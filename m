@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E95CF884E
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D1BCF8840
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swkoM-0005ef-Ln; Fri, 04 Oct 2024 12:05:47 -0400
+	id 1swkn1-0001xQ-Om; Fri, 04 Oct 2024 12:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkoJ-0005QP-Eb; Fri, 04 Oct 2024 12:05:43 -0400
+ id 1swkmx-0001tQ-C7; Fri, 04 Oct 2024 12:04:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1swkoH-0001xw-IM; Fri, 04 Oct 2024 12:05:43 -0400
+ id 1swkmv-0001Z4-Pc; Fri, 04 Oct 2024 12:04:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F00D59557B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2DE119556C;
  Fri,  4 Oct 2024 19:03:30 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3519814D989;
- Fri,  4 Oct 2024 19:03:33 +0300 (MSK)
-Received: (nullmailer pid 1282572 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 666A814D97A;
+ Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
+Received: (nullmailer pid 1282524 invoked by uid 1000);
  Fri, 04 Oct 2024 16:03:32 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 22/23] docs/devel: Mention post_load hook restrictions where we
- document the hook
-Date: Fri,  4 Oct 2024 19:03:30 +0300
-Message-Id: <20241004160331.1282441-23-mjt@tls.msk.ru>
+Subject: [PULL 07/23] net: Remove deadcode
+Date: Fri,  4 Oct 2024 19:03:15 +0300
+Message-Id: <20241004160331.1282441-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
 References: <20241004160331.1282441-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,57 +61,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Accessing another device in a post_load hook is a bad idea, because
-the order of device save/restore is not fixed, and so this
-cross-device access makes the save/restore non-deterministic.
+net_hub_port_find is unused since 2018's commit
+  af1a5c3eb4 ("net: Remove the deprecated "vlan" parameter")
 
-We previously only flagged up this requirement in the
-record-and-replay developer docs; repeat it in the main migration
-documentation, where a developer trying to implement a post_load hook
-is more likely to see it.
+qemu_receive_packet_iov is unused since commit
+  ffbd2dbd8e ("e1000e: Perform software segmentation for loopback")
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+in turn it was the last user of qemu_net_queue_receive_iov.
+
+Remove them.
+
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- docs/devel/migration/main.rst | 6 ++++++
- docs/devel/replay.rst         | 3 +++
- 2 files changed, 9 insertions(+)
+ include/net/net.h   |  4 ----
+ include/net/queue.h |  4 ----
+ net/hub.c           | 25 -------------------------
+ net/net.c           | 10 ----------
+ net/queue.c         | 11 -----------
+ 5 files changed, 54 deletions(-)
 
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 784c899dca..c2857fc244 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -465,6 +465,12 @@ Examples of such API functions are:
-   - portio_list_set_address()
-   - portio_list_set_enabled()
+diff --git a/include/net/net.h b/include/net/net.h
+index c8f679761b..cdd5b109b0 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -172,9 +172,6 @@ ssize_t qemu_sendv_packet_async(NetClientState *nc, const struct iovec *iov,
+                                 int iovcnt, NetPacketSent *sent_cb);
+ ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size);
+ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size);
+-ssize_t qemu_receive_packet_iov(NetClientState *nc,
+-                                const struct iovec *iov,
+-                                int iovcnt);
+ ssize_t qemu_send_packet_raw(NetClientState *nc, const uint8_t *buf, int size);
+ ssize_t qemu_send_packet_async(NetClientState *nc, const uint8_t *buf,
+                                int size, NetPacketSent *sent_cb);
+@@ -307,7 +304,6 @@ void hmp_host_net_remove(Monitor *mon, const QDict *qdict);
+ void netdev_add(QemuOpts *opts, Error **errp);
  
-+Since the order of device save/restore is not defined, you must
-+avoid accessing or changing any other device's state in one of these
-+callbacks. (For instance, don't do anything that calls ``update_irq()``
-+in a ``post_load`` hook.) Otherwise, restore will not be deterministic,
-+and this will break execution record/replay.
-+
- Iterative device migration
- --------------------------
+ int net_hub_id_for_client(NetClientState *nc, int *id);
+-NetClientState *net_hub_port_find(int hub_id);
  
-diff --git a/docs/devel/replay.rst b/docs/devel/replay.rst
-index effd856f0c..40f58d9d4f 100644
---- a/docs/devel/replay.rst
-+++ b/docs/devel/replay.rst
-@@ -202,6 +202,9 @@ into the log.
- Saving/restoring the VM state
- -----------------------------
+ #define DEFAULT_NETWORK_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifup"
+ #define DEFAULT_NETWORK_DOWN_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifdown"
+diff --git a/include/net/queue.h b/include/net/queue.h
+index 9f2f289d77..2e686b1b61 100644
+--- a/include/net/queue.h
++++ b/include/net/queue.h
+@@ -59,10 +59,6 @@ ssize_t qemu_net_queue_receive(NetQueue *queue,
+                                const uint8_t *data,
+                                size_t size);
  
-+Record/replay relies on VM state save and restore being complete and
-+deterministic.
-+
- All fields in the device state structure (including virtual timers)
- should be restored by loadvm to the same values they had before savevm.
+-ssize_t qemu_net_queue_receive_iov(NetQueue *queue,
+-                                   const struct iovec *iov,
+-                                   int iovcnt);
+-
+ ssize_t qemu_net_queue_send(NetQueue *queue,
+                             NetClientState *sender,
+                             unsigned flags,
+diff --git a/net/hub.c b/net/hub.c
+index 4c8a469a50..496a3d3b4b 100644
+--- a/net/hub.c
++++ b/net/hub.c
+@@ -193,31 +193,6 @@ NetClientState *net_hub_add_port(int hub_id, const char *name,
+     return &port->nc;
+ }
  
+-/**
+- * Find a available port on a hub; otherwise create one new port
+- */
+-NetClientState *net_hub_port_find(int hub_id)
+-{
+-    NetHub *hub;
+-    NetHubPort *port;
+-    NetClientState *nc;
+-
+-    QLIST_FOREACH(hub, &hubs, next) {
+-        if (hub->id == hub_id) {
+-            QLIST_FOREACH(port, &hub->ports, next) {
+-                nc = port->nc.peer;
+-                if (!nc) {
+-                    return &(port->nc);
+-                }
+-            }
+-            break;
+-        }
+-    }
+-
+-    nc = net_hub_add_port(hub_id, NULL, NULL);
+-    return nc;
+-}
+-
+ /**
+  * Print hub configuration
+  */
+diff --git a/net/net.c b/net/net.c
+index fc1125111c..d9b23a8f8c 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -750,16 +750,6 @@ ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
+     return qemu_net_queue_receive(nc->incoming_queue, buf, size);
+ }
+ 
+-ssize_t qemu_receive_packet_iov(NetClientState *nc, const struct iovec *iov,
+-                                int iovcnt)
+-{
+-    if (!qemu_can_receive_packet(nc)) {
+-        return 0;
+-    }
+-
+-    return qemu_net_queue_receive_iov(nc->incoming_queue, iov, iovcnt);
+-}
+-
+ ssize_t qemu_send_packet_raw(NetClientState *nc, const uint8_t *buf, int size)
+ {
+     return qemu_send_packet_async_with_flags(nc, QEMU_NET_PACKET_FLAG_RAW,
+diff --git a/net/queue.c b/net/queue.c
+index c872d51df8..fb33856c18 100644
+--- a/net/queue.c
++++ b/net/queue.c
+@@ -193,17 +193,6 @@ ssize_t qemu_net_queue_receive(NetQueue *queue,
+     return qemu_net_queue_deliver(queue, NULL, 0, data, size);
+ }
+ 
+-ssize_t qemu_net_queue_receive_iov(NetQueue *queue,
+-                                   const struct iovec *iov,
+-                                   int iovcnt)
+-{
+-    if (queue->delivering) {
+-        return 0;
+-    }
+-
+-    return qemu_net_queue_deliver_iov(queue, NULL, 0, iov, iovcnt);
+-}
+-
+ ssize_t qemu_net_queue_send(NetQueue *queue,
+                             NetClientState *sender,
+                             unsigned flags,
 -- 
 2.39.5
 
