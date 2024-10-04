@@ -4,75 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B958ECF8840
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 17:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D7DCF8854
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 17:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swlxP-0000jC-Av; Fri, 04 Oct 2024 13:19:11 -0400
+	id 1swmA6-0003QY-Pg; Fri, 04 Oct 2024 13:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swlxL-0000eC-JV
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 13:19:07 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1swlxK-0002Zq-3X
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 13:19:07 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c8784e3bc8so3027422a12.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 10:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728062344; x=1728667144; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cRRtFUUt1Nwga/XyzX7IsYAsDRqRcwBi6s4hI5EmbYs=;
- b=nxymdMAD4eg2LOzx1UHX38sfwm16d2eUSbYXpy2GbL77hbgmMoUUDUH0czbyvmB2lk
- uvIhsf/ubRXPlsA0agRGCB4k3/VafZnOiR9JRSG9NpmTGWzriNgw/nKtoP17NPiY7CiS
- 9hNhsBurB/fw/VlfiTOvaB4+5cWG5l4JDKLZlNEtmKUQi3BvXcaktHNNxnuh+W3ijGbB
- SmlKXMr+h11H45GBCfjc1WL0mW+fQ3Bk+lveU6oIB3CFVbRSBhggoPogGdNOnMARjFZ8
- xmQFugEW5v8qbFvC9aHTSmIKCK5hg2YwjP9suOu440k8Mlkwp9h7aYUo0BQi8W7IM0zx
- EKvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728062344; x=1728667144;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cRRtFUUt1Nwga/XyzX7IsYAsDRqRcwBi6s4hI5EmbYs=;
- b=cA/wly7o3E7paZVAvcuqSi202x49fQQMseVVl02JZzAEciAW5nREfmVNwNUf9+t23P
- sGcwB8Qq6JC+N65uliF38q9NP//nOB3UBjk6IxJ9aGDEP9xrJwOPdcA2JxlmDo8RQLVQ
- wFVO3ltHeao6HwlC4qMYA5GvW66kN6QgRRPasVpsHd/dloH840RD2HkDhDbcv9D/S518
- p4vBw9PmQlSHvH7Fe51Bo6g32VqS9DF8gvjvTooIDldvBcONGTQP2U/0aNxHhI/glqY5
- zkEYBimDuP1BmDRvYjrUi0U4kDIDa8lWmPS1ESfj0V5JMMB71pAuxgl3j7xzBJTJIPKc
- UIig==
-X-Gm-Message-State: AOJu0YxT1I+QqsodvWyj7Vee4iw3g++BatmyI9AqXtnEDx+49dDYH1kY
- KHBiZH2FimWOnGVqL6WQ0UIzzDV5FuwZS5s5Vum1KTn3tQg0KhNv7rH0CAY0hbmg184s8pLc8TJ
- XwWvS9jynwVNPKL5y78aSmLKm2b8Jp/njqwsMqg==
-X-Google-Smtp-Source: AGHT+IHrdGYxTzeymTamDAGpYSpUrzsEwd6+HL5qlGHFnB1/dAdovATJulKkvfbQ8xvsXyW9WAx/llO0lyNBWdK4pyA=
-X-Received: by 2002:a05:6402:4312:b0:5c8:bb09:ae49 with SMTP id
- 4fb4d7f45d1cf-5c8d2e24f38mr2838620a12.8.1728062343780; Fri, 04 Oct 2024
- 10:19:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1swmA5-0003Pv-DZ; Fri, 04 Oct 2024 13:32:17 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1swmA4-0003wG-33; Fri, 04 Oct 2024 13:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=XSRub5E1ID+gyxzPzJEoYK32hcBP5JoGSDkKjL6uLps=; b=sebY+LThyZMZKJ9MnSuOpJST36
+ 3tH2s2Jf6YaVMpMdSuYX6sPs/JcL+muOALN8PonXAfGmajOc1qvQSBQWbIYg0uF7LI+8Karl8+/oE
+ qp/VGK5sJUlKzzzZfmrVEYM8JCfgFWAHwPU59+CexfuvNbUyj0DH1Kn2M7uhWKfRxl3amsNy9LUem
+ BS9FkiP8vQunLVPLrEYqLokXxtn4uNoUXiZkUh9yD8icUuOOzWUV4gYDWAUb36Ox/B0Mh9blGpGiy
+ AYDiF2Akg+dBnBsJo+EEp5qQs/Xqjx4BApSNeEW8zzhwnsID193AhryL/jYwb/bDwsIAOmGGYAOnW
+ vSRP/GOMjM+2fZhckzARhFQXP9yVCBjL/NzAAgg2pMCQB5k/AUc4rYfkd0w0gyLORrZc35JXrebYY
+ mUsM+gR4ErQJyHrqKZ/kZpxBe2IY+80HtL89SgL+VxaZzLtzjHyZkC1QGtwSCeEfMrJACwOhxUNvR
+ mqw9EcAiPbDA7c8oPxhZIdFI4o4SEYcLr/yMlRyostG+UQDrcgCrxvigKdQXq+Fxv2Nogk6fUUTcG
+ REYUzpKT0Raqx9hFO32oRx6x8HCwpwxRdloafvnVaEf//eNREwsr9hMPxBHEMP+18FigkfGFKebQ2
+ piMifkW/Dk5tcDb41hW2bbt258i2ApmIJhucrJmRs=;
+Received: from [2a00:23c4:8bb8:7000:a881:a1c6:b783:4187]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1swm9i-0008Og-7F; Fri, 04 Oct 2024 18:31:58 +0100
+Message-ID: <5c3ac991-6736-4453-948b-7ce6f632d415@ilande.co.uk>
+Date: Fri, 4 Oct 2024 18:32:01 +0100
 MIME-Version: 1.0
-References: <20240903215309.32111-1-philmd@linaro.org>
-In-Reply-To: <20240903215309.32111-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Oct 2024 18:18:52 +0100
-Message-ID: <CAFEAcA8LVx03N8bp05oymus7_ZnvXn5i=dR7H=CA10n8nQCv=A@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/omap1: Remove unused omap_uwire_attach() method
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, David Hildenbrand
+ <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Song Gao <gaosong@loongson.cn>,
+ Thomas Huth <thuth@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ qemu-s390x@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Eric Farman <farman@linux.ibm.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
+ <chigot@adacore.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20241003234211.53644-1-philmd@linaro.org>
+ <20241003234211.53644-13-philmd@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241003234211.53644-13-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:a881:a1c6:b783:4187
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 12/16] target/sparc: Use explicit big-endian LD/ST API
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,21 +119,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Sept 2024 at 22:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> The recently removed 'cheetah' machine was the single user
-> of the omap_uwire_attach() method. Remove it altogether with
-> the uWireSlave structure. Replace the send/receive callbacks
-> by Unimplemented logging.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 04/10/2024 00:42, Philippe Mathieu-Daudé wrote:
+
+> The SPARC architecture uses big endianness. Directly use
+> the big-endian LD/ST API.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Based-on: <20240903160751.4100218-1-peter.maydell@linaro.org>
+>   target/sparc/gdbstub.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+> index ec0036e9ef6..da72a7d3f69 100644
+> --- a/target/sparc/gdbstub.c
+> +++ b/target/sparc/gdbstub.c
+> @@ -110,7 +110,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>   #if defined(TARGET_ABI32)
+>       uint32_t tmp;
+>   
+> -    tmp = ldl_p(mem_buf);
+> +    tmp = ldl_be_p(mem_buf);
+>   #else
+>       target_ulong tmp;
+>   
+> @@ -165,7 +165,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>   #else
+>       else if (n < 64) {
+>           /* f0-f31 */
+> -        tmp = ldl_p(mem_buf);
+> +        tmp = ldl_be_p(mem_buf);
+>           if (n & 1) {
+>               env->fpr[(n - 32) / 2].l.lower = tmp;
+>           } else {
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
+ATB,
 
-Applied to target-arm.next, thanks.
+Mark.
 
--- PMM
 
