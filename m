@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7EACF8840
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC30CF8840
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swlG6-0004av-G1; Fri, 04 Oct 2024 12:34:26 -0400
+	id 1swlGC-0005W0-3g; Fri, 04 Oct 2024 12:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlG1-0003qJ-7O
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:34:21 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1swlFz-00065B-EM
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:34:20 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2fac47f0b1aso29919201fa.1
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:34:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728059657; x=1728664457; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VXhl0xEMfTxY7A/pldYaZefOo2LKk36HnCJi2vt2Dc4=;
- b=SzPpt6RHFygxgf0Zop5pieCHNBIXPTQOBvuzK2gY1SvfRXzASxyhtbOif9L2LlovnS
- +oVmthXPOnKG8fD+l1szHZVtIyWMioabCayNVKK3M+cgwOQhAmdo6QgBBelOJGk3pbkF
- XoFpMQDYDtWDhhqlKrThejqewClb61RXLZsHfKkKmOenr9AGFVC17lx5tBozbI+FJcdl
- 6bhH79IIi3Sy2ADUDStrpTL93tRoil+sTlNzOSYhHBqiQloGTW6yhKKTBBWqe4T/TjW+
- RLMfzwRnYAllJkhA9qVBMvGXqKPNHWGRE7u23IBIyVLNx7wFArcdiUmPbnMhJF++CN/X
- 8LSg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1swlG7-0004jR-Ks
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:34:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1swlG5-00066Q-Ti
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 12:34:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728059665;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gUXOLixf54/Phpgl1bLqDDS7TZylxbd8N1kxNtuKv2s=;
+ b=AcIF0AntI16NzRUjX/eOsh9RppQAv9oRQdqo3HjaHxJro+Eknd7HJcUetMgn8O777GqHLk
+ EzglIrO+LyRcDbzVgrDyOoTWY29ZQGioCPXoxO5XFmg3YVnO9RGBhL3OjYBm2nKW3IPQRu
+ O0QSIRYYKWncXNvr9vUJQtdu8d1SRIg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-527---KYKEBQNUGgaixaPnpcpQ-1; Fri, 04 Oct 2024 12:34:24 -0400
+X-MC-Unique: --KYKEBQNUGgaixaPnpcpQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cb635b108so15828705e9.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 09:34:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728059657; x=1728664457;
+ d=1e100.net; s=20230601; t=1728059662; x=1728664462;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VXhl0xEMfTxY7A/pldYaZefOo2LKk36HnCJi2vt2Dc4=;
- b=sW1i/eoj8bsk0HN/vFweaula7ctQKGa5a5lZGCsQRgRbNQGXFq3MKdv3xzqVWMsBW4
- If0PzuqfqsE2Dwej8qVfy1bzYrn5lCYCKmv8WrzWMwz++ks/4fV1tRlZMphDIbTCOnbU
- vUOArOFGKnSkUQIzZvMWIFYsIGMpIJH3/TpiSvDQPXxiXNXGhX0RvTalvy5CbtCueNzC
- 9v/2h7Eo+A8jjS7S6zAJairVWFbAtPDXC+NEQuR0RSAmNUi4p/hAe9/lCY3GTrihnr8S
- WzTwbkh08csT8eYyrwxSntKw+mv40ivDFsgWHUutloZ/JlqvxmPT3ydmzebBcHYC5Q1q
- Q+Sg==
-X-Gm-Message-State: AOJu0Ywzm/S342Gr4ZFItLcIF5XZPmn/zDHWpzanaEP9XaOpCEXJkC2z
- F0k5ZG0ljpqsKJkHpPs+MmgDVgPwILenCxgrSlqvOgxGlzTS5ZJpIWQZwJPlSGWcAyY31qhhh7s
- yM/QTAA==
-X-Google-Smtp-Source: AGHT+IFSTgZKlya48UFvXDektzLy1IE9Nc2pyEaM/u3ALTn2dbLHkA8CPFiR02Iydbr1v/q8arxrcw==
-X-Received: by 2002:a2e:a542:0:b0:2f7:51a2:96f2 with SMTP id
- 38308e7fff4ca-2faf3c011dbmr15140621fa.8.1728059657380; 
- Fri, 04 Oct 2024 09:34:17 -0700 (PDT)
-Received: from localhost.localdomain ([91.223.100.150])
+ bh=gUXOLixf54/Phpgl1bLqDDS7TZylxbd8N1kxNtuKv2s=;
+ b=DvtTT9LPVgjYsOl93qCOuManzDCUcfTkGrhnlzJ/ocDFi94YVkhuahmkJ1kWA/YNDi
+ XacXL9xBBbRxZlo4SpdXEIElBJkCjJRMinFMVmVu2D7wf/yY3+Gmv2YxlCk/291dNuwW
+ Z07zWmmZBY/Fp2ipkPjGHoB6S5oTrkjNq+TcqURyKRm1q8j8JMbXqG0W8LOLRV1BH2oS
+ Zd0UzZDjb5ccHqf9Phzsd6nLuTLjXTqPc9pyKt8UoKacxQnbi9icndv36r4PbnyYxyzh
+ twZlGs5LoWo4N7wOf6IhMYOC/qRebQR9km6BfkQG/4NW3wcyZSPf5DsVSKTGkVXd5Fpe
+ 731Q==
+X-Gm-Message-State: AOJu0Yz51zlj0SxCAcqLDH3hUgLtwPbOMkq9iCcJCcgJxfGMAbv0V6pJ
+ 4hFBor9txce7/mC81NWiFa95qs2BVGpOZ4VSYveX5fivKpiXSbFswaMjtJAP1flPMoEUpgBPYES
+ 859OYOWZGx/nNQwGzRaIdieO4fsiHN/xNxPAK70MYz9AU2FTkCtn4PRrQBH0rN8r4IKT+LoteLG
+ 9Csw5h2d06UP2c96jhKIFeI8M2Zj2EMJ9rUG4AD/4=
+X-Received: by 2002:a05:600c:19c6:b0:42f:8515:e47d with SMTP id
+ 5b1f17b1804b1-42f85ab68femr26865725e9.11.1728059662440; 
+ Fri, 04 Oct 2024 09:34:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPJd52gdJpiVPDM77fyImR7BVciNpcbGpdeHcj90FBsrO9t6PfIvqSBP0CJH77WRqij9RSng==
+X-Received: by 2002:a05:600c:19c6:b0:42f:8515:e47d with SMTP id
+ 5b1f17b1804b1-42f85ab68femr26865515e9.11.1728059661948; 
+ Fri, 04 Oct 2024 09:34:21 -0700 (PDT)
+Received: from avogadro.local ([151.95.43.71])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2faf9b339b0sm194261fa.124.2024.10.04.09.34.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 04 Oct 2024 09:34:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ 5b1f17b1804b1-42f86b4a38bsm19419185e9.39.2024.10.04.09.34.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Oct 2024 09:34:21 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 14/25] target/tricore: Use explicit little-endian LD/ST API
-Date: Fri,  4 Oct 2024 13:30:30 -0300
-Message-ID: <20241004163042.85922-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241004163042.85922-1-philmd@linaro.org>
-References: <20241004163042.85922-1-philmd@linaro.org>
+Cc: "Xin Li (Intel)" <xin@zytor.com>
+Subject: [PULL 01/23] target/i386: Delete duplicated macro definition
+ CR4_FRED_MASK
+Date: Fri,  4 Oct 2024 18:33:53 +0200
+Message-ID: <20241004163415.951106-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.1
+In-Reply-To: <20241004163415.951106-1-pbonzini@redhat.com>
+References: <20241004163415.951106-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.146,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,37 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TriCore architecture uses little endianness. Directly use
-the little-endian LD/ST API.
+From: "Xin Li (Intel)" <xin@zytor.com>
 
-Mechanical change using:
+Macro CR4_FRED_MASK is defined twice, delete one.
 
-  $ end=le; \
-    for acc in uw w l q tul; do \
-      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
-             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
-        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/tricore/); \
-    done
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Link: https://lore.kernel.org/r/20240807081813.735158-2-xin@zytor.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/tricore/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/cpu.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/target/tricore/gdbstub.c b/target/tricore/gdbstub.c
-index 29a70051ffe..0b73b1280e0 100644
---- a/target/tricore/gdbstub.c
-+++ b/target/tricore/gdbstub.c
-@@ -124,7 +124,7 @@ int tricore_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     CPUTriCoreState *env = cpu_env(cs);
-     uint32_t tmp;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 14edd57a37b..2bf37dd15e0 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -267,12 +267,6 @@ typedef enum X86Seg {
+ #define CR4_FRED_MASK   0
+ #endif
  
--    tmp = ldl_p(mem_buf);
-+    tmp = ldl_le_p(mem_buf);
- 
-     if (n < 16) { /* data registers */
-         env->gpr_d[n] = tmp;
+-#ifdef TARGET_X86_64
+-#define CR4_FRED_MASK   (1ULL << 32)
+-#else
+-#define CR4_FRED_MASK   0
+-#endif
+-
+ #define CR4_RESERVED_MASK \
+ (~(target_ulong)(CR4_VME_MASK | CR4_PVI_MASK | CR4_TSD_MASK \
+                 | CR4_DE_MASK | CR4_PSE_MASK | CR4_PAE_MASK \
 -- 
-2.45.2
+2.46.1
 
 
