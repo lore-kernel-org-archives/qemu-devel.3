@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6F0CFA749
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 06:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BD2CFA74D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 07:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swc3H-0001ZV-0Z; Fri, 04 Oct 2024 02:44:35 -0400
+	id 1swcLU-0003tM-VE; Fri, 04 Oct 2024 03:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swc3F-0001ZM-LH
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 02:44:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swcLR-0003sw-8g
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 03:03:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swc3D-0003Mm-Rx
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 02:44:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1swcLJ-0006TE-Ot
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 03:03:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728024269;
+ s=mimecast20190719; t=1728025391;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=veCQknW8c7X9RGou6gaB6C4La2rZyiyIy66HwbF0seM=;
- b=MZkMSHJgzIZjtsjLW6b97KughZ4E/vlE1YBNKUQR7i03quQjPeINkjyi2vb5pmwXLuwO5V
- ByIRR0bESJgDzcc2vEkkZSqQJf+GzE9uh+PMRgS1pNjMh/Lpn1Jpa9w4R5X403GHAVgYS+
- CtUHUeKANyT+VIChzbMvLTqT+9v2GkE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1qAuTlvRADrHjVzx7ryFC+9Zs4UiNbLvUu5vKbhWMRs=;
+ b=AXBUvEvzF1ZHI1ngO/8Wf6wYhIe79GU4oKyO9zhZ1duB8woft4y6QZH9qjVS7ZQ/P4k5mE
+ AfSeUMv9/u5L1QvHSo4Aa+RC0ZdNs0UGBzv5B2xamm+KtHTuIVULIndCFug297u21dNm1J
+ Kn1VPp0iNPi9wn5OO5XmxShYKmGSSYI=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-2EMRwyDYNL6sW8WwOIVLGw-1; Fri, 04 Oct 2024 02:44:28 -0400
-X-MC-Unique: 2EMRwyDYNL6sW8WwOIVLGw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a8a92ab4cdbso127407966b.0
- for <qemu-devel@nongnu.org>; Thu, 03 Oct 2024 23:44:27 -0700 (PDT)
+ us-mta-271-lm0GkTwaNoymyWBd16r54w-1; Fri, 04 Oct 2024 03:03:08 -0400
+X-MC-Unique: lm0GkTwaNoymyWBd16r54w-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5c8adadc575so3253203a12.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 00:03:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728024267; x=1728629067;
+ d=1e100.net; s=20230601; t=1728025387; x=1728630187;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=veCQknW8c7X9RGou6gaB6C4La2rZyiyIy66HwbF0seM=;
- b=ItDbPsT6EeRccZ2CCwQfV0muGD6O1MewG8j7YiYqZiX7EOWZV/G+VfqM/aoRc2IMK4
- lOLq5o36906nXQWRYCSFA4WIhwc29fOg0zKccMMSmANxoPILrjFbZPVJK4F2rxKE8mAH
- Y2y2xH7rHBhWWIqECf7JPunBwuDIG2+6OkHpwcOyZyHUdgeKKfAXfpp3QLydzSF7VK2N
- NgAgpxNINt7BCvt9pCQPYTYxrU6JR0INEJscgw3Vkjwu+LmFiPJCQnDt0Yftuo9flKNj
- FfHImKLvLX3/HOwitl4hpoDfPi3gNI5jVpOSZyWz32qdDAap49yJ2BMD0gN12QFEy+I3
- zIqA==
+ bh=1qAuTlvRADrHjVzx7ryFC+9Zs4UiNbLvUu5vKbhWMRs=;
+ b=fshrGHSV96HFc+Y1ufDw/csGND02L7VgYFuRgy65nB92osUg4nri/xMzUmFQ9LXDyg
+ FzbTizPnGftG3STeOLxd9nswDgs2m3AQNbJzf+kK3+qM3GDeepzyZ7Ixmb8w4yPb5+1b
+ ec2d2hDoI4a2fTPKsAisLOzbgIXwccIFx0nEuWIwGNFVFE/3mcc519fH1wtVU5hQ6ENt
+ /poSR1gdT+aneMHkTCXmRBPrqnNyi5xh+BpQNjIiWbCukWLCf2mE3xdqa/UbnuahNy7+
+ xmheRM09jXnWFcFu4sfb4JctSly3iUQic71wV/ghMncUsuWB/1fe5If9sXscUYntskww
+ bAow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5dy5d3frrP4NGIPqDP61r8sO/Gq5kYWddyi0YbZG2V8nXV84Md5rz2CODx2vwGKLSlH9zNA5khPop@nongnu.org
-X-Gm-Message-State: AOJu0YxutNIGTh7XxL17ev5qDKbcDp0FExMSKYcfBw4YAswdlpW+YRhi
- T/Y3eXlM6UnNLZNiaCssXA83w2WNeJJR3+CT+C9tJxtVl1mY4UiAERmn76iCZBoiMiQUFOrVaD+
- Jq2yNmN2HN9OF14tSkOZQxZgq8nZKldcSecOTqZW59WtkQN/6oRWg
-X-Received: by 2002:a17:906:ee87:b0:a8d:250a:52a8 with SMTP id
- a640c23a62f3a-a991bce6124mr178706366b.3.1728024266937; 
- Thu, 03 Oct 2024 23:44:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+AetUe+KR8fROGCL+kVoI8pY8eVBohhnsuAf97wGpJbUVemskk2KRt9s5nBY6zaBCZn3N/A==
-X-Received: by 2002:a17:906:ee87:b0:a8d:250a:52a8 with SMTP id
- a640c23a62f3a-a991bce6124mr178703766b.3.1728024266456; 
- Thu, 03 Oct 2024 23:44:26 -0700 (PDT)
+ AJvYcCXh2Zs9BoGjxA3mNzGsnIzmy9COzTmjO0r63rf9WavINgaXi5hIVg9YPkFl4r8DrXdV+4dBSEKAK9eQ@nongnu.org
+X-Gm-Message-State: AOJu0YxG3cQbG5RgJO675cxyW0rhw39QDd4+mZhZc3X6+taztdvOdrje
+ 5Itzs1rnW71KNzs8SgatWYYGW7uzAT0EwbAxnNlBbpZL4pCuDF7ucj5X0ZARoJAA/3SC0C0AbBu
+ qazfyY6MGUKQ3t6S3iY6emVQGCbC9dVu/1p3Q9bqPxB638F3sGKAF
+X-Received: by 2002:a05:6402:2710:b0:5c8:78dd:8027 with SMTP id
+ 4fb4d7f45d1cf-5c8d2f7d634mr1583682a12.12.1728025386795; 
+ Fri, 04 Oct 2024 00:03:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbRglHKlDAfu//PR4QoDJWpwvgEinLZyJ2qIo1UC5CCcPWZujLHI3WJf/MswxQJgh++sDUCA==
+X-Received: by 2002:a05:6402:2710:b0:5c8:78dd:8027 with SMTP id
+ 4fb4d7f45d1cf-5c8d2f7d634mr1583644a12.12.1728025386354; 
+ Fri, 04 Oct 2024 00:03:06 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-143.web.vodafone.de.
  [109.42.49.143]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9910287283sm180763866b.32.2024.10.03.23.44.24
+ 4fb4d7f45d1cf-5c8ca3dfe2csm1531939a12.34.2024.10.04.00.03.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Oct 2024 23:44:25 -0700 (PDT)
-Message-ID: <448beb47-c05f-40aa-a1a0-87ef27bfb494@redhat.com>
-Date: Fri, 4 Oct 2024 08:44:23 +0200
+ Fri, 04 Oct 2024 00:03:05 -0700 (PDT)
+Message-ID: <c6b188c1-bfba-417c-bf6f-5dc943a1e130@redhat.com>
+Date: Fri, 4 Oct 2024 09:03:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] hw/xtensa/xtfpga: Replace memcpy()+tswap32() by
- stl_endian_p()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+Subject: Re: [PATCH trivial] gitlab-ci/build-oss-fuzz: print FAILED marker in
+ case the test failed and run all tests
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Jason Wang <jasowang@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
- <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sven Schnelle <svens@stackframe.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-arm@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
- Max Filippov <jcmvbkbc@gmail.com>, Paul Burton <paulburton@kernel.org>
-References: <20240930073450.33195-1-philmd@linaro.org>
- <20240930073450.33195-9-philmd@linaro.org>
- <257b0de0-6744-4ae8-a2c5-f05eec29a3f0@redhat.com>
- <0c28a435-0af6-450f-8558-14dddc6cb6a6@linaro.org>
- <a14cd43c-087b-4a5d-b036-39aa6a80e691@linaro.org>
- <f20cebfe-027a-4664-82f0-3769c7047e38@linaro.org>
- <aeb88605-989b-4c26-9371-15fbe44a9e3a@linaro.org>
- <46ea20fd-c6bc-411a-b8e2-ab7179c00185@linaro.org>
- <a1a67f7c-553c-42d4-b852-2cc26e7181a0@linaro.org>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241003121656.1173612-1-mjt@tls.msk.ru>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,10 +121,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <a1a67f7c-553c-42d4-b852-2cc26e7181a0@linaro.org>
+In-Reply-To: <20241003121656.1173612-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -165,92 +149,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/10/2024 23.40, Philippe Mathieu-Daudé wrote:
-> On 3/10/24 23:34, Pierrick Bouvier wrote:
->> On 10/3/24 14:31, Pierrick Bouvier wrote:
->>> On 10/3/24 13:48, Philippe Mathieu-Daudé wrote:
->>>> On 3/10/24 18:04, Pierrick Bouvier wrote:
->>>>> On 10/3/24 09:02, Philippe Mathieu-Daudé wrote:
->>>>>> On 30/9/24 16:32, Thomas Huth wrote:
->>>>>>> On 30/09/2024 09.34, Philippe Mathieu-Daudé wrote:
->>>>>>>> Replace a pair of memcpy() + tswap32() by stl_endian_p(),
->>>>>>>> which also swap the value using target endianness.
->>>>>>>>
->>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>> ---
->>>>>>>>      hw/xtensa/xtfpga.c | 6 ++----
->>>>>>>>      1 file changed, 2 insertions(+), 4 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
->>>>>>>> index 228f00b045..521fe84b01 100644
->>>>>>>> --- a/hw/xtensa/xtfpga.c
->>>>>>>> +++ b/hw/xtensa/xtfpga.c
->>>>>>>> @@ -438,11 +438,9 @@ static void xtfpga_init(const XtfpgaBoardDesc
->>>>>>>> *board, MachineState *machine)
->>>>>>>>                  const size_t boot_sz = TARGET_BIG_ENDIAN ?
->>>>>>>> sizeof(boot_be)
->>>>>>>>                                                           :
->>>>>>>> sizeof(boot_le);
->>>>>>>>                  uint8_t *boot = TARGET_BIG_ENDIAN ? boot_be : boot_le;
->>>>>>>> -            uint32_t entry_pc = tswap32(entry_point);
->>>>>>>> -            uint32_t entry_a2 = tswap32(tagptr);
->>>>>>>> -            memcpy(boot + 4, &entry_pc, sizeof(entry_pc));
->>>>>>>> -            memcpy(boot + 8, &entry_a2, sizeof(entry_a2));
->>>>>>>> +            stl_endian_p(TARGET_BIG_ENDIAN, boot + 4, entry_point);
->>>>>>>> +            stl_endian_p(TARGET_BIG_ENDIAN, boot + 8, tagptr);
->>>>>>>
->>>>>>> Why don't you simply use stl_p() here?
->>>>>>
->>>>>> We want to remove the tswap32() calls...
->>>>>>
->>>>>
->>>>> I think is point is that you could directly use stl_be_p, instead of
->>>>> stl_endian_p(TARGET_BIT_ENDIAN, ...).
->>>>
->>>> TARGET_BIG_ENDIAN is defined as 0 on little endian, and 1 on big one.
->>>>
->>>> The following change isn't worth it:
->>>>
->>>>      if (TARGET_BIG_ENDIAN) {
->>>>        stl_be_p(boot + 8, tagptr);
->>>>      } else {
->>>>        stl_le_p(boot + 8, tagptr);
->>>>      }
->>>>
->>>> Maybe I'm missing Thomas point, as the xtfpga machines are available
->>>> for both xtensa-softmmu (LE) and xtensaeb-softmmu (BE).
->>>>
->>>>> I don't know if your intent is to make be/le variant "private" and
->>>>> relies only on endian_p though.
->>>>
->>>> My intent is to enforce endian agnostic API uses when possible, and
->>>> use LE/BE specific variant when it is known at build time.
->>>
->>> Oh ok, it's me who missed your point then.
->>> For some reason, I thought we were always calling big endian variant.
->>>
->>> Thus, your implementation makes totally sense.
->>>
->>> Let's see if Thomas meant something different.
->>> Else,
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Looking more closely,
->> stl_p is already correctly defined when you know at compile time your 
->> target endianness. So Thomas was referring to this.
->>
->> https://gitlab.com/qemu-project/qemu/-/blame/master/include/exec/cpu- 
->> all.h?ref_type=heads#L49
+On 03/10/2024 14.16, Michael Tokarev wrote:
+> currently, if an oss-fuzz fails, the script does just `exit 1`
+> without any additional output, and looking at the build log in
+> the gitlab ci it is not clear what actually failed, without
+> looking at build-oss-fuzz script and seeing this `exit 1`.
 > 
-> OK I guess I'm seeing Thomas point now; this series cover was not clear
-> enough. The goal is to remove TARGET_BIG_ENDIAN so we can build half
-> objects and do a little step toward the single binary.
+> Print easily recognizable error message about test failure, so
+> it becomes obvious what exactly has failed.
+> 
+> While at it, continue running other tests even in case of
+> failure, and exit non-zero if at least one test failed.
+> 
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>   .gitlab-ci.d/buildtest.yml | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index 87848c2ffe..25c481e43a 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -628,12 +628,15 @@ build-oss-fuzz:
+>       - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
+>         ./scripts/oss-fuzz/build.sh
+>       - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
+> +    - failures=0
+>       - for fuzzer in $(find ./build-oss-fuzz/DEST_DIR/ -executable -type f
+>                         | grep -v slirp); do
+>           grep "LLVMFuzzerTestOneInput" ${fuzzer} > /dev/null 2>&1 || continue ;
+>           echo Testing ${fuzzer} ... ;
+> -        "${fuzzer}" -runs=1 -seed=1 || exit 1 ;
+> +        "${fuzzer}" -runs=1 -seed=1 || { echo "FAILED:"" ${fuzzer} exit code is $?"; failures=$(($failures+1)); };
+>         done
+> +    - echo "Number of failures:"" $failures"
+> +    - test $failures = 0
+>   
+>   build-tci:
+>     extends: .native_build_job_template
 
-Ok, that piece of information was missing in the patch description, indeed.
-But the tswap function should already work with common code, see the 
-target_needs_bswap() stuff in include/exec/tswap.h, so maybe this change 
-here even is not needed at all?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
