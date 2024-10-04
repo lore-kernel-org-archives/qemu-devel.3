@@ -4,86 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9099FCF884E
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2261CF8840
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Oct 2024 16:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swkgr-0007P3-1S; Fri, 04 Oct 2024 11:58:01 -0400
+	id 1swkmh-0001qJ-Tk; Fri, 04 Oct 2024 12:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1swkgi-0007M7-Ml
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 11:57:53 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1swkgh-0000qR-4S
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 11:57:52 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20b84bfbdfcso22831805ad.0
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 08:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1728057469; x=1728662269; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9MgZWh8RRqxn5Vr0pJth1pB16p4UHTGHLVd+FFPOcE0=;
- b=Ta3ygV+QyGEpSY9rzrSOyuP7doepkBH8ryETTBW1CEnZDZvy6LNeJWig6Vw3G2/VI/
- 3GH//7ciCZJA81dTOGQrhL+1bGPu+kWBULinGZQWzOIL/NzbDkSTkES+UBSBlnGYKK8A
- zJf/P5FE3H0fET1SQlmMcR2sjGDPsoMCarXZCHz7EyZbef/Co9Q57k7ZsBDsJIk6fNbJ
- Xa50H/9g4aVrZ1+Sk7u3+PAx64FZaAx62AzfXnJvPz32PJgKYtuyg5OyUG6ioyNy3ZJG
- d+JBsKSq7KwhJ5w58dzuQJdiMECtlSKiM+JPVcWjtVAc7lzuT4vFgE4hnNAtiM95NIjm
- BuCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728057469; x=1728662269;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9MgZWh8RRqxn5Vr0pJth1pB16p4UHTGHLVd+FFPOcE0=;
- b=bJ7XkYVt36NRENzrHYJZuerUx0GME79Ud7TzGqMJ4mSkCduNQNmC7wa59+f/Bz15dq
- DPYMZmwWpG95i9JI5MMcpZa0fLgEFLQDjzhev31EPlcO7xg+euKghuj1a2/AQ8gHV2la
- rUGEYPKzGNKOHAVt+pGTcSJGwsAAdfa9W03pg+8ocl0WhEAKfLa2wjmzKZNg6vJP5ELp
- QgTH9p8JL1//ygTY4ACZd1sLXgr3qOVHOcsolPWB1fjKXxPykdH755MSZWKaLbURKhRJ
- c8AwpYng4q5tm7CDdX6kH2rTRlUa07P8yXIKJPsjTssSVnaQCglysBmv0bp1UDsrsezj
- 9yxQ==
-X-Gm-Message-State: AOJu0YzpRM1EYM8ZxLo+KiHF/N/kwg6Ey+LrMDLPs72yKKYQQFrz1QDW
- XJqXlwfKVikSJu8D+XdcmmIyFndvSv/lyhT6RWEBac3Tt4Z0IQZjeX6p9FfAGdf9R/3fL1OW9GH
- f
-X-Google-Smtp-Source: AGHT+IEQuB2qiWTYGTZ90y0B1AvLGUH3azJGzbhuHqSopJnlQT+eeIFEZAOnbOhuLmjStjXS70QYww==
-X-Received: by 2002:a17:902:e94e:b0:20b:831f:e905 with SMTP id
- d9443c01a7336-20bff497da0mr51865095ad.12.1728057469438; 
- Fri, 04 Oct 2024 08:57:49 -0700 (PDT)
-Received: from grind.. (200-206-229-93.dsl.telesp.net.br. [200.206.229.93])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c139306cfsm107635ad.170.2024.10.04.08.57.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Oct 2024 08:57:49 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1swkmP-0001nQ-Pp; Fri, 04 Oct 2024 12:03:49 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1swkmO-0001Tr-3s; Fri, 04 Oct 2024 12:03:45 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D30F595566;
+ Fri,  4 Oct 2024 19:03:29 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 18CC914D974;
+ Fri,  4 Oct 2024 19:03:32 +0300 (MSK)
+Received: (nullmailer pid 1282505 invoked by uid 1000);
+ Fri, 04 Oct 2024 16:03:32 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v9 06/12] hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice
- hotplug
-Date: Fri,  4 Oct 2024 12:57:13 -0300
-Message-ID: <20241004155721.2154626-7-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241004155721.2154626-1-dbarboza@ventanamicro.com>
-References: <20241004155721.2154626-1-dbarboza@ventanamicro.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 01/23] hw/audio/virtio-snd: Remove unnecessary "exec/tswap.h"
+ header
+Date: Fri,  4 Oct 2024 19:03:09 +0300
+Message-Id: <20241004160331.1282441-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241004160331.1282441-1-mjt@tls.msk.ru>
+References: <20241004160331.1282441-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,87 +63,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Generate device tree entry for riscv-iommu PCI device, along with
-mapping all PCI device identifiers to the single IOMMU device instance.
+We were including the "exec/tswap.h" header to get
+target_words_bigendian() declaration, but since commit a276ec8e26
+("hw/audio/virtio-snd: Always use little endian audio format")
+removed this method call, we don't need this header anymore.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ hw/audio/virtio-snd.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 3c0dca86f1..1d32b4b0f3 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -32,6 +32,7 @@
- #include "hw/core/sysbus-fdt.h"
- #include "target/riscv/pmu.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/iommu.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
-@@ -1032,6 +1033,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
-                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
- }
- 
-+static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
-+{
-+    const char comp[] = "riscv,pci-iommu";
-+    void *fdt = MACHINE(s)->fdt;
-+    uint32_t iommu_phandle;
-+    g_autofree char *iommu_node = NULL;
-+    g_autofree char *pci_node = NULL;
-+
-+    pci_node = g_strdup_printf("/soc/pci@%lx",
-+                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
-+    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
-+    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
-+    qemu_fdt_add_subnode(fdt, iommu_node);
-+
-+    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-+    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-+                           bdf << 8, 0, 0, 0, 0);
-+    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
-+                           0, iommu_phandle, 0, bdf,
-+                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
-+}
-+
- static void finalize_fdt(RISCVVirtState *s)
- {
-     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
-@@ -1738,9 +1763,11 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
- 
-     if (device_is_dynamic_sysbus(mc, dev) ||
--        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-         return HOTPLUG_HANDLER(machine);
-     }
-+
-     return NULL;
- }
- 
-@@ -1761,6 +1788,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-         create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-     }
-+
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-+        create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-+    }
- }
- 
- static void virt_machine_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 69838181dd..c5581d7b3d 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -20,7 +20,6 @@
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+ #include "qemu/lockable.h"
+-#include "exec/tswap.h"
+ #include "sysemu/runstate.h"
+ #include "trace.h"
+ #include "qapi/error.h"
 -- 
-2.45.2
+2.39.5
 
 
