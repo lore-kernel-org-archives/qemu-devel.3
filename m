@@ -4,97 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BE0CF8869
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 06:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2F3CF8872
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 07:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swy3m-00029G-Gq; Sat, 05 Oct 2024 02:14:34 -0400
+	id 1swytW-0001Fy-Uj; Sat, 05 Oct 2024 03:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1swy3b-0001xy-KM
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 02:14:24 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1swy3Z-00019O-9U
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 02:14:23 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-71df4620966so237842b3a.0
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 23:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728108860; x=1728713660;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oucCD6GmvM1AxZvz00WRd/F6EZ16LhJ5WCAB0EFZax8=;
- b=UKONea8f94iRc7xRis5UO5Mhc50Lq0Ci7AAORzMIJqmFvR4Sj831btTEnsaorDGF17
- FFv5MslE/AWmwMGdVsiFZwsL6jPUXXObjbhvpubYHaAidvWyb90Eq5N55+JsxVwDUpjm
- xN7YLrr8LFA7CxZgOMBsQjIff7YPL+Rh7rwT29qKf+e80U9OKISE2lS+RT4A60h7H55S
- SnqWfuzhfIB8EO9U3fb+JspPrSYRJoTtnPm1ZnMhM4U/6x2uFS6b/UQd1E8sHFEkx5+s
- 7QKzP0hiRKFz5Uusy/ihuxzwQMgXQuo3WLVYCWqyFBwnF49Y4w29Yibs6Nf2hbAvYn1e
- ygNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728108860; x=1728713660;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oucCD6GmvM1AxZvz00WRd/F6EZ16LhJ5WCAB0EFZax8=;
- b=fCSMv9NPOzIq1G41AjQ74z+fKjp3mSPE2EegcWxvG3QCqjVA9/HGM2EyyrhuCjUJBf
- XJAeOP79Oy+KgR+k0BYFJ3m3AFOtav8KgussB+Qe/S6BhYjARlVE7ASJP5bJBIwY1A4x
- tApbJxjjgFRRWt7k/4g896DyaQkFGeNFDYpjWcbym3Qp8k0Q6GvIAAL5qOESqdvDaNyn
- WdXrsgrnpIa9PhaKNKlQ+B7qoHfyeSwtWMb88A+lS9QWwUoXsTlitOOiXY7Dym0ihPVM
- 3xcoupItSPDGnEKx9ai0r1XJX3fZUTjbZr4LnGMkw3Iq4QyTx8JiuV2yuX5FWap0woYg
- OMSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAtRcVtWPa4/ohdXmW1Xp08LhSsuooPvzWZ5hhocoqqOd5MC1Rre0NXyzvZXL5rjuUAXg4YtblMmmI@nongnu.org
-X-Gm-Message-State: AOJu0Yxtvq64tKU87yLXQj1XSQGPfy+970FSoT6Vb/J6zWUIxfaOF5la
- yA8UhjKjgO0gM/ZfjnzljFZel8cu1cjVtCx7efg/awCJwt68o/kqVG58JHJ8p2n4oL0aONAae1x
- bcAk=
-X-Google-Smtp-Source: AGHT+IHZhobYwD4h9vTuvriEo/QQpRDN7AXz4p2p4cLd+DQHaNKCdohXUgK2lp0BIbgcNTxbwijU+w==
-X-Received: by 2002:a05:6a00:3c83:b0:717:8ee0:4ea1 with SMTP id
- d2e1a72fcca58-71de22e8399mr9376019b3a.0.1728108859995; 
- Fri, 04 Oct 2024 23:14:19 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d69246sm834048b3a.182.2024.10.04.23.14.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Oct 2024 23:14:19 -0700 (PDT)
-Message-ID: <a67552fd-f304-468b-bffa-9d2a98ce5a5e@daynix.com>
-Date: Sat, 5 Oct 2024 15:14:12 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1swytV-0001Fo-2S
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 03:08:01 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1swytT-0006d6-Bf
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 03:08:00 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C5279579B;
+ Sat,  5 Oct 2024 10:07:51 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 5FE6914DDB4;
+ Sat,  5 Oct 2024 10:07:54 +0300 (MSK)
+Received: (nullmailer pid 1328093 invoked by uid 1000);
+ Sat, 05 Oct 2024 07:07:54 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH] net/slirp: introduce slirp_os_socket to stay compatible with
+ libslirp past 4.8.0
+Date: Sat,  5 Oct 2024 10:07:53 +0300
+Message-Id: <20241005070753.1328079-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/14] hvf: arm: Ignore writes to CNTP_CTL_EL0
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org, pbonzini@redhat.com,
- rad@semihalf.com, quic_llindhol@quicinc.com, marcin.juszkiewicz@linaro.org,
- stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
- philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, jcmvbkbc@gmail.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, qemu-arm@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- Alexander Graf <graf@amazon.com>
-References: <20240928085727.56883-1-phil@philjordan.eu>
- <20240928085727.56883-9-phil@philjordan.eu>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240928085727.56883-9-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,15 +60,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/09/28 17:57, Phil Dennis-Jordan wrote:
-> From: Alexander Graf <graf@amazon.com>
-> 
-> MacOS unconditionally disables interrupts of the physical timer on boot
-> and then continues to use the virtual one. We don't really want to support
-> a full physical timer emulation, so let's just ignore those writes.
-> 
-> Signed-off-by: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+libslirp introduced new typedef after 4.8.0, slirp_os_socket, which
+is defined to SOCKET on windows, which, in turn, is a 64bit number.
+qemu uses int, so callback function prorotypes changed.  Introduce
+slirp_os_socket locally if SLIRP_INVALID_SOCKET is not defined (this
+define has been introduced together wiht slirp_os_socket type), for
+libslirp <= 4.8.0, and use it in callback function definitions.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Link: https://gitlab.freedesktop.org/slirp/libslirp/-/commit/72f85005a2307fd0961543e3cea861ad7a4d201e
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2603
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ net/slirp.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/net/slirp.c b/net/slirp.c
+index eb9a456ed4..fa07268cf4 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -98,6 +98,10 @@ typedef struct SlirpState {
+     GSList *fwd;
+ } SlirpState;
+ 
++#ifndef SLIRP_INVALID_SOCKET /* after 4.8.0 */
++typedef int slirp_os_socket;
++#endif
++
+ static struct slirp_config_str *slirp_configs;
+ static QTAILQ_HEAD(, SlirpState) slirp_stacks =
+     QTAILQ_HEAD_INITIALIZER(slirp_stacks);
+@@ -247,7 +251,7 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
+     timer_mod(&t->timer, expire_timer);
+ }
+ 
+-static void net_slirp_register_poll_fd(int fd, void *opaque)
++static void net_slirp_register_poll_fd(slirp_os_socket fd, void *opaque)
+ {
+ #ifdef WIN32
+     AioContext *ctxt = qemu_get_aio_context();
+@@ -260,7 +264,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
+ #endif
+ }
+ 
+-static void net_slirp_unregister_poll_fd(int fd, void *opaque)
++static void net_slirp_unregister_poll_fd(slirp_os_socket fd, void *opaque)
+ {
+ #ifdef WIN32
+     if (WSAEventSelect(fd, NULL, 0) != 0) {
+@@ -314,7 +318,7 @@ static int slirp_poll_to_gio(int events)
+     return ret;
+ }
+ 
+-static int net_slirp_add_poll(int fd, int events, void *opaque)
++static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
+ {
+     GArray *pollfds = opaque;
+     GPollFD pfd = {
+-- 
+2.39.5
+
 
