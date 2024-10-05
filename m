@@ -4,82 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156B0CFB42C
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 20:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A298FCFB42C
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 20:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxB2i-0006Ra-1t; Sat, 05 Oct 2024 16:06:20 -0400
+	id 1sxBMX-0006kp-5Q; Sat, 05 Oct 2024 16:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxB2g-0006PP-HI
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:18 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxB2f-0001nK-0g
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:18 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20b90ab6c19so35190375ad.0
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 13:06:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728158776; x=1728763576; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4X5zP7zXx4H0vSkmfgBSYylbUDArgVMPw2dfqzvhfaA=;
- b=sgwEB8Uhx/P52vUTv5xyl4uXggYLuzfqF16GGrp04uGuPWt/SjWB5XnMoIu1PKx2PD
- 9z4m2LNNH4zrxL+KuFrOsGnF1iJsG4c+LTxKC6y5VCeJNU4zjSuRahomeqvxDP8qvf1r
- c9h0sKmhNN+sQ3VLojV9BEj5g9CYcsY0nNknhCXTyTRkuoowZ/TRLfN5Gz30nOM+shia
- QOde+CGjLIx4tHKPqygW6TjPFDnJG4egdgAswQUeXkDyqkPobHrOvGi4xGHkZ3N9h5jx
- em5uPmvEzvx2/EeHkrPv4iLZpw4XaNBRRCAHpqzX1cj/lfdz+H9/rkmL+07p6xBdrohT
- EFTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728158776; x=1728763576;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4X5zP7zXx4H0vSkmfgBSYylbUDArgVMPw2dfqzvhfaA=;
- b=J/m7w3BpALoGrBr/TqblChFzT3lZGXXCK7xBPR4H7S1JGriwyRQYJG7cUDY0u3O8Mx
- n4c8cbKavmuwRpu+8QZ0ZDY2ZydnwxSVl2xClqvRvtuA8pGvAnJukvVMKjlOw1FO7TuU
- o1lrdQh13XkL82xE8NNVI9blEI70atM7eyuwQwqVvxMtzgWoJAKscxgG3dPQcmifCawV
- ZpyFYDa4xaKQJQq61UEX/QkI65FmmSY3+5kDiNFS6dL9NPv/gNL/sT2waQtH73JINaN5
- xOpVBgGnI8ElR28ZTWIIyI7OUoMSgzSnB/Z3fKKiZItQPRTYpVGm9fGtXkJxP23srHVT
- Pgdg==
-X-Gm-Message-State: AOJu0YwevPDGOBxqf0JcS/3rkbVfyS8BOjl/kSyUcrBSA/NV9beHZrPM
- eIEhjLLNuI3MVMLNhIeezXgiL6y5G0l8tT9zkpBnjJuPh/BC+RYbf3cBtYk3Y+tUUGry89kE1Ns
- Y
-X-Google-Smtp-Source: AGHT+IEx5vHtVkprUThlZwV+Lqo7Z029AoCfFZ0CZWDgQlrwN//FsMIaExtuwtG6PQ0wcXYm3ZJH7Q==
-X-Received: by 2002:a17:902:e84f:b0:20b:b7b2:b6c5 with SMTP id
- d9443c01a7336-20bfee383c2mr91865325ad.54.1728158775790; 
- Sat, 05 Oct 2024 13:06:15 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c13931055sm16493405ad.139.2024.10.05.13.06.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 13:06:15 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH v2 15/21] target/arm: Pass MemOp to get_phys_addr_gpc
-Date: Sat,  5 Oct 2024 13:05:54 -0700
-Message-ID: <20241005200600.493604-16-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241005200600.493604-1-richard.henderson@linaro.org>
-References: <20241005200600.493604-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sxBMU-0006kg-NY
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:26:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sxBMS-0003n8-9N
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:26:46 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 495KJrfJ006585;
+ Sat, 5 Oct 2024 20:26:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ 8/P9+1lpHu8ZgD5LUy2v14JkxTkIru67kEl4I4Qh+II=; b=LrfoE9Klipzgj6RM
+ tvFQ3V1sG9MAbxi60LcYeMnNpHZfRI10iZIOMRmkQn2TV6n9DCZ7DMmMJDjMhmA6
+ HwQmUeiicxcUXBvR/6BF2uYylh67PtSqnvnhc6HcGfiS+AgFH1wCwXIc9rXJCJxM
+ 8tBRqxEbSIYGI/BRoU+zL2Dm6uWCCF8zFlXgQmVes7iJcaYfSGbq8ZEidOKu/LJX
+ OY6QCXAhjOC/0unxy1RY1XdOWAThdxoAXmgZAF8Emy8c5/sf4tUyrzcjZ1aAPKXC
+ 0nJqB2TazBrvai1Pf5v8JXK8ZYiVkm9KBVs8gKUOQnCV5eJh+AYR4xRZ4E89bdsY
+ EWO6cg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 423cd9r0ef-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 05 Oct 2024 20:26:23 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 495KQMAD019287;
+ Sat, 5 Oct 2024 20:26:23 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 423cd9r0ec-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 05 Oct 2024 20:26:22 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 495KFkEe001134;
+ Sat, 5 Oct 2024 20:26:22 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42207kthfy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 05 Oct 2024 20:26:22 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 495KQKUa59441434
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 5 Oct 2024 20:26:20 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B93120043;
+ Sat,  5 Oct 2024 20:26:20 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4BF020040;
+ Sat,  5 Oct 2024 20:26:19 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  5 Oct 2024 20:26:19 +0000 (GMT)
+Message-ID: <7cf5d0a94cc52ac9f8144eb5d1cc83811755ea98.camel@linux.ibm.com>
+Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Date: Sat, 05 Oct 2024 22:26:19 +0200
+In-Reply-To: <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
+References: <20240923162208.90745-1-iii@linux.ibm.com>
+ <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
+ <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
+ <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1g8s77dcOUttNdFKZ4vpcgJlLt4U06FQ
+X-Proofpoint-GUID: Vni-kG-C8PUI8DQcpFS_nshAR1tYeYvG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-05_20,2024-10-04_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0
+ bulkscore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ mlxlogscore=755 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410050149
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,65 +120,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zero is the safe do-nothing value for callers to use.
-Pass the value through from get_phys_addr.
+On Sat, 2024-10-05 at 12:51 -0700, Richard Henderson wrote:
+> On 9/25/24 00:43, Ilya Leoshkevich wrote:
+> > On Tue, 2024-09-24 at 13:46 +0200, Richard Henderson wrote:
+> > > On 9/23/24 18:12, Ilya Leoshkevich wrote:
+> > > > Hi,
+> > > >=20
+> > > > On reporting a breakpoint in a non-non-stop mode, GDB remotes
+> > > > must
+> > > > stop
+> > > > all threads. Currently qemu-user doesn't do that, breaking the
+> > > > debugging session for at least two reasons: concurrent access
+> > > > to
+> > > > the
+> > > > GDB socket, and an assertion within GDB [1].
+> > > >=20
+> > > > This series fixes this by importing pause_all_vcpus() from
+> > > > qemu-
+> > > > system.
+> > > > This in turn requires introducing BQL and a few stubs to qemu-
+> > > > user.
+> > >=20
+> > > I would have expected you to reuse (some portion of)
+> > > start_exclusive,
+> > > which is already
+> > > part of qemu-user.=C2=A0 Is there a reason you chose a solution which
+> > > requires...
+> > >=20
+> > > > =C2=A0=C2=A0=C2=A0 replay: Add replay_mutex_{lock,unlock}() stubs f=
+or qemu-
+> > > > user
+> > > > =C2=A0=C2=A0=C2=A0 qemu-timer: Provide qemu_clock_enable() stub for=
+ qemu-user
+> > > > =C2=A0=C2=A0=C2=A0 cpu: Use BQL in qemu-user
+> > >=20
+> > > all sorts of other infrastructure?
+> > >=20
+> > >=20
+> > > r~
+> >=20
+> > I don't think start_exclusive() would protect the gdb socket from
+> > concurrent accesses (e.g., if two threads are simultaneously
+> > stopped).
+>=20
+> Of course it would, otherwise "exclusive" has no meaning.
+> All other cpus are blocked in exclusive_idle().
+>=20
+> Importantly, no cpus are blocked in syscalls, where the kernel can
+> modify memory behind=20
+> gdbstub's back (e.g. read).=C2=A0 I think considering "in_syscall" to be
+> "paused" a mistake.
+>=20
+>=20
+> r~
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/ptw.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+How can we handle the long-running syscalls?
+Just waiting sounds unsatisfying.
+Sending a reserved host signal may alter the guest's behaviour if a
+syscall like pause() is interrupted.
+What do you think about SIGSTOP-ping the "in_syscall" threads?
+A quick experiment shows that it should be completely invisible to the
+guest - the following program continues to run after SIGSTOP/SIGCONT:
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 9af86da597..e92537d8f2 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -81,7 +81,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
- 
- static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-                               vaddr address,
--                              MMUAccessType access_type,
-+                              MMUAccessType access_type, MemOp memop,
-                               GetPhysAddrResult *result,
-                               ARMMMUFaultInfo *fi);
- 
-@@ -579,7 +579,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
-         };
-         GetPhysAddrResult s2 = { };
- 
--        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, &s2, fi)) {
-+        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
-             goto fail;
-         }
- 
-@@ -3543,7 +3543,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
- 
- static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-                               vaddr address,
--                              MMUAccessType access_type,
-+                              MMUAccessType access_type, MemOp memop,
-                               GetPhysAddrResult *result,
-                               ARMMMUFaultInfo *fi)
- {
-@@ -3641,7 +3641,8 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-     }
- 
-     ptw.in_space = ss;
--    return get_phys_addr_gpc(env, &ptw, address, access_type, result, fi);
-+    return get_phys_addr_gpc(env, &ptw, address, access_type,
-+                             memop, result, fi);
- }
- 
- hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-@@ -3660,7 +3661,7 @@ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-     ARMMMUFaultInfo fi = {};
-     bool ret;
- 
--    ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, &res, &fi);
-+    ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-     *attrs = res.f.attrs;
- 
-     if (ret) {
--- 
-2.43.0
-
+#include <sys/syscall.h>
+#include <unistd.h>
+int main(void) { syscall(__NR_pause); };
 
