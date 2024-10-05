@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F2CCFB42B
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 18:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D3CCFB420
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 18:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx9AH-0005uA-BN; Sat, 05 Oct 2024 14:06:01 -0400
+	id 1sx9ZV-0000TQ-Ap; Sat, 05 Oct 2024 14:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx9AG-0005u0-76
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 14:06:00 -0400
+ id 1sx9ZT-0000TC-NR
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 14:32:03 -0400
 Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx9AE-0000yz-NJ
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 14:05:59 -0400
+ id 1sx9ZS-0005EN-3y
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 14:32:03 -0400
 Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7db54269325so2442109a12.2
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 11:05:58 -0700 (PDT)
+ 41be03b00d2f7-7e6d04f74faso2659179a12.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 11:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728151557; x=1728756357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728153120; x=1728757920; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KycAgWTjsOGivsVmhg6CBFqDuSJHqUU8Ns5zSlTyp5Y=;
- b=bRIR4U1WFJca5pKVsZwE/nyI1vzDnkV7TVXfiAwldvXFEUzQVLhyIu+22cy6ujl9bG
- 54TTQAUtx3DeZMIHS6J6Ye7kz+ZH02DCdHwLHirI9Jga/HOatUdvQ9+pPp4c9BjzEMOs
- 4kmzkcRtAqMGO+P4G9PLa5sWAqJ+GZdDO7EBEsY8eqnB32BQr0xoBlWSlk0AWqfI4cqw
- BdjD22rzDQXQap92i6ReocqF+mvu4WU+bcWX6Q0WoHzcb11pIraC6qrqDkBhSBLBGTJz
- ipMSs4mp1oIWIBUjTfNEf9UhuZ4G/b7PZ8O247OQszlyv8LtvNEy/zmKCoVSOxn+vE78
- ZR3w==
+ bh=Td+DcAbjfAnRecAhb2+4VhWEybU7/2uuImCxzLl8qKQ=;
+ b=ll5WpH1fWG9i3iwPyTxc//Nrwb+xmleNhv6GJFYlSjdmMiHzVULKcJ2NDfEFblNZS0
+ V1IFp/TKjjWRNIS4s+mQsQoufjLVy9H2gNPW3nyuY9cj9eKOVXUouF9StvtZFQLVXE2d
+ 7HGOUC7Yo00GoiKOD0esGta8N+Z4YZqnURYhFxfvTpSRe4xuHJoDPfolUMMBZFRI3xQ3
+ M+u2hUrUkUbisXgxxujwAaIlUd3W6evu5O/Iu65/BTlfIihRbGRWKUfNtC3xIE3EUJVZ
+ QGaw/1fos5hfWPNsF0zNsFww0zxu70pioZNFc+6nN3OoIufB+N+/MZ/UrhFdTAUMQz/3
+ qY7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728151557; x=1728756357;
+ d=1e100.net; s=20230601; t=1728153120; x=1728757920;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KycAgWTjsOGivsVmhg6CBFqDuSJHqUU8Ns5zSlTyp5Y=;
- b=Py8ZhzFSXbqG/9e9SYjq7KC+2gb1uOnj8IcEVk8bKs//Fxs2IdfVOvrkXn6mHqJ+iD
- TKT7Dtwe4LubS0F8o4j1lMfqrSetrhVOT97MPzZmTnrxPKW+T4YazWMjN3cOeK+qImNW
- iaGMLU2ZkLKrj61Nyb3rBY7JRnjQnWZpomF8PUXYC6tkDDttusPhrQ1MrUbA8AMckw3J
- xZzjpNYP3pHXhIENpRLGiNGBuF59fArUo5WWABX0TLTDlTSoCdDtxdhODQLMV2Xi2V+F
- UVAm86nkmnVDl8BP3OXAZ7Uuo43KC0iNl03Q7wJisA/HpoWIq/OJjl6w3yNkiS0Iu5Mg
- ltwA==
+ bh=Td+DcAbjfAnRecAhb2+4VhWEybU7/2uuImCxzLl8qKQ=;
+ b=WESF+P6gbMyGyLO6UXT3mx1GSrxQACbGmI66i/dqIiCJRlUXpKY2hcnJV93wBieuM1
+ okJ4bj3LNPOZhqJgsFaKa6gf2/3wumx7Zs9Ng7SdauqF1W/Y2W20KGpjNPz0u63bMOSV
+ Kn8W4F7SkmRZP7R0zK9LE+LiztSasI+rRNnm6f88fhx4JHihmXCcWOb7KINSzUPQ/vF1
+ pAscR9e3IN4E8WUWU/X+jUmMtiDmnkaSz6ECQHAfMExZo276Kvn4+WvhnYzyL7ZEt19t
+ 8k+nGn4/fBkULyjHnp2kdQedhEE3OIbY2eRRckMJBRQlhHNyaNLSUQ5CINPylR1IKzCf
+ Imqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1czL+AOgLIHkgMgnsmvd19dkR97TLv80l7JSuqgUH8NPEp9A5QKs2jbDKPAmzIm0Q8auLKzfQpJCU@nongnu.org
-X-Gm-Message-State: AOJu0Yz0o7dkzmeaN5Dr7/64rNBzIoBYEwMFDZcUgZLkwA9xLcUo0VZe
- Io2tTb4d/zQMml+sVK/Q8IHVzHvdXMj4hy/fDFE6xJ5TfkgcE8/ZhxwCApFHGas=
-X-Google-Smtp-Source: AGHT+IFygOzvGx98yO4M0UAoWX2ixALyB+QdxkqaJ4ffXSir48g7OXtuMzQ0BcyDLIAyqRT72ZAUiQ==
-X-Received: by 2002:a05:6a20:d704:b0:1d5:388f:275c with SMTP id
- adf61e73a8af0-1d6dfa354a0mr10031184637.20.1728151557131; 
- Sat, 05 Oct 2024 11:05:57 -0700 (PDT)
+ AJvYcCVazHlfvr2Bh7z+0Y2/Mm2Hj6e9Ru1cRUbZfhZ/wXTAMuGgyiai7JQArcE8zHpOi8D7wbmHc1o1jH3A@nongnu.org
+X-Gm-Message-State: AOJu0YyyYAMHlYmLB7a2lxLDhGqg9o9hPSjBuzAwQxKYaoZYbuRhpGZo
+ 8rQMUIeJ5E2D3FRhnnd5jcX6iU1wdN37Gg+jCrleFuYgd0am2pe2xsge2wbSB2w=
+X-Google-Smtp-Source: AGHT+IHrWUEKtKadMCfw2nGXJFVjA5rex21F9UKpJqg0F7BS/UK8Tns0/2aZxCXTbXq3S9W9V8UTdw==
+X-Received: by 2002:a05:6a21:4887:b0:1d4:f661:8937 with SMTP id
+ adf61e73a8af0-1d6e8f881e9mr4744766637.4.1728153120461; 
+ Sat, 05 Oct 2024 11:32:00 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0cbc4c4sm1747374b3a.44.2024.10.05.11.05.56
+ d2e1a72fcca58-71df0cbc47bsm1757735b3a.34.2024.10.05.11.31.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Oct 2024 11:05:56 -0700 (PDT)
-Message-ID: <669f8dfd-84cf-4514-b7d9-398103125d25@linaro.org>
-Date: Sat, 5 Oct 2024 11:05:54 -0700
+ Sat, 05 Oct 2024 11:32:00 -0700 (PDT)
+Message-ID: <f222d253-7cd1-40d5-90c4-cff26a36aab2@linaro.org>
+Date: Sat, 5 Oct 2024 11:31:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] linux-user: Correct print_sockaddr() format
+Subject: Re: [PATCH v3 5/5] linux-user: Add strace for recvfrom()
 To: Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Zach van Rijn <me@zv.io>, Laurent Vivier <laurent@vivier.eu>
 References: <20240807124306.52903-1-philmd@linaro.org>
- <20240807124306.52903-2-philmd@linaro.org>
- <476e5647ed10327c955809de9a4bafd45e8c2c1f.camel@linux.ibm.com>
+ <20240807124306.52903-6-philmd@linaro.org>
+ <d6e29a8aeb083bc937e77233a61f988de6b63eab.camel@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <476e5647ed10327c955809de9a4bafd45e8c2c1f.camel@linux.ibm.com>
+In-Reply-To: <d6e29a8aeb083bc937e77233a61f988de6b63eab.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
@@ -101,42 +101,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/2/24 00:54, Ilya Leoshkevich wrote:
+On 10/1/24 23:55, Ilya Leoshkevich wrote:
 > On Wed, 2024-08-07 at 14:43 +0200, Philippe Mathieu-Daudé wrote:
->> When the %addr argument can not be accessed, a double comma
->> is logged (the final qemu_log call prepend a comma). Call
->> print_raw_param with last=1 to avoid the extra comma.
->> Remove spurious space.
->>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   linux-user/strace.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>   linux-user/strace.c    | 19 +++++++++++++++++++
+>>   linux-user/strace.list |  2 +-
+>>   2 files changed, 20 insertions(+), 1 deletion(-)
 >>
 >> diff --git a/linux-user/strace.c b/linux-user/strace.c
->> index b4d1098170..73f81e66fc 100644
+>> index 98ef26b917..d76907fdc9 100644
 >> --- a/linux-user/strace.c
 >> +++ b/linux-user/strace.c
->> @@ -434,9 +434,9 @@ print_sockaddr(abi_ulong addr, abi_long addrlen,
->> int last)
->>           }
->>           unlock_user(sa, addr, 0);
->>       } else {
->> -        print_raw_param("0x"TARGET_ABI_FMT_lx, addr, 0);
->> +        print_raw_param("0x"TARGET_ABI_FMT_lx, addr, 1);
->>       }
->> -    qemu_log(", "TARGET_ABI_FMT_ld"%s", addrlen, get_comma(last));
->> +    qemu_log(","TARGET_ABI_FMT_ld"%s", addrlen, get_comma(last));
+>> @@ -3127,6 +3127,25 @@ print_bind(CPUArchState *cpu_env, const struct
+>> syscallname *name,
 >>   }
+>>   #endif
 >>   
+>> +#ifdef TARGET_NR_recvfrom
+>> +static void
+>> +print_recvfrom(CPUArchState *cpu_env, const struct syscallname
+>> *name,
+>> +               abi_long arg0, abi_long arg1, abi_long arg2,
+>> +               abi_long arg3, abi_long arg4, abi_long arg5)
+>> +{
+>> +    abi_ulong addrlen;
+>> +
+>> +    get_user_ualx(addrlen, arg5, 0);
+>> +
+>> +    print_syscall_prologue(name);
+>> +    print_sockfd(arg0, 0);
+>> +    print_buf_len(arg1, arg2, 0);
+>> +    print_flags(msg_flags, arg3, 0);
+>> +    print_sockaddr(arg4, addrlen, 1);
+>> +    print_syscall_epilogue(name);
+>> +}
+>> +#endif
+>> +
+>>   #ifdef TARGET_NR_sendto
 >>   static void
+>>   print_sendto(CPUArchState *cpu_env, const struct syscallname *name,
+>> diff --git a/linux-user/strace.list b/linux-user/strace.list
+>> index 5a86419e7d..77ca824f9c 100644
+>> --- a/linux-user/strace.list
+>> +++ b/linux-user/strace.list
+>> @@ -1135,7 +1135,7 @@
+>>   { TARGET_NR_recv, "recv" , "%s(%d,%p,%u,%d)", NULL, NULL },
+>>   #endif
+>>   #ifdef TARGET_NR_recvfrom
+>> -{ TARGET_NR_recvfrom, "recvfrom" , NULL, NULL, NULL },
+>> +{ TARGET_NR_recvfrom, "recvfrom" , NULL, print_recvfrom, NULL },
+>>   #endif
+>>   #ifdef TARGET_NR_recvmmsg
+>>   { TARGET_NR_recvmmsg, "recvmmsg" , NULL, NULL, NULL },
 > 
-> I see why this works, but it feels a bit wrong semantically: addr is
-> not the last argument.
-> Wouldn't it be better to add commas to the preceding switch's cases?
+> I needed to implement read()/write() tracing and stumbled upon this
+> series, which overall looks like a good thing to have. I spotted a few
+> issues though.
+> 
+> 
+> I get the following build error:
+> 
+> qemu/linux-user/strace.c:3138:5: error: implicit declaration of
+> function ‘get_user_ualx’; did you mean ‘get_user_ual’? [-Wimplicit-
+> function-declaration]
+>   3138 |     get_user_ualx(addrlen, arg5, 0);
+>        |     ^~~~~~~~~~~~~
+>        |     get_user_ual
+> 
+> 
+> The following helps:
+> 
+> --- a/linux-user/strace.c
+> +++ b/linux-user/strace.c
+> @@ -2666,11 +2666,15 @@ static void print_sockfd(abi_long sockfd, int
+> last)
+>   
+>   #endif
+>   
+> -#if defined(TARGET_NR_socketcall)
+> +#if defined(TARGET_NR_socketcall) || defined(TARGET_NR_recvfrom)
+>   
+>   #define get_user_ualx(x, gaddr, idx) \
+>           get_user_ual(x, (gaddr) + (idx) * sizeof(abi_long))
+>   
+> +#endif
+> +
+> +#if defined(TARGET_NR_socketcall)
 
-It would indeed.
-Adding the comma manually in the final log is odd.
+Or just not use get_user_ualx.
+
+> However: aren't we printing the contents of the buffer before the
+> syscall returns? Same with sockaddr. This would make the output not
+> very useful.
+
+Yes indeed.  Two of the three pointers are output buffers; the last is in/out.
 
 
 r~
