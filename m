@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8808CFB42B
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A48BCFB42C
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxAM6-0007bv-TA; Sat, 05 Oct 2024 15:22:18 -0400
+	id 1sxAQc-0000P7-KZ; Sat, 05 Oct 2024 15:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxAM3-0007YN-Jm
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:22:16 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sxAQa-0000Ow-P5
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:26:56 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxAM2-0004TU-85
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:22:15 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20b90984971so33795415ad.3
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 12:22:13 -0700 (PDT)
+ id 1sxAQZ-0004vy-Eo
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:26:56 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-71dc4451fffso3178922b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 12:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728156133; x=1728760933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728156414; x=1728761214; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4qa5U/WRGKMBiecK9U1B9AdTSGmSBQnul2adtooYzuU=;
- b=XvVG+ISdDAshm8kFh52j8a5/evCTdoUX1UTqGC8U3WKahKJY+FvtZXDMX0A5EVl5lE
- KQX6K/FnQ4hhPSo3MWFb1h5CuQ40SCiHNOXbmq3JFYJ53FzZPxUQzZteGbpvec9Sq26Z
- kQOcpRR99JOryGCCr/qMIk1/x4THpTn0mOX4xiJbmXhQoEY7XJ3TfL3QOdKqcfJwGupM
- IrCDOq4+Ng/8VYDwr+oXHUIBr4nkHn/WUPUJSwghPStVnt2Vjg1pIS4lpivihyrpGzLq
- VNsVGzpC/M9Z9j7T6NjZddE4sy9coSRDtN3StfVo+RtrlzKy7bO8Cxv5xFnUlmYHOec8
- oIfQ==
+ bh=O+QUIzbsmKQz7yWKePSKF/MTe0CfJIeb3Y/PCdXU7/8=;
+ b=hRDYv22azW4LHxFUnrTKuNUs0axaZcjshAKfX0MpbfGBYOH2yKB205y5wlUQ8yBJJP
+ UtalZ2eURAkXWvD1dZt3jmd5xx5bi8je9rVb30kb6yub5ahOxcmQJX+Nrc4z8GLca0IN
+ kn+pQN+lFSOgpbApCJ5lbKhqAt059gyZkHYBeGJ7eFhzJnMhVIAJ5n/g936onrcU3ii8
+ rJUNf9kc7os31+hDYfVvSZBvbKhF03R+P9gE20ey/Rv4XD8vpbjYbxcnEOKDMukOR2qA
+ uUdYwTiTrX9hMM+NE6rbzn42P1YaeojoBMfDQObDusLslTrWkYqlBRjEKsNAk4rISwDL
+ MWfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728156133; x=1728760933;
+ d=1e100.net; s=20230601; t=1728156414; x=1728761214;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4qa5U/WRGKMBiecK9U1B9AdTSGmSBQnul2adtooYzuU=;
- b=egW/tJIIGmpl1N7/Mj3iIKti3Klv6CsX41ZgaxUTybHSbfniYSSlAwQO92wUe6mpjA
- 4V/YgaHqgn+JKeR4igWFu571P5Ev9bAVn6ueMhzmqRozck9pwF4YTylvgKJBg3HeX1bY
- UfjSvNFFq0YV4mQPQg5EHFLYoXASOYvbnSRz9Nw6yUvAtc6TeimaNhcrSKNFrMumHcFX
- 8Zg7RscYbH2XAebk2qCCShKheMMyPDttiIM9QNQO91fqXsC8rvi1S4cwpq1J0fh1ZBaZ
- aaS7GTE/xV8dpuQBZPcHncdmVvxYyZlYbOW34MagZ+XsxoQIwJGkFvMqG4UuUJ09XGfj
- AHnQ==
-X-Gm-Message-State: AOJu0YzkXYMAZzqM30Nnt4B4sWyTWq+e+1gKyfbJt5XbtiWS51Rur6Zo
- DSsIJbLqKRpjw7fBdnN9QXVzxT0rt/cjCa+Dq0AFas8XAQA3s2eQL1XbxycUqKI=
-X-Google-Smtp-Source: AGHT+IG8wRJGLf1XX+sirWW0hXLsnFQpjT5kTG5I6IArsgTJzKy92jJrSpmtpiwWFIZzjrQPzX/usA==
-X-Received: by 2002:a17:903:32cd:b0:20b:8341:d531 with SMTP id
- d9443c01a7336-20bfde659d3mr111975695ad.4.1728156132768; 
- Sat, 05 Oct 2024 12:22:12 -0700 (PDT)
+ bh=O+QUIzbsmKQz7yWKePSKF/MTe0CfJIeb3Y/PCdXU7/8=;
+ b=A9ruDIbXnl/BkAGa+mIQ8ROA7VfZusVknlrX9LqG7Y+bHrqQHOK5ZyeRQfqs3FTi0I
+ Sam3zmxA2Ng3R+A60VUL2gntMH6ds1mPidBe1JfMknc4saMhqMqeQ0Knl5dL/+QhcfqD
+ ijXk1xB4c4YrTCx6CyLloj1TDUGVhZbXv2PrdEtS8BUqaJd5XLSzb/xaCc2jZLgA+i8f
+ oqNGoNWUTvjlAdWpvFCSaH9Hq9Ce6rceEN7BBpsf9ez6+My/ZqzQShTSxYj1YCF867WT
+ rC6hOfsaikw5Zqk8gaZ4W73PF+v4ImAb0A69fbUoB6gUZJ8blI8jy7ZXvzwbyL+v/pgx
+ fX+w==
+X-Gm-Message-State: AOJu0YzPeVnasEqP5no24nlkY2NUdUfJ+b4MuacYeU0doVT5zjO2Qyni
+ oVW/L9htHFnQBYyaMAyFkHkKLSQvh82sL03+alc6H7D02oMlOr6/0edz1isEsAA=
+X-Google-Smtp-Source: AGHT+IEkzFr4bEzcy2arV39UcCfNozOHRkq82JOaxSDrEWj/lTOyp+AaxTEpZsimEhmbyUEdQDRLrw==
+X-Received: by 2002:a05:6a20:2d07:b0:1cf:9ac1:ac8d with SMTP id
+ adf61e73a8af0-1d6dfae30c3mr12024516637.44.1728156414041; 
+ Sat, 05 Oct 2024 12:26:54 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c138b1395sm16298875ad.3.2024.10.05.12.22.11
+ d2e1a72fcca58-71df0d651f6sm1790060b3a.164.2024.10.05.12.26.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Oct 2024 12:22:12 -0700 (PDT)
-Message-ID: <ba86812d-4612-45cf-b2c0-5857338c8a2c@linaro.org>
-Date: Sat, 5 Oct 2024 12:22:10 -0700
+ Sat, 05 Oct 2024 12:26:53 -0700 (PDT)
+Message-ID: <6bbff82c-cdd9-404b-bc04-c85ffef72841@linaro.org>
+Date: Sat, 5 Oct 2024 12:26:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/18] gdbstub: Move gdb_syscall_mode to GDBSyscallState
+Subject: Re: [PATCH 04/18] gdbstub: Factor out gdb_try_stop()
 To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
  <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20240923162208.90745-1-iii@linux.ibm.com>
- <20240923162208.90745-4-iii@linux.ibm.com>
+ <20240923162208.90745-5-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240923162208.90745-4-iii@linux.ibm.com>
+In-Reply-To: <20240923162208.90745-5-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,13 +100,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/23/24 09:12, Ilya Leoshkevich wrote:
-> Follow the convention that all the pieces of the global stub state must
-> be inside a single struct.
+> Move checking and setting allow_stop_reply into a function.
 > 
 > Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
 > ---
->   gdbstub/syscalls.c | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
+>   gdbstub/gdbstub.c   | 15 +++++++++++----
+>   gdbstub/internals.h |  2 ++
+>   gdbstub/system.c    |  6 ++----
+>   gdbstub/user.c      | 11 ++++-------
+>   4 files changed, 19 insertions(+), 15 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
