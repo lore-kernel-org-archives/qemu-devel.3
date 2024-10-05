@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D52CFB42C
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA35DCFB42C
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxAkb-0005hw-3K; Sat, 05 Oct 2024 15:47:37 -0400
+	id 1sxAkO-0005S2-CY; Sat, 05 Oct 2024 15:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sxAkU-0005aa-Q9; Sat, 05 Oct 2024 15:47:30 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1sxAkC-0005Nh-59; Sat, 05 Oct 2024 15:47:14 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sxAkS-0007lO-Un; Sat, 05 Oct 2024 15:47:30 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42f56ad2afaso41164245e9.1; 
- Sat, 05 Oct 2024 12:47:27 -0700 (PDT)
+ id 1sxAk8-0007fG-U3; Sat, 05 Oct 2024 15:47:11 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42cd74c0d16so31425425e9.1; 
+ Sat, 05 Oct 2024 12:47:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728157647; x=1728762447; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728157626; x=1728762426; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S/Zjzyk/99b3FvfdDneqC7YDOwNG7GIYmd9kWNwTs+4=;
- b=Zl1RXNV4KdeRmI0JC3MeR2wuL8c/pyXU5D1mNQ+kuYYcD8905P+lmgKqO64MwGR88z
- 5gnPTXsh/pRTGyFH57FcisHN2ChLnzlw9Y4aGsNQX9EXHVL8RwDIlgH6u8PV62R/7hnF
- c9wRDQGuHfHmODlia8AhWpDSwELFKhLCpUbc5LCGg3CH/pnp6RBLPMmkY/KdFy4uaIhN
- MTrOqysrl7K4+Q6sDgdiCbUTfNjBfQROF3xNBbJw97tMZlfpXi97VBcQ+b5zMi/WdY68
- DvSnb8K+3rj4KfcWZ6LI1XLsohWNTnOyz+xCmlKBzog6QeABPkSAXHzDnO4aXNCihEUN
- 8Xgg==
+ bh=w+XxmN8aD/MZ6DGzlhF4E6QfY0KHf9UNl0Gr9lvIaYE=;
+ b=hB7qymWJDBYO9eR7JvhaZ681VDYse6aU+va8/2Hs7HPsTEPCJ8O5EBfSj9ITwaf7zq
+ 5xlXeyzvNao2oNL43LUsG4sVFZJgMv7OSvCM1xosgzNLAVXMPwwZtsvvRPpX4ODia1F6
+ TfhzPz6YpURLcgZD0QBImTEF8hYyc9T3tF+/y74re0I+KOr5OnDKS8FPuvFq2PZLcvEc
+ Djy90lFOOjFnv1niIWFZaQeHaPSpiCAeeME1D0q8m1qOsDAlNFU1MkgP+W64bgKHDxgY
+ zoKx9aTKVYN9PZtfcgxSw5JaqEaV7TiMcX8p4bWzY84MXkgoa34rx1GADhoZzBOfzzF/
+ SZww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728157647; x=1728762447;
+ d=1e100.net; s=20230601; t=1728157626; x=1728762426;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S/Zjzyk/99b3FvfdDneqC7YDOwNG7GIYmd9kWNwTs+4=;
- b=BP6/6qmpVta/fNaqxRf0PDmj8pW+Mt5qJGgPI0dRui0l5KsBl5gKwTzZwjZi9zrFPO
- BE3N2hl5ibj94ZvBAkf6K2QPvZ46lrsN/0PKfcaAEOMPGTEfVKxPQ2shqMmrXpFFSTqe
- FGygslcn6X/j4alGN3OO12e31r8Kv7y9nyg9HIgVRTBNe4hIfE4Be9Zucrs0oDdNYTFm
- fzGyIutFgi0S1+xItpKBKAq2Hye/Bx8OjE8FgLXWpx722O1/p4Q3LOHJAv1CV6fuz3JJ
- KHGUihAB1BjCtQratNDGCWMQ7gyrzk8fokZ790SPPT08BYutgFxqt6J8oUlFRdELL9rO
- MSdA==
+ bh=w+XxmN8aD/MZ6DGzlhF4E6QfY0KHf9UNl0Gr9lvIaYE=;
+ b=cLiWdqzJ+bX/vAmcGPcHIaJ7RRRkTwQIEiuNR4nm60CVJcWGwRl+aiTD+pBSYvQRVz
+ ew1gsYnz3Cs8pMCRNt9ALPceO7t34i7PqSYWOsmoOM2BTumsSr1oEgstiFZtWBsAFT4/
+ Ovuz51XAPp1N48vxYvMPBaCn/dMdcQZRnCwnK+VE0CP7ZN8d693WMSlTQJKuuUlytSjj
+ 2q0E2n3z7z/3KgPnl1Pkxk5ce18koXwJk4NbqvqRnAdiSDoIRyvoHS0T66YJ1N1IcgIy
+ NUFpBhM721A5iNatg1AAJRpaYdaBVDz95h07W0y3NpXZ1SJSq3Q+swShkrDVCwfHJtx7
+ k50g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIJLIzvA99IYgFGn58z32iMKKtvOoGx8QihRR4f+qFpb7MNT0tiv3JQfN3rsRIprSahXbpDyM8Zfk=@nongnu.org,
- AJvYcCX4f2KdvaUL3srMNq23N3Oi/WQme+05iqrX0xyG7ma+KI0vvjLCtf+ec5tjAt4GM9Nzh57KTpHxKdSz@nongnu.org
-X-Gm-Message-State: AOJu0Yz5pL7fy6cOUT0B0BniZMydkXxHnIV7IIwkoyO1eDsVyTFyNaI8
- FUEhpMDgJ9QBw4aig1/Q7uwS31Z96iPo/3vsOJtPYwxEYJpoeAGGPhQVHw==
-X-Google-Smtp-Source: AGHT+IFR52qnljiwTpPc9b0iVdklJYtViYGVQ/Wypl3QpXr3NIblivFNbEpIj5l3AfHiFNrrfb/0ww==
-X-Received: by 2002:a05:600c:3c9c:b0:42c:bae0:f05f with SMTP id
- 5b1f17b1804b1-42f85aa98ddmr67367915e9.13.1728157646492; 
- Sat, 05 Oct 2024 12:47:26 -0700 (PDT)
+ AJvYcCVOlFjla8vdGh53AgbilTfcECYzKZZTsO47AyphYJMfLEpCvDXJHBqKFjQLQMy9FBys65hBZsZ+y4d/@nongnu.org,
+ AJvYcCWm3V3wXjkQQkAUtB2WCOErqPcfLPPwQr3fEWAbgqfW46ystMAWQSv28ECycTYUBN0t7QNI5E/AiO8=@nongnu.org
+X-Gm-Message-State: AOJu0YyaY084xNv6y5ru7njuHPO/emI1ytbNUxVtP4BPjjnZcuox5Ydz
+ 8EqXVo0rADveFKSXJ64/Ul5l88lF/pY7Mhz+nHxylr0nohY7NnTOGwQcbg==
+X-Google-Smtp-Source: AGHT+IF6LakbRBuk2PKoeaM+x98od3+6dNX5dPx9nGmSnBzmoj/+W8+58VaL74PBpL0eWovVGY0sTA==
+X-Received: by 2002:a05:600c:3c83:b0:42c:b037:5fce with SMTP id
+ 5b1f17b1804b1-42f85a6c5d5mr52557465e9.3.1728157625983; 
+ Sat, 05 Oct 2024 12:47:05 -0700 (PDT)
 Received: from archlinux.. (pd95ed790.dip0.t-ipconnect.de. [217.94.215.144])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f86a0afc1sm47506775e9.1.2024.10.05.12.47.24
+ 5b1f17b1804b1-42f86a0afc1sm47506775e9.1.2024.10.05.12.47.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 12:47:26 -0700 (PDT)
+ Sat, 05 Oct 2024 12:47:05 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,18 +70,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 23/23] hw/vfio/platform: Let vfio_start_eventfd_injection()
- take VFIOPlatformDevice pointer
-Date: Sat,  5 Oct 2024 21:46:03 +0200
-Message-ID: <20241005194603.23139-24-shentey@gmail.com>
+Subject: [PATCH v2 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio status
+ register
+Date: Sat,  5 Oct 2024 21:45:49 +0200
+Message-ID: <20241005194603.23139-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241005194603.23139-1-shentey@gmail.com>
 References: <20241005194603.23139-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,43 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoids one downcast, making the code more type-safe.
+Populate this read-only register with some arbitrary values which avoids
+U-Boot's get_clocks() to hang().
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/vfio/platform.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ hw/ppc/mpc8544_guts.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index a85c199c76..77bbfbf62c 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -318,13 +318,12 @@ static void vfio_platform_eoi(VFIODevice *vbasedev)
- /**
-  * vfio_start_eventfd_injection - starts the virtual IRQ injection using
-  * user-side handled eventfds
-- * @sbdev: the sysbus device handle
-+ * @vdev: the VFIO platform device handle
-  * @irq: the qemu irq handle
-  */
+diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+index e3540b0281..c02b34ccde 100644
+--- a/hw/ppc/mpc8544_guts.c
++++ b/hw/ppc/mpc8544_guts.c
+@@ -29,6 +29,12 @@
+ #define MPC8544_GUTS_RSTCR_RESET      0x02
  
--static void vfio_start_eventfd_injection(SysBusDevice *sbdev, qemu_irq irq)
-+static void vfio_start_eventfd_injection(VFIOPlatformDevice *vdev, qemu_irq irq)
- {
--    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
-     VFIOINTp *intp;
+ #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
++REG32(GUTS_PORPLLSR, 0x00)
++    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 24, 6)
++    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
++    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
++    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
++
+ #define MPC8544_GUTS_ADDR_PORBMSR     0x04
+ #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
+ #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
+@@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
  
-     QLIST_FOREACH(intp, &vdev->intp_list, next) {
-@@ -417,7 +416,7 @@ fail_vfio:
-     kvm_irqchip_remove_irqfd_notifier(kvm_state, intp->interrupt, irq);
-     abort();
- fail_irqfd:
--    vfio_start_eventfd_injection(sbdev, irq);
-+    vfio_start_eventfd_injection(vdev, irq);
-     return;
- }
- 
+     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
+     switch (addr) {
++    case MPC8544_GUTS_ADDR_PORPLLSR:
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 6); /* 3:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 12); /* 12:1 */
++        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 6); /* 6:1 */
++        break;
+     case MPC8544_GUTS_ADDR_PVR:
+         value = env->spr[SPR_PVR];
+         break;
 -- 
 2.46.2
 
