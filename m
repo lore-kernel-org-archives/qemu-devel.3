@@ -4,70 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E941ECFB420
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 17:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D522CFB420
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 17:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx8I7-0004cx-QA; Sat, 05 Oct 2024 13:10:04 -0400
+	id 1sx8g8-0007ub-Nx; Sat, 05 Oct 2024 13:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx8I4-0004cI-Qw
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 13:10:00 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx8I2-0005ee-IW
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 13:10:00 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6EE699591D;
- Sat,  5 Oct 2024 20:09:50 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A89A414E03F;
- Sat,  5 Oct 2024 20:09:53 +0300 (MSK)
-Message-ID: <f0b03042-248d-4147-b96a-5809ed333fc5@tls.msk.ru>
-Date: Sat, 5 Oct 2024 20:09:53 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sx8g5-0007uF-Cr
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 13:34:50 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sx8g3-0002Fh-FV
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 13:34:49 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-71df0dbee46so615297b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 10:34:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728149684; x=1728754484; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tdqr7C67Hy8bybFmMu3KwmMGIqzKUBbrFaDS3qvvM5E=;
+ b=C6LQTlO6sPtkir6WcPUnnooWX9MIeYHXdjc8YlAQmnebeoCW03g74C1N8ETXmB3kVp
+ fR/EDRR+ktsq0AbXyQQOm4Z7/g/g9hYyp0arC6JqOHyVW0bUZSdovT66EhfdWSaZkVEP
+ 7ND/8utQnNTIkfdW38c4iefu5Jm95CaXJ4U7Z+Jariofmw6amNshzBkDn7So95jF1V2N
+ CpO9XE4+s8a8XO5jnkI4NopGIs9QEUy7KAKXRMNXvedoOLPYf2oQ7nPTyupY70Md5o5O
+ aI04i4gaKZs0reJI9242vMlFqutEF3F10TEJdgniOPQolX0lxis4Ybyf1Gc5DRlj8jWP
+ 26mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728149684; x=1728754484;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tdqr7C67Hy8bybFmMu3KwmMGIqzKUBbrFaDS3qvvM5E=;
+ b=AECsrhnwjnjasTCVf/i53Z1JB8Q0LMmxlrnS/S8wZh42X2QT+pmZ49hcoRfFbFepmE
+ BALlmgXRbvphrYoKJwJUjDvGEhcdG91Wjfes4O9b5NrJjkgym6xmaazoZqrdmepwiQKl
+ Gp6HwUvptT4f/aR6PLTklpbmQpNDRWUw/K+/GLWaeoBMimfoM/QfgMZ697VpdZ6L7LIZ
+ FLQm0uwKcs86SCchggox0hTmInqdpmJtWJfUhKJpNqJxdjTVibdf46ByAyMM0Q2mxUHy
+ +IO7VK/EdmKt3inSLVwgZUqqw7T3KWHuUDIwSfYv2QgYLoepIS6gRtZLiV7Y4TnlPkNt
+ hmbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIU305kemd0WKLs6DoPh7DbtXoKNf9dsbL6onLYqlcE2tlKPGLfYsAIIJ2Ei9TSKrjPZra/JN/RNgJ@nongnu.org
+X-Gm-Message-State: AOJu0YykmW42W0SqdFQMOVFExPrRAOmqoSJEcNBBbyrukFE/nHjIwP56
+ 7q35V3VmfOm6OhziTbOYYRvhVvUajiaXqJxO3U/wu6+Uqa+EkSPTOr1hs/04P6A=
+X-Google-Smtp-Source: AGHT+IEGhLhkzcaWyy3afi20Go+1MRMMgpZvGsg/X+RWry+Tl+Pzkh8OBTwG6oUyyq5sk0AMRXLRHw==
+X-Received: by 2002:a05:6a00:4f91:b0:71b:64c:814b with SMTP id
+ d2e1a72fcca58-71de245e677mr12012861b3a.23.1728149684432; 
+ Sat, 05 Oct 2024 10:34:44 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71df0cbcee2sm1716758b3a.43.2024.10.05.10.34.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 05 Oct 2024 10:34:44 -0700 (PDT)
+Message-ID: <bbbeebd4-2769-41f3-8cd0-1c0121ed4f06@linaro.org>
+Date: Sat, 5 Oct 2024 10:34:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix parse_elf_properties GNU0_MAGIC check
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241005164849.424838-1-richard.henderson@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20241005164849.424838-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH] meson: ensure we enable CMPXCHG128 on x86_64
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ richard.henderson@linaro.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
+ <5604626b-cba7-4d1c-8dfb-2c2e3b8495a5@tls.msk.ru>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <5604626b-cba7-4d1c-8dfb-2c2e3b8495a5@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,83 +102,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.10.2024 19:48, Richard Henderson wrote:
-> Comparing a string of 4 bytes only works in little-endian.
+On 10/5/24 09:16, Michael Tokarev wrote:
+> 05.10.2024 01:01, Pierrick Bouvier wrote:
+>> Alex discovered that CMPXCHG128 was not enabled when building for
+>> x86_64, resulting in slow execution for wide atomic instructions,
+>> creating a huge contention when combined with a high number of cpus
+>> (found while booting android aarch64 guest on x86_64 host).
+>>
+>> The problem is that even though we enable -mcx16 option for x86_64, this
+>> is not used when testing for CMPXCHG128. Thus, we silently turn it off.
+>>
+>> x86_64 is the only architecture adding machine flags for now, so the
+>> problem is limited to this host architecture.
+>>
+>> Meson compiler tests are supposed to be independent of environment flags
+>> (https://mesonbuild.com/Reference-manual_returned_compiler.html#returned-by).
+>> However, CFLAGS are used anyway, thus masking the problem when using
+>> something like CFLAGS='-march=native'. This is a meson bug and was reported:
+>> https://github.com/mesonbuild/meson/issues/13757
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    meson.build | 10 +++++++++-
+>>    1 file changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index b18c2a54ab5..af2ce595dcc 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -2867,6 +2867,13 @@ if has_int128_type
+>>        config_host_data.set('CONFIG_ATOMIC128_OPT', has_atomic128_opt)
+>>    
+>>        if not has_atomic128_opt
+>> +
+>> +      host_flags = []
+>> +      if host_arch == 'x86_64'
+>> +        # for x86_64, x86_version must be >= 1, and we always enable cmpxchg16
+>> +        # in this case.
+>> +        host_flags += ['-mcx16']
+>> +      endif
+>>          config_host_data.set('CONFIG_CMPXCHG128', cc.links('''
+>>            int main(void)
+>>            {
+>> @@ -2874,7 +2881,8 @@ if has_int128_type
+>>              __sync_val_compare_and_swap_16(&x, y, x);
+>>              return 0;
+>>            }
+>> -      '''))
+>> +      ''',
+>> +      args: host_flags))
+>>        endif
+>>      endif
+>>    endif
 > 
-> Adjust bulk bswap to only apply to the note payload.
-> Perform swapping of the note header manually; the magic
-> is defined so that it does not need a runtime swap.
-
-I think this is more confusing than my version, but should do the
-trick too.
-
-I wasn't sure for my patch because I missed the
-
-  for (int i = 0; i < n / 4; i++) { bswap32s() }
-
-loop, - now I see where it gets performs the conversion, and see why my
-patch works (and why it should work too) :)
-
-Either way,
-
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-Also noted for qemu-stable.
-
-Thanks,
-
-/mjt
-
-> Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/elfload.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index 0678c9d506..52c88a68a9 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -3121,11 +3121,11 @@ static bool parse_elf_properties(const ImageSource *src,
->       }
->   
->       /*
-> -     * The contents of a valid PT_GNU_PROPERTY is a sequence
-> -     * of uint32_t -- swap them all now.
-> +     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
-> +     * Swap most of them now, beyond the header and namesz.
->        */
->   #ifdef BSWAP_NEEDED
-> -    for (int i = 0; i < n / 4; i++) {
-> +    for (int i = 4; i < n / 4; i++) {
->           bswap32s(note.data + i);
->       }
->   #endif
-> @@ -3135,15 +3135,15 @@ static bool parse_elf_properties(const ImageSource *src,
->        * immediately follows nhdr and is thus at the 4th word.  Further, all
->        * of the inputs to the kernel's round_up are multiples of 4.
->        */
-> -    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
-> -        note.nhdr.n_namesz != NOTE_NAME_SZ ||
-> +    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
-> +        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
->           note.data[3] != GNU0_MAGIC) {
->           error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
->           return false;
->       }
->       off = sizeof(note.nhdr) + NOTE_NAME_SZ;
->   
-> -    datasz = note.nhdr.n_descsz + off;
-> +    datasz = tswap32(note.nhdr.n_descsz) + off;
->       if (datasz > n) {
->           error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
->           return false;
+> This does not look right.  We test with an extra compiler flag, we should
+> ensure it is actually enabled for the actual build.  Here, we only test
+> if cmpxchg128 works with this flag appended, but do not enable if for
+> the build.  It just happens we have it enabled elsewhere..
+> 
+> Maybe we should add this flags somewhere to $qemu_cflags in this place
+> if the test were successful.  With the proposed variant it is confusing
+> and works just because it happens to match in a few places, not because
+> it is supposed to work :)
 
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+If you look upper in meson.build (x86_version), you'll see this flag 
+(-mcx16) is *always* enabled for x86_64, which is what the comment 
+states in this patch.
+So it's already added to qemu_common_flags anyway. The problem is just 
+that when we call cc.links, environment we defined is not reused.
+After discussing on IRC, we identified it was a really special case only 
+for x64 and this instruction, so I didn't find useful to make a more 
+complex solution than just using the same flag.
 
+Maybe it would be more clear to define a qemu_machine_flags, and reuse 
+it here (or in other places where it might be needed), but I feel like 
+it's too complicated, and we can always add this later.
+
+I'm open to implement something different for flags management, but I 
+feel like we are thinking too much ahead.
+
+> 
+> Besides, in the current situation where CONFIG_CMPXCHG128 is not defined
+> due to this bug, the final link fails due to generated calls to -latomic, -
+> which might mean we have something else wrong.
+> 
+
+By default, __sync_val_compare_and_swap_16 is not available, except if 
+we use explicitely -mcx16, or if we use an -march that implies this.
+
+Our default level for x86_version does not enable it.
+
+$ cat ./build/meson-logs/meson-log.txt
+
+Code: 
+
+ 
+ 
+
+         int main(void) 
+ 
+
+         { 
+
+           __uint128_t x = 0, y = 0; 
+
+           __sync_val_compare_and_swap_16(&x, y, x); 
+ 
+
+           return 0; 
+ 
+
+         } 
+ 
+
+ 
+
+----------- 
+ 
+
+Command line: `cc -m64 
+/home/user/.work/qemu/build/meson-private/tmpkoy6pfnd/testfile.c -o 
+/home/user/.work/qemu/build/meson-private/tmpkoy6pfnd/output.exe -O2 -g 
+-fno-omit-f
+rame-pointer -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11` -> 1 
+ 
+
+stderr: 
+ 
+
+/usr/bin/ld: /tmp/cccPzS5X.o: in function `main': 
+
+/home/user/.work/qemu/build/meson-private/tmpkoy6pfnd/testfile.c:5: 
+undefined reference to `__sync_val_compare_and_swap_16' 
+
+collect2: error: ld returned 1 exit status
+-----------
+
+> FWIW.
+> 
+> /mjt
 
