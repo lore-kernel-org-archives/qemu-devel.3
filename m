@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA167CF8868
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 01:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5497ECF8869
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 01:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1swtI7-0001Ml-CH; Fri, 04 Oct 2024 21:09:03 -0400
+	id 1swtJI-0001tR-Jq; Fri, 04 Oct 2024 21:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swtI4-0001ME-Bn
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 21:09:00 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1swtJE-0001pz-19
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 21:10:12 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1swtI1-00041F-U8
- for qemu-devel@nongnu.org; Fri, 04 Oct 2024 21:08:59 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20b7eb9e81eso31836615ad.2
- for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 18:08:57 -0700 (PDT)
+ id 1swtJB-0004GH-Cu
+ for qemu-devel@nongnu.org; Fri, 04 Oct 2024 21:10:11 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20b93887decso22975125ad.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Oct 2024 18:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728090536; x=1728695336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728090608; x=1728695408; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JT8niUKf5ZQQb/sDnw5AOXKsfuV1koKxYes1dLv3pRA=;
- b=jNyc4a+YBMAlHt9wES50fxf9GbqAsLeKQChzDbRNo6Jl2SOeUUYhgHOBKotu9CqrA5
- h+1S9cahAJtd1NAw+9A1Px1BPba6A97kwRQEjtLmYMZBWiV7W1APR+S5xUX/MvJkOZyZ
- USy+T93DQwTfuGn9cVdb/UT7z+W2OysQR8aOfWYhs1gd7LwLEPB29zbZhEuEHy94QxCf
- NVJ3iDvTr+GEOE3CIlno2tImIq0r8f0ViPtcZDlBQsxHeXMYpO1/BtyjYzdWdlGFRR3+
- 3QLnHcAXOACq7oI1Oxd6d8Svnxn/Opx4ji9hwg6Inf5CFw1ppUbWyvtR2Sg1Miid10Yk
- Xpsg==
+ bh=LFAGykPUspbLZfYGbKb6dpy5Z5eZR/8JSd4o9GjPmkw=;
+ b=JtOH3kyDWVTatnFh3D5si0TFdl5994NUUjqCUMGdpGt75EUU9KOIvSa/p/yeAdGaTJ
+ zY6sjw+MOqyvCUn5wQ9mdjCIg2abqhGH8gQSPnrkiVbo528+AzcR2BngqbjYfGAl3MKm
+ Pe79ukG8LiYcfC2VWze75AcGuJuviqpeeLGv5J4nI7w4kq5aTXysX7i8HzaxkkxQ5e+r
+ /zkFl1q9aHAa5hTlrN02m1IG/bnUQWu9NkiCT8cWh6iqFzPCtkqKvBhuURj+Va7U9w0R
+ z258It7ZJ6IMbm7TfbqUN7jTUuVtQhIBFLg+VzrmHNVG/2DrK1LG/ZFXxTEwg/Wbom/X
+ 9Idg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728090536; x=1728695336;
+ d=1e100.net; s=20230601; t=1728090608; x=1728695408;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JT8niUKf5ZQQb/sDnw5AOXKsfuV1koKxYes1dLv3pRA=;
- b=o4fYXMlp8c+u9hSP5D44b1xTUrjPU8ieygkEx1Q2S8m06aCKUi1qahK/700Bzsxi2a
- DljLFCfcXE1Q+sv4EYLLF7z7C6ARg4n9aZghk3UmPGHCR4wC8sTlkXUp0Uf8N88E3t0A
- tGlA7XVfOn68J7hXd3ezRyGxhbiHB5pYqJCVYmOYb1Yn+80iYPDxcYxBuGukZ5CVxDNN
- M8VVFmTTQ0rYYkM9p/v7VLDlrY5pNoi+0t+OY7WsI7T1wPzaIMDNwU56c+93oWG9QdJY
- 3+KDFTg+aAB5TudCkjvFQdQIpgyZLECzjSCg3YkXOYjrqZYeCGPQFBW/Up4wrx02hQDg
- Zevg==
+ bh=LFAGykPUspbLZfYGbKb6dpy5Z5eZR/8JSd4o9GjPmkw=;
+ b=OyDD77xXMvWgtxRAYs16J0ioj2xq0kQsi4FnwWYgReAJgMwyJR93mCRjQktuOuWTnv
+ ABeW10z1vmhgH4/SKUos/+R6bhBw/rNYLp7MGSjYDT/TKSZjwpjlP6+QX+lsZW+q/cXf
+ STYwmlnhREYNsfFv7tl4J0EVljIqFQpQDu7ET12PxIwTQbenjEcKzLKgC2UDLU+stoWK
+ KjeErBRsrdVyAEM9tFqp514JNG6F90HzIxaH1jbQSym11h5c7ssgGwLaOYL9C9VzRJA7
+ fdIIFcbtMiUtrgyZ/hspclTOw2346W1UzAzo2/ZQBtnbZNJ8qc37DpmqmLc9iv7a+Mvk
+ 3B0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYSSQcnExFH9Phg6tmOPk5Y60+UM6PClmnRS/hwWQgOgNX/KwrJvTbmLWc8OwjmSqkSegZT6Oenoli@nongnu.org
-X-Gm-Message-State: AOJu0Yz1WLD+WwpUpQV8fKZa0RKB8GuuN/TWEvb2a1VSPhN/Vvw9mPZE
- DPvjxe2o5vmuKDRNgqkWKKUjPbV6J/3GJaNnNpua53PAwC2d25uxn2OSgIAC4x4=
-X-Google-Smtp-Source: AGHT+IFUZ9/dfCBLUmh3WECQTSDBzo5BxE9eC/GQzfeWujdZwis03IdAMlPEV3WwoAiCqHBf90xoaw==
-X-Received: by 2002:a17:902:e84d:b0:20b:b26e:c149 with SMTP id
- d9443c01a7336-20bfe01d3c9mr65298225ad.29.1728090536249; 
- Fri, 04 Oct 2024 18:08:56 -0700 (PDT)
+ AJvYcCURVFtC3uqXPuRSRfUjdwpvm5qx1wdEZxECVV3Ne0DwnXvfUSWjutTdoH2JXTNis6KjuIp2IiV+T7t6@nongnu.org
+X-Gm-Message-State: AOJu0YyQwM1N6A/D2bdEg3tyn3HOiz8IM4FWfQAeTkCvcLxPorTs/d8r
+ McVia+TvrahQMos0HBHM/J/xj9sCfHWdX0Wj9CVI/9Wnf9gpuMgEeT5qXPTZbBfqmCZzeGznua4
+ Y
+X-Google-Smtp-Source: AGHT+IEkrT6FHpvrNw8xx/VgUcm7P3Jt3kEeMB1St+Zs+x/0TBZpfI3NKBPTKD7TGuZ2uOhCUzxlcA==
+X-Received: by 2002:a17:902:d2d0:b0:20b:be06:f3d9 with SMTP id
+ d9443c01a7336-20bfe1887c8mr65210395ad.24.1728090607819; 
+ Fri, 04 Oct 2024 18:10:07 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c1393a15fsm4297935ad.121.2024.10.04.18.08.55
+ d9443c01a7336-20c13934817sm4356415ad.158.2024.10.04.18.10.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Oct 2024 18:08:55 -0700 (PDT)
-Message-ID: <219b1d8d-66e9-4228-924e-fa273e4f9d19@linaro.org>
-Date: Fri, 4 Oct 2024 18:08:53 -0700
+ Fri, 04 Oct 2024 18:10:07 -0700 (PDT)
+Message-ID: <f9131f6e-e843-48be-b85f-c341ec198154@linaro.org>
+Date: Fri, 4 Oct 2024 18:10:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/25] target/hexagon: Replace ldtul_p() -> ldl_p()
+Subject: Re: [PATCH v2 01/25] gdbstub/helpers: Have ldtul_p() definition use
+ ldn_p()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-ppc@nongnu.org
 References: <20241004163042.85922-1-philmd@linaro.org>
- <20241004163042.85922-3-philmd@linaro.org>
+ <20241004163042.85922-2-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241004163042.85922-3-philmd@linaro.org>
+In-Reply-To: <20241004163042.85922-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,12 +104,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/4/24 09:30, Philippe Mathieu-Daudé wrote:
-> The Hexagon target is only built for 64-bit.
+> Use ldn_p(TARGET_LONG_SIZE) instead of ldl_p() / ldq_p().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/gdbstub/helpers.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
+> index 26140ef1ac0..fd83e366a51 100644
+> --- a/include/gdbstub/helpers.h
+> +++ b/include/gdbstub/helpers.h
+> @@ -94,10 +94,10 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
+>   
+>   #if TARGET_LONG_BITS == 64
+>   #define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
+> -#define ldtul_p(addr) ldq_p(addr)
+>   #else
+>   #define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
+> -#define ldtul_p(addr) ldl_p(addr)
+>   #endif
+>   
+> +#define ldtul_p(addr) ldn_p(addr, TARGET_LONG_SIZE)
 
-32-bit, which confuses the reading of the patch.  :-)
-
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This does not aid anything in the short term.
 
 
 r~
