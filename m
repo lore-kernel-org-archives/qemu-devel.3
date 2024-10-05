@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DA0CF34C4
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 15:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F845CFA754
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 15:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx6fX-00024d-HD; Sat, 05 Oct 2024 11:26:07 -0400
+	id 1sx6fm-0002Cm-ER; Sat, 05 Oct 2024 11:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fT-00021j-PC
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:03 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sx6fc-00028U-Pa
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:13 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fS-0002Mm-3D
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:03 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20b90984971so32650785ad.3
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 08:26:01 -0700 (PDT)
+ id 1sx6fa-0002PO-OM
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:12 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-20b7463dd89so33893355ad.2
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 08:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728141960; x=1728746760; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728141968; x=1728746768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MP+WvwE/XecW9wPOVCpjk+gA5jxWiH/v3HQ4ejXK7hQ=;
- b=PD9InbelSTBbSyJQhO2yBhjfv6quspqR+hcKBK8xNJQh7SiQ5x16zJul91E/KMn9cE
- apbtsmFnpLKw+Zqk5SH3KnM/hQ5ZjCC4g/kG0TmnPrM1Pz+yJZ4bVfI3Nvuk/qyO8vfw
- LbWJ5JIZlCGbGadT0U+n2G932knz+XmtjrxxPrkGrlGZlwbV/oprBYlljocBZ72nxjbt
- asqgeWZQAsewI4FVTIIZ6F8ZGgQlw82xqN3yuQ/u2IZLV0oJIso7CdsXUnjIUL4WX+RQ
- gYikTvGLG/FiXCwhPQGnQIWifKFHplP8fQw6OXJDoL2dyUuCoGnot+uLmk5d7n2xz1+g
- umJg==
+ bh=3KXMhwqlNY3FEn9X64ijA0SceY+BOiTFnpHj8/s1p5o=;
+ b=zdimwVRYWcrIaLfcLOKxZT00xtHrk3o0XVhS6YCFHYYDBTLIo0fR3+ea+23xfyzIsO
+ Zlmt/fGjbTjpXyBTMlONglp50UE7V3LsRVei1PGtVMHoTQ/7u0uy7hxzH2lilQocTGJK
+ b7QQj+FsF9V69x/wRAOQBCmxNR3Kb0ncT08qJy6hiEgqOI8qLAUAd9kXCBjP//QvJVSK
+ 6OLtYvo1aBVFi4dI1goDzMuFqhoE2HC1Hz64l/I/B0Er+tOC5tn2twDUq/KdA4/quES1
+ Nt6hFRC3FGP2AIEWf6msV0pGhHPakg4/jAthyvRdgJL8bKks2Qyp+ZGyslCkLNnMOlpQ
+ fqGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728141960; x=1728746760;
+ d=1e100.net; s=20230601; t=1728141968; x=1728746768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MP+WvwE/XecW9wPOVCpjk+gA5jxWiH/v3HQ4ejXK7hQ=;
- b=jx8+nV4E59yswRl++f81Niahqc/nLKnexx83Kx262BNAyHRSs3kvpWKie0x+RmFgkO
- h7eVxlkebUDrqLSey2TDecSnJeuVuOQHbIxAdEkIDcLdvr+LWB2dgk3L6M66EQn8kmSe
- TmCtuSsFg1/d+vgnk6NGbHmwbysx4L4qby24r+LZzqYlLA/00O7okgfz+fgJYRx2iY+E
- xwuD7lEI3eSA8r4yKPImd92pQMHJuzb7dRyrLqNXHEcHP/WWVJz6LpYl61sjMZ0PQ9Qt
- sKP2AMArFrKarTOa4DXwGKYG8BjKsxGh5OC9kQnlswHTqEpr4LIKAX8NbQwnpCyT1xsu
- hWlg==
-X-Gm-Message-State: AOJu0YyG1Z1MaqttcY9VoTT1+LujbUuCVqwWEeDRGzq/ncufCeboB3cT
- FUZEZZt+6GLcDDtwxsldHoLYakD/SDIADvN2LdPwtuOPfSer4YarX9JRAApwpIJwnFr0kUhnfJ8
- U
-X-Google-Smtp-Source: AGHT+IESYzC42ts/+MgAFBURTMzI6DPqe+lqay1qM2V34nvaOe/CY71VOZQTw0rCb6RzMXOSgxY+yw==
-X-Received: by 2002:a17:902:db02:b0:20b:ba72:37c with SMTP id
- d9443c01a7336-20bfea542c6mr100209775ad.48.1728141960541; 
- Sat, 05 Oct 2024 08:26:00 -0700 (PDT)
+ bh=3KXMhwqlNY3FEn9X64ijA0SceY+BOiTFnpHj8/s1p5o=;
+ b=NJJ8EnKTiVtacegRw6JO9BNqN3hVXdMqNongnbFQ7R+DmapnuV7VnqWIQqMf17XDMY
+ WYUfy6Y6OCn+CcuXUvYQL8Y1iolgE0JYHJVH2+taJK21h4ASVaYYjyfOecZ69xqlJ4Qr
+ Rwykj0tueWXaMfQIxAl+hsF1fv15diKrLnmD7L2+3le99GRovA1C/JEWabis7eykWN8K
+ 4krmk7j3lh1J5EdrDtNv6kJlCuC0r1lhdj12zS6f+Px9X6HiTj4F7vBJOisLBkvixSb1
+ K7maPOTc5JBEckTcF8E5swEQkEf5Rb+a6q/mSp5hfmDGEV29cGN0klWfdxZ0iNQ0UmL1
+ sE3Q==
+X-Gm-Message-State: AOJu0YxwLA2Z+dfwWZzDpoeVd0QpLDXRyg81SMgyGIaPFJ7PFscv0ged
+ F9/zo5KrTcITs3jIK5l84GfLEgakth59QhUqS+AtVlLOtjuUsqrfR0afku0T01ik00ZQUoP752a
+ l
+X-Google-Smtp-Source: AGHT+IHoXvMFOA7jUAYxgFVahS1q2i1bg/ajDF/sY9Oymkr8mht01U8RsKNrUl4cngSkkvOkcrfljQ==
+X-Received: by 2002:a17:902:fc4e:b0:202:4666:f018 with SMTP id
+ d9443c01a7336-20bfdfd2693mr105297675ad.15.1728141968397; 
+ Sat, 05 Oct 2024 08:26:08 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c1396948dsm14351765ad.225.2024.10.05.08.25.59
+ d9443c01a7336-20c1396948dsm14351765ad.225.2024.10.05.08.26.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 08:26:00 -0700 (PDT)
+ Sat, 05 Oct 2024 08:26:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH 08/20] target/hppa: Add MemOp argument to
- hppa_get_physical_address
-Date: Sat,  5 Oct 2024 08:25:39 -0700
-Message-ID: <20241005152551.307923-9-richard.henderson@linaro.org>
+Subject: [PATCH 16/20] target/arm: Pass MemOp to get_phys_addr_nogpc
+Date: Sat,  5 Oct 2024 08:25:47 -0700
+Message-ID: <20241005152551.307923-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241005152551.307923-1-richard.henderson@linaro.org>
 References: <20241005152551.307923-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,97 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just add the argument, unused at this point.
-Zero is the safe do-nothing value for all callers.
+Zero is the safe do-nothing value for callers to use.
+Pass the value through from get_phys_addr_gpc and
+get_phys_addr_with_space_nogpc.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h        | 2 +-
- target/hppa/int_helper.c | 2 +-
- target/hppa/mem_helper.c | 9 +++++----
- target/hppa/op_helper.c  | 2 +-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ target/arm/ptw.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index f4e051f176..526855f982 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -369,7 +369,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- void hppa_cpu_do_interrupt(CPUState *cpu);
- bool hppa_cpu_exec_interrupt(CPUState *cpu, int int_req);
- int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
--                              int type, hwaddr *pphys, int *pprot);
-+                              int type, MemOp mop, hwaddr *pphys, int *pprot);
- void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-                                      vaddr addr, unsigned size,
-                                      MMUAccessType access_type,
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 391f32f27d..58695def82 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -167,7 +167,7 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index e92537d8f2..0445c3ccf3 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -75,7 +75,7 @@ typedef struct S1Translate {
  
-                     vaddr = hppa_form_gva_psw(old_psw, env->iasq_f, vaddr);
-                     t = hppa_get_physical_address(env, vaddr, MMU_KERNEL_IDX,
--                                                  0, &paddr, &prot);
-+                                                  0, 0, &paddr, &prot);
-                     if (t >= 0) {
-                         /* We can't re-load the instruction.  */
-                         env->cr[CR_IIR] = 0;
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index b984f730aa..a386c80fa4 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -197,7 +197,7 @@ static int match_prot_id64(CPUHPPAState *env, uint32_t access_id)
+ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                 vaddr address,
+-                                MMUAccessType access_type,
++                                MMUAccessType access_type, MemOp memop,
+                                 GetPhysAddrResult *result,
+                                 ARMMMUFaultInfo *fi);
+ 
+@@ -3313,7 +3313,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+     ARMSecuritySpace ipa_space;
+     uint64_t hcr;
+ 
+-    ret = get_phys_addr_nogpc(env, ptw, address, access_type, result, fi);
++    ret = get_phys_addr_nogpc(env, ptw, address, access_type, 0, result, fi);
+ 
+     /* If S1 fails, return early.  */
+     if (ret) {
+@@ -3339,7 +3339,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+     cacheattrs1 = result->cacheattrs;
+     memset(result, 0, sizeof(*result));
+ 
+-    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type, result, fi);
++    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type, 0, result, fi);
+     fi->s2addr = ipa;
+ 
+     /* Combine the S1 and S2 perms.  */
+@@ -3406,7 +3406,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+ 
+ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                       vaddr address,
+-                                      MMUAccessType access_type,
++                                      MMUAccessType access_type, MemOp memop,
+                                       GetPhysAddrResult *result,
+                                       ARMMMUFaultInfo *fi)
+ {
+@@ -3547,7 +3547,8 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                               GetPhysAddrResult *result,
+                               ARMMMUFaultInfo *fi)
+ {
+-    if (get_phys_addr_nogpc(env, ptw, address, access_type, result, fi)) {
++    if (get_phys_addr_nogpc(env, ptw, address, access_type,
++                            memop, result, fi)) {
+         return true;
+     }
+     if (!granule_protection_check(env, result->f.phys_addr,
+@@ -3568,7 +3569,8 @@ bool get_phys_addr_with_space_nogpc(CPUARMState *env, vaddr address,
+         .in_mmu_idx = mmu_idx,
+         .in_space = space,
+     };
+-    return get_phys_addr_nogpc(env, &ptw, address, access_type, result, fi);
++    return get_phys_addr_nogpc(env, &ptw, address, access_type,
++                               memop, result, fi);
  }
  
- int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
--                              int type, hwaddr *pphys, int *pprot)
-+                              int type, MemOp mop, hwaddr *pphys, int *pprot)
- {
-     hwaddr phys;
-     int prot, r_prot, w_prot, x_prot, priv;
-@@ -340,7 +340,7 @@ hwaddr hppa_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     mmu_idx = (cpu->env.psw & PSW_D ? MMU_KERNEL_IDX :
-                cpu->env.psw & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
- 
--    excp = hppa_get_physical_address(&cpu->env, addr, mmu_idx, 0,
-+    excp = hppa_get_physical_address(&cpu->env, addr, mmu_idx, 0, 0,
-                                      &phys, &prot);
- 
-     /* Since we're translating for debugging, the only error that is a
-@@ -438,7 +438,8 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-         break;
-     }
- 
--    excp = hppa_get_physical_address(env, addr, mmu_idx, a_prot, &phys, &prot);
-+    excp = hppa_get_physical_address(env, addr, mmu_idx, a_prot, 0,
-+                                     &phys, &prot);
-     if (unlikely(excp >= 0)) {
-         if (probe) {
-             return false;
-@@ -678,7 +679,7 @@ target_ulong HELPER(lpa)(CPUHPPAState *env, target_ulong addr)
-     hwaddr phys;
-     int prot, excp;
- 
--    excp = hppa_get_physical_address(env, addr, MMU_KERNEL_IDX, 0,
-+    excp = hppa_get_physical_address(env, addr, MMU_KERNEL_IDX, 0, 0,
-                                      &phys, &prot);
-     if (excp >= 0) {
-         if (excp == EXCP_DTLB_MISS) {
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index 7f79196fff..744325969f 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -334,7 +334,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
-     }
- 
-     mmu_idx = PRIV_P_TO_MMU_IDX(level, env->psw & PSW_P);
--    excp = hppa_get_physical_address(env, addr, mmu_idx, 0, &phys, &prot);
-+    excp = hppa_get_physical_address(env, addr, mmu_idx, 0, 0, &phys, &prot);
-     if (excp >= 0) {
-         cpu_restore_state(env_cpu(env), GETPC());
-         hppa_set_ior_and_isr(env, addr, MMU_IDX_MMU_DISABLED(mmu_idx));
+ bool get_phys_addr(CPUARMState *env, vaddr address,
 -- 
 2.43.0
 
