@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81160CF34C4
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 15:31:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBAECFA754
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx6fO-0001xf-Tf; Sat, 05 Oct 2024 11:25:58 -0400
+	id 1sx7Iy-0008HR-T1; Sat, 05 Oct 2024 12:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fM-0001wI-ET
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:25:56 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fK-0002K6-Ho
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:25:56 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20ba6b39a78so22639445ad.3
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 08:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728141953; x=1728746753; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wpFwx2+B2oxOHc6b6hBqiIP5nn07TpsAOahnQ7H73ek=;
- b=WaYS7GWABBpJCmL2badTB3X8oDCApJytvJ1k5qNwlUHCdtt8Qg+X6ooMdnVw548zWi
- f/Txq6XoKy+4rVopvf7rOpbCS0wqPInL96sRicrjzB+/1emcv6YPT9UzKWXaqzUymRrC
- JhTTHch+43uP8LtefNAgNrHCDLcOrGW5J954Sj8ytAVdZh3/TNQnmuK44JxLPwBCRvS9
- Bsm3JOuhsnQqOOzMXuShzsFhSavSWGArsSaex3o+f2dYeICYNLyzailA6uV4Ea0xc3/r
- DZvd+BBfz/on65T89bhnI4HOwgdsxS9+kGaKi7EseoJEgznd1/LFqxlmNsT13/S4qtWs
- mjiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728141953; x=1728746753;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wpFwx2+B2oxOHc6b6hBqiIP5nn07TpsAOahnQ7H73ek=;
- b=C1rN9anu+adGAIAruYazIeehkTxN2o37YK5Gy3IRzmneyb5IYqiJ1aDSR5LHNqLI40
- C882jDQJpbJ0HTAnT/m8tJEmhCeOJJiJBZEtKt0ziDYEGSM8pSn5OoIuRJMFcv0OYyDN
- VA4cxEp9STAANIupJ+/KLNHpOwo9WoM4CgVNV4zDo4X4S1NZe8JgUSyOwa0YtVRGf2uJ
- TB9SmtKTuwRlhxWPULsHwA5dfnqHufHb1h306Nu8i7p8YhWDGRzb22U26v4024b3K6k+
- UyEILd87X6kh1x6K2gUO85dcZw2SsTLM79n+Imx4I94g7SbzrfbEASirehnXEaNejZ5n
- oZsg==
-X-Gm-Message-State: AOJu0YzbLOnEwOthi9JhpWZ8IFZDHs+ijVTttghIc1k+0vI4K/vSDy6Z
- IkNCoS1p9E8iaVmjPDOAQ48MQkLgos2HxHcQDqnQmQ6ww+ge0GP31f37nE0qeZ1TpQ/mJak0KU8
- 1
-X-Google-Smtp-Source: AGHT+IHPXsFE7R6jjgtrThFRIybCkI51Eu2ER9DX0AbZAMTqrYQ1cs+3WLCHNSwkVb8nGfrYpNWUSg==
-X-Received: by 2002:a17:902:f548:b0:20b:96e:8e65 with SMTP id
- d9443c01a7336-20bff1a8b43mr85517295ad.42.1728141952853; 
- Sat, 05 Oct 2024 08:25:52 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c1396948dsm14351765ad.225.2024.10.05.08.25.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 08:25:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1sx7Iu-0008Gi-RS
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:06:49 -0400
+Received: from mail-m16.yeah.net ([220.197.32.16])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <chao.liu@yeah.net>) id 1sx7Io-0002P5-Ok
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:06:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=dAi6E
+ tdnj+bzXLvZ2nY6nMe4oTUVjb5cLyBKiqkX/Yk=; b=fxmk7MjmX0/uTUYVxGSFT
+ rAEZBbKkbhDMkYmBTG1huvC2ZvF3A+Y5gSc9Y0JCLX4ZQjeQJWVTFMS0PIwJAXBH
+ BNHSUsGv3p2ViCrJjscgKGuQxqFMtU4ckRf+0bvF/85Acsvf0YHhuPrkruet8aG4
+ xLKk3Xw+Z+bw7b3RHgVoKw=
+Received: from localhost.localdomain (unknown [])
+ by gzsmtp3 (Coremail) with SMTP id M88vCgCnyun1YwFnyEiwAQ--.25016S4;
+ Sun, 06 Oct 2024 00:06:19 +0800 (CST)
+From: Chao Liu <chao.liu@yeah.net>
 To: qemu-devel@nongnu.org
-Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH 00/20] accel/tcg: Introduce tlb_fill_align hook
-Date: Sat,  5 Oct 2024 08:25:31 -0700
-Message-ID: <20241005152551.307923-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
+ alistair@alistair23.me, Chao Liu <chao.liu@yeah.net>
+Subject: [PATCH v3 2/2] xilink-zynq-devcfg: Fix up for memory address range
+ size not set correctly
+Date: Sun,  6 Oct 2024 00:06:06 +0800
+Message-ID: <0034b90c6a533563863aba7e9fb2f19b6cc59284.1728141040.git.chao.liu@yeah.net>
+X-Mailer: git-send-email 2.46.1
+In-Reply-To: <cover.1728141040.git.chao.liu@yeah.net>
+References: <cover.1728141040.git.chao.liu@yeah.net>
 MIME-Version: 1.0
+Signed-off-by: Chao Liu <chao.liu@yeah.net>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-CM-TRANSID: M88vCgCnyun1YwFnyEiwAQ--.25016S4
+X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+ VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUVFksDUUUU
+X-Originating-IP: [112.19.146.115]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiCRFvKGcBHYV+OAACsl
+Received-SPF: pass client-ip=220.197.32.16; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,84 +71,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This new hook will allow targets to recognize an alignment
-fault with the correct priority with respect to other faults
-that can be raised by paging.
-
-This should fix several hppa fault priority issues, most
-importantly that access permissions come before alignment.
-
-This should fix the documented error in the Arm alignment
-fault due to memory type.
-
-
-r~
-
-
-Richard Henderson (20):
-  accel/tcg: Assert noreturn from write-only page for atomics
-  accel/tcg: Expand tlb_fill for 3 callers
-  include/exec/memop: Move get_alignment_bits from tcg.h
-  include/exec/memop: Rename get_alignment_bits
-  include/exec/memop: Introduce memop_atomicity_bits
-  hw/core/tcg-cpu-ops: Introduce tlb_fill_align hook
-  accel/tcg: Use the tlb_fill_align hook
-  target/hppa: Add MemOp argument to hppa_get_physical_address
-  target/hppa: Perform access rights before protection id check
-  target/hppa: Fix priority of T, D, and B page faults
-  target/hppa: Handle alignment faults in hppa_get_physical_address
-  target/hppa: Add hppa_cpu_tlb_fill_align
-  target/arm: Pass MemOp to get_phys_addr
-  target/arm: Pass MemOp to get_phys_addr_with_space_nogpc
-  target/arm: Pass MemOp to get_phys_addr_gpc
-  target/arm: Pass MemOp to get_phys_addr_nogpc
-  target/arm: Pass MemOp through get_phys_addr_twostage
-  target/arm: Pass MemOp to get_phys_addr_lpae
-  target/arm: Move device detection earlier in get_phys_addr_lpae
-  target/arm: Fix alignment fault priority in get_phys_addr_lpae
-
- include/exec/memop.h           |  47 +++++++++++
- include/hw/core/tcg-cpu-ops.h  |  25 ++++++
- include/tcg/tcg.h              |  23 ------
- target/arm/internals.h         |   6 +-
- target/hppa/cpu.h              |   5 +-
- accel/tcg/cputlb.c             | 142 +++++++++++++++++----------------
- accel/tcg/user-exec.c          |   4 +-
- target/alpha/cpu.c             |   1 +
- target/arm/cpu.c               |   1 +
- target/arm/helper.c            |   4 +-
- target/arm/ptw.c               | 139 ++++++++++++++++++--------------
- target/arm/tcg/cpu-v7m.c       |   1 +
- target/arm/tcg/m_helper.c      |   8 +-
- target/arm/tcg/tlb_helper.c    |   2 +-
- target/arm/tcg/translate-a64.c |   4 +-
- target/avr/cpu.c               |   1 +
- target/hppa/cpu.c              |   1 +
- target/hppa/int_helper.c       |   2 +-
- target/hppa/mem_helper.c       |  50 ++++++++----
- target/hppa/op_helper.c        |   2 +-
- target/i386/tcg/tcg-cpu.c      |   1 +
- target/loongarch/cpu.c         |   1 +
- target/m68k/cpu.c              |   1 +
- target/microblaze/cpu.c        |   1 +
- target/mips/cpu.c              |   1 +
- target/openrisc/cpu.c          |   1 +
- target/ppc/cpu_init.c          |   1 +
- target/riscv/tcg/tcg-cpu.c     |   1 +
- target/rx/cpu.c                |   1 +
- target/s390x/cpu.c             |   1 +
- target/sh4/cpu.c               |   1 +
- target/sparc/cpu.c             |   1 +
- target/tricore/cpu.c           |   1 +
- target/xtensa/cpu.c            |   1 +
- target/xtensa/translate.c      |   2 +-
- tcg/tcg-op-ldst.c              |   6 +-
- tcg/tcg.c                      |   2 +-
- tcg/arm/tcg-target.c.inc       |   4 +-
- tcg/sparc64/tcg-target.c.inc   |   2 +-
- 39 files changed, 302 insertions(+), 196 deletions(-)
-
+diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+index b8544d0731..7170353a62 100644
+--- a/hw/dma/xlnx-zynq-devcfg.c
++++ b/hw/dma/xlnx-zynq-devcfg.c
+@@ -372,7 +372,7 @@ static void xlnx_zynq_devcfg_init(Object *obj)
+                               s->regs_info, s->regs,
+                               &xlnx_zynq_devcfg_reg_ops,
+                               XLNX_ZYNQ_DEVCFG_ERR_DEBUG,
+-                              XLNX_ZYNQ_DEVCFG_R_MAX);
++                              XLNX_ZYNQ_DEVCFG_R_MAX * 4);
+     memory_region_add_subregion(&s->iomem,
+                                 A_CTRL,
+                                 &reg_array->mem);
 -- 
-2.43.0
+2.46.1
 
 
