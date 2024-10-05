@@ -4,31 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEA7CFA754
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366FFCF34C4
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx7YL-00057u-4b; Sat, 05 Oct 2024 12:22:45 -0400
+	id 1sx7gK-0006Cr-D2; Sat, 05 Oct 2024 12:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7YJ-00057l-PJ
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:22:43 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7gF-0006CZ-Il
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:30:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7YH-0005GG-VU
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:22:43 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7gD-0006rv-Qw
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:30:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E1999958F9;
- Sat,  5 Oct 2024 19:22:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D2C76958FE;
+ Sat,  5 Oct 2024 19:30:48 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9518F14E00D;
- Sat,  5 Oct 2024 19:22:40 +0300 (MSK)
-Message-ID: <a9a09776-e472-4321-af74-8d0dd0102654@tls.msk.ru>
-Date: Sat, 5 Oct 2024 19:22:40 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 868A714E017;
+ Sat,  5 Oct 2024 19:30:52 +0300 (MSK)
+Message-ID: <48c34f43-e63e-47e6-99b4-8b1b1842231b@tls.msk.ru>
+Date: Sat, 5 Oct 2024 19:30:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] meson: ensure we enable CMPXCHG128 on x86_64
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -38,8 +39,8 @@ Cc: alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
 References: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
  <5604626b-cba7-4d1c-8dfb-2c2e3b8495a5@tls.msk.ru>
  <1ede7823-8d4c-462a-8a80-c67c9dedd062@linaro.org>
+ <a9a09776-e472-4321-af74-8d0dd0102654@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
  bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
@@ -64,7 +65,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <1ede7823-8d4c-462a-8a80-c67c9dedd062@linaro.org>
+In-Reply-To: <a9a09776-e472-4321-af74-8d0dd0102654@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -90,16 +91,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.10.2024 19:20, Richard Henderson wrote:
-> On 10/5/24 09:16, Michael Tokarev wrote:
->> Besides, in the current situation where CONFIG_CMPXCHG128 is not defined
->> due to this bug, the final link fails due to generated calls to -latomic, -
->> which might mean we have something else wrong.
+05.10.2024 19:22, Michael Tokarev wrote:
+> 05.10.2024 19:20, Richard Henderson wrote:
+>> No, it doesn't fail to link.  That's why it took so long to notice.
 > 
-> No, it doesn't fail to link.  That's why it took so long to notice.
+> It does here quite often during bisection between 9.0 and 9.1.
+> Lemme see..
 
-It does here quite often during bisection between 9.0 and 9.1.
-Lemme see..
+So, it is just 2 steps:
+
+$ git bisect start v9.0.0 v9.1.0   # at 2529ea2d561ea9fe359fb19ebdcfeb8b6cddd219
+$ configure --target-list=x86_64-softmmu
+$ ninja qemu-system-x86_64   # this one will work
+$ git bisect bad    # at 544595e73007c824b7435b52519cc578586783a6
+$ ninja qemu-system-x86_64   # this breaks:
+
+[2/2] Linking target qemu-system-x86_64
+FAILED: qemu-system-x86_64
+cc -m64 @qemu-system-x86_64.rsp
+/usr/bin/ld: libqemu-x86_64-softmmu.fa.p/accel_tcg_cputlb.c.o: in function `atomic16_read_rw':
+/build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
+/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
+/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
+/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
+/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
+/usr/bin/ld: libqemu-x86_64-softmmu.fa.p/accel_tcg_cputlb.c.o: in function `atomic16_set':
+/build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:67: undefined reference to `__sync_bool_compare_and_swap_16'
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+So it requires second step.
+configure is re-run at the second build. So we're holding
+some data between rebuilds which we shouldn't.
 
 /mjt
+
 
