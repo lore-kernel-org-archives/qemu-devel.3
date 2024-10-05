@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494E4CFB43C
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 23:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB58CFB422
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 23:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxDph-0003lo-4K; Sat, 05 Oct 2024 19:05:05 -0400
+	id 1sxEHb-0006C3-3R; Sat, 05 Oct 2024 19:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxDpe-0003jV-M7
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 19:05:02 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1sxEHZ-0006BE-OI
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 19:33:54 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxDpc-0001Uh-W1
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 19:05:02 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e09ff2d890so2818633a91.0
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 16:05:00 -0700 (PDT)
+ id 1sxEHY-0004Dd-AP
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 19:33:53 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2e082f2a427so2433380a91.3
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 16:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728169498; x=1728774298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vRBhMSkUD8hPCFO0QZvm56jqvl/FhCYXXV35QMsLHpw=;
- b=tKkbqm7mgc+UwBb/e/KDkJwKyI7x27LACE+CUOII7d5RlkxuMeymk2DEZ5QhKbeKML
- nzecoYdgfxCG+kSNDxYja4++M0A6ajJavLk8AIamm4b0BpOspQKUc/+Iqh9olDXUGlb0
- PUFESXiEu9/gX2nfwzy2BzWO+NAZOsX6J7JZib+0eOzzqZM/gRPgeK85PHoAz+tPu3Dy
- eWOrAHMhheBDie9YIXW9UCdrc/X66Kqn1pwCnPSab6ag4Sg2959Ah1oQ7E62solF0XT6
- AvPU+sJGETtTINtuyXGB/PF49NvY3+umP9rVb01Ofl64Mz0yvSRjKT3MSiuYZ4Mhuitt
- HCsQ==
+ d=linaro.org; s=google; t=1728171231; x=1728776031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4lBUGHhECpofGFp4uwDS9iqEwNffUJsxDhRgO3S72WA=;
+ b=l54tXIgKtrH35E54nHKX6diTs7rhvXfO9/3Wzpnmso6SHpH+6FR4BzM4DpENA7t597
+ gATfh/T7xSs5VAjcEhZcfEXUs6mhwJwu7Lpzxe1oDB6GtWmgzKCADLTb4QpkzgQTii/9
+ 4geeHvMarTfJX61D9/tG11e7bg+L+Qflny3tOkV2JM0BNUHBFJzib22wVKwwWz53kVEL
+ qabjL1SNdvJ5M53k+3fPn537sfJdj4okIKip/MNXNtCAdNOut9BqAinYsrpjzLZVa/UE
+ SCxpC01EUWEy+SBvVuQVQxZPNtpsVE+zKCE+aJbz4fGjXmOM6ZiTDalTc74vTgdF1YK0
+ m3mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728169498; x=1728774298;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vRBhMSkUD8hPCFO0QZvm56jqvl/FhCYXXV35QMsLHpw=;
- b=vz8yOAYjJF8wLoo5BaSVW5SvQCbj3ExBtrVKmR0cjykZMYMxOtB5RytBzj/arrgz8Y
- HPUghjXvo+NKthpO696WkPV627apYHMxtdpHrspMalXS5OWyk1RfrSKLd8FxO1iYa0GM
- 3fUaWxzUYqtOBvJCEysL39/isfVcV2n6BFEIh45y+MVJq3nkRt0V8xWMZtk+48CFC4VC
- A3WMjyPhH+kshm+PSSOZ0lcWPrHs0oabLOdeoLZ2Jj59N7a9MW+krOyzLatYQ721o1ur
- wERhEH5ut3bMKC1/rdn0RvUnF2sN89UJ8MRwjdwJaQi/YSLu26ADWVD0ZxDM6Brc/95t
- 6yDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYVspbtrGaqopywXj34UOxuBbX9UAO7/5le8AV3boo8oBLGKV5jgueGoSRapSStn7G2TZyOydnm/dh@nongnu.org
-X-Gm-Message-State: AOJu0YzEyaeJBut9agNXeuCUFYq7d95Omadx6XqnEoJIPs8fYNMAa+Xd
- j6a0LyjqqMbfUdKHM3SQJvfvk911YSeH/1T5f1QXZtwQt+gBCCPFA3o6kvM/KcQ=
-X-Google-Smtp-Source: AGHT+IFzweYE9PSHDOLzFygsbTSkGmvJb+7qHDHU7t0f5xACNHE2V/UvISkeXpXSlN2DWKVAHq/h9A==
-X-Received: by 2002:a17:90b:3884:b0:2d2:453:12cb with SMTP id
- 98e67ed59e1d1-2e1e620e10amr9495874a91.2.1728169497951; 
- Sat, 05 Oct 2024 16:04:57 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ d=1e100.net; s=20230601; t=1728171231; x=1728776031;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4lBUGHhECpofGFp4uwDS9iqEwNffUJsxDhRgO3S72WA=;
+ b=sR12ZlNOWPOTKFIMEbB+/yRnC0IqZbe/VlEeLThezg8F5ye3aSsLsd8A2oxHD4o3Sb
+ UeY6bspzFb65Ft+28XfGb2ixPtoMxWHQ1rbSe/LY7LEUdQ8iUFZvJc5YAQIJdjyG+jGm
+ 5+AI5Y6Iqo/yw/p6EmTnjmWd8zu3EWNlD8U9j1tTvOH1H50I6v9YWomrirBgZ902P1Ca
+ Li+bXGYgqm1lqONaab1QJSKv3U8u+YQQzukn0qFjNFedL1L6kWS1k7TyVBxfZBWnyz5I
+ bS86iQiAMsYKbEFsjMnpstSjDJO5puSPBlf5aKvXJ/FyPiRiR/KQBk3ONLGNSfICIDwx
+ xZEQ==
+X-Gm-Message-State: AOJu0YyDvqrEEQiciwYBQFuLAQ4sEfjWotj3hseidve0fWoX9+GAlOHa
+ lgW/cUOCjW8SVKXbp3mWv/FeDlvL+XEQrFxQOB8rfpwmWa1jrZVGzmx8bn/18LgKlF6orCg3pZd
+ n
+X-Google-Smtp-Source: AGHT+IFSKRa4SE/ADCYJbfVsk2d/P2PVNDs0ikRJYMpdCWHpJvOdbUf6ioFv4Z3/DgLGjCJ5BNkB8g==
+X-Received: by 2002:a17:90b:3891:b0:2e0:9d3e:bc2b with SMTP id
+ 98e67ed59e1d1-2e1e636f94amr8943063a91.25.1728171231090; 
+ Sat, 05 Oct 2024 16:33:51 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c138cbb62sm17767295ad.79.2024.10.05.16.04.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Oct 2024 16:04:57 -0700 (PDT)
-Message-ID: <c9cdadc8-ee05-4e8a-9281-3b594157cb47@linaro.org>
-Date: Sat, 5 Oct 2024 16:04:55 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] linux-user/flatload: Take mmap_lock in
- load_flt_binary()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240822095045.72643-1-philmd@linaro.org>
-Content-Language: en-US
+ 98e67ed59e1d1-2e20b129cc2sm2394600a91.51.2024.10.05.16.33.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Oct 2024 16:33:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240822095045.72643-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 07/10] linux-user: Display sockaddr buffer as pointer
+Date: Sat,  5 Oct 2024 16:33:40 -0700
+Message-ID: <20241005233343.503426-8-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241005233343.503426-1-richard.henderson@linaro.org>
+References: <20241005233343.503426-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,17 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/22/24 02:50, Philippe Mathieu-Daudé wrote:
-> Fix for https://gitlab.com/qemu-project/qemu/-/issues/2525
-> 
-> Supersedes: <20240821153836.67987-1-philmd@linaro.org>
-> 
-> Philippe Mathieu-Daudé (4):
->    accel/tcg: Make page_set_flags() documentation public
->    linux-user/flatload: Take mmap_lock in load_flt_binary()
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Queued these two patches.
+Rather than 'raw param', display as pointer to get
+"NULL" instead of "0x00000000".
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20240807124306.52903-3-philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/strace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-r~
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index dfdec58542..b72fcd515f 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -437,7 +437,7 @@ print_sockaddr(abi_ulong addr, abi_long addrlen, int last)
+         }
+         unlock_user(sa, addr, 0);
+     } else {
+-        print_raw_param("0x"TARGET_ABI_FMT_lx, addr, 0);
++        print_pointer(addr, 0);
+     }
+     qemu_log(TARGET_ABI_FMT_ld"%s", addrlen, get_comma(last));
+ }
+-- 
+2.43.0
+
 
