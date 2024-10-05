@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04A6CFA742
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 15:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B5BCF34C4
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 15:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx6fP-0001yR-Jl; Sat, 05 Oct 2024 11:25:59 -0400
+	id 1sx6fe-00029e-N7; Sat, 05 Oct 2024 11:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fN-0001wq-Pp
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:25:57 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sx6fb-00026n-MF
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:11 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sx6fM-0002KS-85
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:25:57 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20b6458ee37so36306035ad.1
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 08:25:55 -0700 (PDT)
+ id 1sx6fY-0002P1-Nq
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 11:26:10 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20b9b35c7c7so21873515ad.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 08:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728141955; x=1728746755; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728141967; x=1728746767; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wBthGFf8BfR2i4dob959bB47CFsEJX0Mf+aRMHd0jM4=;
- b=NRxMumqhUyi4JtJy/8PTggZsUF1jOR0NNV50ryHAaU2cqj05VlICmZs3b06OiKYHnv
- gmjMgSyapT0roF9bCsU9+qDLqmCHetHwarcbolRovDLfXFsn23n1LAsNuG+GZE0aDE8H
- vSeelEQ/kaGrblkkrNZ1SQl9DEJMHPaBozsr3CjaMXvok/vpShsAWVfSdfvBsZYginUf
- DsvXzJOndqPLLcROLUngHqT/DOj4ZxMWt7vh5gRCbZdz+IOMZj6e6Pguas53nIEYEqBJ
- iYSKUlPHLkG1SitzO9aBt6OLh/8J8teDYp6LRx70eZPtGfjge0+f7PxwQcCCxgek8fAt
- DAfQ==
+ bh=4X5zP7zXx4H0vSkmfgBSYylbUDArgVMPw2dfqzvhfaA=;
+ b=x5YzRLk4ARd6XpiUopEFYv+iyWGitqOvwSXLlYUSZ/BgOIE07Hc+9hxiqJNatRBfd4
+ 8hcEPA235BXocSstX592wCuiJGiJ1yPcKJr5pJvZcAhpB0G0cmoRjzL+9ZayYXA9eONg
+ NLlozVhLBfhVos5qMndqHfcpCWKdzhoqwBQLAwtXV+Hx+1Jug/IFxHCNY3O1UuvPCWaJ
+ pZ/ZZM0kuTIND1SvRbxWaT03etn33NY2VtUjWbo310W9SxJSTLKfcsZdQLXtJbSAa9cf
+ o6tRVzk3FD3GcEAcvjRs3XQIIULJbdJqvtwmHNYn2mcjiNAnU1t4dXhr7BkLNAcliG4R
+ Xs1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728141955; x=1728746755;
+ d=1e100.net; s=20230601; t=1728141967; x=1728746767;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wBthGFf8BfR2i4dob959bB47CFsEJX0Mf+aRMHd0jM4=;
- b=ocWFPcy6DZgGoY42joWFetRjXpKZgHfl+PvOWeHHEq5+tCnFV+MHyS0Dcj/rzTwD/N
- 4gU/0YbIDVUQHXIjpWygT3G5aY6owK0izWw6SEiQu0DaAQ6QapT3acTqaGOltN0RB07e
- qlOW1mj6oVty+BZZKTjV2imrOhlqLyqoWiW46nE+pPfQSB/XjcTvR54GB2tqLTxQChcD
- kRXfOmjQsQXadhoWFi1Ty4rYU2TVw0GG7QgpeMboqKOBEvyrm3v9fvmsFGffzXlmJ8aK
- 2YQiRF423XSkkO0hQdYHfA8fDlYv35fuXkQsBSBIAV6QAc/MIGVNrWf2vB4ZjpCvYaIy
- hiWQ==
-X-Gm-Message-State: AOJu0Ywz9MnbOQWAgNPbQXU4P0ktrQeIPnLSF/1qz7Jz96LyzM2d18C0
- xcWRz7zeXP27LlYhFdVajIITrQ7J2Z5c6id7jD/adfYm8y/OnEsVH40FC+/Ylt4n3o6PdCCeF67
- Q
-X-Google-Smtp-Source: AGHT+IH7Xmy/UoZFDozrpGZR2JXAjehjcUEjjy3Gt9EAYcog/cZlmR6Wqao6wjaMYAvpmgnjtSqiEQ==
-X-Received: by 2002:a17:902:d581:b0:20b:419e:9f15 with SMTP id
- d9443c01a7336-20bfea570admr86092045ad.46.1728141954795; 
- Sat, 05 Oct 2024 08:25:54 -0700 (PDT)
+ bh=4X5zP7zXx4H0vSkmfgBSYylbUDArgVMPw2dfqzvhfaA=;
+ b=EqcNM7Fwxtnofdd4NVYEvCpIa9DiFwT53ghJlYXH0NrPkfp8pXGyBrjeVa8mkcI2/B
+ FfcM0bQks1JZqQgdXAVYtMyukDIqPO+L8NRMe+SmUBE4Sv5W3DzezK/XxPJfNNPS0kzu
+ aGe0J7Kuq4EQoPjjMg9vI0rcw2RI3ThKrg2yk7HvJoALan1TC8JRxn+BkNblwX9lmueN
+ GLafF3+3tStl/oHQWaf0fTKWIqlIM3Wme3JiZBKUKjkUbHPt5SJqD031kfbNf4UhsAa6
+ WaSD90WftC01Sl8mF+CKrz0j8n2fYOAQE5Ecn2R9yIMMPI8g+jSnmq9M3a6bAaH96bDY
+ KvNQ==
+X-Gm-Message-State: AOJu0YwVgTxOXBlq1aMtDAoOEaqunBK6qU0Y2DoKPdiXBPMvzW23wsyb
+ DS1Q0uORIDlilm46gtoSYIEjLrLeEdMSFZKgoa0mkP9RbsCEb4maTI+jqBDVGMHPffxn8oqDXv6
+ f
+X-Google-Smtp-Source: AGHT+IHY99g3UXT4c2ojVRByg/b7oYD6LPj2/nVP/Gw9LAajOrCDKRjQrnpHrqEZDe38lbLZqZ4qcw==
+X-Received: by 2002:a17:903:1d0:b0:20b:fa34:7325 with SMTP id
+ d9443c01a7336-20bfe291d4emr83779435ad.43.1728141967491; 
+ Sat, 05 Oct 2024 08:26:07 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c1396948dsm14351765ad.225.2024.10.05.08.25.54
+ d9443c01a7336-20c1396948dsm14351765ad.225.2024.10.05.08.26.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 08:25:54 -0700 (PDT)
+ Sat, 05 Oct 2024 08:26:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH 02/20] accel/tcg: Expand tlb_fill for 3 callers
-Date: Sat,  5 Oct 2024 08:25:33 -0700
-Message-ID: <20241005152551.307923-3-richard.henderson@linaro.org>
+Subject: [PATCH 15/20] target/arm: Pass MemOp to get_phys_addr_gpc
+Date: Sat,  5 Oct 2024 08:25:46 -0700
+Message-ID: <20241005152551.307923-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241005152551.307923-1-richard.henderson@linaro.org>
 References: <20241005152551.307923-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,76 +95,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Zero is the safe do-nothing value for callers to use.
+Pass the value through from get_phys_addr.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 33 ++++++++++-----------------------
- 1 file changed, 10 insertions(+), 23 deletions(-)
+ target/arm/ptw.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index fd6459b695..58960969f4 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1220,25 +1220,6 @@ void tlb_set_page(CPUState *cpu, vaddr addr,
-                             prot, mmu_idx, size);
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9af86da597..e92537d8f2 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -81,7 +81,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+ 
+ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                               vaddr address,
+-                              MMUAccessType access_type,
++                              MMUAccessType access_type, MemOp memop,
+                               GetPhysAddrResult *result,
+                               ARMMMUFaultInfo *fi);
+ 
+@@ -579,7 +579,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
+         };
+         GetPhysAddrResult s2 = { };
+ 
+-        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, &s2, fi)) {
++        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
+             goto fail;
+         }
+ 
+@@ -3543,7 +3543,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+ 
+ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                               vaddr address,
+-                              MMUAccessType access_type,
++                              MMUAccessType access_type, MemOp memop,
+                               GetPhysAddrResult *result,
+                               ARMMMUFaultInfo *fi)
+ {
+@@ -3641,7 +3641,8 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
+     }
+ 
+     ptw.in_space = ss;
+-    return get_phys_addr_gpc(env, &ptw, address, access_type, result, fi);
++    return get_phys_addr_gpc(env, &ptw, address, access_type,
++                             memop, result, fi);
  }
  
--/*
-- * Note: tlb_fill() can trigger a resize of the TLB. This means that all of the
-- * caller's prior references to the TLB table (e.g. CPUTLBEntry pointers) must
-- * be discarded and looked up again (e.g. via tlb_entry()).
-- */
--static void tlb_fill(CPUState *cpu, vaddr addr, int size,
--                     MMUAccessType access_type, int mmu_idx, uintptr_t retaddr)
--{
--    bool ok;
--
--    /*
--     * This is not a probe, so only valid return is success; failure
--     * should result in exception + longjmp to the cpu loop.
--     */
--    ok = cpu->cc->tcg_ops->tlb_fill(cpu, addr, size,
--                                    access_type, mmu_idx, false, retaddr);
--    assert(ok);
--}
--
- static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
-                                         MMUAccessType access_type,
-                                         int mmu_idx, uintptr_t retaddr)
-@@ -1631,7 +1612,10 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data,
-     if (!tlb_hit(tlb_addr, addr)) {
-         if (!victim_tlb_hit(cpu, mmu_idx, index, access_type,
-                             addr & TARGET_PAGE_MASK)) {
--            tlb_fill(cpu, addr, data->size, access_type, mmu_idx, ra);
-+            bool ok = cpu->cc->tcg_ops->tlb_fill(cpu, addr, data->size,
-+                                                 access_type, mmu_idx,
-+                                                 false, ra);
-+            assert(ok);
-             maybe_resized = true;
-             index = tlb_index(cpu, mmu_idx, addr);
-             entry = tlb_entry(cpu, mmu_idx, addr);
-@@ -1833,8 +1817,10 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     if (!tlb_hit(tlb_addr, addr)) {
-         if (!victim_tlb_hit(cpu, mmu_idx, index, MMU_DATA_STORE,
-                             addr & TARGET_PAGE_MASK)) {
--            tlb_fill(cpu, addr, size,
--                     MMU_DATA_STORE, mmu_idx, retaddr);
-+            bool ok = cpu->cc->tcg_ops->tlb_fill(cpu, addr, size,
-+                                                 MMU_DATA_STORE, mmu_idx,
-+                                                 false, retaddr);
-+            assert(ok);
-             index = tlb_index(cpu, mmu_idx, addr);
-             tlbe = tlb_entry(cpu, mmu_idx, addr);
-         }
-@@ -1848,7 +1834,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-      * but addr_read will only be -1 if PAGE_READ was unset.
-      */
-     if (unlikely(tlbe->addr_read == -1)) {
--        tlb_fill(cpu, addr, size, MMU_DATA_LOAD, mmu_idx, retaddr);
-+        cpu->cc->tcg_ops->tlb_fill(cpu, addr, size, MMU_DATA_LOAD,
-+                                   mmu_idx, false, retaddr);
-         /*
-          * Since we don't support reads and writes to different
-          * addresses, and we do have the proper page loaded for
+ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+@@ -3660,7 +3661,7 @@ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+     ARMMMUFaultInfo fi = {};
+     bool ret;
+ 
+-    ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, &res, &fi);
++    ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
+     *attrs = res.f.attrs;
+ 
+     if (ret) {
 -- 
 2.43.0
 
