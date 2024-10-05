@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5279ECF34C4
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8062CF34C4
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx7Sa-0002mx-8s; Sat, 05 Oct 2024 12:16:48 -0400
+	id 1sx7UH-0003TL-II; Sat, 05 Oct 2024 12:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7SY-0002mW-1Y
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:16:46 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7UF-0003Sb-OC
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:18:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7SV-0004Jk-2U
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:16:45 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7UD-0004Xb-9n
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:18:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 18506958F3;
- Sat,  5 Oct 2024 19:16:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 741E9958F5;
+ Sat,  5 Oct 2024 19:18:22 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A3B2114E006;
- Sat,  5 Oct 2024 19:16:41 +0300 (MSK)
-Message-ID: <5604626b-cba7-4d1c-8dfb-2c2e3b8495a5@tls.msk.ru>
-Date: Sat, 5 Oct 2024 19:16:41 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 29FAF14E007;
+ Sat,  5 Oct 2024 19:18:26 +0300 (MSK)
+Message-ID: <d5f7046b-e30b-4471-b433-dadd2435b58e@tls.msk.ru>
+Date: Sat, 5 Oct 2024 19:18:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: ensure we enable CMPXCHG128 on x86_64
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- richard.henderson@linaro.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US, ru-RU
+Subject: Re: [PATCH] meson: fix machine option for x86_version
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20241004223715.1275428-1-pierrick.bouvier@linaro.org>
+ <05c0c746-8cd9-4d77-8de4-e690ca853d35@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
  bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
@@ -62,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <05c0c746-8cd9-4d77-8de4-e690ca853d35@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -88,74 +88,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.10.2024 01:01, Pierrick Bouvier wrote:
-> Alex discovered that CMPXCHG128 was not enabled when building for
-> x86_64, resulting in slow execution for wide atomic instructions,
-> creating a huge contention when combined with a high number of cpus
-> (found while booting android aarch64 guest on x86_64 host).
+05.10.2024 19:08, Michael Tokarev wrote:
+> 05.10.2024 01:37, Pierrick Bouvier wrote:
+>> s/mbmi1/mbmi/
+>>
+>> When configuring with -Dx86_version >= 3, meson step works, but
+>> compilation fails because option -mbmi1 is unknown.
 > 
-> The problem is that even though we enable -mcx16 option for x86_64, this
-> is not used when testing for CMPXCHG128. Thus, we silently turn it off.
-> 
-> x86_64 is the only architecture adding machine flags for now, so the
-> problem is limited to this host architecture.
-> 
-> Meson compiler tests are supposed to be independent of environment flags
-> (https://mesonbuild.com/Reference-manual_returned_compiler.html#returned-by).
-> However, CFLAGS are used anyway, thus masking the problem when using
-> something like CFLAGS='-march=native'. This is a meson bug and was reported:
-> https://github.com/mesonbuild/meson/issues/13757
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   meson.build | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index b18c2a54ab5..af2ce595dcc 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2867,6 +2867,13 @@ if has_int128_type
->       config_host_data.set('CONFIG_ATOMIC128_OPT', has_atomic128_opt)
->   
->       if not has_atomic128_opt
-> +
-> +      host_flags = []
-> +      if host_arch == 'x86_64'
-> +        # for x86_64, x86_version must be >= 1, and we always enable cmpxchg16
-> +        # in this case.
-> +        host_flags += ['-mcx16']
-> +      endif
->         config_host_data.set('CONFIG_CMPXCHG128', cc.links('''
->           int main(void)
->           {
-> @@ -2874,7 +2881,8 @@ if has_int128_type
->             __sync_val_compare_and_swap_16(&x, y, x);
->             return 0;
->           }
-> -      '''))
-> +      ''',
-> +      args: host_flags))
->       endif
->     endif
->   endif
+> Fixes: v9.0.0-1771-gef7d1adfa8 "meson: allow configuring the x86-64 baseline"
+> Revieved-by: Michael Tokarev <mjt@tls.msk.ru>
 
-
-This does not look right.  We test with an extra compiler flag, we should
-ensure it is actually enabled for the actual build.  Here, we only test
-if cmpxchg128 works with this flag appended, but do not enable if for
-the build.  It just happens we have it enabled elsewhere..
-
-Maybe we should add this flags somewhere to $qemu_cflags in this place
-if the test were successful.  With the proposed variant it is confusing
-and works just because it happens to match in a few places, not because
-it is supposed to work :)
-
-Besides, in the current situation where CONFIG_CMPXCHG128 is not defined
-due to this bug, the final link fails due to generated calls to -latomic, -
-which might mean we have something else wrong.
-
-FWIW.
+Also marked this one for qemu-stable.
 
 /mjt
+
 
