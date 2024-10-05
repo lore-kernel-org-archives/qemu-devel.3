@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7A8CFB42C
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 20:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51616CFB42B
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 20:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxB2W-0006Gz-Rc; Sat, 05 Oct 2024 16:06:08 -0400
+	id 1sxB2q-0006TI-6u; Sat, 05 Oct 2024 16:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxB2U-0006Ez-Nd
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:06 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sxB2h-0006QT-Da
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:19 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxB2S-0001hr-0H
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:06 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20b58f2e1f4so21812115ad.2
- for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 13:06:03 -0700 (PDT)
+ id 1sxB2f-0001nw-RF
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 16:06:19 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20b93887decso26368875ad.3
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 13:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728158763; x=1728763563; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728158776; x=1728763576; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qpc+gtvz4QF2D7U7hwk6I/PwDTmOhNNc5A8A2G2CqV8=;
- b=J7ETou96MJsubgZ7bZXJ1Lpb2hWHSpxbRLjFp2u1d+wjN5yvudDHCgKssjd2UKt6Kl
- Mk3Ltpy1k9tWHj9KzZocGvPWT6Gdx732waYHFLHGPjdG22sP9zo2nF/DkuLAVN5KeZLa
- SIZFPwDhiEQwqt8GxnKFAh9kOR3dKbIjZyxA3G2j+1f+VciBOm4lqfYLe2Ug6p4JV/jN
- UApNsZXFs3KiIli88gNk0U1SwZpI6mXfXexRQwea2pULDHSjpZRnaiY5n0O6hVpw7CLF
- nKsH2yXvBjsZkdeWwaD1zWpR8jE0WeGeJaG5L5YmfyjtY/mqrDc8GjQU5uxRx5LCRcKq
- huAA==
+ bh=3KXMhwqlNY3FEn9X64ijA0SceY+BOiTFnpHj8/s1p5o=;
+ b=vrb6jEE0BUrnGnkUrpSJrrfglUrisnKmYE4za2LznzTb+9cwSlwO/r/idErvpUUXBP
+ KdeokkKxZvI9rEJgLGfU+jRi9Yxy1h0yB1S04BFjVMRarh2wuJZV6YEsCcqdv4hPm5Ed
+ IVDGrlZTWRhOTWOFPKZGUpcRDrWegYO1rfLm1PutkEdJQ6zbjKe8OrB+mvQ0J7n7qGXB
+ 6r94+8X+kZsrRLO9HWN6AqIJak8WnZVWQhorJroBnqdNKp1l4eO4o8bu6e2Q+eT2eG0F
+ QJwDmxyHKw5pIVOKwSja8csGgQ5IKVUhYSnyhFRlbrc7Vxw3UrHsTpCjs5wNLobVVT9h
+ sUMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728158763; x=1728763563;
+ d=1e100.net; s=20230601; t=1728158776; x=1728763576;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qpc+gtvz4QF2D7U7hwk6I/PwDTmOhNNc5A8A2G2CqV8=;
- b=sy752RxiRO4zcick0KA55F/ygDBpdLm8lVPm3i0iT2D+qtXFjNzuDqrxdxRVSoKOif
- McIWheIjeAXHWep4J3g3fnMPu3PVlTkNz29wXUfras3mIrtkCGj5/WNxG91A5sx79cXL
- yhYtktEUeq/yewMoDhYF7MA7Nv+Fi2tljbgZyV92eWs42bEMC8qbl/pDqciuUq2cbOtn
- +CW4uvrDwbrAsEHNs/1f5l8bsdCGDeJOianaPxVQqSu3BJmjF3RoML8xMosTWjSIKKP3
- uvekFn7Py/ZH6cFUSTpg/0xF586c+4n9vX31V3mtGWWFu/7ivhGC7UqiA8t+csaJI+yx
- Zt5A==
-X-Gm-Message-State: AOJu0YxLyq5CJ2LcGF0GC3etB3Bu5V80lQuwFKqjq7d4ibd/3x6wd4rt
- gQcMoJ9rfja3NWYgOdtUAtV9InfW8eLxH1YYkcxexby2FFt5+kERoSwad5tJ5O2CyUXgVbGCgFz
- O
-X-Google-Smtp-Source: AGHT+IFmM8Oxp421B76h4UpAzO5VbLx+wqOrR4XfQnLhl5uTco5sEvRm26Oyl1URtBb3k58uPkW8Hg==
-X-Received: by 2002:a17:902:f545:b0:20b:a576:1896 with SMTP id
- d9443c01a7336-20bff190668mr89398765ad.43.1728158762695; 
- Sat, 05 Oct 2024 13:06:02 -0700 (PDT)
+ bh=3KXMhwqlNY3FEn9X64ijA0SceY+BOiTFnpHj8/s1p5o=;
+ b=C8F2/c9TNlKhP4r37y+wcugJ5mbhpa046dB8UIWIMSdBxVUSC57V2FrFACVYsoHqFh
+ qUNPcz0QqhLDU9Y2YGnjntPMOOP3hCHVVKn1Cp7TlCFUlJoAdFEBleUKy1BBpMJlkIDZ
+ cjLUnG0eCYH6BcoLYGmilPRT1Wsg20YTgKWFFs6C7nwrBalxuxcKtMTdT7QOgTLJoPq3
+ 6EYrogXdRloLDrC8WZcYW3p+WYqS3HmqSX+C51CK9/JVRtZW0LRXcQ+94W8NW0k3ocZJ
+ bQjQ4mrAU6g/L/Vr1sZerjFvYEtC2uLqUEG34h+YkjZlaMPgyZoZkJDPaQM+3tj7bMBy
+ oaUA==
+X-Gm-Message-State: AOJu0YwxK9Wt3/SPdWBpOoc5cFZn+ChH/HtFU7L+VHpOi8VkwzVQxp0+
+ kITEFP93pK2PnHj/oxTrQ69xPh6Tm9jrKWgcgB8f/z1hZthrS1UOMgeY+xnA8u5akX8DzzyR2i7
+ /
+X-Google-Smtp-Source: AGHT+IEc/YiENR//GQsH6NJPwFKZle512StiSwrb6jw4fVSQbkD7P+i/ct1jx2CukoHpWHGxpya25Q==
+X-Received: by 2002:a17:902:ec84:b0:20b:6b68:c635 with SMTP id
+ d9443c01a7336-20bff20ca7dmr104384815ad.58.1728158776618; 
+ Sat, 05 Oct 2024 13:06:16 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c13931055sm16493405ad.139.2024.10.05.13.06.02
+ d9443c01a7336-20c13931055sm16493405ad.139.2024.10.05.13.06.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 13:06:02 -0700 (PDT)
+ Sat, 05 Oct 2024 13:06:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH v2 01/21] accel/tcg: Assert noreturn from write-only page for
- atomics
-Date: Sat,  5 Oct 2024 13:05:40 -0700
-Message-ID: <20241005200600.493604-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 16/21] target/arm: Pass MemOp to get_phys_addr_nogpc
+Date: Sat,  5 Oct 2024 13:05:55 -0700
+Message-ID: <20241005200600.493604-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241005200600.493604-1-richard.henderson@linaro.org>
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,31 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There should be no "just in case"; the page is already
-in the tlb, and known to be not readable.
+Zero is the safe do-nothing value for callers to use.
+Pass the value through from get_phys_addr_gpc and
+get_phys_addr_with_space_nogpc.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ target/arm/ptw.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 117b516739..fd6459b695 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1852,10 +1852,9 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         /*
-          * Since we don't support reads and writes to different
-          * addresses, and we do have the proper page loaded for
--         * write, this shouldn't ever return.  But just in case,
--         * handle via stop-the-world.
-+         * write, this shouldn't ever return.
-          */
--        goto stop_the_world;
-+        g_assert_not_reached();
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index e92537d8f2..0445c3ccf3 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -75,7 +75,7 @@ typedef struct S1Translate {
+ 
+ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                 vaddr address,
+-                                MMUAccessType access_type,
++                                MMUAccessType access_type, MemOp memop,
+                                 GetPhysAddrResult *result,
+                                 ARMMMUFaultInfo *fi);
+ 
+@@ -3313,7 +3313,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+     ARMSecuritySpace ipa_space;
+     uint64_t hcr;
+ 
+-    ret = get_phys_addr_nogpc(env, ptw, address, access_type, result, fi);
++    ret = get_phys_addr_nogpc(env, ptw, address, access_type, 0, result, fi);
+ 
+     /* If S1 fails, return early.  */
+     if (ret) {
+@@ -3339,7 +3339,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+     cacheattrs1 = result->cacheattrs;
+     memset(result, 0, sizeof(*result));
+ 
+-    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type, result, fi);
++    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type, 0, result, fi);
+     fi->s2addr = ipa;
+ 
+     /* Combine the S1 and S2 perms.  */
+@@ -3406,7 +3406,7 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
+ 
+ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                       vaddr address,
+-                                      MMUAccessType access_type,
++                                      MMUAccessType access_type, MemOp memop,
+                                       GetPhysAddrResult *result,
+                                       ARMMMUFaultInfo *fi)
+ {
+@@ -3547,7 +3547,8 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                               GetPhysAddrResult *result,
+                               ARMMMUFaultInfo *fi)
+ {
+-    if (get_phys_addr_nogpc(env, ptw, address, access_type, result, fi)) {
++    if (get_phys_addr_nogpc(env, ptw, address, access_type,
++                            memop, result, fi)) {
+         return true;
      }
-     /* Collect tlb flags for read. */
-     tlb_addr |= tlbe->addr_read;
+     if (!granule_protection_check(env, result->f.phys_addr,
+@@ -3568,7 +3569,8 @@ bool get_phys_addr_with_space_nogpc(CPUARMState *env, vaddr address,
+         .in_mmu_idx = mmu_idx,
+         .in_space = space,
+     };
+-    return get_phys_addr_nogpc(env, &ptw, address, access_type, result, fi);
++    return get_phys_addr_nogpc(env, &ptw, address, access_type,
++                               memop, result, fi);
+ }
+ 
+ bool get_phys_addr(CPUARMState *env, vaddr address,
 -- 
 2.43.0
 
