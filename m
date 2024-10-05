@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09CCCFB42B
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8D4CFB42D
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 19:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxAkR-0005X1-8W; Sat, 05 Oct 2024 15:47:27 -0400
+	id 1sxAoH-0003jH-Hu; Sat, 05 Oct 2024 15:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sxAkF-0005OM-3y; Sat, 05 Oct 2024 15:47:15 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxAoG-0003br-FZ
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:51:24 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sxAkC-0007gC-Ok; Sat, 05 Oct 2024 15:47:14 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-37cc60c9838so1773140f8f.1; 
- Sat, 05 Oct 2024 12:47:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxAoE-0008M1-Ls
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 15:51:24 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-71df0dbee46so645183b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 12:51:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728157630; x=1728762430; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tV4roYq++fPVNjDJH3OXVG1IWov9RJmtNt7xuyalb90=;
- b=d3anrNlWdkZMbAMfHr6mF3Gax9uwN9VxWlv+n+twd4LUuj8cdL4zvI9s/As9lKr4Ci
- 0GefztIBJCF/8VIaXKruE6VZThCC+gLTl4reWpX+kOVQlh2KtDWD9U5Y9uYJ74xbpIrY
- dHV1xRntfxYENgEH1YJ8NsFhYbe7ApaHWxfypP5aPng3Q/m2Ac7UC9mXqwNfwvC7dTHk
- UCaCMwEXciAcxMND1WXj9lrdUNtn4iU9PYyNyB2kQnB0ARM6xGCsLuBy+lCg/yGW3z7q
- HpT/jcZ/hSMqxVphGn+gX9s4gYebr2BWz15NX1JGwb49/ABOUeD52AjPBL+p+EtBbMVR
- QIKg==
+ d=linaro.org; s=google; t=1728157881; x=1728762681; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U/LwouViJq+HB0xpw3jHJTahhjSrGiduLo7aelhKuSk=;
+ b=zLHgWP9QoLTVDXBrA/NAFW6+12Gx+xArNt281rUOT9kFHPCUOWoXL+c6nXAvLsqSse
+ DZL4Rix8BqOv3S1YniJlxfdt0cfBwiwDPP8Vf4FJOl4Cj7g0wste702bLH9dNwB+ABVk
+ LONHBFK9jaClqvkTYZM9cIgkxhCKs3Ww9Z0SxM0kvB5sO8KU/YkipEds5cVTduBpe/gv
+ m+Yq3a4+OyRUyo3eXhiPGDqmiYkGXApNC2QySZCZxVUW4xz7vOKOXHrehhQeAYRgTO3r
+ LDrGsQ2E9mXicYCpLWZ6qZ8wuPqAbdvvP2m0RGreKnE/B1AKw84Zy/9E643j01LuXFGA
+ 2ZHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728157630; x=1728762430;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tV4roYq++fPVNjDJH3OXVG1IWov9RJmtNt7xuyalb90=;
- b=qexbedC6AMghb1hZ43s8axDbW+cC8b3dQeg2PMdT/Oyz1ll/W4tl54TjQDrrFpTxiP
- pi4eF3VXyg1XK9cXIELz0wmhBl5n3oovsoQOkreiIm1zwVb8O1M5bkzxzrWRV9wvYWgm
- 5by6xs/aG0h+ItQSgTDWke21HyKxuaS2DkfaFuJdgbwN/LEr4FnXkgVAAvs1lr6EIGZl
- /lRgALBCddAUaqi7atQcTQUowUqb/ALnFKTSIBZ5Tp7aXzG1Y7vWTIeYXbqeFodCqXj/
- 3KVNej2N4hNvxeflvHJUkCrogqv+BOvdrV+d0dtON5pV6ltwgDMuv8YCDzs0ZTln9S4s
- +xWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwWq4y41u+9XVtOy+oKQS0po88/N9O1TQ2kebzTS4wvFWDw4CVnMKJD42r8gtK4bx1oiixK2L0nmgw@nongnu.org,
- AJvYcCVk4t8MflFGHnVK68UJPetqwlCyk8BVaOEn8kTAR4vwZcxZN+FcBP6aiBfC39/wwYSC0B4lYkKodJA=@nongnu.org
-X-Gm-Message-State: AOJu0YxGgAqZ/B+zZ4X87YhQvbrbtcff02y8YJKoYoANMdSXrDaF0Z59
- 9erxRQV9b81gXDFv16sOZSc3u6wB7lQFb3oyeswar4JNiOkx5a8CFTOJCA==
-X-Google-Smtp-Source: AGHT+IFIgwdq4hJJ6vgrn3ijzy2QYQI2gqfswWOBo3bVMtrVrKm1+RYkBMbeY6Tns6dc8nT+gzQU2Q==
-X-Received: by 2002:adf:ee49:0:b0:374:b9ca:f1e8 with SMTP id
- ffacd0b85a97d-37d04a577f7mr6777001f8f.20.1728157630235; 
- Sat, 05 Oct 2024 12:47:10 -0700 (PDT)
-Received: from archlinux.. (pd95ed790.dip0.t-ipconnect.de. [217.94.215.144])
+ d=1e100.net; s=20230601; t=1728157881; x=1728762681;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/LwouViJq+HB0xpw3jHJTahhjSrGiduLo7aelhKuSk=;
+ b=P6eYtl0VWUE0urNqAV0WfubGo9RWyQfhclj52URAqgx0xiTa+kPy3F3N2UzUO5Z0sz
+ Fiy2Jt4T95EGvX+dR1UqgWQnHj3wUBVH/olyrj1bngb190LzSZJwe4mVmNI6qRqGpKex
+ rfNwG8x/fl4VaNRP7/4xaMUU5P6UqQH1n3jLtJU7V9KMUr9Ln7/gp4MX16F+rjxU1p+y
+ IO5JLrMgrl17bnSdi5KsMBSlzWFuPSQh+caq+84dHMpVCR8FXhZz3Av25STNjhHrUjcu
+ GdmQk4nX0eiMI6N3a6p9bKtg2TI6ys05WlVcnMXaE7gVoSlxc6QIjD1LreEiXDErklTV
+ pAhw==
+X-Gm-Message-State: AOJu0YyIIXcmvg09qZUlm/Yr8uKvFGHt/+pb3u6+9hKMN9w/eA8414Vg
+ sZETUPF47+isr2/PV1CrwuHtV7Tz9uWVrDD/FmQG2BixU9oMyvsrNFxLiat2f8PiCv5GNpuvgIL
+ q
+X-Google-Smtp-Source: AGHT+IEjU2DXjoxwm1G1yH5cjNZ4oG2uuIBe2vlv+xD9Yqxc6m2GWSCYiQxn2Kzna1Kogu0gDRfSPg==
+X-Received: by 2002:a05:6a00:888:b0:70a:f65e:b13d with SMTP id
+ d2e1a72fcca58-71de245f362mr10675320b3a.27.1728157880824; 
+ Sat, 05 Oct 2024 12:51:20 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f86a0afc1sm47506775e9.1.2024.10.05.12.47.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Oct 2024 12:47:09 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- Corey Minyard <cminyard@mvista.com>, Bernhard Beschow <shentey@gmail.com>,
- qemu-ppc@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 12/23] hw/pci-host/ppce500: Reuse TYPE_PPC_E500_PCI_BRIDGE
- define
-Date: Sat,  5 Oct 2024 21:45:52 +0200
-Message-ID: <20241005194603.23139-13-shentey@gmail.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241005194603.23139-1-shentey@gmail.com>
-References: <20241005194603.23139-1-shentey@gmail.com>
+ d2e1a72fcca58-71df0d7d407sm1806250b3a.210.2024.10.05.12.51.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 05 Oct 2024 12:51:20 -0700 (PDT)
+Message-ID: <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
+Date: Sat, 5 Oct 2024 12:51:18 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240923162208.90745-1-iii@linux.ibm.com>
+ <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
+ <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,28 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer a macro rather than a string literal when instantiaging device models.
+On 9/25/24 00:43, Ilya Leoshkevich wrote:
+> On Tue, 2024-09-24 at 13:46 +0200, Richard Henderson wrote:
+>> On 9/23/24 18:12, Ilya Leoshkevich wrote:
+>>> Hi,
+>>>
+>>> On reporting a breakpoint in a non-non-stop mode, GDB remotes must
+>>> stop
+>>> all threads. Currently qemu-user doesn't do that, breaking the
+>>> debugging session for at least two reasons: concurrent access to
+>>> the
+>>> GDB socket, and an assertion within GDB [1].
+>>>
+>>> This series fixes this by importing pause_all_vcpus() from qemu-
+>>> system.
+>>> This in turn requires introducing BQL and a few stubs to qemu-user.
+>>
+>> I would have expected you to reuse (some portion of) start_exclusive,
+>> which is already
+>> part of qemu-user.  Is there a reason you chose a solution which
+>> requires...
+>>
+>>>     replay: Add replay_mutex_{lock,unlock}() stubs for qemu-user
+>>>     qemu-timer: Provide qemu_clock_enable() stub for qemu-user
+>>>     cpu: Use BQL in qemu-user
+>>
+>> all sorts of other infrastructure?
+>>
+>>
+>> r~
+> 
+> I don't think start_exclusive() would protect the gdb socket from
+> concurrent accesses (e.g., if two threads are simultaneously stopped).
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/pci-host/ppce500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Of course it would, otherwise "exclusive" has no meaning.
+All other cpus are blocked in exclusive_idle().
 
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index 97e5d47cec..d7ff2ba778 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -475,7 +475,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
-     address_space_init(&s->bm_as, &s->bm, "pci-bm");
-     pci_setup_iommu(b, &ppce500_iommu_ops, s);
- 
--    pci_create_simple(b, 0, "e500-host-bridge");
-+    pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
- 
-     memory_region_init(&s->container, OBJECT(h), "pci-container", PCIE500_ALL_SIZE);
-     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_be_ops, h,
--- 
-2.46.2
+Importantly, no cpus are blocked in syscalls, where the kernel can modify memory behind 
+gdbstub's back (e.g. read).  I think considering "in_syscall" to be "paused" a mistake.
 
+
+r~
 
