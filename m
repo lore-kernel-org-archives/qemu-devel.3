@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366FFCF34C4
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D45CFB421
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Oct 2024 16:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sx7gK-0006Cr-D2; Sat, 05 Oct 2024 12:31:00 -0400
+	id 1sx7xh-0000qG-8V; Sat, 05 Oct 2024 12:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7gF-0006CZ-Il
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:30:58 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sx7gD-0006rv-Qw
- for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:30:55 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D2C76958FE;
- Sat,  5 Oct 2024 19:30:48 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 868A714E017;
- Sat,  5 Oct 2024 19:30:52 +0300 (MSK)
-Message-ID: <48c34f43-e63e-47e6-99b4-8b1b1842231b@tls.msk.ru>
-Date: Sat, 5 Oct 2024 19:30:52 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sx7xe-0000ps-FH
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:48:54 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sx7xc-0001dt-Fx
+ for qemu-devel@nongnu.org; Sat, 05 Oct 2024 12:48:54 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2e0afd945d4so2353758a91.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Oct 2024 09:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728146930; x=1728751730; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iSrAwBk5bZNjn8Zy9dmgJJyBe5UY35yHEd3GQKBCY9s=;
+ b=DITQYRdl1swQoyMDsXKkCOgW6axBDTsJmssDJrwNyvwvYby36+8MKwPlbdMOOP7UOh
+ 12sF+RfZjpxk56WenEYPIBUWZ8mo9LobA+39ohsi+kXtJc/namoDKXxaHYyXkk54YbY3
+ QohKCqSSWEZFYJzuOmB4RnyTp1+Ike0yq4AR6xxhAAIbI3fZ/+3+em4vRonWGOHu9b/g
+ /X2okF+8XNwZGZCJY84dS/7V83Upnxqp+c+Ct+N/zX1+PSrUg6BbIjPaOp0GgCGt//QA
+ RpYLOtKoZ6lqBT8ukPRekeQuvO76XWmgOztmi219x/s46jRZaIMXrktkItKelwiHP+M5
+ epzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728146930; x=1728751730;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iSrAwBk5bZNjn8Zy9dmgJJyBe5UY35yHEd3GQKBCY9s=;
+ b=A6TEcZ04WQ9+8SN57zVVlxpeAx9xdFyOHgAJ8OeahF0CMSN892/l9lCWnnXl9n5TfG
+ 1F68iwI0mmBU09dt15Y8TLwwh72M51u7wTJhpgN6NCFEmCGrt0x1uwkC9naDJtjB+2v2
+ gnAvFMy0CTarDxFBVtZRQNN3MzSLfQqKN8V8XNDEnX73z1LwI12hfQrxfiJn5dzaiGbd
+ d0yXxuNhZtgYl6UPbnJAZCD9aLlnY5urF4jRAyKq92bRTkVIbsu4KCYm4MJwRPQQYvZm
+ emwvQgZJ7Bau2M+hgDh3jieYyXANu7BOkFWlYALxaj818NQwxcSAMrwMxNrpfe2G0oq0
+ 03Ew==
+X-Gm-Message-State: AOJu0YxPBamN3SL9BnvSsRwfrjSjPzfu4u5puGn8WaSJaJSPeysLVHrv
+ L8FwHk7HkZ+/RPOOLaBZZtfl8wBNL0WstQ1ekx/11YX9t9nEdC8UVWIfXmmI+JqcRcEHaDSbRLx
+ C
+X-Google-Smtp-Source: AGHT+IHrFaiYUXXkb+26350+hd1YbPnIQtBz5AsI6Sj550FvAE750ku6uhOBe2SWhE5QfHvBKUx51Q==
+X-Received: by 2002:a17:90a:c7c9:b0:2e0:a4a4:75d9 with SMTP id
+ 98e67ed59e1d1-2e1e622860emr7885380a91.12.1728146930528; 
+ Sat, 05 Oct 2024 09:48:50 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e1e8665529sm3787753a91.39.2024.10.05.09.48.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Oct 2024 09:48:50 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mjt@tls.msk.ru
+Subject: [PATCH] linux-user: Fix parse_elf_properties GNU0_MAGIC check
+Date: Sat,  5 Oct 2024 09:48:49 -0700
+Message-ID: <20241005164849.424838-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: ensure we enable CMPXCHG128 on x86_64
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
- <5604626b-cba7-4d1c-8dfb-2c2e3b8495a5@tls.msk.ru>
- <1ede7823-8d4c-462a-8a80-c67c9dedd062@linaro.org>
- <a9a09776-e472-4321-af74-8d0dd0102654@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <a9a09776-e472-4321-af74-8d0dd0102654@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,39 +91,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-05.10.2024 19:22, Michael Tokarev wrote:
-> 05.10.2024 19:20, Richard Henderson wrote:
->> No, it doesn't fail to link.  That's why it took so long to notice.
-> 
-> It does here quite often during bisection between 9.0 and 9.1.
-> Lemme see..
+Comparing a string of 4 bytes only works in little-endian.
 
-So, it is just 2 steps:
+Adjust bulk bswap to only apply to the note payload.
+Perform swapping of the note header manually; the magic
+is defined so that it does not need a runtime swap.
 
-$ git bisect start v9.0.0 v9.1.0   # at 2529ea2d561ea9fe359fb19ebdcfeb8b6cddd219
-$ configure --target-list=x86_64-softmmu
-$ ninja qemu-system-x86_64   # this one will work
-$ git bisect bad    # at 544595e73007c824b7435b52519cc578586783a6
-$ ninja qemu-system-x86_64   # this breaks:
+Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/elfload.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-[2/2] Linking target qemu-system-x86_64
-FAILED: qemu-system-x86_64
-cc -m64 @qemu-system-x86_64.rsp
-/usr/bin/ld: libqemu-x86_64-softmmu.fa.p/accel_tcg_cputlb.c.o: in function `atomic16_read_rw':
-/build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
-/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
-/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
-/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
-/usr/bin/ld: /build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:51: undefined reference to `__sync_val_compare_and_swap_16'
-/usr/bin/ld: libqemu-x86_64-softmmu.fa.p/accel_tcg_cputlb.c.o: in function `atomic16_set':
-/build/qemu/master/host/include/x86_64/host/atomic128-ldst.h:67: undefined reference to `__sync_bool_compare_and_swap_16'
-collect2: error: ld returned 1 exit status
-ninja: build stopped: subcommand failed.
-
-So it requires second step.
-configure is re-run at the second build. So we're holding
-some data between rebuilds which we shouldn't.
-
-/mjt
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 0678c9d506..52c88a68a9 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3121,11 +3121,11 @@ static bool parse_elf_properties(const ImageSource *src,
+     }
+ 
+     /*
+-     * The contents of a valid PT_GNU_PROPERTY is a sequence
+-     * of uint32_t -- swap them all now.
++     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
++     * Swap most of them now, beyond the header and namesz.
+      */
+ #ifdef BSWAP_NEEDED
+-    for (int i = 0; i < n / 4; i++) {
++    for (int i = 4; i < n / 4; i++) {
+         bswap32s(note.data + i);
+     }
+ #endif
+@@ -3135,15 +3135,15 @@ static bool parse_elf_properties(const ImageSource *src,
+      * immediately follows nhdr and is thus at the 4th word.  Further, all
+      * of the inputs to the kernel's round_up are multiples of 4.
+      */
+-    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
+-        note.nhdr.n_namesz != NOTE_NAME_SZ ||
++    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
++        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
+         note.data[3] != GNU0_MAGIC) {
+         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
+         return false;
+     }
+     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
+ 
+-    datasz = note.nhdr.n_descsz + off;
++    datasz = tswap32(note.nhdr.n_descsz) + off;
+     if (datasz > n) {
+         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
+         return false;
+-- 
+2.43.0
 
 
