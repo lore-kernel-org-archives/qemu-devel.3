@@ -4,40 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7548CFB43F
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 16:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C309CFB43F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 16:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxURh-000608-B7; Sun, 06 Oct 2024 12:49:25 -0400
+	id 1sxUZ0-000886-Vd; Sun, 06 Oct 2024 12:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxURe-0005zS-QP
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 12:49:23 -0400
+ id 1sxUYz-00087q-Md; Sun, 06 Oct 2024 12:56:57 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxURc-0008At-DM
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 12:49:22 -0400
+ id 1sxUYy-0000cB-4f; Sun, 06 Oct 2024 12:56:57 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6B46D4E6001;
- Sun, 06 Oct 2024 18:49:15 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 543694E6004;
+ Sun, 06 Oct 2024 18:56:54 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id YdPnJhRLz9Ie; Sun,  6 Oct 2024 18:49:13 +0200 (CEST)
+ with ESMTP id 12nZs-NBiZTg; Sun,  6 Oct 2024 18:56:52 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 75D804E6004; Sun, 06 Oct 2024 18:49:13 +0200 (CEST)
-Message-Id: <59dd3361ca8ede93122e87752c7d66a304b05c0f.1728232526.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1728232526.git.balaton@eik.bme.hu>
-References: <cover.1728232526.git.balaton@eik.bme.hu>
+ id 5A61B4E6001; Sun, 06 Oct 2024 18:56:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 581E0746F60;
+ Sun, 06 Oct 2024 18:56:52 +0200 (CEST)
+Date: Sun, 6 Oct 2024 18:56:52 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 1/2] log: Add separate debug option for logging invalid memory
- accesses
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-Date: Sun, 06 Oct 2024 18:49:13 +0200 (CEST)
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Corey Minyard <cminyard@mvista.com>, qemu-ppc@nongnu.org, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH v2 01/23] hw/ppc/e500: Do not leak struct boot_info
+In-Reply-To: <20241005194603.23139-2-shentey@gmail.com>
+Message-ID: <631e016f-730f-7b2d-2ab0-49ce767e5e37@eik.bme.hu>
+References: <20241005194603.23139-1-shentey@gmail.com>
+ <20241005194603.23139-2-shentey@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -60,91 +71,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently -d guest_errors enables logging of different invalid actions
-by the guest such as misusing hardware, accessing missing features or
-invalid memory areas. The memory access logging can be quite verbose
-which obscures the other messages enabled by this debug switch so
-separate it by adding a new -d memaccess option to make it possible to
-control it independently of other guest error logs.
+On Sat, 5 Oct 2024, Bernhard Beschow wrote:
+> The struct is allocated once with g_new0() but never free()'d. Fix the leakage
+> by adding an attribute to struct PPCE500MachineState which avoids the
+> allocation.
+>
+> While at it remove the obsolete /*< private >*/ markers.
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+> hw/ppc/e500.h |  9 +++++++--
+> hw/ppc/e500.c | 17 ++++-------------
+> 2 files changed, 11 insertions(+), 15 deletions(-)
+>
+> diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+> index 8c09ef92e4..5654bb7907 100644
+> --- a/hw/ppc/e500.h
+> +++ b/hw/ppc/e500.h
+> @@ -5,18 +5,23 @@
+> #include "hw/platform-bus.h"
+> #include "qom/object.h"
+>
+> +typedef struct boot_info {
+> +    uint32_t dt_base;
+> +    uint32_t dt_size;
+> +    uint32_t entry;
+> +} boot_info;
+> +
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- include/qemu/log.h | 1 +
- system/memory.c    | 6 +++---
- system/physmem.c   | 2 +-
- util/log.c         | 2 ++
- 4 files changed, 7 insertions(+), 4 deletions(-)
+You either don't need a typedef or don't need a struct name. Since coding 
+style says typedefs should be camel case but other machines don't use a 
+typedef it's probably simplest to drop the typedef and define the machine 
+state field as struct boot_info below for consistency with other similar 
+structs. Otherwise you'd have to come up with some camel case type name 
+here but that would be less consistent with other machines. So I'd go 
+without the typedef.
 
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index e10e24cd4f..6122e34bdd 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -37,6 +37,7 @@ bool qemu_log_separate(void);
- #define LOG_PER_THREAD     (1 << 20)
- #define CPU_LOG_TB_VPU     (1 << 21)
- #define LOG_TB_OP_PLUGIN   (1 << 22)
-+#define LOG_MEM_ACCESS     (1 << 23)
- 
- /* Lock/unlock output. */
- 
-diff --git a/system/memory.c b/system/memory.c
-index f6f6fee6d8..e35a473248 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1380,7 +1380,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
- {
-     if (mr->ops->valid.accepts
-         && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_MEM_ACCESS, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: rejected\n",
-                       is_write ? "write" : "read",
-                       addr, size, memory_region_name(mr));
-@@ -1388,7 +1388,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
-     }
- 
-     if (!mr->ops->valid.unaligned && (addr & (size - 1))) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_MEM_ACCESS, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: unaligned\n",
-                       is_write ? "write" : "read",
-                       addr, size, memory_region_name(mr));
-@@ -1402,7 +1402,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
- 
-     if (size > mr->ops->valid.max_access_size
-         || size < mr->ops->valid.min_access_size) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_MEM_ACCESS, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: invalid size "
-                       "(min:%u max:%u)\n",
-                       is_write ? "write" : "read",
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a384..0f0e8f3bed 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2745,7 +2745,7 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
-     if (memory_region_is_ram(mr)) {
-         return true;
-     }
--    qemu_log_mask(LOG_GUEST_ERROR,
-+    qemu_log_mask(LOG_MEM_ACCESS,
-                   "Invalid access to non-RAM device at "
-                   "addr 0x%" HWADDR_PRIX ", size %" HWADDR_PRIu ", "
-                   "region '%s'\n", addr, len, memory_region_name(mr));
-diff --git a/util/log.c b/util/log.c
-index 6219819855..1aa7396277 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -503,6 +503,8 @@ const QEMULogItem qemu_log_items[] = {
-       "open a separate log file per thread; filename must contain '%d'" },
-     { CPU_LOG_TB_VPU, "vpu",
-       "include VPU registers in the 'cpu' logging" },
-+    { LOG_MEM_ACCESS, "memaccess",
-+      "log invalid memory accesses" },
-     { 0, NULL, NULL },
- };
- 
--- 
-2.30.9
+Regards,
+BALATON Zoltan
 
+> struct PPCE500MachineState {
+> -    /*< private >*/
+>     MachineState parent_obj;
+>
+>     /* points to instance of TYPE_PLATFORM_BUS_DEVICE if
+>      * board supports dynamic sysbus devices
+>      */
+>     PlatformBusDevice *pbus_dev;
+> +    boot_info boot_info;
+> };
+>
+> struct PPCE500MachineClass {
+> -    /*< private >*/
+>     MachineClass parent_class;
+>
+>     /* required -- must at least add toplevel board compatible */
+> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+> index 3bd12b54ab..75b051009f 100644
+> --- a/hw/ppc/e500.c
+> +++ b/hw/ppc/e500.c
+> @@ -80,13 +80,6 @@
+>
+> #define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
+>
+> -struct boot_info
+> -{
+> -    uint32_t dt_base;
+> -    uint32_t dt_size;
+> -    uint32_t entry;
+> -};
+> -
+> static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+>                                 int nr_slots, int *len)
+> {
+> @@ -919,7 +912,6 @@ void ppce500_init(MachineState *machine)
+>     bool kernel_as_payload;
+>     hwaddr bios_entry = 0;
+>     target_long payload_size;
+> -    struct boot_info *boot_info = NULL;
+>     int dt_size;
+>     int i;
+>     unsigned int smp_cpus = machine->smp.cpus;
+> @@ -974,9 +966,8 @@ void ppce500_init(MachineState *machine)
+>         /* Register reset handler */
+>         if (!i) {
+>             /* Primary CPU */
+> -            boot_info = g_new0(struct boot_info, 1);
+>             qemu_register_reset(ppce500_cpu_reset, cpu);
+> -            env->load_info = boot_info;
+> +            env->load_info = &pms->boot_info;
+>         } else {
+>             /* Secondary CPUs */
+>             qemu_register_reset(ppce500_cpu_reset_sec, cpu);
+> @@ -1274,9 +1265,9 @@ void ppce500_init(MachineState *machine)
+>     }
+>     assert(dt_size < DTB_MAX_SIZE);
+>
+> -    boot_info->entry = bios_entry;
+> -    boot_info->dt_base = dt_base;
+> -    boot_info->dt_size = dt_size;
+> +    pms->boot_info.entry = bios_entry;
+> +    pms->boot_info.dt_base = dt_base;
+> +    pms->boot_info.dt_size = dt_size;
+> }
+>
+> static void e500_ccsr_initfn(Object *obj)
+>
 
