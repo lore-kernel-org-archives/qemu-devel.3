@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDFACFB424
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 17:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78642CFB43F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 17:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxUo1-0002FC-AV; Sun, 06 Oct 2024 13:12:29 -0400
+	id 1sxV3d-0003wj-Ca; Sun, 06 Oct 2024 13:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxUnx-0002Ea-EP; Sun, 06 Oct 2024 13:12:26 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1sxV3C-0003sz-ON; Sun, 06 Oct 2024 13:28:13 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxUnu-000269-O5; Sun, 06 Oct 2024 13:12:25 -0400
+ id 1sxV34-0002uq-Ha; Sun, 06 Oct 2024 13:28:10 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2DE4B4E6004;
- Sun, 06 Oct 2024 19:12:19 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5DA394E6004;
+ Sun, 06 Oct 2024 19:23:17 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id P9Wq9uwLE9g3; Sun,  6 Oct 2024 19:12:16 +0200 (CEST)
+ with ESMTP id d6eBpTY9-MPz; Sun,  6 Oct 2024 19:23:15 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E294C4E6001; Sun, 06 Oct 2024 19:12:16 +0200 (CEST)
+ id 6EC814E6001; Sun, 06 Oct 2024 19:23:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E0E2F746F60;
- Sun, 06 Oct 2024 19:12:16 +0200 (CEST)
-Date: Sun, 6 Oct 2024 19:12:16 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6CCE2746F60;
+ Sun, 06 Oct 2024 19:23:15 +0200 (CEST)
+Date: Sun, 6 Oct 2024 19:23:15 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Bernhard Beschow <shentey@gmail.com>
 cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
@@ -42,22 +42,21 @@ cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
  =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
  =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: Re: [PATCH v2 08/23] hw/ppc/ppce500_ccsr: Log access to unimplemented
- registers
-In-Reply-To: <20241005194603.23139-9-shentey@gmail.com>
-Message-ID: <a201615f-90b1-1d8e-75ea-0766e231a0a8@eik.bme.hu>
+Subject: Re: [PATCH v2 09/23] hw/ppc/mpc8544_guts: Populate POR PLL ratio
+ status register
+In-Reply-To: <20241005194603.23139-10-shentey@gmail.com>
+Message-ID: <29b750ca-5f21-232b-c8fa-ecfeea8a360b@eik.bme.hu>
 References: <20241005194603.23139-1-shentey@gmail.com>
- <20241005194603.23139-9-shentey@gmail.com>
+ <20241005194603.23139-10-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,94 +73,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sat, 5 Oct 2024, Bernhard Beschow wrote:
-> The CCSR space is just a container which is meant to be covered by platform
-> device memory regions. However, QEMU only implements a subset of these devices.
-> Add some logging to see which devices a guest attempts to access.
+> Populate this read-only register with some arbitrary values which avoids
+> U-Boot's get_clocks() to hang().
 >
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
-> hw/ppc/ppce500_ccsr.c | 32 +++++++++++++++++++++++++++++++-
-> hw/ppc/trace-events   |  3 +++
-> 2 files changed, 34 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/ppc/ppce500_ccsr.c b/hw/ppc/ppce500_ccsr.c
-> index 5d0e1e0e89..6659560674 100644
-> --- a/hw/ppc/ppce500_ccsr.c
-> +++ b/hw/ppc/ppce500_ccsr.c
-> @@ -13,12 +13,42 @@
->
-> #include "qemu/osdep.h"
-> #include "ppce500_ccsr.h"
-> +#include "qemu/log.h"
-> +#include "trace.h"
-> +
-> +static uint64_t ppce500_ccsr_io_read(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    uint64_t value = 0;
-> +
-> +    trace_ppce500_ccsr_io_read(addr, value, size);
-> +    qemu_log_mask(LOG_UNIMP,
-> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] -> 0\n",
-> +                  __func__, addr);
 
-I'm not sure having both unimp log and traces is the best way. I thought 
-unimp log with an unimplemented device area would be the simplest and 
-least intrusive for the code but if you prefer traces then maybe we don't 
-need unimp logs. But adding these otherwise empty functions (which won't 
-get populated as subdevices have their own regions) still bothers me a bit 
-but not enough to block this if others have no opinion on it.
+I think the register fields are overkill, a value with a comment or some 
+or'ed shift'ed values with a comment would be simpler but the result is 
+the same so
 
-I also had this patch:
-https://patchew.org/QEMU/cover.1728232526.git.balaton@eik.bme.hu/
-which I first thought might help but that's about guest_errors not unimp 
-logs so does not apply here. What other unimp logs get in the way here 
-that makes traces a better choice?
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
 Regards,
 BALATON Zoltan
 
-> +
-> +    return value;
-> +}
-> +
-> +static void ppce500_ccsr_io_write(void *opaque, hwaddr addr, uint64_t value,
-> +                                  unsigned size)
-> +{
-> +    trace_ppce500_ccsr_io_write(addr, value, size);
-> +    qemu_log_mask(LOG_UNIMP,
-> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] <- 0x%" PRIx32 "\n",
-> +                  __func__, addr, (uint32_t)value);
-> +}
-> +
-> +static const MemoryRegionOps ppce500_ccsr_ops = {
-> +    .read = ppce500_ccsr_io_read,
-> +    .write = ppce500_ccsr_io_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +};
+> ---
+> hw/ppc/mpc8544_guts.c | 12 ++++++++++++
+> 1 file changed, 12 insertions(+)
 >
-> static void ppce500_ccsr_init(Object *obj)
-> {
->     PPCE500CCSRState *s = CCSR(obj);
+> diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+> index e3540b0281..c02b34ccde 100644
+> --- a/hw/ppc/mpc8544_guts.c
+> +++ b/hw/ppc/mpc8544_guts.c
+> @@ -29,6 +29,12 @@
+> #define MPC8544_GUTS_RSTCR_RESET      0x02
 >
-> -    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
-> +    memory_region_init_io(&s->ccsr_space, obj, &ppce500_ccsr_ops, obj,
-> +                          "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
->     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->ccsr_space);
-> }
->
-> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
-> index 1f125ce841..ca4c231c9f 100644
-> --- a/hw/ppc/trace-events
-> +++ b/hw/ppc/trace-events
-> @@ -143,6 +143,9 @@ ppc_irq_cpu(const char *action) "%s"
-> ppc_dcr_read(uint32_t addr, uint32_t val) "DRCN[0x%x] -> 0x%x"
-> ppc_dcr_write(uint32_t addr, uint32_t val) "DRCN[0x%x] <- 0x%x"
->
-> +ppce500_ccsr_io_read(uint32_t index, uint32_t val, uint8_t size) "[0x%" PRIx32 "] -> 0x%08x (size: 0x%" PRIu8 ")"
-> +ppce500_ccsr_io_write(uint32_t index, uint32_t val, uint8_t size) "[0x%" PRIx32 "] <- 0x%08x (size: 0x%" PRIu8 ")"
+> #define MPC8544_GUTS_ADDR_PORPLLSR    0x00
+> +REG32(GUTS_PORPLLSR, 0x00)
+> +    FIELD(GUTS_PORPLLSR, E500_1_RATIO, 24, 6)
+> +    FIELD(GUTS_PORPLLSR, E500_0_RATIO, 16, 6)
+> +    FIELD(GUTS_PORPLLSR, DDR_RATIO, 9, 5)
+> +    FIELD(GUTS_PORPLLSR, PLAT_RATIO, 1, 5)
 > +
-> # prep_systemio.c
-> prep_systemio_read(uint32_t addr, uint32_t val) "read addr=0x%x val=0x%x"
-> prep_systemio_write(uint32_t addr, uint32_t val) "write addr=0x%x val=0x%x"
+> #define MPC8544_GUTS_ADDR_PORBMSR     0x04
+> #define MPC8544_GUTS_ADDR_PORIMPSCR   0x08
+> #define MPC8544_GUTS_ADDR_PORDEVSR    0x0C
+> @@ -75,6 +81,12 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
+>
+>     addr &= MPC8544_GUTS_MMIO_SIZE - 1;
+>     switch (addr) {
+> +    case MPC8544_GUTS_ADDR_PORPLLSR:
+> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_1_RATIO, 6); /* 3:1 */
+> +        value = FIELD_DP32(value, GUTS_PORPLLSR, E500_0_RATIO, 6); /* 3:1 */
+> +        value = FIELD_DP32(value, GUTS_PORPLLSR, DDR_RATIO, 12); /* 12:1 */
+> +        value = FIELD_DP32(value, GUTS_PORPLLSR, PLAT_RATIO, 6); /* 6:1 */
+> +        break;
+>     case MPC8544_GUTS_ADDR_PVR:
+>         value = env->spr[SPR_PVR];
+>         break;
 >
 
