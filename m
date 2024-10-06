@@ -4,54 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44B5CFB424
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 18:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F41CFB440
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 23:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxWGw-00051E-Au; Sun, 06 Oct 2024 14:46:26 -0400
+	id 1sxade-0004Zn-JV; Sun, 06 Oct 2024 19:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxWGo-00050r-P7; Sun, 06 Oct 2024 14:46:19 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sxadc-0004ZP-O9
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 19:26:08 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sxWGm-0003TU-1f; Sun, 06 Oct 2024 14:46:18 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8C10E4E6013;
- Sun, 06 Oct 2024 20:46:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 0XM6N0iDLlXF; Sun,  6 Oct 2024 20:46:09 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8DA4F4E6039; Sun, 06 Oct 2024 20:46:09 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8C131746F60;
- Sun, 06 Oct 2024 20:46:09 +0200 (CEST)
-Date: Sun, 6 Oct 2024 20:46:09 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 1/2] hw/ppc: Consolidate e500 initial mapping creation
- functions
-In-Reply-To: <C252CEDD-75BE-4A32-9EA3-98FECBF36BA8@gmail.com>
-Message-ID: <d386c6a9-3ca7-b4be-dab7-21bf8a8888f0@eik.bme.hu>
-References: <cover.1721131193.git.balaton@eik.bme.hu>
- <485a90bca642c894d94c8dbcadac58448c0bfa71.1721131193.git.balaton@eik.bme.hu>
- <C252CEDD-75BE-4A32-9EA3-98FECBF36BA8@gmail.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sxada-0006YN-5O
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 19:26:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1728257152; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=XF9MvaTN4r+XrmHtKog6Bgj7+Nej6JQgUcCqn4Xmeh63fM4Eze0iQdBAgAAJ0qKjiK5dzF4xqOCJQS8kcMH4UPxq58VBjRPwcXS5iy0TsE9v6mKU2njRhMm3aX0mWFnf1YKh3mjkQofq+xXYYaI+Jg3fZvM8P1czIsjkM6M6+bA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1728257152;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=9TM082r4TvLK+vLOkloKNZxtKZsN5cJ9v3wGKgaf8xQ=; 
+ b=YQvXiad1hCjAhtZ0z9H2RqPec9VZ6wuPkoXBNrXZxpQIn0bzG0MB2Jf9VWKWmUKAgXBcvEo9aFQXYxGcACEqs32ZeQ36da8FQ0KKwkrKn5AFkZYcxpJpLbYpbgNzxaLWweW+peQu2W+oTDWYnubwhsyobGN1u5bPhEOnmFzNuLQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728257152; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=9TM082r4TvLK+vLOkloKNZxtKZsN5cJ9v3wGKgaf8xQ=;
+ b=GO1PQ0N5+BA1ykZJIxQ6U/uL8Ss43Q3TSgAMoCJke16tZ7qIeqlwF94JXHsngPSg
+ yRacR4A/N4FoUTYhMbGEcMl+aHiiLH3hO9ryGOYMJJuFSzYw/N9tpCHSKMfuUgz+Ns0
+ LlwZ82JVMWZWrHQYaH5ZHZgrYZgpw3ylHD0FCg0g=
+Received: by mx.zohomail.com with SMTPS id 17282571510241008.1980387597356;
+ Sun, 6 Oct 2024 16:25:51 -0700 (PDT)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>
+Subject: [PATCH v1 0/6] Support virtio-gpu DRM native context
+Date: Mon,  7 Oct 2024 02:23:42 +0300
+Message-ID: <20241006232350.3198759-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,204 +90,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Aug 2024, Bernhard Beschow wrote:
-> Am 16. Juli 2024 12:07:57 UTC schrieb BALATON Zoltan <balaton@eik.bme.hu>:
->> Add booke206_set_tlb() utility function and use it to replace very
->> similar create_initial_mapping functions in e500 machines.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->> hw/ppc/e500.c         | 41 +++++++++++++++++++----------------------
->> hw/ppc/e500.h         |  2 --
->> hw/ppc/ppce500_spin.c | 30 +++++++++---------------------
->> include/hw/ppc/ppc.h  |  5 +++++
->> 4 files changed, 33 insertions(+), 45 deletions(-)
->>
->> diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
->> index 3bd12b54ab..8682bc7838 100644
->> --- a/hw/ppc/e500.c
->> +++ b/hw/ppc/e500.c
->> @@ -721,11 +721,21 @@ static int ppce500_prep_device_tree(PPCE500MachineState *machine,
->>                                     kernel_base, kernel_size, true);
->> }
->>
->> -hwaddr booke206_page_size_to_tlb(uint64_t size)
->> +static hwaddr booke206_page_size_to_tlb(uint64_t size)
->> {
->>     return 63 - clz64(size / KiB);
->> }
->>
->> +void booke206_set_tlb(ppcmas_tlb_t *tlb, target_ulong va, hwaddr pa,
->> +                      hwaddr len)
->> +{
->> +    tlb->mas1 = booke206_page_size_to_tlb(len) << MAS1_TSIZE_SHIFT;
->> +    tlb->mas1 |= MAS1_VALID;
->> +    tlb->mas2 = va & TARGET_PAGE_MASK;
->> +    tlb->mas7_3 = pa & TARGET_PAGE_MASK;
->> +    tlb->mas7_3 |= MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | MAS3_SX;
->> +}
->> +
->> static int booke206_initial_map_tsize(CPUPPCState *env)
->> {
->>     struct boot_info *bi = env->load_info;
->> @@ -751,25 +761,6 @@ static uint64_t mmubooke_initial_mapsize(CPUPPCState *env)
->>     return (1ULL << 10 << tsize);
->> }
->>
->> -/* Create -kernel TLB entries for BookE. */
->> -static void mmubooke_create_initial_mapping(CPUPPCState *env)
->> -{
->> -    ppcmas_tlb_t *tlb = booke206_get_tlbm(env, 1, 0, 0);
->> -    hwaddr size;
->> -    int ps;
->> -
->> -    ps = booke206_initial_map_tsize(env);
->> -    size = (ps << MAS1_TSIZE_SHIFT);
->> -    tlb->mas1 = MAS1_VALID | size;
->> -    tlb->mas2 = 0;
->> -    tlb->mas7_3 = 0;
->> -    tlb->mas7_3 |= MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | MAS3_SX;
->> -
->> -#ifdef CONFIG_KVM
->> -    env->tlb_dirty = true;
->> -#endif
->> -}
->> -
->> static void ppce500_cpu_reset_sec(void *opaque)
->> {
->>     PowerPCCPU *cpu = opaque;
->> @@ -786,6 +777,8 @@ static void ppce500_cpu_reset(void *opaque)
->>     CPUState *cs = CPU(cpu);
->>     CPUPPCState *env = &cpu->env;
->>     struct boot_info *bi = env->load_info;
->> +    uint64_t map_size = mmubooke_initial_mapsize(env);
->> +    ppcmas_tlb_t *tlb = booke206_get_tlbm(env, 1, 0, 0);
->>
->>     cpu_reset(cs);
->>
->> @@ -796,11 +789,15 @@ static void ppce500_cpu_reset(void *opaque)
->>     env->gpr[4] = 0;
->>     env->gpr[5] = 0;
->>     env->gpr[6] = EPAPR_MAGIC;
->> -    env->gpr[7] = mmubooke_initial_mapsize(env);
->> +    env->gpr[7] = map_size;
->>     env->gpr[8] = 0;
->>     env->gpr[9] = 0;
->>     env->nip = bi->entry;
->> -    mmubooke_create_initial_mapping(env);
->> +    /* create initial mapping */
->> +    booke206_set_tlb(tlb, 0, 0, map_size);
->
-> Both invocations of booke206_set_tlb() are followed by:
->
->> +#ifdef CONFIG_KVM
->> +    env->tlb_dirty = true;
->> +#endif
->
-> Doesn't it make sense to move these three lines into booke206_set_tlb()? The two copies you're resolving did so, too.
+This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+It's based on the pending Venus v17 patches [1] that bring host blobs
+support to virtio-gpu-gl device.
 
-No because tlb_dirty is in env and booke206_set_tlb only operates on the 
-tlb entry. I don't want to pass the env just for this as this way it 
-separates operations on tlb and on env and is also more consistent with 
-the ppc440 case.
+[1] https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osipenko@collabora.com/
 
-Regards,
-BALATON Zoltan
+Contarary to Virgl and Venus contexts which mediate high level GFX APIs,
+DRM native context [2] mediates lower level kernel driver UAPI, which
+reflects in a less CPU overhead and less/simpler code needed to support it.
+DRM context consists of a host and guest parts that have to be implemented
+for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+a real/native host GPU device for GL/VK applications.
 
-> Best regards,
-> Bernhard
->
->> }
->>
->> static DeviceState *ppce500_init_mpic_qemu(PPCE500MachineState *pms,
->> diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
->> index 8c09ef92e4..01db102625 100644
->> --- a/hw/ppc/e500.h
->> +++ b/hw/ppc/e500.h
->> @@ -41,8 +41,6 @@ struct PPCE500MachineClass {
->>
->> void ppce500_init(MachineState *machine);
->>
->> -hwaddr booke206_page_size_to_tlb(uint64_t size);
->> -
->> #define TYPE_PPCE500_MACHINE      "ppce500-base-machine"
->> OBJECT_DECLARE_TYPE(PPCE500MachineState, PPCE500MachineClass, PPCE500_MACHINE)
->>
->> diff --git a/hw/ppc/ppce500_spin.c b/hw/ppc/ppce500_spin.c
->> index dfbe759481..208d87569a 100644
->> --- a/hw/ppc/ppce500_spin.c
->> +++ b/hw/ppc/ppce500_spin.c
->> @@ -33,6 +33,7 @@
->> #include "hw/hw.h"
->> #include "hw/sysbus.h"
->> #include "sysemu/hw_accel.h"
->> +#include "hw/ppc/ppc.h"
->> #include "e500.h"
->> #include "qom/object.h"
->>
->> @@ -70,30 +71,12 @@ static void spin_reset(DeviceState *dev)
->>     }
->> }
->>
->> -static void mmubooke_create_initial_mapping(CPUPPCState *env,
->> -                                     target_ulong va,
->> -                                     hwaddr pa,
->> -                                     hwaddr len)
->> -{
->> -    ppcmas_tlb_t *tlb = booke206_get_tlbm(env, 1, 0, 1);
->> -    hwaddr size;
->> -
->> -    size = (booke206_page_size_to_tlb(len) << MAS1_TSIZE_SHIFT);
->> -    tlb->mas1 = MAS1_VALID | size;
->> -    tlb->mas2 = (va & TARGET_PAGE_MASK) | MAS2_M;
->> -    tlb->mas7_3 = pa & TARGET_PAGE_MASK;
->> -    tlb->mas7_3 |= MAS3_UR | MAS3_UW | MAS3_UX | MAS3_SR | MAS3_SW | MAS3_SX;
->> -#ifdef CONFIG_KVM
->> -    env->tlb_dirty = true;
->> -#endif
->> -}
->> -
->> static void spin_kick(CPUState *cs, run_on_cpu_data data)
->> {
->>     CPUPPCState *env = cpu_env(cs);
->>     SpinInfo *curspin = data.host_ptr;
->> -    hwaddr map_size = 64 * MiB;
->> -    hwaddr map_start;
->> +    hwaddr map_start, map_size = 64 * MiB;
->> +    ppcmas_tlb_t *tlb = booke206_get_tlbm(env, 1, 0, 1);
->>
->>     cpu_synchronize_state(cs);
->>     stl_p(&curspin->pir, env->spr[SPR_BOOKE_PIR]);
->> @@ -107,7 +90,12 @@ static void spin_kick(CPUState *cs, run_on_cpu_data data)
->>     env->gpr[9] = 0;
->>
->>     map_start = ldq_p(&curspin->addr) & ~(map_size - 1);
->> -    mmubooke_create_initial_mapping(env, 0, map_start, map_size);
->> +    /* create initial mapping */
->> +    booke206_set_tlb(tlb, 0, map_start, map_size);
->> +    tlb->mas2 |= MAS2_M;
->> +#ifdef CONFIG_KVM
->> +    env->tlb_dirty = true;
->> +#endif
->>
->>     cs->halted = 0;
->>     cs->exception_index = -1;
->> diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
->> index d5d119ea7f..070524b02e 100644
->> --- a/include/hw/ppc/ppc.h
->> +++ b/include/hw/ppc/ppc.h
->> @@ -116,6 +116,11 @@ enum {
->>
->> #define PPC_SERIAL_MM_BAUDBASE 399193
->>
->> +#ifndef CONFIG_USER_ONLY
->> +void booke206_set_tlb(ppcmas_tlb_t *tlb, target_ulong va, hwaddr pa,
->> +                      hwaddr len);
->> +#endif
->> +
->> /* ppc_booke.c */
->> void ppc_booke_timers_init(PowerPCCPU *cpu, uint32_t freq, uint32_t flags);
->> #endif
->
->
+[2] https://www.youtube.com/watch?v=9sFP_yddLLQ
+
+Today there are four known DRM native context drivers existing in a wild:
+
+  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+  - AMDGPU, mostly merged into upstreams
+  - Intel (i915), merge requests are opened
+  - Asahi (Apple SoC GPUs), WIP status
+
+
+# How to try out DRM context:
+
+1. Like Venus and Virgl context, DRM context requires applying WIP
+KVM patches [3] to host kernel, otherwise mapping of GPU memory blobs
+will likely fail.
+
+[3] https://lore.kernel.org/all/20240726235234.228822-1-seanjc@google.com/
+
+2. Use latest libvirglrenderer from upstream git/main for Freedreno
+and AMDGPU native contexts. For Intel use patches [4].
+
+[4] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
+
+3. On guest, use latest Mesa version for Freedreno. For AMDGPU use
+Mesa patches [5], for Intel [6].
+
+[5] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
+[6] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
+
+4. On guest, use latest Linux kernel v6.6+.
+
+Example Qemu cmdline that enables DRM context:
+
+  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,drm=true \
+      -machine q35,accel=kvm,memory-backend=mem1 \
+      -object memory-backend-memfd,id=mem1,size=8G -m 8G
+
+
+# Note about known performance problem in Qemu:
+
+DRM contexts are mapping host blobs extensively and these mapping
+operations work slowly in Qemu. Exact reason is unkown. Mappings work
+fast on Crosvm For DRM contexts this problem is more visible than for
+Venus/Virgl.
+
+Dmitry Osipenko (5):
+  ui/sdl2: Restore original context after new context creation
+  linux-headers: Update to Linux v6.12-rc1
+  virtio-gpu: Handle virgl fence creation errors
+  virtio-gpu: Support asynchronous fencing
+  virtio-gpu: Support DRM native context
+
+Pierre-Eric Pelloux-Prayer (1):
+  ui/sdl2: Implement dpy dmabuf functions
+
+ docs/system/devices/virtio-gpu.rst            |  11 +
+ hw/display/virtio-gpu-gl.c                    |   5 +
+ hw/display/virtio-gpu-virgl.c                 | 153 ++++++++++--
+ hw/display/virtio-gpu.c                       |  15 ++
+ include/hw/virtio/virtio-gpu.h                |  17 ++
+ include/standard-headers/drm/drm_fourcc.h     |  43 ++++
+ include/standard-headers/linux/const.h        |  17 ++
+ include/standard-headers/linux/ethtool.h      | 226 ++++++++++++++++++
+ include/standard-headers/linux/fuse.h         |  22 +-
+ .../linux/input-event-codes.h                 |   2 +
+ include/standard-headers/linux/pci_regs.h     |  41 +++-
+ .../standard-headers/linux/virtio_balloon.h   |  16 +-
+ include/standard-headers/linux/virtio_gpu.h   |   1 +
+ include/ui/sdl2.h                             |   5 +
+ linux-headers/asm-arm64/mman.h                |   9 +
+ linux-headers/asm-arm64/unistd.h              |  25 +-
+ linux-headers/asm-generic/unistd.h            |   6 +-
+ linux-headers/asm-loongarch/kvm.h             |  24 ++
+ linux-headers/asm-loongarch/unistd.h          |   4 +-
+ linux-headers/asm-riscv/kvm.h                 |   7 +
+ linux-headers/asm-riscv/unistd.h              |  41 +---
+ linux-headers/asm-x86/kvm.h                   |   2 +
+ linux-headers/asm-x86/unistd_64.h             |   1 +
+ linux-headers/asm-x86/unistd_x32.h            |   1 +
+ linux-headers/linux/bits.h                    |   3 +
+ linux-headers/linux/const.h                   |  17 ++
+ linux-headers/linux/iommufd.h                 | 143 +++++++++--
+ linux-headers/linux/kvm.h                     |  23 +-
+ linux-headers/linux/mman.h                    |   1 +
+ linux-headers/linux/psp-sev.h                 |  28 +++
+ ui/sdl2-gl.c                                  |  42 ++++
+ ui/sdl2.c                                     |   8 +
+ 32 files changed, 851 insertions(+), 108 deletions(-)
+
+-- 
+2.46.0
+
 
