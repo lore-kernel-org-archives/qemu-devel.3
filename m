@@ -4,91 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5217ECFB424
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 15:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A47CFB43F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 16:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxT6P-00047n-Bc; Sun, 06 Oct 2024 11:23:21 -0400
+	id 1sxURg-0005zr-VI; Sun, 06 Oct 2024 12:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxT6K-00047I-SS
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 11:23:16 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sxT6I-0000An-96
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 11:23:15 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-71def18fe1cso1055534b3a.0
- for <qemu-devel@nongnu.org>; Sun, 06 Oct 2024 08:23:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728228191; x=1728832991; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4fjyxKJ3/G0u/DLnGLPBRV7MnMS/uyjpHWFTpctEvg4=;
- b=vvgA2YHqVAynY+k0J0sAQHVGDhKdcq6W62lI04ff9P+0PFJPgYhsbMYLiGL3IkC4Vv
- d7r5ly1bA8AdEE5hSgIcLI7a1anyQC61u926QUwPKAI8GA8lD9za75RC5qdnjHgbQV5n
- zlV1VnBlDCZOXXvbZGDeUo7XSDxgJXheFBjFuNvrzjCYogqRs+4/W9PY0PXeDgBdDTaP
- oYofRx09Un2UT6xo1CotzSCLpTEwCO3o3+CNHSmWQxo+Jtce03aWMajkE0VKKlc4LGrJ
- qB6bBDYuGgBFRsTbkrFaFurN2E4hGjdptHvmXq9vaKYCayUmf75lmQOqLi5WOEqlD6TW
- ibcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728228191; x=1728832991;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4fjyxKJ3/G0u/DLnGLPBRV7MnMS/uyjpHWFTpctEvg4=;
- b=GjQ7mlSlZOOlpjgDIEeIm1UOSx/69HxmVRfy4AMlMHa6ZetwOxDZ1cNrhdpzbfbCOt
- NgvEVX0RSXCSmRRnhcNjLf/L9mtrZR4wNy4s2ZVnjw3pKPPpPUXuvcpdYaBcPgZeo+Yl
- 86YyTjozRo3+/T2R02eEEYKwRN7kLWYWf0TtA7C9zMwzv8U6suBQl4NxBjx72fovLm6c
- K/Y5yjQhndmb9FHB9w9xmGGSrc7MPG47T4WhAuDWL84nt8acl8nTEYEgcsQHVk6m48Yu
- 5kOrPP1WESRPORa6+n1GVfhpfEaDU0vLxyUBKvWO4UjH0W4vbCo2dX0z0F7lsq+FwMzr
- MQTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJXtyiIt1hlapXukyWIV4hqaoJcOP/CDw/isF1yuAOWFmXEq3Qu/wkdoj0nLkpQwnDPus0MWKiyvmE@nongnu.org
-X-Gm-Message-State: AOJu0Yx2M/X0a6ssQ5IMeJgdtwfXeoB9QJzLW5QuFDcGujgfKGRtMe52
- Utzqjhdele2ch40HZfaOI1REoSOjYleqC37zeG52tbVgfnJ0O77sK/DjQkbiiLo=
-X-Google-Smtp-Source: AGHT+IEflkAsWcI3OnNWIwdI7EqsWI9Nv4u8s4uS0vZNxuMzhHFAP64UHuxWFn6IF9TDebpiHFzh2A==
-X-Received: by 2002:a05:6a00:997:b0:714:28eb:ff5d with SMTP id
- d2e1a72fcca58-71de23b5549mr14274817b3a.8.1728228191018; 
- Sun, 06 Oct 2024 08:23:11 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d4538bsm2891667b3a.104.2024.10.06.08.23.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 06 Oct 2024 08:23:10 -0700 (PDT)
-Message-ID: <66c2c949-ccb2-45d6-8d13-2c34ccbf5760@linaro.org>
-Date: Sun, 6 Oct 2024 08:23:07 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] linux-user/flatload: Take mmap_lock in
- load_flt_binary()
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240822095045.72643-1-philmd@linaro.org>
- <20240822095045.72643-3-philmd@linaro.org>
- <d7d4d868-08e5-40d5-9a19-5854db9828f8@tls.msk.ru>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <d7d4d868-08e5-40d5-9a19-5854db9828f8@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sxURe-0005zT-UW
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 12:49:23 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sxURc-0008Ap-Dh
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 12:49:22 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5BAC94E6013;
+ Sun, 06 Oct 2024 18:49:14 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Dwi0N41WvtK9; Sun,  6 Oct 2024 18:49:12 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6A3594E6001; Sun, 06 Oct 2024 18:49:12 +0200 (CEST)
+Message-Id: <cover.1728232526.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH 0/2] Separate memory access logs from guest_errors
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Date: Sun, 06 Oct 2024 18:49:12 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,26 +57,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/24 01:51, Michael Tokarev wrote:
-> 22.08.2024 12:50, Philippe Mathieu-Daudé wrote:
->> load_flt_binary() calls load_flat_file() -> page_set_flags().
->>
->> page_set_flags() must be called with the mmap_lock held,
->> otherwise it aborts:
->>
->>    $ qemu-arm -L stm32/lib/ stm32/bin/busybox
->>    qemu-arm: ../accel/tcg/user-exec.c:505: page_set_flags: Assertion `have_mmap_lock()' 
->> failed.
->>    Aborted (core dumped)
->>
->> Fix by taking the lock in load_flt_binary().
->>
->> Fixes: fbd3c4cff6 ("linux-user/arm: Mark the commpage executable")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2525
-> 
-> This one seems like it should go to -stable, is it not?
+Originally memory access logs were a debug define that then were
+converted to log messages but were classified as guest_errors which
+already logs misc errors. As invalid memory access logs can come from
+accessing not emulated peripherals or memory areas, these often
+generate a lot of messages that are better be controlled separately
+from other errors to avoid obscuring those. As an example try
+'qemu-system-ppc -d guest_errors' to see the problem. After this
+series the actual guest error logs are easier to spot. I've tried to
+submit this before but there were some people who liked the current
+behaviour so now this series has another patch that preserves the old
+optino printing a warning to allow time to get used to the new
+behaviour (which actually brings back the old behaviour when mem
+access logs were a debug define).
 
-Yes, I think so.
+Regards,
+BALATON Zoltan
 
-r~
+BALATON Zoltan (2):
+  log: Add separate debug option for logging invalid memory accesses
+  log: Suggest using -d guest_error,memaccess instead of guest_errors
+
+ docs/devel/secure-coding-practices.rst | 2 +-
+ include/qemu/log.h                     | 1 +
+ system/memory.c                        | 6 +++---
+ system/physmem.c                       | 2 +-
+ tests/avocado/smmu.py                  | 2 +-
+ tests/qtest/pnv-host-i2c-test.c        | 2 +-
+ util/log.c                             | 8 +++++++-
+ 7 files changed, 15 insertions(+), 8 deletions(-)
+
+-- 
+2.30.9
+
 
