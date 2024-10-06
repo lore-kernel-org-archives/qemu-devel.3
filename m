@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F32CFB43F
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 14:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A39CFB43F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 14:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxRyM-0000sv-G3; Sun, 06 Oct 2024 10:10:58 -0400
+	id 1sxS0k-0001aN-1D; Sun, 06 Oct 2024 10:13:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxRyK-0000sd-F0
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 10:10:56 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1sxS0i-0001Zz-90
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 10:13:24 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxRyI-0000Xf-Mv
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 10:10:56 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c8784e3bc8so4949526a12.1
- for <qemu-devel@nongnu.org>; Sun, 06 Oct 2024 07:10:53 -0700 (PDT)
+ id 1sxS0g-0000cT-8G
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 10:13:24 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5c5b954c359so4231848a12.1
+ for <qemu-devel@nongnu.org>; Sun, 06 Oct 2024 07:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728223852; x=1728828652; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728224000; x=1728828800; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=C9ClnrY3x2amDGHxOcjUBlicG90pPDOP6TnHeU7sBWg=;
- b=PJTDiaZ9OCsQFMLddcOwNEgQL015zT8gWP3HOq1EEVpT8e9a1WvQnYEVVDzKzFqDKu
- sClkNUOoJbjiz43hSqo1BR4Dis259U40SiROK+ceefyz6HFkoWcEjzS9+y75XpgsUAZb
- 7vUywxQcZjLCpZbo6ePYvwah0A13KLQo6e208pn5UrSibDyzFbnL1g/tSHqXp/327fJg
- nYfNuhbCnI1YZ6P/IBXhsLokFmR2yRKEJCTRId/X5z6WQUwzhfmZIW+1ydwJantJduz6
- MuBb7oyrzqwO4xGrWLK655aPQ7hfv04XmlJwp5/hTOrcM4+GjCWD/mydOBk8fwuBOCLt
- zVWQ==
+ bh=1tKe0gAfWmD9TphGK1i3DWefKUjIjA3Gvmpc92ZzKCk=;
+ b=CTfWioZM2r9v/tR3uttjlcgQy+u+Kh6JS2RecDmTe+PNp/hqXPzMnIJkCBkKZ5jOMU
+ ajLsxQ5kwAo9r1mSTEzG3Vx+SS1iEZy3CoYEnxmksOkXv/Qg65AscHZLFNilhu534rF8
+ ABVn2jf5+cbHJtgHhXA0RN7Vn85C4G4IAiObl+VDJo30cByPzZPDUqhj4GWQ/LR4UNSv
+ Hb5CDLuQhVneglz6/s9ZvzkgeWwWsJELQXONLaRSGVPhSbdmVc+lHco95AsbIwz0isiT
+ XMLJFWFdbF+INsXWUB3yNeaXqhqlQH5Sx3Z9zp5p397OgVpvKwI0zq2ppsqBV9qo3Kit
+ sbKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728223852; x=1728828652;
+ d=1e100.net; s=20230601; t=1728224000; x=1728828800;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=C9ClnrY3x2amDGHxOcjUBlicG90pPDOP6TnHeU7sBWg=;
- b=g5dYqjfaQCJGErzfzljuxf4XXgl0hYBLAzGo33TrIi5noPetr40DDVxXwvLPI3ZGxx
- 40FINa2Iur6ZJdFyje3w4MYOmY8XMB1NSMFQ02FWK85bhc7pfrv26Hx9gGM8ho6RAlTR
- hbWTfQq1vM82VQ/E7/qIwO2EVepH6wIzogDOwqGOxvmk5i9DUTh4H1CdqmuNYaJIw+c0
- 8hCDuztL98/fYY2iR6tTZ9jgKO5h2NeNJ30lJfSti7nkhsa8bhXnls9pjCsj/yDY1v/B
- 9z4xiEXHPfqGujVeWzD9TswwOYtTR0hDbuLCOtnNZENLsuJUOpIpY94eyofA2Cc3ebF7
- /mWg==
-X-Gm-Message-State: AOJu0Yzimw/EWe/xc+CVdfx1Zuwwg9lhAC7Mc59b9s3IelP/0e59e7OR
- 2ecIj2trltlzhGo3cr9S1P/5T0byFVbAdtNgyPTLrEf5qBAvlELD2ys5ARpJBZTM6AmVwO9MziV
- jcSm3ZKxRmu+BuLQR8WhFCfxbEt3/pj72Ph4fLUMdY61y9JOZ
-X-Google-Smtp-Source: AGHT+IGpZt/BRHo9YpCwByvDVZpnA+aJGknOOLGUl3IXR/sbjl971rpiI/U9KyLY8b7/doN/iFUeGSvKD0NsuPfOx58=
-X-Received: by 2002:a05:6402:1f85:b0:5c2:439d:90d4 with SMTP id
- 4fb4d7f45d1cf-5c8d2eb347cmr7462841a12.30.1728223851952; Sun, 06 Oct 2024
- 07:10:51 -0700 (PDT)
+ bh=1tKe0gAfWmD9TphGK1i3DWefKUjIjA3Gvmpc92ZzKCk=;
+ b=YOkBlRbCup/2XvKfZmVXy5jNt8JcIqhF5EQYuHO8kqKiGvNetwWUIw+bVqqLu+Zht7
+ PtjWn6XgZSeGIf/qx4ndkMv9h42K++XokhieHUllk+ozNIllqoct81URP2j3oXIjyEtY
+ mLSMAO3XDpTb7Y8AFpAKEbkctOtuXB2a7Fqg2IhIR+bAMn2jHxyAZUUss5Oh5Oqo/HO3
+ 7uUUKUp2a11+e7+QWaJf406wTYoVvMl3X9O5Ew40Vh2sowc5eJKdRAhwKNCh0JNr5kpA
+ yREkGn76IzWNxUWK4v4fAeHy19GD3ZcuHQNGkwlKGhvIcOrgEHb/5heZKtbyVPxpI5yx
+ 7xVg==
+X-Gm-Message-State: AOJu0Ywq1OcCRR7dgU/A0/EvvAFhQw3JSnZQu5uEAF0MwZoeCU9XPWud
+ FIxH2PRbb8dXBmlB6YiUz0F7FEmQo63dPHUJ+Gyn/MoWYujdIXGsy3BYFm5vsLKp67uAo221lQ5
+ SO6FXI4lT00zybnNsmXlOYole/x9X8pQTZR/JafDlWHW6dkNo
+X-Google-Smtp-Source: AGHT+IEamKXv940QqJf/8HAIlpJfZZIxKARHm1pA8ONWkzhxm7nFOJZRfw4/t2iKd1TcqMETw+Mas5JDbO6JrEUIFP4=
+X-Received: by 2002:a05:6402:3490:b0:5c8:9476:2bf with SMTP id
+ 4fb4d7f45d1cf-5c8d2ed349amr8224100a12.35.1728223999924; Sun, 06 Oct 2024
+ 07:13:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241004163415.951106-1-pbonzini@redhat.com>
-In-Reply-To: <20241004163415.951106-1-pbonzini@redhat.com>
+References: <cover.1728141040.git.chao.liu@yeah.net>
+ <1193cf07fbfa67f94ebad9bd897358f248f703cb.1728141040.git.chao.liu@yeah.net>
+In-Reply-To: <1193cf07fbfa67f94ebad9bd897358f248f703cb.1728141040.git.chao.liu@yeah.net>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 6 Oct 2024 15:10:40 +0100
-Message-ID: <CAFEAcA9k_NnEhvwq4bMV9SqgB9zhUku-_M6Hr2BASF0rR6UBvw@mail.gmail.com>
-Subject: Re: [PULL 00/23] Misc patches for 2024-10-04
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Sun, 6 Oct 2024 15:13:09 +0100
+Message-ID: <CAFEAcA_3ah0wU5XF7U9QeB4ZXCBhWNnTUWqknN_sWvFq5oKR+A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] xilink_zynq: Add various missing unimplemented
+ devices
+To: Chao Liu <chao.liu@yeah.net>
+Cc: qemu-devel@nongnu.org, bin.meng@windriver.com, edgar.iglesias@gmail.com, 
+ alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,37 +90,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Oct 2024 at 17:34, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Sat, 5 Oct 2024 at 17:06, Chao Liu <chao.liu@yeah.net> wrote:
 >
-> The following changes since commit 718780d20470c66a3a36d036b29148d5809dc855:
+> Add xilinx zynq board memory mapping is implemented in the device.
 >
->   Merge tag 'pull-nvme-20241001' of https://gitlab.com/birkelund/qemu into staging (2024-10-01 11:34:07 +0100)
+> Remove a ignore_memory_transaction_failures concurrently.
 >
-> are available in the Git repository at:
+> Source: Zynq-7000 SoC Data Sheet: Overview, Chapter: Memory Map
 >
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> See: https://www.mouser.com/datasheet/2/903/ds190_Zynq_7000_Overview-1595492.pdf
+> Signed-off-by: Chao Liu <chao.liu@yeah.net>
+> ---
+>  hw/arm/xilinx_zynq.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 >
-> for you to fetch changes up to 7cca79fa52128054b02ecbea249aa51e1916ba72:
+> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+> index 37c234f5ab..77010bebeb 100644
+> --- a/hw/arm/xilinx_zynq.c
+> +++ b/hw/arm/xilinx_zynq.c
+> @@ -34,6 +34,7 @@
+>  #include "hw/net/cadence_gem.h"
+>  #include "hw/cpu/a9mpcore.h"
+>  #include "hw/qdev-clock.h"
+> +#include "hw/misc/unimp.h"
+>  #include "sysemu/reset.h"
+>  #include "qom/object.h"
+>  #include "exec/tswap.h"
+> @@ -229,6 +230,16 @@ static void zynq_init(MachineState *machine)
+>          zynq_machine->cpu[n] = ARM_CPU(cpuobj);
+>      }
 >
->   qom: update object_resolve_path*() documentation (2024-10-03 22:04:24 +0200)
->
-> ----------------------------------------------------------------
-> * pc: Add a description for the i8042 property
-> * kvm: support for nested FRED
-> * tests/unit: fix warning when compiling test-nested-aio-poll with LTO
-> * kvm: refactoring of VM creation
-> * target/i386: expose IBPB-BRTYPE and SBPB CPUID bits to the guest
-> * hw/char: clean up serial
-> * remove virtfs-proxy-helper
-> * target/i386/kvm: Report which action failed in kvm_arch_put/get_registers
-> * qom: improvements to object_resolve_path*()
->
+> +    /* PL AXI */
+> +    create_unimplemented_device("zynq.pl-axi.port0", 0x40000000, 1 * GiB);
+> +    create_unimplemented_device("zynq.pl-axi.port1", 0x80000000, 1 * GiB);
+> +
+> +    /* IOP devices */
+> +    create_unimplemented_device("zynq.iop-devices", 0xE0000000, 256 * MiB);
 
+These clearly are not devices, they are covering a big range
+of memory space. What is the behaviour of the real hardware
+if you access these address space ranges?
 
-Applied, thanks.
+> +    /* Programmable register access via AMBA APB bus */
+> +    create_unimplemented_device("zynq.amba", 0xF8000000, 32 * MiB);
+> +
+>      /* DDR remapped to address zero.  */
+>      memory_region_add_subregion(address_space_mem, 0, machine->ram);
+>
+> @@ -394,7 +405,6 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
+>      mc->init = zynq_init;
+>      mc->max_cpus = ZYNQ_MAX_CPUS;
+>      mc->no_sdcard = 1;
+> -    mc->ignore_memory_transaction_failures = true;
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
-for any user-visible changes.
+As I've said in my review on the previous series, there is no point
+in adding big "unimplemented device" ranges merely in order to
+remove the setting of ignore_memory_transaction_failures.
 
+thanks
 -- PMM
 
