@@ -4,34 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DAFCFB424
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 08:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7A4CFB43F
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Oct 2024 08:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxMh4-000638-SN; Sun, 06 Oct 2024 04:32:47 -0400
+	id 1sxMz1-0000Kk-6x; Sun, 06 Oct 2024 04:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxMgw-00062q-Fv
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 04:32:41 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxMyz-0000KF-N5
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 04:51:17 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxMgt-0006Mf-Uv
- for qemu-devel@nongnu.org; Sun, 06 Oct 2024 04:32:37 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxMyx-0008Df-SL
+ for qemu-devel@nongnu.org; Sun, 06 Oct 2024 04:51:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C62D995B41;
- Sun,  6 Oct 2024 11:32:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 25D4095B49;
+ Sun,  6 Oct 2024 11:51:06 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7BBBE14EC56;
- Sun,  6 Oct 2024 11:32:30 +0300 (MSK)
-Message-ID: <9593be3c-e8d5-4f60-ae0c-c217a5d27ee3@tls.msk.ru>
-Date: Sun, 6 Oct 2024 11:32:30 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id CE73F14EC71;
+ Sun,  6 Oct 2024 11:51:10 +0300 (MSK)
+Message-ID: <d7d4d868-08e5-40d5-9a19-5854db9828f8@tls.msk.ru>
+Date: Sun, 6 Oct 2024 11:51:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/ppc: Use TCG_REG_TMP2 for scratch index in
- prepare_host_addr
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241005221541.495844-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 2/4] linux-user/flatload: Take mmap_lock in
+ load_flt_binary()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Beraldo Leal <bleal@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240822095045.72643-1-philmd@linaro.org>
+ <20240822095045.72643-3-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -58,9 +65,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20241005221541.495844-1-richard.henderson@linaro.org>
+In-Reply-To: <20240822095045.72643-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -84,26 +91,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.10.2024 01:15, Richard Henderson wrote:
-> In tcg_out_qemu_ldst_i128, we need a non-zero index register,
-> which we then use as a base register in several address modes.
-> Since we always have TCG_REG_TMP2 available, use that.
+22.08.2024 12:50, Philippe Mathieu-Daudé wrote:
+> load_flt_binary() calls load_flat_file() -> page_set_flags().
 > 
-> In tcg_out_qemu_st, in the fallback when STDBRX is not available,
-> avoid clobbering TCG_REG_TMP1, which might be h.base, which is
-> still in use.  Use TCG_REG_TMP2 instead.  Since the final use of
-> h.index is that ADDI, there is no conflict with the above.
+> page_set_flags() must be called with the mmap_lock held,
+> otherwise it aborts:
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2597
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>    $ qemu-arm -L stm32/lib/ stm32/bin/busybox
+>    qemu-arm: ../accel/tcg/user-exec.c:505: page_set_flags: Assertion `have_mmap_lock()' failed.
+>    Aborted (core dumped)
+> 
+> Fix by taking the lock in load_flt_binary().
+> 
+> Fixes: fbd3c4cff6 ("linux-user/arm: Mark the commpage executable")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2525
 
-Fixes: v8.0.0-524-ge3867bad0d "tcg/ppc: Introduce HostAddress"
-Fixes: v8.0.0-744-g01a112e2e9 "tcg/ppc: Reorg tcg_out_tlb_read"
-Tested-By: Michael Tokarev <mjt@tls.msk.ru>
+This one seems like it should go to -stable, is it not?
 
-Also noted for -stable.
-
-Thank you!
+Thanks,
 
 /mjt
 
