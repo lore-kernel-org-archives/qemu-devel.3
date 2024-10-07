@@ -4,174 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2920DCFB452
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E278CFB453
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxswy-0006um-3b; Mon, 07 Oct 2024 14:59:20 -0400
+	id 1sxt2j-0008SG-Gx; Mon, 07 Oct 2024 15:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sxsww-0006uZ-3o
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:59:18 -0400
-Received: from mail-bn7nam10on2071.outbound.protection.outlook.com
- ([40.107.92.71] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxt2i-0008Rl-7d
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:05:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sxswt-0001uH-QQ
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:59:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WL0umtE3OTRH6hRJcE+1iI/2VH5Zh6tFnjguTXaGrVDVZbKn128s/OkCnbMnarb/lwCkXFT7d/JMWNfXE0tW/fCLanQmsAbUx+XqOjkBvx+vzrsTc+JOr3Rf0iGSRSSS09f/ARGlff8v/bSaY0NOgwybvdjtRq8ImSFtv8ZV9qslLur8H6VtlK0RIAmjUNy+VCwfZSTRarVegzoJM1RYs5Dcl+WTrmLp+NXkWNedELv9VqOPByaowlNW0FOO48dYvTXUKhzukST/1EwXjTbJSX6HtLr3hRTsQlE8AoRuyqBXD2PZo+KVUVaiIp3ggkbJa85Uvfhs1GwsvQkIb63cdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AzweoRXPgD38rSw1rZ+mydJ2oHHUh8nR6coDRVI9Kug=;
- b=rca6Z0BoB/fb+Jp++brmc/6I7QdFrHFeIwn32knGjCSVanZqsqjw08zSbTFVsLgpYDzXq3rflucCbLIxuiIYpDUiMwT84XJIJuts77TO2ExGZZe+ZCBzOrQGgfbgFSpaN6VbjnlG1HZPUTQ7IAHk1m9tOAJT/AOwdGuqtudWl6LpwUjPXDjSetmdefrBaPMszmRci0GgLdTDqwuLtL3ULUdADIKcK3uWbUucMnfB9TYBm1/Bh8bLjuDRilv5fP3O76WLMidywwXP9BAQKc+CU5BMQjnzoi65uAct8sqSDyow2bOxoaX8LYU55x6f/5o05eNHtT/yv1cZ/RZUgPiiDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AzweoRXPgD38rSw1rZ+mydJ2oHHUh8nR6coDRVI9Kug=;
- b=Cw958mur+au8GoqRJNW1JU1yRPpvZDsH/Ni9cRgk0SlvTlXau4bhjiTiVsi68RlpAtDlmJfFYmsKDzUVR8ZQfoVo3f1mWvsh1AD3FMXbXBgeLnUnC18ckoPfYKL/MVxFnsOxbvNCT9AgRwGv3Q2nz7bDfmGc/KKWm5WaPYUwuzU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
- by DS0PR12MB8767.namprd12.prod.outlook.com (2603:10b6:8:14f::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.22; Mon, 7 Oct
- 2024 18:54:04 +0000
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48%6]) with mapi id 15.20.8026.020; Mon, 7 Oct 2024
- 18:54:04 +0000
-Message-ID: <78028d69-90c8-a295-9393-1f6d6c3826cc@amd.com>
-Date: Mon, 7 Oct 2024 20:53:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v6 05/16] i386/pc_sysfw: Ensure sysfw flash configuration
- does not conflict with IGVM
-Content-Language: en-US
-To: Roy Hopkins <roy.hopkins@suse.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez
- <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?J=c3=b6rg_Roedel?=
- <jroedel@suse.com>
-References: <cover.1727341768.git.roy.hopkins@suse.com>
- <3255767a6d34297ec47f43f9ae9434116d3f17ba.1727341768.git.roy.hopkins@suse.com>
-From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
-In-Reply-To: <3255767a6d34297ec47f43f9ae9434116d3f17ba.1727341768.git.roy.hopkins@suse.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0120.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a8::10) To IA1PR12MB8189.namprd12.prod.outlook.com
- (2603:10b6:208:3f0::13)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxt2g-0002Xk-Ec
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:05:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728327911;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U67EA8NaJuuHzXugmhL5eeCsPAbntIMrbUsfZ282OfQ=;
+ b=H/GqCqRuew+3kVPyAn7H6tAGye3209vPm5FyNA2h+hPNTk7wGDDRMoe2s6Ecqnx+yp9UgL
+ optZjyE+crIMqMFF83NPcwv1hfr2J7hswqRsS2n2tjp0+sIktPCebOtTA0OvH6MNMjXyCt
+ TaKYfzuLZYbV98PJrmNX+MUDSj/EdGo=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-IxDPyPcBNIu6om6Y75JQ5g-1; Mon, 07 Oct 2024 15:05:09 -0400
+X-MC-Unique: IxDPyPcBNIu6om6Y75JQ5g-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6cb4180fab6so104779326d6.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 12:05:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728327909; x=1728932709;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U67EA8NaJuuHzXugmhL5eeCsPAbntIMrbUsfZ282OfQ=;
+ b=RvFuKgyD34H6uUOqOnoiqna9ooWfUfwyJDF76AYiky9/Mim+6VhNgx38hQdxbNs73z
+ 1fNRygEw46F1+X1wcp2a6dcFkaENeLeXoHxcUHMoAabKt0R0+X+0U9CWxXbVDQAEQxC7
+ O/lK13CtpmggHD+iu4fIlGtGc8kGY3tUg0+9cNczr4CzyOHzY3CmvwpGfblddoeSyTps
+ 7jOPjZ1wXRKBmPVqqbJZgvyWM91xhFxpNnRISkIapMToPI/GkYOxMquufjdCtAbfTcjn
+ cQjF2KG8lc+MU07axvBhqhH9sCy38yQj3KRwiu9f8Y7wpHCqL9FARhZDCDONr7MbNYwi
+ LA7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNpRlZfzqLAS+SrqjNrHEohEdBrxniKygni2utczODqWBtYoI7hM9I14S/CH0NBbXnQpop0RRrTyfO@nongnu.org
+X-Gm-Message-State: AOJu0YwS5Xc7tYZGto3FMXaVfB+hFIOhwTtXEsgmmitl7LIGrwHIFiUX
+ CRWWbErJTCCwUl5kXnhX588rKaFYNeOWV01PY0lKpZUHJ6u7TdBS49joDMHHHWSaF2XJv9k0Ig4
+ tbFQUeiZHMmZJS6SwjT10fXxC0VvPIzey+iXXM88tLX3ULvIlhBG4
+X-Received: by 2002:a05:6214:4b04:b0:6c5:1fe5:f84c with SMTP id
+ 6a1803df08f44-6cb9a308cbemr208515386d6.20.1728327909272; 
+ Mon, 07 Oct 2024 12:05:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJHyEbNOoCHdGTPR7TFFUaE837R7Q/qtihVmMC2FT6w12vYT13E5pyCPEFVWKJOBE4UJkVGQ==
+X-Received: by 2002:a05:6214:4b04:b0:6c5:1fe5:f84c with SMTP id
+ 6a1803df08f44-6cb9a308cbemr208515046d6.20.1728327908897; 
+ Mon, 07 Oct 2024 12:05:08 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cba475efcdsm28254736d6.116.2024.10.07.12.05.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 12:05:07 -0700 (PDT)
+Date: Mon, 7 Oct 2024 15:05:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PATCH V2 01/13] machine: alloc-anon option
+Message-ID: <ZwQw4P43IhoEIe66@x1n>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-2-git-send-email-steven.sistare@oracle.com>
+ <Zv7C7MeVP2X8bEJU@x1n>
+ <2143f803-439e-4b8b-ae92-07caa913d646@redhat.com>
+ <Zv_ghrH6i4QOzne8@x1n>
+ <bffa3dc0-36b7-4fa1-a0b6-cce34743a46c@redhat.com>
+ <Zv_spkFwqwgxGkNY@x1n>
+ <47ba3f75-147d-4ea6-a576-eba6ef168643@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|DS0PR12MB8767:EE_
-X-MS-Office365-Filtering-Correlation-Id: f8e87d1b-acd7-46e5-d89c-08dce7016a5f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MHZzR2VDK3JzR0lhZUxpVlVYcVhIckt6WDlNb2ovRVVtMm1hTUs1UlZ4NkJM?=
- =?utf-8?B?Q0YvZG5ycFBpWVVBWGN2T1pObWNodUtGQnhzeFMvd2hFSXhoRktRNXpyQ2Vy?=
- =?utf-8?B?dVRRQ2t2VVNqbVJ4MDZYMDNYRi96b2VDOTg5NGNqNG5JWlRUNHk1T2g3b0hY?=
- =?utf-8?B?Wmd4bWNWaENzN1kvQi9IWFg3T1RtYlpuUjNSOG9aOCtNcTdtNjdFTWp3YVRV?=
- =?utf-8?B?NU83aW1kTGFyMkRnbVNZVjdrQkNMd015UTFUMU1ZZEJlT2orMStOM1VCRE1z?=
- =?utf-8?B?UnlLU1dKZENWcE9HeXJRcE8wNlNtQlZURGFIc21CK2JyMGpsSytVQkltYWV1?=
- =?utf-8?B?RkQxRFFFRWVad3J2TENJRDVTWFVyTjdTY3ZKSU5YUE9KTVc3d3AyRm1ZNmxC?=
- =?utf-8?B?V09zVnYyUDVDdGZyVUl3NFdRTHlrN1QyanhJTjFCMTRHNUhvbkNRQmgxU3NP?=
- =?utf-8?B?bFBPLytJc016cm1SdnAxVmdKSEp5Z21yWkZ6TTZCbXErQ29UamZ5aCtaSERv?=
- =?utf-8?B?OFJPdWt6ei90cFRQTThLOURxSDRLZHpabVF2ZTR5MFMya0V2Kzc2dUZ0ZjBC?=
- =?utf-8?B?ZzhLb0JOSG1wM3FvYUcxejYrN3V3WU1ZZE0xVUQzRFRpOUJLNWswWFJrVEtv?=
- =?utf-8?B?WEhnV1E1UlRJWGJDRTVBdUR0T1JySy9yR29GRzE5NWFrZm12MktCcTRDZmJF?=
- =?utf-8?B?T2d5S2UwRHFDTnA0U0ZMcGtWOEZpVlRuUWxMUEd3Z0IrZVBNT0JnZmsxTjA1?=
- =?utf-8?B?WGVoczcyMDB1SE5WNTRjanRTZGxHQnN3UDZBRUpiKzFOZkRrYVNFMHhIb1Rp?=
- =?utf-8?B?L2l4RnRoeUhjbUJZU0t2WEtvbXJlalBTY0IzU1BNd0huK2MyS2YwR1UxQ0VR?=
- =?utf-8?B?WWM3cldXVlJFUHpPRzZyNnlGYjd4SnZyRENxMGlUMU1KQ2ViN3MvcDA2QUJY?=
- =?utf-8?B?RHBPWE5MKy93ZWxWdkI5bHBaZWxwK2wzUXpaRk5RSmlkRG5aMGZmOTVzYWs0?=
- =?utf-8?B?OG80UlIrQUUremJmOU9BNkNHWkF1SytUVTlKeTVFTU1GdlpBSUs2M1NuNzNL?=
- =?utf-8?B?RkpISUQ3NXpUVHl3WWoranplNC9FbzkweEJKS1Z6Z0hGU0JwRzhpNnFQWDBO?=
- =?utf-8?B?cjBjZkhGMnkwZ1JEaTlwSFFKYkY3QTZndEdqcXdjaTlUL0NEdWlBYUM5b1BG?=
- =?utf-8?B?L2pCR2NQOEZYMTZXZjdUZXNOTnUrODRwQlV2Y0wxY1pWNVRmQm9NMlJGY0k1?=
- =?utf-8?B?UFFDazAvVG02eCtRd1N4TFdDRDVFU0ZkK3JCUlhUcVJWSTNhOGNXRWxONlpS?=
- =?utf-8?B?SnNVMVN0eERybE1VdFQ5MUQ4enRON0FBUVoyNk9aeEh5TlZNUW1sYm5STEc1?=
- =?utf-8?B?UU82VXE3UkZZbklIVUtxOFE2d21ISkFoNUVUWGVZWXY1bmNxbDYrY1g2ZTRH?=
- =?utf-8?B?dmdXaHBSaGhPVUdBWjVIRTlvRllCbjJOZEdaN0EyRHdsN0JJRXJLM011WWdv?=
- =?utf-8?B?R3FnTDg2Mm5QZ0J6QkJRNDZabmNvV1BZczhRSmtSaUdrY3ZWdUMxa2NjcUJF?=
- =?utf-8?B?aWdyZE9neVJMYm1nM0huTlZkNnZyNzVRNUExN01oQVNTSytsMEhubDI1eEw2?=
- =?utf-8?B?UVhFVG83MmlrTStITFQzK0kxSXdtU1dmQUVITlZMN3ZJTWNncjZwWEtGN3lR?=
- =?utf-8?B?c3BOM3ExbEtjNVhkQWV4cjViRkN0MnIyejUzMjVldXBaU2d1ei9ldnlRPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MjR1L2JrKzVsekViZnFFQWVKZU1uc09Pak8wK2VVRVg1Z08zcGhEY3MzWU5V?=
- =?utf-8?B?cUZqbmRSVXZSRDlQTlR3aVkvVnFCK2JpN0VvQkM1SnlDRGV5RXBUQnRlemt5?=
- =?utf-8?B?RjAzQmg5QVRVeUZCVEl4UVRadUJBWitEMkc4c2lkcUR4NjB3YXhhdzFWNEJC?=
- =?utf-8?B?Q0ZDT0hyQjhwdU95c2hMNzE2eG9TYU5FMWZpaTlqQ3ZRcmRwQ1VvQmNkbmpN?=
- =?utf-8?B?WEVxVDhqbTZKSmpaMTc2dzVxZUpuMGl0RUFTUWp3Wk81SEk5QTBwU005TkpS?=
- =?utf-8?B?Z1Q3S212NS9iL3VkTnpMaSttU01YUWVHSjVQK3h4Q3ZzdDAwb0V1VTd4WS9I?=
- =?utf-8?B?NU5wY3RYNXdvNmd6K0NucXl2dERaVGFBSXRma3VkTWJ5b0hQUklXWnZZMklI?=
- =?utf-8?B?b1FidE9jdFdsWlByM290anl2RjRHY2s0U3NtOW5BbytlVEVwbFQyYm9DMzdM?=
- =?utf-8?B?V21lMzFqUEY1a0N1V2lsN0dEaHR3b20wNEdQR3MvYW9PYlQ3clVCWlVUTmxm?=
- =?utf-8?B?TTNJZzlpRzdndmdhUmkzemVHb2wxNkdmMk4rcEF4UzRTZVM4YXZRQ0wvKzhu?=
- =?utf-8?B?MmxQcXUxYm05TXRDemY3dGgvdmlHWGFRYzRjQ200RW5neDVJRTdrZUJOeXVu?=
- =?utf-8?B?VTU2OE0wcXRpWDdCR3RvQ0wyMHdaSDJPM3ROcHNiMFJxK3RGclRFRHg3VHJ6?=
- =?utf-8?B?SDFTMUJJbmYrbmZibUtMcHRPb0pvSnhaY2ZwKzZRR0QrWlEyL1ZvWStNWlNj?=
- =?utf-8?B?V09XaENlZVpLaDg5YkJMNDE2bGFPcTI1NXpVTk1IdFZXc1JaMVJMcWxnd1c0?=
- =?utf-8?B?NE03VmRMV2VHSnlaM2VTSDE0K1ZFUnhkZW1VNmRxNHptMElnMzBNYjNwTW9V?=
- =?utf-8?B?Q0pkTW51V253VTk2TVhOaGYveXh1aklIM0owNlR6OTFvNFV3dXMxdHMwYXhD?=
- =?utf-8?B?eXBVeXZhdmFLaEhTQVRQdTVCTkN3R2RPOWRPWFdUVFBXdE9oTDVEZ2xFT200?=
- =?utf-8?B?TU50N1NHR1NBZmpPbysxOHBnMDRYMDhPZ2Raa0RaeDlhSWFqbnNBaFpkZndx?=
- =?utf-8?B?Z0VydjkybGFBLzArajNEeEJmYmFRZldINE9IN0ZzbElmZ1ZkNk9lb0NhSXVu?=
- =?utf-8?B?RExFNVoyQ241Sm1lZW5qbUs1OHVQaTFrUFNPaU1YdWdWb25VU1JsOEtiSHFN?=
- =?utf-8?B?bSs2SHk5UW1RRzFhdGZTaWVUNDQrTnpmdzBhV2ZGOHVRVitjcEUvaUZhcGRp?=
- =?utf-8?B?RUY4amxreUdMdGpkOFNZMmxJQWpSWS9oOThucmVuN0V4bkR1akVadXZpZVhn?=
- =?utf-8?B?N0JJT2RUUExNWmM0NnlOMHZMUVFCY001bmd0R29Gc2hYeDFmbGpBSjBOT2RN?=
- =?utf-8?B?UlFoTC9pcjYrVUQvM1M1NExneXVSelNyc0xpS0tMU0NMN2owQ09ZMFRMcXM4?=
- =?utf-8?B?OEpuZ2ZwUytGWVNGTnc3b1EzQS9IbUFybThvSFErMFZMTnJxVmVKbTYwSlJQ?=
- =?utf-8?B?UVhIalc0SHVXYWIyUkpIK082dlVBWWh3VHA5dVJPSTJJeTlFUTZFMndkYjVQ?=
- =?utf-8?B?TnRlT2tMT0RDeFpMdFZqc3dsL1pLcUpZWFNyRTIrSGo1Ym54QmRLY1ZuOGVM?=
- =?utf-8?B?V1JhRGVPYmp5dmVzSTdyZ1kvWithTUNHdzBxYnNGRnBlTFJCL2JSUDNIT1Bj?=
- =?utf-8?B?dTNSVThHYVptVytTZ2RuT0gxcGoyeG1wRTNwZkFJSjJIbkxYQWs4UDY1Rk50?=
- =?utf-8?B?K2s2eitaeVc3c25IZWsrTkhJVGc0Nk8wem0xM0FlYnJzT0dZQVRNZnRnckVN?=
- =?utf-8?B?ekxtR3BPMXd4QUVLbFZnMVEwR1ZDWVdjTGZTTEcvckhzai9lYnl3VTRjSGVi?=
- =?utf-8?B?VDhlNDdYYldlbHo0VURWOHoxelQ1c29iZk5XVHVJRUQxWTk1ZXQ5ZEVlUjVk?=
- =?utf-8?B?WXp2TjFCemd6SytKblpFTmw3TWpmRGRJeHFlMmVhdFR2TTlIRWVLYnRGNU1i?=
- =?utf-8?B?T0xXdmM2WUwxeUNtSnFvM0NjclJHYUJHR1JDY294NCt0STBMREhqV1Q3OXpZ?=
- =?utf-8?B?WHJ1V1N1YnZmYitKbUZsWGRrNXNVYzg5OTlBN3FqbVloOUZzRGU1NE5yMUZw?=
- =?utf-8?Q?V4/TzksUO43A0VzmwO2VwEXjl?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f8e87d1b-acd7-46e5-d89c-08dce7016a5f
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2024 18:54:04.7444 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6wWwFf1lSfCqoXi74gjO69Obj7Y6bYXCC/HxzYgsUA/FyjRnhBZ/1K6/MPgHZRBhCIJRMThzY4P15huSylkCTw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8767
-Received-SPF: permerror client-ip=40.107.92.71;
- envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <47ba3f75-147d-4ea6-a576-eba6ef168643@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NICE_REPLY_A=-1.369, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -187,80 +114,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> When using an IGVM file the configuration of the system firmware is
-> defined by IGVM directives contained in the file. In this case the user
-> should not configure any pflash devices.
+On Mon, Oct 07, 2024 at 06:23:26PM +0200, David Hildenbrand wrote:
+> > Yes I thought it could be unconditionally.  We can discuss downside below,
+> > I think we can still use a new flag otherwise, but the idea would be the
+> > same, where I want the flag to be explicit in the callers not implicitly
+> > with the object type check, which I think can be hackish.
 > 
-> This commit skips initialization of the ROM mode when pflash0 is not set
-> then checks to ensure no pflash devices have been configured when using
-> IGVM, exiting with an error message if this is not the case.
+> I agree that the caller should specify it.
 > 
-> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> But I don't think using shared memory where shared memory is not warranted
+> is a reasonable approach.
+> 
+> I'm quite surprise you're considering such changes with unclear impacts on
+> other OSes besides Linux (Freedbsd? Windows that doeasn';t even support
+> shared memory?) just to make one corner-case QEMU use case happy.
+> 
+> But I'm sure there are valid reasons why you had that idea, so I'm happy to
+> learn why using shared memory unconditionally here is better than providing
+> a clean alternative path with the feature enabled and memfd actually being
+> supported on the setup (e.g., newer Linux kernel).
 
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+I was thinking whether cpr-transfer can be enabled by default, so whenever
+people want to use it, no code reset needed.  It's also easier for Libvirt
+to not need to add yet another machine flags if possible.
 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->   hw/i386/pc_sysfw.c | 31 ++++++++++++++++++++++++++++---
->   1 file changed, 28 insertions(+), 3 deletions(-)
+Currently this parameter is the only one left that needs to be manually
+enabled on src.  It means if we can get rid of it then any QEMU based VM on
+Linux can do a cpr-transfer any time as long as QEMU supports it.
+
+Without it, this new parameter will need to be manually enabled otherwise
+another system code reboot / live migration needs to happen first without
+CPR, just to enable this flag.
+
+But yeah I don't think I think it all through, so I left my pure question.
+I think it looks still like an option, the other option if we still want to
+enable it by default is, keep the option, then only enable it on new
+machines that is based on Linux.
+
+OS dependency is definitely an issue.  AFAICT CPR is only available for
+Linux anyway, but I'm happy to be corrected..  IOW, those chunk of new code
+(if only unconditionally done..) would need proper #ifdef, so that
+non-Linux OSes work like before.
+
 > 
-> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> index ef80281d28..f5e40b3ef6 100644
-> --- a/hw/i386/pc_sysfw.c
-> +++ b/hw/i386/pc_sysfw.c
-> @@ -219,7 +219,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
->       BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
->   
->       if (!pcmc->pci_enabled) {
-> -        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
-> +        /*
-> +         * If an IGVM file is specified then the firmware must be provided
-> +         * in the IGVM file.
-> +         */
-> +        if (!X86_MACHINE(pcms)->igvm) {
-> +            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
-> +        }
->           return;
->       }
->   
-> @@ -239,8 +245,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
->       }
->   
->       if (!pflash_blk[0]) {
-> -        /* Machine property pflash0 not set, use ROM mode */
-> -        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
-> +        /*
-> +         * Machine property pflash0 not set, use ROM mode unless using IGVM,
-> +         * in which case the firmware must be provided by the IGVM file.
-> +         */
-> +        if (!X86_MACHINE(pcms)->igvm) {
-> +            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
-> +        }
->       } else {
->           if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
->               /*
-> @@ -256,6 +267,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
->       }
->   
->       pc_system_flash_cleanup_unused(pcms);
-> +
-> +    /*
-> +     * The user should not have specified any pflash devices when using IGVM
-> +     * to configure the guest.
-> +     */
-> +    if (X86_MACHINE(pcms)->igvm) {
-> +        for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-> +            if (pcms->flash[i]) {
-> +                error_report("pflash devices cannot be configured when "
-> +                             "using IGVM");
-> +                exit(1);
-> +            }
-> +        }
-> +    }
->   }
->   
->   void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+> > 
+> > > 
+> > > > 
+> > > > > 
+> > > > > > 
+> > > > > > I think RAM_SHARED can actually be that flag already - I mean, in all paths
+> > > > > > that we may create anon mem (but not memory-backend-* objects), is it
+> > > > > > always safe we always switch to RAM_SHARED from anon?
+> > > > > 
+> > > > > Do you mean only setting the flag (-> anonymous shmem) or switching also to
+> > > > > memfd, which is a bigger change?
+> > > > 
+> > > > Switching to memfd.  I thought anon shmem (mmap(MAP_SHARED)) is mostly the
+> > > > same internally, if we create memfd then mmap(MAP_SHARED) on top of it, no?
+> > > 
+> > > Memfd is Linux specific, keep that in mind. Apart from that there shouldn't
+> > > be much difference between anon shmem and memfd (there are memory commit
+> > > differences, though).
+> > 
+> > Could you elaborate the memory commit difference and what does that imply
+> > to QEMU's usage?
+> 
+> Note how memfd code passed VM_NORESERVE to shmem_file_setup() and
+> shmem_zero_setup() effectively doesn't (unless MAP_NORESERVE was specified
+> IIRC).
+> 
+> Not sure if the change makes a big impact in QEMU's usage, it's just one of
+> these differences between memfd and shared anonymous memory. (responding to
+> your "mostly the same").
+
+So yeah, I hoped the memory commit won't be a problem, because I think they
+should be corner case MRs, and should be small.
+
+Vram can take up to 16MB, that's the max I'm aware of, but indeed I don't
+know all the use cases to be sure.  I think it means some tens of MBs can
+be accounted later during fault rather than upfront to fail QEMU from boot.
+Ideally mgmt apps should leave enough space for these ones, but if we worry
+on that we can stick with the current option (but create a new flag besides
+RAM_SHARED).
+
+> 
+> > 
+> > > 
+> > > Of course, there is a difference between anon memory and shmem, for example
+> > > regarding what viritofsd faced (e.g., KSM) recently.
+> > 
+> > The four paths shouldn't be KSM target, AFAICT.
+> 
+> Do you have a good overview of what is deduplicated in practice and why
+> these don't apply? For example, I thought these functions are also used for
+> hosting the BIOS, and that might just be deduplciated between VMs?
+
+I was thinking KSM was for merging OS/App pages (rather than BIOSs, which
+are normally very, very small)?  Though I could be wrong.
+
+> 
+> Anyhow, there are obviously other differences with shmem vs. anonymous (THP
+> handling, page fault performance, userfaultfd compatibility on older
+> kernels) at least on Linux, but I have absolutely no clue how that would
+> differ on other host OSes.
+> 
+> None of them are major
+> 
+> This is probably going to result in a bigger discussion, for which I don't
+> have any time. So my opinion on it is above.
+> 
+> Anyhow, this sounds like one of the suggestions I wouldn't suggest Steve to
+> actually implement.
+
+We don't need to make it a bigger discussion.  If there's concern with it,
+we can stick with a new flag.
+
+The next question is whether if with a new flag we should enable it by
+default sometimes (e.g. on new machine types on Linux).  But when with a
+new option, that can be discussed later.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
