@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9A5CFB454
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9353CFB455
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtGz-0000wE-5u; Mon, 07 Oct 2024 15:20:01 -0400
+	id 1sxtFC-0005am-WF; Mon, 07 Oct 2024 15:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtGD-00075u-76; Mon, 07 Oct 2024 15:19:15 -0400
+ id 1sxtF9-0005Wf-5q; Mon, 07 Oct 2024 15:18:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtG4-0004MZ-5D; Mon, 07 Oct 2024 15:19:12 -0400
+ id 1sxtF7-0004CB-KW; Mon, 07 Oct 2024 15:18:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BF95F96257;
+ by isrv.corpit.ru (Postfix) with ESMTP id 186B29624D;
  Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9906314F737;
- Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
-Received: (nullmailer pid 2592780 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E797714F72D;
+ Mon,  7 Oct 2024 22:16:55 +0300 (MSK)
+Received: (nullmailer pid 2592749 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 26/32] hw/mips/jazz: fix typo in in-built NIC alias
-Date: Mon,  7 Oct 2024 22:16:43 +0300
-Message-Id: <20241007191654.2592616-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 16/32] mac_dbdma: Remove leftover `dma_memory_unmap`
+ calls
+Date: Mon,  7 Oct 2024 22:16:33 +0300
+Message-Id: <20241007191654.2592616-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,34 +63,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-Commit e104edbb9d ("hw/mips/jazz: use qemu_find_nic_info()") contained a typo
-in the NIC alias which caused initialisation of the in-built dp83932 NIC to fail
-when using the normal -nic user,model=dp83932 command line.
+These were passing a NULL buffer pointer unconditionally, which happens
+to behave in a mostly benign way (except for the chance of an excess
+memory region unref and a bounce buffer leak). Per the function comment,
+this was never meant to be accepted though, and triggers an assertion
+with the "softmmu: Support concurrent bounce buffers" change.
 
-Fixes: e104edbb9d ("hw/mips/jazz: use qemu_find_nic_info()")
+Given that the code in question never sets up any mappings, just remove
+the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
+fields that are now entirely unused.
+
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
+Message-Id: <20240916175708.1829059-1-mnissler@rivosinc.com>
+Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 2e4fdf566062c03456230fd8136b88c5c1e5c4bf)
+(cherry picked from commit 2d0a071e625d7234e8c5623b7e7bf445e1bef72c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 1bc17e69d3..0d44e19707 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -128,7 +128,7 @@ static void mips_jazz_init_net(IOMMUMemoryRegion *rc4030_dma_mr,
-     uint8_t *prom;
-     NICInfo *nd;
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index e84bf2c9f6..15dd40138e 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque, int ret)
+     return;
  
--    nd = qemu_find_nic_info("dp8393x", true, "dp82932");
-+    nd = qemu_find_nic_info("dp8393x", true, "dp83932");
-     if (!nd) {
-         return;
-     }
+ done:
+-    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+-                     io->dir, io->dma_len);
+-
+     if (ret < 0) {
+         block_acct_failed(blk_get_stats(s->blk), &s->acct);
+     } else {
+@@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
+     return;
+ 
+ done:
+-    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
+-                     io->dir, io->dma_len);
+-
+     if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
+         if (ret < 0) {
+             block_acct_failed(blk_get_stats(s->blk), &s->acct);
+diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+index 4a3f644516..c774f6bf84 100644
+--- a/include/hw/ppc/mac_dbdma.h
++++ b/include/hw/ppc/mac_dbdma.h
+@@ -44,10 +44,6 @@ struct DBDMA_io {
+     DBDMA_end dma_end;
+     /* DMA is in progress, don't start another one */
+     bool processing;
+-    /* DMA request */
+-    void *dma_mem;
+-    dma_addr_t dma_len;
+-    DMADirection dir;
+ };
+ 
+ /*
 -- 
 2.39.5
 
