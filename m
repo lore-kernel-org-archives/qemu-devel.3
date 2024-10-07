@@ -4,87 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1122CFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 09:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD52CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 09:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxkDu-0004wW-HG; Mon, 07 Oct 2024 05:40:14 -0400
+	id 1sxkEn-0005jC-TU; Mon, 07 Oct 2024 05:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sxkDr-0004vI-BX
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:40:11 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sxkEl-0005iw-AX
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:41:07 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sxkDo-000535-QX
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:40:11 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42cb806623eso37876765e9.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 02:40:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sxkEh-0005Av-MA
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:41:07 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-71df2b0a2f7so1428901b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 02:41:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728294007; x=1728898807; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=0bvmJJ+8246gH4K3TL1jO3GW/p257TZ4N0EkExiJyKo=;
- b=RADl143HKhFGmcJdyht4bWK94WivhBmiDvtKttl1VaoxtuGgOkEFjX7x7ab+9l3cmh
- 8WpxQ7eKCoj8iqz0lDw2SWpTc28jitlw7Vfhxkm1uMHTTErGhytVBWEKLBGW1SmUxgJj
- 1SF1F8YZK5SN92gPiQQ+SzBSp+BhYEl+ppHbrVGgzic5OqTAm+UcyHBvup2DW67Rt1fM
- NPT+e4ohGU37XTbjvmH3XE4QCwKuBGgsaI4eEdPKutwwuuFkr/xzx2T4T3CQ/6vD9vwF
- o0Juba/Hg+50RYiW12aIVlpF5vgUqGqkiQQSZzBK9irzvcitHlv54hbI6Km/+R7ILfUe
- w4NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728294007; x=1728898807;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728294062; x=1728898862;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0bvmJJ+8246gH4K3TL1jO3GW/p257TZ4N0EkExiJyKo=;
- b=gdpEKcSJk5zNoYke+XF/a6Kgb/UHGW34+rJivNRAzf8D8+k0bDalB1qad/tel85C4N
- HuRfZz0S//f/9r4jYVtBfRl1qAO52vZx107iH4RQXsT84VfPM7LM6ZoeZ85MTYRIWld1
- fmR+mSROoLQGAn2064XTnP/VSQc8nnZLpg4ufo0mhRsb/pBTOwOnRvTjRLkCkTDnBUCe
- jgRj1zIxD1vikdwq47GTCo/o4xKVm+wbsaOxqr5BlKZ22gLjSnqHaRkKd2FHz/a6yQiY
- 0cENIlN4M9UeTtDt/NuTw3Y//NAXucuDQaTWXRHwCkVENFX2hoW0MJeUBNOTXjQLjehB
- ZmJA==
+ bh=QryXnF6nXxKw6ZH1DrOeBNBk4Z+kgjoP0clVzHzesag=;
+ b=nrVQ1Lzl5fmWmai+Xr6XjuR5TMbLpcqhrjodTXYuAmsqS96NVRDJ3WEre5Y38yVXbG
+ Z2AC7uHl+oJQfgxO+qWGtASiNprMf5I81sv1CWikQtGa/zHoczIFfcGpEM0jA5CtF8n2
+ 1OChGo8/g3wN0CKk1Aq1snQkvUJ1qf772ZxVy/Gh51u406uBPjF0miaxdQ+1iQYWQ/X4
+ +0W61BEhjR9bxLd/6KDEkw3mrqiy9k4dBf2ZUFFP+EblVQq3pKgtdgZkQM+MNsgDox1/
+ FDtF9ZhAe9IOYdsTUO3xj1lz7+722COy44QBQJmDUVjo9SEfPfs+oCr9zlQ3Qt2jmVQS
+ BwSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728294062; x=1728898862;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QryXnF6nXxKw6ZH1DrOeBNBk4Z+kgjoP0clVzHzesag=;
+ b=q8Prze25e6XAWTGafzUJMMHhD98fkLjpr9gjwO7h+q8DosH6plBT+dgkMGCYlV6CTN
+ euzN7N1fEExH+TRwzeyHThH5dvN/bW59a85qfdgKvL9b4SO3KzLPm3dKRwtbkGwEFKVJ
+ D1q4zMuD2v57ZIh5MUPoQzZ006GOJJeUS0t9xSDEyPEJPXQwdGyz5G5pF+VR+NHGDKSE
+ 7N5b3Pl6P+xEgz+dkQZDMPy3HPDC3LWfVAs6t92RAsZkLjrMIIeC2owDGuJNFkRhx9js
+ RaP358l+f4IMF/uVGznGd+SfGwmqKlPfq4ozfbEsqdGPzbjGspLg6Espge6LmHQELR6d
+ 0CcQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUH6/3413ODW6DlmBposPdhLoP+N7QJm9+a5nuuObD0nKrtFZd/BEkfTeTxVy+zXfgqUmAiNeqvPM6I@nongnu.org
-X-Gm-Message-State: AOJu0YxWbkLkbOxyHgf3U5e5xQgYlyN4HF9MagpmzLwj5dpNmGTfyg+k
- qqo7LjnNrZnBZpC6LVr/XDabE4R2I1AkyBg22zbAmf+PI8+My4tETb07VFxMboBDNysnQzRuK/Q
- NuoM=
-X-Google-Smtp-Source: AGHT+IGd9px8ux63YIt5qESYU109u7AzkASThaIzTP2XLH16zpBUjtII4NGGFMdJKErd5uVxeE61DA==
-X-Received: by 2002:a05:600c:190b:b0:42c:be90:fa2f with SMTP id
- 5b1f17b1804b1-42f85af4582mr80485315e9.25.1728294007091; 
- Mon, 07 Oct 2024 02:40:07 -0700 (PDT)
-Received: from meli-email.org (adsl-122.37.6.160.tellas.gr. [37.6.160.122])
+ AJvYcCUunFYZ4m2DP0tQDnVlNmkqq9Kjs6dJMb4ll4v+lGeDPUdmUrn4KfuO5Kk4Kofg5VDi4079ck3sSrCW@nongnu.org
+X-Gm-Message-State: AOJu0YzUoA4nFVKPWQPxcFM15mbMcMaLdFh73rXkIPOhr6ArG3hOyZ05
+ nxmbiyLqw835l96ip/SK0r2sgrrGr2EZXTIz82grtC9gDC9+SaQlxMIQ/4VQRK4=
+X-Google-Smtp-Source: AGHT+IFLhdHamsRokoW69B8BReR7QDTEp99ILAnHxpix3s5Ab580nuKm2vs2BOOZA8izY+iAoycijA==
+X-Received: by 2002:a05:6a20:c890:b0:1cf:122b:6ab6 with SMTP id
+ adf61e73a8af0-1d6dfa3a4ccmr15773658637.12.1728294062135; 
+ Mon, 07 Oct 2024 02:41:02 -0700 (PDT)
+Received: from [157.82.207.107] ([157.82.207.107])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f89e89624sm69109265e9.12.2024.10.07.02.40.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 02:40:06 -0700 (PDT)
-Date: Mon, 07 Oct 2024 12:39:12 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v2] tests/functional: Switch back to the gitlab URLs for
- the advent calendar tests
-User-Agent: meli 0.8.7
-References: <20241007083649.204886-1-thuth@redhat.com>
-In-Reply-To: <20241007083649.204886-1-thuth@redhat.com>
-Message-ID: <kzc6t.omlco5eeifu@linaro.org>
+ d2e1a72fcca58-71df0d7cf82sm3993427b3a.200.2024.10.07.02.40.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 02:41:01 -0700 (PDT)
+Message-ID: <d93db4fb-9819-4e00-a243-16feb98fc4d9@daynix.com>
+Date: Mon, 7 Oct 2024 18:40:56 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/6] ui/sdl2: Implement dpy dmabuf functions
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>
+References: <20241006232350.3198759-1-dmitry.osipenko@collabora.com>
+ <20241006232350.3198759-3-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241006232350.3198759-3-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,132 +113,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 07 Oct 2024 11:36, Thomas Huth <thuth@redhat.com> wrote:
->Shortly after we switched to the original URLs on qemu-advent-calendar.org,
->the server went offline - looks like we are better off using the gitlab
->URLs again instead.
->
->Signed-off-by: Thomas Huth <thuth@redhat.com>
->---
-> v2: Drop the wrong change to the test_microblazeel_s3adsp1800.py file
->
-> tests/functional/test_arm_vexpress.py    | 2 +-
-> tests/functional/test_m68k_mcf5208evb.py | 2 +-
-> tests/functional/test_or1k_sim.py        | 2 +-
-> tests/functional/test_ppc64_e500.py      | 2 +-
-> tests/functional/test_ppc_mac.py         | 2 +-
-> tests/functional/test_sh4_r2d.py         | 2 +-
-> tests/functional/test_sparc_sun4m.py     | 2 +-
-> tests/functional/test_xtensa_lx60.py     | 2 +-
-> 8 files changed, 8 insertions(+), 8 deletions(-)
->
->diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
->index cc6015112b..6bd6290030 100755
->--- a/tests/functional/test_arm_vexpress.py
->+++ b/tests/functional/test_arm_vexpress.py
->@@ -11,7 +11,7 @@
-> class VExpressTest(LinuxKernelTest):
+On 2024/10/07 8:23, Dmitry Osipenko wrote:
+> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 > 
->     ASSET_DAY16 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day16.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day16.tar.xz',
->         '63311adb2d4c4e7a73214a86d29988add87266a909719c56acfadd026b4110a7')
+> If EGL is used, we can rely on dmabuf to import textures without
+> doing copies.
 > 
->     def test_arm_vexpressa9(self):
->diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/test_m68k_mcf5208evb.py
->index 869ccc88df..00c59590c3 100755
->--- a/tests/functional/test_m68k_mcf5208evb.py
->+++ b/tests/functional/test_m68k_mcf5208evb.py
->@@ -13,7 +13,7 @@
-> class Mcf5208EvbTest(LinuxKernelTest):
+> To get this working on X11, we use the existing SDL hint:
+> SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
 > 
->     ASSET_DAY07 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day07.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day07.tar.xz',
->         '753c2f3837126b7c6ba92d0b1e0b156e8a2c5131d2d576bb0b9a763fae73c08a')
+> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   include/ui/sdl2.h |  5 +++++
+>   ui/sdl2-gl.c      | 39 +++++++++++++++++++++++++++++++++++++++
+>   ui/sdl2.c         |  8 ++++++++
+>   3 files changed, 52 insertions(+)
 > 
->     def test_m68k_mcf5208evb(self):
->diff --git a/tests/functional/test_or1k_sim.py b/tests/functional/test_or1k_sim.py
->index aa2a1f08d2..10e0437c50 100755
->--- a/tests/functional/test_or1k_sim.py
->+++ b/tests/functional/test_or1k_sim.py
->@@ -13,7 +13,7 @@
-> class OpenRISC1kSimTest(LinuxKernelTest):
-> 
->     ASSET_DAY20 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day20.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day20.tar.xz',
->         'ff9d7dd7c6bdba325bd85ee85c02db61ff653e129558aeffe6aff55bffb6763a')
-> 
->     def test_or1k_sim(self):
->diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
->index 3558ae0c8c..f1af92373e 100755
->--- a/tests/functional/test_ppc64_e500.py
->+++ b/tests/functional/test_ppc64_e500.py
->@@ -10,7 +10,7 @@
-> class E500Test(LinuxKernelTest):
-> 
->     ASSET_DAY19 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day19.tar.xz',
->         '20b1bb5a8488c664defbb5d283addc91a05335a936c63b3f5ff7eee74b725755')
-> 
->     def test_ppc64_e500(self):
->diff --git a/tests/functional/test_ppc_mac.py b/tests/functional/test_ppc_mac.py
->index a6b1ca2d4c..3f45e37a45 100755
->--- a/tests/functional/test_ppc_mac.py
->+++ b/tests/functional/test_ppc_mac.py
->@@ -10,7 +10,7 @@
-> class MacTest(LinuxKernelTest):
-> 
->     ASSET_DAY15 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day15.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day15.tar.xz',
->         '03e0757c131d2959decf293a3572d3b96c5a53587165bf05ce41b2818a2bccd5')
-> 
->     def do_day15_test(self):
->diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
->index 5fe8cf9f8d..c3cfff79ad 100755
->--- a/tests/functional/test_sh4_r2d.py
->+++ b/tests/functional/test_sh4_r2d.py
->@@ -13,7 +13,7 @@
-> class R2dTest(LinuxKernelTest):
-> 
->     ASSET_DAY09 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day09.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day09.tar.xz',
->         'a61b44d2630a739d1380cc4ff4b80981d47ccfd5992f1484ccf48322c35f09ac')
-> 
->     # This test has a 6-10% failure rate on various hosts that look
->diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
->index b334375820..573f85222a 100755
->--- a/tests/functional/test_sparc_sun4m.py
->+++ b/tests/functional/test_sparc_sun4m.py
->@@ -11,7 +11,7 @@
-> class Sun4mTest(LinuxKernelTest):
-> 
->     ASSET_DAY11 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day11.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day11.tar.xz',
->         'c776533ba756bf4dd3f1fc4c024fb50ef0d853e05c5f5ddf0900a32d1eaa49e0')
-> 
->     def test_sparc_ss20(self):
->diff --git a/tests/functional/test_xtensa_lx60.py b/tests/functional/test_xtensa_lx60.py
->index 8ce5206a4f..d4ad92dc6c 100755
->--- a/tests/functional/test_xtensa_lx60.py
->+++ b/tests/functional/test_xtensa_lx60.py
->@@ -11,7 +11,7 @@
-> class XTensaLX60Test(LinuxKernelTest):
-> 
->     ASSET_DAY02 = Asset(
->-        'https://www.qemu-advent-calendar.org/2018/download/day02.tar.xz',
->+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day02.tar.xz',
->         '68ff07f9b3fd3df36d015eb46299ba44748e94bfbb2d5295fddc1a8d4a9fd324')
-> 
->     def test_xtensa_lx60(self):
->-- 
->2.46.1
->
+> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+> index dbe6e3d9739b..b14552f5cd71 100644
+> --- a/include/ui/sdl2.h
+> +++ b/include/ui/sdl2.h
+> @@ -96,5 +96,10 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
+>                                void *d3d_tex2d);
+>   void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>                              uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
+>   
+>   #endif /* SDL2_H */
+> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+> index b1fe96d6af22..24aa9108682e 100644
+> --- a/ui/sdl2-gl.c
+> +++ b/ui/sdl2-gl.c
+> @@ -26,6 +26,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+>   #include "ui/console.h"
+>   #include "ui/input.h"
+>   #include "ui/sdl2.h"
+> @@ -227,6 +228,44 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
+>                            backing_id, false);
+>   }
+>   
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +
+> +    assert(scon->opengl);
+> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+> +
+> +    egl_dmabuf_import_texture(dmabuf);
+> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
+> +        fprintf(stderr, "sdl2_gl_scanout_dmabuf failed fd=%d\n",
+> +                qemu_dmabuf_get_fd(dmabuf));
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Use error_report(). Use __func__ to print the function name.
+
+> +    }
+> +
+> +    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            0, 0,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            NULL);
+> +
+> +    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
+> +        scon->guest_fb.dmabuf = dmabuf;
+> +    }
+> +}
+> +
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    egl_dmabuf_release_texture(dmabuf);
+> +}
+> +
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
+> +{
+> +    return qemu_egl_has_dmabuf();
+> +}
+> +
+>   void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>                              uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+>   {
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index bd4f5a9da14a..8c7b01c5e62f 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -120,6 +120,9 @@ void sdl2_window_create(struct sdl2_console *scon)
+>           /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+>           scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+>       }
+> +
+> +    qemu_egl_display = eglGetCurrentDisplay();
+> +
+>       sdl_update_caption(scon);
+>   }
+>   
+> @@ -820,6 +823,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
+>       .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
+>       .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
+>       .dpy_gl_update           = sdl2_gl_scanout_flush,
+> +
+> +    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
+> +    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
+> +    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
+>   };
+>   
+>   static bool
+> @@ -877,6 +884,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>       SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+>   #endif
+>       SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
+> +    SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
+
+I think it needs to handle cases where X11 is not used or only GLX is 
+available.
+
+>       SDL_EnableScreenSaver();
+>       memset(&info, 0, sizeof(info));
+>       SDL_VERSION(&info.version);
+
 
