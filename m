@@ -4,100 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449D0CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C8FCFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxkjc-0005PS-RB; Mon, 07 Oct 2024 06:13:00 -0400
+	id 1sxkk8-0005aB-KU; Mon, 07 Oct 2024 06:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sxkjb-0005PD-Ie
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:12:59 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sxkk5-0005Z3-8b
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:13:30 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sxkjZ-0008PS-2k
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:12:59 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20ba8d92af9so31027465ad.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 03:12:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sxkk3-0008QK-7f
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:13:28 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c718bb04a3so5969832a12.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 03:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728295975; x=1728900775;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Q7IHPbJam8Lr6f3zVaCyL6LwtRzdkf9mzwO00mjdTp8=;
- b=Aj28axWFq2CbxAo/rjnd2ywcTtAc1QHJk5xLKwQjvXeFZhsmzpSw+r8JSJahU4kVjT
- 2lJIUZOF3WnJ8QQwP9Ph3czNrDer+I6DS9aDlpV+f0cpZIapzpk4DdO4hNcxc6bjwLMQ
- LkR7ctRk02nGz72h5Y6Y1qH8RxPOFunkiz338faCd0KB3hlEkYcHn6QkBCowYv8Vk6Mx
- OcGtSXnG/pAHe+9dwETzCdzLS/wl6imfSgniKf1QGiZiDZHAgkXnO1Gvs+nXlskI6xdX
- CD8pgkJejv+VQK88iaKvN5zSNMiQTV/WVH6BiBhyW8ah4OVfQlVYy0jgvMRV4xJMRmY9
- UGsw==
+ d=gmail.com; s=20230601; t=1728296005; x=1728900805; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=g3HU7O9Od7pnMPFWdwD6NFGHc9gsSGNK3QGoebqitF0=;
+ b=Ooa9pLNdYz1/nPCPqjv9JHkiWY2rEBhJa3LT3kKgUoF9JzkNFdHpWMIagCLz1QmVpR
+ 73bnHmgdSFUjjMCl1etHBjuj63sq+8qY5SjREQwkGUY2qlZqHp534VyWBOHW+no0vj/k
+ h5P42efR3RGxCWzjT4+3HoZMlHCVOsCfyaVfIH3eRJf7MMLry1uVHthNqfalcCyKba7Q
+ d43Fk0vd6vd94d8gyaGxNWY/1MjnNDhXj9sgPac/op24YEbDD6Rv1MeUZWQeXhMMB259
+ wWntxFWXbJ7hc0my9yGMoxKQBDNAY/iuMNW8ctsz1DpcwBgyJC32cdQ6Ho+rxNbe9VkS
+ JPKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728295975; x=1728900775;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q7IHPbJam8Lr6f3zVaCyL6LwtRzdkf9mzwO00mjdTp8=;
- b=nwaUyv0+N21FHnpGNvBa8cwxJqs6QAPVamoDGQF0vIigroVSG0iu0mPdbt+ByHnvIj
- lwMuTW1m6VSea9jt2tmiz2hPQHLT2DZ5OmYtCBFa0Og1hQ42YmbnMRXpLv8r4t17712s
- 77frwQKz5cqMJn6pt0smk6qHNqZvRI7kPGzzNCJBQsJJBWZBgfO5mIuimurWP1/6Wncp
- w6XqAJt/xjsaGMeWyX7Dq9/Rfk/tuMqSQ1xA3vnkw84qKrpa6KYZTHEbWjiFfT6LUZbE
- 6CYqD0DUhl8BLsgTLti3Ykv8ZfD/2KD0nB9x0dXBrs5DBAjaqQLPxWnq0f3+EwULkRiH
- TaMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaIxwUZ6bCpwk0XRmDs6BptQrQu6/ameFeeV0gkdI9p36P2P3hH4eUsSonzN38iQTj/i31Z8rR/af3@nongnu.org
-X-Gm-Message-State: AOJu0YwjLMB4+qrrxRu7np6xGpB14Az5yHwvTZ6aY5vW3TlDVzkjxs1p
- AvN8FwXvHTTRkM9TENfd+FoqiGgLQy0mn5iiqSvZUqw8AvDWTBZc7bIT7JihtWo=
-X-Google-Smtp-Source: AGHT+IHutfdogFTATfIlwfRv70QMSduGIQYhhk08LU/+TMm3hmAwSUqje+mG3yfuG5YmSgJCodaHvg==
-X-Received: by 2002:a17:903:11c7:b0:20b:aebb:e17c with SMTP id
- d9443c01a7336-20bfe04af0cmr164832095ad.36.1728295975304; 
- Mon, 07 Oct 2024 03:12:55 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c138cf169sm36779705ad.109.2024.10.07.03.12.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 03:12:54 -0700 (PDT)
-Message-ID: <f6becec0-394a-4372-baf1-695eac4ecf96@daynix.com>
-Date: Mon, 7 Oct 2024 19:12:49 +0900
+ d=1e100.net; s=20230601; t=1728296005; x=1728900805;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=g3HU7O9Od7pnMPFWdwD6NFGHc9gsSGNK3QGoebqitF0=;
+ b=G50jDuk3YakP3KinzGAKdZBYxOu6QckGR/UiULHBpgGm4aG3tGzFhE4VXIJx9F8GHc
+ X5to6UzsCJtm8jXKf5WDrlqPJCoXgWoPIpGao4z9USZL5xbpaxk/U7E9F+LHI/mafyaB
+ +1n1pQGRgwBsgtkvpxb/0MuPl5oj2Ns6O66Y62VIGlb0IXaW4zvD2Lcdl1nTQ5MZ4ady
+ SzpCstXCQ3+6sBHvliqoBl3EyhmmUbfTVgqoFxm75veTdr+fO25Hfw3QwN1Hi4FSOWt4
+ EcHxULiw/EDj3oU0LQORqC/EY4Ntol483Vt57PP6wzcgpGTKr0oH6ZIDn3G0AtqYq0yY
+ oNgg==
+X-Gm-Message-State: AOJu0YysBCLQiE7JFxXjyMUw5dn1LDRn6UPSIcDlKl2p0LSJLkfNenT1
+ HYTtYpnUVrtp/92loJojT4Lyd/lkCyuvnV2YXkWctqWMjP+GKf5AT/dXmA==
+X-Google-Smtp-Source: AGHT+IFUX6JEYzvJZCLw6uK8EoUWVQHayMnnqxoyj8nfGlusb+fPf5WtET1FOHnF8jgAQs3TnX5tvg==
+X-Received: by 2002:a05:6402:35cb:b0:5c9:3fe:c7b9 with SMTP id
+ 4fb4d7f45d1cf-5c903fecb4fmr145284a12.0.1728296004818; 
+ Mon, 07 Oct 2024 03:13:24 -0700 (PDT)
+Received: from archlinux.. ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c8e05f3f07sm2995550a12.94.2024.10.07.03.13.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 03:13:24 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] net/tap-win32: Fix gcc 14 format truncation errors
+Date: Mon,  7 Oct 2024 12:13:13 +0200
+Message-ID: <20241007101313.3900-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/6] virtio-gpu: Support asynchronous fencing
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>
-References: <20241006232350.3198759-1-dmitry.osipenko@collabora.com>
- <20241006232350.3198759-6-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241006232350.3198759-6-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,274 +88,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/07 8:23, Dmitry Osipenko wrote:
-> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
-> handle fence as soon as it's signalled instead of periodically polling
-> the fence status. This feature is required for enabling DRM context
-> support in Qemu because legacy fencing mode isn't supported for DRM
-> contexts in virglrenderer.
-> 
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   hw/display/virtio-gpu-gl.c     |   3 +
->   hw/display/virtio-gpu-virgl.c  | 143 ++++++++++++++++++++++++++++-----
->   include/hw/virtio/virtio-gpu.h |  14 ++++
->   3 files changed, 141 insertions(+), 19 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-> index 7c0e448b4661..53d938f23f20 100644
-> --- a/hw/display/virtio-gpu-gl.c
-> +++ b/hw/display/virtio-gpu-gl.c
-> @@ -170,6 +170,9 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
->       if (gl->renderer_state >= RS_INITED) {
->   #if VIRGL_VERSION_MAJOR >= 1
->           qemu_bh_delete(gl->cmdq_resume_bh);
-> +
-> +        virtio_gpu_virgl_reset_async_fences(g);
-> +        qemu_bh_delete(gl->async_fence_bh);
->   #endif
->           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
->               timer_free(gl->print_stats);
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index b32ce44ba2b1..ad1d40901bff 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -891,6 +891,7 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
->   void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->                                         struct virtio_gpu_ctrl_command *cmd)
->   {
-> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
->       bool cmd_suspended = false;
->       int ret;
->   
-> @@ -992,35 +993,115 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
->   
->       trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
->   
-> -    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
-> -    if (ret)
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "%s: virgl_renderer_create_fence error: %s",
-> -                      __func__, strerror(-ret));
-> +    if (gl->context_fence_enabled &&
-> +        (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX)) {
-> +        uint32_t flags = 0;
-> +
-> +        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
-> +                                                  cmd->cmd_hdr.ring_idx,
-> +                                                  cmd->cmd_hdr.fence_id);
-> +        if (ret)
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: virgl_renderer_context_create_fence error: %s",
-> +                          __func__, strerror(ret));
-> +    } else {
-> +        ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
-> +        if (ret)
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: virgl_renderer_create_fence error: %s",
-> +                          __func__, strerror(-ret));
-> +    }
->   }
->   
-> -static void virgl_write_fence(void *opaque, uint32_t fence)
-> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
->   {
-> -    VirtIOGPU *g = opaque;
-> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
->       struct virtio_gpu_ctrl_command *cmd, *tmp;
-> +    VirtIOGPU *g = opaque;
-> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
->   
-> -    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
-> -        /*
-> -         * the guest can end up emitting fences out of order
-> -         * so we should check all fenced cmds not just the first one.
-> -         */
-> -        if (cmd->cmd_hdr.fence_id > fence) {
-> -            continue;
-> +    qemu_mutex_lock(&gl->async_fence_lock);
-> +
-> +    QTAILQ_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
-> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
-> +            /*
-> +             * the guest can end up emitting fences out of order
-> +             * so we should check all fenced cmds not just the first one.
-> +             */
-> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
-> +                continue;
-> +            }
-> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
-> +                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
-> +                    continue;
-> +                }
-> +                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
-> +                    continue;
-> +                }
-> +            } else if (f->ring_idx >= 0) {
-> +                /* ctx0 GL-query fences don't have ring info */
-> +                continue;
-> +            }
-> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
-> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
-> +            g_free(cmd);
->           }
-> -        trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
-> -        virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
-> -        QTAILQ_REMOVE(&g->fenceq, cmd, next);
-> -        g_free(cmd);
-> +
-> +        trace_virtio_gpu_fence_resp(f->fence_id);
-> +        QTAILQ_REMOVE(&gl->async_fenceq, f, next);
-> +        g_free(f);
->           g->inflight--;
->           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-> -            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-> +            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
+The patch fixes the following errors generated by GCC 14.2:
 
-Please keep it as is.
+../src/net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 176 [-Werror=format-truncation=]
+  343 |              "%s\\%s\\Connection",
+      |                   ^~
+  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+      |                                       ~~~~~~~~~
 
->           }
->       }
-> +
-> +    qemu_mutex_unlock(&gl->async_fence_lock);
-> +}
-> +
-> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
-> +{
-> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
-> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-> +
-> +    QTAILQ_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
-> +        QTAILQ_REMOVE(&gl->async_fenceq, f, next);
-> +        g_free(f);
-> +    }
-> +}
-> +
-> +static void
-> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
-> +                                  int64_t ring_idx, uint64_t fence_id)
-> +{
-> +    struct virtio_gpu_virgl_context_fence *f;
-> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
-> +
-> +    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
-> +    f->ctx_id = ctx_id;
-> +    f->ring_idx = ring_idx;
-> +    f->fence_id = fence_id;
-> +
-> +    qemu_mutex_lock(&gl->async_fence_lock);
-> +    QTAILQ_INSERT_TAIL(&gl->async_fenceq, f, next);
-> +    qemu_mutex_unlock(&gl->async_fence_lock);
-> +
-> +    qemu_bh_schedule(gl->async_fence_bh);
-> +}
-> +
-> +static void virgl_write_fence(void *opaque, uint32_t fence)
-> +{
-> +    VirtIOGPU *g = opaque;
-> +
-> +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
-> +}
-> +
-> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
-> +                                      uint32_t ring_idx, uint64_t fence)
-> +{
-> +    VirtIOGPU *g = opaque;
-> +
-> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
->   }
->   
->   static virgl_renderer_gl_context
-> @@ -1110,6 +1191,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->           dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
->           dpy_gl_scanout_disable(g->parent_obj.scanout[i].con);
->       }
-> +
-> +    virtio_gpu_virgl_reset_async_fences(g);
->   }
->   
->   void virtio_gpu_virgl_reset(VirtIOGPU *g)
-> @@ -1127,6 +1210,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->       if (qemu_egl_display) {
->           virtio_gpu_3d_cbs.version = 4;
->           virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
-> +#if VIRGL_VERSION_MAJOR >= 1
-> +        virtio_gpu_3d_cbs.write_context_fence = virgl_write_context_fence;
-> +        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
-> +        flags |= VIRGL_RENDERER_THREAD_SYNC;
-> +        gl->context_fence_enabled = true;
-> +#endif
->       }
->   #endif
->   #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
-> @@ -1160,6 +1249,13 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->       gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
->                                       virtio_gpu_virgl_resume_cmdq_bh,
->                                       g);
-> +
-> +    gl->async_fence_bh = aio_bh_new(qemu_get_aio_context(),
-> +                                    virtio_gpu_virgl_async_fence_bh,
-> +                                    g);
-> +
-> +    qemu_mutex_init(&gl->async_fence_lock);
-> +    QTAILQ_INIT(&gl->async_fenceq);
->   #endif
->   
->       return 0;
-> @@ -1196,5 +1292,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
->           }
->       }
->   
-> +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-> +        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
-> +                                   &capset_max_ver,
-> +                                   &capset_max_size);
-> +        if (capset_max_size) {
-> +            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
-> +        }
-> +    }
-> +
->       return capset_ids;
->   }
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index 230fa0c4ee0a..e95d1619c885 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -229,6 +229,13 @@ struct VirtIOGPUClass {
->                                Error **errp);
->   };
->   
-> +struct virtio_gpu_virgl_context_fence {
-> +    uint32_t ctx_id;
-> +    int64_t ring_idx;
-> +    uint64_t fence_id;
-> +    QTAILQ_ENTRY(virtio_gpu_virgl_context_fence) next;
- > +};> +
->   /* VirtIOGPUGL renderer states */
->   typedef enum {
->       RS_START,       /* starting state */
-> @@ -246,6 +253,12 @@ struct VirtIOGPUGL {
->       QEMUTimer *print_stats;
->   
->       QEMUBH *cmdq_resume_bh;
-> +
-> +    QEMUBH *async_fence_bh;
-> +    QemuMutex async_fence_lock;
-> +    QTAILQ_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+../src/net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes into a destination of size 256
+  341 |         snprintf(connection_string,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  342 |              sizeof(connection_string),
+      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+  343 |              "%s\\%s\\Connection",
+      |              ~~~~~~~~~~~~~~~~~~~~~
+  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use QSLIST_HEAD().
+../src/net/tap-win32.c:242:58: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 178 [-Werror=format-truncation=]
+  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+      |                                                          ^~
+  243 |                   ADAPTER_KEY, enum_name);
+      |                                ~~~~~~~~~
 
-> +
-> +    bool context_fence_enabled;
->   };
->   
->   struct VhostUserGPU {
-> @@ -360,5 +373,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
->   void virtio_gpu_virgl_reset(VirtIOGPU *g);
->   int virtio_gpu_virgl_init(VirtIOGPU *g);
->   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
-> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
->   
->   #endif
+../src/net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes into a destination of size 256
+  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  243 |                   ADAPTER_KEY, enum_name);
+      |                   ~~~~~~~~~~~~~~~~~~~~~~~
+
+../src/net/tap-win32.c:620:52: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 245 [-Werror=format-truncation=]
+  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+      |                                                    ^~
+  621 |               USERMODEDEVICEDIR,
+  622 |               device_guid,
+      |               ~~~~~~~~~~~
+../src/net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes into a destination of size 256
+  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  621 |               USERMODEDEVICEDIR,
+      |               ~~~~~~~~~~~~~~~~~~
+  622 |               device_guid,
+      |               ~~~~~~~~~~~~
+  623 |               TAPSUFFIX);
+      |               ~~~~~~~~~~
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ net/tap-win32.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 7edbd71633..4a4625af2b 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
+ 
+     for (;;) {
+         char enum_name[256];
+-        char unit_string[256];
++        char unit_string[512];
+         HKEY unit_key;
+         char component_id_string[] = "ComponentId";
+         char component_id[256];
+@@ -315,7 +315,7 @@ static int get_device_guid(
+     while (!stop)
+     {
+         char enum_name[256];
+-        char connection_string[256];
++        char connection_string[512];
+         HKEY connection_key;
+         char name_data[256];
+         DWORD name_type;
+@@ -595,7 +595,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
+ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+                           const char *preferred_name)
+ {
+-    char device_path[256];
++    char device_path[512];
+     char device_guid[0x100];
+     int rc;
+     HANDLE handle;
+-- 
+2.46.2
 
 
