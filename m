@@ -4,39 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CBBCFB454
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5054CFB455
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtEG-0004Mn-Uv; Mon, 07 Oct 2024 15:17:13 -0400
+	id 1sxtEl-000591-FD; Mon, 07 Oct 2024 15:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtEE-0004Dr-Nh; Mon, 07 Oct 2024 15:17:10 -0400
+ id 1sxtEj-00056Q-63; Mon, 07 Oct 2024 15:17:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtEC-00044O-CQ; Mon, 07 Oct 2024 15:17:10 -0400
+ id 1sxtEh-00049u-2g; Mon, 07 Oct 2024 15:17:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 45A3396242;
+ by isrv.corpit.ru (Postfix) with ESMTP id D7AC596249;
  Mon,  7 Oct 2024 22:16:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1731314F723;
+ by tsrv.corpit.ru (Postfix) with SMTP id AF85D14F72A;
  Mon,  7 Oct 2024 22:16:55 +0300 (MSK)
-Received: (nullmailer pid 2592718 invoked by uid 1000);
+Received: (nullmailer pid 2592740 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 06/32] tests/docker: remove debian-armel-cross
-Date: Mon,  7 Oct 2024 22:16:23 +0300
-Message-Id: <20241007191654.2592616-6-mjt@tls.msk.ru>
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 13/32] softmmu: Support concurrent bounce buffers
+Date: Mon,  7 Oct 2024 22:16:30 +0300
+Message-Id: <20241007191654.2592616-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
@@ -66,260 +63,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Mattias Nissler <mnissler@rivosinc.com>
 
-As debian-11 transitions to LTS we are starting to have problems
-building the image. While we could update to a later Debian building a
-32 bit QEMU without modern floating point is niche host amongst the
-few remaining 32 bit hosts we regularly build for. For now we still
-have armhf-debian-cross-container which is currently built from the
-more recent debian-12.
+When DMA memory can't be directly accessed, as is the case when
+running the device model in a separate process without shareable DMA
+file descriptors, bounce buffering is used.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+It is not uncommon for device models to request mapping of several DMA
+regions at the same time. Examples include:
+ * net devices, e.g. when transmitting a packet that is split across
+   several TX descriptors (observed with igb)
+ * USB host controllers, when handling a packet with multiple data TRBs
+   (observed with xhci)
+
+Previously, qemu only provided a single bounce buffer per AddressSpace
+and would fail DMA map requests while the buffer was already in use. In
+turn, this would cause DMA failures that ultimately manifest as hardware
+errors from the guest perspective.
+
+This change allocates DMA bounce buffers dynamically instead of
+supporting only a single buffer. Thus, multiple DMA mappings work
+correctly also when RAM can't be mmap()-ed.
+
+The total bounce buffer allocation size is limited individually for each
+AddressSpace. The default limit is 4096 bytes, matching the previous
+maximum buffer size. A new x-max-bounce-buffer-size parameter is
+provided to configure the limit for PCI devices.
+
+Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240910173900.4154726-2-alex.bennee@linaro.org>
-(cherry picked from commit d0068b746a0a8cd4bb148527a0d199b130cd5288)
+Acked-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20240819135455.2957406-1-mnissler@rivosinc.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 637b0aa139565cb82a7b9269e62214f87082635c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index e3103940a0..9a3ebd885e 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -22,12 +22,6 @@ arm64-debian-cross-container:
-   variables:
-     NAME: debian-arm64-cross
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index fab86d0567..d2caf3ee8b 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -85,6 +85,8 @@ static Property pci_props[] = {
+                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
++    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
++                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
+     DEFINE_PROP_END_OF_LIST()
+ };
  
--armel-debian-cross-container:
--  extends: .container_job_template
--  stage: containers
--  variables:
--    NAME: debian-armel-cross
--
- armhf-debian-cross-container:
-   extends: .container_job_template
-   stage: containers
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index cb499e4ee0..459273f9da 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -1,13 +1,6 @@
- include:
-   - local: '/.gitlab-ci.d/crossbuild-template.yml'
+@@ -1204,6 +1206,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+                        "bus master container", UINT64_MAX);
+     address_space_init(&pci_dev->bus_master_as,
+                        &pci_dev->bus_master_container_region, pci_dev->name);
++    pci_dev->bus_master_as.max_bounce_buffer_size =
++        pci_dev->max_bounce_buffer_size;
  
--cross-armel-user:
--  extends: .cross_user_build_job
--  needs:
--    job: armel-debian-cross-container
--  variables:
--    IMAGE: debian-armel-cross
--
- cross-armhf-user:
-   extends: .cross_user_build_job
-   needs:
-diff --git a/tests/docker/dockerfiles/debian-armel-cross.docker b/tests/docker/dockerfiles/debian-armel-cross.docker
-deleted file mode 100644
-index 8476fc8cce..0000000000
---- a/tests/docker/dockerfiles/debian-armel-cross.docker
-+++ /dev/null
-@@ -1,179 +0,0 @@
--# THIS FILE WAS AUTO-GENERATED
--#
--#  $ lcitool dockerfile --layers all --cross-arch armv6l debian-11 qemu
--#
--# https://gitlab.com/libvirt/libvirt-ci
--
--FROM docker.io/library/debian:11-slim
--
--RUN export DEBIAN_FRONTEND=noninteractive && \
--    apt-get update && \
--    apt-get install -y eatmydata && \
--    eatmydata apt-get dist-upgrade -y && \
--    eatmydata apt-get install --no-install-recommends -y \
--                      bash \
--                      bc \
--                      bison \
--                      bsdextrautils \
--                      bzip2 \
--                      ca-certificates \
--                      ccache \
--                      dbus \
--                      debianutils \
--                      diffutils \
--                      exuberant-ctags \
--                      findutils \
--                      flex \
--                      gcc \
--                      gcovr \
--                      gettext \
--                      git \
--                      hostname \
--                      libglib2.0-dev \
--                      libgtk-vnc-2.0-dev \
--                      libpcre2-dev \
--                      libsndio-dev \
--                      libspice-protocol-dev \
--                      llvm \
--                      locales \
--                      make \
--                      meson \
--                      mtools \
--                      ncat \
--                      ninja-build \
--                      openssh-client \
--                      pkgconf \
--                      python3 \
--                      python3-numpy \
--                      python3-opencv \
--                      python3-pillow \
--                      python3-pip \
--                      python3-setuptools \
--                      python3-sphinx \
--                      python3-sphinx-rtd-theme \
--                      python3-venv \
--                      python3-wheel \
--                      python3-yaml \
--                      rpm2cpio \
--                      sed \
--                      socat \
--                      sparse \
--                      tar \
--                      tesseract-ocr \
--                      tesseract-ocr-eng \
--                      xorriso \
--                      zstd && \
--    eatmydata apt-get autoremove -y && \
--    eatmydata apt-get autoclean -y && \
--    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
--    dpkg-reconfigure locales && \
--    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
--
--RUN /usr/bin/pip3 install tomli
--
--ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
--ENV LANG "en_US.UTF-8"
--ENV MAKE "/usr/bin/make"
--ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3"
--
--RUN export DEBIAN_FRONTEND=noninteractive && \
--    dpkg --add-architecture armel && \
--    eatmydata apt-get update && \
--    eatmydata apt-get dist-upgrade -y && \
--    eatmydata apt-get install --no-install-recommends -y dpkg-dev && \
--    eatmydata apt-get install --no-install-recommends -y \
--                      gcc-arm-linux-gnueabi \
--                      libaio-dev:armel \
--                      libasan6:armel \
--                      libasound2-dev:armel \
--                      libattr1-dev:armel \
--                      libbpf-dev:armel \
--                      libbrlapi-dev:armel \
--                      libbz2-dev:armel \
--                      libc6-dev:armel \
--                      libcacard-dev:armel \
--                      libcap-ng-dev:armel \
--                      libcapstone-dev:armel \
--                      libcmocka-dev:armel \
--                      libcurl4-gnutls-dev:armel \
--                      libdaxctl-dev:armel \
--                      libdrm-dev:armel \
--                      libepoxy-dev:armel \
--                      libfdt-dev:armel \
--                      libffi-dev:armel \
--                      libfuse3-dev:armel \
--                      libgbm-dev:armel \
--                      libgcrypt20-dev:armel \
--                      libglib2.0-dev:armel \
--                      libglusterfs-dev:armel \
--                      libgnutls28-dev:armel \
--                      libgtk-3-dev:armel \
--                      libibverbs-dev:armel \
--                      libiscsi-dev:armel \
--                      libjemalloc-dev:armel \
--                      libjpeg62-turbo-dev:armel \
--                      libjson-c-dev:armel \
--                      liblttng-ust-dev:armel \
--                      liblzo2-dev:armel \
--                      libncursesw5-dev:armel \
--                      libnfs-dev:armel \
--                      libnuma-dev:armel \
--                      libpam0g-dev:armel \
--                      libpipewire-0.3-dev:armel \
--                      libpixman-1-dev:armel \
--                      libpng-dev:armel \
--                      libpulse-dev:armel \
--                      librbd-dev:armel \
--                      librdmacm-dev:armel \
--                      libsasl2-dev:armel \
--                      libsdl2-dev:armel \
--                      libsdl2-image-dev:armel \
--                      libseccomp-dev:armel \
--                      libselinux1-dev:armel \
--                      libslirp-dev:armel \
--                      libsnappy-dev:armel \
--                      libspice-server-dev:armel \
--                      libssh-gcrypt-dev:armel \
--                      libsystemd-dev:armel \
--                      libtasn1-6-dev:armel \
--                      libubsan1:armel \
--                      libudev-dev:armel \
--                      liburing-dev:armel \
--                      libusb-1.0-0-dev:armel \
--                      libusbredirhost-dev:armel \
--                      libvdeplug-dev:armel \
--                      libvirglrenderer-dev:armel \
--                      libvte-2.91-dev:armel \
--                      libzstd-dev:armel \
--                      nettle-dev:armel \
--                      systemtap-sdt-dev:armel \
--                      zlib1g-dev:armel && \
--    eatmydata apt-get autoremove -y && \
--    eatmydata apt-get autoclean -y && \
--    mkdir -p /usr/local/share/meson/cross && \
--    printf "[binaries]\n\
--c = '/usr/bin/arm-linux-gnueabi-gcc'\n\
--ar = '/usr/bin/arm-linux-gnueabi-gcc-ar'\n\
--strip = '/usr/bin/arm-linux-gnueabi-strip'\n\
--pkgconfig = '/usr/bin/arm-linux-gnueabi-pkg-config'\n\
--\n\
--[host_machine]\n\
--system = 'linux'\n\
--cpu_family = 'arm'\n\
--cpu = 'arm'\n\
--endian = 'little'\n" > /usr/local/share/meson/cross/arm-linux-gnueabi && \
--    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
--    mkdir -p /usr/libexec/ccache-wrappers && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/arm-linux-gnueabi-cc && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/arm-linux-gnueabi-gcc
--
--ENV ABI "arm-linux-gnueabi"
--ENV MESON_OPTS "--cross-file=arm-linux-gnueabi"
--ENV QEMU_CONFIGURE_OPTS --cross-prefix=arm-linux-gnueabi-
--ENV DEF_TARGET_LIST arm-softmmu,arm-linux-user,armeb-linux-user
--# As a final step configure the user (if env is defined)
--ARG USER
--ARG UID
--RUN if [ "${USER}" ]; then \
--  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index ac803e34f1..199d5fad87 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -154,12 +154,6 @@ try:
-                         trailer=cross_build("aarch64-linux-gnu-",
-                                             "aarch64-softmmu,aarch64-linux-user"))
+     if (phase_check(PHASE_MACHINE_READY)) {
+         pci_init_bus_master(pci_dev);
+@@ -2633,6 +2637,10 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
+     k->unrealize = pci_qdev_unrealize;
+     k->bus_type = TYPE_PCI_BUS;
+     device_class_set_props(k, pci_props);
++    object_class_property_set_description(
++        klass, "x-max-bounce-buffer-size",
++        "Maximum buffer size allocated for bounce buffers used for mapped "
++        "access to indirect DMA memory");
+ }
  
--    # migration to bookworm stalled: https://lists.debian.org/debian-arm/2023/09/msg00006.html
--    generate_dockerfile("debian-armel-cross", "debian-11",
--                        cross="armv6l",
--                        trailer=cross_build("arm-linux-gnueabi-",
--                                            "arm-softmmu,arm-linux-user,armeb-linux-user"))
+ static void pci_device_class_base_init(ObjectClass *klass, void *data)
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 296fd068c0..e5e865d1a9 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -1084,13 +1084,7 @@ typedef struct AddressSpaceMapClient {
+     QLIST_ENTRY(AddressSpaceMapClient) link;
+ } AddressSpaceMapClient;
+ 
+-typedef struct {
+-    MemoryRegion *mr;
+-    void *buffer;
+-    hwaddr addr;
+-    hwaddr len;
+-    bool in_use;
+-} BounceBuffer;
++#define DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4096)
+ 
+ /**
+  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
+@@ -1110,8 +1104,10 @@ struct AddressSpace {
+     QTAILQ_HEAD(, MemoryListener) listeners;
+     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
+ 
+-    /* Bounce buffer to use for this address space. */
+-    BounceBuffer bounce;
++    /* Maximum DMA bounce buffer size used for indirect memory map requests */
++    size_t max_bounce_buffer_size;
++    /* Total size of bounce buffers currently allocated, atomically accessed */
++    size_t bounce_buffer_size;
+     /* List of callbacks to invoke when buffers free up */
+     QemuMutex map_client_list_lock;
+     QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index 15694f2489..91df40f989 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -167,6 +167,9 @@ struct PCIDevice {
+     /* ID of standby device in net_failover pair */
+     char *failover_pair_id;
+     uint32_t acpi_index;
++
++    /* Maximum DMA bounce buffer size used for indirect memory map requests */
++    uint32_t max_bounce_buffer_size;
+ };
+ 
+ static inline int pci_intx(PCIDevice *pci_dev)
+diff --git a/system/memory.c b/system/memory.c
+index 5e6eb459d5..f6f6fee6d8 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3148,7 +3148,8 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
+     as->ioeventfds = NULL;
+     QTAILQ_INIT(&as->listeners);
+     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
+-    as->bounce.in_use = false;
++    as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
++    as->bounce_buffer_size = 0;
+     qemu_mutex_init(&as->map_client_list_lock);
+     QLIST_INIT(&as->map_client_list);
+     as->name = g_strdup(name ? name : "anonymous");
+@@ -3158,7 +3159,7 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
+ 
+ static void do_address_space_destroy(AddressSpace *as)
+ {
+-    assert(!qatomic_read(&as->bounce.in_use));
++    assert(qatomic_read(&as->bounce_buffer_size) == 0);
+     assert(QLIST_EMPTY(&as->map_client_list));
+     qemu_mutex_destroy(&as->map_client_list_lock);
+ 
+diff --git a/system/physmem.c b/system/physmem.c
+index 94600a33ec..971bfa0855 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3095,6 +3095,20 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
+                                      NULL, len, FLUSH_CACHE);
+ }
+ 
++/*
++ * A magic value stored in the first 8 bytes of the bounce buffer struct. Used
++ * to detect illegal pointers passed to address_space_unmap.
++ */
++#define BOUNCE_BUFFER_MAGIC 0xb4017ceb4ffe12ed
++
++typedef struct {
++    uint64_t magic;
++    MemoryRegion *mr;
++    hwaddr addr;
++    size_t len;
++    uint8_t buffer[];
++} BounceBuffer;
++
+ static void
+ address_space_unregister_map_client_do(AddressSpaceMapClient *client)
+ {
+@@ -3120,9 +3134,9 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
+     QEMU_LOCK_GUARD(&as->map_client_list_lock);
+     client->bh = bh;
+     QLIST_INSERT_HEAD(&as->map_client_list, client, link);
+-    /* Write map_client_list before reading in_use.  */
++    /* Write map_client_list before reading bounce_buffer_size. */
+     smp_mb();
+-    if (!qatomic_read(&as->bounce.in_use)) {
++    if (qatomic_read(&as->bounce_buffer_size) < as->max_bounce_buffer_size) {
+         address_space_notify_map_clients_locked(as);
+     }
+ }
+@@ -3251,28 +3265,40 @@ void *address_space_map(AddressSpace *as,
+     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
+ 
+     if (!memory_access_is_direct(mr, is_write)) {
+-        if (qatomic_xchg(&as->bounce.in_use, true)) {
++        size_t used = qatomic_read(&as->bounce_buffer_size);
++        for (;;) {
++            hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
++            size_t new_size = used + alloc;
++            size_t actual =
++                qatomic_cmpxchg(&as->bounce_buffer_size, used, new_size);
++            if (actual == used) {
++                l = alloc;
++                break;
++            }
++            used = actual;
++        }
++
++        if (l == 0) {
+             *plen = 0;
+             return NULL;
+         }
+-        /* Avoid unbounded allocations */
+-        l = MIN(l, TARGET_PAGE_SIZE);
+-        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
+-        as->bounce.addr = addr;
+-        as->bounce.len = l;
+ 
++        BounceBuffer *bounce = g_malloc0(l + sizeof(BounceBuffer));
++        bounce->magic = BOUNCE_BUFFER_MAGIC;
+         memory_region_ref(mr);
+-        as->bounce.mr = mr;
++        bounce->mr = mr;
++        bounce->addr = addr;
++        bounce->len = l;
++
+         if (!is_write) {
+             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
+-                          as->bounce.buffer, l);
++                          bounce->buffer, l);
+         }
+ 
+         *plen = l;
+-        return as->bounce.buffer;
++        return bounce->buffer;
+     }
+ 
 -
-     generate_dockerfile("debian-armhf-cross", "debian-12",
-                         cross="armv7l",
-                         trailer=cross_build("arm-linux-gnueabihf-",
+     memory_region_ref(mr);
+     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
+                                         l, is_write, attrs);
+@@ -3287,12 +3313,11 @@ void *address_space_map(AddressSpace *as,
+ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+                          bool is_write, hwaddr access_len)
+ {
+-    if (buffer != as->bounce.buffer) {
+-        MemoryRegion *mr;
+-        ram_addr_t addr1;
++    MemoryRegion *mr;
++    ram_addr_t addr1;
+ 
+-        mr = memory_region_from_host(buffer, &addr1);
+-        assert(mr != NULL);
++    mr = memory_region_from_host(buffer, &addr1);
++    if (mr != NULL) {
+         if (is_write) {
+             invalidate_and_set_dirty(mr, addr1, access_len);
+         }
+@@ -3302,15 +3327,22 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+         memory_region_unref(mr);
+         return;
+     }
++
++
++    BounceBuffer *bounce = container_of(buffer, BounceBuffer, buffer);
++    assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
++
+     if (is_write) {
+-        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
+-                            as->bounce.buffer, access_len);
+-    }
+-    qemu_vfree(as->bounce.buffer);
+-    as->bounce.buffer = NULL;
+-    memory_region_unref(as->bounce.mr);
+-    /* Clear in_use before reading map_client_list.  */
+-    qatomic_set_mb(&as->bounce.in_use, false);
++        address_space_write(as, bounce->addr, MEMTXATTRS_UNSPECIFIED,
++                            bounce->buffer, access_len);
++    }
++
++    qatomic_sub(&as->bounce_buffer_size, bounce->len);
++    bounce->magic = ~BOUNCE_BUFFER_MAGIC;
++    memory_region_unref(bounce->mr);
++    g_free(bounce);
++    /* Write bounce_buffer_size before reading map_client_list. */
++    smp_mb();
+     address_space_notify_map_clients(as);
+ }
+ 
 -- 
 2.39.5
 
