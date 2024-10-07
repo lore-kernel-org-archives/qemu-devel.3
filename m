@@ -4,56 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4371CCFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 632C0CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxlrf-0007KJ-KR; Mon, 07 Oct 2024 07:25:23 -0400
+	id 1sxltQ-0001BA-Vl; Mon, 07 Oct 2024 07:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1sxlre-0007Jt-9L
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:22 -0400
-Received: from mail-m16.yeah.net ([220.197.32.18])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <chao.liu@yeah.net>) id 1sxlra-00017P-TG
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=ZmdNc
- 3IF/kjBwLfNdOw4FBcA5N40qdDiUyFgWihYMr4=; b=gKySBCtJtMLaei6zLihja
- 60ei4RHHV2E2X/JmMh1fmzt190S02u8BYzBoAprkCWr1e0vNN/tHLpgMkto0evCu
- MOzTF6eFYgZcabWH09CjB6FP+ggumtO12XhAYjJ9/FmyO7VxYnCdgpNNr8aJkLnX
- teU2JC17Qm4kI2Wvplvxnk=
-Received: from localhost.localdomain (unknown [])
- by gzsmtp3 (Coremail) with SMTP id M88vCgAnSOcMxQNnGGjGAQ--.32547S2;
- Mon, 07 Oct 2024 19:25:00 +0800 (CST)
-From: Chao Liu <chao.liu@yeah.net>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Chao Liu <chao.liu@yeah.net>
-Subject: [PATCH v4 0/3] Drop ignore_memory_transaction_failures for xilink_zynq
-Date: Mon,  7 Oct 2024 19:24:52 +0800
-Message-ID: <cover.1728299530.git.chao.liu@yeah.net>
-X-Mailer: git-send-email 2.46.1
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxltP-0001AX-FN
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:27:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxltN-0001K6-57
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728300427;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8nKqBnt/fCOBu40ubx4JznSGepSs7ghbPdITuSOSGVo=;
+ b=OcxS4h0S8SjqskIua9jZsHd4cGWa1W7H3bFZzOk1PgYqpPZot0pUsiHymhMhkmtzy31Vw3
+ AxYsXvdL+I2IZFElCYYdT2tXeS5jiRnIqZ1bizrS6AFNTtP+WSrjJyJ7D7IuycrAFY9kol
+ OpgfPuZPX/ucbPnaNgVjzGBwez+Dt4U=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-oXG8utIwOQi1r1PFW6bZYw-1; Mon, 07 Oct 2024 07:27:06 -0400
+X-MC-Unique: oXG8utIwOQi1r1PFW6bZYw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37cd4ec04a1so1761370f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 04:27:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728300425; x=1728905225;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8nKqBnt/fCOBu40ubx4JznSGepSs7ghbPdITuSOSGVo=;
+ b=DQXxg/ibQIZJYiCeztd57O/aAN/g+GW4lg9owjRo4EZZEwmFN08mjKdPYuPouRPqyX
+ VSj9SdEKmT+2bWyNB64FBQm3mlWMha2H4S53f7GKKI0YAP6woGZLf2idswiUw+Q5+RxK
+ 8xM4+CfFnMvsSHs8GT32d+lIFIXXZw97aOVKEttisYs5R4l/scpl1zaUmtihWRfnPq6k
+ wY/i2P4UKwY7+9jq1ioDytW/J7nnkwcXdJZ11erlI6tLAjzDvi5Q3JxPVjXS17CXUbyB
+ Abf2gTRXgqCGGDuD89gKXeeyGeFk5KdleUwtPBd/QIu7zSAvbEQ/i8pxExLHyZlE8DSN
+ 8dLA==
+X-Gm-Message-State: AOJu0YzWpoqdh90vCTjYiH4TW7/nXITEnRPtG2wAjTg8QxfrEuwVEY3e
+ DMSJO1NYgeQEHhR4Wdv1U+dE1pPx87cKlTeX9asQQM2eIbfuXuG8Y+c+xxvItI6HA4xBGt3Ds9W
+ T45J4ON70ac+MEZzcVvGVRUideAPezmJW6zfANCW09wFdkm8YeB5/0Oiah8bUybtp2/8ER+VExr
+ Q8WytLZeadDx4Y4YeUW3ZlJq9PW/o=
+X-Received: by 2002:adf:e501:0:b0:374:ba83:8d73 with SMTP id
+ ffacd0b85a97d-37d0e6dae2amr6181354f8f.8.1728300424838; 
+ Mon, 07 Oct 2024 04:27:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBFQwRnfH6pJlQQqrFl3l1SMSt7cNX3VLUkFV1aiUPe14k06IqUT1J1SEqsgazNkqq1S28P9+FSYd9ciYJM+g=
+X-Received: by 2002:adf:e501:0:b0:374:ba83:8d73 with SMTP id
+ ffacd0b85a97d-37d0e6dae2amr6181343f8f.8.1728300424500; Mon, 07 Oct 2024
+ 04:27:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: M88vCgAnSOcMxQNnGGjGAQ--.32547S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Wr18ur13WF1fXFW3AF1kXwb_yoWDAwc_Ar
- WSka4DXr4kZ3W3AFWkGF1kKrZIvw4I9rW8JF18try7X3yUZF13Cr1DKa4Yv3Wfua98AFZ0
- v3ZrAF1fJw1jgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjyCJPUUUUU==
-X-Originating-IP: [112.19.146.115]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEQpxKGcDw+gCTwAAsA
-Received-SPF: pass client-ip=220.197.32.18; envelope-from=chao.liu@yeah.net;
- helo=mail-m16.yeah.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241007110342.1298598-1-pbonzini@redhat.com>
+ <ZwPB9SnTvkr082NA@redhat.com>
+In-Reply-To: <ZwPB9SnTvkr082NA@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 7 Oct 2024 13:26:52 +0200
+Message-ID: <CABgObfYZgR9xNnP9mHWU92XZZ_VeFLHimkd-t-63KX_KWeDZ=A@mail.gmail.com>
+Subject: Re: [PULL 00/12] Rust initial PoC + meson changes for 2024-10-07
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+ junjie.mao@intel.com, pierrick.bouvier@linaro.org, alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,37 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, maintainer,
+On Mon, Oct 7, 2024 at 1:11=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+> The current dockerfiles don't include rust, and I see nothing
+> here updating them to add rust, so how is any of this getting
+> test coverage ?
+>
+> Even though this has Rust disabled by default, I would still
+> consider CI enablement to be a pre-requsite for merging even
+> basic Rust support.
 
-Following the reference from the chip manualug585-Zynq-7000-TRM manual
-B.3 (Module Summary), placeholders have been added for all unimplemented
-devices, including the AXI and AMBA bus controllers that interact with
-the FPGA.
+I agree in general, but there's already a lot of work that can be
+parallelized and the idea of someone managing Rust-related patches
+out-of-tree was discarded. So this seemed to be the only way to
+proceed.
 
-We can check against the manual by printing the address space of the
-zynq board with the following qemu command:
-    ${QEMU_PATH}/qemu-system-aarch64 \
-    -M xilinx-zynq-a9 \
-    -display none \
-    -monitor stdio -s
-    (qemu) info mtree -f
+Right now only Fedora 39 and 40 (with updates) are able to compile
+QEMU with Rust enabled. Full CI enablement requires further work to
+reduce the minimum supported version of the compiler, after which
+rustc can be added to the libvirt-ci inputs and to the Dockerfiles.
 
-The testing methodology previously discussed in earlier email exchanges
-will not be repeated here.
+Adding a CI job that uses nightly rust (via rustup) is high on my
+priority list, but first of all I wanted to integrate clippy (because
+the main point of having a job with nightly rust is to have a heads-up
+on future clippy warnings). That said, I'm also not sure how one would
+go adding rustup to a container generated by lcitool (for example
+should I add a new dockerfile that is _based_ on one that already
+exists? would that change when Rust/rustc is added to that
+dockerfile?).
 
-Chao Liu (3):
-  xilink_zynq: Add various missing unimplemented devices
-  xilink-zynq-devcfg: Fix up for memory address range size not set
-    correctly
-  xilink-zynq-devcfg: Avoid disabling devcfg memory region during
-    initialization
+I think the best thing to do is to do a presentation to the whole
+community, maybe next week, explaining the state of the experiment and
+asking for help.
 
- hw/arm/xilinx_zynq.c              | 71 ++++++++++++++++++++++++++++++-
- hw/dma/xlnx-zynq-devcfg.c         |  9 +++-
- include/hw/dma/xlnx-zynq-devcfg.h |  2 +-
- 3 files changed, 78 insertions(+), 4 deletions(-)
-
--- 
-2.46.1
+Paolo
 
 
