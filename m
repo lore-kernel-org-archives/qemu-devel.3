@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DDECFB44F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 17:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924A3CFB44D
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 17:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxrMT-00035P-Cq; Mon, 07 Oct 2024 13:17:33 -0400
+	id 1sxrMW-00036N-LQ; Mon, 07 Oct 2024 13:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxrMQ-00034v-6q
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:17:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxrMO-00051e-8U
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:17:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728321447;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8flSEvkTKNfQE0YmmjDCEHuPtG8e2TAlNuuJGdu2NLU=;
- b=TX0+E3EbumSm74S/9PKoemHrCJlHrT201W8LjmJxq3pnPbR1N3ZIHjBcogqJthwvOb7CUR
- kwhDFzHt9YZJHd32/d7ulpYqb6V11Ct/vhlpk0DKdd8zAAj3AUspFQB7Yh+A0OOtysrhqF
- tAqnnF50d+9uWFO+nkzyG3GJeK7GKeo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-c_txk0gBM0K5f7InUXD4Ew-1; Mon, 07 Oct 2024 13:17:26 -0400
-X-MC-Unique: c_txk0gBM0K5f7InUXD4Ew-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42cb5f6708aso29949945e9.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 10:17:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3qhcEZwYKCikYNYZXWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--titusr.bounces.google.com>)
+ id 1sxrMV-000364-Lz
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:17:35 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3qhcEZwYKCikYNYZXWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--titusr.bounces.google.com>)
+ id 1sxrMT-000529-3t
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:17:35 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6e30cf0cf1bso5772287b3.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 10:17:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1728321451; x=1728926251; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=GHz4rSRh9deAPG3dNxam4z9b4qhpmexnTmnPdSRsi6w=;
+ b=PGI3gXec4TcfUzM3dYStTQRFVnghUvvJJ3Ugjls6vY2EY1ccAuJGu98K+SkU74lYKA
+ T30xAavLHOx2LgQIY1mPfGXZtgoximYUUovkxJEXId/mDFuGNlZtxkX3X4jsHkJau7YE
+ qA8k9XqsqOnuQG0z85lRZb2NfRmKKx777V6e45AHeX8pG6jhH5zy9TtIKqtaDtyjteFL
+ /e9bxht7NQSWgujFmG9l6wyEDpTziDYHrrOnEIXvq0U4c9chKs0NO3sY4lpZRdUumDiJ
+ WdJcD7enYgaiFD+s6h9a4aZU9TPT3OAMhl2rgTsItUTxe30u2fAicfY0KeTnstT9p6Aq
+ YLcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728321445; x=1728926245;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8flSEvkTKNfQE0YmmjDCEHuPtG8e2TAlNuuJGdu2NLU=;
- b=YLLi5NoSsIoacgBCsFAAsY7Mhb6T4pwxbWxJo+VsR5Pv5FA6M1DtPXlh5KjlvR/Q4w
- HfPJMux1G3jchDmtImmkpKA3OycaCKsdM3E9tgMcfwWZljhgaY8hp5IoVjSlx1lvZJ8U
- rYobmxl9I9hWDrq4BQWjOsHBrz7N1FgoNf7ROB+g6SIieam1X/08sNlfpct5f4a7wK6V
- UCEjW3JYVbzpt6UE/bl8yJZ67oMIycJB2a7anxNPd9j5YZBCkTfEL1mdjzA8Lzvx1mLp
- i1F7dMCncz49zbVKFHfqsF6Zi7KUUPyzWVzyGKlahfKQdsrqGHxAWW2GH/i9VjNVuMaM
- cGhQ==
-X-Gm-Message-State: AOJu0YxRYo6KagPr6nG6NNg/caPi2L49uQjPccGPK3KtHPbCnWrP0ZMh
- lMliH/cKCEUcEZOKZvWa73k322g9o9VOEDCy9hRemAQUGr8uxpRG2vHj0dQzZwNY+O7hLStnkZ5
- K1/A0DAFtBq96rpdG1E5mlST3YKGNJzJnyQEUl6BXupHS6Ge6KXKl1uwRHJzphIOhdiUD9/IhyR
- lP7Xp+eSo3OSnmo6Hdb0QHDqabRLT1/XO89U5dPhM=
-X-Received: by 2002:a05:600c:3c8c:b0:42d:a024:d6bb with SMTP id
- 5b1f17b1804b1-42f85abf4damr77964965e9.20.1728321444771; 
- Mon, 07 Oct 2024 10:17:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJaKVJFux0yNog9eMBBzHVTv1gveKmR0hy3616euumMMHRIr3jds6dAbE/SAfRNHFaCM22kA==
-X-Received: by 2002:a05:600c:3c8c:b0:42d:a024:d6bb with SMTP id
- 5b1f17b1804b1-42f85abf4damr77964775e9.20.1728321444309; 
- Mon, 07 Oct 2024 10:17:24 -0700 (PDT)
-Received: from avogadro.local ([151.62.111.131])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f89e89fcbsm80673675e9.15.2024.10.07.10.17.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 10:17:23 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 1/2] dockerfiles: add a Dockerfile using a nightly Rust
- toolchain
-Date: Mon,  7 Oct 2024 19:17:12 +0200
-Message-ID: <20241007171717.1436982-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.1
-In-Reply-To: <20241007171717.1436982-1-pbonzini@redhat.com>
-References: <20241007171717.1436982-1-pbonzini@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ d=1e100.net; s=20230601; t=1728321451; x=1728926251;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GHz4rSRh9deAPG3dNxam4z9b4qhpmexnTmnPdSRsi6w=;
+ b=tPHH4jZO5gF0kuhUlgZFfzNOqwjOi/EBV0AmxVD3OsPLbdCatUo+AuJaN7RDBXrtob
+ n/cOWtadlbBRi4CbBJIRIJ36LxkSGjMdXhRgeICGsAINNdvjoPJao4vj7CfFfo4md543
+ nIxXwrUjfMKbOwj8Cb7arwGV4zfxz+9TrU2T3+ZycvBv5uxTrR2W84TwoVmqigGDxMOT
+ A5+K0uh7UI9js1mTQJCLkOGEQZLW8pmDKTQePTXwarrGQSw8Rli3YR+8/6k+TdwfRwQ0
+ hH00ej2GiVxbwHKd4FPOtniLQiNrpvInGchC7iFcZM4YmPTXDDxGeLF67wyKsb6iGg/B
+ e+bw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqhMifMiuVW8cIuOVl8syAY5TMoKhDkM7m/nQp2s2HOl5U8rsDVutl+EbVRFWxjbpQURdykd0wrnGK@nongnu.org
+X-Gm-Message-State: AOJu0Yxb84AE1PlQIMDJ1PGvVB5hOYrj3yqOHHGHy04qmJxulIn909jN
+ qts0ecOZRQnvtcZLrqRfTpTLzBZo6OGSOKY2lG7xcpWRyECkBjjDEudgQ24tigQf4oA12os/Nxo
+ kJw==
+X-Google-Smtp-Source: AGHT+IGs/4Yuwytx+rlHLQoy/aaky/vobzMmBX/BklIQKxGyyddyi49+AbO2F09ZN4s3e49s6TDFTP8qC10=
+X-Received: from titusr.c.googlers.com ([fda3:e722:ac3:cc00:14:4d90:c0a8:914])
+ (user=titusr job=sendgmr) by 2002:a25:908d:0:b0:e1d:2043:da46 with
+ SMTP id
+ 3f1490d57ef6-e28936d4d4fmr37111276.3.1728321450342; Mon, 07 Oct 2024 10:17:30
+ -0700 (PDT)
+Date: Mon,  7 Oct 2024 17:17:00 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
+Message-ID: <20241007171700.1594342-1-titusr@google.com>
+Subject: [PATCH] hw/arm: add Quanta GSZ bmc machine
+From: Titus Rwantare <titusr@google.com>
+To: peter.maydell@linaro.org, minyard@acm.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, venture@google.com, 
+ wuhaotsh@google.com, Titus Rwantare <titusr@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3qhcEZwYKCikYNYZXWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--titusr.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,246 +93,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be useful in order to test QEMU's Rust code with nightly
-clippy.  It can also be used to check that the code builds, until the
-minimum supported Rust version is lowered enough to allow enabling Rust
-in other Dockerfiles too.
+This patch adds the quanta-gsz-bmc target, a current Google machine of
+the day. This machine will be used as a platform to enable features such
+as the PECI bmc interface, and Intel eSPI virtual wire interface in
+QEMU.
 
-Use a separate container, instead of the Fedora one, to avoid that
-CI breaks for everyone if for some reason the rustup build turns out
-to be shaky.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Titus Rwantare <titusr@google.com>
 ---
- .../dockerfiles/fedora-rust-nightly.docker    | 173 ++++++++++++++++++
- tests/lcitool/refresh                         |  26 +++
- 2 files changed, 199 insertions(+)
- create mode 100644 tests/docker/dockerfiles/fedora-rust-nightly.docker
+ hw/arm/npcm7xx_boards.c | 140 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 140 insertions(+)
 
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-new file mode 100644
-index 00000000000..e642db163c7
---- /dev/null
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -0,0 +1,173 @@
-+# THIS FILE WAS AUTO-GENERATED
-+#
-+#  $ lcitool dockerfile --layers all fedora-40 qemu
-+#
-+# https://gitlab.com/libvirt/libvirt-ci
-+
-+FROM registry.fedoraproject.org/fedora:40
-+
-+RUN dnf install -y nosync && \
-+    printf '#!/bin/sh\n\
-+if test -d /usr/lib64\n\
-+then\n\
-+    export LD_PRELOAD=/usr/lib64/nosync/nosync.so\n\
-+else\n\
-+    export LD_PRELOAD=/usr/lib/nosync/nosync.so\n\
-+fi\n\
-+exec "$@"\n' > /usr/bin/nosync && \
-+    chmod +x /usr/bin/nosync && \
-+    nosync dnf update -y && \
-+    nosync dnf install -y \
-+               SDL2-devel \
-+               SDL2_image-devel \
-+               alsa-lib-devel \
-+               bash \
-+               bc \
-+               bison \
-+               brlapi-devel \
-+               bzip2 \
-+               bzip2-devel \
-+               ca-certificates \
-+               capstone-devel \
-+               ccache \
-+               clang \
-+               ctags \
-+               cyrus-sasl-devel \
-+               daxctl-devel \
-+               dbus-daemon \
-+               device-mapper-multipath-devel \
-+               diffutils \
-+               findutils \
-+               flex \
-+               fuse3-devel \
-+               gcc \
-+               gcovr \
-+               gettext \
-+               git \
-+               glib2-devel \
-+               glib2-static \
-+               glibc-langpack-en \
-+               glibc-static \
-+               glusterfs-api-devel \
-+               gnutls-devel \
-+               gtk-vnc2-devel \
-+               gtk3-devel \
-+               hostname \
-+               jemalloc-devel \
-+               json-c-devel \
-+               libaio-devel \
-+               libasan \
-+               libattr-devel \
-+               libbpf-devel \
-+               libcacard-devel \
-+               libcap-ng-devel \
-+               libcmocka-devel \
-+               libcurl-devel \
-+               libdrm-devel \
-+               libepoxy-devel \
-+               libfdt-devel \
-+               libffi-devel \
-+               libgcrypt-devel \
-+               libiscsi-devel \
-+               libjpeg-devel \
-+               libnfs-devel \
-+               libpmem-devel \
-+               libpng-devel \
-+               librbd-devel \
-+               libseccomp-devel \
-+               libselinux-devel \
-+               libslirp-devel \
-+               libssh-devel \
-+               libtasn1-devel \
-+               libubsan \
-+               liburing-devel \
-+               libusbx-devel \
-+               libxdp-devel \
-+               libzstd-devel \
-+               llvm \
-+               lttng-ust-devel \
-+               lzo-devel \
-+               make \
-+               mesa-libgbm-devel \
-+               meson \
-+               mtools \
-+               ncurses-devel \
-+               nettle-devel \
-+               ninja-build \
-+               nmap-ncat \
-+               numactl-devel \
-+               openssh-clients \
-+               pam-devel \
-+               pcre-static \
-+               pipewire-devel \
-+               pixman-devel \
-+               pkgconfig \
-+               pulseaudio-libs-devel \
-+               python3 \
-+               python3-PyYAML \
-+               python3-numpy \
-+               python3-opencv \
-+               python3-pillow \
-+               python3-pip \
-+               python3-sphinx \
-+               python3-sphinx_rtd_theme \
-+               python3-zombie-imp \
-+               rdma-core-devel \
-+               sed \
-+               snappy-devel \
-+               socat \
-+               sparse \
-+               spice-protocol \
-+               spice-server-devel \
-+               swtpm \
-+               systemd-devel \
-+               systemtap-sdt-devel \
-+               tar \
-+               tesseract \
-+               tesseract-langpack-eng \
-+               usbredir-devel \
-+               util-linux \
-+               virglrenderer-devel \
-+               vte291-devel \
-+               which \
-+               xen-devel \
-+               xorriso \
-+               zlib-devel \
-+               zlib-static \
-+               zstd && \
-+    nosync dnf autoremove -y && \
-+    nosync dnf clean all -y && \
-+    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
-+    rpm -qa | sort > /packages.txt && \
-+    mkdir -p /usr/libexec/ccache-wrappers && \
-+    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
-+    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
-+    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
-+
-+ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
-+ENV LANG "en_US.UTF-8"
-+ENV MAKE "/usr/bin/make"
-+ENV NINJA "/usr/bin/ninja"
-+ENV PYTHON "/usr/bin/python3"
-+RUN dnf install -y wget
-+ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo
-+ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
-+RUN set -eux && \
-+  rustArch='x86_64-unknown-linux-gnu' && \
-+  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \
-+  url="https://static.rust-lang.org/rustup/archive/1.27.1/${rustArch}/rustup-init" && \
-+  wget "$url" && \
-+  echo "${rustupSha256} *rustup-init" | sha256sum -c - && \
-+  chmod +x rustup-init && \
-+  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \
-+  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-+  /usr/local/cargo/bin/rustup --version && \
-+  /usr/local/cargo/bin/rustup run nightly rustc --version && \
-+  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
-+ENV PATH=$CARGO_HOME/bin:$PATH
-+RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
-+# As a final step configure the user (if env is defined)
-+ARG USER
-+ARG UID
-+RUN if [ "${USER}" ]; then \
-+  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index a78219f7bc5..1ae0962f04c 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -116,6 +116,26 @@ debian12_extras = [
-     "ENV QEMU_CONFIGURE_OPTS --enable-netmap\n"
- ]
+diff --git a/hw/arm/npcm7xx_boards.c b/hw/arm/npcm7xx_boards.c
+index e229efb447..e1ff5af756 100644
+--- a/hw/arm/npcm7xx_boards.c
++++ b/hw/arm/npcm7xx_boards.c
+@@ -48,6 +48,8 @@
+ #define NPCM750_EVB_POWER_ON_STRAPS ( \
+         NPCM7XX_POWER_ON_STRAPS_DEFAULT & ~NPCM7XX_PWRON_STRAP_J2EN)
+ #define QUANTA_GSJ_POWER_ON_STRAPS NPCM7XX_POWER_ON_STRAPS_DEFAULT
++#define QUANTA_GSZ_POWER_ON_STRAPS ( \
++        NPCM7XX_POWER_ON_STRAPS_DEFAULT & ~NPCM7XX_PWRON_STRAP_SFAB)
+ #define QUANTA_GBS_POWER_ON_STRAPS ( \
+         NPCM7XX_POWER_ON_STRAPS_DEFAULT & ~NPCM7XX_PWRON_STRAP_SFAB)
+ #define KUDO_BMC_POWER_ON_STRAPS NPCM7XX_POWER_ON_STRAPS_DEFAULT
+@@ -269,6 +271,109 @@ static void quanta_gsj_fan_init(NPCM7xxMachine *machine, NPCM7xxState *soc)
+     npcm7xx_connect_pwm_fan(soc, &splitter[2], 0x05, 1);
+ }
  
-+# Based on the hub.docker.com/library/rust Dockerfiles
-+fedora_rustup_nightly_extras = [
-+    "RUN dnf install -y wget\n",
-+    "ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo\n",
-+    "ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc\n",
-+    "RUN set -eux && \\\n",
-+    "  rustArch='x86_64-unknown-linux-gnu' && \\\n",
-+    "  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \\\n",
-+    '  url="https://static.rust-lang.org/rustup/archive/1.27.1/${rustArch}/rustup-init" && \\\n',
-+    '  wget "$url" && \\\n',
-+    '  echo "${rustupSha256} *rustup-init" | sha256sum -c - && \\\n',
-+    "  chmod +x rustup-init && \\\n",
-+    "  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \\\n",
-+    "  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \\\n",
-+    "  /usr/local/cargo/bin/rustup --version && \\\n",
-+    "  /usr/local/cargo/bin/rustup run nightly rustc --version && \\\n",
-+    '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
-+    'ENV PATH=$CARGO_HOME/bin:$PATH\n',
-+    'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
-+]
- 
- def cross_build(prefix, targets):
-     conf = "ENV QEMU_CONFIGURE_OPTS --cross-prefix=%s\n" % (prefix)
-@@ -139,6 +159,12 @@ try:
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
-     generate_dockerfile("ubuntu2204", "ubuntu-2204")
- 
-+    #
-+    # Non-fatal Rust-enabled build
-+    #
-+    generate_dockerfile("fedora-rust-nightly", "fedora-40",
-+                        trailer="".join(fedora_rustup_nightly_extras))
++static void quanta_gsz_i2c_init(NPCM7xxState *soc)
++{
++    I2CSlave *i2c_mux;
 +
-     #
-     # Cross compiling builds
-     #
++    /* i2c1 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1), TYPE_PCA9548,
++                                      0x75);
++    /* pca6416@0x20 */
++
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1),
++                                      TYPE_PCA9548, 0x77);
++
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), "raa229004", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1), "raa229004", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 2), "isl69260", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 3), "isl69260", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 4), "isl69260", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), "isl69260", 0x72);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6), "adm1272", 0x1f);
++
++    /* i2c2 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 2),
++                                      TYPE_PCA9548, 0x77);
++    /*         - channel 0: tps546d24 @25
++     *         - channel 1: delta,dps800 @69
++     */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1), "raa228000", 0x68);
++    /*          - channel 2: delta,dps800 @68 */
++    /* max31725 is compatible with tmp105. */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x5c);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), "tmp105", 0x5c);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6), "tmp105", 0x5c);
++
++    /* i2c3 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 3), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c4 */
++    /* mobo_fru_1 */
++    at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 4), 0x50, 8192);
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 4),
++                                      TYPE_PCA9548, 0x77);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), "max34451", 0x59);
++    /* mobo_fru_2 */
++    at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 2), 0x55, 32768);
++
++    /* pca6416@0x20 */
++    /* pca6416@0x20 */
++
++    /* pdb_fru */
++    at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 6), 0x55, 8192);
++
++    /* i2c5 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 5), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c6 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 6), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c7 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 7), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c8 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 8), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c9 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 9), TYPE_PCA9548,
++                                      0x77);
++
++    /* i2c10 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 10),
++                                      TYPE_PCA9548, 0x77);
++
++    /* i2c11 */
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 11),
++                                      TYPE_PCA9548, 0x77);
++
++    /* i2c12 */
++
++    /* i2c13 */
++    /* pca9555@22 */
++
++    /* i2c14 */
++    /* LEDs and PE Resets */
++    /* pca6416@0x20 */
++
++    /* bmc_fru_1 */
++    at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 14), 0x55, 8192);
++
++    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 14),
++                                      TYPE_PCA9548, 0x77);
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), "max34451", 0x59);
++
++    /* max31725 is compatible with tmp105 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x5c);
++
++    /* i2c15 */
++    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 15), TYPE_PCA9546, 0x75);
++}
++
+ static void quanta_gbs_i2c_init(NPCM7xxState *soc)
+ {
+     /*
+@@ -392,6 +497,25 @@ static void quanta_gsj_init(MachineState *machine)
+     npcm7xx_load_kernel(machine, soc);
+ }
+ 
++static void quanta_gsz_init(MachineState *machine)
++{
++    NPCM7xxState *soc;
++
++    soc = npcm7xx_create_soc(machine, QUANTA_GSZ_POWER_ON_STRAPS);
++    npcm7xx_connect_dram(soc, machine->ram);
++    qdev_realize(DEVICE(soc), NULL, &error_fatal);
++
++    npcm7xx_load_bootrom(machine, soc);
++    npcm7xx_connect_flash(&soc->fiu[0], 0, "mx66u51235f",
++                          drive_get(IF_MTD, 0, 0));
++    npcm7xx_connect_flash(&soc->fiu[1], 0, "mx66u51235f",
++                          drive_get(IF_MTD, 3, 0));
++
++    quanta_gsz_i2c_init(soc);
++    sdhci_attach_drive(&soc->mmc.sdhci, 0);
++    npcm7xx_load_kernel(machine, soc);
++}
++
+ static void quanta_gbs_init(MachineState *machine)
+ {
+     NPCM7xxState *soc;
+@@ -496,6 +620,18 @@ static void gsj_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 512 * MiB;
+ };
+ 
++static void gsz_machine_class_init(ObjectClass *oc, void *data)
++{
++    NPCM7xxMachineClass *nmc = NPCM7XX_MACHINE_CLASS(oc);
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    npcm7xx_set_soc_type(nmc, TYPE_NPCM730);
++
++    mc->desc = "Quanta GSZ (Cortex-A9)";
++    mc->init = quanta_gsz_init;
++    mc->default_ram_size = 1 * GiB;
++}
++
+ static void gbs_bmc_machine_class_init(ObjectClass *oc, void *data)
+ {
+     NPCM7xxMachineClass *nmc = NPCM7XX_MACHINE_CLASS(oc);
+@@ -548,6 +684,10 @@ static const TypeInfo npcm7xx_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("quanta-gsj"),
+         .parent         = TYPE_NPCM7XX_MACHINE,
+         .class_init     = gsj_machine_class_init,
++    }, {
++        .name           = MACHINE_TYPE_NAME("quanta-gsz-bmc"),
++        .parent         = TYPE_NPCM7XX_MACHINE,
++        .class_init     = gsz_machine_class_init,
+     }, {
+         .name           = MACHINE_TYPE_NAME("quanta-gbs-bmc"),
+         .parent         = TYPE_NPCM7XX_MACHINE,
 -- 
-2.46.1
+2.47.0.rc0.187.ge670bccf7e-goog
 
 
