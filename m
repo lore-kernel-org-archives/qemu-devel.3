@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21279CFB43C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 03:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9986DCFB43C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 03:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxeXT-0007CT-DK; Sun, 06 Oct 2024 23:36:03 -0400
+	id 1sxeXv-0007a4-1k; Sun, 06 Oct 2024 23:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sxeXP-00072u-Up; Sun, 06 Oct 2024 23:36:01 -0400
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ id 1sxeXt-0007ZD-Ff; Sun, 06 Oct 2024 23:36:29 -0400
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sxeXN-0006Ju-IV; Sun, 06 Oct 2024 23:35:59 -0400
+ id 1sxeXr-0006M8-G8; Sun, 06 Oct 2024 23:36:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1728272152; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=1NzQGwouVfdUIXxYtTl0qsxrrGtbt73O6bVWAN6aT1A=;
- b=ZiYyV/AoKDEcB//SGUV5UrMxIPHOhVvUe81zQw8OIZoCrjhfQUZ+4wyKx8B+/UFNpBUT3873OSvFQ39fZo6uBhd7aOR5k4v4321WhKh9pgASSpL8q3Fvzanmr+Ub4qnfoD+B1HtNrBBveDxozRu29+DVDS9mVBJbVGcU0gRdl1w=
+ t=1728272183; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=l0oxo6n3yJSrkw/6cRUOpk9Q54Huq5YH2X/aWz0OdsQ=;
+ b=SZSI03B90nAI9lHOsiNEi5Hwbv0y8hz54wtIQzXKj68dW86XApjB1FdF2YkOdT6aupbmkrM/T5tgXlBkAq4La9lat+0jNCgfRaFaN5AseSRLtbUgUQaD6VO5MIEVEk0UP++Yr0oFfnXsrea/QuncQllcZiyB7FCstCGW1a/4rQM=
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WGLRa-D_1728272150) by smtp.aliyun-inc.com;
- Mon, 07 Oct 2024 11:35:51 +0800
+ fp:SMTPD_---0WGLRaF9_1728272181) by smtp.aliyun-inc.com;
+ Mon, 07 Oct 2024 11:36:22 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v1 3/7] target/riscv: Read pte and satp based on SXL in PTW
-Date: Mon,  7 Oct 2024 11:33:56 +0800
-Message-Id: <20241007033400.50163-4-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v1 4/7] hw/riscv: Align kernel to 4MB when sxl32 is on.
+Date: Mon,  7 Oct 2024 11:33:57 +0800
+Message-Id: <20241007033400.50163-5-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
 References: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.98;
+Received-SPF: pass client-ip=115.124.30.132;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
+ helo=out30-132.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -68,36 +68,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-Satp and PTE are always SXLEN-bit. when SXLEN is 32,
-read PTE as 4 bytes, and treat satp as SATP32.
+RISC-V always requires 4MB alignment for RV32.
 
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 ---
- target/riscv/cpu_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/riscv/boot.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 077f6d77c3..773789e02e 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -851,7 +851,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-                 vm = get_field(env->vsatp, SATP64_MODE);
-             }
-         } else {
--            if (riscv_cpu_mxl(env) == MXL_RV32) {
-+            if (riscv_cpu_sxl(env) == MXL_RV32) {
-                 base = (hwaddr)get_field(env->satp, SATP32_PPN) << PGSHIFT;
-                 vm = get_field(env->satp, SATP32_MODE);
-             } else {
-@@ -972,7 +972,7 @@ restart:
-             return TRANSLATE_PMP_FAIL;
-         }
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 1a2c1ff9e0..7ce0d8f08f 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -69,7 +69,8 @@ char *riscv_plic_hart_config_string(int hart_count)
  
--        if (riscv_cpu_mxl(env) == MXL_RV32) {
-+        if (riscv_cpu_sxl(env) == MXL_RV32) {
-             pte = address_space_ldl(cs->as, pte_addr, attrs, &res);
-         } else {
-             pte = address_space_ldq(cs->as, pte_addr, attrs, &res);
+ target_ulong riscv_calc_kernel_start_addr(RISCVHartArrayState *harts,
+                                           target_ulong firmware_end_addr) {
+-    if (riscv_is_32bit(harts)) {
++    RISCVCPU *cpu = &harts->harts[0];
++    if (riscv_is_32bit(harts) || cpu->cfg.sxl32) {
+         return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
+     } else {
+         return QEMU_ALIGN_UP(firmware_end_addr, 2 * MiB);
 -- 
 2.43.0
 
