@@ -4,59 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E03ECFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16963CFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxmGT-0006qs-EK; Mon, 07 Oct 2024 07:51:01 -0400
+	id 1sxmIW-0005bR-Kh; Mon, 07 Oct 2024 07:53:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmGL-0006mK-4D
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:50:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxmIT-0005Pe-QB
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:53:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmGJ-00058f-Li
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:50:52 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxmIR-0005Qv-Vg
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:53:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728301850;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1728301983;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+WoMzCiXM4pA8Lpp1pnLdwd/6UlAnSuE1EoMVwCxQHQ=;
- b=djtZ2Vus1kQt7t9ByseSGn9KMFLWj/5Jl8JGLmcWj5kl4mmifkeMuMlsyS0HjEle4pce3X
- E3BW5j7TOYREf48YRLVumo7KMt3E6t1bjJmgT4zWVK3HnrwBYdVY50/8bR7O7ijYVlJFEg
- rSKnTEgzjN29ip+0uhnnj3Bk6Jdat1k=
+ bh=tP6v/7KBE1urotP00HVvnGBRqvrFRtQkqNumFlZqDpo=;
+ b=bbqq5RHZM4c5psj3JV1zvWHkcEM/F6ZgWdzRP5NPBC4ZmUWHJ8o9O5/CzHCJxQNB+iOOl3
+ SJXvVuQC0feihGcQsrUgHrpav/FDM1MuPxxrV3KZAlvWZKHHpuDMtAJaNCn7Jy3EpqQL6l
+ XCyZRw/E7/rNM74Kw6/lPKCIHjBMFYI=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-aqM-ThftNFCpCQtfp0r5zA-1; Mon,
- 07 Oct 2024 07:50:47 -0400
-X-MC-Unique: aqM-ThftNFCpCQtfp0r5zA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-0d8e2uZpNKu91laRyoPMdw-1; Mon,
+ 07 Oct 2024 07:53:00 -0400
+X-MC-Unique: 0d8e2uZpNKu91laRyoPMdw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EAEA19560B5; Mon,  7 Oct 2024 11:50:46 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AFB219560AE; Mon,  7 Oct 2024 11:50:43 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 05/12] gitlab-ci/build-oss-fuzz: print FAILED marker in case
- the test failed and run all tests
-Date: Mon,  7 Oct 2024 13:50:20 +0200
-Message-ID: <20241007115027.243425-6-thuth@redhat.com>
-In-Reply-To: <20241007115027.243425-1-thuth@redhat.com>
-References: <20241007115027.243425-1-thuth@redhat.com>
+ id EAB5319560AF; Mon,  7 Oct 2024 11:52:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52D8419560A3; Mon,  7 Oct 2024 11:52:56 +0000 (UTC)
+Date: Mon, 7 Oct 2024 12:52:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
+ junjie.mao@intel.com, pierrick.bouvier@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PULL 00/12] Rust initial PoC + meson changes for 2024-10-07
+Message-ID: <ZwPLlHxQkRbf3QBx@redhat.com>
+References: <20241007110342.1298598-1-pbonzini@redhat.com>
+ <ZwPB9SnTvkr082NA@redhat.com>
+ <CABgObfYZgR9xNnP9mHWU92XZZ_VeFLHimkd-t-63KX_KWeDZ=A@mail.gmail.com>
+ <ZwPKPGkpklnY9i5z@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <ZwPKPGkpklnY9i5z@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -78,52 +87,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+On Mon, Oct 07, 2024 at 12:47:08PM +0100, Daniel P. Berrangé wrote:
+> On Mon, Oct 07, 2024 at 01:26:52PM +0200, Paolo Bonzini wrote:
+> > On Mon, Oct 7, 2024 at 1:11 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > The current dockerfiles don't include rust, and I see nothing
+> > > here updating them to add rust, so how is any of this getting
+> > > test coverage ?
+> > >
+> > > Even though this has Rust disabled by default, I would still
+> > > consider CI enablement to be a pre-requsite for merging even
+> > > basic Rust support.
+> > 
+> > I agree in general, but there's already a lot of work that can be
+> > parallelized and the idea of someone managing Rust-related patches
+> > out-of-tree was discarded. So this seemed to be the only way to
+> > proceed.
+> > 
+> > Right now only Fedora 39 and 40 (with updates) are able to compile
+> > QEMU with Rust enabled. Full CI enablement requires further work to
+> > reduce the minimum supported version of the compiler, after which
+> > rustc can be added to the libvirt-ci inputs and to the Dockerfiles.
+> 
+> Full CI enablement isn't a requirement until we want to turn on
+> Rust by default. It would be sufficient to have a single job in
+> CI using Fedora 40 that passes '--enable-rust' to demonstrate that
+> this at least working on one platform we expect.
+> 
+> > Adding a CI job that uses nightly rust (via rustup) is high on my
+> > priority list, but first of all I wanted to integrate clippy (because
+> > the main point of having a job with nightly rust is to have a heads-up
+> > on future clippy warnings). That said, I'm also not sure how one would
+> > go adding rustup to a container generated by lcitool (for example
+> > should I add a new dockerfile that is _based_ on one that already
+> > exists? would that change when Rust/rustc is added to that
+> > dockerfile?).
+> 
+> Having layered dockerfiles is something we try to aviod these days,
+> since each layer turns into another job dependancy in the CI
+> pipeline, expanding the number of stages.
 
-currently, if an oss-fuzz fails, the script does just `exit 1`
-without any additional output, and looking at the build log in
-the gitlab ci it is not clear what actually failed, without
-looking at build-oss-fuzz script and seeing this `exit 1`.
+I forgot to say that QEMU's 'refresh' script can customize the
+dockerfiles from lcitool with an arbitrary amount of trailing
+text - see the 'debian12_extras' for example.
 
-Print easily recognizable error message about test failure, so
-it becomes obvious what exactly has failed.
+> 
+> If the job is merely to validate nightly clippy do we even need
+> any of the rest of the QEMU build deps present ?  Can we not just
+> use a generic pre-existing Rust container and only run clippy
+> in it.
+> 
+> If we want to actually build with the cutting edge, then I'd say
+> it is sufficient to have a container based on Fedora rawhide, since
+> that gives a heads up on what's soon to be impacting the next stable
+> distro release, upto 6 months ahead of time - we don't need to be
+> watching& debugging stuff that hasn't even been released by Rust
+> yet IMHO.
 
-While at it, continue running other tests even in case of
-failure, and exit non-zero if at least one test failed.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241003121656.1173612-1-mjt@tls.msk.ru>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .gitlab-ci.d/buildtest.yml | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 669c980c4b..34d3f4e9ab 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -628,12 +628,15 @@ build-oss-fuzz:
-     - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
-       ./scripts/oss-fuzz/build.sh
-     - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
-+    - failures=0
-     - for fuzzer in $(find ./build-oss-fuzz/DEST_DIR/ -executable -type f
-                       | grep -v slirp); do
-         grep "LLVMFuzzerTestOneInput" ${fuzzer} > /dev/null 2>&1 || continue ;
-         echo Testing ${fuzzer} ... ;
--        "${fuzzer}" -runs=1 -seed=1 || exit 1 ;
-+        "${fuzzer}" -runs=1 -seed=1 || { echo "FAILED:"" ${fuzzer} exit code is $?"; failures=$(($failures+1)); };
-       done
-+    - echo "Number of failures:"" $failures"
-+    - test $failures = 0
- 
- build-tci:
-   extends: .native_build_job_template
+With regards,
+Daniel
 -- 
-2.46.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
