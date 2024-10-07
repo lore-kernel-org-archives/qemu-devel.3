@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E9ECFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD8DCFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxlXs-0002Ej-GQ; Mon, 07 Oct 2024 07:05:00 -0400
+	id 1sxlbQ-0001XX-3H; Mon, 07 Oct 2024 07:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxlXa-0002BE-NM
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:04:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxlbN-0001Wn-P8; Mon, 07 Oct 2024 07:08:34 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxlXZ-0006bi-2s
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:04:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728299076;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aBdsPxBj1O3hBIQ/IJN4alb0E5Eb0MDt74Zp0EoisJ4=;
- b=OvH+8onk6pkcjzuM/+TVKtF0dYqmNqsBvBH/iodS/5gQfy+6sF8pduLOZDodLXVM4MSVP+
- XgKulxMR9CukaVMBCwPigEY+v2+EBYFOzPYsMwm3gIHv0BCkEw0fSI8zFqfv9s6SkDKCOC
- 6MFWXqIDL1p8XXG0rWHmO49kCo5nAYw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-yOFitQhZOBS4DQ6_CaSjMQ-1; Mon, 07 Oct 2024 07:04:33 -0400
-X-MC-Unique: yOFitQhZOBS4DQ6_CaSjMQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37cd32f9c59so1598777f8f.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 04:04:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728299071; x=1728903871;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aBdsPxBj1O3hBIQ/IJN4alb0E5Eb0MDt74Zp0EoisJ4=;
- b=gdvWWPk6LocIsc1NYZgD68u0MdilPqbCdKrVZFsaIdpf28axxSHR17jlQ2BSWEYVKZ
- 0MtI/p+eomvQuB0LUdh6OudpHLmVnAV1wjpIwLJtuIrWiBR0sFPsm0wGWHOuv62a6VhV
- PqOM5ywkHJJ5+FxGJ8DI3FGpiVv+WB7Uc5UlAqePVD5sWVS83LqdqYaOAWdNH6toGjop
- ORWKzl0XCLOnrSTVisac4QRnm/LhiTyQNviB0/engiWDJihcuC6Zbw0pSCgQUXXFTn1Q
- FiGMxyduGYOfjGYH3/PlK9Vxc3LkP8Gq8gjEbXIcnp5VlXm66UnuYzWhNywl1ZkmE27b
- cjQw==
-X-Gm-Message-State: AOJu0Ywb/XilCGuJwqzMAGQkY/jpE9mlYqI6V40yejJz2WaIyaYtSLcr
- je1jg10dDAeF/NX2/bG3joCgvo2TA2xJ8MZwSp3w10Bc36YUWx/8Qh3e7iTmJJglsddlWYxCVt7
- CHZeTtNjARpLBAl++Uz+msh1FpMhXDmeULfppiEpQeu0H0G9k3XfwEhDDRGDggajbRYzhKouDIZ
- D7WjvgQhVBSC5OCRJu9WeLs0e1EwMpFMvZnFFvWk4=
-X-Received: by 2002:adf:f1c4:0:b0:374:bdc4:cfd3 with SMTP id
- ffacd0b85a97d-37d0eaf9afbmr6274382f8f.37.1728299071450; 
- Mon, 07 Oct 2024 04:04:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEixX7wEXCnUz86uDjhVE27FQlvrhIav9dSqrb94HQcZ1uwdhgvrRMvrZYR+YUZdnNXct+tSA==
-X-Received: by 2002:adf:f1c4:0:b0:374:bdc4:cfd3 with SMTP id
- ffacd0b85a97d-37d0eaf9afbmr6274359f8f.37.1728299071075; 
- Mon, 07 Oct 2024 04:04:31 -0700 (PDT)
-Received: from avogadro.local ([151.62.111.131])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d169202efsm5451463f8f.49.2024.10.07.04.04.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 04:04:29 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: manos.pitsidianakis@linaro.org, zhao1.liu@intel.com, junjie.mao@intel.com,
- pierrick.bouvier@linaro.org, alex.bennee@linaro.org,
- qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 10/12] meson: fix machine option for x86_version
-Date: Mon,  7 Oct 2024 13:03:38 +0200
-Message-ID: <20241007110342.1298598-11-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.1
-In-Reply-To: <20241007110342.1298598-1-pbonzini@redhat.com>
-References: <20241007110342.1298598-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxlbL-0007Bn-4M; Mon, 07 Oct 2024 07:08:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728299311; x=1759835311;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=hpwrGxuedAeKuZjTNzgbaWYzvlowhimdFInbSjmkp9g=;
+ b=d8uHpSd7VqE+IOBbTYYgEqYxHitjEPuxJmKvf2nYCy8XdR6JoK7YT6DV
+ ovKnoW9J7Ddg4PhRhrMsJSd+mHZGCaHS7f4Of34RBZRkFGxgwIAX59MmZ
+ n1ZSaRB4qDBTj6pyUd1xohtGXmHbvNoOkJvSEv5/FybChG9WW4vrWLQzp
+ zGsqDpJLn4xyy3bAc608yVI8JVcC6ddslbHYKcyCK2Eh7/bc0za5y2UKd
+ 6kwynbE+L+13R9id77L1za0l1nn3R67L5fRuOELvE4o/0ZZg98iirN6VX
+ e41XodDciEOsn8rP1cgUsqbzMsOWrDt5+v/1CbUr81k6nusq5n5Oqwrfk Q==;
+X-CSE-ConnectionGUID: LwG4B1seS9adT4dB/XjpfA==
+X-CSE-MsgGUID: vGyqoNywSIKrksKb+ID0Iw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11217"; a="31233863"
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="31233863"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2024 04:08:27 -0700
+X-CSE-ConnectionGUID: AQYZDfABQIaxfDs9ei+I9g==
+X-CSE-MsgGUID: h8O7y00TS2SmBdz6F04s3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="75875239"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 07 Oct 2024 04:08:22 -0700
+Date: Mon, 7 Oct 2024 19:24:33 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S.Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2 5/7] i386/cpu: Support thread and module level cache
+ topology
+Message-ID: <ZwPE8foi2qviMQSB@intel.com>
+References: <20240908125920.1160236-1-zhao1.liu@intel.com>
+ <20240908125920.1160236-6-zhao1.liu@intel.com>
+ <20240917100508.00001907@Huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240917100508.00001907@Huawei.com>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Tue, Sep 17, 2024 at 10:05:08AM +0100, Jonathan Cameron wrote:
+> Date: Tue, 17 Sep 2024 10:05:08 +0100
+> From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+> Subject: Re: [PATCH v2 5/7] i386/cpu: Support thread and module level cache
+>  topology
+> X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+> 
+> On Sun,  8 Sep 2024 20:59:18 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+> > Allow cache to be defined at the thread and module level. This
+> > increases flexibility for x86 users to customize their cache topology.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+>
+> Will be interesting to see if anyone uses the thread level, but
+> no harm in supporting it.
 
-s/mbmi1/mbmi/
+x86 CPU has a legacy property "x-l1-cache-per-thread". This is the old
+QEMU cache topology behavior, kept for compatibility. Now add thread
+level and I can refactor the code for this thread level.
 
-When configuring with -Dx86_version >= 3, meson step works, but
-compilation fails because option -mbmi1 is unknown.
+> I guess this would be a case of RDT
+> / MPAM etc as I'm not sure I've seen an SMT processor with
+> private caches. Some old papers seems to suggest that it might
+> make sense for smt 8 and above.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Link: https://lore.kernel.org/r/20241004223715.1275428-1-pierrick.bouvier@linaro.org
-Cc: qemu-stable@nongnu.org
-Fixes: ef7d1adfa85 ("meson: allow configuring the x86-64 baseline", 2024-06-28)
-Revieved-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for the hint, I'll think about whether some of the RDT / MPAM
+cases can be applied here.
 
-diff --git a/meson.build b/meson.build
-index b91863736ea..76335bb2a51 100644
---- a/meson.build
-+++ b/meson.build
-@@ -375,7 +375,7 @@ if host_arch in ['i386', 'x86_64']
-     qemu_common_flags = cc.get_supported_arguments('-mneeded') + qemu_common_flags
-   endif
-   if get_option('x86_version') >= '3'
--    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi1', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
-+    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
-   endif
- 
-   # add required vector instruction set (each level implies those below)
--- 
-2.46.1
+> Anyhow, patch is fine
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Thanks!
+
+-Zhao
 
 
