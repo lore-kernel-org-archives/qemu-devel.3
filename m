@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D60CFB441
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6599ECFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxp2P-0008QL-Od; Mon, 07 Oct 2024 10:48:41 -0400
+	id 1sxp2i-0000Ay-H4; Mon, 07 Oct 2024 10:49:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxp2N-0008Pc-Qe
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxp2g-00009g-El
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:59 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxp2M-00049N-Gt
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728312515;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JigYAc32zxmqoN/1OsqvHHP0IjrVY4uAdTMxLn2WQW4=;
- b=FriKrA5Nrg1GKNV8WhSq+NylLCYK/HtEMmzbs2b98o4PrlFlehOjXcTALOZjkWORatbE2W
- WUC6aP+li/z3OuCqowD2EVgN+R6RModOIMKnKSwTdmFR/gmXH1oCQlLOKmlPBuWWLtkZHq
- dbZsjCbX0WEDoBZZhAbwQpRiFBMbTgs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-6i0PSJAMMV2eLFHpnv-gJA-1; Mon, 07 Oct 2024 10:48:34 -0400
-X-MC-Unique: 6i0PSJAMMV2eLFHpnv-gJA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37cc9b5e533so1924388f8f.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 07:48:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728312513; x=1728917313;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JigYAc32zxmqoN/1OsqvHHP0IjrVY4uAdTMxLn2WQW4=;
- b=KTltRciVsTPwQXtsrf1JKlBhQbu41VRXmP2KCT/mcQ0kU730flneKaOCKakdQdaoYb
- Xk68zaAW99XVJedh20v7UBW8Fa/l1Ci1v/9U5Gg40rgOYOnSSiYJkUdMKHhAjYVYKiF3
- ztwFYSUhG+km4Yrvw786l3jCenKlRnw04obPK+c+dhn7IL6TY2ZfkvB+aSqo+gg2jj1r
- bHmvVB3u2LzKSzhr6SuxT4yBoCvhalJ2HnDpzFZyVaMWs0vfkrhhPZYR7alhbwxQLqbk
- FKUFXta7zvEr1hSKuJCKy3Dx68RhyaSGghNM3uLKNI8JLVI3S9nZdOplkN+eXWLMMcki
- 7GHw==
-X-Gm-Message-State: AOJu0YyvPuuW+JCBFHuaUJ4+NB0JMCYspENRQwE7wnsiw7PSjFaBd0PI
- JCCXg1APmOpYqaaXMpoX5u1hTQwttaLfxcn/s6gB67qlxI5jX6WuvRWj0n8Fr+eGuYs8f/y/fv+
- EdJ8eL16zFMRINW8U6AkL32c69H0dlyshL1QvHY3XCl8MI7MJfMUvrLjbp2Ky90xpNiKgK/Wv95
- KxJq3qnklFdL3+678znnl1zSm/z9s=
-X-Received: by 2002:a5d:64a3:0:b0:37c:fde2:93b6 with SMTP id
- ffacd0b85a97d-37d0e6da837mr7444728f8f.11.1728312513610; 
- Mon, 07 Oct 2024 07:48:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAfqhHKMTWxCITccZoxmG3MkJ1T+bnVm7qr77TWbraiDzAY0N3xORlugT1WudQDHrZi6Z67yHFPn+7pTJo1Hs=
-X-Received: by 2002:a5d:64a3:0:b0:37c:fde2:93b6 with SMTP id
- ffacd0b85a97d-37d0e6da837mr7444712f8f.11.1728312513198; Mon, 07 Oct 2024
- 07:48:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxp2e-0004BK-NJ
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:58 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 15D3296164;
+ Mon,  7 Oct 2024 17:48:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99C7B14F5CF;
+ Mon,  7 Oct 2024 17:48:52 +0300 (MSK)
+Message-ID: <d8901ddc-b7b9-46c2-be35-40950a651b21@tls.msk.ru>
+Date: Mon, 7 Oct 2024 17:48:52 +0300
 MIME-Version: 1.0
-References: <20241007084342.1264048-1-pbonzini@redhat.com>
- <20241007084342.1264048-2-pbonzini@redhat.com>
- <86423148-2cbb-4263-a351-dac0ece198e7@linaro.org>
-In-Reply-To: <86423148-2cbb-4263-a351-dac0ece198e7@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 7 Oct 2024 16:48:21 +0200
-Message-ID: <CABgObfYu2jqKMJ_xrNv1Ci5B2NSxrcaaUO2piu=3o=Ca=Sn_tQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] meson: define qemu_isa_flags
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, qemu-stable@nongnu.org,
- alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: Support 4K page size
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
+ philmd@linaro.org, maobibo@loongson.cn
+References: <20231023024059.3858349-1-gaosong@loongson.cn>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20231023024059.3858349-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,30 +85,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 7, 2024 at 4:46=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
-> > -  qemu_common_flags =3D ['-march=3Di486'] + qemu_common_flags
-> > +  qemu_isa_flags =3D ['-march=3Di486']
->
-> Use +=3D ?
+23.10.2023 05:40, Song Gao wrote:
+> The LoongArch kernel supports 4K page size.
+> Change TARGET_PAGE_BITS to 12.
 
-Here the qemu_isa_flags are known to be empty.
+This change appears to have 2 issues.
 
-> > -      qemu_common_flags =3D ['-mcx16'] + qemu_common_flags
-> > +      qemu_isa_flags =3D ['-mcx16'] + qemu_isa_flags
->
-> Likewise, why verbosely prepend, rather than append with +=3D ?
-> The same for all others, including
->
-> > +qemu_common_flags =3D qemu_isa_flags + qemu_common_flags
+First, the subject is misleading, - it does not only introduces support for 4K page
+size, it actually *switches* to 4K page size.  But this is sort of minor.
 
-The prepending behavior came from CPU_CFLAGS originally being before
-all other compiler flags.
+More interestingly is that it has quite noticeable effect on performance.  For
+example, https://gitlab.com/qemu-project/qemu/-/issues/2491 - I confirm 7z
+decompression performance drop from ~110Mb/s before this change to ~73Mb/s
+after it.
 
-I just didn't want to change behavior here (especially since this
-patch was already about subtle changes in behavior). But you're right
-that at least within qemu_isa_flags the order should not matter.
+Is such a performance drop expected?
 
-Paolo
+Thanks,
 
+/mjt
 
