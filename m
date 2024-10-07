@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E774CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 12:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DD0CFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 12:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxn4X-0000xd-LI; Mon, 07 Oct 2024 08:42:45 -0400
+	id 1sxn6g-0002Bm-TQ; Mon, 07 Oct 2024 08:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sxn4V-0000xJ-Nk
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:42:43 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sxn6e-0002B1-4d
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:44:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sxn4T-0004A0-7W
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:42:43 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sxn6c-0004LT-Hw
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:44:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728304959;
+ s=mimecast20190719; t=1728305093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YLPfZsUmeir2Gw/JHpTz0iq7mm4RMbXmCSPckI7Mm/g=;
- b=ERGd9DSgo9ulB8weKjy3nRHNMEa20rH22WTD9AE9OE3N9PxK4I3aapjEt/i6wIcfryN1UL
- Dl9hjxxrPXuHlDM3u1QqOWnmFaGpFxBmotsZyUb+bKoatNXTB+jJQuuoiBCVEFiL/9dijx
- gG49WShYuEyyoJ8uQlg3PrWhXCnj4lY=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3XimklviNwoadeALIBpKZ5s2pHbdlyJaEPc4Sg0+99s=;
+ b=bXk6Cw4jb3RqvMswn3v30O0cbsjhi/Wiw1wO27OhepXoWoLntfT6pTd4auh8lQ8i58BxnR
+ mibzZ7ald5OinDFTR3tPogrZXChDnEK84MNtIK2SM+8Aqr6gB/lf43dccwJdDOx6MAbM5g
+ lSLRS34p+HR74YfBgAi8kJsF/Om8Y/k=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-r6-az8AZNHCnMRoNnaLAkQ-1; Mon, 07 Oct 2024 08:42:38 -0400
-X-MC-Unique: r6-az8AZNHCnMRoNnaLAkQ-1
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-2871891ca9cso3629350fac.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 05:42:38 -0700 (PDT)
+ us-mta-645-7DBhn_iWPdq5F24n8UOKkA-1; Mon, 07 Oct 2024 08:44:52 -0400
+X-MC-Unique: 7DBhn_iWPdq5F24n8UOKkA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42cdeac2da6so39232405e9.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 05:44:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728304957; x=1728909757;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1728305091; x=1728909891;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YLPfZsUmeir2Gw/JHpTz0iq7mm4RMbXmCSPckI7Mm/g=;
- b=DGlisqWxDRxR9oBmce9hom1+vFE2j6bI+AnKQAQ6yn537mzcIcsE8VYbldRa5Tp4gA
- wHRbynzIw9vGyYdjM4UraBgI+QJM1CR+YCrnUoYpkwWou6LO8UuDB+HPKb5jdOmlfKmC
- YXIM8uR5NwD6rk38ilaweHzZB43+b8YfLUqZrj4doo+vKMJU6Nxv0TtlHVm6O6Me7nXH
- 2VjNsYGeiIcRk2qIZgw4fR3QR3Whz3mOtu3vPN7L7a+wtUWFmMoi84uyLKHUy/qwvffE
- v35bmNyiCmNcnw0cvrTPa6QrBO8JFLHAK+UKn7x9Ob3UZ7EUk+us0mH8/h7e4by9mYDd
- Se+w==
-X-Gm-Message-State: AOJu0YwygjAKfcrFC7SHHGtzlWn8MfLKfBGypGkqQAli1tBQkINs9/nq
- CKHmXccSZgQsiikg8Q58YpdMoOJaVL3NA2pUR2M9Lyh0lURbXrMqhoihWx+FU1FzEDHEKEV3tWp
- pcz95SGO7rGCii66KeluU81Q/gnvBaDN0yXNdBmebFQaH+coXgs70ZCcx6kK1sApdzMOT0Jclie
- Fjm/VHNKdQhzonTpm5LZe6qLPygak=
-X-Received: by 2002:a05:6870:34a:b0:277:d195:ab88 with SMTP id
- 586e51a60fabf-287c1fbc2e6mr7518998fac.32.1728304957324; 
- Mon, 07 Oct 2024 05:42:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBa/gZEKJx8QevhPZbp6wTPymkerlKmKJy2gtPyqAra41/hKT3qD/QdsBu7O9voWj9isNj4I9I3ySwu0MUR8s=
-X-Received: by 2002:a05:6870:34a:b0:277:d195:ab88 with SMTP id
- 586e51a60fabf-287c1fbc2e6mr7518973fac.32.1728304956968; Mon, 07 Oct 2024
- 05:42:36 -0700 (PDT)
+ bh=3XimklviNwoadeALIBpKZ5s2pHbdlyJaEPc4Sg0+99s=;
+ b=mhHN3WegFO+YsM0Uf5Q6E32zDieApTha26fltThF2OpOf4qzCF6n7GnkdYfCHUWDCl
+ 57QXTiQBFUPQMvrakXCRYIdbrWhFzyYcayQGuRJmQ2Yv6inMQwPlwsUn3J9IXE7HgFjU
+ rm28/UbK3Qe6xLOB3sH+STMPI06bwhkgLgcKXAXrCJGNkrKZuY/Jer43e1O8dMErxJnH
+ OFr7LFJknlU3sJBimLPSEANYn/0i0IKuOzwoAcaHN76ecXF3wl5CGb1CbAL7brmtzP7p
+ xhrwa1wfN4aocDDq7cUlnPZpnNgjd1z0b3P9+ZP3fzpZiq0JNyfLJYYnsHvKk8ey2H1z
+ xWzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNqNImbHxidm0+KfeQPyoMyujFeVzYi1EsYBeTfYSn3jJZZbkU83t2fZAS15xzD0LP2HO6CXi69Y4g@nongnu.org
+X-Gm-Message-State: AOJu0Yxm4nygdrMnsB6+lU7ueMBNbThHnqBEYV01QHPU4aCmZfnHmrox
+ PHfPzManXVBd8OutOQwvcIxSGwMF8Gh2LHGgoIXnktwz5xDMbrCZIyadw+XgwN3ILIJY308gkXm
+ WD0FVqo49iaygIpzpMGN/dZHE9lFL7VZhqoHfQ0T4xLHTY5id70VF
+X-Received: by 2002:a7b:c44c:0:b0:42f:6878:a68d with SMTP id
+ 5b1f17b1804b1-42f8664f3c4mr77076345e9.20.1728305091508; 
+ Mon, 07 Oct 2024 05:44:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHS2xc8afWwDsQ0wwImJL1ts+tTXupmvsBG1eenO4wcKj6OReHq5k3VKABP3zeM4BmeoQW5mQ==
+X-Received: by 2002:a7b:c44c:0:b0:42f:6878:a68d with SMTP id
+ 5b1f17b1804b1-42f8664f3c4mr77075975e9.20.1728305091050; 
+ Mon, 07 Oct 2024 05:44:51 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42f86a20471sm91063045e9.17.2024.10.07.05.44.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 05:44:50 -0700 (PDT)
+Date: Mon, 7 Oct 2024 14:44:49 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Annie Li <annie.li@oracle.com>
+Cc: miguel.luis@oracle.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ dave@treblig.org, mst@redhat.com, anisinha@redhat.com,
+ shannon.zhaosl@gmail.com, peter.maydell@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ eblake@redhat.com, armbru@redhat.com
+Subject: Re: [RFC V2 PATCH 01/11] acpi: hmp/qmp: Add hmp/qmp support for
+ system_sleep
+Message-ID: <20241007144449.457d304f@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240927183906.1248-2-annie.li@oracle.com>
+References: <20240927183906.1248-1-annie.li@oracle.com>
+ <20240927183906.1248-2-annie.li@oracle.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
- <20241003112244.3340697-17-marcandre.lureau@redhat.com>
- <f0c03b18-387f-450c-b1c5-33cf51b83445@daynix.com>
-In-Reply-To: <f0c03b18-387f-450c-b1c5-33cf51b83445@daynix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 7 Oct 2024 16:42:25 +0400
-Message-ID: <CAMxuvaz0VneZHRmDnmJNZvaNoS9V28ZDLNWt33WYgXVpO9NDHw@mail.gmail.com>
-Subject: Re: [PATCH 16/16] tests: add basic -display dbus Map.Unix test
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- belmouss@redhat.com, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,186 +111,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Fri, 27 Sep 2024 14:38:56 -0400
+Annie Li <annie.li@oracle.com> wrote:
 
-On Sat, Oct 5, 2024 at 12:32=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2024/10/03 20:22, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Only check we eventually get a shared memory scanout.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   tests/qtest/dbus-display-test.c | 64 ++++++++++++++++++++++++++++++--=
--
-> >   1 file changed, 59 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display=
--test.c
-> > index 0390bdcb41..ac92cb00d4 100644
-> > --- a/tests/qtest/dbus-display-test.c
-> > +++ b/tests/qtest/dbus-display-test.c
-> > @@ -2,9 +2,12 @@
-> >   #include "qemu/sockets.h"
-> >   #include "qemu/dbus.h"
-> >   #include "qemu/sockets.h"
-> > +#include "glib.h"
-> > +#include "glibconfig.h"
-> >   #include <gio/gio.h>
-> >   #include <gio/gunixfdlist.h>
-> >   #include "libqtest.h"
-> > +#include <sys/mman.h>
-> >   #include "ui/dbus-display1.h"
-> >
-> >   static GDBusConnection*
-> > @@ -82,6 +85,7 @@ typedef struct TestDBusConsoleRegister {
-> >       GThread *thread;
-> >       GDBusConnection *listener_conn;
-> >       GDBusObjectManagerServer *server;
-> > +    bool with_map;
-> >   } TestDBusConsoleRegister;
-> >
-> >   static gboolean listener_handle_scanout(
-> > @@ -94,13 +98,48 @@ static gboolean listener_handle_scanout(
-> >       GVariant *arg_data,
-> >       TestDBusConsoleRegister *test)
-> >   {
-> > +    if (!test->with_map) {
-> > +        g_main_loop_quit(test->loop);
-> > +    }
-> > +
-> > +    return DBUS_METHOD_INVOCATION_HANDLED;
-> > +}
-> > +
-> > +static gboolean listener_handle_scanout_map(
-> > +    QemuDBusDisplay1ListenerUnixMap *object,
-> > +    GDBusMethodInvocation *invocation,
-> > +    GUnixFDList *fd_list,
-> > +    GVariant *arg_handle,
-> > +    guint arg_offset,
-> > +    guint arg_width,
-> > +    guint arg_height,
-> > +    guint arg_stride,
-> > +    guint arg_pixman_format,
-> > +    TestDBusConsoleRegister *test)
-> > +{
-> > +    int fd =3D -1;
-> > +    gint32 handle =3D g_variant_get_handle(arg_handle);
-> > +    g_autoptr(GError) error =3D NULL;
-> > +    void *addr =3D NULL;
-> > +    size_t len =3D arg_height * arg_stride;
-> > +
-> > +    g_assert_cmpuint(g_unix_fd_list_get_length(fd_list), =3D=3D, 1);
-> > +    fd =3D g_unix_fd_list_get(fd_list, handle, &error);
-> > +    g_assert_no_error(error);
-> > +
-> > +    addr =3D mmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, arg_offset);
-> > +    g_assert_no_errno(GPOINTER_TO_INT(addr));
->
-> Strictly speaking, this construct is not safe. When void * is 64-bit and
-> int is 32-bit, this assetion will fail if the lower 32 bits of addr are
-> in [0x80000000, 0xffffffff] though addr may still be a valid address.
-> This is because GPOINTER_TO_INT() results in a negative value for such
-> an address, and g_assert_no_errno() asserts that the given value is
-> non-negative.
->
-> Using g_mapped_file_new_from_fd() and will simplify this function as whol=
-e.
+> Followng hmp/qmp commands are implemented for pressing virtual
+> sleep button,
+> 
+> hmp: system_sleep
+> qmp: { "execute": "system_sleep" }
+> 
+> These commands put the guest into suspend or other power states
+> depending on the power settings inside the guest.
+> 
+> Signed-off-by: Annie Li <annie.li@oracle.com>
+> ---
+>  hmp-commands.hx            | 14 ++++++++++++++
+>  hw/core/machine-hmp-cmds.c |  5 +++++
+>  hw/core/machine-qmp-cmds.c |  9 +++++++++
+>  include/monitor/hmp.h      |  1 +
+>  qapi/machine.json          | 18 ++++++++++++++++++
+>  qapi/pragma.json           |  1 +
+>  6 files changed, 48 insertions(+)
+> 
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 06746f0afc..4c149f403f 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -639,6 +639,20 @@ SRST
+>    whether profiling is on or off.
+>  ERST
+>  
+> +    {
+> +        .name       = "system_sleep",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "send ACPI sleep event",
+> +        .cmd = hmp_system_sleep,
+> +    },
+> +
+> +SRST
+> +``system_sleep``
+> +  Push the virtual sleep button; if supported the system will enter
+> +  an ACPI sleep state.
 
-I thought about that, but g_mapped_file_new_from_fd() doesn't take a
-len, and it fstat() the fd. This is ok for memfd apparently, and
-appears to work, but it isn't really compliant with the dbus
-interface.
+perhaps comma after 'if supported'
 
->
-> > +    g_assert_nonnull(addr);
-> > +    g_assert_no_errno(munmap(addr, len));
-> > +
-> >       g_main_loop_quit(test->loop);
-> >
-> > +    close(fd);
-> >       return DBUS_METHOD_INVOCATION_HANDLED;
-> >   }
-> >
-> >   static void
-> > -test_dbus_console_setup_listener(TestDBusConsoleRegister *test)
-> > +test_dbus_console_setup_listener(TestDBusConsoleRegister *test, bool w=
-ith_map)
-> >   {
-> >       g_autoptr(GDBusObjectSkeleton) listener =3D NULL;
-> >       g_autoptr(QemuDBusDisplay1ListenerSkeleton) iface =3D NULL;
-> > @@ -114,6 +153,20 @@ test_dbus_console_setup_listener(TestDBusConsoleRe=
-gister *test)
-> >                        NULL);
-> >       g_dbus_object_skeleton_add_interface(listener,
-> >                                            G_DBUS_INTERFACE_SKELETON(if=
-ace));
-> > +    if (with_map) {
-> > +        g_autoptr(QemuDBusDisplay1ListenerUnixMapSkeleton) iface_map =
-=3D
-> > +            QEMU_DBUS_DISPLAY1_LISTENER_UNIX_MAP_SKELETON(
-> > +                qemu_dbus_display1_listener_unix_map_skeleton_new());
-> > +
-> > +        g_object_connect(iface_map,
-> > +                         "signal::handle-scanout-map", listener_handle=
-_scanout_map, test,
-> > +                         NULL);
-> > +        g_dbus_object_skeleton_add_interface(listener,
-> > +                                             G_DBUS_INTERFACE_SKELETON=
-(iface_map));
-> > +        g_object_set(iface, "interfaces",
-> > +            (const gchar *[]) { "org.qemu.Display1.Listener.Unix.Map",=
- NULL },
-> > +            NULL);
-> > +    }
-> >       g_dbus_object_manager_server_export(test->server, listener);
-> >       g_dbus_object_manager_server_set_connection(test->server,
-> >                                                   test->listener_conn);
-> > @@ -145,7 +198,7 @@ test_dbus_console_registered(GObject *source_object=
-,
-> >       g_assert_no_error(err);
-> >
-> >       test->listener_conn =3D g_thread_join(test->thread);
-> > -    test_dbus_console_setup_listener(test);
-> > +    test_dbus_console_setup_listener(test, test->with_map);
-> >   }
-> >
-> >   static gpointer
-> > @@ -155,7 +208,7 @@ test_dbus_p2p_server_setup_thread(gpointer data)
-> >   }
-> >
-> >   static void
-> > -test_dbus_display_console(void)
-> > +test_dbus_display_console(const void* data)
-> >   {
-> >       g_autoptr(GError) err =3D NULL;
-> >       g_autoptr(GDBusConnection) conn =3D NULL;
-> > @@ -163,7 +216,7 @@ test_dbus_display_console(void)
-> >       g_autoptr(GMainLoop) loop =3D NULL;
-> >       QTestState *qts =3D NULL;
-> >       int pair[2];
-> > -    TestDBusConsoleRegister test =3D { 0, };
-> > +    TestDBusConsoleRegister test =3D { 0, .with_map =3D GPOINTER_TO_IN=
-T(data) };
-> >   #ifdef WIN32
-> >       WSAPROTOCOL_INFOW info;
-> >       g_autoptr(GVariant) listener =3D NULL;
-> > @@ -299,7 +352,8 @@ main(int argc, char **argv)
-> >       g_test_init(&argc, &argv, NULL);
-> >
-> >       qtest_add_func("/dbus-display/vm", test_dbus_display_vm);
-> > -    qtest_add_func("/dbus-display/console", test_dbus_display_console)=
-;
-> > +    qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false=
-), test_dbus_display_console);
-> > +    qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(t=
-rue), test_dbus_display_console);
-> >       qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboa=
-rd);
-> >
-> >       return g_test_run();
->
+
+> +ERST
+> +
+>      {
+>          .name       = "system_reset",
+>          .args_type  = "",
+> diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+> index 8701f00cc7..3ee529d8d5 100644
+> --- a/hw/core/machine-hmp-cmds.c
+> +++ b/hw/core/machine-hmp-cmds.c
+> @@ -189,6 +189,11 @@ void hmp_system_reset(Monitor *mon, const QDict *qdict)
+>      qmp_system_reset(NULL);
+>  }
+>  
+> +void hmp_system_sleep(Monitor *mon, const QDict *qdict)
+> +{
+> +    qmp_system_sleep(NULL);
+> +}
+> +
+>  void hmp_system_powerdown(Monitor *mon, const QDict *qdict)
+>  {
+>      qmp_system_powerdown(NULL);
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index 130217da8f..770f8189ba 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -276,6 +276,15 @@ void qmp_system_reset(Error **errp)
+>      qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET);
+>  }
+>  
+> +void qmp_system_sleep(Error **errp)
+> +{
+> +    if (!qemu_wakeup_suspend_enabled()) {
+> +        error_setg(errp,
+> +                   "suspend from running is not supported by this guest");
+
+it's machine and not the guest that doesn't support, isn't it?
+
+> +        return;
+> +    }
+
+I'd reorder this after 6/11, to avoid adding function that does nothing
+and then explaining why it is done this way.
+
+> +}
+> +
+>  void qmp_system_powerdown(Error **errp)
+>  {
+>      qemu_system_powerdown_request();
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index ae116d9804..e543eec109 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -43,6 +43,7 @@ void hmp_quit(Monitor *mon, const QDict *qdict);
+>  void hmp_stop(Monitor *mon, const QDict *qdict);
+>  void hmp_sync_profile(Monitor *mon, const QDict *qdict);
+>  void hmp_system_reset(Monitor *mon, const QDict *qdict);
+> +void hmp_system_sleep(Monitor *mon, const QDict *qdict);
+>  void hmp_system_powerdown(Monitor *mon, const QDict *qdict);
+>  void hmp_exit_preconfig(Monitor *mon, const QDict *qdict);
+>  void hmp_announce_self(Monitor *mon, const QDict *qdict);
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index d4317435e7..b32d231aa9 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -362,6 +362,24 @@
+>  ##
+>  { 'command': 'system_reset' }
+>  
+> +##
+> +# @system_sleep:
+> +#
+> +# Requests that a guest perform a ACPI sleep transition by pushing a virtual
+> +# sleep button.
+> +#
+> +# .. note:: A guest may or may not respond to this command. This command
+> +#        returning does not indicate that a guest has accepted the request
+> +#        or that it has gone to sleep.
+> +#
+> +# .. qmp-example::
+> +#
+> +# -> { "execute": "system_sleep" }
+> +# <- { "return": {} }
+> +#
+> +##
+> +{ 'command': 'system_sleep' }
+> +
+>  ##
+>  # @system_powerdown:
+>  #
+> diff --git a/qapi/pragma.json b/qapi/pragma.json
+> index 59fbe74b8c..e2c5dcb829 100644
+> --- a/qapi/pragma.json
+> +++ b/qapi/pragma.json
+> @@ -23,6 +23,7 @@
+>          'set_password',
+>          'system_powerdown',
+>          'system_reset',
+> +        'system_sleep',
+>          'system_wakeup' ],
+>      # Commands allowed to return a non-dictionary
+>      'command-returns-exceptions': [
 
 
