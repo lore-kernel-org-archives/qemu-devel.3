@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72921CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 07:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E53CFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 08:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxiXZ-0000wN-Ir; Mon, 07 Oct 2024 03:52:25 -0400
+	id 1sxiu1-0004bh-HT; Mon, 07 Oct 2024 04:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierre@freepascal.org>)
- id 1sxiXV-0000w2-7X
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 03:52:22 -0400
-Received: from mail.freepascal.org ([178.33.235.90])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <pierre@freepascal.org>) id 1sxiXT-00007T-Gt
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 03:52:20 -0400
-Received: from localhost (localhost [127.0.0.1])
- by mail.freepascal.org (Postfix) with ESMTP id 217A4182445
- for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 07:52:15 +0000 (UTC)
-Received: from mail.freepascal.org ([127.0.0.1])
- by localhost (idefixng.freepascal.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WC3xplVbN4VO for <qemu-devel@nongnu.org>;
- Mon,  7 Oct 2024 07:52:15 +0000 (UTC)
-Received: from [192.168.50.107] (gw-ics.u-strasbg.fr [130.79.210.225])
- by mail.freepascal.org (Postfix) with ESMTPSA id EC8A0182434
- for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 07:52:14 +0000 (UTC)
-Message-ID: <d2071e32-c35b-4cd1-a93e-a117c27a9ec1@freepascal.org>
-Date: Mon, 7 Oct 2024 09:52:14 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/25] misc: Use explicit endian LD/ST API
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1sxitw-0004bP-OF
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:15:32 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1sxitt-0002WA-Jf
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:15:32 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-20ba8d92af9so30043845ad.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 01:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1728288923; x=1728893723; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4jEKDaliBrhfUZYD/I7SficdXSuxLO3cX5dW23bd5fQ=;
+ b=dp4NWSOCcTZx+ykmD6XQ5Q6Mh964EEuyhRPS3yIyNIHsuIOEcTAx3q+BzIODzwHzFq
+ ajst9tLzHwqXoi//4KM4lG7hNbYQyk4jo5cLIZlYclNgcvLzKWTlo9/7kkFyv8HlHxJ2
+ enC6KvnojdEUWUtpLFg/eVnWQD/3Ff5aMolh1QiNKRTxvkiqUE3KUURYY155HS4QXZYp
+ xmeEP2zVeaQqc2f+7xgFtOrIFvvx0fZCJQr5nanp6a9g1R8HFxqQ0wNN8bmrBvwfgAGX
+ 38tVF7AkiQJsLBYErth144iDTtVd7mlWDCCDoc/eWvBqfEo9c3AKEOv5MCTfYutppcij
+ jAGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728288923; x=1728893723;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4jEKDaliBrhfUZYD/I7SficdXSuxLO3cX5dW23bd5fQ=;
+ b=RuVcde5/abs7uaBMGk79FhaeS4oOYW2zGTVBvAp7jarTOKGwmTiVW4ah5kP1FAjkgV
+ NfcoLLvpNBhpGeop/3iz239/K+k30FUro+bGBHkzJ+HyUNohAbK+4qqdTtjyaP7DcojM
+ /UVF1kZcn2GcCep0+JxymybsKeqp5aWpvWTRc48RrVCXc6OshwBXfS+aPavpWsFwtaPX
+ 1mJA+Bx1FSfeCyT63Z4LH+POZK0nZkvhxiM1E7UlmXgLbSM1YIAnF/vn2/t9o4F66ad4
+ 5h/RdV2jZNgD776aGqsxkVBRF8cgGG0N0YUyUROSsIJUKg/e+mAZtP9EVWOB7JIxAwAK
+ Fx4w==
+X-Gm-Message-State: AOJu0YxMMcVGnM/e3LgvCLwxBSdo8JvVSfQMe56Y5hc5J3kUbgVPo/R1
+ v2RIUD8Gwzoo+OSmcJ41ly3ykEsokEL+k0YSIzBU8xymW3jp920+9GOhyEpfJrypsRYnYrmTBjY
+ N
+X-Google-Smtp-Source: AGHT+IG10dduOOXESdCPX2bPQhAprSod9+FXePVP9phMMjEsEEqHdbbYP7YyznOfWzw4hDaPAXK9RQ==
+X-Received: by 2002:a17:903:1c7:b0:20b:7633:6e5 with SMTP id
+ d9443c01a7336-20bff045264mr152590075ad.50.1728288923390; 
+ Mon, 07 Oct 2024 01:15:23 -0700 (PDT)
+Received: from MacBook-Pro-2.local.bytedance.net ([63.216.146.178])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c138d0cd9sm35124105ad.107.2024.10.07.01.15.19
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 07 Oct 2024 01:15:23 -0700 (PDT)
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
 To: qemu-devel@nongnu.org
-References: <20241004163042.85922-1-philmd@linaro.org>
- <5a1606e1-649f-4bda-83e9-aff8c9dfd9f4@linaro.org>
-Content-Language: en-US, fr
-From: Pierre Muller <pierre@freepascal.org>
-Autocrypt: addr=pierre@freepascal.org; keydata=
- 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
- ahNt36rlsL9b9LfAbQgrNA4CfCLEAw==
-In-Reply-To: <5a1606e1-649f-4bda-83e9-aff8c9dfd9f4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: pbonzini@redhat.com, imammedo@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+Subject: [PATCH v4] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Date: Mon,  7 Oct 2024 16:13:44 +0800
+Message-Id: <20241007081344.10907-1-xuchuangxclwt@bytedance.com>
+X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.33.235.90; envelope-from=pierre@freepascal.org;
- helo=mail.freepascal.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.668,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,69 +94,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Pierre Muller <pierre@freepascal.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When QEMU is started with:
+-cpu host,migratable=on,host-cache-info=on,l3-cache=off
+-smp 180,sockets=2,dies=1,cores=45,threads=2
 
+Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
+CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
+execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
+CPUID.04H.EAX[31:26] as expected.
 
-Le 05/10/2024 à 03:39, Richard Henderson a écrit :
-> On 10/4/24 09:30, Philippe Mathieu-Daudé wrote:
->> Philippe Mathieu-Daudé (25):
->>     gdbstub/helpers: Have ldtul_p() definition use ldn_p()
->>     target/hexagon: Replace ldtul_p() -> ldl_p()
->>     target/alpha: Replace ldtul_p() -> ldq_p()
->>     target/s390x: Replace ldtul_p() -> ldq_p()
->>     gdbstub/helpers: Introduce ldtul_$endian_p() helpers
->>     target/alpha: Use explicit little-endian LD/ST API
->>     target/hexagon: Use explicit little-endian LD/ST API
->>     hw/i386: Use explicit little-endian LD/ST API
->>     target/i386: Use explicit little-endian LD/ST API
->>     target/avr: Use explicit little-endian LD/ST API
->>     linux-user/i386: Use explicit little-endian LD/ST API
->>     target/loongarch: Use explicit little-endian LD/ST API
->>     target/sh4: Use explicit little-endian LD/ST API
->>     target/tricore: Use explicit little-endian LD/ST API
->>     target/rx: Use explicit little-endian LD/ST API
->>     target/riscv: Use explicit little-endian LD/ST API
->>     hw/m68k: Use explicit big-endian LD/ST API
->>     target/m68k: Use explicit big-endian LD/ST API
->>     hw/sparc: Use explicit big-endian LD/ST API
->>     target/sparc: Use explicit big-endian LD/ST API
->>     target/hppa: Use explicit big-endian LD/ST API
->>     hw/s390x: Use explicit big-endian LD/ST API
->>     target/s390x: Use explicit big-endian LD/ST API
->>     target/openrisc: Use explicit big-endian LD/ST API
->>     hw/ppc/e500: Use explicit big-endian LD/ST API
-> 
-> The sh4, rx, and riscv targets *can* support multiple endianness.
-> 
-> While we removed sh4eb for system mode, we still support sh4eb-linux-user, and therefore
-> the target/sh4 patch affecting gdbstub is wrong.
-> 
-> RX sets endianness via a pin sampled at reset; if we ever implement this, it would be via
-> a property on the cpu.  RISCV sets endianness via a couple of bits in MSTATUS; system mode
-> would always use little-endian, but riscv64eb-user isn't out of the question.
-> 
-> While we have never supported rx or riscv in big-endian, but there's no reason that we
-> can't, and those target/ patches make things harder. Since target/ will *always* have
-> TARGET_BIG_ENDIAN available, I don't see that we're saving anything there.
+As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+integer too. Otherwise we may encounter unexpected results in guest.
 
-   Isn't this also true for the sparc CPU?
-At least llvm seems to think so:
+For example, when QEMU is started with CLI above and xtopology is disabled,
+guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+as the result, even though theads-per-core should actually be 2.
 
-$ ssh gcc421  /usr/bin/llvm-mc-18 --version
-Debian LLVM version 18.1.8
-   Optimized build.
+So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+to solve the unexpected result.
 
-   Registered Targets:
-     aarch64    - AArch64 (little endian)
-....
-     sparc      - Sparc
-     sparcel    - Sparc LE
-     sparcv9    - Sparc V9
-     systemz    - SystemZ
+In addition, we introduce max_thread_number_in_package() instead of
+using pow2ceil() to be compatible with smp and hybrid.
 
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+---
+ target/i386/cpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Pierre Muller
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 85ef7452c0..1b4e3b6931 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -261,6 +261,12 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
+     return num_ids - 1;
+ }
+ 
++static uint32_t max_thread_number_in_package(X86CPUTopoInfo *topo_info)
++{
++    uint32_t num_threads = 1 << apicid_pkg_offset(topo_info);
++    return num_threads;
++}
++
+ static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
+ {
+     uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
+@@ -6462,7 +6468,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         *edx = env->features[FEAT_1_EDX];
+         if (threads_per_pkg > 1) {
+-            *ebx |= threads_per_pkg << 16;
++            *ebx |= max_thread_number_in_package(&topo_info) << 16;
+             *edx |= CPUID_HT;
+         }
+         if (!cpu->enable_pmu) {
+-- 
+2.20.1
+
 
