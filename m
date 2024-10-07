@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13464CFB44C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86DF2CFB44E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 17:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqz0-0006pT-Tr; Mon, 07 Oct 2024 12:53:18 -0400
+	id 1sxr6k-0000HG-5e; Mon, 07 Oct 2024 13:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sxqyy-0006oq-Lf
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:53:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sxqyx-00027j-18
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:53:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728319994;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6F/v8/AKoSk0Mm9eSlgxSnE9cJhVGeB+hWn10hDs/3Y=;
- b=UHT8YVvEAMeElB03gcOqkmJdEzx6mm9ZXltCQFoqc+NfOxwWCwcc3+nd9+Ur0uM7vQuhUM
- B21Wb5yZLWjgAgUo0GHHxFmjPZaUG8dywVkdAxzgbzAo2VP5HbJTMpOoxxyBEz1UHH9b6k
- xD07mHMyTTfdN7f/BQQUBp/B7bcsf0g=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-YC99iMmjMcS_68GxIVV34Q-1; Mon, 07 Oct 2024 12:53:12 -0400
-X-MC-Unique: YC99iMmjMcS_68GxIVV34Q-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6e28b624bfcso65163447b3.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:53:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sxr6h-0000Gi-Vd
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:01:16 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sxr6f-00033Q-EW
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 13:01:15 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a9951fba3b4so200571866b.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 10:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728320472; x=1728925272; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0Nh3rLqnlCA81yxEORMYBruRYvHPRurbBeEmdjQpaxs=;
+ b=hMiD7vSV6WenZrzGdNR5v5hUmMIN6JxSS262EZ+NDyruxBjtrt/FVqzh7Ir4In1OOL
+ ur9bWXbMMaAN28SIxMrtl91g9cgSc1JfhhYs3gqgCwAOLdSEb4FrnhSqfw+a0jopvn14
+ LLJbpbiACloswyKlgBbkQIiTtoxGwUsbzhfNrX3bFuEoJ6LibKkDTiEuo++OZI0XP9Bm
+ Cu30vESurWeTDstwkEGlqZKI4gDs43PCdqlyGnksTf3mJEqLhgFXidf2gTy6Q7QEIL/K
+ CXj3+OePfv8bM/YLqbhwk8aO+kB3Wo4z1zRzeziz/zzWDaeD/uqcytVcdwUjp4ljCIAH
+ edYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728319992; x=1728924792;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6F/v8/AKoSk0Mm9eSlgxSnE9cJhVGeB+hWn10hDs/3Y=;
- b=gRGJTAbxl5w/h5mygRWO03NMahNtm6UplEIVYWtFbH8BGyRr35/ERPtEfGCrmGZMXO
- 2BZYvwSB8sinOIjWQvhbhcTNStCUYBPAy+mPsvATJ2DpVQxpf/002s4KmO8uN/4Oryct
- TmTZeznNAXSeypoM9AdoBQ/xQr6k26InaqRO9fRdVayMaxFgNYgsyS6FknMY8An8qVCs
- w+bRoBqWOsp99jblkTqDSmO5g+35DWoord0ZKv4T+/ZopyGZAaWzm9nDH/s7ZRto0rCf
- IjWgvPEvJBF9tON8V1HSfYZhslfbi3TXspUYN0W7jyLmp5RlhuwvJJHfslBWeNUEx6Na
- Y6jA==
-X-Gm-Message-State: AOJu0YyrUns0E7TCgZLUcGbG2hCoFQXOpFtOTdBmKPWJwihK27GDLzrG
- T/OtYRIDH0ZfcVxXyYJFxojJbq3U10opwg54fwlCIG/ZvM4H0HnztRw7jCBHARtCwNhiHZq3+Og
- yGgz29gVDhEO/8IfT0BlKdImgKXGnA4iyUdwuHxTDeIDqrBUQ4GdaCLL8EufKJyTiyMT3n3VyQm
- 8DWy/1jfI3z3mN1Faoo4sU4c0M8e8=
-X-Received: by 2002:a05:690c:4090:b0:6e2:a88b:9d89 with SMTP id
- 00721157ae682-6e2c7017ad9mr71902427b3.11.1728319992419; 
- Mon, 07 Oct 2024 09:53:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZ3yXBXMQyYij9+Y5HoAGfxtojBDYX/haJvxMtuE7/gJG/F5nZJu8J+s0gwbZkUPGniDhDvC90NQayJxiy/Ig=
-X-Received: by 2002:a05:690c:4090:b0:6e2:a88b:9d89 with SMTP id
- 00721157ae682-6e2c7017ad9mr71902227b3.11.1728319992152; Mon, 07 Oct 2024
- 09:53:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728320472; x=1728925272;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0Nh3rLqnlCA81yxEORMYBruRYvHPRurbBeEmdjQpaxs=;
+ b=N4/Cb21Sb0bA8wS1FfzOuG65dAhd6/BdLzrJlNrMyLG0+4H8QRAGqQiqLkxYrj2f8W
+ pH8DHAwoxT6WJsWzMzlGKepRptTwyzaSljwgEhfhqkgRi+lJDr10em6U0t5xSvs2qaNE
+ YcSeC/S/TRsUAVl2IfPXwJZGUFxM6KYQ4tIIVBcerFoFsJBzEHEihUmM0eL0VBI6MbAr
+ tkuAz8jkVvlgbvl89qr69Xh8H0dkJnguDL1KY4CwpQsH1qEh2XFPBv5xIXUBySqoE+d3
+ sAPeUVRR5KMhj2NeB7CTpcQlU699SBeXRECJJhPCGX9MCv5hmf3E45Of+f2I8/uZYgjK
+ Nvog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXssAhPoTj+y92APn5RD4fmmWL09iqrKtDzJ6+tc2Gh2ARvZNBiU7A+e97576UHPhfpxSER07IE8CIQ@nongnu.org
+X-Gm-Message-State: AOJu0Ywhsf8b8qiKisBJ4vKo8HJLj08dIGJS1/uQ9ctdCZIcc43FCDUg
+ UfyR7tuvLPgTGVP5FJHMGJwc3qGzAygU3RvNOccuRDkQ0AuRoexno/Rp7J6d2as=
+X-Google-Smtp-Source: AGHT+IFYx6T2YNMD/X/resq8EcNFNDn0bBKGrY2FusC4YZ9ZQZ5pWR5rcrdo/7fKF27jyPbFgD2qDg==
+X-Received: by 2002:a17:907:9490:b0:a99:63d8:a1bd with SMTP id
+ a640c23a62f3a-a9963d8a2c9mr77863966b.16.1728320471678; 
+ Mon, 07 Oct 2024 10:01:11 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a992e78498fsm397906066b.107.2024.10.07.10.01.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 10:01:11 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2BB705F796;
+ Mon,  7 Oct 2024 18:01:10 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Zheyu Ma
+ <zheyuma97@gmail.com>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH] hw/char/pl011: Use correct masks for IBRD and FBRD
+In-Reply-To: <20241007144732.2491331-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Mon, 7 Oct 2024 15:47:32 +0100")
+References: <20241007144732.2491331-1-peter.maydell@linaro.org>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Mon, 07 Oct 2024 18:01:10 +0100
+Message-ID: <87wmijvodl.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20241004124445.3802090-1-jonah.palmer@oracle.com>
- <20241004124445.3802090-2-jonah.palmer@oracle.com>
- <CAJaqyWd7c6ZU_4Hk_Wo79Ghw_LRxxjmvXUvZrASKE6WSWZcytg@mail.gmail.com>
- <e3108f34-f951-47d6-ac41-cbbc045a7bd1@oracle.com>
- <CAJaqyWcmjnPaAFGvE5=2e19wuAxOr2=AHX1y-dj70+49sdQh7Q@mail.gmail.com>
- <b229652a-f651-4ecf-adbb-d8e4a45973f4@oracle.com>
-In-Reply-To: <b229652a-f651-4ecf-adbb-d8e4a45973f4@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 7 Oct 2024 18:52:35 +0200
-Message-ID: <CAJaqyWcTwR8vsDax_KzakpBmFBq7_EMSDNyz2DAa4Ai2q3MP-Q@mail.gmail.com>
-Subject: Re: [RFC v2 1/2] vhost-vdpa: Implement IOVA->GPA tree
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com, 
- peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,112 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 7, 2024 at 5:38=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
->
->
-> On 10/7/24 9:51 AM, Eugenio Perez Martin wrote:
-> > On Fri, Oct 4, 2024 at 8:48=E2=80=AFPM Jonah Palmer <jonah.palmer@oracl=
-e.com> wrote:
-> >>
-> >>
-> >>
-> >> On 10/4/24 11:17 AM, Eugenio Perez Martin wrote:
-> >>> On Fri, Oct 4, 2024 at 2:45=E2=80=AFPM Jonah Palmer <jonah.palmer@ora=
-cle.com> wrote:
-> >>>>
-> >>>> Implements the IOVA->GPA tree for handling mapping, unmapping, and
-> >>>> translations for guest memory regions.
-> >>>>
-> >>>> When the guest has overlapping memory regions, an HVA to IOVA transl=
-ation
-> >>>> may return an incorrect IOVA when searching the IOVA->HVA tree. This=
- is
-> >>>> due to one HVA range being contained (overlapping) in another HVA ra=
-nge
-> >>>> in the IOVA->HVA tree. By creating an IOVA->GPA tree, we can use GPA=
-s to
-> >>>> translate and find the correct IOVA for guest memory regions.
-> >>>>
-> >>>
-> >>> Yes, this first patch is super close to what I meant, just one issue
-> >>> and a pair of nits here and there.
-> >>>
-> >>> I'd leave the second patch as an optimization on top, if the numbers
-> >>> prove that adding the code is worth it.
-> >>>
-> >>
-> >> Ah okay, gotcha. I also wasn't sure if what you mentioned below on the
-> >> previous series you also wanted implemented or if these would also be
-> >> optimizations on top.
-> >>
-> >> [Adding code to the vhost_iova_tree layer for handling multiple buffer=
-s
-> >> returned from translation for the memory area where each iovec covers]=
-:
-> >> ----------------------------------------------------------------------=
--
-> >> "Let's say that SVQ wants to translate the HVA range
-> >> 0xfeda0000-0xfedd0000. So it makes available for the device two
-> >> chained buffers: One with addr=3D0x1000 len=3D0x20000 and the other on=
-e
-> >> with addr=3D(0x20000c1000 len=3D0x10000).
-> >>
-> >> The VirtIO device should be able to translate these two buffers in
-> >> isolation and chain them. Not optimal but it helps to keep QEMU source
-> >> clean, as the device already must support it."
-> >>
-> >
-> > This is 100% in the device and QEMU is already able to split the
-> > buffers that way, so we don't need any change in QEMU.
-> >
-> >> [Adding a permission check to iova_tree_find_address_iterator and matc=
-h
-> >> the range by permissions]:
-> >> ----------------------------------------------------------------------=
--
-> >> "About the permissions, maybe we can make the permissions to be part o=
-f
-> >> the lookup? Instead of returning them at iova_tree_find_iova, make
-> >> them match at iova_tree_find_address_iterator."
-> >>
-> >
-> > Ouch, I forgot this part. This is a small change we also need, can you
-> > add it for the next version? Thanks for remind it!
-> >
->
-> Sure can!
->
-> I apologize for my lack of understanding on this, but for example in
-> vhost_svq_translate_addr, how do we know what the permissions are for
-> the addresses we're translating?
->
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-No need to apologize :).
-
-The calling function, vhost_svq_vring_write_descs, knows if they are
-RW (write=3Dtrue) or RO (write=3Dfalse). We need to pass the parameter to
-vhost_svq_translate_addr.
-
-> I'm not sure if this is always true or not, but if the address that
-> we're translating is backed by guest memory, then can we always say that
-> the permission for the mapping would be IOMMU_RW (since the OS needs to
-> be able to modify it)?. Likewise, for addresses backed by host-only
-> memory, can we always say that the permission for the mapping would be
-> IOMMU_RO to avoid accidental modifications by the guest?
+> In commit b88cfee90268cad we defined masks for the IBRD and FBRD
+> integer and fractional baud rate divider registers, to prevent the
+> guest from writing invalid values which could cause division-by-zero.
+> Unfortunately we got the mask values the wrong way around: the FBRD
+> register is six bits and the IBRD register is 16 bits, not
+> vice-versa.
 >
-
-Not really, there are parts of the guest memory that are RO and the
-SVQ's used ring in the host memory is RW.
-
-It should be enough to check that the write bit is enabled in the
-flags & is requested.
-
-> If so, this would mean that these mappings would never have the
-> IOMMU_NONE or IOMMU_WO permissions, right?
+> You would only run into this bug if you programmed the UART to a baud
+> rate of less than 9600, because for 9600 baud and above the IBRD
+> value will fit into 6 bits, as per the table in
+>  https://developer.arm.com/documentation/ddi0183/g/programmers-model/regi=
+ster-descriptions/fractional-baud-rate-register--uartfbrd
 >
+> The only visible effects would be that the value read back from
+> the register by the guest would be truncated, and we would
+> print an incorrect baud rate in the debug logs.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: b88cfee90268 ("hw/char/pl011: Avoid division-by-zero in pl011_get_=
+baudrate()")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2610
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-That's right.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
