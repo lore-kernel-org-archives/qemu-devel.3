@@ -4,73 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3F8CFB443
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 13:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79490CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 13:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxo1r-00074d-0u; Mon, 07 Oct 2024 09:44:03 -0400
+	id 1sxo3R-0008Qf-VC; Mon, 07 Oct 2024 09:45:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxo1o-00074N-RG
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 09:44:00 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxo1m-0004u7-JG
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 09:44:00 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2facaa16826so38279091fa.0
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 06:43:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728308635; x=1728913435; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hRKnH+GxMI/pnGkUrmSW2Za4+scqiueWs1vVnch9jTA=;
- b=AAgVVcyh0WwfkV5gbQ7YgpRTxtpFlyNa1jjqNyqV+6zLpf4oLvIRahYxgbqG8k1MsS
- TLgdE7yTL62cU7sVJv7uu7qGlTbbGthzUnlFpMiGPkHzuTxhqFsD6S+upnB2l/igiGlT
- cpLeiGBnAKyDOMhDyPFVOGs9WwWLfeuFbeeDsj+AGK9fdKdDmT4aZSgCIYv3ZOQPyn3g
- SNhUZDFx1o3HxufC8v9YU7rA2JJ9EY21e/1usd5/uDBwBcRCHeBjGsBdyvVuX/Y5XlgD
- U/KwHggRPMtyg5u29N+wLwffKTG/zT42koZIRLD6nfvncBDGo7ZV/24jjtQBGiDn7E78
- XHdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728308635; x=1728913435;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hRKnH+GxMI/pnGkUrmSW2Za4+scqiueWs1vVnch9jTA=;
- b=uX8kmWrJO1gQ/EBZU3hVWQ8/od2KTW546tF+ma/oUFO1RtLzSLQ0pf2KbwWZxm1OC8
- +Xrx7pxKdJO03IusU0taEmlMbuqmzzC6FS4LPOgkUCtCq7Whk7Ld4jLAFZhN7K4JpdUe
- 3UZFTb421cPuVpU1YO3igQd3lPFOKaqgeK9ut6hz+Mv6IfG0AjDzzF9qSis89BcH5tLb
- fi6IJUSIxIzA8g2ZWQx6DkAr87iC/5S9HrFU5LU8UjEb02hmpCQbqhZDhKhFRDQyDVsR
- +LZ3JXayfwWeThUWL0aQXuHsrauHOp0PxK5lUxS9/egDHJM1GMjBbgFi+mZSYT11wTUw
- I9CQ==
-X-Gm-Message-State: AOJu0YwIiqzozwpEBHhFzQyqWLKo3JGz8igWQ4bxBqxTKubLzTDCSO/9
- G7XZRJnwdgQC4uaz1eksOIgXxVVWUNsSmvruWXuKsXQuTGUTn4nlcW1Py2nB6V3e8TbQJTTuG66
- jFi2GZrJs+l3WdcvYWulUV2DUDCF+tcQUITXrtybu8TPlsOMb
-X-Google-Smtp-Source: AGHT+IFx31Y5SU3tVca4HZdpRuFkDooD3a2naOplDZoPICchZWnVFKdbFuLuR9v6LLgptwcNKbmR6Z7SiJZ2PvowtWM=
-X-Received: by 2002:a2e:8488:0:b0:2f6:5fa7:2640 with SMTP id
- 38308e7fff4ca-2faf3d75bbbmr45331691fa.34.1728308635093; Mon, 07 Oct 2024
- 06:43:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1sxo3Q-0008II-2z
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 09:45:40 -0400
+Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1sxo3L-0005Bv-JP
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 09:45:39 -0400
+Received: from pps.filterd (m0050096.ppops.net [127.0.0.1])
+ by m0050096.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 49778RwA022802; Mon, 7 Oct 2024 14:45:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=tCyYnKGIQTvsoSLxBCVkBRKwgssbH5BLBQlTbv/asl8=; b=bIjLUZj1ugz6
+ Aix5jqRZgA+5ZIrzicEEn1gRzryRJAkPKclrr2bN43BgY/AXilX+pJnO/UPAuDdx
+ JOEs6oH0YGxwfWrnhB5xWKggaDjXMY+jXAPNk9uTpR9i60mKiFnYWLLBHA/U3y4i
+ bxa3vFyiXqb5yT9S8kx/OoDNiA9RDQtyPSftDCnjtqLJhM1K8z71nf8SvO0e03cU
+ E5E7WLWLJLhsqDHLo9v6c/MEEVQhH7vwo4QhP8jqi5ENnQy13fBnFnKOCD7cva3r
+ B7YeBCkVv5WerO16TbzGWsTh52sQFp92RHTkNr4k07h9fzvMd4tS0YJZMaWDdkw3
+ F2ac8SIdPw==
+Received: from prod-mail-ppoint3
+ (a72-247-45-31.deploy.static.akamaitechnologies.com [72.247.45.31] (may be
+ forged))
+ by m0050096.ppops.net-00190b01. (PPS) with ESMTPS id 422xjawnm4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Oct 2024 14:45:11 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint3.akamai.com [127.0.0.1])
+ by prod-mail-ppoint3.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 497CH0Hf031322; Mon, 7 Oct 2024 09:45:11 -0400
+Received: from prod-mail-relay18.dfw02.corp.akamai.com ([172.27.165.172])
+ by prod-mail-ppoint3.akamai.com (PPS) with ESMTP id 423jbws05u-1;
+ Mon, 07 Oct 2024 09:45:10 -0400
+Received: from [100.64.0.1] (unknown [172.27.166.123])
+ by prod-mail-relay18.dfw02.corp.akamai.com (Postfix) with ESMTP id BA51358B;
+ Mon,  7 Oct 2024 13:45:08 +0000 (GMT)
+Message-ID: <856d4f0e-8742-4848-acc5-dbaa5d21c9fd@akamai.com>
+Date: Mon, 7 Oct 2024 08:45:07 -0500
 MIME-Version: 1.0
-References: <20241007115027.243425-1-thuth@redhat.com>
-In-Reply-To: <20241007115027.243425-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 7 Oct 2024 14:43:43 +0100
-Message-ID: <CAFEAcA8C1K5jXvSAf_DpSFDDzj-hDSuduCsuyLa5N2M1Vu0_kQ@mail.gmail.com>
-Subject: Re: [PULL 00/12] CI fixes and various clean-ups
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+To: Yu Zhang <yu.zhang@ionos.com>
+Cc: Sean Hefty <shefty@nvidia.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+References: <20240827165643-mutt-send-email-mst@kernel.org>
+ <027c4f24-f515-4fdb-8770-6bf2433e0f43@akamai.com>
+ <84c74f1a95a648b18c9d41b8c5ef2f60@huawei.com> <ZvQnbzV9SlXKlarV@x1n>
+ <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com> <Zvrq7nSbiLfPQoIY@x1n>
+ <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <ZvsAV0MugV85HuZf@x1n> <c24fa344-0add-477d-8ed3-bf2e91550e0b@akamai.com>
+ <Zv8P8uQmSowF8sGl@x1n> <6211c525-0b9b-4eba-ac3c-2ac796c8ec83@akamai.com>
+ <CAHEcVy7_WveokcN+3J2Qqxg8oJ1BT8sNoU2qUHeU8oZWwVyS6g@mail.gmail.com>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <CAHEcVy7_WveokcN+3J2Qqxg8oJ1BT8sNoU2qUHeU8oZWwVyS6g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-07_05,2024-10-07_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
+ definitions=main-2410070096
+X-Proofpoint-ORIG-GUID: X9dM_Xnij6bag7Prjbk1fQmRG9koYSvG
+X-Proofpoint-GUID: X9dM_Xnij6bag7Prjbk1fQmRG9koYSvG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410070097
+Received-SPF: pass client-ip=2620:100:9005:57f::1;
+ envelope-from=mgalaxy@akamai.com; helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,59 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Oct 2024 at 12:50, Thomas Huth <thuth@redhat.com> wrote:
->
-> The following changes since commit b5ab62b3c0050612c7f9b0b4baeb44ebab42775a:
->
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-04 19:28:37 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-07
->
-> for you to fetch changes up to d841f720c98475c0f67695d99f27794bde69ed6e:
->
->   tests/functional: Bump timeout of some tests (2024-10-07 13:21:41 +0200)
->
-> ----------------------------------------------------------------
-> * Mark "gluster" support as deprecated
-> * Update CI to use macOS 14 instead of 13, and add a macOS 15 job
-> * Use gitlab mirror for advent calendar test images (seems more stable)
-> * Bump timeouts of some tests
-> * Remove CRIS disassembler
-> * Some m68k and s390x cleanups with regards to load and store APIs
->
-> ----------------------------------------------------------------
+Hi,
 
-This suggests it's moving back to the gitlab mirror for the
-advent calendar tests, but one CI test still failed trying
-to access http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz
-and getting a 503 from it:
+On 10/7/24 03:47, Yu Zhang wrote:
+> !-------------------------------------------------------------------|
+>    This Message Is From an External Sender
+>    This message came from outside your organization.
+> |-------------------------------------------------------------------!
+>
+> Sure, as we talked at the KVM Forum, a possible approach is to set up
+> two VMs on a physical host, configure the SoftRoCE, and run the
+> migration test in two nested VMs to ensure that the migration data
+> traffic goes through the emulated RDMA hardware. I will continue with
+> this and let you know.
+>
+Acknowledged. Do share if you have any problems with it, like if it has 
+compatibility issues
+or if we need a different solution. We're open to change.
 
-  https://gitlab.com/qemu-project/qemu/-/jobs/8009902301
+I'm not familiar with the "current state" of this or how well it would 
+even work.
 
-The clang-system test also hit a couple of timeouts:
-  https://gitlab.com/qemu-project/qemu/-/jobs/8009902206
+- Michael
 
-61/109 qemu:qtest+qtest-alpha / qtest-alpha/qmp-cmd-test
-  TIMEOUT 60.10s killed by signal 15 SIGTERM
-93/109 qemu:qtest+qtest-arm / qtest-arm/qmp-cmd-test
-  TIMEOUT 60.04s killed by signal 15 SIGTERM
 
-which are presumably pre-existing intermittents, but I
-mention them here just FYI. Some of the other qmp-cmd-test
-runs in that job also came close to timing out:
-
-102/109 qemu:qtest+qtest-m68k / qtest-m68k/qmp-cmd-test OK 56.56s 65
-subtests passed
-105/109 qemu:qtest+qtest-mips64 / qtest-mips64/qmp-cmd-test OK 53.74s
-65 subtests passed
-106/109 qemu:qtest+qtest-s390x / qtest-s390x/qmp-cmd-test OK 45.48s 65
-subtests passed
-
-so maybe we should add it to slow_tests with a 120s
-timeout...
-
-thanks
--- PMM
+> On Fri, Oct 4, 2024 at 4:06 PM Michael Galaxy <mgalaxy@akamai.com> wrote:
+>>
+>> On 10/3/24 16:43, Peter Xu wrote:
+>>> !-------------------------------------------------------------------|
+>>>     This Message Is From an External Sender
+>>>     This message came from outside your organization.
+>>> |-------------------------------------------------------------------!
+>>>
+>>> On Thu, Oct 03, 2024 at 04:26:27PM -0500, Michael Galaxy wrote:
+>>>> What about the testing solution that I mentioned?
+>>>>
+>>>> Does that satisfy your concerns? Or is there still a gap here that needs to
+>>>> be met?
+>>> I think such testing framework would be helpful, especially if we can kick
+>>> it off in CI when preparing pull requests, then we can make sure nothing
+>>> will break RDMA easily.
+>>>
+>>> Meanwhile, we still need people committed to this and actively maintain it,
+>>> who knows the rdma code well.
+>>>
+>>> Thanks,
+>>>
+>> OK, so comments from Yu Zhang and Gonglei? Can we work up a CI test
+>> along these lines that would ensure that future RDMA breakages are
+>> detected more easily?
+>>
+>> What do you think?
+>>
+>> - Michael
+>>
 
