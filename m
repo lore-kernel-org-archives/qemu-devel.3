@@ -4,79 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60372CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 12:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B5CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 12:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxmSC-0000ct-2g; Mon, 07 Oct 2024 08:03:08 -0400
+	id 1sxmTq-0001MD-Si; Mon, 07 Oct 2024 08:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sxmS9-0000cZ-TM
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:03:05 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sxmTm-0001Lq-6e
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:04:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sxmS7-0006eG-VC
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:03:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1728302569; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Li/VUEN3zPlNzRAH4tlnx5SnXffCz1ns9k2NMgy8VcsfoP65RRmUWxDCh2aVy1M7K+KvfQ3mbnlUfNSHC+qS/3lSduHbzmYI7aZXm3xT+jGXy7mjsVpRi1nwfvarFrznzHwmK5brJFMYzFTvBp/yHg+8oYabv1iRFw6WevUa51k=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1728302569;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=B1Gy+g3lq2nTQhM4/W81FsUms6mxGfQU2IvMKOcd6PU=; 
- b=FJYAcDn2RGLSqq6TH5acYG1rKUcrVhOtlYN4au9+4rl3Ujba9hn9xX7Y8YW9QX0ry2T9y2gf5aCLp7/a3hqbd5t3YujckH3guzATlRMi/PRf+baxEQdrADoWaoxnA86OyHoFRxiB/nnsY0B4z7tY4LBaW4lWyCoR2kBcUZsCuRo=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728302569; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=B1Gy+g3lq2nTQhM4/W81FsUms6mxGfQU2IvMKOcd6PU=;
- b=KTksa60kcX7XPVvg84DHIbnnONm0P72ijLNlVmXpNECEQUK6Sm8PsweNoXWfmKuG
- 4pxKpGUvuT0ICFfA2qBcgUGdExxoe3TS33CSILdGeRPVGI5A0HDd+Zn84cgrIVr6GCd
- jTXkAJWc3dnomCTtGMf6qKSBPbUwGkN89h1PtDAc=
-Received: by mx.zohomail.com with SMTPS id 1728302567327113.37981275804145;
- Mon, 7 Oct 2024 05:02:47 -0700 (PDT)
-Message-ID: <e01ffbc1-31a2-42d9-9004-17b86462e2df@collabora.com>
-Date: Mon, 7 Oct 2024 15:02:40 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sxmTj-0006pp-E8
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 08:04:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728302681;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zDvTPML+zvPwwlzhsWYV2slbFDVNQ20yEDdY3kYFdP0=;
+ b=VuxGWWxyBRYhM4xYBfpTcv/99kh925/wbkndexBBMJIRPKh6Rt3ojSKW1IYA1+xejUA54g
+ R/RBUa+O64K/9QuHTS2Pjnkbd8P+5n7S/vcMEGb+DzOdmLj9oZRxEuiyzfz/6zAsg2IOh4
+ AJWjPJcpCLhLU0UvG8SBRQJuGtiMJ9w=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-ThhruC72OlSw6xKty5BfIQ-1; Mon, 07 Oct 2024 08:04:39 -0400
+X-MC-Unique: ThhruC72OlSw6xKty5BfIQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37cd1fb9497so2629341f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 05:04:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728302677; x=1728907477;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zDvTPML+zvPwwlzhsWYV2slbFDVNQ20yEDdY3kYFdP0=;
+ b=dRPO8+zBb+JWV9m3xXgb2UWRfG00nZgmfvMMpW08bolZgeVPUK89l4SRLPDDRhKsIu
+ HyXRUDVKG6TTMvL5Be940KNmXges0ZBWP/BBe8P5yfbuPUrZBuR9b0jdFCDwCCO17yW1
+ B4gvpAy1TOEDNfiVC540Ha3zSpwqMrL2yPGSG34k2L82SVQtHZaPBsIRx01SoCr70IPK
+ jhcS+G7X6po955YcxHVGhue20QarZPRCy2TNogiuFyOtv2yv+mBtmBpjouCEric775jv
+ cWQYfoNF4xnMFe28umbbVfUQN5bdbIjCnh8uI76s9LHLkvUWV328ETyP5+znx2m84udA
+ Cz7w==
+X-Gm-Message-State: AOJu0YxGiq1VhPvBlOabnBFez5mP4fPvD+ejEPf/6OyskVCqHwTkhmXb
+ 8fInoQihk8eU+tsvOb7AIDrk99IosJ/mL0l+C0bKlSwD6tVmuHP1ljNcGWooThSv0QWyHaFDcmk
+ bw0G0HPx2S7aAUjB5gel+sQZVILOAo93X8EnH5sBoJkxVmeuwzc4w8GCQPgmJ
+X-Received: by 2002:adf:f185:0:b0:374:c64e:3ff1 with SMTP id
+ ffacd0b85a97d-37d049f8707mr9451158f8f.17.1728302677456; 
+ Mon, 07 Oct 2024 05:04:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCeS+XO3+H+I4899VqcnwDvTAc57rN7bWi4i12VZUxB31J20H/VOnffR8QTTg+a/en+AmzUw==
+X-Received: by 2002:adf:f185:0:b0:374:c64e:3ff1 with SMTP id
+ ffacd0b85a97d-37d049f8707mr9451136f8f.17.1728302677009; 
+ Mon, 07 Oct 2024 05:04:37 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d1691a4absm5587555f8f.29.2024.10.07.05.04.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 05:04:36 -0700 (PDT)
+Date: Mon, 7 Oct 2024 14:04:34 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs/system/cpu-hotplug: Update example's
+ socket-id/core-id
+Message-ID: <20241007140434.3c1a064c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <CAFEAcA9weMO1Djm16fQB4JBDUCggXnOfzZ4cXHjqeMseXQRyEw@mail.gmail.com>
+References: <20240819144303.37852-1-peter.maydell@linaro.org>
+ <20240910110344.10e4805e@imammedo.users.ipa.redhat.com>
+ <CAFEAcA_Rjiy1so28OVPpL=+++XuU+gSXhn-v_WHMcpc_wa_xMw@mail.gmail.com>
+ <CAFEAcA94EdUOOk71nv4oFRJXNBM=62FCD9dfwVSWMS-VM_OZtw@mail.gmail.com>
+ <20240920124551.56f1e832@imammedo.users.ipa.redhat.com>
+ <CAFEAcA9weMO1Djm16fQB4JBDUCggXnOfzZ4cXHjqeMseXQRyEw@mail.gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/6] Support virtio-gpu DRM native context
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>
-References: <20241006232350.3198759-1-dmitry.osipenko@collabora.com>
- <1bd2bf2c-41a8-40f4-a086-17e7fbb21682@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <1bd2bf2c-41a8-40f4-a086-17e7fbb21682@daynix.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -95,28 +108,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/24 12:48, Akihiko Odaki wrote:
-> On 2024/10/07 8:23, Dmitry Osipenko wrote:
->> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
->> It's based on the pending Venus v17 patches [1] that bring host blobs
->> support to virtio-gpu-gl device.
-> 
-> Hi Dmitry,
-> 
-> Thank you for submitting this series.
-> 
->>
->> [1]
->> https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osipenko@collabora.com/
-> 
-> Please use Based-on: tag.
-> For details, see: docs/devel/submitting-a-patch.rst
+On Thu, 3 Oct 2024 15:54:45 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Thanks for a very quick review! All the comments are good to me, will
-address them in v2.
+> On Fri, 20 Sept 2024 at 11:45, Igor Mammedov <imammedo@redhat.com> wrote:
+> >
+> > On Thu, 19 Sep 2024 13:34:54 +0100
+> > Peter Maydell <peter.maydell@linaro.org> wrote:
+> >  
+> > > On Tue, 10 Sept 2024 at 10:38, Peter Maydell <peter.maydell@linaro.org> wrote:  
+> > > >
+> > > > On Tue, 10 Sept 2024 at 10:03, Igor Mammedov <imammedo@redhat.com> wrote:  
+> > > > >
+> > > > > On Mon, 19 Aug 2024 15:43:03 +0100
+> > > > > Peter Maydell <peter.maydell@linaro.org> wrote:  
+> > > > > > @@ -83,34 +83,32 @@ vCPU hotplug
+> > > > > >
+> > > > > >        (QEMU) query-cpus-fast
+> > > > > >        {
+> > > > > > -          "execute": "query-cpus-fast",
+> > > > > >            "arguments": {}
+> > > > > > +          "execute": "query-cpus-fast",
+> > > > > >        }
+> > > > > >        {
+> > > > > >            "return": [
+> > > > > >                {
+> > > > > > -                  "qom-path": "/machine/unattached/device[0]",
+> > > > > > -                  "target": "x86_64",
+> > > > > > -                  "thread-id": 11534,
+> > > > > >                    "cpu-index": 0,
+> > > > > >                    "props": {
+> > > > > > -                      "socket-id": 0,
+> > > > > >                        "core-id": 0,
+> > > > > > +                      "socket-id": 0,
+> > > > > >                        "thread-id": 0
+> > > > > >                    },
+> > > > > > -                  "arch": "x86"
+> > > > > > +                  "qom-path": "/machine/unattached/device[0]",
+> > > > > > +                  "target": "x86_64",
+> > > > > > +                  "thread-id": 28957
+> > > > > >                },
+> > > > > >                {
+> > > > > > -                  "qom-path": "/machine/peripheral/cpu-2",
+> > > > > > -                  "target": "x86_64",
+> > > > > > -                  "thread-id": 12106,
+> > > > > >                    "cpu-index": 1,
+> > > > > >                    "props": {
+> > > > > > -                      "socket-id": 1,
+> > > > > > -                      "core-id": 0,
+> > > > > > +                      "core-id": 1,
+> > > > > > +                      "socket-id": 0,
+> > > > > >                        "thread-id": 0
+> > > > > >                    },
+> > > > > > -                  "arch": "x86"
+> > > > > > +                  "qom-path": "/machine/peripheral/cpu-2",
+> > > > > > +                  "target": "x86_64",
+> > > > > > +                  "thread-id": 29095
+> > > > > >                }  
+> > > > >
+> > > > > beside reordering, which seems fine, this hunk also introduces target change
+> > > > > perhaps a separate patch for that?  
+> > > >
+> > > > What target change? It all says "target": "x86_64" both before
+> > > > and after.  
+> >
+> > my mistake,
+> > I should've said  '"arch": "x86"' instead, which is gone after the patch  
+> 
+> This is because the "arch" output member was removed
+> from the query-cpus-fast output in QEMU 6.0. If we
+> mention this also in the commit message, is that OK?
+> 
+> ======
+> docs/system/cpu-hotplug: Update example to match current QEMU
+> 
+> The example of how to do vCPU hotplug and hot-unlpug in the
+> cpu-hotplug documentation no longer works, because the way
+> we allocate socket-id and core-id to CPUs by default has
+> changed at some point. The output also no longer matches what
+> current QEMU produces in some more cosmetic ways.
+> 
+> Update the example to match current QEMU. The differences are:
+>  * the second CPU is now socket-id=0 core-id=1,
+>    not socket-id=1 core-id=0
+>  * the order of fields from the qmp_shell is now in
+>    alphabetical order
+>  * the "arch" member is no longer present in the query-cpus-fast
+>    output (it was removed in QEMU 6.0)
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ======
 
--- 
-Best regards,
-Dmitry
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+
+> 
+> If that seems OK to you I'll send out a v2 with the updated
+> commit message and the fix to the device_add line.
+> 
+> thanks
+> -- PMM
+> 
 
 
