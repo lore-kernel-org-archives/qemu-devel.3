@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C19CFB449
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1921CFB44C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqiL-0008J1-Ny; Mon, 07 Oct 2024 12:36:05 -0400
+	id 1sxqir-0008N3-2q; Mon, 07 Oct 2024 12:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxqiC-0008ID-5N
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:35:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqio-0008Md-St
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:36:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxqi7-0000OV-PP
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:35:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqin-0000SZ-Ar
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:36:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728318950;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=kHD3iE/R0F7OoFYcOqlWl6V6vI5EzHdLStBeQNp5F3U=;
- b=Yl3CBcz11mzBYZCEDkCvZmK4bVzyKiTE+7EATbOrmDt2yCjhELZVjgbZKcgrHVLe5jM/Tb
- Wht6kOVXD5xbyrjOQhA1jji2QWZvMnFVVEFvyYmL09FlsS0pyJh/RJIEqRCQFDPU8LoGfc
- +GorebxHfc24If3nd8Ls3n4wWDNPiXg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-D3ceVTUVN9eeUCnhKQPLYg-1; Mon,
- 07 Oct 2024 12:35:46 -0400
-X-MC-Unique: D3ceVTUVN9eeUCnhKQPLYg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1222A1955D47; Mon,  7 Oct 2024 16:35:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF9A71956088; Mon,  7 Oct 2024 16:35:41 +0000 (UTC)
-Date: Mon, 7 Oct 2024 17:35:37 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ s=mimecast20190719; t=1728318991;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yV/vmXewCSa/0YZ/uGjSrTlYwYs/YpIyYd7Dur602Xs=;
+ b=JVU3aXdBA5dmgrqUhrIKPAOWVevt786csoHh4aIKbKy7zLzU3Xr10MLcVwG4BRY1fDHjv3
+ 3QZWdNjuigRTjrQmlUFdUKWLbboGfejrtL6N3TKnAoIH1fkwg8zH+EFNv/aLse78rhev39
+ 0UeKCbkCU2vtfRE5rDHtgZPr5VBbjW0=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-694-xcVQlUveMLe--L03H7ElLA-1; Mon, 07 Oct 2024 12:36:30 -0400
+X-MC-Unique: xcVQlUveMLe--L03H7ElLA-1
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-8324396d0abso409384339f.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:36:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728318989; x=1728923789;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yV/vmXewCSa/0YZ/uGjSrTlYwYs/YpIyYd7Dur602Xs=;
+ b=rLbQbfT6ZAM2Ci0Z7VQg3jmbeT5UrgQgH6fXN+EpxjsbCjzyguC9BE++PiLR3SHM6E
+ R5srAM8qVFs/kSTVb28ZN44ifHRjWqFY+JPJNTSVGg34gWjFlHmbsoUlPpcGVYhTxP4j
+ jXvriAp3KNTReTs5NOQeIXKRuzyboBxD6GGmz9g5JH7CfantMxNV8wrXUrUYiWN0APvk
+ MgSmk7wEuaaT+c+3HF5pC+rS9077kH3Lnxiu1BkcEj75QohjN8qaiRGL7qiPof5bo0DK
+ mFnR9gnSzYDyDAYtt+t4/c4tYNF/7gFdfAM+StD9pPvok4pa413WqVnloXZmyDCzA6bN
+ ynXA==
+X-Gm-Message-State: AOJu0YxZqlLw47V1AIzIeES6eNbFQxPKjHTnwlMquuU4hD3SdmzVF1SG
+ zfd2O5ayKDGFUyMRJ7P4fwjzpkuGGGuAhLpdxqPPksiY8lxQEUxt3tE/rqqBwGsG2crRHSi8qV9
+ +nXXfYHWaRpwnDQkwQydJNknd8D/Rb0g6Py6cwWmAlXYVabriKEzT
+X-Received: by 2002:a05:6602:1694:b0:82a:1f14:997f with SMTP id
+ ca18e2360f4ac-834f7c73b46mr1310930839f.4.1728318989507; 
+ Mon, 07 Oct 2024 09:36:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFa83r7hKnal9H/Bx5xI/iDUV2C/L8gZRMfl8R1msGUIC66tdTBc+WtfbMQYuvMdqYWOyGGxg==
+X-Received: by 2002:a05:6602:1694:b0:82a:1f14:997f with SMTP id
+ ca18e2360f4ac-834f7c73b46mr1310928239f.4.1728318989130; 
+ Mon, 07 Oct 2024 09:36:29 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-83503a74e97sm132754839f.2.2024.10.07.09.36.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 09:36:28 -0700 (PDT)
+Date: Mon, 7 Oct 2024 12:36:26 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 07/13] migration: SCM_RIGHTS for QEMUFile
-Message-ID: <ZwQN2YoMWNTMdop3@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 08/13] migration: VMSTATE_FD
+Message-ID: <ZwQOChgaKst9uCZn@x1n>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-8-git-send-email-steven.sistare@oracle.com>
- <ZwQG_dvmTFFA2Xom@x1n>
+ <1727725244-105198-9-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZwQG_dvmTFFA2Xom@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <1727725244-105198-9-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,174 +103,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 07, 2024 at 12:06:21PM -0400, Peter Xu wrote:
-> On Mon, Sep 30, 2024 at 12:40:38PM -0700, Steve Sistare wrote:
-> > Define functions to put/get file descriptors to/from a QEMUFile, for qio
-> > channels that support SCM_RIGHTS.  Maintain ordering such that
-> >   put(A), put(fd), put(B)
-> > followed by
-> >   get(A), get(fd), get(B)
-> > always succeeds.  Other get orderings may succeed but are not guaranteed.
-> > 
-> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > ---
-> >  migration/qemu-file.c  | 83 +++++++++++++++++++++++++++++++++++++++++++++++---
-> >  migration/qemu-file.h  |  2 ++
-> >  migration/trace-events |  2 ++
-> >  3 files changed, 83 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-> > index b6d2f58..7f951ab 100644
-> > --- a/migration/qemu-file.c
-> > +++ b/migration/qemu-file.c
-> > @@ -37,6 +37,11 @@
-> >  #define IO_BUF_SIZE 32768
-> >  #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
-> >  
-> > +typedef struct FdEntry {
-> > +    QTAILQ_ENTRY(FdEntry) entry;
-> > +    int fd;
-> > +} FdEntry;
-> > +
-> >  struct QEMUFile {
-> >      QIOChannel *ioc;
-> >      bool is_writable;
-> > @@ -51,6 +56,9 @@ struct QEMUFile {
-> >  
-> >      int last_error;
-> >      Error *last_error_obj;
-> > +
-> > +    bool fd_pass;
-> > +    QTAILQ_HEAD(, FdEntry) fds;
-> >  };
-> >  
-> >  /*
-> > @@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
-> >      object_ref(ioc);
-> >      f->ioc = ioc;
-> >      f->is_writable = is_writable;
-> > +    f->fd_pass = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
-> > +    QTAILQ_INIT(&f->fds);
-> >  
-> >      return f;
-> >  }
-> > @@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-> >      int len;
-> >      int pending;
-> >      Error *local_error = NULL;
-> > +    g_autofree int *fds = NULL;
-> > +    size_t nfd = 0;
-> > +    int **pfds = f->fd_pass ? &fds : NULL;
-> > +    size_t *pnfd = f->fd_pass ? &nfd : NULL;
-> >  
-> >      assert(!qemu_file_is_writable(f));
-> >  
-> > @@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-> >      }
-> >  
-> >      do {
-> > -        len = qio_channel_read(f->ioc,
-> > -                               (char *)f->buf + pending,
-> > -                               IO_BUF_SIZE - pending,
-> > -                               &local_error);
-> > +        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
-> > +        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
-> > +                                     &local_error);
-> >          if (len == QIO_CHANNEL_ERR_BLOCK) {
-> >              if (qemu_in_coroutine()) {
-> >                  qio_channel_yield(f->ioc, G_IO_IN);
-> > @@ -348,9 +361,65 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
-> >          qemu_file_set_error_obj(f, len, local_error);
-> >      }
-> >  
-> > +    for (int i = 0; i < nfd; i++) {
-> > +        FdEntry *fde = g_new0(FdEntry, 1);
-> > +        fde->fd = fds[i];
-> > +        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
-> > +    }
-> > +
-> >      return len;
-> >  }
-> >  
-> > +int qemu_file_put_fd(QEMUFile *f, int fd)
-> > +{
-> > +    int ret = 0;
-> > +    QIOChannel *ioc = qemu_file_get_ioc(f);
-> > +    Error *err = NULL;
-> > +    struct iovec iov = { (void *)" ", 1 };
-> > +
-> > +    /*
-> > +     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
-> > +     * fail with a len=0 error.  Flush first to maintain ordering wrt other
-> > +     * data.
-> > +     */
-> > +
-> > +    qemu_fflush(f);
-> > +    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
-> > +        error_report_err(error_copy(err));
-> > +        qemu_file_set_error_obj(f, -EIO, err);
-> > +        ret = -1;
-> > +    }
-> > +    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
-> > +    return ret;
-> > +}
-> > +
-> > +int qemu_file_get_fd(QEMUFile *f)
-> > +{
-> > +    int fd = -1;
-> > +    FdEntry *fde;
-> > +
-> > +    if (!f->fd_pass) {
-> > +        Error *err = NULL;
-> > +        error_setg(&err, "%s does not support fd passing", f->ioc->name);
-> > +        error_report_err(error_copy(err));
-> > +        qemu_file_set_error_obj(f, -EIO, err);
-> > +        goto out;
-> > +    }
-> > +
-> > +    /* Force the dummy byte and its fd passenger to appear. */
-> > +    qemu_peek_byte(f, 0);
-> > +
-> > +    fde = QTAILQ_FIRST(&f->fds);
-> > +    if (fde) {
-> > +        qemu_get_byte(f);       /* Drop the dummy byte */
+On Mon, Sep 30, 2024 at 12:40:39PM -0700, Steve Sistare wrote:
+> Define VMSTATE_FD for declaring a file descriptor field in a
+> VMStateDescription.
 > 
-> Can we still try to get rid of this magical byte?
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  include/migration/vmstate.h |  9 +++++++++
+>  migration/vmstate-types.c   | 32 ++++++++++++++++++++++++++++++++
+>  2 files changed, 41 insertions(+)
 > 
-> Ideally this function should check for no byte but f->fds bening non-empty,
-> if it is it could invoke qemu_fill_buffer(). OTOH, qemu_fill_buffer() needs
-> to take len==0&&nfds!=0 as legal.  Would that work?
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index f313f2f..a1dfab4 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -230,6 +230,7 @@ extern const VMStateInfo vmstate_info_uint8;
+>  extern const VMStateInfo vmstate_info_uint16;
+>  extern const VMStateInfo vmstate_info_uint32;
+>  extern const VMStateInfo vmstate_info_uint64;
+> +extern const VMStateInfo vmstate_info_fd;
+>  
+>  /** Put this in the stream when migrating a null pointer.*/
+>  #define VMS_NULLPTR_MARKER (0x30U) /* '0' */
+> @@ -902,6 +903,9 @@ extern const VMStateInfo vmstate_info_qlist;
+>  #define VMSTATE_UINT64_V(_f, _s, _v)                                  \
+>      VMSTATE_SINGLE(_f, _s, _v, vmstate_info_uint64, uint64_t)
+>  
+> +#define VMSTATE_FD_V(_f, _s, _v)                                  \
+> +    VMSTATE_SINGLE(_f, _s, _v, vmstate_info_fd, int32_t)
+> +
+>  #ifdef CONFIG_LINUX
+>  
+>  #define VMSTATE_U8_V(_f, _s, _v)                                   \
+> @@ -936,6 +940,9 @@ extern const VMStateInfo vmstate_info_qlist;
+>  #define VMSTATE_UINT64(_f, _s)                                        \
+>      VMSTATE_UINT64_V(_f, _s, 0)
+>  
+> +#define VMSTATE_FD(_f, _s)                                            \
+> +    VMSTATE_FD_V(_f, _s, 0)
+> +
+>  #ifdef CONFIG_LINUX
+>  
+>  #define VMSTATE_U8(_f, _s)                                         \
+> @@ -1009,6 +1016,8 @@ extern const VMStateInfo vmstate_info_qlist;
+>  #define VMSTATE_UINT64_TEST(_f, _s, _t)                                  \
+>      VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_uint64, uint64_t)
+>  
+> +#define VMSTATE_FD_TEST(_f, _s, _t)                                            \
+> +    VMSTATE_SINGLE_TEST(_f, _s, _t, 0, vmstate_info_fd, int32_t)
+>  
+>  #define VMSTATE_TIMER_PTR_TEST(_f, _s, _test)                             \
+>      VMSTATE_POINTER_TEST(_f, _s, _test, vmstate_info_timer, QEMUTimer *)
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index e83bfcc..6e45a4a 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -314,6 +314,38 @@ const VMStateInfo vmstate_info_uint64 = {
+>      .put  = put_uint64,
+>  };
+>  
+> +/* File descriptor communicated via SCM_RIGHTS */
+> +
+> +static int get_fd(QEMUFile *f, void *pv, size_t size,
+> +                  const VMStateField *field)
+> +{
+> +    int32_t *v = pv;
+> +    qemu_get_sbe32s(f, v);
 
-When passing ancilliary data with sendmsg/recvmsg, on Linux at least,
-it is required that there is at least 1 byte of data present.
+Why we need to send/recv the fd integer alone?  Can't that change anyway
+across migration?  What happens if we drop this (and the put side)?
 
-See 'man 7 unix':
+> +    if (*v < 0) {
+> +        return 0;
+> +    }
+> +    *v = qemu_file_get_fd(f);
+> +    return 0;
+> +}
+> +
+> +static int put_fd(QEMUFile *f, void *pv, size_t size,
+> +                  const VMStateField *field, JSONWriter *vmdesc)
+> +{
+> +    int32_t *v = pv;
+> +
+> +    qemu_put_sbe32s(f, v);
+> +    if (*v < 0) {
+> +        return 0;
+> +    }
+> +    return qemu_file_put_fd(f, *v);
+> +}
+> +
+> +const VMStateInfo vmstate_info_fd = {
+> +    .name = "fd",
+> +    .get  = get_fd,
+> +    .put  = put_fd,
+> +};
+> +
+>  static int get_nullptr(QEMUFile *f, void *pv, size_t size,
+>                         const VMStateField *field)
+>  
+> -- 
+> 1.8.3.1
+> 
 
-[quote]
-   At  least  one  byte  of real data should be sent when
-   sending ancillary data.  On Linux, this is required to
-   successfully send ancillary data over  a  UNIX  domain
-   stream  socket.   When  sending  ancillary data over a
-   UNIX domain datagram socket, it is  not  necessary  on
-   Linux  to  send  any accompanying real data.  However,
-   portable applications should also include at least one
-   byte of real data when sending ancillary data  over  a
-   datagram socket.
-[/quote]
-
-So if your protocol doesn't already have a convenient bit of real data to
-attach the SCM_RIGHTS data to, it is common practice to send a single dummy
-data byte that is discarded.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
