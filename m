@@ -4,101 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9E6CFB448
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042BACFB446
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxppP-0002hE-AP; Mon, 07 Oct 2024 11:39:19 -0400
+	id 1sxpt5-0003k3-N0; Mon, 07 Oct 2024 11:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sxppC-0002Kw-ME; Mon, 07 Oct 2024 11:39:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sxppA-0001WP-Ux; Mon, 07 Oct 2024 11:39:06 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497CPN2W006105;
- Mon, 7 Oct 2024 15:38:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- Wazm2HVIkNqa3GdjwEhQ4FCnD6IkWo0bsxTcvLiNHSM=; b=DRTNLvIQ2W5b1zfj
- jcov7z1rWWdGLhRsUhySLAN10z6FLtA5tQPgBlA8CpcABRKj3SQAbn3Axo+JZC+Q
- JXkapsA6BYd3rb2BAiscYbOQFFkO5CKhe6CHTaL7YJ0tvxZ1Fkny9nV8cm7TxeD2
- 1E90fLi08FGL3dv1MGppxAJ3yp7xzes9uSoV2va051BG0dfaKaT0p44P5npfbW6g
- 3rtQWDmeaCCJjv4NGJdNe8CeE9WnyFUz1B01/OJK1+SiFzZAlSDXUtt5rZ6MWBPh
- ELAfWM34jirMl2MYRoG4lLVXbYk8F3NTO9vZjj7Y2bLbU68Ckn/CFQSydUTYR9wE
- KSRwyw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424fmph2qp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Oct 2024 15:38:56 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 497FTmAh030043;
- Mon, 7 Oct 2024 15:38:55 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424fmph2qk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Oct 2024 15:38:55 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497EBbDP030152;
- Mon, 7 Oct 2024 15:38:54 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423gsmfepv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Oct 2024 15:38:54 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 497Fcqh534538228
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 7 Oct 2024 15:38:52 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 621192004F;
- Mon,  7 Oct 2024 15:38:52 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6CB0520040;
- Mon,  7 Oct 2024 15:38:51 +0000 (GMT)
-Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  7 Oct 2024 15:38:51 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
-Subject: [PATCH v3 06/14] ppc/spapr: remove deprecated machine pseries-2.6
-Date: Mon,  7 Oct 2024 21:08:30 +0530
-Message-ID: <20241007153838.1085522-7-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241007153838.1085522-1-harshpb@linux.ibm.com>
-References: <20241007153838.1085522-1-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sxpt3-0003jr-MD
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:43:05 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sxpt1-000296-N8
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:43:05 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fabfc06de3so49658811fa.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 08:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728315781; x=1728920581; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cpMX1eumT+9vHxAImP8gJlIeH1i2TPrcR6wzeFPuFJM=;
+ b=pbPIft4COtBWwxkYyId5hNrp5dVD01/ol6i64PMNR1Eaytav8KGBqUUuxNyC4EPHay
+ VPa8oLqeIpfV3hmtRdya32OzGWlRp03hn+xsWm+/fHLusvTG8unWVjZVtAgZ+RndVwTY
+ yRJu2tB/KjHn/iDxrsZYf12CiTvCSK1K123KtIHxX8edd3P17UQVisPMeClrBHHagLzr
+ 9AQUpYzhwrFD+ZAcf2frPDTBeSQjm8CwpHJRW074iHA4KnfSpnr1TDJ40kUjY8SYL2vq
+ QTE0eNvxlo3vNvYjYPQgcU3nyBuwLhh9TsZrbAausFEW5av0I10Qt8nU/hwDMmzng46b
+ W8JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728315781; x=1728920581;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cpMX1eumT+9vHxAImP8gJlIeH1i2TPrcR6wzeFPuFJM=;
+ b=hTGtloeUVZRdvegCc0bA1p5fVFwGa45UamBkjNHTi+CQ7N1YLFcYG1ZKzkZ24yu3Zy
+ HlZvC1Qnpuqns2RSaL4IEJj7CSQvubK4SEav5reMbPWeHn3iyG29rvqmT1cvBKnkj6Ev
+ vvN6nyMd95noiecJBCKuaigX3hpqKGNX7LbemqoyGRIpc/LTiizpPwDuaL1kDnxeMMfr
+ N/CD5EYV85mnBvlPLVL/KBf8e4kVq/3DIQ67n9TpvSSFshW/OdbWpewbvWoKTH3PzbrM
+ 24QynSysenaMkZw9twURYQDX61QMlITd5ZK1H4O0DqpXd8ePoxgnpOXkeeqxSOeaOHE1
+ 1LzQ==
+X-Gm-Message-State: AOJu0YwcPo7F93FuCfa2lLKDxleYXD1DF97NpQssFhyUoGWw3t1y5HON
+ ZAXX2H3r6CUsZAl9ZLngwh4CBhJTeHwnr6OVGe/UKX6ic54Lk9PZxd2nzVwOFiS5T0YD/sG9RS3
+ /8Lt8enRosFIfZs9mq5AYVtvhPUGZ8C75BwcIzA==
+X-Google-Smtp-Source: AGHT+IETk110tVG61E3F4FABrVSMPupalOBdEBJHK8o1Bqxb8M7h2LJ4plW2qf4888jIdIKNQ+CkKsjEM2CDkn/sJBA=
+X-Received: by 2002:a2e:4e02:0:b0:2f5:2e2:eadf with SMTP id
+ 38308e7fff4ca-2faf3c1c87fmr45497171fa.10.1728315780966; Mon, 07 Oct 2024
+ 08:43:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: uwu3X4JrINfvc8Exr0kg6i-l1pfBrtSQ
-X-Proofpoint-ORIG-GUID: 8DVxEsariTIAxB5eOJS6WaDAYAhHRKd7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-07_08,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- lowpriorityscore=0 mlxscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- phishscore=0 impostorscore=0 adultscore=0 mlxlogscore=916
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410070108
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20241003185655.1480819-1-edgar.iglesias@gmail.com>
+ <20241003185655.1480819-3-edgar.iglesias@gmail.com>
+In-Reply-To: <20241003185655.1480819-3-edgar.iglesias@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 7 Oct 2024 16:42:49 +0100
+Message-ID: <CAFEAcA9SgThjVW=VY_ZeKZh0bAe+rbTReK00DAQEXgMwD8cNqQ@mail.gmail.com>
+Subject: Re: [PULL v2 2/5] hw/xen: Expose handle_bufioreq in xen_register_ioreq
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
+ paul@xen.org, edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,47 +93,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
-deprecated with reasons mentioned in its commit log.
-Removing pseries-2.6 specific code with this patch for now.
+On Thu, 3 Oct 2024 at 19:57, Edgar E. Iglesias <edgar.iglesias@gmail.com> wrote:
+>
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>
+> Expose handle_bufioreq in xen_register_ioreq().
+> This is to allow machines to enable or disable buffered ioreqs.
+>
+> No functional change since all callers still set it to
+> HVM_IOREQSRV_BUFIOREQ_ATOMIC.
+>
+> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- hw/ppc/spapr.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+Hi; Coverity has noticed a problem (CID 1563383) with this change:
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index f63843d107..a9c988b8f6 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -5278,24 +5278,6 @@ static void spapr_machine_2_7_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(2, 7);
- 
--/*
-- * pseries-2.6
-- */
--
--static void spapr_machine_2_6_class_options(MachineClass *mc)
--{
--    static GlobalProperty compat[] = {
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "ddw", "off" },
--    };
--
--    spapr_machine_2_7_class_options(mc);
--    mc->has_hotpluggable_cpus = false;
--    compat_props_add(mc->compat_props, hw_compat_2_6, hw_compat_2_6_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--}
--
--DEFINE_SPAPR_MACHINE(2, 6);
--
- static void spapr_machine_register_types(void)
- {
-     type_register_static(&spapr_machine_info);
--- 
-2.45.2
+> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> index 3a9d6f981b..7d2b72853b 100644
+> --- a/hw/xen/xen-hvm-common.c
+> +++ b/hw/xen/xen-hvm-common.c
+> @@ -667,6 +667,8 @@ static int xen_map_ioreq_server(XenIOState *state)
+>      xen_pfn_t ioreq_pfn;
+>      xen_pfn_t bufioreq_pfn;
+>      evtchn_port_t bufioreq_evtchn;
 
+In this function bufioreq_evtchn is declared uninitialized...
+
+> +    unsigned long num_frames = 1;
+> +    unsigned long frame = 1;
+>      int rc;
+>
+>      /*
+> @@ -675,59 +677,78 @@ static int xen_map_ioreq_server(XenIOState *state)
+>       */
+>      QEMU_BUILD_BUG_ON(XENMEM_resource_ioreq_server_frame_bufioreq != 0);
+>      QEMU_BUILD_BUG_ON(XENMEM_resource_ioreq_server_frame_ioreq(0) != 1);
+> +
+> +    if (state->has_bufioreq) {
+> +        frame = 0;
+> +        num_frames = 2;
+> +    }
+>      state->fres = xenforeignmemory_map_resource(xen_fmem, xen_domid,
+>                                           XENMEM_resource_ioreq_server,
+> -                                         state->ioservid, 0, 2,
+> +                                         state->ioservid,
+> +                                         frame, num_frames,
+>                                           &addr,
+>                                           PROT_READ | PROT_WRITE, 0);
+>      if (state->fres != NULL) {
+>          trace_xen_map_resource_ioreq(state->ioservid, addr);
+> -        state->buffered_io_page = addr;
+> -        state->shared_page = addr + XC_PAGE_SIZE;
+> +        state->shared_page = addr;
+> +        if (state->has_bufioreq) {
+> +            state->buffered_io_page = addr;
+> +            state->shared_page = addr + XC_PAGE_SIZE;
+> +        }
+>      } else if (errno != EOPNOTSUPP) {
+>          error_report("failed to map ioreq server resources: error %d handle=%p",
+>                       errno, xen_xc);
+>          return -1;
+>      }
+>
+> -    rc = xen_get_ioreq_server_info(xen_domid, state->ioservid,
+> -                                   (state->shared_page == NULL) ?
+> -                                   &ioreq_pfn : NULL,
+> -                                   (state->buffered_io_page == NULL) ?
+> -                                   &bufioreq_pfn : NULL,
+> -                                   &bufioreq_evtchn);
+
+...which was OK prior to this change, because (ignoring the
+early-exit case) we would always pass through this function
+call, which initializes bufioreq_evtchn...
+
+> -    if (rc < 0) {
+> -        error_report("failed to get ioreq server info: error %d handle=%p",
+> -                     errno, xen_xc);
+> -        return rc;
+> -    }
+> +    /*
+> +     * If we fail to map the shared page with xenforeignmemory_map_resource()
+> +     * or if we're using buffered ioreqs, we need xen_get_ioreq_server_info()
+> +     * to provide the the addresses to map the shared page and/or to get the
+> +     * event-channel port for buffered ioreqs.
+> +     */
+> +    if (state->shared_page == NULL || state->has_bufioreq) {
+> +        rc = xen_get_ioreq_server_info(xen_domid, state->ioservid,
+> +                                       (state->shared_page == NULL) ?
+> +                                       &ioreq_pfn : NULL,
+> +                                       (state->has_bufioreq &&
+> +                                        state->buffered_io_page == NULL) ?
+> +                                       &bufioreq_pfn : NULL,
+> +                                       &bufioreq_evtchn);
+
+...but now the initialization has moved inside an if() so it only
+happens under certain conditions...
+
+> +        if (rc < 0) {
+> +            error_report("failed to get ioreq server info: error %d handle=%p",
+> +                         errno, xen_xc);
+> +            return rc;
+> +        }
+>
+> -    if (state->shared_page == NULL) {
+> -        trace_xen_map_ioreq_server_shared_page(ioreq_pfn);
+> +        if (state->shared_page == NULL) {
+> +            trace_xen_map_ioreq_server_shared_page(ioreq_pfn);
+>
+> -        state->shared_page = xenforeignmemory_map(xen_fmem, xen_domid,
+> -                                                  PROT_READ | PROT_WRITE,
+> -                                                  1, &ioreq_pfn, NULL);
+> +            state->shared_page = xenforeignmemory_map(xen_fmem, xen_domid,
+> +                                                      PROT_READ | PROT_WRITE,
+> +                                                      1, &ioreq_pfn, NULL);
+> +        }
+>          if (state->shared_page == NULL) {
+>              error_report("map shared IO page returned error %d handle=%p",
+>                           errno, xen_xc);
+>          }
+> -    }
+>
+> -    if (state->buffered_io_page == NULL) {
+> -        trace_xen_map_ioreq_server_buffered_io_page(bufioreq_pfn);
+> +        if (state->has_bufioreq && state->buffered_io_page == NULL) {
+> +            trace_xen_map_ioreq_server_buffered_io_page(bufioreq_pfn);
+>
+> -        state->buffered_io_page = xenforeignmemory_map(xen_fmem, xen_domid,
+> -                                                       PROT_READ | PROT_WRITE,
+> -                                                       1, &bufioreq_pfn,
+> -                                                       NULL);
+> -        if (state->buffered_io_page == NULL) {
+> -            error_report("map buffered IO page returned error %d", errno);
+> -            return -1;
+> +            state->buffered_io_page = xenforeignmemory_map(xen_fmem, xen_domid,
+> +                                                        PROT_READ | PROT_WRITE,
+> +                                                        1, &bufioreq_pfn,
+> +                                                        NULL);
+> +            if (state->buffered_io_page == NULL) {
+> +                error_report("map buffered IO page returned error %d", errno);
+> +                return -1;
+> +            }
+>          }
+>      }
+>
+> -    if (state->shared_page == NULL || state->buffered_io_page == NULL) {
+> +    if (state->shared_page == NULL ||
+> +        (state->has_bufioreq && state->buffered_io_page == NULL)) {
+>          return -1;
+>      }
+
+...and the tail end of the function has not been modified, so
+(not visible in this diff context) when we do:
+
+    trace_xen_map_ioreq_server_buffered_io_evtchn(bufioreq_evtchn);
+
+    state->bufioreq_remote_port = bufioreq_evtchn;
+
+    return 0;
+
+we may be using it uninitialized (in the trace statement
+and when assigning it to state->bufioreq_remote_port).
+
+Could you have a look at this and send a fix, please?
+
+thanks
+-- PMM
 
