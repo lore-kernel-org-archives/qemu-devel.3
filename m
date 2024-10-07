@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE7ECFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 09:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD321CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxkW8-0001OV-OO; Mon, 07 Oct 2024 05:59:04 -0400
+	id 1sxkcM-0003Rj-4R; Mon, 07 Oct 2024 06:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sxkW6-0001Np-I8
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:59:02 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sxkW4-0006fi-UY
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 05:59:02 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a994c322aefso185149566b.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 02:59:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728295139; x=1728899939; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hFSWfOa+YvFLhvTLy01OtkwcwFDP+uGo6d+bULQ2/a0=;
- b=rHdz3OUbauB8QLybwLDWqn1shx5kdrPqSv6ZDY3ToOBzM4OGteaBSASXO5L3Uh8Odv
- iqGYKgtcxgDUVfnCOJ8hai7dFl27BucUUdi9w7hpivqpnKL+JQlAWyVC99fRVbXTKEmL
- KB5pUvQP52LrKZh742E1l87wOoayAlk2xVGI/JOO2v+g4GooqOZg7UBbW0s0SSlczQuh
- VdL1PwrNmAeGi4Y7ODyh1Mfl5w/7ev0muGwtgkB6ZHJABOEhVwrhJtBTff4YHcJGxL/H
- Z2dAOCB6gjUxHq7G9oxvCTIv+BxcG8ntIulF+G/VbTFJT3XuuPSZo2B3fXSvV3mpgUn1
- BD3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728295139; x=1728899939;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hFSWfOa+YvFLhvTLy01OtkwcwFDP+uGo6d+bULQ2/a0=;
- b=LgG5aY4baCCytwS0PvdM9Znes3MIDFU7ZPwRT6Gvh9Uog6ObH3tRmKWBnnHYgm7c1a
- GdC0DbGgFZNEaWVYxR7nJ9ZfLgCIJpAAHqY+BhTw0JwHy8J0/90d+HnWe1EUXTHUDpa8
- uUcfoORE8p03hOt0MdkgRPZQsAOBnLtoe00eNCwRDx1nGgHs3ncwTUss7/IhdPIqQjEa
- YcbJXSSbfJ+QnjeO/w55bm2rld1CzvYbfcwlj15Hpxi73HVBOUNLUMt+H6J9Z5iiFZ3j
- jHil9WEl6Od9D61bUQtELg398uCGDmMkDQ3Tur1ezSv3dz16ct5qt0Kz+lDKY3y1K5OZ
- 3MCg==
-X-Gm-Message-State: AOJu0Yx9CzinoVf22hfIgSPvnMNBCf2HYWxz+uAQ8PTFHX1gjMDw6siy
- hKKrNqeAwPf+glhw6FoQ9tp9t6clARwxtE8M1lljItxK0hED4MoHpAeStYKkjVw=
-X-Google-Smtp-Source: AGHT+IG65qXj4Koi5pZwLyEPXkjAtcazG3RQu/qgd03GiED5ip5hp7iEN3BXYfoD0k3JtAKvcQtlvQ==
-X-Received: by 2002:a17:907:25c7:b0:a8d:4cec:fcec with SMTP id
- a640c23a62f3a-a990a21d5cbmr1657414466b.26.1728295138999; 
- Mon, 07 Oct 2024 02:58:58 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c8e05f395esm2989533a12.84.2024.10.07.02.58.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 02:58:57 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 789D95F875;
- Mon,  7 Oct 2024 10:58:56 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH v2 0/2] meson: ensure we enable CMPXCHG128 on x86_64
-In-Reply-To: <20241007084342.1264048-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 7 Oct 2024 10:43:40 +0200")
-References: <20241007084342.1264048-1-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 07 Oct 2024 10:58:56 +0100
-Message-ID: <87y130w7xb.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxkcJ-0003RB-MY; Mon, 07 Oct 2024 06:05:28 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxkcG-0007hD-Jc; Mon, 07 Oct 2024 06:05:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728295525; x=1759831525;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=AnOcALsZJg/wxyrcnpW+cGt1cV5NfTexgZo0XTBcLLw=;
+ b=cn/Dypl5g3XxaTJsowQRA46wHK0Mvj+ndpx+BYpkOU2DYtg8bFTHXwqO
+ DXgRUffbUhn9wBC0UfF0+t8D/l7xNwTb2lazCN1YspFB3UzFbDrgnS/IJ
+ 8zWL4vas7yk6k/F3lZWQn3gNpFVW6DxFRyq59NenrsNsHw3nZaOri2hlO
+ ay9K6lb8htyS8NO70GqL98ROae/WodMoKJGsHrR3M9QjlJVVkov4gIPmD
+ 3jRwde0NB/bahzT4HoCWqGWtbrGbcz32+GHARecx+JuYtsB829kI3/TQV
+ Spp1rbsny+AfZv5uAFLsF++oYz3H8LX0dsMFeOhs5l9KSvvkSLiJ6dr8d A==;
+X-CSE-ConnectionGUID: W/gsPrPySUW6uC/UpZ0fNQ==
+X-CSE-MsgGUID: uudJT6i4ThWkSsE+hNOGpQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11217"; a="27319853"
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="27319853"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2024 03:05:19 -0700
+X-CSE-ConnectionGUID: 7gJQIEZzT8mpzKFWqrHFdQ==
+X-CSE-MsgGUID: ogeD7LVYT4KOliHP51MW6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="75258677"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa010.jf.intel.com with ESMTP; 07 Oct 2024 03:05:13 -0700
+Date: Mon, 7 Oct 2024 18:21:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S.Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2 6/7] i386/cpu: Update cache topology with machine's
+ configuration
+Message-ID: <ZwO2JIMJ+lX0N61h@intel.com>
+References: <20240908125920.1160236-1-zhao1.liu@intel.com>
+ <20240908125920.1160236-7-zhao1.liu@intel.com>
+ <20240911110028.00001d3d@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240911110028.00001d3d@huawei.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,28 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Hi Ali,
 
-> Alex discovered that CMPXCHG128 was not enabled when building for
-> x86_64, resulting in slow execution for wide atomic instructions,
-> creating a huge contention when combined with a high number of cpus
-> (found while booting android aarch64 guest on x86_64 host).
->
-> The problem is that even though we enable -mcx16 option for x86_64, this
-> is not used when testing for CMPXCHG128. Thus, we silently turn it off.
->
-> x86_64 is the only architecture adding machine flags for now, so the
-> problem is limited to this host architecture.  However, the problem
-> is generic, so define a new variable for all the -m options, so that
-> they can be used for other such tests in the future.
->
-> Based-on: <20241004223715.1275428-1-pierrick.bouvier@linaro.org>
-> Supersedes: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
+[snip]
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > +
+> > +    /*
+> > +     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless
+> > Updates
+> > +     * if user didn't set smp_cache.
+> > +     */
+> Hi Zhao,
+> 
+> Thanks for sending this patchset so quickly. I really appreciate the
+> TODO already :)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Welcome! And I'm also sorry for a long silence. Now I'm back from the
+vacation and will keep pushing this series forward.
+
+> It also helps me avoid going through every single
+> layer, especially when I want to avoid matching system registers in
+> ARM, particularly when there's no description in the command line.
+
+Great! I also noticed your patch for this "TODO" and will help you
+review it soon.
+
+Regards,
+Zhao
+
+> > +    x86_cpu_update_smp_cache_topo(ms, cpu);
+> > +
+> >      qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
+> >  
+> >      if (cpu->env.features[FEAT_1_EDX] & CPUID_APIC || ms->smp.cpus >
+> > 1) {
+> 
+
 
