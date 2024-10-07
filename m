@@ -4,44 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB06CFB455
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5CBCFB456
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtGx-0000fx-2F; Mon, 07 Oct 2024 15:19:59 -0400
+	id 1sxtNn-00028a-7d; Mon, 07 Oct 2024 15:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtGG-0007AM-Qe; Mon, 07 Oct 2024 15:19:19 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxtNk-000285-K3
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:27:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtGE-0004P8-Uy; Mon, 07 Oct 2024 15:19:16 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxtNi-0005aZ-S6
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:27:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CEDC596258;
- Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A8AE214F738;
- Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
-Received: (nullmailer pid 2592783 invoked by uid 1000);
- Mon, 07 Oct 2024 19:16:54 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Elisha Hollander <just4now666666@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 27/32] util/timer: avoid deadlock when shutting down
-Date: Mon,  7 Oct 2024 22:16:44 +0300
-Message-Id: <20241007191654.2592616-27-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
-References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
+ by isrv.corpit.ru (Postfix) with ESMTP id DFECE962AA;
+ Mon,  7 Oct 2024 22:26:48 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id AFF0D14F748;
+ Mon,  7 Oct 2024 22:26:55 +0300 (MSK)
+Message-ID: <94066700-2a07-4d5f-bf0a-be7c1ce7bc62@tls.msk.ru>
+Date: Mon, 7 Oct 2024 22:26:55 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/2] GTK/SDL fixes for a black screen displayed by
+ virtio-gpu
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+References: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -65,56 +91,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+07.10.2024 02:43, Dmitry Osipenko wrote:
+> Hi,
+> 
+> This patchset fixes black screen displayed by Qemu using virtio-gpu.
+> There is a race condition bug with a timer that disables display output
+> after it has been enabled by virtio-gpu. The problem is reproducible
+> by running Qemu with a disabled GL vsync. Note vsync is disabled for
+> SDL display by default.
+> 
+> Dmitry Osipenko (2):
+>    ui/sdl2: Don't disable scanout when display is refreshed
+>    ui/gtk: Don't disable scanout when display is refreshed
 
-When we shut down a guest we disable the timers. However this can
-cause deadlock if the guest has queued some async work that is trying
-to advance system time and spins forever trying to wind time forward.
-Pay attention to the return code and bail early if we can't wind time
-forward.
+Is it a -stable material?  Myself I haven't seen this prob so far, so
+it might be not worth the effort.  Also, any idea when the prob has been
+introduced (or since when it has become real)?
 
-Reported-by: Elisha Hollander <just4now666666@gmail.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240916085400.1046925-15-alex.bennee@linaro.org>
-(cherry picked from commit bc02be4508d8753d1f6071b77d10f4661587df6f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Thanks,
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 213114be68..6b1533bc2a 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -685,10 +685,17 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
- {
-     int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-     AioContext *aio_context;
-+    int64_t deadline;
-+
-     aio_context = qemu_get_aio_context();
--    while (clock < dest) {
--        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+
-+    deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-                                                       QEMU_TIMER_ATTR_ALL);
-+    /*
-+     * A deadline of < 0 indicates this timer is not enabled, so we
-+     * won't get far trying to run it forward.
-+     */
-+    while (deadline >= 0 && clock < dest) {
-         int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
- 
-         qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
-@@ -696,6 +703,9 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-         qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
-         timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
-         clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+
-+        deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-+                                              QEMU_TIMER_ATTR_ALL);
-     }
-     qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
- 
--- 
-2.39.5
-
+/mjt
 
