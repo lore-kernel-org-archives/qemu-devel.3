@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B52CFB446
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E573CFB446
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxpVM-0006Rf-R6; Mon, 07 Oct 2024 11:18:36 -0400
+	id 1sxpdo-0008NC-1O; Mon, 07 Oct 2024 11:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxpVL-0006RV-Fj
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:18:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxpdl-0008Ms-Go
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:27:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxpVJ-0007kt-Ia
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:18:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxpdj-0000EY-P8
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:27:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728314310;
+ s=mimecast20190719; t=1728314832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BjryFoA6HlRzYpU5WGDAFnrAZBvYd8o9Sy+YJipUgSc=;
- b=FYYGfcTE33IF2MUa1y26xwriZv/mAxUQRavP6dXAaV6gOqOH+akY4Jj7W5bA7G4klXXZ+U
- sKc7/N3QYsXbOVSHN7dpY53rRWHg2ShR/zG51LmuZxHBH1rnntRYqjkRTfgfxLh237TGYD
- GRjntc1B4ICsaZFWcb7gDSgFbkiXrXg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=A0fxT2GYYQGHk0Lg7E0sdKx0WaKerQzPamF7pzvbEeo=;
+ b=dvnxohsaIBZPfWJi9cOFD5+4A+4V8UATW/w5pOb/fPazIsTMmNBr8RoUE3l7S7FQGunbdU
+ TEq58mP5l981mM+eyGhdAWvRG6DiCff7LFGVo+twN8JpXLJ774qLAht1MYMIUD9y3qe85a
+ tMNTSK/bO0AWxmLxLNs9i4SvKXWb+Gw=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-sJFb94ACMQ2gXFjwzt89Lg-1; Mon, 07 Oct 2024 11:18:29 -0400
-X-MC-Unique: sJFb94ACMQ2gXFjwzt89Lg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6cb2e0f3242so49554396d6.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 08:18:29 -0700 (PDT)
+ us-mta-26-dbrZQ485MGickY_0FpoTVA-1; Mon, 07 Oct 2024 11:27:10 -0400
+X-MC-Unique: dbrZQ485MGickY_0FpoTVA-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e28690bc290so6699839276.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 08:27:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728314309; x=1728919109;
+ d=1e100.net; s=20230601; t=1728314829; x=1728919629;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BjryFoA6HlRzYpU5WGDAFnrAZBvYd8o9Sy+YJipUgSc=;
- b=rtkuBcX4+lch6F9NVvRnHgBfmoOSULYqFsGcafnSqjQw+J+XQ/Gs5091VXSOQ7dkUi
- UbKcpwjSsjn5Q8uYHmLzGMMMLefDRGRLzYsX+TQvPct6ZBzyIRi+eSn6IC5CvitX+AkE
- wbHTBsxiCV1cVUIB+vL4qhNdvFGo3UOwp6qk2OdBiJePf9StEX0CpNUC0+Uv9TYfuOcz
- uLXDvx2VaILluvttRWN7xW6iVcE7bGUFatR7wSoToFzoKLGSiiU89fFeo4atBLSb4HmJ
- YTUpab3Jm79tP0k4lONNdUtiJ4yo/RFMHDEsv8QpOc1KBA2dsUC5UQ4nQq77ReHinLFG
- P2Cw==
-X-Gm-Message-State: AOJu0YyKkkeTcPod6DdiTCfCBp+g6+IyowZSZ9W6CWZl0XG7TdJ2WXWp
- vVR9ljn1q0PBcuJRh2lBci6ImuJl8dVv2fl+1LaTWlm6vfWRF1RbA6IdlFhuJ8DJuqtxUG5khFI
- lA2vFByZQn0NIjAUgKUy5kKZjhRuxHe8f23Bom37xRYxpp3CLw/ql
-X-Received: by 2002:a05:6214:4b0f:b0:6cb:3c08:31bf with SMTP id
- 6a1803df08f44-6cb9a440c49mr212674806d6.12.1728314308933; 
- Mon, 07 Oct 2024 08:18:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE39eDIl3fy2RZuHzBiwjpshLGZD1lFx1qSUBmIhDy0lCpEjFMCNDaKIyoy++69K5Yft+3JlQ==
-X-Received: by 2002:a05:6214:4b0f:b0:6cb:3c08:31bf with SMTP id
- 6a1803df08f44-6cb9a440c49mr212674376d6.12.1728314308565; 
- Mon, 07 Oct 2024 08:18:28 -0700 (PDT)
+ bh=A0fxT2GYYQGHk0Lg7E0sdKx0WaKerQzPamF7pzvbEeo=;
+ b=X2mLOG+uK39xNtmF2cRh9iFmnzDC/yqMzZ8UmlEc0G+FWMCAc51jwLmHAQyVoMIvUG
+ 3KwVOodRsbUujE1wPimgxrZBCAk58ZD5XnPz1onDkYmjXt4OFYiPsziHsTu4R0k9oOU/
+ X5zy4+JxTtfadANj74POyzR5dZAXOddyEKIpXdUd0pqC2CmcibH4fP4GQHTBf1y0rV1f
+ FGjOMpVi0AmKpI9fUC+TRsrm19Bhs6t7C7xAFmPgdsySXRaSZJiBIOuz8Pm2vsEjbEn1
+ p+NBHdGINntRRhoAqcrzYlVcwOO4xbIT+oV9W38lo1Rgh9IoY+tL+z5IRDCtg8rsSeOe
+ ay9Q==
+X-Gm-Message-State: AOJu0YyUDOATujewHb2tkPHiwuAXHKVWtjxTdazh4C+by1FBD+tZ7071
+ VQZfszjCWkygQQt13IZMNIKgTNe0APZT9IuR4h7NcIrChSR8J8rt13lqgBVWA1BBWdD+lT9NDJD
+ pD1UWF9XEPhse2utTSDflFLAXVD3jvmSvA/kB6UA1MitbCLSlIg+G
+X-Received: by 2002:a05:6902:2747:b0:e1d:9ccf:86ba with SMTP id
+ 3f1490d57ef6-e28939019cbmr7955421276.4.1728314829619; 
+ Mon, 07 Oct 2024 08:27:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGc07AKeSh36XLDFZuZ+kY/LKb2qlo9X7QjNe2XVj7glTV3xcD/CX3nL/sNHYiR7pYT5+J83g==
+X-Received: by 2002:a05:6902:2747:b0:e1d:9ccf:86ba with SMTP id
+ 3f1490d57ef6-e28939019cbmr7955406276.4.1728314829309; 
+ Mon, 07 Oct 2024 08:27:09 -0700 (PDT)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cba4751520sm26458366d6.83.2024.10.07.08.18.25
+ 6a1803df08f44-6cba46df927sm26625086d6.40.2024.10.07.08.27.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 08:18:27 -0700 (PDT)
-Date: Mon, 7 Oct 2024 11:18:23 -0400
+ Mon, 07 Oct 2024 08:27:08 -0700 (PDT)
+Date: Mon, 7 Oct 2024 11:27:06 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -73,14 +73,14 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 03/13] migration: save cpr mode
-Message-ID: <ZwP7v5pZNsMuXPgW@x1n>
+Subject: Re: [PATCH V2 04/13] migration: stop vm earlier for cpr
+Message-ID: <ZwP9ynimqzlmJ3uT@x1n>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-4-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-5-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1727725244-105198-4-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1727725244-105198-5-git-send-email-steven.sistare@oracle.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -106,146 +106,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 30, 2024 at 12:40:34PM -0700, Steve Sistare wrote:
-> Save the mode in CPR state, so the user does not need to explicitly specify
-> it for the target.  Modify migrate_mode() so it returns the incoming mode on
-> the target.
+On Mon, Sep 30, 2024 at 12:40:35PM -0700, Steve Sistare wrote:
+> Stop the vm earlier for cpr, to guarantee consistent device state when
+> CPR state is saved.
+
+Could you add some more info on why this order matters?
+
+E.g., qmp_migrate should switch migration state machine to SETUP, while
+this path holds BQL, I think it means there's no way devices got hot added
+concurrently of the whole process.
+
+Would other things change in the cpr states (name, fd, etc.)?  It'll be
+great to mention these details in the commit message.
+
+Thanks,
+
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->  include/migration/cpr.h |  7 +++++++
->  migration/cpr.c         | 23 ++++++++++++++++++++++-
->  migration/migration.c   |  1 +
->  migration/options.c     |  9 +++++++--
->  4 files changed, 37 insertions(+), 3 deletions(-)
+>  migration/migration.c | 22 +++++++++++++---------
+>  1 file changed, 13 insertions(+), 9 deletions(-)
 > 
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index e7b898b..ac7a63e 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -8,9 +8,16 @@
->  #ifndef MIGRATION_CPR_H
->  #define MIGRATION_CPR_H
->  
-> +#include "qapi/qapi-types-migration.h"
-> +
-> +#define MIG_MODE_NONE           -1
-> +
->  #define QEMU_CPR_FILE_MAGIC     0x51435052
->  #define QEMU_CPR_FILE_VERSION   0x00000001
->  
-> +MigMode cpr_get_incoming_mode(void);
-> +void cpr_set_incoming_mode(MigMode mode);
-> +
->  typedef int (*cpr_walk_fd_cb)(int fd);
->  void cpr_save_fd(const char *name, int id, int fd);
->  void cpr_delete_fd(const char *name, int id);
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index e50fc75..7514c4e 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -21,10 +21,23 @@
->  typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
->  
->  typedef struct CprState {
-> +    MigMode mode;
->      CprFdList fds;
->  } CprState;
->  
-> -static CprState cpr_state;
-> +static CprState cpr_state = {
-> +    .mode = MIG_MODE_NONE,
-> +};
-> +
-> +MigMode cpr_get_incoming_mode(void)
-> +{
-> +    return cpr_state.mode;
-> +}
-> +
-> +void cpr_set_incoming_mode(MigMode mode)
-> +{
-> +    cpr_state.mode = mode;
-> +}
->  
->  /****************************************************************************/
->  
-> @@ -124,11 +137,19 @@ void cpr_resave_fd(const char *name, int id, int fd)
->  /*************************************************************************/
->  #define CPR_STATE "CprState"
->  
-> +static int cpr_state_presave(void *opaque)
-> +{
-> +    cpr_state.mode = migrate_mode();
-> +    return 0;
-> +}
-> +
->  static const VMStateDescription vmstate_cpr_state = {
->      .name = CPR_STATE,
->      .version_id = 1,
->      .minimum_version_id = 1,
-> +    .pre_save = cpr_state_presave,
->      .fields = (VMStateField[]) {
-> +        VMSTATE_UINT32(mode, CprState),
->          VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
->          VMSTATE_END_OF_LIST()
->      }
 > diff --git a/migration/migration.c b/migration/migration.c
-> index 834b0a2..df00e5c 100644
+> index df00e5c..868bf0e 100644
 > --- a/migration/migration.c
 > +++ b/migration/migration.c
-> @@ -416,6 +416,7 @@ void migration_incoming_state_destroy(void)
->          mis->postcopy_qemufile_dst = NULL;
+> @@ -2082,6 +2082,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>      MigrationState *s = migrate_get_current();
+>      g_autoptr(MigrationChannel) channel = NULL;
+>      MigrationAddress *addr = NULL;
+> +    bool stopped = false;
+>  
+>      /*
+>       * Having preliminary checks for uri and channel
+> @@ -2125,6 +2126,15 @@ void qmp_migrate(const char *uri, bool has_channels,
+>          }
 >      }
 >  
-> +    cpr_set_incoming_mode(MIG_MODE_NONE);
->      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->  }
->  
-> diff --git a/migration/options.c b/migration/options.c
-> index 147cd2b..cc85a84 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -22,6 +22,7 @@
->  #include "qapi/qmp/qnull.h"
->  #include "sysemu/runstate.h"
->  #include "migration/colo.h"
-> +#include "migration/cpr.h"
->  #include "migration/misc.h"
->  #include "migration.h"
->  #include "migration-stats.h"
-> @@ -768,8 +769,12 @@ uint64_t migrate_max_postcopy_bandwidth(void)
->  
->  MigMode migrate_mode(void)
->  {
-> -    MigrationState *s = migrate_get_current();
-> -    MigMode mode = s->parameters.mode;
-> +    MigMode mode = cpr_get_incoming_mode();
-> +
-> +    if (mode == MIG_MODE_NONE) {
-> +        MigrationState *s = migrate_get_current();
-> +        mode = s->parameters.mode;
+> +    if (migrate_mode_is_cpr(s)) {
+> +        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> +        if (ret < 0) {
+> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+> +            goto out;
+> +        }
+> +        stopped = true;
 > +    }
-
-Is this trying to avoid interfering with what user specified?
-
-I can kind of get the point of it, but it'll also look pretty werid in this
-case that user can set the mode but then when query before cpr-transfer
-incoming completes it won't read what was set previously, but what was
-migrated via the cpr channel.
-
-And IIUC it is needed to migrate this mode in cpr stream so as to avoid
-another new qemu cmdline on dest qemu.  If true this needs to be mentioned
-in the commit message; so far it reads like it's optional, then it's not
-clear why only cpr-mode needs to be migrated not other migration parameters.
-
-If that won't get right easily, I wonder whether we could just overwrite
-parameters.mode directly by the cpr stream.  After all IIUC that's before
-QMP is available, so there's no legal way to set it, then no legal way that
-it overwrites an user input?
-
+> +
+>      if (cpr_state_save(&local_err)) {
+>          goto out;
+>      }
+> @@ -2160,6 +2170,9 @@ out:
+>          }
+>          migrate_fd_error(s, local_err);
+>          error_propagate(errp, local_err);
+> +        if (stopped) {
+> +            vm_resume(s->vm_old_state);
+> +        }
+>          return;
+>      }
+>  }
+> @@ -3743,7 +3756,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>      Error *local_err = NULL;
+>      uint64_t rate_limit;
+>      bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+> -    int ret;
 >  
->      assert(mode >= 0 && mode < MIG_MODE__MAX);
->      return mode;
+>      /*
+>       * If there's a previous error, free it and prepare for another one.
+> @@ -3815,14 +3827,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>          return;
+>      }
+>  
+> -    if (migrate_mode_is_cpr(s)) {
+> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> -        if (ret < 0) {
+> -            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+> -            goto fail;
+> -        }
+> -    }
+> -
+>      if (migrate_background_snapshot()) {
+>          qemu_thread_create(&s->thread, "mig/snapshot",
+>                  bg_migration_thread, s, QEMU_THREAD_JOINABLE);
 > -- 
 > 1.8.3.1
 > 
