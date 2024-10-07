@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E9BCFB455
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CBBCFB454
 	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtEo-0005Br-Dn; Mon, 07 Oct 2024 15:17:46 -0400
+	id 1sxtEG-0004Mn-Uv; Mon, 07 Oct 2024 15:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtEm-0005A5-7l; Mon, 07 Oct 2024 15:17:44 -0400
+ id 1sxtEE-0004Dr-Nh; Mon, 07 Oct 2024 15:17:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtEj-0004An-Bw; Mon, 07 Oct 2024 15:17:43 -0400
+ id 1sxtEC-00044O-CQ; Mon, 07 Oct 2024 15:17:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EE0CE9624B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 45A3396242;
  Mon,  7 Oct 2024 22:16:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C17E814F72B;
+ by tsrv.corpit.ru (Postfix) with SMTP id 1731314F723;
  Mon,  7 Oct 2024 22:16:55 +0300 (MSK)
-Received: (nullmailer pid 2592743 invoked by uid 1000);
+Received: (nullmailer pid 2592718 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 14/32] softmmu/physmem: fix memory leak in
- dirty_memory_extend()
-Date: Mon,  7 Oct 2024 22:16:31 +0300
-Message-Id: <20241007191654.2592616-14-mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 06/32] tests/docker: remove debian-armel-cross
+Date: Mon,  7 Oct 2024 22:16:23 +0300
+Message-Id: <20241007191654.2592616-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
@@ -67,131 +66,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-As reported by Peter, we might be leaking memory when removing the
-highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
+As debian-11 transitions to LTS we are starting to have problems
+building the image. While we could update to a later Debian building a
+32 bit QEMU without modern floating point is niche host amongst the
+few remaining 32 bit hosts we regularly build for. For now we still
+have armhf-debian-cross-container which is currently built from the
+more recent debian-12.
 
-We will fail to realize that we already allocated bitmaps for more
-dirty memory blocks, and effectively discard the pointers to them.
-
-Fix it by getting rid of last_ram_page() and by remembering the number
-of dirty memory blocks that have been allocated already.
-
-While at it, let's use "unsigned int" for the number of blocks, which
-should be sufficient until we reach ~32 exabytes.
-
-Looks like this leak was introduced as we switched from using a single
-bitmap_zero_extend() to allocating multiple bitmaps:
-bitmap_zero_extend() relies on g_renew() which should have taken care of
-this.
-
-Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-stable@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/20240828090743.128647-1-david@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit b84f06c2bee727b3870b4eeccbe3a45c5aea14c1)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240910173900.4154726-2-alex.bennee@linaro.org>
+(cherry picked from commit d0068b746a0a8cd4bb148527a0d199b130cd5288)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
-index 2ad2a81acc..d9cfe530be 100644
---- a/include/exec/ramlist.h
-+++ b/include/exec/ramlist.h
-@@ -50,6 +50,7 @@ typedef struct RAMList {
-     /* RCU-enabled, writes protected by the ramlist lock. */
-     QLIST_HEAD(, RAMBlock) blocks;
-     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
-+    unsigned int num_dirty_blocks;
-     uint32_t version;
-     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
- } RAMList;
-diff --git a/system/physmem.c b/system/physmem.c
-index 971bfa0855..d71a2b1bbd 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1534,18 +1534,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
-     return offset;
- }
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index e3103940a0..9a3ebd885e 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -22,12 +22,6 @@ arm64-debian-cross-container:
+   variables:
+     NAME: debian-arm64-cross
  
--static unsigned long last_ram_page(void)
--{
--    RAMBlock *block;
--    ram_addr_t last = 0;
+-armel-debian-cross-container:
+-  extends: .container_job_template
+-  stage: containers
+-  variables:
+-    NAME: debian-armel-cross
 -
--    RCU_READ_LOCK_GUARD();
--    RAMBLOCK_FOREACH(block) {
--        last = MAX(last, block->offset + block->max_length);
--    }
--    return last >> TARGET_PAGE_BITS;
--}
+ armhf-debian-cross-container:
+   extends: .container_job_template
+   stage: containers
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index cb499e4ee0..459273f9da 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -1,13 +1,6 @@
+ include:
+   - local: '/.gitlab-ci.d/crossbuild-template.yml'
+ 
+-cross-armel-user:
+-  extends: .cross_user_build_job
+-  needs:
+-    job: armel-debian-cross-container
+-  variables:
+-    IMAGE: debian-armel-cross
 -
- static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
- {
-     int ret;
-@@ -1799,13 +1787,11 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
- }
- 
- /* Called with ram_list.mutex held */
--static void dirty_memory_extend(ram_addr_t old_ram_size,
--                                ram_addr_t new_ram_size)
-+static void dirty_memory_extend(ram_addr_t new_ram_size)
- {
--    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
--    ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
--                                             DIRTY_MEMORY_BLOCK_SIZE);
-+    unsigned int old_num_blocks = ram_list.num_dirty_blocks;
-+    unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
-+                                               DIRTY_MEMORY_BLOCK_SIZE);
-     int i;
- 
-     /* Only need to extend if block count increased */
-@@ -1837,6 +1823,8 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
-             g_free_rcu(old_blocks, rcu);
-         }
-     }
-+
-+    ram_list.num_dirty_blocks = new_num_blocks;
- }
- 
- static void ram_block_add(RAMBlock *new_block, Error **errp)
-@@ -1846,11 +1834,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     RAMBlock *block;
-     RAMBlock *last_block = NULL;
-     bool free_on_error = false;
--    ram_addr_t old_ram_size, new_ram_size;
-+    ram_addr_t ram_size;
-     Error *err = NULL;
- 
--    old_ram_size = last_ram_page();
+ cross-armhf-user:
+   extends: .cross_user_build_job
+   needs:
+diff --git a/tests/docker/dockerfiles/debian-armel-cross.docker b/tests/docker/dockerfiles/debian-armel-cross.docker
+deleted file mode 100644
+index 8476fc8cce..0000000000
+--- a/tests/docker/dockerfiles/debian-armel-cross.docker
++++ /dev/null
+@@ -1,179 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool dockerfile --layers all --cross-arch armv6l debian-11 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
 -
-     qemu_mutex_lock_ramlist();
-     new_block->offset = find_ram_offset(new_block->max_length);
+-FROM docker.io/library/debian:11-slim
+-
+-RUN export DEBIAN_FRONTEND=noninteractive && \
+-    apt-get update && \
+-    apt-get install -y eatmydata && \
+-    eatmydata apt-get dist-upgrade -y && \
+-    eatmydata apt-get install --no-install-recommends -y \
+-                      bash \
+-                      bc \
+-                      bison \
+-                      bsdextrautils \
+-                      bzip2 \
+-                      ca-certificates \
+-                      ccache \
+-                      dbus \
+-                      debianutils \
+-                      diffutils \
+-                      exuberant-ctags \
+-                      findutils \
+-                      flex \
+-                      gcc \
+-                      gcovr \
+-                      gettext \
+-                      git \
+-                      hostname \
+-                      libglib2.0-dev \
+-                      libgtk-vnc-2.0-dev \
+-                      libpcre2-dev \
+-                      libsndio-dev \
+-                      libspice-protocol-dev \
+-                      llvm \
+-                      locales \
+-                      make \
+-                      meson \
+-                      mtools \
+-                      ncat \
+-                      ninja-build \
+-                      openssh-client \
+-                      pkgconf \
+-                      python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+-                      python3-pip \
+-                      python3-setuptools \
+-                      python3-sphinx \
+-                      python3-sphinx-rtd-theme \
+-                      python3-venv \
+-                      python3-wheel \
+-                      python3-yaml \
+-                      rpm2cpio \
+-                      sed \
+-                      socat \
+-                      sparse \
+-                      tar \
+-                      tesseract-ocr \
+-                      tesseract-ocr-eng \
+-                      xorriso \
+-                      zstd && \
+-    eatmydata apt-get autoremove -y && \
+-    eatmydata apt-get autoclean -y && \
+-    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales && \
+-    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+-
+-RUN /usr/bin/pip3 install tomli
+-
+-ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+-ENV LANG "en_US.UTF-8"
+-ENV MAKE "/usr/bin/make"
+-ENV NINJA "/usr/bin/ninja"
+-ENV PYTHON "/usr/bin/python3"
+-
+-RUN export DEBIAN_FRONTEND=noninteractive && \
+-    dpkg --add-architecture armel && \
+-    eatmydata apt-get update && \
+-    eatmydata apt-get dist-upgrade -y && \
+-    eatmydata apt-get install --no-install-recommends -y dpkg-dev && \
+-    eatmydata apt-get install --no-install-recommends -y \
+-                      gcc-arm-linux-gnueabi \
+-                      libaio-dev:armel \
+-                      libasan6:armel \
+-                      libasound2-dev:armel \
+-                      libattr1-dev:armel \
+-                      libbpf-dev:armel \
+-                      libbrlapi-dev:armel \
+-                      libbz2-dev:armel \
+-                      libc6-dev:armel \
+-                      libcacard-dev:armel \
+-                      libcap-ng-dev:armel \
+-                      libcapstone-dev:armel \
+-                      libcmocka-dev:armel \
+-                      libcurl4-gnutls-dev:armel \
+-                      libdaxctl-dev:armel \
+-                      libdrm-dev:armel \
+-                      libepoxy-dev:armel \
+-                      libfdt-dev:armel \
+-                      libffi-dev:armel \
+-                      libfuse3-dev:armel \
+-                      libgbm-dev:armel \
+-                      libgcrypt20-dev:armel \
+-                      libglib2.0-dev:armel \
+-                      libglusterfs-dev:armel \
+-                      libgnutls28-dev:armel \
+-                      libgtk-3-dev:armel \
+-                      libibverbs-dev:armel \
+-                      libiscsi-dev:armel \
+-                      libjemalloc-dev:armel \
+-                      libjpeg62-turbo-dev:armel \
+-                      libjson-c-dev:armel \
+-                      liblttng-ust-dev:armel \
+-                      liblzo2-dev:armel \
+-                      libncursesw5-dev:armel \
+-                      libnfs-dev:armel \
+-                      libnuma-dev:armel \
+-                      libpam0g-dev:armel \
+-                      libpipewire-0.3-dev:armel \
+-                      libpixman-1-dev:armel \
+-                      libpng-dev:armel \
+-                      libpulse-dev:armel \
+-                      librbd-dev:armel \
+-                      librdmacm-dev:armel \
+-                      libsasl2-dev:armel \
+-                      libsdl2-dev:armel \
+-                      libsdl2-image-dev:armel \
+-                      libseccomp-dev:armel \
+-                      libselinux1-dev:armel \
+-                      libslirp-dev:armel \
+-                      libsnappy-dev:armel \
+-                      libspice-server-dev:armel \
+-                      libssh-gcrypt-dev:armel \
+-                      libsystemd-dev:armel \
+-                      libtasn1-6-dev:armel \
+-                      libubsan1:armel \
+-                      libudev-dev:armel \
+-                      liburing-dev:armel \
+-                      libusb-1.0-0-dev:armel \
+-                      libusbredirhost-dev:armel \
+-                      libvdeplug-dev:armel \
+-                      libvirglrenderer-dev:armel \
+-                      libvte-2.91-dev:armel \
+-                      libzstd-dev:armel \
+-                      nettle-dev:armel \
+-                      systemtap-sdt-dev:armel \
+-                      zlib1g-dev:armel && \
+-    eatmydata apt-get autoremove -y && \
+-    eatmydata apt-get autoclean -y && \
+-    mkdir -p /usr/local/share/meson/cross && \
+-    printf "[binaries]\n\
+-c = '/usr/bin/arm-linux-gnueabi-gcc'\n\
+-ar = '/usr/bin/arm-linux-gnueabi-gcc-ar'\n\
+-strip = '/usr/bin/arm-linux-gnueabi-strip'\n\
+-pkgconfig = '/usr/bin/arm-linux-gnueabi-pkg-config'\n\
+-\n\
+-[host_machine]\n\
+-system = 'linux'\n\
+-cpu_family = 'arm'\n\
+-cpu = 'arm'\n\
+-endian = 'little'\n" > /usr/local/share/meson/cross/arm-linux-gnueabi && \
+-    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
+-    mkdir -p /usr/libexec/ccache-wrappers && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/arm-linux-gnueabi-cc && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/arm-linux-gnueabi-gcc
+-
+-ENV ABI "arm-linux-gnueabi"
+-ENV MESON_OPTS "--cross-file=arm-linux-gnueabi"
+-ENV QEMU_CONFIGURE_OPTS --cross-prefix=arm-linux-gnueabi-
+-ENV DEF_TARGET_LIST arm-softmmu,arm-linux-user,armeb-linux-user
+-# As a final step configure the user (if env is defined)
+-ARG USER
+-ARG UID
+-RUN if [ "${USER}" ]; then \
+-  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index ac803e34f1..199d5fad87 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -154,12 +154,6 @@ try:
+                         trailer=cross_build("aarch64-linux-gnu-",
+                                             "aarch64-softmmu,aarch64-linux-user"))
  
-@@ -1901,11 +1887,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
-     }
- 
--    new_ram_size = MAX(old_ram_size,
--              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
--    if (new_ram_size > old_ram_size) {
--        dirty_memory_extend(old_ram_size, new_ram_size);
--    }
-+    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-+    dirty_memory_extend(ram_size);
-     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-      * QLIST (which has an RCU-friendly variant) does not have insertion at
-      * tail, so save the last element in last_block.
+-    # migration to bookworm stalled: https://lists.debian.org/debian-arm/2023/09/msg00006.html
+-    generate_dockerfile("debian-armel-cross", "debian-11",
+-                        cross="armv6l",
+-                        trailer=cross_build("arm-linux-gnueabi-",
+-                                            "arm-softmmu,arm-linux-user,armeb-linux-user"))
+-
+     generate_dockerfile("debian-armhf-cross", "debian-12",
+                         cross="armv7l",
+                         trailer=cross_build("arm-linux-gnueabihf-",
 -- 
 2.39.5
 
