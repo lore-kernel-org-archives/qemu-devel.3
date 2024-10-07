@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6869CFB456
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA1B0CFB458
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtl2-0001md-Ec; Mon, 07 Oct 2024 15:51:04 -0400
+	id 1sxtqC-0003Ep-I2; Mon, 07 Oct 2024 15:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkz-0001lL-EL
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:51:01 -0400
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtq6-0003EC-4F
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:56:18 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkx-0007wm-Jq
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:51:00 -0400
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-3e3937ef498so2597695b6e.0
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 12:50:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtpy-0008Q8-Dj
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:56:15 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20aff65aa37so41317475ad.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 12:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728330658; x=1728935458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728330967; x=1728935767; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=z8TV8fYpF9eRG/D4gP+z3UnjvyTtJ/hBE8IkNgFDQB8=;
- b=PhsJ4DFp8q0rYLg4mnxfbQgmqigSYl1SThFfiCWffLSf7sTePjm8tfBBvzsxQYNVWP
- jqzvOMFM1UGwdeLchjGO45JV0S+gAnWMVgEtMI+XfC5hMrT4q1C49+dATvhqy7m/iTPP
- K5VPIek4KoiSzhNbU6oggvJW5zCi7v6u+toYluwkKMSkzrCK/4VSMaetiu0LLQ1woqMe
- Pd6keD7jND0/OvMEzVa09c1j11WlbFhHcxHrj7b3CHY0GMPkFFFD8NY/7QBf0nX5amaj
- KzJSXAK4DvbPa25zBLM63OCXJersqs08YnMZ3kk0hrCJbWrzlftMIu50Ag/7EJfZsAPp
- topA==
+ bh=GSxqW0uHxp+sUL9P9ODmytM1onOws+nrF3B0SCf/b5c=;
+ b=H7lRvVfMCm1ymvsjeQy+xb2M4zNnSNJ6xgMYKZRihql+Y/G/6KDsUpr1RPywLSDOGH
+ PaxKcFGWRnMnWHG6hIdJ2PrNfx9o+2SC7EmRDDxh+22DiHEBBCUyz6Ncq90DkD4N+kpg
+ CGopWqVdjsgtriqnUOE3iRoSUriTNdk//6/wDOH9zPYvyDPdjhlQJtVngou+2o8pMBYN
+ cIMTbFJ+Ts4Mv6hf0ejwbjLcw2rUa78ECZyA1+Saj8aRy6GwPTeqbsGSfbMSry4zI9BK
+ 9AYVgG+PFJOtsW3EMZfi3Yv5RNPAFKSomtnLWQJi9ECXVqeexOWBwVw6pjMpehUebIFn
+ SweA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728330658; x=1728935458;
+ d=1e100.net; s=20230601; t=1728330967; x=1728935767;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z8TV8fYpF9eRG/D4gP+z3UnjvyTtJ/hBE8IkNgFDQB8=;
- b=kauQ289XB+MQTEwGbMsT5kBgpP4MX0SPvF+ofoYi0elbLawlTvuqqMpFKwSmfAgyiJ
- yt22jdJeA8Ufcyrz5dypApsSLsWcst0QYorQCnmyyoEG5M1bM6q2FgmBicqLNCkwpxD6
- 6HtFSPURX/UIZgYZpcGb7LFnWXyfw87AWsnuIPanVoS1q+1k8wRCIIjy9PQk2IA60SOE
- EpMMEh6t48+6uMkZYDsQX9Ce494ATNzuWXfh1kNd81t6uU9pKce1XLPvLIdcfD5PtiXv
- pnwENFxL+GYRr0MCWXHJeznnTAE7nk7wtImvX2CaQF/LTdEDfO63vDiFQuWqrmtzootV
- kmug==
+ bh=GSxqW0uHxp+sUL9P9ODmytM1onOws+nrF3B0SCf/b5c=;
+ b=XzdUPb4q/Mb/LwG5HgL9ljSP1oupdqRl1vuI4Eq+WpVd345s/QQ/ZTaxgMNc3G0n6Z
+ mKWrPQFCGAJ5vSoDCAnNVlG24Wm5os0nTvdjbWWVimWOTW5Y7wrR1QZEpqRODOQ3SvH+
+ m0/WhImaLsRveqgzxuaAsVsHZab7K0NnId8VPyW9aRoFz3dQtSseTJ+olhquNW3g8vUv
+ XiFubbHHqGnCx+/sKPRBVQRC/NoeHq5lac/6DcP1x+xFfIIIrnTxn9+/Ezj9YgmdNGxS
+ F4XuCoGajHrliAXG92b4kPs5/UNZFspp8PxntUzJnwnL6NTaajwU7QRV8N/Hf/m0sSLy
+ dsRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4V2cj9mnn7z9LgTnwzdRWiKwGKrG7XJCYAcImrS528iBMVuZJ0KCvZY23lOFTTVvSASTDShaNpdfj@nongnu.org
-X-Gm-Message-State: AOJu0YzpzyQ0Vz+K7G0hg0pY/YK2VmueUH1btqIGYNYVES/pW467xR3b
- XCk49loOtmtiTjbonDSRO9YmUBooU7o/FkIKDetx4FhqigwSgfCEVfbYJpbHU7k=
-X-Google-Smtp-Source: AGHT+IFycNog1j3UBj6b3w1bJOhoI111/pUDnd5pUDMugLXE35Q/lZ8qeboZw3NlJXRH/sGowQ4VWQ==
-X-Received: by 2002:a05:6808:1b8c:b0:3e2:a1fe:f0c6 with SMTP id
- 5614622812f47-3e3c131703bmr11385332b6e.6.1728330658252; 
- Mon, 07 Oct 2024 12:50:58 -0700 (PDT)
+ AJvYcCWETuqmY8CWhTFGQ3bOTriOoALouMcudXn7QZHmoMCEIr6v/LhncbQx2JrrNy2vO4iTupejaa9PdzSL@nongnu.org
+X-Gm-Message-State: AOJu0Yx2oBKkIX5jCSUBq3WB07tc0eiu+Ql6iUiKIPDEa5Q5PZBDtpcj
+ 6DjtkzKHQ/0WA/S7dGiy0H/06yVfw5YV081ApuLnWD3kASlF2dhZwFHxjAIfEbluJ6U1kt35Yj4
+ g
+X-Google-Smtp-Source: AGHT+IFKUK5pVrrHJmSVJEp7fl+OdxKbwkmrR4g8g7WF0SA/t3OSirc8UZXddWpN/FItyR6KZKO6gA==
+X-Received: by 2002:a17:903:18a:b0:20b:7d09:8c86 with SMTP id
+ d9443c01a7336-20bfe49666fmr217491655ad.38.1728330967028; 
+ Mon, 07 Oct 2024 12:56:07 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.163])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7e9f680c3a9sm5359598a12.7.2024.10.07.12.50.56
+ 41be03b00d2f7-7e9f681fe06sm5352518a12.20.2024.10.07.12.56.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 12:50:57 -0700 (PDT)
-Message-ID: <858e948e-a1df-44bc-afd8-48df3d0d6d3e@linaro.org>
-Date: Mon, 7 Oct 2024 16:50:55 -0300
+ Mon, 07 Oct 2024 12:56:06 -0700 (PDT)
+Message-ID: <436ab3ab-4b07-4bfb-88aa-4c9b2c2ec6c1@linaro.org>
+Date: Mon, 7 Oct 2024 16:56:03 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] linux-user: Correct print_sockaddr() format
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20241005233343.503426-1-richard.henderson@linaro.org>
- <20241005233343.503426-7-richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/char/pl011: Use correct masks for IBRD and FBRD
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-stable@nongnu.org
+References: <20241007144732.2491331-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241005233343.503426-7-richard.henderson@linaro.org>
+In-Reply-To: <20241007144732.2491331-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-oi1-x232.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,24 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/10/24 20:33, Richard Henderson wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> When the %addr argument can not be accessed, a double comma
-> is logged (the final qemu_log call prepend a comma).  Move
-> the comma from the final qemu_log to the preceeding switch
-> cases that had omitted it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-Id: <20240807124306.52903-2-philmd@linaro.org>
-> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> [rth: Move comma into the various switch cases.]
+On 7/10/24 11:47, Peter Maydell wrote:
+> In commit b88cfee90268cad we defined masks for the IBRD and FBRD
+> integer and fractional baud rate divider registers, to prevent the
+> guest from writing invalid values which could cause division-by-zero.
+> Unfortunately we got the mask values the wrong way around: the FBRD
+> register is six bits and the IBRD register is 16 bits, not
+> vice-versa.
 
-Thanks!
+Oops indeed, I didn't check this closely enough.
 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> You would only run into this bug if you programmed the UART to a baud
+> rate of less than 9600, because for 9600 baud and above the IBRD
+> value will fit into 6 bits, as per the table in
+>   https://developer.arm.com/documentation/ddi0183/g/programmers-model/register-descriptions/fractional-baud-rate-register--uartfbrd
+> 
+> The only visible effects would be that the value read back from
+> the register by the guest would be truncated, and we would
+> print an incorrect baud rate in the debug logs.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: b88cfee90268 ("hw/char/pl011: Avoid division-by-zero in pl011_get_baudrate()")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2610
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   linux-user/strace.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+>   hw/char/pl011.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 
