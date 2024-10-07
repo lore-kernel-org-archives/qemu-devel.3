@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 020B4CFB455
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37575CFB454
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtFD-0005an-0d; Mon, 07 Oct 2024 15:18:11 -0400
+	id 1sxtFT-0005zo-EM; Mon, 07 Oct 2024 15:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtF9-0005X6-TY; Mon, 07 Oct 2024 15:18:08 -0400
+ id 1sxtFD-0005ia-1H; Mon, 07 Oct 2024 15:18:11 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtF7-0004CP-PK; Mon, 07 Oct 2024 15:18:07 -0400
+ id 1sxtFB-0004GP-8L; Mon, 07 Oct 2024 15:18:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 273D29624E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 51BB596250;
  Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 018F714F72E;
+ by tsrv.corpit.ru (Postfix) with SMTP id 2B88514F730;
  Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
-Received: (nullmailer pid 2592752 invoked by uid 1000);
+Received: (nullmailer pid 2592759 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 17/32] migration/multifd: Fix rb->receivedmap cleanup
- race
-Date: Mon,  7 Oct 2024 22:16:34 +0300
-Message-Id: <20241007191654.2592616-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 19/32] target/arm: Correct ID_AA64ISAR1_EL1 value for
+ neoverse-v1
+Date: Mon,  7 Oct 2024 22:16:36 +0300
+Message-Id: <20241007191654.2592616-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
@@ -62,85 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Fix a segmentation fault in multifd when rb->receivedmap is cleared
-too early.
+The Neoverse-V1 TRM is a bit confused about the layout of the
+ID_AA64ISAR1_EL1 register, and so its table 3-6 has the wrong value
+for this ID register.  Trust instead section 3.2.74's list of which
+fields are set.
 
-After commit 5ef7e26bdb ("migration/multifd: solve zero page causing
-multiple page faults"), multifd started using the rb->receivedmap
-bitmap, which belongs to ram.c and is initialized and *freed* from the
-ram SaveVMHandlers.
+This means that we stop incorrectly reporting FEAT_XS as present, and
+now report the presence of FEAT_BF16.
 
-Multifd threads are live until migration_incoming_state_destroy(),
-which is called after qemu_loadvm_state_cleanup(), leading to a crash
-when accessing rb->receivedmap.
-
-process_incoming_migration_co()        ...
-  qemu_loadvm_state()                  multifd_nocomp_recv()
-    qemu_loadvm_state_cleanup()          ramblock_recv_bitmap_set_offset()
-      rb->receivedmap = NULL               set_bit_atomic(..., rb->receivedmap)
-  ...
-  migration_incoming_state_destroy()
-    multifd_recv_cleanup()
-      multifd_recv_terminate_threads(NULL)
-
-Move the loadvm cleanup into migration_incoming_state_destroy(), after
-multifd_recv_cleanup() to ensure multifd threads have already exited
-when rb->receivedmap is cleared.
-
-Adjust the postcopy listen thread comment to indicate that we still
-want to skip the cpu synchronization.
-
-CC: qemu-stable@nongnu.org
-Fixes: 5ef7e26bdb ("migration/multifd: solve zero page causing multiple page faults")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240917185802.15619-3-farosas@suse.de
-[peterx: added comment in migration_incoming_state_destroy()]
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 4ce56229087860805877075ddb29dd44578365a9)
+Cc: qemu-stable@nongnu.org
+Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240917161337.3012188-1-peter.maydell@linaro.org
+(cherry picked from commit 8676007eff04bb4e454bcdf92fab3f855bcc59b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 3dea06d577..ae2be31557 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -378,6 +378,11 @@ void migration_incoming_state_destroy(void)
-     struct MigrationIncomingState *mis = migration_incoming_get_current();
- 
-     multifd_recv_cleanup();
-+    /*
-+     * RAM state cleanup needs to happen after multifd cleanup, because
-+     * multifd threads can use some of its states (receivedmap).
-+     */
-+    qemu_loadvm_state_cleanup();
- 
-     if (mis->to_src_file) {
-         /* Tell source that we are done */
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 6bb404b9c8..b71eba218f 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2983,7 +2983,10 @@ int qemu_loadvm_state(QEMUFile *f)
-     trace_qemu_loadvm_state_post_main(ret);
- 
-     if (mis->have_listen_thread) {
--        /* Listen thread still going, can't clean up yet */
-+        /*
-+         * Postcopy listen thread still going, don't synchronize the
-+         * cpus yet.
-+         */
-         return ret;
-     }
- 
-@@ -3026,7 +3029,6 @@ int qemu_loadvm_state(QEMUFile *f)
-         }
-     }
- 
--    qemu_loadvm_state_cleanup();
-     cpu_synchronize_all_post_init();
- 
-     return ret;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index fe232eb306..8516daefca 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -685,7 +685,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
+     cpu->isar.id_aa64dfr1 = 0x00000000;
+     cpu->isar.id_aa64isar0 = 0x1011111110212120ull; /* with FEAT_RNG */
+-    cpu->isar.id_aa64isar1 = 0x0111000001211032ull;
++    cpu->isar.id_aa64isar1 = 0x0011100001211032ull;
+     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
+     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
 -- 
 2.39.5
 
