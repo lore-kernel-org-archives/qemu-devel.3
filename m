@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEE7CFB449
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E3CCFB446
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqLq-0000yE-UB; Mon, 07 Oct 2024 12:12:50 -0400
+	id 1sxqSE-0002Mq-7S; Mon, 07 Oct 2024 12:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sxqLo-0000y5-LY
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:12:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1sxqSC-0002MZ-CM
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:19:24 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sxqLl-0005g5-1O
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:12:46 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497F6fDg003930;
- Mon, 7 Oct 2024 16:12:40 GMT
+ id 1sxqS8-0006Vq-Qf
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:19:23 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497F6fAO004196;
+ Mon, 7 Oct 2024 16:19:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1MjTtkvMjyOgc0ZbCwQBoKvvfnej7uN5ZnpfCOGi1Fw=; b=I4RhnQVrE1UT19VF
- Wy+lOCrw7FfAY3IcjjP5mSVPWk5Wk6512WjvA78kY9mAvCt5IoSBKRVW4YaRFnRf
- fuulgxte6EKS6F5i2rI/xiYNdbjwXS9mIY8OvIFglUVrZjjnfWbToJvd9SipDUt1
- XToh4JmG7SHFTWH7ki5iGY+bR5/xc/paPuR2JjDTKFEu9c9WY1ODRBFaPU37XWBd
- rHzJfd1Bd7ItRjOTw0SzrCnSV7ClFXHgIRiv4HdnBqE4+5SCuwF++a3sEeDWyrnJ
- xq9943W/trE/TePXtvOCAQvuJD3CmRWrVJMeJjj5pWBPobkYrJy4m8bszWjBm5SY
- GbWkuA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
+ T17uOxxCVZEJiv4uvfYynpTWVoTaDLd28+IXgCIc3DE=; b=RFG59YQzm/KTxGze
+ HDIz0dP1kBMEywfJXJfmQRtlz4JOnEjOr9iReCrF7nNhC4f5/v8+FWGm7yfk79Pw
+ BnInjj8ucAeRWTMFmYuUZ2nxaMZzABh5bLKewlRcWTmJsM6FleilCU0VHL9Bca+f
+ 0X0VyFsj76emXsQEhoaUuh5NNP7ZCmG2Ssw5nfspKYPKapvGNvG/8wFHynWdk4sH
+ aG7ytaDYvqNqLysXhuEu75qJNnoHNII7takWILdZg6POW9EMX34iZcrW1LEacRim
+ 9/oHljWcTCwn7neKl4GtSBZdKtIQcR7uMuQojibziK3AZh/OlctsuPaLCc9aTocP
+ I9VpyA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv6vref-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xqnvpq0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Oct 2024 16:12:40 +0000 (GMT)
+ Mon, 07 Oct 2024 16:19:18 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
  [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497GCdr4025906
+ by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497GJHDs027330
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 7 Oct 2024 16:12:39 GMT
+ Mon, 7 Oct 2024 16:19:17 GMT
 Received: from [10.111.168.217] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
- 09:12:39 -0700
-Message-ID: <d9ffbc39-3fc6-49df-9140-9b5aeacc24d0@quicinc.com>
-Date: Mon, 7 Oct 2024 11:12:37 -0500
+ 09:19:16 -0700
+Message-ID: <0ac9546e-2b0d-46f1-8c5c-fc75529aa682@quicinc.com>
+Date: Mon, 7 Oct 2024 11:19:15 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] scripts: mandate that new files have
- SPDX-License-Identifier
+Subject: Re: [PATCH 2/3] scripts: validate SPDX license choices
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  <qemu-devel@nongnu.org>
 References: <20241007154548.1144961-1-berrange@redhat.com>
- <20241007154548.1144961-2-berrange@redhat.com>
+ <20241007154548.1144961-3-berrange@redhat.com>
 Content-Language: en-US
 From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20241007154548.1144961-2-berrange@redhat.com>
+In-Reply-To: <20241007154548.1144961-3-berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -68,19 +67,19 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-ORIG-GUID: 78GpBbWr7pZ4ELwXayNEiFlXwqXwbBkH
-X-Proofpoint-GUID: 78GpBbWr7pZ4ELwXayNEiFlXwqXwbBkH
+X-Proofpoint-ORIG-GUID: 7QXP0_bLpE31L5rDro7uXXmf5OwD6_SC
+X-Proofpoint-GUID: 7QXP0_bLpE31L5rDro7uXXmf5OwD6_SC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011
- priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=999 mlxscore=0 bulkscore=0 phishscore=0 malwarescore=0
- spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ bulkscore=0 impostorscore=0
+ malwarescore=0 mlxscore=0 phishscore=0 spamscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=799 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410070115
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -106,65 +105,109 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 10/7/2024 10:45 AM, Daniel P. Berrangé wrote:
-> Going forward we want all newly created source files to have an
-> SPDX-License-Identifier tag present.
+> We expect all new code to be contributed with the "GPL-2.0-or-later"
+> license tag. Divergance is permitted if the new file is derived from
+> pre-existing code under a different license, whether from elsewhere
+> in QEMU codebase, or outside.
 >
-> Initially mandate this for C, Python and Perl source files, and
-> encourage this for other file types.
+> Issue a warning if the declared license is not "GPL-2.0-or-later",
+> and an error if the license is not one of the handful of the
+> expected licenses to prevent unintended proliferation.
 >
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   scripts/checkpatch.pl | 26 ++++++++++++++++++++++++++
->   1 file changed, 26 insertions(+)
+>   scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 66 insertions(+)
 >
 > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 1b21249c91..cc266abdcd 100755
+> index cc266abdcd..cd1ed90f4c 100755
 > --- a/scripts/checkpatch.pl
 > +++ b/scripts/checkpatch.pl
-> @@ -1378,6 +1378,8 @@ sub process {
->   	my $in_imported_file = 0;
->   	my $in_no_imported_file = 0;
->   	my $non_utf8_charset = 0;
-> +	my $expect_spdx = 0;
-> +	my $expect_spdx_file;
+> @@ -1353,6 +1353,67 @@ sub checkfilename {
+>   	}
+>   }
 >   
->   	our @report = ();
->   	our $cnt_lines = 0;
-> @@ -1615,6 +1617,30 @@ sub process {
->   			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+> +sub checkspdx {
+> +    my ($file, $expr) = @_;
+> +
+> +    # Imported Linux headers probably have SPDX tags, but if they
+> +    # don't we're not requiring contributors to fix this
+> +    if ($file =~ m,include/standard-headers, ||
+> +	$file =~ m,linux-headers,) {
+> +	return;
+> +    }
+> +
+> +    my $origexpr = $expr;
+> +
+> +    # Flatten sub-expressions
+> +    $expr =~ s/\(|\)/ /g;
+> +    $expr =~ s/OR|AND/ /g;
+> +
+> +    # Merge WITH exceptions to the license
+> +    $expr =~ s/\s+WITH\s+/-WITH-/g;
+> +
+> +    # Cull more leading/trailing whitespace
+> +    $expr =~ s/^\s*//g;
+> +    $expr =~ s/\s*$//g;
+> +
+> +    my @bits = split / +/, $expr;
+> +
+> +    my $prefer = "GPL-2.0-or-later";
+> +    my @valid = qw(
+> +	LGPL-2.0-or-later
+> +	LGPL-2.1-or-later
+> +	GPL-2.0-only
+> +	LGPL-2.0-only
+> +	LGPL-2.0-only
+> +	BSD-2-Clause
+> +	BSD-3-Clause
+> +	MIT
+> +	);
+> +
+> +    my $nonpreferred = 0;
+> +    my @unknown = ();
+> +    foreach my $bit (@bits) {
+> +	if ($bit eq $prefer) {
+> +	    next;
+> +	}
+> +	if (grep /^$bit$/, @valid) {
+> +	    $nonpreferred = 1;
+> +	} else {
+> +	    push @unknown, $bit;
+> +	}
+> +    }
+> +    if (@unknown) {
+> +	ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
+> +	      "', valid choices for QEMU are:\n" . join("\n", $prefer, @valid));
+> +    }
+> +
+> +    if ($nonpreferred) {
+> +	WARN("Saw acceptable license '$origexpr' but note '$prefer' is preferred " .
+> +	     "for new files unless the code is derived from a source with an" .
+> +	     "existed declared license that must be followed.");
+
+Is it not preferred to contribute code under the BSD-3-clause? Based on 
+other items in the project, I was expecting we could make contributions 
+for hexagon w/BSD.  But those are exceptional cases and not to be 
+followed in the general case?
+
+
+> +    }
+> +}
+> +
+>   sub process {
+>   	my $filename = shift;
+>   
+> @@ -1641,6 +1702,11 @@ sub process {
+>   		    }
 >   		}
 >   
-> +# All new files should have a SPDX-License-Identifier tag
-> +		if ($line =~ /^new file mode\s*\d+\s*$/) {
-> +		    if ($expect_spdx) {
-> +			if ($expect_spdx_file =~ /\.(c|h|py|pl|c\.inc)$/) {
-> +			    # source code files MUST have SPDX license declared
-> +			    ERROR("expected 'SPDX-License-Identifer' in new file $expect_spdx_file");
-> +			} else {
-> +			    # Other files MAY have SPDX license if appropriate
-> +			    WARNING("Does new file $expect_spdx_file need 'SPDX-License-Identifer'?");
-> +			}
-> +		    }
-> +		    $expect_spdx = 1;
-> +		    $expect_spdx_file = undef;
-> +		} elsif ($expect_spdx) {
-> +		    $expect_spdx_file = $realfile unless defined $expect_spdx_file;
-> +
-> +		    # SPDX tagsd may occurr in comments which were
-> +		    # stripped from '$line', so use '$rawline'
-> +		    if ($rawline =~ /SPDX-License-Identifier/) {
-> +			$expect_spdx = 0;
-> +			$expect_spdx_file = undef;
-> +		    }
+> +# Check SPDX-License-Identifier references a permitted license
+> +		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+> +		    &checkspdx($realfile, $1);
 > +		}
 > +
 >   # Check for wrappage within a valid hunk of the file
 >   		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
 >   			ERROR("patch seems to be corrupt (line wrapped?)\n" .
-
-This change makes sense to me, thanks for suggesting it.
-
-
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-
 
