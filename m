@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB479CED241
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DA8CED241
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxv7D-0000gC-CN; Mon, 07 Oct 2024 17:18:04 -0400
+	id 1sxv7j-0001aB-TM; Mon, 07 Oct 2024 17:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxv72-0000UV-TB
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 17:17:53 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxv7U-0001HS-3r
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 17:18:25 -0400
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxv71-00017T-Dw
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 17:17:52 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxv7R-0001A7-H6
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 17:18:19 -0400
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20b5affde14so36549715ad.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 14:17:51 -0700 (PDT)
+ d9443c01a7336-20ba9f3824fso36651785ad.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 14:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728335870; x=1728940670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728335893; x=1728940693; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fEczIr49pHVDmhTYxLG19feKRvTV2OhUJFNmzSuMIOA=;
- b=BQ7OWvVcM4+FscqGgRgzPaCreYPL840tYopWHyiOAZcIJpTvYI6uy9eDyp1Ms0OYAl
- /PTKZO5KEOK9Z7I9MhCu5T3VfLf5ncbb9HJKlyChGjFKg3R9tpK1MYsBSH1g5WNVd3Xl
- qf2xo2KTDSL8rDxHJ3+Cv83COLY4FGzKR80Q5RhEBSH0ab1370G6RN1hQ1iQByrv197i
- fmgbOxIRhfZH5yOFNOGc1MigUqNeuGH8NFY0kK7UPah7RgxB5FX+axrE1wZtBZCtt3Cq
- dCKQlihWwTp0o94/aki5qn4zb3aUwXy4jrX/GbZm0DtFgS7W+aRNUIvn4GuWmvTiTS4r
- Te9A==
+ bh=WUs1MzGBq8oTTzLkkmLgPiacHYjlN0lvec1dDM3ysJs=;
+ b=FcnZECzNIO8Ip4t4zG8gtEu9WarzpbUd6Gv48QhluldaFemX6yP8puSGTgQWMgfhdK
+ t7izS5XneMWyEDb+2dWiGhUT5D3cYv261Fp1DKusELGmJu2uawPgNSgsst1R9m5EwaKV
+ F5x4cubN5Mcsiw7f4tw4xE62KBcJvw1W/z966tHkFS6FBuPdsNJlin6E8DO1NknOlFYu
+ xQkJMZjCzjQjGzIdd90patoSXtxbFMAHn/qdIpfpgio/is9voiExxT4AUKJfDyDI3rmz
+ 4utr14jtJ45hQ0MGEf+ooghBZW1BK6OVYOzYn+4cJZvHe7qjpJIsqF/0XBuphacWeMcR
+ 68YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728335870; x=1728940670;
+ d=1e100.net; s=20230601; t=1728335893; x=1728940693;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fEczIr49pHVDmhTYxLG19feKRvTV2OhUJFNmzSuMIOA=;
- b=cHs/gHI4SIbKql2ZuQzMEk89VOjNVGlbDfMgQo9KEdfQiOWJ9V/kKVgnoapRRz38z0
- kE7g0HEqH2wiuFvcp+0caPIoIsx4skTTZdnFpv/wXRziMFI6J3ayTkKGHChshgo1euoj
- iO3b2gQoLVAKPSnSH4zoewLVF/A5nrNnWOGZ5WraLW1WemHRfOu/uZCA0KhDiRCDfcD2
- slb4ajgT5tboof47GrxHINAQdrvHZDo4ebyNXnd+cQvlho7xwMNdsTEu1iCmKsVjoKBL
- gKn6RrXm2SuTvGHXeoI7Z9PQRx+Vnm0dVlnKPJ82PdT6GZJM83qWch5nDuqvJlVPNbQi
- dAlA==
+ bh=WUs1MzGBq8oTTzLkkmLgPiacHYjlN0lvec1dDM3ysJs=;
+ b=prJ18xSginWJJ5VZhDaNRyJqLZigHy8KzbluOR7DI4IlN38v6cuGTHvo+NFVVidaCQ
+ rgGRw020A43TYRQj8Ub9V6MF/Y//MF9zH5WZXmJlntO/M34Z0Lwct4Y/a8xdPklusi0b
+ 2L1h69PlFAIHf0yhxHbHcupbM504S+wRKH+ODY30KWQktkTXWQXeU3CcdpshgAhkEjZb
+ imFVcR7EVR+G/2leK1HRZ0EqpvQUcuDFdPmuHPrsifHzLi+KnkpDlEZIH7uQ6SpojB9s
+ 3RTmTj+6N+gqULgAb90Ym8M+OcA+GEzFNy/4lmaE50Kbs38vz6qGSRwHh7A+W/Pzt0+u
+ SZKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmV/5SI58+EohfbgH7EsFuIVtbZ07+vn4hB+jOhiSwTKuEfoqNqLL87sadOV3dMazggeMy8WI9nk3T@nongnu.org
-X-Gm-Message-State: AOJu0YxjJcd/seLpA7W2RH+GSHghoEHk0QrPBuz57KATmOaLhJMzVlRz
- beMCC1+kMZZKNtkJ34cBq2OU4UUn2yGBmQyPs/qdmr3h3d9MZ4p5sUXWs6UYdgE=
-X-Google-Smtp-Source: AGHT+IF+iFo3nBQNt0M8YZHcNiHTBYDMbNha0m/y303BWu+LZ6fyagZobPptPmMv/9P7CxHL+SpzJA==
-X-Received: by 2002:a17:902:f691:b0:20b:af36:eb3 with SMTP id
- d9443c01a7336-20bff047d4fmr190816015ad.40.1728335869923; 
- Mon, 07 Oct 2024 14:17:49 -0700 (PDT)
+ AJvYcCUUPkjkAPdVGhpDCowlXamVLPOrYnEvYXtOeXbny0m7I8H67P5HxaIeEHC5eMHnUV03c8YT4VJvL7At@nongnu.org
+X-Gm-Message-State: AOJu0Yw0u4PMbG5rZjxi82qOPCLceq7rq/Z8AF0qErEGMcSUmc3f6OYm
+ 9SuW2aHly3cl9UKQO1ir6KLM2siq3wRVfq2EcfVLGPHE+0AedRnskVbiSOYENKqwhbhndL7a/xF
+ E
+X-Google-Smtp-Source: AGHT+IHLjxdI73ZFA1uACTxTQR7LmFrpC2nLEP5ovsgcbR9VpKeVtrR3TIrUVb4iSlbnZFd2IgsyBQ==
+X-Received: by 2002:a17:903:230f:b0:20b:bad4:5b6e with SMTP id
+ d9443c01a7336-20bfe292621mr209530905ad.38.1728335893666; 
+ Mon, 07 Oct 2024 14:18:13 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.163])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c13989814sm43541095ad.269.2024.10.07.14.17.47
+ d9443c01a7336-20c1398ee06sm43758895ad.288.2024.10.07.14.18.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 14:17:49 -0700 (PDT)
-Message-ID: <5c98fb68-df29-43e4-a759-a4b8f9a6bf0e@linaro.org>
-Date: Mon, 7 Oct 2024 18:17:46 -0300
+ Mon, 07 Oct 2024 14:18:13 -0700 (PDT)
+Message-ID: <88485d15-b86a-430e-91e0-0225ddff5849@linaro.org>
+Date: Mon, 7 Oct 2024 18:18:10 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/20] include/exec/memop: Move get_alignment_bits from
- tcg.h
+Subject: Re: [PATCH 04/20] include/exec/memop: Rename get_alignment_bits
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 References: <20241005152551.307923-1-richard.henderson@linaro.org>
- <20241005152551.307923-4-richard.henderson@linaro.org>
+ <20241005152551.307923-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241005152551.307923-4-richard.henderson@linaro.org>
+In-Reply-To: <20241005152551.307923-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
@@ -99,13 +99,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/10/24 12:25, Richard Henderson wrote:
-> This function is specific to MemOp, not TCG in general.
+> Rename to use "memop_" prefix, like other functions
+> that operate on MemOp.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/memop.h | 23 +++++++++++++++++++++++
->   include/tcg/tcg.h    | 23 -----------------------
->   2 files changed, 23 insertions(+), 23 deletions(-)
+>   include/exec/memop.h           | 4 ++--
+>   accel/tcg/cputlb.c             | 4 ++--
+>   accel/tcg/user-exec.c          | 4 ++--
+>   target/arm/tcg/translate-a64.c | 4 ++--
+>   target/xtensa/translate.c      | 2 +-
+>   tcg/tcg-op-ldst.c              | 6 +++---
+>   tcg/tcg.c                      | 2 +-
+>   tcg/arm/tcg-target.c.inc       | 4 ++--
+>   tcg/sparc64/tcg-target.c.inc   | 2 +-
+>   9 files changed, 16 insertions(+), 16 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
