@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51011CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6A8CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxmD5-0005Hh-2P; Mon, 07 Oct 2024 07:47:31 -0400
+	id 1sxmD3-0005Gz-Hq; Mon, 07 Oct 2024 07:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sxmCz-0005Gk-6N
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:47:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxmCy-0005Ga-AP
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:47:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sxmCx-0004at-HP
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxmCw-0004ai-FB
  for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:47:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728301642;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1728301641;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uTNKHSBeE16BG+Rg+MBcBkvebP1koDw5n8zsVRQxr7A=;
- b=aj+KE2QIb2OG8pZexlqxDwtVWG1NXy20spaQKujv5qQV2JZ+omZQVvBGLOfj230VAR4SOi
- Lil1anDc2ye3Ku5XjMo4GDezcZTsNSzZbRNjk7vdhqEjOg+Nz7QP8d/UGqDf5MyBSt67Jb
- pg+la/dVNMGM0htjmDz9QWiPjtGbVrQ=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-WRon3JMKNgGstuRBp8wCRw-1; Mon, 07 Oct 2024 07:47:21 -0400
-X-MC-Unique: WRon3JMKNgGstuRBp8wCRw-1
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-4a3a80afe99so1218190137.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 04:47:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728301641; x=1728906441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uTNKHSBeE16BG+Rg+MBcBkvebP1koDw5n8zsVRQxr7A=;
- b=eygc2S2tjrq/jbpyw4cXKjtYYbXtFqelewxbRzoQT/sAij2HFosHqYeqrjDmoamn8X
- gTPJhEP42/hoJ0ulJzIyyPdPgd9HLXE+t+rGWqFDpCo0hEjsmsmv1Rlt59P8s27DYGwa
- IahWNbUDDlWjVTY1jZLvS72e/DgXOVmg4diPDqxW2FS/rebwcKwcpF/PwXahsl2sYv0w
- 2EHhk58FbevEHImAe6hrSLSxEK+hn1JCIvvgR/7uthSkYGVTyHf4MoLkKacgflDYiggy
- 5XmRfY571FZg/EpIE1vOuTvYywr8wJVJkEXwauSBIDy43lvsWCX2/R1QxnmImc431/qS
- sFlw==
-X-Gm-Message-State: AOJu0Ywyer6VCTVVCxDscZlnV+wiUexmOw4Nwl24R0kyiMRNn8gkLoFY
- aaFy2rFuKJlUi1eY9BBo5GPPTCUVtrrRCsOpHVlTnm6Lga71L65lBHF2yOe4n7FOsudz4XjmQK3
- HLgKVKAHEjRtmOs7pwBcXyX8aHfkjyU0iNPnsvqW34OydqVnHq5K11eLmWaofI5QQ4Jtvzn7h2j
- Y7+6mbh81APUMAfECS5vOk2XifXd0=
-X-Received: by 2002:a05:6102:509f:b0:4a3:c3cf:42b1 with SMTP id
- ada2fe7eead31-4a4058efbd0mr5611912137.26.1728301640691; 
- Mon, 07 Oct 2024 04:47:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFVpv2mYnYzdpMWQbIW6kKw/5DHAVZ9t5wTsUjvEHJDEKV2aGQr2wax97mCabQujxZIB9w1XxB3I/p/05uMps=
-X-Received: by 2002:a05:6102:509f:b0:4a3:c3cf:42b1 with SMTP id
- ada2fe7eead31-4a4058efbd0mr5611888137.26.1728301640312; Mon, 07 Oct 2024
- 04:47:20 -0700 (PDT)
+ bh=QedhxdPw3WIHh9Hw0EwA61PJ5RIl1dSvfhJcTr5SSuk=;
+ b=SlPJTzMFNF09yzd82/+Mzf4D4cmbyvqZIiFrtjS7HTdZ7vINJEKTgR7ET17eKrgIDXmaWe
+ nVmsSHnUQXnSQ+WncEDogOU1qf+8ImNMOoB028ixtNj05g0J8dj1n0ndKyg3XgVS/FejDq
+ 3CNF7JKjkNA47LmNhx8afY4u+Ypzl1s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-HfpDueGwMOuF4tAEkJEKsg-1; Mon,
+ 07 Oct 2024 07:47:18 -0400
+X-MC-Unique: HfpDueGwMOuF4tAEkJEKsg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C06E11964CF9; Mon,  7 Oct 2024 11:47:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69457300018D; Mon,  7 Oct 2024 11:47:12 +0000 (UTC)
+Date: Mon, 7 Oct 2024 12:47:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org,
+ zhao1.liu@intel.com, junjie.mao@intel.com,
+ pierrick.bouvier@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PULL 00/12] Rust initial PoC + meson changes for 2024-10-07
+Message-ID: <ZwPKPGkpklnY9i5z@redhat.com>
+References: <20241007110342.1298598-1-pbonzini@redhat.com>
+ <ZwPB9SnTvkr082NA@redhat.com>
+ <CABgObfYZgR9xNnP9mHWU92XZZ_VeFLHimkd-t-63KX_KWeDZ=A@mail.gmail.com>
 MIME-Version: 1.0
-References: <20241003112244.3340697-1-marcandre.lureau@redhat.com>
- <20241003112244.3340697-13-marcandre.lureau@redhat.com>
- <24a91b5d-89a3-4338-874c-78aaf22b93ac@daynix.com>
-In-Reply-To: <24a91b5d-89a3-4338-874c-78aaf22b93ac@daynix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 7 Oct 2024 15:47:08 +0400
-Message-ID: <CAMxuvay2B_hwZ4eyqp_cRGe5XH1wWkHbVPDEOgBjScKAE7uosA@mail.gmail.com>
-Subject: Re: [PATCH 12/16] ui/surface: allocate shared memory on !win32
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- belmouss@redhat.com, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfYZgR9xNnP9mHWU92XZZ_VeFLHimkd-t-63KX_KWeDZ=A@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -101,158 +87,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 5, 2024 at 12:59=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2024/10/03 20:22, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On Mon, Oct 07, 2024 at 01:26:52PM +0200, Paolo Bonzini wrote:
+> On Mon, Oct 7, 2024 at 1:11 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > The current dockerfiles don't include rust, and I see nothing
+> > here updating them to add rust, so how is any of this getting
+> > test coverage ?
 > >
-> > Use qemu_memfd_alloc() to allocate the display surface memory, which
-> > will fallback on tmpfile/mmap() on systems without memfd, and allow to
-> > share the display with other processes.
-> >
-> > This is similar to how display memory is allocated on win32 since commi=
-t
-> > 09b4c198 ("console/win32: allocate shareable display surface").
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   include/ui/surface.h |  8 ++++++++
-> >   ui/console.c         | 30 ++++++++++++++++++++++++++++--
-> >   2 files changed, 36 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/include/ui/surface.h b/include/ui/surface.h
-> > index 345b19169d..dacf12ffe2 100644
-> > --- a/include/ui/surface.h
-> > +++ b/include/ui/surface.h
-> > @@ -23,6 +23,10 @@ typedef struct DisplaySurface {
-> >       GLenum gltype;
-> >       GLuint texture;
-> >   #endif
-> > +#ifndef WIN32
-> > +    int shmfd;
-> > +    uint32_t shmfd_offset;
-> > +#endif
-> >   #ifdef WIN32
-> >       HANDLE handle;
->
-> What about defining a new struct that contains either of shmfd or
-> handle? We can then have a unified set of functions that uses the struct
-> to allocate/free a shared pixman image and to set one to DisplaySurface.
+> > Even though this has Rust disabled by default, I would still
+> > consider CI enablement to be a pre-requsite for merging even
+> > basic Rust support.
+> 
+> I agree in general, but there's already a lot of work that can be
+> parallelized and the idea of someone managing Rust-related patches
+> out-of-tree was discarded. So this seemed to be the only way to
+> proceed.
+> 
+> Right now only Fedora 39 and 40 (with updates) are able to compile
+> QEMU with Rust enabled. Full CI enablement requires further work to
+> reduce the minimum supported version of the compiler, after which
+> rustc can be added to the libvirt-ci inputs and to the Dockerfiles.
 
-Well, that structure is pretty much DisplaySurface. I am not sure if
-it's valuable to introduce another abstraction.
+Full CI enablement isn't a requirement until we want to turn on
+Rust by default. It would be sufficient to have a single job in
+CI using Fedora 40 that passes '--enable-rust' to demonstrate that
+this at least working on one platform we expect.
 
->
-> >       uint32_t handle_offset;
-> > @@ -37,6 +41,10 @@ DisplaySurface *qemu_create_displaysurface_from(int =
-width, int height,
-> >   DisplaySurface *qemu_create_displaysurface_pixman(pixman_image_t *ima=
-ge);
-> >   DisplaySurface *qemu_create_placeholder_surface(int w, int h,
-> >                                                   const char *msg);
-> > +#ifndef WIN32
-> > +void qemu_displaysurface_set_shmfd(DisplaySurface *surface,
-> > +                                   int shmfd, uint32_t offset);
-> > +#endif
-> >   #ifdef WIN32
-> >   void qemu_displaysurface_win32_set_handle(DisplaySurface *surface,
-> >                                             HANDLE h, uint32_t offset);
-> > diff --git a/ui/console.c b/ui/console.c
-> > index fdd76c2be4..56f2462c3d 100644
-> > --- a/ui/console.c
-> > +++ b/ui/console.c
-> > @@ -37,6 +37,7 @@
-> >   #include "trace.h"
-> >   #include "exec/memory.h"
-> >   #include "qom/object.h"
-> > +#include "qemu/memfd.h"
-> >
-> >   #include "console-priv.h"
-> >
-> > @@ -452,6 +453,17 @@ qemu_graphic_console_init(Object *obj)
-> >   {
-> >   }
-> >
-> > +#ifndef WIN32
-> > +void qemu_displaysurface_set_shmfd(DisplaySurface *surface,
-> > +                                   int shmfd, uint32_t offset)
-> > +{
-> > +    assert(surface->shmfd =3D=3D -1);
-> > +
-> > +    surface->shmfd =3D shmfd;
-> > +    surface->shmfd_offset =3D offset;
-> > +}
-> > +#endif
-> > +
-> >   #ifdef WIN32
-> >   void qemu_displaysurface_win32_set_handle(DisplaySurface *surface,
-> >                                             HANDLE h, uint32_t offset)
-> > @@ -469,12 +481,16 @@ DisplaySurface *qemu_create_displaysurface(int wi=
-dth, int height)
-> >       void *bits =3D NULL;
-> >   #ifdef WIN32
-> >       HANDLE handle =3D NULL;
-> > +#else
-> > +    int shmfd =3D -1;
-> >   #endif
-> >
-> >       trace_displaysurface_create(width, height);
-> >
-> >   #ifdef WIN32
-> >       bits =3D qemu_win32_map_alloc(width * height * 4, &handle, &error=
-_abort);
-> > +#else
-> > +    bits =3D qemu_memfd_alloc("displaysurface", width * height * 4, 0,=
- &shmfd, &error_abort);
-> >   #endif
-> >
-> >       surface =3D qemu_create_displaysurface_from(
-> > @@ -486,9 +502,13 @@ DisplaySurface *qemu_create_displaysurface(int wid=
-th, int height)
-> >
-> >   #ifdef WIN32
-> >       qemu_displaysurface_win32_set_handle(surface, handle, 0);
-> > -    pixman_image_set_destroy_function(surface->image,
-> > -                                      qemu_pixman_shared_image_destroy=
-, handle);
-> > +    void *data =3D handle;
-> > +#else
-> > +    qemu_displaysurface_set_shmfd(surface, shmfd, 0);
-> > +    void *data =3D GINT_TO_POINTER(shmfd);
-> >   #endif
-> > +    pixman_image_set_destroy_function(surface->image, qemu_pixman_shar=
-ed_image_destroy, data);
-> > +
-> >       return surface;
-> >   }
-> >
-> > @@ -499,6 +519,9 @@ DisplaySurface *qemu_create_displaysurface_from(int=
- width, int height,
-> >       DisplaySurface *surface =3D g_new0(DisplaySurface, 1);
-> >
-> >       trace_displaysurface_create_from(surface, width, height, format);
-> > +#ifndef WIN32
-> > +    surface->shmfd =3D -1;
-> > +#endif
-> >       surface->image =3D pixman_image_create_bits(format,
-> >                                                 width, height,
-> >                                                 (void *)data, linesize)=
-;
-> > @@ -512,6 +535,9 @@ DisplaySurface *qemu_create_displaysurface_pixman(p=
-ixman_image_t *image)
-> >       DisplaySurface *surface =3D g_new0(DisplaySurface, 1);
-> >
-> >       trace_displaysurface_create_pixman(surface);
-> > +#ifndef WIN32
-> > +    surface->shmfd =3D -1;
-> > +#endif
-> >       surface->image =3D pixman_image_ref(image);
-> >
-> >       return surface;
->
+> Adding a CI job that uses nightly rust (via rustup) is high on my
+> priority list, but first of all I wanted to integrate clippy (because
+> the main point of having a job with nightly rust is to have a heads-up
+> on future clippy warnings). That said, I'm also not sure how one would
+> go adding rustup to a container generated by lcitool (for example
+> should I add a new dockerfile that is _based_ on one that already
+> exists? would that change when Rust/rustc is added to that
+> dockerfile?).
+
+Having layered dockerfiles is something we try to aviod these days,
+since each layer turns into another job dependancy in the CI
+pipeline, expanding the number of stages.
+
+If the job is merely to validate nightly clippy do we even need
+any of the rest of the QEMU build deps present ?  Can we not just
+use a generic pre-existing Rust container and only run clippy
+in it.
+
+If we want to actually build with the cutting edge, then I'd say
+it is sufficient to have a container based on Fedora rawhide, since
+that gives a heads up on what's soon to be impacting the next stable
+distro release, upto 6 months ahead of time - we don't need to be
+watching& debugging stuff that hasn't even been released by Rust
+yet IMHO.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
