@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2126AC35FE0
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 20:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3667CC35FE0
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 20:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxuDH-0002Z8-Ol; Mon, 07 Oct 2024 16:20:15 -0400
+	id 1sxuGm-0003dK-4z; Mon, 07 Oct 2024 16:23:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sxuDF-0002Yj-LR
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:20:13 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sxuDC-0002fw-0O
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:20:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1728332390; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=O/TtqnhCOQmYQTWT6LNd33se4OWD/kT83pxEnW3zR+XNeFohe/WxL0OPxLtjyrrPQAdTD46TZbnxKW0a/zQ3TvkGHLgE2UsNdcdw9wPCCUhW55eAoWNxu4i23Zg2vJXt2aEJfETcrnodHX52YVfScbufUGcTPYCAuR/tqF6PEf8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1728332390;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=imrnYD1pp26rf1n3HLOTWJV8xX/kWyqNZSLq/kxzfLY=; 
- b=NIOa9V4uEZ5FKVOTY1kN7jXQwumXNRXZ8JFGB+1Xxsrlcp5rYNIc9VQ8ZLC12SNQNeee2VBd6XZsvMKff/RDEfpwM7f9jKphhvHiQl8ZLQbyuYOF6I17ivfhSGwOrphxL+PSbcqVEIlKk3yLWqGuK71eQgKOxHQJlN+NXw+IFNs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728332390; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=imrnYD1pp26rf1n3HLOTWJV8xX/kWyqNZSLq/kxzfLY=;
- b=ckhdnJvOCpJsDih2ZboK3XHmH9gQIMPZzLy46+bUa79J58xJV5Ag0T6uHJLBDFmN
- fabahQflc35C6ruArP4gCd1bAAsrfFbBXags7e72IbMxh3vBada1GEp93pOJzgnq3SW
- yLAA/5Xu1cLmlwQSIicLGZ1vkyUE6BKts0wZ5isc=
-Received: by mx.zohomail.com with SMTPS id 172833238805299.32471808713547;
- Mon, 7 Oct 2024 13:19:48 -0700 (PDT)
-Message-ID: <55042480-6a12-41ca-a5dc-8f6dd5ff8c62@collabora.com>
-Date: Mon, 7 Oct 2024 23:19:43 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxuGk-0003co-0L
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:23:50 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxuGi-0002zd-9n
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:23:49 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7db90a28cf6so3924446a12.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 13:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728332626; x=1728937426; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=grdsN+RxeYJ/hjLL1moN/W57aTGb8bqycnDwu6targY=;
+ b=krjOGxKbyXU94T0HqkeztwheFesUPpHzSJ8/n3/ZYUtY0IWFtCIj4BOwLUd9qkeDi/
+ n08TmbrNpNnAq6nWTEFgVlN0g1QkrvQp1cpeXhuE+IYYlAETE2h2ZYHut1xVbowjfVBB
+ 5cYlsvnIxfRKT6rsfJfqRMnpxHRXSIwwthIw0tmKJ6J5WL6vj/uKbbg83urLH8LzwUPv
+ exeAgryVx1ycFeLF1aGk0TFxIDg8jidypiGWNxThtGBlajOIm58Q6dOsjxXgBRd3Yyh+
+ cUecz9rWPaOyzCvUTZRRTBqKwvrsLvXU+RCpAmiRivRx25KJrof1epTiG3CtROSRFvqB
+ 5YxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728332626; x=1728937426;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=grdsN+RxeYJ/hjLL1moN/W57aTGb8bqycnDwu6targY=;
+ b=VKb3koRonxJQnhL52eW0JMvdhrQDAGSf20G8KAp5OJQqLv3TCxsKn2u1whq31emLqy
+ 9vi8HxM8QuCeFc/kxXQWGfuz8Pk4tEi0b6OZTuo2ajzdR8e4yigJhXKWy1hH+Z6vKrTD
+ KkeNSfrbWrhxVK1kwijvHmf9fXwF0LmMiM4RFQk7vqF0loFX7D+032v0A/NjI6qh6NJd
+ wCpRZNKoHFqr2zvb5RSyoqDl9scqgvZbvnB9YGeBT4SktVDNgSoLi1sR3lvfcj83/CIj
+ vnNsIUUk1UlfLGW1HtUd9j338HVieo/vu84CZuVjx1G2i+pQz9adK/rvyE1V4iYwH4xm
+ PLeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX2uCNLMXKuTTVvp32s5ifzJsJUtHuyITOeQmwF8FuABvyAMURyjDSlvNVnDaJTNLrtk0ct3AaaxdIJ@nongnu.org
+X-Gm-Message-State: AOJu0Yz1JR2tN6RwrfZtK/7XCdkKYLW6TWc2BEAw4NPNHIu13kk1EZin
+ zjmlybAZlN6xtvCE1LHNkwCcZW5aDy1u9jlGYEGd+tbyVHj5FJPTEoChcgIrrHA=
+X-Google-Smtp-Source: AGHT+IF4OU96bzh8k0Mwow+9y3uc3DQkTqKgqw3cRXH35TyNTk4C+gsRChvU+yglBr928vhzjwDY9A==
+X-Received: by 2002:a17:90a:7442:b0:2e0:a9e8:bb95 with SMTP id
+ 98e67ed59e1d1-2e27dd3c32amr1272919a91.3.1728332621015; 
+ Mon, 07 Oct 2024 13:23:41 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.88.163])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e1e85c8ca4sm7671287a91.13.2024.10.07.13.23.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 13:23:40 -0700 (PDT)
+Message-ID: <4b180079-d800-45b9-a455-5fdebd71179d@linaro.org>
+Date: Mon, 7 Oct 2024 17:23:37 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/2] GTK/SDL fixes for a black screen displayed by
- virtio-gpu
-To: Michael Tokarev <mjt@tls.msk.ru>, Akihiko Odaki
- <akihiko.odaki@daynix.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-References: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
- <94066700-2a07-4d5f-bf0a-be7c1ce7bc62@tls.msk.ru>
+Subject: Re: [PATCH v3 01/14] ppc/spapr: remove deprecated machine pseries-2.1
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+References: <20241007153838.1085522-1-harshpb@linux.ibm.com>
+ <20241007153838.1085522-2-harshpb@linux.ibm.com>
 Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <94066700-2a07-4d5f-bf0a-be7c1ce7bc62@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241007153838.1085522-2-harshpb@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/24 22:26, Michael Tokarev wrote:
-> 07.10.2024 02:43, Dmitry Osipenko wrote:
->> Hi,
->>
->> This patchset fixes black screen displayed by Qemu using virtio-gpu.
->> There is a race condition bug with a timer that disables display output
->> after it has been enabled by virtio-gpu. The problem is reproducible
->> by running Qemu with a disabled GL vsync. Note vsync is disabled for
->> SDL display by default.
->>
->> Dmitry Osipenko (2):
->>    ui/sdl2: Don't disable scanout when display is refreshed
->>    ui/gtk: Don't disable scanout when display is refreshed
+Hi Harsh,
+
+On 7/10/24 12:38, Harsh Prateek Bora wrote:
+> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+> deprecated with reasons mentioned in its commit log.
+> Removing pseries-2.1 specific code with this patch for now.
 > 
-> Is it a -stable material?  Myself I haven't seen this prob so far, so
-> it might be not worth the effort.  Also, any idea when the prob has been
-> introduced (or since when it has become real)?
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>   hw/ppc/spapr.c | 11 -----------
+>   1 file changed, 11 deletions(-)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 2c10a70a48..e9518ff8b3 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -5381,17 +5381,6 @@ static void spapr_machine_2_2_class_options(MachineClass *mc)
+>   }
+>   DEFINE_SPAPR_MACHINE(2, 2);
+>   
+> -/*
+> - * pseries-2.1
+> - */
+> -
+> -static void spapr_machine_2_1_class_options(MachineClass *mc)
+> -{
+> -    spapr_machine_2_2_class_options(mc);
+> -    compat_props_add(mc->compat_props, hw_compat_2_1, hw_compat_2_1_len);
 
-The problem is reproducible with a stable Qemu.  With SDL display it may
-require many retries to repro, but with GTK display + vblank_mode=0 it
-happens all the time.  Don't know when exactly it was introduced, but
-will become much easier to hit it with the upcoming changes to Qemu.
-Judging by the git blame, problem always existed, perhaps nobody payed
-attention to it in the past.  Up to maintainers to decide whether it's
-worth having these patches in stable, to me it's not worthwhile because
-normally nobody would run Qemu with vblank_mode=0.  And you won't notice
-the problem if you're running desktop session in the guest because it
-will re-enable scanout on startup.
+Why not remove hw_compat_2_1[] and hw_compat_2_1_len in the same patch?
 
--- 
-Best regards,
-Dmitry
+> -}
+> -DEFINE_SPAPR_MACHINE(2, 1);
+> -
+>   static void spapr_machine_register_types(void)
+>   {
+>       type_register_static(&spapr_machine_info);
 
 
