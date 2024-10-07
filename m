@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E3CCFB446
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4F7CFB44A
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqSE-0002Mq-7S; Mon, 07 Oct 2024 12:19:26 -0400
+	id 1sxqXY-0003UZ-1P; Mon, 07 Oct 2024 12:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sxqSC-0002MZ-CM
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:19:24 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sxqS8-0006Vq-Qf
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:19:23 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497F6fAO004196;
- Mon, 7 Oct 2024 16:19:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- T17uOxxCVZEJiv4uvfYynpTWVoTaDLd28+IXgCIc3DE=; b=RFG59YQzm/KTxGze
- HDIz0dP1kBMEywfJXJfmQRtlz4JOnEjOr9iReCrF7nNhC4f5/v8+FWGm7yfk79Pw
- BnInjj8ucAeRWTMFmYuUZ2nxaMZzABh5bLKewlRcWTmJsM6FleilCU0VHL9Bca+f
- 0X0VyFsj76emXsQEhoaUuh5NNP7ZCmG2Ssw5nfspKYPKapvGNvG/8wFHynWdk4sH
- aG7ytaDYvqNqLysXhuEu75qJNnoHNII7takWILdZg6POW9EMX34iZcrW1LEacRim
- 9/oHljWcTCwn7neKl4GtSBZdKtIQcR7uMuQojibziK3AZh/OlctsuPaLCc9aTocP
- I9VpyA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xqnvpq0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Oct 2024 16:19:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497GJHDs027330
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 7 Oct 2024 16:19:17 GMT
-Received: from [10.111.168.217] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
- 09:19:16 -0700
-Message-ID: <0ac9546e-2b0d-46f1-8c5c-fc75529aa682@quicinc.com>
-Date: Mon, 7 Oct 2024 11:19:15 -0500
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxqXH-0003Ow-S8
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:24:40 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxqXG-00077q-0B
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:24:39 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-20b01da232aso36374375ad.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:24:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728318276; x=1728923076; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZhTNi0J0LZKB7af7Zb43WsGxxujabzbI10ATH65EwyQ=;
+ b=PDAQ+7XDyNXWVQ+VjaqHW6+s331zBzvmUOgp+R5RBOORppork13kElRvdGDtOwpjnq
+ u/JRiCYGHs2rxr7r6tdaGnSegE/1jeNv1AuWUHjqLCebQwcdl+ZCbTXNMhaVvMv4oIa6
+ rHwNxVpK1J3eVoiQAY3fidd3e8EpDG3ndzpWHDTQ02/N3+Orq1r/yXKCDPkEutennOom
+ PDhDuCBCI4cSZkG3OW1GF6z0eWyJjqCQHLIPJ7djiZMIEftnilYLAfwmXzc/DJIOOmcs
+ j6MxEfKRSvANqQ0w6wLIhNn8X5GZB+bdFRZIvDCnfIsSgsL6cnqwWY+N7Uz3Xcek2LQb
+ xyag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728318276; x=1728923076;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZhTNi0J0LZKB7af7Zb43WsGxxujabzbI10ATH65EwyQ=;
+ b=PxeMMC4ZOvOZZNU6hLx1+qhrxdza1+g959ZncRcs186UoDIJqrBZVh8D+xuxrKqgP4
+ B5lIqOPNBaEtbY6HOcE/V8tnMXKmuQR18p+bTSOB4p+49CW440aP/7I2bANUZftDeTq2
+ YKHnEd8Q9yWN8XwlFS9fAHlYngC3fUmwAi3HzIAJ8velfbI4MGKiNbEULKL6+SCnr8ov
+ f8ob3KY7NTV4U98XSK7C604TFoGYyzHYUOKj0Jo1+vX//Pd5FyeJSqYx6+MulRHTedYs
+ j5lfLHQXXCdLt0PH/d8MxjAKklhVq/TjMI/Jlmkkap37Y8n3d0FM7VwS9H7GIbXwrrhI
+ i7hA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHMyv/HM4Ap4aapj46At2BzSi931469EO4NsG+Gt3CW8YorNRpDhzK9juLZGhfVpxFMahfMAu7nsBu@nongnu.org
+X-Gm-Message-State: AOJu0YyG9p5T7UUuCJ+p6LuHy4fRV8C5sUD2FNNVumCyTbc7G+4s0yan
+ /JIVVOTAGJmvm2qhgU6Bn+Ej3n2126hK5i1SAyrRMvEkAasCO68uHshfJqsTrhU=
+X-Google-Smtp-Source: AGHT+IEKyIORfwqOkOmBehKLwE0qdAMn+mXsN+6Wkf2tLiMLc/o194vS7/tfOfQ0ccxc4CfdsFcS2g==
+X-Received: by 2002:a17:902:f54d:b0:20b:a8ad:9b0c with SMTP id
+ d9443c01a7336-20c4e27a5c9mr2933115ad.3.1728318276589; 
+ Mon, 07 Oct 2024 09:24:36 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c138af8ccsm41481565ad.29.2024.10.07.09.24.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 09:24:36 -0700 (PDT)
+Message-ID: <77a9c9c5-9c6c-42cc-821f-1340e06ac685@linaro.org>
+Date: Mon, 7 Oct 2024 09:24:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] scripts: validate SPDX license choices
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- <qemu-devel@nongnu.org>
-References: <20241007154548.1144961-1-berrange@redhat.com>
- <20241007154548.1144961-3-berrange@redhat.com>
+Subject: Re: [PATCH v5 02/12] tcg/riscv: Add basic support for vector
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ Huang Shiyuan <swung0x48@outlook.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20241007025700.47259-1-zhiwei_liu@linux.alibaba.com>
+ <20241007025700.47259-3-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20241007154548.1144961-3-berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: 7QXP0_bLpE31L5rDro7uXXmf5OwD6_SC
-X-Proofpoint-GUID: 7QXP0_bLpE31L5rDro7uXXmf5OwD6_SC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- malwarescore=0 mlxscore=0 phishscore=0 spamscore=0 suspectscore=0
- adultscore=0 mlxlogscore=799 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410070115
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241007025700.47259-3-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,111 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/6/24 19:56, LIU Zhiwei wrote:
+> @@ -2100,6 +2136,30 @@ static void tcg_target_init(TCGContext *s)
+>   {
+>       tcg_target_available_regs[TCG_TYPE_I32] = 0xffffffff;
+>       tcg_target_available_regs[TCG_TYPE_I64] = 0xffffffff;
+> +    s->reserved_regs = 0;
+> +
+> +    switch (riscv_lg2_vlenb) {
+> +    case TCG_TYPE_V64:
+> +        tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +        tcg_target_available_regs[TCG_TYPE_V128] = ALL_DVECTOR_REG_GROUPS;
+> +        tcg_target_available_regs[TCG_TYPE_V256] = ALL_QVECTOR_REG_GROUPS;
+> +        s->reserved_regs |= (~ALL_QVECTOR_REG_GROUPS & ALL_VECTOR_REGS);
+> +        break;
+> +    case TCG_TYPE_V128:
+> +        tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +        tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+> +        tcg_target_available_regs[TCG_TYPE_V256] = ALL_DVECTOR_REG_GROUPS;
+> +        s->reserved_regs |= (~ALL_DVECTOR_REG_GROUPS & ALL_VECTOR_REGS);
+> +        break;
+> +    default:
+> +        /* Guaranteed by Zve64x. */
+> +        tcg_debug_assert(riscv_lg2_vlenb >= TCG_TYPE_V256);
+> +
+> +        tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +        tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+> +        tcg_target_available_regs[TCG_TYPE_V256] = ALL_VECTOR_REGS;
+> +        break;
+> +    }
 
-On 10/7/2024 10:45 AM, Daniel P. Berrangé wrote:
-> We expect all new code to be contributed with the "GPL-2.0-or-later"
-> license tag. Divergance is permitted if the new file is derived from
-> pre-existing code under a different license, whether from elsewhere
-> in QEMU codebase, or outside.
->
-> Issue a warning if the declared license is not "GPL-2.0-or-later",
-> and an error if the license is not one of the handful of the
-> expected licenses to prevent unintended proliferation.
->
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
->
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index cc266abdcd..cd1ed90f4c 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1353,6 +1353,67 @@ sub checkfilename {
->   	}
->   }
->   
-> +sub checkspdx {
-> +    my ($file, $expr) = @_;
-> +
-> +    # Imported Linux headers probably have SPDX tags, but if they
-> +    # don't we're not requiring contributors to fix this
-> +    if ($file =~ m,include/standard-headers, ||
-> +	$file =~ m,linux-headers,) {
-> +	return;
-> +    }
-> +
-> +    my $origexpr = $expr;
-> +
-> +    # Flatten sub-expressions
-> +    $expr =~ s/\(|\)/ /g;
-> +    $expr =~ s/OR|AND/ /g;
-> +
-> +    # Merge WITH exceptions to the license
-> +    $expr =~ s/\s+WITH\s+/-WITH-/g;
-> +
-> +    # Cull more leading/trailing whitespace
-> +    $expr =~ s/^\s*//g;
-> +    $expr =~ s/\s*$//g;
-> +
-> +    my @bits = split / +/, $expr;
-> +
-> +    my $prefer = "GPL-2.0-or-later";
-> +    my @valid = qw(
-> +	LGPL-2.0-or-later
-> +	LGPL-2.1-or-later
-> +	GPL-2.0-only
-> +	LGPL-2.0-only
-> +	LGPL-2.0-only
-> +	BSD-2-Clause
-> +	BSD-3-Clause
-> +	MIT
-> +	);
-> +
-> +    my $nonpreferred = 0;
-> +    my @unknown = ();
-> +    foreach my $bit (@bits) {
-> +	if ($bit eq $prefer) {
-> +	    next;
-> +	}
-> +	if (grep /^$bit$/, @valid) {
-> +	    $nonpreferred = 1;
-> +	} else {
-> +	    push @unknown, $bit;
-> +	}
-> +    }
-> +    if (@unknown) {
-> +	ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
-> +	      "', valid choices for QEMU are:\n" . join("\n", $prefer, @valid));
-> +    }
-> +
-> +    if ($nonpreferred) {
-> +	WARN("Saw acceptable license '$origexpr' but note '$prefer' is preferred " .
-> +	     "for new files unless the code is derived from a source with an" .
-> +	     "existed declared license that must be followed.");
-
-Is it not preferred to contribute code under the BSD-3-clause? Based on 
-other items in the project, I was expecting we could make contributions 
-for hexagon w/BSD.  But those are exceptional cases and not to be 
-followed in the general case?
+Missing a check for host vector support.
 
 
-> +    }
-> +}
-> +
->   sub process {
->   	my $filename = shift;
->   
-> @@ -1641,6 +1702,11 @@ sub process {
->   		    }
->   		}
->   
-> +# Check SPDX-License-Identifier references a permitted license
-> +		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
-> +		    &checkspdx($realfile, $1);
-> +		}
-> +
->   # Check for wrappage within a valid hunk of the file
->   		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
->   			ERROR("patch seems to be corrupt (line wrapped?)\n" .
+r~
 
