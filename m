@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 655B9CFB459
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414C6CFB458
 	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtSC-00031S-5z; Mon, 07 Oct 2024 15:31:36 -0400
+	id 1sxtS0-00030B-QQ; Mon, 07 Oct 2024 15:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sxtSA-00031J-Sd
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:31:34 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1sxtRs-0002zO-Bx
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:31:17 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sxtS6-0006IG-Pg
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:31:34 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497FMeh3030896;
- Mon, 7 Oct 2024 19:31:28 GMT
+ id 1sxtRn-0006HD-Uh
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:31:15 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497FMe5A016440;
+ Mon, 7 Oct 2024 19:31:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=rWQUGzaYYjjPc24+B8uSNX0zcNvvG6DiiR2IZsk516s=; b=
- ANDRpl+L2+C+t0fUeIFZOGSTM1TS/1WeWUGjnGS37goELvafkQOuHpkHdesPzHvP
- nOQm3ldhXydit+eIIAkUCW/HLT6MEW9xLhwPOe11LZ1MJfhMSUN+hQNWT2VlbQvt
- LlU6cTOLTRmD6JwYiAILiEXed/u388b+r0bvOUxIuB8eqxxoaA5OiiCc1JwzxsQR
- ijIg1W0nNMTWg7FrJhkrZp/3r0qM80cs+1I2WmK8Au/KEYyOvbxMFbWv9bpi0dTd
- 64VpLlw+Ry6TKLRLI0eLmKsfZh641eS/jtp5bXG2wDckaLom3l1KoedvU/RWa74f
- OxwhsGc7tqQ6D1YVWyCOFA==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 423063m7as-1
+ corp-2023-11-20; bh=9iDHrmUVj9kWxgu2ByGItmKMe6pRh9g5pKLunX8K9qQ=; b=
+ JBrtyARHGvG5l+kl0ImG3mCXkuCvEP2gkZMsX/6G/tnZpXposWDtdb5zh/Tcb2nP
+ vOzigNEYEN23OpYOz7ndx88UAfy3xrgUBo57uijyML8T+zcGVGmK1TXvDiq7z99d
+ VQRYxMER11TbDErgePT0hgCX1Rw876URaeiM7oQPUeQwlJqfI0eZxzrtL21VgPTI
+ L8m39IYIg6Fe202YNKhICofXdQRAbJfJwsQ8OD3f5YGLfg5UfbLG0I+ongRm38+f
+ cNBdwt+0wuUukjstd1MkmceZIRp5ziqUcCCVhs4YdRGvTOx8ZT58nbN9wBa4Jz/k
+ Cn50pLDV50rypTIcgKNZSw==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42308dm6vv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 07 Oct 2024 19:31:27 +0000 (GMT)
+ Mon, 07 Oct 2024 19:31:04 +0000 (GMT)
 Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 497IGcab001184; Mon, 7 Oct 2024 19:31:26 GMT
-Received: from nam02-dm3-obe.outbound.protection.outlook.com
- (mail-dm3nam02lp2041.outbound.protection.outlook.com [104.47.56.41])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 422uw68jn6-1
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 497IjxNL023929; Mon, 7 Oct 2024 19:31:03 GMT
+Received: from nam02-sn1-obe.outbound.protection.outlook.com
+ (mail-sn1nam02lp2041.outbound.protection.outlook.com [104.47.57.41])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 422uwcgm36-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 07 Oct 2024 19:31:26 +0000
+ Mon, 07 Oct 2024 19:31:03 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UvsbW6AkNyDI/OdUZJM9iEgyqvtik8zzBPAaOHz+2Vo9kUdj1QxDA9LjJYtwmcdyVvoBpFiLYEn/7PhB6ubtEHxhNYnPPJqWnVbQc/O8V2BlsptBM8stw0cdW9cpe3+GFqG4gOj2ilhJQnp1JXDnBgoQ2zTa3nwFFf0QM3S5o9wHkou9kdVOthg3yF5xewD6lS/QOmoAoT5qCxIZYHcxQaaG31MSfEBdpa13JxN17yMX7dIVq8sCW6IGffeove+CrKHtJFXOMLsRTAR0MsQTSIN8bzHTgopL+XL9vNZ89VJnif0/65d+cPSb5tU3/6QKrp43lc8MZ6Z1HpicrCcyyw==
+ b=evX+4Wa1FZusWFMT7lHGvTsnnNm2ye5jp6GkWBRIZBwBI8v+L0I9uL+iirysqo3c7UW+JKTq4Uk6ppyOCzcjeaaPH1AMyTCAeTI4ETfBrEzLT5jDWvfMmFJj0MSUxFTRD2J3/BpsM171i7ZkOEjNioyPQgnKZ+5fuzgUeSetiV01rzExWxNACT/cTPVWpjy6I92g4mrEe0Is2bUHv70fRpWJ2PJo1gu9+mtVX0FxgXzKSKUo3Se28kPgLWQSQ1IZdvX0PmWjrDEbmZ67HRQyzdairF9P683ZZWI+oixi0PyW4o4Pmm8HZTvzFe1VD/6GhnYqgL+A9ovvJcgDvD70IA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rWQUGzaYYjjPc24+B8uSNX0zcNvvG6DiiR2IZsk516s=;
- b=rTuHZNTC/RZVuCvihVisQIsdUxxjLQu1yfa/DWl32GRIMv3tEtxr+YNHTkzXjwg8DhVVpc7JIoefC7YAdJyk7hCTZAvpanRJT7GuHTcGGYLBin86vsBih9XwAEpLvFTV+8ujT1zCEtculXZCkHyvrDmW5YJNzL7VmuhVAoEmwSO7TMR9eWzS/0I1dnZTBuTZsG8L60GPmsqp/cBzORdcUn/RtWXUnFYlqlXUc9FvzRxBIpUZevxFUxpY0wFcxELRFW5Tu0TohBG1d9AayWsz0oXVqptrNHFhEjyZafJHMt7D2RV6Ycad3tJBfGww11b5fIdS/pAv0EwLKxfBi5ILUQ==
+ bh=9iDHrmUVj9kWxgu2ByGItmKMe6pRh9g5pKLunX8K9qQ=;
+ b=XygQ3vo5nZ2YSkns3MM4RtOb2y7cMuWXZMht3WWTuoCkLrofgR3XiyAWGr7rK1GI3+ZJbq3oi5VPxWxjaBLU9SXlRucrUYNHqCI1VtpXhxhsNtyaoKUplj9SaG2r262QtKT8m6IY8lCWCJkF3hK21LQTLcrSn4tlO+xoNGcN5dI8OPJgz92RhlzYRiyKIsoV3HtByb5QFqVUxws9MIlH0qXCVdR1h0MyZnNZW0ZNcPc8OQ5jZX275DYec8Q4rJI8nr0i7Qjzql/DH/X+ja6pr2xvMWE9ZHcX2MVhceKjjclh3FxJBL1fGoj3JhT62wt6lWcrnU552/+F3CgNQNtpFQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rWQUGzaYYjjPc24+B8uSNX0zcNvvG6DiiR2IZsk516s=;
- b=rFop5sGRxSww+2C48oHLf9rQu+YeAacGU6QEk3LRp2dlqWMvBLOMUClDh+9rcmPsoMYXMsejL3j27PHav8hLmz6nOw7Fka/GsA5aDxk6wLSX9zlNzHdJAY2zNvIf9hto/Ya++R35OWoyqAeDq9X5A/7eWQM8f1tnU71/4aqnr80=
+ bh=9iDHrmUVj9kWxgu2ByGItmKMe6pRh9g5pKLunX8K9qQ=;
+ b=PvN6kenlifXkO1bpDZ7ReBnX8IOrs7xw04sph/Xf++phMPk0E23Otppp9RTE+ee3pC1WzkKCL/9I1ppYEE7J1BEyYEDJ3qCTYyd0QWkGAHU78N76WJdTSUvLbYvvYoH9/CwBBMXvYLDeH1JZynRShZdHMgGqqMR0fb3b4vGm1s0=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
  by DS7PR10MB4912.namprd10.prod.outlook.com (2603:10b6:5:3a1::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.22; Mon, 7 Oct
- 2024 19:31:23 +0000
+ 2024 19:31:00 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.8026.020; Mon, 7 Oct 2024
- 19:31:23 +0000
-Message-ID: <4ddfebeb-a1ec-44c4-9f73-a1618427a61d@oracle.com>
-Date: Mon, 7 Oct 2024 15:31:18 -0400
+ 19:31:00 +0000
+Message-ID: <7af9b8e7-1cc6-4ec0-b957-2116b43e1257@oracle.com>
+Date: Mon, 7 Oct 2024 15:30:58 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 09/13] migration: cpr-transfer save and load
+Subject: Re: [PATCH V2 02/13] migration: cpr-state
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
@@ -85,124 +85,124 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-10-git-send-email-steven.sistare@oracle.com>
- <ZwQQlFkguUCp7UH1@x1n>
+ <1727725244-105198-3-git-send-email-steven.sistare@oracle.com>
+ <ZwPsyRQVfmeNCt2z@x1n>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
 Organization: Oracle Corporation
-In-Reply-To: <ZwQQlFkguUCp7UH1@x1n>
+In-Reply-To: <ZwPsyRQVfmeNCt2z@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR08CA0029.namprd08.prod.outlook.com
- (2603:10b6:a03:100::42) To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: BLAPR03CA0087.namprd03.prod.outlook.com
+ (2603:10b6:208:329::32) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DS7PR10MB4912:EE_
-X-MS-Office365-Filtering-Correlation-Id: b07c546c-96d6-40cf-ae3f-08dce706a0fc
+X-MS-Office365-Filtering-Correlation-Id: 7216ec23-6f1f-4174-0c64-08dce706933f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dndnWGJCMDA3aHhjWG41LzJtMUw5ZGExbkJPK1BBUkVOZ2haSFQwM01WMEpB?=
- =?utf-8?B?bmI1ZFUvRU5KM05Fb3VWVERGYnFPWklpNEcwd0FZY2pGSmVaVW8rRFZ2MFlJ?=
- =?utf-8?B?RjIvbFJsdkNDL1RvZUgwTUd2NkZZMkhIZ2gvSjhtTkNNVm5PbVpSSzFaOTlQ?=
- =?utf-8?B?UU5sRnNjbzJuS0ZNWmNZcE1qYnZNa3Z4ZXlaU1EzbXZ6S3c4cEFyOGlaZjNS?=
- =?utf-8?B?dVhYQ1ZWK21sMS8wUW1jMVQrTG9YRzFvRUs0cytxL0ZaOW5oQTFMVEJSMjVE?=
- =?utf-8?B?MEVneVpHcDVVNUJxaE1JVk5JZmY1ay9xa2ZqUk12bUcxN2VVT0RCaCtWYzhS?=
- =?utf-8?B?RGFSY0ZuTFhVS0ZHaE9HdEJCcm9NZit4cDdwQk8zVVphV0w2aTZTcXF5VEhB?=
- =?utf-8?B?ZDY5QzZSTjlDTTNiaCtxWnNEWUhGSnU4VVBuWlgvYmVJdVRNUSs5SlJNcmVN?=
- =?utf-8?B?WGtRclpaeUtkQWM1TFRzRG5WYXJVRTZJeFBPOFJHM3h5aVVLbU54b0t0WnVt?=
- =?utf-8?B?ZzBKTUwxTCtkY3VCZ0J3cnJxdDFnSEQxMXFtOUJxUCt6RU1qcEoxTzVZejUz?=
- =?utf-8?B?K1M3bnhSUzJiSmZMZHdQQWxxeURxUWcyeXVwRVk4dFJwRU9oMElkMytPeXVu?=
- =?utf-8?B?UG9rRGkrWE02V1E1YnZkNDM4T0VVcUplaUV4bGkxS3pXKzBHTjVJanJhT3pz?=
- =?utf-8?B?bnRBdjZ0eXY3dSt2MVBQQVNKdUVBMG1YeUVhcCtYU1duS1E1cSs4c21EaTZE?=
- =?utf-8?B?Nmd6Z0c5V3pqc0UzdkprM3FSWWprZG03TVoxQXRGZHZKV0llNlVQV3ZVM05L?=
- =?utf-8?B?NGhzdlg3dGE2N1prM0FsNjlDVmw4OGlMakNiK21RNVhFWlFTa1dlKzc2RTFQ?=
- =?utf-8?B?SVNtZ1k5amRGZHpUWGdDbUFYUVhHOG1rdnBzVnROS3l5OVg3d2tHbk9uUGJ5?=
- =?utf-8?B?cmt5emlXN2xEVzlnRjc3ejlnSlk3eStuZDVYdlJiUnlLVzVoQzVWbkxzRzlF?=
- =?utf-8?B?bFphekJsN3FIVnNsYStsSkhBQ25pcU5WNmQraXVibzhMaytCb3pVYkxhVHJy?=
- =?utf-8?B?Y0VPYmM0VStBR3htNUE2N29qL1N3K05FTm5zN01oU3JOcXVVMi95SEk3bDBX?=
- =?utf-8?B?REp4MWVUUFowNXQzVnFLMjBLSkUxYmxvd1FnYWoza29jeU9oV3JRbzh1QVlo?=
- =?utf-8?B?TVduWUVWQ2lGZVVON3VyYnBxT1Z1NGw2aHQwTlVBTWdUMWQ1eWxib2ZjRDcr?=
- =?utf-8?B?V2o0aXpzSU5MdEVsT0pVK1dnL2dST21KN3FlSEJLNmpsdlJieGNBVU5HSUJZ?=
- =?utf-8?B?K3RPbVcyOW1UdVQvZlJFY3VGNUFQelVRUmhaYjQ1UUMwNDVVVzczdUFXb25X?=
- =?utf-8?B?cUcwQjFpVW8rMDlKOGlGWTBjMGU5b3JsV2tpa29PMDNEY3loZ0ROaEtuaWJ2?=
- =?utf-8?B?c0hvTXBhbHUxaWd3ajZnU2pDdmNMNmRQcGdpRENGbWhhbDNUWm1xalVGWjZu?=
- =?utf-8?B?aTZ4WnZyUjcybmxjTXB3NzVzUGk1QnlROVNPbk9GNTFiK3lMeG9DbFhKaDdj?=
- =?utf-8?B?VnRmczM3K1JxQXVCQlFtZ0Y0UitxY3hoYnJZZFBYdTVBdmlENGxScVlmQmd6?=
- =?utf-8?B?OG5lZ1NnNUJPK3RTRGlJNTVMWE51NEdMaUdyNnJueHplT2RJOURidlFrU1p4?=
- =?utf-8?B?SUdydkk0R1BVeXhPTHBwdnpsMm5nSjUyRk9xVWw2WEptcVlmSzFmTS9RPT0=?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OW1RN1g1SDVaS2VMazZaRDRjeGR1U1RSdjMvY1JScFE5RFFGMUx3RHBzbkdR?=
+ =?utf-8?B?QU1qdE1uVnJ3aEx6WFpQeFRVczRqK0VmZGkyUUEvS1pWdmdzQnQ5Wnh0OEls?=
+ =?utf-8?B?ZUtVN1NaSWdMMGVIbk01L3V4ODVscVAvYXQwNVcvNlVXZnBJK1J6dTRTbFJW?=
+ =?utf-8?B?Y3U4RnJyTnowQzk3SDlWbHYvVDNoRk1sZmYwM3A2TDMwNzhsUCtLYjJWcE9j?=
+ =?utf-8?B?U2pyMDZ5K0wrR2pqWE0vVDl1Z0NHaVFMd2NUOGRLMkpMZmlycXF4TTAwTmZt?=
+ =?utf-8?B?UEFCbCtNbXJlZXo2bWhQU0JqNDV2QllwOGN5RnBUd2xGeER2Vi9XQnNaMUdq?=
+ =?utf-8?B?T1JxRHhWVDIwWGV6bTQrcDlZeDhWcHFmdVNEMkdsQjhrcThuSXBSa0paY1Z6?=
+ =?utf-8?B?ek41bEJnQ016YnVvdnlLOXdPVXFQcWVFTzdYOEZyMDI5RnQwZmx0RzBSSlN2?=
+ =?utf-8?B?K2FSWExFZVZCK2lJS294d2dQbk0xcWcxaHBPd1EycFhQdUhFdjJENjY2T0w1?=
+ =?utf-8?B?MitnZG00MWVVYk9SUHduRmM2ckhWaHAxY3Axc2l6NStaSm9mc0NGSGtqUWZj?=
+ =?utf-8?B?Uk9Wa2taajJaMWNyemJzc2g4K1BXbmxnVEN2WnEvRzFnQzVSU0YwU1l3akR0?=
+ =?utf-8?B?OEllWkRRV3FpeHFWenVkMjFURFRNdUtNUW5FV04rMlFHMld0K3V2bTV6dFJI?=
+ =?utf-8?B?cUNpcU1nNU1ReXM5U0N5L3ltWHc5UmorYVBYVTdXdWRVcmZNUE9YVUxYbFJL?=
+ =?utf-8?B?cmY2YzhuVnhiNG9QSlpqN0Ivb1hVaElKWWZmc3lDNVYxekgwQjgrTE5VUzdI?=
+ =?utf-8?B?ZjFzSE93Z3RJM1Z3V2xVQThra3hyWVBEem1Ua215YjU5UUpuSFRGdGlNQ1Bz?=
+ =?utf-8?B?elkwaUh4cW1waTNLOS9tSWszK082c2R1R0hVVG1VbjdrU1M4R2sxT2VXM2po?=
+ =?utf-8?B?eFFvMnVwaHlidUFuTUdHcVVjRXphWDdPdTVoNGVxN2VoMDN3eWhsRGE0WXY1?=
+ =?utf-8?B?UW9hbHBUdkhlU2luTnZSZVBlOG5MMWlvSEl3TXQrSzllcmYrVCtJcnFuL3R1?=
+ =?utf-8?B?WkQ2TnpQSll1dkN6L3NhUVd2RkI5eUhQQ1A3MWxlOFg0QlpIYXZBUUo1NU0y?=
+ =?utf-8?B?M1hZQXpYRzNEMjRieWhEZUNIbzdjODNCaU56czJxbWhJN3lKNFYyOHFJbVpw?=
+ =?utf-8?B?WUxPQkdtMTBwWHl6aE5oalVjTTIxYVlHUU5vSGkreXVrRmpmSzJ1SS9LbUly?=
+ =?utf-8?B?bGFLTWdOOFBHZWZLQXFOT05DNFlRak81clRyZ1BzS0dFV2RwVG4yaUFyeHAr?=
+ =?utf-8?B?VSs4ZXJoV2N3anp2UnMydktNYTVzRU8zMU9ibHN2MXUvUm9XNjNxMUdodkU0?=
+ =?utf-8?B?emZaUFJtUnA4TExQRW5oUnJUZmtEQ05WZUxKVVlGMi83TE5wZndBRXpVekYz?=
+ =?utf-8?B?endLUmJKQ0o1N3A3TEpGeWpBcVdMK1RJMGkvRGtUZjlXQ1RXb2s5YXo3QWNH?=
+ =?utf-8?B?c0tGSG16RWlIZnQ5WlpTTGpVLzhQR1huZXRid1FicnV5aEFVQ2g5cE9jbWxS?=
+ =?utf-8?B?aEgwSWZQeGFRNk5mTlRpYnVrSlFTWlZIWFIvYXdacjZ6dGl2OUw4ZTRYUHh2?=
+ =?utf-8?B?QUNwTmVwbk1FYnJZTkJEc0NNTjNNMlVMM2Q0WDNocml4TUpMNC9aNmtlYVgx?=
+ =?utf-8?B?WUtsbmx6K2xPVWhRb0JNWi9Fc2FxbjIzU0cwQ2FnVHhVelA3cVU0c29nPT0=?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Tnc2bEl0VGptbWpHY1ovRHRUZWVWb01NYkRwOUZ2UkJ4aTdNQjhXemdyWUV2?=
- =?utf-8?B?ZTYzME94dStwUnpDVmRVNmVOQW0wZWNkMWs2S2c5ZlpoTHltQkdYU2hGbTVY?=
- =?utf-8?B?QkRGK285ZzlpQ3ZJNFJVUDhRSjJJQm5WcDNsaE41L1pPL1VWTVdEajdBZVBR?=
- =?utf-8?B?cFVUVWlJVmRvYllNb1M0elhJWTB1QmQ0N3lNTmtGbDlsaS9ST2FucXNqL3ZF?=
- =?utf-8?B?dXIvNy9NeTZCdHAwVThCTjFDRDNQbXNIRzkrYThYNWhLWTR1NHVCVjZCY1NZ?=
- =?utf-8?B?NTFqWXRwNXFFUlhMZlBZVURJd2ZRYlVJWGd3SjNWdlV1YkROWE1HNHNZS08y?=
- =?utf-8?B?Q3hPaURJWjlnS2xCOGZxTGlLVHRGLzEyMlpGa1VQRW15aTZ0ejJjb0NZNXQ1?=
- =?utf-8?B?KytFSmh5V3BBQk9aTm1YUkwvaml4K2JiNldINFQ2OFVPQUF4Rm5Wd2dRcVl6?=
- =?utf-8?B?Y3FjVW9QYXIycXpEWlJwOVRaekZJY0c1RXdtZ2pDR1gvNXdZeThQeTE1Nzk3?=
- =?utf-8?B?UlFYODlnR0ZJSjlQZys4NkZ5UjkyLy83ZTFTOFpPOTNjUmllai9BSGR0MVZ3?=
- =?utf-8?B?SVZObEFQVHZNbUJDSHMwQkwvckdGNU9WRUZVVkJjTVoxOHRObEtpZU8yYlR4?=
- =?utf-8?B?UEx2Snd3UzY1amlzbzk2V25sUUNXR2hiQi9IZFhJV095UmN4ZUF1bk9McnhH?=
- =?utf-8?B?cjZMOVVhMHczUnBpZGUyUEpEL040eHU2akgxYnlPaFMyWkVqc1JmZFVESFNz?=
- =?utf-8?B?bVVyNzc5akpMYlhaYVJzK09FWktNNnJDYVZuY1RJWDErc0FLZzBiT3Y4cEV0?=
- =?utf-8?B?NXFmSzlxekdaRWF1WmR0bTlDR0tWRnZ2NmlzR1B4SUFYRDJrKzNaQWFjeEpU?=
- =?utf-8?B?MndyclpFaXZ2VE9tNU5LdTd5VFNMa3Z4V3kvaDU0cFBUU1VRVGdBNkZ6UkQ1?=
- =?utf-8?B?Zk5xUGFkRHBzVUkxTVhqbXo1YXB6U1c1Y0Z5ZlFoQnlKUFEvQklmSTZabjN6?=
- =?utf-8?B?UW96Uy9RR2xJN3Z5TGdzNlhmQlljSlhCM1lxSUhxVWJyckR5K2tWNThIa0o4?=
- =?utf-8?B?YzQwbTJwUlY1VG1aMDVSR2VtVzkzNU1VbkJ5blYrVUJYQ21GUWxiNUhjeWl0?=
- =?utf-8?B?OFRPSnU5TkYxcUpmd04zQThOeHI4Tjk1UWRFSnNUK09oS1IrN2x5M0huMy94?=
- =?utf-8?B?dmR6aWc5a3BCcnVtT0t2MzZieURuckRGUkhDSEkvRzlOeDJLc1dzYlQ4QWZ0?=
- =?utf-8?B?aUM4YkJmZ08xajhLNEYwckxqazM0dzBGYWRxTUZybDVJdmRsMi83ZVN4Z0gy?=
- =?utf-8?B?RGJTWGVvd0c1VWxtNWdadktsM3UzQ3N6UGx4dDVLTTZ4RDVBRFZsMGprczFO?=
- =?utf-8?B?QmdzVmtYUEplQVNjSGRZaTY0b3ByNGt1bXVkOGVtVGRCMktSU2t4T1dqdTIv?=
- =?utf-8?B?TldKRUoydm9GRW5meldVeUlhbVIwU1JaQVBqang4THBPeWVFVHpSMWU3UFZ3?=
- =?utf-8?B?cjJnWXFodS9YZ3VFS0JhWlZuN2pkYnNHSjRZYmVDUnYzd1g0eE5oLzJIb3l2?=
- =?utf-8?B?akhIT1ZVZ2N4dlNNNVZsTXVKVVFJWlVubUpleWgzTkJGRDNHUmtSUk1hd3Nl?=
- =?utf-8?B?ZHZuMi9LaHJSTHJodlJqYzFKa1JzVW5aUmVaMDNobUZQQThMNU85NXhDNjBL?=
- =?utf-8?B?ZmVJU2kza2Rpd21NWExkYUxHZElyMzg5azNyaU9WUTk0OWUrOTFiemY3NTIy?=
- =?utf-8?B?QlRYT2tNb2NVZHFxemZPcTcydlJkdUJKdHpEdUduZldMbWhra2lWUXlmWmli?=
- =?utf-8?B?SWVpRzgwWkZXWVdhc2JTNGJySVVkcDZWbjBjRE9ISlJLYkZWRnI2UkNSaFpa?=
- =?utf-8?B?WlJicDMyTlZLUXJXaENjazFuYkt0OFVFd1dhNi9QS0FUSmtNcERnZ0M2OHlQ?=
- =?utf-8?B?blZ0a1VNWkxzRm9uVG1pYXV2ZVlSTnBRTG5qZ1VtZ294WGVLRUVjNnBEMitQ?=
- =?utf-8?B?VWZsZTZPQ1hIMjF3V01sdVFleDRydnM3dzVTMk8vb1hHeGJHWEoybzBXaDRw?=
- =?utf-8?B?b1NFcUZGWW1UU3pSenBRc1ZUNWlSMVNlVkk2bHF4UlR0WnlYOXRRUHhvTDli?=
- =?utf-8?B?L29YbkZaeXN6K2RVRWJnY3RCMHVaZUxxUElITGxTdHhzWDZEbXF4azJBMGZC?=
- =?utf-8?B?Unc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cWRZOC9zUDIzYm1jZHphUThiczVWYlg2dHdsM0RWcTR4SVhqZ0ZIYit0SnR2?=
+ =?utf-8?B?dlhCdi9HQjMwd2tBV0ZLK0c5cmpjVlAwWnkxa3VnTmFYQUplQW5jRTNBRWgx?=
+ =?utf-8?B?aVpOZ1NGZUx1MlNibnVmVnJIZzc3a05ldExCazgyNjhmNjVmY3U0bGRnV1F2?=
+ =?utf-8?B?a1d2bmhDNVRSd3hOSW1Vc0ZtSld6QjVLSmwybW9KaTFVTExhNGJ0NnVNV3F4?=
+ =?utf-8?B?UytVOTJxWGhSaFpsVWFTT1c2TW9nbVJpREZ3ckVJMmxmRXJwUzRsU2lEWU4z?=
+ =?utf-8?B?RVRZVHZKTnNuTGQwNWVxd2pWZmgva2VDWkREMHV0M0UzQlVuZGZVNEJvWlpE?=
+ =?utf-8?B?bmVndnpERGxOVmd2OXp6VmdDL09nVFVxYXRaYkI0c3NhandtK211SWtOS00w?=
+ =?utf-8?B?ZnFTL3hUaFJwd0Fock5nQmphTW9GNUo1YkZ2UGlSUDZMUFBUbWdhZDdSUWoz?=
+ =?utf-8?B?NG1tMitONUdrQ1JmbEQvaFNGNW1STjFMTG9XK3UzN1BQNVlLMEJtaWpKcENG?=
+ =?utf-8?B?WlJzUXBSUmRFcFFXSm1qWkJDTVNUSHRDRlYzaUlFdmh2YVlWcHc2OGI2VUNu?=
+ =?utf-8?B?b2VlSis1TXZ2aHp2Slk4MTBHNVhhdDV2SENwNWNpMjB1N0dlbDdOeDdkb1l0?=
+ =?utf-8?B?TUFuMTIwRkVuV0tNRjRKS2FUOTVYTC9rMlgzM3c0enpTVWJzbXJmUkJhNzV2?=
+ =?utf-8?B?dm1mQ0RzbXZQRWZDbm9kN3BVMnlKbERwcHVqNkVDZTZCS2V5c1FlNnI4ME1o?=
+ =?utf-8?B?dWVEMElITXZDQ3NtZ053SzNHNVdVOHdWVVB6VzExdnBLTUJiRkZHUVFoemN3?=
+ =?utf-8?B?TmdLQTlQL3BLZmthSWpzY2ZXb085WXArNXh6QlA0aGZhVFEveFZLVm11a2dU?=
+ =?utf-8?B?NlRpdmV3STRJUlRLU0JpT3Rsd2xMdmRGeGhtSG1IN2lBakZtTHA5Nlhpd3ZG?=
+ =?utf-8?B?bk5DUUE4N0xhR1N5WTFId2k0WDAxcC9IQ0I2RW41bFJxSEFFYmVqd3VHVTZj?=
+ =?utf-8?B?ODVPdHloRnYvQmxHdGRuZ0d2QjBUVnI4SU1lRjhycW5xSHhLaTQ2UVRGbmp1?=
+ =?utf-8?B?RUNSakFPRmVoa0F2ZndGeGJ0a20rYzdTV2g0WWRhRDYxRldTalVIUENoQkUv?=
+ =?utf-8?B?aC80bnNkT2ZlYVd4OWFSSEZiT2lTVHVPZHhaamg4cTVGWUxNdDZhUU1JbjZu?=
+ =?utf-8?B?RENZMy84a1Q2ZjNvNTc1Q1ViUXdjSm5oRmJaM2laNlFCR05ycE9lUjJpUGdo?=
+ =?utf-8?B?STJiMFRpYnRTQzJmREFYRm1pdGRCZktpNVZZdmx1SHBRT0h3Qi94WlluSGJI?=
+ =?utf-8?B?djJkeGhOUWd6NlJSNmM4dkxXSnBKcnI2NGtsUnJmOE1UTnZvWlFGQ2lSVURz?=
+ =?utf-8?B?eFYrTnRwSUMzUHJjT083YXc3QnRGR3h2bEZHZ1YzU1JVTXdLSURvbDRHVkZu?=
+ =?utf-8?B?MXdtY3B6a3Q2clJGMmk2YUhRRGZRenM3ckZCRjRZTUZCNU1hT1BPdHRMOWY2?=
+ =?utf-8?B?dVczUFR6L0gweUVtRTRsNUM3ZFlqS2JkalhuRktjUlYvN0FCNzNISk0rR01W?=
+ =?utf-8?B?ZGdmL3p6RDBjNEFmcFRZVE5VV1A2eklRcFJIdVQ1akx1WXFvbEJHR1Vkelh6?=
+ =?utf-8?B?dlBrN1VFUUxnT1J4UnBVR2JmM1lJc0s1S3AxN2dZbFp4ZDQ2SktZUXJqd2lC?=
+ =?utf-8?B?bC9KNHM2TTE1c0dVYy9kOXp3MGhrb3BENTVhQUZSU0hOcHFHQTlEWEE1aUJ1?=
+ =?utf-8?B?ajJOMFo3Rnd2VHNvUjI5aTZDWVAyeXNXa012c0RNVEMreU5EMEh3d2FLaXc2?=
+ =?utf-8?B?Z1VOUGdGNWgrOSt4dGU0M2htOExDcEtkcXdVU3RDajJrZ3ZpUitIdW9TY0V6?=
+ =?utf-8?B?ZDBJN2paRi8ycTNEZ1ZwTlhSRExMOWlzbHF2emgyTHJ0RWlzNHFYM1BlZldj?=
+ =?utf-8?B?K3owUjl4bkdUaVQ1SHlOc1l3a3F4MWtQdE5NN09kWEtaS0wrNnNSNnMrOEtn?=
+ =?utf-8?B?Yk5scWpLM0pQY2w1bWwvanBYQytCWklsU0k4SURUTlpWRTRyZVRzWFNUKzg1?=
+ =?utf-8?B?L00yeWgvc0ZuRTNzcFR6UUpqVDFybytieUdDU3JnNmY2UEhNU291QzJBbmNs?=
+ =?utf-8?B?YUI5ZkVyTXZzYkpjemMybTRiZXFRQkR1a01KYjgzOEE1T2c1T0JvdEM4MTBL?=
+ =?utf-8?B?MkE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: A6NbWCHIGf/VRY8fgUyZIFnT+TpnZn/NeTjIKIwedeNfIEqGRW3T58byoEROGFBNFdDdDrL0uQc4HWQdvHq1OrXQKw61LQff588C8pzMkYyTNsMeDDAtygD1jNdU+eRTh19qaJ1l5UL7g9aarOn0QXIRedraH/MG4NycIPHFzqVEMnG4MxLTXz1a313TLYwDVM9CfcmLx9W/CIdTWpvAPZiDUnpS4uDAudU8YJkdZQhs4nDEa87/hweRNPHl7RA1S1lfLe+8u2+KpNTEznj0fhOMWGhZ2FfNVlhQTyW6ioClR9QeF/GxLlKm47BOwo7OgEJ2HV7VLbUbFWD9qJT/c5AdkvHvI7NshTUVAkO3DUA0bTwZBvfufblEqm4MeXOtyc+42cM3QyH6y3qVTgSUfhA96EPMeQnw5ao10WFUy3WErEWpv3e1kiQSPysNJ4nV0E8lk0vT5G7s/CL3kxH0Oq6N1s3AtygN8jT/oT0PyKDlO5SNCTmVNTeAPF9X1wlsaNbo7u78q7yKuskjfxgaUis8jVReIHDoSULBDjY5Q+iY4XiOpYEUqSF39/G0CVqHbejitIEUi//6/er/hFw23ZSwCnlIYpSOs11lrT22YbM=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: kn4DeZQKWnsQaj9+C0CAkvW06nuLlmgYtFOex7LT9dMgsZhIdCjcJW8miEqidjHmlbdGktEkviJpzB7mr4PCvj9bPep/WSxaiJFbF/3p5qL46Gz5IbQ5paHBdwIb5zFCR2hd89RTt58qAMVam6DF6EVVSW09hGkPJiuM03KAm8gRcyV7tdhEV55TCm7M7PyPf00hZyQZsIrfjfTDMAGscqhimzVss60j0//7uy4qjgjj6La5aJ/MDuPWOUzuXNsqFj4WKK7LYD1aaffuMJh7XxL+e/V7lkfypQxApdgXx9mGuErYD5RgRGcQHTXu5qDZpShdwnaFKMIof78ML35m2LJPmvayr0oPdQQnkS58YNkgEkD5HdqAIMRf1dzk9ic76qClb7914sWE/rNqkwzbaOTAIRZWyTJrF5NAyNZWSnJuTBQLX0LpUti/juYebZZZkvZ1vsWnZZzkJ65cl+cibPa9rn9SkeyuTzeJ+actXSUpeMLExc8DvAJ1G1mxofbI8x5LOdceFRHmq2A6pMTPGvohZLV0sj0IH4/UMa6g3V4hdIw0lSpFCKO88VooCEwmlbKeZnMhySyycBbLPy2AlJRkwuwuqAQZfvukFMcTCPc=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b07c546c-96d6-40cf-ae3f-08dce706a0fc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7216ec23-6f1f-4174-0c64-08dce706933f
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2024 19:31:23.8168 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2024 19:31:00.6974 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BvowwHNLiiScZS13Dp+YUnzz7wcokRGzVW96fCkaJ8Yzsbj8HPwy5usUS3ORkQq/FQrmwfBUslBlF21zKgD7InDXHtTBh1FqrMapxx2YwgQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: OOedB0T/OE/07/PaPrl0JQZJLNH61CBAGgKKXcyeKh9MEo9eE49g9z4zliOeyewlGSAX//vUecDFJWaMFeGUlansawgXwO7Oh0Ioqefzvag=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB4912
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-07_12,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 adultscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxlogscore=999
+ spamscore=0 adultscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410070134
-X-Proofpoint-ORIG-GUID: UyThEdynzuxjVrRycDwfTUsI5lajnQnE
-X-Proofpoint-GUID: UyThEdynzuxjVrRycDwfTUsI5lajnQnE
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: wDLdfhHvKG2O33NZQM0DQ72yrQB09j1Y
+X-Proofpoint-GUID: wDLdfhHvKG2O33NZQM0DQ72yrQB09j1Y
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -220,50 +220,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/2024 12:47 PM, Peter Xu wrote:
-> On Mon, Sep 30, 2024 at 12:40:40PM -0700, Steve Sistare wrote:
->> Add functions to create a QEMUFile based on a unix URI, for saving or
->> loading, for use by cpr-transfer mode to preserve CPR state.
+On 10/7/2024 10:14 AM, Peter Xu wrote:
+> On Mon, Sep 30, 2024 at 12:40:33PM -0700, Steve Sistare wrote:
+>> CPR must save state that is needed after QEMU is restarted, when devices
+>> are realized.  Thus the extra state cannot be saved in the migration stream,
+>> as objects must already exist before that stream can be loaded.  Instead,
+>> define auxilliary state structures and vmstate descriptions, not associated
+>> with any registered object, and serialize the aux state to a cpr-specific
+>> stream in cpr_state_save.  Deserialize in cpr_state_load after QEMU
+>> restarts, before devices are realized.
+>>
+>> Provide accessors for clients to register file descriptors for saving.
+>> The mechanism for passing the fd's to the new process will be specific
+>> to each migration mode, and added in subsequent patches.
 >>
 >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 > 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Only two trivial comments below.
 > 
-> There're a few extra newlines below, though, which could be removed.
-
-I added the extra lines for readability.  They separate multi-line conditional
-expressions from the body that follows, and separate one if-then-else body
-from the next body.
-
-- Steve
-
 >> ---
->>   include/migration/cpr.h  |  3 ++
->>   migration/cpr-transfer.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
->>   migration/meson.build    |  1 +
->>   3 files changed, 85 insertions(+)
->>   create mode 100644 migration/cpr-transfer.c
+>>   include/migration/cpr.h |  26 ++++++
+>>   migration/cpr.c         | 217 ++++++++++++++++++++++++++++++++++++++++++++++++
+>>   migration/meson.build   |   1 +
+>>   migration/migration.c   |   6 ++
+>>   migration/trace-events  |   5 ++
+>>   system/vl.c             |   7 ++
+>>   6 files changed, 262 insertions(+)
+>>   create mode 100644 include/migration/cpr.h
+>>   create mode 100644 migration/cpr.c
 >>
 >> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->> index ac7a63e..51c19ed 100644
->> --- a/include/migration/cpr.h
->> +++ b/include/migration/cpr.h
->> @@ -30,4 +30,7 @@ int cpr_state_load(Error **errp);
->>   void cpr_state_close(void);
->>   struct QIOChannel *cpr_state_ioc(void);
->>   
->> +QEMUFile *cpr_transfer_output(const char *uri, Error **errp);
->> +QEMUFile *cpr_transfer_input(const char *uri, Error **errp);
->> +
->>   #endif
->> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
 >> new file mode 100644
->> index 0000000..fb9ecd8
+>> index 0000000..e7b898b
 >> --- /dev/null
->> +++ b/migration/cpr-transfer.c
->> @@ -0,0 +1,81 @@
+>> +++ b/include/migration/cpr.h
+>> @@ -0,0 +1,26 @@
 >> +/*
->> + * Copyright (c) 2022, 2024 Oracle and/or its affiliates.
+>> + * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory.
+>> + */
+>> +
+>> +#ifndef MIGRATION_CPR_H
+>> +#define MIGRATION_CPR_H
+>> +
+>> +#define QEMU_CPR_FILE_MAGIC     0x51435052
+>> +#define QEMU_CPR_FILE_VERSION   0x00000001
+>> +
+>> +typedef int (*cpr_walk_fd_cb)(int fd);
+>> +void cpr_save_fd(const char *name, int id, int fd);
+>> +void cpr_delete_fd(const char *name, int id);
+>> +int cpr_find_fd(const char *name, int id);
+>> +int cpr_walk_fd(cpr_walk_fd_cb cb);
+>> +void cpr_resave_fd(const char *name, int id, int fd);
+>> +
+>> +int cpr_state_save(Error **errp);
+>> +int cpr_state_load(Error **errp);
+>> +void cpr_state_close(void);
+>> +struct QIOChannel *cpr_state_ioc(void);
+>> +
+>> +#endif
+>> diff --git a/migration/cpr.c b/migration/cpr.c
+>> new file mode 100644
+>> index 0000000..e50fc75
+>> --- /dev/null
+>> +++ b/migration/cpr.c
+>> @@ -0,0 +1,217 @@
+>> +/*
+>> + * Copyright (c) 2021-2024 Oracle and/or its affiliates.
 >> + *
 >> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
 >> + * See the COPYING file in the top-level directory.
@@ -271,102 +297,315 @@ from the next body.
 >> +
 >> +#include "qemu/osdep.h"
 >> +#include "qapi/error.h"
->> +#include "io/channel-file.h"
->> +#include "io/channel-socket.h"
->> +#include "io/net-listener.h"
 >> +#include "migration/cpr.h"
->> +#include "migration/migration.h"
->> +#include "migration/savevm.h"
+>> +#include "migration/misc.h"
 >> +#include "migration/qemu-file.h"
+>> +#include "migration/savevm.h"
 >> +#include "migration/vmstate.h"
+>> +#include "sysemu/runstate.h"
+>> +#include "trace.h"
 >> +
->> +QEMUFile *cpr_transfer_output(const char *uri, Error **errp)
+>> +/*************************************************************************/
+>> +/* cpr state container for all information to be saved. */
+>> +
+>> +typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+>> +
+>> +typedef struct CprState {
+>> +    CprFdList fds;
+>> +} CprState;
+>> +
+>> +static CprState cpr_state;
+>> +
+>> +/****************************************************************************/
+>> +
+>> +typedef struct CprFd {
+>> +    char *name;
+>> +    unsigned int namelen;
+>> +    int id;
+>> +    int fd;
+>> +    QLIST_ENTRY(CprFd) next;
+>> +} CprFd;
+>> +
+>> +static const VMStateDescription vmstate_cpr_fd = {
+>> +    .name = "cpr fd",
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .fields = (VMStateField[]) {
+>> +        VMSTATE_UINT32(namelen, CprFd),
+>> +        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+>> +        VMSTATE_INT32(id, CprFd),
+>> +        VMSTATE_INT32(fd, CprFd),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>> +void cpr_save_fd(const char *name, int id, int fd)
 >> +{
->> +    g_autoptr(MigrationChannel) channel = NULL;
->> +    QIOChannel *ioc;
+>> +    CprFd *elem = g_new0(CprFd, 1);
 >> +
->> +    if (!migrate_uri_parse(uri, &channel, errp)) {
->> +        return NULL;
->> +    }
->> +
->> +    if (channel->addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
->> +        channel->addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
->> +
-> 
-> here
-> 
->> +        QIOChannelSocket *sioc = qio_channel_socket_new();
->> +        SocketAddress *saddr = &channel->addr->u.socket;
->> +
->> +        if (qio_channel_socket_connect_sync(sioc, saddr, errp)) {
->> +            object_unref(OBJECT(sioc));
->> +            return NULL;
->> +        }
->> +        ioc = QIO_CHANNEL(sioc);
->> +
-> 
-> here
-> 
->> +    } else {
->> +        error_setg(errp, "bad cpr-uri %s; must be unix:", uri);
->> +        return NULL;
->> +    }
->> +
->> +    qio_channel_set_name(ioc, "cpr-out");
->> +    return qemu_file_new_output(ioc);
+>> +    trace_cpr_save_fd(name, id, fd);
+>> +    elem->name = g_strdup(name);
+>> +    elem->namelen = strlen(name) + 1;
+>> +    elem->id = id;
+>> +    elem->fd = fd;
+>> +    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
 >> +}
 >> +
->> +QEMUFile *cpr_transfer_input(const char *uri, Error **errp)
+>> +static CprFd *find_fd(CprFdList *head, const char *name, int id)
 >> +{
->> +    g_autoptr(MigrationChannel) channel = NULL;
->> +    QIOChannel *ioc;
+>> +    CprFd *elem;
 >> +
->> +    if (!migrate_uri_parse(uri, &channel, errp)) {
->> +        return NULL;
->> +    }
->> +
->> +    if (channel->addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
->> +        channel->addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
->> +
-> 
-> here
-> 
->> +        QIOChannelSocket *sioc;
->> +        SocketAddress *saddr = &channel->addr->u.socket;
->> +        QIONetListener *listener = qio_net_listener_new();
->> +
->> +        qio_net_listener_set_name(listener, "cpr-socket-listener");
->> +        if (qio_net_listener_open_sync(listener, saddr, 1, errp) < 0) {
->> +            object_unref(OBJECT(listener));
->> +            return NULL;
+>> +    QLIST_FOREACH(elem, head, next) {
+>> +        if (!strcmp(elem->name, name) && elem->id == id) {
+>> +            return elem;
 >> +        }
+>> +    }
+>> +    return NULL;
+>> +}
 >> +
->> +        sioc = qio_net_listener_wait_client(listener);
->> +        ioc = QIO_CHANNEL(sioc);
+>> +void cpr_delete_fd(const char *name, int id)
+>> +{
+>> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
 >> +
-> 
-> here
-> 
->> +    } else {
->> +        error_setg(errp, "bad cpr-uri %s; must be unix:", uri);
->> +        return NULL;
+>> +    if (elem) {
+>> +        QLIST_REMOVE(elem, next);
+>> +        g_free(elem->name);
+>> +        g_free(elem);
 >> +    }
 >> +
->> +    qio_channel_set_name(ioc, "cpr-in");
->> +    return qemu_file_new_input(ioc);
+>> +    trace_cpr_delete_fd(name, id);
+>> +}
+>> +
+>> +int cpr_find_fd(const char *name, int id)
+>> +{
+>> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
+>> +    int fd = elem ? elem->fd : -1;
+>> +
+>> +    trace_cpr_find_fd(name, id, fd);
+>> +    return fd;
+>> +}
+>> +
+>> +int cpr_walk_fd(cpr_walk_fd_cb cb)
+>> +{
+>> +    CprFd *elem;
+>> +
+>> +    QLIST_FOREACH(elem, &cpr_state.fds, next) {
+>> +        if (elem->fd >= 0 && cb(elem->fd)) {
+>> +            return 1;
+>> +        }
+>> +    }
+>> +    return 0;
+>> +}
+>> +
+>> +void cpr_resave_fd(const char *name, int id, int fd)
+>> +{
+>> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
+>> +    int old_fd = elem ? elem->fd : -1;
+>> +
+>> +    if (old_fd < 0) {
+>> +        cpr_save_fd(name, id, fd);
+>> +    } else if (old_fd != fd) {
+>> +        error_setg(&error_fatal,
+>> +                   "internal error: cpr fd '%s' id %d value %d "
+>> +                   "already saved with a different value %d",
+>> +                   name, id, fd, old_fd);
+>> +    }
+>> +}
+> 
+> I remember I commented this, maybe not.. cpr_walk_fd() and cpr_resave_fd()
+> are not used in this series.  Suggest introduce them only when they're
+> used.
+
+Thanks, you probably did.  I just edited my tree, so I will not forget again.
+
+>> +/*************************************************************************/
+>> +#define CPR_STATE "CprState"
+>> +
+>> +static const VMStateDescription vmstate_cpr_state = {
+>> +    .name = CPR_STATE,
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .fields = (VMStateField[]) {
+>> +        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +/*************************************************************************/
+>> +
+>> +static QEMUFile *cpr_state_file;
+>> +
+>> +QIOChannel *cpr_state_ioc(void)
+>> +{
+>> +    return qemu_file_get_ioc(cpr_state_file);
+>> +}
+>> +
+>> +int cpr_state_save(Error **errp)
+>> +{
+>> +    int ret;
+>> +    QEMUFile *f;
+>> +
+>> +    /* set f based on mode in a later patch in this series */
+>> +    return 0;
+>> +
+>> +    qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
+>> +    qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
+>> +
+>> +    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0);
+>> +    if (ret) {
+>> +        error_setg(errp, "vmstate_save_state error %d", ret);
+>> +        qemu_fclose(f);
+>> +        return ret;
+>> +    }
+>> +
+>> +    /*
+>> +     * Close the socket only partially so we can later detect when the other
+>> +     * end closes by getting a HUP event.
+>> +     */
+>> +    qemu_fflush(f);
+>> +    qio_channel_shutdown(qemu_file_get_ioc(f), QIO_CHANNEL_SHUTDOWN_WRITE,
+>> +                         NULL);
+> 
+> What happens if we send everything and close immediately?
+> 
+> I didn't see how this cached file is used later throughout the whole
+> series.  Is it used in some follow up series?
+
+The complete usage and rationale is in the last patch, "migration: cpr-transfer mode"
+
+- Steve
+
+>> +    cpr_state_file = f;
+>> +    return 0;
+>> +}
+>> +
+>> +int cpr_state_load(Error **errp)
+>> +{
+>> +    int ret;
+>> +    uint32_t v;
+>> +    QEMUFile *f;
+>> +
+>> +    /* set f based on mode in a later patch in this series */
+>> +    return 0;
+>> +
+>> +    v = qemu_get_be32(f);
+>> +    if (v != QEMU_CPR_FILE_MAGIC) {
+>> +        error_setg(errp, "Not a migration stream (bad magic %x)", v);
+>> +        qemu_fclose(f);
+>> +        return -EINVAL;
+>> +    }
+>> +    v = qemu_get_be32(f);
+>> +    if (v != QEMU_CPR_FILE_VERSION) {
+>> +        error_setg(errp, "Unsupported migration stream version %d", v);
+>> +        qemu_fclose(f);
+>> +        return -ENOTSUP;
+>> +    }
+>> +
+>> +    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1);
+>> +    if (ret) {
+>> +        error_setg(errp, "vmstate_load_state error %d", ret);
+>> +        qemu_fclose(f);
+>> +        return ret;
+>> +    }
+>> +
+>> +    /*
+>> +     * Let the caller decide when to close the socket (and generate a HUP event
+>> +     * for the sending side).
+>> +     */
+>> +    cpr_state_file = f;
+>> +    return ret;
+>> +}
+>> +
+>> +void cpr_state_close(void)
+>> +{
+>> +    if (cpr_state_file) {
+>> +        qemu_fclose(cpr_state_file);
+>> +        cpr_state_file = NULL;
+>> +    }
 >> +}
 >> diff --git a/migration/meson.build b/migration/meson.build
->> index e5f4211..684ba98 100644
+>> index 66d3de8..e5f4211 100644
 >> --- a/migration/meson.build
 >> +++ b/migration/meson.build
->> @@ -14,6 +14,7 @@ system_ss.add(files(
+>> @@ -13,6 +13,7 @@ system_ss.add(files(
+>>     'block-dirty-bitmap.c',
 >>     'channel.c',
 >>     'channel-block.c',
->>     'cpr.c',
->> +  'cpr-transfer.c',
+>> +  'cpr.c',
 >>     'dirtyrate.c',
 >>     'exec.c',
 >>     'fd.c',
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index ae2be31..834b0a2 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -27,6 +27,7 @@
+>>   #include "sysemu/cpu-throttle.h"
+>>   #include "rdma.h"
+>>   #include "ram.h"
+>> +#include "migration/cpr.h"
+>>   #include "migration/global_state.h"
+>>   #include "migration/misc.h"
+>>   #include "migration.h"
+>> @@ -2123,6 +2124,10 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>           }
+>>       }
+>>   
+>> +    if (cpr_state_save(&local_err)) {
+>> +        goto out;
+>> +    }
+>> +
+>>       if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+>>           SocketAddress *saddr = &addr->u.socket;
+>>           if (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+>> @@ -2147,6 +2152,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>                             MIGRATION_STATUS_FAILED);
+>>       }
+>>   
+>> +out:
+>>       if (local_err) {
+>>           if (!resume_requested) {
+>>               yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+>> diff --git a/migration/trace-events b/migration/trace-events
+>> index c65902f..5356fb5 100644
+>> --- a/migration/trace-events
+>> +++ b/migration/trace-events
+>> @@ -341,6 +341,11 @@ colo_receive_message(const char *msg) "Receive '%s' message"
+>>   # colo-failover.c
+>>   colo_failover_set_state(const char *new_state) "new state %s"
+>>   
+>> +# cpr.c
+>> +cpr_save_fd(const char *name, int id, int fd) "%s, id %d, fd %d"
+>> +cpr_delete_fd(const char *name, int id) "%s, id %d"
+>> +cpr_find_fd(const char *name, int id, int fd) "%s, id %d returns %d"
+>> +
+>>   # block-dirty-bitmap.c
+>>   send_bitmap_header_enter(void) ""
+>>   send_bitmap_bits(uint32_t flags, uint64_t start_sector, uint32_t nr_sectors, uint64_t data_size) "flags: 0x%x, start_sector: %" PRIu64 ", nr_sectors: %" PRIu32 ", data_size: %" PRIu64
+>> diff --git a/system/vl.c b/system/vl.c
+>> index 752a1da..565d932 100644
+>> --- a/system/vl.c
+>> +++ b/system/vl.c
+>> @@ -77,6 +77,7 @@
+>>   #include "hw/block/block.h"
+>>   #include "hw/i386/x86.h"
+>>   #include "hw/i386/pc.h"
+>> +#include "migration/cpr.h"
+>>   #include "migration/misc.h"
+>>   #include "migration/snapshot.h"
+>>   #include "sysemu/tpm.h"
+>> @@ -3720,6 +3721,12 @@ void qemu_init(int argc, char **argv)
+>>   
+>>       qemu_create_machine(machine_opts_dict);
+>>   
+>> +    /*
+>> +     * Load incoming CPR state before any devices are created, because it
+>> +     * contains file descriptors that are needed in device initialization code.
+>> +     */
+>> +    cpr_state_load(&error_fatal);
+>> +
+>>       suspend_mux_open();
+>>   
+>>       qemu_disable_default_devices();
 >> -- 
 >> 1.8.3.1
 >>
