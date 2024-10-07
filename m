@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35033CFB442
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4371CCFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxls9-0007Mu-3W; Mon, 07 Oct 2024 07:25:53 -0400
+	id 1sxlrf-0007KJ-KR; Mon, 07 Oct 2024 07:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1sxls2-0007MY-PN
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:46 -0400
-Received: from mail-m16.yeah.net ([220.197.32.17])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1sxlre-0007Jt-9L
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:22 -0400
+Received: from mail-m16.yeah.net ([220.197.32.18])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <chao.liu@yeah.net>) id 1sxls0-0001BJ-Pg
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:46 -0400
+ (envelope-from <chao.liu@yeah.net>) id 1sxlra-00017P-TG
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:25:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=QHbPa
- lvgpRBsIV4AzKxJkAd/59RTOeVHtbo41YQVKiY=; b=F1cZIgRuKCtf+GQyG/J7v
- N3Q1kFXcNCq02DmbVD8ZQPNk9SbFOuI3ysjqv+I9WxwG89DGDEiXbVBQTHQDq9eu
- 4fpKcjZTQtRUXcPOZW0UjzTbLh6+Okb0L6ugHr0JF6jsltyBQseKfkB+rufrTPfA
- J38dWu90g9DO+amBYeu19M=
+ s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=ZmdNc
+ 3IF/kjBwLfNdOw4FBcA5N40qdDiUyFgWihYMr4=; b=gKySBCtJtMLaei6zLihja
+ 60ei4RHHV2E2X/JmMh1fmzt190S02u8BYzBoAprkCWr1e0vNN/tHLpgMkto0evCu
+ MOzTF6eFYgZcabWH09CjB6FP+ggumtO12XhAYjJ9/FmyO7VxYnCdgpNNr8aJkLnX
+ teU2JC17Qm4kI2Wvplvxnk=
 Received: from localhost.localdomain (unknown [])
- by gzsmtp3 (Coremail) with SMTP id M88vCgAnSOcMxQNnGGjGAQ--.32547S5;
- Mon, 07 Oct 2024 19:25:01 +0800 (CST)
+ by gzsmtp3 (Coremail) with SMTP id M88vCgAnSOcMxQNnGGjGAQ--.32547S2;
+ Mon, 07 Oct 2024 19:25:00 +0800 (CST)
 From: Chao Liu <chao.liu@yeah.net>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, bin.meng@windriver.com, edgar.iglesias@gmail.com,
  alistair@alistair23.me, Chao Liu <chao.liu@yeah.net>
-Subject: [PATCH v4 3/3] xilink-zynq-devcfg: Avoid disabling devcfg memory
- region during initialization
-Date: Mon,  7 Oct 2024 19:24:55 +0800
-Message-ID: <bcdacdcbf7b26192aebe4723c57bd87ef986defa.1728299530.git.chao.liu@yeah.net>
+Subject: [PATCH v4 0/3] Drop ignore_memory_transaction_failures for xilink_zynq
+Date: Mon,  7 Oct 2024 19:24:52 +0800
+Message-ID: <cover.1728299530.git.chao.liu@yeah.net>
 X-Mailer: git-send-email 2.46.1
-In-Reply-To: <cover.1728299530.git.chao.liu@yeah.net>
-References: <cover.1728299530.git.chao.liu@yeah.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: M88vCgAnSOcMxQNnGGjGAQ--.32547S5
-X-Coremail-Antispam: 1Uf129KBjvdXoWrKw1xZFW8GrW8tw43GFWkXrb_yoWktrg_Ca
- yFkF93ursxAw1Syas0yr1qyryfuw4vvr10gFn7t3s3tFyUWrsxGrsYy3ZYqw1kX3y5Arsx
- Za4jkFnxAa13ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU87l1PUUUUU==
+X-CM-TRANSID: M88vCgAnSOcMxQNnGGjGAQ--.32547S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Wr18ur13WF1fXFW3AF1kXwb_yoWDAwc_Ar
+ WSka4DXr4kZ3W3AFWkGF1kKrZIvw4I9rW8JF18try7X3yUZF13Cr1DKa4Yv3Wfua98AFZ0
+ v3ZrAF1fJw1jgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjyCJPUUUUU==
 X-Originating-IP: [112.19.146.115]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiERNxKGcDw+gCUgAAsE
-Received-SPF: pass client-ip=220.197.32.17; envelope-from=chao.liu@yeah.net;
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiEQpxKGcDw+gCTwAAsA
+Received-SPF: pass client-ip=220.197.32.18; envelope-from=chao.liu@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -72,39 +69,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During the initialization phase, we've encountered an issue where the
-UNLOCK register is inadvertently cleared. This results in devcfg MR being
-disabled, which in turn leads to unexpected memory access exceptions when
-attempting subsequent accesses to the devcfg register. This behavior is not
-consistent with the hardware specifications.
+Hi, maintainer,
 
-This bug was not found earlier because the ignore_memory_transaction_failures
-flag was enabled, which ignored exceptions from devcfg devices
-when access was disabled.
+Following the reference from the chip manualug585-Zynq-7000-TRM manual
+B.3 (Module Summary), placeholders have been added for all unimplemented
+devices, including the AXI and AMBA bus controllers that interact with
+the FPGA.
 
-Signed-off-by: Chao Liu <chao.liu@yeah.net>
----
- hw/dma/xlnx-zynq-devcfg.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+We can check against the manual by printing the address space of the
+zynq board with the following qemu command:
+    ${QEMU_PATH}/qemu-system-aarch64 \
+    -M xilinx-zynq-a9 \
+    -display none \
+    -monitor stdio -s
+    (qemu) info mtree -f
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index e5eff9abc0..af8cc72471 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -144,7 +144,12 @@ static void xlnx_zynq_devcfg_reset(DeviceState *dev)
-     int i;
- 
-     for (i = 0; i < XLNX_ZYNQ_DEVCFG_R_MAX; ++i) {
--        register_reset(&s->regs_info[i]);
-+        if (s->regs_info[i].access) {
-+            if (s->regs_info[i].access->addr == A_UNLOCK) {
-+                continue;
-+            }
-+            register_reset(&s->regs_info[i]);
-+        }
-     }
- }
- 
+The testing methodology previously discussed in earlier email exchanges
+will not be repeated here.
+
+Chao Liu (3):
+  xilink_zynq: Add various missing unimplemented devices
+  xilink-zynq-devcfg: Fix up for memory address range size not set
+    correctly
+  xilink-zynq-devcfg: Avoid disabling devcfg memory region during
+    initialization
+
+ hw/arm/xilinx_zynq.c              | 71 ++++++++++++++++++++++++++++++-
+ hw/dma/xlnx-zynq-devcfg.c         |  9 +++-
+ include/hw/dma/xlnx-zynq-devcfg.h |  2 +-
+ 3 files changed, 78 insertions(+), 4 deletions(-)
+
 -- 
 2.46.1
 
