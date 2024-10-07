@@ -4,86 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29399CFB449
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C6DCFB449
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqba-0005fg-Ep; Mon, 07 Oct 2024 12:29:06 -0400
+	id 1sxqcU-0006o8-6r; Mon, 07 Oct 2024 12:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqbX-0005eP-2j
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:29:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sxqcS-0006nL-7w
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:30:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqbV-0007od-Gl
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:29:02 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sxqcQ-0007uM-3T
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:29:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728318540;
+ s=mimecast20190719; t=1728318597;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aqyGj7XKQ5Qwm5Y7ZXLkMTOwcVoaKIkBF102LtqvvHk=;
- b=ZZFVZ2/Q5dnqIIaq+CsDDqG2kuGop7MHurfqglazV6e2/OPh/CYKHSiGogS281aWlLktv+
- hWuMbfE6xBgp2EZC0BWbg+JeK47YmeGqdulZ2l42MHRfx72Bjo/GN1RdJ3oPMraiKIuJQE
- P8rSRh+L72HMvEQukKIJ0RPtKV+kP6E=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MWpaqFztT6vJFysQ3qnmofMl7bo5aV/JsBw22pQ4ozs=;
+ b=FSYcqYO93PbHzciGEB9RfBY9iyGtJRiur3A8ba+bh7B3DfubqdJcsfjm+keRM3Rzgfj19Y
+ 4p64nZQpGs3la1aGF9Hv7kAM3HOQIxGp1JtzjjDsakFvxyWAy7zEjqFqTGrGQIEUlZZq7r
+ FMoRxXhDsdaIdpl8zLngFw2K6B21uCw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589--5ZChC35Nsu4NP17tsSdMQ-1; Mon, 07 Oct 2024 12:28:58 -0400
-X-MC-Unique: -5ZChC35Nsu4NP17tsSdMQ-1
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-3a34205e146so63511245ab.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:28:58 -0700 (PDT)
+ us-mta-388-5QtcZ1L2M-qX-fAtbUdApw-1; Mon, 07 Oct 2024 12:23:30 -0400
+X-MC-Unique: 5QtcZ1L2M-qX-fAtbUdApw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37cd32f9c59so1743855f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:23:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728318537; x=1728923337;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aqyGj7XKQ5Qwm5Y7ZXLkMTOwcVoaKIkBF102LtqvvHk=;
- b=fULk9RY+V1/oqFJuBJ8RLAIwi01SRhbfrPh5m/4t1i4Wil2osAB+2FLIEetZmpyozM
- 4QrSeffYqU3BWMffGRoxbXPWEYwle1VftzJ+C1s9ExWCoPnukZQays+sjgJ/I/pDbnpP
- D3q3adufds8nSAFcxMHe1kF+aK8nOm1lZ7kOffZTli1Y9B72zQhcC97hm3MCDjrNCZ3d
- oe32e916eALaSPOe20LIFk3FIQ811b2KzKLp1m57GByeXbU1fC0nFqYjAA91+gniiH5G
- aroOIM1ojcXIWVXJiLxFfiAQlgvgO/R6n35qYYGxld/WEfGEgULINBQt7SSHifuevqck
- m0/g==
-X-Gm-Message-State: AOJu0YwGCAgjNGqzEoXaW/rGhT6Yt1A1+wTMRy2b3wGD7APf4yCrUHf1
- odERnrENxN83klpOIS7X/sTvfh62mKbNNLx6QQw+bXic5nBRRQ8KLaCXHaycCLhoIOWSvNCN0eP
- s7fLU8ypebUKOolxdu+PbepIZ9ND9JgV5BBJZ1YcqGkEDx8lOOGgX
-X-Received: by 2002:a92:c269:0:b0:3a0:ae35:f2eb with SMTP id
- e9e14a558f8ab-3a375bafe0bmr116749815ab.19.1728318537405; 
- Mon, 07 Oct 2024 09:28:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0ubEzsD9oO/1+RTGVok4YLY53cORHUcy717UbPdM9+H0eo+UK3QNfGdyF8NpWtozzAxz1zw==
-X-Received: by 2002:a92:c269:0:b0:3a0:ae35:f2eb with SMTP id
- e9e14a558f8ab-3a375bafe0bmr116749535ab.19.1728318536978; 
- Mon, 07 Oct 2024 09:28:56 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a37a7e790bsm14120955ab.10.2024.10.07.09.28.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 09:28:56 -0700 (PDT)
-Date: Mon, 7 Oct 2024 12:28:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
+ d=1e100.net; s=20230601; t=1728318209; x=1728923009;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=MWpaqFztT6vJFysQ3qnmofMl7bo5aV/JsBw22pQ4ozs=;
+ b=bpPpFUVlxI2G5eeHsDRhtuEfZ27djl23sZy1BwR6UaGxs6Xa9od7Y8xkT4aC52f7jz
+ NcjAvBlNE0LR9eiPt2/jCTICLsvwwzHW5YlYOS7ZYds6TE54d9b7KW6UBVpI92hnKsO0
+ 3A/T8v+iy6Iu+YzF7hfJFIQkbEn7nHriXdV+30Kow0ySCgs3PwYOST++f3VGK1tnJM9K
+ S1izPbkGwkoLd1MdGqP4PIoFQU0kYigcAkX/lEnXiJAzaB2svoHOYuswrurJ3bAe4jHF
+ qT6Mzz7dSbPuRDYiz+c7T6J1UMC7RlzE5a4gW+LXUkjMFrz3bpmD5XXrYGXrPwd+bq4M
+ gQ0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/L+2FlkPXJ9yAeVTWMmqZnuxd0sON3AWMqO4SXWCB/PNQXc1YMgEkVadqUAT2vcxBc95r6C7aR3K8@nongnu.org
+X-Gm-Message-State: AOJu0Ywx/khQ8+r/gjf27r4By9Vi6J+G8glLNZwKxKc2IMKP8EP1yHLp
+ cvzS9I+vwsoeiOK5fMCA/2xN0V+4r5o6fA3gbdRBPRovMhgm1509bAvw/+jURZwa3tcTsu2U0ui
+ lp6o+CDwcsJTrN99mK7YkBZVehTCLnN8LAISwZke/oW9AEjWHp/AY
+X-Received: by 2002:a5d:5f46:0:b0:37c:cc60:2c63 with SMTP id
+ ffacd0b85a97d-37d0e6dab88mr8163615f8f.5.1728318208809; 
+ Mon, 07 Oct 2024 09:23:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDWk/ktOBFGRJvZBONByKYslLlAHeSAXyzAyC1kXej3V32hCO94D9bTi1V/+1kXcr8zdWXbQ==
+X-Received: by 2002:a5d:5f46:0:b0:37c:cc60:2c63 with SMTP id
+ ffacd0b85a97d-37d0e6dab88mr8163586f8f.5.1728318208307; 
+ Mon, 07 Oct 2024 09:23:28 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c725:8700:77c7:bde:9446:8d34?
+ (p200300cbc725870077c70bde94468d34.dip0.t-ipconnect.de.
+ [2003:cb:c725:8700:77c7:bde:9446:8d34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d1695e7e2sm6054417f8f.84.2024.10.07.09.23.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 09:23:27 -0700 (PDT)
+Message-ID: <47ba3f75-147d-4ea6-a576-eba6ef168643@redhat.com>
+Date: Mon, 7 Oct 2024 18:23:26 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 01/13] machine: alloc-anon option
+To: Peter Xu <peterx@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 05/13] physmem: preserve ram blocks for cpr
-Message-ID: <ZwQMRlSSqP0i0ITb@x1n>
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-6-git-send-email-steven.sistare@oracle.com>
- <ZwQDBc-8niK2A0Vt@x1n>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZwQDBc-8niK2A0Vt@x1n>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ <1727725244-105198-2-git-send-email-steven.sistare@oracle.com>
+ <Zv7C7MeVP2X8bEJU@x1n> <2143f803-439e-4b8b-ae92-07caa913d646@redhat.com>
+ <Zv_ghrH6i4QOzne8@x1n> <bffa3dc0-36b7-4fa1-a0b6-cce34743a46c@redhat.com>
+ <Zv_spkFwqwgxGkNY@x1n>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <Zv_spkFwqwgxGkNY@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,128 +162,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 07, 2024 at 11:49:25AM -0400, Peter Xu wrote:
-> On Mon, Sep 30, 2024 at 12:40:36PM -0700, Steve Sistare wrote:
-> > Save the memfd for anonymous ramblocks in CPR state, along with a name
-> > that uniquely identifies it.  The block's idstr is not yet set, so it
-> > cannot be used for this purpose.  Find the saved memfd in new QEMU when
-> > creating a block.  QEMU hard-codes the length of some internally-created
-> > blocks, so to guard against that length changing, use lseek to get the
-> > actual length of an incoming memfd.
-> > 
-> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > ---
-> >  system/physmem.c | 25 ++++++++++++++++++++++++-
-> >  1 file changed, 24 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index 174f7e0..ddbeec9 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -72,6 +72,7 @@
-> >  
-> >  #include "qapi/qapi-types-migration.h"
-> >  #include "migration/options.h"
-> > +#include "migration/cpr.h"
-> >  #include "migration/vmstate.h"
-> >  
-> >  #include "qemu/range.h"
-> > @@ -1663,6 +1664,19 @@ void qemu_ram_unset_idstr(RAMBlock *block)
-> >      }
-> >  }
-> >  
-> > +static char *cpr_name(RAMBlock *block)
-> > +{
-> > +    MemoryRegion *mr = block->mr;
-> > +    const char *mr_name = memory_region_name(mr);
-> > +    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
-> > +
-> > +    if (id) {
-> > +        return g_strdup_printf("%s/%s", id, mr_name);
-> > +    } else {
-> > +        return g_strdup(mr_name);
-> > +    }
-> > +}
-> > +
-> >  size_t qemu_ram_pagesize(RAMBlock *rb)
-> >  {
-> >      return rb->page_size;
-> > @@ -1858,14 +1872,18 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-> >                                          TYPE_MEMORY_BACKEND)) {
-> >              size_t max_length = new_block->max_length;
-> >              MemoryRegion *mr = new_block->mr;
-> > -            const char *name = memory_region_name(mr);
-> > +            g_autofree char *name = cpr_name(new_block);
-> >  
-> >              new_block->mr->align = QEMU_VMALLOC_ALIGN;
-> >              new_block->flags |= RAM_SHARED;
-> > +            new_block->fd = cpr_find_fd(name, 0);
-> >  
-> >              if (new_block->fd == -1) {
-> >                  new_block->fd = qemu_memfd_create(name, max_length + mr->align,
-> >                                                    0, 0, 0, errp);
-> > +                cpr_save_fd(name, 0, new_block->fd);
-> > +            } else {
-> > +                new_block->max_length = lseek(new_block->fd, 0, SEEK_END);
+On 04.10.24 15:24, Peter Xu wrote:
+> On Fri, Oct 04, 2024 at 02:54:38PM +0200, David Hildenbrand wrote:
+>> On 04.10.24 14:33, Peter Xu wrote:
+>>> On Fri, Oct 04, 2024 at 12:14:35PM +0200, David Hildenbrand wrote:
+>>>> On 03.10.24 18:14, Peter Xu wrote:
+>>>>> On Mon, Sep 30, 2024 at 12:40:32PM -0700, Steve Sistare wrote:
+>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
+>>>>>> on the value of the anon-alloc machine property.  This option applies to
+>>>>>> memory allocated as a side effect of creating various devices. It does
+>>>>>> not apply to memory-backend-objects, whether explicitly specified on
+>>>>>> the command line, or implicitly created by the -m command line option.
+>>>>>>
+>>>>>> The memfd option is intended to support new migration modes, in which the
+>>>>>> memory region can be transferred in place to a new QEMU process, by sending
+>>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
+>>>>>> and if the mode also transfers device descriptors, then pages that are
+>>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
+>>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
+>>>>>>
+>>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>>>
+>>>>> [Igor seems missing in the loop; added]
+>>>>>
+>>>>>> ---
+>>>>>>     hw/core/machine.c   | 19 +++++++++++++++++++
+>>>>>>     include/hw/boards.h |  1 +
+>>>>>>     qapi/machine.json   | 14 ++++++++++++++
+>>>>>>     qemu-options.hx     | 11 +++++++++++
+>>>>>>     system/physmem.c    | 35 +++++++++++++++++++++++++++++++++++
+>>>>>>     system/trace-events |  3 +++
+>>>>>>     6 files changed, 83 insertions(+)
+>>>>>>
+>>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>>>> index adaba17..a89a32b 100644
+>>>>>> --- a/hw/core/machine.c
+>>>>>> +++ b/hw/core/machine.c
+>>>>>> @@ -460,6 +460,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
+>>>>>>         ms->mem_merge = value;
+>>>>>>     }
+>>>>>> +static int machine_get_anon_alloc(Object *obj, Error **errp)
+>>>>>> +{
+>>>>>> +    MachineState *ms = MACHINE(obj);
+>>>>>> +
+>>>>>> +    return ms->anon_alloc;
+>>>>>> +}
+>>>>>> +
+>>>>>> +static void machine_set_anon_alloc(Object *obj, int value, Error **errp)
+>>>>>> +{
+>>>>>> +    MachineState *ms = MACHINE(obj);
+>>>>>> +
+>>>>>> +    ms->anon_alloc = value;
+>>>>>> +}
+>>>>>> +
+>>>>>>     static bool machine_get_usb(Object *obj, Error **errp)
+>>>>>>     {
+>>>>>>         MachineState *ms = MACHINE(obj);
+>>>>>> @@ -1078,6 +1092,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
+>>>>>>         object_class_property_set_description(oc, "mem-merge",
+>>>>>>             "Enable/disable memory merge support");
+>>>>>> +    object_class_property_add_enum(oc, "anon-alloc", "AnonAllocOption",
+>>>>>> +                                   &AnonAllocOption_lookup,
+>>>>>> +                                   machine_get_anon_alloc,
+>>>>>> +                                   machine_set_anon_alloc);
+>>>>>> +
+>>>>>>         object_class_property_add_bool(oc, "usb",
+>>>>>>             machine_get_usb, machine_set_usb);
+>>>>>>         object_class_property_set_description(oc, "usb",
+>>>>>> diff --git a/include/hw/boards.h b/include/hw/boards.h
+>>>>>> index 5966069..5a87647 100644
+>>>>>> --- a/include/hw/boards.h
+>>>>>> +++ b/include/hw/boards.h
+>>>>>> @@ -393,6 +393,7 @@ struct MachineState {
+>>>>>>         bool enable_graphics;
+>>>>>>         ConfidentialGuestSupport *cgs;
+>>>>>>         HostMemoryBackend *memdev;
+>>>>>> +    AnonAllocOption anon_alloc;
+>>>>>>         /*
+>>>>>>          * convenience alias to ram_memdev_id backend memory region
+>>>>>>          * or to numa container memory region
+>>>>>> diff --git a/qapi/machine.json b/qapi/machine.json
+>>>>>> index a6b8795..d4a63f5 100644
+>>>>>> --- a/qapi/machine.json
+>>>>>> +++ b/qapi/machine.json
+>>>>>> @@ -1898,3 +1898,17 @@
+>>>>>>     { 'command': 'x-query-interrupt-controllers',
+>>>>>>       'returns': 'HumanReadableText',
+>>>>>>       'features': [ 'unstable' ]}
+>>>>>> +
+>>>>>> +##
+>>>>>> +# @AnonAllocOption:
+>>>>>> +#
+>>>>>> +# An enumeration of the options for allocating anonymous guest memory.
+>>>>>> +#
+>>>>>> +# @mmap: allocate using mmap MAP_ANON
+>>>>>> +#
+>>>>>> +# @memfd: allocate using memfd_create
+>>>>>> +#
+>>>>>> +# Since: 9.2
+>>>>>> +##
+>>>>>> +{ 'enum': 'AnonAllocOption',
+>>>>>> +  'data': [ 'mmap', 'memfd' ] }
+>>>>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>>>>> index d94e2cb..90ab943 100644
+>>>>>> --- a/qemu-options.hx
+>>>>>> +++ b/qemu-options.hx
+>>>>>> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>>>>>>         "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+>>>>>>         "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+>>>>>>         "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+>>>>>> +    "                anon-alloc=mmap|memfd allocate anonymous guest RAM using mmap MAP_ANON or memfd_create (default: mmap)\n"
+>>>>>>         "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+>>>>>>         "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
+>>>>>>         QEMU_ARCH_ALL)
+>>>>>> @@ -101,6 +102,16 @@ SRST
+>>>>>>             Enables or disables ACPI Heterogeneous Memory Attribute Table
+>>>>>>             (HMAT) support. The default is off.
+>>>>>> +    ``anon-alloc=mmap|memfd``
+>>>>>> +        Allocate anonymous guest RAM using mmap MAP_ANON (the default)
+>>>>>> +        or memfd_create.  This option applies to memory allocated as a
+>>>>>> +        side effect of creating various devices. It does not apply to
+>>>>>> +        memory-backend-objects, whether explicitly specified on the
+>>>>>> +        command line, or implicitly created by the -m command line
+>>>>>> +        option.
+>>>>>> +
+>>>>>> +        Some migration modes require anon-alloc=memfd.
+>>>>>> +
+>>>>>>         ``memory-backend='id'``
+>>>>>>             An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
+>>>>>>             Allows to use a memory backend as main RAM.
+>>>>>> diff --git a/system/physmem.c b/system/physmem.c
+>>>>>> index dc1db3a..174f7e0 100644
+>>>>>> --- a/system/physmem.c
+>>>>>> +++ b/system/physmem.c
+>>>>>> @@ -47,6 +47,7 @@
+>>>>>>     #include "qemu/qemu-print.h"
+>>>>>>     #include "qemu/log.h"
+>>>>>>     #include "qemu/memalign.h"
+>>>>>> +#include "qemu/memfd.h"
+>>>>>>     #include "exec/memory.h"
+>>>>>>     #include "exec/ioport.h"
+>>>>>>     #include "sysemu/dma.h"
+>>>>>> @@ -69,6 +70,8 @@
+>>>>>>     #include "qemu/pmem.h"
+>>>>>> +#include "qapi/qapi-types-migration.h"
+>>>>>> +#include "migration/options.h"
+>>>>>>     #include "migration/vmstate.h"
+>>>>>>     #include "qemu/range.h"
+>>>>>> @@ -1849,6 +1852,35 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>>>>>>                     qemu_mutex_unlock_ramlist();
+>>>>>>                     return;
+>>>>>>                 }
+>>>>>> +
+>>>>>> +        } else if (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD &&
+>>>>>> +                   !object_dynamic_cast(new_block->mr->parent_obj.parent,
+>>>>>> +                                        TYPE_MEMORY_BACKEND)) {
+>>>>>
+>>>>> This is pretty fragile.. if someone adds yet another layer on top of memory
+>>>>> backend objects, the ownership links can change and this might silently run
+>>>>> into something else even without any warning..
+>>>>>
+>>>>> I wished we dig into what is missing, but maybe that's too trivial.  If
+>>>>> not, we still need to make this as solid.  Perhaps that can be a ram flag
+>>>>> and let relevant callers pass in that flag explicitly.
+>>>>
+>>>> How would they decide whether or not we want to set the flag in the current
+>>>> configuration?
+>>>
+>>> It was in the previous email where it got cut..  I listed four paths that
+>>> may need change.
+>>
+>> That's not my question. Who would decide whether we want to set MAP_SHARED
+>> in these callers or not?
+>>
+>> If you have "unconditionally" in mind, I think it's a bad idea. If there is
+>> some other toggle to perform that setting conditionally, why not.
 > 
-> So this can overwrite the max_length that the caller specified..
-> 
-> I remember we used to have some tricks on specifying different max_length
-> for ROMs on dest QEMU (on which, qemu firmwares also upgraded on the dest
-> host so the size can be bigger than src qemu's old ramblocks), so that the
-> MR is always large enough to reload even the new firmwares, while migration
-> only migrates the smaller size (used_length) so it's fine as we keep the
-> extra sizes empty. I think that can relevant to the qemu_ram_resize() call
-> of parse_ramblock().
-> 
-> The reload will not happen until some point, perhaps system resets.  I
-> wonder whether that is an issue in this case.
-> 
-> +Igor +Mst for this.
+> Yes I thought it could be unconditionally.  We can discuss downside below,
+> I think we can still use a new flag otherwise, but the idea would be the
+> same, where I want the flag to be explicit in the callers not implicitly
+> with the object type check, which I think can be hackish.
 
-PS: If this is needed by CPR-transfer only because mmap() later can fail
-due to a bigger max_length, I wonder whether it can be fixed by passing
-truncate=true in the upcoming file_ram_alloc(), rather than overwritting
-the max_length value itself.
+I agree that the caller should specify it.
+
+But I don't think using shared memory where shared memory is not 
+warranted is a reasonable approach.
+
+I'm quite surprise you're considering such changes with unclear impacts 
+on other OSes besides Linux (Freedbsd? Windows that doeasn';t even 
+support shared memory?) just to make one corner-case QEMU use case happy.
+
+But I'm sure there are valid reasons why you had that idea, so I'm happy 
+to learn why using shared memory unconditionally here is better than 
+providing a clean alternative path with the feature enabled and memfd 
+actually being supported on the setup (e.g., newer Linux kernel).
 
 > 
-> >              }
-> >  
-> >              if (new_block->fd >= 0) {
-> > @@ -1875,6 +1893,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-> >                                                   false, 0, errp);
-> >              }
-> >              if (!new_block->host) {
-> > +                cpr_delete_fd(name, 0);
-> >                  qemu_mutex_unlock_ramlist();
-> >                  return;
-> >              }
-> > @@ -2182,6 +2201,8 @@ static void reclaim_ramblock(RAMBlock *block)
-> >  
-> >  void qemu_ram_free(RAMBlock *block)
-> >  {
-> > +    g_autofree char *name = NULL;
-> > +
-> >      if (!block) {
-> >          return;
-> >      }
-> > @@ -2192,6 +2213,8 @@ void qemu_ram_free(RAMBlock *block)
-> >      }
-> >  
-> >      qemu_mutex_lock_ramlist();
-> > +    name = cpr_name(block);
-> > +    cpr_delete_fd(name, 0);
-> >      QLIST_REMOVE_RCU(block, next);
-> >      ram_list.mru_block = NULL;
-> >      /* Write list before version */
-> > -- 
-> > 1.8.3.1
-> > 
+>>
+>>>
+>>>>
+>>>>>
+>>>>> I think RAM_SHARED can actually be that flag already - I mean, in all paths
+>>>>> that we may create anon mem (but not memory-backend-* objects), is it
+>>>>> always safe we always switch to RAM_SHARED from anon?
+>>>>
+>>>> Do you mean only setting the flag (-> anonymous shmem) or switching also to
+>>>> memfd, which is a bigger change?
+>>>
+>>> Switching to memfd.  I thought anon shmem (mmap(MAP_SHARED)) is mostly the
+>>> same internally, if we create memfd then mmap(MAP_SHARED) on top of it, no?
+>>
+>> Memfd is Linux specific, keep that in mind. Apart from that there shouldn't
+>> be much difference between anon shmem and memfd (there are memory commit
+>> differences, though).
 > 
-> -- 
-> Peter Xu
+> Could you elaborate the memory commit difference and what does that imply
+> to QEMU's usage?
+
+Note how memfd code passed VM_NORESERVE to shmem_file_setup() and 
+shmem_zero_setup() effectively doesn't (unless MAP_NORESERVE was 
+specified IIRC).
+
+Not sure if the change makes a big impact in QEMU's usage, it's just one 
+of these differences between memfd and shared anonymous memory. 
+(responding to your "mostly the same").
+
+> 
+>>
+>> Of course, there is a difference between anon memory and shmem, for example
+>> regarding what viritofsd faced (e.g., KSM) recently.
+> 
+> The four paths shouldn't be KSM target, AFAICT.
+
+Do you have a good overview of what is deduplicated in practice and why 
+these don't apply? For example, I thought these functions are also used 
+for hosting the BIOS, and that might just be deduplciated between VMs?
+
+Anyhow, there are obviously other differences with shmem vs. anonymous 
+(THP handling, page fault performance, userfaultfd compatibility on 
+older kernels) at least on Linux, but I have absolutely no clue how that 
+would differ on other host OSes.
+
+None of them are major
+
+This is probably going to result in a bigger discussion, for which I 
+don't have any time. So my opinion on it is above.
+
+Anyhow, this sounds like one of the suggestions I wouldn't suggest Steve 
+to actually implement.
+
 
 -- 
-Peter Xu
+Cheers,
+
+David / dhildenb
 
 
