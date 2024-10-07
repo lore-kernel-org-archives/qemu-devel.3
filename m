@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA897CFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 03:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21279CFB43C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 03:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxeWu-0005qZ-Ek; Sun, 06 Oct 2024 23:35:28 -0400
+	id 1sxeXT-0007CT-DK; Sun, 06 Oct 2024 23:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sxeWs-0005mp-HD; Sun, 06 Oct 2024 23:35:26 -0400
-Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+ id 1sxeXP-00072u-Up; Sun, 06 Oct 2024 23:36:01 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sxeWq-0006Hl-Gp; Sun, 06 Oct 2024 23:35:26 -0400
+ id 1sxeXN-0006Ju-IV; Sun, 06 Oct 2024 23:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1728272121; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=ZK8IihrJgq1aqOhIVgrYyLKYrkCn5+LTqtDMLZVNDLE=;
- b=UlOsrOp/8zigBhOhHmZ3KAYdNwk9VrcK8Ov7DgOmz7VvwCn3sLv3C58jgqtjcUtCCj3N5F5Alo8PlBB+Y2E1MWtIpsxetu3AIUKWMjegKiAFlnp6ylZCwKYt9qyNF+0igqWKdaKpdNNHCZN66DpdcNiEpsgy/onIiGDOvYq2In8=
+ t=1728272152; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=1NzQGwouVfdUIXxYtTl0qsxrrGtbt73O6bVWAN6aT1A=;
+ b=ZiYyV/AoKDEcB//SGUV5UrMxIPHOhVvUe81zQw8OIZoCrjhfQUZ+4wyKx8B+/UFNpBUT3873OSvFQ39fZo6uBhd7aOR5k4v4321WhKh9pgASSpL8q3Fvzanmr+Ub4qnfoD+B1HtNrBBveDxozRu29+DVDS9mVBJbVGcU0gRdl1w=
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WGLTm4l_1728272119) by smtp.aliyun-inc.com;
- Mon, 07 Oct 2024 11:35:20 +0800
+ fp:SMTPD_---0WGLRa-D_1728272150) by smtp.aliyun-inc.com;
+ Mon, 07 Oct 2024 11:35:51 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v1 2/7] target/riscv: Fix satp read and write implicitly or
- explicitly.
-Date: Mon,  7 Oct 2024 11:33:55 +0800
-Message-Id: <20241007033400.50163-3-zhiwei_liu@linux.alibaba.com>
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Subject: [PATCH v1 3/7] target/riscv: Read pte and satp based on SXL in PTW
+Date: Mon,  7 Oct 2024 11:33:56 +0800
+Message-Id: <20241007033400.50163-4-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
 References: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.97;
+Received-SPF: pass client-ip=115.124.30.98;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
+ helo=out30-98.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,101 +68,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-CSR satp is SXLEN bits in length and always has the $layout determined by
-the SXL configuration, regardless of the current XLEN.
-
-Only process CSR satp, as we still don't have a riscv_cpu_vsxl API
-currently.
-
-Added sxl32 property to control sxlen as 32 in s-mode for QEMU RV64.
+Satp and PTE are always SXLEN-bit. when SXLEN is 32,
+read PTE as 4 bytes, and treat satp as SATP32.
 
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Fixes: c7b9517188 (RISC-V: Implement modular CSR helper interface)
-Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- target/riscv/cpu_cfg.h |  4 ++++
- target/riscv/csr.c     | 25 +++++++++++++++++++------
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ target/riscv/cpu_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 8b272fb826..cdbd2afe29 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -173,6 +173,10 @@ struct RISCVCPUConfig {
-     bool short_isa_string;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 077f6d77c3..773789e02e 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -851,7 +851,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                 vm = get_field(env->vsatp, SATP64_MODE);
+             }
+         } else {
+-            if (riscv_cpu_mxl(env) == MXL_RV32) {
++            if (riscv_cpu_sxl(env) == MXL_RV32) {
+                 base = (hwaddr)get_field(env->satp, SATP32_PPN) << PGSHIFT;
+                 vm = get_field(env->satp, SATP32_MODE);
+             } else {
+@@ -972,7 +972,7 @@ restart:
+             return TRANSLATE_PMP_FAIL;
+         }
  
- #ifndef CONFIG_USER_ONLY
-+    /*
-+     * true when RV64 QEMU running with mxlen==64 but sxlen==32.
-+     */
-+    bool sxl32;
-     RISCVSATPMap satp_mode;
- #endif
- };
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index b33cc1ec23..93a5cf87ed 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1504,16 +1504,29 @@ static RISCVException read_mstatus(CPURISCVState *env, int csrno,
- 
- static bool validate_vm(CPURISCVState *env, target_ulong vm)
- {
--    uint64_t mode_supported = riscv_cpu_cfg(env)->satp_mode.map;
-+    uint64_t mode_supported = 0;
-+    if (riscv_cpu_cfg(env)->sxl32 && (riscv_cpu_mxl(env) != MXL_RV32)) {
-+        mode_supported = (1 << VM_1_10_MBARE) | (1 << VM_1_10_SV32);
-+    } else {
-+        mode_supported = riscv_cpu_cfg(env)->satp_mode.map;
-+    }
-     return get_field(mode_supported, (1 << vm));
- }
- 
- static target_ulong legalize_xatp(CPURISCVState *env, target_ulong old_xatp,
--                                  target_ulong val)
-+                                  target_ulong val, int csrno)
- {
-     target_ulong mask;
-     bool vm;
--    if (riscv_cpu_mxl(env) == MXL_RV32) {
-+    RISCVMXL xl;
-+
-+    if (csrno == CSR_SATP) {
-+        xl = riscv_cpu_sxl(env);
-+    } else {
-+        xl = riscv_cpu_mxl(env);
-+    }
-+
-+    if (xl == MXL_RV32) {
-         vm = validate_vm(env, get_field(val, SATP32_MODE));
-         mask = (val ^ old_xatp) & (SATP32_MODE | SATP32_ASID | SATP32_PPN);
-     } else {
-@@ -3316,7 +3329,7 @@ static RISCVException write_satp(CPURISCVState *env, int csrno,
-         return RISCV_EXCP_NONE;
-     }
- 
--    env->satp = legalize_xatp(env, env->satp, val);
-+    env->satp = legalize_xatp(env, env->satp, val, csrno);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -3834,7 +3847,7 @@ static RISCVException read_hgatp(CPURISCVState *env, int csrno,
- static RISCVException write_hgatp(CPURISCVState *env, int csrno,
-                                   target_ulong val)
- {
--    env->hgatp = legalize_xatp(env, env->hgatp, val);
-+    env->hgatp = legalize_xatp(env, env->hgatp, val, csrno);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -4116,7 +4129,7 @@ static RISCVException read_vsatp(CPURISCVState *env, int csrno,
- static RISCVException write_vsatp(CPURISCVState *env, int csrno,
-                                   target_ulong val)
- {
--    env->vsatp = legalize_xatp(env, env->vsatp, val);
-+    env->vsatp = legalize_xatp(env, env->vsatp, val, csrno);
-     return RISCV_EXCP_NONE;
- }
- 
+-        if (riscv_cpu_mxl(env) == MXL_RV32) {
++        if (riscv_cpu_sxl(env) == MXL_RV32) {
+             pte = address_space_ldl(cs->as, pte_addr, attrs, &res);
+         } else {
+             pte = address_space_ldq(cs->as, pte_addr, attrs, &res);
 -- 
 2.43.0
 
