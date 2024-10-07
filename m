@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6DA7CFB448
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF9DCFB446
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxq1c-0001tl-Pw; Mon, 07 Oct 2024 11:51:56 -0400
+	id 1sxq2C-0002Oi-04; Mon, 07 Oct 2024 11:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxq1a-0001sK-Ku
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:51:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxq2A-0002L4-Vm
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:52:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sxq1Z-00038Q-5b
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:51:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxq29-0003A9-JD
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:52:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728316312;
+ s=mimecast20190719; t=1728316348;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VGfBzNauwRh2yHiMgBgqKa6m11HTaarMBwkUsXGACSY=;
- b=JMf1PfeB58646VndEsHZ3yIKFRtIPZygvBYbA5MEFJZNP5t9Cgls3FQynYa8cuNPKPVf8M
- LCfGf/YKmW7rESgSswyVGd906pAf6e26zBGfuMye90gDD7KoynHhsIeMzFvCrg949Fl3/D
- IMhyrGCOtomrRWnEUQyKJ0LSd8omno4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0PAKksN8xE2hdEYnQbd341d2Fhclc/I8LslQMIyP8Tc=;
+ b=UDUNvSPzT7y+89YgSELzx3ZIPRohetw7oiOXdnFIzRAhSPNOtozZm0Yda49MmTYnJN72yX
+ xRXlvCFp1xvhqQC96fhHRADGyzV6B00KaTPjuNT7mcIgNeHWK4S6oVIlXCFg+EWuhT8SE4
+ HhFxTl8si/rRMMLCVY0WMrhqMTU6M+U=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-1toJM_2TOlW0o_-pnEcR4w-1; Mon, 07 Oct 2024 11:51:51 -0400
-X-MC-Unique: 1toJM_2TOlW0o_-pnEcR4w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37ccc96d3e6so1745928f8f.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 08:51:51 -0700 (PDT)
+ us-mta-114-vYsW_QwyN2-UfeKDRXEUSQ-1; Mon, 07 Oct 2024 11:52:27 -0400
+X-MC-Unique: vYsW_QwyN2-UfeKDRXEUSQ-1
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a0cd6a028bso40239435ab.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 08:52:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728316310; x=1728921110;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VGfBzNauwRh2yHiMgBgqKa6m11HTaarMBwkUsXGACSY=;
- b=vRIfNhzcwCuNqOUNlEJqVqZBVbHi1vIm1xUXEzTsV6wGV/HokSn0XC48uPv9Q/XXEB
- thWJTbynJLt/mTL2Cp1hODnut2hoqsTSu7jp/WyudIOUUZsB5QmJX1Ft6UUHTrLTwBJt
- FVsvpdJliIQPGdLfmvkuL8TR7X9d2UqwArwsOUwd5xq1HM/TSdia4CMp4qwuHV915n4d
- fg9pvtSTfLQ+6lPQuCXo0urHEuSOsPu9NrUSVz2hEjuAMhJS8HdDNe9wuHRhOfGFCWd5
- lcNQH9q6M2cBNZz2mSInwx7qRTCGJVkXLWswQz12iKX8UpF1U7CJ/duO2aQ2IBc6rm28
- 55SQ==
-X-Gm-Message-State: AOJu0YxOFUTy7kf1T6+0H1fMDVpw14H2nb/wQX0VsdB+QU8zlKSD6DC1
- HmdTL5Ikv7QtLi72XY203OBXyAbUEp7vcdzu7KrrJ/NDnYhaU3c2rmy+1ufUzk8Ns2oXW4rX1bf
- 055Hku3NaYt9gZ+omCAIZoyESvT0qhGGRydtqbYwkLfEq/FjSV+KPpy53RGuSc61SGTbU8Zs1/3
- 4/E+uq58aDGhxwtfMtXmPrnV2yLWo=
-X-Received: by 2002:adf:e681:0:b0:37c:d1d2:dbe5 with SMTP id
- ffacd0b85a97d-37d0e8e03e5mr7180246f8f.45.1728316309977; 
- Mon, 07 Oct 2024 08:51:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUVPIE7UJ7XkgzN89XuTQeXfYCuVkJcXDSagx1Y9gv+Dk/e5+gwqNfOPuF0xlWo25V+Y4gZlyjohtuhqF3Des=
-X-Received: by 2002:adf:e681:0:b0:37c:d1d2:dbe5 with SMTP id
- ffacd0b85a97d-37d0e8e03e5mr7180235f8f.45.1728316309601; Mon, 07 Oct 2024
- 08:51:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728316346; x=1728921146;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0PAKksN8xE2hdEYnQbd341d2Fhclc/I8LslQMIyP8Tc=;
+ b=lQ+OUAaMJvXXtUHfozXS6ZYPKDdW9JhJfUsIitxFc8UzBVvntmiQUPq0yjLIM8J5z2
+ WEVuvQeGrLwAPE4JdZJTxacsCTdKq1EYmREjHhzmjSOBbnLYWjt7cWr2PNenBpiazIDO
+ 6zql/wj6tCbOkrtzFy1crHZIUrGFVY4xNMqaanchw4LoX7NPCH7lA8LoCM2OrgxEDM6+
+ ryg/Lk8xL1eRpdHzttF2EKEJ6oWsuFpBEm7uFO7qnRMpN2Mal/t3nnOrdBSPEMWwisgw
+ yaz2ExFoVjAaAlD8kh3LoSMhGgGV1rM4EK4PLhEOVLq7bte9ucMnevtziywT+FRTM308
+ CqfA==
+X-Gm-Message-State: AOJu0YznT/LX1SFG/XEtgtt5HR0Dxq0nPFsFjyxd0Gj4rCpOw1HHi9sF
+ iB7D/QO+Nl0t0dBxOvuE2myF18aiSmk/N9lylsn7+f3LRvXBG90o1KyzzYurVRckEIN6OL4m/I5
+ eT+4UKPOP/jJnVi42Rl7OWKIj5qb70F/7apuRKDIMA63RkUyoQ1zdVfynQZ8d
+X-Received: by 2002:a05:6e02:1a8f:b0:39d:351a:d0a2 with SMTP id
+ e9e14a558f8ab-3a375bded13mr104004325ab.25.1728316345918; 
+ Mon, 07 Oct 2024 08:52:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbQ2+ZU5DEZnWmKmybu1ljwAa3g26FsGQkf4tPCu/mwCpfoVjCIAUGsSScsvLJIhxOD9qPpA==
+X-Received: by 2002:a05:6e02:1a8f:b0:39d:351a:d0a2 with SMTP id
+ e9e14a558f8ab-3a375bded13mr104003985ab.25.1728316345520; 
+ Mon, 07 Oct 2024 08:52:25 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a37a7e790bsm14011445ab.10.2024.10.07.08.52.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 08:52:24 -0700 (PDT)
+Date: Mon, 7 Oct 2024 11:52:22 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 06/13] hostmem-memfd: preserve for cpr
+Message-ID: <ZwQDtrUxg1eYMfwL@x1n>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-7-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-References: <20241007110342.1298598-1-pbonzini@redhat.com>
- <ZwPB9SnTvkr082NA@redhat.com>
- <CABgObfYZgR9xNnP9mHWU92XZZ_VeFLHimkd-t-63KX_KWeDZ=A@mail.gmail.com>
- <ZwPKPGkpklnY9i5z@redhat.com> <ZwPLlHxQkRbf3QBx@redhat.com>
-In-Reply-To: <ZwPLlHxQkRbf3QBx@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 7 Oct 2024 17:51:36 +0200
-Message-ID: <CABgObfb5ypzdCnZm6OYTLMjEpX_L5A8dK66P_aLwg6iEqjk_Cw@mail.gmail.com>
-Subject: Re: [PULL 00/12] Rust initial PoC + meson changes for 2024-10-07
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, zhao1.liu@intel.com,
- junjie.mao@intel.com, pierrick.bouvier@linaro.org, alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1727725244-105198-7-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -101,32 +106,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 7, 2024 at 1:53=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
-> > Full CI enablement isn't a requirement until we want to turn on
-> > Rust by default. It would be sufficient to have a single job in
-> > CI using Fedora 40 that passes '--enable-rust' to demonstrate that
-> > this at least working on one platform we expect.
->
-> I forgot to say that QEMU's 'refresh' script can customize the
-> dockerfiles from lcitool with an arbitrary amount of trailing
-> text - see the 'debian12_extras' for example.
+On Mon, Sep 30, 2024 at 12:40:37PM -0700, Steve Sistare wrote:
+> Preserve memory-backend-memfd memory objects during cpr-transfer.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Ok, I'll try to concoct something like that.
+Acked-by: Peter Xu <peterx@redhat.com>
 
-> > If we want to actually build with the cutting edge, then I'd say
-> > it is sufficient to have a container based on Fedora rawhide, since
-> > that gives a heads up on what's soon to be impacting the next stable
-> > distro release, upto 6 months ahead of time - we don't need to be
-> > watching& debugging stuff that hasn't even been released by Rust
-> > yet IMHO.
-
-I think it's a good idea to give ourselves early access to lints,
-given that clippy and rustc are evolving more rapidly than C compilers
-(which already bite us every now and then). It tells us whether we
-consider them over-the-top and disable them, or potential bugs/traps
-that we want to fix now.
-
-Paolo
+-- 
+Peter Xu
 
 
