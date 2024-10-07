@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 502EDCF887C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0901FCF887C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:02:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxurG-0006qu-KD; Mon, 07 Oct 2024 17:01:34 -0400
+	id 1sxus1-0007Rh-SK; Mon, 07 Oct 2024 17:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxurB-0006qR-R5; Mon, 07 Oct 2024 17:01:31 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ id 1sxurp-0007Mc-1K; Mon, 07 Oct 2024 17:02:10 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxur9-000758-Qe; Mon, 07 Oct 2024 17:01:29 -0400
+ id 1sxurn-00079J-CE; Mon, 07 Oct 2024 17:02:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728334885; x=1728939685; i=deller@gmx.de;
- bh=gbXUcqECTYm5JGx/YDix/NjPhsYJDm4Zi1/kMrB6RKo=;
+ s=s31663417; t=1728334925; x=1728939725; i=deller@gmx.de;
+ bh=Xh5m0gVCYGwVn938X3xjGyOvV0Ab5N3D1UUZ3mAE+CA=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=uZsHQ5vaa5X/+3+2tBA61/UEYqG6ZtO/Xmr55dX3vbBZsqYqhDwaPoTzFFk7VIG4
- GJNkDyZbNljc7US10qvCoDYsv2WQRsWnOef9Scs3rfm7ah6WBEW+f3Dvwl8GcaIm/
- HxVnjspcb6B6DDic5y+xXVoSgK4T8LxTtEmmE7cJaI8mE9c0scrCRChFoK9SmFPEZ
- XhgnBkZLkTtjErnfE1sZ5+dkkB01zjXWbWzEMiiQtVl2riCLQjYxaoNdw9Ho5sTbE
- X1ggj9l29A1UdUbP3+fcVO4zZFCS3iVnsKsx4HWWxK6pG2KidPhECOhRdCwvLm85i
- ekHxSXFdn98nJwkzSA==
+ b=FTxtQt6TiRigCUb9eIQ+2GtGX7fZYg4dOUIZdh69vdmQVb5n2irqKSp+qJEtRRFd
+ 3/nbKahz5zpDZPlFDnC34VEnwrBcUqY0yYbl0s7OKhTwGx3Hq0RkYvUYYCzmExic0
+ tiNSYO893zO12c/UJrIX5FeRoQUH/3A3pjWhznpH37IzjFtOFJwaJ0jyNUio4mqit
+ c3uE6dC41q7WGpGqiHj1J1FfJO/PN5lKb6vNNX7h/NDjpwVV0/SUgJY7pz51Pvye9
+ bV26gqr+CamGgE/owUCN5otdtzwALHYcv4eFa+n738zu5zfln+iNf+J42k3OEq6UY
+ QqtGyxA/BbXb9dXv8g==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McY8T-1tYcBd3N9R-00gYvN; Mon, 07
- Oct 2024 23:01:24 +0200
-Message-ID: <c9bf746f-d4db-43f4-a7ad-628ffd9669f6@gmx.de>
-Date: Mon, 7 Oct 2024 23:01:23 +0200
+Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYeR1-1tTWcZ3Agt-00Qd0J; Mon, 07
+ Oct 2024 23:02:04 +0200
+Message-ID: <0e45843c-01a7-4e89-a809-c8f03d0ca304@gmx.de>
+Date: Mon, 7 Oct 2024 23:02:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/21] accel/tcg: Expand tlb_fill for 3 callers
+Subject: Re: [PATCH v2 03/21] include/exec/memop: Move get_alignment_bits from
+ tcg.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-3-richard.henderson@linaro.org>
+ <20241005200600.493604-4-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -91,27 +92,27 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241005200600.493604-3-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vKbC5LAECUGMqJYj4QMon4AgKT61oeyNhmHaMGxAH+o2IuMC5of
- XNekivMRP8fTlKGXb2ZuvLgrF7pkczrV5rtDHKWQBIDYl2EheijpmTNqArL8Tqasp7OVgbw
- D/GKqrzHjK7VWDNgz6QmIyVXc2Lmg4ONA4k3Cwd1St05eSUifxG32mnEf2NnoF7jV4E8Nd1
- s93HNAF991YWBKQufevRw==
-UI-OutboundReport: notjunk:1;M01:P0:muAlPIwNScU=;uEARVxfZKLW/cnaDVIB9m95DdN7
- yNcN0sUP4AHSZC8eTmdX/9HzBLtJWPoL6lvRtuUCColXZrtMfBAkVEyjPYsJyB+Uqc+DwniC1
- /XUE8jrkSw/h6K11u0ERWfUI5RgKjRjiX/zg/7mlG2289VHtlEeG+1wIWx5qo55PIarjs6D5p
- M2vPWG2NTz/BVKP3mcmnAiHE9iBnfrYgeeadMfWoHSW0pFFTxLfz5bSbgMytau/KlEXqz+2H8
- 2mzo4t47oUBcO7IEkCymGm+g3MKIuGSlgM51sfCZYAAFgadLujeOZbbVHgVmeiIMZPgPjsw1v
- sDR/RYjSTIFyh8lT3fBQ4Ub5gKPJjpne4Y3b2NxaTpzXk1qRJP7Dy8j2XecDoGwxTQG12VVER
- Sd1q1IAlWeT2C5ZPt3WCfgfuOtOkrePY0iyMbl0eD++JX3N173icscFyJpkVFsv+isIxO4DjE
- da0lR0g6f916AIpcGW1/vlrbXQuJDGpHKho1W4YujWNgCYSc74tudplJVyBPFw3QsLUg5d0AV
- ZuEcPg8KKeDe6//N/m4MZ3yFU9lVhgZTUmxTSL8KsrV4MHRDggR0cOzu8/xOQnior5+olZaKx
- KweGTPJwzYwuvcgFQC2v4TpSqoUtbxHjECSU1eRrSFk8s8budnXn6MnYI7XxOauSIMRiGHJsp
- G/RgoT1u+JJ7fbDM2LSHPqPLPvXVF/538P+gG1G/4we+amtUqmQJ43/9oKwmypJNLsTiY2O8M
- rAyUcz3pkcAWMg+b3H8AkAI0nwB/SQFVWkk0h9WY9ComqKJBIq235gH5ntZkECGir4pAhdaIj
- 4eH7TEXgeESZONkGCkL1qIpg==
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:KPfvXCahsFFrqCAao6fdpdWwRAT2fhIG/UicyG3avH9T7NOHCZB
+ rnp5xqcrte33AH3C6bOKBhydIHvQPC0lMhd4AEitwln5Npje0hsGzIbOAOIlCgtmFyetcxE
+ 0u4Pi4GNLPrCJWKpNLH2feCpO7i3hE53ZT42/jM3Jy+VZW7nIszXu3uk1U8zG06RA/w1eF+
+ JmgOyyJASLKHrWdvTWZ2g==
+UI-OutboundReport: notjunk:1;M01:P0:Ql2WnfdEydM=;HGk6ueqeBTR/8IenwnS4ZvirnFQ
+ +uxsLLXpTJXbt4WtFFmcxDdJ+VkhubiIeHpzO7cAGZjHTl+9LhfriQ+njvoU+ecLEeoICS6Hz
+ 59ncO/dyA3hFlUgEULvMrJoOZ0pm5z4O9YujV3hlFZpEJv5ru4/7So5tpBiZwbjtVJgbyUZ49
+ y2W8ALmiHtdtzT11IqyCBx9l2j3BlsHFyUxYupgrSIfFE8QuJM2vRneLDrR3NsT5NCfx7kkCF
+ 0mDXfD6FYAIDMA13KkogaCWdPoLytLZLUFtawS6oWIXWaGSpzhQ2nlcUx28WixqflrnhuU1XE
+ MqmUVbhRsfRRHxqXm3/TDaQunakk/A8QWAx+Ir7oar43/xprPIlxxWWkUsiK9OB9sTgJRvDaE
+ epBhHUK2eotPHXQT2hezBa6jU6JwKpUtu4SpI8xQBAUCuyJ6QEr4ReKzGRGELHmDW83dHSzn1
+ ow5evmxsuaCK7dnzvNDHUes5rsy/Qmd6iV6yB2jbTRTZAfnDMvH8yLbOaW8+t/G/nLBKjgEIi
+ OTt6Q+CTwnycGnCjpNNAGire80FQ8dlbv8ysmqHQHr3Y0o830iA3BlMp7L9U/t5Er+9hg8BYx
+ YpDHqx0FP7hwIg3Wv3oVKkomiOQNk1sEh6dw5u6bKVsHlvGKYPANF9KvCXGVgJ84R5i673i/I
+ gPRKCm7rsS9lZ9EdkDzaXVtE3cxlDR818n7iNIvIX0Y8PMmcGpkyjKQrOWsrglG6tSK7b0TIl
+ PhNkUOJs5t1VIetJwiaS4kywUTBxrioKOvVo+zbDD4mTGapAbbmuoaAhXPaytRaAsKtBhOjCM
+ 5/Kw++di6KhLqBM0M/bFVF1g==
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -137,89 +138,83 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/24 22:05, Richard Henderson wrote:
+> This function is specific to MemOp, not TCG in general.
+>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 
+
 > ---
->   accel/tcg/cputlb.c | 33 ++++++++++-----------------------
->   1 file changed, 10 insertions(+), 23 deletions(-)
+>   include/exec/memop.h | 23 +++++++++++++++++++++++
+>   include/tcg/tcg.h    | 23 -----------------------
+>   2 files changed, 23 insertions(+), 23 deletions(-)
 >
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index fd6459b695..58960969f4 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1220,25 +1220,6 @@ void tlb_set_page(CPUState *cpu, vaddr addr,
->                               prot, mmu_idx, size);
+> diff --git a/include/exec/memop.h b/include/exec/memop.h
+> index f881fe7af4..97720a8ee7 100644
+> --- a/include/exec/memop.h
+> +++ b/include/exec/memop.h
+> @@ -170,4 +170,27 @@ static inline bool memop_big_endian(MemOp op)
+>       return (op & MO_BSWAP) =3D=3D MO_BE;
 >   }
 >
-> -/*
-> - * Note: tlb_fill() can trigger a resize of the TLB. This means that al=
-l of the
-> - * caller's prior references to the TLB table (e.g. CPUTLBEntry pointer=
-s) must
-> - * be discarded and looked up again (e.g. via tlb_entry()).
+> +/**
+> + * get_alignment_bits
+> + * @memop: MemOp value
+> + *
+> + * Extract the alignment size from the memop.
+> + */
+> +static inline unsigned get_alignment_bits(MemOp memop)
+> +{
+> +    unsigned a =3D memop & MO_AMASK;
+> +
+> +    if (a =3D=3D MO_UNALN) {
+> +        /* No alignment required.  */
+> +        a =3D 0;
+> +    } else if (a =3D=3D MO_ALIGN) {
+> +        /* A natural alignment requirement.  */
+> +        a =3D memop & MO_SIZE;
+> +    } else {
+> +        /* A specific alignment requirement.  */
+> +        a =3D a >> MO_ASHIFT;
+> +    }
+> +    return a;
+> +}
+> +
+>   #endif
+> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+> index 21d5884741..824fb3560d 100644
+> --- a/include/tcg/tcg.h
+> +++ b/include/tcg/tcg.h
+> @@ -281,29 +281,6 @@ static inline int tcg_type_size(TCGType t)
+>       return 4 << i;
+>   }
+>
+> -/**
+> - * get_alignment_bits
+> - * @memop: MemOp value
+> - *
+> - * Extract the alignment size from the memop.
 > - */
-> -static void tlb_fill(CPUState *cpu, vaddr addr, int size,
-> -                     MMUAccessType access_type, int mmu_idx, uintptr_t =
-retaddr)
+> -static inline unsigned get_alignment_bits(MemOp memop)
 > -{
-> -    bool ok;
+> -    unsigned a =3D memop & MO_AMASK;
 > -
-> -    /*
-> -     * This is not a probe, so only valid return is success; failure
-> -     * should result in exception + longjmp to the cpu loop.
-> -     */
-> -    ok =3D cpu->cc->tcg_ops->tlb_fill(cpu, addr, size,
-> -                                    access_type, mmu_idx, false, retadd=
-r);
-> -    assert(ok);
+> -    if (a =3D=3D MO_UNALN) {
+> -        /* No alignment required.  */
+> -        a =3D 0;
+> -    } else if (a =3D=3D MO_ALIGN) {
+> -        /* A natural alignment requirement.  */
+> -        a =3D memop & MO_SIZE;
+> -    } else {
+> -        /* A specific alignment requirement.  */
+> -        a =3D a >> MO_ASHIFT;
+> -    }
+> -    return a;
 > -}
 > -
->   static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
->                                           MMUAccessType access_type,
->                                           int mmu_idx, uintptr_t retaddr=
-)
-> @@ -1631,7 +1612,10 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupP=
-ageData *data,
->       if (!tlb_hit(tlb_addr, addr)) {
->           if (!victim_tlb_hit(cpu, mmu_idx, index, access_type,
->                               addr & TARGET_PAGE_MASK)) {
-> -            tlb_fill(cpu, addr, data->size, access_type, mmu_idx, ra);
-> +            bool ok =3D cpu->cc->tcg_ops->tlb_fill(cpu, addr, data->siz=
-e,
-> +                                                 access_type, mmu_idx,
-> +                                                 false, ra);
-> +            assert(ok);
->               maybe_resized =3D true;
->               index =3D tlb_index(cpu, mmu_idx, addr);
->               entry =3D tlb_entry(cpu, mmu_idx, addr);
-> @@ -1833,8 +1817,10 @@ static void *atomic_mmu_lookup(CPUState *cpu, vad=
-dr addr, MemOpIdx oi,
->       if (!tlb_hit(tlb_addr, addr)) {
->           if (!victim_tlb_hit(cpu, mmu_idx, index, MMU_DATA_STORE,
->                               addr & TARGET_PAGE_MASK)) {
-> -            tlb_fill(cpu, addr, size,
-> -                     MMU_DATA_STORE, mmu_idx, retaddr);
-> +            bool ok =3D cpu->cc->tcg_ops->tlb_fill(cpu, addr, size,
-> +                                                 MMU_DATA_STORE, mmu_id=
-x,
-> +                                                 false, retaddr);
-> +            assert(ok);
->               index =3D tlb_index(cpu, mmu_idx, addr);
->               tlbe =3D tlb_entry(cpu, mmu_idx, addr);
->           }
-> @@ -1848,7 +1834,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vadd=
-r addr, MemOpIdx oi,
->        * but addr_read will only be -1 if PAGE_READ was unset.
->        */
->       if (unlikely(tlbe->addr_read =3D=3D -1)) {
-> -        tlb_fill(cpu, addr, size, MMU_DATA_LOAD, mmu_idx, retaddr);
-> +        cpu->cc->tcg_ops->tlb_fill(cpu, addr, size, MMU_DATA_LOAD,
-> +                                   mmu_idx, false, retaddr);
->           /*
->            * Since we don't support reads and writes to different
->            * addresses, and we do have the proper page loaded for
+>   typedef tcg_target_ulong TCGArg;
+>
+>   /* Define type and accessor macros for TCG variables.
 
 
