@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C94CFB456
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6869CFB456
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtkS-0001YN-6G; Mon, 07 Oct 2024 15:50:28 -0400
+	id 1sxtl2-0001md-Ec; Mon, 07 Oct 2024 15:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkL-0001Y4-Sx
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:50:21 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkz-0001lL-EL
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:51:01 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkK-0007jB-91
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:50:21 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71df7632055so2052104b3a.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 12:50:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sxtkx-0007wm-Jq
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 15:51:00 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3e3937ef498so2597695b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 12:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728330618; x=1728935418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728330658; x=1728935458; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DB2owELhHAVkpAYi2YUuWUEEaGC68RFcQbhaPz/OHOQ=;
- b=HHfuhOw5ypRfWXSrsaT28PJOM0RCAiKGOXBNl92U0J9R6rTJ8bF817oydgwsElM/Hp
- fQ4BWI9naJFKEmNVGHMCImoCotLNn2CRRXc6Co0pmCNdjVI7ynUeAJ1EF44UZMwdlAI2
- TcoFIEkLGDEXgdxv599eiUNopQLc/N5disnVPWlGp/MLFuVUuRFcMjprTGbfQFW3qdSX
- v+duUPtySTjhzK/H/RY7kQiCjx9kpdBBHBB9PXxY7wby3gY+Pq7SRWeMeVca/RFFKf0o
- aMRF5VShCdOq3SlSpyESprZ66usAybpFyetnwlsq1dxLCej7X/R2egZvd/zIjckdy0Nt
- hkZQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z8TV8fYpF9eRG/D4gP+z3UnjvyTtJ/hBE8IkNgFDQB8=;
+ b=PhsJ4DFp8q0rYLg4mnxfbQgmqigSYl1SThFfiCWffLSf7sTePjm8tfBBvzsxQYNVWP
+ jqzvOMFM1UGwdeLchjGO45JV0S+gAnWMVgEtMI+XfC5hMrT4q1C49+dATvhqy7m/iTPP
+ K5VPIek4KoiSzhNbU6oggvJW5zCi7v6u+toYluwkKMSkzrCK/4VSMaetiu0LLQ1woqMe
+ Pd6keD7jND0/OvMEzVa09c1j11WlbFhHcxHrj7b3CHY0GMPkFFFD8NY/7QBf0nX5amaj
+ KzJSXAK4DvbPa25zBLM63OCXJersqs08YnMZ3kk0hrCJbWrzlftMIu50Ag/7EJfZsAPp
+ topA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728330618; x=1728935418;
+ d=1e100.net; s=20230601; t=1728330658; x=1728935458;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DB2owELhHAVkpAYi2YUuWUEEaGC68RFcQbhaPz/OHOQ=;
- b=ZTmY7hzKRj5ovxhVGXkUia6Zna5dSh2MjSjpTKurAx0gKEwM5XsN8b0SzFaFidraHi
- aa+Ktx2hRq5H9t9x0XeZgMiMun8PmN4Z2GUehsBwWsd71/Im87brFxDIVwUwuhlNFqDK
- ma0LnDKU0UTfiG1PzzqmmMeQQ9ggddlhuqBd57LdVgbo8VPaMQvLCMLRZprGPQROadzH
- uVqbC+fcTUqLjHmJbjqKWhTko1499I3YalI04M7PRCHh8Hh/q3zHWeQ/fqJa3Vm+8+W0
- GfPZ3hwLWH2fH5AnWEeFognYIA5VtKd1goz534CaZjHX/F14iyVvn6lBL2T1eZtTPYba
- hqQA==
+ bh=z8TV8fYpF9eRG/D4gP+z3UnjvyTtJ/hBE8IkNgFDQB8=;
+ b=kauQ289XB+MQTEwGbMsT5kBgpP4MX0SPvF+ofoYi0elbLawlTvuqqMpFKwSmfAgyiJ
+ yt22jdJeA8Ufcyrz5dypApsSLsWcst0QYorQCnmyyoEG5M1bM6q2FgmBicqLNCkwpxD6
+ 6HtFSPURX/UIZgYZpcGb7LFnWXyfw87AWsnuIPanVoS1q+1k8wRCIIjy9PQk2IA60SOE
+ EpMMEh6t48+6uMkZYDsQX9Ce494ATNzuWXfh1kNd81t6uU9pKce1XLPvLIdcfD5PtiXv
+ pnwENFxL+GYRr0MCWXHJeznnTAE7nk7wtImvX2CaQF/LTdEDfO63vDiFQuWqrmtzootV
+ kmug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7nhq+uoQk8oDzaZUx9ixx3TJNfBUKHKI/kbqTKh9x8zZwCtyRFBAb+lHFc7TzgzwNPMzm7TTU8D6g@nongnu.org
-X-Gm-Message-State: AOJu0YwI7fOjRvySoH9tWsDr2C43ON3/q+jC7oKoQ3Q1EGETHq2p8XcB
- fCKhf9EBMfxlOAPYwFAO1qpqItuR19KVqqYnEu6eoYyd1kbUXkuY1ajx7Yd3HooVHfd9xygyYVW
- n
-X-Google-Smtp-Source: AGHT+IHSiNgh0iaZnhn3FiORXiKa6T1N4jSmW9inleNVwDEhHTqJIE5sZnx0NDaMijojx0iSgWs5zg==
-X-Received: by 2002:a05:6a00:2d97:b0:71e:2a0:b0d0 with SMTP id
- d2e1a72fcca58-71e02a0b3c9mr8001939b3a.13.1728330618200; 
- Mon, 07 Oct 2024 12:50:18 -0700 (PDT)
+ AJvYcCV4V2cj9mnn7z9LgTnwzdRWiKwGKrG7XJCYAcImrS528iBMVuZJ0KCvZY23lOFTTVvSASTDShaNpdfj@nongnu.org
+X-Gm-Message-State: AOJu0YzpzyQ0Vz+K7G0hg0pY/YK2VmueUH1btqIGYNYVES/pW467xR3b
+ XCk49loOtmtiTjbonDSRO9YmUBooU7o/FkIKDetx4FhqigwSgfCEVfbYJpbHU7k=
+X-Google-Smtp-Source: AGHT+IFycNog1j3UBj6b3w1bJOhoI111/pUDnd5pUDMugLXE35Q/lZ8qeboZw3NlJXRH/sGowQ4VWQ==
+X-Received: by 2002:a05:6808:1b8c:b0:3e2:a1fe:f0c6 with SMTP id
+ 5614622812f47-3e3c131703bmr11385332b6e.6.1728330658252; 
+ Mon, 07 Oct 2024 12:50:58 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.163])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d47a4dsm4780560b3a.118.2024.10.07.12.50.16
+ 41be03b00d2f7-7e9f680c3a9sm5359598a12.7.2024.10.07.12.50.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 12:50:17 -0700 (PDT)
-Message-ID: <e9ed68d9-1cdc-4b6c-a644-1c8cfce6eb01@linaro.org>
-Date: Mon, 7 Oct 2024 16:50:15 -0300
+ Mon, 07 Oct 2024 12:50:57 -0700 (PDT)
+Message-ID: <858e948e-a1df-44bc-afd8-48df3d0d6d3e@linaro.org>
+Date: Mon, 7 Oct 2024 16:50:55 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] linux-user: Fix parse_elf_properties GNU0_MAGIC
- check
+Subject: Re: [PATCH 06/10] linux-user: Correct print_sockaddr() format
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
 References: <20241005233343.503426-1-richard.henderson@linaro.org>
- <20241005233343.503426-3-richard.henderson@linaro.org>
+ <20241005233343.503426-7-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241005233343.503426-3-richard.henderson@linaro.org>
+In-Reply-To: <20241005233343.503426-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,19 +97,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/10/24 20:33, Richard Henderson wrote:
-> Comparing a string of 4 bytes only works in little-endian.
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Adjust bulk bswap to only apply to the note payload.
-> Perform swapping of the note header manually; the magic
-> is defined so that it does not need a runtime swap.
+> When the %addr argument can not be accessed, a double comma
+> is logged (the final qemu_log call prepend a comma).  Move
+> the comma from the final qemu_log to the preceeding switch
+> cases that had omitted it.
 > 
-> Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Message-Id: <20240807124306.52903-2-philmd@linaro.org>
+> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> [rth: Move comma into the various switch cases.]
+
+Thanks!
+
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/elfload.c | 12 ++++++------
+>   linux-user/strace.c | 12 ++++++------
 >   1 file changed, 6 insertions(+), 6 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
