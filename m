@@ -4,42 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37575CFB454
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E9BCFB455
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtFT-0005zo-EM; Mon, 07 Oct 2024 15:18:29 -0400
+	id 1sxtEo-0005Br-Dn; Mon, 07 Oct 2024 15:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtFD-0005ia-1H; Mon, 07 Oct 2024 15:18:11 -0400
+ id 1sxtEm-0005A5-7l; Mon, 07 Oct 2024 15:17:44 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtFB-0004GP-8L; Mon, 07 Oct 2024 15:18:10 -0400
+ id 1sxtEj-0004An-Bw; Mon, 07 Oct 2024 15:17:43 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 51BB596250;
- Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EE0CE9624B;
+ Mon,  7 Oct 2024 22:16:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2B88514F730;
- Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
-Received: (nullmailer pid 2592759 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id C17E814F72B;
+ Mon,  7 Oct 2024 22:16:55 +0300 (MSK)
+Received: (nullmailer pid 2592743 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 19/32] target/arm: Correct ID_AA64ISAR1_EL1 value for
- neoverse-v1
-Date: Mon,  7 Oct 2024 22:16:36 +0300
-Message-Id: <20241007191654.2592616-19-mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 14/32] softmmu/physmem: fix memory leak in
+ dirty_memory_extend()
+Date: Mon,  7 Oct 2024 22:16:31 +0300
+Message-Id: <20241007191654.2592616-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,37 +67,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: David Hildenbrand <david@redhat.com>
 
-The Neoverse-V1 TRM is a bit confused about the layout of the
-ID_AA64ISAR1_EL1 register, and so its table 3-6 has the wrong value
-for this ID register.  Trust instead section 3.2.74's list of which
-fields are set.
+As reported by Peter, we might be leaking memory when removing the
+highest RAMBlock (in the weird ram_addr_t space), and adding a new one.
 
-This means that we stop incorrectly reporting FEAT_XS as present, and
-now report the presence of FEAT_BF16.
+We will fail to realize that we already allocated bitmaps for more
+dirty memory blocks, and effectively discard the pointers to them.
 
+Fix it by getting rid of last_ram_page() and by remembering the number
+of dirty memory blocks that have been allocated already.
+
+While at it, let's use "unsigned int" for the number of blocks, which
+should be sufficient until we reach ~32 exabytes.
+
+Looks like this leak was introduced as we switched from using a single
+bitmap_zero_extend() to allocating multiple bitmaps:
+bitmap_zero_extend() relies on g_renew() which should have taken care of
+this.
+
+Resolves: https://lkml.kernel.org/r/CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 5b82b703b69a ("memory: RCU ram_list.dirty_memory[] for safe RAM hotplug")
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-stable@nongnu.org
-Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240917161337.3012188-1-peter.maydell@linaro.org
-(cherry picked from commit 8676007eff04bb4e454bcdf92fab3f855bcc59b3)
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240828090743.128647-1-david@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit b84f06c2bee727b3870b4eeccbe3a45c5aea14c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index fe232eb306..8516daefca 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -685,7 +685,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
-     cpu->isar.id_aa64dfr1 = 0x00000000;
-     cpu->isar.id_aa64isar0 = 0x1011111110212120ull; /* with FEAT_RNG */
--    cpu->isar.id_aa64isar1 = 0x0111000001211032ull;
-+    cpu->isar.id_aa64isar1 = 0x0011100001211032ull;
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
+diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+index 2ad2a81acc..d9cfe530be 100644
+--- a/include/exec/ramlist.h
++++ b/include/exec/ramlist.h
+@@ -50,6 +50,7 @@ typedef struct RAMList {
+     /* RCU-enabled, writes protected by the ramlist lock. */
+     QLIST_HEAD(, RAMBlock) blocks;
+     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
++    unsigned int num_dirty_blocks;
+     uint32_t version;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
+ } RAMList;
+diff --git a/system/physmem.c b/system/physmem.c
+index 971bfa0855..d71a2b1bbd 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1534,18 +1534,6 @@ static ram_addr_t find_ram_offset(ram_addr_t size)
+     return offset;
+ }
+ 
+-static unsigned long last_ram_page(void)
+-{
+-    RAMBlock *block;
+-    ram_addr_t last = 0;
+-
+-    RCU_READ_LOCK_GUARD();
+-    RAMBLOCK_FOREACH(block) {
+-        last = MAX(last, block->offset + block->max_length);
+-    }
+-    return last >> TARGET_PAGE_BITS;
+-}
+-
+ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
+ {
+     int ret;
+@@ -1799,13 +1787,11 @@ void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length)
+ }
+ 
+ /* Called with ram_list.mutex held */
+-static void dirty_memory_extend(ram_addr_t old_ram_size,
+-                                ram_addr_t new_ram_size)
++static void dirty_memory_extend(ram_addr_t new_ram_size)
+ {
+-    ram_addr_t old_num_blocks = DIV_ROUND_UP(old_ram_size,
+-                                             DIRTY_MEMORY_BLOCK_SIZE);
+-    ram_addr_t new_num_blocks = DIV_ROUND_UP(new_ram_size,
+-                                             DIRTY_MEMORY_BLOCK_SIZE);
++    unsigned int old_num_blocks = ram_list.num_dirty_blocks;
++    unsigned int new_num_blocks = DIV_ROUND_UP(new_ram_size,
++                                               DIRTY_MEMORY_BLOCK_SIZE);
+     int i;
+ 
+     /* Only need to extend if block count increased */
+@@ -1837,6 +1823,8 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
+             g_free_rcu(old_blocks, rcu);
+         }
+     }
++
++    ram_list.num_dirty_blocks = new_num_blocks;
+ }
+ 
+ static void ram_block_add(RAMBlock *new_block, Error **errp)
+@@ -1846,11 +1834,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     RAMBlock *block;
+     RAMBlock *last_block = NULL;
+     bool free_on_error = false;
+-    ram_addr_t old_ram_size, new_ram_size;
++    ram_addr_t ram_size;
+     Error *err = NULL;
+ 
+-    old_ram_size = last_ram_page();
+-
+     qemu_mutex_lock_ramlist();
+     new_block->offset = find_ram_offset(new_block->max_length);
+ 
+@@ -1901,11 +1887,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+         }
+     }
+ 
+-    new_ram_size = MAX(old_ram_size,
+-              (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS);
+-    if (new_ram_size > old_ram_size) {
+-        dirty_memory_extend(old_ram_size, new_ram_size);
+-    }
++    ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
++    dirty_memory_extend(ram_size);
+     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
+      * QLIST (which has an RCU-friendly variant) does not have insertion at
+      * tail, so save the last element in last_block.
 -- 
 2.39.5
 
