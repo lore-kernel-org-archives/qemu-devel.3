@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA607CFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0272ECFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxl2H-0001H7-UG; Mon, 07 Oct 2024 06:32:17 -0400
+	id 1sxl78-0003CN-H6; Mon, 07 Oct 2024 06:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sxl2A-0001DS-4W; Mon, 07 Oct 2024 06:32:11 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sxl27-0002G4-GZ; Mon, 07 Oct 2024 06:32:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728297127; x=1759833127;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=jhJUK+AWFll4gfSxpcVeHGVJ440uyTmTNkzlK2H16Kk=;
- b=N7SXfege0Wes4ly/Gd3A9xQO711B8hnOWG3ZuLqhG/aySauWUAARX7uy
- JcPKyqUzMGBxRNMxycFL+YmUUb013ZuyDVC/lV5r0qOIzz+Dni7IwIKIX
- /yKcgStu/XOYA2ueQVjQw/vR4cuS8MrrFti3EU5sxXJLnZlNaPNKS72Yu
- WbjBrRpUBk82uo+zm9sp+H0xomhKEZYUB4wU9Es1+0CUiDb7OqKRyvqqV
- g/uG/jhIQA7BubqqjRuCwFQiMErnrQtwR6Vw4+6NW0/9PZEV7O6EjdX1+
- ClSZdzuMS6Y5XtqRF3gukqJNGBqTZVepY9S45iRzO03qlWhfBNJnkKpeX g==;
-X-CSE-ConnectionGUID: C8JhfIWuQAWIYLtHYy3j4A==
-X-CSE-MsgGUID: ZSWHk0pCSBa+paBmVjEFUQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11217"; a="38044285"
-X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="38044285"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Oct 2024 03:32:02 -0700
-X-CSE-ConnectionGUID: o2wxnFLcQ8aCs2GXkI/Wpg==
-X-CSE-MsgGUID: 9taj1YQOS2OUtO3z+NOWIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="80401926"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 07 Oct 2024 03:31:56 -0700
-Date: Mon, 7 Oct 2024 18:48:07 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S.Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 2/7] qapi/qom: Define cache enumeration and properties
-Message-ID: <ZwO8Z6pABtp2Zfi3@intel.com>
-References: <20240908125920.1160236-1-zhao1.liu@intel.com>
- <20240908125920.1160236-3-zhao1.liu@intel.com>
- <20240917095126.000036f1@Huawei.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sxl75-00039m-J4
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:37:16 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sxl73-0002m3-SO
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:37:15 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2fabfc06de3so44998061fa.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 03:37:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728297431; x=1728902231; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ngPWRvFSjCMt+74SoKPh5f+HvsBf1msKQnpxsK8zLbs=;
+ b=l0JP8x1mxS3jfi9tuaogunYMxBts1dq1mYb0jueCQPq1uPydUKlJkXHEwniU2/UJDr
+ exj15SQ3MMA3IpdgNBbs4q/oM7hq9v0Hg3jEFTAza7eSeKJmH0AcbvlCH/flSgg5F7Ph
+ QBSHyo0Ax+SvGZ6ZA3owUgTn76fiuzzfSay7wBTxxTjLpMWiLnUd3x2tswNrUDpyB8OG
+ OHHUKA8YKxaV8WDca+5W3w7/7ldiNb4Dw86TOSTlgoZj0XCNYSt8DRNnVw7WcabSmkEw
+ ZKFzGxyRtbsEzH23RnHNVW6kNUcRGcvS//QywdRbczLWVOw9cuBO+86MEXQsel4wHrOj
+ Q4EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728297431; x=1728902231;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ngPWRvFSjCMt+74SoKPh5f+HvsBf1msKQnpxsK8zLbs=;
+ b=wa8Yv5EFY9OIt8K3EKqRyrQikeItROCr564SpYpZl8Ql8FCgz6vPneWRi0NJQGgMLF
+ pHA2PkesvjevoPXdhsnJHGdS8xTG6udcyWHwFF4nd24ntAqaBh7mbztsXiHAkCpNBiQs
+ RW0qSwqK+iMkv6s3SzifQ2LUazBNAmIWaV4y6V+jr8i6BkOAUBvxoWaR4rRIsJgkJvJ0
+ QXaK2shaK0RLEbtgtAeprMAEmoQ+PNHBqLglLdT1mxssDd9H05nAlIdR/3mLfFT6Sadg
+ Y2J37czboZ+xuarFdkRmitu0PBDP2W5XTm3qlMn1OJh0/hhTWLnTlhGiP8ZixgXu/Sw0
+ Q46A==
+X-Gm-Message-State: AOJu0YxbbYIP84uzzqa/6W36WDDaOA8wPMml62Rm0M5iGNtowTKcdw4b
+ sIqgMst4MFUC3SGyI4YfrUxoiL6Rix6MeRWok0Zfx+UvAUTD5Uu4tibxQXWltvP+b48n3DU/Lqw
+ m2/1XLugSxoaOxL9Fuw84nTl8da2GHfwJBc0GHg==
+X-Google-Smtp-Source: AGHT+IET1Dv9yDJgZGasEKqfv1tZ/g91Bp2R/MxxEdBiaBFlbU6jnYnUvrXRfeQsL3EXMRjVEt4Ue7YGf9VuSeLtgWM=
+X-Received: by 2002:a2e:a9a5:0:b0:2fb:b8a:7abb with SMTP id
+ 38308e7fff4ca-2fb0b8a7b17mr6739151fa.21.1728297430629; Mon, 07 Oct 2024
+ 03:37:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240917095126.000036f1@Huawei.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241007101313.3900-1-shentey@gmail.com>
+In-Reply-To: <20241007101313.3900-1-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 7 Oct 2024 11:36:59 +0100
+Message-ID: <CAFEAcA-d0jcDiJASmvS5S2jWUijUGuk5Vu7QT8wrD+HKUgEJqQ@mail.gmail.com>
+Subject: Re: [PATCH] net/tap-win32: Fix gcc 14 format truncation errors
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
+ Stefan Weil <sw@weilnetz.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,75 +88,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
-
-Thanks for your review and feedback!
-
-[snip]
-
-> > Note, define cache topology based on CPU topology level with two
-> > reasons:
-> > 
-> >  1. In practice, a cache will always be bound to the CPU container
-> >     (either private in the CPU container or shared among multiple
-> >     containers), and CPU container is often expressed in terms of CPU
-> >     topology level.
-> >  2. The x86's cache-related CPUIDs encode cache topology based on APIC
-> >     ID's CPU topology layout. And the ACPI PPTT table that ARM/RISCV
-> >     relies on also requires CPU containers to help indicate the private
-> 
-> Really trivial but CPU Containers are a different ACPI concept.
-> For PPTT they are referred to as Processor Groups. Wonderfully they
-> 'might match a Processor Container in the namespace' which rather implies
-> they might not.  In QEMU they always will because the next bit of the
-> spec matters. "In that case this entry will match the value of the _UID
-> method of the associated processor container. Where there is a match it must
-> be represented."
-> 
-> So having said all that, CPU container is probably fine as a description.
-
-Thanks for the explanation!
-
-> >     shared hierarchy of the cache. Therefore, for SMP systems, it is
-> >     natural to use the CPU topology hierarchy directly in QEMU to define
-> >     the cache topology.
-> > 
-> > Suggested-by: Daniel P. Berrange <berrange@redhat.com>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+On Mon, 7 Oct 2024 at 11:14, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> Seems fine but my gut would be to combine this and next patch so we can
-> see how it is used (assuming no one asked for it to be separate!)
+> The patch fixes the following errors generated by GCC 14.2:
+>
+> ../src/net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 176 [-Werror=format-truncation=]
+>   343 |              "%s\\%s\\Connection",
+>       |                   ^~
+>   344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+>       |                                       ~~~~~~~~~
+>
+> ../src/net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes into a destination of size 256
+>   341 |         snprintf(connection_string,
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   342 |              sizeof(connection_string),
+>       |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   343 |              "%s\\%s\\Connection",
+>       |              ~~~~~~~~~~~~~~~~~~~~~
+>   344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+>       |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> ../src/net/tap-win32.c:242:58: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 178 [-Werror=format-truncation=]
+>   242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+>       |                                                          ^~
+>   243 |                   ADAPTER_KEY, enum_name);
+>       |                                ~~~~~~~~~
+>
+> ../src/net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes into a destination of size 256
+>   242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   243 |                   ADAPTER_KEY, enum_name);
+>       |                   ~~~~~~~~~~~~~~~~~~~~~~~
+>
+> ../src/net/tap-win32.c:620:52: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 245 [-Werror=format-truncation=]
+>   620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+>       |                                                    ^~
+>   621 |               USERMODEDEVICEDIR,
+>   622 |               device_guid,
+>       |               ~~~~~~~~~~~
+> ../src/net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes into a destination of size 256
+>   620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
+>       |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   621 |               USERMODEDEVICEDIR,
+>       |               ~~~~~~~~~~~~~~~~~~
+>   622 |               device_guid,
+>       |               ~~~~~~~~~~~~
+>   623 |               TAPSUFFIX);
+>       |               ~~~~~~~~~~
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-No problem. I intended to make it easier to review the QAPI part, but
-these two patches were simple enough that I was happy to combine them.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2607
+Probably also worth
+Cc: qemu-stable@nongnu.org
 
-> Version numbers need an update I guess.
+> ---
+>  net/tap-win32.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/net/tap-win32.c b/net/tap-win32.c
+> index 7edbd71633..4a4625af2b 100644
+> --- a/net/tap-win32.c
+> +++ b/net/tap-win32.c
+> @@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
+>
+>      for (;;) {
+>          char enum_name[256];
+> -        char unit_string[256];
+> +        char unit_string[512];
+>          HKEY unit_key;
+>          char component_id_string[] = "ComponentId";
+>          char component_id[256];
+> @@ -315,7 +315,7 @@ static int get_device_guid(
+>      while (!stop)
+>      {
+>          char enum_name[256];
+> -        char connection_string[256];
+> +        char connection_string[512];
+>          HKEY connection_key;
+>          char name_data[256];
+>          DWORD name_type;
+> @@ -595,7 +595,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
+>  static int tap_win32_open(tap_win32_overlapped_t **phandle,
+>                            const char *preferred_name)
+>  {
+> -    char device_path[256];
+> +    char device_path[512];
+>      char device_guid[0x100];
+>      int rc;
+>      HANDLE handle;
 
-Ah, yes!
+Rather than just increasing the array sizes, I think we
+should use g_autofree and g_strdup_printf(), like:
 
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+       g_autofree char* unit_string = NULL;
 
-Thanks!
+       [...]
+       unit_string = g_strdup_printf("%s\\%s", ADAPTER_KEY, enum_name);
 
-> > +##
-> > +# @SmpCachePropertiesWrapper:
-> > +#
-> > +# List wrapper of SmpCacheProperties.
-> > +#
-> > +# @caches: the list of SmpCacheProperties.
-> > +#
-> > +# Since 9.1
-> 
-> Needs updating to 9.2 I guess.
+       (then no need for an explicit free)
 
-Yes, I think so, too.
+All this only happens once at open, so we can certainly
+happily take the cost of memory allocation, and it saves
+us wondering about whether there's actually a maximum
+limit on these string values. (Looking at the MS documentation,
+I think registry keys have a limit of 255 chars, but
+values are 16383 chars, so 512 would be more than needed
+for a key and less than the theoretical maximum for a value.)
 
-Thanks,
-Zhao
-
-> > +##
-> > +{ 'struct': 'SmpCachePropertiesWrapper',
-> > +  'data': { 'caches': ['SmpCacheProperties'] } }
-> 
+thanks
+-- PMM
 
