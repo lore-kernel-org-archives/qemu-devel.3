@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108A4CF887D
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C436CF887C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxutP-0008Gx-TZ; Mon, 07 Oct 2024 17:03:47 -0400
+	id 1sxuuh-0000zz-HP; Mon, 07 Oct 2024 17:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxutO-0008Gi-2v; Mon, 07 Oct 2024 17:03:46 -0400
-Received: from mout.gmx.net ([212.227.17.20])
+ id 1sxuuZ-0000w7-Qb; Mon, 07 Oct 2024 17:05:01 -0400
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxutM-0007T9-5v; Mon, 07 Oct 2024 17:03:45 -0400
+ id 1sxuuY-0007fS-5e; Mon, 07 Oct 2024 17:04:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728335018; x=1728939818; i=deller@gmx.de;
- bh=zeag8zsSiy0vNgNC1UzYWjr/V8m5BRLCuGswN8A9LdI=;
+ s=s31663417; t=1728335096; x=1728939896; i=deller@gmx.de;
+ bh=Asn+5QYgZ80t/ESs8Mt65BDvhZZZgP6XVThreBfw+1o=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=rWKS/SlAiTjA2EnMwa4d8DvrrW+wT0JNNklto6rHzylxPe35LS2VM4ScJsQ2tEbn
- pMjIS0DtWfJBodZeO5WDJVncl/ME38tShVb2pjWaC6wt9B/MCntlmAWLxMkCF/QZJ
- S1IJIKA+XestxhrKqv5lVt3ig0Zcz636h4+ockMW80OpV/uy+Yk5L5d3b14lJ6UZn
- XIQSpdrT+CBQlC3NteWxBTAU+syeVzwuRc2BABZalD65+ZiTkBPZvkdcQoZW1cvnq
- 0n4dod5YyNVKW8d0d0q1Ezh9/ChXcfs7sWMdh73/24TtSrlWJgq4OgeXyYRyCwGKL
- RvyHpHhyiZQHbdRZlg==
+ b=aFr7chLJpgUI6a22iRkhLOZjlRs/VbFA0WRT+LOQfWCkuiSSqKuoeL01yAxoJKkU
+ L8BqV7U9D+oJWL+tu93FoMKXZgCBEba9Qk+kZx6+nY/HTh7/mdCSY6BAOHRrM8YQq
+ fATUguytU1FwCXgVAOKkduZ7Sat098PANYdmq3Yr5SqytvY4T6bcsA+xFJnkJI5Q9
+ RwqK8PGtT7bOhFdSysbAtyIUSi9LAmG1OIm88TVfimJz8cceK7lcD+qcVM0xpSBj1
+ TDzT2AdnBe1uLJ+UzrtaqaPSiHshGJPKh6S9S5/UO0Krr+GHzZJ6JsOLDq6lV0g2z
+ 1NfbtLs717Y7nWkGrA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEUz4-1tDuW82ZmU-00BRD4; Mon, 07
- Oct 2024 23:03:38 +0200
-Message-ID: <c71c8234-da23-4dee-b356-f91098c4797d@gmx.de>
-Date: Mon, 7 Oct 2024 23:03:37 +0200
+Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAOJP-1t9lnw3IGR-00GcEi; Mon, 07
+ Oct 2024 23:04:55 +0200
+Message-ID: <b927a1c5-d232-40f1-83cb-279595cf8d93@gmx.de>
+Date: Mon, 7 Oct 2024 23:04:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/21] include/exec/memop: Rename get_alignment_bits
+Subject: Re: [PATCH v2 05/21] include/exec/memop: Introduce
+ memop_atomicity_bits
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-5-richard.henderson@linaro.org>
+ <20241005200600.493604-6-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -91,27 +92,27 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241005200600.493604-5-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-6-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:uGA6s4/DJkguxWiolsLv3MJyY+yba700uvgBHakOdjkug+/u5jE
- ZAsGU4WQheATM5KIhJQCMq3Vrq1Hl1zRF5zv+kLzop5ZQULILLF0v3/KSRsJMNJPmxf30O8
- qTlFXTqYtgVbCEw7sHN+OLn/mX3P2GqRCk68ytf0EtKoCBLsDYB/rygyLsfQ23iliIr33na
- e3Pjlo44NerYFTJsEhOEw==
-UI-OutboundReport: notjunk:1;M01:P0:0MFCzOQkQrI=;bUCl29W2Q1TG9ei+52rcDrFsvZU
- 3UAjtBaJZULaCWnDwtK1t5Ww9YeyVvQOLdM0kTzGzwIygMQS6YB/cCv14qM/6O8U5J9HAvlwt
- ffhoQvxgQTXlLGwa4buKNEwZ1zDzv2obD18RxGKqpnEi+ncjoXF3MS7z0I96DCPWfEGyoi2ld
- 4Ha23xzbRvoHL5I3xt8jmFv5ZmMqUM5EaWsF1Yg7uKYOu86XBHDiy4XbSNNOBUtAcdB7nSBCa
- 1J38VP+o2rVisU26kW2akG0DkTHvz1JV+Jsst5qbbH7tzurvgt7OL5rjkdyezydV3b/Xlm1O8
- NpXWeAAeewoXaxzLeLdYXb10e0gtBgYt3AXvs6DILMkEWNqSzP7InnOp2XSICqWp8X03Y2IZD
- 9lJfDGuxYYaABDE59sGQLyP75LqSHBvklvLCGvl9QfnMKXbQ49Rrtm4SFMkO9VFrmuhzWCVrK
- 7+gLqXwktuBhPzXrc3SNys6VhikG2kUP+P0OkHAfQ8LIbr9w5Uohf9K7nuSdn20KsVaNPnbBc
- ngkhO9FmPX/4uuE8W1bg+70Eycb3zGGBoECVxZQQEnlGiFy3mtMTYfk1q2vuVM5GeWMUhOAFH
- KTvemjH05UdHVyg5Dho/GV/MBiMXVCj+X7xDgGuzi1UwQwbMDg7MnAwm9dwYm1BhN15aqz/qk
- 2ZmwHBf40aCOdJDhhtBKPDPf3VPQzHSliZGeju/gRiwjpphUAboGEE0ay+DA5r4+epz1sqWux
- wsXDPFBSp82oUrDxbh0M+zYtClxNVaTSGVfS+uDH9S5X5OA4nU4jAYQSB2eqdEdPnaMvisEoY
- T9Y/0rAbzp1TUjid87Be3Azw==
-Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:xAZ5XjPMPucqJ8WuHVVEKM1e96QQn8HOyXcnrGa498KFFmhQ3I2
+ lyguGU2vW/F8Id9wM21U/hECIp6GsBzHJW4ZmDyYORXv143PAaa8IPWJGLsh9TfYxDRw9w1
+ PBafWW9kZa9XULq7Jiur1zEFRKT5M6uIwG+5lfRgXy7SDCDQTC42reCuhRlBZ7C3TOKoPrr
+ O0wB8fSghF5yZVHd2jX1g==
+UI-OutboundReport: notjunk:1;M01:P0:sCAgjSgLqos=;gItkBghhNOKlcgyT6h8kIMvTmiR
+ 9CrU9e2VYlTxifgpiWK8GVGX/9K5c4wx90P6xjEeOJta9AyQw9V363UdEo6IXbE5DaETwoClA
+ MeoMKcfD542Wb+0KyeMJeIBGVLb9aHA+NhFKN2gp05h5EmtVHH7Wywk/mUJwgMN0FDgG0j/Sq
+ 0ttda9ilVj6Ul8giJmMXunkopj0b0/uokTYZWxNL+l+oZGvtaw/2InGxCn9ZppFJT4iO2wRi9
+ 1XsKqpDYRTa9oBoKtvpQLicc7GAOklHq+pcr+YSnvzoToXbsK8TJVuh1sgxdZYqJLMjMEh5SJ
+ y2wDPceU4RxWjWb6xfPd9CJ7PweEEl3tJEL4Q1pFTuxi36AKwIaA00403bz8JD87PlC7uhk+M
+ OC526abnVuf5kRsqdPyiOqgAAq6VERx/YnLTOER1OWk6fYA2cc7nGlumBVBg8sg80SdzPKeRJ
+ ZPcvlRfQBhPQMP6m5nfqO//tnQs4cBIbQBN6qAhYPfVBgnlhlueasiIlV4U/jtVT32Ja/zeZ4
+ bJ1Do0ThtGYFhOnLy2Phspmj1n1MHZ0p+hsFMDIEgZkz1wEmZBDK92fw3Q81GuYjEJdU0Mpo7
+ TUsmxzoGrRgKwTsjtjSgwLjEm5QwZKbC65YzdcXZxESoN3aHSvUc9+PjVeQBhajoVuKwhSocU
+ Y+DbugYJd++kpLSi2xyxo0ggCwFVqcmdfjYQLlAl2y6sZfI1fABaJ+yUYq5DvEUioEzSIMXGU
+ jkupwYfCNrQJnKiTgnlnI8iXFV+k+7HPHIv8IpD0GIUMZ2L46l+VDQFzD2Ao26M9aer1o66fC
+ yC8YUfL1Xbta7hHfusn2QEbQ==
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -137,8 +138,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/24 22:05, Richard Henderson wrote:
-> Rename to use "memop_" prefix, like other functions
-> that operate on MemOp.
+> Split out of mmu_lookup.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -147,16 +147,71 @@ Reviewed-by: Helge Deller <deller@gmx.de>
 
 
 > ---
->   include/exec/memop.h           | 4 ++--
->   accel/tcg/cputlb.c             | 4 ++--
->   accel/tcg/user-exec.c          | 4 ++--
->   target/arm/tcg/translate-a64.c | 4 ++--
->   target/xtensa/translate.c      | 2 +-
->   tcg/tcg-op-ldst.c              | 6 +++---
->   tcg/tcg.c                      | 2 +-
->   tcg/arm/tcg-target.c.inc       | 4 ++--
->   tcg/sparc64/tcg-target.c.inc   | 2 +-
->   9 files changed, 16 insertions(+), 16 deletions(-)
+>   include/exec/memop.h | 24 ++++++++++++++++++++++++
+>   accel/tcg/cputlb.c   | 16 ++--------------
+>   2 files changed, 26 insertions(+), 14 deletions(-)
 >
+> diff --git a/include/exec/memop.h b/include/exec/memop.h
+> index f53bf618c6..b699bf7688 100644
+> --- a/include/exec/memop.h
+> +++ b/include/exec/memop.h
+> @@ -193,4 +193,28 @@ static inline unsigned memop_alignment_bits(MemOp m=
+emop)
+>       return a;
+>   }
+>
+> +/*
+> + * memop_atomicity_bits:
+> + * @memop: MemOp value
+> + *
+> + * Extract the atomicity size from the memop.
+> + */
+> +static inline unsigned memop_atomicity_bits(MemOp memop)
+> +{
+> +    unsigned size =3D memop & MO_SIZE;
+> +
+> +    switch (memop & MO_ATOM_MASK) {
+> +    case MO_ATOM_NONE:
+> +        size =3D MO_8;
+> +        break;
+> +    case MO_ATOM_IFALIGN_PAIR:
+> +    case MO_ATOM_WITHIN16_PAIR:
+> +        size =3D size ? size - 1 : 0;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +    return size;
+> +}
+> +
+>   #endif
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index b5bff220a3..f5fca5a118 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1751,20 +1751,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr,=
+ MemOpIdx oi,
+>        * Device memory type require alignment.
+>        */
+>       if (unlikely(flags & TLB_CHECK_ALIGNED)) {
+> -        MemOp size =3D l->memop & MO_SIZE;
+> -
+> -        switch (l->memop & MO_ATOM_MASK) {
+> -        case MO_ATOM_NONE:
+> -            size =3D MO_8;
+> -            break;
+> -        case MO_ATOM_IFALIGN_PAIR:
+> -        case MO_ATOM_WITHIN16_PAIR:
+> -            size =3D size ? size - 1 : 0;
+> -            break;
+> -        default:
+> -            break;
+> -        }
+> -        if (addr & ((1 << size) - 1)) {
+> +        a_bits =3D memop_atomicity_bits(l->memop);
+> +        if (addr & ((1 << a_bits) - 1)) {
+>               cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
+>           }
+>       }
 
 
