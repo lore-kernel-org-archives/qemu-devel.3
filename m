@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30222CFB455
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A020BCFB455
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtH2-0001EA-NY; Mon, 07 Oct 2024 15:20:05 -0400
+	id 1sxtHI-0002X8-0E; Mon, 07 Oct 2024 15:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtGH-0007Am-LP; Mon, 07 Oct 2024 15:19:19 -0400
+ id 1sxtGh-0007pc-FH; Mon, 07 Oct 2024 15:19:44 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtGF-0004Pi-Nx; Mon, 07 Oct 2024 15:19:17 -0400
+ id 1sxtGf-0004Tq-KL; Mon, 07 Oct 2024 15:19:43 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E920196259;
- Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 266129625C;
+ Mon,  7 Oct 2024 22:16:50 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B846414F739;
+ by tsrv.corpit.ru (Postfix) with SMTP id F329214F73C;
  Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
-Received: (nullmailer pid 2592786 invoked by uid 1000);
+Received: (nullmailer pid 2592795 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 28/32] block/reqlist: allow adding overlapping requests
-Date: Mon,  7 Oct 2024 22:16:45 +0300
-Message-Id: <20241007191654.2592616-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 31/32] testing: bump mips64el cross to bookworm and fix
+ package list
+Date: Mon,  7 Oct 2024 22:16:48 +0300
+Message-Id: <20241007191654.2592616-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,107 +65,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Allow overlapping request by removing the assert that made it
-impossible. There are only two callers:
+The mips64el cross setup is very broken for bullseye which has now
+entered LTS support so is unlikely to be fixed. While we still can't
+build the container with all packages for bookworm due to a single
+missing dependency that will hopefully get fixed in due course. For
+the sake of keeping the CI green we disable the problematic packages
+via the lcitool's mappings.yml file.
 
-1. block_copy_task_create()
+See also: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535
 
-It already asserts the very same condition before calling
-reqlist_init_req().
-
-2. cbw_snapshot_read_lock()
-
-There is no need to have read requests be non-overlapping in
-copy-before-write when used for snapshot-access. In fact, there was no
-protection against two callers of cbw_snapshot_read_lock() calling
-reqlist_init_req() with overlapping ranges and this could lead to an
-assertion failure [1].
-
-In particular, with the reproducer script below [0], two
-cbw_co_snapshot_block_status() callers could race, with the second
-calling reqlist_init_req() before the first one finishes and removes
-its conflicting request.
-
-[0]:
-
-> #!/bin/bash -e
-> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
-> ./qemu-img create /tmp/fleecing.raw -f raw 1G
-> (
-> ./qemu-system-x86_64 --qmp stdio \
-> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
-> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
-> <<EOF
-> {"execute": "qmp_capabilities"}
-> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
-> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
-> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
-> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
-> EOF
-> ) &
-> sleep 5
-> while true; do
-> ./qemu-nbd -d /dev/nbd0
-> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
-> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
-> done
-
-[1]:
-
-> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
-> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
-> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
-> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
-> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
-> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
-> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
-> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
-> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
-> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
-> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
-> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
-> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
-> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
-> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20240712140716.517911-1-f.ebner@proxmox.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 6475155d519209c80fdda53e05130365aa769838)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+[thuth: Disable the problematic packages via lcitool's mappings.yml]
+Message-ID: <20241002080333.127172-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit c60473d29254b79d9437eface8b342e84663ba66)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 853e01a1eb..28f6a096cd 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 2862785692..bfa96cb507 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-11 qemu
++#  $ lcitool dockerfile --layers all --cross-arch mips64el debian-12 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
-     /*
-      * @frozen_read_reqs: current read requests for fleecing user in bs->file
--     * node. These areas must not be rewritten by guest.
-+     * node. These areas must not be rewritten by guest. There can be multiple
-+     * overlapping read requests.
-      */
-     BlockReqList frozen_read_reqs;
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
  
-diff --git a/block/reqlist.c b/block/reqlist.c
-index 08cb57cfa4..098e807378 100644
---- a/block/reqlist.c
-+++ b/block/reqlist.c
-@@ -20,8 +20,6 @@
- void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
-                       int64_t bytes)
- {
--    assert(!reqlist_find_conflict(reqs, offset, bytes));
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+@@ -48,16 +48,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-opencv \
+                       python3-pillow \
+                       python3-pip \
+-                      python3-setuptools \
+                       python3-sphinx \
+                       python3-sphinx-rtd-theme \
+                       python3-venv \
+-                      python3-wheel \
+                       python3-yaml \
+                       rpm2cpio \
+                       sed \
+                       socat \
+                       sparse \
++                      swtpm \
+                       tar \
+                       tesseract-ocr \
+                       tesseract-ocr-eng \
+@@ -69,8 +68,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     dpkg-reconfigure locales && \
+     rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+-RUN /usr/bin/pip3 install tomli
 -
-     *req = (BlockReq) {
-         .offset = offset,
-         .bytes = bytes,
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+@@ -97,17 +94,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libcmocka-dev:mips64el \
+                       libcurl4-gnutls-dev:mips64el \
+                       libdaxctl-dev:mips64el \
+-                      libdrm-dev:mips64el \
+-                      libepoxy-dev:mips64el \
+                       libfdt-dev:mips64el \
+                       libffi-dev:mips64el \
+                       libfuse3-dev:mips64el \
+-                      libgbm-dev:mips64el \
+                       libgcrypt20-dev:mips64el \
+                       libglib2.0-dev:mips64el \
+                       libglusterfs-dev:mips64el \
+                       libgnutls28-dev:mips64el \
+-                      libgtk-3-dev:mips64el \
+                       libibverbs-dev:mips64el \
+                       libiscsi-dev:mips64el \
+                       libjemalloc-dev:mips64el \
+@@ -126,8 +119,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       librbd-dev:mips64el \
+                       librdmacm-dev:mips64el \
+                       libsasl2-dev:mips64el \
+-                      libsdl2-dev:mips64el \
+-                      libsdl2-image-dev:mips64el \
+                       libseccomp-dev:mips64el \
+                       libselinux1-dev:mips64el \
+                       libslirp-dev:mips64el \
+@@ -141,8 +132,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libusb-1.0-0-dev:mips64el \
+                       libusbredirhost-dev:mips64el \
+                       libvdeplug-dev:mips64el \
+-                      libvirglrenderer-dev:mips64el \
+-                      libvte-2.91-dev:mips64el \
++                      libxdp-dev:mips64el \
+                       libzstd-dev:mips64el \
+                       nettle-dev:mips64el \
+                       systemtap-sdt-dev:mips64el \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 03b974ad02..0ab3a89013 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -2,6 +2,20 @@ mappings:
+   flake8:
+     OpenSUSELeap15:
+ 
++  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
++  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
++  gtk3:
++    mips64el-deb:
++
++  libdrm:
++    mips64el-deb:
++
++  libepoxy:
++    mips64el-deb:
++
++  mesa-libgbm:
++    mips64el-deb:
++
+   meson:
+     OpenSUSELeap15:
+ 
+@@ -60,6 +74,18 @@ mappings:
+   python3-wheel:
+     OpenSUSELeap15: python311-pip
+ 
++  sdl2:
++    mips64el-deb:
++
++  sdl2-image:
++    mips64el-deb:
++
++  virglrenderer:
++    mips64el-deb:
++
++  vte:
++    mips64el-deb:
++
+ pypi_mappings:
+   # Request more recent version
+   meson:
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index c60490a7fa..35c5266381 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -166,7 +166,7 @@ try:
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
+ 
+-    generate_dockerfile("debian-mips64el-cross", "debian-11",
++    generate_dockerfile("debian-mips64el-cross", "debian-12",
+                         cross="mips64el",
+                         trailer=cross_build("mips64el-linux-gnuabi64-",
+                                             "mips64el-softmmu,mips64el-linux-user"))
 -- 
 2.39.5
 
