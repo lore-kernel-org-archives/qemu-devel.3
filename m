@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F364ECF887D
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A62CFA754
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxv4K-0005fH-EM; Mon, 07 Oct 2024 17:15:06 -0400
+	id 1sxv55-0006bG-65; Mon, 07 Oct 2024 17:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxv40-0005W8-Jz; Mon, 07 Oct 2024 17:14:45 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ id 1sxv53-0006Y3-6B; Mon, 07 Oct 2024 17:15:49 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxv3y-0000Zb-UW; Mon, 07 Oct 2024 17:14:44 -0400
+ id 1sxv4y-0000u7-Fc; Mon, 07 Oct 2024 17:15:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728335678; x=1728940478; i=deller@gmx.de;
- bh=OOUA8oOsBM4wkSyzXKc8P5D0/fw7drV6WW83phXePfI=;
+ s=s31663417; t=1728335740; x=1728940540; i=deller@gmx.de;
+ bh=N/IuYQ6OdLCzl3pWE8NPI5PGV7fJcLaN3Ul1Rcd6Qqw=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=etHUyLIr/4ieTkMit0uDHwua77MrP36mCXpiRT/oaqrkOHuS57g71x7rYEYwX27D
- uevphmeRHqe3IkFW3BnVIAcm4G51sqSoM5eG1aEPmI0x/QMi6tbg7uhrJvm504gPG
- Ja7407vcuYUxwKrKKJOKcJ+dhEgNLbbOixpr3trLnOnrmkXnMsSgtQSBINCtM4xOG
- Yr0QvvyYUvQb3aMZjK6sIA6TttjBkdGJ8mYxqGQ4gE/BawdaaQDTVVdEcL4VOmxw1
- EyLsivJqVXwN8EQpcWh8TTjuvkr5hUS7m62TsodB0gezn6L5WnAkLXAdkZiIriwxS
- ApRsSIJZYGZab5uKww==
+ b=C6B73FGoO8T6QLKBW53WlEwp5q0uSIrwHOWkFYFen/K3lcFu6Rfk/sQcACsnW5Mn
+ 3R16wgUJWctQLvqpBQbbLpHKDVwsQUwSGk2jENK4NijxMSI5MxVrP5npVezi4xB+c
+ DGaTwVJZS2t11jKqon4xiR11rZY/TM/w6EftVIyyH4ammbugftx8BtdA/wxXEgreH
+ pxhXVFguHISH/l7m4i81D1iOsLVRE4fC4AZZk+z3fwpoZocFPD/AInexSWT5v+gwr
+ onzFP3luqMy8NsVId4YTPGEYELJmpqOkHnC3PXJwq5kjV6ct/07Wl1PHzy5zZQJjJ
+ bMuVBgJwvBc625Ke+w==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3bSt-1tyROn0UUd-015H2O; Mon, 07
- Oct 2024 23:14:38 +0200
-Message-ID: <b91c7cf3-12b4-4a0b-b372-11b291e70d50@gmx.de>
-Date: Mon, 7 Oct 2024 23:14:37 +0200
+Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sn1-1u3wcV1V6N-012zOc; Mon, 07
+ Oct 2024 23:15:40 +0200
+Message-ID: <c4ab226b-b8f3-4a28-b4cf-d630acada5e3@gmx.de>
+Date: Mon, 7 Oct 2024 23:15:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/21] target/hppa: Add MemOp argument to
- hppa_get_physical_address
+Subject: Re: [PATCH v2 09/21] target/hppa: Perform access rights before
+ protection id check
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-9-richard.henderson@linaro.org>
+ <20241005200600.493604-10-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -92,27 +92,27 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241005200600.493604-9-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:axKvToOl0KnBf+C7712fpuUtJ0XvZJZJQhFyfzw/K6UCJMUL0kN
- 0Yp1/r9wHHmSyDMSrScdWCDb9USkiAIN5cSqFF9hLOqYZlbd+MAf2mVMeLxTAtoCHoveeP/
- UILffrUYZ5pN/P9e13UQ5DFcUa6iSeEj+PEeTJT8fMo5xwWMQQIzTuF41hJYZswqxOLJzhx
- Xxbowc7psY8JzzLqeDskw==
-UI-OutboundReport: notjunk:1;M01:P0:6kBs6HUgm/k=;KHQdTeZ2ZixVZpTgj8TlIeJZ/e8
- MKZ7N+Hb0V3MsNY6ZZ9prnDHAie1TmvkibUyEGqQLVUhIzNKAJtqyAZgm/1H7NB4dRx0lTrSQ
- r6a0nWj/7zkRlSjIiv+WBT8LWxJqWoFLy1aLLj3se/Hew+IrzyrxzXY0zm6OdtKqZT+2ErmSt
- wbOq8Q/Q0nMO3LVqEVf1tiKFjfrz5SbBY7p/vYorCA9tX8+NZZIugUNbZV84vhE4NMDAUMNUx
- M5U1e1/cW64afEtF/k3w44EiQMztuZON8mcLG3rKmtl8LueJivscklVWaqWWUiVhoT2UmtAIE
- SrmOfK+39nC0xr6UJ9mHcczpUbMnBS5iuiqC5/RCJCiV438uMTXCm98Ku8QZM04UFFLBAG06R
- m7HDor53f/EWS8mFTp6zGqKTgtD1AoFnhKcr0HNFAPkYxSIyyTwai7NMpZimqQ45U+ZUtPD1b
- PdSOdRbybpepw3g47ysEjEYyWKAfXP7VI+UT2gGqppS9mDdOsDCW5i9humTw07zYEjiFXU7oH
- WP0Y7fogyQEZbckGLZJWyigLGswbdyHxvmieWyGAtVIdp6wRQumfstIR7abXAam2IPp4beNaB
- Og3GW4jnZL3gD3/xHxfJT0SgOCg3gvttlTSn12HTEjISL01lJcevtUWAqYS2SdQNXn/vooivQ
- gchdcTj61fTc4/jlVz9FWPjw6UlqEy0l2nNAK3It0OWn0dM3TQNWfWJOJ+6f/NNP7YoYEgs/T
- UVgM5KLh7zQy9BGrslEyihmPsW3GjfrH4V3vrsE73eBRsvfQCDkxNoutAX+en2lC8QEEXNVR+
- 5ZdrWONg2diYItPjGjJnUWIA==
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:CSycCyFWk0lfJ/gjDV44mLQjyvDU/lgQ7u8UlMqt/5MIBW0yc11
+ v60YvtOHCtMofCGpZweGh8BQElw1IseAA24q+mgbNIMJoBxnNnDgteInwM/tJcq8CAsOxrl
+ e9I9s1sbosXSR5eN5M95N7rjQQcMmQ/zvsSXyU5La+h8fX8oCLqyb3xPOQa1eL9XU6/4O54
+ 8HjEBFu60Rlp/RHBKpZsg==
+UI-OutboundReport: notjunk:1;M01:P0:FABvcphQqcE=;LV/6mo2FmHezyMpq1NjZmlKK2jj
+ Q9QKV7UGl6jKDJt/vDteqwF3KUKpxrquBBB3SD0etztNiG069KtvGXCyDo9/LXtzfgKDGkCu4
+ OuC5VXB3qxW1dU+1t3nB4THRqIf7RTCNoAUApaNbVhgaoMS7pmuxcv4+5aNOn6da6sESZi7h0
+ seOu+mlLetrLouHe5Zs7q30EdGy0y4CkvbgzgsVzCBUSgHXgl9QnKC10duMYqOE1vYMapXhlH
+ 6bNc7w5lLgCdqNo8OyAWgY5fZpd39psqxH3wYm+RGeAqy5sCKxlgoHTu34I3OKOz5c8nXT+17
+ NmkQnq/m3bu3RcVbTnFFyIulXNgHi2l6OnnLyGj0277rOd/Rp5IrWyqD55BXcoMEA5WB2l/UO
+ /UbNPo5L+mE88eCgM8fCWM7ZufFfhzcEkRzOeLcX1woLGpJXKc7ChWiiSFVFCApZYiW+bnLqF
+ j1FhS0FkX2BvHoeFnrZw/e9Jh2sVHBGRamckyJFK8FooTCxbaQ6SYu04XfGx4PUBq6kq+v6tP
+ ccgj+eELL5+yAn2Z/jAXQvHlcZqiu9+j4sIOTXOL5ijoYYp7Y65bc7GhnMvZQvHTPVyZY834n
+ r4VZfubbG6++6ZfWt8TJlnvGaWWfAMTGNm3fuIdmc09VCE+61w+nrfSN9euPD+ZXgbonMCfle
+ 5ck6mpiGYYEUGbxZwGaFg0Gw+abJIlCYNi/dVkuRKRxyjFpPNlyozMWj9GAGeuC2RmlL2lxyb
+ dFsBIvKL4LKgHroO8ws+CckGFcY4kLAYvhgWXhdQJTI8qFbppuJSgMIHrLsW7QYvGwPIO6pOC
+ t8WLlSGSJ3ABj/pLue7sv57g==
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -138,8 +138,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/24 22:05, Richard Henderson wrote:
-> Just add the argument, unused at this point.
-> Zero is the safe do-nothing value for all callers.
+> In Chapter 5, Interruptions, the group 3 exceptions lists
+> "Data memory access rights trap" in priority order ahead of
+> "Data memory protection ID trap".
+>
+> Swap these checks in hppa_get_physical_address.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -147,10 +150,7 @@ On 10/5/24 22:05, Richard Henderson wrote:
 Reviewed-by: Helge Deller <deller@gmx.de>
 
 > ---
->   target/hppa/cpu.h        | 2 +-
->   target/hppa/int_helper.c | 2 +-
->   target/hppa/mem_helper.c | 9 +++++----
->   target/hppa/op_helper.c  | 2 +-
->   4 files changed, 8 insertions(+), 7 deletions(-)
+>   target/hppa/mem_helper.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 
 
