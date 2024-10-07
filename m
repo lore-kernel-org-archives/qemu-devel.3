@@ -4,66 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B326CFB44D
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC2ACFB44E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqvP-00040b-9k; Mon, 07 Oct 2024 12:49:35 -0400
+	id 1sxqvb-00041a-0n; Mon, 07 Oct 2024 12:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxqvG-00040D-UI
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:49:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqvS-000413-Hd
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:49:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxqvF-0001hv-5k
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:49:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sxqvQ-0001id-LN
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:49:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728319763;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1728319776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HGRyBWHIwZqg96fn/eepaCq3cwJw9gO6H3WK60kAjOg=;
- b=Pk6SalK+gPOzizPlC4uZV5F0WrMLOI8xzhRuGh2DCHGf0T8TnphHCxMIVmpWxx16Oi85ij
- aA9ZSnMsFmKFzlKEUYM99S2Y3DQGoTVR/3ky0RhAex95+YYRVHc9l/w8JGSZ/ryz5NIV8A
- nBXh++ntfRzfI7m6xQvP/O/hwDrkH3k=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-mPEuz9tZPMGZjJwRz89sqw-1; Mon,
- 07 Oct 2024 12:49:20 -0400
-X-MC-Unique: mPEuz9tZPMGZjJwRz89sqw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77F2C1955EA5; Mon,  7 Oct 2024 16:49:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAA4E1956088; Mon,  7 Oct 2024 16:49:17 +0000 (UTC)
-Date: Mon, 7 Oct 2024 17:49:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Brian Cain <quic_bcain@quicinc.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/3] scripts: validate SPDX license choices
-Message-ID: <ZwQRCi-orF8FXXsU@redhat.com>
-References: <20241007154548.1144961-1-berrange@redhat.com>
- <20241007154548.1144961-3-berrange@redhat.com>
- <0ac9546e-2b0d-46f1-8c5c-fc75529aa682@quicinc.com>
+ bh=C2d7C+GNSvGCo5+p/uoE0UbGBHIaPIUCTehZKTSVV+M=;
+ b=bgRw8uoB/8l7DK/7teoMM2/06MIl+1kyPUMVB2SlkPY+e77q5pVm5Ak0JB5dF+3fHB84ex
+ g67zalZCZvg4HUI59monbe/K5xG++4KnzxyeyLRHnuq118+w0MtQzUzcRtv+qcaR5Vj6Rx
+ 8Mddi3REPcTvOYpVdu7m8604jm5P5+I=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-264-FQ7TRSb_OyG-9VmUr_tKzQ-1; Mon, 07 Oct 2024 12:49:34 -0400
+X-MC-Unique: FQ7TRSb_OyG-9VmUr_tKzQ-1
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-3a19665ed40so34669095ab.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:49:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728319774; x=1728924574;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C2d7C+GNSvGCo5+p/uoE0UbGBHIaPIUCTehZKTSVV+M=;
+ b=uGFIUF8EZBZoHLLLuYU/5WZ/yoau8ruAzf/fZNcuU6DQDzbkEVcWS/oN5xH6lTGqub
+ Hk/NQt7nBriW/5GLc1n27vofv7IFjaLPVuED16Vpraf6iNemqfJtvNxmKEmQSvTd9acd
+ Ym7u/UYLb9hx1LHP0AyEx+suZjaK9SFjnZvJU2v7GGXdk1uIq3x3Cy3vqC8ih20xE3Hj
+ e64a3v3yNJCVhRrvdXSk8nXSbWx3I9rF0VCFIJNh1ArkiBvPOmWj9CuTVqRvgcxHM7gw
+ jz6qhEB6CZu7HAH+7Fjz3MQyAtsObV4Ce1GFPVfj9BgPm7n/l0RJU1I/fGV5bOWxkoy0
+ +72w==
+X-Gm-Message-State: AOJu0YyrhqSq5E5eeyouHHd+0OSrwQZD/ViFNHjvDd/VuWKDS1TEroco
+ s/P3xDQEHWA3yfB4o6rKyLGMz6StpjJ1KAWDAy6yMwBXgy0N9okW4+V3dMNKWPXptFz820daZgE
+ CJZTBLfHMRHKSe0UCiLyAlHZvlk9/oY/iCpD9Tqui/YuImz643OXG
+X-Received: by 2002:a05:6e02:1c41:b0:395:e85e:f2fa with SMTP id
+ e9e14a558f8ab-3a38af1565amr2145145ab.1.1728319774219; 
+ Mon, 07 Oct 2024 09:49:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo2+ClRa/4wuN2Skfx19B0UCReFrYlHIlmf0krmtEBUIMeLNLf+RWni4vndqcteoU/v6JvoQ==
+X-Received: by 2002:a05:6e02:1c41:b0:395:e85e:f2fa with SMTP id
+ e9e14a558f8ab-3a38af1565amr2144905ab.1.1728319773918; 
+ Mon, 07 Oct 2024 09:49:33 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3a37a7fd529sm13977825ab.22.2024.10.07.09.49.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 09:49:33 -0700 (PDT)
+Date: Mon, 7 Oct 2024 12:49:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 10/13] migration: cpr-uri parameter
+Message-ID: <ZwQRF6FY4-G88KuM@x1n>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-11-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0ac9546e-2b0d-46f1-8c5c-fc75529aa682@quicinc.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <1727725244-105198-11-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,118 +103,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 07, 2024 at 11:19:15AM -0500, Brian Cain wrote:
+On Mon, Sep 30, 2024 at 12:40:41PM -0700, Steve Sistare wrote:
+> Define the cpr-uri migration parameter to specify the URI to which
+> CPR vmstate is saved for cpr-transfer mode.
 > 
-> On 10/7/2024 10:45 AM, Daniel P. Berrangé wrote:
-> > We expect all new code to be contributed with the "GPL-2.0-or-later"
-> > license tag. Divergance is permitted if the new file is derived from
-> > pre-existing code under a different license, whether from elsewhere
-> > in QEMU codebase, or outside.
-> > 
-> > Issue a warning if the declared license is not "GPL-2.0-or-later",
-> > and an error if the license is not one of the handful of the
-> > expected licenses to prevent unintended proliferation.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 66 insertions(+)
-> > 
-> > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> > index cc266abdcd..cd1ed90f4c 100755
-> > --- a/scripts/checkpatch.pl
-> > +++ b/scripts/checkpatch.pl
-> > @@ -1353,6 +1353,67 @@ sub checkfilename {
-> >   	}
-> >   }
-> > +sub checkspdx {
-> > +    my ($file, $expr) = @_;
-> > +
-> > +    # Imported Linux headers probably have SPDX tags, but if they
-> > +    # don't we're not requiring contributors to fix this
-> > +    if ($file =~ m,include/standard-headers, ||
-> > +	$file =~ m,linux-headers,) {
-> > +	return;
-> > +    }
-> > +
-> > +    my $origexpr = $expr;
-> > +
-> > +    # Flatten sub-expressions
-> > +    $expr =~ s/\(|\)/ /g;
-> > +    $expr =~ s/OR|AND/ /g;
-> > +
-> > +    # Merge WITH exceptions to the license
-> > +    $expr =~ s/\s+WITH\s+/-WITH-/g;
-> > +
-> > +    # Cull more leading/trailing whitespace
-> > +    $expr =~ s/^\s*//g;
-> > +    $expr =~ s/\s*$//g;
-> > +
-> > +    my @bits = split / +/, $expr;
-> > +
-> > +    my $prefer = "GPL-2.0-or-later";
-> > +    my @valid = qw(
-> > +	LGPL-2.0-or-later
-> > +	LGPL-2.1-or-later
-> > +	GPL-2.0-only
-> > +	LGPL-2.0-only
-> > +	LGPL-2.0-only
-> > +	BSD-2-Clause
-> > +	BSD-3-Clause
-> > +	MIT
-> > +	);
-> > +
-> > +    my $nonpreferred = 0;
-> > +    my @unknown = ();
-> > +    foreach my $bit (@bits) {
-> > +	if ($bit eq $prefer) {
-> > +	    next;
-> > +	}
-> > +	if (grep /^$bit$/, @valid) {
-> > +	    $nonpreferred = 1;
-> > +	} else {
-> > +	    push @unknown, $bit;
-> > +	}
-> > +    }
-> > +    if (@unknown) {
-> > +	ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
-> > +	      "', valid choices for QEMU are:\n" . join("\n", $prefer, @valid));
-> > +    }
-> > +
-> > +    if ($nonpreferred) {
-> > +	WARN("Saw acceptable license '$origexpr' but note '$prefer' is preferred " .
-> > +	     "for new files unless the code is derived from a source with an" .
-> > +	     "existed declared license that must be followed.");
-> 
-> Is it not preferred to contribute code under the BSD-3-clause? Based on
-> other items in the project, I was expecting we could make contributions for
-> hexagon w/BSD.  But those are exceptional cases and not to be followed in
-> the general case?
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-I'm not saying people can't contribute under BSD, but if that is required,
-a explanation of why is desired.
+Acked-by: Peter Xu <peterx@redhat.com>
 
-IMHO we don't want contributors choosing an non-GPL-2.0-or-later license
-merely out of personal (or corporate) preferences.
-
-We want GPL-2.0-or-later to be used for everything, unless there is a
-compelling reason to diverge. The need to remain compliant with existing
-code that has been incorporated is the most common & obvious reason for
-this.
-
-Other reasons likely exist - which could be explained in the commit
-message, to aid reviewers who are likely to see the checkpatch warnings
-about the unusal license choices.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
