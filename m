@@ -4,72 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6599ECFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75002CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxp2i-0000Ay-H4; Mon, 07 Oct 2024 10:49:01 -0400
+	id 1sxp9e-0001fa-CH; Mon, 07 Oct 2024 10:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxp2g-00009g-El
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:59 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxp2e-0004BK-NJ
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 15D3296164;
- Mon,  7 Oct 2024 17:48:46 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99C7B14F5CF;
- Mon,  7 Oct 2024 17:48:52 +0300 (MSK)
-Message-ID: <d8901ddc-b7b9-46c2-be35-40950a651b21@tls.msk.ru>
-Date: Mon, 7 Oct 2024 17:48:52 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxp9b-0001fB-5J
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:56:07 -0400
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sxp9X-0004zD-MV
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:56:05 -0400
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-3a0c9ff90b1so15173045ab.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 07:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728312961; x=1728917761; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BKdgXElvtmC3BjQfBOpKZHEnG7ZOBX48jxp32nA7fXo=;
+ b=BOHO7VSWB6DJpmms9eVdYrSdIxiRHwfQoe1sQTbgsXHkL04VYSkK9fxjri5BxyoszM
+ JJ3voX4nc60xqABmHA9Llx2zlC5calC/RxgufZBKcfVhlprdek/wbO73IcFfsnNYPkXj
+ 38Cvr7s9Yf0Ub3YAEu7LXumZ2n71J0S34HA7PzG9idQZaB8B8NuIJdxWm/26fqd4pK9X
+ +0oVyIWAKKLsvG3oqKjOWZ42oC82EBwfsrnMmS1c6k0P5y7ix3pJnLvajYD1avyUfhj8
+ 288wEoks/glrZxwKap3WdyVDHm5FYguHpZv8KgwPL0Ht4DCsbjk21KoCKBoFxBT6l+di
+ OcUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728312961; x=1728917761;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BKdgXElvtmC3BjQfBOpKZHEnG7ZOBX48jxp32nA7fXo=;
+ b=arI0WIjHrTJQ2Q5avw7drcZ1EPGFrlVoMyDt2itQPYFLhvK7I4QdXKeSqqcov/sxIS
+ Oqtq9T9oWa1jbr/A797j3yKPehY5Ktv/DMO4rAzUAy76+F/iGHJe0/wZelyLjHEL5FDw
+ lFJo2KWWm1MSErj02sULd6E+SC8rrrButP30o7wa1EVDk4UpT4EeGQL6uLseN4o7cUDQ
+ ifOBEWKH/HDVPNJ849pW3EB1TkP64wiJtGVt825zD3n7qd0cRSvLLiwwaZ4O854krOuU
+ xMsfbuWzch1Eye3itv5wh5L5jHgrxqiLUnu/Ur693FadBjnYKOIxFNEiyQYnsSsQvUhN
+ X9HQ==
+X-Gm-Message-State: AOJu0YzGMmqOrDYNgAhQpmJKAr5OM8hQLrF0lFE0P59xB/VLB7hZFLcK
+ qIXr8XsarpmG6g8zeHLZ3fYedWALnE+e9RsGLevmEaxKr3X3rbBAPnt54q/BLCg=
+X-Google-Smtp-Source: AGHT+IHs+txySE7ClBpcV46ESWbYoaZZJnjz1fVRhUI0gxFEtBa3vfreuQKlyf8E2OE/YI23WadR5A==
+X-Received: by 2002:a05:6e02:148c:b0:39f:5e18:239d with SMTP id
+ e9e14a558f8ab-3a375a9ac5emr97788365ab.15.1728312961146; 
+ Mon, 07 Oct 2024 07:56:01 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7e9f6c375b0sm5004071a12.69.2024.10.07.07.56.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 07:56:00 -0700 (PDT)
+Message-ID: <9d0c83aa-a22d-43b1-bd96-6ef64ea9ae96@linaro.org>
+Date: Mon, 7 Oct 2024 07:55:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: Support 4K page size
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- philmd@linaro.org, maobibo@loongson.cn
-References: <20231023024059.3858349-1-gaosong@loongson.cn>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20231023024059.3858349-1-gaosong@loongson.cn>
+Subject: Re: [PATCH 1/2] meson: define qemu_isa_flags
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org,
+ qemu-stable@nongnu.org, alex.bennee@linaro.org
+References: <20241007084342.1264048-1-pbonzini@redhat.com>
+ <20241007084342.1264048-2-pbonzini@redhat.com>
+ <86423148-2cbb-4263-a351-dac0ece198e7@linaro.org>
+ <CABgObfYu2jqKMJ_xrNv1Ci5B2NSxrcaaUO2piu=3o=Ca=Sn_tQ@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CABgObfYu2jqKMJ_xrNv1Ci5B2NSxrcaaUO2piu=3o=Ca=Sn_tQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,23 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.10.2023 05:40, Song Gao wrote:
-> The LoongArch kernel supports 4K page size.
-> Change TARGET_PAGE_BITS to 12.
+On 10/7/24 07:48, Paolo Bonzini wrote:
+> On Mon, Oct 7, 2024 at 4:46 PM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>> -  qemu_common_flags = ['-march=i486'] + qemu_common_flags
+>>> +  qemu_isa_flags = ['-march=i486']
+>>
+>> Use += ?
+> 
+> Here the qemu_isa_flags are known to be empty.
 
-This change appears to have 2 issues.
+... until we add something else beforehand and fail to update.
+Surely it's easier to assume that it's not empty.
 
-First, the subject is misleading, - it does not only introduces support for 4K page
-size, it actually *switches* to 4K page size.  But this is sort of minor.
+> I just didn't want to change behavior here (especially since this
+> patch was already about subtle changes in behavior). But you're right
+> that at least within qemu_isa_flags the order should not matter.
 
-More interestingly is that it has quite noticeable effect on performance.  For
-example, https://gitlab.com/qemu-project/qemu/-/issues/2491 - I confirm 7z
-decompression performance drop from ~110Mb/s before this change to ~73Mb/s
-after it.
+Fair enough.
 
-Is such a performance drop expected?
 
-Thanks,
-
-/mjt
+r~
 
