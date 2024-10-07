@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0BACFB451
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 18:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B12CFB450
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 18:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxsGS-0003gK-Le; Mon, 07 Oct 2024 14:15:24 -0400
+	id 1sxsGd-0003lG-FC; Mon, 07 Oct 2024 14:15:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sxsGR-0003gB-8C
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:15:23 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sxsGK-0003ND-V8
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:15:22 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2e075ceebdaso3385471a91.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 11:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728324915; x=1728929715;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4LqouA+i+jupi1YNBtUoZli+HVICtPE7Ga/Yg67kZLA=;
- b=e+s+ONnK11t9x/Py2T50rOiakInXh2vZ2CnneKfw7IqRbLx6dASlf+7+ugdbdR5UEq
- cScWnISYWab9jdSzug9/Loo2Ng3/RU/pDz6xIwrVmJcPrM5hCEaO9IDxf9BD/PJf9aai
- pAftCcDFmeCxkSFyzCxVMKfpDABE2Rv4GXwhmXGYiYC36VAc9ktU77x79E3ANHMpiQWE
- oHdjG9P9LwvsWrkDCYvvhtMz9g20jGjXc1NodvbCRWaf7LS/iToVPvdoJkvlSRb6UsGT
- 2q238nMg71/d3yWrXp0mzLQAIxWdHclr1yeQdLl2RItvaYhfbgivPff5CR2YfTRKOrwS
- FsEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728324915; x=1728929715;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4LqouA+i+jupi1YNBtUoZli+HVICtPE7Ga/Yg67kZLA=;
- b=TgPFdG7qD93lWHGLSoGDfjfPV2s2kn7+yKI2b9182Un9NzARaVhRROn8KtzAlMRLYm
- n8hZFwqXiJQDIrTKHl/uhatOm7tQF8KKvNkxYRkxUW0+JmYkdWeLTX7/rMENy7WUui71
- GO8Zmm6Om2MHZtT/mMuYbqNqc7TK5r7N3UnaUWInVp1uIbrU54m3ArkY09C87T/mk9nu
- VE8IczFCRl1hYvwYGw6Xp0922uMsQbJKU0UTipn9B9/00wLKHga+jQmqQR8bI8X3GqNn
- z93DdMg9Z/9ZDSFb1RxcpUIHsK8qSPvzup+Aqtcf5yIZS2RL2hFcF6TekAsSkuI9NnxA
- 2IDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVE4C4LXS8FGi8B6uo61gpPjJPJpf9hq1msBJWEcqr+2r4ls5+6TgK2jSoYQMbHXDv4JFciCCgnyrx/@nongnu.org
-X-Gm-Message-State: AOJu0Yy7faenaVzbh+wDdepxz5KyzseIL2saTTHOk9aJTvEKpso9ns5m
- CKPES7FYTxojjuydXaB1aZrEuL61iWFHga0L7jxfVGQVKOV9JVIOJm11srehEVQ=
-X-Google-Smtp-Source: AGHT+IHrxVk4owZyQWDZR+8x0nWTl/HHv1T7eOBqO0Cuh65hcfMYfN+b9nBwjqPi1M8c1A5ch7KP9g==
-X-Received: by 2002:a17:90b:4c04:b0:2e0:db81:4f79 with SMTP id
- 98e67ed59e1d1-2e1e620efadmr14518164a91.2.1728324915423; 
- Mon, 07 Oct 2024 11:15:15 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
- ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e20b128847sm5756447a91.49.2024.10.07.11.15.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 11:15:14 -0700 (PDT)
-Message-ID: <6ae662db-fba6-43a5-8be9-8de01dd4f476@daynix.com>
-Date: Tue, 8 Oct 2024 03:15:11 +0900
+ (Exim 4.90_1) (envelope-from <leon@kernel.org>) id 1sxsGc-0003l1-E0
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:15:34 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leon@kernel.org>) id 1sxsGZ-0003PQ-Sn
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 14:15:33 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id AA21A5C5C50;
+ Mon,  7 Oct 2024 18:15:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152A6C4CEC6;
+ Mon,  7 Oct 2024 18:15:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1728324920;
+ bh=gqHJwCIbdfrOnxiwwaMf8fDbuj9L9oc66uFjUXYdzUY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=oGoCrGF/+YcDlUHOvZyUbYA89NGdxyJDwuCqJR+RDUVAIlFGzU4Z6U2SXBSfgUv7Z
+ XVCribpgPF8WJTXvzUT5D3Uqml4PzZ8rNV1yP0f1uZTl7JUlc3Ke9sk+3w4GskFkZG
+ EaX0c4Tq8cpk6z7Z9/4s+burBTqJVd9Nvq21xSMuNL3VmAE37efwkQLTQXMnZSnofL
+ u+4atW6NBcMx7lVQjXkCBwQQ+uf/uJosjBqWQg8/zwsfr1IADJga2TqjNpxaNbjCCD
+ oMix8Zs091IvflZwEdZHMy66haHs3NcGmvG+Opum19/JLGfrD3Vbh6mP3H3Paybp78
+ jvIpOXPvNS14w==
+Date: Mon, 7 Oct 2024 21:15:13 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: Michael Galaxy <mgalaxy@akamai.com>
+Cc: Yu Zhang <yu.zhang@ionos.com>, Sean Hefty <shefty@nvidia.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Message-ID: <20241007181513.GC25819@unreal>
+References: <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com>
+ <Zvrq7nSbiLfPQoIY@x1n>
+ <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <ZvsAV0MugV85HuZf@x1n>
+ <c24fa344-0add-477d-8ed3-bf2e91550e0b@akamai.com>
+ <Zv8P8uQmSowF8sGl@x1n>
+ <6211c525-0b9b-4eba-ac3c-2ac796c8ec83@akamai.com>
+ <CAHEcVy7_WveokcN+3J2Qqxg8oJ1BT8sNoU2qUHeU8oZWwVyS6g@mail.gmail.com>
+ <856d4f0e-8742-4848-acc5-dbaa5d21c9fd@akamai.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ui/sdl2: Don't disable scanout when display is
- refreshed
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-References: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
- <20241006234353.3201037-2-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241006234353.3201037-2-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <856d4f0e-8742-4848-acc5-dbaa5d21c9fd@akamai.com>
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=leon@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,34 +93,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/07 8:43, Dmitry Osipenko wrote:
-> Display refreshment is invoked by a timer and it erroneously disables
-> the active scanout if it happens to be invoked after scanout has been
-> enabled. This offending scanout-disable race condition with a timer
-> can be easily hit when Qemu runs with a disabled vsync by using SDL or
-> GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
-> content shouldn't disable the active display. Fix it by keeping the
-> scanout's state unchanged when display is redrawn.
+On Mon, Oct 07, 2024 at 08:45:07AM -0500, Michael Galaxy wrote:
+> Hi,
 > 
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-> ---
->   ui/sdl2-gl.c | 1 -
->   1 file changed, 1 deletion(-)
+> On 10/7/24 03:47, Yu Zhang wrote:
+> > !-------------------------------------------------------------------|
+> >    This Message Is From an External Sender
+> >    This message came from outside your organization.
+> > |-------------------------------------------------------------------!
+> > 
+> > Sure, as we talked at the KVM Forum, a possible approach is to set up
+> > two VMs on a physical host, configure the SoftRoCE, and run the
+> > migration test in two nested VMs to ensure that the migration data
+> > traffic goes through the emulated RDMA hardware. I will continue with
+> > this and let you know.
+> > 
+> Acknowledged. Do share if you have any problems with it, like if it has
+> compatibility issues
+> or if we need a different solution. We're open to change.
 > 
-> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-> index e01d9ab0c7bf..4975d923db38 100644
-> --- a/ui/sdl2-gl.c
-> +++ b/ui/sdl2-gl.c
-> @@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
->       int ww, wh;
->   
->       SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-> -    sdl2_set_scanout_mode(scon, false);
->   
->       SDL_GetWindowSize(scon->real_window, &ww, &wh);
->       surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
+> I'm not familiar with the "current state" of this or how well it would even
+> work.
 
+Any compatibility issue between versions of RXE (SoftRoCE) or between
+RXE and real devices is a bug in RXE, which should be fixed.
+
+RXE is expected to be compatible with rest RoCE devices, both virtual
+and physical.
+
+Thanks
+
+> 
+> - Michael
+> 
+> 
+> > On Fri, Oct 4, 2024 at 4:06 PM Michael Galaxy <mgalaxy@akamai.com> wrote:
+> > > 
+> > > On 10/3/24 16:43, Peter Xu wrote:
+> > > > !-------------------------------------------------------------------|
+> > > >     This Message Is From an External Sender
+> > > >     This message came from outside your organization.
+> > > > |-------------------------------------------------------------------!
+> > > > 
+> > > > On Thu, Oct 03, 2024 at 04:26:27PM -0500, Michael Galaxy wrote:
+> > > > > What about the testing solution that I mentioned?
+> > > > > 
+> > > > > Does that satisfy your concerns? Or is there still a gap here that needs to
+> > > > > be met?
+> > > > I think such testing framework would be helpful, especially if we can kick
+> > > > it off in CI when preparing pull requests, then we can make sure nothing
+> > > > will break RDMA easily.
+> > > > 
+> > > > Meanwhile, we still need people committed to this and actively maintain it,
+> > > > who knows the rdma code well.
+> > > > 
+> > > > Thanks,
+> > > > 
+> > > OK, so comments from Yu Zhang and Gonglei? Can we work up a CI test
+> > > along these lines that would ensure that future RDMA breakages are
+> > > detected more easily?
+> > > 
+> > > What do you think?
+> > > 
+> > > - Michael
+> > > 
+> 
 
