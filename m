@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CB9CFB446
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6396ECFB448
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxpvc-0004eh-Ct; Mon, 07 Oct 2024 11:45:44 -0400
+	id 1sxpvt-0005AC-0B; Mon, 07 Oct 2024 11:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxpvW-0004a4-Pk
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:38 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxpvp-00058o-Fy
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxpvV-0002VR-2e
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:38 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 23D529619F;
- Mon,  7 Oct 2024 18:45:28 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B46B314F610;
- Mon,  7 Oct 2024 18:45:34 +0300 (MSK)
-Message-ID: <5a634e7a-2993-4f2b-b90d-64bcfc5a6aef@tls.msk.ru>
-Date: Mon, 7 Oct 2024 18:45:34 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxpvo-0002Xe-1p
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728315954;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZTX+6cRA+/ltHCjvlFktg7Y59mCZ2nEaRmncVeNd1ko=;
+ b=D+jDJ2sRvul/ejKjM5HA0ogkTkD+Wm/5H05P300BTb4pwLh4bRy0yKNLNs9sSXZY8QMPzn
+ G4KRiDlmTX2x3ZqrHy8jqvL0aS8BeMK8YiBQfjxhaife8iu5pa/YEfTgpJvETNkRcjacqh
+ MoN8jRYb0jvCwyh91QgiCetlbek7ZFo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-AbbImbsWNQSWd0oDYgUtlg-1; Mon,
+ 07 Oct 2024 11:45:53 -0400
+X-MC-Unique: AbbImbsWNQSWd0oDYgUtlg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DB2D1955EAB
+ for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 15:45:52 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6224A300019E; Mon,  7 Oct 2024 15:45:51 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 1/3] scripts: mandate that new files have
+ SPDX-License-Identifier
+Date: Mon,  7 Oct 2024 16:45:46 +0100
+Message-ID: <20241007154548.1144961-2-berrange@redhat.com>
+In-Reply-To: <20241007154548.1144961-1-berrange@redhat.com>
+References: <20241007154548.1144961-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: Support 4K page size
-To: Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@linaro.org, maobibo@loongson.cn
-References: <20231023024059.3858349-1-gaosong@loongson.cn>
- <d8901ddc-b7b9-46c2-be35-40950a651b21@tls.msk.ru>
- <9228f7d2-851f-48e6-b864-65cfbe04a069@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <9228f7d2-851f-48e6-b864-65cfbe04a069@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,21 +85,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.10.2024 18:09, Richard Henderson wrote:
+Going forward we want all newly created source files to have an
+SPDX-License-Identifier tag present.
 
-> The #2491 issue appears to be for user-mode emulation.  Because the reported host is x86, I would expect guest page size == host page size to improve 
-> performance, not degrade it.
+Initially mandate this for C, Python and Perl source files, and
+encourage this for other file types.
 
-Yes, it is about linux-user.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/checkpatch.pl | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-> If this is really about user-mode, then perf may be your friend in determining where the extra overhead is coming from.
-
-I updated the issue adding some perf output.  It looks like
-the 4k-pagesize case just calls tb_lookup() and extract64()
-significantly more times than with 16K pages.
-
-Thanks,
-
-/mjt
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 1b21249c91..cc266abdcd 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1378,6 +1378,8 @@ sub process {
+ 	my $in_imported_file = 0;
+ 	my $in_no_imported_file = 0;
+ 	my $non_utf8_charset = 0;
++	my $expect_spdx = 0;
++	my $expect_spdx_file;
+ 
+ 	our @report = ();
+ 	our $cnt_lines = 0;
+@@ -1615,6 +1617,30 @@ sub process {
+ 			WARN("added, moved or deleted file(s), does MAINTAINERS need updating?\n" . $herecurr);
+ 		}
+ 
++# All new files should have a SPDX-License-Identifier tag
++		if ($line =~ /^new file mode\s*\d+\s*$/) {
++		    if ($expect_spdx) {
++			if ($expect_spdx_file =~ /\.(c|h|py|pl|c\.inc)$/) {
++			    # source code files MUST have SPDX license declared
++			    ERROR("expected 'SPDX-License-Identifer' in new file $expect_spdx_file");
++			} else {
++			    # Other files MAY have SPDX license if appropriate
++			    WARNING("Does new file $expect_spdx_file need 'SPDX-License-Identifer'?");
++			}
++		    }
++		    $expect_spdx = 1;
++		    $expect_spdx_file = undef;
++		} elsif ($expect_spdx) {
++		    $expect_spdx_file = $realfile unless defined $expect_spdx_file;
++
++		    # SPDX tagsd may occurr in comments which were
++		    # stripped from '$line', so use '$rawline'
++		    if ($rawline =~ /SPDX-License-Identifier/) {
++			$expect_spdx = 0;
++			$expect_spdx_file = undef;
++		    }
++		}
++
+ # Check for wrappage within a valid hunk of the file
+ 		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
+ 			ERROR("patch seems to be corrupt (line wrapped?)\n" .
+-- 
+2.46.0
 
 
