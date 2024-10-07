@@ -4,124 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6578ECF8870
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 20:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADBFACF8870
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 20:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxuog-0005PI-BU; Mon, 07 Oct 2024 16:58:55 -0400
+	id 1sxupO-00062O-MD; Mon, 07 Oct 2024 16:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxuoe-0005Oj-D3; Mon, 07 Oct 2024 16:58:52 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sxupN-00061i-Ay
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:59:37 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxuoc-0006gy-OY; Mon, 07 Oct 2024 16:58:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728334725; x=1728939525; i=deller@gmx.de;
- bh=GAlosL+TJZgdrXiaGQlTc+iVwvN76V4OIg09yn92x8Y=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=fb0oyfjr/SmnrrbefP12a0rmMJTI/XILeZspDRcMCYwOq7QK/mBG9a+SxImM4V9v
- FDlmyn3tepyPI9OaFpMZtVTNHr2WpXAGIPTPPhvYT0ePqR7oJxvqTGA17lrErpbkt
- 4gkNAYu8SSRtpFVFMbCDfH112N9lhLr89++8VgJ69wW6+p7llxh8d2PNrv0Kcvabb
- eE81K/9uGBCxD/hHJUMxp/g/30D2mfsUKPPmYj75c25WTqxBIz/qTYbcRh9GHTKFz
- xFBSvAweGztGFnBBGS6B1HVYZqLd7xWh//sgCj/S5LjPP3cPnzD+JgW/akftv5+Uu
- 3c1iX7BYRuh7qjCuqQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQ5vc-1tJrYD1Mrg-00JY4m; Mon, 07
- Oct 2024 22:58:45 +0200
-Message-ID: <90c11001-d395-480b-931c-f61c399562d9@gmx.de>
-Date: Mon, 7 Oct 2024 22:58:44 +0200
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sxupL-0006kH-Qk
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 16:59:37 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1728334758; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=mP3V8NrMJ7TEvPYJb7fyMdl/n0nJM7Yl0j02E89I+VsuVOpDgBCqnyTA6vNZ1ZLjSnhMbGpjFibd0+CxhO6AWSexUi0KI6kbeTyQ5IlECvuvtwH9F9yO6Fz8jS1Q4o5HG0+IqjeiJSfRfBwv1g1Qw13O5zz4XWkWAaARRrO/N6Y=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1728334758;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ohzwX1XdmzKRe7EXs6vFQ4IDrFV63PF96qPVg3gSWyg=; 
+ b=VrdQkQpQNXnGKBqa9BeqGEby/R6akm7puC/YTb8gbCEc0CXUwXaor4UB+r/vj+8fZmEZ8MFCFmcNQkPyYGbJ85VCsf822fRbA47KWTNwz73R2yK8MoNGuuI0uQHf8agDDl5diqaWaJhkD9Kfy83UUBIV/6hCOtgDtD1bm/ems7c=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728334758; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=ohzwX1XdmzKRe7EXs6vFQ4IDrFV63PF96qPVg3gSWyg=;
+ b=Sml6/f5xuun1lI7DeI98C12UiSzvfftiHVTDaR+X3Oxz3P6u2PD8oTmI6acovnrK
+ o8vvBqQZI+9t18mLSSJzfqI7xEQCCFsbwLzTea9rlq/ydEWXnewwAKbQ8O/4FOAYpWF
+ d74IofdAy90C90utRG78Ve2t/D2ZWO8orfT8a7YU=
+Received: by mx.zohomail.com with SMTPS id 172833475645282.8920181119064;
+ Mon, 7 Oct 2024 13:59:16 -0700 (PDT)
+Message-ID: <da1e425d-cc3a-4121-ba89-baa6be706bca@collabora.com>
+Date: Mon, 7 Oct 2024 23:59:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/21] accel/tcg: Assert noreturn from write-only page
- for atomics
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH v1 0/2] GTK/SDL fixes for a black screen displayed by
+ virtio-gpu
+To: Michael Tokarev <mjt@tls.msk.ru>, Akihiko Odaki
+ <akihiko.odaki@daynix.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+References: <20241006234353.3201037-1-dmitry.osipenko@collabora.com>
+ <94066700-2a07-4d5f-bf0a-be7c1ce7bc62@tls.msk.ru>
+ <55042480-6a12-41ca-a5dc-8f6dd5ff8c62@collabora.com>
+ <94f02eeb-0c20-43fc-b5c5-7a3172630d8f@tls.msk.ru>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241005200600.493604-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mvgWx4FlFZRRT4DudOSzVM0Q2kNOMrbekljjhnk+yUCLvmz2mOt
- 6g29UnZFQQfRJZyPhbgtbdbctOMxANHvUs5nJ2cyZkNYaq3TfqxpJbMb/lge4NFFAI3566h
- nANFg1OINY6Dzpud/f788ZcmC0pg4pumuxhGkwqQIdbyI/4CokD8h2BpfIEQa6XpqWUIWsJ
- CQbvPDIFmnKuc67doybVg==
-UI-OutboundReport: notjunk:1;M01:P0:wUmcV8HOFF0=;jx3xsDnzCqnEXKep66YVugo+4h5
- HxVFGV2X7oF3r8j5gHXGndFzFejH7vTvfuCqV9msNXl/z1VJZuEWXAFvs/KHenMvssPFfoy+5
- MzEeBGDCumR0DQiV0ktSX85y7gRgjwpfroeGsDD6blLrJ7kYjjfi4m08c1voBUAh91VKFC2ny
- LsoV1xaNoVvQoh86MpIIMAE5VS8IiDkxLd1uCzXpkTYOCW6jTIYb/4G9NpHDvKPcXDPLoO7hx
- wPy8OZCzUcTOFrdcCAS4qaJgMZ7M1ketk6+US8sLKwdhvCqfLV8Of7OHozx0P8OULEPN2P+k6
- X8ZnM/6R1eCgh/89tFY/aLU8itY//NLcnlb8hYkh5ZvBKJU5EnjfHdhhHIPJN3qLqeGMjoYK/
- fIAtq0kmvvAMUkYQ0RIt0HFENNQjo6iMyhlv8oRjqdjqp58sm14E5HNpZc2Ocy0fUP9zCTFUH
- IRQK60TCRwJhl/NPRAqP2SqhxW+iPWtbD8uib3E6MLpa+akcjLd0Bfrm+u6Q6JB1SDHPMVvy3
- 2zHLCprPrC5xhdiHzh0DyVO55y8tAc7RiL+6xl3XGFVY18PXI01iFPj/HGM19iiZbHG2mq26b
- 4wd4mAbi6EqRbrndfO97HXzJpaRXn5BzbaPvbdrZhQPLVlZf+By5LWuKigJ+zgtiD7GKeC3sT
- Kg+extPKU1jXPPu6CGEdTnEsrUEBrH18ScPNGkVfDaW3nHAsIaGxwRE0tnfA+ERNeMqY++dXs
- uPseZxTs266OMZAadfmjz8dZNlEyb1TQfssLJKgCymRi6GV5OEkM7J8CRarJrjV5ixFLWV9jt
- AdQldML8bto4pN2gck4uZauw==
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <94f02eeb-0c20-43fc-b5c5-7a3172630d8f@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,35 +89,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/24 22:05, Richard Henderson wrote:
-> There should be no "just in case"; the page is already
-> in the tlb, and known to be not readable.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 10/7/24 23:48, Michael Tokarev wrote:
+> 07.10.2024 23:19, Dmitry Osipenko wrote:
+>>> Is it a -stable material?  Myself I haven't seen this prob so far, so
+>>> it might be not worth the effort.  Also, any idea when the prob has been
+>>> introduced (or since when it has become real)?
+>>
+>> The problem is reproducible with a stable Qemu.  With SDL display it may
+> 
+> Which stable qemu do you mean? We've 4 currently active/supported stable
+> series - 7.2.x, 8.2.x, 9.0.x, 9.1.x :)
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+I check only the v8, v7 shouldn't differ from v8 in regards to the
+display code, AFAICT.
 
-> ---
->   accel/tcg/cputlb.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 117b516739..fd6459b695 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -1852,10 +1852,9 @@ static void *atomic_mmu_lookup(CPUState *cpu, vad=
-dr addr, MemOpIdx oi,
->           /*
->            * Since we don't support reads and writes to different
->            * addresses, and we do have the proper page loaded for
-> -         * write, this shouldn't ever return.  But just in case,
-> -         * handle via stop-the-world.
-> +         * write, this shouldn't ever return.
->            */
-> -        goto stop_the_world;
-> +        g_assert_not_reached();
->       }
->       /* Collect tlb flags for read. */
->       tlb_addr |=3D tlbe->addr_read;
+>> require many retries to repro, but with GTK display + vblank_mode=0 it
+>> happens all the time.  Don't know when exactly it was introduced, but
+>> will become much easier to hit it with the upcoming changes to Qemu.
+> 
+> what is vblank_mode=0 anyway, how to turn it on/off ?
+> 
+> Do you mean setting this variable in environment when launching qemu?
+
+Yes, you'll need to set this env var
+
+-- 
+Best regards,
+Dmitry
 
 
