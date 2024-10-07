@@ -4,64 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E419BCFB440
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 08:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB83CFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 08:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxjKS-0007Rk-CN; Mon, 07 Oct 2024 04:42:56 -0400
+	id 1sxjLN-000820-Ka; Mon, 07 Oct 2024 04:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxjKQ-0007Ra-Eb
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:42:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxjLL-00081F-Hh
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:43:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxjKO-000703-Jb
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:42:54 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxjLJ-00072P-RO
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 04:43:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728290571;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=hgwzmtV5BraAQTKXC4qHZt7MlwzUlfHpJhq4r3pomqI=;
- b=JreRFqYL9E7TYbI9YSYCJ5BqkCbCQoIY9AwtFxKZDHq2dKQ+MAE5qYyghceA8MENd4hoIZ
- c7tukU8F9XNrMJNOH/MeIVwWMjz6zRVAAG3BRgDSVwEBZAw+Zm8ogMmW9aFbBvGHkT1zBy
- 3bmMA/cwMNlrP17julF7xg23QbLOfxg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-6pVX0G-8NNuKdY8Qin9wDw-1; Mon,
- 07 Oct 2024 04:42:48 -0400
-X-MC-Unique: 6pVX0G-8NNuKdY8Qin9wDw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F08F9195419F; Mon,  7 Oct 2024 08:42:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D6F619560AE; Mon,  7 Oct 2024 08:42:43 +0000 (UTC)
-Date: Mon, 7 Oct 2024 09:42:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] meson: ensure we enable CMPXCHG128 on x86_64
-Message-ID: <ZwOfAE7hk503w11E@redhat.com>
-References: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
+ s=mimecast20190719; t=1728290628;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1MheWRSfhSH8hsFx1mUVzIpObg6Qbt7Ef5EUrenlELE=;
+ b=QrEaZVwWr1izpXAU3q6iPL+4jtt21ISOBpJPA92pyjFC7DoEDiszy1RgdhPiIbWONOdFbP
+ E7Qc2eMMB2bUGl0sFBbEYqpRRTbwZl2eGnu0f77vAAAMe7+pTeSHd5XacQHG1t06d2q+/m
+ tMcFVHmn+IUyzQr4HLwfUBna14n5wKE=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-628-Llh52h8YMtGGSC-RLjqnaQ-1; Mon, 07 Oct 2024 04:43:47 -0400
+X-MC-Unique: Llh52h8YMtGGSC-RLjqnaQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5c88e8d0a69so5722166a12.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 01:43:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728290625; x=1728895425;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1MheWRSfhSH8hsFx1mUVzIpObg6Qbt7Ef5EUrenlELE=;
+ b=KnUrVHZiHM8B488BJcMM+yKgGZvJIf14TWGCX/Bpna9hGeCW20jncSQkgf7rxFBW1D
+ CCIkCgHWAHMXXvOXK+bM6/gNfJhUK9e2x03nlWPPW1qm1nO5V94ApFj0Wwojx5VCqYjM
+ ajQf8cGi0bjtvzuHeMjnZqGqSfNO0hEDcB0BogRVaKCPbKj4nHG6snrNudN92PBxrUh1
+ 8RVIAMKF2MsWjN9jEKFwroJsFUzI5p5pCfqmV2E2183JXHY2YqcMpfZOy0vyCoFRdpsZ
+ QtTcFgfqxVFxeeZzbs0Z4zo2A+8BLv27MMJ/wmgwUDTRDu14O0Nmr4c71G2tG55ukZfL
+ kYUQ==
+X-Gm-Message-State: AOJu0YwOF7nU9bqAdJOX77yftLOYbYXZHuUrfAJRnP1BqQOwtHc40M40
+ 3y0sKawJKPtdNTeHpx14mN5C36yaQll+Gw4K6nQ41YxIVXAKOQ2t40SG9GLNI34lIw/3R3PCJjm
+ ISCj9u9wJX+aMrpNpba0qEc7WkoydY8QsrkN2uI045nZ07YUhdajOjesNpFjvWqxRERpOTnY3KD
+ zqiyl59Sxc5SowNtotI7HJ31WiJL2tQVl3GLugbBs=
+X-Received: by 2002:a05:6402:2350:b0:5c8:8c16:3971 with SMTP id
+ 4fb4d7f45d1cf-5c8c0a8250amr17884563a12.16.1728290625407; 
+ Mon, 07 Oct 2024 01:43:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyKfvlsryUKGk9NK4feyxacGLusdnwePQlGid8riSoUlH1xEiKnyAyOZeGAsIAjORynsbZEA==
+X-Received: by 2002:a05:6402:2350:b0:5c8:8c16:3971 with SMTP id
+ 4fb4d7f45d1cf-5c8c0a8250amr17884534a12.16.1728290624922; 
+ Mon, 07 Oct 2024 01:43:44 -0700 (PDT)
+Received: from avogadro.local ([151.95.43.71])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c8e05bc56asm2918527a12.45.2024.10.07.01.43.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Oct 2024 01:43:44 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, qemu-stable@nongnu.org, alex.bennee@linaro.org
+Subject: [PATCH v2 0/2] meson: ensure we enable CMPXCHG128 on x86_64
+Date: Mon,  7 Oct 2024 10:43:40 +0200
+Message-ID: <20241007084342.1264048-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -83,74 +98,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 04, 2024 at 03:01:23PM -0700, Pierrick Bouvier wrote:
-> Alex discovered that CMPXCHG128 was not enabled when building for
-> x86_64, resulting in slow execution for wide atomic instructions,
-> creating a huge contention when combined with a high number of cpus
-> (found while booting android aarch64 guest on x86_64 host).
-> 
-> The problem is that even though we enable -mcx16 option for x86_64, this
-> is not used when testing for CMPXCHG128. Thus, we silently turn it off.
-> 
-> x86_64 is the only architecture adding machine flags for now, so the
-> problem is limited to this host architecture.
-> 
-> Meson compiler tests are supposed to be independent of environment flags
-> (https://mesonbuild.com/Reference-manual_returned_compiler.html#returned-by).
-> However, CFLAGS are used anyway, thus masking the problem when using
-> something like CFLAGS='-march=native'. This is a meson bug and was reported:
-> https://github.com/mesonbuild/meson/issues/13757
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  meson.build | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index b18c2a54ab5..af2ce595dcc 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2867,6 +2867,13 @@ if has_int128_type
->      config_host_data.set('CONFIG_ATOMIC128_OPT', has_atomic128_opt)
->  
->      if not has_atomic128_opt
-> +
-> +      host_flags = []
-> +      if host_arch == 'x86_64'
-> +        # for x86_64, x86_version must be >= 1, and we always enable cmpxchg16
-> +        # in this case.
-> +        host_flags += ['-mcx16']
-> +      endif
 
-IMHO, we shouldn't be assuming that the earlier code passed '-mcx16',
-as it requires that we keep 2 far away parts of meson.build in sync.
+Alex discovered that CMPXCHG128 was not enabled when building for
+x86_64, resulting in slow execution for wide atomic instructions,
+creating a huge contention when combined with a high number of cpus
+(found while booting android aarch64 guest on x86_64 host).
 
->        config_host_data.set('CONFIG_CMPXCHG128', cc.links('''
->          int main(void)
->          {
-> @@ -2874,7 +2881,8 @@ if has_int128_type
->            __sync_val_compare_and_swap_16(&x, y, x);
->            return 0;
->          }
-> -      '''))
-> +      ''',
-> +      args: host_flags))
+The problem is that even though we enable -mcx16 option for x86_64, this
+is not used when testing for CMPXCHG128. Thus, we silently turn it off.
 
-Just pass 'qemu_common_flags' here.
+x86_64 is the only architecture adding machine flags for now, so the
+problem is limited to this host architecture.  However, the problem
+is generic, so define a new variable for all the -m options, so that
+they can be used for other such tests in the future.
 
->      endif
->    endif
->  endif
+Based-on: <20241004223715.1275428-1-pierrick.bouvier@linaro.org>
+Supersedes: <20241004220123.978938-1-pierrick.bouvier@linaro.org>
 
-With regards,
-Daniel
+Paolo Bonzini (2):
+  meson: define qemu_isa_flags
+  meson: ensure -mcx16 is passed when detecting ATOMIC128
+
+ meson.build | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.46.1
 
 
