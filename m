@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A52CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D60CFB441
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 14:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxp1P-00071B-03; Mon, 07 Oct 2024 10:47:39 -0400
+	id 1sxp2P-0008QL-Od; Mon, 07 Oct 2024 10:48:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxp1N-00070Y-NE
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:47:37 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxp1M-000463-2k
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:47:37 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42cc43454d5so35669635e9.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 07:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728312454; x=1728917254; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=A1fr/rYlw9AI2M0g4JKjOGpNkbuvuDWs4lHkTXYOIYU=;
- b=FZ5vnJ/73BblFeW7EunOhMMTOwAMpxOJSbc22RumIQpeAiP3X7MNjjCgGM2oS/dNSK
- kS1CEk6nhJA3QV9INrxmN23buH0Q6S9wP8s2buWd90XKsypx1NR/rbnpv9bKjctYsTAb
- Qp0y+/FzthR9knIjgTYOFzXM6VeD5DXZUXXN7T3Vh/sSk05ofRyUwpHSEbUaWrdpS2s8
- xkQt7k16vZGF8cEtKIN/zGWOXN3NRzyhzGOOT8OcqKxieWfWJaA2T82gcWAQa62Dc4FW
- +rMLc920aqYU7LL53cYfl/HPxEuw88Y4fZsCvsM3ES/rOdozOSjLEjpCaBtOi4T8SWd9
- IqFA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxp2N-0008Pc-Qe
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sxp2M-00049N-Gt
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 10:48:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728312515;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JigYAc32zxmqoN/1OsqvHHP0IjrVY4uAdTMxLn2WQW4=;
+ b=FriKrA5Nrg1GKNV8WhSq+NylLCYK/HtEMmzbs2b98o4PrlFlehOjXcTALOZjkWORatbE2W
+ WUC6aP+li/z3OuCqowD2EVgN+R6RModOIMKnKSwTdmFR/gmXH1oCQlLOKmlPBuWWLtkZHq
+ dbZsjCbX0WEDoBZZhAbwQpRiFBMbTgs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-6i0PSJAMMV2eLFHpnv-gJA-1; Mon, 07 Oct 2024 10:48:34 -0400
+X-MC-Unique: 6i0PSJAMMV2eLFHpnv-gJA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37cc9b5e533so1924388f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 07:48:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728312454; x=1728917254;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A1fr/rYlw9AI2M0g4JKjOGpNkbuvuDWs4lHkTXYOIYU=;
- b=U+Pmum4sj3otGEz+CND8Q/Fgw19cA1ZN+dtZz0K+cTUwtrumPAFYqCtEabONzpGB1P
- 38CkwL44uISwlfnVDtMLS2LB2yYtE0EH3OdDE0lUyCXQRBKwJol9aH25f88yYm/483Ja
- oLtFnZiItqR+ya5e0u0MMXQSINl2mBk1wexgiw9ZSfVQdW6JgC+zjQ+NlClWvip397Ud
- VrheBBvlbYyaGkE6NkH7cyp3bQA0ahqKsuVncIKlAsJ33HTcmkij3lyZht/zGxK6MpW1
- ic4G/JJAo3KsU/H8CcU5l1Em1LDzP7hbGVEDK4X24PvtXmClFwfYjrYzMiNRF4pZ/N61
- 5kGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhptcFlT3cHCxgfRwRYMX81lY7ecg4DtahO/uDjG4b3ZGPGar2Z1HCvO9fHFG/z7fnQ0wg3Q4YlGxH@nongnu.org
-X-Gm-Message-State: AOJu0Yy+fB57dV7qySgCBeTVtv7HmqueNyM5QTc/mEIPtoklgaHT4u0p
- o1rKwhdDXmsz2NJ8B1rTmI0WX1t7HNGRgrmruCR7V0+ICnn5br1Z9Xhaw1X+Xds=
-X-Google-Smtp-Source: AGHT+IGuIPKbSf6PuOle/25mp5Ufkht8woOOwN9rVjudaUD9M6fTee142HTowo5JQpUKhsyUVqjCiw==
-X-Received: by 2002:a05:600c:45c6:b0:426:51dc:f6cd with SMTP id
- 5b1f17b1804b1-42f85abebdcmr78276085e9.18.1728312454342; 
- Mon, 07 Oct 2024 07:47:34 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42f86a20393sm94252435e9.12.2024.10.07.07.47.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Oct 2024 07:47:34 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Zheyu Ma <zheyuma97@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PATCH] hw/char/pl011: Use correct masks for IBRD and FBRD
-Date: Mon,  7 Oct 2024 15:47:32 +0100
-Message-Id: <20241007144732.2491331-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1728312513; x=1728917313;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JigYAc32zxmqoN/1OsqvHHP0IjrVY4uAdTMxLn2WQW4=;
+ b=KTltRciVsTPwQXtsrf1JKlBhQbu41VRXmP2KCT/mcQ0kU730flneKaOCKakdQdaoYb
+ Xk68zaAW99XVJedh20v7UBW8Fa/l1Ci1v/9U5Gg40rgOYOnSSiYJkUdMKHhAjYVYKiF3
+ ztwFYSUhG+km4Yrvw786l3jCenKlRnw04obPK+c+dhn7IL6TY2ZfkvB+aSqo+gg2jj1r
+ bHmvVB3u2LzKSzhr6SuxT4yBoCvhalJ2HnDpzFZyVaMWs0vfkrhhPZYR7alhbwxQLqbk
+ FKUFXta7zvEr1hSKuJCKy3Dx68RhyaSGghNM3uLKNI8JLVI3S9nZdOplkN+eXWLMMcki
+ 7GHw==
+X-Gm-Message-State: AOJu0YyvPuuW+JCBFHuaUJ4+NB0JMCYspENRQwE7wnsiw7PSjFaBd0PI
+ JCCXg1APmOpYqaaXMpoX5u1hTQwttaLfxcn/s6gB67qlxI5jX6WuvRWj0n8Fr+eGuYs8f/y/fv+
+ EdJ8eL16zFMRINW8U6AkL32c69H0dlyshL1QvHY3XCl8MI7MJfMUvrLjbp2Ky90xpNiKgK/Wv95
+ KxJq3qnklFdL3+678znnl1zSm/z9s=
+X-Received: by 2002:a5d:64a3:0:b0:37c:fde2:93b6 with SMTP id
+ ffacd0b85a97d-37d0e6da837mr7444728f8f.11.1728312513610; 
+ Mon, 07 Oct 2024 07:48:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAfqhHKMTWxCITccZoxmG3MkJ1T+bnVm7qr77TWbraiDzAY0N3xORlugT1WudQDHrZi6Z67yHFPn+7pTJo1Hs=
+X-Received: by 2002:a5d:64a3:0:b0:37c:fde2:93b6 with SMTP id
+ ffacd0b85a97d-37d0e6da837mr7444712f8f.11.1728312513198; Mon, 07 Oct 2024
+ 07:48:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241007084342.1264048-1-pbonzini@redhat.com>
+ <20241007084342.1264048-2-pbonzini@redhat.com>
+ <86423148-2cbb-4263-a351-dac0ece198e7@linaro.org>
+In-Reply-To: <86423148-2cbb-4263-a351-dac0ece198e7@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 7 Oct 2024 16:48:21 +0200
+Message-ID: <CABgObfYu2jqKMJ_xrNv1Ci5B2NSxrcaaUO2piu=3o=Ca=Sn_tQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] meson: define qemu_isa_flags
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, qemu-stable@nongnu.org,
+ alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,48 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit b88cfee90268cad we defined masks for the IBRD and FBRD
-integer and fractional baud rate divider registers, to prevent the
-guest from writing invalid values which could cause division-by-zero.
-Unfortunately we got the mask values the wrong way around: the FBRD
-register is six bits and the IBRD register is 16 bits, not
-vice-versa.
+On Mon, Oct 7, 2024 at 4:46=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+> > -  qemu_common_flags =3D ['-march=3Di486'] + qemu_common_flags
+> > +  qemu_isa_flags =3D ['-march=3Di486']
+>
+> Use +=3D ?
 
-You would only run into this bug if you programmed the UART to a baud
-rate of less than 9600, because for 9600 baud and above the IBRD
-value will fit into 6 bits, as per the table in
- https://developer.arm.com/documentation/ddi0183/g/programmers-model/register-descriptions/fractional-baud-rate-register--uartfbrd
+Here the qemu_isa_flags are known to be empty.
 
-The only visible effects would be that the value read back from
-the register by the guest would be truncated, and we would
-print an incorrect baud rate in the debug logs.
+> > -      qemu_common_flags =3D ['-mcx16'] + qemu_common_flags
+> > +      qemu_isa_flags =3D ['-mcx16'] + qemu_isa_flags
+>
+> Likewise, why verbosely prepend, rather than append with +=3D ?
+> The same for all others, including
+>
+> > +qemu_common_flags =3D qemu_isa_flags + qemu_common_flags
 
-Cc: qemu-stable@nongnu.org
-Fixes: b88cfee90268 ("hw/char/pl011: Avoid division-by-zero in pl011_get_baudrate()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2610
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/char/pl011.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The prepending behavior came from CPU_CFLAGS originally being before
+all other compiler flags.
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index 15df7c1e1ca..0fd1334fab4 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -90,10 +90,10 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
- #define CR_UARTEN   (1 << 0)
- 
- /* Integer Baud Rate Divider, UARTIBRD */
--#define IBRD_MASK 0x3f
-+#define IBRD_MASK 0xffff
- 
- /* Fractional Baud Rate Divider, UARTFBRD */
--#define FBRD_MASK 0xffff
-+#define FBRD_MASK 0x3f
- 
- static const unsigned char pl011_id_arm[8] =
-   { 0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1 };
--- 
-2.34.1
+I just didn't want to change behavior here (especially since this
+patch was already about subtle changes in behavior). But you're right
+that at least within qemu_isa_flags the order should not matter.
+
+Paolo
 
 
