@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C263CFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379CACFB43F
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 11:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxmGb-000705-NF; Mon, 07 Oct 2024 07:51:09 -0400
+	id 1sxmGH-0006ke-6x; Mon, 07 Oct 2024 07:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmGU-0006vj-R3
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:51:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmG8-0006jT-Ak
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:50:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmGT-0005A7-2F
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:51:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sxmG6-00056q-KR
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 07:50:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728301860;
+ s=mimecast20190719; t=1728301838;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P+4EUWDQDbf57uL93QwVw8I4I0w22pv7O5Ga/qquH3k=;
- b=Z/6/tTvTMuoHkEmy/RpQIucQuBjkviSqQJZjUsANAaF0dInDcFKIwkueQNm125cc7dPH/Z
- Ivqw4plDQzeIk8f3UGFMVZgHgwRmUovqiBG4L0XSmdvfuPbkazw8ShuytPj8ZgckVSrPbC
- uq8J4RGTJmVMl4Hqrk0uWUzeDHEqCus=
+ bh=dP6uGr+fy58ZGPXR38kWez6WFlz7rDCeh/E4BG4jKUQ=;
+ b=iz5EYsu5SoeHOjnBL2OqFNMdou/Qmx4ILkTep8ex0tdJujzvjpXggOQpOAwUZwVIUqhosj
+ y7cg6HhY2JHmdumVUfQQ3m7gBnbOr1ckwK4T+taRHlGCPXgs/bK2O2GseWLv8998vj7XUD
+ o2FAOFPSmIMeQn3j3FBrvNRfqPvA0pM=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-yWAZNP1VPlyoMK97VzWA8w-1; Mon,
- 07 Oct 2024 07:50:58 -0400
-X-MC-Unique: yWAZNP1VPlyoMK97VzWA8w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-vL9GJXmVMQOors-vZdY4fg-1; Mon,
+ 07 Oct 2024 07:50:35 -0400
+X-MC-Unique: vL9GJXmVMQOors-vZdY4fg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5593F1955EAA; Mon,  7 Oct 2024 11:50:57 +0000 (UTC)
+ id F22CF1955EA8; Mon,  7 Oct 2024 11:50:33 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.46])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88C9219560B2; Mon,  7 Oct 2024 11:50:55 +0000 (UTC)
+ id 3D7AF19560AE; Mon,  7 Oct 2024 11:50:31 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/12] target/s390x: Replace ldtul_p() -> ldq_p()
-Date: Mon,  7 Oct 2024 13:50:24 +0200
-Message-ID: <20241007115027.243425-10-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Niels de Vos <ndevos@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 01/12] docs: Mark "gluster" support in QEMU as deprecated
+Date: Mon,  7 Oct 2024 13:50:16 +0200
+Message-ID: <20241007115027.243425-2-thuth@redhat.com>
 In-Reply-To: <20241007115027.243425-1-thuth@redhat.com>
 References: <20241007115027.243425-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,126 +81,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+According to https://marc.info/?l=fedora-devel-list&m=171934833215726
+the GlusterFS development effectively ended. Thus mark it as deprecated
+in QEMU, so we can remove it in a future release if the project does
+not gain momentum again.
 
-The S390X  target is only built for 64-bit.
-Using ldtul_p() is pointless, replace by ldq_p().
-
-Mechanical change doing:
-
-  $ sed -i -e 's/ldtul_p/ldq_p/' $(git grep -wl ldtul_p target/s390x/)
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20241004163042.85922-5-philmd@linaro.org>
+Acked-by: Niels de Vos <ndevos@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20241002082033.129022-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/gdbstub.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ docs/about/deprecated.rst | 9 +++++++++
+ qapi/block-core.json      | 8 +++++++-
+ block/gluster.c           | 2 ++
+ 3 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
-index a9f4eb92ad..9ffec0bccb 100644
---- a/target/s390x/gdbstub.c
-+++ b/target/s390x/gdbstub.c
-@@ -46,7 +46,7 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- int s390_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
-     CPUS390XState *env = cpu_env(cs);
--    target_ulong tmpl = ldtul_p(mem_buf);
-+    target_ulong tmpl = ldq_p(mem_buf);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 48b230b0a0..c02bbb66f7 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -377,6 +377,15 @@ Specifying the iSCSI password in plain text on the command line using the
+ used instead, to refer to a ``--object secret...`` instance that provides
+ a password via a file, or encrypted.
  
-     switch (n) {
-     case S390_PSWM_REGNUM:
-@@ -126,7 +126,7 @@ static int cpu_write_fp_reg(CPUState *cs, uint8_t *mem_buf, int n)
-         env->fpc = ldl_p(mem_buf);
-         return 4;
-     case S390_F0_REGNUM ... S390_F15_REGNUM:
--        *get_freg(env, n - S390_F0_REGNUM) = ldtul_p(mem_buf);
-+        *get_freg(env, n - S390_F0_REGNUM) = ldq_p(mem_buf);
-         return 8;
-     default:
-         return 0;
-@@ -167,11 +167,11 @@ static int cpu_write_vreg(CPUState *cs, uint8_t *mem_buf, int n)
++``gluster`` backend (since 9.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++According to https://marc.info/?l=fedora-devel-list&m=171934833215726
++the GlusterFS development effectively ended. Unless the development
++gains momentum again, the QEMU project will remove the gluster backend
++in a future release.
++
++
+ Character device options
+ ''''''''''''''''''''''''
  
-     switch (n) {
-     case S390_V0L_REGNUM ... S390_V15L_REGNUM:
--        env->vregs[n][1] = ldtul_p(mem_buf + 8);
-+        env->vregs[n][1] = ldq_p(mem_buf + 8);
-         return 8;
-     case S390_V16_REGNUM ... S390_V31_REGNUM:
--        env->vregs[n][0] = ldtul_p(mem_buf);
--        env->vregs[n][1] = ldtul_p(mem_buf + 8);
-+        env->vregs[n][0] = ldq_p(mem_buf);
-+        env->vregs[n][1] = ldq_p(mem_buf + 8);
-         return 16;
-     default:
-         return 0;
-@@ -203,7 +203,7 @@ static int cpu_write_c_reg(CPUState *cs, uint8_t *mem_buf, int n)
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 5c2b3ac0d4..2feae8e697 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3190,12 +3190,18 @@
+ #
+ # @snapshot-access: Since 7.0
+ #
++# Features:
++#
++# @deprecated: Member @gluster is deprecated because GlusterFS
++#     development ceased.
++#
+ # Since: 2.9
+ ##
+ { 'enum': 'BlockdevDriver',
+   'data': [ 'blkdebug', 'blklogwrites', 'blkreplay', 'blkverify', 'bochs',
+             'cloop', 'compress', 'copy-before-write', 'copy-on-read', 'dmg',
+-            'file', 'snapshot-access', 'ftp', 'ftps', 'gluster',
++            'file', 'snapshot-access', 'ftp', 'ftps',
++            {'name': 'gluster', 'features': [ 'deprecated' ] },
+             {'name': 'host_cdrom', 'if': 'HAVE_HOST_BLOCK_DEVICE' },
+             {'name': 'host_device', 'if': 'HAVE_HOST_BLOCK_DEVICE' },
+             'http', 'https',
+diff --git a/block/gluster.c b/block/gluster.c
+index f8b415f381..f03d05251e 100644
+--- a/block/gluster.c
++++ b/block/gluster.c
+@@ -809,6 +809,8 @@ static int qemu_gluster_open(BlockDriverState *bs,  QDict *options,
+         goto out;
+     }
  
-     switch (n) {
-     case S390_C0_REGNUM ... S390_C15_REGNUM:
--        env->cregs[n] = ldtul_p(mem_buf);
-+        env->cregs[n] = ldq_p(mem_buf);
-         if (tcg_enabled()) {
-             tlb_flush(env_cpu(env));
-         }
-@@ -246,19 +246,19 @@ static int cpu_write_virt_reg(CPUState *cs, uint8_t *mem_buf, int n)
++    warn_report_once("'gluster' is deprecated");
++
+     filename = qemu_opt_get(opts, GLUSTER_OPT_FILENAME);
  
-     switch (n) {
-     case S390_VIRT_CKC_REGNUM:
--        env->ckc = ldtul_p(mem_buf);
-+        env->ckc = ldq_p(mem_buf);
-         cpu_synchronize_post_init(cs);
-         return 8;
-     case S390_VIRT_CPUTM_REGNUM:
--        env->cputm = ldtul_p(mem_buf);
-+        env->cputm = ldq_p(mem_buf);
-         cpu_synchronize_post_init(cs);
-         return 8;
-     case S390_VIRT_BEA_REGNUM:
--        env->gbea = ldtul_p(mem_buf);
-+        env->gbea = ldq_p(mem_buf);
-         cpu_synchronize_post_init(cs);
-         return 8;
-     case S390_VIRT_PREFIX_REGNUM:
--        env->psa = ldtul_p(mem_buf);
-+        env->psa = ldq_p(mem_buf);
-         cpu_synchronize_post_init(cs);
-         return 8;
-     default:
-@@ -298,19 +298,19 @@ static int cpu_write_virt_kvm_reg(CPUState *cs, uint8_t *mem_buf, int n)
- 
-     switch (n) {
-     case S390_VIRT_KVM_PP_REGNUM:
--        env->pp = ldtul_p(mem_buf);
-+        env->pp = ldq_p(mem_buf);
-         cpu_synchronize_post_init(env_cpu(env));
-         return 8;
-     case S390_VIRT_KVM_PFT_REGNUM:
--        env->pfault_token = ldtul_p(mem_buf);
-+        env->pfault_token = ldq_p(mem_buf);
-         cpu_synchronize_post_init(env_cpu(env));
-         return 8;
-     case S390_VIRT_KVM_PFS_REGNUM:
--        env->pfault_select = ldtul_p(mem_buf);
-+        env->pfault_select = ldq_p(mem_buf);
-         cpu_synchronize_post_init(env_cpu(env));
-         return 8;
-     case S390_VIRT_KVM_PFC_REGNUM:
--        env->pfault_compare = ldtul_p(mem_buf);
-+        env->pfault_compare = ldq_p(mem_buf);
-         cpu_synchronize_post_init(env_cpu(env));
-         return 8;
-     default:
-@@ -338,7 +338,7 @@ static int cpu_write_gs_reg(CPUState *cs, uint8_t *mem_buf, int n)
-     S390CPU *cpu = S390_CPU(cs);
-     CPUS390XState *env = &cpu->env;
- 
--    env->gscb[n] = ldtul_p(mem_buf);
-+    env->gscb[n] = ldq_p(mem_buf);
-     cpu_synchronize_post_init(env_cpu(env));
-     return 8;
- }
+     s->debug = qemu_opt_get_number(opts, GLUSTER_OPT_DEBUG,
 -- 
 2.46.1
 
