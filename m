@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE8F9CFB446
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE719CFB449
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxpvz-0005Nd-4d; Mon, 07 Oct 2024 11:46:07 -0400
+	id 1sxpvv-0005EU-MT; Mon, 07 Oct 2024 11:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxpvu-0005Al-1N
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:46:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sxpvr-0005A9-V6
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:46:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxpvs-0002ZX-Gb
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:46:01 -0400
+ id 1sxpvp-0002YO-Su
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728315958;
+ s=mimecast20190719; t=1728315957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oWdSJqNTu1f2aCVErVpBxq7bLKJEcOtDRM7rNUFeIe4=;
- b=NkaRg+6yiv6wrS3AoXeaGTDCZRkHxThb7Ud+Alb663B3Elz0nyvPRFafQjmCoLVLZdkJte
- fcD0Civno63twb+NF0jokUDRcJZ3RRYQ9aAaUhD81cD9+rNeeywJS9GiccHrMO0u/ggpAz
- yCh0jdYJ4Jyz7ZgRGmUoV1iaHmFsI4M=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hHT9bzk7iZ6Hr+wEwZTdWZD3MAdisW6GXcAQc3HKdK4=;
+ b=Y6CjvnMIWSglvpC5qP1c9LAiIokqr+3HUrzQ818JU5qSHtlMbFxq0QrZO5lN7plP1AI2Ts
+ 4Gd4ToETeoh/unTX7sR1AAtvXM69LaNPgYJpEmJYBGWFM1TXjMRWppM6xktveI1EPstnzP
+ 1LCVVZgL/1T3M4ggR27Phalj0dJmfA4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-hIrEPruWPMezXKwrd_ZquA-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-IFfafe2BPlu2eelkoAN5VQ-1; Mon,
  07 Oct 2024 11:45:56 -0400
-X-MC-Unique: hIrEPruWPMezXKwrd_ZquA-1
+X-MC-Unique: IFfafe2BPlu2eelkoAN5VQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEE02196C40B
- for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 15:45:55 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4ABE61978F59
+ for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 15:45:54 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.61])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0BD530001A0; Mon,  7 Oct 2024 15:45:54 +0000 (UTC)
+ id 0E14F300019E; Mon,  7 Oct 2024 15:45:52 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 3/3] scripts: forbid use of arbitrary SPDX tags besides
- license identifiers
-Date: Mon,  7 Oct 2024 16:45:48 +0100
-Message-ID: <20241007154548.1144961-4-berrange@redhat.com>
+Subject: [PATCH 2/3] scripts: validate SPDX license choices
+Date: Mon,  7 Oct 2024 16:45:47 +0100
+Message-ID: <20241007154548.1144961-3-berrange@redhat.com>
 In-Reply-To: <20241007154548.1144961-1-berrange@redhat.com>
 References: <20241007154548.1144961-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,44 +84,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While SPDX-License-Identifier is a well known SPDX tag, there are a
-great many more besides that[1]. This are around making machine readable
-metadata available to the 'reuse' tool and similar for things like
-author names, copyright owners, and much more. It is even possible to
-define source file line groups and apply different SPDX tags to just
-that region of code.
+We expect all new code to be contributed with the "GPL-2.0-or-later"
+license tag. Divergance is permitted if the new file is derived from
+pre-existing code under a different license, whether from elsewhere
+in QEMU codebase, or outside.
 
-At this time we're only interested in adopting SPDX for recording the
-licensing info, so detect & reject any other SPDX metadata. If we want
-to explicitly collect extra data in SPDX format, we can evaluate each
-case on its merits.
-
-[1] https://spdx.github.io/spdx-spec/v2.2.2/file-tags/
-    https://spdx.github.io/spdx-spec/v2.2.2/file-information/
+Issue a warning if the declared license is not "GPL-2.0-or-later",
+and an error if the license is not one of the handful of the
+expected licenses to prevent unintended proliferation.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/checkpatch.pl | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
 diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index cd1ed90f4c..5ad2d4ca2e 100755
+index cc266abdcd..cd1ed90f4c 100755
 --- a/scripts/checkpatch.pl
 +++ b/scripts/checkpatch.pl
-@@ -1707,6 +1707,18 @@ sub process {
- 		    &checkspdx($realfile, $1);
+@@ -1353,6 +1353,67 @@ sub checkfilename {
+ 	}
+ }
+ 
++sub checkspdx {
++    my ($file, $expr) = @_;
++
++    # Imported Linux headers probably have SPDX tags, but if they
++    # don't we're not requiring contributors to fix this
++    if ($file =~ m,include/standard-headers, ||
++	$file =~ m,linux-headers,) {
++	return;
++    }
++
++    my $origexpr = $expr;
++
++    # Flatten sub-expressions
++    $expr =~ s/\(|\)/ /g;
++    $expr =~ s/OR|AND/ /g;
++
++    # Merge WITH exceptions to the license
++    $expr =~ s/\s+WITH\s+/-WITH-/g;
++
++    # Cull more leading/trailing whitespace
++    $expr =~ s/^\s*//g;
++    $expr =~ s/\s*$//g;
++
++    my @bits = split / +/, $expr;
++
++    my $prefer = "GPL-2.0-or-later";
++    my @valid = qw(
++	LGPL-2.0-or-later
++	LGPL-2.1-or-later
++	GPL-2.0-only
++	LGPL-2.0-only
++	LGPL-2.0-only
++	BSD-2-Clause
++	BSD-3-Clause
++	MIT
++	);
++
++    my $nonpreferred = 0;
++    my @unknown = ();
++    foreach my $bit (@bits) {
++	if ($bit eq $prefer) {
++	    next;
++	}
++	if (grep /^$bit$/, @valid) {
++	    $nonpreferred = 1;
++	} else {
++	    push @unknown, $bit;
++	}
++    }
++    if (@unknown) {
++	ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
++	      "', valid choices for QEMU are:\n" . join("\n", $prefer, @valid));
++    }
++
++    if ($nonpreferred) {
++	WARN("Saw acceptable license '$origexpr' but note '$prefer' is preferred " .
++	     "for new files unless the code is derived from a source with an" .
++	     "existed declared license that must be followed.");
++    }
++}
++
+ sub process {
+ 	my $filename = shift;
+ 
+@@ -1641,6 +1702,11 @@ sub process {
+ 		    }
  		}
  
-+		if ($rawline =~ m,(SPDX-[a-zA-Z0-9-_]+):,) {
-+		    my $tag = $1;
-+		    my @permitted = qw(
-+			SPDX-License-Identifier
-+		    );
-+
-+		    unless (grep { /^$tag$/ } @permitted) {
-+			ERROR("Tag $tag not permitted in QEMU code, valid " .
-+			      "choices are: " . join(", ", @permitted));
-+		    }
++# Check SPDX-License-Identifier references a permitted license
++		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
++		    &checkspdx($realfile, $1);
 +		}
 +
  # Check for wrappage within a valid hunk of the file
