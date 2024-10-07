@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C882ECED241
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72BF0CED241
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 21:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxv8E-0002MP-Mu; Mon, 07 Oct 2024 17:19:08 -0400
+	id 1sxv90-000477-6X; Mon, 07 Oct 2024 17:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxv81-000299-7V; Mon, 07 Oct 2024 17:18:53 -0400
+ id 1sxv8y-00046V-AK; Mon, 07 Oct 2024 17:19:52 -0400
 Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1sxv7z-0001Eu-Aj; Mon, 07 Oct 2024 17:18:52 -0400
+ id 1sxv8w-0001MC-Rj; Mon, 07 Oct 2024 17:19:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728335928; x=1728940728; i=deller@gmx.de;
- bh=ybp8DxqGhiOCC3gBIGdXUk7U12n0Cs0I6KjeHangAac=;
+ s=s31663417; t=1728335988; x=1728940788; i=deller@gmx.de;
+ bh=LWO2T/Pb8/YNscpa9TTq1B/pI/psKixxkneHfn/6zxU=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=bCyaAGyTP3ycJcLqxotFpgTqB+tdsZT7iKmjl/IFarA6a/115B6Bi32m+x8hBOsc
- Py8k0rqg0hXXC0bBPQKwmoCB8/lL8oRPsJw4/F4WrG07oXsIglxt2LzaEcoz+BLaZ
- SMsvuSE1Hpqlhm+XWYPpnMtJ6O3VDAjcJL0Gqkyz0is0BfwrcZGEuNJYdd5dnbsjB
- MUxO3PbNehIu/ozBs4av1kVRC9h4h+V7F6t0IjGRZcyZjAmNhOga82/n98dplatNH
- RWSQ7T4Rnbajn2H8uitJINuWLzn2IJimJvTaUnGHq73KVhNrtXKlWlYF3eSMopq60
- MncZFDfUVvCsBAdm/w==
+ b=Y76qgj6h/LJAJVAMEQ/yaY2tdtD8Z0X50fOC8foqBB3PSuqn5G5bboX+ff4+hg2z
+ is4vJerjfn+dhenDoeKkqCatkOOTtSt7WE9n8eIzEHlN38VzqGRO20/NeaV5Dy3Me
+ PD3XdBr974o+Tl9an6g/XSIYmOeoCFSL8p83GdluSJtDPofSZTZCCWL58QuE1cNkP
+ xBu8q2ag1+85oKoKPA+BY1etOhPCYyvZMlgMI+BBut+uyGHyrZ7W85c/FreXRXpZW
+ uwg8s4vukyrP4aS0RM2WkZt24FFbkp5ls4WAeuoBjn2qFy3G6Edk6UfH/pViq3/iR
+ ZmEKWcmc/BD8314MbQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKYx-1tHOLv0jRH-00PY3J; Mon, 07
- Oct 2024 23:18:48 +0200
-Message-ID: <36c576de-a968-4f29-98d2-59c04d026051@gmx.de>
-Date: Mon, 7 Oct 2024 23:18:47 +0200
+Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFsUp-1tD4t11buZ-00B7v7; Mon, 07
+ Oct 2024 23:19:48 +0200
+Message-ID: <2878d217-0471-4834-92e2-59dd1ffaddd1@gmx.de>
+Date: Mon, 7 Oct 2024 23:19:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/21] target/hppa: Handle alignment faults in
- hppa_get_physical_address
+Subject: Re: [PATCH v2 12/21] target/hppa: Add hppa_cpu_tlb_fill_align
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-12-richard.henderson@linaro.org>
+ <20241005200600.493604-13-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -92,26 +91,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20241005200600.493604-12-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:fq9gHxoay73UdIR3Hlz9VADnBL5kmz+0WOuaIZdPFIhmMVf8e6O
- Lw0OpnZoKGc7LNbjXpIPCG4WB54ljF56389IVUtxEP1f41R+SVwrgB0Pag/6Urt4gUEn2zH
- Uk008TmqfEnsE5Z/nB6X0mDFA5yWQB7F8qAskgagjETfUhZs7K9HtF2rfa+6ieFj9bnvuKt
- yEFHtNyasf2ZQFv63g+mg==
-UI-OutboundReport: notjunk:1;M01:P0:ydmFGL/If6k=;a73ZldmkvBU/xA2L1iik+dZ0sfS
- dVSpBtRoZ8IRgNhZc9L6tbIWDDi6G7TFXfrCkSuY4UePgv6HUB2u/ukUeqKgVE+zULWQgM/6M
- Bde0NyiuJXzMk6tCTI8n97OlASYKa6bR/YmXhh8aKP/s4m0Bv6lXZFBJ/P8/Q7AtcyUKLFaeX
- 8P648Rw2VYHAwO1MeBRcvXHfzVqif4UI07tY5jzkP9Go/udukjlT7RNM9nI7AcnAIL0sO6WF4
- UIP+ih2xEiQeUybvttwVD6fkK17Ny6IQPY+de+Pd4rp5HLQpMcllHaQ5uX9v6s8Rmh0ux8UWO
- BC0TX/jFiwFpdSV4OVLObhaTPaUIOkxKDF9921aKocRtvQ2hOxRxNUHgrIHSFHNoMklNH8QGw
- ad5qcZl7E8DJM63lE7OLWfYQd7F5Sr/1OuV9aWcPA9gHGjGxbwCrqtuY0GAYew1pWBH8D4jJO
- CL82qz+JO87uQFRuvDtIwMriz9t1NOm4X13HD8IHv8te2hr0cVtJsXkty9a9gdxT/3D3UrPWx
- 5Qnuf7bzcUvrjpMWGD3DTzJR1tW12zVWKtMu/A1xWjJmwxumihRfeBn8hWRVoghbNO4vVwL8a
- mlinOATkhSn9Lttg7/A08I8PVjDnH57V2MKpWP8xdQY78YHXZ0/8F7Mx3CHE4yPVAMGsFzxBF
- NdXImLY6M6GbsQp7v8s1iuNE5CUzfQPByG8EY7ZmH6uBhXfOti8u2kjnchQq12Dy3wASGI++F
- i6ue0wktCCVrh+qMkm9/+uHgFLF9seQTR36Jos0NZaecVyzID7pLxY9dD0h08QgtBSp6JOEvs
- RaXGUcBiUhN+ZCuxbGd9SdXw==
+X-Provags-ID: V03:K1:3arFgz8tyZpMG+f/IJy02SmN8P/6cnxgbXYTVLQf5W38tEyTjpF
+ 0wDpi4EjD25KKzKXQHzniyIbgt8yeYTN2tnUYD2vf13bxtMHG33vueMUJy/DB70Ddak7lEA
+ mLFtcBUH8n7C9u2cxXOqj1gNH6olMCxXGDqYQZD6NeDdH5PNjtJWrJSK70Nt8HIB2j7e3IR
+ aGKysCGeJLSVxr/lblTow==
+UI-OutboundReport: notjunk:1;M01:P0:EDk+wYjsWKM=;oPuZbntgOLU6ULHuC4WqDY/QNLQ
+ NyEBopRsETAyiqDU0KJPbecL2HaS9HG4pXm4S6QP2JODaiJy3t5y9DovQ1rq4+WMZJ6ybexeU
+ +dXEUT1hmMoeDI/byaNYTBRsPeOx3EoGnhCZzj056UM7ZIl1iLW2NMIxAPZwFj7YumdCdQHNZ
+ vp+nIvzaCEuI9LTZbt9+ye5cixghmh+LLlFtGxUWwREU8yO+frTguY+ULHTFXQurYG6xTQ7cE
+ Vnn1x0hvFvKZdQy33HWhkqncFtbZtKRmaV6ZYYhRFcVX6Mn1l777mZ2HpjGHG+mIYFbdHybp+
+ 44/iHeVF1l2JIQkM+0ShsWselSKlK+WSirlE+Kw65smwyfPaWTAnQ9INcI6nZOTGEaz/TD0JZ
+ 3FyhPi6BrjcIDr3uvCZv9UrTjbk2jBw00wBZDEdzzIO9Io2Hf1nbCEsmu4s0wj2tT1Q9TbJmR
+ hsMLA9KrzUdPaQFfcWu/ZfmSPz7kdpjAQAfBnk1p7nFKF5o0zDc3BhHjaHp6d9U9Qp0rcUjO9
+ a8tWY2qDj3avg5abXPLZF2lvNsGsMnmODAsjfw2syQSodeQoLdIu0DCeAeKLRFaprGWA3TpDs
+ j886oEYSB0IVudh3I36YnmSJnnJ2neahlHB7tgDyL4/tKLaxMIY/fn/XWhBG8aGi3SjJ7iiEW
+ Bqc28sIa41uqrHJXYwjVIVt6rm9G+G8q+cZbzeVz63235++ipvk0HWgYj8r9tc7IC7LpZaM6p
+ dCHGov0QKXOF08q5KSLHbfWAIA6vlzWD8L0Lve+B/EuqsKunZYCbiqZw18iBUmgyCM0sL0b7P
+ wNleQ+JBpt2rvk+KrZSqeyvQ==
 Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -138,9 +137,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/5/24 22:05, Richard Henderson wrote:
-> In Chapter 5, Interruptions, the group 3 exceptions lists
-> "Unaligned data reference trap" has higher priority than
-> "Data memory break trap".
+> Fill in the tlb_fill_align hook, so that we can recognize
+> alignment exceptions in the correct priority order.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -148,7 +146,9 @@ On 10/5/24 22:05, Richard Henderson wrote:
 Reviewed-by: Helge Deller <deller@gmx.de>
 
 > ---
->   target/hppa/mem_helper.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>   target/hppa/cpu.h        |  3 +++
+>   target/hppa/cpu.c        |  2 +-
+>   target/hppa/mem_helper.c | 16 ++++++++++++----
+>   3 files changed, 16 insertions(+), 5 deletions(-)
 
 
