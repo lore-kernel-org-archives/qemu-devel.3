@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0272ECFB43F
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3940CFB440
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 10:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxl78-0003CN-H6; Mon, 07 Oct 2024 06:37:21 -0400
+	id 1sxlGD-0005KH-4e; Mon, 07 Oct 2024 06:46:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxl75-00039m-J4
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:37:16 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sxl73-0002m3-SO
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 06:37:15 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2fabfc06de3so44998061fa.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 03:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728297431; x=1728902231; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ngPWRvFSjCMt+74SoKPh5f+HvsBf1msKQnpxsK8zLbs=;
- b=l0JP8x1mxS3jfi9tuaogunYMxBts1dq1mYb0jueCQPq1uPydUKlJkXHEwniU2/UJDr
- exj15SQ3MMA3IpdgNBbs4q/oM7hq9v0Hg3jEFTAza7eSeKJmH0AcbvlCH/flSgg5F7Ph
- QBSHyo0Ax+SvGZ6ZA3owUgTn76fiuzzfSay7wBTxxTjLpMWiLnUd3x2tswNrUDpyB8OG
- OHHUKA8YKxaV8WDca+5W3w7/7ldiNb4Dw86TOSTlgoZj0XCNYSt8DRNnVw7WcabSmkEw
- ZKFzGxyRtbsEzH23RnHNVW6kNUcRGcvS//QywdRbczLWVOw9cuBO+86MEXQsel4wHrOj
- Q4EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728297431; x=1728902231;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ngPWRvFSjCMt+74SoKPh5f+HvsBf1msKQnpxsK8zLbs=;
- b=wa8Yv5EFY9OIt8K3EKqRyrQikeItROCr564SpYpZl8Ql8FCgz6vPneWRi0NJQGgMLF
- pHA2PkesvjevoPXdhsnJHGdS8xTG6udcyWHwFF4nd24ntAqaBh7mbztsXiHAkCpNBiQs
- RW0qSwqK+iMkv6s3SzifQ2LUazBNAmIWaV4y6V+jr8i6BkOAUBvxoWaR4rRIsJgkJvJ0
- QXaK2shaK0RLEbtgtAeprMAEmoQ+PNHBqLglLdT1mxssDd9H05nAlIdR/3mLfFT6Sadg
- Y2J37czboZ+xuarFdkRmitu0PBDP2W5XTm3qlMn1OJh0/hhTWLnTlhGiP8ZixgXu/Sw0
- Q46A==
-X-Gm-Message-State: AOJu0YxbbYIP84uzzqa/6W36WDDaOA8wPMml62Rm0M5iGNtowTKcdw4b
- sIqgMst4MFUC3SGyI4YfrUxoiL6Rix6MeRWok0Zfx+UvAUTD5Uu4tibxQXWltvP+b48n3DU/Lqw
- m2/1XLugSxoaOxL9Fuw84nTl8da2GHfwJBc0GHg==
-X-Google-Smtp-Source: AGHT+IET1Dv9yDJgZGasEKqfv1tZ/g91Bp2R/MxxEdBiaBFlbU6jnYnUvrXRfeQsL3EXMRjVEt4Ue7YGf9VuSeLtgWM=
-X-Received: by 2002:a2e:a9a5:0:b0:2fb:b8a:7abb with SMTP id
- 38308e7fff4ca-2fb0b8a7b17mr6739151fa.21.1728297430629; Mon, 07 Oct 2024
- 03:37:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxlFs-00055e-2W; Mon, 07 Oct 2024 06:46:25 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sxlFp-0003ut-6X; Mon, 07 Oct 2024 06:46:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728297977; x=1759833977;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=B7T9+eTv/Zw/x8yFPq2kpJfgxfT66Zaq5LvJc4Qn1No=;
+ b=A7Cs4CCDBCU/22adE7q9iA8HB/FdCbfhAjdOlDJ495mTOH0hiQaMbiUg
+ fSmyoKDRHNivo+HK7qeFiCiTqmqtC6MxovmsbUTrdDJ1TATCA51nwNJ+g
+ WCcwnRl2IBS62h+tAL8e5K9fidpA9xTCDdKJsbdFO0dlH+o8NagK60F4q
+ aZqmOM3CDJF8GpT2qGGGtv4QVFEtXY7Qo+4mAKwaVKZ+iUx+YwAwPH5sh
+ iehH2jrJ0et3MqA21lsniEj8kU7zPhCEfYqJS3RzE5MGZ9ptdZy7xijR8
+ PCBB/oBO5BbzPilxavot/QF0aQfJcKlReva/OWR4a5Q1wwUUD1B5YfYmN w==;
+X-CSE-ConnectionGUID: 0TVyqe1uTA2pWQIC8scj8g==
+X-CSE-MsgGUID: xDMG9nJTQrqptVXXuSeWAA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11217"; a="30323839"
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="30323839"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2024 03:46:14 -0700
+X-CSE-ConnectionGUID: AX+g0EMbQD6q55DiWdQOyA==
+X-CSE-MsgGUID: dW1FG9hzTJijhkJ9dGXajQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,184,1725346800"; d="scan'208";a="75004461"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 07 Oct 2024 03:46:09 -0700
+Date: Mon, 7 Oct 2024 19:02:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S.Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2 3/7] hw/core: Add smp cache topology for machine
+Message-ID: <ZwO/u0T+65b2/cFg@intel.com>
+References: <20240908125920.1160236-1-zhao1.liu@intel.com>
+ <20240908125920.1160236-4-zhao1.liu@intel.com>
+ <20240917100048.00001bcf@Huawei.com>
 MIME-Version: 1.0
-References: <20241007101313.3900-1-shentey@gmail.com>
-In-Reply-To: <20241007101313.3900-1-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 7 Oct 2024 11:36:59 +0100
-Message-ID: <CAFEAcA-d0jcDiJASmvS5S2jWUijUGuk5Vu7QT8wrD+HKUgEJqQ@mail.gmail.com>
-Subject: Re: [PATCH] net/tap-win32: Fix gcc 14 format truncation errors
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
- Stefan Weil <sw@weilnetz.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240917100048.00001bcf@Huawei.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,114 +98,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Oct 2024 at 11:14, Bernhard Beschow <shentey@gmail.com> wrote:
+On Tue, Sep 17, 2024 at 10:00:48AM +0100, Jonathan Cameron wrote:
+> Date: Tue, 17 Sep 2024 10:00:48 +0100
+> From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+> Subject: Re: [PATCH v2 3/7] hw/core: Add smp cache topology for machine
+> X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+> 
+> On Sun,  8 Sep 2024 20:59:16 +0800
+> Zhao Liu <zhao1.liu@intel.com> wrote:
+> 
+> > With smp-cache object support, add smp cache topology for machine by
+> > linking the smp-cache object.
+> > 
+> > Also add a helper to access cache topology level.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 >
-> The patch fixes the following errors generated by GCC 14.2:
->
-> ../src/net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 176 [-Werror=format-truncation=]
->   343 |              "%s\\%s\\Connection",
->       |                   ^~
->   344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->       |                                       ~~~~~~~~~
->
-> ../src/net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes into a destination of size 256
->   341 |         snprintf(connection_string,
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->   342 |              sizeof(connection_string),
->       |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
->   343 |              "%s\\%s\\Connection",
->       |              ~~~~~~~~~~~~~~~~~~~~~
->   344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->       |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> ../src/net/tap-win32.c:242:58: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 178 [-Werror=format-truncation=]
->   242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->       |                                                          ^~
->   243 |                   ADAPTER_KEY, enum_name);
->       |                                ~~~~~~~~~
->
-> ../src/net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes into a destination of size 256
->   242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   243 |                   ADAPTER_KEY, enum_name);
->       |                   ~~~~~~~~~~~~~~~~~~~~~~~
->
-> ../src/net/tap-win32.c:620:52: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 245 [-Werror=format-truncation=]
->   620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->       |                                                    ^~
->   621 |               USERMODEDEVICEDIR,
->   622 |               device_guid,
->       |               ~~~~~~~~~~~
-> ../src/net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes into a destination of size 256
->   620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->       |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   621 |               USERMODEDEVICEDIR,
->       |               ~~~~~~~~~~~~~~~~~~
->   622 |               device_guid,
->       |               ~~~~~~~~~~~~
->   623 |               TAPSUFFIX);
->       |               ~~~~~~~~~~
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Minor stuff. The property stuff is something I seems to mostly get wrong
+> so needs more eyes but fwiw looks fine to me.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2607
-Probably also worth
-Cc: qemu-stable@nongnu.org
+Yes and thank you!
 
-> ---
->  net/tap-win32.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/net/tap-win32.c b/net/tap-win32.c
-> index 7edbd71633..4a4625af2b 100644
-> --- a/net/tap-win32.c
-> +++ b/net/tap-win32.c
-> @@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
->
->      for (;;) {
->          char enum_name[256];
-> -        char unit_string[256];
-> +        char unit_string[512];
->          HKEY unit_key;
->          char component_id_string[] = "ComponentId";
->          char component_id[256];
-> @@ -315,7 +315,7 @@ static int get_device_guid(
->      while (!stop)
->      {
->          char enum_name[256];
-> -        char connection_string[256];
-> +        char connection_string[512];
->          HKEY connection_key;
->          char name_data[256];
->          DWORD name_type;
-> @@ -595,7 +595,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
->  static int tap_win32_open(tap_win32_overlapped_t **phandle,
->                            const char *preferred_name)
->  {
-> -    char device_path[256];
-> +    char device_path[512];
->      char device_guid[0x100];
->      int rc;
->      HANDLE handle;
+> With the tweaks suggested below.
+> 
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> 
+> > ---
+> > Changes since Patch v1:
+> >  * Integrated cache properties list into MachineState and used -machine
+> >    to configure SMP cache properties. (Markus)
+> > 
+> > Changes since RFC v2:
+> >  * Linked machine's smp_cache to smp-cache object instead of a builtin
+> >    structure. This is to get around the fact that the keyval format of
+> >    -machine can't support JSON.
+> >  * Wrapped the cache topology level access into a helper.
+> > ---
+> >  hw/core/machine-smp.c | 41 ++++++++++++++++++++++++++++++++++++++++
+> >  hw/core/machine.c     | 44 +++++++++++++++++++++++++++++++++++++++++++
+> >  include/hw/boards.h   | 10 ++++++++++
+> >  3 files changed, 95 insertions(+)
+> > 
+> > diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> > index 5d8d7edcbd3f..b517c3471d1a 100644
+> > --- a/hw/core/machine-smp.c
+> > +++ b/hw/core/machine-smp.c
+> > @@ -261,6 +261,41 @@ void machine_parse_smp_config(MachineState *ms,
+> >      }
+> >  }
+> >  
+> > +bool machine_parse_smp_cache(MachineState *ms,
+> > +                             const SmpCachePropertiesList *caches,
+> > +                             Error **errp)
+> > +{
+> > +    const SmpCachePropertiesList *node;
+> > +    DECLARE_BITMAP(caches_bitmap, CACHE_LEVEL_AND_TYPE__MAX);
+> > +
+> > +    for (node = caches; node; node = node->next) {
+> > +        /* Prohibit users from setting the cache topology level to invalid. */
+> > +        if (node->value->topology == CPU_TOPOLOGY_LEVEL_INVALID) {
+> > +            error_setg(errp,
+> > +                       "Invalid cache topology level: %s. "
+> > +                       "The topology should match the "
+> > +                       "valid CPU topology level",
+> 
+> I think that's too much wrapping for an error message. Makes them hard
+> to grep for.
 
-Rather than just increasing the array sizes, I think we
-should use g_autofree and g_strdup_printf(), like:
+I understand you mean the last sentence should not be on separate lines
+but should be continuous in one line, right?
 
-       g_autofree char* unit_string = NULL;
+> > +                       CpuTopologyLevel_str(node->value->topology));
+> > +            return false;
+> > +        }
+> > +
+> > +        /* Prohibit users from repeating settings. */
+> > +        if (test_bit(node->value->cache, caches_bitmap)) {
+> > +            error_setg(errp,
+> > +                       "Invalid cache properties: %s. "
+> > +                       "The cache properties are duplicated",
+> > +                       CacheLevelAndType_str(node->value->cache));
+> > +            return false;
+> > +        } else {
+> 
+> returned anyway in the above path, so can drop the else and reduce
+> indent a little.
 
-       [...]
-       unit_string = g_strdup_printf("%s\\%s", ADAPTER_KEY, enum_name);
+Sure.
 
-       (then no need for an explicit free)
+Thanks,
+Zhao
 
-All this only happens once at open, so we can certainly
-happily take the cost of memory allocation, and it saves
-us wondering about whether there's actually a maximum
-limit on these string values. (Looking at the MS documentation,
-I think registry keys have a limit of 255 chars, but
-values are 16383 chars, so 512 would be more than needed
-for a key and less than the theoretical maximum for a value.)
-
-thanks
--- PMM
+> > +            ms->smp_cache.props[node->value->cache].topology =
+> > +                node->value->topology;
+> > +            set_bit(node->value->cache, caches_bitmap);
+> > +        }
+> > +    }
+> > +
+> > +    return true;
+> > +}
+> > +
+> 
+> 
 
