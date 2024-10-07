@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9353CFB455
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30222CFB455
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 19:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxtFC-0005am-WF; Mon, 07 Oct 2024 15:18:11 -0400
+	id 1sxtH2-0001EA-NY; Mon, 07 Oct 2024 15:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtF9-0005Wf-5q; Mon, 07 Oct 2024 15:18:07 -0400
+ id 1sxtGH-0007Am-LP; Mon, 07 Oct 2024 15:19:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sxtF7-0004CB-KW; Mon, 07 Oct 2024 15:18:06 -0400
+ id 1sxtGF-0004Pi-Nx; Mon, 07 Oct 2024 15:19:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 186B29624D;
+ by isrv.corpit.ru (Postfix) with ESMTP id E920196259;
  Mon,  7 Oct 2024 22:16:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E797714F72D;
- Mon,  7 Oct 2024 22:16:55 +0300 (MSK)
-Received: (nullmailer pid 2592749 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id B846414F739;
+ Mon,  7 Oct 2024 22:16:56 +0300 (MSK)
+Received: (nullmailer pid 2592786 invoked by uid 1000);
  Mon, 07 Oct 2024 19:16:54 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mattias Nissler <mnissler@rivosinc.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 16/32] mac_dbdma: Remove leftover `dma_memory_unmap`
- calls
-Date: Mon,  7 Oct 2024 22:16:33 +0300
-Message-Id: <20241007191654.2592616-16-mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 28/32] block/reqlist: allow adding overlapping requests
+Date: Mon,  7 Oct 2024 22:16:45 +0300
+Message-Id: <20241007191654.2592616-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241007221311@cover.tls.msk.ru>
@@ -63,66 +62,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mattias Nissler <mnissler@rivosinc.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-These were passing a NULL buffer pointer unconditionally, which happens
-to behave in a mostly benign way (except for the chance of an excess
-memory region unref and a bounce buffer leak). Per the function comment,
-this was never meant to be accepted though, and triggers an assertion
-with the "softmmu: Support concurrent bounce buffers" change.
+Allow overlapping request by removing the assert that made it
+impossible. There are only two callers:
 
-Given that the code in question never sets up any mappings, just remove
-the unnecessary dma_memory_unmap calls along with the DBDMA_io struct
-fields that are now entirely unused.
+1. block_copy_task_create()
 
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Message-Id: <20240916175708.1829059-1-mnissler@rivosinc.com>
-Fixes: be1e343995 ("macio: switch over to new byte-aligned DMA helpers")
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-(cherry picked from commit 2d0a071e625d7234e8c5623b7e7bf445e1bef72c)
+It already asserts the very same condition before calling
+reqlist_init_req().
+
+2. cbw_snapshot_read_lock()
+
+There is no need to have read requests be non-overlapping in
+copy-before-write when used for snapshot-access. In fact, there was no
+protection against two callers of cbw_snapshot_read_lock() calling
+reqlist_init_req() with overlapping ranges and this could lead to an
+assertion failure [1].
+
+In particular, with the reproducer script below [0], two
+cbw_co_snapshot_block_status() callers could race, with the second
+calling reqlist_init_req() before the first one finishes and removes
+its conflicting request.
+
+[0]:
+
+> #!/bin/bash -e
+> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+> (
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+> EOF
+> ) &
+> sleep 5
+> while true; do
+> ./qemu-nbd -d /dev/nbd0
+> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+> done
+
+[1]:
+
+> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
+
+Cc: qemu-stable@nongnu.org
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-Id: <20240712140716.517911-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 6475155d519209c80fdda53e05130365aa769838)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index e84bf2c9f6..15dd40138e 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -119,9 +119,6 @@ static void pmac_ide_atapi_transfer_cb(void *opaque, int ret)
-     return;
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 853e01a1eb..28f6a096cd 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
  
- done:
--    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
--                     io->dir, io->dma_len);
+     /*
+      * @frozen_read_reqs: current read requests for fleecing user in bs->file
+-     * node. These areas must not be rewritten by guest.
++     * node. These areas must not be rewritten by guest. There can be multiple
++     * overlapping read requests.
+      */
+     BlockReqList frozen_read_reqs;
+ 
+diff --git a/block/reqlist.c b/block/reqlist.c
+index 08cb57cfa4..098e807378 100644
+--- a/block/reqlist.c
++++ b/block/reqlist.c
+@@ -20,8 +20,6 @@
+ void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+                       int64_t bytes)
+ {
+-    assert(!reqlist_find_conflict(reqs, offset, bytes));
 -
-     if (ret < 0) {
-         block_acct_failed(blk_get_stats(s->blk), &s->acct);
-     } else {
-@@ -202,9 +199,6 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
-     return;
- 
- done:
--    dma_memory_unmap(&address_space_memory, io->dma_mem, io->dma_len,
--                     io->dir, io->dma_len);
--
-     if (s->dma_cmd == IDE_DMA_READ || s->dma_cmd == IDE_DMA_WRITE) {
-         if (ret < 0) {
-             block_acct_failed(blk_get_stats(s->blk), &s->acct);
-diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
-index 4a3f644516..c774f6bf84 100644
---- a/include/hw/ppc/mac_dbdma.h
-+++ b/include/hw/ppc/mac_dbdma.h
-@@ -44,10 +44,6 @@ struct DBDMA_io {
-     DBDMA_end dma_end;
-     /* DMA is in progress, don't start another one */
-     bool processing;
--    /* DMA request */
--    void *dma_mem;
--    dma_addr_t dma_len;
--    DMADirection dir;
- };
- 
- /*
+     *req = (BlockReq) {
+         .offset = offset,
+         .bytes = bytes,
 -- 
 2.39.5
 
