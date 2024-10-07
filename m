@@ -4,140 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C6DCFB449
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C19CFB449
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 16:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxqcU-0006o8-6r; Mon, 07 Oct 2024 12:30:02 -0400
+	id 1sxqiL-0008J1-Ny; Mon, 07 Oct 2024 12:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sxqcS-0006nL-7w
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:30:00 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxqiC-0008ID-5N
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:35:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sxqcQ-0007uM-3T
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:29:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sxqi7-0000OV-PP
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 12:35:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728318597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MWpaqFztT6vJFysQ3qnmofMl7bo5aV/JsBw22pQ4ozs=;
- b=FSYcqYO93PbHzciGEB9RfBY9iyGtJRiur3A8ba+bh7B3DfubqdJcsfjm+keRM3Rzgfj19Y
- 4p64nZQpGs3la1aGF9Hv7kAM3HOQIxGp1JtzjjDsakFvxyWAy7zEjqFqTGrGQIEUlZZq7r
- FMoRxXhDsdaIdpl8zLngFw2K6B21uCw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-5QtcZ1L2M-qX-fAtbUdApw-1; Mon, 07 Oct 2024 12:23:30 -0400
-X-MC-Unique: 5QtcZ1L2M-qX-fAtbUdApw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37cd32f9c59so1743855f8f.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 09:23:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728318209; x=1728923009;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=MWpaqFztT6vJFysQ3qnmofMl7bo5aV/JsBw22pQ4ozs=;
- b=bpPpFUVlxI2G5eeHsDRhtuEfZ27djl23sZy1BwR6UaGxs6Xa9od7Y8xkT4aC52f7jz
- NcjAvBlNE0LR9eiPt2/jCTICLsvwwzHW5YlYOS7ZYds6TE54d9b7KW6UBVpI92hnKsO0
- 3A/T8v+iy6Iu+YzF7hfJFIQkbEn7nHriXdV+30Kow0ySCgs3PwYOST++f3VGK1tnJM9K
- S1izPbkGwkoLd1MdGqP4PIoFQU0kYigcAkX/lEnXiJAzaB2svoHOYuswrurJ3bAe4jHF
- qT6Mzz7dSbPuRDYiz+c7T6J1UMC7RlzE5a4gW+LXUkjMFrz3bpmD5XXrYGXrPwd+bq4M
- gQ0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/L+2FlkPXJ9yAeVTWMmqZnuxd0sON3AWMqO4SXWCB/PNQXc1YMgEkVadqUAT2vcxBc95r6C7aR3K8@nongnu.org
-X-Gm-Message-State: AOJu0Ywx/khQ8+r/gjf27r4By9Vi6J+G8glLNZwKxKc2IMKP8EP1yHLp
- cvzS9I+vwsoeiOK5fMCA/2xN0V+4r5o6fA3gbdRBPRovMhgm1509bAvw/+jURZwa3tcTsu2U0ui
- lp6o+CDwcsJTrN99mK7YkBZVehTCLnN8LAISwZke/oW9AEjWHp/AY
-X-Received: by 2002:a5d:5f46:0:b0:37c:cc60:2c63 with SMTP id
- ffacd0b85a97d-37d0e6dab88mr8163615f8f.5.1728318208809; 
- Mon, 07 Oct 2024 09:23:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEDWk/ktOBFGRJvZBONByKYslLlAHeSAXyzAyC1kXej3V32hCO94D9bTi1V/+1kXcr8zdWXbQ==
-X-Received: by 2002:a5d:5f46:0:b0:37c:cc60:2c63 with SMTP id
- ffacd0b85a97d-37d0e6dab88mr8163586f8f.5.1728318208307; 
- Mon, 07 Oct 2024 09:23:28 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c725:8700:77c7:bde:9446:8d34?
- (p200300cbc725870077c70bde94468d34.dip0.t-ipconnect.de.
- [2003:cb:c725:8700:77c7:bde:9446:8d34])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d1695e7e2sm6054417f8f.84.2024.10.07.09.23.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 09:23:27 -0700 (PDT)
-Message-ID: <47ba3f75-147d-4ea6-a576-eba6ef168643@redhat.com>
-Date: Mon, 7 Oct 2024 18:23:26 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 01/13] machine: alloc-anon option
+ s=mimecast20190719; t=1728318950;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=kHD3iE/R0F7OoFYcOqlWl6V6vI5EzHdLStBeQNp5F3U=;
+ b=Yl3CBcz11mzBYZCEDkCvZmK4bVzyKiTE+7EATbOrmDt2yCjhELZVjgbZKcgrHVLe5jM/Tb
+ Wht6kOVXD5xbyrjOQhA1jji2QWZvMnFVVEFvyYmL09FlsS0pyJh/RJIEqRCQFDPU8LoGfc
+ +GorebxHfc24If3nd8Ls3n4wWDNPiXg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-D3ceVTUVN9eeUCnhKQPLYg-1; Mon,
+ 07 Oct 2024 12:35:46 -0400
+X-MC-Unique: D3ceVTUVN9eeUCnhKQPLYg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1222A1955D47; Mon,  7 Oct 2024 16:35:45 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF9A71956088; Mon,  7 Oct 2024 16:35:41 +0000 (UTC)
+Date: Mon, 7 Oct 2024 17:35:37 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Peter Xu <peterx@redhat.com>
 Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 07/13] migration: SCM_RIGHTS for QEMUFile
+Message-ID: <ZwQN2YoMWNTMdop3@redhat.com>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
- <1727725244-105198-2-git-send-email-steven.sistare@oracle.com>
- <Zv7C7MeVP2X8bEJU@x1n> <2143f803-439e-4b8b-ae92-07caa913d646@redhat.com>
- <Zv_ghrH6i4QOzne8@x1n> <bffa3dc0-36b7-4fa1-a0b6-cce34743a46c@redhat.com>
- <Zv_spkFwqwgxGkNY@x1n>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Zv_spkFwqwgxGkNY@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ <1727725244-105198-8-git-send-email-steven.sistare@oracle.com>
+ <ZwQG_dvmTFFA2Xom@x1n>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZwQG_dvmTFFA2Xom@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -159,262 +87,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.10.24 15:24, Peter Xu wrote:
-> On Fri, Oct 04, 2024 at 02:54:38PM +0200, David Hildenbrand wrote:
->> On 04.10.24 14:33, Peter Xu wrote:
->>> On Fri, Oct 04, 2024 at 12:14:35PM +0200, David Hildenbrand wrote:
->>>> On 03.10.24 18:14, Peter Xu wrote:
->>>>> On Mon, Sep 30, 2024 at 12:40:32PM -0700, Steve Sistare wrote:
->>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->>>>>> on the value of the anon-alloc machine property.  This option applies to
->>>>>> memory allocated as a side effect of creating various devices. It does
->>>>>> not apply to memory-backend-objects, whether explicitly specified on
->>>>>> the command line, or implicitly created by the -m command line option.
->>>>>>
->>>>>> The memfd option is intended to support new migration modes, in which the
->>>>>> memory region can be transferred in place to a new QEMU process, by sending
->>>>>> the memfd file descriptor to the process.  Memory contents are preserved,
->>>>>> and if the mode also transfers device descriptors, then pages that are
->>>>>> locked in memory for DMA remain locked.  This behavior is a pre-requisite
->>>>>> for supporting vfio, vdpa, and iommufd devices with the new modes.
->>>>>>
->>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>>>
->>>>> [Igor seems missing in the loop; added]
->>>>>
->>>>>> ---
->>>>>>     hw/core/machine.c   | 19 +++++++++++++++++++
->>>>>>     include/hw/boards.h |  1 +
->>>>>>     qapi/machine.json   | 14 ++++++++++++++
->>>>>>     qemu-options.hx     | 11 +++++++++++
->>>>>>     system/physmem.c    | 35 +++++++++++++++++++++++++++++++++++
->>>>>>     system/trace-events |  3 +++
->>>>>>     6 files changed, 83 insertions(+)
->>>>>>
->>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>>>>> index adaba17..a89a32b 100644
->>>>>> --- a/hw/core/machine.c
->>>>>> +++ b/hw/core/machine.c
->>>>>> @@ -460,6 +460,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
->>>>>>         ms->mem_merge = value;
->>>>>>     }
->>>>>> +static int machine_get_anon_alloc(Object *obj, Error **errp)
->>>>>> +{
->>>>>> +    MachineState *ms = MACHINE(obj);
->>>>>> +
->>>>>> +    return ms->anon_alloc;
->>>>>> +}
->>>>>> +
->>>>>> +static void machine_set_anon_alloc(Object *obj, int value, Error **errp)
->>>>>> +{
->>>>>> +    MachineState *ms = MACHINE(obj);
->>>>>> +
->>>>>> +    ms->anon_alloc = value;
->>>>>> +}
->>>>>> +
->>>>>>     static bool machine_get_usb(Object *obj, Error **errp)
->>>>>>     {
->>>>>>         MachineState *ms = MACHINE(obj);
->>>>>> @@ -1078,6 +1092,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
->>>>>>         object_class_property_set_description(oc, "mem-merge",
->>>>>>             "Enable/disable memory merge support");
->>>>>> +    object_class_property_add_enum(oc, "anon-alloc", "AnonAllocOption",
->>>>>> +                                   &AnonAllocOption_lookup,
->>>>>> +                                   machine_get_anon_alloc,
->>>>>> +                                   machine_set_anon_alloc);
->>>>>> +
->>>>>>         object_class_property_add_bool(oc, "usb",
->>>>>>             machine_get_usb, machine_set_usb);
->>>>>>         object_class_property_set_description(oc, "usb",
->>>>>> diff --git a/include/hw/boards.h b/include/hw/boards.h
->>>>>> index 5966069..5a87647 100644
->>>>>> --- a/include/hw/boards.h
->>>>>> +++ b/include/hw/boards.h
->>>>>> @@ -393,6 +393,7 @@ struct MachineState {
->>>>>>         bool enable_graphics;
->>>>>>         ConfidentialGuestSupport *cgs;
->>>>>>         HostMemoryBackend *memdev;
->>>>>> +    AnonAllocOption anon_alloc;
->>>>>>         /*
->>>>>>          * convenience alias to ram_memdev_id backend memory region
->>>>>>          * or to numa container memory region
->>>>>> diff --git a/qapi/machine.json b/qapi/machine.json
->>>>>> index a6b8795..d4a63f5 100644
->>>>>> --- a/qapi/machine.json
->>>>>> +++ b/qapi/machine.json
->>>>>> @@ -1898,3 +1898,17 @@
->>>>>>     { 'command': 'x-query-interrupt-controllers',
->>>>>>       'returns': 'HumanReadableText',
->>>>>>       'features': [ 'unstable' ]}
->>>>>> +
->>>>>> +##
->>>>>> +# @AnonAllocOption:
->>>>>> +#
->>>>>> +# An enumeration of the options for allocating anonymous guest memory.
->>>>>> +#
->>>>>> +# @mmap: allocate using mmap MAP_ANON
->>>>>> +#
->>>>>> +# @memfd: allocate using memfd_create
->>>>>> +#
->>>>>> +# Since: 9.2
->>>>>> +##
->>>>>> +{ 'enum': 'AnonAllocOption',
->>>>>> +  'data': [ 'mmap', 'memfd' ] }
->>>>>> diff --git a/qemu-options.hx b/qemu-options.hx
->>>>>> index d94e2cb..90ab943 100644
->>>>>> --- a/qemu-options.hx
->>>>>> +++ b/qemu-options.hx
->>>>>> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->>>>>>         "                nvdimm=on|off controls NVDIMM support (default=off)\n"
->>>>>>         "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
->>>>>>         "                hmat=on|off controls ACPI HMAT support (default=off)\n"
->>>>>> +    "                anon-alloc=mmap|memfd allocate anonymous guest RAM using mmap MAP_ANON or memfd_create (default: mmap)\n"
->>>>>>         "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->>>>>>         "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
->>>>>>         QEMU_ARCH_ALL)
->>>>>> @@ -101,6 +102,16 @@ SRST
->>>>>>             Enables or disables ACPI Heterogeneous Memory Attribute Table
->>>>>>             (HMAT) support. The default is off.
->>>>>> +    ``anon-alloc=mmap|memfd``
->>>>>> +        Allocate anonymous guest RAM using mmap MAP_ANON (the default)
->>>>>> +        or memfd_create.  This option applies to memory allocated as a
->>>>>> +        side effect of creating various devices. It does not apply to
->>>>>> +        memory-backend-objects, whether explicitly specified on the
->>>>>> +        command line, or implicitly created by the -m command line
->>>>>> +        option.
->>>>>> +
->>>>>> +        Some migration modes require anon-alloc=memfd.
->>>>>> +
->>>>>>         ``memory-backend='id'``
->>>>>>             An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
->>>>>>             Allows to use a memory backend as main RAM.
->>>>>> diff --git a/system/physmem.c b/system/physmem.c
->>>>>> index dc1db3a..174f7e0 100644
->>>>>> --- a/system/physmem.c
->>>>>> +++ b/system/physmem.c
->>>>>> @@ -47,6 +47,7 @@
->>>>>>     #include "qemu/qemu-print.h"
->>>>>>     #include "qemu/log.h"
->>>>>>     #include "qemu/memalign.h"
->>>>>> +#include "qemu/memfd.h"
->>>>>>     #include "exec/memory.h"
->>>>>>     #include "exec/ioport.h"
->>>>>>     #include "sysemu/dma.h"
->>>>>> @@ -69,6 +70,8 @@
->>>>>>     #include "qemu/pmem.h"
->>>>>> +#include "qapi/qapi-types-migration.h"
->>>>>> +#include "migration/options.h"
->>>>>>     #include "migration/vmstate.h"
->>>>>>     #include "qemu/range.h"
->>>>>> @@ -1849,6 +1852,35 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->>>>>>                     qemu_mutex_unlock_ramlist();
->>>>>>                     return;
->>>>>>                 }
->>>>>> +
->>>>>> +        } else if (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD &&
->>>>>> +                   !object_dynamic_cast(new_block->mr->parent_obj.parent,
->>>>>> +                                        TYPE_MEMORY_BACKEND)) {
->>>>>
->>>>> This is pretty fragile.. if someone adds yet another layer on top of memory
->>>>> backend objects, the ownership links can change and this might silently run
->>>>> into something else even without any warning..
->>>>>
->>>>> I wished we dig into what is missing, but maybe that's too trivial.  If
->>>>> not, we still need to make this as solid.  Perhaps that can be a ram flag
->>>>> and let relevant callers pass in that flag explicitly.
->>>>
->>>> How would they decide whether or not we want to set the flag in the current
->>>> configuration?
->>>
->>> It was in the previous email where it got cut..  I listed four paths that
->>> may need change.
->>
->> That's not my question. Who would decide whether we want to set MAP_SHARED
->> in these callers or not?
->>
->> If you have "unconditionally" in mind, I think it's a bad idea. If there is
->> some other toggle to perform that setting conditionally, why not.
+On Mon, Oct 07, 2024 at 12:06:21PM -0400, Peter Xu wrote:
+> On Mon, Sep 30, 2024 at 12:40:38PM -0700, Steve Sistare wrote:
+> > Define functions to put/get file descriptors to/from a QEMUFile, for qio
+> > channels that support SCM_RIGHTS.  Maintain ordering such that
+> >   put(A), put(fd), put(B)
+> > followed by
+> >   get(A), get(fd), get(B)
+> > always succeeds.  Other get orderings may succeed but are not guaranteed.
+> > 
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > ---
+> >  migration/qemu-file.c  | 83 +++++++++++++++++++++++++++++++++++++++++++++++---
+> >  migration/qemu-file.h  |  2 ++
+> >  migration/trace-events |  2 ++
+> >  3 files changed, 83 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> > index b6d2f58..7f951ab 100644
+> > --- a/migration/qemu-file.c
+> > +++ b/migration/qemu-file.c
+> > @@ -37,6 +37,11 @@
+> >  #define IO_BUF_SIZE 32768
+> >  #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
+> >  
+> > +typedef struct FdEntry {
+> > +    QTAILQ_ENTRY(FdEntry) entry;
+> > +    int fd;
+> > +} FdEntry;
+> > +
+> >  struct QEMUFile {
+> >      QIOChannel *ioc;
+> >      bool is_writable;
+> > @@ -51,6 +56,9 @@ struct QEMUFile {
+> >  
+> >      int last_error;
+> >      Error *last_error_obj;
+> > +
+> > +    bool fd_pass;
+> > +    QTAILQ_HEAD(, FdEntry) fds;
+> >  };
+> >  
+> >  /*
+> > @@ -109,6 +117,8 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
+> >      object_ref(ioc);
+> >      f->ioc = ioc;
+> >      f->is_writable = is_writable;
+> > +    f->fd_pass = qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS);
+> > +    QTAILQ_INIT(&f->fds);
+> >  
+> >      return f;
+> >  }
+> > @@ -310,6 +320,10 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+> >      int len;
+> >      int pending;
+> >      Error *local_error = NULL;
+> > +    g_autofree int *fds = NULL;
+> > +    size_t nfd = 0;
+> > +    int **pfds = f->fd_pass ? &fds : NULL;
+> > +    size_t *pnfd = f->fd_pass ? &nfd : NULL;
+> >  
+> >      assert(!qemu_file_is_writable(f));
+> >  
+> > @@ -325,10 +339,9 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+> >      }
+> >  
+> >      do {
+> > -        len = qio_channel_read(f->ioc,
+> > -                               (char *)f->buf + pending,
+> > -                               IO_BUF_SIZE - pending,
+> > -                               &local_error);
+> > +        struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
+> > +        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
+> > +                                     &local_error);
+> >          if (len == QIO_CHANNEL_ERR_BLOCK) {
+> >              if (qemu_in_coroutine()) {
+> >                  qio_channel_yield(f->ioc, G_IO_IN);
+> > @@ -348,9 +361,65 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+> >          qemu_file_set_error_obj(f, len, local_error);
+> >      }
+> >  
+> > +    for (int i = 0; i < nfd; i++) {
+> > +        FdEntry *fde = g_new0(FdEntry, 1);
+> > +        fde->fd = fds[i];
+> > +        QTAILQ_INSERT_TAIL(&f->fds, fde, entry);
+> > +    }
+> > +
+> >      return len;
+> >  }
+> >  
+> > +int qemu_file_put_fd(QEMUFile *f, int fd)
+> > +{
+> > +    int ret = 0;
+> > +    QIOChannel *ioc = qemu_file_get_ioc(f);
+> > +    Error *err = NULL;
+> > +    struct iovec iov = { (void *)" ", 1 };
+> > +
+> > +    /*
+> > +     * Send a dummy byte so qemu_fill_buffer on the receiving side does not
+> > +     * fail with a len=0 error.  Flush first to maintain ordering wrt other
+> > +     * data.
+> > +     */
+> > +
+> > +    qemu_fflush(f);
+> > +    if (qio_channel_writev_full(ioc, &iov, 1, &fd, 1, 0, &err) < 1) {
+> > +        error_report_err(error_copy(err));
+> > +        qemu_file_set_error_obj(f, -EIO, err);
+> > +        ret = -1;
+> > +    }
+> > +    trace_qemu_file_put_fd(f->ioc->name, fd, ret);
+> > +    return ret;
+> > +}
+> > +
+> > +int qemu_file_get_fd(QEMUFile *f)
+> > +{
+> > +    int fd = -1;
+> > +    FdEntry *fde;
+> > +
+> > +    if (!f->fd_pass) {
+> > +        Error *err = NULL;
+> > +        error_setg(&err, "%s does not support fd passing", f->ioc->name);
+> > +        error_report_err(error_copy(err));
+> > +        qemu_file_set_error_obj(f, -EIO, err);
+> > +        goto out;
+> > +    }
+> > +
+> > +    /* Force the dummy byte and its fd passenger to appear. */
+> > +    qemu_peek_byte(f, 0);
+> > +
+> > +    fde = QTAILQ_FIRST(&f->fds);
+> > +    if (fde) {
+> > +        qemu_get_byte(f);       /* Drop the dummy byte */
 > 
-> Yes I thought it could be unconditionally.  We can discuss downside below,
-> I think we can still use a new flag otherwise, but the idea would be the
-> same, where I want the flag to be explicit in the callers not implicitly
-> with the object type check, which I think can be hackish.
-
-I agree that the caller should specify it.
-
-But I don't think using shared memory where shared memory is not 
-warranted is a reasonable approach.
-
-I'm quite surprise you're considering such changes with unclear impacts 
-on other OSes besides Linux (Freedbsd? Windows that doeasn';t even 
-support shared memory?) just to make one corner-case QEMU use case happy.
-
-But I'm sure there are valid reasons why you had that idea, so I'm happy 
-to learn why using shared memory unconditionally here is better than 
-providing a clean alternative path with the feature enabled and memfd 
-actually being supported on the setup (e.g., newer Linux kernel).
-
+> Can we still try to get rid of this magical byte?
 > 
->>
->>>
->>>>
->>>>>
->>>>> I think RAM_SHARED can actually be that flag already - I mean, in all paths
->>>>> that we may create anon mem (but not memory-backend-* objects), is it
->>>>> always safe we always switch to RAM_SHARED from anon?
->>>>
->>>> Do you mean only setting the flag (-> anonymous shmem) or switching also to
->>>> memfd, which is a bigger change?
->>>
->>> Switching to memfd.  I thought anon shmem (mmap(MAP_SHARED)) is mostly the
->>> same internally, if we create memfd then mmap(MAP_SHARED) on top of it, no?
->>
->> Memfd is Linux specific, keep that in mind. Apart from that there shouldn't
->> be much difference between anon shmem and memfd (there are memory commit
->> differences, though).
-> 
-> Could you elaborate the memory commit difference and what does that imply
-> to QEMU's usage?
+> Ideally this function should check for no byte but f->fds bening non-empty,
+> if it is it could invoke qemu_fill_buffer(). OTOH, qemu_fill_buffer() needs
+> to take len==0&&nfds!=0 as legal.  Would that work?
 
-Note how memfd code passed VM_NORESERVE to shmem_file_setup() and 
-shmem_zero_setup() effectively doesn't (unless MAP_NORESERVE was 
-specified IIRC).
+When passing ancilliary data with sendmsg/recvmsg, on Linux at least,
+it is required that there is at least 1 byte of data present.
 
-Not sure if the change makes a big impact in QEMU's usage, it's just one 
-of these differences between memfd and shared anonymous memory. 
-(responding to your "mostly the same").
+See 'man 7 unix':
 
-> 
->>
->> Of course, there is a difference between anon memory and shmem, for example
->> regarding what viritofsd faced (e.g., KSM) recently.
-> 
-> The four paths shouldn't be KSM target, AFAICT.
+[quote]
+   At  least  one  byte  of real data should be sent when
+   sending ancillary data.  On Linux, this is required to
+   successfully send ancillary data over  a  UNIX  domain
+   stream  socket.   When  sending  ancillary data over a
+   UNIX domain datagram socket, it is  not  necessary  on
+   Linux  to  send  any accompanying real data.  However,
+   portable applications should also include at least one
+   byte of real data when sending ancillary data  over  a
+   datagram socket.
+[/quote]
 
-Do you have a good overview of what is deduplicated in practice and why 
-these don't apply? For example, I thought these functions are also used 
-for hosting the BIOS, and that might just be deduplciated between VMs?
+So if your protocol doesn't already have a convenient bit of real data to
+attach the SCM_RIGHTS data to, it is common practice to send a single dummy
+data byte that is discarded.
 
-Anyhow, there are obviously other differences with shmem vs. anonymous 
-(THP handling, page fault performance, userfaultfd compatibility on 
-older kernels) at least on Linux, but I have absolutely no clue how that 
-would differ on other host OSes.
-
-None of them are major
-
-This is probably going to result in a bigger discussion, for which I 
-don't have any time. So my opinion on it is above.
-
-Anyhow, this sounds like one of the suggestions I wouldn't suggest Steve 
-to actually implement.
-
-
+With regards,
+Daniel
 -- 
-Cheers,
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
