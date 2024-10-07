@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE719CFB449
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CB9CFB446
 	for <qemu-devel@archiver.kernel.org>; Mon,  7 Oct 2024 15:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxpvv-0005EU-MT; Mon, 07 Oct 2024 11:46:04 -0400
+	id 1sxpvc-0004eh-Ct; Mon, 07 Oct 2024 11:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxpvr-0005A9-V6
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:46:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxpvW-0004a4-Pk
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:38 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sxpvp-0002YO-Su
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728315957;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hHT9bzk7iZ6Hr+wEwZTdWZD3MAdisW6GXcAQc3HKdK4=;
- b=Y6CjvnMIWSglvpC5qP1c9LAiIokqr+3HUrzQ818JU5qSHtlMbFxq0QrZO5lN7plP1AI2Ts
- 4Gd4ToETeoh/unTX7sR1AAtvXM69LaNPgYJpEmJYBGWFM1TXjMRWppM6xktveI1EPstnzP
- 1LCVVZgL/1T3M4ggR27Phalj0dJmfA4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-IFfafe2BPlu2eelkoAN5VQ-1; Mon,
- 07 Oct 2024 11:45:56 -0400
-X-MC-Unique: IFfafe2BPlu2eelkoAN5VQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4ABE61978F59
- for <qemu-devel@nongnu.org>; Mon,  7 Oct 2024 15:45:54 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.61])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E14F300019E; Mon,  7 Oct 2024 15:45:52 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/3] scripts: validate SPDX license choices
-Date: Mon,  7 Oct 2024 16:45:47 +0100
-Message-ID: <20241007154548.1144961-3-berrange@redhat.com>
-In-Reply-To: <20241007154548.1144961-1-berrange@redhat.com>
-References: <20241007154548.1144961-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sxpvV-0002VR-2e
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 11:45:38 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 23D529619F;
+ Mon,  7 Oct 2024 18:45:28 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B46B314F610;
+ Mon,  7 Oct 2024 18:45:34 +0300 (MSK)
+Message-ID: <5a634e7a-2993-4f2b-b90d-64bcfc5a6aef@tls.msk.ru>
+Date: Mon, 7 Oct 2024 18:45:34 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: Support 4K page size
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, maobibo@loongson.cn
+References: <20231023024059.3858349-1-gaosong@loongson.cn>
+ <d8901ddc-b7b9-46c2-be35-40950a651b21@tls.msk.ru>
+ <9228f7d2-851f-48e6-b864-65cfbe04a069@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <9228f7d2-851f-48e6-b864-65cfbe04a069@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,105 +87,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We expect all new code to be contributed with the "GPL-2.0-or-later"
-license tag. Divergance is permitted if the new file is derived from
-pre-existing code under a different license, whether from elsewhere
-in QEMU codebase, or outside.
+07.10.2024 18:09, Richard Henderson wrote:
 
-Issue a warning if the declared license is not "GPL-2.0-or-later",
-and an error if the license is not one of the handful of the
-expected licenses to prevent unintended proliferation.
+> The #2491 issue appears to be for user-mode emulation.  Because the reported host is x86, I would expect guest page size == host page size to improve 
+> performance, not degrade it.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 66 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+Yes, it is about linux-user.
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index cc266abdcd..cd1ed90f4c 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1353,6 +1353,67 @@ sub checkfilename {
- 	}
- }
- 
-+sub checkspdx {
-+    my ($file, $expr) = @_;
-+
-+    # Imported Linux headers probably have SPDX tags, but if they
-+    # don't we're not requiring contributors to fix this
-+    if ($file =~ m,include/standard-headers, ||
-+	$file =~ m,linux-headers,) {
-+	return;
-+    }
-+
-+    my $origexpr = $expr;
-+
-+    # Flatten sub-expressions
-+    $expr =~ s/\(|\)/ /g;
-+    $expr =~ s/OR|AND/ /g;
-+
-+    # Merge WITH exceptions to the license
-+    $expr =~ s/\s+WITH\s+/-WITH-/g;
-+
-+    # Cull more leading/trailing whitespace
-+    $expr =~ s/^\s*//g;
-+    $expr =~ s/\s*$//g;
-+
-+    my @bits = split / +/, $expr;
-+
-+    my $prefer = "GPL-2.0-or-later";
-+    my @valid = qw(
-+	LGPL-2.0-or-later
-+	LGPL-2.1-or-later
-+	GPL-2.0-only
-+	LGPL-2.0-only
-+	LGPL-2.0-only
-+	BSD-2-Clause
-+	BSD-3-Clause
-+	MIT
-+	);
-+
-+    my $nonpreferred = 0;
-+    my @unknown = ();
-+    foreach my $bit (@bits) {
-+	if ($bit eq $prefer) {
-+	    next;
-+	}
-+	if (grep /^$bit$/, @valid) {
-+	    $nonpreferred = 1;
-+	} else {
-+	    push @unknown, $bit;
-+	}
-+    }
-+    if (@unknown) {
-+	ERROR("Saw unacceptable licenses '" . join(',', @unknown) .
-+	      "', valid choices for QEMU are:\n" . join("\n", $prefer, @valid));
-+    }
-+
-+    if ($nonpreferred) {
-+	WARN("Saw acceptable license '$origexpr' but note '$prefer' is preferred " .
-+	     "for new files unless the code is derived from a source with an" .
-+	     "existed declared license that must be followed.");
-+    }
-+}
-+
- sub process {
- 	my $filename = shift;
- 
-@@ -1641,6 +1702,11 @@ sub process {
- 		    }
- 		}
- 
-+# Check SPDX-License-Identifier references a permitted license
-+		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
-+		    &checkspdx($realfile, $1);
-+		}
-+
- # Check for wrappage within a valid hunk of the file
- 		if ($realcnt != 0 && $line !~ m{^(?:\+|-| |\\ No newline|$)}) {
- 			ERROR("patch seems to be corrupt (line wrapped?)\n" .
--- 
-2.46.0
+> If this is really about user-mode, then perf may be your friend in determining where the extra overhead is coming from.
+
+I updated the issue adding some perf output.  It looks like
+the 4k-pagesize case just calls tb_lookup() and extract64()
+significantly more times than with 16K pages.
+
+Thanks,
+
+/mjt
 
 
