@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D196CEFC39
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFEFECEFC3A
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syEmQ-0007Tv-6p; Tue, 08 Oct 2024 14:17:54 -0400
+	id 1syEvh-0000gF-P6; Tue, 08 Oct 2024 14:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syEmO-0007TS-5A
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:17:52 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syEmL-00076D-Na
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:17:51 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-20b5fb2e89dso47315385ad.1
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:17:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728411468; x=1729016268; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=blgVudscveX31njLbd+dJ2k2y2SyCCUUFo/u+umo9tA=;
- b=IilDBDSyortNt/MxBH7GQwWB9PWIYKNGCI1NQt2Lvnl4BQLrQRfSlYscEZeHcYVgJE
- VcRqoKzxV2IqRf+HZ0/JtBu6LLK+Kz+TcxNQWEmqa3mg46T3UktVAluYyGj5kWZes0hK
- gJG3+jfa5P1KedJoRbbfwM+jXj9F3a9UNfTQi33CJ3TnzGJWEJgTevMFp8IGDjvMpjCx
- Onv8YIaEp5ZOP5JyhF3HxrSIk8jb9wJo0EjF2xKYtgshLq0aDKYbI/rzePcJMJpckrCl
- zsjtjY299/KnQxN8AzvlcpRweBuWbzPkAzhha7RtvM+hqiqoIby3I6PlI8USLducIb68
- vFxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728411468; x=1729016268;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=blgVudscveX31njLbd+dJ2k2y2SyCCUUFo/u+umo9tA=;
- b=SJKF/Au3TLPPB3zPWxAsu4lTiII0lJ74PbKqNgA3gZ8QQoxfrapLxVjL4UlGejODO4
- tJCwdYLs1pASbQfFIGetvff5U03XiU+/548KnY7iyN6eshm3rHTJS/BOHETBAS/XbxpD
- d1zYOomSJryw+PfbFpVO2UnlcOCX98skfzWNO6znUFyrrGwxWY5cWM7goX9w0kkfZaXR
- sskfnJWxLPSEMkleEj4T9lQtyQttE5ASY3CidbiC/i5BMQ0lD7ykec8ETfIJnNIprLKW
- bHD8evKPL5mddrwWYAyS9H7onl0OHIFw0rpRN+5XDZbuHXQAp+u+8CTKEmVoah7sT052
- szrg==
-X-Gm-Message-State: AOJu0YyJQpcesB/LRB7VZniojEmxDWgr/rRm6jbPHD40yqCSmbP4SiOp
- 7G3R2WFUQAYMd9fubpg5RhLazpCiSeDdeJkKuZl5GlDrbxWrG4HCdxpcErZ5TRE=
-X-Google-Smtp-Source: AGHT+IFwt5JiDs+JQaoom5c6uwume7LZx70+24IrfmMCYHXTyBwwcvR3AVVVveUor5iCvJO7F8wUuQ==
-X-Received: by 2002:a17:903:120d:b0:20b:6d8c:9d2 with SMTP id
- d9443c01a7336-20bff1df1cfmr215358055ad.54.1728411467958; 
- Tue, 08 Oct 2024 11:17:47 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c5c0f2edbsm8263955ad.175.2024.10.08.11.17.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Oct 2024 11:17:47 -0700 (PDT)
-Message-ID: <94ebebf2-e775-4fd2-8fcf-921610261a7e@linaro.org>
-Date: Tue, 8 Oct 2024 11:17:45 -0700
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1syEvc-0000fl-6C; Tue, 08 Oct 2024 14:27:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1syEvZ-00085f-IU; Tue, 08 Oct 2024 14:27:23 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498ILVaj015516;
+ Tue, 8 Oct 2024 18:27:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=a
+ uA9kJFoi6NaWO1pKJCEnJqugAuoVcDLAGcXgc/IVVg=; b=DMsfeAKbyh1HD9mDD
+ OuCRItwntk15Y2MhRtlEViT63VOSXo0JmkCRUa4Q5wwsFdnlHfwen56wo/BItN98
+ WEy4om1JwdXUG4hQOWQqQJClPKOQ4N8aQHSVBqPyM4TQKQdjHsN8b/G6iAF9MtDo
+ kQ7WSawxCZEhDMIvZxhjMqFL3puwS38zEiR6f8LfaOU3a46S4hWG0ixVLmzAlqJ0
+ +VmB96hhuoqIfKdsDMbAXNIAdvlM+0k9g0/mwv5jtEfDS8RcWbIgN1IeCjlw2Eo6
+ gUuXPZxF1a4rYupq6rQ6RFho0JftRc8xcIcZBZhMaXqbmnyJetS4fAojWhvh273o
+ /1OBA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4259xar10a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 18:27:19 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 498IRJ29028719;
+ Tue, 8 Oct 2024 18:27:19 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4259xar104-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 18:27:19 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 498H0soB022861;
+ Tue, 8 Oct 2024 18:27:18 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 423jg0wmk9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 18:27:18 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 498IRHpP41746744
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Oct 2024 18:27:18 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BA6445805C;
+ Tue,  8 Oct 2024 18:27:17 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B4415805D;
+ Tue,  8 Oct 2024 18:27:17 +0000 (GMT)
+Received: from [9.61.79.151] (unknown [9.61.79.151])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  8 Oct 2024 18:27:17 +0000 (GMT)
+Message-ID: <5728799c-3c12-405c-ba96-af4b70e180b6@linux.ibm.com>
+Date: Tue, 8 Oct 2024 14:27:16 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240923162208.90745-1-iii@linux.ibm.com>
- <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
- <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
- <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
- <7cf5d0a94cc52ac9f8144eb5d1cc83811755ea98.camel@linux.ibm.com>
- <7531a0890a2f804b9e5e89e80d019ea53c738eab.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 17/19] pc-bios/s390x: Enable multi-device boot loop
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+ <20241008011552.2645520-18-jrossi@linux.ibm.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <7531a0890a2f804b9e5e89e80d019ea53c738eab.camel@linux.ibm.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20241008011552.2645520-18-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: jjAhwb0f1TV6Rk-6WaC0p3bpuwuFJlu0
+X-Proofpoint-GUID: JI13RcifjNAKWI4F45xyGaTAIXv1bZIQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-08_16,2024-10-08_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=999
+ bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410080119
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +116,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/24 13:35, Ilya Leoshkevich wrote:
->> How can we handle the long-running syscalls?
->> Just waiting sounds unsatisfying.
->> Sending a reserved host signal may alter the guest's behaviour if a
->> syscall like pause() is interrupted.
->> What do you think about SIGSTOP-ping the "in_syscall" threads?
->> A quick experiment shows that it should be completely invisible to
->> the
->> guest - the following program continues to run after SIGSTOP/SIGCONT:
->>
->> #include <sys/syscall.h>
->> #include <unistd.h>
->> int main(void) { syscall(__NR_pause); };
-> 
-> Hmm, no, that won't work: SIGSTOP would stop all threads.
-> 
-> So I wonder if reserving a host signal for interrupting "in_syscall"
-> threads would be an acceptable tradeoff?
-
-Could work, yes.  We already steal SIGRTMIN for guest abort (to distinguish from host 
-abort), and remap guest __SIGRTMIN to host SIGRTMIN+1.  Grabbing SIGRTMIN+1 should work 
-ok, modulo the existing problem of presenting the guest with an incomplete set of signals.
-
-I've wondered from time to time about multiplexing signals in this space, but I think that 
-runs afoul of having a consistent mapping for interprocess signaling.
 
 
-r~
+On 10/7/24 9:15 PM, jrossi@linux.ibm.com wrote:
+> [snip...]
+>
+>       switch (vdev->senseid.cu_model) {
+>       case VIRTIO_ID_NET:
+>           puts("Network boot device detected");
+> @@ -271,11 +275,9 @@ static void ipl_boot_device(void)
+>           dasd_ipl(blk_schid, cutype);
+>           break;
+>       case CU_TYPE_VIRTIO:
+> -        if (virtio_setup()) {
+> -            return;    /* Only returns in case of errors */
+> +        if (virtio_setup() == 0) {
+> +            zipl_load();
+>           }
+> -        zipl_load();
+> -        break;
+>       default:
+>           printf("Attempting to boot from unexpected device type 0x%X", cutype);
+>       }
+>
+> [snip...]
+A small mistake I found after posting is that the break is missing after
+zipl_load(). This causes the "unexpected device type" message to print after
+a failed virtio IPL, but it is fixed simply by not removing the break 
+and will
+be will be corrected in the next version.
 
