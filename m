@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367CACEF16B
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 12:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E03CCCEF166
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 12:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy9gf-0007ot-Tv; Tue, 08 Oct 2024 08:51:37 -0400
+	id 1sy9h2-0008I1-O3; Tue, 08 Oct 2024 08:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gT-0007Vm-Q6
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:26 -0400
+ id 1sy9gW-0007an-D6
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gR-0002Sc-Qj
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:25 -0400
+ id 1sy9gU-0002TO-9O
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728391882;
+ s=mimecast20190719; t=1728391885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EUNwShyGVzhC0LtMjkUoqL4y2E98jZ/av/bX37TEm0s=;
- b=MTzG7JunJiqdzJffjPTrZG5Mfqvqy/x6jVjJtGaAxaSh3d320hbx28sdv+R72dFIKF+YOR
- Z9fU/tkUE/gby9lTWwN6+tcXssxUa7L+qgptZMzGfLhobf9jqfqhI4MYzh/zTDh82xJt7U
- HFtVwGUCESfqx9QPa1MaaNFveSBuYKM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=DgYzvGfMU9ZP3288OSkdcgQovJGODKQfEShGEk8xYmc=;
+ b=KC5rR0GFPuw9/yGTWSc8WiJGx5E/Wm6O6LEh97WrI4AxzkQe4O3ROE6Enn9hYB8zXwa2dQ
+ n8ckP6doqxpq9HGSSotjYQSKUReTdI7jBazLemeS0yWsgxBg8HyZugqBhDfA6laP+fzXBj
+ 0X3e72nhBoSzfcOJdcl+QnbyWd04Jkc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-MrDGDvDWN5e1W7TvkpQ0vw-1; Tue,
- 08 Oct 2024 08:51:19 -0400
-X-MC-Unique: MrDGDvDWN5e1W7TvkpQ0vw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-5poxncyoMleKhuymLAGbqA-1; Tue,
+ 08 Oct 2024 08:51:22 -0400
+X-MC-Unique: 5poxncyoMleKhuymLAGbqA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A94FE1905987; Tue,  8 Oct 2024 12:51:15 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB3831943CFB; Tue,  8 Oct 2024 12:51:20 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.19])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 72C4919560A3; Tue,  8 Oct 2024 12:51:14 +0000 (UTC)
+ id 631DD19560A3; Tue,  8 Oct 2024 12:51:19 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -56,9 +56,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 08/19] util/memfd: report potential errors on free
-Date: Tue,  8 Oct 2024 16:50:17 +0400
-Message-ID: <20241008125028.1177932-9-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 09/19] ui/pixman: generalize shared_image_destroy
+Date: Tue,  8 Oct 2024 16:50:18 +0400
+Message-ID: <20241008125028.1177932-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
 References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -93,41 +93,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Learn to free memfd-allocated shared memory.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- util/memfd.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/ui/qemu-pixman.h |  2 +-
+ hw/display/virtio-gpu.c  |  4 ++--
+ ui/console.c             |  2 +-
+ ui/qemu-pixman.c         | 20 ++++++++++++--------
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/util/memfd.c b/util/memfd.c
-index 4a3c07e0be..8a2e906962 100644
---- a/util/memfd.c
-+++ b/util/memfd.c
-@@ -28,6 +28,7 @@
- #include "qemu/osdep.h"
+diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
+index e3dd72b9e3..a97f56d09a 100644
+--- a/include/ui/qemu-pixman.h
++++ b/include/ui/qemu-pixman.h
+@@ -97,7 +97,7 @@ void qemu_pixman_glyph_render(pixman_image_t *glyph,
  
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "qemu/memfd.h"
- #include "qemu/host-utils.h"
+ void qemu_pixman_image_unref(pixman_image_t *image);
  
-@@ -149,11 +150,15 @@ err:
- void qemu_memfd_free(void *ptr, size_t size, int fd)
- {
-     if (ptr) {
--        munmap(ptr, size);
-+        if (munmap(ptr, size) != 0) {
-+            error_report("memfd munmap() failed: %s", strerror(errno));
-+        }
+-void qemu_pixman_win32_image_destroy(pixman_image_t *image, void *data);
++void qemu_pixman_shared_image_destroy(pixman_image_t *image, void *data);
+ 
+ G_DEFINE_AUTOPTR_CLEANUP_FUNC(pixman_image_t, qemu_pixman_image_unref)
+ 
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 017a0f170c..77f6e76f23 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -298,7 +298,7 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+             bits, c2d.height ? res->hostmem / c2d.height : 0);
+ #ifdef WIN32
+         if (res->image) {
+-            pixman_image_set_destroy_function(res->image, qemu_pixman_win32_image_destroy, res->handle);
++            pixman_image_set_destroy_function(res->image, qemu_pixman_shared_image_destroy, res->handle);
+         }
+ #endif
      }
+@@ -1317,7 +1317,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+             return -EINVAL;
+         }
+ #ifdef WIN32
+-        pixman_image_set_destroy_function(res->image, qemu_pixman_win32_image_destroy, res->handle);
++        pixman_image_set_destroy_function(res->image, qemu_pixman_shared_image_destroy, res->handle);
+ #endif
  
-     if (fd != -1) {
--        close(fd);
-+        if (close(fd) != 0) {
-+            error_report("memfd close() failed: %s", strerror(errno));
-+        }
-     }
+         res->addrs = g_new(uint64_t, res->iov_cnt);
+diff --git a/ui/console.c b/ui/console.c
+index 8f416ff0b9..fdd76c2be4 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -487,7 +487,7 @@ DisplaySurface *qemu_create_displaysurface(int width, int height)
+ #ifdef WIN32
+     qemu_displaysurface_win32_set_handle(surface, handle, 0);
+     pixman_image_set_destroy_function(surface->image,
+-                                      qemu_pixman_win32_image_destroy, handle);
++                                      qemu_pixman_shared_image_destroy, handle);
+ #endif
+     return surface;
  }
+diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
+index 3870e1a215..46a91e7f7a 100644
+--- a/ui/qemu-pixman.c
++++ b/ui/qemu-pixman.c
+@@ -6,6 +6,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "ui/console.h"
++#include "qemu/memfd.h"
+ #include "standard-headers/drm/drm_fourcc.h"
+ #include "trace.h"
  
+@@ -269,16 +270,19 @@ void qemu_pixman_glyph_render(pixman_image_t *glyph,
+ }
+ #endif /* CONFIG_PIXMAN */
+ 
+-#ifdef WIN32
+ void
+-qemu_pixman_win32_image_destroy(pixman_image_t *image, void *data)
++qemu_pixman_shared_image_destroy(pixman_image_t *image, void *data)
+ {
++    void *ptr = pixman_image_get_data(image);
++
++#ifdef WIN32
+     HANDLE handle = data;
+ 
+-    qemu_win32_map_free(
+-        pixman_image_get_data(image),
+-        handle,
+-        &error_warn
+-    );
+-}
++    qemu_win32_map_free(ptr, handle, &error_warn);
++#else
++    int shmfd = GPOINTER_TO_INT(data);
++    size_t size = pixman_image_get_height(image) * pixman_image_get_stride(image);
++
++    qemu_memfd_free(ptr, size, shmfd);
+ #endif
++}
 -- 
 2.47.0
 
