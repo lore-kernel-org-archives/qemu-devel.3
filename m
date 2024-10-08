@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A563CED256
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9C1CED258
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy083-0003wX-0M; Mon, 07 Oct 2024 22:39:15 -0400
+	id 1sy0DV-0005FX-DB; Mon, 07 Oct 2024 22:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sy080-0003vx-Qj; Mon, 07 Oct 2024 22:39:13 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sy07z-0007f8-5o; Mon, 07 Oct 2024 22:39:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728355151; x=1759891151;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=h/4KWn9V7cIjP5cDR1TS7MiUChbx6T5U2FcDlheaVt8=;
- b=EgPz4OcyTarscBFkXYPVCOdsTo0wRRI35SSc3oPYyPCN25NAGwxOcSss
- bViphDzPwQR5siJHfvZ/8SK4RP/cPSNa7E2pNLP/susW0beGeGexLD9ku
- axsdCN/3s4JKX5hQ8+Am0t2lx6m8u1VlATmAu+3RB6/tthcYk1x5XpGvR
- nrO5gDvH8n2/lS7XRFl+FIEC0ltXWicK0HWZDwwSWgAepk81uaD/oJGOe
- FORnKuljmo6/regEln2RnrC+bKqbG3pQGQX7UX0+17zzZd4T0TQovsP6c
- NofYYlSDZLj+EXx2Cu6slzK6K9naiE5FOinNcdbL6fIpIu9wtYiMcnRFu w==;
-X-CSE-ConnectionGUID: pk28RzSIS0+cKfpXXZsFaw==
-X-CSE-MsgGUID: SgWFZrDlQkq3unWsG0tL/w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="27612025"
-X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="27612025"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Oct 2024 19:39:07 -0700
-X-CSE-ConnectionGUID: ydLZjjDwTnyX5wr3ApkTrw==
-X-CSE-MsgGUID: AfcGwOnVSNGBRoDsN9uwew==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="75682478"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 07 Oct 2024 19:39:05 -0700
-Date: Tue, 8 Oct 2024 10:55:16 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Chuang Xu <xuchuangxclwt@bytedance.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
- xieyongji@bytedance.com, chaiwen.cc@bytedance.com,
- qemu-stable@nongnu.org, Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-Subject: Re: [PATCH v4] i386/cpu: fixup number of addressable IDs for logical
- processors in the physical package
-Message-ID: <ZwSfFNUYQNs/X74u@intel.com>
-References: <20241007081344.10907-1-xuchuangxclwt@bytedance.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sy0DT-0005F2-Ii; Mon, 07 Oct 2024 22:44:51 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sy0DR-0008IA-Uc; Mon, 07 Oct 2024 22:44:51 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-84e857bc0feso2826371241.0; 
+ Mon, 07 Oct 2024 19:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1728355488; x=1728960288; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vmtwzfYVvKE9wfoCiqlAQ9b9b0NA7/bDfk1kM+8FZsw=;
+ b=H+UntRtGYcNBle+WcBmdk0ASKYlXErtaan0kFS90CC7nqSN3e5bJDwgy6HZJPl4ovm
+ r2ckveOytDAWhda7s+U7isZcFD6I7Unn3nT0eXOV8788bWC23mjy/LG66diY/l9Uor94
+ /ewNB8VdmFOc+HfuGjNX9dXyC7hnaT1apgQMOKMDGVaVU/VwCAzAEtFivkxStfewie4b
+ XwMa/ZBuCRO3lV7WV4iM1vZ82bq1D6IEJ6M24puiIaMtfPmLIoJgWzIjxVSz3lKAfYGJ
+ qOzWJ3DZlZrsie5gMpx5Q+ks5MhYE4iUR/mU0amFMEPNutrkW2o0D86Aq/zgrQnjCzQi
+ SRQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728355488; x=1728960288;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vmtwzfYVvKE9wfoCiqlAQ9b9b0NA7/bDfk1kM+8FZsw=;
+ b=mZ5xtju9FsI9S8D1oMlKA3tEjPvK/CtyF+Ix1fobHCCf9r94bRFTTQzu7cC1P0rGh/
+ YHoHJRzkBQLiWksExInraYUvDUEFWSzKJjHPxEvErtt9dmgcKhYfXGp/cIg6ebD7I7wx
+ 3rM3ttfCqOgxT56lpXcvQwbCUurRzxa7rhpcIPSAogmWMqIYPfeWUKFXPLxZiRa/t62O
+ hrZ/Rc4U0uEvQVuMt+aDi9QD7Jp1zE9UT9hgB2OToTsbOeg+knVYNVP70FKNCvBezVGh
+ 2SBmRJBT0jdtnnBC8JCOLK5wKghbTW5uRVGUBnK6j8BFWQwE4be1w8AyS+bA/9KbjqCN
+ f6xQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGEFDwmbrcxWC5/pGo3voy7USVGeFIaeHA6nVVIt1i/jq3eTtykW6qDL/KR2MjixYms6JT4Sh4LbIY@nongnu.org
+X-Gm-Message-State: AOJu0YweWFFMfoK0ffNGYsa7JnOAPyP4vDYeSNyBb6Xr9inuRgn/J+sQ
+ Qa5BdI+Ki4GiznQD/uZ7j6VMiUo9AURnXpTDl3+ik2xc38hnNL4iaqqsqfGspNQ/sshwSdy/s6d
+ 4STdu5lJpUWyGxg38GGUik7mlG64=
+X-Google-Smtp-Source: AGHT+IEZfN7mHBOMGL+ac6ZCWvnUpoqoGIUWCsDhjycR89+2/9WrjF8ApGTY76I4iWA94UuznbDSnS/oym9vzOtOpew=
+X-Received: by 2002:a05:6102:f0b:b0:4a3:d4bd:258b with SMTP id
+ ada2fe7eead31-4a43890a036mr1552660137.8.1728355488211; Mon, 07 Oct 2024
+ 19:44:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241007081344.10907-1-xuchuangxclwt@bytedance.com>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20241004104649.13129-1-yongxuan.wang@sifive.com>
+In-Reply-To: <20241004104649.13129-1-yongxuan.wang@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 8 Oct 2024 12:44:22 +1000
+Message-ID: <CAKmqyKOGNohPoZHdxNAW15bcR7SsCpupjf0i3A3XLoxDjqibTQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Check and update pending when
+ write sourcecfg
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,100 +97,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chuang.
-
-Look fine for me, and only some minor nits:
-
-On Mon, Oct 07, 2024 at 04:13:44PM +0800, Chuang Xu wrote:
-> Date: Mon,  7 Oct 2024 16:13:44 +0800
-> From: Chuang Xu <xuchuangxclwt@bytedance.com>
-> Subject: [PATCH v4] i386/cpu: fixup number of addressable IDs for logical
->  processors in the physical package
-> X-Mailer: git-send-email 2.24.3 (Apple Git-128)
-> 
-> When QEMU is started with:
-> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
-> -smp 180,sockets=2,dies=1,cores=45,threads=2
-> 
-> Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
-> CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
-> execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
-> CPUID.04H.EAX[31:26] as expected.
-
-I polished the sentences a bit:
-
-When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
-CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
-executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
-CPUID.04H.EAX[31:26], which matches the expected result.
-
-> As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
-
-s/round/rounds/
-
-> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
-> integer too. Otherwise we may encounter unexpected results in guest.
-> 
-> For example, when QEMU is started with CLI above and xtopology is disabled,
-
-What's xtopology?
-
-> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
-> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
-> as the result, even though theads-per-core should actually be 2.
-
-s/theads-per-core/threads-per-core/
- 
-> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
-> to solve the unexpected result.
-> 
-> In addition, we introduce max_thread_number_in_package() instead of
-> using pow2ceil() to be compatible with smp and hybrid.
+On Fri, Oct 4, 2024 at 8:47=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifive=
+.com> wrote:
 >
-> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> The section 4.5.2 of the RISC-V AIA specification says that any write
+> to a sourcecfg register of an APLIC might (or might not) cause the
+> corresponding interrupt-pending bit to be set to one if the rectified
+> input value is high (=3D 1) under the new source mode.
+>
+> If an interrupt is asserted before the driver configs its interrupt
+> type to APLIC, it's pending bit will not be set except a relevant
+> write to a setip or setipnum register. When we write the interrupt
+> type to sourcecfg register, if the APLIC device doesn't check
+> rectified input value and update the pending bit, this interrupt
+> might never becomes pending.
+>
+> For APLIC.m, we can manully set pending by setip or setipnum
+> registers in driver. But for APLIC.w, the pending status totally
+> depends on the rectified input value, we can't control the pending
+> status via mmio registers. In this case, hw should check and update
+> pending status for us when writing sourcecfg registers.
+>
+> Update QEMU emulation to handle "pre-existing" interrupts.
+>
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
+>
 > ---
->  target/i386/cpu.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 85ef7452c0..1b4e3b6931 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -261,6 +261,12 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
->      return num_ids - 1;
+> v2:
+> - fix checkpatch warning
+> ---
+>  hw/intc/riscv_aplic.c | 51 ++++++++++++++++++++++++++++---------------
+>  1 file changed, 33 insertions(+), 18 deletions(-)
+>
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index 32edd6d07bb3..4a262c82f078 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -159,31 +159,42 @@ static bool is_kvm_aia(bool msimode)
+>      return kvm_irqchip_in_kernel() && msimode;
 >  }
->  
-> +static uint32_t max_thread_number_in_package(X86CPUTopoInfo *topo_info)
+>
+> +static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
+> +                                          uint32_t irq)
 > +{
-> +    uint32_t num_threads = 1 << apicid_pkg_offset(topo_info);
-> +    return num_threads;
+> +    uint32_t sourcecfg, sm, raw_input, irq_inverted;
+> +
+> +    if (!irq || aplic->num_irqs <=3D irq) {
+> +        return false;
+> +    }
+> +
+> +    sourcecfg =3D aplic->sourcecfg[irq];
+> +    if (sourcecfg & APLIC_SOURCECFG_D) {
+> +        return false;
+> +    }
+> +
+> +    sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
+> +    if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
+> +        return false;
+> +    }
+> +
+> +    raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+> +    irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
+> +                    sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+> +
+> +    return !!(raw_input ^ irq_inverted);
 > +}
 > +
->  static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
+>  static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
+>                                              uint32_t word)
 >  {
->      uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
-> @@ -6462,7 +6468,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+> -    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret =3D 0;
+> +    uint32_t i, irq, rectified_val, ret =3D 0;
+>
+>      for (i =3D 0; i < 32; i++) {
+>          irq =3D word * 32 + i;
+> -        if (!irq || aplic->num_irqs <=3D irq) {
+> -            continue;
+> -        }
+>
+> -        sourcecfg =3D aplic->sourcecfg[irq];
+> -        if (sourcecfg & APLIC_SOURCECFG_D) {
+> -            continue;
+> -        }
+> -
+> -        sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
+> -        if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
+> -            continue;
+> -        }
+> -
+> -        raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+> -        irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
+> -                        sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+> -        ret |=3D (raw_input ^ irq_inverted) << i;
+> +        rectified_val =3D riscv_aplic_irq_rectified_val(aplic, irq);
+> +        ret |=3D rectified_val << i;
+>      }
+>
+>      return ret;
+> @@ -702,6 +713,10 @@ static void riscv_aplic_write(void *opaque, hwaddr a=
+ddr, uint64_t value,
+>              (aplic->sourcecfg[irq] =3D=3D 0)) {
+>              riscv_aplic_set_pending_raw(aplic, irq, false);
+>              riscv_aplic_set_enabled_raw(aplic, irq, false);
+> +        } else {
+> +            if (riscv_aplic_irq_rectified_val(aplic, irq)) {
+> +                riscv_aplic_set_pending_raw(aplic, irq, true);
+> +            }
 >          }
->          *edx = env->features[FEAT_1_EDX];
->          if (threads_per_pkg > 1) {
-> -            *ebx |= threads_per_pkg << 16;
-> +            *ebx |= max_thread_number_in_package(&topo_info) << 16;
-
-This helper has only 1 caller and its name doesn't distinguish the
-addressable ID, so it's not necessary. I feel it's better to shift
-the bits directly here:
-
-*ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
-
->              *edx |= CPUID_HT;
->          }
->          if (!cpu->enable_pmu) {
-> -- 
-> 2.20.1
-> 
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+>      } else if (aplic->mmode && aplic->msimode &&
+>                 (addr =3D=3D APLIC_MMSICFGADDR)) {
+> --
+> 2.17.1
+>
+>
 
