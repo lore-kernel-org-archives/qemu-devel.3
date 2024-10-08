@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F047ECEFC3F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D708CEFC41
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:53:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syFJR-0007Qh-03; Tue, 08 Oct 2024 14:52:01 -0400
+	id 1syFJU-0007TW-Uv; Tue, 08 Oct 2024 14:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJM-0007QM-5G
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:51:56 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1syFJP-0007Qo-Q5
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:52:00 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJJ-0002Ry-Tq
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:51:55 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7ea03ecf191so2312313a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:51:44 -0700 (PDT)
+ id 1syFJK-0002SQ-B1
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:51:56 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20b1335e4e4so59268885ad.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728413503; x=1729018303; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0r34YH/mokkCrpkMkmNPCTEaSZRmckSr1gIGHxh8kqw=;
- b=ZLRGR9sJeb5/oa5ouR/btkQMQLFQzPe8D7evMBr0i629Zdv4zBs0RlAsCX21g3w4P3
- 1kzxoUypgCOSN9nYzeIs4HppQR899FfxIg2+qKDFCg7zcG6OI4yaSOLmEdUAm1EkM6US
- F9+UEsUC2X7jeahotHC7XRqZ+gD/+DxQWTGzcWNifCSIVE72shy7sSch5KFeG9uXOx3a
- 5Qdv2DbOxpAAhC6HB0godxRww8vIwtZUr3poq18KtRGDu2JEqk04wMRm8Ng8eRI8RpEp
- iKwE/xENLsf+jnSqq/MMXvScq1rdUiojWGiVybqkW2VzaV4ho6vJoW8XeMsaV3UDb5rv
- wc5A==
+ d=linaro.org; s=google; t=1728413508; x=1729018308; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o3MlKySkLCqcubwj2AlCHtEZtre6EurFM45v8Ib7p+Y=;
+ b=ckAE1xcHhhyryqfgq6V8xT8/ESnVNIJOmcbSF05SvmOZaMq9YBMvqMNr8BsrjE/n1h
+ FyjiLbRL8xhm64z6paSkVJFLR+qihdh7hWV6hMVbhfpvcLURLZvIQKZFatyNSUn2+l4H
+ F015CgmNetOteGcZEckNBl81+5HSTrLThOWsvkHZ5d7yd4UBQYxX1wiPlpP4up9HIxMB
+ Pi8qbEIb0fcoa7EeNXc9TfcmwV3xzpeETHOSaZ9uoBeLsEJuCXRguadE/QwP/cNjqp2N
+ 5fj93gKamV0TDpqtv8fseJ3Dd8GFVDz3ccj69EKxJf+BAMXdddp5uDODbz0MdigmuOqq
+ eDHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728413503; x=1729018303;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0r34YH/mokkCrpkMkmNPCTEaSZRmckSr1gIGHxh8kqw=;
- b=XbnxaESvkeVWjHNI/Mrnz+fp/xvr+sY2gdVhYT3zBMw2Dz4xh9KsJZ79/Bz/2HJf8+
- rRjNhf0KJwYPWAKZ50UsBL3USGcUSxi34QYKoWmJ6LNS6VmxHqmjNdTMqB0O+H2DLqVb
- jZ7GNmrE1V94Oo1FpYSOOLpX5kYZPKlUhxGcw/7jxFi7T1ITKGr1GtcwjA82PKdQGEwY
- b5mxyruMmu7Psj6llMPUJPRgUu2BrcfmKMirmPNLTcusugiJHSZOjciaPczoXi7jzCdP
- dv1ToJm1BTelo1xO4qpDqhBlLlkdW3bdoejWBVt8v/0DrHtWeE2pSlvV5JONAVrSv0Pc
- tLqQ==
-X-Gm-Message-State: AOJu0Yx2UNz/VRY/cTpfQ370idQCc8jLuU3KXcRhd8DuXJ6jwjXqToZn
- 6xSajbWpC+46dXltWvFlgEviBr1RuaUk6V03GU41vRdQ82Rz+k3SG1+JQAGeGuuMdjVQZjLDjdO
- k
-X-Google-Smtp-Source: AGHT+IH4fHjPUgB4P0SyWWKrXbJKyp14R6CRnM7B8PypNIA3tArjgliR5CNLOmsg+ei52nI2n56LNw==
-X-Received: by 2002:a05:6a21:3983:b0:1d6:236d:ea29 with SMTP id
- adf61e73a8af0-1d6df727d0fmr26394474637.0.1728413503328; 
- Tue, 08 Oct 2024 11:51:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728413508; x=1729018308;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=o3MlKySkLCqcubwj2AlCHtEZtre6EurFM45v8Ib7p+Y=;
+ b=MYKl+jAU10dVF1M6z1P/Bc6E7Ebj3tiHzn3vI8OKd4hJxJD9DX1SrmOo9u8wJpKTaI
+ o4qihh4FJPT2+BeDUMtF4KAtcz69kJ7bw8d0Nw7jZLCcZ4jl9I5x1/oS5Qdfpfoxvujh
+ NseHrE1eRl9IFdGAV1UPQUsUhE3n1kQ+59y4s0nVM+lwrI3f19i9TDDFk5Zr6KHYpSmS
+ 73rjzrXbQCF4x5bVmXQffpeyATVlrgBWSz0Q7OyYuaSJwuCici/N4JJyVQOA69Y5wszT
+ g7g609yHl1je2WHzfNiMVV4+XroSXjB0wXln5P6dpjmrTqYIB0MKoLw87eUCDkfhAo2f
+ vObw==
+X-Gm-Message-State: AOJu0YxBEslOme7sjhVdIoNuuoo8tibHx2VoTx2Oy4cKbiXgLqgGESvC
+ QgDBWnwgBYdmI7prVzSSfmiZvJkyAqm6vJWS/otoKe3iibsMM5yEpJDYfM+QS/k+CmKS/xrW7t0
+ I
+X-Google-Smtp-Source: AGHT+IEa+7ueo9qRjODzmJ3PWrseph8EsiTnAGeBakZxvc9x/8glG9Tcl6JScM5XspT42+CN/kfTHw==
+X-Received: by 2002:a17:902:fc4e:b0:202:4666:f018 with SMTP id
+ d9443c01a7336-20bfdfd2693mr274481165ad.15.1728413508303; 
+ Tue, 08 Oct 2024 11:51:48 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7e9f6821c32sm7186818a12.33.2024.10.08.11.51.42
+ 41be03b00d2f7-7e9f6821c32sm7186818a12.33.2024.10.08.11.51.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 11:51:42 -0700 (PDT)
+ Tue, 08 Oct 2024 11:51:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 00/14] tcg + linux-user patch queue
-Date: Tue,  8 Oct 2024 11:51:27 -0700
-Message-ID: <20241008185141.20057-1-richard.henderson@linaro.org>
+Cc: peter.maydell@linaro.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 05/14] linux-user: Trace wait4()'s and waitpid()'s wstatus
+Date: Tue,  8 Oct 2024 11:51:32 -0700
+Message-ID: <20241008185141.20057-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241008185141.20057-1-richard.henderson@linaro.org>
+References: <20241008185141.20057-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,62 +95,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 2af37e791906cfda42cb9604a16d218e56994bb1:
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-  Merge tag 'pull-request-2024-10-07' of https://gitlab.com/thuth/qemu into staging (2024-10-07 12:55:02 +0100)
+Borrow the code for formatting the most frequent WIFEXITED() and
+WIFSIGNALED() special cases from from the strace's printstatus().
 
-are available in the Git repository at:
+Output examples:
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241008
+    474729 wait4(-1,0x7f00767ff0a0,0,(nil)) = 474733 (wstatus={WIFEXITED(s) && WEXITSTATUS(s) == 1})
+    475833 wait4(-1,0x7f7de61ff0a0,0,(nil)) = 475837 (wstatus={WIFSIGNALED(s) && WTERMSIG(s) == SIGKILL})
+    1168 waitpid(1171,0x7f44eea00340,0) = 1171 (wstatus={WIFSIGNALED(s) && WTERMSIG(s) == SIGKILL})
 
-for you to fetch changes up to 25f4e71722417db1f7d5140847849197053b23dd:
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20241001193244.14939-1-iii@linux.ibm.com>
+[rth: Drop extra output for NULL wstatus or error reading.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/strace.c    | 57 ++++++++++++++++++++++++++++++++++++++++++
+ linux-user/strace.list |  6 +++--
+ 2 files changed, 61 insertions(+), 2 deletions(-)
 
-  accel/tcg: Make page_set_flags() documentation public (2024-10-08 06:40:31 -0700)
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index d3cdd09dc1..cf9eaf71c9 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -4215,6 +4215,63 @@ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
+ 
++#if defined(TARGET_NR_wait4) || defined(TARGET_NR_waitpid)
++static void print_wstatus(int wstatus)
++{
++    if (WIFSIGNALED(wstatus)) {
++        qemu_log("{WIFSIGNALED(s) && WTERMSIG(s) == ");
++        print_signal(WTERMSIG(wstatus), 1);
++        if (WCOREDUMP(wstatus)) {
++            qemu_log(" && WCOREDUMP(s)");
++        }
++        qemu_log("}");
++    } else if (WIFEXITED(wstatus)) {
++        qemu_log("{WIFEXITED(s) && WEXITSTATUS(s) == %d}",
++                 WEXITSTATUS(wstatus));
++    } else {
++        print_number(wstatus, 1);
++    }
++}
++
++static void print_ret_wstatus(abi_long ret, abi_long wstatus_addr)
++{
++    int wstatus;
++
++    if (!print_syscall_err(ret)
++        && wstatus_addr
++        && get_user_s32(wstatus, wstatus_addr)) {
++        qemu_log(TARGET_ABI_FMT_ld " (wstatus=", ret);
++        print_wstatus(wstatus);
++        qemu_log(")");
++    }
++    qemu_log("\n");
++}
++#endif
++
++#ifdef TARGET_NR_wait4
++static void
++print_syscall_ret_wait4(CPUArchState *cpu_env,
++                        const struct syscallname *name,
++                        abi_long ret, abi_long arg0, abi_long arg1,
++                        abi_long arg2, abi_long arg3, abi_long arg4,
++                        abi_long arg5)
++{
++    print_ret_wstatus(ret, arg1);
++}
++#endif
++
++#ifdef TARGET_NR_waitpid
++static void
++print_syscall_ret_waitpid(CPUArchState *cpu_env,
++                          const struct syscallname *name,
++                          abi_long ret, abi_long arg0, abi_long arg1,
++                          abi_long arg2, abi_long arg3, abi_long arg4,
++                          abi_long arg5)
++{
++    print_ret_wstatus(ret, arg1);
++}
++#endif
++
+ /*
+  * An array of all of the syscalls we know about
+  */
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index ef658224fc..f8899710b5 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1662,13 +1662,15 @@
+ { TARGET_NR_vserver, "vserver" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_wait4
+-{ TARGET_NR_wait4, "wait4" , "%s(%d,%p,%d,%p)", NULL, NULL },
++{ TARGET_NR_wait4, "wait4" , "%s(%d,%p,%d,%p)", NULL,
++                   print_syscall_ret_wait4 },
+ #endif
+ #ifdef TARGET_NR_waitid
+ { TARGET_NR_waitid, "waitid" , "%s(%#x,%d,%p,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_waitpid
+-{ TARGET_NR_waitpid, "waitpid" , "%s(%d,%p,%#x)", NULL, NULL },
++{ TARGET_NR_waitpid, "waitpid", "%s(%d,%p,%#x)", NULL,
++                     print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+ { TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
+-- 
+2.43.0
 
-----------------------------------------------------------------
-linux-user: Fix parse_elf_properties GNU0_MAGIC check
-linux-user: Various improvements to strace
-linux-user: Add openat2 support
-linux-user/flatload: Take mmap_lock in load_flt_binary()
-accel/tcg: Make page_set_flags() documentation public
-tcg/ppc: Use TCG_REG_TMP2 for scratch tcg_out_qemu_st
-tcg/ppc: Use TCG_REG_TMP2 for scratch index in prepare_host_addr
-target/m68k: Always return a temporary from gen_lea_mode
-
-----------------------------------------------------------------
-Ilya Leoshkevich (1):
-      linux-user: Trace wait4()'s and waitpid()'s wstatus
-
-Michael Vogt (2):
-      linux-user: add openat2 support in linux-user
-      linux-user: add strace support for openat2
-
-Philippe Mathieu-Daudé (7):
-      linux-user/flatload: Take mmap_lock in load_flt_binary()
-      linux-user: Correct print_sockaddr() format
-      linux-user: Display sockaddr buffer as pointer
-      linux-user: Factor print_buf_len() out
-      linux-user: Add strace for sendto()
-      linux-user: Add strace for recvfrom()
-      accel/tcg: Make page_set_flags() documentation public
-
-Richard Henderson (4):
-      linux-user: Fix parse_elf_properties GNU0_MAGIC check
-      tcg/ppc: Use TCG_REG_TMP2 for scratch tcg_out_qemu_st
-      tcg/ppc: Use TCG_REG_TMP2 for scratch index in prepare_host_addr
-      target/m68k: Always return a temporary from gen_lea_mode
-
- include/exec/cpu-all.h    |  13 ++++
- linux-user/qemu.h         |   9 +++
- linux-user/syscall_defs.h |  18 +++++
- accel/tcg/user-exec.c     |   5 --
- linux-user/elfload.c      |  12 ++--
- linux-user/flatload.c     |   3 +
- linux-user/strace.c       | 163 ++++++++++++++++++++++++++++++++++++++++++----
- linux-user/syscall.c      |  99 +++++++++++++++++++++++++++-
- target/m68k/translate.c   |  13 ++--
- linux-user/strace.list    |  13 ++--
- meson.build               |   1 +
- tcg/ppc/tcg-target.c.inc  |   8 +--
- 12 files changed, 321 insertions(+), 36 deletions(-)
 
