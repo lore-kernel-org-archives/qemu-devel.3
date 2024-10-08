@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C3CCEF17A
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54186CEF17C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syAxQ-0006aj-Eb; Tue, 08 Oct 2024 10:13:00 -0400
+	id 1syAxg-0006ci-7M; Tue, 08 Oct 2024 10:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syAxN-0006aF-UJ
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:12:57 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1syAxe-0006c7-Uy
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:13:14 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syAxK-00076i-MS
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:12:57 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c918c067a1so281778a12.3
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:12:54 -0700 (PDT)
+ id 1syAxa-00078v-37
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:13:14 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2facf48166bso64754021fa.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728396773; x=1729001573; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728396788; x=1729001588; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1lXif4RUJBAa4Us8GfRhA66sgDxsm7TrrGS+Pr6tRns=;
- b=tvrC5KfvqHxxv4Is1WA1vR/jtwYRuCaeYh6zB/t49jCIOvPmTmJcnhiJI1zzLwpbB6
- MHak6dIw7FfKlwAeI77ieDM0aCyvZ8HgXUZYoNHm6rdzCrEIyIShPa8ja8wFVxxPPkrW
- q1pzaGDE/rDGixVSHr/v83HOjKZD682YzPiuJ4q5Wq54ARNqSUt3JiR+SE3q4NxKtSH2
- AybHFIpG5HNN1QE9iJn5rRHw9DD48Px5bYSjOb91/PZ1HdKfe1yG5vZbbV65+EEjOmaI
- akLs9NeK8fexf1wCtRFzmTqV7WraWfywZSC1KA5xbKEc4fu7AW+qGV1Q1a23evQa+7nc
- /+VQ==
+ bh=IilAgLFf9D3WPiImik68r3HP0LrP4VXSn1RvllVJUL0=;
+ b=U3XSiefpwWVPQgIo8D3tdg+TBkXCzzd6VnrXhvTMVTebd5gdaMbdbfMQwrQZKohzfL
+ ugEJ3WGuU7vi7KYR1PkOF+1qJCvrvkj1AZcGjvyyk4EO/paj23rf6DXQcA7fi0D+58Us
+ tz+B6hZfG4R7QWwaBvNVSxg4SokZgHQIci4h0cES2osgEE5KLQdMEZeN4sRFpz65L9iv
+ ay09Wrv9XRWWAXJ6GbWoamJL3TtuClaYHDoAPeMUI4SfmxJ01ivTZQl2EUxNx9fTux/o
+ ej4kXZ9ISP5tO/9/uRFa89LeYc9s9uzxwb2C722/ANfjugMJHBfrk2CTPwcpHlzFnqCl
+ V+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728396773; x=1729001573;
+ d=1e100.net; s=20230601; t=1728396788; x=1729001588;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1lXif4RUJBAa4Us8GfRhA66sgDxsm7TrrGS+Pr6tRns=;
- b=cz7TK6ntivdtaZqHSe8cLwwvw3NYHMaA9iBALYZFRJGMbkGOwGwXFDuD8QKNUFwR9t
- ECUjULIeh23+SanUNsWaaH+hagk9r9h7klGPz3Q8l299qbGV6pVFU/t9+uAjYH/7He8i
- tx9EutrIw+Szll4FdhSpvycHSRAKr1JvDYdGtTO97GaSGOeylIAci69gUsYlkZ+lcLM5
- h37GAucv0WNJsIO9FnnRYTFPAhSDllUCMZ+n1nnMzhj6W/wyiZQNPtf85UbXVyoVKuS7
- 4qriq6Zp6juMYm+6062YlhDKFUWqlHxjk+oOcvVasGVv/FXS1Flc0Yipbajy7f7L5sQR
- xazw==
-X-Gm-Message-State: AOJu0YzmQUK+iYgYPmzWL4q4gFZVPh1RkBGIok3+UcuM9pxpvKcHzTRD
- g3ngbtj3vb8NMsmyHcZTHOO54F8yDygKWtH82ZrpU2FYO9/VBIJu61JQGpddRok7DY1tvwvZ4fR
- Z0YWou4y1d36TxvfOF65xkkJsITHWs7ModkgQEw==
-X-Google-Smtp-Source: AGHT+IEcDc2sIhY+0z9mugT3adwi3ou7mwIvwU3589KDMI2IU3RWaTS2embnO91yYcHNIouo0MisPyWHIBEyQYrQlQs=
-X-Received: by 2002:a05:6402:4028:b0:5c2:6343:8ddf with SMTP id
- 4fb4d7f45d1cf-5c8d2ea0879mr11698041a12.33.1728396772504; Tue, 08 Oct 2024
- 07:12:52 -0700 (PDT)
+ bh=IilAgLFf9D3WPiImik68r3HP0LrP4VXSn1RvllVJUL0=;
+ b=OynvQmbvXtYM0rz243XHP+gEKEnxbvrmQWolUpokAnup63xnLQxSUvTtPw1iaDExuK
+ cAdGrGD7sLnmLaCoiXGCuvxnVtx/CgKUrRU8R6hBSzbe01E4NFqK1NT+GYxniErhF4Vn
+ rGIgny9ClDVI/fVrHTozZtH39OI+NyYr3dhI1x3gDwf1MshDz0AfKeQF2fs8nJXqDEp/
+ UVp8YAIQNd9FyoNXGSzjbJgv6offUB1AzjVAuNLQmI2aDwlon6kScXwovQqS5pvJnups
+ OgQI+7AheWZqJnuNMtoKQjFowvRC2/ME6RCWzhqfRgykpJz84cMcl5IjX/5TA2SkViYd
+ ysrA==
+X-Gm-Message-State: AOJu0YxOiiR3XLxlOTcAaWm9VZlEap4UZwMkz1e71NfHgemLsem9PuBV
+ gYJ+XITCUfnjhD1U7Ts6zOKNciAP6Y8+OOyVyxk2wpgfC9FJSxhSRtkSN3uMqpoB+bDeFksJykm
+ SpKh5MAF4gCiylFHC+oq8ZIdw5GKMeIEBh0keRwm+3vF/zD58
+X-Google-Smtp-Source: AGHT+IHX8WDeU6G0DWTwtDykB80Fzl5sFUDON9fa7jmgPNRDLEDPb4CCr71S9cNPuXQATiVBxQVvICmfLTtgmJ0ORaM=
+X-Received: by 2002:a05:651c:a0b:b0:2fa:c6b3:bf1c with SMTP id
+ 38308e7fff4ca-2faf3c01f43mr79822331fa.8.1728396788120; Tue, 08 Oct 2024
+ 07:13:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-7-richard.henderson@linaro.org>
-In-Reply-To: <20241005200600.493604-7-richard.henderson@linaro.org>
+ <20241005200600.493604-8-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-8-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 15:12:41 +0100
-Message-ID: <CAFEAcA944zo89gOGhn8Axdi4P+vWqATo7qGGEEMDcwPyAD==7A@mail.gmail.com>
-Subject: Re: [PATCH v2 06/21] hw/core/tcg-cpu-ops: Introduce tlb_fill_align
- hook
+Date: Tue, 8 Oct 2024 15:12:56 +0100
+Message-ID: <CAFEAcA_HQvZf0GT64vy3_KgXrGK2hq+Tu21y8w-WLbHsWGiBGw@mail.gmail.com>
+Subject: Re: [PATCH v2 07/21] accel/tcg: Use the tlb_fill_align hook
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,13 +92,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sat, 5 Oct 2024 at 21:06, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Add the hook to struct TCGCPUOps.  Add a default implementation
-> that recognizes alignment faults before page faults.  Populate
-> all TCGCPUOps structures with the default implementation.
+> When we have a tlb miss, defer the alignment check to
+> the new tlb_fill_align hook.  Move the existing alignment
+> check so that we only perform it with a tlb hit.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
