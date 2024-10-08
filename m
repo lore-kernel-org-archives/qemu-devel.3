@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57EE2CED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55945CED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyuE-0005Ac-HH; Mon, 07 Oct 2024 21:20:54 -0400
+	id 1sxytB-0001Gu-JQ; Mon, 07 Oct 2024 21:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3oIgEZwUKCgMwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com>)
- id 1sxysy-0008Co-3e
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:36 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com>)
+ id 1sxysY-0007mH-8C
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:15 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3oIgEZwUKCgMwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com>)
- id 1sxysv-0000Da-8r
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:35 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6e2270a147aso75604587b3.0
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:29 -0700 (PDT)
+ <3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com>)
+ id 1sxysV-00008Z-4u
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:08 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-71e11abb22aso517563b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350369; x=1728955169; darn=nongnu.org;
+ d=google.com; s=20230601; t=1728350345; x=1728955145; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=nCq9fs8MJ+mFnJecQKMchHHydT4SahSTnFv0Noo9rMg=;
- b=p8iTvODxXhY3EuP2vWuOgIN8T9ZfHG8xPTdYuYj8qiiKd+ua3Lrp4CMOkaZsVYZvCY
- G/M74SrW5rBZND41lCygiPQVEVEiPv/ERz4QISklBjuDOL7J5Yk5gt5uMR/kj2HXffv4
- SLLetMgjy6iXCClodZ9fcdLrRWDuxKsa/NsxKLXPutUOBbFUfXZbyMHswxsf0nGhGIAw
- wtKk+UrlSQjRVa5+n0o+ajawpxBSNdvh8AWk0h3Cv1AYNGxTx+uoLUL2EmcRn01VS4fo
- YgAT03tdHW0QhLtfWd8GpGrTqBJBwhWCbDl+PQE8XNt/5JqGDMrKSdwp9WgKQ+QFxHqv
- wumQ==
+ bh=mYb8OnCeZQrVX3cX0gw+0rgqxbLbcVi8KOrSlVTkt1w=;
+ b=R+dbq+lYPKBxoShJVGaECVHtrXWjZzyeL7InCQCZ+Qj0EgFmQTkodR+QRqOUAowVa8
+ ZbH9shwsQ4mThB9EgjYZrslSSBTb+ZlCdlJdCuSB9I3DizhOELaSwNaTGkSZ1L40cDGi
+ S63PVlsC3lgMjRypOkldSc8DqSvKFpMDdkmIbXHAl9yoTPbj9almi8UE/cxV5LxdBiO0
+ /Wy/HsA3EhJV8YFaNXLwrYqnjE5CMuAjeIOIkTnY//xeRfuTV5YrEl2pQGl13LmZjlxc
+ u8nel40foteYKxO7WdJN7JDd3MFtUfPux72NbhYSZaIIW3dZU1KMB7wdb9C6FRpkGLgi
+ H58A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350369; x=1728955169;
+ d=1e100.net; s=20230601; t=1728350345; x=1728955145;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nCq9fs8MJ+mFnJecQKMchHHydT4SahSTnFv0Noo9rMg=;
- b=Qy/g/0ztU4ZYCJcvSSCHHbsiiH3TDmO4xHgeztpF39esCkMXH/KNyga29D0Ug24bR8
- XPQh9i4svMGJpX6QADvHiMHGOslu3Uut4AinrFI1M+d/CFxD4BcC6DMiU0A1H3cIGqZq
- pU1VJtG7VIaWXkP4ZeSzKkCdl0A649V5zFbORxOh0K13v5QaTMNNe8FEfryXd6J0p6z9
- 6jwVwIIzWF06N74VEBrrvBYRHAkCIxAZ1ki7Aimmg0UReUSqUR+GCQI66TKshW6Y+rfW
- SOLouC6n4yrggLrmd1QqMHTuTKSy1HqxVvbRYLh7yNYj5HRW1pusg2wHLn9yxh+5njnt
- kfIA==
-X-Gm-Message-State: AOJu0YzutnqIMEcyJJW3d6PHx/49Iajvcbo6+FCA9b86LrIwgP6O2V3T
- SKJ81G9pkHXXuuCzg11vaBUGaQ2Cr0LP4iAdQgOY0/kbSScz7ZXw+rT1kl8pRulYJ/3gQ4hapyz
- vkr4X0fo+YvZHAmX1SyyU5qNvHV01Q53mjW5jtfarXFcqZ/4eL+di8mxxMYUC32noTwHQdS/eoQ
- 6vV6otTwmC3G+H7LOXuET5fs2TYw==
-X-Google-Smtp-Source: AGHT+IFUmkLVVZH+vWL0zyz0TcYFmOI86jHuXPIUgCaHGoy2/OH/FDqpkkmIBwci5b1oJCfJzaV6kvhkUQ==
+ bh=mYb8OnCeZQrVX3cX0gw+0rgqxbLbcVi8KOrSlVTkt1w=;
+ b=GHjD8GiqGS9oF0jg7sb99hk0yRlt/ojKP1rSgPo4Sfbfc3vP9HO/feXKer+iZH6eg3
+ W2VVQwvvumvd9xRSRnJsF7plMGiA0WGB32OzTZTl8ykGdS8PH9zoU53AMbw1R8ZvLjve
+ NhUrkcmPA6sSie+d7nNaput2BA59j3ymEW8eWJpN/xWxT8kXfmF2c1JCjNJPcOkvtJs6
+ vpUOhiB5a8HMnUv9e20u6n0u60OsaodSw9eQnVsMAwk1k12GFTxmzeIQTYZDuu8iGT4g
+ jlNstYOa/XriuF6tpLd+FYxiwtxzK4PYg0bR0SkHFReo76xUYNr6OPVkSReSqgE640jv
+ h04A==
+X-Gm-Message-State: AOJu0YyfgC2Q743aF0Enq6syaEsHkQq+jPVTw7gcwY++y/xIgxuFV2wS
+ rnaszC5IO1eVYp+imUXnlmoXfhddb6+omN3KIiqeK2Wr/yDw7BlFUA1/6bmdPq043MmKDVcg2x+
+ X4jeRNaWo+L53rTnqSCuFwa/hk//C/JzfKEGph+T7NLr/ofGb43dYOKzJHnLZpVNPf277mRYlzH
+ bP/jg3JfG6OGER2MMFBMhZwB15ow==
+X-Google-Smtp-Source: AGHT+IGFgJf3vbj7kBTLVjfPMhdKIVaWnTkGtp63eWEPIqhdYAUDElv58c3jqoWBOfsVGgkeJlZGsISX+w==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6902:4a8:b0:e28:e4a7:3206
- with SMTP id
- 3f1490d57ef6-e28e4a732e6mr15578276.8.1728350368601; Mon, 07 Oct 2024 18:19:28
- -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:45 -0700
+ (user=tavip job=sendgmr) by 2002:a62:ae17:0:b0:71d:ef29:82b2 with
+ SMTP id
+ d2e1a72fcca58-71def2984ddmr23497b3a.0.1728350344733; Mon, 07 Oct 2024
+ 18:19:04 -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:32 -0700
 In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20241008011852.1439154-1-tavip@google.com>
 X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-20-tavip@google.com>
-Subject: [PATCH v2 19/25] hw/misc: add i2c-tester
+Message-ID: <20241008011852.1439154-7-tavip@google.com>
+Subject: [PATCH v2 06/25] hw/misc/flexcomm.c: add common fifo functionality
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,9 +72,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3oIgEZwUKCgMwdylsjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--tavip.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com;
+ helo=mail-pf1-x449.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,213 +97,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a simple i2c peripheral to be used for testing I2C device
-models. The peripheral has a fixed number of registers that can be
-read and written.
+FLEXCOMM SPI and USART share FIFO functionality. Add common helper
+functions to avoid code duplication.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/misc/i2c_tester.h |  43 ++++++++++++++
- hw/misc/i2c_tester.c         | 109 +++++++++++++++++++++++++++++++++++
- hw/misc/Kconfig              |   5 ++
- hw/misc/meson.build          |   2 +
- 4 files changed, 159 insertions(+)
- create mode 100644 include/hw/misc/i2c_tester.h
- create mode 100644 hw/misc/i2c_tester.c
+ include/hw/misc/flexcomm.h          |  2 +
+ include/hw/misc/flexcomm_function.h |  8 +++
+ hw/misc/flexcomm.c                  | 83 +++++++++++++++++++++++++++++
+ hw/misc/trace-events                |  1 +
+ 4 files changed, 94 insertions(+)
 
-diff --git a/include/hw/misc/i2c_tester.h b/include/hw/misc/i2c_tester.h
-new file mode 100644
-index 0000000000..f8292fc219
---- /dev/null
-+++ b/include/hw/misc/i2c_tester.h
-@@ -0,0 +1,43 @@
-+/*
-+ * Simple I2C peripheral for testing I2C device models.
-+ *
-+ * At the moment of introducing this not all of the functionality can be tested
-+ * with an existing QEMU peripheral device, notably error paths such as when a
-+ * peripheral device responds with an I2C_NACK during a transaction.
-+ *
-+ * It also provides a place where new future functionality can be added to help
-+ * with more kinds of tests rather than trying to hack it in a real device where
-+ * it might not even be possible.
-+ *
-+ * The peripheral allows reading and writing to a fixed number of registers.
-+ * The first transmitted byte in a transaction sets the index register. Note
-+ * that the index register is not auto-incremented on neither reads nor writes.
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_I2C_TESTER_H
-+#define HW_I2C_TESTER_H
-+
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "hw/irq.h"
-+
-+#define I2C_TESTER_NUM_REGS    0x31
-+
-+#define TYPE_I2C_TESTER "i2c-tester"
-+#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_TESTER)
-+
-+typedef struct {
-+    I2CSlave i2c;
-+    bool set_reg_idx;
-+    uint8_t reg_idx;
-+    uint8_t regs[I2C_TESTER_NUM_REGS];
-+} I2cTesterState;
-+
-+#endif /* HW_I2C_TESTER_H */
-diff --git a/hw/misc/i2c_tester.c b/hw/misc/i2c_tester.c
-new file mode 100644
-index 0000000000..77ce8bf91a
---- /dev/null
-+++ b/hw/misc/i2c_tester.c
-@@ -0,0 +1,109 @@
-+/*
-+ * Simple I2C peripheral for testing I2C device models.
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "hw/misc/i2c_tester.h"
-+
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "migration/vmstate.h"
-+
-+static void i2c_tester_reset_enter(Object *o, ResetType type)
-+{
-+    I2cTesterState *s = I2C_TESTER(o);
-+
-+    s->set_reg_idx = false;
-+    s->reg_idx     = 0;
-+    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
-+}
-+
-+static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (event == I2C_START_SEND) {
-+        s->set_reg_idx = true;
-+    }
-+
-+    return 0;
-+}
-+
-+static uint8_t i2c_tester_rx(I2CSlave *i2c)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    return s->regs[s->reg_idx];
-+}
-+
-+static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->set_reg_idx) {
-+        /* Setting the register in which the operation will be done. */
-+        s->reg_idx = data;
-+        s->set_reg_idx = false;
-+        return 0;
-+    }
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    /* Write reg data. */
-+    s->regs[s->reg_idx] = data;
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_i2c_tester = {
-+    .name = "i2c-tester",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_I2C_SLAVE(i2c, I2cTesterState),
-+        VMSTATE_BOOL(set_reg_idx, I2cTesterState),
-+        VMSTATE_UINT8(reg_idx, I2cTesterState),
-+        VMSTATE_UINT8_ARRAY(regs, I2cTesterState, I2C_TESTER_NUM_REGS),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void i2c_tester_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
-+    I2CSlaveClass *isc = I2C_SLAVE_CLASS(oc);
-+
-+    rc->phases.enter = i2c_tester_reset_enter;
-+    dc->vmsd = &vmstate_i2c_tester;
-+    isc->event = i2c_tester_event;
-+    isc->recv = i2c_tester_rx;
-+    isc->send = i2c_tester_tx;
-+}
-+
-+static const TypeInfo i2c_tester_types[] = {
-+    {
-+        .name = TYPE_I2C_TESTER,
-+        .parent = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(I2cTesterState),
-+        .class_init = i2c_tester_class_init
-+    },
-+};
-+
-+DEFINE_TYPES(i2c_tester_types);
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4b688aead2..3e93c12c8e 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -213,6 +213,11 @@ config IOSB
- config XLNX_VERSAL_TRNG
-     bool
+diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
+index ea0fe77f26..832d4cd29d 100644
+--- a/include/hw/misc/flexcomm.h
++++ b/include/hw/misc/flexcomm.h
+@@ -44,6 +44,8 @@ struct FlexcommState {
+     uint32_t functions;
+     qemu_irq irq;
+     bool irq_state;
++    Fifo32 rx_fifo;
++    Fifo32 tx_fifo;
+ };
  
-+config I2C_TESTER
-+    bool
-+    default y if TEST_DEVICES
-+    depends on I2C
-+
- config FLEXCOMM
-     bool
-     select I2C
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index bf0988fd43..cd29db37d7 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -152,6 +152,8 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+ #endif /* HW_FLEXCOMM_H */
+diff --git a/include/hw/misc/flexcomm_function.h b/include/hw/misc/flexcomm_function.h
+index e498976927..3ff1677ff6 100644
+--- a/include/hw/misc/flexcomm_function.h
++++ b/include/hw/misc/flexcomm_function.h
+@@ -23,6 +23,8 @@ struct FlexcommFunction {
  
-+system_ss.add(when: 'CONFIG_I2C_TESTER', if_true: files('i2c_tester.c'))
+     MemoryRegion mmio;
+     uint32_t *regs;
++    Fifo32 *tx_fifo;
++    Fifo32 *rx_fifo;
+ };
+ 
+ typedef void (*FlexcommFunctionSelect)(FlexcommFunction *f, bool selected);
+@@ -32,6 +34,7 @@ struct FlexcommFunctionClass {
+ 
+     const MemoryRegionOps *mmio_ops;
+     const char *name;
++    bool has_fifos;
+     FlexcommFunctionSelect select;
+ };
+ 
+@@ -43,5 +46,10 @@ static inline void flexcomm_select(FlexcommFunction *obj, bool selected)
+ }
+ 
+ void flexcomm_set_irq(FlexcommFunction *f, bool irq);
++void flexcomm_update_fifostat(FlexcommFunction *f);
++void flexcomm_clear_fifostat(FlexcommFunction *f, uint64_t value);
++void flexcomm_init_fifos(FlexcommFunction *f, unsigned num);
++void flexcomm_cleanup_fifos(FlexcommFunction *f);
++void flexcomm_reset_fifos(FlexcommFunction *f);
+ 
+ #endif /* HW_FLEXCOMM_FUNCTION_H */
+diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
+index 2337fb814c..a98d8845aa 100644
+--- a/hw/misc/flexcomm.c
++++ b/hw/misc/flexcomm.c
+@@ -22,6 +22,7 @@
+ #include "trace.h"
+ #include "migration/vmstate.h"
+ #include "hw/misc/flexcomm.h"
++#include "hw/arm/svd/flexcomm_usart.h"
+ 
+ #define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
+ #define RF_WR(s, reg, field, val) \
+@@ -219,12 +220,22 @@ static void flexcomm_init(Object *obj)
+     sysbus_init_irq(sbd, &s->irq);
+ }
+ 
++static void flexcomm_finalize(Object *obj)
++{
++    FlexcommState *s = FLEXCOMM(obj);
 +
- system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
- system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkctl0.c', 'rt500_clkctl1.c'))
- system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
++    /* release resources allocated by the function select (e.g. fifos) */
++    flexcomm_func_select(s, false);
++}
++
+ static void flexcomm_func_realize_and_unref(FlexcommFunction *f, Error **errp)
+ {
+     FlexcommState *s = FLEXCOMM(OBJECT(f)->parent);
+     FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_GET_CLASS(f);
+ 
+     f->regs = s->regs;
++    f->tx_fifo = &s->tx_fifo;
++    f->rx_fifo = &s->rx_fifo;
+     memory_region_add_subregion_overlap(&s->container, 0, &f->mmio, 0);
+     DEVICE(f)->id = g_strdup_printf("%s-%s", DEVICE(s)->id, fc->name);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(f), errp);
+@@ -274,11 +285,82 @@ void flexcomm_set_irq(FlexcommFunction *f, bool irq)
+     }
+ }
+ 
++/* FIFO is shared between USART and SPI, provide common functions here */
++#define FIFO_REG(s, reg) (s->regs[R_FLEXCOMM_USART_FIFO##reg])
++#define FIFO_WR(s, reg, field, val) \
++    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_USART_FIFO##reg, field, val)
++#define FIFO_RD(s, reg, field) \
++    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_USART_FIFO##reg, field)
++
++void flexcomm_update_fifostat(FlexcommFunction *f)
++{
++    int rxlvl = fifo32_num_used(f->rx_fifo);
++    int txlvl = fifo32_num_used(f->tx_fifo);
++
++    FIFO_WR(f, STAT, RXLVL, rxlvl);
++    FIFO_WR(f, STAT, TXLVL, txlvl);
++    FIFO_WR(f, STAT, RXFULL, fifo32_is_full(f->rx_fifo) ? 1 : 0);
++    FIFO_WR(f, STAT, RXNOTEMPTY, !fifo32_is_empty(f->rx_fifo) ? 1 : 0);
++    FIFO_WR(f, STAT, TXNOTFULL, !fifo32_is_full(f->tx_fifo) ? 1 : 0);
++    FIFO_WR(f, STAT, TXEMPTY, fifo32_is_empty(f->tx_fifo) ? 1 : 0);
++
++    if (FIFO_RD(f, TRIG, RXLVLENA) && (rxlvl > FIFO_RD(f, TRIG, RXLVL))) {
++        FIFO_WR(f, INTSTAT, RXLVL, 1);
++    } else {
++        FIFO_WR(f, INTSTAT, RXLVL, 0);
++    }
++
++    if (FIFO_RD(f, TRIG, TXLVLENA) && (txlvl <= FIFO_RD(f, TRIG, TXLVL))) {
++        FIFO_WR(f, INTSTAT, TXLVL, 1);
++    } else {
++        FIFO_WR(f, INTSTAT, TXLVL, 0);
++    }
++
++    trace_flexcomm_fifostat(DEVICE(f)->id, FIFO_REG(f, STAT),
++                            FIFO_REG(f, INTSTAT));
++}
++
++void flexcomm_reset_fifos(FlexcommFunction *f)
++{
++    if (FIFO_RD(f, CFG, EMPTYRX)) {
++        FIFO_WR(f, CFG, EMPTYRX, 0);
++        fifo32_reset(f->rx_fifo);
++    }
++    if (FIFO_RD(f, CFG, EMPTYTX)) {
++        FIFO_WR(f, CFG, EMPTYTX, 0);
++        fifo32_reset(f->tx_fifo);
++    }
++}
++
++void flexcomm_clear_fifostat(FlexcommFunction *f, uint64_t value)
++{
++    bool rxerr = FIELD_EX32(value, FLEXCOMM_USART_FIFOSTAT, RXERR);
++    bool txerr = FIELD_EX32(value, FLEXCOMM_USART_FIFOSTAT, TXERR);
++
++    if (rxerr) {
++        FIFO_WR(f, STAT, RXERR, 0);
++    }
++    if (txerr) {
++        FIFO_WR(f, STAT, TXERR, 0);
++    }
++}
++
+ static void flexcomm_function_select(FlexcommFunction *f, bool selected)
+ {
+     FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_GET_CLASS(f);
+ 
+     memory_region_set_enabled(&f->mmio, selected);
++    if (fc->has_fifos) {
++        if (selected) {
++            unsigned num = FIFO_RD(f, SIZE, FIFOSIZE);
++
++            fifo32_create(f->tx_fifo, num);
++            fifo32_create(f->rx_fifo, num);
++        } else {
++            fifo32_destroy(f->tx_fifo);
++            fifo32_destroy(f->rx_fifo);
++        }
++    }
+ }
+ 
+ static void flexcomm_function_init(Object *obj)
+@@ -303,6 +385,7 @@ static const TypeInfo flexcomm_types[] = {
+         .parent        = TYPE_SYS_BUS_DEVICE,
+         .instance_size = sizeof(FlexcommState),
+         .instance_init = flexcomm_init,
++        .instance_finalize = flexcomm_finalize,
+         .class_init    = flexcomm_class_init,
+     },
+     {
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 419879fd65..dc245905dc 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -367,3 +367,4 @@ flexcomm_reset(void) ""
+ flexcomm_irq(const char *id, uint8_t irq) "%s %d"
+ flexcomm_reg_read(const char *devname, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
+ flexcomm_reg_write(const char *dename, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
++flexcomm_fifostat(const char *id, uint32_t fifostat, uint32_t fifoinstat) "%s: %08x %08x"
 -- 
 2.47.0.rc0.187.ge670bccf7e-goog
 
