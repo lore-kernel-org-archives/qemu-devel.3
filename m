@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA4F7CEF172
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1832BCEF172
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:47:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syBJ6-0008LM-Hb; Tue, 08 Oct 2024 10:35:24 -0400
+	id 1syBTl-0001Q1-Mj; Tue, 08 Oct 2024 10:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBJ5-0008Kv-7L
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:35:23 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1syBTW-0001Ol-P2
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:46:11 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBJ3-0002Li-LU
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:35:22 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c89f3e8a74so7893652a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:35:20 -0700 (PDT)
+ id 1syBTT-0003ht-M1
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:46:10 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c42e7adbddso7751666a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728398119; x=1729002919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728398765; x=1729003565; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ejEHR1wMlkNLtiJ1Hqtaqwe+D7rXesFiFwGrxD/Swxc=;
- b=oeC8l3VaX5McD6Umg/WwgNNFE1V7OcHqY37Q3h2vy/kD8wr78/vtGgB3k9ODiQkRdN
- zwC99BpgmqL5A+6kErebcweJaPm/XczAlMMKcPa3Jx1eYeJbIKqKVE+gPxkSFp3TYjNU
- XVBOZnNPHHUjhmmySn1mc2kEumAk2ieAfTgjpFZPCZQYhuRR+VJ9jDznO+jyNsXwGTXV
- TAIqAFsD5pEOENHZf6lJNgUXtJ4XGaMkzWl9rfGlwOpJdCLo4pxCABhGkUPIADY9p/ct
- qXeuy8TZSToa6D4njI0Y+pQpXDGWKeNq0uBUAAJmfNXZBs4i6PwmG8L8pSTjSVAUq4Oi
- JSag==
+ bh=j5MphECLD4P0U/jqbmbESSvAYHMevQyba1bA/1qjbuA=;
+ b=xYHqge3vS/rOjQM1krEHZJ9ZCyZfkovFrflTWBr6FN5/WuE6RAH5ar5eMmhByXyVOY
+ Sn7+BIY/hE+3lh7Q596YDaT46H5Q9q7b8waDmtRwj1QrAUwC+dNXbFBiIuKT14LbQ8pu
+ dpKIAdxYPQll4GkJeSF5emEoJ5WV6nFr8/6ZazI/w8QEaTBfT+AmBeuBPlPqv2NRl6g8
+ OE8ecgpfKXd9rjFgxysAHqui094Edivu3g+yeGS/cQImj6+vFYh0ao0WnYJPM9eaeZQA
+ jdYd1vL8cYqLwrc44oFP2W+zTHRPWqagbKQNt25Ab8HLfY1OD2eEUY661Uo95EOExFli
+ pwOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728398119; x=1729002919;
+ d=1e100.net; s=20230601; t=1728398765; x=1729003565;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ejEHR1wMlkNLtiJ1Hqtaqwe+D7rXesFiFwGrxD/Swxc=;
- b=HuDlzzwj6S1w8PuK0dP833cXbPEjw8tjvoi2XSEU+NoH1YnA9oeGRj39Gd9z4Qyg+B
- 0QtfVyz1SExzr8oyVExJoGLjNGLOBgc1DO2p5Phtd0xlV8o6075B2m91SQjYBQ90SpnB
- Fr7nufJfJ0mIZrfIQ5BAnpALeumJPGxiHoYfdmxIvfMi9dA+npHTq9hTA1KvCd0zEEAb
- Xdhby4d1ma84943ybRRfCXEqLNSU3ZeYTdO9vKnYBHDzdsjHJO0v4HM77rhs/zrkDLgP
- 9noS4IOT8O8l4jTy00lorQtz1zCXDcA0Q06tHdWJoXY6oIZJtEDHP/A6PlvbQtvOiPCP
- 3Hrw==
-X-Gm-Message-State: AOJu0YxUydKR43CfvAfH5awTmNohgV7UdUL/3oIeXwhaPIgFCAfpNKD8
- 51yXdP0r7tZzqT9TBvdpBKg/mUaCBDro0VWM/R27M5SPGMjDdJcoLDT+Fqr3iTbmd+9mCAr1Yb2
- 503HeoM9THDaxINnRLwlnUOjSa1oKmLvAzUIpvQ==
-X-Google-Smtp-Source: AGHT+IEJhPFIg7Qd18l/zzU6VuxNjyfZlpL9dJ5GySWcXx1gRxvqO8ZcTix41f8blmGjq8Y98ULXs/w/4SLM1BwGu+4=
-X-Received: by 2002:a05:6402:c42:b0:5c8:ad38:165c with SMTP id
- 4fb4d7f45d1cf-5c8d2ebdaf7mr14866174a12.23.1728398118716; Tue, 08 Oct 2024
- 07:35:18 -0700 (PDT)
+ bh=j5MphECLD4P0U/jqbmbESSvAYHMevQyba1bA/1qjbuA=;
+ b=NL4ekN0tTSpoJNtMGSAWhoDi7KaAdcthnrIXc106PlsSGFg84jBNXCTlmDWNOe8P/7
+ Sbpkg7yNXyN1Jj3a9SYZrPqEGtau8dgmhBCMLxehNfbRpbyNtOVWPz4+mio5mNOP2y3k
+ YuVQAY3dTA4yuorxgAR1PlTdpdOnKD39ztKYC6uf5tsEV8AWTzJWAPTBEwrHss3oc7BD
+ 6QLaKva7G9EIjqLNwAT5dYJ3LfN0WONOU0rIrKuwskwvD+Y5rgne4KWhKUgvJyHsFL4R
+ oy8ZLQy9XE9YrTJ0Ntl/ffTeGy2t/mE8gF3cSgQ9/UD+2BF27zRdktyd95Z7iYwPemiS
+ bC3Q==
+X-Gm-Message-State: AOJu0Yzb7ripMt/OcU9t/PnArHi2Wc3Jo9nPChvOBu/OULrVo21ip8wl
+ Xgu8JNHVijCKqqVCg45Am8brtppXhg1JCo5YqkbOcJm77oW5OUb0Qk+/IcJ7k1wuibV9K509EcH
+ 8htVQgEE4mkbzlfqVcvIWdaEIcR/gfBrWOcehpQ==
+X-Google-Smtp-Source: AGHT+IGbbRXahkkw9UahWbFZHSA6zRVWmmssrHeW2g12mO5Ut8YunOTSsC5XXWpGwl8aN5g3vofSKPBmJRKe9gpczlc=
+X-Received: by 2002:a05:6402:50d0:b0:5c8:a92b:b0a with SMTP id
+ 4fb4d7f45d1cf-5c8d2e1efd5mr13576867a12.1.1728398765144; Tue, 08 Oct 2024
+ 07:46:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-15-richard.henderson@linaro.org>
-In-Reply-To: <20241005200600.493604-15-richard.henderson@linaro.org>
+ <20241005200600.493604-14-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-14-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 15:35:07 +0100
-Message-ID: <CAFEAcA9B1OsYgChehuz7uRgP-=Mbh=4zSK+owJz+BoBvA4Cnvg@mail.gmail.com>
-Subject: Re: [PATCH v2 14/21] target/arm: Pass MemOp to
- get_phys_addr_with_space_nogpc
+Date: Tue, 8 Oct 2024 15:45:53 +0100
+Message-ID: <CAFEAcA_jXTuB6c8oVcXmi66zcXn5-PYM7W9z1wf7-fzXg7_Oiw@mail.gmail.com>
+Subject: Re: [PATCH v2 13/21] target/arm: Pass MemOp to get_phys_addr
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,56 +96,78 @@ On Sat, 5 Oct 2024 at 21:06, Richard Henderson
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/internals.h | 3 ++-
->  target/arm/helper.c    | 4 ++--
->  target/arm/ptw.c       | 2 +-
->  3 files changed, 5 insertions(+), 4 deletions(-)
+>  target/arm/internals.h      | 3 ++-
+>  target/arm/ptw.c            | 2 +-
+>  target/arm/tcg/m_helper.c   | 8 ++++----
+>  target/arm/tcg/tlb_helper.c | 2 +-
+>  4 files changed, 8 insertions(+), 7 deletions(-)
+
+> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+> index 23d7f73035..f7354f3c6e 100644
+> --- a/target/arm/tcg/m_helper.c
+> +++ b/target/arm/tcg/m_helper.c
+> @@ -222,7 +222,7 @@ static bool v7m_stack_write(ARMCPU *cpu, uint32_t addr, uint32_t value,
+>      int exc;
+>      bool exc_secure;
 >
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index 2b16579fa5..a6088d551c 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -1461,6 +1461,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
->   * @env: CPUARMState
->   * @address: virtual address to get physical address for
->   * @access_type: 0 for read, 1 for write, 2 for execute
-> + * @memop: memory operation feeding this access, or 0 for none
->   * @mmu_idx: MMU index indicating required translation regime
->   * @space: security space for the access
->   * @result: set on translation success.
-> @@ -1470,7 +1471,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
->   * a Granule Protection Check on the resulting address.
->   */
->  bool get_phys_addr_with_space_nogpc(CPUARMState *env, vaddr address,
-> -                                    MMUAccessType access_type,
-> +                                    MMUAccessType access_type, MemOp memop,
->                                      ARMMMUIdx mmu_idx, ARMSecuritySpace space,
->                                      GetPhysAddrResult *result,
->                                      ARMMMUFaultInfo *fi)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 3f77b40734..f2f329e00a 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -3602,8 +3602,8 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
->       * I_MXTJT: Granule protection checks are not performed on the final address
->       * of a successful translation.
+> -    if (get_phys_addr(env, addr, MMU_DATA_STORE, mmu_idx, &res, &fi)) {
+> +    if (get_phys_addr(env, addr, MMU_DATA_STORE, 0, mmu_idx, &res, &fi)) {
+>          /* MPU/SAU lookup failed */
+>          if (fi.type == ARMFault_QEMU_SFault) {
+>              if (mode == STACK_LAZYFP) {
+> @@ -311,7 +311,7 @@ static bool v7m_stack_read(ARMCPU *cpu, uint32_t *dest, uint32_t addr,
+>      bool exc_secure;
+>      uint32_t value;
+>
+> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
+> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
+>          /* MPU/SAU lookup failed */
+>          if (fi.type == ARMFault_QEMU_SFault) {
+>              qemu_log_mask(CPU_LOG_INT,
+
+We do actually know what kind of memory operation we're doing here:
+it's a 4-byte access. (It should never be unaligned because an M-profile
+SP can't ever be un-4-aligned, though I forget whether our implementation
+really enforces that.)
+
+> @@ -2009,7 +2009,7 @@ static bool v7m_read_half_insn(ARMCPU *cpu, ARMMMUIdx mmu_idx, bool secure,
+>                        "...really SecureFault with SFSR.INVEP\n");
+>          return false;
+>      }
+> -    if (get_phys_addr(env, addr, MMU_INST_FETCH, mmu_idx, &res, &fi)) {
+> +    if (get_phys_addr(env, addr, MMU_INST_FETCH, 0, mmu_idx, &res, &fi)) {
+>          /* the MPU lookup failed */
+>          env->v7m.cfsr[env->v7m.secure] |= R_V7M_CFSR_IACCVIOL_MASK;
+>          armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_MEM, env->v7m.secure);
+
+Similarly this is a 16-bit load that in theory should never
+be possible to be unaligned.
+
+> @@ -2045,7 +2045,7 @@ static bool v7m_read_sg_stack_word(ARMCPU *cpu, ARMMMUIdx mmu_idx,
+>      ARMMMUFaultInfo fi = {};
+>      uint32_t value;
+>
+> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
+> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
+>          /* MPU/SAU lookup failed */
+>          if (fi.type == ARMFault_QEMU_SFault) {
+>              qemu_log_mask(CPU_LOG_INT,
+
+and this is another 4-byte load via sp.
+
+> diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+> index 885bf4ec14..1d8b7bcaa2 100644
+> --- a/target/arm/tcg/tlb_helper.c
+> +++ b/target/arm/tcg/tlb_helper.c
+> @@ -344,7 +344,7 @@ bool arm_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       * return false.  Otherwise populate fsr with ARM DFSR/IFSR fault
+>       * register format, and signal the fault.
 >       */
-> -    ret = get_phys_addr_with_space_nogpc(env, value, access_type, mmu_idx, ss,
-> -                                         &res, &fi);
-> +    ret = get_phys_addr_with_space_nogpc(env, value, access_type, 0,
-> +                                         mmu_idx, ss, &res, &fi);
-
-0 is the correct thing here, because AT operations are effectively
-assuming an aligned address (cf AArch64.AT() setting "aligned = true"
-in the Arm ARM pseudocode).
-
-Is there a way to write this as something other than "0" as
-an indication of "we've definitely thought about this callsite
-and it's not just 0 for back-compat behaviour" ? Otherwise we
-could add a brief comment.
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> -    ret = get_phys_addr(&cpu->env, address, access_type,
+> +    ret = get_phys_addr(&cpu->env, address, access_type, 0,
+>                          core_to_arm_mmu_idx(&cpu->env, mmu_idx),
+>                          &res, fi);
+>      if (likely(!ret)) {
 
 thanks
 -- PMM
