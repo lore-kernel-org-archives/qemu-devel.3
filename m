@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43125CED250
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12EBACED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyq4-0004Fj-N2; Mon, 07 Oct 2024 21:16:36 -0400
+	id 1sxyuo-0007qZ-D3; Mon, 07 Oct 2024 21:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypn-000483-04; Mon, 07 Oct 2024 21:16:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypk-0008Jo-C6; Mon, 07 Oct 2024 21:16:18 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497Nt3N9026100;
- Tue, 8 Oct 2024 01:16:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=makpDwUvlh3dq
- ljBNVAsth6a0r4pZ+82htafiNgsa9s=; b=aOMaVhRRTmdpqOqYkEHwQNeQ72xaz
- TFxHg8g1I3jjvNLdQk2H1aBSjzow94fKlXXzqtQNxaPdlAZVOLGYD58asHX+5KLI
- DMpN8ph+hO8hOCgds0jleDomVCHYig1kXJuLDOzlmXlEfX6Z77ctwtKFyhHaLRk/
- zNL11rSPmaDwbWbLhTsqvauIpJFFLJi6LGLZuRUi1Jd66r+PVVZ6hXZ/554rixg6
- F6kwmnqEmp3iyIvPFxr24Dc7Wi5jKcHdVWWkvNeKcwfpgv1bMh8HHPEa2JgPf7Io
- 1ZnZSVnZ8VfsXdNhYuye9/FxiBMUYmyR5ayYU8axB1hxGuEoWoJa0NGwQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7hb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:15 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981G8nF017417;
- Tue, 8 Oct 2024 01:16:14 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7h9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4980wm1f013804;
- Tue, 8 Oct 2024 01:16:13 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fss1r3u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:13 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981GDlP43712988
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:13 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F077758043;
- Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A7CD58059;
- Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.51.58])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 12/19] pc-bios/s390-ccw: Enable failed IPL to return after
- error
-Date: Mon,  7 Oct 2024 21:15:45 -0400
-Message-ID: <20241008011552.2645520-13-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Dj_vaQIG5cUacCdVInkQdzQ6P-IAjoce
-X-Proofpoint-GUID: nKdhjMmV5PDB6IR5MMk3esnji9tSEPfr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410080003
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com>)
+ id 1sxyt6-0000c9-Ax
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:44 -0400
+Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com>)
+ id 1sxyt3-0000HA-R1
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:44 -0400
+Received: by mail-pf1-x44a.google.com with SMTP id
+ d2e1a72fcca58-71e11abb22aso518153b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1728350380; x=1728955180; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=49FquaWPsQCXDvZ+9iOGQgsSq0aM4lH+3lh+RTdFI2o=;
+ b=ZbGg8t+qbV8sonNVz0B5vAy1Q0OrO5tMy1xHL4d5DTHJstdZK0I3leAavZ7yUwJ5/K
+ HzzcIG0Emk/za25DfQrPu4xxJWzP9b5d8Apai9CO3wWRVSCIG8/rv2QWPVH0csLuYVcm
+ GMh2PhjyZ1COo381ynQF4BUECvcjCRnXXiQCR33b4NvfKLEPB8h2qZ10uDfkUG0o1IKH
+ hUFSpHWyeuCGAEyfwZA8w5r8JBMFwesiVKsC9vGt0ByRTH1sx88VE+OIZA9uC3061nx/
+ jBeEqqvcyqYy1S9CQEi/lp0TNLawL8sa0N6AJsf7O0qu9ccT1m5CUfliHJ7j6/Qshbqd
+ nHlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728350380; x=1728955180;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=49FquaWPsQCXDvZ+9iOGQgsSq0aM4lH+3lh+RTdFI2o=;
+ b=kN7aUTSKEOpU4Gf12JSfxUUo4KvXdTkpD1YnXJrcZIgtKaFYrnqRnCLTz3m/EMPatc
+ M87MVvbvq4GyxhvvM56bNu/8/BiK5PFeSjUT7IORxyPRVT7y2F/P6A/mHKzpn+tRc4cS
+ Okj8kIzsbHhjGCKA9gWHR4oDz3CALEq2ZX8NCW94UjzqgagO1c4IXbQHav0+VLmuytBl
+ ix4c2NON2PyFSJkSD56hMW6ngpk7X101z00MZm9qxh/8Wt9SmG7yB+QtBXNcHY9fohCs
+ /9/J5XAjyVEna5cc5I/7OzVpQycaQyJnTRYKF3kejTFjezvBUP++EeJ+YTiZ9mt9ILUF
+ pTKQ==
+X-Gm-Message-State: AOJu0Yz7/DheuOcfHVxyQ9dpJkLQMcS+MIAIWKnEK9rRn2Z/gDcoLE6C
+ 9kcr/Kve4s3A7jtzeULvdr1gRMjnLIjvKX62h8SsN7wa72QzlULbTHKjS1zqY6YS0j3v7Z/4VcH
+ 69kYiezcxHmtTzUuPS78mJSysypWfB+tbeCY+TVHGgy4CXfohyVvlj7VGGGbRWEAbnIxDRdoCjm
+ 1KEOQb3tCgXPa1sWYNyxmyYTfyNQ==
+X-Google-Smtp-Source: AGHT+IHJH7MDeTk7Nh7rloj7vbrxdaiHNNx6zsfSUnM9QveGoJqzgfjpJEuaUwn1zp3dxVmynOyZGpE3ag==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a05:6a00:324b:b0:71d:eb98:7341
+ with SMTP id
+ d2e1a72fcca58-71deb987431mr22279b3a.2.1728350379687; Mon, 07 Oct 2024
+ 18:19:39 -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:51 -0700
+In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
+Mime-Version: 1.0
+References: <20241008011852.1439154-1-tavip@google.com>
+X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
+Message-ID: <20241008011852.1439154-26-tavip@google.com>
+Subject: [PATCH v2 25/25] tests/qtest: add tests for RT500's clock controller
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
+ crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
+ envelope-from=3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com;
+ helo=mail-pf1-x44a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,424 +97,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Add test to exercise clocks set and clear, system PLL initialization,
+audio PLL initialization, systick and ostimer clock source selection.
 
-Remove panic-on-error from IPL functions such that a return code is propagated
-back to the main IPL calling function (rather than terminating immediately),
-which facilitates possible error recovery in the future.
-
-A select few panics remain, which indicate fatal non-devices errors that must
-result in termination.
-
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- pc-bios/s390-ccw/s390-ccw.h      |  2 +-
- pc-bios/s390-ccw/virtio.h        |  2 +-
- pc-bios/s390-ccw/bootmap.c       | 53 ++++++++++++++++++--------
- pc-bios/s390-ccw/cio.c           |  3 +-
- pc-bios/s390-ccw/jump2ipl.c      |  5 ++-
- pc-bios/s390-ccw/main.c          | 35 +++++++++--------
- pc-bios/s390-ccw/virtio-blkdev.c |  4 +-
- pc-bios/s390-ccw/virtio.c        | 65 +++++++++++++++++++++-----------
- 8 files changed, 111 insertions(+), 58 deletions(-)
+ tests/qtest/rt500-clkctl-test.c | 195 ++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build         |   1 +
+ 2 files changed, 196 insertions(+)
+ create mode 100644 tests/qtest/rt500-clkctl-test.c
 
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 496dccb2aa..cdf998868c 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -79,7 +79,7 @@ void zipl_load(void);
- 
- /* jump2ipl.c */
- void write_reset_psw(uint64_t psw);
--void jump_to_IPL_code(uint64_t address);
-+int jump_to_IPL_code(uint64_t address);
- void jump_to_low_kernel(void);
- 
- /* menu.c */
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 6f9a558ff5..9faf3986b1 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -274,7 +274,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags);
- int vr_poll(VRing *vr);
- int vring_wait_reply(void);
- int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
--void virtio_setup_ccw(VDev *vdev);
-+int virtio_setup_ccw(VDev *vdev);
- 
- int virtio_net_init(void *mac_addr);
- 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 1874d4bf5e..c80fcd6f01 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -62,15 +62,34 @@ static void *s2_prev_blk = _s2;
- static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
- static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
- 
--static inline void verify_boot_info(BootInfo *bip)
-+static inline int verify_boot_info(BootInfo *bip)
- {
--    IPL_assert(magic_match(bip->magic, ZIPL_MAGIC), "No zIPL sig in BootInfo");
--    IPL_assert(bip->version == BOOT_INFO_VERSION, "Wrong zIPL version");
--    IPL_assert(bip->bp_type == BOOT_INFO_BP_TYPE_IPL, "DASD is not for IPL");
--    IPL_assert(bip->dev_type == BOOT_INFO_DEV_TYPE_ECKD, "DASD is not ECKD");
--    IPL_assert(bip->flags == BOOT_INFO_FLAGS_ARCH, "Not for this arch");
--    IPL_assert(block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size),
--               "Bad block size in zIPL section of the 1st record.");
-+    if (!magic_match(bip->magic, ZIPL_MAGIC)) {
-+        puts("No zIPL sig in BootInfo");
-+        return -EINVAL;
-+    }
-+    if (bip->version != BOOT_INFO_VERSION) {
-+        puts("Wrong zIPL version");
-+        return -EINVAL;
-+    }
-+    if (bip->bp_type != BOOT_INFO_BP_TYPE_IPL) {
-+        puts("DASD is not for IPL");
-+        return -ENODEV;
-+    }
-+    if (bip->dev_type != BOOT_INFO_DEV_TYPE_ECKD) {
-+        puts("DASD is not ECKD");
-+        return -ENODEV;
-+    }
-+    if (bip->flags != BOOT_INFO_FLAGS_ARCH) {
-+        puts("Not for this arch");
-+        return -EINVAL;
-+    }
-+    if (!block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size)) {
-+        puts("Bad block size in zIPL section of 1st record");
-+        return -EINVAL;
-+    }
+diff --git a/tests/qtest/rt500-clkctl-test.c b/tests/qtest/rt500-clkctl-test.c
+new file mode 100644
+index 0000000000..d5b83d81da
+--- /dev/null
++++ b/tests/qtest/rt500-clkctl-test.c
+@@ -0,0 +1,195 @@
++/*
++ * Copyright (c) 2024 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+    return 0;
- }
- 
- static void eckd_format_chs(ExtEckdBlockPtr *ptr,  bool ldipl,
-@@ -368,8 +387,8 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
-         puts("Unknown script entry type");
-         return -EINVAL;
-     }
--    write_reset_psw(bms->entry[i].address.load_address); /* no return */
--    jump_to_IPL_code(0); /* no return */
-+    write_reset_psw(bms->entry[i].address.load_address);
-+    jump_to_IPL_code(0);
-     return 1;
- }
- 
-@@ -1060,16 +1079,19 @@ void zipl_load(void)
- 
-     if (vdev->is_cdrom) {
-         ipl_iso_el_torito();
--        panic("\n! Cannot IPL this ISO image !\n");
-+        puts("Failed to IPL this ISO image!");
-+        return;
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
-         netmain();
--        panic("\n! Cannot IPL from this network !\n");
-+        puts("Failed to IPL from this network!");
-+        return;
-     }
- 
-     if (ipl_scsi()) {
--        panic("\n! Cannot IPL this SCSI device !\n");
-+        puts("Failed to IPL from this SCSI device!");
-+        return;
-     }
- 
-     switch (virtio_get_device_type()) {
-@@ -1080,8 +1102,9 @@ void zipl_load(void)
-         zipl_load_vscsi();
-         break;
-     default:
--        panic("\n! Unknown IPL device type !\n");
-+        puts("Unknown IPL device type!");
-+        return;
-     }
- 
--    puts("zIPL load failed.");
-+    puts("zIPL load failed!");
- }
-diff --git a/pc-bios/s390-ccw/cio.c b/pc-bios/s390-ccw/cio.c
-index 758e74965e..35b08ba7c1 100644
---- a/pc-bios/s390-ccw/cio.c
-+++ b/pc-bios/s390-ccw/cio.c
-@@ -59,7 +59,8 @@ uint16_t cu_type(SubChannelId schid)
-     };
- 
-     if (do_cio(schid, CU_TYPE_UNKNOWN, ptr2u32(&sense_id_ccw), CCW_FMT1)) {
--        panic("Failed to run SenseID CCw\n");
-+        puts("Failed to run SenseID CCW");
-+        return CU_TYPE_UNKNOWN;
-     }
- 
-     return sense_data.cu_type;
-diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
-index 6671e4fe5c..92627b56c6 100644
---- a/pc-bios/s390-ccw/jump2ipl.c
-+++ b/pc-bios/s390-ccw/jump2ipl.c
-@@ -34,7 +34,7 @@ static void jump_to_IPL_addr(void)
-     /* should not return */
- }
- 
--void jump_to_IPL_code(uint64_t address)
-+int jump_to_IPL_code(uint64_t address)
- {
-     /* store the subsystem information _after_ the bootmap was loaded */
-     write_subsystem_identification();
-@@ -69,7 +69,8 @@ void jump_to_IPL_code(uint64_t address)
-     asm volatile("lghi %%r1,1\n\t"
-                  "diag %%r1,%%r1,0x308\n\t"
-                  : : : "1", "memory");
--    panic("\n! IPL returns !\n");
-+    puts("IPL code jump failed");
-+    return 1;
- }
- 
- void jump_to_low_kernel(void)
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 2345432abb..f818bd7210 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -77,6 +77,9 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
- 
-     enable_subchannel(blk_schid);
-     cutype = cu_type(blk_schid);
-+    if (cutype == CU_TYPE_UNKNOWN) {
-+        return -EIO;
-+    }
- 
-     /*
-      * Note: we always have to run virtio_is_supported() here to make
-@@ -194,10 +197,10 @@ static void boot_setup(void)
-     have_iplb = store_iplb(&iplb);
- }
- 
--static void find_boot_device(void)
-+static bool find_boot_device(void)
- {
-     VDev *vdev = virtio_get_device();
--    bool found;
-+    bool found = false;
- 
-     switch (iplb.pbt) {
-     case S390_IPL_TYPE_CCW:
-@@ -215,10 +218,10 @@ static void find_boot_device(void)
-         found = find_subch(iplb.scsi.devno);
-         break;
-     default:
--        panic("List-directed IPL not supported yet!\n");
-+        puts("Unsupported IPLB");
-     }
- 
--    IPL_assert(found, "Boot device not found\n");
-+    return found;
- }
- 
- static int virtio_setup(void)
-@@ -244,11 +247,13 @@ static int virtio_setup(void)
-         ret = virtio_scsi_setup_device(blk_schid);
-         break;
-     default:
--        panic("\n! No IPL device available !\n");
-+        puts("\n! No IPL device available !\n");
-+        return 1;
-     }
- 
--    if (!ret) {
--        IPL_assert(virtio_ipl_disk_is_valid(), "No valid IPL device detected");
-+    if (!ret && !virtio_ipl_disk_is_valid()) {
-+        puts("No valid IPL device detected");
-+        return -ENODEV;
-     }
- 
-     return ret;
-@@ -259,16 +264,16 @@ static void ipl_boot_device(void)
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
--        dasd_ipl(blk_schid, cutype); /* no return */
-+        dasd_ipl(blk_schid, cutype);
-         break;
-     case CU_TYPE_VIRTIO:
--        if (virtio_setup() == 0) {
--            zipl_load();             /* Only returns in case of errors */
-+        if (virtio_setup()) {
-+            return;    /* Only returns in case of errors */
-         }
-+        zipl_load();
-         break;
-     default:
-         printf("Attempting to boot from unexpected device type 0x%X", cutype);
--        panic("\nBoot failed.\n");
-     }
- }
- 
-@@ -288,7 +293,8 @@ static void probe_boot_device(void)
-                 break;
-             }
-             if (ret == true) {
--                ipl_boot_device();      /* Only returns if unsuccessful */
-+                ipl_boot_device(); /* Only returns if unsuccessful */
-+                return;
-             }
-         }
-     }
-@@ -301,12 +307,11 @@ void main(void)
-     sclp_setup();
-     css_setup();
-     boot_setup();
--    if (have_iplb) {
--        find_boot_device();
-+    if (have_iplb && find_boot_device()) {
-         ipl_boot_device();
-     } else {
-         probe_boot_device();
-     }
- 
--    panic("Failed to load OS from hard disk\n");
-+    panic("Failed to IPL. Halting...");
- }
-diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-index 1c585f034b..5ef273bdc0 100644
---- a/pc-bios/s390-ccw/virtio-blkdev.c
-+++ b/pc-bios/s390-ccw/virtio-blkdev.c
-@@ -59,8 +59,8 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
-     case VIRTIO_ID_SCSI:
-         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
-     }
--    panic("\n! No readable IPL device !\n");
--    return -1;
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/main-loop.h"
++#include "exec/memory.h"
++#include "hw/clock.h"
++#include "hw/irq.h"
++#include "hw/qdev-clock.h"
++#include "hw/qdev-properties.h"
 +
-+    return 1;
- }
- 
- unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index 8c6b0a8a92..8b5a370bb3 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -217,16 +217,19 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
-     return 0;
- }
- 
--void virtio_setup_ccw(VDev *vdev)
-+int virtio_setup_ccw(VDev *vdev)
- {
--    int i, rc, cfg_size = 0;
-+    int i, cfg_size = 0;
-     uint8_t status;
-     struct VirtioFeatureDesc {
-         uint32_t features;
-         uint8_t index;
-     } __attribute__((packed)) feats;
- 
--    IPL_assert(virtio_is_supported(vdev->schid), "PE");
-+    if (!virtio_is_supported(vdev->schid)) {
-+        puts("Virtio unsupported for this device ID");
-+        return -ENODEV;
-+    }
-     /* device ID has been established now */
- 
-     vdev->config.blk.blk_size = 0; /* mark "illegal" - setup started... */
-@@ -235,8 +238,10 @@ void virtio_setup_ccw(VDev *vdev)
-     run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
- 
-     status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write ACKNOWLEDGE status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write ACKNOWLEDGE status to host");
-+        return -EIO;
-+    }
- 
-     switch (vdev->senseid.cu_model) {
-     case VIRTIO_ID_NET:
-@@ -255,27 +260,37 @@ void virtio_setup_ccw(VDev *vdev)
-         cfg_size = sizeof(vdev->config.scsi);
-         break;
-     default:
--        panic("Unsupported virtio device\n");
-+        puts("Unsupported virtio device");
-+        return -ENODEV;
-     }
- 
-     status |= VIRTIO_CONFIG_S_DRIVER;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write DRIVER status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write DRIVER status to host");
-+        return -EIO;
-+    }
- 
-     /* Feature negotiation */
-     for (i = 0; i < ARRAY_SIZE(vdev->guest_features); i++) {
-         feats.features = 0;
-         feats.index = i;
--        rc = run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false);
--        IPL_assert(rc == 0, "Could not get features bits");
-+        if (run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false)) {
-+            puts("Could not get features bits");
-+            return -EIO;
-+        }
++#include "hw/misc/rt500_clkctl0.h"
++#include "hw/misc/rt500_clkctl1.h"
++#include "hw/misc/rt500_clk_freqs.h"
++#include "hw/arm/svd/rt500.h"
++#include "reg-utils.h"
 +
-         vdev->guest_features[i] &= bswap32(feats.features);
-         feats.features = bswap32(vdev->guest_features[i]);
--        rc = run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false);
--        IPL_assert(rc == 0, "Could not set features bits");
-+        if (run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false)) {
-+            puts("Could not set features bits");
-+            return -EIO;
-+        }
-     }
- 
--    rc = run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false);
--    IPL_assert(rc == 0, "Could not get virtio device configuration");
-+    if (run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false)) {
-+        puts("Could not get virtio device configuration");
-+        return -EIO;
-+    }
- 
-     for (i = 0; i < vdev->nr_vqs; i++) {
-         VqInfo info = {
-@@ -289,19 +304,27 @@ void virtio_setup_ccw(VDev *vdev)
-             .num = 0,
-         };
- 
--        rc = run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config), false);
--        IPL_assert(rc == 0, "Could not get virtio device VQ configuration");
-+        if (run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config),
-+                false)) {
-+            puts("Could not get virtio device VQ config");
-+            return -EIO;
-+        }
-         info.num = config.num;
-         vring_init(&vdev->vrings[i], &info);
-         vdev->vrings[i].schid = vdev->schid;
--        IPL_assert(
--            run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false) == 0,
--            "Cannot set VQ info");
-+        if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
-+            puts("Cannot set VQ info");
-+            return -EIO;
-+        }
-     }
- 
-     status |= VIRTIO_CONFIG_S_DRIVER_OK;
--    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
--    IPL_assert(rc == 0, "Could not write DRIVER_OK status to host");
-+    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
-+        puts("Could not write DRIVER_OK status to host");
-+        return -EIO;
-+    }
++#define SYSCLK_HZ 200000000
++#define CLKCTL0_NAME "/machine/soc/clkctl0"
++#define CLKCTL1_NAME "/machine/soc/clkctl1"
 +
-+    return 0;
- }
++static void pscctl_test(gconstpointer user_data)
++{
++    /* rom controller clock should be enabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, ROM_CTRLR_CLK) == 1);
++
++    /* DSP clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
++
++    /* check PSCTL_SET functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_SET, DSP_CLK, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 1);
++
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_CLR, DSP_CLK, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
++
++    /* FLEXIO clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
++
++    /* check PSCTL_SET functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_SET, FlexIO, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 1);
++
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_CLR, FlexIO, 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
++}
++
++static void audiopll0pfd_test(gconstpointer user_data)
++{
++    /*  audio plls are gated at boot */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE) == 1);
++
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 0);
++
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE, 0);
++
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 1);
++}
++
++static void syspll0pfd_test(gconstpointer user_data)
++{
++    /*  system plls are gated at boot */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE) == 1);
++
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 0);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 0);
++
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE, 0);
++
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 1);
++    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 1);
++}
++
++static void systick_clk_test(gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"), ==, 0);
++
++    /* select divout no divisor */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_DIVOUT);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, SYSCLK_HZ);
++
++    /* change divisor to 2 */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKDIV, DIV, 1);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, SYSCLK_HZ / 2);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_LPOSC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, LPOSC_CLK_HZ);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_32KHZRTC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, RTC32KHZ_CLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                      SYSTICKFCLKSEL_NONE);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
++                     ==, 0);
++}
++
++static void ostimer_clk_test(gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_LPOSC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     LPOSC_CLK_HZ);
++
++    /* select 32khz RTC */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_32KHZRTC);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     RTC32KHZ_CLK_HZ);
++
++    /* select hclk */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_HCLK);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
++                     SYSCLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                      OSEVENTTFCLKSEL_NONE);
++    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_data_func("/rt500-clkctl/pscctl-test", NULL, pscctl_test);
++    qtest_add_data_func("/rt500-clkctl/syspll0pfd-test", NULL,
++                        syspll0pfd_test);
++    qtest_add_data_func("/rt500-clkctl/audiopll0pfd-test", NULL,
++                        audiopll0pfd_test);
++    g_test_add_data_func("/rt500-clkctl/systick-test", NULL,
++                         systick_clk_test);
++    g_test_add_data_func("/rt500-clkctl/ostimer-clk-test", NULL,
++                         ostimer_clk_test);
++
++    qtest_start("-M rt595-evk");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index d3bf33b855..1a2d2ca3e1 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -234,6 +234,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test', 'flexcomm-i2c-test', 'flexcomm-spi-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_RT500_CLKCTL') ? ['rt500-clkctl-test'] : []) + \
+   ['arm-cpu-features',
+    'boot-serial-test']
  
- bool virtio_is_supported(SubChannelId schid)
 -- 
-2.45.1
+2.47.0.rc0.187.ge670bccf7e-goog
 
 
