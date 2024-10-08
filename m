@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12EBACED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA5FCED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyuo-0007qZ-D3; Mon, 07 Oct 2024 21:21:30 -0400
+	id 1sxysf-0007lO-P3; Mon, 07 Oct 2024 21:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com>)
- id 1sxyt6-0000c9-Ax
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:44 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ <3fogEZwUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
+ id 1sxysM-0007Vj-Tg
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:18:59 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com>)
- id 1sxyt3-0000HA-R1
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:44 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-71e11abb22aso518153b3a.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:41 -0700 (PDT)
+ <3fogEZwUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
+ id 1sxysK-00006c-F6
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:18:58 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-6e251ba2243so63851307b3.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350380; x=1728955180; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=49FquaWPsQCXDvZ+9iOGQgsSq0aM4lH+3lh+RTdFI2o=;
- b=ZbGg8t+qbV8sonNVz0B5vAy1Q0OrO5tMy1xHL4d5DTHJstdZK0I3leAavZ7yUwJ5/K
- HzzcIG0Emk/za25DfQrPu4xxJWzP9b5d8Apai9CO3wWRVSCIG8/rv2QWPVH0csLuYVcm
- GMh2PhjyZ1COo381ynQF4BUECvcjCRnXXiQCR33b4NvfKLEPB8h2qZ10uDfkUG0o1IKH
- hUFSpHWyeuCGAEyfwZA8w5r8JBMFwesiVKsC9vGt0ByRTH1sx88VE+OIZA9uC3061nx/
- jBeEqqvcyqYy1S9CQEi/lp0TNLawL8sa0N6AJsf7O0qu9ccT1m5CUfliHJ7j6/Qshbqd
- nHlQ==
+ d=google.com; s=20230601; t=1728350335; x=1728955135; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=e/sYozCpm0AUnUMW26eV/Tr3M4dtso2PXNjHQLd3lMs=;
+ b=m8YTIvDvsRWUeP7TuZNYFBSgZriIU5cqXJRhQiudWHe/pgRXQAxbGGKr5w6eZ0JD5J
+ Na7cuFRCbDcIklxkbGFIoqRj1N4TE337hQfN5F/RCSqknavt0FsRoU4Mmszbk3e2qODU
+ TlavzN51rqJlNXMNxMTLv1XGG8IOUFI5hX/5z5Erckg3Iyxpg0EkfOQUnbsxs5KZ/OIh
+ 0pYwNbUx1zGa0fHNZEkpC+/4VzqpVHrTu+mEHZVn2B9ZwqvqjzzKPWRVp7gJxA3ZVkgD
+ ylJgdnAqYaoFeoqXrU7HdhgR5mHwWHh1Ffa9DO5gmpE0VxfHc0gRqnU0VdL7V4Z7G+ee
+ ArtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350380; x=1728955180;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=49FquaWPsQCXDvZ+9iOGQgsSq0aM4lH+3lh+RTdFI2o=;
- b=kN7aUTSKEOpU4Gf12JSfxUUo4KvXdTkpD1YnXJrcZIgtKaFYrnqRnCLTz3m/EMPatc
- M87MVvbvq4GyxhvvM56bNu/8/BiK5PFeSjUT7IORxyPRVT7y2F/P6A/mHKzpn+tRc4cS
- Okj8kIzsbHhjGCKA9gWHR4oDz3CALEq2ZX8NCW94UjzqgagO1c4IXbQHav0+VLmuytBl
- ix4c2NON2PyFSJkSD56hMW6ngpk7X101z00MZm9qxh/8Wt9SmG7yB+QtBXNcHY9fohCs
- /9/J5XAjyVEna5cc5I/7OzVpQycaQyJnTRYKF3kejTFjezvBUP++EeJ+YTiZ9mt9ILUF
- pTKQ==
-X-Gm-Message-State: AOJu0Yz7/DheuOcfHVxyQ9dpJkLQMcS+MIAIWKnEK9rRn2Z/gDcoLE6C
- 9kcr/Kve4s3A7jtzeULvdr1gRMjnLIjvKX62h8SsN7wa72QzlULbTHKjS1zqY6YS0j3v7Z/4VcH
- 69kYiezcxHmtTzUuPS78mJSysypWfB+tbeCY+TVHGgy4CXfohyVvlj7VGGGbRWEAbnIxDRdoCjm
- 1KEOQb3tCgXPa1sWYNyxmyYTfyNQ==
-X-Google-Smtp-Source: AGHT+IHJH7MDeTk7Nh7rloj7vbrxdaiHNNx6zsfSUnM9QveGoJqzgfjpJEuaUwn1zp3dxVmynOyZGpE3ag==
+ d=1e100.net; s=20230601; t=1728350335; x=1728955135;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=e/sYozCpm0AUnUMW26eV/Tr3M4dtso2PXNjHQLd3lMs=;
+ b=Q8piRkWe9kDPeOIuq0eWe+yEpGQM8Qw740jdJ1+IQ1Aokd+Qub8r4hX+AtsSkHPq5h
+ OvHaRLPjKMAI0L5n97EEK5d7/Yv3jTCiPctoEHWnzJTfLo3dfirmDGNmhLoADHaeLcAu
+ TNw8pSI29hL0cF3znwEx9vYIDcaigsUZe8Rwu6gt9A8u5nIP0l928Alrmx+C9s0bW3QO
+ PA50DhnEbebCRAfYJ1TgHvTKuBrSuAz3LYsbVtmLU/bK5jd0XlyM2UTkzswP21kQriPF
+ jIqsI0Jb7vbsgULdRRNoLtLg7aTGT/uAvnNWnPQ4/UghNyUnTeZAS4uAQMQvB14gWX71
+ UQuQ==
+X-Gm-Message-State: AOJu0YzSwtheirGaysV/Xz9S7tcGvuuGNjJU9mrNuAU71qXoghtCe87a
+ XydREUyacdd37+ii0S7uvWXDpBxtTsLMWwXUK9oSjba03DyNbH26I/lnSdosbEF2ThDXFL0RynU
+ j1JANGtMBZimM8EK60vKoyQqsRw/j22psYd2VRj6gYkqYeFlNmO23wC2HQvTbZSPjX0U//1QvMA
+ 2jnmlUF680wjiVM/bK8jLnEQKOIA==
+X-Google-Smtp-Source: AGHT+IE3GycGPOK7hbEi2gcW7gNqIjpl0yWA5uXvt3wxwOvmw7K06001dQa21RlWYRWXkyuA1WI6c0FMLA==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a00:324b:b0:71d:eb98:7341
+ (user=tavip job=sendgmr) by 2002:a05:690c:5a09:b0:6e2:c1c7:ec27
  with SMTP id
- d2e1a72fcca58-71deb987431mr22279b3a.2.1728350379687; Mon, 07 Oct 2024
- 18:19:39 -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:51 -0700
-In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
+ 00721157ae682-6e30de949dbmr27107b3.1.1728350334199; Mon, 07 Oct 2024 18:18:54
+ -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:26 -0700
 Mime-Version: 1.0
-References: <20241008011852.1439154-1-tavip@google.com>
 X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-26-tavip@google.com>
-Subject: [PATCH v2 25/25] tests/qtest: add tests for RT500's clock controller
+Message-ID: <20241008011852.1439154-1-tavip@google.com>
+Subject: [PATCH v2 00/25] NXP i.MX RT595
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,9 +70,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3q4gEZwUKCg47o9w3u22uzs.q204s08-rs9sz121u18.25u@flex--tavip.bounces.google.com;
- helo=mail-pf1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3fogEZwUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,229 +95,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test to exercise clocks set and clear, system PLL initialization,
-audio PLL initialization, systick and ostimer clock source selection.
+This patch set adds support for NXP's RT500 MCU [1] and the RT595
+EVK[2]. More RT500 device models will be submitted in future patch sets.
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
----
- tests/qtest/rt500-clkctl-test.c | 195 ++++++++++++++++++++++++++++++++
- tests/qtest/meson.build         |   1 +
- 2 files changed, 196 insertions(+)
+This is a minimal patch set that allows running the NXP MCU SDK hello
+world example[4].
+
+The patch set introduces a (python) tool that generates C header files
+from ARM SVD files[3]. This significantly reduces the effort to write
+a new device model by automatically generating: register definitions
+and layout (including bit fields), register names for easier debugging
+and tracing, reset register values, register write masks, etc.
+
+The generated files are commited and not generated at compile
+time. Build targets are created so that they can be easily regenerated
+if needed.
+
+Changes since v1:
+
+ * svd_gen_header: remove field values generation for 1 bit fields,
+   add options to control which registers and fields to be generated,
+   switch to using defines instead of enums for field values with more
+   than 1 bit
+ * i2c-tester: document the rationale and basic functionality in the
+   header
+
+Changes since RFC v3:
+ * rewrite the flexcomm devices to take advantage of QEMU's object
+   model / class inheritance and overlapped memory region and remove
+   the adhoc flexcomm APIs
+ * remove code duplication by using common fifo functions for USART
+   and SPI
+ * fix copyright in one of the headers
+ * remove hw/registerfields.h from generated headers as hw/register.h
+   is already included
+ * fix signed off email address for the qtests API patches
+ * fix description (tests/unit -> tests/qtest) for RT500 clock
+   controller tests
+ * convert devices to use the Resettable interfaces
+ * add support for migration
+ * rework the fifo32 tests on top of Mark's and Phillippe's work
+
+Changes since RFC v2:
+ * convert tests from unit to qtest
+ * move i2c and spi testers from unit tests to hw/misc devices
+ * switch to using RegisterAccessInfo to generate register information
+   like register names, reset values, or read-only mask
+ * use register_write instead of adding a new reg32_write API
+ * remove reg32_aligned_access completly and rely on memops access
+   constraints and size of access for alignment checks
+ * add qtest APIs for checking memory access faulires
+ * add qtest APIs for accessing the device clock frequency
+ * fix bugs detected by address sanitizers
+
+Changes since RFC v1:
+ * setup scripts/git.orderfile
+ * svd_gen_header: add support for multi line comments
+ * svd_gen_header: use qemu register fields instead of bitfields
+ * svd_gen_header: generate register write mask array
+ * add mcux-soc-svd as a subproject instead of commiting the rt595 SVD
+   file directly
+ * svd generated headers: don't generate them at compile time, instead
+   commit the generated headers and create compile targets so that it is
+   easy to regenerate them
+ * remove pysvd dependency; developers who need to (re)generate svd
+   headers need to have it installed on the host machine
+ * use DEFINE_TYPES where possible
+ * use g_strdup_printf where possible
+ * reduce iterator variables scopes
+ * hard code rt500 to use the cortex-m33
+ * use static for local arrays initializers
+ * remove rt500 properties as they are not yet used
+ * drop private/public comments
+ * remove unused headers
+ * free rt500 mem regions in rt500_unrealize() instead of
+   rt500_finalize
+ * use memops access constraints where possible instead of
+   reg32_aligned_access
+ * flexspi: use 64bit properties for mmap_size property
+ * rstctl: use a generic abstract type and remove the  "num" property
+ * flexspi: don't call get_system_memory() directly and remove
+   mmap_base property
+
+[1] https://www.nxp.com/docs/en/data-sheet/IMXRT500EC.pdf
+[2] https://www.nxp.com/webapp/Download?colCode=MIMXRT595EVKHUG
+[3] https://arm-software.github.io/CMSIS_5/SVD/html/index.html
+[4] Building and running the NXP MCU SDK hello world example
+
+    Clone the following git repos:
+
+    https://github.com/nxp-mcuxpresso/cmsis.git,
+    https://github.com/nxp-mcuxpresso/mcux-sdk.git
+    https://github.com/nxp-mcuxpresso/mcux-sdk-examples.git
+
+    in the following directories: CMSIS, core, examples.
+
+    cd examples/evkmimxrt595/demo_apps/hello_world/armgcc
+
+    ARMGCC_DIR=/usr CFLAGS=-I../../../../../CMSIS/CMSIS/Core/Include \
+      sh build_flash_debug.sh
+
+    qemu-system-arm --machine rt595-evk -kernel flash_debug/hello_world.elf \
+      -global armv7m.init-nsvtor=0x08001000 -global armv7m.init-svtor=0x08001000 \
+      -chardev stdio,id=flexcomm0
+
+Octavian Purdila (22):
+  fifo32: add peek function
+  tests/unit: add fifo32 tests
+  Add mcux-soc-svd subproject
+  hw/misc: add support for flexcomm
+  hw/misc/flexcomm.c: add common fifo functionality
+  hw/char: add support for flexcomm usart
+  hw/i2c: add support for flexcomm i2c
+  hw/misc: add support for RT500's clock controller
+  hw/ssi: add support for flexspi
+  hw/misc: add support for RT500's reset controller
+  hw/arm: add basic support for the RT500 SoC
+  hw/arm: add RT595-EVK board
+  tests/qtest: add register access macros and functions
+  system/qtest: add APIS to check for memory access failures
+  tests/qtest: add flexcomm tests
+  tests/qtest: add flexcomm usart tests
+  hw/misc: add i2c-tester
+  tests/qtest: add tests for flexcomm i2c
+  hw/ssi: allow NULL realize callbacks for peripherals
+  hw/misc: add spi-tester
+  systems/qtest: add device clock APIs
+  tests/qtest: add tests for RT500's clock controller
+
+Sebastian Ene (2):
+  hw/ssi: add support for flexcomm spi
+  tests/qtest: add tests for flexcomm spi
+
+Stefan Stanacar (1):
+  scripts: add script to generate C header files from SVD XML files
+
+ meson.build                                   |    4 +
+ include/hw/arm/rt500.h                        |   44 +
+ include/hw/arm/svd/flexcomm.h                 |   70 ++
+ include/hw/arm/svd/flexcomm_i2c.h             |  229 ++++
+ include/hw/arm/svd/flexcomm_spi.h             |  327 +++++
+ include/hw/arm/svd/flexcomm_usart.h           |  294 +++++
+ include/hw/arm/svd/flexspi.h                  | 1085 +++++++++++++++++
+ include/hw/arm/svd/rt500.h                    |   63 +
+ include/hw/arm/svd/rt500_clkctl0.h            |  509 ++++++++
+ include/hw/arm/svd/rt500_clkctl1.h            |  675 ++++++++++
+ include/hw/arm/svd/rt500_rstctl0.h            |  110 ++
+ include/hw/arm/svd/rt500_rstctl1.h            |  110 ++
+ include/hw/char/flexcomm_usart.h              |   33 +
+ include/hw/i2c/flexcomm_i2c.h                 |   40 +
+ include/hw/misc/flexcomm.h                    |   57 +
+ include/hw/misc/flexcomm_function.h           |   55 +
+ include/hw/misc/i2c_tester.h                  |   43 +
+ include/hw/misc/rt500_clk_freqs.h             |   18 +
+ include/hw/misc/rt500_clkctl0.h               |   35 +
+ include/hw/misc/rt500_clkctl1.h               |   36 +
+ include/hw/misc/rt500_rstctl.h                |   32 +
+ include/hw/misc/spi_tester.h                  |   32 +
+ include/hw/qdev-clock.h                       |   10 +
+ include/hw/ssi/flexcomm_spi.h                 |   36 +
+ include/hw/ssi/flexspi.h                      |   31 +
+ include/qemu/fifo32.h                         |   28 +
+ tests/qtest/libqtest-single.h                 |  116 ++
+ tests/qtest/libqtest.h                        |   98 ++
+ tests/qtest/reg-utils.h                       |   70 ++
+ hw/arm/rt500.c                                |  329 +++++
+ hw/arm/rt595-evk.c                            |   64 +
+ hw/char/flexcomm_usart.c                      |  288 +++++
+ hw/core/qdev-clock.c                          |    2 +-
+ hw/i2c/flexcomm_i2c.c                         |  250 ++++
+ hw/misc/flexcomm.c                            |  411 +++++++
+ hw/misc/i2c_tester.c                          |  109 ++
+ hw/misc/rt500_clkctl0.c                       |  253 ++++
+ hw/misc/rt500_clkctl1.c                       |  238 ++++
+ hw/misc/rt500_rstctl.c                        |  258 ++++
+ hw/misc/spi_tester.c                          |   67 +
+ hw/ssi/flexcomm_spi.c                         |  422 +++++++
+ hw/ssi/flexspi.c                              |  181 +++
+ hw/ssi/ssi.c                                  |    4 +-
+ system/qtest.c                                |   95 +-
+ tests/qtest/flexcomm-i2c-test.c               |  170 +++
+ tests/qtest/flexcomm-spi-test.c               |  145 +++
+ tests/qtest/flexcomm-test.c                   |   82 ++
+ tests/qtest/flexcomm-usart-test.c             |  316 +++++
+ tests/qtest/libqtest.c                        |  102 +-
+ tests/qtest/rt500-clkctl-test.c               |  195 +++
+ tests/unit/test-fifo.c                        |   50 +
+ hw/arm/Kconfig                                |   12 +
+ hw/arm/meson.build                            |    4 +
+ hw/arm/svd/meson.build                        |   43 +
+ hw/char/meson.build                           |    1 +
+ hw/char/trace-events                          |    8 +
+ hw/i2c/meson.build                            |    1 +
+ hw/i2c/trace-events                           |   10 +
+ hw/misc/Kconfig                               |   21 +
+ hw/misc/meson.build                           |    7 +
+ hw/misc/trace-events                          |   18 +
+ hw/ssi/Kconfig                                |    4 +
+ hw/ssi/meson.build                            |    2 +
+ hw/ssi/trace-events                           |    9 +
+ meson_options.txt                             |    3 +
+ scripts/meson-buildoptions.sh                 |    4 +
+ scripts/svd-gen-header.py                     |  415 +++++++
+ subprojects/.gitignore                        |    1 +
+ subprojects/mcux-soc-svd.wrap                 |    5 +
+ .../packagefiles/mcux-soc-svd/meson.build     |    5 +
+ tests/qtest/meson.build                       |    3 +
+ 71 files changed, 8875 insertions(+), 22 deletions(-)
+ create mode 100644 include/hw/arm/rt500.h
+ create mode 100644 include/hw/arm/svd/flexcomm.h
+ create mode 100644 include/hw/arm/svd/flexcomm_i2c.h
+ create mode 100644 include/hw/arm/svd/flexcomm_spi.h
+ create mode 100644 include/hw/arm/svd/flexcomm_usart.h
+ create mode 100644 include/hw/arm/svd/flexspi.h
+ create mode 100644 include/hw/arm/svd/rt500.h
+ create mode 100644 include/hw/arm/svd/rt500_clkctl0.h
+ create mode 100644 include/hw/arm/svd/rt500_clkctl1.h
+ create mode 100644 include/hw/arm/svd/rt500_rstctl0.h
+ create mode 100644 include/hw/arm/svd/rt500_rstctl1.h
+ create mode 100644 include/hw/char/flexcomm_usart.h
+ create mode 100644 include/hw/i2c/flexcomm_i2c.h
+ create mode 100644 include/hw/misc/flexcomm.h
+ create mode 100644 include/hw/misc/flexcomm_function.h
+ create mode 100644 include/hw/misc/i2c_tester.h
+ create mode 100644 include/hw/misc/rt500_clk_freqs.h
+ create mode 100644 include/hw/misc/rt500_clkctl0.h
+ create mode 100644 include/hw/misc/rt500_clkctl1.h
+ create mode 100644 include/hw/misc/rt500_rstctl.h
+ create mode 100644 include/hw/misc/spi_tester.h
+ create mode 100644 include/hw/ssi/flexcomm_spi.h
+ create mode 100644 include/hw/ssi/flexspi.h
+ create mode 100644 tests/qtest/reg-utils.h
+ create mode 100644 hw/arm/rt500.c
+ create mode 100644 hw/arm/rt595-evk.c
+ create mode 100644 hw/char/flexcomm_usart.c
+ create mode 100644 hw/i2c/flexcomm_i2c.c
+ create mode 100644 hw/misc/flexcomm.c
+ create mode 100644 hw/misc/i2c_tester.c
+ create mode 100644 hw/misc/rt500_clkctl0.c
+ create mode 100644 hw/misc/rt500_clkctl1.c
+ create mode 100644 hw/misc/rt500_rstctl.c
+ create mode 100644 hw/misc/spi_tester.c
+ create mode 100644 hw/ssi/flexcomm_spi.c
+ create mode 100644 hw/ssi/flexspi.c
+ create mode 100644 tests/qtest/flexcomm-i2c-test.c
+ create mode 100644 tests/qtest/flexcomm-spi-test.c
+ create mode 100644 tests/qtest/flexcomm-test.c
+ create mode 100644 tests/qtest/flexcomm-usart-test.c
  create mode 100644 tests/qtest/rt500-clkctl-test.c
+ create mode 100644 hw/arm/svd/meson.build
+ create mode 100755 scripts/svd-gen-header.py
+ create mode 100644 subprojects/mcux-soc-svd.wrap
+ create mode 100644 subprojects/packagefiles/mcux-soc-svd/meson.build
 
-diff --git a/tests/qtest/rt500-clkctl-test.c b/tests/qtest/rt500-clkctl-test.c
-new file mode 100644
-index 0000000000..d5b83d81da
---- /dev/null
-+++ b/tests/qtest/rt500-clkctl-test.c
-@@ -0,0 +1,195 @@
-+/*
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/main-loop.h"
-+#include "exec/memory.h"
-+#include "hw/clock.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/qdev-properties.h"
-+
-+#include "hw/misc/rt500_clkctl0.h"
-+#include "hw/misc/rt500_clkctl1.h"
-+#include "hw/misc/rt500_clk_freqs.h"
-+#include "hw/arm/svd/rt500.h"
-+#include "reg-utils.h"
-+
-+#define SYSCLK_HZ 200000000
-+#define CLKCTL0_NAME "/machine/soc/clkctl0"
-+#define CLKCTL1_NAME "/machine/soc/clkctl1"
-+
-+static void pscctl_test(gconstpointer user_data)
-+{
-+    /* rom controller clock should be enabled at reset */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, ROM_CTRLR_CLK) == 1);
-+
-+    /* DSP clk is disabled at reset */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
-+
-+    /* check PSCTL_SET functionality */
-+    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_SET, DSP_CLK, 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 1);
-+
-+    /* check PSCTL_CLR functionality */
-+    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL0, PSCCTL0_CLR, DSP_CLK, 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
-+
-+    /* FLEXIO clk is disabled at reset */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
-+
-+    /* check PSCTL_SET functionality */
-+    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_SET, FlexIO, 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 1);
-+
-+    /* check PSCTL_CLR functionality */
-+    REG32_WRITE_FIELD_NOUPDATE(RT500_CLKCTL1, PSCCTL0_CLR, FlexIO, 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
-+}
-+
-+static void audiopll0pfd_test(gconstpointer user_data)
-+{
-+    /*  audio plls are gated at boot */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE) == 1);
-+
-+    /*  ,,, and clocks are not ready */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 0);
-+
-+    /* ungate all plls and check that clocks are ready */
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE, 0);
-+
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY) == 1);
-+}
-+
-+static void syspll0pfd_test(gconstpointer user_data)
-+{
-+    /*  system plls are gated at boot */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE) == 1);
-+
-+    /*  ,,, and clocks are not ready */
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 0);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 0);
-+
-+    /* ungate all plls and check that clocks are ready */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE, 0);
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE, 0);
-+
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY) == 1);
-+    g_assert(REG32_READ_FIELD(RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY) == 1);
-+}
-+
-+static void systick_clk_test(gconstpointer user_data)
-+{
-+    /* systick is not running at reset */
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"), ==, 0);
-+
-+    /* select divout no divisor */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
-+                      SYSTICKFCLKSEL_DIVOUT);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
-+                     ==, SYSCLK_HZ);
-+
-+    /* change divisor to 2 */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKDIV, DIV, 1);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
-+                     ==, SYSCLK_HZ / 2);
-+
-+    /* select lpsoc */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
-+                      SYSTICKFCLKSEL_LPOSC);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
-+                     ==, LPOSC_CLK_HZ);
-+
-+    /* select lpsoc */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
-+                      SYSTICKFCLKSEL_32KHZRTC);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
-+                     ==, RTC32KHZ_CLK_HZ);
-+
-+    /* disable clock */
-+    REG32_WRITE_FIELD(RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
-+                      SYSTICKFCLKSEL_NONE);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL0_NAME, "systick_clk"),
-+                     ==, 0);
-+}
-+
-+static void ostimer_clk_test(gconstpointer user_data)
-+{
-+    /* systick is not running at reset */
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
-+
-+    /* select lpsoc */
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
-+                      OSEVENTTFCLKSEL_LPOSC);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
-+                     LPOSC_CLK_HZ);
-+
-+    /* select 32khz RTC */
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
-+                      OSEVENTTFCLKSEL_32KHZRTC);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
-+                     RTC32KHZ_CLK_HZ);
-+
-+    /* select hclk */
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
-+                      OSEVENTTFCLKSEL_HCLK);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==,
-+                     SYSCLK_HZ);
-+
-+    /* disable clock */
-+    REG32_WRITE_FIELD(RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
-+                      OSEVENTTFCLKSEL_NONE);
-+    g_assert_cmpuint(dev_clock_out_get_hz(CLKCTL1_NAME, "ostimer_clk"), ==, 0);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_data_func("/rt500-clkctl/pscctl-test", NULL, pscctl_test);
-+    qtest_add_data_func("/rt500-clkctl/syspll0pfd-test", NULL,
-+                        syspll0pfd_test);
-+    qtest_add_data_func("/rt500-clkctl/audiopll0pfd-test", NULL,
-+                        audiopll0pfd_test);
-+    g_test_add_data_func("/rt500-clkctl/systick-test", NULL,
-+                         systick_clk_test);
-+    g_test_add_data_func("/rt500-clkctl/ostimer-clk-test", NULL,
-+                         ostimer_clk_test);
-+
-+    qtest_start("-M rt595-evk");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index d3bf33b855..1a2d2ca3e1 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -234,6 +234,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test', 'flexcomm-i2c-test', 'flexcomm-spi-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_RT500_CLKCTL') ? ['rt500-clkctl-test'] : []) + \
-   ['arm-cpu-features',
-    'boot-serial-test']
- 
 -- 
 2.47.0.rc0.187.ge670bccf7e-goog
 
