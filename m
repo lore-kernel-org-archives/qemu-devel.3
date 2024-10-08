@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99BDCED270
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E52ECED270
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy46A-0004AW-Mv; Tue, 08 Oct 2024 02:53:34 -0400
+	id 1sy46f-00053S-Mk; Tue, 08 Oct 2024 02:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sy45z-00046J-OR; Tue, 08 Oct 2024 02:53:24 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sy46d-000532-T4
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:54:03 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sy45x-0006i7-Rn; Tue, 08 Oct 2024 02:53:23 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7e9ff6fb4c6so3409524a12.3; 
- Mon, 07 Oct 2024 23:53:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sy46b-0006jX-05
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:54:02 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-71e10ae746aso487916b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 23:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728370399; x=1728975199; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yl9wVhYdYzr0dbvFnE/KpqC4pyrVnkoW5bYQFuOcopg=;
- b=LediI65aKEnX/xLfwTVZyipfpTrrIF97+tplZVldswPqyox14JLLQtXPaXDjLX9i5/
- kYt5bNaedJ0POHCyJco1G3oULbyQPWzOdt1sPuAn+3+4g9sRQaYMW7yEbK/TYUVqdzLL
- B7GF/kvZqXLMT1pvcNChZS4T9t/iC2snSzPMjiTIIDIru0ckrHbqSKnnCUzsWnurjgyh
- UJWrqlrb+p2vIT4NYllcG3aR1T3QBj8+O3vqhYk3/LNqTcN89m+COD1HjxLhx1iaqe12
- ZJ3UYABEBaGkntb2J7W/Fgw0GDskWISos88V033KzocK0SKiuG2pkQ+Uxu6cHkO7rnAk
- Si/A==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728370439; x=1728975239;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eoKeg070ISHJdTi0tJlsnTrJcindlp2xNxO1qtraMEs=;
+ b=awaL+wCdMi9x6XWtd4u/qiqVXaURvA43ToikPgd48A8IOJQs4aBtEc3pZM33R9np/1
+ n8Wxaxknr2ejL1/ECZPalwDNYjj5eQLzDTWqMPJAc5m7ojalAkNooEfxI+c9PJF3+j3X
+ sGnyHWGeQDeKBJ6uCfHbZnP/vinUB9tnXNSwpRztmDWKc3Z3R0/pxfyvHC3s8f3xjmVv
+ qah9vkwj0fOkiZKSM5DQmznmqQcrkhZaEMZLpVU/O0UtZ6Jlg4cVFVXTgVneTp2ZXv/9
+ F4rhM6hWa6IRGsNIjEBpv9/DECYbEbiV3MhXt3Y0GLbjxwvHj9EkigQm4zUooe4IIKGj
+ q6xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728370399; x=1728975199;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=yl9wVhYdYzr0dbvFnE/KpqC4pyrVnkoW5bYQFuOcopg=;
- b=OZir6J4Jh9rZt5tPDAZdedSPpW+vOIPpWXrTLeh2arabAGjM4YTTSJJUTqzb0Bttbu
- iTBWXlmsU1rY5vOSnQ+vPL/sSdoAV32wLLPn5qVPSoi+WBYZjcURWrXWGeP/kggoQCMR
- ZKk2NnqI0zquzkpx5wW+yFt8Z2hnzHR/mYya2NP0l2OMl//82xF2CbP9pkxF7dAuxsnT
- vMtknRQyZaQqLxpj2Jyi7sm3LYhzslKBXxIhFR/Kw/7qi3/vr5yinahD7HQWlwixT/nn
- FQM4ShOLdcFXPFEJESPDZyl8Sb1hX771wD+i3W1j/OxSMkYt/o20vqbFMiBTTDl9cV5z
- FTKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIRJWdBFwEUhjilBvCUYsjwzT+Q9ss2+DLfCQBNqfiSA8qL6ojKvQIjRGJ7eFYE3Xc8KeWafSgkaU3@nongnu.org
-X-Gm-Message-State: AOJu0Yz/0YNoizj5mg47C1mr60f+LTG7OyNn2leK3PY8idWK31umJyGL
- fTsvc7wI/pE43IlIYcT48fKjH7wX3fwIGOxGFDUwns13hOglsZ06TIDZSA==
-X-Google-Smtp-Source: AGHT+IGZSP/uWhV0S4GQKMUGWPIvR7EL57D1jVX5BMQ3q0M43TqZ7Lj/gzkZnhDgAT8W8yqNMmdPLQ==
-X-Received: by 2002:a17:90a:b015:b0:2e1:ce67:5d2e with SMTP id
- 98e67ed59e1d1-2e1e6213b03mr21534307a91.5.1728370399474; 
- Mon, 07 Oct 2024 23:53:19 -0700 (PDT)
-Received: from localhost ([118.210.103.101]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e20af65b7asm6734628a91.34.2024.10.07.23.53.17
+ d=1e100.net; s=20230601; t=1728370439; x=1728975239;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eoKeg070ISHJdTi0tJlsnTrJcindlp2xNxO1qtraMEs=;
+ b=pI+HuGcQLd1BG/5x3ws5/RYdlW+jJAxsWm0oOh4VjUyg1oY3FLBA2IGpaua/pFU3Jv
+ 4+ZKBSMeYpYRnDjMXZb8eFmerDihuXwiwJjS6ZUVkUxxRo/cN4P80RoH5hO+kUlLXkgc
+ Scz3MHwbxPtLjCIxQXToXR4kvfi020+XmU5Jk2dkAR2qPuIImSZ8a4ygKftiIlso/ih6
+ ZPhHiXhozst+PITSoz8l5Q//4vGPe71QWWbUCb5AX3Sg0VZIR/50xU5zDm5AA2bgjVNN
+ oouIFaJD8MBpxNcvfWf82no0yrG7+q7PFK/55skwUhi8kczjufr7oxPFL+i0TT+Y1UEq
+ Cq3Q==
+X-Gm-Message-State: AOJu0Yx0yZEslNzBnP4wn535LF5jqPyutGOvz77TGODl0NRd1kpGYzme
+ /IbxsG05sKIZHjtG0Cl8cfOz3p9NOP5xI4++YbWuDBVjZCqDYc2NSQh/OhFR5VI=
+X-Google-Smtp-Source: AGHT+IFkg7LM3GtggujQctyGN5nmDTCn5B5yK6X34+qMOMPtcTihDN+HDDxKypnaacYuWFvfzYJOKQ==
+X-Received: by 2002:a05:6a00:1149:b0:70e:a42e:3417 with SMTP id
+ d2e1a72fcca58-71de23c7d54mr23334480b3a.10.1728370439445; 
+ Mon, 07 Oct 2024 23:53:59 -0700 (PDT)
+Received: from localhost ([157.82.207.107])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-71df0cccab2sm5459218b3a.58.2024.10.07.23.53.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 23:53:19 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 08 Oct 2024 16:53:15 +1000
-Message-Id: <D4Q8666EZOP0.14XMUHAKLYHCU@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>
-Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>, <danielhb413@gmail.com>
-Subject: Re: [PATCH v3 09/10] target/ppc: simplify var usage in
- ppc_next_unmasked_interrupt
-X-Mailer: aerc 0.18.2
-References: <20240913041337.912876-1-harshpb@linux.ibm.com>
- <20240913041337.912876-10-harshpb@linux.ibm.com>
- <e09919a0-061d-90e0-8107-68e509ce08aa@eik.bme.hu>
-In-Reply-To: <e09919a0-061d-90e0-8107-68e509ce08aa@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Mon, 07 Oct 2024 23:53:59 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Tue, 08 Oct 2024 15:53:55 +0900
+Subject: [PATCH] dma: Fix dma_memory_map/dma_memory_unmap documentation
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241008-dma-v1-1-c439c0fc5f3a@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAALXBGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDAwML3ZTcRF0DIyPDNMvkVAsLSwsloMqCotS0zAqwKdGxtbUAUeTpy1U
+ AAAA=
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::431;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,181 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Sep 13, 2024 at 10:50 PM AEST, BALATON Zoltan wrote:
-> On Fri, 13 Sep 2024, Harsh Prateek Bora wrote:
-> > As previously done for arch specific handlers, simplify var usage in
-> > ppc_next_unmasked_interrupt by caching the env->pending_interrupts and
-> > env->spr[SPR_LPCR] in local vars and using it later at multiple places.
-> >
-> > Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > ---
-> > target/ppc/excp_helper.c | 54 ++++++++++++++++++++--------------------
-> > 1 file changed, 27 insertions(+), 27 deletions(-)
-> >
-> > diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> > index d0e0f609a0..4eeeedff5b 100644
-> > --- a/target/ppc/excp_helper.c
-> > +++ b/target/ppc/excp_helper.c
-> > @@ -2022,31 +2022,31 @@ static int p9_next_unmasked_interrupt(CPUPPCSta=
-te *env,
-> >
-> > static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-> > {
-> > +    uint32_t pending_interrupts =3D env->pending_interrupts;
-> > +    target_ulong lpcr =3D env->spr[SPR_LPCR];
-> > +    bool async_deliver;
->
-> Maybe easier to review if split into one patch for each variable added so=
-=20
-> it's easier to see what's replaced and that nothing is missed.
+Ensure the function names match.
 
-I'm happy to leave squashed since it's pretty simple search/replace
-with no logic change, and touching the same lines.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ include/sysemu/dma.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Thanks,
-Nick
+diff --git a/include/sysemu/dma.h b/include/sysemu/dma.h
+index a1ac5bc1b543..e132ece4510d 100644
+--- a/include/sysemu/dma.h
++++ b/include/sysemu/dma.h
+@@ -189,7 +189,7 @@ MemTxResult dma_memory_set(AddressSpace *as, dma_addr_t addr,
+                            uint8_t c, dma_addr_t len, MemTxAttrs attrs);
+ 
+ /**
+- * address_space_map: Map a physical memory region into a host virtual address.
++ * dma_space_map: Map a physical memory region into a host virtual address.
+  *
+  * May map a subset of the requested range, given by and returned in @plen.
+  * May return %NULL and set *@plen to zero(0), if resources needed to perform
+@@ -216,8 +216,7 @@ static inline void *dma_memory_map(AddressSpace *as,
+ }
+ 
+ /**
+- * address_space_unmap: Unmaps a memory region previously mapped
+- *                      by dma_memory_map()
++ * dma_space_unmap: Unmaps a memory region previously mapped by dma_memory_map()
+  *
+  * Will also mark the memory as dirty if @dir == %DMA_DIRECTION_FROM_DEVICE.
+  * @access_len gives the amount of memory that was actually read or written
 
->
-> Regards,
-> BALATON Zoltan
->
-> > +
-> > #ifdef TARGET_PPC64
-> >     switch (env->excp_model) {
-> >     case POWERPC_EXCP_POWER7:
-> > -        return p7_next_unmasked_interrupt(env, env->pending_interrupts=
-,
-> > -                                          env->spr[SPR_LPCR]);
-> > +        return p7_next_unmasked_interrupt(env, pending_interrupts, lpc=
-r);
-> >     case POWERPC_EXCP_POWER8:
-> > -        return p8_next_unmasked_interrupt(env, env->pending_interrupts=
-,
-> > -                                          env->spr[SPR_LPCR]);
-> > +        return p8_next_unmasked_interrupt(env, pending_interrupts, lpc=
-r);
-> >     case POWERPC_EXCP_POWER9:
-> >     case POWERPC_EXCP_POWER10:
-> >     case POWERPC_EXCP_POWER11:
-> > -        return p9_next_unmasked_interrupt(env, env->pending_interrupts=
-,
-> > -			                  env->spr[SPR_LPCR]);
-> > +        return p9_next_unmasked_interrupt(env, pending_interrupts, lpc=
-r);
-> >     default:
-> >         break;
-> >     }
-> > #endif
-> > -    bool async_deliver;
-> >
-> >     /* External reset */
-> > -    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
-> > +    if (pending_interrupts & PPC_INTERRUPT_RESET) {
-> >         return PPC_INTERRUPT_RESET;
-> >     }
-> >     /* Machine check exception */
-> > -    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
-> > +    if (pending_interrupts & PPC_INTERRUPT_MCK) {
-> >         return PPC_INTERRUPT_MCK;
-> >     }
-> > #if 0 /* TODO */
-> > @@ -2065,9 +2065,9 @@ static int ppc_next_unmasked_interrupt(CPUPPCStat=
-e *env)
-> >     async_deliver =3D FIELD_EX64(env->msr, MSR, EE) || env->resume_as_s=
-reset;
-> >
-> >     /* Hypervisor decrementer exception */
-> > -    if (env->pending_interrupts & PPC_INTERRUPT_HDECR) {
-> > +    if (pending_interrupts & PPC_INTERRUPT_HDECR) {
-> >         /* LPCR will be clear when not supported so this will work */
-> > -        bool hdice =3D !!(env->spr[SPR_LPCR] & LPCR_HDICE);
-> > +        bool hdice =3D !!(lpcr & LPCR_HDICE);
-> >         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hdice) {
-> >             /* HDEC clears on delivery */
-> >             return PPC_INTERRUPT_HDECR;
-> > @@ -2075,18 +2075,18 @@ static int ppc_next_unmasked_interrupt(CPUPPCSt=
-ate *env)
-> >     }
-> >
-> >     /* Hypervisor virtualization interrupt */
-> > -    if (env->pending_interrupts & PPC_INTERRUPT_HVIRT) {
-> > +    if (pending_interrupts & PPC_INTERRUPT_HVIRT) {
-> >         /* LPCR will be clear when not supported so this will work */
-> > -        bool hvice =3D !!(env->spr[SPR_LPCR] & LPCR_HVICE);
-> > +        bool hvice =3D !!(lpcr & LPCR_HVICE);
-> >         if ((async_deliver || !FIELD_EX64_HV(env->msr)) && hvice) {
-> >             return PPC_INTERRUPT_HVIRT;
-> >         }
-> >     }
-> >
-> >     /* External interrupt can ignore MSR:EE under some circumstances */
-> > -    if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
-> > -        bool lpes0 =3D !!(env->spr[SPR_LPCR] & LPCR_LPES0);
-> > -        bool heic =3D !!(env->spr[SPR_LPCR] & LPCR_HEIC);
-> > +    if (pending_interrupts & PPC_INTERRUPT_EXT) {
-> > +        bool lpes0 =3D !!(lpcr & LPCR_LPES0);
-> > +        bool heic =3D !!(lpcr & LPCR_HEIC);
-> >         /* HEIC blocks delivery to the hypervisor */
-> >         if ((async_deliver && !(heic && FIELD_EX64_HV(env->msr) &&
-> >             !FIELD_EX64(env->msr, MSR, PR))) ||
-> > @@ -2096,45 +2096,45 @@ static int ppc_next_unmasked_interrupt(CPUPPCSt=
-ate *env)
-> >     }
-> >     if (FIELD_EX64(env->msr, MSR, CE)) {
-> >         /* External critical interrupt */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_CEXT) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_CEXT) {
-> >             return PPC_INTERRUPT_CEXT;
-> >         }
-> >     }
-> >     if (async_deliver !=3D 0) {
-> >         /* Watchdog timer on embedded PowerPC */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_WDT) {
-> >             return PPC_INTERRUPT_WDT;
-> >         }
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_CDOORBELL) {
-> >             return PPC_INTERRUPT_CDOORBELL;
-> >         }
-> >         /* Fixed interval timer on embedded PowerPC */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_FIT) {
-> >             return PPC_INTERRUPT_FIT;
-> >         }
-> >         /* Programmable interval timer on embedded PowerPC */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_PIT) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_PIT) {
-> >             return PPC_INTERRUPT_PIT;
-> >         }
-> >         /* Decrementer exception */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_DECR) {
-> >             return PPC_INTERRUPT_DECR;
-> >         }
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-> >             return PPC_INTERRUPT_DOORBELL;
-> >         }
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_HDOORBELL) {
-> >             return PPC_INTERRUPT_HDOORBELL;
-> >         }
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_PERFM) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_PERFM) {
-> >             return PPC_INTERRUPT_PERFM;
-> >         }
-> >         /* Thermal interrupt */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_THERM) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_THERM) {
-> >             return PPC_INTERRUPT_THERM;
-> >         }
-> >         /* EBB exception */
-> > -        if (env->pending_interrupts & PPC_INTERRUPT_EBB) {
-> > +        if (pending_interrupts & PPC_INTERRUPT_EBB) {
-> >             /*
-> >              * EBB exception must be taken in problem state and
-> >              * with BESCR_GE set.
-> >
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20241008-dma-0221f9ce8898
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
