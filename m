@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B54CED274
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 07:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA35CED276
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 07:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy56L-0008Bb-IE; Tue, 08 Oct 2024 03:57:49 -0400
+	id 1sy56Y-0008Dq-B1; Tue, 08 Oct 2024 03:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56J-0008BN-JZ
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:57:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56W-0008Da-J1
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:58:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56I-0005ce-2i
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:57:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56V-0005dg-5V
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:58:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728374265;
+ s=mimecast20190719; t=1728374278;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OoKGs8l3xtjTx6L7BAWnBuTu46Zpy5iAyWVfPaiZqpc=;
- b=JeD2o0XD/kO37mFCfZtSj8PrryAjCQju6XafNfKKc64Da+qJl3wR1+TGLkNmkZhrzZd/yO
- Vj/a7AR7NOONTFTqy0wS/0nUNNAOWS2qdSxoiqwbn7849ewwVHF/A0B6Ru91gdlxq5Re4T
- lnrn1gY2OhKesnZeJL8/K0wecEpm2sw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=S5ZBYoXwkkM/UZtkbBXkrBJL7Uz5J4M57e6yKY+YW2U=;
+ b=KCr5V7kg8nEA/uvQIX+Zy4G2SwgKlwNZ/mb3eDLKUPZrMfaEVAh1ntL/sj7UiwMy1n1Csl
+ vTyDYazsTXHfbQ37xY+nTYd2pDgb1NQZdGLNqMEM97NEp5FtURZQljXfsAieK6xQdMEmsM
+ j9MwKoChXVKRRzPjwR7Qg31adMGn3TE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-yOENIQgmNAiedlXeIjAijQ-1; Tue,
- 08 Oct 2024 03:57:41 -0400
-X-MC-Unique: yOENIQgmNAiedlXeIjAijQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-lbiXZRYHPwm-2Be1T57Vaw-1; Tue,
+ 08 Oct 2024 03:57:55 -0400
+X-MC-Unique: lbiXZRYHPwm-2Be1T57Vaw-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 027EB19560A3; Tue,  8 Oct 2024 07:57:40 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1B751956069; Tue,  8 Oct 2024 07:57:53 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.61])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A70EB300018D; Tue,  8 Oct 2024 07:57:37 +0000 (UTC)
+ id A3D0D300018D; Tue,  8 Oct 2024 07:57:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	berrange@redhat.com
@@ -51,16 +51,16 @@ Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
  evan.burgess@seagate.com, peter.maydell@linaro.org,
  Alejandro Zeise <alejandro.zeise@seagate.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 04/16] crypto/hash-gnutls: Implement new hash API
-Date: Tue,  8 Oct 2024 09:57:11 +0200
-Message-ID: <20241008075724.2772149-5-clg@redhat.com>
+Subject: [PATCH v5 09/16] tests/unit/test-crypto-hash: accumulative hashing
+Date: Tue,  8 Oct 2024 09:57:16 +0200
+Message-ID: <20241008075724.2772149-10-clg@redhat.com>
 In-Reply-To: <20241008075724.2772149-1-clg@redhat.com>
 References: <20241008075724.2772149-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,120 +87,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-Implements the new hashing API in the gnutls hash driver.
-Supports creating/destroying a context, updating the context
-with input data and obtaining an output hash.
+Added an accumulative hashing test. Checks for functionality of
+the new hash create, update, finalize and free functions.
 
 Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-[ clg: - Dropped qcrypto_hash_supports() in qcrypto_gnutls_hash_new()
-       - Reworked qcrypto_gnutls_hash_finalize()
-       - Handled gnutls_hash_init() errors in qcrypto_gnutls_hash_new()
-       - Replaced gnutls_hash_deinit() by gnutls_hash_output() in
-         qcrypto_gnutls_hash_finalize()
-       - Freed resources with gnutls_hash_deinit() in
-         qcrypto_gnutls_hash_free() ]
+[ clg: - Improved test_hash_accumulate() with g_autofree variables ]
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- crypto/hash-gnutls.c | 78 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 78 insertions(+)
+ tests/unit/test-crypto-hash.c | 46 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/crypto/hash-gnutls.c b/crypto/hash-gnutls.c
-index 0636c0727a93..8b0327be82cf 100644
---- a/crypto/hash-gnutls.c
-+++ b/crypto/hash-gnutls.c
+diff --git a/tests/unit/test-crypto-hash.c b/tests/unit/test-crypto-hash.c
+index 124d204485d8..e5829ca766dc 100644
+--- a/tests/unit/test-crypto-hash.c
++++ b/tests/unit/test-crypto-hash.c
 @@ -1,6 +1,7 @@
  /*
   * QEMU Crypto hash algorithms
   *
 + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
-  * Copyright (c) 2021 Red Hat, Inc.
+  * Copyright (c) 2015 Red Hat, Inc.
   *
   * This library is free software; you can redistribute it and/or
-@@ -98,7 +99,84 @@ qcrypto_gnutls_hash_bytesv(QCryptoHashAlgo alg,
-     return 0;
+@@ -241,6 +242,50 @@ static void test_hash_base64(void)
+     }
  }
  
-+static
-+QCryptoHash *qcrypto_gnutls_hash_new(QCryptoHashAlgo alg, Error **errp)
++static void test_hash_accumulate(void)
 +{
-+    QCryptoHash *hash;
-+    int ret;
++    size_t i;
 +
-+    hash = g_new(QCryptoHash, 1);
-+    hash->alg = alg;
-+    hash->opaque = g_new(gnutls_hash_hd_t, 1);
++    for (i = 0; i < G_N_ELEMENTS(expected_outputs) ; i++) {
++        g_autoptr(QCryptoHash) hash = NULL;
++        struct iovec iov[] = {
++            { .iov_base = (char *)INPUT_TEXT1, .iov_len = strlen(INPUT_TEXT1) },
++            { .iov_base = (char *)INPUT_TEXT2, .iov_len = strlen(INPUT_TEXT2) },
++            { .iov_base = (char *)INPUT_TEXT3, .iov_len = strlen(INPUT_TEXT3) },
++        };
++        g_autofree uint8_t *result = NULL;
++        size_t resultlen = 0;
++        int ret;
++        size_t j;
 +
-+    ret = gnutls_hash_init(hash->opaque, qcrypto_hash_alg_map[alg]);
-+    if (ret < 0) {
-+        error_setg(errp,
-+                   "Unable to initialize hash algorithm: %s",
-+                   gnutls_strerror(ret));
-+        g_free(hash->opaque);
-+        g_free(hash);
-+        return NULL;
-+    }
++        if (!qcrypto_hash_supports(i)) {
++            continue;
++        }
 +
-+    return hash;
-+}
++        hash = qcrypto_hash_new(i, &error_fatal);
++        g_assert(hash != NULL);
 +
-+static
-+void qcrypto_gnutls_hash_free(QCryptoHash *hash)
-+{
-+    gnutls_hash_hd_t *ctx = hash->opaque;
++        /* Add each iovec to the hash context separately */
++        for (j = 0; j < G_N_ELEMENTS(iov); j++) {
++            ret = qcrypto_hash_updatev(hash,
++                                      &iov[j], 1,
++                                      &error_fatal);
 +
-+    gnutls_hash_deinit(*ctx, NULL);
-+    g_free(ctx);
-+    g_free(hash);
-+}
++            g_assert(ret == 0);
++        }
 +
++        ret = qcrypto_hash_finalize_bytes(hash, &result, &resultlen,
++                                          &error_fatal);
 +
-+static
-+int qcrypto_gnutls_hash_update(QCryptoHash *hash,
-+                               const struct iovec *iov,
-+                               size_t niov,
-+                               Error **errp)
-+{
-+    int ret = 0;
-+    gnutls_hash_hd_t *ctx = hash->opaque;
-+
-+    for (int i = 0; i < niov; i++) {
-+        ret = gnutls_hash(*ctx, iov[i].iov_base, iov[i].iov_len);
-+        if (ret != 0) {
-+            error_setg(errp, "Failed to hash data: %s",
-+                       gnutls_strerror(ret));
-+            return -1;
++        g_assert(ret == 0);
++        g_assert(resultlen == expected_lens[i]);
++        for (j = 0; j < resultlen; j++) {
++            g_assert(expected_outputs[i][j * 2] == hex[(result[j] >> 4) & 0xf]);
++            g_assert(expected_outputs[i][j * 2 + 1] == hex[result[j] & 0xf]);
 +        }
 +    }
-+
-+    return 0;
 +}
 +
-+static
-+int qcrypto_gnutls_hash_finalize(QCryptoHash *hash,
-+                                 uint8_t **result,
-+                                 size_t *result_len,
-+                                 Error **errp)
-+{
-+    gnutls_hash_hd_t *ctx = hash->opaque;
-+
-+    *result_len = gnutls_hash_get_len(qcrypto_hash_alg_map[hash->alg]);
-+    if (*result_len == 0) {
-+        error_setg(errp, "Unable to get hash length");
-+        return -1;
-+    }
-+
-+    *result = g_new(uint8_t, *result_len);
-+    gnutls_hash_output(*ctx, *result);
-+    return 0;
-+}
- 
- QCryptoHashDriver qcrypto_hash_lib_driver = {
-     .hash_bytesv = qcrypto_gnutls_hash_bytesv,
-+    .hash_new      = qcrypto_gnutls_hash_new,
-+    .hash_update   = qcrypto_gnutls_hash_update,
-+    .hash_finalize = qcrypto_gnutls_hash_finalize,
-+    .hash_free     = qcrypto_gnutls_hash_free,
- };
+ int main(int argc, char **argv)
+ {
+     int ret = qcrypto_init(&error_fatal);
+@@ -252,5 +297,6 @@ int main(int argc, char **argv)
+     g_test_add_func("/crypto/hash/prealloc", test_hash_prealloc);
+     g_test_add_func("/crypto/hash/digest", test_hash_digest);
+     g_test_add_func("/crypto/hash/base64", test_hash_base64);
++    g_test_add_func("/crypto/hash/accumulate", test_hash_accumulate);
+     return g_test_run();
+ }
 -- 
 2.46.2
 
