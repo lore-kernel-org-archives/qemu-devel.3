@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FF6CED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66089CED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxysn-0007tC-Ru; Mon, 07 Oct 2024 21:19:29 -0400
+	id 1sxyq5-0004Ft-Bl; Mon, 07 Oct 2024 21:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3f4gEZwUKCuAVCXKRIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--tavip.bounces.google.com>)
- id 1sxysQ-0007cD-FO
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:03 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3f4gEZwUKCuAVCXKRIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--tavip.bounces.google.com>)
- id 1sxysO-00006p-NB
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:02 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-71dfa361499so2100210b3a.0
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350337; x=1728955137; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=tX+6Z1PHnYxk320Y4l1d37qXLvaekBWmUkrZNyFnhQ0=;
- b=dbmY/ZCjpBKcnfie7FHk5Q4XREW4d0AptJVY+ZUQHuTYy8ax5kwtpdbdpBrfT/dPto
- gCfL4xLURjBI/XGpHdnv3uEX5IwoEzycP1/LqTI6U26Igs36HmvpOnDjpaf9JHN2jooj
- 4aNs2TswgWE/VnRHisRqPUxe2hKhV7q/0SaE7DBPV3SuzwyvHjlN4u8awvcosoz3ANSx
- 9uk9ARuHIvWSMKb0HBUZfmQQb03EqyY8o+0McglPlOk9LbWwwuhFSg8hswt12VdSXUGw
- TVt293mW22HU4nMSxC7jDDR11CGZ/5Qi0teN1rXk5Bx1PwmdODtYsUQhqP9UFxUFp98D
- QD5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350337; x=1728955137;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tX+6Z1PHnYxk320Y4l1d37qXLvaekBWmUkrZNyFnhQ0=;
- b=iDnRWt0/rvv/2mJvpxDCDzkD4gRmX8jHeuHUWJsv0Oj75bAQV2fBAWkUjwCxddlA1d
- uvlvH37QjR5tbqlrKRLxPgMr8c7TU9x9W1O0tjhtNJNte+k8tvortSItOJGyTTOmIbmE
- nNDB2ok3laoFtzC1Mffjnr2JVEqxsd/hh54IM9sciwSwXyvI/BNAvXgGETo+CRsuN4cX
- o8QjYr4a8lmo/BWH1T2qiWOJ+JGyuso9myFgzIiCC4yeyHKuqBMMYyYtlnjbXH2mS8SF
- zqmKPQxTIC/hLoNBbQilbU4CdwLo/0aCfTxlBJ4vIRCw9o4SXYOLa9b4Gt+dU8v4d6+O
- vk5w==
-X-Gm-Message-State: AOJu0Yzg3BkTAWy3Sejd495u5jVKR/GNeHLcfVNir9uCVtl/MeoG/VHX
- tdFqMjEU76U5BxGJFN64Hxz47KLvmbZGquEONES9BqtTAg1tBWT2GHS2pDDNO0sl6q5kM8xPJ6V
- 86bkCB9QEBz4wlp43PNSK5zx6ISH6MLknVc5SS9A7zEQK0VhXKWzJV8eq1xwHgfQe0r7D3gsV7r
- zKJ83JcqbRoy24wBWgiYtjh2CyrQ==
-X-Google-Smtp-Source: AGHT+IFcS0b2L6CwNcAuaaxIJ0yPVF1XIP3tgzQU+rGCAQO+Un5l5gv5AKJ7m2pQ1hJxX6pAHEEMx7pv1Q==
-X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a00:8c0b:b0:71d:ef26:2c6f
- with SMTP id
- d2e1a72fcca58-71def262d76mr15806b3a.1.1728350335998; Mon, 07 Oct 2024
- 18:18:55 -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:27 -0700
-In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
-Mime-Version: 1.0
-References: <20241008011852.1439154-1-tavip@google.com>
-X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-2-tavip@google.com>
-Subject: [PATCH v2 01/25] fifo32: add peek function
-From: Octavian Purdila <tavip@google.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
- peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
- alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
- crosa@redhat.com, lvivier@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3f4gEZwUKCuAVCXKRIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--tavip.bounces.google.com;
- helo=mail-pf1-x44a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypk-000475-TZ; Mon, 07 Oct 2024 21:16:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypj-0008J9-AZ; Mon, 07 Oct 2024 21:16:16 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4980oLYQ008829;
+ Tue, 8 Oct 2024 01:16:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=xrqYhGsRfzkIg
+ I7UJhFw6xZfDl5QI7dFuNb11Xf9od4=; b=ilfNX6GMQV5YszhSb7WoT2i0vZG6L
+ uHLglsDFoh8V42ua7B6c8/doCZTRM9G5lAqPkA6knpg3iwruLoqUXSjkzYH5P/52
+ +VEIXBzWpts/lO5QzY3DuoEbqnzdBSjCI2FXBm+E/5tI7VboTvCo1u0HA9mqLNL4
+ WpKWsnItPI0m0JuOvq9P0KRWDi4NcXu2KDgVGTtsJ+HUwxA6JyJywP3zaJn6h4b4
+ qTWMVhww+ebRq6voO8wm1GdEkwQG2HLw8GCLnN6zbJXxBx+UO0MM5xp94w3uUK0p
+ yvMFulAHQEW1HTZfq1vcbTuvpN7PJ9H0MV2NAHf4C8LSkMZofHkrOYs2w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424thq02ke-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:13 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GDPW026912;
+ Tue, 8 Oct 2024 01:16:13 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424thq02kb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:13 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497N6YTp022835;
+ Tue, 8 Oct 2024 01:16:12 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 423jg0s7p7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:12 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4981GBdf38863230
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Oct 2024 01:16:12 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2FD358043;
+ Tue,  8 Oct 2024 01:16:11 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E0BE58055;
+ Tue,  8 Oct 2024 01:16:11 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.51.58])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Oct 2024 01:16:11 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH v3 11/19] pc-bios/s390-ccw: Remove panics from Netboot IPL path
+Date: Mon,  7 Oct 2024 21:15:44 -0400
+Message-ID: <20241008011552.2645520-12-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: _0AVYJyGP-7hVnUWVHxvIuTOh_hxPFD5
+X-Proofpoint-GUID: MqcmMynhp5Pj7M9suwlgoPjLMCa_846q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 clxscore=1015 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410080006
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,54 +112,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add fifo32_peek() that returns the first element from the queue
-without popping it.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
+Remove panic-on-error from Netboot specific functions so that error recovery
+may be possible in the future.
+
+Functions that would previously panic now provide a return code.
+
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- include/qemu/fifo32.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ pc-bios/s390-ccw/s390-ccw.h   |  2 +-
+ pc-bios/s390-ccw/bootmap.c    |  1 +
+ pc-bios/s390-ccw/netmain.c    | 17 +++++++++++------
+ pc-bios/s390-ccw/virtio-net.c |  7 +++++--
+ 4 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/include/qemu/fifo32.h b/include/qemu/fifo32.h
-index 4e9fd1b5ef..9de1807375 100644
---- a/include/qemu/fifo32.h
-+++ b/include/qemu/fifo32.h
-@@ -140,6 +140,34 @@ static inline uint32_t fifo32_pop(Fifo32 *fifo)
-     return ret;
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 7516e96a14..496dccb2aa 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -58,7 +58,7 @@ unsigned int get_loadparm_index(void);
+ void main(void);
+ 
+ /* netmain.c */
+-void netmain(void);
++int netmain(void);
+ 
+ /* sclp.c */
+ void sclp_print(const char *string);
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 534d900f9e..1874d4bf5e 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -1065,6 +1065,7 @@ void zipl_load(void)
+ 
+     if (virtio_get_device_type() == VIRTIO_ID_NET) {
+         netmain();
++        panic("\n! Cannot IPL from this network !\n");
+     }
+ 
+     if (ipl_scsi()) {
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index bc6ad8695f..0c2329c752 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -464,7 +464,7 @@ static bool find_net_dev(Schib *schib, int dev_no)
+     return false;
  }
  
-+/**
-+ * fifo32_peek:
-+ * @fifo: fifo to peek at
-+ *
-+ * Returns the value from the FIFO's head without poping it. Behaviour
-+ * is undefined if the FIFO is empty. Clients are responsible for
-+ * checking for emptiness using fifo32_is_empty().
-+ *
-+ * Returns: the value from the FIFO's head
-+ */
-+
-+static inline uint32_t fifo32_peek(Fifo32 *fifo)
-+{
-+    uint32_t ret = 0, num;
-+    const uint8_t *buf;
-+
-+    buf = fifo8_peek_bufptr(&fifo->fifo, 4, &num);
-+    if (num != 4) {
-+        return ret;
+-static void virtio_setup(void)
++static int virtio_setup(void)
+ {
+     Schib schib;
+     int ssid;
+@@ -495,10 +495,10 @@ static void virtio_setup(void)
+         }
+     }
+ 
+-    IPL_assert(found, "No virtio net device found");
++    return found;
+ }
+ 
+-void netmain(void)
++int netmain(void)
+ {
+     filename_ip_t fn_ip;
+     int rc, fnlen;
+@@ -506,11 +506,15 @@ void netmain(void)
+     sclp_setup();
+     puts("Network boot starting...");
+ 
+-    virtio_setup();
++    if (!virtio_setup()) {
++        puts("No virtio net device found.");
++        return 1;
++    }
+ 
+     rc = net_init(&fn_ip);
+     if (rc) {
+-        panic("Network initialization failed. Halting.");
++        puts("Network initialization failed.");
++        return 1;
+     }
+ 
+     fnlen = strlen(fn_ip.filename);
+@@ -528,5 +532,6 @@ void netmain(void)
+         jump_to_low_kernel();
+     }
+ 
+-    panic("Failed to load OS from network.");
++    puts("Failed to load OS from network.");
++    return 1;
+ }
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index 2fcb0a58c5..f9854a22c3 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -54,8 +54,11 @@ int virtio_net_init(void *mac_addr)
+     vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+     virtio_setup_ccw(vdev);
+ 
+-    IPL_assert(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT,
+-               "virtio-net device does not support the MAC address feature");
++    if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
++        puts("virtio-net device does not support the MAC address feature");
++        return -1;
 +    }
 +
-+    for (int i = 0; i < sizeof(uint32_t); i++) {
-+        ret |= buf[i] << (i * 8);
-+    }
-+
-+    return ret;
-+}
-+
- /**
-  * There is no fifo32_pop_buf() because the data is not stored in the buffer
-  * as a set of native-order words.
+     memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
+ 
+     for (i = 0; i < 64; i++) {
 -- 
-2.47.0.rc0.187.ge670bccf7e-goog
+2.45.1
 
 
