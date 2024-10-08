@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760A2CEFC42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A5DDCEFC3F
 	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syFJh-0007Y5-NL; Tue, 08 Oct 2024 14:52:17 -0400
+	id 1syFJV-0007TX-Ub; Tue, 08 Oct 2024 14:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJS-0007SR-S9
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:52:02 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1syFJP-0007Qu-RY
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:52:00 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJP-0002Uc-G9
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:52:01 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-71df8585a42so2548693b3a.3
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:51:56 -0700 (PDT)
+ id 1syFJK-0002Se-6d
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:51:56 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7d4f85766f0so4823303a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728413515; x=1729018315; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728413511; x=1729018311; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=421LbBczhN+7djkIM+80LiuWG1ET4qxsB+bV+/jUDAA=;
- b=o80o3xZQf0wmvDB/S97KNbXeaGPVjYVQev31/7sOBubGp77Z5Eg1XHZXHG634I/Awj
- 1Okoh0mZP0MtVh/BGfwDeDLX2nNIdY7+GWcyxzA37yNj4r10484XAYNoJk6gJSxo9KrM
- SSEkJclqRT6hZyIJqR6UxKkvQTOqSygedJQvfZoxV2nWLUNKEmS/N9jlGBmBmvtk2ajc
- Jk+zbPYrdl+tyNDXXew6fIACzQWGpGwCdZRiGxvzOuxgyNojjjUi9KSN4kY/0na4Y5pc
- 9ofIV5STK7RNCk8t5QG5KPxVk0fZkWJr8oXM8br8OkywKg9DfjXiYIc2M4U2/IwrFGuP
- /xmQ==
+ bh=280plYgj9pKDnH+V9HZdJ+ePLYDZqB5eIDcpDzTLK4I=;
+ b=WzJpZiePA48mCqtODV3EfjoJNr1+0kxfGubz4xebTpCFJ4csGdcoHcvf48mYi58JlW
+ 4eCv6bs9CMm6gGDrnI3aXnGvf9yjnPhFa3y6N/BQ0Pkhguf6bZ8Q2uG9SGu/KVZ6jimJ
+ fq6wt2uYHhr+EBSxJynMo9uFzkC82zgkl/7w1CrDwv6Tq6mXK0UI1iQPUHQ1S4FS9IaJ
+ AIWcKgYtVtmFT9hGYxJ3vesdj5fRgaAaB7UE8bsUBIBOsJrBSB+wOczzkufM1pcfpACv
+ L1MkcS1smDI8PA9Fb8AL0NZz/Ydvs68wopPohAap5A3Q1cCvhWoy6ve3UElpO4VGJBeY
+ /ubA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728413515; x=1729018315;
+ d=1e100.net; s=20230601; t=1728413511; x=1729018311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=421LbBczhN+7djkIM+80LiuWG1ET4qxsB+bV+/jUDAA=;
- b=pUXmj+S4/NuM69leVuPVCyU2vk4nBrkziaYuS2sRnMlmlqDesFjV9H9Des1XZMYK2Y
- ewTTwAEBaqSKueM80KuhVFzknAx0OoOoDOtGa90EnpPWJYxQL5qleF6+A4Rh+H/ICfFH
- P4d8aRv1FHHuJZW2lXUEfyirdhpBoflnt0W2RNzA1HIUqJhNm66laq6pzZfI5kuZR5P8
- BFO8ecW3dNzxWT6NGdC1k2MipgAN+R6uCH0b0nzN00M6FWE6eIvhyk7HaghNbkaRp4fh
- zsby5uW8Yw0PgGExUEHUFWn464hE7GVO3x/SScAbhD5KqsT24zmDJT9ylCTNI+hdtlK+
- hJgA==
-X-Gm-Message-State: AOJu0YzOf/6xuKXJZuSRuznNH6zHqEkbdraN+Se89rRPQXvDP16Osvxo
- MeBiaAYFtHn6EzarYHDTH0qo2OeU2fEU2L+JDUAR1uWtQTBvPwv/lJHwnQXaLlnpGHXLJWP1IT+
- V
-X-Google-Smtp-Source: AGHT+IFIqfSlo7K5fV0qmuQGX5zZ3paHeLNylBm779/MEKKiozPHCSLty7GokoI2bFW6wsyH3BBUvQ==
-X-Received: by 2002:a05:6a20:c709:b0:1d2:bbd9:4646 with SMTP id
- adf61e73a8af0-1d6dfabb7bfmr25353858637.38.1728413515383; 
- Tue, 08 Oct 2024 11:51:55 -0700 (PDT)
+ bh=280plYgj9pKDnH+V9HZdJ+ePLYDZqB5eIDcpDzTLK4I=;
+ b=b0fdboDuKttxKSKb5MmsFtdEm6NJJisqsazFWGvES+FX84wu/vuMawT1xqA9UbKrqf
+ aeYKSZBkd43QBak2xkkFDVuC5wRzayLMS9CRx0bdqC3/j5P0j6nJqvgLlYp/e/++orUH
+ +BpvqIDoCaim8Oi5HiFTMufdESeiTKkg2phJUKfqyQHiAyI1Hz1A/cIopmnO9Imf/wr9
+ iK5kr45mZEPMaKBwjdq4fLtNVAlMGagjYJ/9Kzsq8dZJym08LH0cLsW5WZ0FojDCuT6s
+ xxgPMgNJP139RNfnAzoPNHaLCtnaGL2P3kv0Duc0lK2bJVghO7dUDIehFF+Zd+CChLxW
+ 0Pnw==
+X-Gm-Message-State: AOJu0YwxjQXOvSGU/RTaF7aBdvhTtq8EnWzjva2vUI0epy72KSnpyu8o
+ tG2LAKAH5fk0GbuAnD9pGESazlb9sBJZeYiuGoXAoqrvv8YXR1OCBeKvLTemIas3HR2sUKbW/6C
+ T
+X-Google-Smtp-Source: AGHT+IGUCTtSmbqHjUb1W4Pyd0j+H6qaQE/aoVvPuwe0Ko1qc6MWfotOgC1vRJ0bshhIMoCs1Rb4eg==
+X-Received: by 2002:a05:6a20:c886:b0:1d5:a29:3173 with SMTP id
+ adf61e73a8af0-1d6dfa42844mr25093834637.24.1728413511098; 
+ Tue, 08 Oct 2024 11:51:51 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7e9f6821c32sm7186818a12.33.2024.10.08.11.51.54
+ 41be03b00d2f7-7e9f6821c32sm7186818a12.33.2024.10.08.11.51.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 11:51:55 -0700 (PDT)
+ Tue, 08 Oct 2024 11:51:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/14] target/m68k: Always return a temporary from gen_lea_mode
-Date: Tue,  8 Oct 2024 11:51:40 -0700
-Message-ID: <20241008185141.20057-14-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 08/14] linux-user: Factor print_buf_len() out
+Date: Tue,  8 Oct 2024 11:51:35 -0700
+Message-ID: <20241008185141.20057-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241008185141.20057-1-richard.henderson@linaro.org>
 References: <20241008185141.20057-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,60 +97,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returning a raw areg does not preserve the value if the areg
-is subsequently modified.  Fixes, e.g. "jsr (sp)", where the
-return address is pushed before the branch.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2483
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20240807124306.52903-4-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240813000737.228470-1-richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/translate.c | 13 +++++++++----
+ linux-user/strace.c | 13 +++++++++----
  1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 445966fb6a..ad3ce34501 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -720,7 +720,9 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
-         }
-         /* fallthru */
-     case 2: /* Indirect register */
--        return get_areg(s, reg0);
-+        tmp = tcg_temp_new();
-+        tcg_gen_mov_i32(tmp, get_areg(s, reg0));
-+        return tmp;
-     case 4: /* Indirect predecrememnt.  */
-         if (opsize == OS_UNSIZED) {
-             return NULL_QREG;
-@@ -747,20 +749,23 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
-         switch (reg0) {
-         case 0: /* Absolute short.  */
-             offset = (int16_t)read_im16(env, s);
--            return tcg_constant_i32(offset);
-+            break;
-         case 1: /* Absolute long.  */
-             offset = read_im32(env, s);
--            return tcg_constant_i32(offset);
-+            break;
-         case 2: /* pc displacement  */
-             offset = s->pc;
-             offset += (int16_t)read_im16(env, s);
--            return tcg_constant_i32(offset);
-+            break;
-         case 3: /* pc index+displacement.  */
-             return gen_lea_indexed(env, s, NULL_QREG);
-         case 4: /* Immediate.  */
-         default:
-             return NULL_QREG;
-         }
-+        tmp = tcg_temp_new();
-+        tcg_gen_movi_i32(tmp, offset);
-+        return tmp;
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index b72fcd515f..245153c1ce 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -1670,6 +1670,13 @@ print_buf(abi_long addr, abi_long len, int last)
      }
-     /* Should never happen.  */
-     return NULL_QREG;
+ }
+ 
++static void
++print_buf_len(abi_long addr, abi_long len, int last)
++{
++    print_buf(addr, len, 0);
++    print_raw_param(TARGET_ABI_FMT_ld, len, last);
++}
++
+ /*
+  * Prints out raw parameter using given format.  Caller needs
+  * to do byte swapping if needed.
+@@ -2757,8 +2764,7 @@ static void do_print_sendrecv(const char *name, abi_long arg1)
+ 
+     qemu_log("%s(", name);
+     print_sockfd(sockfd, 0);
+-    print_buf(msg, len, 0);
+-    print_raw_param(TARGET_ABI_FMT_ld, len, 0);
++    print_buf_len(msg, len, 0);
+     print_flags(msg_flags, flags, 1);
+     qemu_log(")");
+ }
+@@ -2776,8 +2782,7 @@ static void do_print_msgaddr(const char *name, abi_long arg1)
+ 
+     qemu_log("%s(", name);
+     print_sockfd(sockfd, 0);
+-    print_buf(msg, len, 0);
+-    print_raw_param(TARGET_ABI_FMT_ld, len, 0);
++    print_buf_len(msg, len, 0);
+     print_flags(msg_flags, flags, 0);
+     print_sockaddr(addr, addrlen, 0);
+     qemu_log(")");
 -- 
 2.43.0
 
