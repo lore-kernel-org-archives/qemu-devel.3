@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB3ACED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCAE4CED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyq6-0004GF-1l; Mon, 07 Oct 2024 21:16:38 -0400
+	id 1sxyq2-0004DT-Qy; Mon, 07 Oct 2024 21:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypt-00049e-5C; Mon, 07 Oct 2024 21:16:25 -0400
+ id 1sxypj-00045s-Mc; Mon, 07 Oct 2024 21:16:15 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypp-0008M2-Jo; Mon, 07 Oct 2024 21:16:23 -0400
+ id 1sxyph-0008IQ-8h; Mon, 07 Oct 2024 21:16:15 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4980Odsf001808;
- Tue, 8 Oct 2024 01:16:20 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4980OvVu002125;
+ Tue, 8 Oct 2024 01:16:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=qvbKGfft7U2kO
- /sOU+7bLGIa+fNsHtYsZyugYA+8ddo=; b=nqtH/cFLwRz6uioETL0NFOd2vHF1p
- TALldOqUVj5IvlH/ScPC7RzBnlzAtwDnsyB4G3dAArx75OLKyb75S8NqkrxXlWvB
- PeBy2S0suGJmrH1P/tlTEk/H90adVmtEyYXkYA2y0u50X9H7z8rFI2xb3lHmSPKS
- tqTu1CslabOR4WtErM3PHV72P8E9cu93NlXUl96R/HuzIelyx+dFnmopbe1OGIUl
- CncJltaurzrWsWeHXl0yDQJ0jIfenwwtV89etmMu2aA5EzxWDc7QYr8+X7ZB4Y/A
- TGJ1+B6A6GetHUJw746+s/YE5Io+E3lkmlzsa1b1JmYTwBuVleOf+jSFg==
+ :mime-version:content-transfer-encoding; s=pp1; bh=t6z5uXzymn4br
+ orRXCN/qJXIMEP0rIygIs2yjOMQa64=; b=R1xFCRF51eLa3tli4cONF/mP0OFYa
+ 1QiluNQGszslKw6H9KaUtNZxvHYkuNBoG/wh438VklVR97ESYaXk3TOjzEzVmiJq
+ uaGs7ePme5g3fPvQrnWzSvcYSH6IO2278vZq4YGRgfeJwawMRADpL120elNNiXiv
+ 7do8A0FL6phEmaiJmgSgXQnYnGHH0/B9YjWst84fdcdFgK9Na5GxEi9fC74DfGJX
+ Mh79AY4LeQGjDtKTnpLUyLjsa3XVh4Htk9BRd4PvJhYW7cKD8SuFxm5/T1dMcjVN
+ wbP6qoe8qeQHT3hetJ6JLNtOnRcbBm4TG7tchH7C/g/nkpdZbgHxhzHfA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5e1-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5dg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:19 +0000 (GMT)
+ Tue, 08 Oct 2024 01:16:11 +0000 (GMT)
 Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GJtf001027;
- Tue, 8 Oct 2024 01:16:19 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5dx-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GAEh000844;
+ Tue, 8 Oct 2024 01:16:10 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5dd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:19 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4980vB4Q013838;
- Tue, 8 Oct 2024 01:16:18 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fss1r41-1
+ Tue, 08 Oct 2024 01:16:10 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497LgUXT022856;
+ Tue, 8 Oct 2024 01:16:09 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423h9jsfjc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:18 +0000
+ Tue, 08 Oct 2024 01:16:09 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981GGOY28836368
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4981G83c23528078
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:17 GMT
+ Tue, 8 Oct 2024 01:16:08 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9833B58059;
- Tue,  8 Oct 2024 01:16:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2A41258059;
+ Tue,  8 Oct 2024 01:16:08 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24AFF5805D;
- Tue,  8 Oct 2024 01:16:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9D1D458043;
+ Tue,  8 Oct 2024 01:16:07 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.51.58])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:16 +0000 (GMT)
+ Tue,  8 Oct 2024 01:16:07 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 15/19] hw/s390x: Build an IPLB for each boot device
-Date: Mon,  7 Oct 2024 21:15:48 -0400
-Message-ID: <20241008011552.2645520-16-jrossi@linux.ibm.com>
+Subject: [PATCH v3 08/19] pc-bios/s390-ccw: Remove panics from ECKD IPL path
+Date: Mon,  7 Oct 2024 21:15:41 -0400
+Message-ID: <20241008011552.2645520-9-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
 References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: aNsOIutThkVku3wvQAsMJm-G_fsLBh0N
-X-Proofpoint-GUID: l4w2JUqHlmPbPgedcJAnEoCaFs0rfcxu
+X-Proofpoint-ORIG-GUID: d2phorUS-YxWaOUtP54ClrR0R2wpiu_p
+X-Proofpoint-GUID: hvLRgaC9F-viwBQzSpfoheQMwXHWdIsW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
@@ -114,247 +114,457 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Build an IPLB for any device with a bootindex (up to a maximum of 8 devices).
+Remove panic-on-error from ECKD block device IPL specific functions so that
+error recovery may be possible in the future.
 
-The IPLB chain is placed immediately before the BIOS in memory. Because this
-is not a fixed address, the location of the next IPLB and number of remaining
-boot devices is stored in the QIPL global variable for possible later access by
-the guest during IPL.
+Functions that would previously panic now provide a return code.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- hw/s390x/ipl.h              |   1 +
- include/hw/s390x/ipl/qipl.h |   4 +-
- hw/s390x/ipl.c              | 123 ++++++++++++++++++++++++++++--------
- 3 files changed, 99 insertions(+), 29 deletions(-)
+ pc-bios/s390-ccw/s390-ccw.h |   1 +
+ pc-bios/s390-ccw/bootmap.c  | 183 ++++++++++++++++++++++++------------
+ 2 files changed, 126 insertions(+), 58 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index b670bad551..54eb48fd6e 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -20,6 +20,7 @@
- #include "qom/object.h"
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index cbd92f3671..7516e96a14 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -31,6 +31,7 @@ typedef unsigned long long u64;
+ #define EBUSY   2
+ #define ENODEV  3
+ #define EINVAL  4
++#define ENOENT  5
  
- #define DIAG308_FLAGS_LP_VALID 0x80
-+#define MAX_BOOT_DEVS 8 /* Max number of devices that may have a bootindex */
+ #ifndef MIN
+ #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 7984de62fe..266b38c034 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -145,14 +145,17 @@ static block_number_t load_eckd_segments(block_number_t blk, bool ldipl,
+     bool more_data;
  
- void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index 0ef04af027..e56b181298 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -31,7 +31,9 @@ struct QemuIplParameters {
-     uint8_t  reserved1[3];
-     uint64_t reserved2;
-     uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
-+    uint8_t  reserved3[2];
-+    uint16_t chain_len;
-+    uint64_t next_iplb;
- } QEMU_PACKED;
- typedef struct QemuIplParameters QemuIplParameters;
+     memset(_bprs, FREE_SPACE_FILLER, sizeof(_bprs));
+-    read_block(blk, bprs, "BPRS read failed");
++    if (virtio_read(blk, bprs)) {
++        puts("BPRS read failed");
++        return -EIO;
++    }
  
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 55a83bb836..aec79f41a8 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -56,6 +56,13 @@ static bool iplb_extended_needed(void *opaque)
-     return ipl->iplbext_migration;
+     do {
+         more_data = false;
+         for (j = 0;; j++) {
+             block_nr = gen_eckd_block_num(&bprs[j].xeckd, ldipl);
+             if (is_null_block_number(block_nr)) { /* end of chunk */
+-                break;
++                return -ENOENT;
+             }
+ 
+             /* we need the updated blockno for the next indirect entry
+@@ -163,15 +166,20 @@ static block_number_t load_eckd_segments(block_number_t blk, bool ldipl,
+             }
+ 
+             /* List directed pointer does not store block size */
+-            IPL_assert(ldipl || block_size_ok(bprs[j].xeckd.bptr.size),
+-                       "bad chunk block size");
++            if (!ldipl && !block_size_ok(bprs[j].xeckd.bptr.size)) {
++                puts("Bad chunk block size");
++                return -EIO;
++            }
+ 
+             if (!eckd_valid_address(&bprs[j].xeckd, ldipl)) {
+                 /*
+                  * If an invalid address is found during LD-IPL then break and
+-                 * retry as CCW
++                 * retry as CCW-IPL, otherwise abort on error
+                  */
+-                IPL_assert(ldipl, "bad chunk ECKD addr");
++                if (!ldipl) {
++                    puts("Bad chunk ECKD address");
++                    return -EIO;
++                }
+                 break;
+             }
+ 
+@@ -189,7 +197,10 @@ static block_number_t load_eckd_segments(block_number_t blk, bool ldipl,
+                  * I.e. the next ptr must point to the unused memory area
+                  */
+                 memset(_bprs, FREE_SPACE_FILLER, sizeof(_bprs));
+-                read_block(block_nr, bprs, "BPRS continuation read failed");
++                if (virtio_read(block_nr, bprs)) {
++                    puts("BPRS continuation read failed");
++                    return -EIO;
++                }
+                 more_data = true;
+                 break;
+             }
+@@ -198,7 +209,10 @@ static block_number_t load_eckd_segments(block_number_t blk, bool ldipl,
+              * to memory (address).
+              */
+             rc = virtio_read_many(block_nr, (void *)(*address), count + 1);
+-            IPL_assert(rc == 0, "code chunk read failed");
++            if (rc != 0) {
++                puts("Code chunk read failed");
++                return -EIO;
++            }
+ 
+             *address += (count + 1) * virtio_get_block_size();
+         }
+@@ -232,7 +246,10 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+ 
+     /* Get Stage1b data */
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(s1b_block_nr, s1b, "Cannot read stage1b boot loader");
++    if (virtio_read(s1b_block_nr, s1b)) {
++        puts("Cannot read stage1b boot loader");
++        return -EIO;
++    }
+ 
+     memset(_s2, FREE_SPACE_FILLER, sizeof(_s2));
+ 
+@@ -244,7 +261,10 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+             break;
+         }
+ 
+-        read_block(cur_block_nr, s2_cur_blk, "Cannot read stage2 boot loader");
++        if (virtio_read(cur_block_nr, s2_cur_blk)) {
++            puts("Cannot read stage2 boot loader");
++            return -EIO;
++        }
+ 
+         if (find_zipl_boot_menu_banner(&banner_offset)) {
+             /*
+@@ -252,8 +272,10 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+              * possibility of menu data spanning multiple blocks.
+              */
+             if (prev_block_nr) {
+-                read_block(prev_block_nr, s2_prev_blk,
+-                           "Cannot read stage2 boot loader");
++                if (virtio_read(prev_block_nr, s2_prev_blk)) {
++                    puts("Cannot read stage2 boot loader");
++                    return -EIO;
++                }
+             }
+ 
+             if (i + 1 < STAGE2_BLK_CNT_MAX) {
+@@ -261,8 +283,10 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+             }
+ 
+             if (next_block_nr && !is_null_block_number(next_block_nr)) {
+-                read_block(next_block_nr, s2_next_blk,
+-                           "Cannot read stage2 boot loader");
++                if (virtio_read(next_block_nr, s2_next_blk)) {
++                    puts("Cannot read stage2 boot loader");
++                    return -EIO;
++                }
+             }
+ 
+             return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
+@@ -275,7 +299,7 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+     return 0;
  }
  
-+/* Place the IPLB chain immediately before the BIOS in memory */
-+static uint64_t find_iplb_chain_addr(uint64_t bios_addr, uint16_t count)
-+{
-+    return (bios_addr & TARGET_PAGE_MASK)
-+            - (count * sizeof(IplParameterBlock));
-+}
-+
- static const VMStateDescription vmstate_iplb_extended = {
-     .name = "ipl/iplb_extended",
-     .version_id = 0,
-@@ -398,6 +405,17 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
-     return ccw_dev;
- }
- 
-+static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
-+{
-+    S390IPLState *ipl = get_ipl_device();
-+    uint16_t count = ipl->qipl.chain_len;
-+    uint64_t len = sizeof(IplParameterBlock) * count;
-+    uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
-+
-+    cpu_physical_memory_write(chain_addr, iplb_chain, len);
-+    return chain_addr;
-+}
-+
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
+-static void run_eckd_boot_script(block_number_t bmt_block_nr,
++static int run_eckd_boot_script(block_number_t bmt_block_nr,
+                                  block_number_t s1b_block_nr)
  {
      int i;
-@@ -428,54 +446,51 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
+@@ -292,17 +316,28 @@ static void run_eckd_boot_script(block_number_t bmt_block_nr,
      }
- }
  
--static bool s390_gen_initial_iplb(S390IPLState *ipl)
-+static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
--    DeviceState *dev_st;
-+    S390IPLState *ipl = get_ipl_device();
-     CcwDevice *ccw_dev = NULL;
-     SCSIDevice *sd;
-     int devtype;
-     uint8_t *lp;
- 
--    dev_st = get_boot_device(0);
--    if (dev_st) {
--        ccw_dev = s390_get_ccw_device(dev_st, &devtype);
--    }
--
-     /*
-      * Currently allow IPL only from CCW devices.
-      */
-+    ccw_dev = s390_get_ccw_device(dev_st, &devtype);
-     if (ccw_dev) {
-         lp = ccw_dev->loadparm;
- 
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
--            ipl->iplb.blk0_len =
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-+            iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_QEMU_SCSI;
--            ipl->iplb.scsi.lun = cpu_to_be32(sd->lun);
--            ipl->iplb.scsi.target = cpu_to_be16(sd->id);
--            ipl->iplb.scsi.channel = cpu_to_be16(sd->channel);
--            ipl->iplb.scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.scsi.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-+            iplb->scsi.lun = cpu_to_be32(sd->lun);
-+            iplb->scsi.target = cpu_to_be16(sd->id);
-+            iplb->scsi.channel = cpu_to_be16(sd->channel);
-+            iplb->scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         case CCW_DEVTYPE_VFIO:
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
--            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-+            iplb->pbt = S390_IPL_TYPE_CCW;
-+            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         case CCW_DEVTYPE_VIRTIO_NET:
-+            /* The S390IPLState netboot is true if ANY IPLB may use netboot */
-             ipl->netboot = true;
-             /* Fall through to CCW_DEVTYPE_VIRTIO case */
-         case CCW_DEVTYPE_VIRTIO:
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
--            ipl->iplb.blk0_len =
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-+            iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_CCW_LEN - S390_IPLB_HEADER_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
--            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->pbt = S390_IPL_TYPE_CCW;
-+            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         }
- 
-@@ -484,8 +499,8 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-             lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-         }
- 
--        s390_ipl_convert_loadparm((char *)lp, ipl->iplb.loadparm);
--        ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
-+        s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-+        iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
-         return true;
-     }
-@@ -493,6 +508,56 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-     return false;
- }
- 
-+static bool s390_init_all_iplbs(S390IPLState *ipl)
-+{
-+    int iplb_num = 0;
-+    IplParameterBlock iplb_chain[7];
-+    DeviceState *dev_st = get_boot_device(0);
-+
-+    /*
-+     * Parse the boot devices.  Generate an IPLB for only the first boot device
-+     * which will later be set with DIAG308.
-+     */
-+    if (!dev_st) {
-+        ipl->qipl.chain_len = 0;
-+        return false;
+     debug_print_int("loadparm", loadparm);
+-    IPL_assert(loadparm < MAX_BOOT_ENTRIES, "loadparm value greater than"
+-               " maximum number of boot entries allowed");
++    if (loadparm >= MAX_BOOT_ENTRIES) {
++        puts("loadparm value greater than max number of boot entries allowed");
++        return -EINVAL;
 +    }
-+
-+    iplb_num = 1;
-+    s390_build_iplb(dev_st, &ipl->iplb);
-+
-+    /*  Index any fallback boot devices */
-+    while (get_boot_device(iplb_num)) {
-+        iplb_num++;
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(bmt_block_nr, sec, "Cannot read Boot Map Table");
++    if (virtio_read(bmt_block_nr, sec)) {
++        puts("Cannot read Boot Map Table");
++        return -EIO;
 +    }
-+
-+    if (iplb_num > MAX_BOOT_DEVS) {
-+        warn_report("Excess boot devices defined! %d boot devices found, "
-+                    "but only the first %d will be considered.",
-+                    iplb_num, MAX_BOOT_DEVS);
-+
-+        iplb_num = MAX_BOOT_DEVS;
+ 
+     block_nr = gen_eckd_block_num(&bmt->entry[loadparm].xeckd, ldipl);
+-    IPL_assert(block_nr != -1, "Cannot find Boot Map Table Entry");
++    if (block_nr == NULL_BLOCK_NR) {
++        puts("Cannot find Boot Map Table Entry");
++        return -EIO;
 +    }
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(block_nr, sec, "Cannot read Boot Map Script");
++    if (virtio_read(block_nr, sec)) {
++        puts("Cannot read Boot Map Script");
++        return -EIO;
++    }
+ 
+     for (i = 0; bms->entry[i].type == BOOT_SCRIPT_LOAD ||
+                 bms->entry[i].type == BOOT_SCRIPT_SIGNATURE; i++) {
+@@ -317,21 +352,28 @@ static void run_eckd_boot_script(block_number_t bmt_block_nr,
+ 
+         do {
+             block_nr = load_eckd_segments(block_nr, ldipl, &address);
+-        } while (block_nr != -1);
++        } while (block_nr >= 0);
 +
-+    ipl->qipl.chain_len = iplb_num - 1;
-+
-+    /*
-+     * Build fallback IPLBs for any boot devices above index 0, up to a
-+     * maximum amount as defined in ipl.h
-+     */
-+    if (iplb_num > 1) {
-+        /* Start at 1 because the IPLB for boot index 0 is not chained */
-+        for (int i = 1; i < iplb_num; i++) {
-+            dev_st = get_boot_device(i);
-+            s390_build_iplb(dev_st, &iplb_chain[i - 1]);
++        if (block_nr != -ENOENT && block_nr < 0) {
++            return ldipl ? 0 : -EIO;
 +        }
-+
-+        ipl->qipl.next_iplb = s390_ipl_map_iplb_chain(iplb_chain);
+     }
+ 
+     if (ldipl && bms->entry[i].type != BOOT_SCRIPT_EXEC) {
+         /* Abort LD-IPL and retry as CCW-IPL */
+-        return;
++        return 0;
+     }
+ 
+-    IPL_assert(bms->entry[i].type == BOOT_SCRIPT_EXEC,
+-               "Unknown script entry type");
++    if (bms->entry[i].type != BOOT_SCRIPT_EXEC) {
++        puts("Unknown script entry type");
++        return -EINVAL;
 +    }
-+
-+    return iplb_num;
-+}
-+
- static bool is_virtio_ccw_device_of_type(IplParameterBlock *iplb,
-                                          int virtio_id)
+     write_reset_psw(bms->entry[i].address.load_address); /* no return */
+     jump_to_IPL_code(0); /* no return */
++    return 1;
+ }
+ 
+-static void ipl_eckd_cdl(void)
++static int ipl_eckd_cdl(void)
  {
-@@ -620,7 +685,7 @@ void s390_ipl_reset_request(CPUState *cs, enum s390_reset reset_type)
-              * this is the original boot device's SCSI
-              * so restore IPL parameter info from it
-              */
--            ipl->iplb_valid = s390_gen_initial_iplb(ipl);
-+            ipl->iplb_valid = s390_build_iplb(get_boot_device(0), &ipl->iplb);
+     XEckdMbr *mbr;
+     EckdCdlIpl2 *ipl2 = (void *)sec;
+@@ -342,20 +384,23 @@ static void ipl_eckd_cdl(void)
+     puts("CDL");
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(1, ipl2, "Cannot read IPL2 record at block 1");
++    if (virtio_read(1, ipl2)) {
++        puts("Cannot read IPL2 record at block 1");
++        return -EIO;
++    }
+ 
+     mbr = &ipl2->mbr;
+     if (!magic_match(mbr, ZIPL_MAGIC)) {
+         puts("No zIPL section in IPL2 record.");
+-        return;
++        return 0;
+     }
+     if (!block_size_ok(mbr->blockptr.xeckd.bptr.size)) {
+         puts("Bad block size in zIPL section of IPL2 record.");
+-        return;
++        return 0;
+     }
+     if (mbr->dev_type != DEV_TYPE_ECKD) {
+         puts("Non-ECKD device type in zIPL section of IPL2 record.");
+-        return;
++        return 0;
+     }
+ 
+     /* save pointer to Boot Map Table */
+@@ -365,19 +410,21 @@ static void ipl_eckd_cdl(void)
+     s1b_block_nr = eckd_block_num(&ipl2->stage1.seek[0].chs);
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(2, vlbl, "Cannot read Volume Label at block 2");
++    if (virtio_read(2, vlbl)) {
++        puts("Cannot read Volume Label at block 2");
++        return -EIO;
++    }
+     if (!magic_match(vlbl->key, VOL1_MAGIC)) {
+         puts("Invalid magic of volume label block.");
+-        return;
++        return 0;
+     }
+     if (!magic_match(vlbl->f.key, VOL1_MAGIC)) {
+         puts("Invalid magic of volser block.");
+-        return;
++        return 0;
+     }
+     print_volser(vlbl->f.volser);
+ 
+-    run_eckd_boot_script(bmt_block_nr, s1b_block_nr);
+-    /* no return */
++    return run_eckd_boot_script(bmt_block_nr, s1b_block_nr);
+ }
+ 
+ static void print_eckd_ldl_msg(ECKD_IPL_mode_t mode)
+@@ -403,7 +450,7 @@ static void print_eckd_ldl_msg(ECKD_IPL_mode_t mode)
+     print_volser(vlbl->volser);
+ }
+ 
+-static void ipl_eckd_ldl(ECKD_IPL_mode_t mode)
++static int ipl_eckd_ldl(ECKD_IPL_mode_t mode)
+ {
+     block_number_t bmt_block_nr, s1b_block_nr;
+     EckdLdlIpl1 *ipl1 = (void *)sec;
+@@ -415,10 +462,13 @@ static void ipl_eckd_ldl(ECKD_IPL_mode_t mode)
+     /* DO NOT read BootMap pointer (only one, xECKD) at block #2 */
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(0, sec, "Cannot read block 0 to grab boot info.");
++    if (virtio_read(0, sec)) {
++        puts("Cannot read block 0 to grab boot info.");
++        return -EIO;
++    }
+     if (mode == ECKD_LDL_UNLABELED) {
+         if (!magic_match(ipl1->bip.magic, ZIPL_MAGIC)) {
+-            return; /* not applicable layout */
++            return 0; /* not applicable layout */
+         }
+         puts("unlabeled LDL.");
+     }
+@@ -430,8 +480,7 @@ static void ipl_eckd_ldl(ECKD_IPL_mode_t mode)
+     /* save pointer to Stage1b Data */
+     s1b_block_nr = eckd_block_num(&ipl1->stage1.seek[0].chs);
+ 
+-    run_eckd_boot_script(bmt_block_nr, s1b_block_nr);
+-    /* no return */
++    return run_eckd_boot_script(bmt_block_nr, s1b_block_nr);
+ }
+ 
+ static block_number_t eckd_find_bmt(ExtEckdBlockPtr *ptr)
+@@ -441,11 +490,14 @@ static block_number_t eckd_find_bmt(ExtEckdBlockPtr *ptr)
+     BootRecord *br;
+ 
+     blockno = gen_eckd_block_num(ptr, 0);
+-    read_block(blockno, tmp_sec, "Cannot read boot record");
++    if (virtio_read(blockno, tmp_sec)) {
++        puts("Cannot read boot record");
++        return -EIO;
++    }
+     br = (BootRecord *)tmp_sec;
+     if (!magic_match(br->magic, ZIPL_MAGIC)) {
+         /* If the boot record is invalid, return and try CCW-IPL instead */
+-        return NULL_BLOCK_NR;
++        return 0;
+     }
+ 
+     return gen_eckd_block_num(&br->pgt.xeckd, 1);
+@@ -470,7 +522,7 @@ static void print_eckd_msg(void)
+     printf("%s", msg);
+ }
+ 
+-static void ipl_eckd(void)
++static int ipl_eckd(void)
+ {
+     IplVolumeLabel *vlbl = (void *)sec;
+     LDL_VTOC *vtoc = (void *)sec;
+@@ -480,7 +532,10 @@ static void ipl_eckd(void)
+ 
+     /* Block 2 can contain either the CDL VOL1 label or the LDL VTOC */
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(2, vlbl, "Cannot read block 2");
++    if (virtio_read(2, vlbl)) {
++        puts("Cannot read block 2");
++        return -EIO;
++    }
+ 
+     /*
+      * First check for a list-directed-format pointer which would
+@@ -490,34 +545,46 @@ static void ipl_eckd(void)
+         ldipl_bmt = eckd_find_bmt((ExtEckdBlockPtr *)&vlbl->f.br);
+         if (ldipl_bmt) {
+             puts("List-Directed");
+-            /* LD-IPL does not use the S1B bock, just make it NULL */
+-            run_eckd_boot_script(ldipl_bmt, NULL_BLOCK_NR);
+-            /* Only return in error, retry as CCW-IPL */
++            /*
++             * LD-IPL does not use the S1B bock, just make it NULL_BLOCK_NR.
++             * In some failure cases retry IPL before aborting.
++             */
++            if (run_eckd_boot_script(ldipl_bmt, NULL_BLOCK_NR)) {
++                return -EIO;
++            }
++            /* Non-fatal error, retry as CCW-IPL */
+             printf("Retrying IPL ");
+             print_eckd_msg();
+         }
+         memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-        read_block(2, vtoc, "Cannot read block 2");
++        if (virtio_read(2, vtoc)) {
++            puts("Cannot read block 2");
++            return -EIO;
++        }
+     }
+ 
+     /* Not list-directed */
+     if (magic_match(vtoc->magic, VOL1_MAGIC)) {
+-        ipl_eckd_cdl(); /* may return in error */
++        if (ipl_eckd_cdl()) {
++            return 1;
++        }
+     }
+ 
+     if (magic_match(vtoc->magic, CMS1_MAGIC)) {
+-        ipl_eckd_ldl(ECKD_CMS); /* no return */
++        return ipl_eckd_ldl(ECKD_CMS);
+     }
+     if (magic_match(vtoc->magic, LNX1_MAGIC)) {
+-        ipl_eckd_ldl(ECKD_LDL); /* no return */
++        return ipl_eckd_ldl(ECKD_LDL);
+     }
+ 
+-    ipl_eckd_ldl(ECKD_LDL_UNLABELED); /* it still may return */
++    if (ipl_eckd_ldl(ECKD_LDL_UNLABELED)) {
++        return 1;
++    }
+     /*
+      * Ok, it is not a LDL by any means.
+      * It still might be a CDL with zero record keys for IPL1 and IPL2
+      */
+-    ipl_eckd_cdl();
++    return ipl_eckd_cdl();
+ }
+ 
+ /***********************************************************************
+@@ -907,7 +974,7 @@ static bool has_iso_signature(void)
+  * Bus specific IPL sequences
+  */
+ 
+-static void zipl_load_vblk(void)
++static int zipl_load_vblk(void)
+ {
+     int blksize = virtio_get_block_size();
+ 
+@@ -916,7 +983,7 @@ static void zipl_load_vblk(void)
+             virtio_assume_iso9660();
+         }
+         if (ipl_iso_el_torito()) {
+-            return;
++            return 0;
          }
      }
-     if (reset_type == S390_RESET_MODIFIED_CLEAR ||
-@@ -714,7 +779,9 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
-     if (!ipl->kernel || ipl->iplb_valid) {
-         cpu->env.psw.addr = ipl->bios_start_addr;
-         if (!ipl->iplb_valid) {
--            ipl->iplb_valid = s390_gen_initial_iplb(ipl);
-+            ipl->iplb_valid = s390_init_all_iplbs(ipl);
-+        } else {
-+            ipl->qipl.chain_len = 0;
+ 
+@@ -924,21 +991,21 @@ static void zipl_load_vblk(void)
+         puts("Using guessed DASD geometry.");
+         virtio_assume_eckd();
+     }
+-    ipl_eckd();
++    return ipl_eckd();
+ }
+ 
+-static void zipl_load_vscsi(void)
++static int zipl_load_vscsi(void)
+ {
+     if (virtio_get_block_size() == VIRTIO_ISO_BLOCK_SIZE) {
+         /* Is it an ISO image in non-CD drive? */
+         if (ipl_iso_el_torito()) {
+-            return;
++            return 0;
          }
      }
-     s390_ipl_set_boot_menu(ipl);
+ 
+     puts("Using guessed DASD geometry.");
+     virtio_assume_eckd();
+-    ipl_eckd();
++    return ipl_eckd();
+ }
+ 
+ /***********************************************************************
 -- 
 2.45.1
 
