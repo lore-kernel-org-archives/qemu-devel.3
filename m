@@ -4,62 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A89CED276
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 08:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6B8CED276
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 08:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy56u-0008M5-W1; Tue, 08 Oct 2024 03:58:25 -0400
+	id 1sy5AF-0000oH-QH; Tue, 08 Oct 2024 04:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56r-0008Ka-3s
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:58:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy5AC-0000ar-8P
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 04:01:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56p-0005g4-0m
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:58:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy5AA-00062g-A1
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 04:01:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728374298;
+ s=mimecast20190719; t=1728374505;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jLdx1/Cl7gGjeFgtGWbyh6ai0MP7WgSk3tPWW14XjmA=;
- b=U5TpheTs6cgOpnMg9HnA/Yi8F4awiIFGvGWB53bcTIYd92I3KP4t7Gl94ZLUOhpPz73+JQ
- RqD/N0N1mtlNVhgo0DO1Bgt24ve7JJol47BBnEbOzLm0iAyHxCzo3H1RzV80TBPw+l0N5O
- E5isW15ikUdYdOOvO1ljooFgFut/t34=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-bvFbGr2UME6tXyJYYE3ZYg-1; Tue,
- 08 Oct 2024 03:58:15 -0400
-X-MC-Unique: bvFbGr2UME6tXyJYYE3ZYg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CA7319560AD; Tue,  8 Oct 2024 07:58:13 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.61])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D861300018D; Tue,  8 Oct 2024 07:58:11 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	berrange@redhat.com
-Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
- evan.burgess@seagate.com, peter.maydell@linaro.org,
- Alejandro Zeise <alejandro.zeise@seagate.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 16/16] hw/misc/aspeed_hace: Fix SG Accumulative hashing
-Date: Tue,  8 Oct 2024 09:57:23 +0200
-Message-ID: <20241008075724.2772149-17-clg@redhat.com>
-In-Reply-To: <20241008075724.2772149-1-clg@redhat.com>
-References: <20241008075724.2772149-1-clg@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9QhZJ0eHo+KvEJ0qOi+bI3DWzF0LqJRHk/5DmLjJVJA=;
+ b=Zn2AzFeSnR7gIN3EwZP/11tTsB7qsdgNe9RocjddyTNgMVx1UaJ5UUf9EVckVUzQjmCR/w
+ cNVprsfvjzbsPdz5/0m5NzlZENEgLWdAA168JLGjloMApmVT+U625rVEoxYdefJyPFvOqp
+ bnDU9W+FZ4wtEJJz6e9spx/8SwVxDLo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-Q6isrIwVMqemL0wrKz-xDg-1; Tue, 08 Oct 2024 04:01:43 -0400
+X-MC-Unique: Q6isrIwVMqemL0wrKz-xDg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42ac185e26cso46704085e9.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 01:01:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728374502; x=1728979302;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9QhZJ0eHo+KvEJ0qOi+bI3DWzF0LqJRHk/5DmLjJVJA=;
+ b=vYvBB3iBQrbvecbhi+bIgND23ncRkEhITWrA81wNo37hqKfylIsDzLAaYtmtbZxx42
+ ZZ7bTr0D5qB/SwsELxtBq7kTLvW7/qvX34+sDZR/ZZ9ucnZQEMkp35o5o4AwHFnDAcPV
+ VD8urkJhgF2P6z0vwexus47uOj9LTK5Y9JOOwPtnMVwt/pD1bq+66W12u4lENK2RU2w+
+ bDBs6c6gHrV++uJoHRRTgvPO6L7ueh+z40xQLwx/8eZBpLF8ti1hTFc1UDJLMSPLZR3L
+ wVhoW+YvQWcUDXV8h5fO3ArTsIsVInk8oHuEGUuJhdcKeD9ngGerrYG0o3pONgw8XMj2
+ wK7A==
+X-Gm-Message-State: AOJu0Ywnb3axufrblycY4ItXdLJcrY33b2DvQ2DSwklpQ7qZOex+b/jp
+ nFsJUYOsm6khX0MT8PmIUQK+tDICUywNr0J/ttXlEmd2FonqQcvRMrKoFt06xvaoi+jIFgaEHh1
+ gGTqQHgIMZ4zt/hZM9T85VXL1ofCNdt/RskVr+oKiUop5xgW3KCWg6xGKcUT6yDZLs/6Auu8/0u
+ 5SKOQJoNNhRoRgZW+qk4pRQf4UmOB9dw==
+X-Received: by 2002:a05:600c:1e26:b0:42c:baf9:bee7 with SMTP id
+ 5b1f17b1804b1-42f9210c3d1mr37438595e9.12.1728374501678; 
+ Tue, 08 Oct 2024 01:01:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELwqKF+EmyLXRwyIxEjDb2BeGshD+mDrNwF8m+pJr0wzPnCgl2t1QwoDP7w7N6n42rWQti6A==
+X-Received: by 2002:a05:600c:1e26:b0:42c:baf9:bee7 with SMTP id
+ 5b1f17b1804b1-42f9210c3d1mr37438305e9.12.1728374501095; 
+ Tue, 08 Oct 2024 01:01:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43017466075sm13140565e9.0.2024.10.08.01.01.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Oct 2024 01:01:40 -0700 (PDT)
+Message-ID: <7517bf36-aaf7-43de-b47b-768dd51c2ad0@redhat.com>
+Date: Tue, 8 Oct 2024 10:01:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/16] hw/misc/aspeed_hace: Fix SG Accumulative Hash
+ Calculations
+To: qemu-devel@nongnu.org, berrange@redhat.com
+Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
+ evan.burgess@seagate.com, peter.maydell@linaro.org
+References: <20241008075724.2772149-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241008075724.2772149-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -85,209 +149,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Zeise <alejandro.zeise@seagate.com>
+On 10/8/24 09:57, Cédric Le Goater wrote:
+> Hello,
+> 
+> This is a resping of Alejandro's series fixing SG Accumulative Hash
+> Calculations. See [1] for more details.
 
-Make the Aspeed HACE module use the new qcrypto accumulative hashing functions
-when in scatter-gather accumulative mode. A hash context will maintain a
-"running-hash" as each scatter-gather chunk is received.
+arf.
 
-Previously each scatter-gather "chunk" was cached
-so the hash could be computed once the final chunk was received.
-However, the cache was a shallow copy, so once the guest overwrote the
-memory provided to HACE the final hash would not be correct.
+[1] https://lore.kernel.org/all/20240807195122.2827364-1-alejandro.zeise@seagate.com/
 
-Possibly related to: https://gitlab.com/qemu-project/qemu/-/issues/1121
-Buglink: https://github.com/openbmc/qemu/issues/36
+C.
 
-Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-[ clg: - Checkpatch fixes ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/misc/aspeed_hace.h |  4 ++
- hw/misc/aspeed_hace.c         | 96 +++++++++++++++++++----------------
- 2 files changed, 56 insertions(+), 44 deletions(-)
-
-diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
-index ecb1b67de816..4af99191955a 100644
---- a/include/hw/misc/aspeed_hace.h
-+++ b/include/hw/misc/aspeed_hace.h
-@@ -1,6 +1,7 @@
- /*
-  * ASPEED Hash and Crypto Engine
-  *
-+ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
-  * Copyright (C) 2021 IBM Corp.
-  *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-@@ -10,6 +11,7 @@
- #define ASPEED_HACE_H
- 
- #include "hw/sysbus.h"
-+#include "crypto/hash.h"
- 
- #define TYPE_ASPEED_HACE "aspeed.hace"
- #define TYPE_ASPEED_AST2400_HACE TYPE_ASPEED_HACE "-ast2400"
-@@ -35,6 +37,8 @@ struct AspeedHACEState {
- 
-     MemoryRegion *dram_mr;
-     AddressSpace dram_as;
-+
-+    QCryptoHash *hash_ctx;
- };
- 
- 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index b6f43f65b29a..8c88a1dc1ca0 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -1,6 +1,7 @@
- /*
-  * ASPEED Hash and Crypto Engine
-  *
-+ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
-  * Copyright (C) 2021 IBM Corp.
-  *
-  * Joel Stanley <joel@jms.id.au>
-@@ -151,50 +152,28 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
-     return iov_count;
- }
- 
--/**
-- * Generate iov for accumulative mode.
-- *
-- * @param s             aspeed hace state object
-- * @param iov           iov of the current request
-- * @param id            index of the current iov
-- * @param req_len       length of the current request
-- *
-- * @return count of iov
-- */
--static int gen_acc_mode_iov(AspeedHACEState *s, struct iovec *iov, int id,
--                            hwaddr *req_len)
--{
--    uint32_t pad_offset;
--    uint32_t total_msg_len;
--    s->total_req_len += *req_len;
--
--    if (has_padding(s, &iov[id], *req_len, &total_msg_len, &pad_offset)) {
--        if (s->iov_count) {
--            return reconstruct_iov(s, iov, id, &pad_offset);
--        }
--
--        *req_len -= s->total_req_len - total_msg_len;
--        s->total_req_len = 0;
--        iov[id].iov_len = *req_len;
--    } else {
--        s->iov_cache[s->iov_count].iov_base = iov->iov_base;
--        s->iov_cache[s->iov_count].iov_len = *req_len;
--        ++s->iov_count;
--    }
--
--    return id + 1;
--}
--
- static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                               bool acc_mode)
- {
-     struct iovec iov[ASPEED_HACE_MAX_SG];
-+    uint32_t total_msg_len;
-+    uint32_t pad_offset;
-     g_autofree uint8_t *digest_buf = NULL;
-     size_t digest_len = 0;
--    int niov = 0;
-+    bool sg_acc_mode_final_request = false;
-     int i;
-     void *haddr;
- 
-+    if (acc_mode && s->hash_ctx == NULL) {
-+        s->hash_ctx = qcrypto_hash_new(algo, NULL);
-+        if (s->hash_ctx == NULL) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: qcrypto failed to create hash context\n",
-+                          __func__);
-+            return;
-+        }
-+    }
-+
-     if (sg_mode) {
-         uint32_t len = 0;
- 
-@@ -226,8 +205,16 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-             }
-             iov[i].iov_base = haddr;
-             if (acc_mode) {
--                niov = gen_acc_mode_iov(s, iov, i, &plen);
--
-+                s->total_req_len += plen;
-+
-+                if (has_padding(s, &iov[i], plen, &total_msg_len,
-+                                &pad_offset)) {
-+                    /* Padding being present indicates the final request */
-+                    sg_acc_mode_final_request = true;
-+                    iov[i].iov_len = pad_offset;
-+                } else {
-+                    iov[i].iov_len = plen;
-+                }
-             } else {
-                 iov[i].iov_len = plen;
-             }
-@@ -252,20 +239,36 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-              * required to check whether cache is empty. If no, we should
-              * combine cached iov and the current iov.
-              */
--            uint32_t total_msg_len;
--            uint32_t pad_offset;
-             s->total_req_len += len;
-             if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
--                niov = reconstruct_iov(s, iov, 0, &pad_offset);
-+                i = reconstruct_iov(s, iov, 0, &pad_offset);
-             }
-         }
-     }
- 
--    if (niov) {
--        i = niov;
--    }
-+    if (acc_mode) {
-+        if (qcrypto_hash_updatev(s->hash_ctx, iov, i, NULL) < 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: qcrypto hash update failed\n", __func__);
-+            return;
-+        }
-+
-+        if (sg_acc_mode_final_request) {
-+            if (qcrypto_hash_finalize_bytes(s->hash_ctx, &digest_buf,
-+                                            &digest_len, NULL)) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: qcrypto failed to finalize hash\n",
-+                              __func__);
-+            }
- 
--    if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf, &digest_len, NULL) < 0) {
-+            qcrypto_hash_free(s->hash_ctx);
-+
-+            s->hash_ctx = NULL;
-+            s->iov_count = 0;
-+            s->total_req_len = 0;
-+        }
-+    } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf,
-+                                   &digest_len, NULL) < 0) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
-         return;
-     }
-@@ -397,6 +400,11 @@ static void aspeed_hace_reset(DeviceState *dev)
- {
-     struct AspeedHACEState *s = ASPEED_HACE(dev);
- 
-+    if (s->hash_ctx != NULL) {
-+        qcrypto_hash_free(s->hash_ctx);
-+        s->hash_ctx = NULL;
-+    }
-+
-     memset(s->regs, 0, sizeof(s->regs));
-     s->iov_count = 0;
-     s->total_req_len = 0;
--- 
-2.46.2
+> 
+> The goal of this patch series is to fix accumulative hashing support
+> in the Aspeed HACE module. The issue that stemmed this patch was a
+> failure to boot an OpenBMC image using the "ast2600-evb" machine. The
+> U-boot 2019.04 loader failed to verify image hashes.
+> 
+> These incorrect image hashes given by the HACE to the U-boot guest are
+> due to an oversight in the HACE module. Previously when operating in
+> scatter-gather accumulative mode, the HACE would cache the address
+> provided by the guest which contained the source data. However, there
+> was no deep copy, so when HACE generated the digest upon the reception
+> of the final accumulative chunk the digest was incorrect, as the
+> addresses provided had their regions overwritten by that time.
+> 
+> This fix consists of two main steps:
+> * Add an accumulative hashing function to the qcrypto library
+> * Modify the HACE module to use the accumulative hashing functions
+> 
+> All the crypto library backends (nettle, gnutls, etc.) support
+> accumulative hashing, so it was trivial to create wrappers for those
+> functions.
+> 
+> Changes in v5 (clg):
+> 
+>   - Changed documentation "non-zero on error" -> "-1 on error"
+>   - Dropped qcrypto_hash_supports() in qcrypto_glib_hash_new()
+>   - Removed superfluous cast (GChecksum *) in qcrypto_glib_hash_free()
+>   - Reworked qcrypto_glib_hash_finalize()
+>   - Dropped qcrypto_hash_supports() in qcrypto_gcrypt_hash_new()
+>   - Reworked qcrypto_gcrypt_hash_finalize()
+>   - Handled gcry_md_open() errors in qcrypto_gcrypt_hash_new()
+>   - Dropped qcrypto_hash_supports() in qcrypto_gnutls_hash_new()
+>   - Reworked qcrypto_gnutls_hash_finalize()
+>   - Handled gnutls_hash_init() errors in qcrypto_gnutls_hash_new()
+>   - Replaced gnutls_hash_deinit() by gnutls_hash_output() in
+>     qcrypto_gnutls_hash_finalize()
+>   - Freed resources with gnutls_hash_deinit() in qcrypto_gnutls_hash_free()
+>   - Dropped qcrypto_hash_supports() in qcrypto_nettle_hash_new()
+>   - Split iov changes from original patch
+>   - Handled qcrypto_afalg_hash_ctx_new() errors in qcrypto_afalg_hash_new()
+>   - Freed alg_name in qcrypto_afalg_hash_new()
+>   - Reworked qcrypto_afalg_recv_from_kernel()
+>   - Split iov changes from original patch
+>   - Reworked qcrypto_hash_bytesv() error handling
+>   - Used hash->driver int qcrypto_hash_new(), qcrypto_hash_free() qcrypto_hash_updatev()
+>   - Introduced qcrypto_hash_supports() check in  qcrypto_hash_new()
+>   - Introduced g_autofree variables in qcrypto_hash_finalize_digest()
+>     and qcrypto_hash_finalize_base64()
+>   - Re-arrranged code in qcrypto_hash_digestv() and qcrypto_hash_digest()
+>   - Improved test_hash_accumulate() with g_autofree variables
+>   - Fixed spelling in commit log
+>   - Checkpatch fixes
+> 
+> Changes in V4:
+> * Restructured patches so unit tests pass for each independently.
+> * Freeing hash context is now a void function.
+> * Added autoptr cleanup function definition for qcrypto_hash_free.
+> * Separated qcrypto_hash_update into qcrypto_hash_update and
+>    qcrypto_hash_updatev.
+> * Changed public hash functions to use afalg implementation correctly if support
+>    is enabled.
+> * Fixed accumulative hashing in afalg driver (pass MSG_MORE socket flag).
+> 
+> Changes in V3:
+> * Reworked crypto hash API with comments from Daniel
+>    * Creation/Deletion of contexts, updating, and finalizing
+>    * Modified existing API functions to use the new 4 main core functions
+>    * Added test for accumulative hashing
+>    * Added afalg driver implementation
+> * Fixed bug in HACE module where hash context fails to allocate,
+>    causing the HACE internal state to be incorrect and segfault.
+> 
+> Changes in V2:
+> * Fixed error checking bug in libgcrypt crypto backend of
+>    accumulate_bytesv
+> 
+> Alejandro Zeise (16):
+>    crypto: accumulative hashing API
+>    crypto/hash-glib: Implement new hash API
+>    crypto/hash-gcrypt: Implement new hash API
+>    crypto/hash-gnutls: Implement new hash API
+>    crypto/hash-nettle: Implement new hash API
+>    util/iov: Introduce iov_send_recv_with_flags()
+>    crypto/hash-afalg: Implement new hash API
+>    crypto/hash: Implement and use new hash API
+>    tests/unit/test-crypto-hash: accumulative hashing
+>    crypto/hash-glib: Remove old hash API functions
+>    crypto/hash-gcrypt: Remove old hash API functions
+>    crypto/hash-gnutls: Remove old hash API functions
+>    crypto/hash-nettle: Remove old hash API functions
+>    crypto/hash-afalg: Remove old hash API functions
+>    crypto/hashpriv: Remove old hash API function
+>    hw/misc/aspeed_hace: Fix SG Accumulative hashing
+> 
+>   crypto/hashpriv.h             |  13 ++-
+>   include/crypto/hash.h         | 119 ++++++++++++++++++++++++
+>   include/hw/misc/aspeed_hace.h |   4 +
+>   include/qemu/iov.h            |  27 ++++++
+>   crypto/hash-afalg.c           | 167 ++++++++++++++++++++++++----------
+>   crypto/hash-gcrypt.c          | 112 +++++++++++++----------
+>   crypto/hash-glib.c            |  92 +++++++++++--------
+>   crypto/hash-gnutls.c          |  97 +++++++++++++-------
+>   crypto/hash-nettle.c          |  81 ++++++++++-------
+>   crypto/hash.c                 | 161 ++++++++++++++++++++++++++------
+>   hw/misc/aspeed_hace.c         |  96 ++++++++++---------
+>   tests/unit/test-crypto-hash.c |  46 ++++++++++
+>   util/iov.c                    |  25 +++--
+>   13 files changed, 756 insertions(+), 284 deletions(-)
+> 
 
 
