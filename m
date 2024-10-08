@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE0ACED256
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A563CED256
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy03Y-0002xo-IF; Mon, 07 Oct 2024 22:34:36 -0400
+	id 1sy083-0003wX-0M; Mon, 07 Oct 2024 22:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sy03W-0002xf-Mv
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 22:34:34 -0400
-Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sy03T-0007Hc-Gs
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 22:34:34 -0400
-Received: by mail-oo1-xc2c.google.com with SMTP id
- 006d021491bc7-5e5a0519d00so1872894eaf.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 19:34:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1728354869; x=1728959669;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yIPUZ51OYw24cGl9TaEM56fx5kK0EjSq5r+orsgcUjI=;
- b=Ee+YEQBPdmoO9oVuaUhf3FXjzejWH1006C3zXAcEdcuJ0wDpVh1DBh0CnNnAP2SRyS
- l7aSWbYVf4YMetOz1W5ZhhwJdcZvgTjE2KE9qbqJLzx8UpE5A/nX2UNQxcbLbq/p/QXw
- 0RjiXIWwIVwVBwhCfrx6r6rG44CYXqznjsyDkoQ5aAUkg7tfup4nU6WQKCONUZnTuInH
- iigMHhiDFekc/zkjBMEMYaC27DH/IF9fb5w9cykNusEXNld/r8uEOXEq7grujUaH/S/J
- CRyqpDh5x2sOOZyh4vWorWvpz/AMveErE7kSdRz7ZxESAJ3J2Dx2inH6KFgIIAsSh91H
- iKvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728354869; x=1728959669;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yIPUZ51OYw24cGl9TaEM56fx5kK0EjSq5r+orsgcUjI=;
- b=kyXMEsTDIGVLp75oFS6vaB/eDwd3UglsM/9lf+cBF4ursd+PT45fDZnDGKJN7nosiJ
- hg68eOJrj5TNH3tLxU4UbddCBVD/dyxDpl+ONPHcNqoXgRkjrWlhB2jdeWSeM12kE1/O
- 9SrVI8KVVKTtAAV6X9QLm3LXx/nfOZR8x8+3hBa2AuTHgGfxqODUvyWgKfoqX7y63m9b
- sTrbc4NDbL0tnafayK89QDFTsO9XYkZN0Hcx749Fo6RQO0ADio9z8m61CvDYN7+Cf6e/
- owTYoZ8nfkKW2o+7N6YsWGmOpRkA+gDJErJiwlnhAt0HuzZIt73d/N1NK3ek/Ebeb3L1
- nGcQ==
-X-Gm-Message-State: AOJu0YymsNLZK+kyVik8beyJUbbRUDTbGKHQkA15WMiNPkyDwcp834yo
- GslyhR4HT5e85Rbh6JW6rdTb85CqnmcrLPWJL5bo+UTfrP1IL3+oPnuQjV8ZRvFxMOp7DdfcHXn
- 6Ph5xCXUSgnDtD0GCz2Ep8BeREG9ej5g/N73hfg==
-X-Google-Smtp-Source: AGHT+IHG+6qOxg+nF2V9igGGdBcUTHxH+kYlnkfuBnlbmiJSykoNwIWJ15tU0fibMQhdWOVneEP0tsvVjCgAiwD4tgo=
-X-Received: by 2002:a05:6870:d202:b0:279:334e:7f93 with SMTP id
- 586e51a60fabf-287c1db0177mr8386100fac.10.1728354868588; Mon, 07 Oct 2024
- 19:34:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sy080-0003vx-Qj; Mon, 07 Oct 2024 22:39:13 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sy07z-0007f8-5o; Mon, 07 Oct 2024 22:39:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728355151; x=1759891151;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=h/4KWn9V7cIjP5cDR1TS7MiUChbx6T5U2FcDlheaVt8=;
+ b=EgPz4OcyTarscBFkXYPVCOdsTo0wRRI35SSc3oPYyPCN25NAGwxOcSss
+ bViphDzPwQR5siJHfvZ/8SK4RP/cPSNa7E2pNLP/susW0beGeGexLD9ku
+ axsdCN/3s4JKX5hQ8+Am0t2lx6m8u1VlATmAu+3RB6/tthcYk1x5XpGvR
+ nrO5gDvH8n2/lS7XRFl+FIEC0ltXWicK0HWZDwwSWgAepk81uaD/oJGOe
+ FORnKuljmo6/regEln2RnrC+bKqbG3pQGQX7UX0+17zzZd4T0TQovsP6c
+ NofYYlSDZLj+EXx2Cu6slzK6K9naiE5FOinNcdbL6fIpIu9wtYiMcnRFu w==;
+X-CSE-ConnectionGUID: pk28RzSIS0+cKfpXXZsFaw==
+X-CSE-MsgGUID: SgWFZrDlQkq3unWsG0tL/w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="27612025"
+X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="27612025"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2024 19:39:07 -0700
+X-CSE-ConnectionGUID: ydLZjjDwTnyX5wr3ApkTrw==
+X-CSE-MsgGUID: AfcGwOnVSNGBRoDsN9uwew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="75682478"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 07 Oct 2024 19:39:05 -0700
+Date: Tue, 8 Oct 2024 10:55:16 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Chuang Xu <xuchuangxclwt@bytedance.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
+ xieyongji@bytedance.com, chaiwen.cc@bytedance.com,
+ qemu-stable@nongnu.org, Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+Subject: Re: [PATCH v4] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Message-ID: <ZwSfFNUYQNs/X74u@intel.com>
+References: <20241007081344.10907-1-xuchuangxclwt@bytedance.com>
 MIME-Version: 1.0
-References: <cover.1727630000.git.yong.huang@smartx.com>
- <3a383e563cc57c77320af805c8b8ece4e68eebea.1727630000.git.yong.huang@smartx.com>
- <ZvsORXZDZodSrzO-@x1n>
- <CAK9dgmZ7M30xXahBUKEkmQ2ZkWoF=DA=pb8XF_=YVM9xF2zcJw@mail.gmail.com>
- <ZvwXUHltQU2seIM4@x1n>
-In-Reply-To: <ZvwXUHltQU2seIM4@x1n>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Tue, 8 Oct 2024 10:34:12 +0800
-Message-ID: <CAK9dgmbi5YRGJsUEY0XdvM9zhfacvSxksjUcCXvqG0SA4D-C7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] migration: Support responsive CPU throttle
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fd0a450623edf968"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc2c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241007081344.10907-1-xuchuangxclwt@bytedance.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,276 +84,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fd0a450623edf968
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Chuang.
 
-On Tue, Oct 1, 2024 at 11:37=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+Look fine for me, and only some minor nits:
 
-> On Tue, Oct 01, 2024 at 10:18:54AM +0800, Yong Huang wrote:
-> > On Tue, Oct 1, 2024 at 4:47=E2=80=AFAM Peter Xu <peterx@redhat.com> wro=
-te:
-> >
-> > > On Mon, Sep 30, 2024 at 01:14:28AM +0800, yong.huang@smartx.com wrote=
-:
-> > > > From: Hyman Huang <yong.huang@smartx.com>
-> > > >
-> > > > Currently, the convergence algorithm determines that the migration
-> > > > cannot converge according to the following principle:
-> > > > The dirty pages generated in current iteration exceed a specific
-> > > > percentage (throttle-trigger-threshold, 50 by default) of the numbe=
-r
-> > > > of transmissions. Let's refer to this criteria as the "dirty rate".
-> > > > If this criteria is met more than or equal to twice
-> > > > (dirty_rate_high_cnt >=3D 2), the throttle percentage increased.
-> > > >
-> > > > In most cases, above implementation is appropriate. However, for a
-> > > > VM with high memory overload, each iteration is time-consuming.
-> > > > The VM's computing performance may be throttled at a high percentag=
-e
-> > > > and last for a long time due to the repeated confirmation behavior.
-> > > > Which may be intolerable for some computationally sensitive softwar=
-e
-> > > > in the VM.
-> > > >
-> > > > As the comment mentioned in the migration_trigger_throttle function=
-,
-> > > > in order to avoid erroneous detection, the original algorithm
-> confirms
-> > > > the criteria repeatedly. Put differently, the criteria does not nee=
-d
-> > > > to be validated again once the detection is more reliable.
-> > > >
-> > > > In the refinement, in order to make the detection more accurate, we
-> > > > introduce another criteria, called the "dirty ratio" to determine
-> > > > the migration convergence. The "dirty ratio" is the ratio of
-> > > > bytes_xfer_period and bytes_dirty_period. When the algorithm
-> > > > repeatedly detects that the "dirty ratio" of current sync is lower
-> > > > than the previous, the algorithm determines that the migration cann=
-ot
-> > > > converge. For the "dirty rate" and "dirty ratio", if one of the two
-> > > > criteria is met, the penalty percentage would be increased. This
-> > > > makes CPU throttle more responsively and therefor saves the time of
-> > > > the entire iteration and therefore reduces the time of VM performan=
-ce
-> > > > degradation.
-> > > >
-> > > > In conclusion, this refinement significantly reduces the processing
-> > > > time required for the throttle percentage step to its maximum while
-> > > > the VM is under a high memory load.
-> > >
-> > > I'm a bit lost on why this patch 2-3 is still needed if patch 1 works=
-.
-> > > Wouldn't that greatly increase the chance of throttle code being
-> inovked
-> > > already?  Why we still need this?
-> > >
-> >
-> > Indeed, if we are considering how to increase the change of throttle.
-> > Patch 1 is sufficient, and I'm not insisting.
-> >
-> > If we are talking about how to detect the migration convergence, this
-> > patch, IMHO, is still helpful. Anyway, it depends on your judgment. :)
->
-> Thanks.  I really hope we can stick with patch 1 only for now, and we lea=
-ve
-> patches like 2-3 for future, or probably never.
->
-> I want to avoid more magical tunables, and I want to avoid the code harde=
-r
-> to read.  Unlike most of other migration features, auto converge so far i=
-s
-> already pretty heavy on the "engineering" aspect of things.  More people
-> care about downtime with 100ms or even less, then it makes zero sense a
-> throttle feature can stop a group of vCPUs for more than that easily.
->
-> I hope we can unite more dev/qe resources on postcopy across QEMU communi=
-ty
-> for enterprise users.  PoCs are always good stuff for QEMU as it's a
-> community project and people experiment things on it, but I hope at least
-> from design level, not small tunables like this one.  We could have
-> introduced 10 more tunables all over, feed them to AI and train some
-> numbers that migration can improve 10%, but IMHO that doesn't hugely help=
-.
->
-> If you really care about convergence issues, I want to know whether you
-> agree on postcopy being a better way to go.  There're still plenty of
->
+On Mon, Oct 07, 2024 at 04:13:44PM +0800, Chuang Xu wrote:
+> Date: Mon,  7 Oct 2024 16:13:44 +0800
+> From: Chuang Xu <xuchuangxclwt@bytedance.com>
+> Subject: [PATCH v4] i386/cpu: fixup number of addressable IDs for logical
+>  processors in the physical package
+> X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+> 
+> When QEMU is started with:
+> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+> -smp 180,sockets=2,dies=1,cores=45,threads=2
+> 
+> Try to execute "cpuid -1 -l 1 -r" in guest, we'll obtain a value of 90 for
+> CPUID.01H.EBX[23:16], while the expected value is 128. And Try to
+> execute "cpuid -1 -l 4 -r" in guest, we'll obtain a value of 63 for
+> CPUID.04H.EAX[31:26] as expected.
 
-Agree, postcopy ought to deserve more attention as respect to refining the
-huge
-VM migration.
+I polished the sentences a bit:
 
+When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
+CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+CPUID.04H.EAX[31:26], which matches the expected result.
 
-> things we can do better in that area on either postcopy in general, or
-> downtime optimizations that lots of people are working (e.g. VFIO's), so
-> again IMHO it'll be good we keep focused there.
+> As (1+CPUID.04H.EAX[31:26]) round up to the nearest power-of-2 integer,
+
+s/round/rounds/
+
+> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+> integer too. Otherwise we may encounter unexpected results in guest.
+> 
+> For example, when QEMU is started with CLI above and xtopology is disabled,
+
+What's xtopology?
+
+> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+> as the result, even though theads-per-core should actually be 2.
+
+s/theads-per-core/threads-per-core/
+ 
+> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+> to solve the unexpected result.
+> 
+> In addition, we introduce max_thread_number_in_package() instead of
+> using pow2ceil() to be compatible with smp and hybrid.
 >
-> Thanks,
->
-> --
-> Peter Xu
->
->
-Thanks for sharing your idea, I'll drop these 2 patches in the next version=
-.
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> ---
+>  target/i386/cpu.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 85ef7452c0..1b4e3b6931 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -261,6 +261,12 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
+>      return num_ids - 1;
+>  }
+>  
+> +static uint32_t max_thread_number_in_package(X86CPUTopoInfo *topo_info)
+> +{
+> +    uint32_t num_threads = 1 << apicid_pkg_offset(topo_info);
+> +    return num_threads;
+> +}
+> +
+>  static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
+>  {
+>      uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
+> @@ -6462,7 +6468,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          }
+>          *edx = env->features[FEAT_1_EDX];
+>          if (threads_per_pkg > 1) {
+> -            *ebx |= threads_per_pkg << 16;
+> +            *ebx |= max_thread_number_in_package(&topo_info) << 16;
 
-Yong
+This helper has only 1 caller and its name doesn't distinguish the
+addressable ID, so it's not necessary. I feel it's better to shift
+the bits directly here:
 
---=20
-Best regards
+*ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
 
---000000000000fd0a450623edf968
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>              *edx |= CPUID_HT;
+>          }
+>          if (!cpu->enable_pmu) {
+> -- 
+> 2.20.1
+> 
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 1, 202=
-4 at 11:37=E2=80=AFPM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pet=
-erx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
-id;border-left-color:rgb(204,204,204);padding-left:1ex">On Tue, Oct 01, 202=
-4 at 10:18:54AM +0800, Yong Huang wrote:<br>
-&gt; On Tue, Oct 1, 2024 at 4:47=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:=
-peterx@redhat.com" target=3D"_blank">peterx@redhat.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; On Mon, Sep 30, 2024 at 01:14:28AM +0800, <a href=3D"mailto:yong.=
-huang@smartx.com" target=3D"_blank">yong.huang@smartx.com</a> wrote:<br>
-&gt; &gt; &gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.co=
-m" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Currently, the convergence algorithm determines that the mig=
-ration<br>
-&gt; &gt; &gt; cannot converge according to the following principle:<br>
-&gt; &gt; &gt; The dirty pages generated in current iteration exceed a spec=
-ific<br>
-&gt; &gt; &gt; percentage (throttle-trigger-threshold, 50 by default) of th=
-e number<br>
-&gt; &gt; &gt; of transmissions. Let&#39;s refer to this criteria as the &q=
-uot;dirty rate&quot;.<br>
-&gt; &gt; &gt; If this criteria is met more than or equal to twice<br>
-&gt; &gt; &gt; (dirty_rate_high_cnt &gt;=3D 2), the throttle percentage inc=
-reased.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; In most cases, above implementation is appropriate. However,=
- for a<br>
-&gt; &gt; &gt; VM with high memory overload, each iteration is time-consumi=
-ng.<br>
-&gt; &gt; &gt; The VM&#39;s computing performance may be throttled at a hig=
-h percentage<br>
-&gt; &gt; &gt; and last for a long time due to the repeated confirmation be=
-havior.<br>
-&gt; &gt; &gt; Which may be intolerable for some computationally sensitive =
-software<br>
-&gt; &gt; &gt; in the VM.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; As the comment mentioned in the migration_trigger_throttle f=
-unction,<br>
-&gt; &gt; &gt; in order to avoid erroneous detection, the original algorith=
-m confirms<br>
-&gt; &gt; &gt; the criteria repeatedly. Put differently, the criteria does =
-not need<br>
-&gt; &gt; &gt; to be validated again once the detection is more reliable.<b=
-r>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; In the refinement, in order to make the detection more accur=
-ate, we<br>
-&gt; &gt; &gt; introduce another criteria, called the &quot;dirty ratio&quo=
-t; to determine<br>
-&gt; &gt; &gt; the migration convergence. The &quot;dirty ratio&quot; is th=
-e ratio of<br>
-&gt; &gt; &gt; bytes_xfer_period and bytes_dirty_period. When the algorithm=
-<br>
-&gt; &gt; &gt; repeatedly detects that the &quot;dirty ratio&quot; of curre=
-nt sync is lower<br>
-&gt; &gt; &gt; than the previous, the algorithm determines that the migrati=
-on cannot<br>
-&gt; &gt; &gt; converge. For the &quot;dirty rate&quot; and &quot;dirty rat=
-io&quot;, if one of the two<br>
-&gt; &gt; &gt; criteria is met, the penalty percentage would be increased. =
-This<br>
-&gt; &gt; &gt; makes CPU throttle more responsively and therefor saves the =
-time of<br>
-&gt; &gt; &gt; the entire iteration and therefore reduces the time of VM pe=
-rformance<br>
-&gt; &gt; &gt; degradation.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; In conclusion, this refinement significantly reduces the pro=
-cessing<br>
-&gt; &gt; &gt; time required for the throttle percentage step to its maximu=
-m while<br>
-&gt; &gt; &gt; the VM is under a high memory load.<br>
-&gt; &gt;<br>
-&gt; &gt; I&#39;m a bit lost on why this patch 2-3 is still needed if patch=
- 1 works.<br>
-&gt; &gt; Wouldn&#39;t that greatly increase the chance of throttle code be=
-ing inovked<br>
-&gt; &gt; already?=C2=A0 Why we still need this?<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Indeed, if we are considering how to increase the change of throttle.<=
-br>
-&gt; Patch 1 is sufficient, and I&#39;m not insisting.<br>
-&gt; <br>
-&gt; If we are talking about how to detect the migration convergence, this<=
-br>
-&gt; patch, IMHO, is still helpful. Anyway, it depends on your judgment. :)=
-<br>
-<br>
-Thanks.=C2=A0 I really hope we can stick with patch 1 only for now, and we =
-leave<br>
-patches like 2-3 for future, or probably never.<br>
-<br>
-I want to avoid more magical tunables, and I want to avoid the code harder<=
-br>
-to read.=C2=A0 Unlike most of other migration features, auto converge so fa=
-r is<br>
-already pretty heavy on the &quot;engineering&quot; aspect of things.=C2=A0=
- More people<br>
-care about downtime with 100ms or even less, then it makes zero sense a<br>
-throttle feature can stop a group of vCPUs for more than that easily.<br>
-<br>
-I hope we can unite more dev/qe resources on postcopy across QEMU community=
-<br>
-for enterprise users.=C2=A0 PoCs are always good stuff for QEMU as it&#39;s=
- a<br>
-community project and people experiment things on it, but I hope at least<b=
-r>
-from design level, not small tunables like this one.=C2=A0 We could have<br=
->
-introduced 10 more tunables all over, feed them to AI and train some<br>
-numbers that migration can improve 10%, but IMHO that doesn&#39;t hugely he=
-lp.<br>
-<br>
-If you really care about convergence issues, I want to know whether you<br>
-agree on postcopy being a better way to go.=C2=A0 There&#39;re still plenty=
- of<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;com=
-ic sans ms&quot;,sans-serif" class=3D"gmail_default">Agree, postcopy ought =
-to deserve more attention as respect to refining the huge</div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t">VM migration.</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-sty=
-le:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-things we can do better in that area on either postcopy in general, or<br>
-downtime optimizations that lots of people are working (e.g. VFIO&#39;s), s=
-o<br>
-again IMHO it&#39;ll be good we keep focused there.<br>
-<br>
-Thanks,<br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div><div><br></div><div style=3D"font-family:&quot;comic san=
-s ms&quot;,sans-serif" class=3D"gmail_default">Thanks for sharing your idea=
-, I&#39;ll drop these 2 patches in the next version.</div><div style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default"><br>=
-</div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=
-=3D"gmail_default">Yong</div><div><br></div><span class=3D"gmail_signature_=
-prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=
-=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font></div>=
-</div></div>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
---000000000000fd0a450623edf968--
 
