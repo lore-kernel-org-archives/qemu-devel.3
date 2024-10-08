@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3767BCED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 00:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F944CED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 00:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyMl-000631-F4; Mon, 07 Oct 2024 20:46:19 -0400
+	id 1sxyQF-00072w-WF; Mon, 07 Oct 2024 20:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sxyMa-00061w-GG; Mon, 07 Oct 2024 20:46:09 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ id 1sxyQE-00072f-Ed; Mon, 07 Oct 2024 20:49:54 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sxyMV-0005K7-Oc; Mon, 07 Oct 2024 20:46:08 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-505a9e521b8so1631161e0c.0; 
- Mon, 07 Oct 2024 17:46:03 -0700 (PDT)
+ id 1sxyQC-0005QF-Vm; Mon, 07 Oct 2024 20:49:54 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-50abd42a6b2so3474072e0c.0; 
+ Mon, 07 Oct 2024 17:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728348362; x=1728953162; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728348584; x=1728953384; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DwrZU7+WRXa2SBCQtrdGDwpBC/7fI0xHGdzxrY4bl/4=;
- b=CY5edREhnxt49jyL5uzt8oJ1vvxzO+QeYeSyU/XsWCSJ9wKrQxxVeLldtDhmDLhMX6
- P4s7W1kvXbzvfZ1BtSoVgz/xXZdh+RD5WK6+Jmmr55N+b0j+LK7G9HzVNsI1d4nkYml5
- SnWoe8mgKtIPRUZcDl5dzQCthUKJNmExtxY6/Bj6kTsMTvusupPtI6wi77qaBkiOKgo6
- tNpFoxGhWZMVZDUhO5mne3D/K+UL3Ev988frFBM+HKr96mo+AQUrR5TNFwbXeckerQ5I
- 6ih6NIYExDgR30NVx2aNypzavrCcKwV8ZPURdzIV4wQzUvqXMdmA2EZIYmgN3JKVdkxX
- WVLw==
+ bh=v/z6WiVmtUbbKwjOUBqxNjOTosLFsd4CXzc8JqXjGuQ=;
+ b=UxUcgNZmFZEp9yzWu76jIIeu30hfXW/NRVcHcYnNQS1W+AeZzY46nRlWsIzlmy2+tp
+ I0F3MnwPQWpM+GrCr35QQx5Sg5EGNuPLF00MOqo8WepH/9izzjXvqHzcYTEGfLrljNwa
+ gGqxSorAcV6/JNAptVvwnKxVj9ijMwNPaDoE8GKORjvV5KikjPgPRVxMFjPYybFBievD
+ NROW1X4BsZKBa5TmimKc1tg3UxKKQjLRDkeAdeGjUgyodXvXdA1NTfzY1rmT+ODo+nAx
+ ESs4CYz81Trwd6wOQImyRblhbQXaImncoXF3px89PvSkNzoj8WcVJC7oN9SsSQODTjMv
+ Yjrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728348362; x=1728953162;
+ d=1e100.net; s=20230601; t=1728348584; x=1728953384;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DwrZU7+WRXa2SBCQtrdGDwpBC/7fI0xHGdzxrY4bl/4=;
- b=KZQ0Qodnu2scRg36HskJmIU0FWEhvHT4Jy0X3zcwXr309aMZWHj0O0DY6pIOvLH1Y2
- FpEgcP5dxYSgeOLwApWZhpYgOCb/v30e3OZ2nLWAhYyZGhp6K+VAqzWw5isjyWJmgQxk
- LB3tiwUqH/SC2wd17Nvl3uVD5WZsEdl7MdKaq+8H4d8+CsDPNH26dkjKw0L3s92GPGUL
- wllakUGrzyb1kLb8/BmaXQecZZWTIqxE5sVoC+Y/ANqpO4C7w5M6odz4ONpJHbT3sbtH
- A/WDRGqdWPo95nt8ftN9guXUCttmTJg9l1sLjlViEIEtAPKSmwDXafeaJ4rm6BXMEVOf
- Mc4g==
+ bh=v/z6WiVmtUbbKwjOUBqxNjOTosLFsd4CXzc8JqXjGuQ=;
+ b=VuIu8HDMyH1wBk4jr7l2LiSwtK7AURTPcDQf4cwEDE1TWC8IUcuBrUASPjwTZVF2f6
+ eHwExoVetml4HNY876PGvTIojB8XcR8eBEVJXwfvjDYUN/ReKTZsSN5ZHFYDim1UKTyB
+ fCaRwKTohwTsruoJGL9TggiCNUj20zZSjtof88TKX+VAX2AL2eH9gmz3UkYwripHbcan
+ xUJdMsP0HH/2g20kaIAPbfqm16Zgb5DLb+G6hDqnx5D/9+pkcyf574iXbfGfbwjfWe0d
+ 5PWnBRQ40qlyK1luf+o0+yYVBDzvkv9hZ4sJ55JXoXbxW/VHVoFf41oUJ33T23jOMbx3
+ OvMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNrFNpiyLvUxGa8xgmZsFEMeuFE/deCQSmXx+2qCiFHTtMiZHJHesLhuxyQGnsSUUiF+yvvRwkqEva@nongnu.org,
- AJvYcCVkLYv45LbL2pKoWhP6VlMjEq93VGxJB26M0DmusD0VPEfGmwBFlPXCvJxnurhj/0HIrphSzreZRGG4eg==@nongnu.org
-X-Gm-Message-State: AOJu0YzttwHb9j9qUT32GuKpyQ9lkTDv9vQhHaU27BsD5UJVpLrLUwUP
- zx4bJYLIH4M28ahSLyvDmzlVjNgyWDNAwEqnuk/E8frv/BvSQzJefblPTRVwPdKWfD/hBtb+jOT
- 816rTh1ERZiT+c5p94XISMWn7jTQ=
-X-Google-Smtp-Source: AGHT+IHSJlvK4jZXDTbKT7zFv1I0YNJsGBRL7BUreec71rnnZExDUt435St1qHWdGUc4qJLEHqo7Brx0xwV9I6zN6Oo=
-X-Received: by 2002:a05:6102:440b:b0:4a3:c830:81e9 with SMTP id
- ada2fe7eead31-4a40574966fmr11623307137.6.1728348362222; Mon, 07 Oct 2024
- 17:46:02 -0700 (PDT)
+ AJvYcCXzJ1rE/pSN3gdACU5sJQgXGXkJEtDtsmecBbUHuDvYiLIaV7oqBBZV+zkIspCru5HszjVdFVXyzrRj@nongnu.org
+X-Gm-Message-State: AOJu0YznfANF9ip0kH68+QvZudYKPV/WkmVhY2eHFc3Bl0lsoaRFnuIY
+ i1onKkux3WLDy4ktSauZuHjMQCOnT6vkVqi+0xYykWvR61FU9U4Y+CWjMxgX2w8JIKxYQSl3yDW
+ LEKw6PmpeMVx5yseTjnHeTIip6pM=
+X-Google-Smtp-Source: AGHT+IEVxBn0+c31tFPPWPvY4CtqLHCUm2hHhmCUcxs7solHt6dRyy6iNvI+wPke6aaTVgB00B5MZMuBCwilRzkb+CM=
+X-Received: by 2002:a05:6122:35cd:b0:4f5:312a:6573 with SMTP id
+ 71dfb90a1353d-50cd812faeamr1304977e0c.5.1728348584271; Mon, 07 Oct 2024
+ 17:49:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240916181633.366449-1-heinrich.schuchardt@canonical.com>
- <20240917-f45624310204491aede04703@orel>
- <15c359a4-b3c1-4cb0-be2e-d5ca5537bc5b@canonical.com>
- <20240917-b13c51d41030029c70aab785@orel>
- <8b24728f-8b6e-4c79-91f6-7cbb79494550@canonical.com>
- <20240918-039d1e3bebf2231bd452a5ad@orel>
- <CAFEAcA-Yg9=5naRVVCwma0Ug0vFZfikqc6_YiRQTrfBpoz9Bjw@mail.gmail.com>
- <bab7a5ce-74b6-49ae-b610-9a0f624addc0@canonical.com>
- <CAFEAcA-L7sQfK6MNt1ZbZqUMk+TJor=uD3Jj-Pc6Vy9j9JHhYQ@mail.gmail.com>
- <f1e41b95-c499-4e06-91cb-006dcd9d29e6@canonical.com>
- <CAFEAcA_ePVwnpVVWJSx8=-8v2h_z2imfSdyAZd62RhXaZUTojA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_ePVwnpVVWJSx8=-8v2h_z2imfSdyAZd62RhXaZUTojA@mail.gmail.com>
+References: <20240919055048.562-1-zhiwei_liu@linux.alibaba.com>
+ <20240919055048.562-8-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240919055048.562-8-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 8 Oct 2024 10:45:36 +1000
-Message-ID: <CAKmqyKPoom+iQbrNn7xuebRdd9DfX3GAJQQM+8fswEqfRi3e_A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] target/riscv: enable floating point unit
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- Anup Patel <anup@brainfault.org>, Atish Patra <atishp@atishpatra.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, Albert Ou <aou@eecs.berkeley.edu>,
- kvm@vger.kernel.org, 
- kvm-riscv@lists.infradead.org, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Andrew Jones <ajones@ventanamicro.com>
+Date: Tue, 8 Oct 2024 10:49:18 +1000
+Message-ID: <CAKmqyKOyR---gKrQkZWaTs65sr05P3f8M+M5uzhNKWbhLFn_Og@mail.gmail.com>
+Subject: Re: [PATCH v7 7/8] target/riscv: Add max32 CPU for RV64 QEMU
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ bmeng.cn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,7 +77,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,85 +93,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 1:34=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+On Thu, Sep 19, 2024 at 3:56=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
+a.com> wrote:
 >
-> On Wed, 18 Sept 2024 at 14:49, Heinrich Schuchardt
-> <heinrich.schuchardt@canonical.com> wrote:
-> >
-> > On 18.09.24 15:12, Peter Maydell wrote:
-> > > On Wed, 18 Sept 2024 at 14:06, Heinrich Schuchardt
-> > > <heinrich.schuchardt@canonical.com> wrote:
-> > >> Thanks Peter for looking into this.
-> > >>
-> > >> QEMU's cpu_synchronize_all_post_init() and
-> > >> do_kvm_cpu_synchronize_post_reset() both end up in
-> > >> kvm_arch_put_registers() and that is long after Linux
-> > >> kvm_arch_vcpu_create() has been setting some FPU state. See the outp=
-ut
-> > >> below.
-> > >>
-> > >> kvm_arch_put_registers() copies the CSRs by calling
-> > >> kvm_riscv_put_regs_csr(). Here we can find:
-> > >>
-> > >>       KVM_RISCV_SET_CSR(cs, env, sstatus, env->mstatus);
-> > >>
-> > >> This call enables or disables the FPU according to the value of
-> > >> env->mstatus.
-> > >>
-> > >> So we need to set the desired state of the floating point unit in QE=
-MU.
-> > >> And this is what the current patch does both for TCG and KVM.
-> > >
-> > > If it does this for both TCG and KVM then I don't understand
-> > > this bit from the commit message:
-> > >
-> > > # Without this patch EDK II with TLS enabled crashes when hitting the=
- first
-> > > # floating point instruction while running QEMU with --accel kvm and =
-runs
-> > > # fine with --accel tcg.
-> > >
-> > > Shouldn't this guest crash the same way with both KVM and TCG without
-> > > this patch, because the FPU state is the same for both?
+> We may need 32-bit max for RV64 QEMU. Thus we add these two CPUs
+> for RV64 QEMU.
 >
-> > By default `qemu-system-riscv64 --accel tcg` runs OpenSBI as firmware
-> > which enables the FPU.
-> >
-> > If you would choose a different SBI implementation which does not enabl=
-e
-> > the FPU you could experience the same crash.
+> The reason we don't expose them to RV32 QEMU is that we already have
+> max cpu with the same configuration. Another reason is that we want
+> to follow the RISC-V custom where addw instruction doesn't exist in
+> RV32 CPU.
 >
-> Ah, so KVM vs TCG is a red herring and it's actually "some guest
-> firmware doesn't enable the FPU itself, and if you run that then it will
-> fall over, whether you do it in KVM or TCG" ? That makes more sense.
->
-> I don't have an opinion on whether you want to do that or not,
-> not knowing what the riscv architecture mandates. (On Arm this
-> would be fairly clearly "the guest software is broken and
-> should be fixed", but that's because the Arm architecture
-> says you can't assume the FPU is enabled from reset.)
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Suggested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-RISC-V is the same. Section "3.4 Reset" states that:
-
-"All other hart state is UNSPECIFIED." (the paragraph doesn't mention
-the FS state).
-
-So it's unspecified what the value is on reset. Guest software
-shouldn't assume anything about it and it does seem like a guest
-software bug.
-
-In saying that, we are allowed to set it then as the spec doesn't say
-it should be 0. So setting it to 0x01 (Initial) doesn't seem like a
-bad idea, as the name kind of implies that it should be 0x01 on reset
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 12 +++++++-----
+>  2 files changed, 8 insertions(+), 5 deletions(-)
 >
-> I do think the commit message could use clarification to
-> explain this.
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 4464c0fd7a..62115375cd 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -30,6 +30,7 @@
+>  #define RISCV_CPU_TYPE_NAME(name) (name RISCV_CPU_TYPE_SUFFIX)
 >
-> thanks
-> -- PMM
+>  #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
+> +#define TYPE_RISCV_CPU_MAX32            RISCV_CPU_TYPE_NAME("max32")
+>  #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
+>  #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
+>  #define TYPE_RISCV_CPU_BASE128          RISCV_CPU_TYPE_NAME("x-rv128")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 86ce15252a..baf8fba467 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -448,11 +448,9 @@ static void riscv_max_cpu_init(Object *obj)
+>
+>      env->priv_ver =3D PRIV_VERSION_LATEST;
+>  #ifndef CONFIG_USER_ONLY
+> -#ifdef TARGET_RISCV32
+> -    set_satp_mode_max_supported(cpu, VM_1_10_SV32);
+> -#else
+> -    set_satp_mode_max_supported(cpu, VM_1_10_SV57);
+> -#endif
+> +    set_satp_mode_max_supported(RISCV_CPU(obj),
+> +        riscv_cpu_mxl(&RISCV_CPU(obj)->env) =3D=3D MXL_RV32 ?
+> +        VM_1_10_SV32 : VM_1_10_SV57);
+>  #endif
+>  }
+>
+> @@ -2945,6 +2943,10 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>      DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_c=
+pu_init),
+>  #endif
+>
+> +#if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+> +    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX32,     MXL_RV32,  riscv_max_cp=
+u_init),
+> +#endif
+> +
+>  #if defined(TARGET_RISCV64)
+>      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cp=
+u_init),
+>      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_=
+e_cpu_init),
+> --
+> 2.43.0
+>
 >
 
