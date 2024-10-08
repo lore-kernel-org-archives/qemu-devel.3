@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A48CEFC42
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 19:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC62CEFC4C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 19:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syG2y-0007Av-Tf; Tue, 08 Oct 2024 15:39:04 -0400
+	id 1syGCI-0000yL-LS; Tue, 08 Oct 2024 15:48:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syG2x-0007Ak-JP
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:39:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syGCG-0000xy-Q3
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:48:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syG2v-0007ON-Vw
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:39:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syGCF-0008HJ-3e
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:48:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728416339;
+ s=mimecast20190719; t=1728416917;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IHHK60XsjGrINdo5Nh2U56qbr1RhpBxBkQfMTJ1DNaA=;
- b=fsXej1eXr4V2P3TYwiY3mYjo2A9b+qk+nKwmb7neNmXKfj9TlkOHQPerjQ02kftlXW8xbG
- +QQUAuowPioUd2bKf61PUA05v70rYnei8BaPoo+Btg9UNxP76EVNkyKfeJtQ1B0u4+v8Vh
- R+ndy6bqLV+4CmtHcorCQK9xg7+nzi4=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RXpaIx73q5I/74lpDfzRABCWO05/NlrPljfcc3PtkuE=;
+ b=hpJNMuTbseh/tBOMCRXlTYja8igp9ymH94oYgvPKNF8IwFPJdukKxugNZarM/BlB9TD4uI
+ xms2EQiYI4h+szuwEGwkZGn6XDkM4p3l8B3X+ymzzwjYTidXrAHx9cXKUeiLql5cuz16A/
+ mEP+Vx8YzpsyLC0mai65c5jkP+vZGKM=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-PjMoLKTOPRK7qLXuuzx4eQ-1; Tue, 08 Oct 2024 15:38:57 -0400
-X-MC-Unique: PjMoLKTOPRK7qLXuuzx4eQ-1
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-82cedb7a183so490252239f.0
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 12:38:57 -0700 (PDT)
+ us-mta-640-AA-_HGoWN2SY82xBRNFccA-1; Tue, 08 Oct 2024 15:48:36 -0400
+X-MC-Unique: AA-_HGoWN2SY82xBRNFccA-1
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-3a1a8a4174dso57827025ab.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 12:48:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728416337; x=1729021137;
+ d=1e100.net; s=20230601; t=1728416915; x=1729021715;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IHHK60XsjGrINdo5Nh2U56qbr1RhpBxBkQfMTJ1DNaA=;
- b=VlSmneOut7GrnQeJCQqbA0K+bs7CN6Vb9eqtViutbZTcqvYUYzZFsjflBPPr5rpodU
- bm48X9mCKbSjjYgJZ2QG9qOPRYihAdIdr5v6z6QvX+J8WDRj7jzSjghc3n8sfnOJd63+
- q3eKbKRUyu/mXq8vRsLISWb+8wvO9PT6tYRXR3D7qCeJGNZjLNAfRjJWsazWO0He7irV
- Qtw/sB4VX8el7mefF7ASYCpJjP1whUBJSJsDkLyACGRwhlXOAyeJ7Dmh/mPUMmZvA75j
- b2+TG3/sNNDd5TwLlfXgbuwrs5vYnlbsb4fUBUHlOK/DCBCcgGgPyU7TtyIGLSvYf88F
- nlaQ==
-X-Gm-Message-State: AOJu0YwzvgAblvcATt+KwLjJp8lhCS2gUU/TB8ejSVhY6Cwcibm2Vy3m
- 01zAp9w/EENBKGHkBGL5WF1OAcGaHbhxTQIGhL/217ispkBHDu3NSRYiygngDC2zPdNfBqzGCd3
- j1KgHeEWvU/6gvoS2Jy/DvQXr/mvECI0wzNYxC8Pr4eVxR+MAouDr
-X-Received: by 2002:a05:6602:1595:b0:82c:bdec:1c0e with SMTP id
- ca18e2360f4ac-8353d378d0cmr14970839f.2.1728416337026; 
- Tue, 08 Oct 2024 12:38:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFzjlMPVg0oRJ2UTFpQpvVgc8eLx6pkTABHPGotuNKQxb8KZwCCXKXPrSNVt85la4DdycAUdw==
-X-Received: by 2002:a05:6602:1595:b0:82c:bdec:1c0e with SMTP id
- ca18e2360f4ac-8353d378d0cmr14959439f.2.1728416335261; 
- Tue, 08 Oct 2024 12:38:55 -0700 (PDT)
+ bh=RXpaIx73q5I/74lpDfzRABCWO05/NlrPljfcc3PtkuE=;
+ b=ruvODGA0J8p+1j674v3wEnR/OUbJySaUKiFOv1OdAp//Y2MVCg25/J8PqnPLgvmBpi
+ g/Wr1BHlp6Esr+fvft1kqRbiHlILAzAoQLI/JASVdLn3ysVPPyymqnb9bwYl0qBd07tM
+ /Iqcwfej6gqN2KjnQ+T2DMfrIXG2AeXdBhxrAKKgSN9XDAkDtXwFbvuiM6yK82eqIR6a
+ YjyX11mh+uLQli9PTJYg3mHPjZjbQLlwPipSwi8OZrLxfRVRkmmODDzePPPmiWenMGj5
+ xDFqyY11O3upb53KgK6Jb/Ok2xP05HsPMGya1uXZWjurq5uXR3IMo9+tTXcJyP+xfHDj
+ /IvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoNkH5rlJoqf0iVfnDWOy2uezj6Jhs69HTM5t4lgyEXGpeONUB6sYVf3FHytS3+kd6fog0WIHTiCgq@nongnu.org
+X-Gm-Message-State: AOJu0YwnYhev9IsGbkrXQ544TEf0qr1zuhQdho6zlnFQexyffDamP+q3
+ jFJgcUUaeJnngpvL4/2mZCx+jIW3UuCg9TC2FJ+fzfVAQPEuYtzHqdKg2PfhbWYASV7eybotzmY
+ egtriW6Ce3uVk02JO8hMwbgKARLsd+d1nibiBLc8rH0JkX+ug1wPP
+X-Received: by 2002:a05:6e02:20c3:b0:39f:5abe:ec25 with SMTP id
+ e9e14a558f8ab-3a397d10756mr195585ab.19.1728416915466; 
+ Tue, 08 Oct 2024 12:48:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0jYJJ4NwsEeKpgkb2xkATPZsNxfmJsfiYYRgkY3hHjbLtJhQ4G0GY0ciQJwZVZTnFuJwShQ==
+X-Received: by 2002:a05:6e02:20c3:b0:39f:5abe:ec25 with SMTP id
+ e9e14a558f8ab-3a397d10756mr195395ab.19.1728416915171; 
+ Tue, 08 Oct 2024 12:48:35 -0700 (PDT)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83503a74b7csm187106639f.9.2024.10.08.12.38.53
+ e9e14a558f8ab-3a37a808befsm20008325ab.42.2024.10.08.12.48.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 12:38:54 -0700 (PDT)
-Date: Tue, 8 Oct 2024 15:38:51 -0400
+ Tue, 08 Oct 2024 12:48:34 -0700 (PDT)
+Date: Tue, 8 Oct 2024 15:48:31 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
  David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -74,17 +76,17 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
-Message-ID: <ZwWKS_0TLa83ncCy@x1n>
+Message-ID: <ZwWMj4FYYpOSnPbe@x1n>
 References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
  <1727725244-105198-14-git-send-email-steven.sistare@oracle.com>
  <ZwQ6GbVCmitlills@x1n>
  <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com>
- <ZwVTgl9t3KButBDs@x1n>
- <5da33a31-bdcc-45ff-89c0-55b8ab08954b@oracle.com>
+ <87ed4qtpo1.fsf@suse.de> <ZwV-NRICDNTajTRq@x1n>
+ <877caitno5.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5da33a31-bdcc-45ff-89c0-55b8ab08954b@oracle.com>
+In-Reply-To: <877caitno5.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -110,41 +112,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 03:12:32PM -0400, Steven Sistare wrote:
-> > This is slightly tricky part and would be nice to be documented somewhere,
-> > perhaps starting from in the commit message.
-> 
-> I will extend the block comment in qmp_migrate:
-> 
->     /*
->      * For cpr-transfer, the target may not be listening yet on the migration
->      * channel, because first it must finish cpr_load_state.  The target tells
->      * us it is listening by closing the cpr-state socket.  Wait for that HUP
->      * event before connecting in qmp_migrate_finish.
->      *
->      * The HUP could occur because the target fails while reading CPR state,
->      * in which case the target will not listen for the incoming migration
->      * connection, so qmp_migrate_finish will fail to connect, and then recover.
->      */
+On Tue, Oct 08, 2024 at 04:11:38PM -0300, Fabiano Rosas wrote:
+> As of half an hour ago =) We could put a feature branch up and work
+> together, if you have more concrete thoughts on how this would look like
+> let me know.
 
-Yes this is better, thanks.
+[I'll hijack this thread with one more email, as this is not cpr-relevant]
 
-> 
-> > Then the error will say "failed to connect to destination QEMU" hiding the
-> > real failure (cpr save/load failed), right?  That's slightly a pity.
-> 
-> Yes, but destination qemu will also emit a more specific message.
+I think I listed all the things I can think of in the wiki, so please go
+ahead.
 
-True.
+One trivial suggestion is we can start from the very simple, which is the
+handshake itself, with a self-bootstrap protocol, probably feature-bit
+based or whatever you prefer.  Then we set bit 0 saying "this QEMU knows
+how to handshake".
 
-> 
-> > I'm OK with the HUP as of now, but if you care about accurate CPR-stage
-> > error reporting, then feel free to draft something else in the next post.
-> 
-> I'll think about it, but to get cpr into 9.2, this will probably need to be
-> deferred as a future enhancement.
+Comparing to the rest requirement, IMHO we can make the channel
+establishment the 1st feature, then it's already good for merging, having
+feature bit 1 saying "this qemu understands named channel establishment".
 
-Yep that's OK.
+Then we add new feature bits on top of the handshake feature, by adding
+more feature bits.  Both QEMUs should first handshake on the feature bits
+they support and enable only the subset that all support.
+
+Or instead of bit, feature strings, etc. would all work which you
+prefer. Just to say we don't need to impl all the ideas there, as some of
+them might take more time (e.g. device tree check), and that list is
+probably not complete anyway.
 
 -- 
 Peter Xu
