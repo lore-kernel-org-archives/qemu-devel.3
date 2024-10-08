@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9C1CED258
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B7ECED25B
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 02:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy0DV-0005FX-DB; Mon, 07 Oct 2024 22:44:53 -0400
+	id 1sy0LL-0007Dx-BK; Mon, 07 Oct 2024 22:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sy0DT-0005F2-Ii; Mon, 07 Oct 2024 22:44:51 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1sy0LJ-0007DP-K2; Mon, 07 Oct 2024 22:52:57 -0400
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sy0DR-0008IA-Uc; Mon, 07 Oct 2024 22:44:51 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-84e857bc0feso2826371241.0; 
- Mon, 07 Oct 2024 19:44:49 -0700 (PDT)
+ id 1sy0LH-0000Zo-VW; Mon, 07 Oct 2024 22:52:57 -0400
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-84e857bc0feso2829939241.0; 
+ Mon, 07 Oct 2024 19:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728355488; x=1728960288; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728355974; x=1728960774; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vmtwzfYVvKE9wfoCiqlAQ9b9b0NA7/bDfk1kM+8FZsw=;
- b=H+UntRtGYcNBle+WcBmdk0ASKYlXErtaan0kFS90CC7nqSN3e5bJDwgy6HZJPl4ovm
- r2ckveOytDAWhda7s+U7isZcFD6I7Unn3nT0eXOV8788bWC23mjy/LG66diY/l9Uor94
- /ewNB8VdmFOc+HfuGjNX9dXyC7hnaT1apgQMOKMDGVaVU/VwCAzAEtFivkxStfewie4b
- XwMa/ZBuCRO3lV7WV4iM1vZ82bq1D6IEJ6M24puiIaMtfPmLIoJgWzIjxVSz3lKAfYGJ
- qOzWJ3DZlZrsie5gMpx5Q+ks5MhYE4iUR/mU0amFMEPNutrkW2o0D86Aq/zgrQnjCzQi
- SRQw==
+ bh=FX9JGiMDxOlwd/M6UUiIW5RV5yq4JFKHzR5ivOEV+I0=;
+ b=g9THTMmXIvbZGKwHqhbSQhubRgcQf3S78MwERhJ78PdLZd5son8lU7dbH+46d35vIK
+ CKC4oQoKsBiPd48KAQ3C5dqiKlXN8O58jejDCFejyuzgg1xGPZ11zHS+7XIVjkqXN4od
+ Qp1QAfAxXwOWaPMIYy3rGf5JxFdV5lwN+mWFjvGX417p/Z8t+hvlsAGAiWAhRF/RA6iT
+ bzEi5Tl+gohZzo0qIBs4ewOfadLyyCqlKuICd3l9Ce4lWbkx29qisjdpbrrr9WfqhOyj
+ +oabq0CkQUxI31BYsarAtWFiwv6h2KeYBSX7JNApufdkfLCQayKGesSASK9camiSStr4
+ TJ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728355488; x=1728960288;
+ d=1e100.net; s=20230601; t=1728355974; x=1728960774;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vmtwzfYVvKE9wfoCiqlAQ9b9b0NA7/bDfk1kM+8FZsw=;
- b=mZ5xtju9FsI9S8D1oMlKA3tEjPvK/CtyF+Ix1fobHCCf9r94bRFTTQzu7cC1P0rGh/
- YHoHJRzkBQLiWksExInraYUvDUEFWSzKJjHPxEvErtt9dmgcKhYfXGp/cIg6ebD7I7wx
- 3rM3ttfCqOgxT56lpXcvQwbCUurRzxa7rhpcIPSAogmWMqIYPfeWUKFXPLxZiRa/t62O
- hrZ/Rc4U0uEvQVuMt+aDi9QD7Jp1zE9UT9hgB2OToTsbOeg+knVYNVP70FKNCvBezVGh
- 2SBmRJBT0jdtnnBC8JCOLK5wKghbTW5uRVGUBnK6j8BFWQwE4be1w8AyS+bA/9KbjqCN
- f6xQ==
+ bh=FX9JGiMDxOlwd/M6UUiIW5RV5yq4JFKHzR5ivOEV+I0=;
+ b=O6qsIpZLs6hwM8fFyYWhUjxeUQySduqJEdeI25brnl0UQMPq+6alG/VKhmphO8ZXPG
+ Bt4uq0KNUn7wuc2crhx+0A/V2PnYvKBl8kKFVfsrZi6CVzfeJjjj9SQtjjGox/td0xjz
+ nDSss3oxvmOVci44Sf0XXELkvbTvjS8n21f42Arb5tHPfUIE7slscKP2k8yBK9bENIPf
+ /92B3vRyEJEeOHEH2rGE+hgc/f7nz8TTUL1L2p2SkkyhtsA6/s6FnE8FYJbXZckwc+Ga
+ ISVhH9eDkf8ihwoqJWrnRmmg1QBK440lRrGFGDRUCgVeurixb1oEjuwZApDCcEQhRdxW
+ VOrg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGEFDwmbrcxWC5/pGo3voy7USVGeFIaeHA6nVVIt1i/jq3eTtykW6qDL/KR2MjixYms6JT4Sh4LbIY@nongnu.org
-X-Gm-Message-State: AOJu0YweWFFMfoK0ffNGYsa7JnOAPyP4vDYeSNyBb6Xr9inuRgn/J+sQ
- Qa5BdI+Ki4GiznQD/uZ7j6VMiUo9AURnXpTDl3+ik2xc38hnNL4iaqqsqfGspNQ/sshwSdy/s6d
- 4STdu5lJpUWyGxg38GGUik7mlG64=
-X-Google-Smtp-Source: AGHT+IEZfN7mHBOMGL+ac6ZCWvnUpoqoGIUWCsDhjycR89+2/9WrjF8ApGTY76I4iWA94UuznbDSnS/oym9vzOtOpew=
-X-Received: by 2002:a05:6102:f0b:b0:4a3:d4bd:258b with SMTP id
- ada2fe7eead31-4a43890a036mr1552660137.8.1728355488211; Mon, 07 Oct 2024
- 19:44:48 -0700 (PDT)
+ AJvYcCUlJ0PHTYjTnEv8JXG4eE5N+EJuL+8dZ4L//sfP8dnCK9kPcx9Gc8wfFMXnLJkY4TXBNuRVZQct+eWi@nongnu.org,
+ AJvYcCX1T2qDotONP2Tkk58feioTQrz+fnqOhVvxImOp2PwNaOo5eAjxpht28SBg/2L0A0oGK0zf0DJcvqWpLA==@nongnu.org
+X-Gm-Message-State: AOJu0YzP62iAq5459okIdU6cTDUVlH/svvjmpGqzAYd4vLN1SGqmGskp
+ DmibQW7H1yy6mPYUX26zMn8q65JErLCgCT8SgoABGinKZxEnhmqqwxgvFnZST7v5u+MqfPriLaL
+ LqMSb/HchFr21BuJjvtOcMXxh10Y=
+X-Google-Smtp-Source: AGHT+IH63q7nW84ndmyAZxkrLkifyxhhuKMT4Xfu3nJn2Z6z/YUlMRJIaN3uc6n4CUNrwmK63GgnfJJ7UmZbmgyRXWU=
+X-Received: by 2002:a05:6102:50a7:b0:4a3:c912:6707 with SMTP id
+ ada2fe7eead31-4a43890a020mr1378611137.7.1728355973884; Mon, 07 Oct 2024
+ 19:52:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241004104649.13129-1-yongxuan.wang@sifive.com>
-In-Reply-To: <20241004104649.13129-1-yongxuan.wang@sifive.com>
+References: <20240910174747.148141-1-alexei.filippov@syntacore.com>
+In-Reply-To: <20240910174747.148141-1-alexei.filippov@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 8 Oct 2024 12:44:22 +1000
-Message-ID: <CAKmqyKOGNohPoZHdxNAW15bcR7SsCpupjf0i3A3XLoxDjqibTQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] hw/intc/riscv_aplic: Check and update pending when
- write sourcecfg
-To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
- vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Tue, 8 Oct 2024 12:52:27 +1000
+Message-ID: <CAKmqyKPH33Lf5YdNrdHEQ9K0ZLrnJmvcGi9DjsP6gKNQZYAxaA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] target/riscv: Add support for machine specific
+ pmu's events
+To: Alexei Filippov <alexei.filippov@syntacore.com>,
+ Atish Patra <atishp@rivosinc.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,125 +95,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 4, 2024 at 8:47=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifive=
-.com> wrote:
+On Wed, Sep 11, 2024 at 3:49=E2=80=AFAM Alexei Filippov
+<alexei.filippov@syntacore.com> wrote:
 >
-> The section 4.5.2 of the RISC-V AIA specification says that any write
-> to a sourcecfg register of an APLIC might (or might not) cause the
-> corresponding interrupt-pending bit to be set to one if the rectified
-> input value is high (=3D 1) under the new source mode.
->
-> If an interrupt is asserted before the driver configs its interrupt
-> type to APLIC, it's pending bit will not be set except a relevant
-> write to a setip or setipnum register. When we write the interrupt
-> type to sourcecfg register, if the APLIC device doesn't check
-> rectified input value and update the pending bit, this interrupt
-> might never becomes pending.
->
-> For APLIC.m, we can manully set pending by setip or setipnum
-> registers in driver. But for APLIC.w, the pending status totally
-> depends on the rectified input value, we can't control the pending
-> status via mmio registers. In this case, hw should check and update
-> pending status for us when writing sourcecfg registers.
->
-> Update QEMU emulation to handle "pre-existing" interrupts.
->
-> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Following original patch [1] here's a patch with support of machine
+> specific pmu events and PoC with initial support for sifive_u's HPM.
 
-Thanks!
+Thanks for the patch.
 
-Applied to riscv-to-apply.next
+I'm hesitate to support these callback functions as I feel they
+(callbacks in the CPU to the machine in general) are clunky.
+
+I think the cover letter, code and commit messages need more details here.
+
+First can you link to the exact spec you are trying to implement
+(RISC-V has a habit of creating multiple "ratified" specs that are all
+incompatible). It's really handy to point to the exact PDF in the
+cover letter or commit message to just be really clear what you are
+supporting.
+
+Secondly, can you describe why this is useful? What is the point of
+machine specific PMU events? Why do we want to support this in QEMU?
+
+The callbacks should also have some documentation in the code base so
+others can implement the functionality.
+
+It might also be helpful to split this patch up a little bit more. A
+quick read through and it seems like the patches could be a little
+smaller, making it easier to review.
+
+Finally, for the next version CC @Atish Patra  who has ended up being
+the PMU person :)
 
 Alistair
 
 >
-> ---
-> v2:
-> - fix checkpatch warning
-> ---
->  hw/intc/riscv_aplic.c | 51 ++++++++++++++++++++++++++++---------------
->  1 file changed, 33 insertions(+), 18 deletions(-)
+> =3D=3D Test scenarios =3D=3D
 >
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 32edd6d07bb3..4a262c82f078 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -159,31 +159,42 @@ static bool is_kvm_aia(bool msimode)
->      return kvm_irqchip_in_kernel() && msimode;
->  }
+> So, I tested this patches on current Linux master with perf.
+> something like `perf stat -e branch-misses perf bench mem memcpy` works
+> just fine, also 'perf record -e branch-misses perf bench mem memcpy'
+> collect samples just fine and `perf report` works.
 >
-> +static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
-> +                                          uint32_t irq)
-> +{
-> +    uint32_t sourcecfg, sm, raw_input, irq_inverted;
-> +
-> +    if (!irq || aplic->num_irqs <=3D irq) {
-> +        return false;
-> +    }
-> +
-> +    sourcecfg =3D aplic->sourcecfg[irq];
-> +    if (sourcecfg & APLIC_SOURCECFG_D) {
-> +        return false;
-> +    }
-> +
-> +    sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
-> +    if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
-> +        return false;
-> +    }
-> +
-> +    raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
-> +    irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
-> +                    sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-> +
-> +    return !!(raw_input ^ irq_inverted);
-> +}
-> +
->  static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
->                                              uint32_t word)
->  {
-> -    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret =3D 0;
-> +    uint32_t i, irq, rectified_val, ret =3D 0;
+> =3D=3D ToDos / Limitations =3D=3D
 >
->      for (i =3D 0; i < 32; i++) {
->          irq =3D word * 32 + i;
-> -        if (!irq || aplic->num_irqs <=3D irq) {
-> -            continue;
-> -        }
+> Second patch is only inital sifive_u's HPM support, without any
+> filtering, events combining features or differrent counting
+> algorithm for different events. There are also no tests, but if you
+> have any suggestions about where I need to look to implement them, please
+> point me to.
 >
-> -        sourcecfg =3D aplic->sourcecfg[irq];
-> -        if (sourcecfg & APLIC_SOURCECFG_D) {
-> -            continue;
-> -        }
-> -
-> -        sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
-> -        if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
-> -            continue;
-> -        }
-> -
-> -        raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
-> -        irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
-> -                        sm =3D=3D APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
-> -        ret |=3D (raw_input ^ irq_inverted) << i;
-> +        rectified_val =3D riscv_aplic_irq_rectified_val(aplic, irq);
-> +        ret |=3D rectified_val << i;
->      }
+> =3D=3D Changes since original patch =3D=3D
 >
->      return ret;
-> @@ -702,6 +713,10 @@ static void riscv_aplic_write(void *opaque, hwaddr a=
-ddr, uint64_t value,
->              (aplic->sourcecfg[irq] =3D=3D 0)) {
->              riscv_aplic_set_pending_raw(aplic, irq, false);
->              riscv_aplic_set_enabled_raw(aplic, irq, false);
-> +        } else {
-> +            if (riscv_aplic_irq_rectified_val(aplic, irq)) {
-> +                riscv_aplic_set_pending_raw(aplic, irq, true);
-> +            }
->          }
->      } else if (aplic->mmode && aplic->msimode &&
->                 (addr =3D=3D APLIC_MMSICFGADDR)) {
+> - Rebased to current master
+>
+> [1] https://lore.kernel.org/all/20240625144643.34733-1-alexei.filippov@sy=
+ntacore.com/
+>
+> Alexei Filippov (2):
+>   target/riscv: Add support for machine specific pmu's events
+>   hw/riscv/sifive_u.c: Add initial HPM support
+>
+>  hw/misc/meson.build            |   1 +
+>  hw/misc/sifive_u_pmu.c         | 384 +++++++++++++++++++++++++++++++++
+>  hw/riscv/sifive_u.c            |  14 ++
+>  include/hw/misc/sifive_u_pmu.h |  24 +++
+>  target/riscv/cpu.c             |  20 +-
+>  target/riscv/cpu.h             |   9 +
+>  target/riscv/csr.c             |  93 +++++---
+>  target/riscv/pmu.c             | 138 ++++++------
+>  target/riscv/pmu.h             |  19 +-
+>  9 files changed, 599 insertions(+), 103 deletions(-)
+>  create mode 100644 hw/misc/sifive_u_pmu.c
+>  create mode 100644 include/hw/misc/sifive_u_pmu.h
+>
 > --
-> 2.17.1
+> 2.34.1
 >
 >
 
