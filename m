@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B40CED270
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84517CED273
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy43t-00018P-KW; Tue, 08 Oct 2024 02:51:13 -0400
+	id 1sy44d-0001jk-FO; Tue, 08 Oct 2024 02:51:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sy43s-00017z-97
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:51:12 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sy43o-0006S4-Ox
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:51:12 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2e077a4b8c0so3727732a91.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 23:51:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728370267; x=1728975067;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z8H1l1RnezQQYsp1g3XxYvGFbv/mtFIUiqzu3ZLJuso=;
- b=gxnbaIOpc2OSV3kF3EcBuBx4WZegWsSmAqfmX07rr/Mh65tpL2T5XH805/QKNXZjWY
- 3DC27rxPGGbJpPKMdGnOsSY06YKmxLSKjRshQl1EsNR87yNUHnhmZStxrn8qE1Bdxg+j
- mCbIjqtPVeu5yxGcfl7LESv01jkQ2X8bmGX9cXuPYGY9C5o4FBQJv6txFLazDox9vBq1
- vNL79EIXDkvcO04IusC0UjB3nZFEg00esEClSRvNKj/POgf98wsSnezMlfzkHLEgHzhk
- uNy4cZhiS0RnyYwjPpKQ579irz88L9fTp9RKUiobPrGQkcnlGcjf+/QdhADOj6gLsGvz
- TUSQ==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sy44a-0001jC-3t
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:51:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sy44Y-0006VQ-GN
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:51:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728370312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I/XAWt0895jl/66QC9384He5rounJue2EgEi+HUDNt0=;
+ b=OUjMglicil455zR5diBhOjqqlO1FplfAo+bUJCWqqv0lvaQwUQ8CNBJ8NP/738kben+5Op
+ RjrphJ+GAfiZcdF7HqTgiwFjgSrjiDj+P9+4kArakEfznnxcRKAuQ8WDiDQMhbd0prlqfq
+ zeho5O1QeeVZMUvonjcKTPNLFZT/pq8=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-20-HDykToLGP0m_XwfrbBT7OA-1; Tue, 08 Oct 2024 02:51:50 -0400
+X-MC-Unique: HDykToLGP0m_XwfrbBT7OA-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6dbbeee08f0so85656047b3.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 23:51:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728370267; x=1728975067;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z8H1l1RnezQQYsp1g3XxYvGFbv/mtFIUiqzu3ZLJuso=;
- b=QORclG/FeV5OZlLI2x4/HHbX1pnWeSE4qFUanb6lBIQPfnjURch2GSPsme38pOSD62
- kBHNBpWRnSjTJkExtukekYm1sUIKCt7W+syJruZv/5OJU1vGOt5QjaGU1pRirH5Zn5ne
- nbnT6H5jiCeLmRkDjYNGXzf999eix1S8meHKdkUg5PPFmuiUREuki8mQJORpxiIGEj/6
- 1MkvJpDiH+MthENnEnpDoWN2Ga7+STOKywfkCNpJxW4rW4ZzJwxYlGd8uTuMcVlw9FcX
- ExYJOG2tsWzg/Kw+nep2hPGZfSPb1UDoHatLEr0jYOtvpAUDlLTX/HQkbvHPrxK4b6zI
- 1Ujw==
-X-Gm-Message-State: AOJu0YwefhcgPxqw/iCKMbl1X1lVXpPGcn89uH6UVdlCr4m14XYX1WSX
- NrmweuB0it8S9CDW6YraqTxf6OFoxv7oOpJck2tzrxTYOMdP/7nSDvWEIbgyCr8=
-X-Google-Smtp-Source: AGHT+IF1uRsTZpbSRzJGDujPWK360hNR7PCiLG8WHc9tN5rLqC/mG5YR9tuUYqQ7M7q/Yg2b5uIeMw==
-X-Received: by 2002:a17:90a:17ad:b0:2e0:7580:6853 with SMTP id
- 98e67ed59e1d1-2e27df0ce96mr3252964a91.17.1728370267009; 
- Mon, 07 Oct 2024 23:51:07 -0700 (PDT)
-Received: from localhost ([157.82.207.107])
- by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2e20aebc40csm6732940a91.23.2024.10.07.23.51.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 23:51:06 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 08 Oct 2024 15:51:03 +0900
-Subject: [PATCH] virtio-net: Avoid indirection_table_mask overflow
+ d=1e100.net; s=20230601; t=1728370310; x=1728975110;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I/XAWt0895jl/66QC9384He5rounJue2EgEi+HUDNt0=;
+ b=U9G5oam/lRNP38WSH5zMXfqPFn7yaQpPm90Y7+WAv2vTT2cmgdAV0Dgz6ZCjjoDQVc
+ A09mIgsJzYnDQJAnfLnxBd0CxuXDDInodAgqTYjKWsL4z5eqJkLWGIlvTWnbiuYKa8m2
+ HnJ/1aC7J7wo9HPntduJLFjhp3eZMVz/TGu/PF/RzJIdDKxO6EqTGiG+eEyUGfYgk0KZ
+ lZDuvR+VFbWmaccnPffB0omztyFdaCIe+Qo4Yt0wS9Ds3t84fx0CvHNfSIoe9x6O87ho
+ Jvh9+884uYMh9j+Rd1wLUWkp3sAr4DAyZSBxcGVp9zCtgBTaEeeTSmOt4qCUYOEBoTLl
+ dYBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2XiWZWKCmtA9vL78OQ7O82C1yJMbjjG02oo2DmQOZRWm8RNlgGVq+WKyzRajMgoRgc0HVowYDouD2@nongnu.org
+X-Gm-Message-State: AOJu0YyRal46QoWwXDr8u9k57Uq8X2LDIzlW3DgpL+f0riHF+gp+o6eW
+ P6WQ4NeQ9Y3UqS/V+wB/EWVWmSP/kNpQ4QbvJ3zdlF3ZE6AManaoOnz5Jk3g8/EeBCTdvjeXXhB
+ ZAOdJSk5h/EsuZyyDaHrAUaG7eYx1myKgRHpbocwBZ5t5mPx772yTS7D4wdwDXs94O935h+S6Pi
+ TBoVtCB1O00E+AiUp+kWZTAcDEfR4=
+X-Received: by 2002:a05:6902:987:b0:e28:e488:91b6 with SMTP id
+ 3f1490d57ef6-e28ea76b88bmr1775513276.15.1728370310083; 
+ Mon, 07 Oct 2024 23:51:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKfx2x3dfBeUxOUYaYu8GNf7E+SnNttuT0BN6h2boKcITMoMhGIx+yVzA9e6fUzacBmzWuKmXzMQjka39+M0Q=
+X-Received: by 2002:a05:6902:987:b0:e28:e488:91b6 with SMTP id
+ 3f1490d57ef6-e28ea76b88bmr1775505276.15.1728370309794; Mon, 07 Oct 2024
+ 23:51:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241008-mask-v1-1-679ae2720bd5@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAFbWBGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDAwML3dzE4mxdE3OL1BSztFRTYzNTJaDSgqLUtMwKsDHRsbW1ANX5A+V
- WAAAA
-To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::102b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20241004124445.3802090-1-jonah.palmer@oracle.com>
+ <20241004124445.3802090-2-jonah.palmer@oracle.com>
+ <CAJaqyWd7c6ZU_4Hk_Wo79Ghw_LRxxjmvXUvZrASKE6WSWZcytg@mail.gmail.com>
+ <e3108f34-f951-47d6-ac41-cbbc045a7bd1@oracle.com>
+ <CAJaqyWcmjnPaAFGvE5=2e19wuAxOr2=AHX1y-dj70+49sdQh7Q@mail.gmail.com>
+ <a1711695-9d0c-44f4-b799-1879404581d9@oracle.com>
+In-Reply-To: <a1711695-9d0c-44f4-b799-1879404581d9@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 8 Oct 2024 08:51:13 +0200
+Message-ID: <CAJaqyWfYvD0nEYU9UgKzYgUo5JzuFu3PBKNEkDrM0BE0Ek5LfA@mail.gmail.com>
+Subject: Re: [RFC v2 1/2] vhost-vdpa: Implement IOVA->GPA tree
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ mst@redhat.com, 
+ leiyang@redhat.com, peterx@redhat.com, dtatulea@nvidia.com, 
+ jasowang@redhat.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,51 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We computes indirections_len by adding 1 to indirection_table_mask, but
-it may overflow indirection_table_mask is UINT16_MAX. Check if
-indirection_table_mask is small enough before adding 1.
+On Tue, Oct 8, 2024 at 2:14=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> w=
+rote:
+>
+>
+>
+> On 10/7/2024 6:51 AM, Eugenio Perez Martin wrote:
+> > On Fri, Oct 4, 2024 at 8:48=E2=80=AFPM Jonah Palmer <jonah.palmer@oracl=
+e.com> wrote:
+> >>
+> >>
+> >> On 10/4/24 11:17 AM, Eugenio Perez Martin wrote:
+> >>> On Fri, Oct 4, 2024 at 2:45=E2=80=AFPM Jonah Palmer <jonah.palmer@ora=
+cle.com> wrote:
+> >>>> Implements the IOVA->GPA tree for handling mapping, unmapping, and
+> >>>> translations for guest memory regions.
+> >>>>
+> >>>> When the guest has overlapping memory regions, an HVA to IOVA transl=
+ation
+> >>>> may return an incorrect IOVA when searching the IOVA->HVA tree. This=
+ is
+> >>>> due to one HVA range being contained (overlapping) in another HVA ra=
+nge
+> >>>> in the IOVA->HVA tree. By creating an IOVA->GPA tree, we can use GPA=
+s to
+> >>>> translate and find the correct IOVA for guest memory regions.
+> >>>>
+> >>> Yes, this first patch is super close to what I meant, just one issue
+> >>> and a pair of nits here and there.
+> >>>
+> >>> I'd leave the second patch as an optimization on top, if the numbers
+> >>> prove that adding the code is worth it.
+> >>>
+> >> Ah okay, gotcha. I also wasn't sure if what you mentioned below on the
+> >> previous series you also wanted implemented or if these would also be
+> >> optimizations on top.
+> >>
+> >> [Adding code to the vhost_iova_tree layer for handling multiple buffer=
+s
+> >> returned from translation for the memory area where each iovec covers]=
+:
+> >> ----------------------------------------------------------------------=
+-
+> >> "Let's say that SVQ wants to translate the HVA range
+> >> 0xfeda0000-0xfedd0000. So it makes available for the device two
+> >> chained buffers: One with addr=3D0x1000 len=3D0x20000 and the other on=
+e
+> >> with addr=3D(0x20000c1000 len=3D0x10000).
+> >>
+> >> The VirtIO device should be able to translate these two buffers in
+> >> isolation and chain them. Not optimal but it helps to keep QEMU source
+> >> clean, as the device already must support it."
+> >>
+> > This is 100% in the device and QEMU is already able to split the
+> > buffers that way, so we don't need any change in QEMU.
+> Noted that if working with the full HVA tree directly, the internal iova
+> tree linear iterator iova_tree_find_address_iterator() today doesn't
+> guarantee the iova range returned can cover the entire length of the
+> iov, so things could happen like that the aliased range with smaller
+> size (than the requested) happens to be hit first in the linear search
+> and be returned, the fragmentation of which can't be guarded against by
+> the VirtIO device or the DMA API mentioned above.
+>
+> The second patch in this series kind of mitigated this side effect by
+> sorting out the backing ram_block with the help of
+> qemu_ram_block_from_host() in case of guest memory backed iov, so it
+> doesn't really count on vhost_iova_gpa_tree_find_iova() to find the
+> matching IOVA, but instead (somehow implicitly) avoids the fragmentation
+> side effect as mentioned above would never happen. Not saying I like the
+> way how it is implemented, but just wanted to point out the implication
+> if the second patch has to be removed - either add special handling code
+> to the iova-tree iterator sizing the range (same as how range selection
+> based upon permission will be done), or add special code in SVQ layer to
+> deal with fragmented IOVA ranges due to aliasing.
+>
 
-Fixes: 590790297c0d ("virtio-net: implement RSS configuration command")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/net/virtio-net.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 8f3097270869..625852a590ea 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1400,17 +1400,17 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-     n->rss_data.hash_types = virtio_ldl_p(vdev, &cfg.hash_types);
-     n->rss_data.indirections_len =
-         virtio_lduw_p(vdev, &cfg.indirection_table_mask);
--    n->rss_data.indirections_len++;
-     if (!do_rss) {
--        n->rss_data.indirections_len = 1;
-+        n->rss_data.indirections_len = 0;
-     }
--    if (!is_power_of_2(n->rss_data.indirections_len)) {
--        err_msg = "Invalid size of indirection table";
-+    if (n->rss_data.indirections_len >= VIRTIO_NET_RSS_MAX_TABLE_LEN) {
-+        err_msg = "Too large indirection table";
-         err_value = n->rss_data.indirections_len;
-         goto error;
-     }
--    if (n->rss_data.indirections_len > VIRTIO_NET_RSS_MAX_TABLE_LEN) {
--        err_msg = "Too large indirection table";
-+    n->rss_data.indirections_len++;
-+    if (!is_power_of_2(n->rss_data.indirections_len)) {
-+        err_msg = "Invalid size of indirection table";
-         err_value = n->rss_data.indirections_len;
-         goto error;
-     }
-
----
-base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-change-id: 20241008-mask-478ed6fe5365
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+This special code in SVQ is already there. And it will be needed even
+if we look for the buffers by GPA instead of by vaddr, the same way
+virtqueue_map_desc needs to handle it even if it works with GPA.
+Continuous GPA does not imply continuous vaddr.
 
 
