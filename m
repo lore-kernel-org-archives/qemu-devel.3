@@ -4,84 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E67CED24D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43125CED250
 	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxytB-0001Gt-Jz; Mon, 07 Oct 2024 21:19:50 -0400
+	id 1sxyq4-0004Fj-N2; Mon, 07 Oct 2024 21:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com>)
- id 1sxysp-0007zo-SQ
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:30 -0400
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com>)
- id 1sxysi-0000Aj-DS
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:24 -0400
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-6e2e5e376fcso36890017b3.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350356; x=1728955156; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=YIWmowqh9ilBPFqbJVFwbgPlrwHIw046vPnX3/duUf8=;
- b=u7ui+LImFaOOJ5kLN/Jmoe0p2opkvfDsBTOeA0VDRthZMHvRzGRU5al3GHV9mtUeWc
- gFaEX2ivu3B0QGomD11CP4sbBhZVIzyIeYZDH5AGYUdTXPZp5b3Ni8KIDe9Zle0oMgnL
- YIv2d82Qcl2gLSaTeljpdRwY5KINJQF6BhO//9aX6d9DDHpluZg+g4eorTdTnOXDfNYe
- DkrqnfDhL/5P+sGfbnb50VfErshZA0k5jrHG7KJ8F8bg3xjOMzuniH1umvw7eKx9z4FT
- 5vJhje+nwb3sqFlt4dZeI+YkVPXV+BUdAOajR6jALm+dl0plhhXSlgTbkqK1ZR4ssM4C
- q/jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350356; x=1728955156;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YIWmowqh9ilBPFqbJVFwbgPlrwHIw046vPnX3/duUf8=;
- b=mSoH8JIS3KSl8/20t1cqmkOB5MeBga5iuw5ckaqFEKILFpLt51yk29y1kTfziVaRRr
- Ji8BOp1GqXQBhb2LyA3WVAtYkdEHuApLEfaHDkKyzolP8B563TEPcOwrAxK4f1dP3geL
- R0hhWbouHgvasWznYKOvX/s0DMfSElaiTw67BSO8+3Vb3SQ4fBWVD9KDoagnkHQPIsCj
- kwcthTnVFzW3v6XhL+n4wlka2DNQdf27IR0TblWklrFktuDvFwYAf63dszi5sMmxUb8G
- Ty6vC5iTQsjGhqBDG068yLkORGNjrbFFL0+LyrK4VX7h42cxWK/3ZPT41xG5zMvHru1l
- 25HQ==
-X-Gm-Message-State: AOJu0Ywevsl+797gUNv/iCkr0J37B1lE5I83l7bkQbpH0UZHZh67vTEX
- 460yLztxGn9CFh5S6xwJbTm7A3FqrcO5JIhUQuCjADpWTLgVPASe5k0ubkfPY5F9lH4O71H/UOD
- 9uCeQrR8JmY8yqh7KuJypfuZV6yY87MLytxHkEan5WPflnOaE8TCh/10R3LIXDl1TFlzjq4T52e
- A4fJQs7dlZtq9BIjvsaVw7bsOZ9g==
-X-Google-Smtp-Source: AGHT+IESayc9Ykh3LqzVr2AuC96ugMENmY3SXvFs8UUnrZxFn5w0W5/UBHaqraEly00eTLOFk6KJH0+Pgg==
-X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:690c:2c87:b0:6e2:b263:1040
- with SMTP id
- 00721157ae682-6e2c6e88722mr1437387b3.0.1728350355919; Mon, 07 Oct 2024
- 18:19:15 -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:38 -0700
-In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
-Mime-Version: 1.0
-References: <20241008011852.1439154-1-tavip@google.com>
-X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-13-tavip@google.com>
-Subject: [PATCH v2 12/25] hw/misc: add support for RT500's reset controller
-From: Octavian Purdila <tavip@google.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
- peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
- alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
- crosa@redhat.com, lvivier@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypn-000483-04; Mon, 07 Oct 2024 21:16:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypk-0008Jo-C6; Mon, 07 Oct 2024 21:16:18 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497Nt3N9026100;
+ Tue, 8 Oct 2024 01:16:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=makpDwUvlh3dq
+ ljBNVAsth6a0r4pZ+82htafiNgsa9s=; b=aOMaVhRRTmdpqOqYkEHwQNeQ72xaz
+ TFxHg8g1I3jjvNLdQk2H1aBSjzow94fKlXXzqtQNxaPdlAZVOLGYD58asHX+5KLI
+ DMpN8ph+hO8hOCgds0jleDomVCHYig1kXJuLDOzlmXlEfX6Z77ctwtKFyhHaLRk/
+ zNL11rSPmaDwbWbLhTsqvauIpJFFLJi6LGLZuRUi1Jd66r+PVVZ6hXZ/554rixg6
+ F6kwmnqEmp3iyIvPFxr24Dc7Wi5jKcHdVWWkvNeKcwfpgv1bMh8HHPEa2JgPf7Io
+ 1ZnZSVnZ8VfsXdNhYuye9/FxiBMUYmyR5ayYU8axB1hxGuEoWoJa0NGwQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7hb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:15 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981G8nF017417;
+ Tue, 8 Oct 2024 01:16:14 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7h9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:14 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4980wm1f013804;
+ Tue, 8 Oct 2024 01:16:13 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fss1r3u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:13 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4981GDlP43712988
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Oct 2024 01:16:13 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F077758043;
+ Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7A7CD58059;
+ Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.51.58])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Oct 2024 01:16:12 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH v3 12/19] pc-bios/s390-ccw: Enable failed IPL to return after
+ error
+Date: Mon,  7 Oct 2024 21:15:45 -0400
+Message-ID: <20241008011552.2645520-13-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Dj_vaQIG5cUacCdVInkQdzQ6P-IAjoce
+X-Proofpoint-GUID: nKdhjMmV5PDB6IR5MMk3esnji9tSEPfr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410080003
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,620 +113,424 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RT500 reset controller has two instances that have the same
-register layout but with different fields for some registers.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-The model only provides set and clear functionality for the various
-reset lines which is common for both instances. Because of that only
-one type is implemented for both controllers.
+Remove panic-on-error from IPL functions such that a return code is propagated
+back to the main IPL calling function (rather than terminating immediately),
+which facilitates possible error recovery in the future.
 
-The patch includes automatically generated headers which contains the
-register layout and helpers.
+A select few panics remain, which indicate fatal non-devices errors that must
+result in termination.
 
-The header can be regenerated with the svd-rstctl0 and svd-rstctl1
-targets when the build is configured with --enable-mcux-soc-svd.
-
-Signed-off-by: Octavian Purdila <tavip@google.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- include/hw/arm/svd/rt500_rstctl0.h | 110 ++++++++++++
- include/hw/arm/svd/rt500_rstctl1.h | 110 ++++++++++++
- include/hw/misc/rt500_rstctl.h     |  32 ++++
- hw/misc/rt500_rstctl.c             | 258 +++++++++++++++++++++++++++++
- hw/arm/svd/meson.build             |   8 +
- hw/misc/Kconfig                    |   3 +
- hw/misc/meson.build                |   1 +
- hw/misc/trace-events               |   4 +
- 8 files changed, 526 insertions(+)
- create mode 100644 include/hw/arm/svd/rt500_rstctl0.h
- create mode 100644 include/hw/arm/svd/rt500_rstctl1.h
- create mode 100644 include/hw/misc/rt500_rstctl.h
- create mode 100644 hw/misc/rt500_rstctl.c
+ pc-bios/s390-ccw/s390-ccw.h      |  2 +-
+ pc-bios/s390-ccw/virtio.h        |  2 +-
+ pc-bios/s390-ccw/bootmap.c       | 53 ++++++++++++++++++--------
+ pc-bios/s390-ccw/cio.c           |  3 +-
+ pc-bios/s390-ccw/jump2ipl.c      |  5 ++-
+ pc-bios/s390-ccw/main.c          | 35 +++++++++--------
+ pc-bios/s390-ccw/virtio-blkdev.c |  4 +-
+ pc-bios/s390-ccw/virtio.c        | 65 +++++++++++++++++++++-----------
+ 8 files changed, 111 insertions(+), 58 deletions(-)
 
-diff --git a/include/hw/arm/svd/rt500_rstctl0.h b/include/hw/arm/svd/rt500_rstctl0.h
-new file mode 100644
-index 0000000000..da25f22208
---- /dev/null
-+++ b/include/hw/arm/svd/rt500_rstctl0.h
-@@ -0,0 +1,110 @@
-+/*
-+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
-+ *
-+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
-+ */
-+#pragma once
-+
-+#include "hw/register.h"
-+
-+/* Reset Controller 0 */
-+#define RT500_RSTCTL0_REGS_NO (31)
-+
-+/* System Reset Status Register */
-+REG32(RT500_RSTCTL0_SYSRSTSTAT, 0x0);
-+
-+/* Peripheral Reset Control Register 0 */
-+REG32(RT500_RSTCTL0_PRSTCTL0, 0x10);
-+
-+/* Peripheral Reset Control Register 1 */
-+REG32(RT500_RSTCTL0_PRSTCTL1, 0x14);
-+
-+/* Peripheral Reset Control Register 2 */
-+REG32(RT500_RSTCTL0_PRSTCTL2, 0x18);
-+
-+/* Peripheral Reset Control Register 0 SET */
-+REG32(RT500_RSTCTL0_PRSTCTL0_SET, 0x40);
-+
-+/* Peripheral Reset Control Register 1 SET */
-+REG32(RT500_RSTCTL0_PRSTCTL1_SET, 0x44);
-+
-+/* Peripheral Reset Control Register 2 SET */
-+REG32(RT500_RSTCTL0_PRSTCTL2_SET, 0x48);
-+
-+/* Peripheral Reset Control Register 0 CLR */
-+REG32(RT500_RSTCTL0_PRSTCTL0_CLR, 0x70);
-+
-+/* Peripheral Reset Control Register 1 CLR */
-+REG32(RT500_RSTCTL0_PRSTCTL1_CLR, 0x74);
-+
-+/* Peripheral Reset Control Register 2 CLR */
-+REG32(RT500_RSTCTL0_PRSTCTL2_CLR, 0x78);
-+
-+
-+#define RT500_RSTCTL0_REGISTER_ACCESS_INFO_ARRAY(_name) \
-+    struct RegisterAccessInfo _name[RT500_RSTCTL0_REGS_NO] = { \
-+        [0 ... RT500_RSTCTL0_REGS_NO - 1] = { \
-+            .name = "", \
-+            .addr = -1, \
-+        }, \
-+        [0x0] = { \
-+            .name = "SYSRSTSTAT", \
-+            .addr = 0x0, \
-+            .ro = 0xFFFFFF0E, \
-+            .reset = 0x1, \
-+        }, \
-+        [0x4] = { \
-+            .name = "PRSTCTL0", \
-+            .addr = 0x10, \
-+            .ro = 0x820AE0F5, \
-+            .reset = 0x7DF51F0A, \
-+        }, \
-+        [0x5] = { \
-+            .name = "PRSTCTL1", \
-+            .addr = 0x14, \
-+            .ro = 0xFEFE7FF3, \
-+            .reset = 0x101800C, \
-+        }, \
-+        [0x6] = { \
-+            .name = "PRSTCTL2", \
-+            .addr = 0x18, \
-+            .ro = 0xFFFFFFFC, \
-+            .reset = 0x1C000001, \
-+        }, \
-+        [0x10] = { \
-+            .name = "PRSTCTL0_SET", \
-+            .addr = 0x40, \
-+            .ro = 0x820AE0F5, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x11] = { \
-+            .name = "PRSTCTL1_SET", \
-+            .addr = 0x44, \
-+            .ro = 0xFEFE7FF3, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x12] = { \
-+            .name = "PRSTCTL2_SET", \
-+            .addr = 0x48, \
-+            .ro = 0xFFFFFFFC, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1C] = { \
-+            .name = "PRSTCTL0_CLR", \
-+            .addr = 0x70, \
-+            .ro = 0x820AE0F5, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1D] = { \
-+            .name = "PRSTCTL1_CLR", \
-+            .addr = 0x74, \
-+            .ro = 0xFEFE7FF3, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1E] = { \
-+            .name = "PRSTCTL2_CLR", \
-+            .addr = 0x78, \
-+            .ro = 0xFFFFFFFC, \
-+            .reset = 0x0, \
-+        }, \
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 496dccb2aa..cdf998868c 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -79,7 +79,7 @@ void zipl_load(void);
+ 
+ /* jump2ipl.c */
+ void write_reset_psw(uint64_t psw);
+-void jump_to_IPL_code(uint64_t address);
++int jump_to_IPL_code(uint64_t address);
+ void jump_to_low_kernel(void);
+ 
+ /* menu.c */
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 6f9a558ff5..9faf3986b1 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -274,7 +274,7 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags);
+ int vr_poll(VRing *vr);
+ int vring_wait_reply(void);
+ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+-void virtio_setup_ccw(VDev *vdev);
++int virtio_setup_ccw(VDev *vdev);
+ 
+ int virtio_net_init(void *mac_addr);
+ 
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 1874d4bf5e..c80fcd6f01 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -62,15 +62,34 @@ static void *s2_prev_blk = _s2;
+ static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
+ static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
+ 
+-static inline void verify_boot_info(BootInfo *bip)
++static inline int verify_boot_info(BootInfo *bip)
+ {
+-    IPL_assert(magic_match(bip->magic, ZIPL_MAGIC), "No zIPL sig in BootInfo");
+-    IPL_assert(bip->version == BOOT_INFO_VERSION, "Wrong zIPL version");
+-    IPL_assert(bip->bp_type == BOOT_INFO_BP_TYPE_IPL, "DASD is not for IPL");
+-    IPL_assert(bip->dev_type == BOOT_INFO_DEV_TYPE_ECKD, "DASD is not ECKD");
+-    IPL_assert(bip->flags == BOOT_INFO_FLAGS_ARCH, "Not for this arch");
+-    IPL_assert(block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size),
+-               "Bad block size in zIPL section of the 1st record.");
++    if (!magic_match(bip->magic, ZIPL_MAGIC)) {
++        puts("No zIPL sig in BootInfo");
++        return -EINVAL;
 +    }
-diff --git a/include/hw/arm/svd/rt500_rstctl1.h b/include/hw/arm/svd/rt500_rstctl1.h
-new file mode 100644
-index 0000000000..7b0380798f
---- /dev/null
-+++ b/include/hw/arm/svd/rt500_rstctl1.h
-@@ -0,0 +1,110 @@
-+/*
-+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
-+ *
-+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
-+ */
-+#pragma once
-+
-+#include "hw/register.h"
-+
-+/* Reset Controller 1 */
-+#define RT500_RSTCTL1_REGS_NO (31)
-+
-+/* System Reset Status Register */
-+REG32(RT500_RSTCTL1_SYSRSTSTAT, 0x0);
-+
-+/* Peripheral Reset Control Register 0 */
-+REG32(RT500_RSTCTL1_PRSTCTL0, 0x10);
-+
-+/* Peripheral Reset Control Register 1 */
-+REG32(RT500_RSTCTL1_PRSTCTL1, 0x14);
-+
-+/* Peripheral Reset Control Register 2 */
-+REG32(RT500_RSTCTL1_PRSTCTL2, 0x18);
-+
-+/* Peripheral Reset Control Register 0 SET */
-+REG32(RT500_RSTCTL1_PRSTCTL0_SET, 0x40);
-+
-+/* Peripheral Reset Control Register 1 SET */
-+REG32(RT500_RSTCTL1_PRSTCTL1_SET, 0x44);
-+
-+/* Peripheral Reset Control Register 2 SET */
-+REG32(RT500_RSTCTL1_PRSTCTL2_SET, 0x48);
-+
-+/* Peripheral Reset Control Register 0 CLR */
-+REG32(RT500_RSTCTL1_PRSTCTL0_CLR, 0x70);
-+
-+/* Peripheral Reset Control Register 1 CLR */
-+REG32(RT500_RSTCTL1_PRSTCTL1_CLR, 0x74);
-+
-+/* Peripheral Reset Control Register 2 CLR */
-+REG32(RT500_RSTCTL1_PRSTCTL2_CLR, 0x78);
-+
-+
-+#define RT500_RSTCTL1_REGISTER_ACCESS_INFO_ARRAY(_name) \
-+    struct RegisterAccessInfo _name[RT500_RSTCTL1_REGS_NO] = { \
-+        [0 ... RT500_RSTCTL1_REGS_NO - 1] = { \
-+            .name = "", \
-+            .addr = -1, \
-+        }, \
-+        [0x0] = { \
-+            .name = "SYSRSTSTAT", \
-+            .addr = 0x0, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x1, \
-+        }, \
-+        [0x4] = { \
-+            .name = "PRSTCTL0", \
-+            .addr = 0x10, \
-+            .ro = 0xD40000FF, \
-+            .reset = 0x1C0FF00, \
-+        }, \
-+        [0x5] = { \
-+            .name = "PRSTCTL1", \
-+            .addr = 0x14, \
-+            .ro = 0x4E7EFF00, \
-+            .reset = 0xB18100FF, \
-+        }, \
-+        [0x6] = { \
-+            .name = "PRSTCTL2", \
-+            .addr = 0x18, \
-+            .ro = 0x3FFCFAE0, \
-+            .reset = 0xC001011F, \
-+        }, \
-+        [0x10] = { \
-+            .name = "PRSTCTL0_SET", \
-+            .addr = 0x40, \
-+            .ro = 0xD40000FF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x11] = { \
-+            .name = "PRSTCTL1_SET", \
-+            .addr = 0x44, \
-+            .ro = 0x4E7EFF00, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x12] = { \
-+            .name = "PRSTCTL2_SET", \
-+            .addr = 0x48, \
-+            .ro = 0x3FFCFAE0, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1C] = { \
-+            .name = "PRSTCTL0_CLR", \
-+            .addr = 0x70, \
-+            .ro = 0xD40000FF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1D] = { \
-+            .name = "PRSTCTL1_CLR", \
-+            .addr = 0x74, \
-+            .ro = 0x4E7EFF00, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1E] = { \
-+            .name = "PRSTCTL2_CLR", \
-+            .addr = 0x78, \
-+            .ro = 0x3FFCFAE0, \
-+            .reset = 0x0, \
-+        }, \
++    if (bip->version != BOOT_INFO_VERSION) {
++        puts("Wrong zIPL version");
++        return -EINVAL;
 +    }
-diff --git a/include/hw/misc/rt500_rstctl.h b/include/hw/misc/rt500_rstctl.h
-new file mode 100644
-index 0000000000..ae7e304b2e
---- /dev/null
-+++ b/include/hw/misc/rt500_rstctl.h
-@@ -0,0 +1,32 @@
-+/*
-+ * QEMU model for RT500 Reset Controller
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_MISC_RT500_RSTCTL_H
-+#define HW_MISC_RT500_RSTCTL_H
-+
-+#include "hw/arm/svd/rt500_rstctl0.h"
-+#include "hw/arm/svd/rt500_rstctl1.h"
-+#include "hw/sysbus.h"
-+
-+#define TYPE_RT500_RSTCTL "rt500-rstctl"
-+#define RT500_RSTCTL(o) OBJECT_CHECK(RT500RstCtlState, o, TYPE_RT500_RSTCTL)
-+
-+#define TYPE_RT500_RSTCTL0 "rt500-rstctl0"
-+#define TYPE_RT500_RSTCTL1 "rt500-rstctl1"
-+
-+typedef struct {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    uint32_t regs[RT500_RSTCTL1_REGS_NO];
-+} RT500RstCtlState;
-+
-+#endif /* HW_MISC_RT500_RSTCTL_H */
-diff --git a/hw/misc/rt500_rstctl.c b/hw/misc/rt500_rstctl.c
-new file mode 100644
-index 0000000000..a6e818c0a0
---- /dev/null
-+++ b/hw/misc/rt500_rstctl.c
-@@ -0,0 +1,258 @@
-+/*
-+ * QEMU model for RT500 Reset Controller
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "exec/address-spaces.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/rt500_rstctl.h"
-+
-+#include "trace.h"
-+
-+/*
-+ * There are two intances for RSTCTL with the same register names and layout but
-+ * with different fields.
-+ */
-+#define BUILD_BUG_REG_ADDR(reg) \
-+    QEMU_BUILD_BUG_ON((int)A_RT500_RSTCTL0_##reg != (int)A_RT500_RSTCTL1_##reg)
-+
-+#define REG(s, reg) (s->regs[R_RT500_RSTCTL0_##reg])
-+#define RF_WR(s, reg, field, val) \
-+    ARRAY_FIELD_DP32(s->regs, RT500_RSTCTL0_##reg, field, val)
-+#define RF_RD(s, reg, field) \
-+    ARRAY_FIELD_EX32(s->regs, RT500_RSTCTL0_##reg, field)
-+
-+#define RSTCTL_SYSRSTSTAT_WMASK (BITS(7, 4) | BIT(0))
-+#define RSTCL0_PRSCTL0_WMASK (BITS(30, 26) | BITS(24, 20) | BIT(18) | \
-+                              BIT(16) | BITS(12, 8) | BIT(3) | BIT(1))
-+#define RSTCL0_PRSCTL1_WMASK (BIT(24) | BITS(16, 15) | BITS(3, 2))
-+#define RSTCL0_PRSCTL2_WMASK (BITS(1, 0))
-+#define RSTCL1_PRSCTL0_WMASK (BIT(29) | BIT(27) |  BITS(25, 8))
-+#define RSTCL1_PRSCTL1_WMASK (BIT(31) | BITS(29, 28) | BITS(24, 23) | \
-+                              BIT(16) | BITS(7, 0))
-+#define RSTCL1_PRSCTL2_WMASK (BITS(31, 30) | BITS(17, 16) | BIT(10) | \
-+                              BIT(8) | BITS(4, 0))
-+
-+
-+/*
-+ * The two RSTCLK modules have different write register masks.
-+ */
-+typedef struct {
-+    SysBusDeviceClass parent;
-+    const struct RegisterAccessInfo *reg_info;
-+    int reg_info_num;
-+} RT500RstCtlClass;
-+
-+#define RT500_RSTCTL_CLASS(klass) \
-+    OBJECT_CLASS_CHECK(RT500RstCtlClass, (klass), TYPE_RT500_RSTCTL)
-+#define RT500_RSTCTL_GET_CLASS(obj) \
-+    OBJECT_GET_CLASS(RT500RstCtlClass, (obj), TYPE_RT500_RSTCTL)
-+
-+BUILD_BUG_REG_ADDR(SYSRSTSTAT);
-+BUILD_BUG_REG_ADDR(PRSTCTL0);
-+BUILD_BUG_REG_ADDR(PRSTCTL1);
-+BUILD_BUG_REG_ADDR(PRSTCTL2);
-+BUILD_BUG_REG_ADDR(PRSTCTL0_SET);
-+BUILD_BUG_REG_ADDR(PRSTCTL1_SET);
-+BUILD_BUG_REG_ADDR(PRSTCTL2_SET);
-+BUILD_BUG_REG_ADDR(PRSTCTL0_CLR);
-+BUILD_BUG_REG_ADDR(PRSTCTL1_CLR);
-+BUILD_BUG_REG_ADDR(PRSTCTL2_CLR);
-+
-+static MemTxResult rt500_rstctl_read(void *opaque, hwaddr addr,
-+                                     uint64_t *data, unsigned size,
-+                                     MemTxAttrs attrs)
-+{
-+    RT500RstCtlState *s = opaque;
-+    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
-+    const struct RegisterAccessInfo *rai = &c->reg_info[addr / 4];
-+    MemTxResult ret = MEMTX_OK;
-+
-+    switch (addr) {
-+    case A_RT500_RSTCTL0_SYSRSTSTAT:
-+    case A_RT500_RSTCTL0_PRSTCTL0:
-+    case A_RT500_RSTCTL0_PRSTCTL1:
-+    case A_RT500_RSTCTL0_PRSTCTL2:
-+        *data = s->regs[addr / 4];
-+        break;
-+    default:
-+        ret = MEMTX_ERROR;
++    if (bip->bp_type != BOOT_INFO_BP_TYPE_IPL) {
++        puts("DASD is not for IPL");
++        return -ENODEV;
++    }
++    if (bip->dev_type != BOOT_INFO_DEV_TYPE_ECKD) {
++        puts("DASD is not ECKD");
++        return -ENODEV;
++    }
++    if (bip->flags != BOOT_INFO_FLAGS_ARCH) {
++        puts("Not for this arch");
++        return -EINVAL;
++    }
++    if (!block_size_ok(bip->bp.ipl.bm_ptr.eckd.bptr.size)) {
++        puts("Bad block size in zIPL section of 1st record");
++        return -EINVAL;
 +    }
 +
-+    trace_rt500_rstctl_reg_read(DEVICE(s)->id, rai->name, addr, *data);
-+    return ret;
-+}
-+
-+static MemTxResult rt500_rstctl_write(void *opaque, hwaddr addr,
-+                                      uint64_t value, unsigned size,
-+                                      MemTxAttrs attrs)
-+{
-+    RT500RstCtlState *s = opaque;
-+    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
-+    const struct RegisterAccessInfo *rai = &c->reg_info[addr / 4];
-+    struct RegisterInfo ri = {
-+        .data = &s->regs[addr / 4],
-+        .data_size = 4,
-+        .access = rai,
-+    };
-+
-+    trace_rt500_rstctl_reg_write(DEVICE(s)->id, rai->name, addr, value);
-+
-+    switch (addr) {
-+    case A_RT500_RSTCTL0_SYSRSTSTAT:
-+    {
-+        /* write 1 to clear bits */
-+        REG(s, SYSRSTSTAT) &= ~value;
-+        break;
++    return 0;
+ }
+ 
+ static void eckd_format_chs(ExtEckdBlockPtr *ptr,  bool ldipl,
+@@ -368,8 +387,8 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
+         puts("Unknown script entry type");
+         return -EINVAL;
+     }
+-    write_reset_psw(bms->entry[i].address.load_address); /* no return */
+-    jump_to_IPL_code(0); /* no return */
++    write_reset_psw(bms->entry[i].address.load_address);
++    jump_to_IPL_code(0);
+     return 1;
+ }
+ 
+@@ -1060,16 +1079,19 @@ void zipl_load(void)
+ 
+     if (vdev->is_cdrom) {
+         ipl_iso_el_torito();
+-        panic("\n! Cannot IPL this ISO image !\n");
++        puts("Failed to IPL this ISO image!");
++        return;
+     }
+ 
+     if (virtio_get_device_type() == VIRTIO_ID_NET) {
+         netmain();
+-        panic("\n! Cannot IPL from this network !\n");
++        puts("Failed to IPL from this network!");
++        return;
+     }
+ 
+     if (ipl_scsi()) {
+-        panic("\n! Cannot IPL this SCSI device !\n");
++        puts("Failed to IPL from this SCSI device!");
++        return;
+     }
+ 
+     switch (virtio_get_device_type()) {
+@@ -1080,8 +1102,9 @@ void zipl_load(void)
+         zipl_load_vscsi();
+         break;
+     default:
+-        panic("\n! Unknown IPL device type !\n");
++        puts("Unknown IPL device type!");
++        return;
+     }
+ 
+-    puts("zIPL load failed.");
++    puts("zIPL load failed!");
+ }
+diff --git a/pc-bios/s390-ccw/cio.c b/pc-bios/s390-ccw/cio.c
+index 758e74965e..35b08ba7c1 100644
+--- a/pc-bios/s390-ccw/cio.c
++++ b/pc-bios/s390-ccw/cio.c
+@@ -59,7 +59,8 @@ uint16_t cu_type(SubChannelId schid)
+     };
+ 
+     if (do_cio(schid, CU_TYPE_UNKNOWN, ptr2u32(&sense_id_ccw), CCW_FMT1)) {
+-        panic("Failed to run SenseID CCw\n");
++        puts("Failed to run SenseID CCW");
++        return CU_TYPE_UNKNOWN;
+     }
+ 
+     return sense_data.cu_type;
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 6671e4fe5c..92627b56c6 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -34,7 +34,7 @@ static void jump_to_IPL_addr(void)
+     /* should not return */
+ }
+ 
+-void jump_to_IPL_code(uint64_t address)
++int jump_to_IPL_code(uint64_t address)
+ {
+     /* store the subsystem information _after_ the bootmap was loaded */
+     write_subsystem_identification();
+@@ -69,7 +69,8 @@ void jump_to_IPL_code(uint64_t address)
+     asm volatile("lghi %%r1,1\n\t"
+                  "diag %%r1,%%r1,0x308\n\t"
+                  : : : "1", "memory");
+-    panic("\n! IPL returns !\n");
++    puts("IPL code jump failed");
++    return 1;
+ }
+ 
+ void jump_to_low_kernel(void)
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 2345432abb..f818bd7210 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -77,6 +77,9 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
+ 
+     enable_subchannel(blk_schid);
+     cutype = cu_type(blk_schid);
++    if (cutype == CU_TYPE_UNKNOWN) {
++        return -EIO;
 +    }
-+    case A_RT500_RSTCTL0_PRSTCTL0:
-+    case A_RT500_RSTCTL0_PRSTCTL1:
-+    case A_RT500_RSTCTL0_PRSTCTL2:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        break;
+ 
+     /*
+      * Note: we always have to run virtio_is_supported() here to make
+@@ -194,10 +197,10 @@ static void boot_setup(void)
+     have_iplb = store_iplb(&iplb);
+ }
+ 
+-static void find_boot_device(void)
++static bool find_boot_device(void)
+ {
+     VDev *vdev = virtio_get_device();
+-    bool found;
++    bool found = false;
+ 
+     switch (iplb.pbt) {
+     case S390_IPL_TYPE_CCW:
+@@ -215,10 +218,10 @@ static void find_boot_device(void)
+         found = find_subch(iplb.scsi.devno);
+         break;
+     default:
+-        panic("List-directed IPL not supported yet!\n");
++        puts("Unsupported IPLB");
+     }
+ 
+-    IPL_assert(found, "Boot device not found\n");
++    return found;
+ }
+ 
+ static int virtio_setup(void)
+@@ -244,11 +247,13 @@ static int virtio_setup(void)
+         ret = virtio_scsi_setup_device(blk_schid);
+         break;
+     default:
+-        panic("\n! No IPL device available !\n");
++        puts("\n! No IPL device available !\n");
++        return 1;
+     }
+ 
+-    if (!ret) {
+-        IPL_assert(virtio_ipl_disk_is_valid(), "No valid IPL device detected");
++    if (!ret && !virtio_ipl_disk_is_valid()) {
++        puts("No valid IPL device detected");
++        return -ENODEV;
+     }
+ 
+     return ret;
+@@ -259,16 +264,16 @@ static void ipl_boot_device(void)
+     switch (cutype) {
+     case CU_TYPE_DASD_3990:
+     case CU_TYPE_DASD_2107:
+-        dasd_ipl(blk_schid, cutype); /* no return */
++        dasd_ipl(blk_schid, cutype);
+         break;
+     case CU_TYPE_VIRTIO:
+-        if (virtio_setup() == 0) {
+-            zipl_load();             /* Only returns in case of errors */
++        if (virtio_setup()) {
++            return;    /* Only returns in case of errors */
+         }
++        zipl_load();
+         break;
+     default:
+         printf("Attempting to boot from unexpected device type 0x%X", cutype);
+-        panic("\nBoot failed.\n");
+     }
+ }
+ 
+@@ -288,7 +293,8 @@ static void probe_boot_device(void)
+                 break;
+             }
+             if (ret == true) {
+-                ipl_boot_device();      /* Only returns if unsuccessful */
++                ipl_boot_device(); /* Only returns if unsuccessful */
++                return;
+             }
+         }
+     }
+@@ -301,12 +307,11 @@ void main(void)
+     sclp_setup();
+     css_setup();
+     boot_setup();
+-    if (have_iplb) {
+-        find_boot_device();
++    if (have_iplb && find_boot_device()) {
+         ipl_boot_device();
+     } else {
+         probe_boot_device();
+     }
+ 
+-    panic("Failed to load OS from hard disk\n");
++    panic("Failed to IPL. Halting...");
+ }
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 1c585f034b..5ef273bdc0 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -59,8 +59,8 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
+     case VIRTIO_ID_SCSI:
+         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
+     }
+-    panic("\n! No readable IPL device !\n");
+-    return -1;
++
++    return 1;
+ }
+ 
+ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index 8c6b0a8a92..8b5a370bb3 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -217,16 +217,19 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
+     return 0;
+ }
+ 
+-void virtio_setup_ccw(VDev *vdev)
++int virtio_setup_ccw(VDev *vdev)
+ {
+-    int i, rc, cfg_size = 0;
++    int i, cfg_size = 0;
+     uint8_t status;
+     struct VirtioFeatureDesc {
+         uint32_t features;
+         uint8_t index;
+     } __attribute__((packed)) feats;
+ 
+-    IPL_assert(virtio_is_supported(vdev->schid), "PE");
++    if (!virtio_is_supported(vdev->schid)) {
++        puts("Virtio unsupported for this device ID");
++        return -ENODEV;
 +    }
-+    case A_RT500_RSTCTL0_PRSTCTL0_SET:
-+    case A_RT500_RSTCTL0_PRSTCTL1_SET:
-+    case A_RT500_RSTCTL0_PRSTCTL2_SET:
-+    {
-+        uint32_t tmp;
-+
-+        tmp = A_RT500_RSTCTL0_PRSTCTL0 + (addr - A_RT500_RSTCTL0_PRSTCTL0_SET);
-+        s->regs[tmp / 4] |= value;
-+        break;
+     /* device ID has been established now */
+ 
+     vdev->config.blk.blk_size = 0; /* mark "illegal" - setup started... */
+@@ -235,8 +238,10 @@ void virtio_setup_ccw(VDev *vdev)
+     run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
+ 
+     status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write ACKNOWLEDGE status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write ACKNOWLEDGE status to host");
++        return -EIO;
 +    }
-+    case A_RT500_RSTCTL0_PRSTCTL0_CLR:
-+    case A_RT500_RSTCTL0_PRSTCTL1_CLR:
-+    case A_RT500_RSTCTL0_PRSTCTL2_CLR:
-+    {
-+        uint32_t tmp;
-+
-+        tmp = A_RT500_RSTCTL0_PRSTCTL0 + (addr - A_RT500_RSTCTL0_PRSTCTL0_CLR);
-+        s->regs[tmp / 4] &= ~value;
-+        break;
+ 
+     switch (vdev->senseid.cu_model) {
+     case VIRTIO_ID_NET:
+@@ -255,27 +260,37 @@ void virtio_setup_ccw(VDev *vdev)
+         cfg_size = sizeof(vdev->config.scsi);
+         break;
+     default:
+-        panic("Unsupported virtio device\n");
++        puts("Unsupported virtio device");
++        return -ENODEV;
+     }
+ 
+     status |= VIRTIO_CONFIG_S_DRIVER;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write DRIVER status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write DRIVER status to host");
++        return -EIO;
 +    }
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
-+static const MemoryRegionOps rt500_rstctl_ops = {
-+    .read_with_attrs = rt500_rstctl_read,
-+    .write_with_attrs = rt500_rstctl_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void rt500_rstctl_reset_enter(Object *obj, ResetType type)
-+{
-+    RT500RstCtlState *s = RT500_RSTCTL(obj);
-+    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
-+
-+    for (int i = 0; i < c->reg_info_num; i++) {
-+        hwaddr addr = c->reg_info[i].addr;
-+
-+        if (addr != -1) {
-+            struct RegisterInfo ri = {
-+                .data = &s->regs[addr / 4],
-+                .data_size = 4,
-+                .access = &c->reg_info[i],
-+            };
-+
-+            register_reset(&ri);
+ 
+     /* Feature negotiation */
+     for (i = 0; i < ARRAY_SIZE(vdev->guest_features); i++) {
+         feats.features = 0;
+         feats.index = i;
+-        rc = run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false);
+-        IPL_assert(rc == 0, "Could not get features bits");
++        if (run_ccw(vdev, CCW_CMD_READ_FEAT, &feats, sizeof(feats), false)) {
++            puts("Could not get features bits");
++            return -EIO;
 +        }
-+    }
-+}
 +
-+static void rt500_rstctl_init(Object *obj)
-+{
-+    RT500RstCtlState *s = RT500_RSTCTL(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &rt500_rstctl_ops, s,
-+                          TYPE_RT500_RSTCTL, sizeof(s->regs));
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static const VMStateDescription vmstate_rt500_rstcl0 = {
-+    .name = "rt500-rstctl0",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, RT500RstCtlState, RT500_RSTCTL0_REGS_NO),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_rt500_rstcl1 = {
-+    .name = "rt500-rstctl1",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, RT500RstCtlState, RT500_RSTCTL1_REGS_NO),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void rt500_rstctl0_class_init(ObjectClass *klass, void *data)
-+{
-+    RT500RstCtlClass *rc = RT500_RSTCTL_CLASS(klass);
-+    static const RT500_RSTCTL0_REGISTER_ACCESS_INFO_ARRAY(reg_info);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    RESETTABLE_CLASS(klass)->phases.enter = rt500_rstctl_reset_enter;
-+    dc->vmsd = &vmstate_rt500_rstcl0;
-+    rc->reg_info = reg_info;
-+    rc->reg_info_num = ARRAY_SIZE(reg_info);
-+}
-+
-+static void rt500_rstctl1_class_init(ObjectClass *klass, void *data)
-+{
-+    RT500RstCtlClass *rc = RT500_RSTCTL_CLASS(klass);
-+    static const RT500_RSTCTL1_REGISTER_ACCESS_INFO_ARRAY(reg_info);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    RESETTABLE_CLASS(klass)->phases.enter = rt500_rstctl_reset_enter;
-+    dc->vmsd = &vmstate_rt500_rstcl1;
-+    rc->reg_info = reg_info;
-+    rc->reg_info_num = ARRAY_SIZE(reg_info);
-+}
-+
-+static const TypeInfo rt500_rstctl_types[] = {
-+    {
-+        .name          = TYPE_RT500_RSTCTL,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(RT500RstCtlState),
-+        .instance_init = rt500_rstctl_init,
-+        .abstract      = true,
-+    },
-+    {
-+        .name          = TYPE_RT500_RSTCTL0,
-+        .parent        = TYPE_RT500_RSTCTL,
-+        .class_init    = rt500_rstctl0_class_init,
-+        .class_size    = sizeof(RT500RstCtlClass),
-+    },
-+    {
-+        .name          = TYPE_RT500_RSTCTL1,
-+        .parent        = TYPE_RT500_RSTCTL,
-+        .class_init    = rt500_rstctl1_class_init,
-+        .class_size    = sizeof(RT500RstCtlClass),
-+    },
-+};
-+
-+DEFINE_TYPES(rt500_rstctl_types);
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index adf0f8327a..eb2fab54f5 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -28,4 +28,12 @@ if get_option('mcux-soc-svd')
-     [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexspi.h',
-       '-p', 'FLEXSPI0', '-t', 'FLEXSPI',
-       '--fields', 'STS0:SEQIDLE MCR0:SWRESET INTR:IPCMDDONE'])
-+  run_target('svd-rt500-rstctl0', command: svd_gen_header +
-+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/rt500_rstctl0.h',
-+      '-p', 'RSTCTL0', '-t', 'RT500_RSTCTL0',
-+      '--fields', 'SYSRSTSTAT: PRSTCTL*:'])
-+  run_target('svd-rt500-rstctl1', command: svd_gen_header +
-+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/rt500_rstctl1.h',
-+      '-p', 'RSTCTL1', '-t', 'RT500_RSTCTL1',
-+      '--fields', 'SYSRSTSTAT: PRSTCTL*:'])
- endif
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 02feb93840..4b688aead2 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -221,4 +221,7 @@ config FLEXCOMM
- config RT500_CLKCTL
-     bool
+         vdev->guest_features[i] &= bswap32(feats.features);
+         feats.features = bswap32(vdev->guest_features[i]);
+-        rc = run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false);
+-        IPL_assert(rc == 0, "Could not set features bits");
++        if (run_ccw(vdev, CCW_CMD_WRITE_FEAT, &feats, sizeof(feats), false)) {
++            puts("Could not set features bits");
++            return -EIO;
++        }
+     }
  
-+config RT500_RSTCTL
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 15f9153be4..bf0988fd43 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -154,3 +154,4 @@ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+-    rc = run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false);
+-    IPL_assert(rc == 0, "Could not get virtio device configuration");
++    if (run_ccw(vdev, CCW_CMD_READ_CONF, &vdev->config, cfg_size, false)) {
++        puts("Could not get virtio device configuration");
++        return -EIO;
++    }
  
- system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
- system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkctl0.c', 'rt500_clkctl1.c'))
-+system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index b19393dd36..721ebe4bb7 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -376,3 +376,7 @@ rt500_clkctl0_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x
- # rt500_clkctl1.c
- rt500_clkctl1_reg_read(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] -> 0x%08x"
- rt500_clkctl1_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] <- 0x%08x"
+     for (i = 0; i < vdev->nr_vqs; i++) {
+         VqInfo info = {
+@@ -289,19 +304,27 @@ void virtio_setup_ccw(VDev *vdev)
+             .num = 0,
+         };
+ 
+-        rc = run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config), false);
+-        IPL_assert(rc == 0, "Could not get virtio device VQ configuration");
++        if (run_ccw(vdev, CCW_CMD_READ_VQ_CONF, &config, sizeof(config),
++                false)) {
++            puts("Could not get virtio device VQ config");
++            return -EIO;
++        }
+         info.num = config.num;
+         vring_init(&vdev->vrings[i], &info);
+         vdev->vrings[i].schid = vdev->schid;
+-        IPL_assert(
+-            run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false) == 0,
+-            "Cannot set VQ info");
++        if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
++            puts("Cannot set VQ info");
++            return -EIO;
++        }
+     }
+ 
+     status |= VIRTIO_CONFIG_S_DRIVER_OK;
+-    rc = run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false);
+-    IPL_assert(rc == 0, "Could not write DRIVER_OK status to host");
++    if (run_ccw(vdev, CCW_CMD_WRITE_STATUS, &status, sizeof(status), false)) {
++        puts("Could not write DRIVER_OK status to host");
++        return -EIO;
++    }
 +
-+# rt500_rstctl.c
-+rt500_rstctl_reg_read(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
-+rt500_rstctl_reg_write(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
++    return 0;
+ }
+ 
+ bool virtio_is_supported(SubChannelId schid)
 -- 
-2.47.0.rc0.187.ge670bccf7e-goog
+2.45.1
 
 
