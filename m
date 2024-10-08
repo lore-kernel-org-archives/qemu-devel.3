@@ -4,99 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1E3CED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B826CED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxypj-00045z-Vj; Mon, 07 Oct 2024 21:16:16 -0400
+	id 1sxyrJ-0005nO-C5; Mon, 07 Oct 2024 21:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxyph-00045H-Hv; Mon, 07 Oct 2024 21:16:13 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypf-0008HY-5f; Mon, 07 Oct 2024 21:16:12 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497Nt8Jr026653;
- Tue, 8 Oct 2024 01:16:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=EMFlUjXFbClm+
- byH4iu81LclUpFGQnIekH0pDh+MOKo=; b=trka2cqO46iZNNtsDmZ5DgYZRQma9
- XaP+ERCHRxOHTfBOi5bqdv/rRNzC2jBR96WiygJXMiBaSG7LasVTF6rFevXd2Zme
- +Qoq7VpQtf7847aHU5dZD6szOQbMaONONq0zSY4R+kbGNbNpksVHwlVmm9HtyAlN
- EStCPOyotgKTtrZkfb011LZJcWmcHREA94MUQAthMZXHGGvAQBVXhT77B8oYipXY
- AIJjBtMqizRwx9vP1ISVlVOQU0CSlLOt9HnSprMkGDb5KYo9brXBz1D59SIWipVd
- qB8T68a3JUYzZrjAxz9osQ58EalJR8nRw4bUDRt8UffXs7U1n0pjK8ZwQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7gy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:09 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981G8nD017417;
- Tue, 8 Oct 2024 01:16:09 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7gu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:08 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497Kicxn030253;
- Tue, 8 Oct 2024 01:16:08 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423gsmhjj1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:08 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981G7MH2818594
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:07 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D81C258055;
- Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 63CDC58043;
- Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.51.58])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 07/19] pc-bios/s390-ccw: Remove panics from ISO IPL path
-Date: Mon,  7 Oct 2024 21:15:40 -0400
-Message-ID: <20241008011552.2645520-8-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sxyr7-0005Xr-JM; Mon, 07 Oct 2024 21:17:42 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sxyr5-0008TH-7W; Mon, 07 Oct 2024 21:17:40 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-84f29f2547fso1299169241.0; 
+ Mon, 07 Oct 2024 18:17:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1728350256; x=1728955056; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H7XcROQHzaMp4c2pQ5mw9PeqZzqv/Ez36cA9tpdGmts=;
+ b=K4fveUZD3Ownoz2Hp8W4uafTCuSyz773qghmSwniEHnRu5K+INIpg9E//PaDf9Hq3c
+ UXxBc/RMOqXB3kI8ZZ5MMN+tQdplu5gJOEjVc/6pOgvjn5zypI5iyFXvTpDT8ZhmWdgO
+ miVxutxnBKuf2uJRAeQNSMZCCcrWcC0gahorNgTEzw4d8GcVOGzzEJGUMgUwL2ZCDr8v
+ +LvKgqQp5R0fF4Fxq2+hz92PHM7++ZO3zDmvq/tP2M2gJPYy7GkJKGl50jm0LRtc0BGQ
+ Fv6yrk2MBaLMbdL1RZjdYH/RXFs1FAzf80rMJgqZzwdhbj1jhD5Y0jekp7MVMt/UyhJY
+ cNow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728350256; x=1728955056;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H7XcROQHzaMp4c2pQ5mw9PeqZzqv/Ez36cA9tpdGmts=;
+ b=jd4iBBAa7Gwl8qzUw+qoZsTPwmxKMGLMC+BCK/LeM0cvyQSZHiMxRoYROXKD4Sk/B0
+ eg9Wk9Jl8UP6B3hlG2DpG3qOWI3YSavApJkNxJPssuB73E2RpIWjWBcxDsM3x4AD+AGT
+ 8KTQMMJVE8wi5qb9Ibvb/O5FKH5AZDGNiDd1QVwgzmqFG7F0NXep91w66ludTqtCe17G
+ RJ7+KlZqq3GO6MgV8AlPHJHjVEzjdrV7BCxKQxibVcVywxLkXscW7ehXqmG67Zj+bph5
+ h9XZKiXGgYmACAijjRrPq2Q+97Mufizkbni/ucfeazH3n9E9QWPpd3cFPFZIHeC6bh/3
+ nCeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOco5m+TvsCdQMQfBDzpJrFnp9dCGlYta9BHdhgMb0K/Q11vS3i2ZLxTX5nBQArdVjdsQs6DbV/vrr@nongnu.org
+X-Gm-Message-State: AOJu0YxTBXopQDyKD2y2WVpkWrWiQzxPk0fWVothqQuWH/YnwhJP2+n1
+ 6vKiynLEOXFtZm80cDprbT4jXwCpf37R4kdY56V5SA9Aho/A/cKt+JvwkefBD1yEIvpGW5rnxNO
+ TgwwxvvV7wR1fYlYM5DB1+R0nx3k=
+X-Google-Smtp-Source: AGHT+IEOLPrkggHEBAx19gWSsT9KlLjPJMUVyFnd0spGUs/FgRm9s0B7W9n/afgGJ600gGpCv62LkRGItKTF5NVrMas=
+X-Received: by 2002:a05:6102:b07:b0:4a3:a0b1:b94 with SMTP id
+ ada2fe7eead31-4a4057620eemr8833563137.9.1728350256662; Mon, 07 Oct 2024
+ 18:17:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: vZBnXx5xjy6E4L-dPcuZdnXKNMHL6_om
-X-Proofpoint-GUID: 64DOKli3yBS7e3vuRftSlJATWx37MMYm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410080003
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240919055048.562-1-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240919055048.562-1-zhiwei_liu@linux.alibaba.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 8 Oct 2024 11:17:10 +1000
+Message-ID: <CAKmqyKOAnhskgqw1RU-3cSkUUCVRj7B614QT3RWn5t-pD=CziQ@mail.gmail.com>
+Subject: Re: [PATCH v7 0/8] target/riscv: Expose RV32 cpu to RV64 QEMU
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,233 +92,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On Thu, Sep 19, 2024 at 3:53=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
+a.com> wrote:
+>
+> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>
+> This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
+> qemu-system-riscv64 can directly boot a RV32 Linux.
+>
+> This patch set has been tested with 6.9.0 Linux Image.
+> And add an avocado tuxrun test in tests/avocado.
+>
+> v7:
+>   Remove cpu of "any".
+>
+> v6:
+>   Use TUXRUN test case instead of boot_linux_console
+>   Add any32 and max32 cpu for RV64 QEMU
+>
+> v5:
+>   Rebase to master and add tags
+>
+> v4:
+>   Drop UL completely in PATCH v3 2/7, 4/7, 5/7.
+>   Avocado: Add "if=3Dnone" to "-drive" option in QEMU command line
+>
+> v3:
+>   Rebase to the master branch
+>
+> v2:
+>   Remove the line that was inadvertently left in PATCH v1 4/6.
+>   Add an avocado test.
+>
+> v1:
+>   https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00501.html
+>
+> LIU Zhiwei (2):
+>   target/riscv: Add max32 CPU for RV64 QEMU
+>   tests/avocado: Boot Linux for RV32 cpu on RV64 QEMU
+>
+> TANG Tiancheng (6):
+>   target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
+>   target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
+>   target/riscv: Correct SXL return value for RV32 in RV64 QEMU
+>   target/riscv: Detect sxl to set bit width for RV32 in RV64
+>   target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
+>   target/riscv: Enable RV32 CPU support in RV64 QEMU
 
-Remove panic-on-error from IPL ISO El Torito specific functions so that error
-recovery may be possible in the future.
+Thanks!
 
-Functions that would previously panic now provide a return code.
+Applied to riscv-to-apply.next
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/bootmap.h  | 15 +++----
- pc-bios/s390-ccw/s390-ccw.h |  1 +
- pc-bios/s390-ccw/bootmap.c  | 78 ++++++++++++++++++++++++-------------
- 3 files changed, 59 insertions(+), 35 deletions(-)
+Alistair
 
-diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
-index bbe2c132aa..d639258eca 100644
---- a/pc-bios/s390-ccw/bootmap.h
-+++ b/pc-bios/s390-ccw/bootmap.h
-@@ -385,17 +385,14 @@ static inline uint32_t iso_733_to_u32(uint64_t x)
- 
- #define ISO_PRIMARY_VD_SECTOR 16
- 
--static inline void read_iso_sector(uint32_t block_offset, void *buf,
--                                   const char *errmsg)
--{
--    IPL_assert(virtio_read_many(block_offset, buf, 1) == 0, errmsg);
--}
--
--static inline void read_iso_boot_image(uint32_t block_offset, void *load_addr,
-+static inline int read_iso_boot_image(uint32_t block_offset, void *load_addr,
-                                        uint32_t blks_to_load)
- {
--    IPL_assert(virtio_read_many(block_offset, load_addr, blks_to_load) == 0,
--               "Failed to read boot image!");
-+    if (virtio_read_many(block_offset, load_addr, blks_to_load)) {
-+        puts("Failed to read boot image!");
-+        return 1;
-+    }
-+    return 0;
- }
- 
- #define ISO9660_MAX_DIR_DEPTH 8
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 0ed7eb8ade..cbd92f3671 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -30,6 +30,7 @@ typedef unsigned long long u64;
- #define EIO     1
- #define EBUSY   2
- #define ENODEV  3
-+#define EINVAL  4
- 
- #ifndef MIN
- #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 414c3f1b47..7984de62fe 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -678,8 +678,10 @@ static bool is_iso_bc_entry_compatible(IsoBcSection *s)
-     if (s->unused || !s->sector_count) {
-         return false;
-     }
--    read_iso_sector(bswap32(s->load_rba), magic_sec,
--                    "Failed to read image sector 0");
-+    if (virtio_read(bswap32(s->load_rba), magic_sec)) {
-+        puts("Failed to read image sector 0");
-+        return false;
-+    }
- 
-     /* Checking bytes 8 - 32 for S390 Linux magic */
-     return !memcmp(magic_sec + 8, linux_s390_magic, 24);
-@@ -699,21 +701,28 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
-     uint8_t *temp = sec + ISO_SECTOR_SIZE;
-     int level = 0;
- 
--    read_iso_sector(ISO_PRIMARY_VD_SECTOR, sec,
--                    "Failed to read ISO primary descriptor");
-+    if (virtio_read(ISO_PRIMARY_VD_SECTOR, sec)) {
-+        puts("Failed to read ISO primary descriptor");
-+        return -EIO;
-+    }
-+
-     sec_loc[0] = iso_733_to_u32(cur_record->ext_loc);
-     dir_rem[0] = 0;
-     sec_offset[0] = 0;
- 
-     while (level >= 0) {
--        IPL_assert(sec_offset[level] <= ISO_SECTOR_SIZE,
--                   "Directory tree structure violation");
-+        if (sec_offset[level] > ISO_SECTOR_SIZE) {
-+            puts("Directory tree structure violation");
-+            return -EIO;
-+        }
- 
-         cur_record = (IsoDirHdr *)(temp + sec_offset[level]);
- 
-         if (sec_offset[level] == 0) {
--            read_iso_sector(sec_loc[level], temp,
--                            "Failed to read ISO directory");
-+            if (virtio_read(sec_loc[level], temp)) {
-+                puts("Failed to read ISO directory");
-+                return -EIO;
-+            }
-             if (dir_rem[level] == 0) {
-                 /* Skip self and parent records */
-                 dir_rem[level] = iso_733_to_u32(cur_record->data_len) -
-@@ -758,8 +767,10 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
-         if (dir_rem[level] == 0) {
-             /* Nothing remaining */
-             level--;
--            read_iso_sector(sec_loc[level], temp,
--                            "Failed to read ISO directory");
-+            if (virtio_read(sec_loc[level], temp)) {
-+                puts("Failed to read ISO directory");
-+                return -EIO;
-+            }
-         }
-     }
- 
-@@ -784,9 +795,11 @@ static void load_iso_bc_entry(IsoBcSection *load)
-         puts("ISO boot image size could not be verified");
-     }
- 
--    read_iso_boot_image(bswap32(s.load_rba),
-+    if (read_iso_boot_image(bswap32(s.load_rba),
-                         (void *)((uint64_t)bswap16(s.load_segment)),
--                        blks_to_load);
-+                        blks_to_load)) {
-+        return;
-+    }
- 
-     jump_to_low_kernel();
- }
-@@ -809,17 +822,18 @@ static uint32_t find_iso_bc(void)
-                 return bswap32(et->bc_offset);
-             }
-         }
--        read_iso_sector(block_num++, sec,
--                        "Failed to read ISO volume descriptor");
-+        if (virtio_read(block_num++, sec)) {
-+            puts("Failed to read ISO volume descriptor");
-+            return 0;
-+        }
-     }
- 
-     return 0;
- }
- 
--static IsoBcSection *find_iso_bc_entry(void)
-+static IsoBcSection *find_iso_bc_entry(uint32_t offset)
- {
-     IsoBcEntry *e = (IsoBcEntry *)sec;
--    uint32_t offset = find_iso_bc();
-     int i;
-     unsigned int loadparm = get_loadparm_index();
- 
-@@ -827,11 +841,13 @@ static IsoBcSection *find_iso_bc_entry(void)
-         return NULL;
-     }
- 
--    read_iso_sector(offset, sec, "Failed to read El Torito boot catalog");
-+    if (virtio_read(offset, sec)) {
-+        puts("Failed to read El Torito boot catalog");
-+        return NULL;
-+    }
- 
-     if (!is_iso_bc_valid(e)) {
-         /* The validation entry is mandatory */
--        panic("No valid boot catalog found!\n");
-         return NULL;
-     }
- 
-@@ -851,19 +867,25 @@ static IsoBcSection *find_iso_bc_entry(void)
-         }
-     }
- 
--    panic("No suitable boot entry found on ISO-9660 media!\n");
--
-     return NULL;
- }
- 
--static void ipl_iso_el_torito(void)
-+static int ipl_iso_el_torito(void)
- {
--    IsoBcSection *s = find_iso_bc_entry();
-+    uint32_t offset = find_iso_bc();
-+    if (!offset) {
-+        return 0;
-+    }
-+
-+    IsoBcSection *s = find_iso_bc_entry(offset);
- 
-     if (s) {
--        load_iso_bc_entry(s);
--        /* no return */
-+        load_iso_bc_entry(s); /* only return in error */
-+        return 1;
-     }
-+
-+    puts("No suitable boot entry found on ISO-9660 media!");
-+    return -EIO;
- }
- 
- /**
-@@ -893,7 +915,9 @@ static void zipl_load_vblk(void)
-         if (blksize != VIRTIO_ISO_BLOCK_SIZE) {
-             virtio_assume_iso9660();
-         }
--        ipl_iso_el_torito();
-+        if (ipl_iso_el_torito()) {
-+            return;
-+        }
-     }
- 
-     if (blksize != VIRTIO_DASD_DEFAULT_BLOCK_SIZE) {
-@@ -907,7 +931,9 @@ static void zipl_load_vscsi(void)
- {
-     if (virtio_get_block_size() == VIRTIO_ISO_BLOCK_SIZE) {
-         /* Is it an ISO image in non-CD drive? */
--        ipl_iso_el_torito();
-+        if (ipl_iso_el_torito()) {
-+            return;
-+        }
-     }
- 
-     puts("Using guessed DASD geometry.");
--- 
-2.45.1
-
+>
+>  configs/targets/riscv64-softmmu.mak |  2 +-
+>  hw/riscv/boot.c                     | 35 +++++++++++++++++++----------
+>  hw/riscv/sifive_u.c                 |  3 ++-
+>  include/hw/riscv/boot.h             |  4 +++-
+>  include/hw/riscv/boot_opensbi.h     | 29 ++++++++++++++++++++++++
+>  target/riscv/cpu-qom.h              |  1 +
+>  target/riscv/cpu.c                  | 28 ++++++++++++++++-------
+>  target/riscv/cpu.h                  |  5 ++++-
+>  target/riscv/cpu_helper.c           | 25 +++++++++++++++------
+>  target/riscv/pmp.c                  |  2 +-
+>  tests/avocado/tuxrun_baselines.py   | 16 +++++++++++++
+>  11 files changed, 118 insertions(+), 32 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
 
