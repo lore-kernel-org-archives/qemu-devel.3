@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A81CED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C73CED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxz2M-0001t6-BF; Mon, 07 Oct 2024 21:29:18 -0400
+	id 1sxz3s-0003E4-7P; Mon, 07 Oct 2024 21:30:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sxz2L-0001sw-Gr
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:29:17 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sxz3q-0003Dh-31; Mon, 07 Oct 2024 21:30:50 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sxz2J-0001RD-MQ
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:29:17 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42f6995dab8so125725e9.0
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:29:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sxz3j-0001js-QE; Mon, 07 Oct 2024 21:30:49 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-84f965407beso298621241.3; 
+ Mon, 07 Oct 2024 18:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350953; x=1728955753; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728351042; x=1728955842; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H+5O1d5QD8SiqkSDnIJpF32o7IWvaXTr5T4PAuQq1/8=;
- b=y3ndyfleTbfIZvjjm/1LXJ5RkAGHjdljXvvdu4drprjVVkao+93jEzXh1VVO6R/ZRo
- /K3Gt0CrRkZeKTCD8uT0xxyE3XEBxVfYuFiUh4NCKVGgDHD5yqktqgIcn0zUZxyPhpVs
- BzKsOtbgyiLjCLbGXp7k2rS5b+axNon3Qjy32vAYEPRKOCZGRhbEp03aiVWfOXCbv5Kk
- jO5VMq9eJ9J38CrYXKBPcmfmU5dYlGj0JFgusbNyaD/KpUIb6mL3DF0nrQ6YC4fqosmx
- +WHppI6FcyFd8GHzG1M2aYjbt4H0Od2WGXsrUtkogjjlUnZEYMi5oBAZIpkIqRQQNfft
- eMPQ==
+ bh=oKifHFSpcfjlmRYnmhwnCfwktQUFaMDiwzDKEfJqBpU=;
+ b=E4T++4jBh9uA5S8X+6dWOhkuqszOWG4ktNH7GZtN68E5ngqgnQkZH4a1xfX7ww6YrA
+ 4qzXTC/WjtouiTj1sKFtsUvj6o3/mbgrW9kEpQnyt8DSq6YqZ+VQi0AjqHj21hBh1NBN
+ ocQod7tA24V3fyeUuA4/x/I8wp458oFX+VZEa+Ox4/IhTEr28kk4/iKibDTjXo9pUsY5
+ HyGiTt+BUmOZlk6Nn0VxcmV3XsdsjA0KNN8Gs1FBjc27zg0wgCg2kEhcORCbGzYch0c+
+ SfAvv8AcIvZfbVc4PXIR2GV0qlnEONyBGqPeWntWH2onoXXW9umpmGSNSVjjSUnuxsWY
+ pMig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350953; x=1728955753;
+ d=1e100.net; s=20230601; t=1728351042; x=1728955842;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=H+5O1d5QD8SiqkSDnIJpF32o7IWvaXTr5T4PAuQq1/8=;
- b=FpgbMbTOw9wNLlTOGzqgs7KRp8RnPL65MeRrG656xVO0EmeH515hzaYJRSuJCHdaIc
- YptcHxh5tWmTWhG0Muk3XJ3BBF+4/9Syjm4CB+aZjGSgSmV8awxeYPYu39VTENGPAMIa
- I/BMnZM6ytihfxgSrChLYea7Mxq3oi7bEOWoa9CKkFLXVEh7Pq5WqcGI4aIw8I2CGQWL
- Ljk8wpBn8PWAHG6mt1CUMPfJc++qMsZ8lxfsjtE3FLspjLa2tkPuiogxBrVY5am1tZwC
- ZbZUZvRaLASOvUksu6WqNvidu2BNN4ZyGHQdvGy0R0wcFhP4VJLUIH/5ssM4p9g8bYYw
- nhZg==
-X-Gm-Message-State: AOJu0Yx/YZmuITW6Mysp2+y9k9++Khi3vUSHhtzvjZbNsGuO5XqYLSox
- oSlAIQb8y5BmmotpLIyyhNWhnz9eLQTT6wxfeS9xeSJy86/pe5Zp6Mdlnmu+iH55K2S/6lA3jEB
- MxeIyV+7AfTgofKZpnp0sKbjL5klkG4H4k81d
-X-Google-Smtp-Source: AGHT+IFwSDOkZGHl6BoEMiBL0H5Gt6QjKeSQcfdzGOoFBZvGlnz4IrBU4N5Dua/3URvtYccWoCVoCkq7DRrhrTQoPNg=
-X-Received: by 2002:a05:600c:5010:b0:428:e6eb:1340 with SMTP id
- 5b1f17b1804b1-42fcdcddf49mr2430475e9.4.1728350952901; Mon, 07 Oct 2024
- 18:29:12 -0700 (PDT)
+ bh=oKifHFSpcfjlmRYnmhwnCfwktQUFaMDiwzDKEfJqBpU=;
+ b=U9iz08wgagzRcJmTz2xR8+1lVK1qL3sDqvgpHhIdttQw+LKJ3NhixX4SHUmLP4zwvJ
+ S2nhRhzFT6zDmRq5u1zmBkv+ELi3GxmZBpVbRD7556j2y5+ywAI+HM+XSaMY8mo6fa26
+ ubkH7Zz8iPTH6h7SuCssMYAw3b25Ge0kOwJaRZvzNRc1fFrHf+sLCdDkxO4wTUztTQRY
+ 5TKVNCl5JAToZHFiypRR3IS8S2MJuT+kmeVfrWcQlERHbUnNuvtgivToeixIDs4uvqHy
+ La/4AV2RnD4DB3dtkrbAQf/+UoEsndlH49dMEjxB32Tm8fc39U6pZU7TkYDDe3XXFa2w
+ D2bg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWo8Bs7gBOMP0FeKaxBgv8rLh8c9F2NxobA2jXoT5WxJmTeLOSXd74dxc2XUkji2zPhQOijtxpiyZTz@nongnu.org
+X-Gm-Message-State: AOJu0YwE0JtTOuQwwMy8DfT4kOfoH1pGHawSU3vr6Hyp2ZJPk0LJH152
+ gjKYqXDrq8OaRkSidgTqApeAcdU2f51pM/b7LjqAkYs4GpIlhavuLpuzwxArPXd2i9fmdHjrZDZ
+ GxDGv2P4eLOD9X5vuZImZV24QMhw=
+X-Google-Smtp-Source: AGHT+IFr7gbLzlb2uL/CbydTofMcuMrjTFkL2bWCj2oY9TBFfL4DJgT8KVPbUojLVE1qhgevbJhDBLiped81EP7jIOU=
+X-Received: by 2002:a05:6102:370a:b0:497:7b07:8d08 with SMTP id
+ ada2fe7eead31-4a4057860dfmr7770195137.17.1728351042071; Mon, 07 Oct 2024
+ 18:30:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240806010735.2450555-1-tavip@google.com>
- <CAJ+F1CLhDSMzT31TCiCuoXegyhAeSNr4Ly3Jm4Aqp9SFYW+kAg@mail.gmail.com>
-In-Reply-To: <CAJ+F1CLhDSMzT31TCiCuoXegyhAeSNr4Ly3Jm4Aqp9SFYW+kAg@mail.gmail.com>
-From: Octavian Purdila <tavip@google.com>
-Date: Mon, 7 Oct 2024 18:29:01 -0700
-Message-ID: <CAGWr4cRM6o2tJJi1vVw4SPagUqiJPrmtNYUhn4rSuGpwHeSnDA@mail.gmail.com>
-Subject: Re: [PATCH v4] chardev: add path option for pty backend
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
- armbru@redhat.com
-Cc: qemu-devel@nongnu.org, eblake@redhat.com, peter.maydell@linaro.org, 
- berrange@redhat.com, Paulo Neves <ptsneves@gmail.com>
+References: <20240930165258.72258-1-rbradford@rivosinc.com>
+In-Reply-To: <20240930165258.72258-1-rbradford@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 8 Oct 2024 11:30:16 +1000
+Message-ID: <CAKmqyKP-Z8MP3ijv7JhA-khNFrcQ5C3DpePtXg-nCVmQeD2zkQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Set vtype.vill on CPU reset
+To: Rob Bradford <rbradford@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=tavip@google.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,64 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 3, 2024 at 12:14=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
->
->
-> On Tue, Aug 6, 2024 at 5:09=E2=80=AFAM Octavian Purdila <tavip@google.com=
+On Tue, Oct 1, 2024 at 2:53=E2=80=AFAM Rob Bradford <rbradford@rivosinc.com=
 > wrote:
->>
->> Add path option to the pty char backend which will create a symbolic
->> link to the given path that points to the allocated PTY.
->>
->> This avoids having to make QMP or HMP monitor queries to find out what
->> the new PTY device path is.
->>
->> Based on patch from Paulo Neves:
->>
->> https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmai=
-l.com/
->>
->> Tested with the following invocations that the link is created and
->> removed when qemu stops:
->>
->>   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
->>   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
->>
->>   qemu-system-x86_64 -nodefaults -monitor pty:test
->>
->>   # check QMP invocation with path set
->>   qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=3Don,wai=
-t=3Doff
->>   nc localhost 4444
->>   > {"execute": "qmp_capabilities"}
->>   > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
->>       "type": "pty", "data": {"path": "test" }}}}
->>
->>   # check QMP invocation with path not set
->>   qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=3Don,wai=
-t=3Doff
->>   nc localhost 4444
->>   > {"execute": "qmp_capabilities"}
->>   > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
->>       "type": "pty", "data": {}}}}
->>
->> Also tested that when a link path is not passed invocations still work, =
-e.g.:
->>
->>   qemu-system-x86_64 -monitor pty
->>
->> Co-authored-by: Paulo Neves <ptsneves@gmail.com>
->> Signed-off-by: Paulo Neves <ptsneves@gmail.com>
->> [OP: rebase and address original patch review comments]
->> Signed-off-by: Octavian Purdila <tavip@google.com>
 >
+> The RISC-V unprivileged specification "31.3.11. State of Vector
+> Extension at Reset" has a note that recommends vtype.vill be set on
+> reset as part of ensuring that the vector extension have a consistent
+> state at reset.
 >
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> This change now makes QEMU consistent with Spike which sets vtype.vill
+> on reset.
 >
+> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
 
-Ping, it looks like this got lost.
+Thanks!
 
-https://patchew.org/QEMU/20240605185050.1678102-1-tavip@google.com/
+Applied to riscv-to-apply.next
+
+Alistair
+
+> ---
+>  target/riscv/cpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 4bda754b01..af602e3caf 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -997,6 +997,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetTy=
+pe type)
+>      cs->exception_index =3D RISCV_EXCP_NONE;
+>      env->load_res =3D -1;
+>      set_default_nan_mode(1, &env->fp_status);
+> +    env->vill =3D true;
+>
+>  #ifndef CONFIG_USER_ONLY
+>      if (cpu->cfg.debug) {
+> --
+> 2.46.0
+>
+>
 
