@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1832BCEF172
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 871D4CEFC20
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 15:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syBTl-0001Q1-Mj; Tue, 08 Oct 2024 10:46:26 -0400
+	id 1syBkt-0004K4-3L; Tue, 08 Oct 2024 11:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBTW-0001Ol-P2
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:46:11 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBTT-0003ht-M1
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:46:10 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c42e7adbddso7751666a12.2
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:46:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728398765; x=1729003565; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j5MphECLD4P0U/jqbmbESSvAYHMevQyba1bA/1qjbuA=;
- b=xYHqge3vS/rOjQM1krEHZJ9ZCyZfkovFrflTWBr6FN5/WuE6RAH5ar5eMmhByXyVOY
- Sn7+BIY/hE+3lh7Q596YDaT46H5Q9q7b8waDmtRwj1QrAUwC+dNXbFBiIuKT14LbQ8pu
- dpKIAdxYPQll4GkJeSF5emEoJ5WV6nFr8/6ZazI/w8QEaTBfT+AmBeuBPlPqv2NRl6g8
- OE8ecgpfKXd9rjFgxysAHqui094Edivu3g+yeGS/cQImj6+vFYh0ao0WnYJPM9eaeZQA
- jdYd1vL8cYqLwrc44oFP2W+zTHRPWqagbKQNt25Ab8HLfY1OD2eEUY661Uo95EOExFli
- pwOg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syBkp-0004JR-IP
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:04:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syBkn-0005tV-Ka
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:04:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728399836;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qCLswsaCDmO6lNcN8llSnqr8LWUc01OAPvL2dQ+YGhQ=;
+ b=TagTa0MuA7zvFsQi7CFc+yJcwnJ+FAHfRocov1c0DeYedwNV82f1PuGm3JNp51YQ2JLQmN
+ 14QkyFvD1MXmgml97MK/VkwnU1LG3MtdZyTe4XH8O55zeJcqB17/xTAaFO22XLg9xSUoqy
+ D8sNfOaimdzYHVU8W3lhrpuWdh6z91M=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-180-WpzKRZFoM2SiLRsqQTPxzQ-1; Tue, 08 Oct 2024 11:03:55 -0400
+X-MC-Unique: WpzKRZFoM2SiLRsqQTPxzQ-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-45d94168de2so121310671cf.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 08:03:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728398765; x=1729003565;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=j5MphECLD4P0U/jqbmbESSvAYHMevQyba1bA/1qjbuA=;
- b=NL4ekN0tTSpoJNtMGSAWhoDi7KaAdcthnrIXc106PlsSGFg84jBNXCTlmDWNOe8P/7
- Sbpkg7yNXyN1Jj3a9SYZrPqEGtau8dgmhBCMLxehNfbRpbyNtOVWPz4+mio5mNOP2y3k
- YuVQAY3dTA4yuorxgAR1PlTdpdOnKD39ztKYC6uf5tsEV8AWTzJWAPTBEwrHss3oc7BD
- 6QLaKva7G9EIjqLNwAT5dYJ3LfN0WONOU0rIrKuwskwvD+Y5rgne4KWhKUgvJyHsFL4R
- oy8ZLQy9XE9YrTJ0Ntl/ffTeGy2t/mE8gF3cSgQ9/UD+2BF27zRdktyd95Z7iYwPemiS
- bC3Q==
-X-Gm-Message-State: AOJu0Yzb7ripMt/OcU9t/PnArHi2Wc3Jo9nPChvOBu/OULrVo21ip8wl
- Xgu8JNHVijCKqqVCg45Am8brtppXhg1JCo5YqkbOcJm77oW5OUb0Qk+/IcJ7k1wuibV9K509EcH
- 8htVQgEE4mkbzlfqVcvIWdaEIcR/gfBrWOcehpQ==
-X-Google-Smtp-Source: AGHT+IGbbRXahkkw9UahWbFZHSA6zRVWmmssrHeW2g12mO5Ut8YunOTSsC5XXWpGwl8aN5g3vofSKPBmJRKe9gpczlc=
-X-Received: by 2002:a05:6402:50d0:b0:5c8:a92b:b0a with SMTP id
- 4fb4d7f45d1cf-5c8d2e1efd5mr13576867a12.1.1728398765144; Tue, 08 Oct 2024
- 07:46:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728399834; x=1729004634;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qCLswsaCDmO6lNcN8llSnqr8LWUc01OAPvL2dQ+YGhQ=;
+ b=dKiy4ysYR1o0W7SjNV3+4JshPYmkLEuCvNBJnNe0WpKpyImKVi3iw9P2KDq7rkIaoB
+ sYR9eebufxoD6sbgUH1SifZrRp6p7kE/sEeTV5baDenjhnVyw3QSNFg702iJkzvxooZ7
+ uJt45M8ILdhkhB5ynRatUyTsdeAJ6n0FaHbtgSzdkOlWJ82Ondw2DkKiwELDqi8hAEI/
+ Q/CKvNtjo3aJs/o/dfSJHP1+aBvoUa1r9HXH6R2BBSpksbADo9Dzmd0G/VAqW5i+M/oh
+ HivwhB2ZdAbt2AqUFbNDw3Q9t1gf24t7DO7+LIVWldqmRMus3V8ryPQjhlYZr8u5qvf6
+ IOwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBQpXApd3heXvjKuOvuYMB1w2Smo3UL/X+ANuZpnHZNmM0+leJ0uJaV+gM/JfmlAVTDyzfYYeWk2yZ@nongnu.org
+X-Gm-Message-State: AOJu0YzSk/AVNRUyyYLd4Mrk6cxCK8Uy6E1XGfsHuU+u/I4Y8sfWFW6m
+ eW/VuMtYJk6vV2PlmlxuRq6GKwZpF9Qz/sKHT3P2gbYTuxvajRpfi7A+8mfSCkC/NNAB/MAJdZZ
+ iGMBi6atTZlJRQRU+w/pIOPSX2f/mKd/s2yf6aU7o6zQ5QHAXOS1w
+X-Received: by 2002:a05:622a:130a:b0:45c:a613:65b7 with SMTP id
+ d75a77b69052e-45d9ba2c34dmr240151281cf.11.1728399834385; 
+ Tue, 08 Oct 2024 08:03:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHE4RoXKcuGpvofMzYigpOZtfF6/WQbv3oTOQX+wbAEZsaXG9Ud/QChsXlO/qcjUHupsUhIYA==
+X-Received: by 2002:a05:622a:130a:b0:45c:a613:65b7 with SMTP id
+ d75a77b69052e-45d9ba2c34dmr240150951cf.11.1728399834021; 
+ Tue, 08 Oct 2024 08:03:54 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cbc7ecde8esm336016d6.105.2024.10.08.08.03.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Oct 2024 08:03:53 -0700 (PDT)
+Date: Tue, 8 Oct 2024 11:03:51 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Shivam Kumar <shivam.kumar1@nutanix.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] Use multifd state to determine if multifd cleanup is
+ needed
+Message-ID: <ZwVJ16JDW_U6fPeo@x1n>
+References: <20241007154451.107007-1-shivam.kumar1@nutanix.com>
+ <ZwQLzf8mGHCr1Itg@x1n> <87h69mu164.fsf@suse.de>
 MIME-Version: 1.0
-References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-14-richard.henderson@linaro.org>
-In-Reply-To: <20241005200600.493604-14-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 15:45:53 +0100
-Message-ID: <CAFEAcA_jXTuB6c8oVcXmi66zcXn5-PYM7W9z1wf7-fzXg7_Oiw@mail.gmail.com>
-Subject: Re: [PATCH v2 13/21] target/arm: Pass MemOp to get_phys_addr
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87h69mu164.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,86 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 5 Oct 2024 at 21:06, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Zero is the safe do-nothing value for callers to use.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/internals.h      | 3 ++-
->  target/arm/ptw.c            | 2 +-
->  target/arm/tcg/m_helper.c   | 8 ++++----
->  target/arm/tcg/tlb_helper.c | 2 +-
->  4 files changed, 8 insertions(+), 7 deletions(-)
+On Tue, Oct 08, 2024 at 11:20:03AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Mon, Oct 07, 2024 at 03:44:51PM +0000, Shivam Kumar wrote:
+> >> If the client calls the QMP command to reset the migration
+> >> capabilities after the migration status is set to failed or cancelled
+> >
+> > Is cancelled ok?
+> >
+> > Asked because I think migrate_fd_cleanup() should still be in CANCELLING
+> > stage there, so no one can disable multifd capability before that, it
+> > should fail the QMP command.
+> >
+> > But FAILED indeed looks problematic.
+> >
+> > IIUC it's not only to multifd alone - is it a race condition that
+> > migrate_fd_cleanup() can be invoked without migration_is_running() keeps
+> > being true?  Then I wonder what happens if a concurrent QMP "migrate"
+> > happens together with migrate_fd_cleanup(), even with multifd always off.
+> >
+> > Do we perhaps need to cleanup everything before the state changes to
+> > FAILED?
+> >
+> 
+> Should we make CANCELLED the only terminal state aside from COMPLETED?
+> So migrate_fd_cleanup would set CANCELLED whenever it sees either
+> CANCELLING or FAILED.
 
-> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-> index 23d7f73035..f7354f3c6e 100644
-> --- a/target/arm/tcg/m_helper.c
-> +++ b/target/arm/tcg/m_helper.c
-> @@ -222,7 +222,7 @@ static bool v7m_stack_write(ARMCPU *cpu, uint32_t addr, uint32_t value,
->      int exc;
->      bool exc_secure;
->
-> -    if (get_phys_addr(env, addr, MMU_DATA_STORE, mmu_idx, &res, &fi)) {
-> +    if (get_phys_addr(env, addr, MMU_DATA_STORE, 0, mmu_idx, &res, &fi)) {
->          /* MPU/SAU lookup failed */
->          if (fi.type == ARMFault_QEMU_SFault) {
->              if (mode == STACK_LAZYFP) {
-> @@ -311,7 +311,7 @@ static bool v7m_stack_read(ARMCPU *cpu, uint32_t *dest, uint32_t addr,
->      bool exc_secure;
->      uint32_t value;
->
-> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
-> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
->          /* MPU/SAU lookup failed */
->          if (fi.type == ARMFault_QEMU_SFault) {
->              qemu_log_mask(CPU_LOG_INT,
+I think that may be a major ABI change that can be risky, as we normally
+see CANCELLED to be user's choice.
 
-We do actually know what kind of memory operation we're doing here:
-it's a 4-byte access. (It should never be unaligned because an M-profile
-SP can't ever be un-4-aligned, though I forget whether our implementation
-really enforces that.)
+If we really want an ABI change, we could also introduce FAILING too, but I
+wonder what I replied in the other email could work without any ABI change,
+but close the gap on this race.
 
-> @@ -2009,7 +2009,7 @@ static bool v7m_read_half_insn(ARMCPU *cpu, ARMMMUIdx mmu_idx, bool secure,
->                        "...really SecureFault with SFSR.INVEP\n");
->          return false;
->      }
-> -    if (get_phys_addr(env, addr, MMU_INST_FETCH, mmu_idx, &res, &fi)) {
-> +    if (get_phys_addr(env, addr, MMU_INST_FETCH, 0, mmu_idx, &res, &fi)) {
->          /* the MPU lookup failed */
->          env->v7m.cfsr[env->v7m.secure] |= R_V7M_CFSR_IACCVIOL_MASK;
->          armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_MEM, env->v7m.secure);
+-- 
+Peter Xu
 
-Similarly this is a 16-bit load that in theory should never
-be possible to be unaligned.
-
-> @@ -2045,7 +2045,7 @@ static bool v7m_read_sg_stack_word(ARMCPU *cpu, ARMMMUIdx mmu_idx,
->      ARMMMUFaultInfo fi = {};
->      uint32_t value;
->
-> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
-> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
->          /* MPU/SAU lookup failed */
->          if (fi.type == ARMFault_QEMU_SFault) {
->              qemu_log_mask(CPU_LOG_INT,
-
-and this is another 4-byte load via sp.
-
-> diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-> index 885bf4ec14..1d8b7bcaa2 100644
-> --- a/target/arm/tcg/tlb_helper.c
-> +++ b/target/arm/tcg/tlb_helper.c
-> @@ -344,7 +344,7 @@ bool arm_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->       * return false.  Otherwise populate fsr with ARM DFSR/IFSR fault
->       * register format, and signal the fault.
->       */
-> -    ret = get_phys_addr(&cpu->env, address, access_type,
-> +    ret = get_phys_addr(&cpu->env, address, access_type, 0,
->                          core_to_arm_mmu_idx(&cpu->env, mmu_idx),
->                          &res, fi);
->      if (likely(!ret)) {
-
-thanks
--- PMM
 
