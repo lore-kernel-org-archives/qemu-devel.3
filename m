@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E52ECED270
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE51FCED272
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 06:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy46f-00053S-Mk; Tue, 08 Oct 2024 02:54:06 -0400
+	id 1sy48a-00065Q-EQ; Tue, 08 Oct 2024 02:56:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sy46d-000532-T4
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:54:03 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sy46b-0006jX-05
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 02:54:02 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-71e10ae746aso487916b3a.2
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 23:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728370439; x=1728975239;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eoKeg070ISHJdTi0tJlsnTrJcindlp2xNxO1qtraMEs=;
- b=awaL+wCdMi9x6XWtd4u/qiqVXaURvA43ToikPgd48A8IOJQs4aBtEc3pZM33R9np/1
- n8Wxaxknr2ejL1/ECZPalwDNYjj5eQLzDTWqMPJAc5m7ojalAkNooEfxI+c9PJF3+j3X
- sGnyHWGeQDeKBJ6uCfHbZnP/vinUB9tnXNSwpRztmDWKc3Z3R0/pxfyvHC3s8f3xjmVv
- qah9vkwj0fOkiZKSM5DQmznmqQcrkhZaEMZLpVU/O0UtZ6Jlg4cVFVXTgVneTp2ZXv/9
- F4rhM6hWa6IRGsNIjEBpv9/DECYbEbiV3MhXt3Y0GLbjxwvHj9EkigQm4zUooe4IIKGj
- q6xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728370439; x=1728975239;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eoKeg070ISHJdTi0tJlsnTrJcindlp2xNxO1qtraMEs=;
- b=pI+HuGcQLd1BG/5x3ws5/RYdlW+jJAxsWm0oOh4VjUyg1oY3FLBA2IGpaua/pFU3Jv
- 4+ZKBSMeYpYRnDjMXZb8eFmerDihuXwiwJjS6ZUVkUxxRo/cN4P80RoH5hO+kUlLXkgc
- Scz3MHwbxPtLjCIxQXToXR4kvfi020+XmU5Jk2dkAR2qPuIImSZ8a4ygKftiIlso/ih6
- ZPhHiXhozst+PITSoz8l5Q//4vGPe71QWWbUCb5AX3Sg0VZIR/50xU5zDm5AA2bgjVNN
- oouIFaJD8MBpxNcvfWf82no0yrG7+q7PFK/55skwUhi8kczjufr7oxPFL+i0TT+Y1UEq
- Cq3Q==
-X-Gm-Message-State: AOJu0Yx0yZEslNzBnP4wn535LF5jqPyutGOvz77TGODl0NRd1kpGYzme
- /IbxsG05sKIZHjtG0Cl8cfOz3p9NOP5xI4++YbWuDBVjZCqDYc2NSQh/OhFR5VI=
-X-Google-Smtp-Source: AGHT+IFkg7LM3GtggujQctyGN5nmDTCn5B5yK6X34+qMOMPtcTihDN+HDDxKypnaacYuWFvfzYJOKQ==
-X-Received: by 2002:a05:6a00:1149:b0:70e:a42e:3417 with SMTP id
- d2e1a72fcca58-71de23c7d54mr23334480b3a.10.1728370439445; 
- Mon, 07 Oct 2024 23:53:59 -0700 (PDT)
-Received: from localhost ([157.82.207.107])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-71df0cccab2sm5459218b3a.58.2024.10.07.23.53.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Oct 2024 23:53:59 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 08 Oct 2024 15:53:55 +0900
-Subject: [PATCH] dma: Fix dma_memory_map/dma_memory_unmap documentation
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sy48U-00065A-Hs; Tue, 08 Oct 2024 02:55:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sy48S-0006y3-FG; Tue, 08 Oct 2024 02:55:58 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4986t2YB001399;
+ Tue, 8 Oct 2024 06:55:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=0
+ JFY9ZECMQFBsElknI9Q63sCqY3Bn56q4AALNTp1wC0=; b=NYMiSIMm5UicV/VoZ
+ sFng4cvPYwgnv7evos7G7VBr2mV3af/YNrO246GpqPbNWPY9oxBpKD6nQu2Vbst+
+ b5U/gw3czxfUKE/Kpm/FC52zRBohqprXwuaLu6/BuRY5pm4zl6wGOPhbzt+tYP77
+ BVcgoK4M/TObwCWPkmQEj6wWHcp8uyZoK8mD8Su9gfxH086nl4i/h7My0CoTE3zg
+ ObKKNxt+zX5D/2a98ftpMaVc7GXnwfoxURMlBs53LiIhPB0aXOM7LJEJvbfbevDP
+ Z/qZ4ULoVFLWAJqUWulBguZiL80UmYLv8tg7pE02Xv/2GdM9hAvJLx2/WO9i2A8Y
+ kvBsQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424yvv804d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 06:55:52 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4986tq0u002500;
+ Tue, 8 Oct 2024 06:55:52 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424yvv804b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 06:55:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4985aesx011598;
+ Tue, 8 Oct 2024 06:55:51 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423g5xjtqs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 06:55:51 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4986toXU57475482
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Oct 2024 06:55:51 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF0BF58060;
+ Tue,  8 Oct 2024 06:55:50 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8924658051;
+ Tue,  8 Oct 2024 06:55:48 +0000 (GMT)
+Received: from [9.124.215.170] (unknown [9.124.215.170])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Oct 2024 06:55:48 +0000 (GMT)
+Message-ID: <153ea9e3-1b2d-4d55-8e35-4bdd95b14185@linux.ibm.com>
+Date: Tue, 8 Oct 2024 12:25:46 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241008-dma-v1-1-c439c0fc5f3a@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAALXBGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDAwML3ZTcRF0DIyPDNMvkVAsLSwsloMqCotS0zAqwKdGxtbUAUeTpy1U
- AAAA=
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/14] ppc/spapr: remove deprecated machine pseries-2.1
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+References: <20241007153838.1085522-1-harshpb@linux.ibm.com>
+ <20241007153838.1085522-2-harshpb@linux.ibm.com>
+ <4b180079-d800-45b9-a455-5fdebd71179d@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <4b180079-d800-45b9-a455-5fdebd71179d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xc71Xbbca_hlMhYNibvVgFDgfW5jgaJE
+X-Proofpoint-GUID: Cfny6qWw8gYUTb1Xsgl4k_eMcj7IaUwa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-08_04,2024-10-08_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0
+ spamscore=0 mlxscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=991 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410080042
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,43 +118,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure the function names match.
+Hi Philippe,
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/sysemu/dma.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+On 10/8/24 01:53, Philippe Mathieu-Daudé wrote:
+> Hi Harsh,
+> 
+> On 7/10/24 12:38, Harsh Prateek Bora wrote:
+>> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+>> deprecated with reasons mentioned in its commit log.
+>> Removing pseries-2.1 specific code with this patch for now.
+>>
+>> Suggested-by: Cédric Le Goater <clg@kaod.org>
+>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> ---
+>>   hw/ppc/spapr.c | 11 -----------
+>>   1 file changed, 11 deletions(-)
+>>
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 2c10a70a48..e9518ff8b3 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -5381,17 +5381,6 @@ static void 
+>> spapr_machine_2_2_class_options(MachineClass *mc)
+>>   }
+>>   DEFINE_SPAPR_MACHINE(2, 2);
+>> -/*
+>> - * pseries-2.1
+>> - */
+>> -
+>> -static void spapr_machine_2_1_class_options(MachineClass *mc)
+>> -{
+>> -    spapr_machine_2_2_class_options(mc);
+>> -    compat_props_add(mc->compat_props, hw_compat_2_1, 
+>> hw_compat_2_1_len);
+> 
+> Why not remove hw_compat_2_1[] and hw_compat_2_1_len in the same patch?
+> 
 
-diff --git a/include/sysemu/dma.h b/include/sysemu/dma.h
-index a1ac5bc1b543..e132ece4510d 100644
---- a/include/sysemu/dma.h
-+++ b/include/sysemu/dma.h
-@@ -189,7 +189,7 @@ MemTxResult dma_memory_set(AddressSpace *as, dma_addr_t addr,
-                            uint8_t c, dma_addr_t len, MemTxAttrs attrs);
- 
- /**
-- * address_space_map: Map a physical memory region into a host virtual address.
-+ * dma_space_map: Map a physical memory region into a host virtual address.
-  *
-  * May map a subset of the requested range, given by and returned in @plen.
-  * May return %NULL and set *@plen to zero(0), if resources needed to perform
-@@ -216,8 +216,7 @@ static inline void *dma_memory_map(AddressSpace *as,
- }
- 
- /**
-- * address_space_unmap: Unmaps a memory region previously mapped
-- *                      by dma_memory_map()
-+ * dma_space_unmap: Unmaps a memory region previously mapped by dma_memory_map()
-  *
-  * Will also mark the memory as dirty if @dir == %DMA_DIRECTION_FROM_DEVICE.
-  * @access_len gives the amount of memory that was actually read or written
+Nice catch, somehow I missed it. Probably because I saw hw_compat_2_4 
+onwards are still shared by other machines. I shall remove the ones for 
+which spapr remains the only consumer.
 
----
-base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-change-id: 20241008-dma-0221f9ce8898
+Thanks
+Harsh
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+>> -}
+>> -DEFINE_SPAPR_MACHINE(2, 1);
+>> -
+>>   static void spapr_machine_register_types(void)
+>>   {
+>>       type_register_static(&spapr_machine_info);
+> 
 
