@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE07CF0423
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 21:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95193CF0428
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 21:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syHab-0000xd-UJ; Tue, 08 Oct 2024 17:17:53 -0400
+	id 1syHad-0000y0-15; Tue, 08 Oct 2024 17:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1syHaY-0000wv-9v
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:51 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1syHab-0000xO-0z
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:53 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1syHaU-0000IW-1a
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:50 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71df8585a42so2662166b3a.3
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 14:17:45 -0700 (PDT)
+ id 1syHaX-0000Io-8p
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:51 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-71df468496fso3434367b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 14:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728422264; x=1729027064; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728422268; x=1729027068; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oJ1vdXSql8klyBUtpQSK8xyT0uWAPL00MiF1IYj0jGg=;
- b=gnCu+zOGbwzOC82pyWmlAXxLPgxZQVDbp9pUuPmaffTbqiJa3xlV9ONoJmLb/NF/P4
- D6fQGKAYuUdJjrOWriGDEvchLfsenHsEcAuN5hGQkBRr+8YXzsyge5nGqAPXueGsXWZ5
- hLgfLZFd3p0N7kh+u3+2VEo6InfD6aSsGvo/Hb+FDaxXLhlDxCv3U2XQ15ej+uf5z7MV
- Wie6ogGL5m7FIVFbeGFZmw1UEpP+byXRZCDHseDUpHwnqQJqQUHGG8TYTWxrA70UA+60
- nxBkz5kwdvTIoMvQZFtyH/V3MkIqxJDbPRc/TJ5MhnFDdcBfgcPL8SjUDA4ds7+t1wjz
- zJLw==
+ bh=24zRmHMMhcdSJx2V4bVQhsa1ucVSimwSzc0CPtF1cac=;
+ b=ZX5ak0yFs6k7/BMT5J/mIGMCbttSHMt+mC0yKSbF+jep9A/g6ZvunZN1QMGpNXhnYg
+ fosDGdCibT1FPeKJm/ndTS+y3KFJYz3mdIIRmIvISmC2jilRhbp2VI8oHUsx7pj3yoh7
+ OPaGrD5Pxht2YVW0TeRciC/cn70kgIvQiAqkXxTeLhBKWpU0qCpCfixb//gHQvSJL5jr
+ Nu4ZDJiOyDOPIq6tMDfYvxD5dvUmi3AIHZVP8HNYmxY9mzyNkKI5DWCn97fI15ELQYx/
+ iiGCaa2wsL3vRYB4vlF1jzZ4eb13UmdzFLcdrX/1OyikU0Psn0HJyIea5+KB1McAjlD2
+ Tzsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728422264; x=1729027064;
+ d=1e100.net; s=20230601; t=1728422268; x=1729027068;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oJ1vdXSql8klyBUtpQSK8xyT0uWAPL00MiF1IYj0jGg=;
- b=LigBEMU9Li/4No9Fp7i2xWUBY3odV1Iulx69t6eFCrjLQlyqnlDTnrAXBqkBMd74tp
- WC32STSXKWOhYjAq/4q5C5SwTevxkZolqJ8V6LfopOv6sHbIf/LFqOp7OWiji/C94WnU
- uDPJmpXB83plbsiWu1E6yP2K+EU9/yGd2mq4wMlhOjyImcQ2j1j9u/ipfn6sKAr4UbEx
- ithk90ieR9NAjL1q36nYItEsEJH8k1IbNK4HN/QQY44aKFa5gFv4KLNs24CJGCRYzysq
- G9uXdVWzAdVbR8Xr8+21vdOD2WwHjiSP4mOzwKkPOdVRq9fqweJnCmIOOXOZDxKD05du
- 3pqw==
-X-Gm-Message-State: AOJu0YxSMdkswJEKOCQyvD0O84m699ipKfTDnsHW3dSSVdWjVyckikh4
- RDPl9yOD0qyXbmXU6grsDEGz7FMX4KBISuVlvkrlmjQoFLlM4GvS3iXbkg==
-X-Google-Smtp-Source: AGHT+IHTHr3PBro/Y020JUBq8ITMZiQJQSfON06A6mthFsK+AsSlCRElhXrngCAhXsOepmDxmgB7cA==
-X-Received: by 2002:a05:6a20:43a9:b0:1d8:a13d:d6b4 with SMTP id
- adf61e73a8af0-1d8a3be3baemr356682637.4.1728422263332; 
- Tue, 08 Oct 2024 14:17:43 -0700 (PDT)
+ bh=24zRmHMMhcdSJx2V4bVQhsa1ucVSimwSzc0CPtF1cac=;
+ b=osIf8jRmUQmI/wQa4KhI4+RnDn7vNcUn9P0An4X5Er7rXXxGNy6yv/vnazCvmTrB2k
+ MyvRO0Za6+NKcp0uWet83y+FwZnSaXIMmm0bfGJlQ/3H/Tc9ftnZEZmBMI6l6ah0Ocm7
+ oa7y67bnYD3MYDtRV6Npngs8DZo3sWSKqQXL+I/3d6ype6t85vBEkQvDIeeAz9EIJJwB
+ 4oQ7AS5EKfuZ5SwJfzCq/V1dKbq8NYSklJEqK+o8AkMI3SCTaCEkqGUPQPOPMT3WOu9S
+ NfyM1RNxxhTqzr2ZON9kMrB2qy8wc0MSjBH7wbmVrtxkoTrsYJrQM2hqQSoq03r+2zDA
+ ylPg==
+X-Gm-Message-State: AOJu0YxnNRF4OGtnYoUQtQXLTydK0xap0bmr1Oa105CWIIe2bY/OdGg7
+ j3te3nlTIdiWXnoH58HmxJXEJVgPOJ6PQzPcwScx37gsB87ADoz6dJKPIQ==
+X-Google-Smtp-Source: AGHT+IHjmd2MOXScdk2L8Ky5VTQXeV0C1wNoi87fj8ovIuPYE5Q9QeUB/wt4wojixjzUfMIjAGlMEQ==
+X-Received: by 2002:a05:6a21:3511:b0:1d6:c98f:fd44 with SMTP id
+ adf61e73a8af0-1d8a3be06f8mr489024637.2.1728422267590; 
+ Tue, 08 Oct 2024 14:17:47 -0700 (PDT)
 Received: from localhost.localdomain ([103.103.35.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d6254dsm6549078b3a.153.2024.10.08.14.17.39
+ d2e1a72fcca58-71df0d6254dsm6549078b3a.153.2024.10.08.14.17.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 14:17:43 -0700 (PDT)
+ Tue, 08 Oct 2024 14:17:47 -0700 (PDT)
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
  slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v8 2/6] device/virtio-nsm: Support for Nitro Secure Module
- device
-Date: Wed,  9 Oct 2024 03:17:23 +0600
-Message-Id: <20241008211727.49088-3-dorjoychy111@gmail.com>
+Subject: [PATCH v8 3/6] hw/core: Add Enclave Image Format (EIF) related helpers
+Date: Wed,  9 Oct 2024 03:17:24 +0600
+Message-Id: <20241008211727.49088-4-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241008211727.49088-1-dorjoychy111@gmail.com>
 References: <20241008211727.49088-1-dorjoychy111@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -98,434 +96,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nitro Secure Module (NSM)[1] device is used in AWS Nitro Enclaves[2]
-for stripped down TPM functionality like cryptographic attestation.
-The requests to and responses from NSM device are CBOR[3] encoded.
+An EIF (Enclave Image Format)[1] file is used to boot an AWS nitro
+enclave[2] virtual machine. The EIF file contains the necessary kernel,
+cmdline, ramdisk(s) sections to boot.
 
-This commit adds support for NSM device in QEMU. Although related to
-AWS Nitro Enclaves, the virito-nsm device is independent and can be
-used in other machine types as well. The libcbor[4] library has been
-used for the CBOR encoding and decoding functionalities.
+Some helper functions have been introduced for extracting the necessary
+sections from an EIF file and then writing them to temporary files as
+well as computing SHA384 hashes from the section data. These will be
+used in the following commit to add support for nitro-enclave machine
+type in QEMU.
 
-[1] https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
+The files added in this commit are not compiled yet but will be added
+to the hw/core/meson.build file in the following commit where
+CONFIG_NITRO_ENCLAVE will be introduced.
+
+[1] https://github.com/aws/aws-nitro-enclaves-image-format
 [2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-[3] http://cbor.io/
-[4] https://libcbor.readthedocs.io/en/latest/
 
 Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 ---
- MAINTAINERS                      |   10 +
- hw/virtio/Kconfig                |    5 +
- hw/virtio/cbor-helpers.c         |  321 ++++++
- hw/virtio/meson.build            |    6 +
- hw/virtio/virtio-nsm-pci.c       |   73 ++
- hw/virtio/virtio-nsm.c           | 1732 ++++++++++++++++++++++++++++++
- include/hw/virtio/cbor-helpers.h |   45 +
- include/hw/virtio/virtio-nsm.h   |   49 +
- meson.build                      |    2 +
- 9 files changed, 2243 insertions(+)
- create mode 100644 hw/virtio/cbor-helpers.c
- create mode 100644 hw/virtio/virtio-nsm-pci.c
- create mode 100644 hw/virtio/virtio-nsm.c
- create mode 100644 include/hw/virtio/cbor-helpers.h
- create mode 100644 include/hw/virtio/virtio-nsm.h
+ MAINTAINERS   |   7 +
+ hw/core/eif.c | 719 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ hw/core/eif.h |  22 ++
+ 3 files changed, 748 insertions(+)
+ create mode 100644 hw/core/eif.c
+ create mode 100644 hw/core/eif.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d7a11fe601..ca1cbc7118 100644
+index ca1cbc7118..54e985bc19 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2278,6 +2278,16 @@ F: include/sysemu/rng*.h
- F: backends/rng*.c
- F: tests/qtest/virtio-rng-test.c
+@@ -1819,6 +1819,13 @@ F: hw/i386/microvm.c
+ F: include/hw/i386/microvm.h
+ F: pc-bios/bios-microvm.bin
  
-+virtio-nsm
++nitro-enclave
 +M: Alexander Graf <graf@amazon.com>
 +M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 +S: Maintained
-+F: hw/virtio/cbor-helpers.c
-+F: hw/virtio/virtio-nsm.c
-+F: hw/virtio/virtio-nsm-pci.c
-+F: include/hw/virtio/cbor-helpers.h
-+F: include/hw/virtio/virtio-nsm.h
++F: hw/core/eif.c
++F: hw/core/eif.h
 +
- vhost-user-stubs
- M: Alex Bennée <alex.bennee@linaro.org>
- S: Maintained
-diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-index 17595ff350..0cedf48f98 100644
---- a/hw/virtio/Kconfig
-+++ b/hw/virtio/Kconfig
-@@ -6,6 +6,11 @@ config VIRTIO_RNG
-     default y
-     depends on VIRTIO
- 
-+config VIRTIO_NSM
-+   bool
-+   default y
-+   depends on VIRTIO
-+
- config VIRTIO_IOMMU
-     bool
-     default y
-diff --git a/hw/virtio/cbor-helpers.c b/hw/virtio/cbor-helpers.c
+ Machine core
+ M: Eduardo Habkost <eduardo@habkost.net>
+ M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+diff --git a/hw/core/eif.c b/hw/core/eif.c
 new file mode 100644
-index 0000000000..49f55df399
+index 0000000000..d737d7f23c
 --- /dev/null
-+++ b/hw/virtio/cbor-helpers.c
-@@ -0,0 +1,321 @@
++++ b/hw/core/eif.c
+@@ -0,0 +1,719 @@
 +/*
-+ * QEMU CBOR helpers
-+ *
-+ * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * (at your option) any later version.  See the COPYING file in the
-+ * top-level directory.
-+ */
-+
-+#include "hw/virtio/cbor-helpers.h"
-+
-+bool qemu_cbor_map_add(cbor_item_t *map, cbor_item_t *key, cbor_item_t *value)
-+{
-+    bool success = false;
-+    struct cbor_pair pair = (struct cbor_pair) {
-+        .key = cbor_move(key),
-+        .value = cbor_move(value)
-+    };
-+
-+    success = cbor_map_add(map, pair);
-+    if (!success) {
-+        cbor_incref(pair.key);
-+        cbor_incref(pair.value);
-+    }
-+
-+    return success;
-+}
-+
-+bool qemu_cbor_array_push(cbor_item_t *array, cbor_item_t *value)
-+{
-+    bool success = false;
-+
-+    success = cbor_array_push(array, cbor_move(value));
-+    if (!success) {
-+        cbor_incref(value);
-+    }
-+
-+    return success;
-+}
-+
-+bool qemu_cbor_add_bool_to_map(cbor_item_t *map, const char *key, bool value)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_bool(value);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_uint8_to_map(cbor_item_t *map, const char *key,
-+                                uint8_t value)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_uint8(value);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_map_to_map(cbor_item_t *map, const char *key,
-+                              size_t nested_map_size,
-+                              cbor_item_t **nested_map)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_new_definite_map(nested_map_size);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+    *nested_map = value_cbor;
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_bytestring_to_map(cbor_item_t *map, const char *key,
-+                                     uint8_t *arr, size_t len)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_bytestring(arr, len);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_null_to_map(cbor_item_t *map, const char *key)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_new_null();
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_string_to_map(cbor_item_t *map, const char *key,
-+                                 const char *value)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_string(value);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_uint8_array_to_map(cbor_item_t *map, const char *key,
-+                                      uint8_t *arr, size_t len)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_new_definite_array(len);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+
-+    for (int i = 0; i < len; ++i) {
-+        cbor_item_t *tmp = cbor_build_uint8(arr[i]);
-+        if (!tmp) {
-+            goto cleanup;
-+        }
-+        if (!qemu_cbor_array_push(value_cbor, tmp)) {
-+            cbor_decref(&tmp);
-+            goto cleanup;
-+        }
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_uint8_key_bytestring_to_map(cbor_item_t *map, uint8_t key,
-+                                               uint8_t *buf, size_t len)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_uint8(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_bytestring(buf, len);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+bool qemu_cbor_add_uint64_to_map(cbor_item_t *map, const char *key,
-+                                 uint64_t value)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+
-+    key_cbor = cbor_build_string(key);
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_build_uint64(value);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 621fc65454..1fe7cb4d72 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -54,6 +54,9 @@ specific_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c
- specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
-+if libcbor.found()
-+  specific_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm.c', 'cbor-helpers.c'), libcbor])
-+endif
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
- specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
-@@ -70,6 +73,9 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('virtio-crypto-pc
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_INPUT_HOST', if_true: files('virtio-input-host-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng-pci.c'))
-+if libcbor.found()
-+  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm-pci.c', 'cbor-helpers.c'), libcbor])
-+endif
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_9P', if_true: files('virtio-9p-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_SCSI', if_true: files('virtio-scsi-pci.c'))
-diff --git a/hw/virtio/virtio-nsm-pci.c b/hw/virtio/virtio-nsm-pci.c
-new file mode 100644
-index 0000000000..dca797315a
---- /dev/null
-+++ b/hw/virtio/virtio-nsm-pci.c
-@@ -0,0 +1,73 @@
-+/*
-+ * AWS Nitro Secure Module (NSM) device
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -535,1814 +157,722 @@ index 0000000000..dca797315a
 + */
 +
 +#include "qemu/osdep.h"
-+
-+#include "hw/virtio/virtio-pci.h"
-+#include "hw/virtio/virtio-nsm.h"
-+#include "hw/qdev-properties.h"
++#include "qemu/bswap.h"
 +#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "qom/object.h"
-+
-+typedef struct VirtIONsmPCI VirtIONsmPCI;
-+
-+#define TYPE_VIRTIO_NSM_PCI "virtio-nsm-pci-base"
-+DECLARE_INSTANCE_CHECKER(VirtIONsmPCI, VIRTIO_NSM_PCI,
-+                         TYPE_VIRTIO_NSM_PCI)
-+
-+struct VirtIONsmPCI {
-+    VirtIOPCIProxy parent_obj;
-+    VirtIONSM vdev;
-+};
-+
-+static void virtio_nsm_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-+{
-+    VirtIONsmPCI *vnsm = VIRTIO_NSM_PCI(vpci_dev);
-+    DeviceState *vdev = DEVICE(&vnsm->vdev);
-+
-+    virtio_pci_force_virtio_1(vpci_dev);
-+
-+    if (!qdev_realize(vdev, BUS(&vpci_dev->bus), errp)) {
-+        return;
-+    }
-+}
-+
-+static void virtio_nsm_pci_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
-+
-+    k->realize = virtio_nsm_pci_realize;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static void virtio_nsm_initfn(Object *obj)
-+{
-+    VirtIONsmPCI *dev = VIRTIO_NSM_PCI(obj);
-+
-+    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-+                                TYPE_VIRTIO_NSM);
-+}
-+
-+static const VirtioPCIDeviceTypeInfo virtio_nsm_pci_info = {
-+    .base_name             = TYPE_VIRTIO_NSM_PCI,
-+    .generic_name          = "virtio-nsm-pci",
-+    .instance_size = sizeof(VirtIONsmPCI),
-+    .instance_init = virtio_nsm_initfn,
-+    .class_init    = virtio_nsm_pci_class_init,
-+};
-+
-+static void virtio_nsm_pci_register(void)
-+{
-+    virtio_pci_types_register(&virtio_nsm_pci_info);
-+}
-+
-+type_init(virtio_nsm_pci_register)
-diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-new file mode 100644
-index 0000000000..a3db8eef3e
---- /dev/null
-+++ b/hw/virtio/virtio-nsm.c
-@@ -0,0 +1,1732 @@
-+/*
-+ * AWS Nitro Secure Module (NSM) device
-+ *
-+ * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * (at your option) any later version.  See the COPYING file in the
-+ * top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/iov.h"
-+#include "qemu/guest-random.h"
-+#include "qapi/error.h"
-+
 +#include "crypto/hash.h"
-+#include "hw/virtio/virtio.h"
-+#include "hw/virtio/virtio-nsm.h"
-+#include "hw/virtio/cbor-helpers.h"
-+#include "standard-headers/linux/virtio_ids.h"
++#include "crypto/x509-utils.h"
++#include <zlib.h> /* for crc32 */
++#include <cbor.h>
 +
-+#define NSM_REQUEST_MAX_SIZE      0x1000
-+#define NSM_RESPONSE_BUF_SIZE     0x3000
-+#define NSM_RND_BUF_SIZE          256
++#include "hw/core/eif.h"
 +
-+enum NSMResponseTypes {
-+    NSM_SUCCESS = 0,
-+    NSM_INVALID_ARGUMENT = 1,
-+    NSM_INVALID_INDEX = 2,
-+    NSM_READONLY_INDEX = 3,
-+    NSM_INVALID_OPERATION = 4,
-+    NSM_BUFFER_TOO_SMALL = 5,
-+    NSM_INPUT_TOO_LARGE = 6,
-+    NSM_INTERNAL_ERROR = 7,
++#define MAX_SECTIONS 32
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifHeader {
++    uint8_t  magic[4]; /* must be .eif in ascii i.e., [46, 101, 105, 102] */
++    uint16_t version;
++    uint16_t flags;
++    uint64_t default_memory;
++    uint64_t default_cpus;
++    uint16_t reserved;
++    uint16_t section_cnt;
++    uint64_t section_offsets[MAX_SECTIONS];
++    uint64_t section_sizes[MAX_SECTIONS];
++    uint32_t unused;
++    uint32_t eif_crc32;
++} QEMU_PACKED EifHeader;
++
++/* members are ordered according to field order in .eif file */
++typedef struct EifSectionHeader {
++    /*
++     * 0 = invalid, 1 = kernel, 2 = cmdline, 3 = ramdisk, 4 = signature,
++     * 5 = metadata
++     */
++    uint16_t section_type;
++    uint16_t flags;
++    uint64_t section_size;
++} QEMU_PACKED EifSectionHeader;
++
++enum EifSectionTypes {
++    EIF_SECTION_INVALID = 0,
++    EIF_SECTION_KERNEL = 1,
++    EIF_SECTION_CMDLINE = 2,
++    EIF_SECTION_RAMDISK = 3,
++    EIF_SECTION_SIGNATURE = 4,
++    EIF_SECTION_METADATA = 5,
++    EIF_SECTION_MAX = 6,
 +};
 +
-+static const char *error_string(enum NSMResponseTypes type)
++static const char *section_type_to_string(uint16_t type)
 +{
 +    const char *str;
 +    switch (type) {
-+    case NSM_INVALID_ARGUMENT:
-+        str = "InvalidArgument";
++    case EIF_SECTION_INVALID:
++        str = "invalid";
 +        break;
-+    case NSM_INVALID_INDEX:
-+        str = "InvalidIndex";
++    case EIF_SECTION_KERNEL:
++        str = "kernel";
 +        break;
-+    case NSM_READONLY_INDEX:
-+        str = "ReadOnlyIndex";
++    case EIF_SECTION_CMDLINE:
++        str = "cmdline";
 +        break;
-+    case NSM_INVALID_OPERATION:
-+        str = "InvalidOperation";
++    case EIF_SECTION_RAMDISK:
++        str = "ramdisk";
 +        break;
-+    case NSM_BUFFER_TOO_SMALL:
-+        str = "BufferTooSmall";
++    case EIF_SECTION_SIGNATURE:
++        str = "signature";
 +        break;
-+    case NSM_INPUT_TOO_LARGE:
-+        str = "InputTooLarge";
++    case EIF_SECTION_METADATA:
++        str = "metadata";
 +        break;
 +    default:
-+        str = "InternalError";
++        str = "unknown";
 +        break;
 +    }
 +
 +    return str;
 +}
 +
-+/*
-+ * Error response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("Error"),
-+ *     value = String(error_name)
-+ *   }
-+ * }
-+ *
-+ * where error_name can be one of the following:
-+ *   InvalidArgument
-+ *   InvalidIndex
-+ *   InvalidResponse
-+ *   ReadOnlyIndex
-+ *   InvalidOperation
-+ *   BufferTooSmall
-+ *   InputTooLarge
-+ *   InternalError
-+ */
-+
-+static bool error_response(struct iovec *response, enum NSMResponseTypes error,
-+                           Error **errp)
++static bool read_eif_header(FILE *f, EifHeader *header, uint32_t *crc,
++                            Error **errp)
 +{
-+    cbor_item_t *root;
-+    size_t len;
-+    bool r = false;
++    size_t got;
++    size_t header_size = sizeof(*header);
 +
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
++    got = fread(header, 1, header_size, f);
++    if (got != header_size) {
++        error_setg(errp, "Failed to read EIF header");
++        return false;
 +    }
 +
-+    if (!qemu_cbor_add_string_to_map(root, "Error", error_string(error))) {
-+        goto err;
++    if (memcmp(header->magic, ".eif", 4) != 0) {
++        error_setg(errp, "Invalid EIF image. Magic mismatch.");
++        return false;
 +    }
 +
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        error_setg(errp, "Response buffer is small for %s response",
-+                   error_string(error));
-+        goto out;
-+    }
-+    response->iov_len = len;
-+    r = true;
++    /* Exclude header->eif_crc32 field from CRC calculation */
++    *crc = crc32(*crc, (uint8_t *)header, header_size - 4);
 +
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
++    header->version = be16_to_cpu(header->version);
++    header->flags = be16_to_cpu(header->flags);
++    header->default_memory = be64_to_cpu(header->default_memory);
++    header->default_cpus = be64_to_cpu(header->default_cpus);
++    header->reserved = be16_to_cpu(header->reserved);
++    header->section_cnt = be16_to_cpu(header->section_cnt);
 +
-+ err:
-+    error_setg(errp, "Failed to initialize %s response", error_string(error));
-+    goto out;
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_offsets[i] = be64_to_cpu(header->section_offsets[i]);
++    }
++
++    for (int i = 0; i < MAX_SECTIONS; ++i) {
++        header->section_sizes[i] = be64_to_cpu(header->section_sizes[i]);
++    }
++
++    header->unused = be32_to_cpu(header->unused);
++    header->eif_crc32 = be32_to_cpu(header->eif_crc32);
++    return true;
++}
++
++static bool read_eif_section_header(FILE *f, EifSectionHeader *section_header,
++                                    uint32_t *crc, Error **errp)
++{
++    size_t got;
++    size_t section_header_size = sizeof(*section_header);
++
++    got = fread(section_header, 1, section_header_size, f);
++    if (got != section_header_size) {
++        error_setg(errp, "Failed to read EIF section header");
++        return false;
++    }
++
++    *crc = crc32(*crc, (uint8_t *)section_header, section_header_size);
++
++    section_header->section_type = be16_to_cpu(section_header->section_type);
++    section_header->flags = be16_to_cpu(section_header->flags);
++    section_header->section_size = be64_to_cpu(section_header->section_size);
++    return true;
 +}
 +
 +/*
-+ * GetRandom response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("GetRandom"),
-+ *     value = Map(1) {
-+ *       key = String("random"),
-+ *       value = Byte_String()
-+ *     }
-+ *   }
-+ * }
++ * Upon success, the caller is responsible for unlinking and freeing *tmp_path.
 + */
-+static bool handle_get_random(VirtIONSM *vnsm, struct iovec *request,
-+                              struct iovec *response, Error **errp)
++static bool get_tmp_file(const char *template, char **tmp_path, Error **errp)
 +{
-+    cbor_item_t *root, *nested_map;
-+    size_t len;
-+    uint8_t rnd[NSM_RND_BUF_SIZE];
-+    bool r = false;
++    int tmp_fd;
 +
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
++    *tmp_path = NULL;
++    tmp_fd = g_file_open_tmp(template, tmp_path, NULL);
++    if (tmp_fd < 0 || *tmp_path == NULL) {
++        error_setg(errp, "Failed to create temporary file for template %s",
++                   template);
++        return false;
 +    }
 +
-+    if (!qemu_cbor_add_map_to_map(root, "GetRandom", 1, &nested_map)) {
-+        goto err;
++    close(tmp_fd);
++    return true;
++}
++
++static void safe_fclose(FILE *f)
++{
++    if (f) {
++        fclose(f);
 +    }
++}
 +
-+    qemu_guest_getrandom_nofail(rnd, NSM_RND_BUF_SIZE);
-+
-+    if (!qemu_cbor_add_bytestring_to_map(nested_map, "random", rnd,
-+                                         NSM_RND_BUF_SIZE)) {
-+        goto err;
++static void safe_unlink(char *f)
++{
++    if (f) {
++        unlink(f);
 +    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_INPUT_TOO_LARGE, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize GetRandom response");
-+    goto out;
 +}
 +
 +/*
-+ * DescribeNSM response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("DescribeNSM"),
-+ *     value = Map(7) {
-+ *       key = String("digest"),
-+ *       value = String("SHA384"),
-+ *       key = String("max_pcrs"),
-+ *       value = Uint8(32),
-+ *       key = String("module_id"),
-+ *       value = String("i-1234-enc5678"),
-+ *       key = String("locked_pcrs"),
-+ *       value = Array<Uint8>(),
-+ *       key = String("version_major"),
-+ *       value = Uint8(1),
-+ *       key = String("version_minor"),
-+ *       value = Uint8(0),
-+ *       key = String("version_patch"),
-+ *       value = Uint8(0)
-+ *     }
-+ *   }
-+ * }
++ * Upon success, the caller is reponsible for unlinking and freeing *kernel_path
 + */
-+static bool handle_describe_nsm(VirtIONSM *vnsm, struct iovec *request,
-+                                struct iovec *response, Error **errp)
++static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
++                            uint8_t *kernel, uint32_t *crc, Error **errp)
 +{
-+    cbor_item_t *root, *nested_map;
-+    uint16_t locked_pcrs_cnt = 0;
-+    uint8_t locked_pcrs_ind[NSM_MAX_PCRS];
-+    size_t len;
-+    bool r = false;
++    size_t got;
++    FILE *tmp_file = NULL;
 +
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_map_to_map(root, "DescribeNSM", 7, &nested_map)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_string_to_map(nested_map, "digest", vnsm->digest)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_uint8_to_map(nested_map, "max_pcrs", vnsm->max_pcrs)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_string_to_map(nested_map, "module_id",
-+                                     vnsm->module_id)) {
-+        goto err;
-+    }
-+
-+    for (uint8_t i = 0; i < NSM_MAX_PCRS; ++i) {
-+        if (vnsm->pcrs[i].locked) {
-+            locked_pcrs_ind[locked_pcrs_cnt++] = i;
-+        }
-+    }
-+    if (!qemu_cbor_add_uint8_array_to_map(nested_map, "locked_pcrs",
-+                                          locked_pcrs_ind, locked_pcrs_cnt)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_uint8_to_map(nested_map, "version_major",
-+                                    vnsm->version_major)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_uint8_to_map(nested_map, "version_minor",
-+                                    vnsm->version_minor)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_uint8_to_map(nested_map, "version_patch",
-+                                    vnsm->version_patch)) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_INPUT_TOO_LARGE, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize DescribeNSM response");
-+    goto out;
-+}
-+
-+/*
-+ * DescribePCR request structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("DescribePCR"),
-+ *     value = Map(1) {
-+ *       key = String("index"),
-+ *       value = Uint8(pcr)
-+ *     }
-+ *   }
-+ * }
-+ */
-+typedef struct NSMDescribePCRReq {
-+    uint8_t index;
-+} NSMDescribePCRReq;
-+
-+static enum NSMResponseTypes get_nsm_describe_pcr_req(
-+    uint8_t *req, size_t len,
-+    NSMDescribePCRReq *nsm_req)
-+{
-+    size_t size;
-+    uint8_t *str;
-+    struct cbor_pair *pair;
-+    cbor_item_t *item = NULL;
-+    struct cbor_load_result result;
-+    enum NSMResponseTypes r = NSM_INVALID_OPERATION;
-+
-+    item = cbor_load(req, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
++    *kernel_path = NULL;
++    if (!get_tmp_file("eif-kernel-XXXXXX", kernel_path, errp)) {
 +        goto cleanup;
 +    }
 +
-+    pair = cbor_map_handle(item);
-+    if (!cbor_isa_map(pair->value)) {
++    tmp_file = fopen(*kernel_path, "wb");
++    if (tmp_file == NULL) {
++        error_setg_errno(errp, errno, "Failed to open temporary file %s",
++                         *kernel_path);
 +        goto cleanup;
 +    }
-+    size = cbor_map_size(pair->value);
-+    if (size < 1) {
++
++    got = fread(kernel, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF kernel section data");
 +        goto cleanup;
 +    }
 +
-+    pair = cbor_map_handle(pair->value);
-+    for (int i = 0; i < size; ++i) {
-+        if (!cbor_isa_string(pair[i].key)) {
-+            continue;
-+        }
-+
-+        str = cbor_string_handle(pair[i].key);
-+        if (str && cbor_string_length(pair[i].key) == 5 &&
-+            memcmp(str, "index", 5) == 0) {
-+            if (!cbor_isa_uint(pair[i].value) ||
-+                cbor_int_get_width(pair[i].value) != CBOR_INT_8) {
-+                break;
-+            }
-+
-+            nsm_req->index = cbor_get_uint8(pair[i].value);
-+            r = NSM_SUCCESS;
-+            break;
-+        }
++    got = fwrite(kernel, 1, size, tmp_file);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF kernel section data to temporary"
++                   " file");
++        goto cleanup;
 +    }
++
++    *crc = crc32(*crc, kernel, size);
++    fclose(tmp_file);
++
++    return true;
 +
 + cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return r;
++    safe_fclose(tmp_file);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    return false;
 +}
 +
-+/*
-+ * DescribePCR response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("DescribePCR"),
-+ *     value = Map(2) {
-+ *       key = String("data"),
-+ *       value = Byte_String(),
-+ *       key = String("lock"),
-+ *       value = Bool()
-+ *     }
-+ *   }
-+ * }
-+ */
-+static bool handle_describe_pcr(VirtIONSM *vnsm, struct iovec *request,
-+                                struct iovec *response, Error **errp)
++static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
++                             uint32_t *crc, Error **errp)
 +{
-+    cbor_item_t *root = NULL;
-+    cbor_item_t *nested_map;
-+    size_t len;
-+    NSMDescribePCRReq nsm_req;
-+    enum NSMResponseTypes type;
-+    struct PCRInfo *pcr;
-+    bool r = false;
-+
-+    type = get_nsm_describe_pcr_req(request->iov_base, request->iov_len,
-+                                    &nsm_req);
-+    if (type != NSM_SUCCESS) {
-+        if (error_response(response, type, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+    if (nsm_req.index >= vnsm->max_pcrs) {
-+        if (error_response(response, NSM_INVALID_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+    pcr = &(vnsm->pcrs[nsm_req.index]);
-+
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
++    size_t got = fread(cmdline, 1, size, f);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF cmdline section data");
++        return false;
 +    }
 +
-+    if (!qemu_cbor_add_map_to_map(root, "DescribePCR", 2, &nested_map)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_bytestring_to_map(nested_map, "data", pcr->data,
-+                                         QCRYPTO_HASH_DIGEST_LEN_SHA384)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_bool_to_map(nested_map, "lock", pcr->locked)) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_INPUT_TOO_LARGE, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize DescribePCR response");
-+    goto out;
++    *crc = crc32(*crc, (uint8_t *)cmdline, size);
++    return true;
 +}
 +
-+/*
-+ * ExtendPCR request structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("ExtendPCR"),
-+ *     value = Map(2) {
-+ *       key = String("index"),
-+ *       value = Uint8(pcr),
-+ *       key = String("data"),
-+ *       value = Byte_String(data),
-+ *     }
-+ *   }
-+ * }
-+ */
-+typedef struct NSMExtendPCRReq {
-+    uint8_t index;
-+    uint16_t data_len;
-+    uint8_t data[NSM_REQUEST_MAX_SIZE];
-+} NSMExtendPCRReq;
-+
-+static enum NSMResponseTypes get_nsm_extend_pcr_req(uint8_t *req, size_t len,
-+                                                    NSMExtendPCRReq *nsm_req)
++static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
++                             uint8_t *ramdisk, uint32_t *crc, Error **errp)
 +{
++    size_t got;
++
++    got = fread(ramdisk, 1, size, eif);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF ramdisk section data");
++        return false;
++    }
++
++    got = fwrite(ramdisk, 1, size, initrd);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to write EIF ramdisk data to temporary file");
++        return false;
++    }
++
++    *crc = crc32(*crc, ramdisk, size);
++    return true;
++}
++
++static bool get_signature_fingerprint_sha384(FILE *eif, uint64_t size,
++                                             uint8_t *sha384,
++                                             uint32_t *crc,
++                                             Error **errp)
++{
++    size_t got;
++    g_autofree uint8_t *sig = NULL;
++    g_autofree uint8_t *cert = NULL;
 +    cbor_item_t *item = NULL;
-+    size_t size ;
-+    uint8_t *str;
-+    bool index_found = false;
-+    bool data_found = false;
++    cbor_item_t *pcr0 = NULL;
++    size_t len;
++    size_t hash_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
 +    struct cbor_pair *pair;
 +    struct cbor_load_result result;
-+    enum NSMResponseTypes r = NSM_INVALID_OPERATION;
-+
-+    item = cbor_load(req, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(item);
-+    if (!cbor_isa_map(pair->value)) {
-+        goto cleanup;
-+    }
-+    size = cbor_map_size(pair->value);
-+    if (size < 2) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(pair->value);
-+    for (int i = 0; i < size; ++i) {
-+        if (!cbor_isa_string(pair[i].key)) {
-+            continue;
-+        }
-+        str = cbor_string_handle(pair[i].key);
-+        if (!str) {
-+            continue;
-+        }
-+
-+        if (cbor_string_length(pair[i].key) == 5 &&
-+            memcmp(str, "index", 5) == 0) {
-+            if (!cbor_isa_uint(pair[i].value) ||
-+                cbor_int_get_width(pair[i].value) != CBOR_INT_8) {
-+                goto cleanup;
-+            }
-+            nsm_req->index = cbor_get_uint8(pair[i].value);
-+            index_found = true;
-+            continue;
-+        }
-+
-+        if (cbor_string_length(pair[i].key) == 4 &&
-+            memcmp(str, "data", 4) == 0) {
-+            if (!cbor_isa_bytestring(pair[i].value)) {
-+                goto cleanup;
-+            }
-+            str = cbor_bytestring_handle(pair[i].value);
-+            if (!str) {
-+                goto cleanup;
-+            }
-+            nsm_req->data_len = cbor_bytestring_length(pair[i].value);
-+            /*
-+             * nsm_req->data_len will be smaller than NSM_REQUEST_MAX_SIZE as
-+             * we already check for the max request size before processing
-+             * any request. So it's safe to copy.
-+             */
-+            memcpy(nsm_req->data, str, nsm_req->data_len);
-+            data_found = true;
-+            continue;
-+        }
-+    }
-+
-+    if (index_found && data_found) {
-+        r = NSM_SUCCESS;
-+    }
-+
-+ cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return r;
-+}
-+
-+/*
-+ * ExtendPCR response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("ExtendPCR"),
-+ *     value = Map(1) {
-+ *       key = String("data"),
-+ *       value = Byte_String()
-+ *     }
-+ *   }
-+ * }
-+ */
-+static bool handle_extend_pcr(VirtIONSM *vnsm, struct iovec *request,
-+                              struct iovec *response, Error **errp)
-+{
-+    cbor_item_t *root = NULL;
-+    cbor_item_t *nested_map;
-+    size_t len;
-+    struct PCRInfo *pcr;
-+    enum NSMResponseTypes type;
-+    bool r = false;
-+    g_autofree NSMExtendPCRReq *nsm_req = g_malloc(sizeof(NSMExtendPCRReq));
-+
-+    type = get_nsm_extend_pcr_req(request->iov_base, request->iov_len,
-+                                  nsm_req);
-+    if (type != NSM_SUCCESS) {
-+        if (error_response(response, type, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+    if (nsm_req->index >= vnsm->max_pcrs) {
-+        if (error_response(response, NSM_INVALID_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    pcr = &(vnsm->pcrs[nsm_req->index]);
-+
-+    if (pcr->locked) {
-+        if (error_response(response, NSM_READONLY_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    if (!vnsm->extend_pcr(vnsm, nsm_req->index, nsm_req->data,
-+                          nsm_req->data_len)) {
-+        if (error_response(response, NSM_INTERNAL_ERROR, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_map_to_map(root, "ExtendPCR", 1, &nested_map)) {
-+        goto err;
-+    }
-+
-+    if (!qemu_cbor_add_bytestring_to_map(nested_map, "data", pcr->data,
-+                                         QCRYPTO_HASH_DIGEST_LEN_SHA384)) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_BUFFER_TOO_SMALL, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize DescribePCR response");
-+    goto out;
-+}
-+
-+/*
-+ * LockPCR request structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("LockPCR"),
-+ *     value = Map(1) {
-+ *       key = String("index"),
-+ *       value = Uint8(pcr)
-+ *     }
-+ *   }
-+ * }
-+ */
-+typedef struct NSMLockPCRReq {
-+    uint8_t index;
-+} NSMLockPCRReq;
-+
-+static enum NSMResponseTypes get_nsm_lock_pcr_req(uint8_t *req, size_t len,
-+                                                  NSMLockPCRReq *nsm_req)
-+{
-+    cbor_item_t *item = NULL;
-+    size_t size;
-+    uint8_t *str;
-+    struct cbor_pair *pair;
-+    struct cbor_load_result result;
-+    enum NSMResponseTypes r = NSM_INVALID_OPERATION;
-+
-+    item = cbor_load(req, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(item);
-+    if (!cbor_isa_map(pair->value)) {
-+        goto cleanup;
-+    }
-+    size = cbor_map_size(pair->value);
-+    if (size < 1) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(pair->value);
-+    for (int i = 0; i < size; ++i) {
-+        if (!cbor_isa_string(pair[i].key)) {
-+            continue;
-+        }
-+        str = cbor_string_handle(pair[i].key);
-+        if (str && cbor_string_length(pair[i].key) == 5 &&
-+            memcmp(str, "index", 5) == 0) {
-+            if (!cbor_isa_uint(pair[i].value) ||
-+                cbor_int_get_width(pair[i].value) != CBOR_INT_8) {
-+                break;
-+            }
-+
-+            nsm_req->index = cbor_get_uint8(pair[i].value);
-+            r = NSM_SUCCESS;
-+            break;
-+        }
-+    }
-+
-+ cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return r;
-+}
-+
-+/*
-+ * LockPCR success response structure:
-+ * {
-+ *   String("LockPCR")
-+ * }
-+ */
-+static bool handle_lock_pcr(VirtIONSM *vnsm, struct iovec *request,
-+                            struct iovec *response, Error **errp)
-+{
-+    cbor_item_t *root = NULL;
-+    size_t len;
-+    NSMLockPCRReq nsm_req;
-+    enum NSMResponseTypes type;
-+    struct PCRInfo *pcr;
-+    bool r = false;
-+
-+    type = get_nsm_lock_pcr_req(request->iov_base, request->iov_len, &nsm_req);
-+    if (type != NSM_SUCCESS) {
-+        if (error_response(response, type, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+    if (nsm_req.index >= vnsm->max_pcrs) {
-+        if (error_response(response, NSM_INVALID_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+
-+    pcr = &(vnsm->pcrs[nsm_req.index]);
-+
-+    if (pcr->locked) {
-+        if (error_response(response, NSM_READONLY_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+
-+    pcr->locked = true;
-+
-+    root = cbor_build_string("LockPCR");
-+    if (!root) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_BUFFER_TOO_SMALL, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+    goto cleanup;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize LockPCR response");
-+
-+ cleanup:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+}
-+
-+/*
-+ * LockPCRs request structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("LockPCRs"),
-+ *     value = Map(1) {
-+ *       key = String("range"),
-+ *       value = Uint8(pcr)
-+ *     }
-+ *   }
-+ * }
-+ */
-+typedef struct NSMLockPCRsReq {
-+    uint16_t range;
-+} NSMLockPCRsReq;
-+
-+static enum NSMResponseTypes get_nsm_lock_pcrs_req(uint8_t *req, size_t len,
-+                                                   NSMLockPCRsReq *nsm_req)
-+{
-+    cbor_item_t *item = NULL;
-+    size_t size;
-+    uint8_t *str;
-+    struct cbor_pair *pair;
-+    struct cbor_load_result result;
-+    enum NSMResponseTypes r = NSM_INVALID_OPERATION;
-+
-+    item = cbor_load(req, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(item);
-+    if (!cbor_isa_map(pair->value)) {
-+        goto cleanup;
-+    }
-+    size = cbor_map_size(pair->value);
-+    if (size < 1) {
-+        goto cleanup;
-+    }
-+
-+    pair = cbor_map_handle(pair->value);
-+    for (int i = 0; i < size; ++i) {
-+        if (!cbor_isa_string(pair[i].key)) {
-+            continue;
-+        }
-+        str = cbor_string_handle(pair[i].key);
-+        if (str && cbor_string_length(pair[i].key) == 5 &&
-+            memcmp(str, "range", 5) == 0) {
-+            if (!cbor_isa_uint(pair[i].value) ||
-+                cbor_int_get_width(pair[i].value) != CBOR_INT_8) {
-+                break;
-+            }
-+
-+            nsm_req->range = cbor_get_uint8(pair[i].value);
-+            r = NSM_SUCCESS;
-+            break;
-+        }
-+    }
-+
-+ cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return r;
-+}
-+
-+/*
-+ * LockPCRs success response structure:
-+ * {
-+ *   String("LockPCRs")
-+ * }
-+ */
-+static bool handle_lock_pcrs(VirtIONSM *vnsm, struct iovec *request,
-+                             struct iovec *response, Error **errp)
-+{
-+    cbor_item_t *root = NULL;
-+    size_t len;
-+    NSMLockPCRsReq nsm_req;
-+    enum NSMResponseTypes type;
-+    bool r = false;
-+
-+    type = get_nsm_lock_pcrs_req(request->iov_base, request->iov_len, &nsm_req);
-+    if (type != NSM_SUCCESS) {
-+        if (error_response(response, type, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+    if (nsm_req.range > vnsm->max_pcrs) {
-+        if (error_response(response, NSM_INVALID_INDEX, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+
-+    for (int i = 0; i < nsm_req.range; ++i) {
-+        vnsm->pcrs[i].locked = true;
-+    }
-+
-+    root = cbor_build_string("LockPCRs");
-+    if (!root) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_BUFFER_TOO_SMALL, errp)) {
-+            r = true;
-+        }
-+        goto cleanup;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+    goto cleanup;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize response");
-+
-+ cleanup:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+}
-+
-+/*
-+ * Attestation request structure:
-+ *
-+ *   Map(1) {
-+ *     key = String("Attestation"),
-+ *     value = Map(3) {
-+ *       key = String("user_data"),
-+ *       value = Byte_String() || null, // Optional
-+ *       key = String("nonce"),
-+ *       value = Byte_String() || null, // Optional
-+ *       key = String("public_key"),
-+ *       value = Byte_String() || null, // Optional
-+ *     }
-+ *   }
-+ * }
-+ */
-+
-+struct AttestationProperty {
-+    bool is_null; /* True if property is not present in map or is null */
-+    uint16_t len;
-+    uint8_t buf[NSM_REQUEST_MAX_SIZE];
-+};
-+
-+typedef struct NSMAttestationReq {
-+    struct AttestationProperty public_key;
-+    struct AttestationProperty user_data;
-+    struct AttestationProperty nonce;
-+} NSMAttestationReq;
-+
-+static bool fill_attestation_property(struct AttestationProperty *prop,
-+                                      cbor_item_t *value)
-+{
-+    uint8_t *str;
 +    bool ret = false;
 +
-+    if (cbor_is_null(value)) {
-+        prop->is_null = true;
-+        ret = true;
-+        goto out;
-+    } else if (cbor_isa_bytestring(value)) {
-+        str = cbor_bytestring_handle(value);
-+        if (!str) {
-+            goto out;
-+        }
-+        prop->len = cbor_bytestring_length(value);
-+    } else if (cbor_isa_string(value)) {
-+        str = cbor_string_handle(value);
-+        if (!str) {
-+            goto out;
-+        }
-+        prop->len = cbor_string_length(value);
-+    } else {
-+        goto out;
++    sig = g_malloc(size);
++    got = fread(sig, 1, size, eif);
++    if ((uint64_t) got != size) {
++        error_setg(errp, "Failed to read EIF signature section data");
++        goto cleanup;
 +    }
 +
-+    /*
-+     * prop->len will be smaller than NSM_REQUEST_MAX_SIZE as we
-+     * already check for the max request size before processing
-+     * any request. So it's safe to copy.
-+     */
-+    memcpy(prop->buf, str, prop->len);
-+    prop->is_null = false;
++    *crc = crc32(*crc, sig, size);
++
++    item = cbor_load(sig, size, &result);
++    if (!item || result.error.code != CBOR_ERR_NONE) {
++        error_setg(errp, "Failed to load signature section data as CBOR");
++        goto cleanup;
++    }
++    if (!cbor_isa_array(item) || cbor_array_size(item) < 1) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    pcr0 = cbor_array_get(item, 0);
++    if (!pcr0) {
++        error_setg(errp, "Failed to get PCR0 signature");
++        goto cleanup;
++    }
++    if (!cbor_isa_map(pcr0) || cbor_map_size(pcr0) != 2) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    pair = cbor_map_handle(pcr0);
++    if (!cbor_isa_string(pair->key) || cbor_string_length(pair->key) != 19 ||
++        memcmp(cbor_string_handle(pair->key), "signing_certificate", 19) != 0) {
++        error_setg(errp, "Invalid signautre CBOR");
++        goto cleanup;
++    }
++    if (!cbor_isa_array(pair->value)) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    len = cbor_array_size(pair->value);
++    if (len == 0) {
++        error_setg(errp, "Invalid signature CBOR");
++        goto cleanup;
++    }
++    cert = g_malloc(len);
++    for (int i = 0; i < len; ++i) {
++        cbor_item_t *tmp = cbor_array_get(pair->value, i);
++        if (!tmp) {
++            error_setg(errp, "Invalid signature CBOR");
++            goto cleanup;
++        }
++        if (!cbor_isa_uint(tmp) || cbor_int_get_width(tmp) != CBOR_INT_8) {
++            cbor_decref(&tmp);
++            error_setg(errp, "Invalid signature CBOR");
++            goto cleanup;
++        }
++        cert[i] = cbor_get_uint8(tmp);
++        cbor_decref(&tmp);
++    }
++
++    if (qcrypto_get_x509_cert_fingerprint(cert, len, QCRYPTO_HASH_ALGO_SHA384,
++                                          sha384, &hash_len, errp)) {
++        goto cleanup;
++    }
++
 +    ret = true;
 +
-+ out:
++ cleanup:
++    if (pcr0) {
++        cbor_decref(&pcr0);
++    }
++    if (item) {
++        cbor_decref(&item);
++    }
 +    return ret;
 +}
 +
-+static enum NSMResponseTypes get_nsm_attestation_req(uint8_t *req, size_t len,
-+                                                     NSMAttestationReq *nsm_req)
++/* Expects file to have offset 0 before this function is called */
++static long get_file_size(FILE *f, Error **errp)
 +{
-+    cbor_item_t *item = NULL;
-+    size_t size;
-+    uint8_t *str;
-+    struct cbor_pair *pair;
-+    struct cbor_load_result result;
-+    enum NSMResponseTypes r = NSM_INVALID_OPERATION;
++    long size;
 +
-+    nsm_req->public_key.is_null = true;
-+    nsm_req->user_data.is_null = true;
-+    nsm_req->nonce.is_null = true;
-+
-+    item = cbor_load(req, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
-+        goto cleanup;
++    if (fseek(f, 0, SEEK_END) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek to the end of file");
++        return -1;
 +    }
 +
-+    pair = cbor_map_handle(item);
-+    if (!cbor_isa_map(pair->value)) {
-+        goto cleanup;
-+    }
-+    size = cbor_map_size(pair->value);
-+    if (size == 0) {
-+        r = NSM_SUCCESS;
-+        goto cleanup;
++    size = ftell(f);
++    if (size == -1) {
++        error_setg_errno(errp, errno, "Failed to get offset");
++        return -1;
 +    }
 +
-+    pair = cbor_map_handle(pair->value);
-+    for (int i = 0; i < size; ++i) {
-+        if (!cbor_isa_string(pair[i].key)) {
-+            continue;
-+        }
-+
-+        str = cbor_string_handle(pair[i].key);
-+        if (!str) {
-+            continue;
-+        }
-+
-+        if (cbor_string_length(pair[i].key) == 10 &&
-+            memcmp(str, "public_key", 10) == 0) {
-+            if (!fill_attestation_property(&(nsm_req->public_key),
-+                                           pair[i].value)) {
-+                goto cleanup;
-+            }
-+            continue;
-+        }
-+
-+        if (cbor_string_length(pair[i].key) == 9 &&
-+            memcmp(str, "user_data", 9) == 0) {
-+            if (!fill_attestation_property(&(nsm_req->user_data),
-+                                           pair[i].value)) {
-+                goto cleanup;
-+            }
-+            continue;
-+        }
-+
-+        if (cbor_string_length(pair[i].key) == 5 &&
-+            memcmp(str, "nonce", 5) == 0) {
-+            if (!fill_attestation_property(&(nsm_req->nonce), pair[i].value)) {
-+                goto cleanup;
-+            }
-+            continue;
-+        }
++    if (fseek(f, 0, SEEK_SET) != 0) {
++        error_setg_errno(errp, errno, "Failed to seek back to the start");
++        return -1;
 +    }
 +
-+    r = NSM_SUCCESS;
-+
-+ cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return r;
++    return size;
 +}
 +
-+static bool add_protected_header_to_cose(cbor_item_t *cose)
++static bool get_SHA384_digest(GList *list, uint8_t *digest, Error **errp)
 +{
-+    cbor_item_t *map = NULL;
-+    cbor_item_t *key = NULL;
-+    cbor_item_t *value = NULL;
-+    cbor_item_t *bs = NULL;
-+    size_t len;
-+    bool r = false;
-+    size_t buf_len = 4096;
-+    g_autofree uint8_t *buf = g_malloc(buf_len);
-+
-+    map = cbor_new_definite_map(1);
-+    if (!map) {
-+        goto cleanup;
-+    }
-+    key = cbor_build_uint8(1);
-+    if (!key) {
-+        goto cleanup;
-+    }
-+    value = cbor_new_int8();
-+    if (!value) {
-+        goto cleanup;
-+    }
-+    cbor_mark_negint(value);
-+    /* we don't actually sign the data, so we use -1 as the 'alg' value */
-+    cbor_set_uint8(value, 0);
-+
-+    if (!qemu_cbor_map_add(map, key, value)) {
-+        goto cleanup;
-+    }
-+
-+    len = cbor_serialize(map, buf, buf_len);
-+    if (len == 0) {
-+        goto cleanup_map;
-+    }
-+
-+    bs = cbor_build_bytestring(buf, len);
-+    if (!bs) {
-+        goto cleanup_map;
-+    }
-+    if (!qemu_cbor_array_push(cose, bs)) {
-+        cbor_decref(&bs);
-+        goto cleanup_map;
-+    }
-+    r = true;
-+    goto cleanup_map;
-+
-+ cleanup:
-+    if (key) {
-+        cbor_decref(&key);
-+    }
-+    if (value) {
-+        cbor_decref(&value);
-+    }
-+
-+ cleanup_map:
-+    if (map) {
-+        cbor_decref(&map);
-+    }
-+    return r;
-+}
-+
-+static bool add_unprotected_header_to_cose(cbor_item_t *cose)
-+{
-+    cbor_item_t *map = cbor_new_definite_map(0);
-+    if (!map) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_array_push(cose, map)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (map) {
-+        cbor_decref(&map);
-+    }
-+    return false;
-+}
-+
-+static bool add_ca_bundle_to_payload(cbor_item_t *map)
-+{
-+    cbor_item_t *key_cbor = NULL;
-+    cbor_item_t *value_cbor = NULL;
-+    cbor_item_t *bs = NULL;
-+    uint8_t zero[64] = {0};
-+
-+    key_cbor = cbor_build_string("cabundle");
-+    if (!key_cbor) {
-+        goto cleanup;
-+    }
-+    value_cbor = cbor_new_definite_array(1);
-+    if (!value_cbor) {
-+        goto cleanup;
-+    }
-+    bs = cbor_build_bytestring(zero, 64);
-+    if (!bs) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_array_push(value_cbor, bs)) {
-+        cbor_decref(&bs);
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_map_add(map, key_cbor, value_cbor)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (key_cbor) {
-+        cbor_decref(&key_cbor);
-+    }
-+    if (value_cbor) {
-+        cbor_decref(&value_cbor);
-+    }
-+    return false;
-+}
-+
-+static bool add_payload_to_cose(cbor_item_t *cose, VirtIONSM *vnsm,
-+                                NSMAttestationReq *req)
-+{
-+    cbor_item_t *root = NULL;
-+    cbor_item_t *nested_map;
-+    cbor_item_t *bs = NULL;
-+    size_t locked_cnt;
-+    uint8_t ind[NSM_MAX_PCRS];
-+    size_t payload_map_size = 9;
-+    size_t len;
-+    struct PCRInfo *pcr;
-+    uint8_t zero[64] = {0};
-+    bool r = false;
-+    size_t buf_len = 16384;
-+    g_autofree uint8_t *buf = g_malloc(buf_len);
-+
-+    root = cbor_new_definite_map(payload_map_size);
-+    if (!root) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_add_string_to_map(root, "module_id", vnsm->module_id)) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_add_string_to_map(root, "digest", vnsm->digest)) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_add_uint64_to_map(root, "timestamp",
-+                                     (uint64_t) time(NULL) * 1000)) {
-+        goto cleanup;
-+    }
-+
-+    locked_cnt = 0;
-+    for (uint8_t i = 0; i < NSM_MAX_PCRS; ++i) {
-+        if (vnsm->pcrs[i].locked) {
-+            ind[locked_cnt++] = i;
-+        }
-+    }
-+    if (!qemu_cbor_add_map_to_map(root, "pcrs", locked_cnt, &nested_map)) {
-+        goto cleanup;
-+    }
-+    for (uint8_t i = 0; i < locked_cnt; ++i) {
-+        pcr = &(vnsm->pcrs[ind[i]]);
-+        if (!qemu_cbor_add_uint8_key_bytestring_to_map(
-+                nested_map, ind[i],
-+                pcr->data,
-+                QCRYPTO_HASH_DIGEST_LEN_SHA384)) {
-+            goto cleanup;
-+        }
-+    }
-+    if (!qemu_cbor_add_bytestring_to_map(root, "certificate", zero, 64)) {
-+        goto cleanup;
-+    }
-+    if (!add_ca_bundle_to_payload(root)) {
-+        goto cleanup;
-+    }
-+
-+    if (req->public_key.is_null) {
-+        if (!qemu_cbor_add_null_to_map(root, "public_key")) {
-+            goto cleanup;
-+        }
-+    } else if (!qemu_cbor_add_bytestring_to_map(root, "public_key",
-+                                                req->public_key.buf,
-+                                                req->public_key.len)) {
-+        goto cleanup;
-+    }
-+
-+    if (req->user_data.is_null) {
-+        if (!qemu_cbor_add_null_to_map(root, "user_data")) {
-+            goto cleanup;
-+        }
-+    } else if (!qemu_cbor_add_bytestring_to_map(root, "user_data",
-+                                                req->user_data.buf,
-+                                                req->user_data.len)) {
-+            goto cleanup;
-+    }
-+
-+    if (req->nonce.is_null) {
-+        if (!qemu_cbor_add_null_to_map(root, "nonce")) {
-+            goto cleanup;
-+        }
-+    } else if (!qemu_cbor_add_bytestring_to_map(root, "nonce",
-+                                                req->nonce.buf,
-+                                                req->nonce.len)) {
-+        goto cleanup;
-+    }
-+
-+    len = cbor_serialize(root, buf, buf_len);
-+    if (len == 0) {
-+        goto cleanup;
-+    }
-+
-+    bs = cbor_build_bytestring(buf, len);
-+    if (!bs) {
-+        goto cleanup;
-+    }
-+    if (!qemu_cbor_array_push(cose, bs)) {
-+        cbor_decref(&bs);
-+        goto cleanup;
-+    }
-+
-+    r = true;
-+
-+ cleanup:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    return r;
-+}
-+
-+static bool add_signature_to_cose(cbor_item_t *cose)
-+{
-+    cbor_item_t *bs = NULL;
-+    uint8_t zero[64] = {0};
-+
-+    /* we don't actually sign the data, so we just put 64 zero bytes */
-+    bs = cbor_build_bytestring(zero, 64);
-+    if (!bs) {
-+        goto cleanup;
-+    }
-+
-+    if (!qemu_cbor_array_push(cose, bs)) {
-+        goto cleanup;
-+    }
-+
-+    return true;
-+
-+ cleanup:
-+    if (bs) {
-+        cbor_decref(&bs);
-+    }
-+    return false;
-+}
-+
-+/*
-+ * Attestation response structure:
-+ *
-+ * {
-+ *   Map(1) {
-+ *     key = String("Attestation"),
-+ *     value = Map(1) {
-+ *       key = String("document"),
-+ *       value = Byte_String()
-+ *     }
-+ *   }
-+ * }
-+ *
-+ * The document is a serialized COSE sign1 blob of the structure:
-+ * {
-+ *   Array(4) {
-+ *     [0] { ByteString() }, // serialized protected header
-+ *     [1] { Map(0) },       // 0 length map
-+ *     [2] { ByteString() }, // serialized payload
-+ *     [3] { ByteString() }, // signature
-+ *   }
-+ * }
-+ *
-+ * where [0] protected header is a serialized CBOR blob of the structure:
-+ * {
-+ *   Map(1) {
-+ *     key = Uint8(1)         // alg
-+ *     value = NegativeInt8() // Signing algorithm
-+ *   }
-+ * }
-+ *
-+ * [2] payload is serialized CBOR blob of the structure:
-+ * {
-+ *   Map(9) {
-+ *     [0] { key = String("module_id"), value = String(module_id) },
-+ *     [1] { key = String("digest"), value = String("SHA384") },
-+ *     [2] {
-+ *           key = String("timestamp"),
-+ *           value = Uint64(unix epoch of  when document was created)
-+ *         },
-+ *     [3] {
-+ *           key = String("pcrs"),
-+ *           value = Map(locked_pcr_cnt) {
-+ *                       key = Uint8(pcr_index),
-+ *                       value = ByteString(pcr_data)
-+ *                   },
-+ *         },
-+ *     [4] {
-+ *           key = String("certificate"),
-+ *           value = ByteString(Signing certificate)
-+ *         },
-+ *     [5] { key = String("cabundle"), value = Array(N) { ByteString()... } },
-+ *     [6] { key = String("public_key"), value = ByteString() || null },
-+ *     [7] { key = String("user_data"), value = ByteString() || null},
-+ *     [8] { key = String("nonce"), value = ByteString() || null},
-+ *   }
-+ * }
-+ */
-+static bool handle_attestation(VirtIONSM *vnsm, struct iovec *request,
-+                               struct iovec *response, Error **errp)
-+{
-+    cbor_item_t *root = NULL;
-+    cbor_item_t *cose = NULL;
-+    cbor_item_t *nested_map;
-+    size_t len;
-+    enum NSMResponseTypes type;
-+    bool r = false;
-+    size_t buf_len = 16384;
-+    g_autofree uint8_t *buf = g_malloc(buf_len);
-+    g_autofree NSMAttestationReq *nsm_req = g_malloc(sizeof(NSMAttestationReq));
-+
-+    nsm_req->public_key.is_null = true;
-+    nsm_req->user_data.is_null = true;
-+    nsm_req->nonce.is_null = true;
-+
-+    type = get_nsm_attestation_req(request->iov_base, request->iov_len,
-+                                   nsm_req);
-+    if (type != NSM_SUCCESS) {
-+        if (error_response(response, type, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    cose = cbor_new_definite_array(4);
-+    if (!cose) {
-+        goto err;
-+    }
-+    if (!add_protected_header_to_cose(cose)) {
-+        goto err;
-+    }
-+    if (!add_unprotected_header_to_cose(cose)) {
-+        goto err;
-+    }
-+    if (!add_payload_to_cose(cose, vnsm, nsm_req)) {
-+        goto err;
-+    }
-+    if (!add_signature_to_cose(cose)) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(cose, buf, buf_len);
-+    if (len == 0) {
-+        goto err;
-+    }
-+
-+    root = cbor_new_definite_map(1);
-+    if (!root) {
-+        goto err;
-+    }
-+    if (!qemu_cbor_add_map_to_map(root, "Attestation", 1, &nested_map)) {
-+        goto err;
-+    }
-+    if (!qemu_cbor_add_bytestring_to_map(nested_map, "document", buf, len)) {
-+        goto err;
-+    }
-+
-+    len = cbor_serialize(root, response->iov_base, response->iov_len);
-+    if (len == 0) {
-+        if (error_response(response, NSM_INPUT_TOO_LARGE, errp)) {
-+            r = true;
-+        }
-+        goto out;
-+    }
-+
-+    response->iov_len = len;
-+    r = true;
-+
-+ out:
-+    if (root) {
-+        cbor_decref(&root);
-+    }
-+    if (cose) {
-+        cbor_decref(&cose);
-+    }
-+    return r;
-+
-+ err:
-+    error_setg(errp, "Failed to initialize Attestation response");
-+    goto out;
-+}
-+
-+enum CBOR_ROOT_TYPE {
-+    CBOR_ROOT_TYPE_STRING = 0,
-+    CBOR_ROOT_TYPE_MAP = 1,
-+};
-+
-+struct nsm_cmd {
-+    char name[16];
-+    /*
-+     * There are 2 types of request
-+     * 1) String(); "GetRandom", "DescribeNSM"
-+     * 2) Map(1) { key: String(), value: ... }
-+     */
-+    enum CBOR_ROOT_TYPE root_type;
-+    bool (*response_fn)(VirtIONSM *vnsm, struct iovec *request,
-+                        struct iovec *response, Error **errp);
-+};
-+
-+const struct nsm_cmd nsm_cmds[] = {
-+    { "GetRandom",   CBOR_ROOT_TYPE_STRING,  handle_get_random },
-+    { "DescribeNSM", CBOR_ROOT_TYPE_STRING,  handle_describe_nsm },
-+    { "DescribePCR", CBOR_ROOT_TYPE_MAP,     handle_describe_pcr },
-+    { "ExtendPCR",   CBOR_ROOT_TYPE_MAP,     handle_extend_pcr },
-+    { "LockPCR",     CBOR_ROOT_TYPE_MAP,     handle_lock_pcr },
-+    { "LockPCRs",    CBOR_ROOT_TYPE_MAP,     handle_lock_pcrs },
-+    { "Attestation", CBOR_ROOT_TYPE_MAP,     handle_attestation },
-+};
-+
-+static const struct nsm_cmd *get_nsm_request_cmd(uint8_t *buf, size_t len)
-+{
-+    size_t size;
-+    uint8_t *req;
-+    enum CBOR_ROOT_TYPE root_type;
-+    struct cbor_load_result result;
-+    cbor_item_t *item = cbor_load(buf, len, &result);
-+    if (!item || result.error.code != CBOR_ERR_NONE) {
-+        goto cleanup;
-+    }
-+
-+    if (cbor_isa_string(item)) {
-+        size = cbor_string_length(item);
-+        req = cbor_string_handle(item);
-+        root_type = CBOR_ROOT_TYPE_STRING;
-+    } else if (cbor_isa_map(item) && cbor_map_size(item) == 1) {
-+        struct cbor_pair *handle = cbor_map_handle(item);
-+        if (cbor_isa_string(handle->key)) {
-+            size = cbor_string_length(handle->key);
-+            req = cbor_string_handle(handle->key);
-+            root_type = CBOR_ROOT_TYPE_MAP;
-+        } else {
-+            goto cleanup;
-+        }
-+    } else {
-+        goto cleanup;
-+    }
-+
-+    if  (size == 0 || req == NULL) {
-+        goto cleanup;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(nsm_cmds); ++i) {
-+        if (nsm_cmds[i].root_type == root_type &&
-+            strlen(nsm_cmds[i].name) == size &&
-+            memcmp(nsm_cmds[i].name, req, size) == 0) {
-+            cbor_decref(&item);
-+            return &nsm_cmds[i];
-+        }
-+    }
-+
-+ cleanup:
-+    if (item) {
-+        cbor_decref(&item);
-+    }
-+    return NULL;
-+}
-+
-+static bool get_nsm_request_response(VirtIONSM *vnsm, struct iovec *req,
-+                                     struct iovec *resp, Error **errp)
-+{
-+    const struct nsm_cmd *cmd;
-+
-+    if (req->iov_len > NSM_REQUEST_MAX_SIZE) {
-+        if (error_response(resp, NSM_INPUT_TOO_LARGE, errp)) {
-+            return true;
-+        }
-+        error_setg(errp, "Failed to initialize InputTooLarge response");
-+        return false;
-+    }
-+
-+    cmd = get_nsm_request_cmd(req->iov_base, req->iov_len);
-+
-+    if (cmd == NULL) {
-+        if (error_response(resp, NSM_INVALID_OPERATION, errp)) {
-+            return true;
-+        }
-+        error_setg(errp, "Failed to initialize InvalidOperation response");
-+        return false;
-+    }
-+
-+    return cmd->response_fn(vnsm, req, resp, errp);
-+}
-+
-+static void handle_input(VirtIODevice *vdev, VirtQueue *vq)
-+{
-+    g_autofree VirtQueueElement *out_elem = NULL;
-+    g_autofree VirtQueueElement *in_elem = NULL;
-+    VirtIONSM *vnsm = VIRTIO_NSM(vdev);
-+    Error *err = NULL;
-+    size_t sz;
-+    struct iovec req = {.iov_base = NULL, .iov_len = 0};
-+    struct iovec res = {.iov_base = NULL, .iov_len = 0};
-+
-+    out_elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-+    if (!out_elem) {
-+        /* nothing in virtqueue */
-+        return;
-+    }
-+
-+    sz = iov_size(out_elem->out_sg, out_elem->out_num);
-+    if (sz == 0) {
-+        virtio_error(vdev, "Expected non-zero sized request buffer in "
-+                     "virtqueue");
-+        goto cleanup;
-+    }
-+
-+    in_elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-+    if (!in_elem) {
-+        virtio_error(vdev, "Expected response buffer after request buffer "
-+                     "in virtqueue");
-+        goto cleanup;
-+    }
-+    if (iov_size(in_elem->in_sg, in_elem->in_num) != NSM_RESPONSE_BUF_SIZE) {
-+        virtio_error(vdev, "Expected response buffer of length 0x3000");
-+        goto cleanup;
-+    }
-+
-+    req.iov_base = g_malloc(sz);
-+    req.iov_len = iov_to_buf(out_elem->out_sg, out_elem->out_num, 0,
-+                             req.iov_base, sz);
-+    if (req.iov_len != sz) {
-+        virtio_error(vdev, "Failed to copy request buffer");
-+        goto cleanup;
-+    }
-+
-+    res.iov_base = g_malloc(NSM_RESPONSE_BUF_SIZE);
-+    res.iov_len = NSM_RESPONSE_BUF_SIZE;
-+
-+    if (!get_nsm_request_response(vnsm, &req, &res, &err)) {
-+        error_report_err(err);
-+        virtio_error(vdev, "Failed to get NSM request response");
-+        goto cleanup;
-+    }
-+
-+    sz = iov_from_buf(in_elem->in_sg, in_elem->in_num, 0, res.iov_base,
-+                      res.iov_len);
-+    if (sz != res.iov_len) {
-+        virtio_error(vdev, "Failed to copy response buffer");
-+        goto cleanup;
-+    }
-+
-+    g_free(req.iov_base);
-+    g_free(res.iov_base);
-+    virtqueue_push(vq, out_elem, 0);
-+    virtqueue_push(vq, in_elem, in_elem->in_sg->iov_len);
-+    virtio_notify(vdev, vq);
-+    return;
-+
-+ cleanup:
-+    g_free(req.iov_base);
-+    g_free(res.iov_base);
-+    if (out_elem) {
-+        virtqueue_detach_element(vq, out_elem, 0);
-+    }
-+    if (in_elem) {
-+        virtqueue_detach_element(vq, in_elem, 0);
-+    }
-+    return;
-+}
-+
-+static uint64_t get_features(VirtIODevice *vdev, uint64_t f, Error **errp)
-+{
-+    return f;
-+}
-+
-+static bool extend_pcr(VirtIONSM *vnsm, int ind, uint8_t *data, uint16_t len)
-+{
-+    Error *err = NULL;
-+    struct PCRInfo *pcr = &(vnsm->pcrs[ind]);
 +    size_t digest_len = QCRYPTO_HASH_DIGEST_LEN_SHA384;
-+    uint8_t result[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+    uint8_t *ptr = result;
-+    struct iovec iov[2] = {
-+        { .iov_base = pcr->data, .iov_len = QCRYPTO_HASH_DIGEST_LEN_SHA384 },
-+        { .iov_base = data, .iov_len = len },
-+    };
++    size_t list_len = g_list_length(list);
++    struct iovec *iovec_list = g_new0(struct iovec, list_len);
++    bool ret = true;
++    GList *l;
++    int i;
 +
-+    if (qcrypto_hash_bytesv(QCRYPTO_HASH_ALGO_SHA384, iov, 2, &ptr, &digest_len,
-+                            &err) < 0) {
-+        return false;
++    for (i = 0, l = list; l != NULL; l = l->next, i++) {
++        iovec_list[i] = *(struct iovec *) l->data;
 +    }
 +
-+    memcpy(pcr->data, result, QCRYPTO_HASH_DIGEST_LEN_SHA384);
++    if (qcrypto_hash_bytesv(QCRYPTO_HASH_ALGO_SHA384, iovec_list, list_len,
++                            &digest, &digest_len, errp) < 0) {
++        ret = false;
++    }
++
++    g_free(iovec_list);
++    return ret;
++}
++
++static void free_iovec(struct iovec *iov)
++{
++    if (iov) {
++        g_free(iov->iov_base);
++        g_free(iov);
++    }
++}
++
++/*
++ * Upon success, the caller is reponsible for unlinking and freeing
++ * *kernel_path, *initrd_path and freeing *cmdline.
++ */
++bool read_eif_file(const char *eif_path, const char *machine_initrd,
++                   char **kernel_path, char **initrd_path, char **cmdline,
++                   uint8_t *image_sha384, uint8_t *bootstrap_sha384,
++                   uint8_t *app_sha384, uint8_t *fingerprint_sha384,
++                   bool *signature_found, Error **errp)
++{
++    FILE *f = NULL;
++    FILE *machine_initrd_f = NULL;
++    FILE *initrd_path_f = NULL;
++    long machine_initrd_size;
++    uint32_t crc = 0;
++    EifHeader eif_header;
++    bool seen_sections[EIF_SECTION_MAX] = {false};
++    /* kernel + ramdisks + cmdline sha384 hash */
++    GList *iov_PCR0 = NULL;
++    /* kernel + boot ramdisk + cmdline sha384 hash */
++    GList *iov_PCR1 = NULL;
++    /* application ramdisk(s) hash */
++    GList *iov_PCR2 = NULL;
++    uint8_t *ptr = NULL;
++    struct iovec *iov_ptr = NULL;
++
++    *signature_found = false;
++    *kernel_path = *initrd_path = *cmdline = NULL;
++
++    f = fopen(eif_path, "rb");
++    if (f == NULL) {
++        error_setg_errno(errp, errno, "Failed to open %s", eif_path);
++        goto cleanup;
++    }
++
++    if (!read_eif_header(f, &eif_header, &crc, errp)) {
++        goto cleanup;
++    }
++
++    if (eif_header.version < 4) {
++        error_setg(errp, "Expected EIF version 4 or greater");
++        goto cleanup;
++    }
++
++    if (eif_header.flags != 0) {
++        error_setg(errp, "Expected EIF flags to be 0");
++        goto cleanup;
++    }
++
++    if (eif_header.section_cnt > MAX_SECTIONS) {
++        error_setg(errp, "EIF header section count must not be greater than "
++                   "%d but found %d", MAX_SECTIONS, eif_header.section_cnt);
++        goto cleanup;
++    }
++
++    for (int i = 0; i < eif_header.section_cnt; ++i) {
++        EifSectionHeader hdr;
++        uint16_t section_type;
++
++        if (fseek(f, eif_header.section_offsets[i], SEEK_SET) != 0) {
++            error_setg_errno(errp, errno, "Failed to offset to %lu in EIF file",
++                             eif_header.section_offsets[i]);
++            goto cleanup;
++        }
++
++        if (!read_eif_section_header(f, &hdr, &crc, errp)) {
++            goto cleanup;
++        }
++
++        if (hdr.flags != 0) {
++            error_setg(errp, "Expected EIF section header flags to be 0");
++            goto cleanup;
++        }
++
++        if (eif_header.section_sizes[i] != hdr.section_size) {
++            error_setg(errp, "EIF section size mismatch between header and "
++                       "section header: header %lu, section header %lu",
++                       eif_header.section_sizes[i],
++                       hdr.section_size);
++            goto cleanup;
++        }
++
++        section_type = hdr.section_type;
++
++        switch (section_type) {
++        case EIF_SECTION_KERNEL:
++            if (seen_sections[EIF_SECTION_KERNEL]) {
++                error_setg(errp, "Invalid EIF image. More than 1 kernel "
++                           "section");
++                goto cleanup;
++            }
++
++            ptr = g_malloc(hdr.section_size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = ptr;
++            iov_ptr->iov_len = hdr.section_size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++
++            if (!read_eif_kernel(f, hdr.section_size, kernel_path, ptr, &crc,
++                                 errp)) {
++                goto cleanup;
++            }
++
++            break;
++        case EIF_SECTION_CMDLINE:
++        {
++            uint64_t size;
++            uint8_t *cmdline_copy;
++            if (seen_sections[EIF_SECTION_CMDLINE]) {
++                error_setg(errp, "Invalid EIF image. More than 1 cmdline "
++                           "section");
++                goto cleanup;
++            }
++            size = hdr.section_size;
++            *cmdline = g_malloc(size + 1);
++            if (!read_eif_cmdline(f, size, *cmdline, &crc, errp)) {
++                goto cleanup;
++            }
++            (*cmdline)[size] = '\0';
++
++            /*
++             * We make a copy of '*cmdline' for putting it in iovecs so that
++             * we can easily free all the iovec entries later as we cannot
++             * free '*cmdline' which is used by the caller.
++             */
++            cmdline_copy = g_memdup2(*cmdline, size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = cmdline_copy;
++            iov_ptr->iov_len = size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++            break;
++        }
++        case EIF_SECTION_RAMDISK:
++        {
++            if (!seen_sections[EIF_SECTION_RAMDISK]) {
++                /*
++                 * If this is the first time we are seeing a ramdisk section,
++                 * we need to create the initrd temporary file.
++                 */
++                if (!get_tmp_file("eif-initrd-XXXXXX", initrd_path, errp)) {
++                    goto cleanup;
++                }
++                initrd_path_f = fopen(*initrd_path, "wb");
++                if (initrd_path_f == NULL) {
++                    error_setg_errno(errp, errno, "Failed to open file %s",
++                                     *initrd_path);
++                    goto cleanup;
++                }
++            }
++
++            ptr = g_malloc(hdr.section_size);
++
++            iov_ptr = g_malloc(sizeof(struct iovec));
++            iov_ptr->iov_base = ptr;
++            iov_ptr->iov_len = hdr.section_size;
++
++            iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++            /*
++             * If it's the first ramdisk, we need to hash it into bootstrap
++             * i.e., iov_PCR1, otherwise we need to hash it into app i.e.,
++             * iov_PCR2.
++             */
++            if (!seen_sections[EIF_SECTION_RAMDISK]) {
++                iov_PCR1 = g_list_append(iov_PCR1, iov_ptr);
++            } else {
++                iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
++            }
++
++            if (!read_eif_ramdisk(f, initrd_path_f, hdr.section_size, ptr,
++                                  &crc, errp)) {
++                goto cleanup;
++            }
++
++            break;
++        }
++        case EIF_SECTION_SIGNATURE:
++            *signature_found = true;
++            if (!get_signature_fingerprint_sha384(f, hdr.section_size,
++                                                  fingerprint_sha384, &crc,
++                                                  errp)) {
++                goto cleanup;
++            }
++            break;
++        default:
++            /* other sections including invalid or unknown sections */
++        {
++            uint8_t *buf;
++            size_t got;
++            uint64_t size = hdr.section_size;
++            buf = g_malloc(size);
++            got = fread(buf, 1, size, f);
++            if ((uint64_t) got != size) {
++                g_free(buf);
++                error_setg(errp, "Failed to read EIF %s section data",
++                           section_type_to_string(section_type));
++                goto cleanup;
++            }
++            crc = crc32(crc, buf, size);
++            g_free(buf);
++            break;
++        }
++        }
++
++        if (section_type < EIF_SECTION_MAX) {
++            seen_sections[section_type] = true;
++        }
++    }
++
++    if (!seen_sections[EIF_SECTION_KERNEL]) {
++        error_setg(errp, "Invalid EIF image. No kernel section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_CMDLINE]) {
++        error_setg(errp, "Invalid EIF image. No cmdline section.");
++        goto cleanup;
++    }
++    if (!seen_sections[EIF_SECTION_RAMDISK]) {
++        error_setg(errp, "Invalid EIF image. No ramdisk section.");
++        goto cleanup;
++    }
++
++    if (eif_header.eif_crc32 != crc) {
++        error_setg(errp, "CRC mismatch. Expected %u but header has %u.",
++                   crc, eif_header.eif_crc32);
++        goto cleanup;
++    }
++
++    /*
++     * Let's append the initrd file from "-initrd" option if any. Although
++     * we pass the crc pointer to read_eif_ramdisk, it is not useful anymore.
++     * We have already done the crc mismatch check above this code.
++     */
++    if (machine_initrd) {
++        machine_initrd_f = fopen(machine_initrd, "rb");
++        if (machine_initrd_f == NULL) {
++            error_setg_errno(errp, errno, "Failed to open initrd file %s",
++                             machine_initrd);
++            goto cleanup;
++        }
++
++        machine_initrd_size = get_file_size(machine_initrd_f, errp);
++        if (machine_initrd_size == -1) {
++            goto cleanup;
++        }
++
++        ptr = g_malloc(machine_initrd_size);
++
++        iov_ptr = g_malloc(sizeof(struct iovec));
++        iov_ptr->iov_base = ptr;
++        iov_ptr->iov_len = machine_initrd_size;
++
++        iov_PCR0 = g_list_append(iov_PCR0, iov_ptr);
++        iov_PCR2 = g_list_append(iov_PCR2, iov_ptr);
++
++        if (!read_eif_ramdisk(machine_initrd_f, initrd_path_f,
++                              machine_initrd_size, ptr, &crc, errp)) {
++            goto cleanup;
++        }
++    }
++
++    if (!get_SHA384_digest(iov_PCR0, image_sha384, errp)) {
++        goto cleanup;
++    }
++    if (!get_SHA384_digest(iov_PCR1, bootstrap_sha384, errp)) {
++        goto cleanup;
++    }
++    if (!get_SHA384_digest(iov_PCR2, app_sha384, errp)) {
++        goto cleanup;
++    }
++
++    /*
++     * We only need to free iov_PCR0 entries because iov_PCR1 and
++     * iov_PCR2 iovec entries are subsets of iov_PCR0 iovec entries.
++     */
++    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
++    g_list_free(iov_PCR1);
++    g_list_free(iov_PCR2);
++    fclose(f);
++    fclose(initrd_path_f);
++    safe_fclose(machine_initrd_f);
 +    return true;
++
++ cleanup:
++    g_list_free_full(iov_PCR0, (GDestroyNotify) free_iovec);
++    g_list_free(iov_PCR1);
++    g_list_free(iov_PCR2);
++
++    safe_fclose(f);
++    safe_fclose(initrd_path_f);
++    safe_fclose(machine_initrd_f);
++
++    safe_unlink(*kernel_path);
++    g_free(*kernel_path);
++    *kernel_path = NULL;
++
++    safe_unlink(*initrd_path);
++    g_free(*initrd_path);
++    *initrd_path = NULL;
++
++    g_free(*cmdline);
++    *cmdline = NULL;
++
++    return false;
 +}
-+
-+static void lock_pcr(VirtIONSM *vnsm, int ind)
-+{
-+    vnsm->pcrs[ind].locked = true;
-+}
-+
-+static void virtio_nsm_device_realize(DeviceState *dev, Error **errp)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VirtIONSM *vnsm = VIRTIO_NSM(dev);
-+
-+    vnsm->max_pcrs = NSM_MAX_PCRS;
-+    vnsm->digest = (char *) "SHA384";
-+    if (vnsm->module_id == NULL) {
-+        vnsm->module_id = (char *) "i-234-enc5678";
-+    }
-+    vnsm->version_major = 1;
-+    vnsm->version_minor = 0;
-+    vnsm->version_patch = 0;
-+    vnsm->extend_pcr = extend_pcr;
-+    vnsm->lock_pcr = lock_pcr;
-+
-+    virtio_init(vdev, VIRTIO_ID_NITRO_SEC_MOD, 0);
-+
-+    vnsm->vq = virtio_add_queue(vdev, 2, handle_input);
-+}
-+
-+static void virtio_nsm_device_unrealize(DeviceState *dev)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+
-+    virtio_del_queue(vdev, 0);
-+    virtio_cleanup(vdev);
-+}
-+
-+static const VMStateDescription vmstate_pcr_info_entry = {
-+    .name = "pcr_info_entry",
-+    .minimum_version_id = 1,
-+    .version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(locked, struct PCRInfo),
-+        VMSTATE_UINT8_ARRAY(data, struct PCRInfo,
-+                            QCRYPTO_HASH_DIGEST_LEN_SHA384),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static const VMStateDescription vmstate_virtio_nsm_device = {
-+    .name = "virtio-nsm-device",
-+    .minimum_version_id = 1,
-+    .version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT_ARRAY(pcrs, VirtIONSM, NSM_MAX_PCRS, 1,
-+                             vmstate_pcr_info_entry, struct PCRInfo),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static const VMStateDescription vmstate_virtio_nsm = {
-+    .name = "virtio-nsm",
-+    .minimum_version_id = 1,
-+    .version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VIRTIO_DEVICE,
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static Property virtio_nsm_properties[] = {
-+    DEFINE_PROP_STRING("module-id", VirtIONSM, module_id),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void virtio_nsm_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+
-+    device_class_set_props(dc, virtio_nsm_properties);
-+    dc->vmsd = &vmstate_virtio_nsm;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    vdc->realize = virtio_nsm_device_realize;
-+    vdc->unrealize = virtio_nsm_device_unrealize;
-+    vdc->get_features = get_features;
-+    vdc->vmsd = &vmstate_virtio_nsm_device;
-+}
-+
-+static const TypeInfo virtio_nsm_info = {
-+    .name = TYPE_VIRTIO_NSM,
-+    .parent = TYPE_VIRTIO_DEVICE,
-+    .instance_size = sizeof(VirtIONSM),
-+    .class_init = virtio_nsm_class_init,
-+};
-+
-+static void virtio_register_types(void)
-+{
-+    type_register_static(&virtio_nsm_info);
-+}
-+
-+type_init(virtio_register_types)
-diff --git a/include/hw/virtio/cbor-helpers.h b/include/hw/virtio/cbor-helpers.h
+diff --git a/hw/core/eif.h b/hw/core/eif.h
 new file mode 100644
-index 0000000000..f25fd481ad
+index 0000000000..fed3cb5514
 --- /dev/null
-+++ b/include/hw/virtio/cbor-helpers.h
-@@ -0,0 +1,45 @@
++++ b/hw/core/eif.h
+@@ -0,0 +1,22 @@
 +/*
-+ * QEMU CBOR helpers
++ * EIF (Enclave Image Format) related helpers
 + *
 + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
 + *
@@ -2351,109 +881,18 @@ index 0000000000..f25fd481ad
 + * top-level directory.
 + */
 +
-+#ifndef QEMU_VIRTIO_CBOR_HELPERS_H
-+#define QEMU_VIRTIO_CBOR_HELPERS_H
++#ifndef HW_CORE_EIF_H
++#define HW_CORE_EIF_H
 +
-+#include <cbor.h>
-+
-+bool qemu_cbor_map_add(cbor_item_t *map, cbor_item_t *key, cbor_item_t *value);
-+
-+bool qemu_cbor_array_push(cbor_item_t *array, cbor_item_t *value);
-+
-+bool qemu_cbor_add_bool_to_map(cbor_item_t *map, const char *key, bool value);
-+
-+bool qemu_cbor_add_uint8_to_map(cbor_item_t *map, const char *key,
-+                                uint8_t value);
-+
-+bool qemu_cbor_add_map_to_map(cbor_item_t *map, const char *key,
-+                              size_t nested_map_size,
-+                              cbor_item_t **nested_map);
-+
-+bool qemu_cbor_add_bytestring_to_map(cbor_item_t *map, const char *key,
-+                                     uint8_t *arr, size_t len);
-+
-+bool qemu_cbor_add_null_to_map(cbor_item_t *map, const char *key);
-+
-+bool qemu_cbor_add_string_to_map(cbor_item_t *map, const char *key,
-+                                 const char *value);
-+
-+bool qemu_cbor_add_uint8_array_to_map(cbor_item_t *map, const char *key,
-+                                      uint8_t *arr, size_t len);
-+
-+bool qemu_cbor_add_uint8_key_bytestring_to_map(cbor_item_t *map, uint8_t key,
-+                                               uint8_t *buf, size_t len);
-+
-+bool qemu_cbor_add_uint64_to_map(cbor_item_t *map, const char *key,
-+                                 uint64_t value);
-+#endif
-diff --git a/include/hw/virtio/virtio-nsm.h b/include/hw/virtio/virtio-nsm.h
-new file mode 100644
-index 0000000000..57ddbbbf3f
---- /dev/null
-+++ b/include/hw/virtio/virtio-nsm.h
-@@ -0,0 +1,49 @@
-+/*
-+ * AWS Nitro Secure Module (NSM) device
-+ *
-+ * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * (at your option) any later version.  See the COPYING file in the
-+ * top-level directory.
-+ */
-+
-+#ifndef QEMU_VIRTIO_NSM_H
-+#define QEMU_VIRTIO_NSM_H
-+
-+#include "crypto/hash.h"
-+#include "hw/virtio/virtio.h"
-+#include "qom/object.h"
-+
-+#define NSM_MAX_PCRS 32
-+
-+#define TYPE_VIRTIO_NSM "virtio-nsm-device"
-+OBJECT_DECLARE_SIMPLE_TYPE(VirtIONSM, VIRTIO_NSM)
-+#define VIRTIO_NSM_GET_PARENT_CLASS(obj) \
-+    OBJECT_GET_PARENT_CLASS(obj, TYPE_VIRTIO_NSM)
-+
-+struct PCRInfo {
-+    bool locked;
-+    uint8_t data[QCRYPTO_HASH_DIGEST_LEN_SHA384];
-+};
-+
-+struct VirtIONSM {
-+    VirtIODevice parent_obj;
-+
-+    /* Only one vq - guest puts request and response buffers on it */
-+    VirtQueue *vq;
-+
-+    /* NSM State */
-+    uint16_t max_pcrs;
-+    struct PCRInfo pcrs[NSM_MAX_PCRS];
-+    char *digest;
-+    char *module_id;
-+    uint8_t version_major;
-+    uint8_t version_minor;
-+    uint8_t version_patch;
-+
-+    bool (*extend_pcr)(VirtIONSM *vnsm, int ind, uint8_t *data, uint16_t len);
-+    void (*lock_pcr)(VirtIONSM *vnsm, int ind);
-+};
++bool read_eif_file(const char *eif_path, const char *machine_initrd,
++                   char **kernel_path, char **initrd_path,
++                   char **kernel_cmdline, uint8_t *image_sha384,
++                   uint8_t *bootstrap_sha384, uint8_t *app_sha384,
++                   uint8_t *fingerprint_sha384, bool *signature_found,
++                   Error **errp);
 +
 +#endif
-diff --git a/meson.build b/meson.build
-index 33954b3eba..c578a6aede 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1683,6 +1683,8 @@ if (have_system or have_tools) and (virgl.found() or opengl.found())
- endif
- have_vhost_user_gpu = have_vhost_user_gpu and virgl.found() and opengl.found() and gbm.found()
- 
-+libcbor = dependency('libcbor', version: '>=0.7.0', required: false)
 +
- gnutls = not_found
- gnutls_crypto = not_found
- if get_option('gnutls').enabled() or (get_option('gnutls').auto() and have_system)
 -- 
 2.39.5
 
