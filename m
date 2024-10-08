@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43423CEF16B
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 12:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278EECEF170
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 13:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy9gd-0007hO-1h; Tue, 08 Oct 2024 08:51:35 -0400
+	id 1sy9rO-000384-6h; Tue, 08 Oct 2024 09:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gH-0007Rx-96
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yanjun.zhu@linux.dev>)
+ id 1sy6ZY-0000wL-1L
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 05:32:04 -0400
+Received: from out-183.mta0.migadu.com ([91.218.175.183])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gE-0002QG-Bz
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728391867;
+ (Exim 4.90_1) (envelope-from <yanjun.zhu@linux.dev>)
+ id 1sy6ZV-0008Aa-4m
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 05:32:03 -0400
+Message-ID: <3cecfd89-b6a6-47cc-8361-de6be943cf80@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1728379915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HJWuRNqEoFwGiS9Acn78TLn0S58AkpF1R7ZZlyTcOXE=;
- b=eB752ZzUjyMVvszQmGOkFcWPzr9RGF2B+3BzKVOiaQ2xwlOx7yy22SuJ5I3dSLNV7X4yxh
- BV8Fci6BejRvgjskdv4f318AGClLC7+TtwyLZdFfE102I4QHqb6tU8dE/RTntaJhJxeOAC
- WYOT5VcQKH0dNWTM716e3x7F8HL9qu8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-GYwxdxATM6KLxitOU-rbjA-1; Tue,
- 08 Oct 2024 08:51:04 -0400
-X-MC-Unique: GYwxdxATM6KLxitOU-rbjA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 377EB1936124; Tue,  8 Oct 2024 12:50:59 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.19])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66A0519560A2; Tue,  8 Oct 2024 12:50:56 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, belmouss@redhat.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 05/19] ui/dbus: fix filtering all update messages
-Date: Tue,  8 Oct 2024 16:50:14 +0400
-Message-ID: <20241008125028.1177932-6-marcandre.lureau@redhat.com>
-In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
-References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+ bh=uyDX2hRvovTAYvoIws3jWRBwqsnw6pkBjgs4txlDDoM=;
+ b=CcY1caTQRvy4cJ98Nts2DNWBdQvgC/IRAcqwXBDITgutCeHUejmWXQBSV9kRA7MjDxt5qD
+ 3g8cZYJMwj7v8TRI4Kvgeu/uJlL//rhOtYj1wzjnFP9UBvv1MzhnqUCGB7nt65cVKVrnia
+ z9u3zmO0VbpIKRmaXadFKyYvvFSeiWA=
+Date: Tue, 8 Oct 2024 17:31:37 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+To: Leon Romanovsky <leon@kernel.org>, Michael Galaxy <mgalaxy@akamai.com>
+Cc: Yu Zhang <yu.zhang@ionos.com>, Sean Hefty <shefty@nvidia.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>,
+ "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+References: <DM6PR12MB431364C7A2D94609B4AAF9A8BD6B2@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <0730fa9b-49cd-46e4-9264-afabe2486154@akamai.com> <Zvrq7nSbiLfPQoIY@x1n>
+ <DM6PR12MB4313D6BA256740DE1ACA29E9BD762@DM6PR12MB4313.namprd12.prod.outlook.com>
+ <ZvsAV0MugV85HuZf@x1n> <c24fa344-0add-477d-8ed3-bf2e91550e0b@akamai.com>
+ <Zv8P8uQmSowF8sGl@x1n> <6211c525-0b9b-4eba-ac3c-2ac796c8ec83@akamai.com>
+ <CAHEcVy7_WveokcN+3J2Qqxg8oJ1BT8sNoU2qUHeU8oZWwVyS6g@mail.gmail.com>
+ <856d4f0e-8742-4848-acc5-dbaa5d21c9fd@akamai.com>
+ <20241007181513.GC25819@unreal>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
+In-Reply-To: <20241007181513.GC25819@unreal>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=91.218.175.183; envelope-from=yanjun.zhu@linux.dev;
+ helo=out-183.mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 08 Oct 2024 09:02:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,134 +89,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+在 2024/10/8 2:15, Leon Romanovsky 写道:
+> On Mon, Oct 07, 2024 at 08:45:07AM -0500, Michael Galaxy wrote:
+>> Hi,
+>>
+>> On 10/7/24 03:47, Yu Zhang wrote:
+>>> !-------------------------------------------------------------------|
+>>>     This Message Is From an External Sender
+>>>     This message came from outside your organization.
+>>> |-------------------------------------------------------------------!
+>>>
+>>> Sure, as we talked at the KVM Forum, a possible approach is to set up
+>>> two VMs on a physical host, configure the SoftRoCE, and run the
+>>> migration test in two nested VMs to ensure that the migration data
+>>> traffic goes through the emulated RDMA hardware. I will continue with
+>>> this and let you know.
+>>>
+>> Acknowledged. Do share if you have any problems with it, like if it has
+>> compatibility issues
+>> or if we need a different solution. We're open to change.
+>>
+>> I'm not familiar with the "current state" of this or how well it would even
+>> work.
+> 
+> Any compatibility issue between versions of RXE (SoftRoCE) or between
+> RXE and real devices is a bug in RXE, which should be fixed.
+> 
+> RXE is expected to be compatible with rest RoCE devices, both virtual
+> and physical.
 
-Filtering pending messages when a new scanout is given shouldn't discard
-pending cursor changes, for example.
+ From my tests, about physical RoCE devices, for example, Nvidia MLX5 
+and intel E810 (iRDMA), if RDMA feature is disabled on those devices. 
+RXE can work well with them.
 
-Since filtering happens in a different thread, use atomic set/get.
+About Virtual devices, most virtual devices can work well with RXE, for 
+example,bonding, veth. I have done a lot of tests with them.
 
-Fixes: fa88b85dea ("ui/dbus: filter out pending messages when scanout")
+If some virtual devices can not work well with RXE, please share the 
+error messages in RDMA maillist.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/dbus-listener.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
+Zhu Yanjun
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 434bd608f2..c69afc05a8 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -26,6 +26,7 @@
- #include "qapi/error.h"
- #include "sysemu/sysemu.h"
- #include "dbus.h"
-+#include "glib.h"
- #ifdef G_OS_UNIX
- #include <gio/gunixfdlist.h>
- #endif
-@@ -85,7 +86,7 @@ struct _DBusDisplayListener {
- #endif
- 
-     guint dbus_filter;
--    guint32 out_serial_to_discard;
-+    guint32 display_serial_to_discard;
- };
- 
- G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
-@@ -93,10 +94,12 @@ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
- static void dbus_gfx_update(DisplayChangeListener *dcl,
-                             int x, int y, int w, int h);
- 
--static void ddl_discard_pending_messages(DBusDisplayListener *ddl)
-+static void ddl_discard_display_messages(DBusDisplayListener *ddl)
- {
--    ddl->out_serial_to_discard = g_dbus_connection_get_last_serial(
-+    guint32 serial = g_dbus_connection_get_last_serial(
-         g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
-+
-+    g_atomic_int_set(&ddl->display_serial_to_discard, serial);
- }
- 
- #ifdef CONFIG_OPENGL
-@@ -290,7 +293,7 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-         return;
-     }
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     width = qemu_dmabuf_get_width(dmabuf);
-     height = qemu_dmabuf_get_height(dmabuf);
-@@ -338,7 +341,7 @@ static bool dbus_scanout_map(DBusDisplayListener *ddl)
-         return false;
-     }
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     if (!qemu_dbus_display1_listener_win32_map_call_scanout_map_sync(
-             ddl->map_proxy,
-@@ -401,7 +404,7 @@ dbus_scanout_share_d3d_texture(
-         return false;
-     }
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     qemu_dbus_display1_listener_win32_d3d11_call_scanout_texture2d(
-         ddl->d3d11_proxy,
-@@ -659,7 +662,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
-         surface_stride(ddl->ds) * surface_height(ddl->ds), TRUE,
-         (GDestroyNotify)pixman_image_unref, pixman_image_ref(ddl->ds->image));
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     qemu_dbus_display1_listener_call_scanout(
-         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
-@@ -992,17 +995,35 @@ dbus_filter(GDBusConnection *connection,
-             gpointer         user_data)
- {
-     DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(user_data);
--    guint32 serial;
-+    guint32 serial, discard_serial;
- 
-     if (incoming) {
-         return message;
-     }
- 
-     serial = g_dbus_message_get_serial(message);
--    if (serial <= ddl->out_serial_to_discard) {
--        trace_dbus_filter(serial, ddl->out_serial_to_discard);
--        g_object_unref(message);
--        return NULL;
-+
-+    discard_serial = g_atomic_int_get(&ddl->display_serial_to_discard);
-+    if (serial <= discard_serial) {
-+        const char *member = g_dbus_message_get_member(message);
-+        static const char *const display_messages[] = {
-+            "Scanout",
-+            "Update",
-+#ifdef CONFIG_GBM
-+            "ScanoutDMABUF",
-+            "UpdateDMABUF",
-+#endif
-+            "ScanoutMap",
-+            "UpdateMap",
-+            "Disable",
-+            NULL,
-+        };
-+
-+        if (g_strv_contains(display_messages, member)) {
-+            trace_dbus_filter(serial, discard_serial);
-+            g_object_unref(message);
-+            return NULL;
-+        }
-     }
- 
-     return message;
--- 
-2.47.0
+> 
+> Thanks
+> 
+>>
+>> - Michael
+>>
+>>
+>>> On Fri, Oct 4, 2024 at 4:06 PM Michael Galaxy <mgalaxy@akamai.com> wrote:
+>>>>
+>>>> On 10/3/24 16:43, Peter Xu wrote:
+>>>>> !-------------------------------------------------------------------|
+>>>>>      This Message Is From an External Sender
+>>>>>      This message came from outside your organization.
+>>>>> |-------------------------------------------------------------------!
+>>>>>
+>>>>> On Thu, Oct 03, 2024 at 04:26:27PM -0500, Michael Galaxy wrote:
+>>>>>> What about the testing solution that I mentioned?
+>>>>>>
+>>>>>> Does that satisfy your concerns? Or is there still a gap here that needs to
+>>>>>> be met?
+>>>>> I think such testing framework would be helpful, especially if we can kick
+>>>>> it off in CI when preparing pull requests, then we can make sure nothing
+>>>>> will break RDMA easily.
+>>>>>
+>>>>> Meanwhile, we still need people committed to this and actively maintain it,
+>>>>> who knows the rdma code well.
+>>>>>
+>>>>> Thanks,
+>>>>>
+>>>> OK, so comments from Yu Zhang and Gonglei? Can we work up a CI test
+>>>> along these lines that would ensure that future RDMA breakages are
+>>>> detected more easily?
+>>>>
+>>>> What do you think?
+>>>>
+>>>> - Michael
+>>>>
+>>
 
 
