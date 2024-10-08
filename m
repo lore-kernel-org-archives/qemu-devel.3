@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811A5CED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09457CED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyq3-0004Eg-Gu; Mon, 07 Oct 2024 21:16:35 -0400
+	id 1sxyuK-0005iY-Qx; Mon, 07 Oct 2024 21:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypv-0004AJ-1q; Mon, 07 Oct 2024 21:16:28 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypr-0008MF-3c; Mon, 07 Oct 2024 21:16:26 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4980OvVv002125;
- Tue, 8 Oct 2024 01:16:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=M/5O55L4D9xLC
- 32wTkb064/Yo3FwLmQOtumJQJUqbXo=; b=DmjG9nQAQmyaDVkwy/J4YdDDldZyV
- LJGBh6zsozVcxVFvAHSlMacgER7S+qqRkliNdv4vNmNJ8lL6dqTjpD0ffYBY5us1
- EdjTYIUKdW7UoT5Bwfs32EP/XygWzigxI3dtJOX3UcsqFXKuoFPEaBGRyukBsM+a
- 4wqoCKjeSJIoH5gV6Ys2h8kCtBZCaJt22tymJXzc+Gacc9obamg1I6bRAFzknK/2
- sj5zr2hgt4gqJaPr4SCZYp6BpCOf2s1snNXqhDfdR8I2KwJgGqkdZnehjkB+M/+I
- 9Mq08Zvpqq4K5GC6vk9zxa5iLevoy4wwhUrrH2KK5DhntUrv+POpmeGqg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5e5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:20 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GK49001040;
- Tue, 8 Oct 2024 01:16:20 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424t5tg5e0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497LU5a2022671;
- Tue, 8 Oct 2024 01:16:19 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423h9jsfjv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:19 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981GHes19727096
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:18 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C4D9358055;
- Tue,  8 Oct 2024 01:16:17 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4582C58043;
- Tue,  8 Oct 2024 01:16:17 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.51.58])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:17 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 16/19] s390x: Rebuild IPLB for SCSI device directly from
- DIAG308
-Date: Mon,  7 Oct 2024 21:15:49 -0400
-Message-ID: <20241008011552.2645520-17-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: wt_j9CsqOrungpBblkIk2QiXHORF3hed
-X-Proofpoint-GUID: CkLm7p3iuTjp1H40OInxvUdO3aX_Fd_R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0 clxscore=1015
- mlxlogscore=999 adultscore=0 spamscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410080006
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3oogEZwUKCgUyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sxysz-0008OB-KP
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:38 -0400
+Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3oogEZwUKCgUyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sxysx-0000EB-9V
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:37 -0400
+Received: by mail-yb1-xb49.google.com with SMTP id
+ 3f1490d57ef6-e2605ce4276so8766179276.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1728350371; x=1728955171; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=1slVDOqEB8KWMUfUEIu1Co2wfDTjYSlNZhTPxBm4iBk=;
+ b=P6q/CdY2awtYAOESYIzSPypj0ywt66EHkHcaQ4Ik6RCVsKPZcpdlagLWu2EA9E/qkx
+ kPWPqSogwcG9NFEjbOqhckGS1WXgG4qdQZV3eYnDauQ+RPyljgHmdVxAMjRNLQNJBbUA
+ aszKSpEEukX6Dm5Ymm9yRK38GfC37D7TcY3FKag2cz4S/ofkK52wuluJ0tyoPjcU7nz0
+ i0AlFclQ5h5Fn5O72lJD3R19/Y3QAJA30KydLPUrajKiOrfvG5GIcPJexaApoW5Cq8nN
+ q4uelEFGtVW9X/of+XOu6LU1/DAY32WDfJlOh1zTeAdX+ZU4qHYSWxvudHq3pSfc9K79
+ oWyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728350371; x=1728955171;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1slVDOqEB8KWMUfUEIu1Co2wfDTjYSlNZhTPxBm4iBk=;
+ b=RQMW/EScZxu+RZ37/31blft+ehXqqrR3H5n6Pr9htV9w67Yjj2D+i33Xymjd/HHUfs
+ 7BqbuKKjz3U5rchTTBEonGTPZxieHhUil+AqheW7iQaxbY+Gvb7Dkh4it9cs909ZCP1T
+ 9CZ5+XyiR4AmccVJbap3cCJeL60MvcAz0potETMRoel4WjMVJ5aTmh4QhWxSQ+w6ZEjw
+ HGVIQlGCOUTKr+FH2GGSHSpbEF9xkDtbfYvthymZPPtIvPuYRx801zp7x3255F7L1W42
+ h2J0CFBsgFWgYIDEJ9cO797WKvPKp1nqhLYcCD9hJJIujUsufTBMEprnmNJ7UFrfEBCs
+ pJ1g==
+X-Gm-Message-State: AOJu0YxCqNnRn0S9tNB5loauc5rb8Y6wOIfZkgn1lIq7b8vu6IUpty1B
+ yYJYyhVquGkuE277DsnlrWJopyDEbllLsY3Z09XBXMDsiCpcBRbIvnyJ/gb6Fc1F4fkq3OYxM7M
+ HwWp5qQiXjwoWrI0xar+rgdIiLqHEwSJeMYi1ZGJxIEV2IHpk7qxNID3S1hqT4FDgfycH21RKmn
+ /1oaCjOq2I37EnrCaV8GLGV3gAKA==
+X-Google-Smtp-Source: AGHT+IHxB5sCWH5nkCL2OyLmSweayfDOeEQuNrJr5rUOJUR090O0aNAKrhs0d0x92rZnK79q0Qx+PG1vCw==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a5b:388:0:b0:e20:2502:be14 with
+ SMTP id
+ 3f1490d57ef6-e289391f4abmr10789276.7.1728350370295; Mon, 07 Oct 2024 18:19:30
+ -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:46 -0700
+In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
+Mime-Version: 1.0
+References: <20241008011852.1439154-1-tavip@google.com>
+X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
+Message-ID: <20241008011852.1439154-21-tavip@google.com>
+Subject: [PATCH v2 20/25] tests/qtest: add tests for flexcomm i2c
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
+ crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
+ envelope-from=3oogEZwUKCgUyf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com;
+ helo=mail-yb1-xb49.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,251 +97,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Add master mode tests for flexcomm i2c.
 
-Because virtio-scsi type devices use a non-architected IPLB pbt code they cannot
-be set and stored normally. Instead, the IPLB must be rebuilt during re-ipl.
-
-As s390x does not natively support multiple boot devices, the devno field is
-used to store the position in the boot order for the device.
-
-Handling the rebuild as part of DIAG308 removes the need to check the devices
-for invalid IPLBs later in the IPL.
-
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/s390x/ipl.h              | 11 ++++--
- include/hw/s390x/ipl/qipl.h |  3 +-
- hw/s390x/ipl.c              | 75 +++++++------------------------------
- pc-bios/s390-ccw/jump2ipl.c | 11 ++++--
- target/s390x/diag.c         |  9 ++++-
- 5 files changed, 39 insertions(+), 70 deletions(-)
+ tests/qtest/flexcomm-i2c-test.c | 170 ++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build         |   2 +-
+ 2 files changed, 171 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/flexcomm-i2c-test.c
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 54eb48fd6e..aead1d6ae5 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -24,6 +24,7 @@
- 
- void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
-+void s390_rebuild_iplb(uint16_t index, IplParameterBlock *iplb);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
- int s390_ipl_prepare_pv_header(Error **errp);
- int s390_ipl_pv_unpack(void);
-@@ -65,7 +66,8 @@ struct S390IPLState {
-     bool enforce_bios;
-     bool iplb_valid;
-     bool iplb_valid_pv;
--    bool netboot;
-+    bool rebuilt_iplb;
-+    uint16_t iplb_index;
-     /* reset related properties don't have to be migrated or reset */
-     enum s390_reset reset_type;
-     int reset_cpu_index;
-@@ -172,11 +174,14 @@ static inline bool iplb_valid_pv(IplParameterBlock *iplb)
- 
- static inline bool iplb_valid(IplParameterBlock *iplb)
- {
-+    uint32_t len = be32_to_cpu(iplb->len);
+diff --git a/tests/qtest/flexcomm-i2c-test.c b/tests/qtest/flexcomm-i2c-test.c
+new file mode 100644
+index 0000000000..45f31da7de
+--- /dev/null
++++ b/tests/qtest/flexcomm-i2c-test.c
+@@ -0,0 +1,170 @@
++/*
++ * Copyright (c) 2024 Google LLC.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-     switch (iplb->pbt) {
-     case S390_IPL_TYPE_FCP:
--        return be32_to_cpu(iplb->len) >= S390_IPLB_MIN_FCP_LEN;
-+        return len >= S390_IPLB_MIN_FCP_LEN;
-     case S390_IPL_TYPE_CCW:
--        return be32_to_cpu(iplb->len) >= S390_IPLB_MIN_CCW_LEN;
-+        return (len >= S390_IPLB_MIN_CCW_LEN);
-+    case S390_IPL_TYPE_QEMU_SCSI:
-     default:
-         return false;
-     }
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index e56b181298..451f3b1684 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -28,7 +28,8 @@
-  */
- struct QemuIplParameters {
-     uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
-+    uint8_t  index;
-+    uint8_t  reserved1[2];
-     uint64_t reserved2;
-     uint32_t boot_menu_timeout;
-     uint8_t  reserved3[2];
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index aec79f41a8..50fde05b67 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -448,7 +448,6 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
- 
- static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
--    S390IPLState *ipl = get_ipl_device();
-     CcwDevice *ccw_dev = NULL;
-     SCSIDevice *sd;
-     int devtype;
-@@ -481,9 +480,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-             iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         case CCW_DEVTYPE_VIRTIO_NET:
--            /* The S390IPLState netboot is true if ANY IPLB may use netboot */
--            ipl->netboot = true;
--            /* Fall through to CCW_DEVTYPE_VIRTIO case */
-         case CCW_DEVTYPE_VIRTIO:
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-             iplb->blk0_len =
-@@ -508,6 +504,17 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     return false;
- }
- 
++#include "qemu/osdep.h"
 +
-+void s390_rebuild_iplb(uint16_t dev_index, IplParameterBlock *iplb)
++#include "qemu/config-file.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "qemu/sockets.h"
++#include "sysemu/sysemu.h"
++#include "qemu/main-loop.h"
++#include "qemu/option.h"
++#include "exec/memory.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-core.h"
++
++#include "hw/misc/flexcomm.h"
++#include "hw/arm/svd/flexcomm_i2c.h"
++#include "hw/arm/svd/rt500.h"
++#include "hw/misc/i2c_tester.h"
++#include "reg-utils.h"
++
++#define PERIPH_ADDR (0x50)
++#define INVALID_ADDR (0x10)
++
++#define REG_ADDR 11
++#define REG_VALUE 0xAA
++
++#define FLEXCOMM_BASE RT500_FLEXCOMM0_BASE
++#define FLEXCOMM_I2C_BASE RT500_FLEXCOMM0_BASE
++#define DEVICE_NAME "/machine/soc/flexcomm0"
++
++struct TestState {
++    QTestState *qtest;
++};
++
++static void master_test(gconstpointer user_data)
 +{
-+    S390IPLState *ipl = get_ipl_device();
-+    uint16_t index;
-+    index = ipl->rebuilt_iplb ? ipl->iplb_index : dev_index;
++    struct TestState *t = (struct TestState *)user_data;
++    uint32_t tmp;
 +
-+    ipl->rebuilt_iplb = s390_build_iplb(get_boot_device(index), iplb);
-+    ipl->iplb_index = index;
++    qtest_irq_intercept_out_named(t->qtest, DEVICE_NAME,
++                                  SYSBUS_DEVICE_GPIO_IRQ);
++
++    /* Select and lock I2C */
++    tmp = FLEXCOMM_PERSEL_I2C;
++    FIELD_DP32(tmp, FLEXCOMM_PSELID, LOCK, 1);
++    REG32_WRITE(FLEXCOMM, PSELID, tmp);
++
++    /* Enable master mode */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, CFG, MSTEN, 1);
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, CFG, MSTEN) == 1);
++
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTPENDING) == 1);
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_IDLE);
++
++    /* Enable interrupts */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, INTENSET, MSTPENDINGEN, 1);
++    g_assert_true(get_irq(0));
++
++    /* start for invalid address  */
++    REG32_WRITE(FLEXCOMM_I2C, MSTDAT, INVALID_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_NAKADR);
++    g_assert_true(get_irq(0));
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++
++    /* write past the last register */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, I2C_TESTER_NUM_REGS + 10);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_NAKDAT);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++
++    /* write value to register */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, REG_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, REG_VALUE);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_IDLE);
++
++    /* read value back from register */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, REG_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_TXRDY);
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, (PERIPH_ADDR + 1));
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++    g_assert_true(get_irq(0));
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_RXRDY);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_I2C, MSTDAT, DATA), ==,
++                     REG_VALUE);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++
++    /*
++     * Check that the master ended the transaction (i.e. i2c_end_transfer was
++     * called). If the master does not properly end the transaction this would
++     * be seen as a restart and it would not be NACKed.
++     */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, MSTDAT, DATA, INVALID_ADDR);
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
++
++    g_assert(REG32_READ_FIELD(FLEXCOMM_I2C, STAT, MSTSTATE) ==
++             MSTSTATE_NAKADR);
++    g_assert_true(get_irq(0));
++    REG32_WRITE_FIELD_NOUPDATE(FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++
++    /* Disable interrupts */
++    REG32_WRITE_FIELD(FLEXCOMM_I2C, INTENCLR, MSTPENDINGCLR, 1);
++    g_assert_false(get_irq(0));
 +}
 +
- static bool s390_init_all_iplbs(S390IPLState *ipl)
- {
-     int iplb_num = 0;
-@@ -558,44 +565,6 @@ static bool s390_init_all_iplbs(S390IPLState *ipl)
-     return iplb_num;
- }
- 
--static bool is_virtio_ccw_device_of_type(IplParameterBlock *iplb,
--                                         int virtio_id)
--{
--    uint8_t cssid;
--    uint8_t ssid;
--    uint16_t devno;
--    uint16_t schid;
--    SubchDev *sch = NULL;
--
--    if (iplb->pbt != S390_IPL_TYPE_CCW) {
--        return false;
--    }
--
--    devno = be16_to_cpu(iplb->ccw.devno);
--    ssid = iplb->ccw.ssid & 3;
--
--    for (schid = 0; schid < MAX_SCHID; schid++) {
--        for (cssid = 0; cssid < MAX_CSSID; cssid++) {
--            sch = css_find_subch(1, cssid, ssid, schid);
--
--            if (sch && sch->devno == devno) {
--                return sch->id.cu_model == virtio_id;
--            }
--        }
--    }
--    return false;
--}
--
--static bool is_virtio_net_device(IplParameterBlock *iplb)
--{
--    return is_virtio_ccw_device_of_type(iplb, VIRTIO_ID_NET);
--}
--
--static bool is_virtio_scsi_device(IplParameterBlock *iplb)
--{
--    return is_virtio_ccw_device_of_type(iplb, VIRTIO_ID_SCSI);
--}
--
- static void update_machine_ipl_properties(IplParameterBlock *iplb)
- {
-     Object *machine = qdev_get_machine();
-@@ -635,7 +604,7 @@ void s390_ipl_update_diag308(IplParameterBlock *iplb)
-         ipl->iplb = *iplb;
-         ipl->iplb_valid = true;
-     }
--    ipl->netboot = is_virtio_net_device(iplb);
++int main(int argc, char **argv)
++{
++    int ret;
++    struct TestState test;
 +
-     update_machine_ipl_properties(iplb);
- }
- 
-@@ -662,32 +631,14 @@ IplParameterBlock *s390_ipl_get_iplb(void)
- void s390_ipl_reset_request(CPUState *cs, enum s390_reset reset_type)
- {
-     S390IPLState *ipl = get_ipl_device();
--
-     if (reset_type == S390_RESET_EXTERNAL || reset_type == S390_RESET_REIPL) {
-         /* use CPU 0 for full resets */
-         ipl->reset_cpu_index = 0;
-     } else {
-         ipl->reset_cpu_index = cs->cpu_index;
-     }
--    ipl->reset_type = reset_type;
- 
--    if (reset_type == S390_RESET_REIPL &&
--        ipl->iplb_valid &&
--        !ipl->netboot &&
--        ipl->iplb.pbt == S390_IPL_TYPE_CCW &&
--        is_virtio_scsi_device(&ipl->iplb)) {
--        CcwDevice *ccw_dev = s390_get_ccw_device(get_boot_device(0), NULL);
--
--        if (ccw_dev &&
--            cpu_to_be16(ccw_dev->sch->devno) == ipl->iplb.ccw.devno &&
--            (ccw_dev->sch->ssid & 3) == ipl->iplb.ccw.ssid) {
--            /*
--             * this is the original boot device's SCSI
--             * so restore IPL parameter info from it
--             */
--            ipl->iplb_valid = s390_build_iplb(get_boot_device(0), &ipl->iplb);
--        }
--    }
-+    ipl->reset_type = reset_type;
-     if (reset_type == S390_RESET_MODIFIED_CLEAR ||
-         reset_type == S390_RESET_LOAD_NORMAL ||
-         reset_type == S390_RESET_PV) {
-diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
-index 92627b56c6..711a69a206 100644
---- a/pc-bios/s390-ccw/jump2ipl.c
-+++ b/pc-bios/s390-ccw/jump2ipl.c
-@@ -40,10 +40,15 @@ int jump_to_IPL_code(uint64_t address)
-     write_subsystem_identification();
-     write_iplb_location();
- 
--    /* prevent unknown IPL types in the guest */
-+    /*
-+     * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
-+     * iplb.devno is set to the boot position of the target SCSI device.
-+     */
-     if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
--        iplb.pbt = S390_IPL_TYPE_CCW;
--        set_iplb(&iplb);
-+        iplb.devno = qipl.index;
-+        if (!set_iplb(&iplb)) {
-+            panic("Failed to set IPLB");
-+        }
-     }
- 
-     /*
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index 27ffd48576..a1fd54ddac 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -133,7 +133,14 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
- 
-         valid = subcode == DIAG308_PV_SET ? iplb_valid_pv(iplb) : iplb_valid(iplb);
-         if (!valid) {
--            env->regs[r1 + 1] = DIAG_308_RC_INVALID;
-+            if (subcode == DIAG308_SET && iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
-+                s390_rebuild_iplb(iplb->devno, iplb);
-+                s390_ipl_update_diag308(iplb);
-+                env->regs[r1 + 1] = DIAG_308_RC_OK;
-+            } else {
-+                env->regs[r1 + 1] = DIAG_308_RC_INVALID;
-+            }
++    module_call_init(MODULE_INIT_QOM);
++    g_test_init(&argc, &argv, NULL);
 +
-             goto out;
-         }
++    qtest_add_data_func("/flexcomm-i2c/master", &test, master_test);
++
++    test.qtest = qtest_start("-M rt595-evk "
++                          "-device i2c-tester,address=0x50,bus=/flexcomm0-i2c");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index c7a5bb61e9..c21b18c304 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -233,7 +233,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test', 'flexcomm-i2c-test'] : []) + \
+   ['arm-cpu-features',
+    'boot-serial-test']
  
 -- 
-2.45.1
+2.47.0.rc0.187.ge670bccf7e-goog
 
 
