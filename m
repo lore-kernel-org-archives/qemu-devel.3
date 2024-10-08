@@ -4,205 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 489EFCEFC26
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 15:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17C2CEFC27
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 15:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syCLh-0006WT-Mn; Tue, 08 Oct 2024 11:42:10 -0400
+	id 1syCOs-0007bK-9M; Tue, 08 Oct 2024 11:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1syCLb-0006W0-4m
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:42:04 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syCOj-0007aW-3N
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:45:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1syCLY-00033k-3w
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:42:02 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498Dtar3031985;
- Tue, 8 Oct 2024 15:41:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=xfpoCOGffj3K8hh/dLMRJVKos+hgizKldhnKv207St0=; b=
- aIre6UKT+fX5CNE1flsGsW28WEcYjvsht5F2fGUnas13v0525zQLoiUyKIuI6GDW
- 1MJZG9M/FNuDSG9c5oi0fkH2NDEhx+yK3mOviMIWgYjkNMU4Rkfp6CbRc/4BSJ+6
- cVFctmQl0mt7wuE/j5FgM9vDsGfYh1XO0TC+A2rGv4DC5kwbUi453itRnOF56vB4
- H7BUbX4iZgXoRblcxIAs7R7ByUwswLu4E5wNsD6P+f0XadRoBQEPP6U53sjvPLET
- FptOuM78lU3InSEkbEoiQNwZUu2y9vW9dTBu9/rtrHpqQngqF16IKH44g6CnjEQY
- lq8nzruu6jmfQIQ34kuqcA==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42303ye5ck-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 08 Oct 2024 15:41:55 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 498FfbLm038388; Tue, 8 Oct 2024 15:41:54 GMT
-Received: from nam04-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam04lp2043.outbound.protection.outlook.com [104.47.73.43])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 422uw7d2g7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 08 Oct 2024 15:41:54 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HmZ9gD/lHfvbbFEIWETHXHjaDzLMgZpMVPkLPhJl4Cl3asJRHQkPyjKX0Zbf37OpgwsuNUPZj4NatnIENQOT2pWRJRrBuQ6Zvqb04bO5UnCiC9T0kvvIALeGT2LNFbPaXRBCEYdCnwD3/cEGgpOGG/e3rXvO8/A2mSfjt3nKsfta3QmpRWWk9ZKIlXFjjB39q4L941C4aJLs//s+rp0jP25UX3769oIdk9bwSpIbnVdF8p1Ua2vac4sJVzxoNKDIyLlkPltXWtvn0QV54TocLmph9Vx8ZcrPjYDFfMdMefvMFAB9StrdLxcyh12KKj1DJMgg46/4F/ndzHK61ze4Ag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xfpoCOGffj3K8hh/dLMRJVKos+hgizKldhnKv207St0=;
- b=tJyMWSzHsabPHVjQDOElwHB/qAoZifPLll3cQ3NZ+Qno1sb9uKVh+RphBzLx8Ryf/fSyevenuL7TckLe45N02lopyCou9vgbHqLfZJpSQNK0JuFyrvz4oPUhIcKgJL9Fti+IvsOqFosAk+f63lI1mA0xqBD34BWqa0cmH6iH2+vXc81FY6nO8QQljkuCVhtHG6J2JbHYPmOAt3vBCuX3F/2TQKXHy//A8a1dGPaTWev4VHXcS9gNfi1GQK2wBAgT/jqEFSkp+nF5qwbySsPoHOtyV1n4ogX26r8Z2ItS58Sd3hwDRfkVjFhAyaeVRNQCAlyCdmz+nR4n9KgMV7Atjg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xfpoCOGffj3K8hh/dLMRJVKos+hgizKldhnKv207St0=;
- b=CzJli6g841NvE+B84Yp5hpggT/E53xSs4pD0AhWefHgJluycltYyChAdailpnTjuV/BLSRi33A/dYDadHOCW7LFqCaqqbtMeKaVm+thUzP9cu6yr46Kah4lTMhGhn1TeH+ESjYAljg+KYhlMu86r5A03Bj22Yo0DHDqYWq4I0W4=
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
- by IA0PR10MB7133.namprd10.prod.outlook.com (2603:10b6:208:400::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.23; Tue, 8 Oct
- 2024 15:40:34 +0000
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935%6]) with mapi id 15.20.8026.020; Tue, 8 Oct 2024
- 15:40:34 +0000
-Message-ID: <5ebfd766-c8b5-4fb3-86ad-17a74212ef5e@oracle.com>
-Date: Tue, 8 Oct 2024 11:40:29 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 1/2] vhost-vdpa: Implement IOVA->GPA tree
-To: Eugenio Perez Martin <eperezma@redhat.com>,
- Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, leiyang@redhat.com,
- peterx@redhat.com, dtatulea@nvidia.com, jasowang@redhat.com,
- boris.ostrovsky@oracle.com
-References: <20241004124445.3802090-1-jonah.palmer@oracle.com>
- <20241004124445.3802090-2-jonah.palmer@oracle.com>
- <CAJaqyWd7c6ZU_4Hk_Wo79Ghw_LRxxjmvXUvZrASKE6WSWZcytg@mail.gmail.com>
- <e3108f34-f951-47d6-ac41-cbbc045a7bd1@oracle.com>
- <CAJaqyWcmjnPaAFGvE5=2e19wuAxOr2=AHX1y-dj70+49sdQh7Q@mail.gmail.com>
- <a1711695-9d0c-44f4-b799-1879404581d9@oracle.com>
- <CAJaqyWfYvD0nEYU9UgKzYgUo5JzuFu3PBKNEkDrM0BE0Ek5LfA@mail.gmail.com>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <CAJaqyWfYvD0nEYU9UgKzYgUo5JzuFu3PBKNEkDrM0BE0Ek5LfA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P123CA0425.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:18b::16) To PH0PR10MB4664.namprd10.prod.outlook.com
- (2603:10b6:510:41::11)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syCOg-0003bx-0L
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 11:45:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728402312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NOTESuifx+GxdynsbE3tK/a1J0DecfmBqRZlAjYzf6c=;
+ b=c0iGMEt+sDZ7Z5SqLTPBFNpRjLWyt/+QlV8i8aS0SqEuPrQZQOZOJkJuZQKcdUMuzDbsM/
+ zxtd8wJD2nb14kcciyVoMD3feHjjmyBXf0Na8ZF7stCeS9o2cfUGVj3RJPIM0ITOx5AlBu
+ ljixwf6kJKZHy889XYKB/33evXOp7/w=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199-4Y6MOyytP4agt53FTCdHJw-1; Tue, 08 Oct 2024 11:45:11 -0400
+X-MC-Unique: 4Y6MOyytP4agt53FTCdHJw-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a9a6634b08so942393885a.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 08:45:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728402310; x=1729007110;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NOTESuifx+GxdynsbE3tK/a1J0DecfmBqRZlAjYzf6c=;
+ b=bzi4q02y7fMxDr25K/b3sIoninmpMrAYZfIdxB+GO52UHxwd13uXok9xItK+42DeAC
+ 0M+4GRXXZ0dQwuLqENYacGCp2AwF/FzI4csnTL/c37A1EIH+3jGFdDxJ0vPR4KhthmCr
+ nRmsr3xl8pP7g53t6g3/RlkzcdfVK3EsVh9ITMfhDPX2NTUa+0kJSA0qcb3jyD7i3Pf8
+ RwzVl11ud57jnpGVD5ch52irJyfpFxgvydvImjazvvYOeOMvB+t+HMd3sa5r8I4iCR9O
+ wLKfIXM+g3OVj9EDH6LwAdGEhsxiYAFcGgeVVVcuiweBZ+3+jXwA49V+rMpYe5D6AxHe
+ 4MDA==
+X-Gm-Message-State: AOJu0Yw7ysAbCslulUJF4Yt7awVfkYawjMUolpMa+n4U4/qz43ltt+0j
+ LiGy5zB52THmDVcmw7qDFjFDy+8E4eeRBqWJtk0gt4P3/mhfPkANA/kXfbQQr/gjqoV58Wk4bF5
+ aZ29s3TGKR/vCQFjhxwLVgDmjvwem0vxr3A795AYwPEHFZq0SRR4o
+X-Received: by 2002:a05:620a:6689:b0:7a7:fe96:880a with SMTP id
+ af79cd13be357-7ae85f85435mr481600385a.31.1728402310192; 
+ Tue, 08 Oct 2024 08:45:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYahr0Ej9+B4pfXerR97Hf8pfagKO6zrLvi0l8zNVAQ99DsDJw/vXNBQxU8ww1XtFYipFJGQ==
+X-Received: by 2002:a05:620a:6689:b0:7a7:fe96:880a with SMTP id
+ af79cd13be357-7ae85f85435mr481594985a.31.1728402309630; 
+ Tue, 08 Oct 2024 08:45:09 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7ae756611b5sm364520885a.77.2024.10.08.08.45.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Oct 2024 08:45:09 -0700 (PDT)
+Date: Tue, 8 Oct 2024 11:45:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
+Message-ID: <ZwVTgl9t3KButBDs@x1n>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-14-git-send-email-steven.sistare@oracle.com>
+ <ZwQ6GbVCmitlills@x1n>
+ <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|IA0PR10MB7133:EE_
-X-MS-Office365-Filtering-Correlation-Id: ea4b5e22-05d0-484b-f644-08dce7af8caf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|1800799024|376014|366016|10070799003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cExzS0NJQitKc01WQTNtZm9uK0c4U1N5RllOYzFEaW8yQVlrdHBCYjhUeGFu?=
- =?utf-8?B?WlVvQjR5QVhKMitvam83V0UxeUljbjd3bEsvUm41SGU1ck9SVXBWUUNURDNm?=
- =?utf-8?B?eDlYWUR1RitTS2hrUXdmU3pEaWE0OFk0TWNMa0VGS1Q3b1BQb3JkMFNwd3Iz?=
- =?utf-8?B?WmNJbWRCaG1MemFKdDV3eEtDSUVxNkZZUm5xTThuT3g2TS91eVJjRHdEOFc4?=
- =?utf-8?B?Y2NPaEhNdFZYRGFjNmZwMnU2K1NValdiWFRiMHpCb0xvQXJRRDBaQXdJUytY?=
- =?utf-8?B?T1J4djR6UjgzSWwydStoRjY1bm5lUWFmL0YrUkt5RCtqa2xlWlB1Y09xMkJr?=
- =?utf-8?B?emY0eXM2MWNzd1NGZmhxaTJydVFFSkgvejhXRDNvYjNJcHJxRko3OUtWTXpx?=
- =?utf-8?B?M3VsdVhGNW01a0w1eHlkUUFPaUJ0NDVHU2VmZTFpZWJBRUJzcEFRZk9pRWtp?=
- =?utf-8?B?UVQ4cURYcURPU1pTWWFXbDBBS0hMOWxwVTVHY3hMeUVuTUZ1aHlWMlo3TUFk?=
- =?utf-8?B?RVBHdnpKY1RqMnFUdFEyQ1pWN29obTdLc2l1cHlkYWRDVU1ZREYwRERHdjNm?=
- =?utf-8?B?cHFnS21kdlZkMkh1OWVJbkVGemFqQStKWnF6U3FOTTRFMktYVVV3TjNxeXl0?=
- =?utf-8?B?bVd5eVZxZlZPWlRSM3NFaDBuVGpUMkYxcFJNeHVoNWo5cUVneHpCaUFkYW5t?=
- =?utf-8?B?UStHeTdPaHJjUXpLcjdyWjhjRlFJdkFwVHZ1WndOTk0yR1JnRGhFVHRHTm5y?=
- =?utf-8?B?STcwUENNT0hWT2pPWUszQ1JpWWFrTEFlZXBLejJ0WXZHNE5yNk0xRzM5MUpX?=
- =?utf-8?B?UXJqaFVILzd3QzFhU0ZJYVF1T1oydVlGbkNtMVdiMWhzMXBaVjBDQU42Smw0?=
- =?utf-8?B?UGJIOUlWQzVkWHdTM0ZqYzBrM1NZN3U2VmR5Z3BIcFhLZ2hDVzBSVzhPQ21I?=
- =?utf-8?B?dWtMdlhvc1prS2FRelZNVUo0WTI5VVVhR2t6QW5xYTFIUlBTOFd6V3ZSYW5R?=
- =?utf-8?B?Q2ovdW5pWjJJbVV3YnVEYXo3bmFnR1FFR1Rvb0NtZTNyYjR2ZkwvbStyK1g2?=
- =?utf-8?B?U3BEeWdCMGQ4d0t0TkRwbTVzNkUxZGowSks4VCtUekdvRkUyNDhFZ3RrTk1W?=
- =?utf-8?B?Vit6Z0RaWHl2ZUlYeGlZYnBFZjhjR2lEYlFIbWFXWWcwYUFiN2xvMzFEei8r?=
- =?utf-8?B?c2NUWWcvVFZiaWdJZ0JQeWlWcUtFMlA2VU85enczQ2pDQ05RRHczdUtEMDdh?=
- =?utf-8?B?amhOY2RVMG9aQkg2NndJSXFzWFdPOFZ4MlhVOFVBTnZBYi9VMUw5N3YySlhu?=
- =?utf-8?B?cnF1bGExVFVpSzYwOHZxOEhpQkl0K2UxTytBU1NBdWloQzROd3YxbHRQdk1o?=
- =?utf-8?B?aFdmanhha2Y1clY3VWE1MG9GZFBrY09Cd1FGaEV6dDJiK0t4NFBYWEMxbitH?=
- =?utf-8?B?UXMrY2pIdEYreGVaanFqTkV5VTIzQ2IvOFlpOEEyT0RuNVF5OUxpV0NzU0Jh?=
- =?utf-8?B?VUw1YXpFTUx2UGZ4a3VkeGRabThnZ3hMRkJLTlRYZTE2RGtYejl3QkYxNHo1?=
- =?utf-8?B?RTBZemEzU2N2b0R6VE5FNWE1K3E0WGVXcGZmUkIxR3A0NS94c2FRQTZzcmFa?=
- =?utf-8?B?MEdlSVRra0ZsMlhTQ2tjdWM3VGtlUnNNdC9lT0JFdTc0Sng0bS9rTHpTRTRi?=
- =?utf-8?B?a0kvQmVkd0FjRlF5NkdveXg1N0F3S1FpWG1rYSs2S2x0UkdWc1NYendRPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(10070799003); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K2VJaTdpa3pSVGduc3ovNklsYXpNNzNGVEppaWdhaExMTy9mNjB1Vm5uRGVn?=
- =?utf-8?B?WHBINFgycUJnODZpb1NadEdkZlhtaWZzendlS2ZtWlRxaDZ3K2NRc2RlWTdO?=
- =?utf-8?B?M3BvTTJ2K3oySm5qbVpvMGZHejJtZkdLeEhKWmEzby9Td2dKdGl6UXptM3c3?=
- =?utf-8?B?YzViYWZWdDV6NWZmUFhmTHNCdzFQYjFjQ1BWZklwUEJ3d0YzaVo2SFUyZDc2?=
- =?utf-8?B?YVhRa3lhRHJUZFcvbHRBcDVBYUVheDk5NkJaUHdKQ0pYeTVLUFRYYkh6cVNZ?=
- =?utf-8?B?NSs0UjcyREJpVVBTdzIrWm1PcVR6RDh0em9XczhMRXVSajFPWG5OejI2REVX?=
- =?utf-8?B?REZ2TEl0bWlrVTlPMVp2dHVkOTB1MWwycE5YK1QvK0lrRlg3ZFY2V0Z0WHAy?=
- =?utf-8?B?ZVJRYUw0U09TZ0RKTEVsdURjNUhrNlBZN1FadW8vcGZEa3kvOEk3ZXA2aTNm?=
- =?utf-8?B?UTJ6dDRVSU9DUUExajBtUmlwcmorZ25XeDJLVFlaRjN6ZUs0N3E1a3FYZklY?=
- =?utf-8?B?bExRVjhXdVJvUHc5RGw5Z2E5VzFHNnBVeFNIRnVoTnE2YTFiQ1lDMnFzaUoy?=
- =?utf-8?B?eVEyWTErRzk0QVFvOTlTWU5zekI0Uk53NzVmKzI4OXdmMkloMnNscytqdWha?=
- =?utf-8?B?cnp2Ynl3Mm1oZmp5MEl0ZTZJY3oxQkdLcWlYekorYlc3MDhnRURqejMrTFM1?=
- =?utf-8?B?RmY3NnV5MXpENHhEclJiZUZpTWRTeElEZW9lYWdnQjJGeUtrSDdneGxjK09Z?=
- =?utf-8?B?ajY4eStqWFhPWEx4cEJudy9CT2hjVnF1dEpjclNPOVUzUXVDRWdMaHdDQ25t?=
- =?utf-8?B?TGJXR1lXR1hJWjNSMGVYSStHV3FrVnhDZzFHUXE5ZlVIWUVSZTEzZWl2T0wz?=
- =?utf-8?B?QkF2V0FXS2Y4ZzZQK3FuWVowZzl0ZUhxbExKYWFCOUNmZ3NqMExxNXNvMFdL?=
- =?utf-8?B?NXEwb0IrZFF6QzFVSllJZUFPVksza0F1ellyRG4rTSsyUkk0L0YwMVBYSzVx?=
- =?utf-8?B?cWpmc2tuYjR2WFNBZkdLcDR6bnVqeElxeEtib3I3bjZ1cTFPTmtER242NnBT?=
- =?utf-8?B?akNSb042cWZYZXZ1Y3hwQnhxbDF3N0JQbDNxb0dDYnJETkxMMys2UDEvQnl6?=
- =?utf-8?B?NXdmc1NYQ2VabVdHWFhtSTB2akdxR1VseEg4ZjRSQzhxZXRuZTJKWWxsRmRs?=
- =?utf-8?B?Wmc3V05nM1FINTBqeUFUYm5vOTFHbG1FcHUzVHhVMTlhc3cwZHh0dTd2eHlm?=
- =?utf-8?B?T2gvbGpPYTNLQm5HbEJyd294UkFuNDFZekdmQjZnNGpDOC9YOUlWbnVhZDds?=
- =?utf-8?B?M2ppQTNnWU43VUo5aXJuaTBKUWZHbzRIbDN2SVlFT1lIVFMzWitPaXNxeEdj?=
- =?utf-8?B?dXpPSW96VWZaTDN6ZURYRGlRbXBvVm1OeHhrUHgvWEZOUFg5b2V1UmliNi9C?=
- =?utf-8?B?cXBrUkFzeEZTZ1NvRHRlOVRBdmwvT05tNUdJMFgzeFdXMndmWlN5UDl2ZlFr?=
- =?utf-8?B?ekhQNHhHVFV1aHZ1Q24yT3lpQm0rcCtDTzErbzNzSDdoRERUaTF1UTIxZHAz?=
- =?utf-8?B?bVZPODIwdGhVU2hEUnUwL0JudnZXMHVycnV0WXBZNlNCNmQyTWRLeXdCaC9U?=
- =?utf-8?B?TExsZldXLzNRSXNEUnhiVVBObHdiWHdISms3YnFxZ2VCWk16Sk1ibE42OXkw?=
- =?utf-8?B?V2MrTXJEbUY1RkRja25jZVZxN1JGMEdCVnE4U0J2TWFRdkFwK0FzMjJIWUNW?=
- =?utf-8?B?UVFRVE9GNVljYmNCOXZDRklpOGV3bmV2dEVNYzRYRE8wV3ZHYjdHQTVTSE1i?=
- =?utf-8?B?ZU1hU2U1OElEam9ONE1GU0lwOHBJb1JTckxFVU1ISVRjTTdpRVJKVU9PSUk2?=
- =?utf-8?B?MzJ0aVdOWmhPc3RHd1lzeFpIOXpBWjY0UmF0b28yVll5ZkxIeWFycitVKzhQ?=
- =?utf-8?B?ZGlacjBvOVlqTzhQT2pyTVhrTGpsbUkyT01rQUZGc2ZIZkdtRklvcnEwSXcw?=
- =?utf-8?B?K3VRbXR0QmIvODBjdVAwdDJxc1huT0loaWV5Um5aK0NVcVk5MnFValBSR1E4?=
- =?utf-8?B?STVuU1QvVEpId2o5T0ZPMi92cG9uWmZVRnRWeU8reWJLdmFkcFpmaTh2ckt1?=
- =?utf-8?B?RlgxYTJDeG5yWWN0QzBWTms1dXdrb0dIY3cxV2ZlVFFCc094dlpGZ1pZeFVi?=
- =?utf-8?Q?qLa+SHi4T4Q0OaJ+UDrfgW4=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: WoinpkoWgMhgPOzAWKrj2pLh0OaX4flZdPKikCXUl46P+B17uJe9Y5CQ5dGBiXo8d1xb0hp0We1UQu4LVV0lW65Dsdb4D4AInlBoE1E3Pa1QUC9KvgU9Sv1gGoLz/nAhhMMWLpVOcV7Bd6ElGNI5iEnqsl3JZmal11taOdWzVfpSEoVRzzRtNbTvAgmFs72Fis8rJqh37GlTtnRrVRdNLwXK1TkXlgsdTmAL4zYZL//GKKsl+tFzXj7xptwH7Cexu//HEfTd8V4sX6k8B38dlNqlvJ+j4CIqP8qJsyNNsF2eE4HzDJT/UOSzxm3/sc33zwzCxWFQv+A4SOjuGJtT6mI1BvYVBUUs2ramnDW4Tcm+h3SgN06i1xG+0WbKdKdc6wLY+eI8eEcpQPm2qPNh2PRaHaKoftZXf5FhQ9LiO0CawgHcLsNMvx+dSv6TePTFtwtXse2r2qkuObK0xueeekAD4n66tV6LEq4gfdRtC7zIT2hL4bge09QSkxJPxm9x4A19u1pSnJgbgtelaAiJvnb5wmeg+mXWDbSrohhc4hJfW15bHvPH4hrD51F8AiBfPhnL3BXVmDJm0zKv5xx3+BsvltmfViClV/TfyP9kNX4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea4b5e22-05d0-484b-f644-08dce7af8caf
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2024 15:40:34.8078 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BNxEIDmHsIwhVoaP9LyNO5RhZIcGMo0/cbeZdX/XYLoD5LN8WItSWHNg6k48CXBJQajKL8PDOG9Z3ux73oFfAw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7133
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-08_14,2024-10-08_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0
- suspectscore=0 mlxscore=0 phishscore=0 adultscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2409260000 definitions=main-2410080099
-X-Proofpoint-ORIG-GUID: Bpc3YNQVXBbBTu1E520MGFQHQD7YTj7k
-X-Proofpoint-GUID: Bpc3YNQVXBbBTu1E520MGFQHQD7YTj7k
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -220,148 +108,439 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/8/24 2:51 AM, Eugenio Perez Martin wrote:
-> On Tue, Oct 8, 2024 at 2:14 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
->>
->>
->>
->> On 10/7/2024 6:51 AM, Eugenio Perez Martin wrote:
->>> On Fri, Oct 4, 2024 at 8:48 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
->>>>
->>>>
->>>> On 10/4/24 11:17 AM, Eugenio Perez Martin wrote:
->>>>> On Fri, Oct 4, 2024 at 2:45 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
->>>>>> Implements the IOVA->GPA tree for handling mapping, unmapping, and
->>>>>> translations for guest memory regions.
->>>>>>
->>>>>> When the guest has overlapping memory regions, an HVA to IOVA translation
->>>>>> may return an incorrect IOVA when searching the IOVA->HVA tree. This is
->>>>>> due to one HVA range being contained (overlapping) in another HVA range
->>>>>> in the IOVA->HVA tree. By creating an IOVA->GPA tree, we can use GPAs to
->>>>>> translate and find the correct IOVA for guest memory regions.
->>>>>>
->>>>> Yes, this first patch is super close to what I meant, just one issue
->>>>> and a pair of nits here and there.
->>>>>
->>>>> I'd leave the second patch as an optimization on top, if the numbers
->>>>> prove that adding the code is worth it.
->>>>>
->>>> Ah okay, gotcha. I also wasn't sure if what you mentioned below on the
->>>> previous series you also wanted implemented or if these would also be
->>>> optimizations on top.
->>>>
->>>> [Adding code to the vhost_iova_tree layer for handling multiple buffers
->>>> returned from translation for the memory area where each iovec covers]:
->>>> -----------------------------------------------------------------------
->>>> "Let's say that SVQ wants to translate the HVA range
->>>> 0xfeda0000-0xfedd0000. So it makes available for the device two
->>>> chained buffers: One with addr=0x1000 len=0x20000 and the other one
->>>> with addr=(0x20000c1000 len=0x10000).
->>>>
->>>> The VirtIO device should be able to translate these two buffers in
->>>> isolation and chain them. Not optimal but it helps to keep QEMU source
->>>> clean, as the device already must support it."
->>>>
->>> This is 100% in the device and QEMU is already able to split the
->>> buffers that way, so we don't need any change in QEMU.
->> Noted that if working with the full HVA tree directly, the internal iova
->> tree linear iterator iova_tree_find_address_iterator() today doesn't
->> guarantee the iova range returned can cover the entire length of the
->> iov, so things could happen like that the aliased range with smaller
->> size (than the requested) happens to be hit first in the linear search
->> and be returned, the fragmentation of which can't be guarded against by
->> the VirtIO device or the DMA API mentioned above.
->>
->> The second patch in this series kind of mitigated this side effect by
->> sorting out the backing ram_block with the help of
->> qemu_ram_block_from_host() in case of guest memory backed iov, so it
->> doesn't really count on vhost_iova_gpa_tree_find_iova() to find the
->> matching IOVA, but instead (somehow implicitly) avoids the fragmentation
->> side effect as mentioned above would never happen. Not saying I like the
->> way how it is implemented, but just wanted to point out the implication
->> if the second patch has to be removed - either add special handling code
->> to the iova-tree iterator sizing the range (same as how range selection
->> based upon permission will be done), or add special code in SVQ layer to
->> deal with fragmented IOVA ranges due to aliasing.
->>
+On Mon, Oct 07, 2024 at 04:39:25PM -0400, Steven Sistare wrote:
+> On 10/7/2024 3:44 PM, Peter Xu wrote:
+> > On Mon, Sep 30, 2024 at 12:40:44PM -0700, Steve Sistare wrote:
+> > > Add the cpr-transfer migration mode.  Usage:
+> > >    qemu-system-$arch -machine anon-alloc=memfd ...
+> > > 
+> > >    start new QEMU with "-incoming <uri-1> -cpr-uri <uri-2>"
+> > > 
+> > >    Issue commands to old QEMU:
+> > >    migrate_set_parameter mode cpr-transfer
+> > >    migrate_set_parameter cpr-uri <uri-2>
+> > >    migrate -d <uri-1>
+> > > 
+> > > The migrate command stops the VM, saves CPR state to uri-2, saves
+> > > normal migration state to uri-1, and old QEMU enters the postmigrate
+> > > state.  The user starts new QEMU on the same host as old QEMU, with the
+> > > same arguments as old QEMU, plus the -incoming option.  Guest RAM is
+> > > preserved in place, albeit with new virtual addresses in new QEMU.
+> > > 
+> > > This mode requires a second migration channel, specified by the
+> > > cpr-uri migration property on the outgoing side, and by the cpr-uri
+> > > QEMU command-line option on the incoming side.  The channel must
+> > > be a type, such as unix socket, that supports SCM_RIGHTS.
+> > > 
+> > > Memory-backend objects must have the share=on attribute, but
+> > > memory-backend-epc is not supported.  The VM must be started with
+> > > the '-machine anon-alloc=memfd' option, which allows anonymous
+> > > memory to be transferred in place to the new process.  The memfds
+> > > are kept open by sending the descriptors to new QEMU via the
+> > > cpr-uri, which must support SCM_RIGHTS, and they are mmap'd
+> > > in new QEMU.
+> > > 
+> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > > ---
+> > >   include/migration/cpr.h   |  1 +
+> > >   migration/cpr.c           | 34 +++++++++++++++++++----
+> > >   migration/migration.c     | 69 +++++++++++++++++++++++++++++++++++++++++++++--
+> > >   migration/migration.h     |  2 ++
+> > >   migration/ram.c           |  2 ++
+> > >   migration/vmstate-types.c |  5 ++--
+> > >   qapi/migration.json       | 27 ++++++++++++++++++-
+> > >   stubs/vmstate.c           |  7 +++++
+> > >   8 files changed, 137 insertions(+), 10 deletions(-)
+> > > 
+> > > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> > > index e886c98..5cd373f 100644
+> > > --- a/include/migration/cpr.h
+> > > +++ b/include/migration/cpr.h
+> > > @@ -30,6 +30,7 @@ int cpr_state_save(Error **errp);
+> > >   int cpr_state_load(Error **errp);
+> > >   void cpr_state_close(void);
+> > >   struct QIOChannel *cpr_state_ioc(void);
+> > > +bool cpr_needed_for_reuse(void *opaque);
+> > >   QEMUFile *cpr_transfer_output(const char *uri, Error **errp);
+> > >   QEMUFile *cpr_transfer_input(const char *uri, Error **errp);
+> > > diff --git a/migration/cpr.c b/migration/cpr.c
+> > > index 86f66c1..911b556 100644
+> > > --- a/migration/cpr.c
+> > > +++ b/migration/cpr.c
+> > > @@ -9,6 +9,7 @@
+> > >   #include "qapi/error.h"
+> > >   #include "migration/cpr.h"
+> > >   #include "migration/misc.h"
+> > > +#include "migration/options.h"
+> > >   #include "migration/qemu-file.h"
+> > >   #include "migration/savevm.h"
+> > >   #include "migration/vmstate.h"
+> > > @@ -57,7 +58,7 @@ static const VMStateDescription vmstate_cpr_fd = {
+> > >           VMSTATE_UINT32(namelen, CprFd),
+> > >           VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+> > >           VMSTATE_INT32(id, CprFd),
+> > > -        VMSTATE_INT32(fd, CprFd),
+> > > +        VMSTATE_FD(fd, CprFd),
+> > >           VMSTATE_END_OF_LIST()
+> > >       }
+> > >   };
+> > > @@ -174,9 +175,16 @@ int cpr_state_save(Error **errp)
+> > >   {
+> > >       int ret;
+> > >       QEMUFile *f;
+> > > +    MigMode mode = migrate_mode();
+> > > -    /* set f based on mode in a later patch in this series */
+> > > -    return 0;
+> > > +    if (mode == MIG_MODE_CPR_TRANSFER) {
+> > > +        f = cpr_transfer_output(migrate_cpr_uri(), errp);
+> > > +    } else {
+> > > +        return 0;
+> > > +    }
+> > > +    if (!f) {
+> > > +        return -1;
+> > > +    }
+> > >       qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
+> > >       qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
+> > > @@ -205,8 +213,18 @@ int cpr_state_load(Error **errp)
+> > >       uint32_t v;
+> > >       QEMUFile *f;
+> > > -    /* set f based on mode in a later patch in this series */
+> > > -    return 0;
+> > > +    /*
+> > > +     * Mode will be loaded in CPR state, so cannot use it to decide which
+> > > +     * form of state to load.
+> > > +     */
+> > > +    if (cpr_uri) {
+> > > +        f = cpr_transfer_input(cpr_uri, errp);
+> > > +    } else {
+> > > +        return 0;
+> > > +    }
+> > > +    if (!f) {
+> > > +        return -1;
+> > > +    }
+> > >       v = qemu_get_be32(f);
+> > >       if (v != QEMU_CPR_FILE_MAGIC) {
+> > > @@ -243,3 +261,9 @@ void cpr_state_close(void)
+> > >           cpr_state_file = NULL;
+> > >       }
+> > >   }
+> > > +
+> > > +bool cpr_needed_for_reuse(void *opaque)
+> > > +{
+> > > +    MigMode mode = migrate_mode();
+> > > +    return mode == MIG_MODE_CPR_TRANSFER;
+> > > +}
+> > 
+> > Drop it until used?
 > 
-> This special code in SVQ is already there. And it will be needed even
-> if we look for the buffers by GPA instead of by vaddr, the same way
-> virtqueue_map_desc needs to handle it even if it works with GPA.
-> Continuous GPA does not imply continuous vaddr.
+> Maybe, but here is my reason for including it here.
 > 
+> These common functions like cpr_needed_for_reuse and cpr_resave_fd are needed
+> by multiple follow-on series: vfio, tap, iommufd.  To send those for comment,
+> as I have beem, I need to prepend a patch for cpr_needed_for_reuse to each of
+> those series, which is redundant.  It makes more sense IMO to include them in
+> this initial series.
+> 
+> But, it's your call.
 
-My apologies if I misunderstood something here regarding size & 
-permission matching, but I attempted to implement both the size and 
-permission check to iova_tree_find_address_iterator(), however, there's 
-a sizing mismatch in the vhost_svq_translate_addr() code path that's 
-causing vhost-net to fail to start.
+Hmm, logically we shouldn't keep any dead code in QEMU, but indeed this is
+slightly special.
 
-qemu-system-x86_64: unable to start vhost net: 22: falling back on
-userspace virtio
+Would you mind keeping all these helpers in a separate patch after the base
+patches?  The commit message should describe what future projects will
+start to use it, then whoever noticed later (I at least know Dave has quite
+a few patches recently removing dead code in QEMU) will know that's
+potentially to-be-used code, so should keep them around.
 
-More specifically, in vhost_svq_add_split(), the first call to 
-vhost_svq_vring_write_descs() returns false:
+> 
+> > > diff --git a/migration/migration.c b/migration/migration.c
+> > > index 3301583..73b85aa 100644
+> > > --- a/migration/migration.c
+> > > +++ b/migration/migration.c
+> > > @@ -76,6 +76,7 @@
+> > >   static NotifierWithReturnList migration_state_notifiers[] = {
+> > >       NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
+> > >       NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
+> > > +    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_TRANSFER),
+> > >   };
+> > >   /* Messages sent on the return path from destination to source */
+> > > @@ -109,6 +110,7 @@ static int migration_maybe_pause(MigrationState *s,
+> > >   static void migrate_fd_cancel(MigrationState *s);
+> > >   static bool close_return_path_on_source(MigrationState *s);
+> > >   static void migration_completion_end(MigrationState *s);
+> > > +static void migrate_hup_delete(MigrationState *s);
+> > >   static void migration_downtime_start(MigrationState *s)
+> > >   {
+> > > @@ -204,6 +206,12 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
+> > >           return false;
+> > >       }
+> > > +    if (migrate_mode() == MIG_MODE_CPR_TRANSFER &&
+> > > +        addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+> > > +        error_setg(errp, "Migration requires streamable transport (eg unix)");
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       return true;
+> > >   }
+> > > @@ -316,6 +324,7 @@ void migration_cancel(const Error *error)
+> > >           qmp_cancel_vcpu_dirty_limit(false, -1, NULL);
+> > >       }
+> > >       migrate_fd_cancel(current_migration);
+> > > +    migrate_hup_delete(current_migration);
+> > >   }
+> > >   void migration_shutdown(void)
+> > > @@ -718,6 +727,9 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+> > >       } else {
+> > >           error_setg(errp, "unknown migration protocol: %s", uri);
+> > >       }
+> > > +
+> > > +    /* Close cpr socket to tell source that we are listening */
+> > > +    cpr_state_close();
+> > 
+> > Would it be possible to use some explicit reply message to mark this?
+> 
+> In theory yes, but I fear that using a return channel with message parsing and
+> dispatch adds more code than it is worth.
+> 
+> > So
+> > far looks like src QEMU will continue with qmp_migrate_finish() even if the
+> > cpr channel was closed due to error.
+> 
+> Yes, but we recover just fine.  The target hits some error, fails to read all the
+> cpr state, closes the channel prematurely, and does *not* create a listen socket
+> for the normal migration channel.  Hence qmp_migrate_finish fails to connect to the
+> normal channel, and recovers.
 
-     ok = vhost_svq_vring_write_descs(svq, sgs, out_sg, out_num, in_num >
-                                      0, false);
-     if (unlikely(!ok)) {
-         return false;
-     }
+This is slightly tricky part and would be nice to be documented somewhere,
+perhaps starting from in the commit message.
 
-Maybe I misunderstood the proposal, but in 
-iova_tree_find_address_iterator I'm checking for an exact match for sizes:
+Then the error will say "failed to connect to destination QEMU" hiding the
+real failure (cpr save/load failed), right?  That's slightly a pity.
 
-     if (map->size != needle->size || map->perm != needle->perm) {
-         return false;
-     }
+I'm OK with the HUP as of now, but if you care about accurate CPR-stage
+error reporting, then feel free to draft something else in the next post.
 
-During the device setup phase, vhost_svq_add_split() -> 
-vhost_svq_vring_write_descs() -> vhost_svq_translate_addr() -> 
-vhost_iova_tree_find_iova() -> iova_tree_find_iova() is called, but in 
-iova_tree_find_address_iterator() map->size & needle->size mismatch. I 
-inserted some printf's to give more information:
+> 
+> > I still didn't see how that kind of issue was captured below [1] (e.g., cpr
+> > channel broken after sending partial fds)?
+> 
+> Same as above.
+> 
+> > >   }
+> > >   static void process_incoming_migration_bh(void *opaque)
+> > > @@ -1414,6 +1426,8 @@ static void migrate_fd_cleanup(MigrationState *s)
+> > >       s->vmdesc = NULL;
+> > >       qemu_savevm_state_cleanup();
+> > > +    cpr_state_close();
+> > > +    migrate_hup_delete(s);
+> > >       close_return_path_on_source(s);
+> > > @@ -1698,7 +1712,9 @@ bool migration_thread_is_self(void)
+> > >   bool migrate_mode_is_cpr(MigrationState *s)
+> > >   {
+> > > -    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
+> > > +    MigMode mode = s->parameters.mode;
+> > > +    return mode == MIG_MODE_CPR_REBOOT ||
+> > > +           mode == MIG_MODE_CPR_TRANSFER;
+> > >   }
+> > >   int migrate_init(MigrationState *s, Error **errp)
+> > > @@ -2033,6 +2049,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+> > >           return false;
+> > >       }
+> > > +    if (migrate_mode() == MIG_MODE_CPR_TRANSFER &&
+> > > +        !s->parameters.cpr_uri) {
+> > > +        error_setg(errp, "cpr-transfer mode requires setting cpr-uri");
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       if (migration_is_blocked(errp)) {
+> > >           return false;
+> > >       }
+> > > @@ -2076,6 +2098,37 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+> > >   static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+> > >                                  Error **errp);
+> > > +static void migrate_hup_add(MigrationState *s, QIOChannel *ioc, GSourceFunc cb,
+> > > +                            void *opaque)
+> > > +{
+> > > +        s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
+> > > +        g_source_set_callback(s->hup_source, cb, opaque, NULL);
+> > > +        g_source_attach(s->hup_source, NULL);
+> > > +}
+> > > +
+> > > +static void migrate_hup_delete(MigrationState *s)
+> > > +{
+> > > +    if (s->hup_source) {
+> > > +        g_source_destroy(s->hup_source);
+> > > +        g_source_unref(s->hup_source);
+> > > +        s->hup_source = NULL;
+> > > +    }
+> > > +}
+> > > +
+> > > +static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
+> > > +                                      GIOCondition cond,
+> > > +                                      void *opaque)
+> > > +{
+> > > +    MigrationAddress *addr = opaque;
+> > 
+> > [1]
+> > 
+> > > +
+> > > +    qmp_migrate_finish(addr, false, NULL);
+> > > +
+> > > +    cpr_state_close();
+> > > +    migrate_hup_delete(migrate_get_current());
+> > > +    qapi_free_MigrationAddress(addr);
+> > > +    return G_SOURCE_REMOVE;
+> > > +}
+> > > +
+> > >   void qmp_migrate(const char *uri, bool has_channels,
+> > >                    MigrationChannelList *channels, bool has_detach, bool detach,
+> > >                    bool has_resume, bool resume, Error **errp)
+> > > @@ -2136,7 +2189,19 @@ void qmp_migrate(const char *uri, bool has_channels,
+> > >           goto out;
+> > >       }
+> > > -    qmp_migrate_finish(addr, resume_requested, errp);
+> > > +    /*
+> > > +     * For cpr-transfer, the target may not be listening yet on the migration
+> > > +     * channel, because first it must finish cpr_load_state.  The target tells
+> > > +     * us it is listening by closing the cpr-state socket.  Wait for that HUP
+> > > +     * event before connecting in qmp_migrate_finish.
+> > > +     */
+> > > +    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER) {
+> > > +        migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
+> > > +                        QAPI_CLONE(MigrationAddress, addr));
+> > > +
+> > > +    } else {
+> > > +        qmp_migrate_finish(addr, resume_requested, errp);
+> > > +    }
+> > >   out:
+> > >       if (local_err) {
+> > > diff --git a/migration/migration.h b/migration/migration.h
+> > > index 38aa140..74c167b 100644
+> > > --- a/migration/migration.h
+> > > +++ b/migration/migration.h
+> > > @@ -457,6 +457,8 @@ struct MigrationState {
+> > >       bool switchover_acked;
+> > >       /* Is this a rdma migration */
+> > >       bool rdma_migration;
+> > > +
+> > > +    GSource *hup_source;
+> > >   };
+> > >   void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+> > > diff --git a/migration/ram.c b/migration/ram.c
+> > > index 81eda27..e2cef50 100644
+> > > --- a/migration/ram.c
+> > > +++ b/migration/ram.c
+> > > @@ -216,7 +216,9 @@ static bool postcopy_preempt_active(void)
+> > >   bool migrate_ram_is_ignored(RAMBlock *block)
+> > >   {
+> > > +    MigMode mode = migrate_mode();
+> > >       return !qemu_ram_is_migratable(block) ||
+> > > +           mode == MIG_MODE_CPR_TRANSFER ||
+> > >              (migrate_ignore_shared() && qemu_ram_is_shared(block)
+> > >                                       && qemu_ram_is_named_file(block));
+> > >   }
+> > > diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> > > index 6e45a4a..b5a55b8 100644
+> > > --- a/migration/vmstate-types.c
+> > > +++ b/migration/vmstate-types.c
+> > > @@ -15,6 +15,7 @@
+> > >   #include "qemu-file.h"
+> > >   #include "migration.h"
+> > >   #include "migration/vmstate.h"
+> > > +#include "migration/client-options.h"
+> > >   #include "qemu/error-report.h"
+> > >   #include "qemu/queue.h"
+> > >   #include "trace.h"
+> > > @@ -321,7 +322,7 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
+> > >   {
+> > >       int32_t *v = pv;
+> > >       qemu_get_sbe32s(f, v);
+> > > -    if (*v < 0) {
+> > > +    if (*v < 0 || migrate_mode() != MIG_MODE_CPR_TRANSFER) {
+> > >           return 0;
+> > >       }
+> > >       *v = qemu_file_get_fd(f);
+> > > @@ -334,7 +335,7 @@ static int put_fd(QEMUFile *f, void *pv, size_t size,
+> > >       int32_t *v = pv;
+> > >       qemu_put_sbe32s(f, v);
+> > > -    if (*v < 0) {
+> > > +    if (*v < 0 || migrate_mode() != MIG_MODE_CPR_TRANSFER) {
+> > 
+> > So I suppose you wanted to guard VMSTATE_FD being abused.  Then I wonder
+> > whether it'll help more by adding a comment above VMSTATE_FD instead; it'll
+> > be more straightforward to me.
+> > 
+> > And if you want to fail hard, assert should work better too in runtime, or
+> > the "return 0" can be pretty hard to notice.
+> 
+> No, this code is not about detecting abuse or errors.  It is there to skip
+> the qemu_file_put_fd for cpr-exec mode.  In my next version this function will
+> simply be:
+> 
+> static int put_fd(QEMUFile *f, void *pv, size_t size,
+>                   const VMStateField *field, JSONWriter *vmdesc)
+> {
+>     int32_t *v = pv;
+>     return qemu_file_put_fd(f, *v);
+> }
 
-...
-[    8.019672] ahci 0000:00:1f.2: 6/6 ports implemented (port mask 0x3f)
-[    8.020694] ahci 0000:00:1f.2: flags: 64bit ncq only
-[    8.022403] scsi host0: ahci
-[    8.023511] scsi host1: ahci
-[    8.024446] scsi host2: ahci
-[    8.025308
-vhost_svq_translate_addr: iovec[i].iov_len = 0x8
-iova_tree_find_address_iterator: mismatched sizes
-map->size: 0xfff, needle->size: 0x8
-map->perm: 1, needle->perm: 1
-vhost_svq_add_split: _write_descs fail, sgs: 0x7fd85018ea80, out_sg: 
-0x7ff8649fbb50, out_num: 1, in_sg: 0x7ff8649fbb60, in_num: 1, 
-more_descs: true, write: false
-vhost_vdpa_svq_unmap_ring
-vhost_vdpa_svq_unmap_ring
-vhost_vdpa_listener_region_del
-vhost_vdpa_listener_region_del
-vhost_vdpa_listener_region_del
-vhost_vdpa_listener_region_del
-vhost_vdpa_listener_region_del
-vhost_vdpa_svq_unmap_ring
-vhost_vdpa_svq_unmap_ring
-vhost_vdpa_svq_unmap_ring
-vhost_vdpa_svq_unmap_ring
-2024-10-08T15:12:22.184902Z qemu-system-x86_64: unable to start vhost 
-net: 22: falling back on userspace virtio
-] scsi host3: ahci
-[   10.921733] scsi host4: ahci
-[   10.922946] scsi host5: ahci
-[   10.923486] virtio_net virtio1 enp0s2: renamed from eth0
-...
+Great, thanks.
 
-This is with similar Qemu args as Si-Wei's from way back when:
+> 
+> > >           return 0;
+> > >       }
+> > >       return qemu_file_put_fd(f, *v);
+> > > diff --git a/qapi/migration.json b/qapi/migration.json
+> > > index c0d8bcc..f51b4cb 100644
+> > > --- a/qapi/migration.json
+> > > +++ b/qapi/migration.json
+> > > @@ -611,9 +611,34 @@
+> > >   #     or COLO.
+> > >   #
+> > >   #     (since 8.2)
+> > > +#
+> > > +# @cpr-transfer: This mode allows the user to transfer a guest to a
+> > > +#     new QEMU instance on the same host with minimal guest pause
+> > > +#     time, by preserving guest RAM in place, albeit with new virtual
+> > > +#     addresses in new QEMU.
+> > > +#
+> > > +#     The user starts new QEMU on the same host as old QEMU, with the
+> > > +#     the same arguments as old QEMU, plus the -incoming option.  The
+> > > +#     user issues the migrate command to old QEMU, which stops the VM,
+> > > +#     saves state to the migration channels, and enters the
+> > > +#     postmigrate state.  Execution resumes in new QEMU.  Guest RAM is
+> > > +#     preserved in place, albeit with new virtual addresses in new
+> > > +#     QEMU.  The incoming migration channel cannot be a file type.
+> > > +#
+> > > +#     This mode requires a second migration channel, specified by the
+> > > +#     cpr-uri migration property on the outgoing side, and by
+> > > +#     the cpr-uri QEMU command-line option on the incoming
+> > > +#     side.  The channel must be a type, such as unix socket, that
+> > > +#     supports SCM_RIGHTS.
+> > > +#
+> > > +#     Memory-backend objects must have the share=on attribute, but
+> > > +#     memory-backend-epc is not supported.  The VM must be started
+> > > +#     with the '-machine anon-alloc=memfd' option.
+> > > +#
+> > > +#     (since 9.2)
+> > >   ##
+> > >   { 'enum': 'MigMode',
+> > > -  'data': [ 'normal', 'cpr-reboot' ] }
+> > > +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+> > 
+> > No need to rush, but please add the CPR.rst and unit test updates when you
+> > feel confident on the protocol.  It looks pretty good to me now.
+> > 
+> > Especially it'll be nice to describe the separate cpr-channel protocol in
+> > the new doc page.
+> 
+> Will do, now that there is light at the end of the tunnel.
 
--m size=128G,slots=8,maxmem=256G
+I just noticed that we have 1 month left before soft freeze. I'll try to
+prioritize review of this series (and the other VFIO one) in the upcoming
+month.  Let's see whether it can hit 9.2.
 
-There are also some error catches with just the permission check but it 
-appears the vhost-net device is still able to start up (when not 
-matching sizes also).
+-- 
+Peter Xu
+
 
