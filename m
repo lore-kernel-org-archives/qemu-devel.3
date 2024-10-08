@@ -4,83 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5996CEFC41
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 18:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F94CEFC43
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 19:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syFJW-0007Tg-Rn; Tue, 08 Oct 2024 14:52:06 -0400
+	id 1syFce-0000o0-Bk; Tue, 08 Oct 2024 15:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJP-0007Qr-R3
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:52:00 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syFcZ-0000nr-4R
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:11:47 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syFJL-0002S8-AZ
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 14:51:58 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20b833f9b35so52365595ad.2
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 11:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728413505; x=1729018305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TOn9FQKnsFqqK8dvmrqts9k4e/ZA/rwyYeo2+pg72XQ=;
- b=YlVD4yWS0Adj4ke/Vz2TCJVjSDPbZ0DWWjhmUzhLIjGy28b9IgbUNpYfZChn4RAwSi
- nz/SF/NWB2EqXrwdKL3al0Rwo/Yp/2Xwdk1FJiry0ejWA3yM0iKPXwD1dl+pmRUhJuUB
- F9qaTOQ/b85hiKIlAV3P9vmPGGvH2eSHdfRqSP/kO9Q/oQu/3I391sxkw3hzDC2+nG58
- 4FyPJqbpq0aE6q6jGTFkeM76LKPuVK0xQzhbgFOB+LItLAfLUR+sutzz5CuU3mlXiJkm
- eezbCt8U4v5WyDpAn+M0JtMmZLxav8iSvSB50lo9RDs8VrVVkMKehYYiwPTtpfxP6B0r
- XI6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728413505; x=1729018305;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TOn9FQKnsFqqK8dvmrqts9k4e/ZA/rwyYeo2+pg72XQ=;
- b=QtnVdHj+//FGJN06mCeydEPhnA7HI0IoaK5K2haRyCl3s1q3mtGmZXL/9/itDFaeVC
- 9bOqfWKBiJxdaXfkZwOy/Y3JnkItGNzzFPf7rAjhpHX/zVEcdKw+GvohRYXjbg8tioEr
- PDoJufADBDZQpJVaClpuTgQhhbS5YFCY5KGTIKo8GIKFP0pkGTHLoDm2pkHpXRmiVLF1
- 6QfUpfBQboFcHZwgRjMvJR/OnUXXQywNSL1GnJGSMrEcIMyBJZrTtSj2d+U9kwT2gS19
- c8MWY1n/Ktk5402EScnCDcEbqYMQJecvAuVKRC6+J5ySlcIBI2xPoRCvo4ZDJBL15zEF
- kAAg==
-X-Gm-Message-State: AOJu0YzvnDR/u6PXN1ncUVZdnPoEo2pfQ5+TbVJeSaOmWQ3K7iMkad1/
- XXSISp1AAyI32xTBuW5BaUMfoXd24LzDgVi9XuE5eBoQHT/svghCwiif7icvCCPvn0WznRZrLeM
- q
-X-Google-Smtp-Source: AGHT+IFOv8diGM21FYv9YDwizxS5s028Hi+fU2TCwgadH+mZHg6bnJk/BU1A3/rPydAYDPtDqSLVPQ==
-X-Received: by 2002:a17:903:2289:b0:20c:61f8:f45d with SMTP id
- d9443c01a7336-20c61f8f6admr6163045ad.22.1728413505243; 
- Tue, 08 Oct 2024 11:51:45 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7e9f6821c32sm7186818a12.33.2024.10.08.11.51.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 11:51:44 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 02/14] linux-user: Fix parse_elf_properties GNU0_MAGIC check
-Date: Tue,  8 Oct 2024 11:51:29 -0700
-Message-ID: <20241008185141.20057-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241008185141.20057-1-richard.henderson@linaro.org>
-References: <20241008185141.20057-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syFcW-0004QW-LC
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 15:11:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 646F621DA9;
+ Tue,  8 Oct 2024 19:11:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1728414701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cKysmZ310nRt5wHieSZwZ7yH5oUqKDxr49v/Vg8a4e0=;
+ b=NTgK6GpCXWRVILlTgalhKNIWvrSn6jo68rDcaSZulnyGW+4o1zyCW+iYuJvpxXqBQOUGE8
+ wcGPfy/WO2hpL3G4UaWoTJKVyknQ+v7YXIsu1cUMf7HlNH0Ew3gbt0TTnw2EMWrxi2y1jv
+ Lf6nfE3suEuGYk4KqxySHmOFhY0Ybdc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1728414701;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cKysmZ310nRt5wHieSZwZ7yH5oUqKDxr49v/Vg8a4e0=;
+ b=UkHgipmsXhOYDb3pOClLQ9uOdJCluHceVmSHmC9Mk2pX8Ynbz/t96UmuU8Q4dk+w7nB+qX
+ CQGXNI6mWpxtHaAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1728414701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cKysmZ310nRt5wHieSZwZ7yH5oUqKDxr49v/Vg8a4e0=;
+ b=NTgK6GpCXWRVILlTgalhKNIWvrSn6jo68rDcaSZulnyGW+4o1zyCW+iYuJvpxXqBQOUGE8
+ wcGPfy/WO2hpL3G4UaWoTJKVyknQ+v7YXIsu1cUMf7HlNH0Ew3gbt0TTnw2EMWrxi2y1jv
+ Lf6nfE3suEuGYk4KqxySHmOFhY0Ybdc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1728414701;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cKysmZ310nRt5wHieSZwZ7yH5oUqKDxr49v/Vg8a4e0=;
+ b=UkHgipmsXhOYDb3pOClLQ9uOdJCluHceVmSHmC9Mk2pX8Ynbz/t96UmuU8Q4dk+w7nB+qX
+ CQGXNI6mWpxtHaAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D552B137CF;
+ Tue,  8 Oct 2024 19:11:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id H2CuJuyDBWeLdQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 08 Oct 2024 19:11:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org, David
+ Hildenbrand <david@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
+In-Reply-To: <ZwV-NRICDNTajTRq@x1n>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+ <1727725244-105198-14-git-send-email-steven.sistare@oracle.com>
+ <ZwQ6GbVCmitlills@x1n> <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com>
+ <87ed4qtpo1.fsf@suse.de> <ZwV-NRICDNTajTRq@x1n>
+Date: Tue, 08 Oct 2024 16:11:38 -0300
+Message-ID: <877caitno5.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[oracle.com,nongnu.org,redhat.com,gmail.com,habkost.net,linaro.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,60 +125,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Comparing a string of 4 bytes only works in little-endian.
+Peter Xu <peterx@redhat.com> writes:
 
-Adjust bulk bswap to only apply to the note payload.
-Perform swapping of the note header manually; the magic
-is defined so that it does not need a runtime swap.
+> On Tue, Oct 08, 2024 at 03:28:30PM -0300, Fabiano Rosas wrote:
+>> >>> +    /* Close cpr socket to tell source that we are listening */
+>> >>> +    cpr_state_close();
+>> >> 
+>> >> Would it be possible to use some explicit reply message to mark this?  
+>> >
+>> > In theory yes, but I fear that using a return channel with message parsing and
+>> > dispatch adds more code than it is worth.
+>> 
+>> I think this approach is fine for now, but I wonder whether we could
+>> reuse the current return path (RP) by starting it earlier and take
+>> benefit from it already having the message passing infrastructure in
+>> place. I'm actually looking ahead to the migration handshake thread[1],
+>> which could be thought to have some similarity with the early cpr
+>> channel. So having a generic channel in place early on to handle
+>> handshake, CPR, RP, etc. could be a good idea.
+>
+> The current design relies on CPR stage happens before device realize()s, so
+> I assume migration channel (including RP) isn't easily applicable at as
+> early as this stage.
 
-Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/elfload.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Well, what is the dependency for the RP? If we can send CPR state, we
+can send QEMU_VM_COMMAND, no?
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0678c9d506..52c88a68a9 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3121,11 +3121,11 @@ static bool parse_elf_properties(const ImageSource *src,
-     }
- 
-     /*
--     * The contents of a valid PT_GNU_PROPERTY is a sequence
--     * of uint32_t -- swap them all now.
-+     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
-+     * Swap most of them now, beyond the header and namesz.
-      */
- #ifdef BSWAP_NEEDED
--    for (int i = 0; i < n / 4; i++) {
-+    for (int i = 4; i < n / 4; i++) {
-         bswap32s(note.data + i);
-     }
- #endif
-@@ -3135,15 +3135,15 @@ static bool parse_elf_properties(const ImageSource *src,
-      * immediately follows nhdr and is thus at the 4th word.  Further, all
-      * of the inputs to the kernel's round_up are multiples of 4.
-      */
--    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
--        note.nhdr.n_namesz != NOTE_NAME_SZ ||
-+    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
-+        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
-         note.data[3] != GNU0_MAGIC) {
-         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
-         return false;
-     }
-     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
- 
--    datasz = note.nhdr.n_descsz + off;
-+    datasz = tswap32(note.nhdr.n_descsz) + off;
-     if (datasz > n) {
-         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
-         return false;
--- 
-2.43.0
+>
+> However I think dest qemu can directly write back to the cpr_uri channel
+> instead if we want and then follow a protocol simple enough (even though
+> it'll be separate from the migration stream protocol).
+>
+> What worries me more (besides using HUP as of now..) is cpr_state_save() is
+> currently synchronous and can block the main iothread.  It means if cpr
+> destination is not properly setup, it can hang the main thread (including
+> e.g. QMP monitor) at qio_channel_socket_connect_sync().  Ideally we
+> shouldn't block the main thread.
+>
+> If async-mode can be done, it might be even easier, e.g. if we do
+> cpr_state_save() in a thread, after qemu_put*() we can directly qemu_get*()
+> in the same context with the pairing return qemufile.
+>
+> But maybe we can do it in two steps, merging HUP first.  Then when a better
+> protocol (plus async mode) ready, one can boost QEMU_CPR_FILE_VERSION.
+> I'll see how Steve wants to address it.
+
+I agree HUP is fine at the moment.
+
+>
+>> 
+>> Anyway, I'm probing on this a bit so I can start drafting something. I
+>> got surprised that we don't even have the capability bits in the stream
+>> in a useful way (currently, configuration_validate_capabilities() does
+>> kind of nothing).
+>> 
+>> 1- https://wiki.qemu.org/ToDo/LiveMigration#Migration_handshake
+>
+> Happy to know this. I was thinking whether I should work on this even
+> earlier, so if you're looking at that it'll be great.
+
+As of half an hour ago =) We could put a feature branch up and work
+together, if you have more concrete thoughts on how this would look like
+let me know.
+
+>
+> The major pain to me is the channel establishment part where we now have
+> all kinds of channels, so we should really fix that sooner (e.g., we hope
+> to enable multifd + postcopy very soon, that requires multifd and preempt
+> channels appear in the same time).  It was reasonable the vfio/multifd
+> series tried to fix it.
 
 
