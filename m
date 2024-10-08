@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534CACEFC2A
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 16:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599B5CEFC31
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 16:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syD7n-0008S0-2h; Tue, 08 Oct 2024 12:31:51 -0400
+	id 1syDMK-00037q-Oe; Tue, 08 Oct 2024 12:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syD7k-0008RT-T6
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 12:31:48 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1syDMJ-00037f-CD
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 12:46:51 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syD7j-00013B-61
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 12:31:48 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c8784e3bc8so8057427a12.1
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 09:31:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1syDMH-00036H-J0
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 12:46:50 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-6e129c01b04so47389687b3.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 09:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728405105; x=1729009905; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=x3kuQrBW/a9Xs+5IB1zhh+k1QVWjK52nxPRasCvLhko=;
- b=KDiy2CI6Emx3t3W4d2Z1NSk4+jAaCxAEKstdhhpijsFUjWzZsC4IkMsvs94kpc0kGF
- 4IR0DXMm+9aY7xzvBBJ9WerT+MRdz2j8a3V091eWnpUqCQ2yldPXXs09V28N2k4YCBQc
- 7EdDtjDA9cMhhlpfszGKCUVmxJAec/bJ0nohAlQ/w4zuAPZV+toKbhcOLtpRJmX60IhZ
- shxx/FX7gmJ1j8UZAJPXdCw/f6WBGQctMftBv40qRM9NviyEkCqYy18SgwY5vyRdlmjD
- R6FHTOoERdZKnuoL1bClyKYsY8XIX5SkNzVPw4s0yAMA/ywwCkurGtKbkKt4wZYkWKQ1
- L/bA==
+ d=gmail.com; s=20230601; t=1728406006; x=1729010806; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VZ6DCcUZIpjkjbo+HdIBkZWSoiW8VwPF5vcnXRm5F/c=;
+ b=LKHGJKPD3V1+JKK7RczKP01Ob+2VKCbqsxuh8eDSXj40Q7NnHFycBaq3DSoCSMJR1j
+ tTBFCz7q9Zr0JFnmofDqTOEjpxkxIDf6DBdVGzl2Sz50knwjh8cGTvkakNi5eUf4m5yY
+ RDPXcZ1iOGrSIr0yKFf7InOETZtvwIk72aDXlkNy/1UEMootZl+zmbTD4SIYVTzH/RvA
+ 76ww4Q/d35ybPLSBCqSGp55WgQ0sRNQ1il17QS0O0sZUtjQfCz3gzSa2oiHLe7T/9MLo
+ dWlZZDrTY68fL06u1lNwVV5zp84yQDXzcZ+/arIfz6TEcCGmsC7EzBcoXE7g6Yr01uAr
+ Jb0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728405105; x=1729009905;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x3kuQrBW/a9Xs+5IB1zhh+k1QVWjK52nxPRasCvLhko=;
- b=Rt67mD8YzCnhgx8tqrU0QjhP0R5ENls98IeZvgyxVhZqMqih0L5HwVz91vFuqrA81v
- zTq8Y9lakB/f9elVe+OSsQARF6J/kK01T++x0aaYR7qBVoUF7s/klAwSRFvvb8cgnlcs
- JdjDCEO6rtX1ZMtFvv+keBQ2tihpuWE0YtkefNvAvWQ5RX19a3fU2lTRDtY11R3SbjO8
- 22GIbEyVWh7MeVDAf7t68JsIs31OeoiUBNh6pyDJsTDl/GXIFElo8KFRRopWz/c7WzGE
- UjCWG6XH9kiMDFzTv3ZsnHMCf96FCBemtXrx39KyxlU/q0BZmBpL+nPSR4FuIrXq+8jy
- WB5Q==
-X-Gm-Message-State: AOJu0Yxh3zIvQasvqywi2araFul4Wxy8+eg7SUSfLur1XGBA9Ialy+Ld
- QrfpWY8yPZlvM7hxkZN0+UovB9zFJsTu6IiQotJZJiotmnZ2Ubj0nl/D9Jzhxg734GbhNxXuC1M
- Lo1/oAzn7K83vYP1UaXe1dQYwptSpH3C0t3PNqV8msY+nI9pV
-X-Google-Smtp-Source: AGHT+IHCC0RfjRNbsPGK7WXh/3vXnCUJYVvhZ3s2BX6L2yXJ1mUwjAVUJJfJ5nTPMS44wl++kf8/k23p/sck2IM1syg=
-X-Received: by 2002:a05:6402:27d3:b0:5c9:60a:5bc2 with SMTP id
- 4fb4d7f45d1cf-5c9060a5c30mr2901921a12.17.1728405104738; Tue, 08 Oct 2024
- 09:31:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728406006; x=1729010806;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VZ6DCcUZIpjkjbo+HdIBkZWSoiW8VwPF5vcnXRm5F/c=;
+ b=WE4EpTP1PanqEmRhlLSl24cGewnTwNy9DRxEJNrPtOMHzd0B//f2dEfaC7rVV2lXK6
+ smPaa8zgEx7vV3GAjMSeRoFK6AlhGFzR0tl2Tmkrq9yOqTUhVcRifEiG/U+9Xe7qGF9N
+ rMa8NptRiraidiz60HCkEPaBWqPlRBHSOqqegLpMY91eBVV1NtvJvE3j0qbeGX/84K8C
+ 0DTB8b2UrcRnYQc+siC/PyF/PPbPmyssAn6xGX9oCUOd2oyYqubhrJ/i1Q2XHOecYfT8
+ ZNhpwbJALTfXX2ODFZsOBZMlWxXmHloefLHVQg56hRQBvE4L3AygdgE61T932N6IO41P
+ hB8g==
+X-Gm-Message-State: AOJu0YwJ2g8mwgPqxOxzN94t8HBoALXRAXsr67bkmtd/2svTKqPczd5q
+ s1rOHKPZUtVxiYdff5uqhlGgMpSuv1aDLNHHTvH/q0I0YEWrCLbF11JLAA==
+X-Google-Smtp-Source: AGHT+IHIAkPgWXq889nUNPQVkfBDdMNYDtX2A5WPUAZtxx3p+5qTBrz4vYbkueDHvb3dy+IAHwcXnA==
+X-Received: by 2002:a05:690c:2d03:b0:6b1:61e0:5359 with SMTP id
+ 00721157ae682-6e2c723f257mr103013247b3.21.1728406006535; 
+ Tue, 08 Oct 2024 09:46:46 -0700 (PDT)
+Received: from fan.. ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-6e2d9387db8sm14978437b3.59.2024.10.08.09.46.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Oct 2024 09:46:46 -0700 (PDT)
+From: nifan.cxl@gmail.com
+To: qemu-devel@nongnu.org
+Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ abhi.n@samsung.com, alok.rathore@samsung.com, Fan Ni <fan.ni@samsung.com>
+Subject: [QEMU PATCH] cxl/cxl-mailbox-utils: Fix size check for
+ cmd_firmware_update_get_info
+Date: Tue,  8 Oct 2024 09:44:47 -0700
+Message-ID: <20241008164624.78608-1-nifan.cxl@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 17:31:33 +0100
-Message-ID: <CAFEAcA_y6xYLyK_qEjngtCm+Y5-Yuw-rqK2Qm0UhVAFHtp610w@mail.gmail.com>
-Subject: qemu-iotests test 297 tries to run python linters on editor backup
- files
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: John Snow <jsnow@redhat.com>, Qemu-block <qemu-block@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,73 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I made some changes to a block backend so I wanted to run the iotests.
-I ran into an unrelated failure of iotest 297. The bulk of this
-seems to be because the iotest tries to run on all files
-in qemu-iotests, even on editor backups like in this case "040~"
-(which is an old editor backup of 040). But there are also
-some warnings about files that do exist in the tree and which
-I haven't modified:
+From: Fan Ni <fan.ni@samsung.com>
 
-+tests/migrate-bitmaps-test:63:4: R0201: Method could be a function
-(no-self-use)
-+tests/mirror-change-copy-mode:109:4: R0201: Method could be a
-function (no-self-use)
-+fat16.py:239:4: R0201: Method could be a function (no-self-use)
+In the function cmd_firmware_update_get_info for handling Get FW info
+command (0x0200h), the vmem, pmem and DC capacity size check were
+incorrect. The size should be aligned to 256MiB, not smaller than
+256MiB.
 
-Q1: can we make this test not run the linters on editor backup files?
-Q2: why do I see the errors above but they aren't in the reference file
-output?
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 9258e48f95..c82ad50ac8 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -649,9 +649,9 @@ static CXLRetCode cmd_firmware_update_get_info(const struct cxl_cmd *cmd,
+     } QEMU_PACKED *fw_info;
+     QEMU_BUILD_BUG_ON(sizeof(*fw_info) != 0x50);
+ 
+-    if ((cxl_dstate->vmem_size < CXL_CAPACITY_MULTIPLIER) ||
+-        (cxl_dstate->pmem_size < CXL_CAPACITY_MULTIPLIER) ||
+-        (ct3d->dc.total_capacity < CXL_CAPACITY_MULTIPLIER)) {
++    if ((!QEMU_IS_ALIGNED(cxl_dstate->vmem_size, CXL_CAPACITY_MULTIPLIER)) ||
++        (!QEMU_IS_ALIGNED(cxl_dstate->pmem_size, CXL_CAPACITY_MULTIPLIER)) ||
++        (!QEMU_IS_ALIGNED(ct3d->dc.total_capacity, CXL_CAPACITY_MULTIPLIER))) {
+         return CXL_MBOX_INTERNAL_ERROR;
+     }
+ 
+-- 
+2.43.0
 
-e104462:jammy:qemu-iotests$ ./check 297
-QEMU          --
-"/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/qemu-system-x86_64"
--nodefaults -display none -accel qtest
-QEMU_IMG      --
-"/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/qemu-img"
-QEMU_IO       --
-"/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/qemu-io"
---cache writeback --aio threads -f raw
-QEMU_NBD      --
-"/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/qemu-nbd"
-IMGFMT        -- raw
-IMGPROTO      -- file
-PLATFORM      -- Linux/x86_64 e104462 5.15.0-89-generic
-TEST_DIR      --
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/tests/qemu-iotests/scratch
-SOCK_DIR      -- /tmp/qemu-iotests-0c1ft_vw
-GDB_OPTIONS   --
-VALGRIND_QEMU --
-PRINT_QEMU_OUTPUT --
-
-297   fail       [17:26:10] [17:26:23]   13.1s                output
-mismatch (see /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/tests/qemu-iotests/scratch/raw-file-297/297.out.bad)
-    [case not run] 'mypy' not found
-
---- /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/qemu-iotests/297.out
-+++ /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/x86-tgts/tests/qemu-iotests/scratch/raw-file-297/297.out.bad
-@@ -1,2 +1,74 @@
- === pylint ===
-+************* Module migrate-bitmaps-test
-+tests/migrate-bitmaps-test:63:4: R0201: Method could be a function
-(no-self-use)
-+************* Module mirror-change-copy-mode
-+tests/mirror-change-copy-mode:109:4: R0201: Method could be a
-function (no-self-use)
-+************* Module fat16
-+fat16.py:239:4: R0201: Method could be a function (no-self-use)
-+************* Module 040~
-+040~:50:0: C0301: Line too long (85/79) (line-too-long)
-+040~:64:0: C0301: Line too long (86/79) (line-too-long)
-+040~:91:0: C0301: Line too long (138/79) (line-too-long)
-[PMM: deleted a lot more warnings about this editor backup file]
- === mypy ===
-Some cases not run in:
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/qemu-iotests/297
-Failures: 297
-Failed 1 of 1 iotests
-
-thanks
--- PMM
 
