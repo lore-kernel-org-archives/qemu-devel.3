@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA58CED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2840ECED24E
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxytG-0001lq-BO; Mon, 07 Oct 2024 21:19:54 -0400
+	id 1sxyu6-0004AN-Mu; Mon, 07 Oct 2024 21:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3iogEZwUKCusgNiVcTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--tavip.bounces.google.com>)
- id 1sxysa-0007nM-Nn
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:17 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ <3nogEZwUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com>)
+ id 1sxysx-0008CR-Ja
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:36 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3iogEZwUKCusgNiVcTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--tavip.bounces.google.com>)
- id 1sxysX-00008v-Vp
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:12 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e28690bc290so7535132276.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:08 -0700 (PDT)
+ <3nogEZwUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com>)
+ id 1sxyst-0000DM-7E
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:34 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6e2baf2ff64so75973027b3.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350347; x=1728955147; darn=nongnu.org;
+ d=google.com; s=20230601; t=1728350367; x=1728955167; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=Vzupf3vt9+CjqF4zkzgvZPteAeoMK9Pq2w9EB8vbI+s=;
- b=odlR4mOhxesowE5PMylvU9UJ79+ssGRuruZ3GrwUZkjNrxN3tY1V8IEYghq0EjuQgH
- HNmv+iNkohMwsN8+Q58RZGNHi4TX6Epn4x1n4bvMJlC5aOwk9AGUqfq56yWkMVmJqh3M
- WzU4pHNr0KZLgellApQnOGYxsWHAd8ZrOOsIzWFc51Qa1HsXd+zhvMHFQ9yPCXKnMbA5
- pbrgoTFDVWRGNJBLWO3n4cWxV4x0Lw/qzK8yLFFXrmPOEo81Do8l45mmOj+RHbb6SbAc
- dVaUtiLoOYeqv/h1ru7GGbmExlBz9Wi+ckgayOm92f+uAxnU4AbnNbNv09uGuOwWN6xa
- LrcQ==
+ bh=KH/2xv+ry9E6fErLW4rxS6RZmIvXaaOZIkrg/WhK4hs=;
+ b=E2IPreJg/qpe9C4HZIVYUl2AoLpgWNToFGeYZsH+sMaXZz3c31uhCKtffKNXPBwNZR
+ 3CXoacMfTSpq8TOnLP9S86M/HI3SJ/NwPeP/B52CunBCG1ecXHXugSQPg5hOVPbUz//0
+ j6Rwm+THEUt/hOKd9dDX+i8goQw5ndtBptBe/bNXwGsCFz+BYN4Pr5vZFsIw8unH8xmR
+ I9/XArOEGjwu7wjaELZlQcxd1oivqpJhmHGuxWZaSJp/ESqHur71Q0xhWeeUFtcXOE8M
+ adWbHJl0xIbX8ogLBSsTllQb14XvWg5Bjxfq4f8UaqV9rHbRvyUPcVxCN2B/wdfGWIE4
+ 9N2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350347; x=1728955147;
+ d=1e100.net; s=20230601; t=1728350367; x=1728955167;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vzupf3vt9+CjqF4zkzgvZPteAeoMK9Pq2w9EB8vbI+s=;
- b=g4dQ9aHjRMxTs2FJ98aEZCl7YsJ6Ipx9tcygYO25NTBMHEow5OwCJIFW+jD+iwq79b
- XLYli5/apL92uQ+etdHiZoZzWJXv9zXGPcbb+JX9raAcUiOPVPXLLv3RVU2g2hKD9NdH
- 8l/meP4iqh1pTX/+RKvlN2SLLw0wMMj7Y1+RGPZNsQjckVR6iH8FHtKx6Qs0/w29LVEp
- mRmZukAZhj3LhokQS3OGFkjM5e+AgQXSzrGHptdku1AUT7tM84Zu4iwbk9syTptR+YeM
- MvM2HHee6eTnIyeLLGbjFOUkmUtzrfdaPZIH1FtTwtZ+ubufP2GTfo20FARScVo70Upw
- cFYg==
-X-Gm-Message-State: AOJu0Yw3XhfqXl0DdEMsw3O5CTtTWa9rIrQ1CZqdlunBFpRjVdKaA6GP
- EtZRxOajWZ0Q7oFQagiJoHsOvbGOcnR0gOW1tklqbD4IgfY2rljwdGHFup/WsmeDhuWSXgL3294
- r4gRQUkHpp5hrsDX0KgeDYmJ54/GinIWZBhH7Bhidw/ikfzw5fNA1e3u+ke+lCSEfA1Et7mLoJ9
- ePebs3H8CrLLhQTsVk67m70aFI1Q==
-X-Google-Smtp-Source: AGHT+IF8b+KwDkEfdHpiw3avdhoIJWRKXiRbTxfcFuMGtw+4XiGc6GeHNYWj3ZNVznRFO2FNXD2xTlVYVw==
+ bh=KH/2xv+ry9E6fErLW4rxS6RZmIvXaaOZIkrg/WhK4hs=;
+ b=uhh8X65gXBBchvyOtfp1kmbC4VlS4xR9H2bpPUGHzFOd+sQISIRdYws6j0+KMJ4dh1
+ LcRV90bD9IJD7htsy8Gg99rSJOmxlsf1Wzm0eWF7n5BeLhN5WeIZ+PW/KVcUEifqieMw
+ irf6RKePbUbpb2cWi7md33k9sxLgdyfueexnZqi96PlzdWbwloV8zkEHsNwoGtCiWPYX
+ WQ0Qj4wVkP4JqXSXerb2954GE1TRdpzDSG5ZJmCWEutUSajRub6k3du37ZvEgg0j1FTb
+ 3PFQe5+yNDQatPOGyVUiAoG9JJDtHcfJ4pG1kThq/JnAoIdIQDkADfS1AEZ8AhXcENSg
+ DJCw==
+X-Gm-Message-State: AOJu0YwYBAmhugtdk33HXbNbSmavuKHm2AWsg+jWr4l/TZ9KgZ+/1YDe
+ ZSqKB1Q8rWQHIEKwMG7T5jYpkxr6Tn5kgbHQcyHJFV8cn7PKgw1ePuDdm4NxYXBYwoHVnYNtF/x
+ aLf13jNWMsKtzjCNS61FzGRQ5ECVaq4K7m08lO4oWz0+Y9ohPoHHXNuJ6dGVG86FuQFUoBkubPs
+ frbAkZKUehlnVW+dFaYcHSoS3g8Q==
+X-Google-Smtp-Source: AGHT+IEPgy4jBCEt/GAlr5KBC579+z7N16RaMIrOgzKSXWJPySuiz34MQJTVEkI0pz4USPrVQ52UP1boKg==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a25:6b4b:0:b0:e1a:44fa:f09 with
+ (user=tavip job=sendgmr) by 2002:a81:ad0b:0:b0:6e2:121c:4509 with
  SMTP id
- 3f1490d57ef6-e28936c0e5amr9284276.2.1728350346664; Mon, 07 Oct 2024 18:19:06
- -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:33 -0700
+ 00721157ae682-6e2c72bbd4bmr1572397b3.7.1728350366897; Mon, 07 Oct 2024
+ 18:19:26 -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:44 -0700
 In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20241008011852.1439154-1-tavip@google.com>
 X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-8-tavip@google.com>
-Subject: [PATCH v2 07/25] hw/char: add support for flexcomm usart
+Message-ID: <20241008011852.1439154-19-tavip@google.com>
+Subject: [PATCH v2 18/25] tests/qtest: add flexcomm usart tests
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,9 +72,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3iogEZwUKCusgNiVcTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--tavip.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3nogEZwUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,399 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for NXP's flexcomm usart. It supports interupts and FIFO
-access but no DMA.
-
-The patch includes an automatically generated header which contains
-the register layout and helpers.
-
-The header can be regenerated with the svd-flexcomm-usart target when
-the build is configured with --enable-mcux-soc-svd.
+Add flexcomm usart polling and irq unit tests.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/arm/svd/flexcomm_usart.h | 294 ++++++++++++++++++++++++++++
- include/hw/char/flexcomm_usart.h    |  33 ++++
- include/hw/misc/flexcomm.h          |   2 +
- hw/char/flexcomm_usart.c            | 288 +++++++++++++++++++++++++++
- hw/misc/flexcomm.c                  |   3 +
- hw/arm/svd/meson.build              |   4 +
- hw/char/meson.build                 |   1 +
- hw/char/trace-events                |   8 +
- 8 files changed, 633 insertions(+)
- create mode 100644 include/hw/arm/svd/flexcomm_usart.h
- create mode 100644 include/hw/char/flexcomm_usart.h
- create mode 100644 hw/char/flexcomm_usart.c
+ tests/qtest/flexcomm-usart-test.c | 316 ++++++++++++++++++++++++++++++
+ tests/qtest/meson.build           |   3 +-
+ 2 files changed, 318 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/flexcomm-usart-test.c
 
-diff --git a/include/hw/arm/svd/flexcomm_usart.h b/include/hw/arm/svd/flexcomm_usart.h
+diff --git a/tests/qtest/flexcomm-usart-test.c b/tests/qtest/flexcomm-usart-test.c
 new file mode 100644
-index 0000000000..a226917182
+index 0000000000..0ffa49dd6f
 --- /dev/null
-+++ b/include/hw/arm/svd/flexcomm_usart.h
-@@ -0,0 +1,294 @@
++++ b/tests/qtest/flexcomm-usart-test.c
+@@ -0,0 +1,316 @@
 +/*
-+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
-+ *
-+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
-+ */
-+#pragma once
-+
-+#include "hw/register.h"
-+
-+/* Flexcomm USART */
-+#define FLEXCOMM_USART_REGS_NO (1024)
-+
-+/* USART Configuration */
-+REG32(FLEXCOMM_USART_CFG, 0x0);
-+/* USART Enable */
-+FIELD(FLEXCOMM_USART_CFG, ENABLE, 0, 1);
-+
-+/* USART Control */
-+REG32(FLEXCOMM_USART_CTL, 0x4);
-+
-+/* USART Status */
-+REG32(FLEXCOMM_USART_STAT, 0x8);
-+
-+/* Interrupt Enable Read and Set for USART (not FIFO) Status */
-+REG32(FLEXCOMM_USART_INTENSET, 0xC);
-+
-+/* Interrupt Enable Clear */
-+REG32(FLEXCOMM_USART_INTENCLR, 0x10);
-+
-+/* Baud Rate Generator */
-+REG32(FLEXCOMM_USART_BRG, 0x20);
-+
-+/* Interrupt Status */
-+REG32(FLEXCOMM_USART_INTSTAT, 0x24);
-+
-+/* Oversample Selection Register for Asynchronous Communication */
-+REG32(FLEXCOMM_USART_OSR, 0x28);
-+
-+/* Address Register for Automatic Address Matching */
-+REG32(FLEXCOMM_USART_ADDR, 0x2C);
-+
-+/* FIFO Configuration */
-+REG32(FLEXCOMM_USART_FIFOCFG, 0xE00);
-+/* Enable the Transmit FIFO. */
-+FIELD(FLEXCOMM_USART_FIFOCFG, ENABLETX, 0, 1);
-+/* Enable the Receive FIFO */
-+FIELD(FLEXCOMM_USART_FIFOCFG, ENABLERX, 1, 1);
-+/* Empty Command for the Transmit FIFO */
-+FIELD(FLEXCOMM_USART_FIFOCFG, EMPTYTX, 16, 1);
-+/* Empty Command for the Receive FIFO */
-+FIELD(FLEXCOMM_USART_FIFOCFG, EMPTYRX, 17, 1);
-+
-+/* FIFO Status */
-+REG32(FLEXCOMM_USART_FIFOSTAT, 0xE04);
-+/* TX FIFO Error */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, TXERR, 0, 1);
-+/* RX FIFO Error */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, RXERR, 1, 1);
-+/* Peripheral Interrupt */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, PERINT, 3, 1);
-+/* Transmit FIFO Empty */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, TXEMPTY, 4, 1);
-+/* Transmit FIFO is Not Full */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, TXNOTFULL, 5, 1);
-+/* Receive FIFO is Not Empty */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, RXNOTEMPTY, 6, 1);
-+/* Receive FIFO is Full */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, RXFULL, 7, 1);
-+/* Transmit FIFO Current Level */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, TXLVL, 8, 5);
-+/* Receive FIFO Current Level */
-+FIELD(FLEXCOMM_USART_FIFOSTAT, RXLVL, 16, 5);
-+
-+/* FIFO Trigger Settings for Interrupt and DMA Request */
-+REG32(FLEXCOMM_USART_FIFOTRIG, 0xE08);
-+/* Transmit FIFO Level Trigger Enable. */
-+FIELD(FLEXCOMM_USART_FIFOTRIG, TXLVLENA, 0, 1);
-+/* Receive FIFO Level Trigger Enable */
-+FIELD(FLEXCOMM_USART_FIFOTRIG, RXLVLENA, 1, 1);
-+/* Transmit FIFO Level Trigger Point */
-+FIELD(FLEXCOMM_USART_FIFOTRIG, TXLVL, 8, 4);
-+/* Trigger when the TX FIFO becomes empty */
-+#define FLEXCOMM_USART_FIFOTRIG_TXLVL_TXLVL0 0
-+/* Trigger when the TX FIFO level decreases to 1 entry */
-+#define FLEXCOMM_USART_FIFOTRIG_TXLVL_TXLVL1 1
-+/* Trigger when the TX FIFO level decreases to 15 entries (is no longer full) */
-+#define FLEXCOMM_USART_FIFOTRIG_TXLVL_TXLVL15 15
-+/* Receive FIFO Level Trigger Point */
-+FIELD(FLEXCOMM_USART_FIFOTRIG, RXLVL, 16, 4);
-+/* Trigger when the RX FIFO has received 1 entry (is no longer empty) */
-+#define FLEXCOMM_USART_FIFOTRIG_RXLVL_RXLVL1 0
-+/* Trigger when the RX FIFO has received 2 entries */
-+#define FLEXCOMM_USART_FIFOTRIG_RXLVL_RXLVL2 1
-+/* Trigger when the RX FIFO has received 16 entries (has become full) */
-+#define FLEXCOMM_USART_FIFOTRIG_RXLVL_RXLVL15 15
-+
-+/* FIFO Interrupt Enable */
-+REG32(FLEXCOMM_USART_FIFOINTENSET, 0xE10);
-+/* Transmit Error Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENSET, TXERR, 0, 1);
-+/* Receive Error Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENSET, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENSET, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENSET, RXLVL, 3, 1);
-+
-+/* FIFO Interrupt Enable Clear */
-+REG32(FLEXCOMM_USART_FIFOINTENCLR, 0xE14);
-+/* Transmit Error Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENCLR, TXERR, 0, 1);
-+/* Receive Error Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENCLR, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENCLR, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_USART_FIFOINTENCLR, RXLVL, 3, 1);
-+
-+/* FIFO Interrupt Status */
-+REG32(FLEXCOMM_USART_FIFOINTSTAT, 0xE18);
-+/* TX FIFO Error Interrupt Status */
-+FIELD(FLEXCOMM_USART_FIFOINTSTAT, TXERR, 0, 1);
-+/* RX FIFO Error Interrupt Status */
-+FIELD(FLEXCOMM_USART_FIFOINTSTAT, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Status */
-+FIELD(FLEXCOMM_USART_FIFOINTSTAT, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Status */
-+FIELD(FLEXCOMM_USART_FIFOINTSTAT, RXLVL, 3, 1);
-+/* Peripheral Interrupt Status */
-+FIELD(FLEXCOMM_USART_FIFOINTSTAT, PERINT, 4, 1);
-+
-+/* FIFO Write Data */
-+REG32(FLEXCOMM_USART_FIFOWR, 0xE20);
-+/* Transmit data to the FIFO */
-+FIELD(FLEXCOMM_USART_FIFOWR, TXDATA, 0, 9);
-+
-+/* FIFO Read Data */
-+REG32(FLEXCOMM_USART_FIFORD, 0xE30);
-+/* Received Data from the FIFO */
-+FIELD(FLEXCOMM_USART_FIFORD, RXDATA, 0, 9);
-+/* Framing Error Status Flag */
-+FIELD(FLEXCOMM_USART_FIFORD, FRAMERR, 13, 1);
-+/* Parity Error Status Flag */
-+FIELD(FLEXCOMM_USART_FIFORD, PARITYERR, 14, 1);
-+/* Received Noise Flag */
-+FIELD(FLEXCOMM_USART_FIFORD, RXNOISE, 15, 1);
-+
-+/* FIFO Data Read with No FIFO Pop */
-+REG32(FLEXCOMM_USART_FIFORDNOPOP, 0xE40);
-+/* Received Data from the FIFO */
-+FIELD(FLEXCOMM_USART_FIFORDNOPOP, RXDATA, 0, 9);
-+/* Framing Error Status Flag */
-+FIELD(FLEXCOMM_USART_FIFORDNOPOP, FRAMERR, 13, 1);
-+/* Parity Error Status Flag */
-+FIELD(FLEXCOMM_USART_FIFORDNOPOP, PARITYERR, 14, 1);
-+/* Received Noise Flag */
-+FIELD(FLEXCOMM_USART_FIFORDNOPOP, RXNOISE, 15, 1);
-+
-+/* FIFO Size */
-+REG32(FLEXCOMM_USART_FIFOSIZE, 0xE48);
-+/* FIFO Size */
-+FIELD(FLEXCOMM_USART_FIFOSIZE, FIFOSIZE, 0, 5);
-+
-+/* Peripheral Identification */
-+REG32(FLEXCOMM_USART_ID, 0xFFC);
-+
-+
-+#define FLEXCOMM_USART_REGISTER_ACCESS_INFO_ARRAY(_name) \
-+    struct RegisterAccessInfo _name[FLEXCOMM_USART_REGS_NO] = { \
-+        [0 ... FLEXCOMM_USART_REGS_NO - 1] = { \
-+            .name = "", \
-+            .addr = -1, \
-+        }, \
-+        [0x0] = { \
-+            .name = "CFG", \
-+            .addr = 0x0, \
-+            .ro = 0xFF032402, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x1] = { \
-+            .name = "CTL", \
-+            .addr = 0x4, \
-+            .ro = 0xFFFEFCB9, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x2] = { \
-+            .name = "STAT", \
-+            .addr = 0x8, \
-+            .ro = 0xFFFE07DF, \
-+            .reset = 0xA, \
-+        }, \
-+        [0x3] = { \
-+            .name = "INTENSET", \
-+            .addr = 0xC, \
-+            .ro = 0xFFFE0797, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x4] = { \
-+            .name = "INTENCLR", \
-+            .addr = 0x10, \
-+            .ro = 0xFFFE0797, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x8] = { \
-+            .name = "BRG", \
-+            .addr = 0x20, \
-+            .ro = 0xFFFF0000, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x9] = { \
-+            .name = "INTSTAT", \
-+            .addr = 0x24, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0xA] = { \
-+            .name = "OSR", \
-+            .addr = 0x28, \
-+            .ro = 0xFFFFFFF0, \
-+            .reset = 0xF, \
-+        }, \
-+        [0xB] = { \
-+            .name = "ADDR", \
-+            .addr = 0x2C, \
-+            .ro = 0xFFFFFF00, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x380] = { \
-+            .name = "FIFOCFG", \
-+            .addr = 0xE00, \
-+            .ro = 0xFFF80FFC, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x381] = { \
-+            .name = "FIFOSTAT", \
-+            .addr = 0xE04, \
-+            .ro = 0xFFFFFFFC, \
-+            .reset = 0x30, \
-+        }, \
-+        [0x382] = { \
-+            .name = "FIFOTRIG", \
-+            .addr = 0xE08, \
-+            .ro = 0xFFF0F0FC, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x384] = { \
-+            .name = "FIFOINTENSET", \
-+            .addr = 0xE10, \
-+            .ro = 0xFFFFFFF0, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x385] = { \
-+            .name = "FIFOINTENCLR", \
-+            .addr = 0xE14, \
-+            .ro = 0xFFFFFFF0, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x386] = { \
-+            .name = "FIFOINTSTAT", \
-+            .addr = 0xE18, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x388] = { \
-+            .name = "FIFOWR", \
-+            .addr = 0xE20, \
-+            .ro = 0xFFFFFE00, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x38C] = { \
-+            .name = "FIFORD", \
-+            .addr = 0xE30, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x390] = { \
-+            .name = "FIFORDNOPOP", \
-+            .addr = 0xE40, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x392] = { \
-+            .name = "FIFOSIZE", \
-+            .addr = 0xE48, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x10, \
-+        }, \
-+        [0x3FF] = { \
-+            .name = "ID", \
-+            .addr = 0xFFC, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0xE0102100, \
-+        }, \
-+    }
-diff --git a/include/hw/char/flexcomm_usart.h b/include/hw/char/flexcomm_usart.h
-new file mode 100644
-index 0000000000..e67b15208f
---- /dev/null
-+++ b/include/hw/char/flexcomm_usart.h
-@@ -0,0 +1,33 @@
-+/*
-+ * QEMU model for NXP's FLEXCOMM USART
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_FLEXCOMM_USART_H
-+#define HW_FLEXCOMM_USART_H
-+
-+#include "hw/misc/flexcomm_function.h"
-+#include "chardev/char-fe.h"
-+
-+#define TYPE_FLEXCOMM_USART "flexcomm-usart"
-+OBJECT_DECLARE_TYPE(FlexcommUsartState, FlexcommUsartClass, FLEXCOMM_USART);
-+
-+struct FlexcommUsartState {
-+    FlexcommFunction parent_obj;
-+
-+    CharBackend chr;
-+};
-+
-+struct FlexcommUsartClass {
-+    FlexcommFunctionClass parent_obj;
-+
-+    FlexcommFunctionSelect select;
-+};
-+
-+#endif /* HW_FLEXCOMM_USART_H */
-diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
-index 832d4cd29d..679b7ea64d 100644
---- a/include/hw/misc/flexcomm.h
-+++ b/include/hw/misc/flexcomm.h
-@@ -15,6 +15,7 @@
- #include "hw/sysbus.h"
- #include "hw/arm/svd/flexcomm.h"
- #include "qemu/fifo32.h"
-+#include "hw/char/flexcomm_usart.h"
- 
- #define FLEXCOMM_FUNC_USART     0
- #define FLEXCOMM_FUNC_SPI       1
-@@ -46,6 +47,7 @@ struct FlexcommState {
-     bool irq_state;
-     Fifo32 rx_fifo;
-     Fifo32 tx_fifo;
-+    FlexcommUsartState usart;
- };
- 
- #endif /* HW_FLEXCOMM_H */
-diff --git a/hw/char/flexcomm_usart.c b/hw/char/flexcomm_usart.c
-new file mode 100644
-index 0000000000..53ab5d8379
---- /dev/null
-+++ b/hw/char/flexcomm_usart.c
-@@ -0,0 +1,288 @@
-+/*
-+ * QEMU model for NXP's FLEXCOMM USART
-+ *
-+ * Copyright (c) 2024 Google LLC
++ * Copyright (C) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -498,348 +122,333 @@ index 0000000000..53ab5d8379
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/cutils.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
++#include <glib/gstdio.h>
++
++#include "io/channel-socket.h"
++#include "qemu/config-file.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "exec/address-spaces.h"
 +#include "qapi/error.h"
-+#include "trace.h"
++#include "qemu/sockets.h"
++#include "sysemu/sysemu.h"
++#include "qemu/main-loop.h"
++#include "qemu/option.h"
++#include "exec/memory.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++
 +#include "hw/misc/flexcomm.h"
-+#include "hw/char/flexcomm_usart.h"
 +#include "hw/arm/svd/flexcomm_usart.h"
++#include "hw/arm/svd/rt500.h"
++#include "reg-utils.h"
 +
-+#define REG(s, reg) (s->regs[R_FLEXCOMM_USART_##reg])
-+/* register field write helper macro */
-+#define RF_RD(s, reg, field, val) \
-+    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_USART_##reg, field, val)
-+/* register field read helper macro */
-+#define RF_WR(s, reg, field) \
-+    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_USART_##reg, field)
++#define FLEXCOMM_BASE RT500_FLEXCOMM0_BASE
++#define FLEXCOMM_USART_BASE RT500_FLEXCOMM0_BASE
++#define DEVICE_NAME "/machine/soc/flexcomm0"
 +
-+static FLEXCOMM_USART_REGISTER_ACCESS_INFO_ARRAY(reg_info);
++struct TestState {
++    QTestState *qtest;
++    QIOChannel *ioc;
++};
 +
-+static void flexcomm_usart_reset(FlexcommFunction *f)
++static void polling_test(gconstpointer user_data)
 +{
-+    for (int i = 0; i < FLEXCOMM_USART_REGS_NO; i++) {
-+        hwaddr addr = reg_info[i].addr;
++    struct TestState *t = (struct TestState *)user_data;
++    uint32_t tmp;
++    char byte;
++    int fifo_size;
++    QDict *resp;
 +
-+        if (addr != -1) {
-+            struct RegisterInfo ri = {
-+                .data = &f->regs[addr / 4],
-+                .data_size = 4,
-+                .access = &reg_info[i],
-+            };
++    resp = qmp("{\"execute\": \"system_reset\"}");
++    qdict_unref(resp);
 +
-+            register_reset(&ri);
-+        }
++    /* select and lock USART */
++    tmp = FIELD_DP32(FLEXCOMM_PERSEL_USART, FLEXCOMM_PSELID, LOCK, 1);
++    REG32_WRITE(FLEXCOMM, PSELID, tmp);
++
++    fifo_size = REG32_READ_FIELD(FLEXCOMM_USART, FIFOSIZE, FIFOSIZE);
++
++    /* enable USART */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, CFG, ENABLE, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, CFG, ENABLE), ==, 1);
++
++    /* enable TX and RX FIFO */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLETX),
++                     ==, 1);
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLERX),
++                     ==, 1);
++
++    /* test writes and fifo counters wrap */
++    for (int i = 0; i < fifo_size / 2; i++) {
++        /* check fifostat */
++        g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXFULL),
++                         ==, 0);
++        g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY),
++                         ==, 0);
++        g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXNOTFULL),
++                         ==, 1);
++        g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXEMPTY),
++                         ==, 1);
++
++        REG32_WRITE(FLEXCOMM_USART, FIFOWR, 'a' + i);
++        qio_channel_read(t->ioc, &byte, 1, &error_abort);
++        g_assert_cmpuint(byte, ==, 'a' + i);
 +    }
++
++    /* test reads and fifo level */
++
++    for (int i = 0; i < fifo_size / 2; i++) {
++        byte = 'A' + i;
++        g_assert_cmpuint(qio_channel_write(t->ioc, &byte, 1, &error_abort),
++                         ==, 1);
++    }
++
++    /* wait for the RXLVL to update */
++    WAIT_REG32_FIELD(1000, FLEXCOMM_USART, FIFOSTAT, RXLVL,
++                     fifo_size / 2);
++
++    /* check fifo stat */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXFULL),
++                     ==, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXNOTFULL),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXEMPTY),
++                     ==, 1);
++
++    /* send until FIFO is full */
++    for (int i = fifo_size / 2; i < fifo_size; i++) {
++        byte = 'A' + i;
++        g_assert_cmpuint(qio_channel_write(t->ioc, &byte, 1, &error_abort),
++                         ==, 1);
++    }
++
++    /* wait for the RXLVL to update */
++    WAIT_REG32_FIELD(1000, FLEXCOMM_USART, FIFOSTAT, RXLVL, fifo_size);
++
++    /* check fifo stat */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXFULL),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXNOTFULL),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXEMPTY),
++                     ==, 1);
++
++    /* check read no pop */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFORDNOPOP, RXDATA),
++                     ==, 'A');
++
++    /* now read from the fifo  */
++    for (int i = 0; i < fifo_size; i++) {
++        g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFORD, RXDATA),
++                         ==, 'A' + i);
++    }
++
++    /* check fifostat */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXFULL), ==, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY),
++                     ==, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXNOTFULL),
++                     ==, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, TXEMPTY),
++                     ==, 1);
 +}
 +
-+static void flexcomm_usart_irq_update(FlexcommFunction *f)
++static void irq_test(gconstpointer user_data)
 +{
-+    bool irq, per_irqs, fifo_irqs, enabled = RF_WR(f, CFG, ENABLE);
++    struct TestState *t = (struct TestState *)user_data;
++    char buf[256] = { 0, };
++    uint32_t tmp;
++    QDict *resp;
 +
-+    flexcomm_update_fifostat(f);
-+    fifo_irqs = REG(f, FIFOINTSTAT) & REG(f, FIFOINTENSET);
++    resp = qmp("{\"execute\": \"system_reset\"}");
++    qdict_unref(resp);
 +
-+    REG(f, INTSTAT) = REG(f, STAT) & REG(f, INTENSET);
-+    per_irqs = REG(f, INTSTAT) != 0;
++    qtest_irq_intercept_out_named(t->qtest, DEVICE_NAME,
++                                  SYSBUS_DEVICE_GPIO_IRQ);
 +
-+    irq = enabled && (fifo_irqs || per_irqs);
++    /* select and lock FLEXCOMM_USART */
++    tmp = FIELD_DP32(FLEXCOMM_PERSEL_USART, FLEXCOMM_PSELID, LOCK, 1);
++    REG32_WRITE(FLEXCOMM, PSELID, tmp);
 +
-+    trace_flexcomm_usart_irq(DEVICE(f)->id, irq, fifo_irqs, per_irqs, enabled);
-+    flexcomm_set_irq(f, irq);
++    /*
++     * set RX IRQ/DMA trigger level to 4 bytes - value 3 in FIFOTRIG
++     *
++     * 0000 - Trigger when the RX FIFO has received 1 entry (is no longer empty)
++     * 0001 - Trigger when the RX FIFO has received 2 entries
++     * 1111 - Trigger when the RX FIFO has received 16 entries (has become full)
++     */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOTRIG, RXLVL, 3);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOTRIG, RXLVL),
++                     ==, 3);
++
++    /* enable RX trigger for IRQ/DMA  */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOTRIG, RXLVLENA, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOTRIG, RXLVLENA),
++                     ==, 1);
++
++    /* enable RXLVL interrupt */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOINTENSET, RXLVL, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTENSET, RXLVL),
++                     ==, 1);
++
++    /* enable FLEXCOMM_USART */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, CFG, ENABLE, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, CFG, ENABLE),
++                     ==, 1);
++
++    /* enable TX and RX FIFO */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLETX),
++                     ==, 1);
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOCFG, ENABLERX),
++                     ==, 1);
++
++    /* check interrupt status */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, RXLVL),
++                     ==, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, TXLVL),
++                     ==, 0);
++    g_assert_false(get_irq(0));
++
++    /* enable TX trigger for IRQ/DMA  */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOTRIG, TXLVLENA),
++                     ==, 1);
++
++    /* enable irq for TX */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOINTENSET, TXLVL, 1);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTENSET, TXLVL),
++                     ==, 1);
++
++    /* check TX irq */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, TXLVL),
++                     ==, 1);
++    g_assert_true(get_irq(0));
++
++    /* disable irq for TX */
++    REG32_WRITE_FIELD(FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOTRIG, TXLVLENA),
++                     ==, 0);
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, TXLVL),
++                     ==, 0);
++    g_assert_false(get_irq(0));
++
++    /* send 3 bytes */
++    g_assert_cmpuint(qio_channel_write(t->ioc, buf, 3, &error_abort),
++                     ==, 3);
++
++    /* check that we have 3 bytes in the fifo */
++    WAIT_REG32_FIELD(1000, FLEXCOMM_USART, FIFOSTAT, RXLVL, 3);
++
++    /* and no interrupt has been triggered yet */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, RXLVL),
++                     ==, 0);
++    g_assert_false(get_irq(0));
++
++    /* push it over the edge */
++    g_assert_cmpuint(qio_channel_write(t->ioc, buf, 1, &error_abort), ==, 1);
++
++    /* check that we have 4 bytes in the fifo */
++    WAIT_REG32_FIELD(1000, FLEXCOMM_USART, FIFOSTAT, RXLVL, 4);
++
++    /* and the interrupt has been triggered */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, RXLVL),
++                     ==, 1);
++    g_assert_true(get_irq(0));
++
++    /* read one byte from the fifo */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFORD, RXDATA),
++                     ==, 0);
++
++    /* we should have 3 bytes in the FIFO */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOSTAT, RXLVL),
++                     ==, 3);
++
++    /* and no interrupts active */
++    g_assert_cmpuint(REG32_READ_FIELD(FLEXCOMM_USART, FIFOINTSTAT, RXLVL),
++             ==, 0);
++    g_assert_false(get_irq(0));
 +}
 +
-+static int flexcomm_usart_rx_space(void *opaque)
++static void close_ioc(void *ioc)
 +{
-+    FlexcommUsartState *s = FLEXCOMM_USART(opaque);
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+
-+    uint32_t ret = fifo32_num_free(f->rx_fifo);
-+
-+    if (!RF_WR(f, CFG, ENABLE) || !RF_WR(f, FIFOCFG, ENABLERX)) {
-+        ret = 0;
-+    }
-+
-+    trace_flexcomm_usart_rx_space(DEVICE(s)->id, ret);
-+
-+    return ret;
++    qio_channel_close(ioc, NULL);
 +}
 +
-+static void flexcomm_usart_rx(void *opaque, const uint8_t *buf, int size)
++int main(int argc, char **argv)
 +{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+
-+    if (!RF_WR(f, CFG, ENABLE) || !RF_WR(f, FIFOCFG, ENABLERX)) {
-+        return;
-+    }
-+
-+    trace_flexcomm_usart_rx(DEVICE(f)->id);
-+
-+    while (!fifo32_is_full(f->rx_fifo) && size) {
-+        fifo32_push(f->rx_fifo, *buf++);
-+        size--;
-+    }
-+
-+    flexcomm_usart_irq_update(f);
-+}
-+
-+static MemTxResult flexcomm_usart_reg_read(void *opaque, hwaddr addr,
-+                                           uint64_t *data, unsigned size,
-+                                           MemTxAttrs attrs)
-+{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+    FlexcommUsartState *s = FLEXCOMM_USART(opaque);
-+    const struct RegisterAccessInfo *rai = &reg_info[addr / 4];
-+    MemTxResult ret = MEMTX_OK;
-+
-+    if (size != 4) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
-+
-+    switch (addr) {
-+    case A_FLEXCOMM_USART_FIFORD:
-+    {
-+        if (!fifo32_is_empty(f->rx_fifo)) {
-+            *data = fifo32_pop(f->rx_fifo);
-+            qemu_chr_fe_accept_input(&s->chr);
-+        }
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFORDNOPOP:
-+    {
-+        if (!fifo32_is_empty(f->rx_fifo)) {
-+            *data = fifo32_peek(f->rx_fifo);
-+        }
-+        break;
-+    }
-+    default:
-+        *data = f->regs[addr / 4];
-+        break;
-+    }
-+
-+    flexcomm_usart_irq_update(f);
-+
-+out:
-+    trace_flexcomm_usart_reg_read(DEVICE(f)->id, rai->name, addr, *data);
-+    return ret;
-+}
-+
-+static MemTxResult flexcomm_usart_reg_write(void *opaque, hwaddr addr,
-+                                            uint64_t value, unsigned size,
-+                                            MemTxAttrs attrs)
-+{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+    FlexcommUsartState *s = FLEXCOMM_USART(opaque);
-+    const struct RegisterAccessInfo *rai = &reg_info[addr / 4];
-+    struct RegisterInfo ri = {
-+        .data = &f->regs[addr / 4],
-+        .data_size = 4,
-+        .access = rai,
++    int ret;
++    struct TestState test;
++    char *tmp_path = g_dir_make_tmp("qemu-flexcomm-usart-test.XXXXXX", NULL);
++    SocketAddress addr = {
++        .type = SOCKET_ADDRESS_TYPE_UNIX,
++        .u.q_unix.path = g_build_filename(tmp_path, "sock", NULL),
 +    };
++    char *args;
++    QIOChannelSocket *lioc;
 +
-+    trace_flexcomm_usart_reg_write(DEVICE(f)->id, rai->name, addr, value);
++    module_call_init(MODULE_INIT_QOM);
++    g_test_init(&argc, &argv, NULL);
 +
-+    switch (addr) {
-+    case A_FLEXCOMM_USART_INTENCLR:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        REG(f, INTENSET) &= ~REG(f, INTENCLR);
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFOCFG:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        flexcomm_reset_fifos(f);
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFOSTAT:
-+    {
-+        flexcomm_clear_fifostat(f, value);
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFOINTENSET:
-+    {
-+        REG(f, FIFOINTENSET) |= value;
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFOINTENCLR:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        REG(f, FIFOINTENSET) &= ~value;
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_FIFOWR:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
++    lioc = qio_channel_socket_new();
++    qio_channel_socket_listen_sync(lioc, &addr, 1, &error_abort);
 +
-+        if (!fifo32_is_full(f->tx_fifo)) {
-+            fifo32_push(f->tx_fifo, REG(f, FIFOWR));
-+        }
++    qtest_add_data_func("/flexcomm-usart/polling", &test, polling_test);
++    qtest_add_data_func("/flexcomm-usart/irq", &test, irq_test);
 +
-+        if (!RF_WR(f, CFG, ENABLE) || !RF_WR(f, FIFOCFG, ENABLETX)) {
-+            break;
-+        }
++    args = g_strdup_printf("-M rt595-evk "
++                           "-chardev socket,id=flexcomm0-usart,path=%s",
++                           addr.u.q_unix.path);
++    test.qtest = qtest_start(args);
 +
-+        while (!fifo32_is_empty(f->tx_fifo)) {
-+            uint32_t val32 = fifo32_pop(f->tx_fifo);
-+            uint8_t val8 = val32 & 0xff;
++    qio_channel_wait(QIO_CHANNEL(lioc), G_IO_IN);
++    test.ioc = QIO_CHANNEL(qio_channel_socket_accept(lioc, &error_abort));
++    g_assert(test.ioc);
++    qtest_add_abrt_handler(close_ioc, test.ioc);
 +
-+            trace_flexcomm_usart_tx(DEVICE(f)->id);
-+            qemu_chr_fe_write_all(&s->chr, &val8, sizeof(val8));
-+        }
-+        break;
-+    }
-+    case A_FLEXCOMM_USART_CFG:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        break;
-+    }
-+    default:
-+        register_write(&ri, value, ~0, NULL, false);
-+        break;
-+    }
++    ret = g_test_run();
 +
-+    flexcomm_usart_irq_update(f);
++    qtest_end();
 +
-+    return MEMTX_OK;
++    qtest_remove_abrt_handler(test.ioc);
++    g_unlink(addr.u.q_unix.path);
++    g_free(addr.u.q_unix.path);
++    g_rmdir(tmp_path);
++    g_free(tmp_path);
++    g_free(args);
++    object_unref(OBJECT(test.ioc));
++    object_unref(OBJECT(lioc));
++
++    return ret;
 +}
-+
-+static void flexcomm_usart_select(FlexcommFunction *f, bool selected)
-+{
-+    FlexcommUsartState *s = FLEXCOMM_USART(f);
-+    FlexcommUsartClass *uc = FLEXCOMM_USART_GET_CLASS(f);
-+
-+    if (selected) {
-+        qemu_chr_fe_set_handlers(&s->chr, flexcomm_usart_rx_space,
-+                             flexcomm_usart_rx, NULL, NULL,
-+                             s, NULL, true);
-+        flexcomm_usart_reset(f);
-+    } else {
-+        qemu_chr_fe_set_handlers(&s->chr, NULL, NULL, NULL, NULL, NULL, NULL,
-+                                 false);
-+    }
-+    uc->select(f, selected);
-+}
-+
-+static const MemoryRegionOps flexcomm_usart_ops = {
-+    .read_with_attrs = flexcomm_usart_reg_read,
-+    .write_with_attrs = flexcomm_usart_reg_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static Property flexcomm_usart_properties[] = {
-+    DEFINE_PROP_CHR("chardev", FlexcommUsartState, chr),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void flexcomm_usart_realize(DeviceState *dev, Error **errp)
-+{
-+    qdev_prop_set_chr(dev, "chardev", qemu_chr_find(dev->id));
-+}
-+
-+static void flexcomm_usart_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_CLASS(klass);
-+    FlexcommUsartClass *uc = FLEXCOMM_USART_CLASS(klass);
-+
-+    device_class_set_props(dc, flexcomm_usart_properties);
-+    dc->realize = flexcomm_usart_realize;
-+    uc->select = fc->select;
-+    fc->select = flexcomm_usart_select;
-+    fc->name = "usart";
-+    fc->has_fifos = true;
-+    fc->mmio_ops = &flexcomm_usart_ops;
-+}
-+
-+static const TypeInfo flexcomm_usart_types[] = {
-+    {
-+        .name          = TYPE_FLEXCOMM_USART,
-+        .parent        = TYPE_FLEXCOMM_FUNCTION,
-+        .instance_size = sizeof(FlexcommUsartState),
-+        .class_init    = flexcomm_usart_class_init,
-+        .class_size    = sizeof(FlexcommUsartClass),
-+    },
-+};
-+
-+DEFINE_TYPES(flexcomm_usart_types);
-diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
-index a98d8845aa..a291148f27 100644
---- a/hw/misc/flexcomm.c
-+++ b/hw/misc/flexcomm.c
-@@ -23,6 +23,7 @@
- #include "migration/vmstate.h"
- #include "hw/misc/flexcomm.h"
- #include "hw/arm/svd/flexcomm_usart.h"
-+#include "hw/char/flexcomm_usart.h"
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f35bb52aa2..c7a5bb61e9 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -233,7 +233,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_FSI_APB2OPB_ASPEED') ? ['aspeed_fsi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
+    config_all_devices.has_key('CONFIG_DM163')? ['dm163-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_FLEXCOMM')? ['flexcomm-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_FLEXCOMM') ? ['flexcomm-test', 'flexcomm-usart-test'] : []) + \
+   ['arm-cpu-features',
+    'boot-serial-test']
  
- #define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
- #define RF_WR(s, reg, field, val) \
-@@ -218,6 +219,7 @@ static void flexcomm_init(Object *obj)
-                           TYPE_FLEXCOMM, sizeof(s->regs));
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->container);
-     sysbus_init_irq(sbd, &s->irq);
-+    object_initialize_child(obj, "usart", &s->usart, TYPE_FLEXCOMM_USART);
+@@ -350,6 +350,7 @@ qtests = {
+   'virtio-net-failover': files('migration-helpers.c'),
+   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
+   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
++  'flexcomm-usart-test': [io],
  }
  
- static void flexcomm_finalize(Object *obj)
-@@ -247,6 +249,7 @@ static void flexcomm_realize(DeviceState *dev, Error **errp)
-     FlexcommState *s = FLEXCOMM(dev);
- 
-     memory_region_add_subregion_overlap(&s->container, 0, &s->mmio, -1);
-+    flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->usart), errp);
- }
- 
- static const VMStateDescription vmstate_flexcomm = {
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index 4b0bbbbbdc..3bff90bcbd 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -4,4 +4,8 @@ if get_option('mcux-soc-svd')
-   run_target('svd-flexcomm', command: svd_gen_header +
-     [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm.h',
-     '-p', 'FLEXCOMM0', '-t', 'FLEXCOMM'])
-+  run_target('svd-flexcomm-usart', command: svd_gen_header +
-+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm_usart.h',
-+     '-p', 'USART0', '-t', 'FLEXCOMM_USART',
-+     '--fields', 'CFG:ENABLE FIFOCFG:ENABLE*,EMPTY* FIFO*:* *:'])
- endif
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index 1750834385..5c6aaf8309 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -39,3 +39,4 @@ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
- specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
- specific_ss.add(when: 'CONFIG_VIRTIO', if_true: files('virtio-serial-bus.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
-+system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm_usart.c'))
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 59e1f734a7..578551b388 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -125,3 +125,11 @@ xen_console_unrealize(unsigned int idx) "idx %u"
- xen_console_realize(unsigned int idx, const char *chrdev) "idx %u chrdev %s"
- xen_console_device_create(unsigned int idx) "idx %u"
- xen_console_device_destroy(unsigned int idx) "idx %u"
-+
-+# flexcomm_usart.c
-+flexcomm_usart_reg_read(const char *id, const char *reg_name, uint32_t addr, uint32_t val) " %s: %s[0x%04x] -> 0x%08x"
-+flexcomm_usart_reg_write(const char *id, const char *reg_name, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
-+flexcomm_usart_rx_space(const char *id, uint32_t rx) "%s: %d"
-+flexcomm_usart_rx(const char *id) "%s"
-+flexcomm_usart_tx(const char *id) "%s"
-+flexcomm_usart_irq(const char *id, bool irq, bool fifoirqs, bool perirqs, bool enabled) "%s: %d %d %d %d"
+ if vnc.found()
 -- 
 2.47.0.rc0.187.ge670bccf7e-goog
 
