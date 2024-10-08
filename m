@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D24ECF0423
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 21:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423FECF0423
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 21:19:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syHaU-0000wK-B2; Tue, 08 Oct 2024 17:17:46 -0400
+	id 1syHai-0000zA-KO; Tue, 08 Oct 2024 17:18:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1syHaQ-0000vy-Ig
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:42 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1syHae-0000yR-Tt
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:56 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1syHaO-0000II-Dx
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:42 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e03be0d92so1944478b3a.3
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 14:17:40 -0700 (PDT)
+ id 1syHac-0000JE-7b
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 17:17:56 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-71e1a715c72so514098b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 14:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728422259; x=1729027059; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728422272; x=1729027072; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RyhYk86x3Y6zwFojKY/uni4sKUw2rIeokUy1XUAGDGw=;
- b=a15gDs+FrSFFb4kKlvvaFTiJwjeZQpoReQGjROmLo3BSv9VmPI81enykmvvu4Bnyqr
- cSE4XWsdAq9RrIdY4dooU+f154aNf5Gvt4gbOeqThr6DQ71b1gml5O8DdqgJCRf9ORO0
- BHVmD+QsKMbGi0p1JILewLNEG/UyEuYpxUtfxLyPJdcEThI82gSiDDF7UNWu2i1Ojsxt
- r3jSTAHjSLGKz973oNHDbp+p2Iuhjz323WVCRiVGcfAg54QDlc6G4Wyrdlh4TLUMK6af
- dPndcX3iAXSFrnQPvt+wNzkymGkSCFqrt/HL4zEqKZ8wESV18uv0/B4YHzEhw5qUys5m
- TgZw==
+ bh=n+muP5dO1nGu0swq72CYPofawNUkLVVMQiIFvA203T4=;
+ b=Wpcgc3zcZczyrRPKMguZiohz1G2Ck6PX+VPVJGgvR2zCTeAT0G3RThYYc/jl6KmdH1
+ BpzuMrvsZX7eEmAqsAyzKeWlZi4q34p3wanEXnLvPPt5+WgN+dCJXHz3LhAwoN9YHe7h
+ 5mVxR+CB6hUUjMatc4+4VsTUwr9+C/7tjgT5a7+eJpKDlZ80y3RDf7LTy7cEJQ0Ezk9y
+ irBudbudYN/hm69bhflWpOpOLUDYHBJxpW87EHsAWdYN6G9uGOW4Pbuxqo+MN0L568ra
+ QX6AOdiQl3a1Uv7rAze/5irp0xn5pB46KL/TLMAW/JUKpP+38x3QfHOWmFST7Se8mXwN
+ RZuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728422259; x=1729027059;
+ d=1e100.net; s=20230601; t=1728422272; x=1729027072;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RyhYk86x3Y6zwFojKY/uni4sKUw2rIeokUy1XUAGDGw=;
- b=WQ6yiARVUFMgJqWSpsjKbQMDk5qryFKXeV2bu86VTt2/ygP3zivjFTGDwQ3qKkFBU0
- ALzaFzNp+G63ezSGpEA1lLxOE7ZByzi/nimd4JLbOXrMjXWZrFvTKPrc/yPXuvvkVgAQ
- oiaUuUbrXU5Flv/MDrLpA6MM3qqNGMyOsiwfFsoOtct2OZQjxENRkvLGfWRwzVuTF8Uw
- Xaq1TBfaHIqZBiJkuG2Jkw7DstRyoTGoakeqUxfuIqy0lPRw8tPs4EWWwJDavCwoo9OF
- /ecrX3CnWe6Q66tMC7iskH9d4PUyCzNp3BCSqPXGGJfnfL8lRQBFLbKkBD/P/y9/obkq
- DGUA==
-X-Gm-Message-State: AOJu0YxXu6VHX/o2ejTPMZfTvQ5MMKbiKWDWJf6fuUX5BDyQQS8R3FPy
- Dh+DA2hS9Em/2bQodof3Vg49EpGQONk70fxtH9nJshtDMMTAIHGm4GHbOA==
-X-Google-Smtp-Source: AGHT+IHeSXioTfv3VsRZaUVDhmQjHhCxBdSGnV4l64YajWWtCuxxKowvPJSO9qRE3a5I98RrhxzbEA==
-X-Received: by 2002:a05:6a00:1749:b0:71d:ebac:f007 with SMTP id
- d2e1a72fcca58-71e1dbc7686mr304170b3a.28.1728422258398; 
- Tue, 08 Oct 2024 14:17:38 -0700 (PDT)
+ bh=n+muP5dO1nGu0swq72CYPofawNUkLVVMQiIFvA203T4=;
+ b=AY+b6icijJmcKcJLOowuF2YN/pRRjY/Y7HGyk6CabfdN9WW4A4qf73mlNaL3LgkHBB
+ rln/pxdo76WxCKNIFs35DOKs35aUMsQBws2prh190IG18CHYp6Vve/xEg4hgvZyrDgk1
+ yWbu7uUT6waxYX8dPpH6bfQPZocAZNm5Sb4ePS32/qTwEnRGl6nP0d+OkeEg0HLKdW6+
+ Vb3cRoUaIT+CBnldrlwOvvvynWtPR51CGYeVI40tRSMzfqLTpP2wRHXxppalHV/2SaT0
+ ng0SBihHWDUU5TMAvLa6ZV1MkiskjMCXwtMF/oOkjemRFkd/XOhwHLZAMtIVSFQqafpF
+ vU2g==
+X-Gm-Message-State: AOJu0YzT6HA+/rlugX4jUdE/ee3COiYOAaOb2473UDtUWqiaQqfF/Rgb
+ U5IT4NJYAlBE34GuI1senLzLZ9mzVfBn+LVUAy4ZHEQf/uPKuyzLxpx92g==
+X-Google-Smtp-Source: AGHT+IGCmyPfZCGVneoY+rTi3FiWj9y7yaqiOqGA5FPE4mcvzmpwHNv/dIfWZYo0PSZo+dHaUEs3cw==
+X-Received: by 2002:a05:6a00:1ac7:b0:71e:1784:4cbe with SMTP id
+ d2e1a72fcca58-71e1db87c14mr234800b3a.15.1728422271747; 
+ Tue, 08 Oct 2024 14:17:51 -0700 (PDT)
 Received: from localhost.localdomain ([103.103.35.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d6254dsm6549078b3a.153.2024.10.08.14.17.34
+ d2e1a72fcca58-71df0d6254dsm6549078b3a.153.2024.10.08.14.17.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 14:17:38 -0700 (PDT)
+ Tue, 08 Oct 2024 14:17:51 -0700 (PDT)
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
  slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v8 1/6] tests/lcitool: Update libvirt-ci and add libcbor
- dependency
-Date: Wed,  9 Oct 2024 03:17:22 +0600
-Message-Id: <20241008211727.49088-2-dorjoychy111@gmail.com>
+Subject: [PATCH v8 4/6] core/machine: Make create_default_memdev machine class
+ property
+Date: Wed,  9 Oct 2024 03:17:25 +0600
+Message-Id: <20241008211727.49088-5-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241008211727.49088-1-dorjoychy111@gmail.com>
 References: <20241008211727.49088-1-dorjoychy111@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -98,251 +97,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-libcbor dependecy is necessary for adding virtio-nsm and nitro-enclave
-machine support in the following commits. libvirt-ci has already been
-updated with the dependency upstream and this commit updates libvirt-ci
-submodule in QEMU to latest upstream. Also the libcbor dependency has
-been added to tests/lcitool/projects/qemu.yml.
+This is in preparation for the next commit where the nitro-enclave
+machine type will need to instead use a memfd backend for the built-in
+vhost-user-vsock device to work.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 ---
- .gitlab-ci.d/cirrus/macos-14.vars                     | 2 +-
- .gitlab-ci.d/cirrus/macos-15.vars                     | 2 +-
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 1 +
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 1 +
- tests/docker/dockerfiles/alpine.docker                | 1 +
- tests/docker/dockerfiles/debian-amd64-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-arm64-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-armhf-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-i686-cross.docker     | 1 +
- tests/docker/dockerfiles/debian-mips64el-cross.docker | 1 +
- tests/docker/dockerfiles/debian-mipsel-cross.docker   | 1 +
- tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 1 +
- tests/docker/dockerfiles/debian-s390x-cross.docker    | 1 +
- tests/docker/dockerfiles/debian.docker                | 1 +
- tests/docker/dockerfiles/fedora.docker                | 1 +
- tests/docker/dockerfiles/opensuse-leap.docker         | 1 +
- tests/docker/dockerfiles/ubuntu2204.docker            | 1 +
- tests/lcitool/projects/qemu.yml                       | 1 +
- 18 files changed, 18 insertions(+), 2 deletions(-)
+ backends/hostmem-memfd.c |  2 --
+ hw/core/machine.c        | 71 +++++++++++++++++++++-------------------
+ include/hw/boards.h      |  2 ++
+ include/sysemu/hostmem.h |  2 ++
+ 4 files changed, 42 insertions(+), 35 deletions(-)
 
-diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
-index 24cfec3b89..2bbab50ca0 100644
---- a/.gitlab-ci.d/cirrus/macos-14.vars
-+++ b/.gitlab-ci.d/cirrus/macos-14.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-15.vars b/.gitlab-ci.d/cirrus/macos-15.vars
-index 23b2c1d22f..f76ad3b1ed 100644
---- a/.gitlab-ci.d/cirrus/macos-15.vars
-+++ b/.gitlab-ci.d/cirrus/macos-15.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-index 71a0f0c433..4fb3c7555f 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-@@ -35,6 +35,7 @@ packages:
-   - libcacard-dev
-   - libcap-ng-dev
-   - libcapstone-dev
-+  - libcbor-dev
-   - libcmocka-dev
-   - libcurl4-gnutls-dev
-   - libdaxctl-dev
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-index d8de967b18..d79399caf3 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-@@ -35,6 +35,7 @@ packages:
-   - libcacard-dev
-   - libcap-ng-dev
-   - libcapstone-dev
-+  - libcbor-dev
-   - libcmocka-dev
-   - libcurl4-gnutls-dev
-   - libdaxctl-dev
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index 54b9721997..a0136181d3 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -45,6 +45,7 @@ RUN apk update && \
-         libaio-dev \
-         libbpf-dev \
-         libcap-ng-dev \
-+        libcbor-dev \
-         libdrm-dev \
-         libepoxy-dev \
-         libffi-dev \
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 136c3a79a1..5c5a753aca 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:amd64 \
-                       libcap-ng-dev:amd64 \
-                       libcapstone-dev:amd64 \
-+                      libcbor-dev:amd64 \
-                       libcmocka-dev:amd64 \
-                       libcurl4-gnutls-dev:amd64 \
-                       libdaxctl-dev:amd64 \
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 233f6ee1de..7724b5f7fb 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:arm64 \
-                       libcap-ng-dev:arm64 \
-                       libcapstone-dev:arm64 \
-+                      libcbor-dev:arm64 \
-                       libcmocka-dev:arm64 \
-                       libcurl4-gnutls-dev:arm64 \
-                       libdaxctl-dev:arm64 \
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index f26385e0b9..d64c2a2cbd 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:armhf \
-                       libcap-ng-dev:armhf \
-                       libcapstone-dev:armhf \
-+                      libcbor-dev:armhf \
-                       libcmocka-dev:armhf \
-                       libcurl4-gnutls-dev:armhf \
-                       libdaxctl-dev:armhf \
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index 2328ee1732..f4501866f9 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:i386 \
-                       libcap-ng-dev:i386 \
-                       libcapstone-dev:i386 \
-+                      libcbor-dev:i386 \
-                       libcmocka-dev:i386 \
-                       libcurl4-gnutls-dev:i386 \
-                       libdaxctl-dev:i386 \
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index bfa96cb507..126b22c311 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -91,6 +91,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:mips64el \
-                       libcap-ng-dev:mips64el \
-                       libcapstone-dev:mips64el \
-+                      libcbor-dev:mips64el \
-                       libcmocka-dev:mips64el \
-                       libcurl4-gnutls-dev:mips64el \
-                       libdaxctl-dev:mips64el \
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 4ac314e22e..0fcb88a174 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -91,6 +91,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:mipsel \
-                       libcap-ng-dev:mipsel \
-                       libcapstone-dev:mipsel \
-+                      libcbor-dev:mipsel \
-                       libcmocka-dev:mipsel \
-                       libcurl4-gnutls-dev:mipsel \
-                       libdaxctl-dev:mipsel \
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 8c1dcec9cf..393d0300c6 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:ppc64el \
-                       libcap-ng-dev:ppc64el \
-                       libcapstone-dev:ppc64el \
-+                      libcbor-dev:ppc64el \
-                       libcmocka-dev:ppc64el \
-                       libcurl4-gnutls-dev:ppc64el \
-                       libdaxctl-dev:ppc64el \
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 72668e0315..cbe590080d 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -92,6 +92,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev:s390x \
-                       libcap-ng-dev:s390x \
-                       libcapstone-dev:s390x \
-+                      libcbor-dev:s390x \
-                       libcmocka-dev:s390x \
-                       libcurl4-gnutls-dev:s390x \
-                       libdaxctl-dev:s390x \
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 42bd0067d1..631fe6b671 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -41,6 +41,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev \
-                       libcap-ng-dev \
-                       libcapstone-dev \
-+                      libcbor-dev \
-                       libcmocka-dev \
-                       libcurl4-gnutls-dev \
-                       libdaxctl-dev \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index ecdefaff1a..a01c004cfa 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -61,6 +61,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                libbpf-devel \
-                libcacard-devel \
-                libcap-ng-devel \
-+               libcbor-devel \
-                libcmocka-devel \
-                libcurl-devel \
-                libdrm-devel \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 0dab4e4873..751919c1ec 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -46,6 +46,7 @@ RUN zypper update -y && \
-            libbz2-devel \
-            libcacard-devel \
-            libcap-ng-devel \
-+           libcbor-devel \
-            libcmocka-devel \
-            libcurl-devel \
-            libdrm-devel \
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index 3a7de6a318..ecd5c4fd08 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -41,6 +41,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcacard-dev \
-                       libcap-ng-dev \
-                       libcapstone-dev \
-+                      libcbor-dev \
-                       libcmocka-dev \
-                       libcurl4-gnutls-dev \
-                       libdaxctl-dev \
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index 252e871f80..35878951b6 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -42,6 +42,7 @@ packages:
-  - libc-static
-  - libcacard
-  - libcap-ng
-+ - libcbor
-  - libcurl
-  - libdrm
-  - libepoxy
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 6a3c89a12b..9f890a813e 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -18,8 +18,6 @@
+ #include "qapi/error.h"
+ #include "qom/object.h"
+ 
+-#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
+-
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+ 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index adaba17eba..222799bc46 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1001,6 +1001,39 @@ void machine_add_audiodev_property(MachineClass *mc)
+                                           "Audiodev to use for default machine devices");
+ }
+ 
++static bool create_default_memdev(MachineState *ms, const char *path,
++                                  Error **errp)
++{
++    Object *obj;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    bool r = false;
++
++    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
++    if (path) {
++        if (!object_property_set_str(obj, "mem-path", path, errp)) {
++            goto out;
++        }
++    }
++    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
++        goto out;
++    }
++    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
++                              obj);
++    /* Ensure backend's memory region name is equal to mc->default_ram_id */
++    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
++                             false, errp)) {
++        goto out;
++    }
++    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
++        goto out;
++    }
++    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
++
++out:
++    object_unref(obj);
++    return r;
++}
++
+ static void machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1020,6 +1053,8 @@ static void machine_class_init(ObjectClass *oc, void *data)
+      */
+     mc->numa_mem_align_shift = 23;
+ 
++    mc->create_default_memdev = create_default_memdev;
++
+     object_class_property_add_str(oc, "kernel",
+         machine_get_kernel, machine_set_kernel);
+     object_class_property_set_description(oc, "kernel",
+@@ -1413,38 +1448,6 @@ MemoryRegion *machine_consume_memdev(MachineState *machine,
+     return ret;
+ }
+ 
+-static bool create_default_memdev(MachineState *ms, const char *path, Error **errp)
+-{
+-    Object *obj;
+-    MachineClass *mc = MACHINE_GET_CLASS(ms);
+-    bool r = false;
+-
+-    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
+-    if (path) {
+-        if (!object_property_set_str(obj, "mem-path", path, errp)) {
+-            goto out;
+-        }
+-    }
+-    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
+-        goto out;
+-    }
+-    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
+-                              obj);
+-    /* Ensure backend's memory region name is equal to mc->default_ram_id */
+-    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
+-                             false, errp)) {
+-        goto out;
+-    }
+-    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
+-        goto out;
+-    }
+-    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
+-
+-out:
+-    object_unref(obj);
+-    return r;
+-}
+-
+ const char *machine_class_default_cpu_type(MachineClass *mc)
+ {
+     if (mc->valid_cpu_types && !mc->valid_cpu_types[1]) {
+@@ -1548,7 +1551,9 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
+                 machine_class->default_ram_id);
+             return;
+         }
+-        if (!create_default_memdev(current_machine, mem_path, errp)) {
++
++        if (!machine_class->create_default_memdev(current_machine, mem_path,
++                                                  errp)) {
+             return;
+         }
+     }
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 5966069baa..91f2edd392 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -314,6 +314,8 @@ struct MachineClass {
+     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+     uint64_t smbios_memory_device_size;
++    bool (*create_default_memdev)(MachineState *ms, const char *path,
++                                  Error **errp);
+ };
+ 
+ /**
+diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
+index de47ae59e4..67f45abe39 100644
+--- a/include/sysemu/hostmem.h
++++ b/include/sysemu/hostmem.h
+@@ -39,6 +39,8 @@ OBJECT_DECLARE_TYPE(HostMemoryBackend, HostMemoryBackendClass,
+  */
+ #define TYPE_MEMORY_BACKEND_FILE "memory-backend-file"
+ 
++#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
++
+ 
+ /**
+  * HostMemoryBackendClass:
 -- 
 2.39.5
 
