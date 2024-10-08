@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C566CEF17C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C5ACEF17D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syB9n-0005fC-Od; Tue, 08 Oct 2024 10:25:47 -0400
+	id 1syBAz-0006Xy-35; Tue, 08 Oct 2024 10:27:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syB9f-0005XL-3g
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:25:39 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1syBAv-0006X6-KV
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:26:57 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syB9d-00012G-Ke
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:25:38 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c40aea5c40so241027a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:25:36 -0700 (PDT)
+ id 1syBAt-00018Y-Fo
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:26:56 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2fabd2c4ac0so62010511fa.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728397535; x=1729002335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728397613; x=1729002413; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=KFyOI4kR/oCoxSqEZ5bt7UtRlDCHr0O31AoUd84Ktk4=;
- b=QIb7koEMw3ZBsyhKfyyncE83LgikxZTBcHTatW+qcgFy494DlImXCXCMfwTm7Hg1E+
- 1Lw0Aw4+01yU1G+2qe6aTF5DsDB+rOfIJf869OlghFZbAw8BVKtnFbIoMv9e4h8LOV1S
- 0SSjcBPE2g1nuDfOE7zbncoc/H5IaPbXiZ1pMksqHZ9HhoCK+jVdS8t4GBi+ITRpdV38
- aMRm6O2nJ7TsPdwU8M2LEfnJT9V6qLSbrK9gj2DtNgKXFw6HVOnVIA4LuJG6YVr4hD4q
- zt5r2QYvbaUKjoCo+gCYEW41FjKUkbJ4FKCKTpF2Xme1VS9MB0JAnRnn9ta+Y0F8+rg8
- tmxA==
+ bh=RQozRerSiRfKC4vBeczSbk4ogjlVq89iod84xYTjpH8=;
+ b=qbk9y5bsRX4BdYX5AkrBawphp/l4T58y5ZIkF0ZDXnII8zWZE8Kt/zsQ1X5LGHeMsT
+ Oxn1N0ATL9GFgj8a93tMNDU2HaMxIXG3Suydas6BsO/vxwPW1Ksl+o2wWhfQXUDppeCY
+ 767Ws/2epaLN+rJ2ZLatCMH/HMD8ZoCGzUcoXIsQ8qhPMt8e7J9iSnZYxkyXfOctuxHY
+ TKSWkQ4sdd8u46TIV/JEha8h71Xb+Ph/ceM1/+AMzj7zChpBpgHa1Pfo5dMBKqVekhsr
+ gX8B7efhvWfmK4nDEXauU6cYdwJFcMZHNkjI4LuQfLee4D7BHbjEuWGAyREiTnR0nKTQ
+ vORA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728397535; x=1729002335;
+ d=1e100.net; s=20230601; t=1728397613; x=1729002413;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KFyOI4kR/oCoxSqEZ5bt7UtRlDCHr0O31AoUd84Ktk4=;
- b=hNet7RHNsISM1V/Tote/5bJtOU/MMcEoKi44KFxEB4bHz6DQb1sNSwy5eWJkw0oGpe
- d6bD3QT3hmRdEMRZQbKVUUbJzH2SQ2pNDc1x/MCXs1ymleQx+u0mMt/cLOyoezvFYUxY
- l5P+563O0hZ/9GQYIKGNsNEG8lKflU1otD+6dG1u4PlkFJ2ktw7yIXWOsWAAwqlrfyrK
- N0wWtqyjE683yhvgXWedj9fQKuQcqyHfp+nAjPZG3tgFqLRAa+CkW10Jocla4OPunoJ8
- 6Zk/fu+r4cUFhW9hjTynlAUR6SBk7d7+2iWUmwgbwbWaDXmqBpdy9WQV/us/vw/gv3eh
- /b2w==
-X-Gm-Message-State: AOJu0YxbWds/y89UQ/gwXCojoTZuFn0poUR2k+Jhk168lKnKoIxbYuOn
- iKNsKYmxODxTTFEP3OchjgGwl5ot6mIEedewnol8xVYYtfhLRm7dDiJEMsfxWVgTRKoqLIPjx9R
- zA2smpcLMPZq8crQz0gchb44fIAzH+gj6qieOQw==
-X-Google-Smtp-Source: AGHT+IH6vDRkL8posdyuwttmhFmsw/CjaMeEXHedCAmJUQDyqmuFFuzqUW413BB7Q7kpg2ghdilkoR5TzKy13fwkI/0=
-X-Received: by 2002:a05:6402:5187:b0:5c5:cb7f:e56a with SMTP id
- 4fb4d7f45d1cf-5c905cfc19emr3762017a12.1.1728397535021; Tue, 08 Oct 2024
- 07:25:35 -0700 (PDT)
+ bh=RQozRerSiRfKC4vBeczSbk4ogjlVq89iod84xYTjpH8=;
+ b=DBBwueeB6Vri/4yiS2o/dPR0xcfMzgLWq/FTZGLGbDMvYc3HHNMCfcycqjx6N64N/m
+ g4o5y8vH1IDoKso68z4C065TJWWYQGSM939upZaQ7fVEsBqegEmWVB7nWAivODp82Z37
+ OjfD+q27scfBdZ8Mtr1BKFKbWK9wKF+0imelnErTQ0kOPohZrp8JKQLmsQ1yYTQ+oXqC
+ tRdxNeqErbbqiftgN+QcGIn7z5cYwJBxjN5rVkQZ7ztYhlILMjg9D+t+pHhRENkTBuNL
+ ciXBY1Yre+RKVWZSMCLmGEa/hEbP+03pIEHceobqTfS6HwA37BgD2vS2l/XNDRvbQ5h4
+ 37Cw==
+X-Gm-Message-State: AOJu0YzL5rBavt3/gs5MpPTZsXvEPUi9NT2SebnFyt7G1UveDQ70a8hP
+ R/Bckq/VZDKjT5ucH1/dNM5XhfStLcOBoIH94OTpOFYytfJiFBJ+uTIyGyESDjHFlLbHmuJanEA
+ piQsqs/zdWnOizGfnLj+P4SNhjd0wCWU9ZMsU9w==
+X-Google-Smtp-Source: AGHT+IEK40RZGPZt5Ym42R8l1+Af5CABSgiP3N8qQETkX12gAxA9awW14sA1GNRaKGIg0p+kd3F0YmluVLQN8uT/C+o=
+X-Received: by 2002:a2e:be90:0:b0:2f7:9d20:3882 with SMTP id
+ 38308e7fff4ca-2faf3c63ec9mr87028611fa.22.1728397613383; Tue, 08 Oct 2024
+ 07:26:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-17-richard.henderson@linaro.org>
-In-Reply-To: <20241005200600.493604-17-richard.henderson@linaro.org>
+ <20241005200600.493604-16-richard.henderson@linaro.org>
+In-Reply-To: <20241005200600.493604-16-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 15:25:24 +0100
-Message-ID: <CAFEAcA8aKThqSWLwCAEb3ec3QPtBowMfvgRn8TxN1C-kGcrdgA@mail.gmail.com>
-Subject: Re: [PATCH v2 16/21] target/arm: Pass MemOp to get_phys_addr_nogpc
+Date: Tue, 8 Oct 2024 15:26:42 +0100
+Message-ID: <CAFEAcA-d3MHj=_Ma6MHLGLT-nW0iKA9fV7C7gmK9pnG-9NXZcA@mail.gmail.com>
+Subject: Re: [PATCH v2 15/21] target/arm: Pass MemOp to get_phys_addr_gpc
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
  linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,11 +93,9 @@ On Sat, 5 Oct 2024 at 21:06, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Zero is the safe do-nothing value for callers to use.
-> Pass the value through from get_phys_addr_gpc and
-> get_phys_addr_with_space_nogpc.
+> Pass the value through from get_phys_addr.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
