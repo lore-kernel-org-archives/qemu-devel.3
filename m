@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29CBCED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63B8ACED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxytN-0002Wa-L6; Mon, 07 Oct 2024 21:20:02 -0400
+	id 1sxyuF-0005Jt-N9; Mon, 07 Oct 2024 21:20:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3jogEZwUKCu8kRmZgXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--tavip.bounces.google.com>)
- id 1sxysg-0007qG-3U
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:21 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3m4gEZwUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com>)
+ id 1sxysx-0008CE-JD
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:36 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3jogEZwUKCu8kRmZgXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--tavip.bounces.google.com>)
- id 1sxysa-00009c-T4
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:16 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6e2b049b64aso81156477b3.3
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:11 -0700 (PDT)
+ <3m4gEZwUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com>)
+ id 1sxyst-0000CW-74
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:34 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6e2b049b64aso81158297b3.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350351; x=1728955151; darn=nongnu.org;
+ d=google.com; s=20230601; t=1728350364; x=1728955164; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=bFIqfrB60fzUJwtasXiqxuXbxvJUBaZy8yqqf9RYqyc=;
- b=x1peIlfIAg5KUmhXJxqFRQ2JwbyBiiA2MOZrzbRJn+dFSPPF2i+C7+DLYaupQuDwq9
- E2Rt72z3rC2arKSNOc9xO0BhWpTPGwh9UKOSxFsf4UEqCwLoNWlchCN/j/2xcephNA2f
- n9Xwmg1EkwIaG9Qn3hsDrevPPgRz+a7r67koCKG9uGVmdWh/e+MqXxLB3l+whqcDF+OI
- AJJ9hzzs1wqOKz8vAg7mdgh98iTGqZdOngksyrbtw2kq1SWKevKLxbfBq2k0HhFd6MsU
- ZSoHkDuYSQjMF5y+KCEFjnjAfhXHNRPE2so2NEbfAku6dh0T+06gQfkap1BS4bQVP1WU
- Elxg==
+ bh=UWggVGt8pbE9ZLsUZv4jH44X5yOt44e5jHCMlGNjp7Y=;
+ b=a7goeXj4xpd6QVZucbFLqeoo/qPRNmaftLcNPO5RqWa4dtcwb5fvbAOo/gFAuj1eI8
+ yTqXbWYK5kULLpevzOiSJCy8RTEKyXi1vOw+k/9c9u4ChJTA41b+fuXAaVk8PZCGjCe9
+ Z6dCam6aESV/eqE8L/a0RvwPlAZrgKpC+SNemGQA7wJAHol0r3R/B/YNyDrAS2/NXMiM
+ 1Q3uY3+F4dRSf+OSSBeyDpJR7ztZb+3gzaXttRYqoYxFv4CQ+3LdPhtStBTOu1md9Oui
+ 1VgEYaekDdL1auVUopeUaVbrUDpGk6s9IoAbnQMUXqH5tsNXyvpsVvHK1PRJ/tIT9ylI
+ Gi6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350351; x=1728955151;
+ d=1e100.net; s=20230601; t=1728350364; x=1728955164;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bFIqfrB60fzUJwtasXiqxuXbxvJUBaZy8yqqf9RYqyc=;
- b=CcxDY6DrkVmFXOvBqHwwpaOcsxfDOstM4MunzEqeWI/LOEgcJPz4UUyCrWCvyyfSC3
- rsXUdKHZPJplydD/YHQMennAb2M11DR0tw5HO58MqztnNBYkCgQoxMbH5g8pxGBoX5yc
- E8NOubH+3fIehav7Imew4TC8Nezu8EKOMtNCMe+Ij5UPzkjg6yzDrldWpKVgn3LZ5evx
- N80N41JhMF+LipH3RUbQLuIuzchLmwtaU3lduRwTW6bFNC3ZM74YKI3T0lNNICHg3LsT
- GBfdjkJC59kjc6MpiSdfcSJ49Y36AnvaeStBWhfnwlYDJYABNZI/e1nMTCgTa4Vl8Rxw
- GniA==
-X-Gm-Message-State: AOJu0YwH4QN0fndhBvGHjC9m1ngrUb2VIU98tTLbUZ/mh7wsPihKKZmR
- TqNEHHPSjUFMZg5Ik/ZrxRK/I649yr+9pxm9GRC7f2YzC18NHImFGAcc3R05L2CyVG+sioxxvzE
- dSj45GHj1sQs16E8106w3MNXIXiPtLtnuQWNyk7yCViGGGYRnlTlFJjfbe2yU0gLTVc0vJl0Mbg
- ZfyfGwV3+WiGYFL4fFZsK8+L963Q==
-X-Google-Smtp-Source: AGHT+IGkuD7TbREcq6U/rFFH7/EYiI9O0MyX/NGirkYsV/sq33w1AV5NrldGAUI8PuBzb2XtTF0vKNw1DQ==
+ bh=UWggVGt8pbE9ZLsUZv4jH44X5yOt44e5jHCMlGNjp7Y=;
+ b=mZ+Yz8s1krXk77laXY97zVaKm9+WD7gIgTDatbze/B2QZnod5q9vCnzekqB0rO5/QF
+ H9GMF2HAeEu7nJvHNyySIqQDjvtsN9OhNU0J0M5dcCTq9MkcaGlw00AjIeOrFgiUtuPX
+ E9+7s6XkayJGYAMfqBPsmjd4vL3xOrkNk3DJGewZ14X43v4LLePCinUbhy9kSHe81YMk
+ xH0VqhmkHuoRJC5FNUMIHsPHHCgWBSHGgH+6KBzknPa8c+ncTc91JyUza8/yJUGvCfmH
+ RqUZ/weEtJSrkS204OkgFqjiwyMl1RNXHqMUkPhV4M71CEsimhHkBhpBrKGMSxdbMoIb
+ huFg==
+X-Gm-Message-State: AOJu0YzGkHnS7f6a2VuKYVDhnr6wyBBs+CyPJpsCwioV1BubJ2d+dBQ4
+ FC9epnrthHjVOM5fTOOoaup9BFsWHR/zsX1wefwzKHB97DviRGli8cRh825MLFelAJ9uWyOtW9r
+ +zFkqqsowIn7QcJq1FuBm+tRtvOh0FB8gMkCoNH6TutT+lhRPjQ6/fooKO5+I8tTwfB8urc0esK
+ jz26cEWfZiWZBQfgKXMp2KyyIhpQ==
+X-Google-Smtp-Source: AGHT+IEnKoproXBmyAwcgsF2f2+HISyD0A+czH81es2a+FVh2KqZfn9xb+61J5CW4nGtkj6QDLnqUisx7g==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:690c:945:b0:6db:7b3d:b414
- with SMTP id
- 00721157ae682-6e2c6e9b946mr1970347b3.0.1728350350652; Mon, 07 Oct 2024
- 18:19:10 -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:35 -0700
+ (user=tavip job=sendgmr) by 2002:a25:26d0:0:b0:e17:8e73:866c with
+ SMTP id
+ 3f1490d57ef6-e2893945130mr35092276.10.1728350363413; Mon, 07 Oct 2024
+ 18:19:23 -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:42 -0700
 In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20241008011852.1439154-1-tavip@google.com>
 X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-10-tavip@google.com>
-Subject: [PATCH v2 09/25] hw/ssi: add support for flexcomm spi
+Message-ID: <20241008011852.1439154-17-tavip@google.com>
+Subject: [PATCH v2 16/25] system/qtest: add APIS to check for memory access
+ failures
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -72,9 +73,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
  crosa@redhat.com, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3jogEZwUKCu8kRmZgXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--tavip.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3m4gEZwUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,934 +98,423 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ene <sebastianene@google.com>
+Add read*/write*_fail qtest APIs to check for memory access failures.
 
-Add support for NXP's flexcomm spi. It supports FIFO access,
-interrupts and master mode only. It does not support DMA.
-
-The patch includes an automatically generated header which contains
-the register layout and helpers.
-
-The header can be regenerated with the svd-flexcomm-spi target when
-the build is configured with --enable-mcux-soc-svd.
-
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-[tavip: add suport for CFG.SPOL, CFG.LSBF, TX control flags per FIFO
-entry and 8/16 bit access to FIFORD and FIFOWR, convert to Resettable
-interface, add support for migration]
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/arm/svd/flexcomm_spi.h | 327 +++++++++++++++++++++++
- include/hw/misc/flexcomm.h        |   2 +
- include/hw/ssi/flexcomm_spi.h     |  36 +++
- hw/misc/flexcomm.c                |   3 +
- hw/ssi/flexcomm_spi.c             | 422 ++++++++++++++++++++++++++++++
- hw/arm/svd/meson.build            |   4 +
- hw/misc/Kconfig                   |   1 +
- hw/ssi/meson.build                |   1 +
- hw/ssi/trace-events               |   5 +
- 9 files changed, 801 insertions(+)
- create mode 100644 include/hw/arm/svd/flexcomm_spi.h
- create mode 100644 include/hw/ssi/flexcomm_spi.h
- create mode 100644 hw/ssi/flexcomm_spi.c
+ tests/qtest/libqtest-single.h | 92 +++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.h        | 76 +++++++++++++++++++++++++++++
+ system/qtest.c                | 44 ++++++++++-------
+ tests/qtest/libqtest.c        | 73 ++++++++++++++++++++++++++-
+ 4 files changed, 265 insertions(+), 20 deletions(-)
 
-diff --git a/include/hw/arm/svd/flexcomm_spi.h b/include/hw/arm/svd/flexcomm_spi.h
-new file mode 100644
-index 0000000000..c9ab2c661a
---- /dev/null
-+++ b/include/hw/arm/svd/flexcomm_spi.h
-@@ -0,0 +1,327 @@
-+/*
-+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
-+ *
-+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
-+ */
-+#pragma once
-+
-+#include "hw/register.h"
-+
-+/* Serial Peripheral Interfaces (SPI) */
-+#define FLEXCOMM_SPI_REGS_NO (1024)
-+
-+/* Configuration Register */
-+REG32(FLEXCOMM_SPI_CFG, 0x400);
-+/* SPI Enable */
-+FIELD(FLEXCOMM_SPI_CFG, ENABLE, 0, 1);
-+/* Master Mode Select */
-+FIELD(FLEXCOMM_SPI_CFG, MASTER, 2, 1);
-+/* LSB First Mode Enable */
-+FIELD(FLEXCOMM_SPI_CFG, LSBF, 3, 1);
-+/* Clock Phase Select */
-+FIELD(FLEXCOMM_SPI_CFG, CPHA, 4, 1);
-+/* Clock Polarity Select */
-+FIELD(FLEXCOMM_SPI_CFG, CPOL, 5, 1);
-+/* Loopback Mode Enable */
-+FIELD(FLEXCOMM_SPI_CFG, LOOP, 7, 1);
-+/* SSEL0 Polarity Select */
-+FIELD(FLEXCOMM_SPI_CFG, SPOL0, 8, 1);
-+/* SSEL1 Polarity Select */
-+FIELD(FLEXCOMM_SPI_CFG, SPOL1, 9, 1);
-+/* SSEL2 Polarity Select */
-+FIELD(FLEXCOMM_SPI_CFG, SPOL2, 10, 1);
-+/* SSEL3 Polarity Select */
-+FIELD(FLEXCOMM_SPI_CFG, SPOL3, 11, 1);
-+
-+/* Status Register */
-+REG32(FLEXCOMM_SPI_STAT, 0x408);
-+/* Slave Select Assert */
-+FIELD(FLEXCOMM_SPI_STAT, SSA, 4, 1);
-+/* Slave Select Deassert */
-+FIELD(FLEXCOMM_SPI_STAT, SSD, 5, 1);
-+/* Stalled Status Flag */
-+FIELD(FLEXCOMM_SPI_STAT, STALLED, 6, 1);
-+/* End Transfer Control */
-+FIELD(FLEXCOMM_SPI_STAT, ENDTRANSFER, 7, 1);
-+/* Master Idle Status Flag */
-+FIELD(FLEXCOMM_SPI_STAT, MSTIDLE, 8, 1);
-+
-+/* Interrupt Enable Register */
-+REG32(FLEXCOMM_SPI_INTENSET, 0x40C);
-+
-+/* Interrupt Enable Clear Register */
-+REG32(FLEXCOMM_SPI_INTENCLR, 0x410);
-+
-+/* Interrupt Status Register */
-+REG32(FLEXCOMM_SPI_INTSTAT, 0x428);
-+
-+/* FIFO Configuration Register */
-+REG32(FLEXCOMM_SPI_FIFOCFG, 0xE00);
-+/* Enable the Transmit FIFO */
-+FIELD(FLEXCOMM_SPI_FIFOCFG, ENABLETX, 0, 1);
-+/* Enable the Receive FIFO */
-+FIELD(FLEXCOMM_SPI_FIFOCFG, ENABLERX, 1, 1);
-+/* Empty Command for the Transmit FIFO */
-+FIELD(FLEXCOMM_SPI_FIFOCFG, EMPTYTX, 16, 1);
-+/* Empty Command for the Receive FIFO */
-+FIELD(FLEXCOMM_SPI_FIFOCFG, EMPTYRX, 17, 1);
-+
-+/* FIFO Status Register */
-+REG32(FLEXCOMM_SPI_FIFOSTAT, 0xE04);
-+/* TX FIFO Error */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, TXERR, 0, 1);
-+/* RX FIFO Error */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, RXERR, 1, 1);
-+/* Peripheral Interrupt */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, PERINT, 3, 1);
-+/* Transmit FIFO Empty */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, TXEMPTY, 4, 1);
-+/* Transmit FIFO is Not Full */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, TXNOTFULL, 5, 1);
-+/* Receive FIFO is Not Empty */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, RXNOTEMPTY, 6, 1);
-+/* Receive FIFO is Full */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, RXFULL, 7, 1);
-+/* Transmit FIFO Current Level */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, TXLVL, 8, 5);
-+/* Receive FIFO Current Level */
-+FIELD(FLEXCOMM_SPI_FIFOSTAT, RXLVL, 16, 5);
-+
-+/* FIFO Trigger Register */
-+REG32(FLEXCOMM_SPI_FIFOTRIG, 0xE08);
-+/* Transmit FIFO Level Trigger Enable */
-+FIELD(FLEXCOMM_SPI_FIFOTRIG, TXLVLENA, 0, 1);
-+/* Receive FIFO Level Trigger Enable */
-+FIELD(FLEXCOMM_SPI_FIFOTRIG, RXLVLENA, 1, 1);
-+/* Transmit FIFO Level Trigger Point */
-+FIELD(FLEXCOMM_SPI_FIFOTRIG, TXLVL, 8, 4);
-+/* Trigger when the TX FIFO becomes empty */
-+#define FLEXCOMM_SPI_FIFOTRIG_TXLVL_TXLVL0 0
-+/* Trigger when the TX FIFO level decreases to 1 entry */
-+#define FLEXCOMM_SPI_FIFOTRIG_TXLVL_TXLVL1 1
-+/* Trigger when the TX FIFO level decreases to 15 entries (is no longer full) */
-+#define FLEXCOMM_SPI_FIFOTRIG_TXLVL_TXLVL15 15
-+/* Receive FIFO Level Trigger Point */
-+FIELD(FLEXCOMM_SPI_FIFOTRIG, RXLVL, 16, 4);
-+/* Trigger when the RX FIFO has received 1 entry (is no longer empty) */
-+#define FLEXCOMM_SPI_FIFOTRIG_RXLVL_RXLVL1 0
-+/* Trigger when the RX FIFO has received 2 entries */
-+#define FLEXCOMM_SPI_FIFOTRIG_RXLVL_RXLVL2 1
-+/* Trigger when the RX FIFO has received 16 entries (has become full) */
-+#define FLEXCOMM_SPI_FIFOTRIG_RXLVL_RXLVL15 15
-+
-+/* FIFO Interrupt Enable Register */
-+REG32(FLEXCOMM_SPI_FIFOINTENSET, 0xE10);
-+/* TX Error Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENSET, TXERR, 0, 1);
-+/* Receive Error Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENSET, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENSET, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENSET, RXLVL, 3, 1);
-+
-+/* FIFO Interrupt Enable Clear Register */
-+REG32(FLEXCOMM_SPI_FIFOINTENCLR, 0xE14);
-+/* TX Error Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENCLR, TXERR, 0, 1);
-+/* Receive Error Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENCLR, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENCLR, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Enable */
-+FIELD(FLEXCOMM_SPI_FIFOINTENCLR, RXLVL, 3, 1);
-+
-+/* FIFO Interrupt Status Register */
-+REG32(FLEXCOMM_SPI_FIFOINTSTAT, 0xE18);
-+/* TX FIFO Error Interrupt Status */
-+FIELD(FLEXCOMM_SPI_FIFOINTSTAT, TXERR, 0, 1);
-+/* RX FIFO Error Interrupt Status */
-+FIELD(FLEXCOMM_SPI_FIFOINTSTAT, RXERR, 1, 1);
-+/* Transmit FIFO Level Interrupt Status */
-+FIELD(FLEXCOMM_SPI_FIFOINTSTAT, TXLVL, 2, 1);
-+/* Receive FIFO Level Interrupt Status */
-+FIELD(FLEXCOMM_SPI_FIFOINTSTAT, RXLVL, 3, 1);
-+/* Peripheral Interrupt Status */
-+FIELD(FLEXCOMM_SPI_FIFOINTSTAT, PERINT, 4, 1);
-+
-+/* FIFO Write Data Register */
-+REG32(FLEXCOMM_SPI_FIFOWR, 0xE20);
-+/* Transmit Data to the FIFO */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXDATA, 0, 16);
-+/* Transmit Slave Select 0 */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXSSEL0_N, 16, 1);
-+/* Transmit Slave Select 1 */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXSSEL1_N, 17, 1);
-+/* Transmit Slave Select 2 */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXSSEL2_N, 18, 1);
-+/* Transmit Slave Select 3 */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXSSEL3_N, 19, 1);
-+/* End of Transfer */
-+FIELD(FLEXCOMM_SPI_FIFOWR, EOT, 20, 1);
-+/* End of Frame */
-+FIELD(FLEXCOMM_SPI_FIFOWR, EOF, 21, 1);
-+/* Receive Ignore */
-+FIELD(FLEXCOMM_SPI_FIFOWR, RXIGNORE, 22, 1);
-+/* Transmit Ignore */
-+FIELD(FLEXCOMM_SPI_FIFOWR, TXIGNORE, 23, 1);
-+/* Data Length */
-+FIELD(FLEXCOMM_SPI_FIFOWR, LEN, 24, 4);
-+/* Data transfer is 4 bits in length */
-+#define FLEXCOMM_SPI_FIFOWR_LEN_LEN_4BITS 3
-+/* Data transfer is 5 bits in length */
-+#define FLEXCOMM_SPI_FIFOWR_LEN_LEN_5BITS 4
-+/* Data transfer is 16 bits in length */
-+#define FLEXCOMM_SPI_FIFOWR_LEN_LEN_16BITS 15
-+
-+/* FIFO Read Data Register */
-+REG32(FLEXCOMM_SPI_FIFORD, 0xE30);
-+/* Received Data from the FIFO */
-+FIELD(FLEXCOMM_SPI_FIFORD, RXDATA, 0, 16);
-+/* Slave Select 0 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORD, RXSSEL0_N, 16, 1);
-+/* Slave Select 1 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORD, RXSSEL1_N, 17, 1);
-+/* Slave Select 2 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORD, RXSSEL2_N, 18, 1);
-+/* Slave Select 3 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORD, RXSSEL3_N, 19, 1);
-+/* Start of Transfer Flag */
-+FIELD(FLEXCOMM_SPI_FIFORD, SOT, 20, 1);
-+
-+/* FIFO Data Read with no FIFO Pop Register */
-+REG32(FLEXCOMM_SPI_FIFORDNOPOP, 0xE40);
-+/* Received Data from the FIFO */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, RXDATA, 0, 16);
-+/* Slave Select 0 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, RXSSEL0_N, 16, 1);
-+/* Slave Select 1 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, RXSSEL1_N, 17, 1);
-+/* Slave Select 2 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, RXSSEL2_N, 18, 1);
-+/* Slave Select 3 for Receive */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, RXSSEL3_N, 19, 1);
-+/* Start of Transfer Flag */
-+FIELD(FLEXCOMM_SPI_FIFORDNOPOP, SOT, 20, 1);
-+
-+/* FIFO Size Register */
-+REG32(FLEXCOMM_SPI_FIFOSIZE, 0xE48);
-+/* FIFO Size */
-+FIELD(FLEXCOMM_SPI_FIFOSIZE, FIFOSIZE, 0, 5);
-+
-+
-+#define FLEXCOMM_SPI_REGISTER_ACCESS_INFO_ARRAY(_name) \
-+    struct RegisterAccessInfo _name[FLEXCOMM_SPI_REGS_NO] = { \
-+        [0 ... FLEXCOMM_SPI_REGS_NO - 1] = { \
-+            .name = "", \
-+            .addr = -1, \
-+        }, \
-+        [0x100] = { \
-+            .name = "CFG", \
-+            .addr = 0x400, \
-+            .ro = 0xFFFFF042, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x101] = { \
-+            .name = "DLY", \
-+            .addr = 0x404, \
-+            .ro = 0xFFFF0000, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x102] = { \
-+            .name = "STAT", \
-+            .addr = 0x408, \
-+            .ro = 0xFFFFFF4F, \
-+            .reset = 0x100, \
-+        }, \
-+        [0x103] = { \
-+            .name = "INTENSET", \
-+            .addr = 0x40C, \
-+            .ro = 0xFFFFFECF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x104] = { \
-+            .name = "INTENCLR", \
-+            .addr = 0x410, \
-+            .ro = 0xFFFFFECF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x109] = { \
-+            .name = "DIV", \
-+            .addr = 0x424, \
-+            .ro = 0xFFFF0000, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x10A] = { \
-+            .name = "INTSTAT", \
-+            .addr = 0x428, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x380] = { \
-+            .name = "FIFOCFG", \
-+            .addr = 0xE00, \
-+            .ro = 0xFFF80FFC, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x381] = { \
-+            .name = "FIFOSTAT", \
-+            .addr = 0xE04, \
-+            .ro = 0xFFFFFFFC, \
-+            .reset = 0x30, \
-+        }, \
-+        [0x382] = { \
-+            .name = "FIFOTRIG", \
-+            .addr = 0xE08, \
-+            .ro = 0xFFF0F0FC, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x384] = { \
-+            .name = "FIFOINTENSET", \
-+            .addr = 0xE10, \
-+            .ro = 0xFFFFFFF0, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x385] = { \
-+            .name = "FIFOINTENCLR", \
-+            .addr = 0xE14, \
-+            .ro = 0xFFFFFFF0, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x386] = { \
-+            .name = "FIFOINTSTAT", \
-+            .addr = 0xE18, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x388] = { \
-+            .name = "FIFOWR", \
-+            .addr = 0xE20, \
-+            .ro = 0xF0000000, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x38C] = { \
-+            .name = "FIFORD", \
-+            .addr = 0xE30, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x390] = { \
-+            .name = "FIFORDNOPOP", \
-+            .addr = 0xE40, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x392] = { \
-+            .name = "FIFOSIZE", \
-+            .addr = 0xE48, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0x0, \
-+        }, \
-+        [0x3FF] = { \
-+            .name = "ID", \
-+            .addr = 0xFFC, \
-+            .ro = 0xFFFFFFFF, \
-+            .reset = 0xE0201200, \
-+        }, \
-+    }
-diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
-index c9f1cd3890..757453df97 100644
---- a/include/hw/misc/flexcomm.h
-+++ b/include/hw/misc/flexcomm.h
-@@ -17,6 +17,7 @@
- #include "qemu/fifo32.h"
- #include "hw/char/flexcomm_usart.h"
- #include "hw/i2c/flexcomm_i2c.h"
-+#include "hw/ssi/flexcomm_spi.h"
- 
- #define FLEXCOMM_FUNC_USART     0
- #define FLEXCOMM_FUNC_SPI       1
-@@ -50,6 +51,7 @@ struct FlexcommState {
-     Fifo32 tx_fifo;
-     FlexcommUsartState usart;
-     FlexcommI2cState i2c;
-+    FlexcommSpiState spi;
- };
- 
- #endif /* HW_FLEXCOMM_H */
-diff --git a/include/hw/ssi/flexcomm_spi.h b/include/hw/ssi/flexcomm_spi.h
-new file mode 100644
-index 0000000000..c39cc33de4
---- /dev/null
-+++ b/include/hw/ssi/flexcomm_spi.h
-@@ -0,0 +1,36 @@
-+/*
-+ * QEMU model for NXP's FLEXCOMM SPI
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_FLEXCOMM_SPI_H
-+#define HW_FLEXCOMM_SPI_H
-+
-+#include "hw/misc/flexcomm_function.h"
-+#include "hw/ssi/ssi.h"
-+
-+#define TYPE_FLEXCOMM_SPI "flexcomm-spi"
-+OBJECT_DECLARE_TYPE(FlexcommSpiState, FlexcommSpiClass, FLEXCOMM_SPI);
-+
-+struct FlexcommSpiState {
-+    FlexcommFunction parent_obj;
-+
-+    SSIBus *bus;
-+    qemu_irq cs[4];
-+    bool cs_asserted[4];
-+    uint32_t tx_ctrl;
-+};
-+
-+struct FlexcommSpiClass {
-+    FlexcommFunctionClass parent_obj;
-+
-+    FlexcommFunctionSelect select;
-+};
-+
-+#endif /* HW_FLEXCOMM_SPI_H */
-diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
-index b1a2f01acf..fef220eb5b 100644
---- a/hw/misc/flexcomm.c
-+++ b/hw/misc/flexcomm.c
-@@ -25,6 +25,7 @@
- #include "hw/arm/svd/flexcomm_usart.h"
- #include "hw/char/flexcomm_usart.h"
- #include "hw/i2c/flexcomm_i2c.h"
-+#include "hw/ssi/flexcomm_spi.h"
- 
- #define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
- #define RF_WR(s, reg, field, val) \
-@@ -222,6 +223,7 @@ static void flexcomm_init(Object *obj)
-     sysbus_init_irq(sbd, &s->irq);
-     object_initialize_child(obj, "usart", &s->usart, TYPE_FLEXCOMM_USART);
-     object_initialize_child(obj, "i2c", &s->i2c, TYPE_FLEXCOMM_I2C);
-+    object_initialize_child(obj, "spi", &s->spi, TYPE_FLEXCOMM_SPI);
+diff --git a/tests/qtest/libqtest-single.h b/tests/qtest/libqtest-single.h
+index 851724cbcb..c22037c8b2 100644
+--- a/tests/qtest/libqtest-single.h
++++ b/tests/qtest/libqtest-single.h
+@@ -265,6 +265,98 @@ static inline uint64_t readq(uint64_t addr)
+     return qtest_readq(global_qtest, addr);
  }
  
- static void flexcomm_finalize(Object *obj)
-@@ -253,6 +255,7 @@ static void flexcomm_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->container, 0, &s->mmio, -1);
-     flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->usart), errp);
-     flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->i2c), errp);
-+    flexcomm_func_realize_and_unref(FLEXCOMM_FUNCTION(&s->spi), errp);
- }
- 
- static const VMStateDescription vmstate_flexcomm = {
-diff --git a/hw/ssi/flexcomm_spi.c b/hw/ssi/flexcomm_spi.c
-new file mode 100644
-index 0000000000..d8ecd37024
---- /dev/null
-+++ b/hw/ssi/flexcomm_spi.c
-@@ -0,0 +1,422 @@
-+/*
-+ * QEMU model for NXP's FLEXCOMM SPI
++/**
++ * writeb_fail:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
 + *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * Writes an 8-bit value to memory expecting a failure.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "qemu/cutils.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "exec/address-spaces.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/flexcomm.h"
-+#include "hw/arm/svd/flexcomm_spi.h"
-+
-+#define REG(s, reg) (s->regs[R_FLEXCOMM_SPI_##reg])
-+#define RF_WR(s, reg, field, val) \
-+    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_SPI_##reg, field, val)
-+#define RF_RD(s, reg, field) \
-+    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_SPI_##reg, field)
-+
-+#define FLEXCOMM_SSEL_ASSERTED             (0)
-+#define FLEXCOMM_SSEL_DEASSERTED           (1)
-+
-+#define FLEXCOMM_SPI_FIFOWR_LEN_MIN        (3)
-+#define FLEXCOMM_SPI_FIFOWR_LEN_MAX        (15)
-+
-+static const FLEXCOMM_SPI_REGISTER_ACCESS_INFO_ARRAY(reg_info);
-+
-+static void flexcomm_spi_reset(FlexcommFunction *f)
++static inline void writeb_fail(uint64_t addr, uint8_t value)
 +{
-+    for (int i = 0; i < FLEXCOMM_SPI_REGS_NO; i++) {
-+        hwaddr addr = reg_info[i].addr;
-+
-+        if (addr != -1) {
-+            struct RegisterInfo ri = {
-+                .data = &f->regs[addr / 4],
-+                .data_size = 4,
-+                .access = &reg_info[i],
-+            };
-+
-+            register_reset(&ri);
-+        }
-+    }
-+
-+    RF_WR(f, FIFOSIZE, FIFOSIZE, 0x8);
++    qtest_writeb_fail(global_qtest, addr, value);
 +}
 +
-+static void flexcomm_spi_irq_update(FlexcommFunction *f)
++/**
++ * writew_fail:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 16-bit value to memory expecting a failure.
++ */
++static inline void writew_fail(uint64_t addr, uint16_t value)
 +{
-+    bool irq, per_irqs, fifo_irqs, enabled = RF_RD(f, CFG, ENABLE);
-+
-+    flexcomm_update_fifostat(f);
-+    fifo_irqs = REG(f, FIFOINTSTAT) & REG(f, FIFOINTENSET);
-+
-+    REG(f, INTSTAT) = REG(f, STAT) & REG(f, INTENSET);
-+    per_irqs = REG(f, INTSTAT) != 0;
-+
-+    irq = enabled && (fifo_irqs || per_irqs);
-+
-+    trace_flexcomm_spi_irq(DEVICE(f)->id, irq, fifo_irqs, per_irqs, enabled);
-+    flexcomm_set_irq(f, irq);
++    qtest_writew_fail(global_qtest, addr, value);
 +}
 +
-+static void flexcomm_spi_select(FlexcommFunction *f, bool selected)
++/**
++ * writel_fail:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 32-bit value to memory expecting a failure.
++ */
++static inline void writel_fail(uint64_t addr, uint32_t value)
 +{
-+    FlexcommSpiState *s = FLEXCOMM_SPI(f);
-+    FlexcommSpiClass *sc = FLEXCOMM_SPI_GET_CLASS(f);
-+
-+    if (selected) {
-+        bool spol[] = {
-+            RF_RD(f, CFG, SPOL0), RF_RD(f, CFG, SPOL1), RF_RD(f, CFG, SPOL2),
-+            RF_RD(f, CFG, SPOL3),
-+        };
-+
-+        flexcomm_spi_reset(f);
-+        for (int i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+            s->cs_asserted[i] = false;
-+            qemu_set_irq(s->cs[i], !spol[i]);
-+        }
-+    }
-+    sc->select(f, selected);
++    qtest_writel_fail(global_qtest, addr, value);
 +}
 +
-+static MemTxResult flexcomm_spi_reg_read(void *opaque, hwaddr addr,
-+                                         uint64_t *data, unsigned size,
-+                                         MemTxAttrs attrs)
++/**
++ * writeq_fail:
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 64-bit value to memory expecting a failure.
++ */
++static inline void writeq_fail(uint64_t addr, uint64_t value)
 +{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+    MemTxResult ret = MEMTX_OK;
-+    const struct RegisterAccessInfo *rai = &reg_info[addr / 4];
-+
-+    /*
-+     * Allow 8/16 bits access to the FIFORD LSB half-word. This is supported by
-+     * hardware and required for 1/2 byte(s) width DMA transfers.
-+     */
-+    if (size != 4 && addr != A_FLEXCOMM_SPI_FIFORD) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
-+
-+    switch (addr) {
-+    case A_FLEXCOMM_SPI_FIFORD:
-+    {
-+        /* If we are running in loopback mode get the data from TX FIFO */
-+        if (RF_RD(f, CFG, LOOP) &&
-+            RF_RD(f, CFG, MASTER))
-+        {
-+            if (!fifo32_is_empty(f->tx_fifo)) {
-+                *data = fifo32_pop(f->tx_fifo);
-+            }
-+            break;
-+        }
-+
-+        if (!fifo32_is_empty(f->rx_fifo)) {
-+            *data = fifo32_pop(f->rx_fifo);
-+        }
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFORDNOPOP:
-+    {
-+        if (!fifo32_is_empty(f->rx_fifo)) {
-+            *data = fifo32_peek(f->rx_fifo);
-+        }
-+        break;
-+    }
-+    default:
-+        *data = f->regs[addr / 4];
-+        break;
-+    }
-+
-+    flexcomm_spi_irq_update(f);
-+
-+out:
-+    trace_flexcomm_spi_reg_read(DEVICE(f)->id, rai->name, addr, *data);
-+    return ret;
++    qtest_writeq_fail(global_qtest, addr, value);
 +}
 +
-+static uint32_t fifowr_len_bits(uint32_t val)
++/**
++ * readb_fail:
++ * @addr: Guest address to read from.
++ *
++ * Reads an 8-bit value from memory expecting a failure.
++ */
++static inline void readb_fail(uint64_t addr)
 +{
-+    int len = FIELD_EX32(val, FLEXCOMM_SPI_FIFOWR, LEN);
-+
-+    if (len < FLEXCOMM_SPI_FIFOWR_LEN_MIN ||
-+        len > FLEXCOMM_SPI_FIFOWR_LEN_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid spi xfer len %d\n",
-+                      __func__, val);
-+        return 0;
-+    }
-+
-+    return len + 1;
++    qtest_readb_fail(global_qtest, addr);
 +}
 +
-+static inline uint32_t fifowr_len_bytes(uint32_t val)
++/**
++ * readw_fail:
++ * @addr: Guest address to read from.
++ *
++ * Reads a 16-bit value from memory expecting a failure.
++ */
++static inline void readw_fail(uint64_t addr)
 +{
-+    return fifowr_len_bits(val) > 8 ? 2 : 1;
++    qtest_readw_fail(global_qtest, addr);
 +}
 +
-+static uint32_t flexcomm_spi_xfer_word(FlexcommSpiState *s, uint32_t out_data,
-+                                       int bytes, bool be)
++/**
++ * readl_fail:
++ * @addr: Guest address to read from.
++ *
++ * Reads a 32-bit value from memory expecting a failure.
++ */
++static inline void readl_fail(uint64_t addr)
 +{
-+    uint32_t word = 0;
-+    int out = 0;
++    qtest_readl_fail(global_qtest, addr);
++}
 +
-+    for (int i = 0; i < bytes; i++) {
-+        if (be) {
-+            int byte_offset = bytes - i - 1;
-+            out = (out_data & (0xFF << byte_offset * 8)) >> byte_offset * 8;
-+            word |= ssi_transfer(s->bus, out) << byte_offset * 8;
++/**
++ * readq_fail:
++ * @addr: Guest address to read from.
++ *
++ * Reads a 64-bit value from memory expecting a failure.
++ */
++static inline void readq_fail(uint64_t addr)
++{
++    qtest_readq_fail(global_qtest, addr);
++}
++
+ /**
+  * memread:
+  * @addr: Guest address to read from.
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index beb96b18eb..f9bbeb2e60 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -549,6 +549,82 @@ uint32_t qtest_readl(QTestState *s, uint64_t addr);
+  */
+ uint64_t qtest_readq(QTestState *s, uint64_t addr);
+ 
++/**
++ * qtest_writeb_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes an 8-bit value to memory expecting a failure.
++ */
++void qtest_writeb_fail(QTestState *s, uint64_t addr, uint8_t value);
++
++/**
++ * qtest_writew_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 16-bit value to memory expecting a failure.
++ */
++void qtest_writew_fail(QTestState *s, uint64_t addr, uint16_t value);
++
++/**
++ * qtest_writel_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 32-bit value to memory expecting a failure.
++ */
++void qtest_writel_fail(QTestState *s, uint64_t addr, uint32_t value);
++
++/**
++ * qtest_writeq_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to write to.
++ * @value: Value being written.
++ *
++ * Writes a 64-bit value to memory expecting a failure.
++ */
++void qtest_writeq_fail(QTestState *s, uint64_t addr, uint64_t value);
++
++/**
++ * qtest_readb_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ *
++ * Reads an 8-bit value from memory expecting a failure.
++ */
++void qtest_readb_fail(QTestState *s, uint64_t addr);
++
++/**
++ * qtest_readw_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ *
++ * Reads a 16-bit value from memory expecting a failure.
++ */
++void qtest_readw_fail(QTestState *s, uint64_t addr);
++
++/**
++ * qtest_readl_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ *
++ * Reads a 32-bit value from memory expecting a failure.
++ */
++void qtest_readl_fail(QTestState *s, uint64_t addr);
++
++/**
++ * qtest_readq_fail:
++ * @s: #QTestState instance to operate on.
++ * @addr: Guest address to read from.
++ *
++ * Reads a 64-bit value from memory expecting a failure.
++ */
++void qtest_readq_fail(QTestState *s, uint64_t addr);
++
+ /**
+  * qtest_memread:
+  * @s: #QTestState instance to operate on.
+diff --git a/system/qtest.c b/system/qtest.c
+index 12703a2045..95bb80a2bc 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -514,26 +514,30 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+ 
+         if (words[0][5] == 'b') {
+             uint8_t data = value;
+-            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                                &data, 1);
++            ret = address_space_write(first_cpu->as, addr,
++                                      MEMTXATTRS_UNSPECIFIED, &data, 1);
+         } else if (words[0][5] == 'w') {
+             uint16_t data = value;
+             tswap16s(&data);
+-            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                                &data, 2);
++            ret = address_space_write(first_cpu->as, addr,
++                                      MEMTXATTRS_UNSPECIFIED, &data, 2);
+         } else if (words[0][5] == 'l') {
+             uint32_t data = value;
+             tswap32s(&data);
+-            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                                &data, 4);
++            ret = address_space_write(first_cpu->as, addr,
++                                      MEMTXATTRS_UNSPECIFIED, &data, 4);
+         } else if (words[0][5] == 'q') {
+             uint64_t data = value;
+             tswap64s(&data);
+-            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                                &data, 8);
++            ret = address_space_write(first_cpu->as, addr,
++                                      MEMTXATTRS_UNSPECIFIED, &data, 8);
+         }
+         qtest_send_prefix(chr);
+-        qtest_send(chr, "OK\n");
++        if (ret == MEMTX_OK) {
++            qtest_send(chr, "OK\n");
 +        } else {
-+            out = (out_data & (0xFF << i * 8)) >> i * 8;
-+            word |= ssi_transfer(s->bus, out) << i * 8;
++            qtest_send(chr, "FAIL\n");
 +        }
-+    }
-+
-+    return word;
-+}
-+
-+static uint32_t flexcomm_spi_get_ss_mask(FlexcommSpiState *s,
-+                                        uint32_t txfifo_val)
-+{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(s);
-+
-+    uint32_t slave_select_mask = 0;
-+    bool ss[] = {
-+        FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, TXSSEL0_N),
-+        FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, TXSSEL1_N),
-+        FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, TXSSEL2_N),
-+        FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, TXSSEL3_N),
-+    };
-+    bool spol[] = {
-+        RF_RD(f, CFG, SPOL0), RF_RD(f, CFG, SPOL1), RF_RD(f, CFG, SPOL2),
-+        RF_RD(f, CFG, SPOL3),
-+    };
-+
-+    for (int i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+        int irq_level = ss[i] ? spol[i] : !spol[i];
-+
-+        slave_select_mask |= (ss[i] << i);
-+        s->cs_asserted[i] = ss[i];
-+        qemu_set_irq(s->cs[i], irq_level);
-+    }
-+
-+    return slave_select_mask;
-+}
-+
-+static MemTxResult flexcomm_spi_reg_write(void *opaque, hwaddr addr,
-+                                          uint64_t value, unsigned size,
-+                                          MemTxAttrs attrs)
-+{
-+    FlexcommFunction *f = FLEXCOMM_FUNCTION(opaque);
-+    FlexcommSpiState *s = FLEXCOMM_SPI(opaque);
-+    const struct RegisterAccessInfo *rai = &reg_info[addr / 4];
-+    struct RegisterInfo ri = {
-+        .data = &f->regs[addr / 4],
-+        .data_size = 4,
-+        .access = rai,
-+    };
-+    MemTxResult ret = MEMTX_OK;
-+
-+    trace_flexcomm_spi_reg_write(DEVICE(f)->id, rai->name, addr, value);
-+
-+    /*
-+     * Allow 8/16 bits access to both the FIFOWR MSB and LSB half-words. The
-+     * former is required for updating the control bits while the latter for DMA
-+     * transfers of 1/2 byte(s) width.
-+     */
-+    if (size != 4 && (addr / 4 != R_FLEXCOMM_SPI_FIFOWR)) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    switch (addr) {
-+    case A_FLEXCOMM_SPI_CFG:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_INTENCLR:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        REG(f, INTENSET) &= ~REG(f, INTENCLR);
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFOCFG:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        flexcomm_reset_fifos(f);
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFOSTAT:
-+    {
-+        flexcomm_clear_fifostat(f, value);
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFOINTENSET:
-+    {
-+        REG(f, FIFOINTENSET) |= value;
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFOINTENCLR:
-+    {
-+        register_write(&ri, value, ~0, NULL, false);
-+        REG(f, FIFOINTENSET) &= ~REG(f, FIFOINTENCLR);
-+        break;
-+    }
-+    /* update control bits but don't push into the FIFO */
-+    case A_FLEXCOMM_SPI_FIFOWR + 2:
-+    {
-+        if (value != 0) {
-+            s->tx_ctrl = value << 16;
-+        }
-+        break;
-+    }
-+    /* update control bits but don't push into the FIFO */
-+    case A_FLEXCOMM_SPI_FIFOWR + 3:
-+    {
-+        if (value != 0) {
-+            s->tx_ctrl = value << 24;
-+        }
-+        break;
-+    }
-+    case A_FLEXCOMM_SPI_FIFOWR:
-+    {
-+        /* fifo value contains both data and control bits */
-+        uint32_t txfifo_val;
-+        uint16_t tx_data = FIELD_EX32(value, FLEXCOMM_SPI_FIFOWR, TXDATA);
-+        uint32_t tx_ctrl = value & 0xffff0000;
-+
-+        if (size > 2 && tx_ctrl != 0) {
-+            /* non-zero writes to control bits updates them */
-+            s->tx_ctrl = tx_ctrl;
-+        }
-+
-+        /* push the data and control bits into the FIFO */
-+        txfifo_val = tx_data | s->tx_ctrl;
-+
-+        if (!fifo32_is_full(f->tx_fifo)) {
-+            fifo32_push(f->tx_fifo, txfifo_val);
-+        }
-+
-+        if (!RF_RD(f, CFG, ENABLE) || !RF_RD(f, FIFOCFG, ENABLETX)) {
-+            break;
-+        }
-+
-+        /*
-+         * On loopback mode we just insert the values in the TX FIFO. On slave
-+         * mode master needs to initiate the SPI transfer.
-+         */
-+        if (RF_RD(f, CFG, LOOP) || !RF_RD(f, CFG, MASTER)) {
-+            break;
-+        }
-+
-+        while (!fifo32_is_empty(f->tx_fifo)) {
-+            txfifo_val = fifo32_pop(f->tx_fifo);
-+
-+            uint32_t ss_mask = flexcomm_spi_get_ss_mask(s, txfifo_val);
-+            uint32_t data = FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, TXDATA);
-+            uint8_t bytes = fifowr_len_bytes(txfifo_val);
-+            bool msb = !RF_RD(f, CFG, LSBF);
-+            uint32_t val32;
-+
-+            val32 = flexcomm_spi_xfer_word(s, data, bytes, msb);
-+
-+            if (!fifo32_is_full(f->rx_fifo)) {
-+                /* Append the mask that informs which client is active */
-+                val32 |= (ss_mask << R_FLEXCOMM_SPI_FIFORD_RXSSEL0_N_SHIFT);
-+                fifo32_push(f->rx_fifo, val32);
-+            }
-+
-+            /* If this is the end of the transfer raise the CS line */
-+            if (FIELD_EX32(txfifo_val, FLEXCOMM_SPI_FIFOWR, EOT)) {
-+                bool spol[ARRAY_SIZE(s->cs)] = {
-+                    RF_RD(f, CFG, SPOL0),
-+                    RF_RD(f, CFG, SPOL1),
-+                    RF_RD(f, CFG, SPOL2),
-+                    RF_RD(f, CFG, SPOL3),
-+                };
-+
-+                for (int i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+                    if (s->cs_asserted[i]) {
-+                        s->cs_asserted[i] = false;
-+                        qemu_set_irq(s->cs[i], !spol[i]);
-+                    }
-+                }
-+            }
-+        }
-+        break;
-+    }
-+    default:
-+        register_write(&ri, value, ~0, NULL, false);
-+        break;
-+    }
-+
-+    flexcomm_spi_irq_update(f);
-+
-+    return ret;
-+}
-+
-+static const MemoryRegionOps flexcomm_spi_ops = {
-+    .read_with_attrs = flexcomm_spi_reg_read,
-+    .write_with_attrs = flexcomm_spi_reg_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void flexcomm_spi_realize(DeviceState *dev, Error **error)
-+{
-+    FlexcommSpiState *s = FLEXCOMM_SPI(dev);
-+
-+    s->bus = ssi_create_bus(DEVICE(s), "bus");
-+    qdev_init_gpio_out_named(DEVICE(s), s->cs, "cs", ARRAY_SIZE(s->cs));
-+}
-+
-+static const VMStateDescription vmstate_flexcomm_spi = {
-+    .name = "flexcomm-spi",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL_ARRAY(cs_asserted, FlexcommSpiState, 4),
-+        VMSTATE_UINT32(tx_ctrl, FlexcommSpiState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void flexcomm_spi_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_CLASS(klass);
-+    FlexcommSpiClass *sc = FLEXCOMM_SPI_CLASS(klass);
-+
-+    dc->realize = flexcomm_spi_realize;
-+    dc->vmsd = &vmstate_flexcomm_spi;
-+    sc->select = fc->select;
-+    fc->select = flexcomm_spi_select;
-+    fc->name = "spi";
-+    fc->has_fifos = true;
-+    fc->mmio_ops = &flexcomm_spi_ops;
-+}
-+
-+static const TypeInfo flexcomm_spi_types[] = {
-+    {
-+        .name          = TYPE_FLEXCOMM_SPI,
-+        .parent        = TYPE_FLEXCOMM_FUNCTION,
-+        .instance_size = sizeof(FlexcommSpiState),
-+        .class_init    = flexcomm_spi_class_init,
-+        .class_size    = sizeof(FlexcommSpiClass),
-+    },
-+};
-+
-+DEFINE_TYPES(flexcomm_spi_types);
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index 2542b56294..e7d62a7f35 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -12,4 +12,8 @@ if get_option('mcux-soc-svd')
-     [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm_i2c.h',
-       '-p', 'I2C0', '-t', 'FLEXCOMM_I2C',
-       '--fields', 'CFG TIMEOUT:TOMIN MSTCTL MSTDAT STAT:MSTPENDING,MSTSTATE INT*:MSTPENDING* SLV*:'])
-+  run_target('svd-flexcomm-spi', command: svd_gen_header +
-+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm_spi.h',
-+      '-p', 'SPI0', '-t', 'FLEXCOMM_SPI',
-+      '--fields', 'CFG FIFOCFG:ENABLE*,EMPTY* FIFO*:* INT*: STAT'])
- endif
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 9a244fa01d..b373e651e1 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -216,5 +216,6 @@ config XLNX_VERSAL_TRNG
- config FLEXCOMM
-     bool
-     select I2C
-+    select SSI
+     } else if (strcmp(words[0], "readb") == 0 ||
+                strcmp(words[0], "readw") == 0 ||
+                strcmp(words[0], "readl") == 0 ||
+@@ -548,26 +552,30 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
  
- source macio/Kconfig
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index 23cd425ab0..58e0d14b37 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -12,3 +12,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
-+system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm_spi.c'))
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 089d269994..f849f1f8be 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -53,3 +53,8 @@ pnv_spi_rx_read_N2frame(void) ""
- pnv_spi_shift_rx(uint8_t byte, uint32_t index) "byte = 0x%2.2x into RDR from payload index %d"
- pnv_spi_sequencer_stop_requested(const char* reason) "due to %s"
- pnv_spi_RDR_match(const char* result) "%s"
+         if (words[0][4] == 'b') {
+             uint8_t data;
+-            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                               &data, 1);
++            ret = address_space_read(first_cpu->as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, &data, 1);
+             value = data;
+         } else if (words[0][4] == 'w') {
+             uint16_t data;
+-            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                               &data, 2);
++            ret = address_space_read(first_cpu->as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, &data, 2);
+             value = tswap16(data);
+         } else if (words[0][4] == 'l') {
+             uint32_t data;
+-            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                               &data, 4);
++            ret = address_space_read(first_cpu->as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, &data, 4);
+             value = tswap32(data);
+         } else if (words[0][4] == 'q') {
+-            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
+-                               &value, 8);
++            ret = address_space_read(first_cpu->as, addr,
++                                     MEMTXATTRS_UNSPECIFIED, &value, 8);
+             tswap64s(&value);
+         }
+         qtest_send_prefix(chr);
+-        qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
++        if (ret == MEMTX_OK) {
++            qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
++        } else {
++            qtest_sendf(chr, "FAIL\n");
++        }
+     } else if (strcmp(words[0], "read") == 0) {
+         g_autoptr(GString) enc = NULL;
+         uint64_t addr, len;
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 9d07de1fbd..4055d6b953 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -666,7 +666,7 @@ static GString *qtest_client_socket_recv_line(QTestState *s)
+     return line;
+ }
+ 
+-static gchar **qtest_rsp_args(QTestState *s, int expected_args)
++static gchar **_qtest_rsp_args(QTestState *s, int expected_args, bool fail)
+ {
+     GString *line;
+     gchar **words;
+@@ -700,7 +700,11 @@ redo:
+     }
+ 
+     g_assert(words[0] != NULL);
+-    g_assert_cmpstr(words[0], ==, "OK");
++    if (fail) {
++        g_assert_cmpstr(words[0], ==, "FAIL");
++    } else {
++        g_assert_cmpstr(words[0], ==, "OK");
++    }
+ 
+     for (i = 0; i < expected_args; i++) {
+         g_assert(words[i] != NULL);
+@@ -709,6 +713,11 @@ redo:
+     return words;
+ }
+ 
++static gchar **qtest_rsp_args(QTestState *s, int expected_args)
++{
++    return _qtest_rsp_args(s, expected_args, false);
++}
 +
-+# flexcomm_spi.c
-+flexcomm_spi_reg_read(const char *id, const char *reg_name, uint32_t addr, uint32_t val) " %s: %s[0x%04x] -> 0x%08x"
-+flexcomm_spi_reg_write(const char *id, const char *reg_name, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
-+flexcomm_spi_irq(const char *id, bool irq, bool fifoirqs, bool perirqs, bool enabled) "%s: %d %d %d %d"
+ static void qtest_rsp(QTestState *s)
+ {
+     gchar **words = qtest_rsp_args(s, 0);
+@@ -716,6 +725,13 @@ static void qtest_rsp(QTestState *s)
+     g_strfreev(words);
+ }
+ 
++static void qtest_rsp_fail(QTestState *s)
++{
++    gchar **words = _qtest_rsp_args(s, 0, true);
++
++    g_strfreev(words);
++}
++
+ static int qtest_query_target_endianness(QTestState *s)
+ {
+     gchar **args;
+@@ -1103,6 +1119,13 @@ static void qtest_write(QTestState *s, const char *cmd, uint64_t addr,
+     qtest_rsp(s);
+ }
+ 
++static void qtest_write_fail(QTestState *s, const char *cmd, uint64_t addr,
++                             uint64_t value)
++{
++    qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 "\n", cmd, addr, value);
++    qtest_rsp_fail(s);
++}
++
+ void qtest_writeb(QTestState *s, uint64_t addr, uint8_t value)
+ {
+     qtest_write(s, "writeb", addr, value);
+@@ -1123,6 +1146,26 @@ void qtest_writeq(QTestState *s, uint64_t addr, uint64_t value)
+     qtest_write(s, "writeq", addr, value);
+ }
+ 
++void qtest_writeb_fail(QTestState *s, uint64_t addr, uint8_t value)
++{
++    qtest_write_fail(s, "writeb", addr, value);
++}
++
++void qtest_writew_fail(QTestState *s, uint64_t addr, uint16_t value)
++{
++    qtest_write_fail(s, "writew", addr, value);
++}
++
++void qtest_writel_fail(QTestState *s, uint64_t addr, uint32_t value)
++{
++    qtest_write_fail(s, "writel", addr, value);
++}
++
++void qtest_writeq_fail(QTestState *s, uint64_t addr, uint64_t value)
++{
++    qtest_write_fail(s, "writeq", addr, value);
++}
++
+ static uint64_t qtest_read(QTestState *s, const char *cmd, uint64_t addr)
+ {
+     gchar **args;
+@@ -1138,6 +1181,12 @@ static uint64_t qtest_read(QTestState *s, const char *cmd, uint64_t addr)
+     return value;
+ }
+ 
++static void qtest_read_fail(QTestState *s, const char *cmd, uint64_t addr)
++{
++    qtest_sendf(s, "%s 0x%" PRIx64 "\n", cmd, addr);
++    qtest_rsp_fail(s);
++}
++
+ uint8_t qtest_readb(QTestState *s, uint64_t addr)
+ {
+     return qtest_read(s, "readb", addr);
+@@ -1158,6 +1207,26 @@ uint64_t qtest_readq(QTestState *s, uint64_t addr)
+     return qtest_read(s, "readq", addr);
+ }
+ 
++void qtest_readb_fail(QTestState *s, uint64_t addr)
++{
++    qtest_read_fail(s, "readb", addr);
++}
++
++void qtest_readw_fail(QTestState *s, uint64_t addr)
++{
++    qtest_read_fail(s, "readw", addr);
++}
++
++void qtest_readl_fail(QTestState *s, uint64_t addr)
++{
++    qtest_read_fail(s, "readl", addr);
++}
++
++void qtest_readq_fail(QTestState *s, uint64_t addr)
++{
++    qtest_read(s, "readq", addr);
++}
++
+ static int hex2nib(char ch)
+ {
+     if (ch >= '0' && ch <= '9') {
 -- 
 2.47.0.rc0.187.ge670bccf7e-goog
 
