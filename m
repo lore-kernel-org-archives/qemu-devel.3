@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44934CEF152
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 11:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AACCEF152
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 11:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy8I9-0006ZY-Lj; Tue, 08 Oct 2024 07:22:13 -0400
+	id 1sy8N0-0007bE-Q1; Tue, 08 Oct 2024 07:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f77a4ae65edec99617ba+7716+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sy8I6-0006ZB-Ni
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 07:22:11 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sy8Mz-0007ay-Gs; Tue, 08 Oct 2024 07:27:13 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+f77a4ae65edec99617ba+7716+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sy8I3-0005kk-0c
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 07:22:09 -0400
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sy8Mx-0006Rw-SY; Tue, 08 Oct 2024 07:27:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=VyiAD24zlZgToiP9ghUi3RawuMTRKS/tJlVtZDaQRx8=; b=WHkq3mQ0BV36R9vK0+3W59Cm4z
- us0Tq1uNSxKi6s6Fvx6kqdnobi+1S7pUWHSnnvWoRtszw8umDQuvPnU8b4f00vENc4gqzI4sUafJc
- 7kqBzfH5LzgzCWV6cFbPfEc1QgnVejxBWxGHEcg//3XwgY3W5qws6TJ432alP2Z+g4/JdroGplvGz
- Amnl5hqowDGR3t0GIE5JxK+KrH7pgjcueyEK1V5mTJ9WvM4M2hfklVCmHEJQowmcfMrkh9oXkkXe9
- BIgeuQ5lbPi04GMltxRCCCMP+DuczJz5A1MAnHwIxRPHHOJydAREdqY73p+6hxuVMV5K+coUz/e3I
- oWYc+R5g==;
-Received: from 54-240-197-235.amazon.com ([54.240.197.235]
- helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1sy8Hp-00000002BLv-0Dm5; Tue, 08 Oct 2024 11:21:53 +0000
-Message-ID: <686204bb375ddac471fd7c93863adc725bf4913b.camel@infradead.org>
-Subject: Re: [PATCH v4] hw/acpi: Add vmclock device
-From: David Woodhouse <dwmw2@infradead.org>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Hilber
- <peter.hilber@opensynergy.com>, "Mohamed Abuelfotoh, Hazem"
- <abuehaze@amazon.com>, paul <paul@xen.org>
-Date: Tue, 08 Oct 2024 12:21:52 +0100
-In-Reply-To: <20241008120429.00000603@Huawei.com>
-References: <64144cfa550c54bee25c7be0cc3101cb1d1b1967.camel@infradead.org>
- <20241008120429.00000603@Huawei.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-Gqn8Trz9e0GVh5aXs6Ox"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=GREMHMDmJ2fUCXlxvu+uaJjkNyWtKsp5t6jc3ciaenk=; b=KCCknC/RZT3ZgP9xyF4cH7rWtA
+ 5CO5Nztf5PISTPnp0TqXIE1MUVeV/yGaykqai1DmaaYy/I4vZNE1du2jzRoYWX0A3NesMBNBjmwIB
+ oUmbgqy7u+KsaCopFRMop4AniRbrcFedfkO5JbGtXd62vxkGPQZSHu+/SomR5TOhFzwjtefCPzWg0
+ 6PUBrvYdOGvFoy8ho+l9XwLX4UXvcpRbaQnjKAFeVDZzuCdQ95ex2PJhloxM/36FxBAAlRdOvsoiv
+ CvxzQSsYsgNZd35jCksRKRyYPnpOpkTkapS9mQUWedSP3e98QlCk4IQEf2dSlfmrCEVElSQPMzd5r
+ OGcDAkZNZN4N2d+ITSh3oSdu1pR1cOYng3CUR6VqwmhJ4GEISYK1g6XL1Dbxm90w6e5rq9tzgSpho
+ RB05zUjOQczyyegUZiRLUMcjc8nuv6pWZBcYoSfRYKinRTuoiKSaZ8SZb4VddVZPXLeGUgopfSi83
+ EG6YNPJReC2PiijRe/mb2xmASu9tM38zP9hBDGD62pvirxJiXIPYFwCS/ebKaVqBfhx+T7lnklZIY
+ vIcegOwgiC+XhzD+PAn06IjPvBIYDofhctPJZl4x6EDjFSo+TOtnIQ79lzCkxq5zkkyMPfvLCsAgx
+ gAGOOfy0TBkncakTODh2EJ25qah8JWBxyIRgn3vJY=;
+Received: from [2a00:23c4:8bb8:7000:9446:5c4d:e682:7940]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sy8Mi-0001aT-QM; Tue, 08 Oct 2024 12:26:57 +0100
+Message-ID: <7994769f-efed-4eff-aac7-aa3828f603b7@ilande.co.uk>
+Date: Tue, 8 Oct 2024 12:27:03 +0100
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+f77a4ae65edec99617ba+7716+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr,
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org,
+ jsnow@redhat.com, crosa@redhat.com, lvivier@redhat.com
+References: <20241008011852.1439154-1-tavip@google.com>
+ <20241008011852.1439154-2-tavip@google.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20241008011852.1439154-2-tavip@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:9446:5c4d:e682:7940
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 01/25] fifo32: add peek function
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,210 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 08/10/2024 02:18, Octavian Purdila wrote:
 
---=-Gqn8Trz9e0GVh5aXs6Ox
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Add fifo32_peek() that returns the first element from the queue
+> without popping it.
+> 
+> Signed-off-by: Octavian Purdila <tavip@google.com>
+> ---
+>   include/qemu/fifo32.h | 28 ++++++++++++++++++++++++++++
+>   1 file changed, 28 insertions(+)
+> 
+> diff --git a/include/qemu/fifo32.h b/include/qemu/fifo32.h
+> index 4e9fd1b5ef..9de1807375 100644
+> --- a/include/qemu/fifo32.h
+> +++ b/include/qemu/fifo32.h
+> @@ -140,6 +140,34 @@ static inline uint32_t fifo32_pop(Fifo32 *fifo)
+>       return ret;
+>   }
+>   
+> +/**
+> + * fifo32_peek:
+> + * @fifo: fifo to peek at
+> + *
+> + * Returns the value from the FIFO's head without poping it. Behaviour
+> + * is undefined if the FIFO is empty. Clients are responsible for
+> + * checking for emptiness using fifo32_is_empty().
+> + *
+> + * Returns: the value from the FIFO's head
+> + */
+> +
+> +static inline uint32_t fifo32_peek(Fifo32 *fifo)
+> +{
+> +    uint32_t ret = 0, num;
+> +    const uint8_t *buf;
+> +
+> +    buf = fifo8_peek_bufptr(&fifo->fifo, 4, &num);
 
-On Tue, 2024-10-08 at 12:04 +0100, Jonathan Cameron wrote:
-> On Mon, 07 Oct 2024 14:53:54 +0100
-> David Woodhouse <dwmw2@infradead.org> wrote:
->=20
-> >=20
-> > +=C2=A0=C2=A0=C2=A0 aml_append(dev, aml_name_decl("_HID",
-> > aml_string("AMZNC10C")));
->=20
-> Nice _HID :)
+Are you sure that you want to use fifo8_peek_bufptr() as opposed to fifo8_peek_buf() 
+here? The reason for using the latter function (and why fifo8_*_bufptr() functions 
+are not generally recommended) is that they will correctly handle the FIFO wraparound 
+caused by the drifting head pointer which can occur if you don't empty the entire 
+FIFO contents in a single *_pop() or *_pop_buf() operation.
 
-Can't take credit for that; it was mst's idea :)
-
-> > +=C2=A0=C2=A0=C2=A0 aml_append(dev, aml_name_decl("_CID", aml_string("V=
-MCLOCK")));
-> > +=C2=A0=C2=A0=C2=A0 aml_append(dev, aml_name_decl("_DDN", aml_string("V=
-MCLOCK")));
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /* Simple status method */
-> > +=C2=A0=C2=A0=C2=A0 method =3D aml_method("_STA", 0, AML_NOTSERIALIZED)=
-;
-> > +=C2=A0=C2=A0=C2=A0 addr =3D aml_local(0);
-> > +=C2=A0=C2=A0=C2=A0 aml_append(method, aml_store(aml_int(0xf), addr));
-> > +=C2=A0=C2=A0=C2=A0 aml_append(method, aml_return(addr));
-> > +=C2=A0=C2=A0=C2=A0 aml_append(dev, method);
->=20
-> It's static so you should be able to do:
-> aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
-
-Thanks. Tested and pushed to
-https://git.infradead.org/users/dwmw2/qemu.git/shortlog/refs/heads/vmclock
-
->=20
-> > +static Property vmclock_device_properties[] =3D {
-> > +=C2=A0=C2=A0=C2=A0 DEFINE_PROP_END_OF_LIST(),
-> > +};
-> > +
-> > +static void vmclock_device_class_init(ObjectClass *klass, void *data)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 DeviceClass *dc =3D DEVICE_CLASS(klass);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 dc->vmsd =3D &vmstate_vmclock;
-> > +=C2=A0=C2=A0=C2=A0 dc->realize =3D vmclock_realize;
-> > +=C2=A0=C2=A0=C2=A0 device_class_set_props(dc, vmclock_device_propertie=
-s);
->=20
-> Probably a silly question but why register no properties?
-> Is that any different to not registering them?
-> + a quick look suggests not all class_init functions
-> set them.
-
-They'll be used in the future. Phase 1 of the VMCLOCK device just
-signals *disruption* to guests, so they know that their clocks are
-wrong immediately after migration and they have to resync before
-performing any operations that require accurate time.
-
-Phase 2 will advertise the current time (based on the TSC of the new
-host) directly to the guest. That's when it'll need a little more
-setup.
-
-So when I copied the boilerplate from vmgenid I just ripped out the
-actual UUID property, not the whole setup.
-
- For now I've just been testing the guest side with this hack, FWIW:
-
---- a/hw/acpi/vmclock.c
-+++ b/hw/acpi/vmclock.c
-@@ -151,6 +151,18 @@ static void vmclock_realize(DeviceState *dev,
-Error **errp)
-=20
-     qemu_register_reset(vmclock_handle_reset, vms);
-=20
-+    vms->clk->time_type =3D VMCLOCK_TIME_TAI;
-+    vms->clk->flags =3D VMCLOCK_FLAG_TAI_OFFSET_VALID;
-+    vms->clk->tai_offset_sec =3D -3600;
-+    vms->clk->clock_status =3D VMCLOCK_STATUS_SYNCHRONIZED;
-+    vms->clk->counter_value =3D 0;
-+    vms->clk->counter_id =3D VMCLOCK_COUNTER_X86_TSC;
-+    vms->clk->time_sec =3D 1704067200;
-+    vms->clk->time_frac_sec =3D 0x8000000000000000ULL;
-+    vms->clk->counter_period_frac_sec =3D 0x1a6e39b3e0ULL;
-+    vms->clk->counter_period_shift =3D 4;
-+    //vms->clk->counter_period_frac_sec =3D 0x1934c67f9b2ce6ULL;
-+
-     vmclock_update_guest(vms);
- }
-=20
+> +    if (num != 4) {
+> +        return ret;
+> +    }
+> +
+> +    for (int i = 0; i < sizeof(uint32_t); i++) {
+> +        ret |= buf[i] << (i * 8);
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>   /**
+>    * There is no fifo32_pop_buf() because the data is not stored in the buffer
+>    * as a set of native-order words.
 
 
---=-Gqn8Trz9e0GVh5aXs6Ox
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+ATB,
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMDA4MTEyMTUyWjAvBgkqhkiG9w0BCQQxIgQgHcGRw4bM
-6eEejfInCzX1mIXWTmPMy5BFT7WRUc00RKEwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAWG6S9jq/QjqIOk/1a3+idaEj4Rq3gAl2Y
-wtkwy3TeQ5hzmHcyeMkU7SH089p00kvOZiwQfb81CjnnfD66SX6vKvd44IREpDY/L3kQva6aK49H
-NSm2dg5IOWGbNd8HcPVC6hOvXTwCbhZiKpX/WI7u+Ayp9KqeV0pORqM+Zn3rCN731NDk81pr2IIH
-je0Drg5r6NEg3Eqe3+P/ZhZJX2DMt1rkBQUk8q7cA2HofEvddPsoGOJAEdracsLcW/yACoSn5LJc
-5GVuxSinUzLWkOhNVAI9i+mu803Bs9b0AfWlsQLoGAEiVVUg4kZMJjP/pQ31rkxxHQz3yEQQRmAL
-WSNfXsFhMKcH5ANwXszP9+d5lD99izGI7iP6stzE3fygVLTV9W/Y8oxWpY4l980znYkScSsdHvkh
-WudqrY07a+7HFHrkvKtPhV8pan5BMKtDcyKRymbjpwnbkLsZAYYb8QvxYvMgd+KBUPXg6euk0mqo
-A9Yw+GnYd7GDQJB8E4Masu59iBQx7C+oT3WCuiL8wL+A5WZ/KHftXguhYVi/x4zD5pusU21K96t/
-3zgS8rbyRn6jyp0B5gk8H0lRofPlAmXw4N+v3vhLX+2X+yx8ZWLbm8dJ2QsTcFxasFuGc1QQyFt5
-geoqyEwicCsMfTFRWTgLwBET0ckoBzQ9e1Lmw2jXNQAAAAAAAA==
+Mark.
 
-
---=-Gqn8Trz9e0GVh5aXs6Ox--
 
