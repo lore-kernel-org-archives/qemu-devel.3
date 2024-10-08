@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26162CED24D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1E3CED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyq8-0004IN-9p; Mon, 07 Oct 2024 21:16:40 -0400
+	id 1sxypj-00045z-Vj; Mon, 07 Oct 2024 21:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypo-00048f-Vt; Mon, 07 Oct 2024 21:16:22 -0400
+ id 1sxyph-00045H-Hv; Mon, 07 Oct 2024 21:16:13 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypn-0008LG-4o; Mon, 07 Oct 2024 21:16:20 -0400
+ id 1sxypf-0008HY-5f; Mon, 07 Oct 2024 21:16:12 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497NvUax029225;
- Tue, 8 Oct 2024 01:16:18 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497Nt8Jr026653;
+ Tue, 8 Oct 2024 01:16:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=DEFEPPwca8cbU
- rn5c+Sf8o9VCEUuCEQCcf30CbCJe1Y=; b=JkYLk7ekKyyTFsyuaMqGHXCIN5bKZ
- ZuDWzVeYKNGxkGJhqbioD1Y7o8igJtBoyKKyrQiPgWiAkdf4jJwKP/+F2dx64xAv
- y2fdByL9FdZhmuj3rrVxQ4eXlbLpwmWV4yfXIZSFbFgLapKP1mCqVEi9rguGRZDL
- icuOOG7lCcx4++4SwerGFLtoIASgwx+ENCZ7uZNjQ8+0wsbMDCQSPy0WXuI/omH2
- 6c0h9gA2oAiv4RfP+H+rjFeW66HEygD6HFIOy2BC8gTu4EvwUPdWkYCJluhy1FLz
- 3KAZYtrWUVtz/n29JboiOA1S5mU9rueZ+NnVw0R7omq82LTtN4+4U2Seg==
+ :mime-version:content-transfer-encoding; s=pp1; bh=EMFlUjXFbClm+
+ byH4iu81LclUpFGQnIekH0pDh+MOKo=; b=trka2cqO46iZNNtsDmZ5DgYZRQma9
+ XaP+ERCHRxOHTfBOi5bqdv/rRNzC2jBR96WiygJXMiBaSG7LasVTF6rFevXd2Zme
+ +Qoq7VpQtf7847aHU5dZD6szOQbMaONONq0zSY4R+kbGNbNpksVHwlVmm9HtyAlN
+ EStCPOyotgKTtrZkfb011LZJcWmcHREA94MUQAthMZXHGGvAQBVXhT77B8oYipXY
+ AIJjBtMqizRwx9vP1ISVlVOQU0CSlLOt9HnSprMkGDb5KYo9brXBz1D59SIWipVd
+ qB8T68a3JUYzZrjAxz9osQ58EalJR8nRw4bUDRt8UffXs7U1n0pjK8ZwQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7hk-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7gy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:17 +0000 (GMT)
+ Tue, 08 Oct 2024 01:16:09 +0000 (GMT)
 Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GH23017715;
- Tue, 8 Oct 2024 01:16:17 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7he-1
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981G8nD017417;
+ Tue, 8 Oct 2024 01:16:09 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7gu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497LNald022844;
- Tue, 8 Oct 2024 01:16:16 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423h9jsfjq-1
+ Tue, 08 Oct 2024 01:16:08 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497Kicxn030253;
+ Tue, 8 Oct 2024 01:16:08 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423gsmhjj1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:16 +0000
+ Tue, 08 Oct 2024 01:16:08 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981GF4p49676784
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4981G7MH2818594
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:15 GMT
+ Tue, 8 Oct 2024 01:16:07 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7113958055;
- Tue,  8 Oct 2024 01:16:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D81C258055;
+ Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E973058043;
- Tue,  8 Oct 2024 01:16:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 63CDC58043;
+ Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.51.58])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:14 +0000 (GMT)
+ Tue,  8 Oct 2024 01:16:06 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 14/19] s390x: Add individual loadparm assignment to CCW
- device
-Date: Mon,  7 Oct 2024 21:15:47 -0400
-Message-ID: <20241008011552.2645520-15-jrossi@linux.ibm.com>
+Subject: [PATCH v3 07/19] pc-bios/s390-ccw: Remove panics from ISO IPL path
+Date: Mon,  7 Oct 2024 21:15:40 -0400
+Message-ID: <20241008011552.2645520-8-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
 References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Fh-BN6dAaSQtFOrmu2wl_VMzVGTrksWL
-X-Proofpoint-GUID: FpRlehbUfgDSYag91MvHy7TIPUOP-xi6
+X-Proofpoint-ORIG-GUID: vZBnXx5xjy6E4L-dPcuZdnXKNMHL6_om
+X-Proofpoint-GUID: 64DOKli3yBS7e3vuRftSlJATWx37MMYm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
@@ -115,312 +114,230 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Add a loadparm property to the VirtioCcwDevice object so that different
-loadparms can be defined on a per-device basis for CCW boot devices.
+Remove panic-on-error from IPL ISO El Torito specific functions so that error
+recovery may be possible in the future.
 
-The machine/global loadparm is still supported. If both a global and per-device
-loadparm are defined, the per-device value will override the global value for
-that device, but any other devices that do not specify a per-device loadparm
-will still use the global loadparm.
-
-It is invalid to assign a loadparm to a non-boot device.
+Functions that would previously panic now provide a return code.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/ccw-device.h      |  2 ++
- hw/s390x/ipl.h             |  3 +-
- hw/s390x/ccw-device.c      | 46 ++++++++++++++++++++++++++
- hw/s390x/ipl.c             | 66 +++++++++++++++++++++++---------------
- hw/s390x/s390-virtio-ccw.c | 18 +----------
- hw/s390x/sclp.c            |  3 +-
- pc-bios/s390-ccw/main.c    | 10 ++++--
- 7 files changed, 100 insertions(+), 48 deletions(-)
+ pc-bios/s390-ccw/bootmap.h  | 15 +++----
+ pc-bios/s390-ccw/s390-ccw.h |  1 +
+ pc-bios/s390-ccw/bootmap.c  | 78 ++++++++++++++++++++++++-------------
+ 3 files changed, 59 insertions(+), 35 deletions(-)
 
-diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
-index 5feeb0ee7a..1e1737c0f3 100644
---- a/hw/s390x/ccw-device.h
-+++ b/hw/s390x/ccw-device.h
-@@ -26,6 +26,8 @@ struct CcwDevice {
-     CssDevId dev_id;
-     /* The actual busid of the virtual subchannel. */
-     CssDevId subch_id;
-+    /* If set, use this loadparm value when device is boot target */
-+    uint8_t loadparm[8];
- };
- typedef struct CcwDevice CcwDevice;
+diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+index bbe2c132aa..d639258eca 100644
+--- a/pc-bios/s390-ccw/bootmap.h
++++ b/pc-bios/s390-ccw/bootmap.h
+@@ -385,17 +385,14 @@ static inline uint32_t iso_733_to_u32(uint64_t x)
  
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index fa394c339d..b670bad551 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -21,7 +21,8 @@
+ #define ISO_PRIMARY_VD_SECTOR 16
  
- #define DIAG308_FLAGS_LP_VALID 0x80
- 
--int s390_ipl_set_loadparm(uint8_t *loadparm);
-+void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
-+void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
- int s390_ipl_prepare_pv_header(Error **errp);
- int s390_ipl_pv_unpack(void);
-diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-index 14c24e3890..230cc09e03 100644
---- a/hw/s390x/ccw-device.c
-+++ b/hw/s390x/ccw-device.c
-@@ -13,6 +13,10 @@
- #include "ccw-device.h"
- #include "hw/qdev-properties.h"
- #include "qemu/module.h"
-+#include "ipl.h"
-+#include "qapi/visitor.h"
-+#include "qemu/ctype.h"
-+#include "qapi/error.h"
- 
- static void ccw_device_refill_ids(CcwDevice *dev)
- {
-@@ -37,10 +41,52 @@ static bool ccw_device_realize(CcwDevice *dev, Error **errp)
-     return true;
- }
- 
-+static void ccw_device_get_loadparm(Object *obj, Visitor *v,
-+                                 const char *name, void *opaque,
-+                                 Error **errp)
-+{
-+    CcwDevice *dev = CCW_DEVICE(obj);
-+    char *str = g_strndup((char *) dev->loadparm, sizeof(dev->loadparm));
-+
-+    visit_type_str(v, name, &str, errp);
-+    g_free(str);
-+}
-+
-+static void ccw_device_set_loadparm(Object *obj, Visitor *v,
-+                                 const char *name, void *opaque,
-+                                 Error **errp)
-+{
-+    CcwDevice *dev = CCW_DEVICE(obj);
-+    char *val;
-+    int index;
-+
-+    index = object_property_get_int(obj, "bootindex", NULL);
-+
-+    if (index < 0) {
-+        error_setg(errp, "LOADPARM is only valid for boot devices!");
-+    }
-+
-+    if (!visit_type_str(v, name, &val, errp)) {
-+        return;
-+    }
-+
-+    s390_ipl_fmt_loadparm(dev->loadparm, val, errp);
-+}
-+
-+static const PropertyInfo ccw_loadparm = {
-+    .name  = "ccw_loadparm",
-+    .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
-+            " to the guest loader/kernel",
-+    .get = ccw_device_get_loadparm,
-+    .set = ccw_device_set_loadparm,
-+};
-+
- static Property ccw_device_properties[] = {
-     DEFINE_PROP_CSS_DEV_ID("devno", CcwDevice, devno),
-     DEFINE_PROP_CSS_DEV_ID_RO("dev_id", CcwDevice, dev_id),
-     DEFINE_PROP_CSS_DEV_ID_RO("subch_id", CcwDevice, subch_id),
-+    DEFINE_PROP("loadparm", CcwDevice, loadparm, ccw_loadparm,
-+            typeof(uint8_t[8])),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 8c490eeb52..55a83bb836 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -34,6 +34,7 @@
- #include "qemu/config-file.h"
- #include "qemu/cutils.h"
- #include "qemu/option.h"
-+#include "qemu/ctype.h"
- #include "standard-headers/linux/virtio_ids.h"
- 
- #define KERN_IMAGE_START                0x010000UL
-@@ -397,12 +398,43 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
-     return ccw_dev;
- }
- 
-+void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
-+{
-+    int i;
-+
-+    /* Initialize the loadparm with spaces */
-+    memset(loadparm, ' ', LOADPARM_LEN);
-+    for (i = 0; i < LOADPARM_LEN && str[i]; i++) {
-+        uint8_t c = qemu_toupper(str[i]); /* mimic HMC */
-+
-+        if (qemu_isalnum(c) || c == '.' || c == ' ') {
-+            loadparm[i] = c;
-+        } else {
-+            error_setg(errp, "LOADPARM: invalid character '%c' (ASCII 0x%02x)",
-+                       c, c);
-+            return;
-+        }
-+    }
-+}
-+
-+void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
-+{
-+    int i;
-+
-+    /* Initialize the loadparm with EBCDIC spaces (0x40) */
-+    memset(ebcdic_lp, '@', LOADPARM_LEN);
-+    for (i = 0; i < LOADPARM_LEN && ascii_lp[i]; i++) {
-+        ebcdic_lp[i] = ascii2ebcdic[(uint8_t) ascii_lp[i]];
-+    }
-+}
-+
- static bool s390_gen_initial_iplb(S390IPLState *ipl)
- {
-     DeviceState *dev_st;
-     CcwDevice *ccw_dev = NULL;
-     SCSIDevice *sd;
-     int devtype;
-+    uint8_t *lp;
- 
-     dev_st = get_boot_device(0);
-     if (dev_st) {
-@@ -413,6 +445,8 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-      * Currently allow IPL only from CCW devices.
-      */
-     if (ccw_dev) {
-+        lp = ccw_dev->loadparm;
-+
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
-@@ -445,40 +479,20 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-             break;
-         }
- 
--        if (!s390_ipl_set_loadparm(ipl->iplb.loadparm)) {
--            ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
-+        /* If the device loadparm is empty use the global machine loadparm */
-+        if (memcmp(lp, "\0\0\0\0\0\0\0\0", 8) == 0) {
-+            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-         }
- 
-+        s390_ipl_convert_loadparm((char *)lp, ipl->iplb.loadparm);
-+        ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
-+
-         return true;
-     }
- 
-     return false;
- }
- 
--int s390_ipl_set_loadparm(uint8_t *loadparm)
+-static inline void read_iso_sector(uint32_t block_offset, void *buf,
+-                                   const char *errmsg)
 -{
--    MachineState *machine = MACHINE(qdev_get_machine());
--    char *lp = object_property_get_str(OBJECT(machine), "loadparm", NULL);
--
--    if (lp) {
--        int i;
--
--        /* lp is an uppercase string without leading/embedded spaces */
--        for (i = 0; i < 8 && lp[i]; i++) {
--            loadparm[i] = ascii2ebcdic[(uint8_t) lp[i]];
--        }
--
--        if (i < 8) {
--            memset(loadparm + i, 0x40, 8 - i); /* fill with EBCDIC spaces */
--        }
--
--        g_free(lp);
--        return 0;
--    }
--
--    return -1;
+-    IPL_assert(virtio_read_many(block_offset, buf, 1) == 0, errmsg);
 -}
 -
- static bool is_virtio_ccw_device_of_type(IplParameterBlock *iplb,
-                                          int virtio_id)
+-static inline void read_iso_boot_image(uint32_t block_offset, void *load_addr,
++static inline int read_iso_boot_image(uint32_t block_offset, void *load_addr,
+                                        uint32_t blks_to_load)
  {
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 529e53f308..fe03f716f3 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -722,28 +722,12 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
- {
-     S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-     char *val;
--    int i;
- 
-     if (!visit_type_str(v, name, &val, errp)) {
-         return;
-     }
- 
--    for (i = 0; i < sizeof(ms->loadparm) && val[i]; i++) {
--        uint8_t c = qemu_toupper(val[i]); /* mimic HMC */
--
--        if (('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') || (c == '.') ||
--            (c == ' ')) {
--            ms->loadparm[i] = c;
--        } else {
--            error_setg(errp, "LOADPARM: invalid character '%c' (ASCII 0x%02x)",
--                       c, c);
--            return;
--        }
--    }
--
--    for (; i < sizeof(ms->loadparm); i++) {
--        ms->loadparm[i] = ' '; /* pad right with spaces */
--    }
-+    s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
+-    IPL_assert(virtio_read_many(block_offset, load_addr, blks_to_load) == 0,
+-               "Failed to read boot image!");
++    if (virtio_read_many(block_offset, load_addr, blks_to_load)) {
++        puts("Failed to read boot image!");
++        return 1;
++    }
++    return 0;
  }
  
- static void ccw_machine_class_init(ObjectClass *oc, void *data)
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index e725dcd5fd..8b2d7a88bd 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -175,7 +175,8 @@ static void read_SCP_info(SCLPDevice *sclp, SCCB *sccb)
-         memcpy(&read_info->loadparm, &ipib->loadparm,
-                sizeof(read_info->loadparm));
-     } else {
--        s390_ipl_set_loadparm(read_info->loadparm);
-+        s390_ipl_convert_loadparm((char *)S390_CCW_MACHINE(machine)->loadparm,
-+                                read_info->loadparm);
-     }
+ #define ISO9660_MAX_DIR_DEPTH 8
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 0ed7eb8ade..cbd92f3671 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -30,6 +30,7 @@ typedef unsigned long long u64;
+ #define EIO     1
+ #define EBUSY   2
+ #define ENODEV  3
++#define EINVAL  4
  
-     sccb->h.response_code = cpu_to_be16(SCLP_RC_NORMAL_READ_COMPLETION);
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index f818bd7210..d7c457e0ed 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -183,8 +183,14 @@ static void css_setup(void)
- static void boot_setup(void)
- {
-     char lpmsg[] = "LOADPARM=[________]\n";
-+    have_iplb = store_iplb(&iplb);
-+
-+    if (memcmp(iplb.loadparm, "@@@@@@@@", LOADPARM_LEN) != 0) {
-+        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
-+    } else {
-+        sclp_get_loadparm_ascii(loadparm_str);
+ #ifndef MIN
+ #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 414c3f1b47..7984de62fe 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -678,8 +678,10 @@ static bool is_iso_bc_entry_compatible(IsoBcSection *s)
+     if (s->unused || !s->sector_count) {
+         return false;
+     }
+-    read_iso_sector(bswap32(s->load_rba), magic_sec,
+-                    "Failed to read image sector 0");
++    if (virtio_read(bswap32(s->load_rba), magic_sec)) {
++        puts("Failed to read image sector 0");
++        return false;
 +    }
  
--    sclp_get_loadparm_ascii(loadparm_str);
-     memcpy(lpmsg + 10, loadparm_str, 8);
-     puts(lpmsg);
+     /* Checking bytes 8 - 32 for S390 Linux magic */
+     return !memcmp(magic_sec + 8, linux_s390_magic, 24);
+@@ -699,21 +701,28 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
+     uint8_t *temp = sec + ISO_SECTOR_SIZE;
+     int level = 0;
  
-@@ -193,8 +199,6 @@ static void boot_setup(void)
-      * so we don't taint our decision-making process during a reboot.
-      */
-     memset((char *)S390EP, 0, 6);
--
--    have_iplb = store_iplb(&iplb);
+-    read_iso_sector(ISO_PRIMARY_VD_SECTOR, sec,
+-                    "Failed to read ISO primary descriptor");
++    if (virtio_read(ISO_PRIMARY_VD_SECTOR, sec)) {
++        puts("Failed to read ISO primary descriptor");
++        return -EIO;
++    }
++
+     sec_loc[0] = iso_733_to_u32(cur_record->ext_loc);
+     dir_rem[0] = 0;
+     sec_offset[0] = 0;
+ 
+     while (level >= 0) {
+-        IPL_assert(sec_offset[level] <= ISO_SECTOR_SIZE,
+-                   "Directory tree structure violation");
++        if (sec_offset[level] > ISO_SECTOR_SIZE) {
++            puts("Directory tree structure violation");
++            return -EIO;
++        }
+ 
+         cur_record = (IsoDirHdr *)(temp + sec_offset[level]);
+ 
+         if (sec_offset[level] == 0) {
+-            read_iso_sector(sec_loc[level], temp,
+-                            "Failed to read ISO directory");
++            if (virtio_read(sec_loc[level], temp)) {
++                puts("Failed to read ISO directory");
++                return -EIO;
++            }
+             if (dir_rem[level] == 0) {
+                 /* Skip self and parent records */
+                 dir_rem[level] = iso_733_to_u32(cur_record->data_len) -
+@@ -758,8 +767,10 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
+         if (dir_rem[level] == 0) {
+             /* Nothing remaining */
+             level--;
+-            read_iso_sector(sec_loc[level], temp,
+-                            "Failed to read ISO directory");
++            if (virtio_read(sec_loc[level], temp)) {
++                puts("Failed to read ISO directory");
++                return -EIO;
++            }
+         }
+     }
+ 
+@@ -784,9 +795,11 @@ static void load_iso_bc_entry(IsoBcSection *load)
+         puts("ISO boot image size could not be verified");
+     }
+ 
+-    read_iso_boot_image(bswap32(s.load_rba),
++    if (read_iso_boot_image(bswap32(s.load_rba),
+                         (void *)((uint64_t)bswap16(s.load_segment)),
+-                        blks_to_load);
++                        blks_to_load)) {
++        return;
++    }
+ 
+     jump_to_low_kernel();
+ }
+@@ -809,17 +822,18 @@ static uint32_t find_iso_bc(void)
+                 return bswap32(et->bc_offset);
+             }
+         }
+-        read_iso_sector(block_num++, sec,
+-                        "Failed to read ISO volume descriptor");
++        if (virtio_read(block_num++, sec)) {
++            puts("Failed to read ISO volume descriptor");
++            return 0;
++        }
+     }
+ 
+     return 0;
  }
  
- static bool find_boot_device(void)
+-static IsoBcSection *find_iso_bc_entry(void)
++static IsoBcSection *find_iso_bc_entry(uint32_t offset)
+ {
+     IsoBcEntry *e = (IsoBcEntry *)sec;
+-    uint32_t offset = find_iso_bc();
+     int i;
+     unsigned int loadparm = get_loadparm_index();
+ 
+@@ -827,11 +841,13 @@ static IsoBcSection *find_iso_bc_entry(void)
+         return NULL;
+     }
+ 
+-    read_iso_sector(offset, sec, "Failed to read El Torito boot catalog");
++    if (virtio_read(offset, sec)) {
++        puts("Failed to read El Torito boot catalog");
++        return NULL;
++    }
+ 
+     if (!is_iso_bc_valid(e)) {
+         /* The validation entry is mandatory */
+-        panic("No valid boot catalog found!\n");
+         return NULL;
+     }
+ 
+@@ -851,19 +867,25 @@ static IsoBcSection *find_iso_bc_entry(void)
+         }
+     }
+ 
+-    panic("No suitable boot entry found on ISO-9660 media!\n");
+-
+     return NULL;
+ }
+ 
+-static void ipl_iso_el_torito(void)
++static int ipl_iso_el_torito(void)
+ {
+-    IsoBcSection *s = find_iso_bc_entry();
++    uint32_t offset = find_iso_bc();
++    if (!offset) {
++        return 0;
++    }
++
++    IsoBcSection *s = find_iso_bc_entry(offset);
+ 
+     if (s) {
+-        load_iso_bc_entry(s);
+-        /* no return */
++        load_iso_bc_entry(s); /* only return in error */
++        return 1;
+     }
++
++    puts("No suitable boot entry found on ISO-9660 media!");
++    return -EIO;
+ }
+ 
+ /**
+@@ -893,7 +915,9 @@ static void zipl_load_vblk(void)
+         if (blksize != VIRTIO_ISO_BLOCK_SIZE) {
+             virtio_assume_iso9660();
+         }
+-        ipl_iso_el_torito();
++        if (ipl_iso_el_torito()) {
++            return;
++        }
+     }
+ 
+     if (blksize != VIRTIO_DASD_DEFAULT_BLOCK_SIZE) {
+@@ -907,7 +931,9 @@ static void zipl_load_vscsi(void)
+ {
+     if (virtio_get_block_size() == VIRTIO_ISO_BLOCK_SIZE) {
+         /* Is it an ISO image in non-CD drive? */
+-        ipl_iso_el_torito();
++        if (ipl_iso_el_torito()) {
++            return;
++        }
+     }
+ 
+     puts("Using guessed DASD geometry.");
 -- 
 2.45.1
 
