@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651C3CEF166
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 12:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15AFCEF16B
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 12:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy9gz-0008DL-Tj; Tue, 08 Oct 2024 08:51:59 -0400
+	id 1sy9hM-0000NR-AU; Tue, 08 Oct 2024 08:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gj-0007wA-R4
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:41 -0400
+ id 1sy9h3-0008KY-BM
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:52:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sy9gi-0002VO-AS
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:51:41 -0400
+ id 1sy9h1-0002Wz-M8
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 08:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728391899;
+ s=mimecast20190719; t=1728391919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p/FFNbld4EevaVzMzzg2VI1RGQ4n7l4RxFHaEc4jkBs=;
- b=QK5i12iDmd0dQwAeJ9nt83MJrcnwUxnsdI+WtXml5QEdXGTvjDbcfWpP6gg+/xsOug+1tB
- vVGVITtAc+FqDo9MByRolCsDX+5SdT3hJU9LvImCf0xBAvgAq+mMYmkbHyzb3dGU8weTQU
- I6cSDqo93jHRnmsJznI9I3a9idiA8gM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+IgTnRfniwRi77bd6UMA2D9j3/l/jJFMYCUgCknteSI=;
+ b=CR5Zr95XnXdiMM+/1PKtmNP4rGtecLm46eTIiUOhDKjtIl9q2/FyGW87Pi7PONOHjKdDcY
+ eNLMpFS0aacdji22WWBonrIWsd5MwIbqyKwpFhJoIJjlLzPV8FfNfDu9FQPlRK1ohUBRrR
+ EM75kcRCfIF7tuuTcuHIbyQnjAtrZDM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-aEYlkZnCM1Wv16O-0Ato7A-1; Tue,
- 08 Oct 2024 08:51:36 -0400
-X-MC-Unique: aEYlkZnCM1Wv16O-0Ato7A-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-6k_DrQVoO92eVaPQWzwn4g-1; Tue,
+ 08 Oct 2024 08:51:57 -0400
+X-MC-Unique: 6k_DrQVoO92eVaPQWzwn4g-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5B05192DE08; Tue,  8 Oct 2024 12:51:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4E9A1944A8A; Tue,  8 Oct 2024 12:51:56 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.19])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F27919560AA; Tue,  8 Oct 2024 12:51:33 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9FFCE19560A3; Tue,  8 Oct 2024 12:51:55 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -56,15 +56,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 12/19] ui/surface: allocate shared memory on !win32
-Date: Tue,  8 Oct 2024 16:50:21 +0400
-Message-ID: <20241008125028.1177932-13-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 16/19] ui/dbus: implement Unix.Map
+Date: Tue,  8 Oct 2024 16:50:25 +0400
+Message-ID: <20241008125028.1177932-17-marcandre.lureau@redhat.com>
 In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
 References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,124 +93,152 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use qemu_memfd_alloc() to allocate the display surface memory, which
-will fallback on tmpfile/mmap() on systems without memfd, and allow to
-share the display with other processes.
-
-This is similar to how display memory is allocated on win32 since commit
-09b4c198 ("console/win32: allocate shareable display surface").
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/surface.h |  6 ++++++
- ui/console.c         | 28 ++++++++++++++++++++++++++--
- 2 files changed, 32 insertions(+), 2 deletions(-)
+ ui/dbus-listener.c | 78 +++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 73 insertions(+), 5 deletions(-)
 
-diff --git a/include/ui/surface.h b/include/ui/surface.h
-index 345b19169d..37d03be4af 100644
---- a/include/ui/surface.h
-+++ b/include/ui/surface.h
-@@ -26,6 +26,9 @@ typedef struct DisplaySurface {
- #ifdef WIN32
-     HANDLE handle;
-     uint32_t handle_offset;
-+#else
-+    int shmfd;
-+    uint32_t shmfd_offset;
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 7142afcddb..ec47946282 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -83,6 +83,8 @@ struct _DBusDisplayListener {
+ #ifdef CONFIG_OPENGL
+     egl_fb fb;
  #endif
- } DisplaySurface;
- 
-@@ -40,6 +43,9 @@ DisplaySurface *qemu_create_placeholder_surface(int w, int h,
- #ifdef WIN32
- void qemu_displaysurface_win32_set_handle(DisplaySurface *surface,
-                                           HANDLE h, uint32_t offset);
-+#else
-+void qemu_displaysurface_set_shmfd(DisplaySurface *surface,
-+                                   int shmfd, uint32_t offset);
++#else /* !WIN32 */
++    QemuDBusDisplay1ListenerUnixMap *map_proxy;
  #endif
  
- DisplaySurface *qemu_create_displaysurface(int width, int height);
-diff --git a/ui/console.c b/ui/console.c
-index fdd76c2be4..3a2aaba3c7 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -37,6 +37,7 @@
- #include "trace.h"
- #include "exec/memory.h"
- #include "qom/object.h"
-+#include "qemu/memfd.h"
- 
- #include "console-priv.h"
- 
-@@ -461,6 +462,15 @@ void qemu_displaysurface_win32_set_handle(DisplaySurface *surface,
-     surface->handle = h;
-     surface->handle_offset = offset;
+     guint dbus_filter;
+@@ -441,6 +443,51 @@ dbus_scanout_share_d3d_texture(
+     return true;
  }
-+#else
-+void qemu_displaysurface_set_shmfd(DisplaySurface *surface,
-+                                   int shmfd, uint32_t offset)
+ #endif /* CONFIG_OPENGL */
++#else /* !WIN32 */
++static bool dbus_scanout_map(DBusDisplayListener *ddl)
 +{
-+    assert(surface->shmfd == -1);
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GUnixFDList) fd_list = NULL;
 +
-+    surface->shmfd = shmfd;
-+    surface->shmfd_offset = offset;
++    if (ddl->ds_share == SHARE_KIND_MAPPED) {
++        return true;
++    }
++
++    if (!ddl->can_share_map || ddl->ds->shmfd == -1) {
++        return false;
++    }
++
++    ddl_discard_display_messages(ddl);
++    fd_list = g_unix_fd_list_new();
++    if (g_unix_fd_list_append(fd_list, ddl->ds->shmfd, &err) != 0) {
++        g_debug("Failed to setup scanout map fdlist: %s", err->message);
++        ddl->can_share_map = false;
++        return false;
++    }
++
++    if (!qemu_dbus_display1_listener_unix_map_call_scanout_map_sync(
++            ddl->map_proxy,
++            g_variant_new_handle(0),
++            ddl->ds->shmfd_offset,
++            surface_width(ddl->ds),
++            surface_height(ddl->ds),
++            surface_stride(ddl->ds),
++            surface_format(ddl->ds),
++            G_DBUS_CALL_FLAGS_NONE,
++            DBUS_DEFAULT_TIMEOUT,
++            fd_list,
++            NULL,
++            NULL,
++            &err)) {
++        g_debug("Failed to call ScanoutMap: %s", err->message);
++        ddl->can_share_map = false;
++        return false;
++    }
++
++    ddl->ds_share = SHARE_KIND_MAPPED;
++
++    return true;
 +}
- #endif
+ #endif /* WIN32 */
  
- DisplaySurface *qemu_create_displaysurface(int width, int height)
-@@ -469,12 +479,16 @@ DisplaySurface *qemu_create_displaysurface(int width, int height)
-     void *bits = NULL;
- #ifdef WIN32
-     HANDLE handle = NULL;
+ #ifdef CONFIG_OPENGL
+@@ -693,16 +740,22 @@ static void dbus_gfx_update(DisplayChangeListener *dcl,
+ 
+     trace_dbus_update(x, y, w, h);
+ 
+-#ifdef WIN32
+     if (dbus_scanout_map(ddl)) {
++#ifdef WIN32
+         qemu_dbus_display1_listener_win32_map_call_update_map(
+             ddl->map_proxy,
+             x, y, w, h,
+             G_DBUS_CALL_FLAGS_NONE,
+             DBUS_DEFAULT_TIMEOUT, NULL, NULL, NULL);
 +#else
-+    int shmfd = -1;
- #endif
++        qemu_dbus_display1_listener_unix_map_call_update_map(
++            ddl->map_proxy,
++            x, y, w, h,
++            G_DBUS_CALL_FLAGS_NONE,
++            DBUS_DEFAULT_TIMEOUT, NULL, NULL, NULL);
++#endif
+         return;
+     }
+-#endif
  
-     trace_displaysurface_create(width, height);
- 
- #ifdef WIN32
-     bits = qemu_win32_map_alloc(width * height * 4, &handle, &error_abort);
-+#else
-+    bits = qemu_memfd_alloc("displaysurface", width * height * 4, 0, &shmfd, &error_abort);
- #endif
- 
-     surface = qemu_create_displaysurface_from(
-@@ -486,9 +500,13 @@ DisplaySurface *qemu_create_displaysurface(int width, int height)
- 
- #ifdef WIN32
-     qemu_displaysurface_win32_set_handle(surface, handle, 0);
--    pixman_image_set_destroy_function(surface->image,
--                                      qemu_pixman_shared_image_destroy, handle);
-+    void *data = handle;
-+#else
-+    qemu_displaysurface_set_shmfd(surface, shmfd, 0);
-+    void *data = GINT_TO_POINTER(shmfd);
- #endif
-+    pixman_image_set_destroy_function(surface->image, qemu_pixman_shared_image_destroy, data);
-+
-     return surface;
+     if (x == 0 && y == 0 && w == surface_width(ddl->ds) && h == surface_height(ddl->ds)) {
+         return ddl_scanout(ddl);
+@@ -879,7 +932,6 @@ dbus_display_listener_get_console(DBusDisplayListener *ddl)
+     return ddl->console;
  }
  
-@@ -499,6 +517,9 @@ DisplaySurface *qemu_create_displaysurface_from(int width, int height,
-     DisplaySurface *surface = g_new0(DisplaySurface, 1);
+-#ifdef WIN32
+ static bool
+ dbus_display_listener_implements(DBusDisplayListener *ddl, const char *iface)
+ {
+@@ -894,6 +946,7 @@ dbus_display_listener_implements(DBusDisplayListener *ddl, const char *iface)
+     return implements;
+ }
  
-     trace_displaysurface_create_from(surface, width, height, format);
-+#ifndef WIN32
-+    surface->shmfd = -1;
-+#endif
-     surface->image = pixman_image_create_bits(format,
-                                               width, height,
-                                               (void *)data, linesize);
-@@ -512,6 +533,9 @@ DisplaySurface *qemu_create_displaysurface_pixman(pixman_image_t *image)
-     DisplaySurface *surface = g_new0(DisplaySurface, 1);
++#ifdef WIN32
+ static bool
+ dbus_display_listener_setup_peer_process(DBusDisplayListener *ddl)
+ {
+@@ -976,10 +1029,11 @@ dbus_display_listener_setup_d3d11(DBusDisplayListener *ddl)
+ static void
+ dbus_display_listener_setup_shared_map(DBusDisplayListener *ddl)
+ {
+-#ifdef WIN32
+     g_autoptr(GError) err = NULL;
  
-     trace_displaysurface_create_pixman(surface);
-+#ifndef WIN32
-+    surface->shmfd = -1;
-+#endif
-     surface->image = pixman_image_ref(image);
+-    if (!dbus_display_listener_implements(ddl, "org.qemu.Display1.Listener.Win32.Map")) {
++#ifdef WIN32
++    if (!dbus_display_listener_implements(
++            ddl, "org.qemu.Display1.Listener.Win32.Map")) {
+         return;
+     }
  
-     return surface;
+@@ -999,6 +1053,20 @@ dbus_display_listener_setup_shared_map(DBusDisplayListener *ddl)
+         return;
+     }
+ 
++    ddl->can_share_map = true;
++#else /* !WIN32 */
++    if (!dbus_display_listener_implements(
++            ddl, "org.qemu.Display1.Listener.Unix.Map")) {
++        return;
++    }
++    ddl->map_proxy = qemu_dbus_display1_listener_unix_map_proxy_new_sync(
++        ddl->conn, G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START, NULL,
++        "/org/qemu/Display1/Listener", NULL, &err);
++    if (!ddl->map_proxy) {
++        g_debug("Failed to setup Unix map proxy: %s", err->message);
++        return;
++    }
++
+     ddl->can_share_map = true;
+ #endif
+ }
 -- 
 2.47.0
 
