@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55945CED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3C3CED24F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxytB-0001Gu-JQ; Mon, 07 Oct 2024 21:19:49 -0400
+	id 1sxyq4-0004F3-7e; Mon, 07 Oct 2024 21:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com>)
- id 1sxysY-0007mH-8C
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:15 -0400
-Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com>)
- id 1sxysV-00008Z-4u
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:08 -0400
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-71e11abb22aso517563b3a.1
- for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728350345; x=1728955145; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=mYb8OnCeZQrVX3cX0gw+0rgqxbLbcVi8KOrSlVTkt1w=;
- b=R+dbq+lYPKBxoShJVGaECVHtrXWjZzyeL7InCQCZ+Qj0EgFmQTkodR+QRqOUAowVa8
- ZbH9shwsQ4mThB9EgjYZrslSSBTb+ZlCdlJdCuSB9I3DizhOELaSwNaTGkSZ1L40cDGi
- S63PVlsC3lgMjRypOkldSc8DqSvKFpMDdkmIbXHAl9yoTPbj9almi8UE/cxV5LxdBiO0
- /Wy/HsA3EhJV8YFaNXLwrYqnjE5CMuAjeIOIkTnY//xeRfuTV5YrEl2pQGl13LmZjlxc
- u8nel40foteYKxO7WdJN7JDd3MFtUfPux72NbhYSZaIIW3dZU1KMB7wdb9C6FRpkGLgi
- H58A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728350345; x=1728955145;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mYb8OnCeZQrVX3cX0gw+0rgqxbLbcVi8KOrSlVTkt1w=;
- b=GHjD8GiqGS9oF0jg7sb99hk0yRlt/ojKP1rSgPo4Sfbfc3vP9HO/feXKer+iZH6eg3
- W2VVQwvvumvd9xRSRnJsF7plMGiA0WGB32OzTZTl8ykGdS8PH9zoU53AMbw1R8ZvLjve
- NhUrkcmPA6sSie+d7nNaput2BA59j3ymEW8eWJpN/xWxT8kXfmF2c1JCjNJPcOkvtJs6
- vpUOhiB5a8HMnUv9e20u6n0u60OsaodSw9eQnVsMAwk1k12GFTxmzeIQTYZDuu8iGT4g
- jlNstYOa/XriuF6tpLd+FYxiwtxzK4PYg0bR0SkHFReo76xUYNr6OPVkSReSqgE640jv
- h04A==
-X-Gm-Message-State: AOJu0YyfgC2Q743aF0Enq6syaEsHkQq+jPVTw7gcwY++y/xIgxuFV2wS
- rnaszC5IO1eVYp+imUXnlmoXfhddb6+omN3KIiqeK2Wr/yDw7BlFUA1/6bmdPq043MmKDVcg2x+
- X4jeRNaWo+L53rTnqSCuFwa/hk//C/JzfKEGph+T7NLr/ofGb43dYOKzJHnLZpVNPf277mRYlzH
- bP/jg3JfG6OGER2MMFBMhZwB15ow==
-X-Google-Smtp-Source: AGHT+IGFgJf3vbj7kBTLVjfPMhdKIVaWnTkGtp63eWEPIqhdYAUDElv58c3jqoWBOfsVGgkeJlZGsISX+w==
-X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a62:ae17:0:b0:71d:ef29:82b2 with
- SMTP id
- d2e1a72fcca58-71def2984ddmr23497b3a.0.1728350344733; Mon, 07 Oct 2024
- 18:19:04 -0700 (PDT)
-Date: Mon,  7 Oct 2024 18:18:32 -0700
-In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
-Mime-Version: 1.0
-References: <20241008011852.1439154-1-tavip@google.com>
-X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241008011852.1439154-7-tavip@google.com>
-Subject: [PATCH v2 06/25] hw/misc/flexcomm.c: add common fifo functionality
-From: Octavian Purdila <tavip@google.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
- peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
- alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
- crosa@redhat.com, lvivier@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3iIgEZwUKCukeLgTaRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--tavip.bounces.google.com;
- helo=mail-pf1-x449.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypw-0004Ah-Tz; Mon, 07 Oct 2024 21:16:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sxypt-0008Mc-7f; Mon, 07 Oct 2024 21:16:27 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497Nt6Oh026136;
+ Tue, 8 Oct 2024 01:16:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=kF5dPfxF8Y8gE
+ NUt8C3/z/Ntb9QSp63LYS6fH7P+zvM=; b=SJ57YM0+Zq4P65nknYchi+NtPLa7V
+ MEtt2IQoYsTBR8nlhSTolgiC84OXH4J+dnA1V0nd2/b/MQS5kmWlXtqGu6TzUi1e
+ gCq3QwtP2w900sZAD6SlXWEglw0QwVDTc0P4C93hSLXhn0URiTozj1gdnwILnjqh
+ Dkve3QA2/BlkWPRy9FWzEJzsjl9MukjyredWOtfnr4NA2725x/ocIxxYsUlwK87i
+ fAOAmRrhu6FAYJXQTl4f9TYEwxByqEssQWTizHVzBFqQHPXFUoQso5OnvzqCUtmy
+ 0QpLnf4nbUyE6OKhZev3nahuktUxjLJYRcL0RsjwTKWyZ9n0v7z4VjQmw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7hx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:23 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981GMNv017880;
+ Tue, 8 Oct 2024 01:16:22 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424sr4g7hv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:22 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497NC6u3022840;
+ Tue, 8 Oct 2024 01:16:21 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 423jg0s7pm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Oct 2024 01:16:21 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4981GKPs24969830
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Oct 2024 01:16:20 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A1B258043;
+ Tue,  8 Oct 2024 01:16:20 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A9F7A58055;
+ Tue,  8 Oct 2024 01:16:19 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.51.58])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Oct 2024 01:16:19 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH v3 18/19] docs/system: Update documentation for s390x IPL
+Date: Mon,  7 Oct 2024 21:15:51 -0400
+Message-ID: <20241008011552.2645520-19-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -uNYwC_waoNLXv66RvApjIu-ukA9TllH
+X-Proofpoint-GUID: NBP6MlgOsOiYyGrsSHhAmaIWt8UCo5Ol
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=756 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410080003
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,198 +112,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FLEXCOMM SPI and USART share FIFO functionality. Add common helper
-functions to avoid code duplication.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
+Update docs to show that s390x PC BIOS can support more than one boot device.
+
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- include/hw/misc/flexcomm.h          |  2 +
- include/hw/misc/flexcomm_function.h |  8 +++
- hw/misc/flexcomm.c                  | 83 +++++++++++++++++++++++++++++
- hw/misc/trace-events                |  1 +
- 4 files changed, 94 insertions(+)
+ docs/system/bootindex.rst         | 7 ++++---
+ docs/system/s390x/bootdevices.rst | 9 ++++++---
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
-index ea0fe77f26..832d4cd29d 100644
---- a/include/hw/misc/flexcomm.h
-+++ b/include/hw/misc/flexcomm.h
-@@ -44,6 +44,8 @@ struct FlexcommState {
-     uint32_t functions;
-     qemu_irq irq;
-     bool irq_state;
-+    Fifo32 rx_fifo;
-+    Fifo32 tx_fifo;
- };
+diff --git a/docs/system/bootindex.rst b/docs/system/bootindex.rst
+index 8b057f812f..988f7b3beb 100644
+--- a/docs/system/bootindex.rst
++++ b/docs/system/bootindex.rst
+@@ -49,10 +49,11 @@ Limitations
+ -----------
  
- #endif /* HW_FLEXCOMM_H */
-diff --git a/include/hw/misc/flexcomm_function.h b/include/hw/misc/flexcomm_function.h
-index e498976927..3ff1677ff6 100644
---- a/include/hw/misc/flexcomm_function.h
-+++ b/include/hw/misc/flexcomm_function.h
-@@ -23,6 +23,8 @@ struct FlexcommFunction {
+ Some firmware has limitations on which devices can be considered for
+-booting.  For instance, the PC BIOS boot specification allows only one
+-disk to be bootable.  If boot from disk fails for some reason, the BIOS
++booting.  For instance, the x86 PC BIOS boot specification allows only one
++disk to be bootable.  If boot from disk fails for some reason, the x86 BIOS
+ won't retry booting from other disk.  It can still try to boot from
+-floppy or net, though.
++floppy or net, though. In the case of s390x BIOS, the BIOS will try up to
++8 total devices, any number of which may be disks.
  
-     MemoryRegion mmio;
-     uint32_t *regs;
-+    Fifo32 *tx_fifo;
-+    Fifo32 *rx_fifo;
- };
+ Sometimes, firmware cannot map the device path QEMU wants firmware to
+ boot from to a boot method.  It doesn't happen for devices the firmware
+diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
+index c97efb8fc0..1a1a764c1c 100644
+--- a/docs/system/s390x/bootdevices.rst
++++ b/docs/system/s390x/bootdevices.rst
+@@ -6,9 +6,7 @@ Booting with bootindex parameter
  
- typedef void (*FlexcommFunctionSelect)(FlexcommFunction *f, bool selected);
-@@ -32,6 +34,7 @@ struct FlexcommFunctionClass {
+ For classical mainframe guests (i.e. LPAR or z/VM installations), you always
+ have to explicitly specify the disk where you want to boot from (or "IPL" from,
+-in s390x-speak -- IPL means "Initial Program Load"). In particular, there can
+-also be only one boot device according to the architecture specification, thus
+-specifying multiple boot devices is not possible (yet).
++in s390x-speak -- IPL means "Initial Program Load").
  
-     const MemoryRegionOps *mmio_ops;
-     const char *name;
-+    bool has_fifos;
-     FlexcommFunctionSelect select;
- };
+ So for booting an s390x guest in QEMU, you should always mark the
+ device where you want to boot from with the ``bootindex`` property, for
+@@ -17,6 +15,11 @@ example::
+  qemu-system-s390x -drive if=none,id=dr1,file=guest.qcow2 \
+                    -device virtio-blk,drive=dr1,bootindex=1
  
-@@ -43,5 +46,10 @@ static inline void flexcomm_select(FlexcommFunction *obj, bool selected)
- }
- 
- void flexcomm_set_irq(FlexcommFunction *f, bool irq);
-+void flexcomm_update_fifostat(FlexcommFunction *f);
-+void flexcomm_clear_fifostat(FlexcommFunction *f, uint64_t value);
-+void flexcomm_init_fifos(FlexcommFunction *f, unsigned num);
-+void flexcomm_cleanup_fifos(FlexcommFunction *f);
-+void flexcomm_reset_fifos(FlexcommFunction *f);
- 
- #endif /* HW_FLEXCOMM_FUNCTION_H */
-diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
-index 2337fb814c..a98d8845aa 100644
---- a/hw/misc/flexcomm.c
-+++ b/hw/misc/flexcomm.c
-@@ -22,6 +22,7 @@
- #include "trace.h"
- #include "migration/vmstate.h"
- #include "hw/misc/flexcomm.h"
-+#include "hw/arm/svd/flexcomm_usart.h"
- 
- #define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
- #define RF_WR(s, reg, field, val) \
-@@ -219,12 +220,22 @@ static void flexcomm_init(Object *obj)
-     sysbus_init_irq(sbd, &s->irq);
- }
- 
-+static void flexcomm_finalize(Object *obj)
-+{
-+    FlexcommState *s = FLEXCOMM(obj);
++Multiple devices may have a bootindex. The lowest bootindex is assigned to the
++device to IPL first.  If the IPL fails for the first, the device with the second
++lowest bootindex will be tried and so on until IPL is successful or there are no
++remaining boot devices to try.
 +
-+    /* release resources allocated by the function select (e.g. fifos) */
-+    flexcomm_func_select(s, false);
-+}
-+
- static void flexcomm_func_realize_and_unref(FlexcommFunction *f, Error **errp)
- {
-     FlexcommState *s = FLEXCOMM(OBJECT(f)->parent);
-     FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_GET_CLASS(f);
- 
-     f->regs = s->regs;
-+    f->tx_fifo = &s->tx_fifo;
-+    f->rx_fifo = &s->rx_fifo;
-     memory_region_add_subregion_overlap(&s->container, 0, &f->mmio, 0);
-     DEVICE(f)->id = g_strdup_printf("%s-%s", DEVICE(s)->id, fc->name);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(f), errp);
-@@ -274,11 +285,82 @@ void flexcomm_set_irq(FlexcommFunction *f, bool irq)
-     }
- }
- 
-+/* FIFO is shared between USART and SPI, provide common functions here */
-+#define FIFO_REG(s, reg) (s->regs[R_FLEXCOMM_USART_FIFO##reg])
-+#define FIFO_WR(s, reg, field, val) \
-+    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_USART_FIFO##reg, field, val)
-+#define FIFO_RD(s, reg, field) \
-+    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_USART_FIFO##reg, field)
-+
-+void flexcomm_update_fifostat(FlexcommFunction *f)
-+{
-+    int rxlvl = fifo32_num_used(f->rx_fifo);
-+    int txlvl = fifo32_num_used(f->tx_fifo);
-+
-+    FIFO_WR(f, STAT, RXLVL, rxlvl);
-+    FIFO_WR(f, STAT, TXLVL, txlvl);
-+    FIFO_WR(f, STAT, RXFULL, fifo32_is_full(f->rx_fifo) ? 1 : 0);
-+    FIFO_WR(f, STAT, RXNOTEMPTY, !fifo32_is_empty(f->rx_fifo) ? 1 : 0);
-+    FIFO_WR(f, STAT, TXNOTFULL, !fifo32_is_full(f->tx_fifo) ? 1 : 0);
-+    FIFO_WR(f, STAT, TXEMPTY, fifo32_is_empty(f->tx_fifo) ? 1 : 0);
-+
-+    if (FIFO_RD(f, TRIG, RXLVLENA) && (rxlvl > FIFO_RD(f, TRIG, RXLVL))) {
-+        FIFO_WR(f, INTSTAT, RXLVL, 1);
-+    } else {
-+        FIFO_WR(f, INTSTAT, RXLVL, 0);
-+    }
-+
-+    if (FIFO_RD(f, TRIG, TXLVLENA) && (txlvl <= FIFO_RD(f, TRIG, TXLVL))) {
-+        FIFO_WR(f, INTSTAT, TXLVL, 1);
-+    } else {
-+        FIFO_WR(f, INTSTAT, TXLVL, 0);
-+    }
-+
-+    trace_flexcomm_fifostat(DEVICE(f)->id, FIFO_REG(f, STAT),
-+                            FIFO_REG(f, INTSTAT));
-+}
-+
-+void flexcomm_reset_fifos(FlexcommFunction *f)
-+{
-+    if (FIFO_RD(f, CFG, EMPTYRX)) {
-+        FIFO_WR(f, CFG, EMPTYRX, 0);
-+        fifo32_reset(f->rx_fifo);
-+    }
-+    if (FIFO_RD(f, CFG, EMPTYTX)) {
-+        FIFO_WR(f, CFG, EMPTYTX, 0);
-+        fifo32_reset(f->tx_fifo);
-+    }
-+}
-+
-+void flexcomm_clear_fifostat(FlexcommFunction *f, uint64_t value)
-+{
-+    bool rxerr = FIELD_EX32(value, FLEXCOMM_USART_FIFOSTAT, RXERR);
-+    bool txerr = FIELD_EX32(value, FLEXCOMM_USART_FIFOSTAT, TXERR);
-+
-+    if (rxerr) {
-+        FIFO_WR(f, STAT, RXERR, 0);
-+    }
-+    if (txerr) {
-+        FIFO_WR(f, STAT, TXERR, 0);
-+    }
-+}
-+
- static void flexcomm_function_select(FlexcommFunction *f, bool selected)
- {
-     FlexcommFunctionClass *fc = FLEXCOMM_FUNCTION_GET_CLASS(f);
- 
-     memory_region_set_enabled(&f->mmio, selected);
-+    if (fc->has_fifos) {
-+        if (selected) {
-+            unsigned num = FIFO_RD(f, SIZE, FIFOSIZE);
-+
-+            fifo32_create(f->tx_fifo, num);
-+            fifo32_create(f->rx_fifo, num);
-+        } else {
-+            fifo32_destroy(f->tx_fifo);
-+            fifo32_destroy(f->rx_fifo);
-+        }
-+    }
- }
- 
- static void flexcomm_function_init(Object *obj)
-@@ -303,6 +385,7 @@ static const TypeInfo flexcomm_types[] = {
-         .parent        = TYPE_SYS_BUS_DEVICE,
-         .instance_size = sizeof(FlexcommState),
-         .instance_init = flexcomm_init,
-+        .instance_finalize = flexcomm_finalize,
-         .class_init    = flexcomm_class_init,
-     },
-     {
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 419879fd65..dc245905dc 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -367,3 +367,4 @@ flexcomm_reset(void) ""
- flexcomm_irq(const char *id, uint8_t irq) "%s %d"
- flexcomm_reg_read(const char *devname, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
- flexcomm_reg_write(const char *dename, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
-+flexcomm_fifostat(const char *id, uint32_t fifostat, uint32_t fifoinstat) "%s: %08x %08x"
+ For booting from a CD-ROM ISO image (which needs to include El-Torito boot
+ information in order to be bootable), it is recommended to specify a ``scsi-cd``
+ device, for example like this::
 -- 
-2.47.0.rc0.187.ge670bccf7e-goog
+2.45.1
 
 
