@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C144ACED24E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E67CED24D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 01:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sxyq3-0004Ek-Mp; Mon, 07 Oct 2024 21:16:35 -0400
+	id 1sxytB-0001Gt-Jz; Mon, 07 Oct 2024 21:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxypi-00045S-V4; Mon, 07 Oct 2024 21:16:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sxype-0008HD-4a; Mon, 07 Oct 2024 21:16:14 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4980o7ZY008625;
- Tue, 8 Oct 2024 01:16:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:mime-version; s=pp1; bh=3baPwsJ4d9/44
- iWyLE2uKRwn3a4yRi/xHKhWUigxytk=; b=Rnr6vXLSNLgI2KWaLdoej6tHr6GwV
- ZwjuVndyZvZobRowEPZQSGJF/B30l40/VmfMLRbnIVhNUoP+/fIM/5vr9pT+y0TD
- lYsZoSaX5Dw78V4XzrDK8PrOYkIGUQsyKkf5qtgCpj4iB+EGwRNash5B+Ap87Hom
- MZ69yy5kIi/jTCHBkc4th65VG6UsIvUWkfiRgw9R+nBwgtkUwUbWBZaP4jTEfWnk
- 3mUx0pA0Vu8E57yS9idk0tPuMR7PsoRC7T4BKib1vvLFTOS4Vh9XZNMb4nny3kGN
- v3mzNLMXVYTYni03wj74hDg93WQkIDouIwhQNIlm02fNgqzgL1x+PoslA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424thq02k0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:08 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4981G866026875;
- Tue, 8 Oct 2024 01:16:08 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 424thq02jv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:08 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 497MEwQE010727;
- Tue, 8 Oct 2024 01:16:07 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 423j0j9ba5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Oct 2024 01:16:07 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4981G51N48038364
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Oct 2024 01:16:06 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C9D258055;
- Tue,  8 Oct 2024 01:16:05 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 250A95805D;
- Tue,  8 Oct 2024 01:16:05 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.51.58])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Oct 2024 01:16:05 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v3 06/19] docs/system/s390x/bootdevices: Update the
- documentation about network booting
-Date: Mon,  7 Oct 2024 21:15:39 -0400
-Message-ID: <20241008011552.2645520-7-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: gvifKiS6IWwDdpVnhV4FqZqURrkHYdd8
-X-Proofpoint-GUID: uh9FDgf2pI6dKlSjAXK2Nr_rrxfl6urq
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-07_16,2024-10-07_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 mlxlogscore=923 bulkscore=0 clxscore=1015 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080006
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com>)
+ id 1sxysp-0007zo-SQ
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:30 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com>)
+ id 1sxysi-0000Aj-DS
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 21:19:24 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6e2e5e376fcso36890017b3.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 18:19:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1728350356; x=1728955156; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=YIWmowqh9ilBPFqbJVFwbgPlrwHIw046vPnX3/duUf8=;
+ b=u7ui+LImFaOOJ5kLN/Jmoe0p2opkvfDsBTOeA0VDRthZMHvRzGRU5al3GHV9mtUeWc
+ gFaEX2ivu3B0QGomD11CP4sbBhZVIzyIeYZDH5AGYUdTXPZp5b3Ni8KIDe9Zle0oMgnL
+ YIv2d82Qcl2gLSaTeljpdRwY5KINJQF6BhO//9aX6d9DDHpluZg+g4eorTdTnOXDfNYe
+ DkrqnfDhL/5P+sGfbnb50VfErshZA0k5jrHG7KJ8F8bg3xjOMzuniH1umvw7eKx9z4FT
+ 5vJhje+nwb3sqFlt4dZeI+YkVPXV+BUdAOajR6jALm+dl0plhhXSlgTbkqK1ZR4ssM4C
+ q/jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728350356; x=1728955156;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YIWmowqh9ilBPFqbJVFwbgPlrwHIw046vPnX3/duUf8=;
+ b=mSoH8JIS3KSl8/20t1cqmkOB5MeBga5iuw5ckaqFEKILFpLt51yk29y1kTfziVaRRr
+ Ji8BOp1GqXQBhb2LyA3WVAtYkdEHuApLEfaHDkKyzolP8B563TEPcOwrAxK4f1dP3geL
+ R0hhWbouHgvasWznYKOvX/s0DMfSElaiTw67BSO8+3Vb3SQ4fBWVD9KDoagnkHQPIsCj
+ kwcthTnVFzW3v6XhL+n4wlka2DNQdf27IR0TblWklrFktuDvFwYAf63dszi5sMmxUb8G
+ Ty6vC5iTQsjGhqBDG068yLkORGNjrbFFL0+LyrK4VX7h42cxWK/3ZPT41xG5zMvHru1l
+ 25HQ==
+X-Gm-Message-State: AOJu0Ywevsl+797gUNv/iCkr0J37B1lE5I83l7bkQbpH0UZHZh67vTEX
+ 460yLztxGn9CFh5S6xwJbTm7A3FqrcO5JIhUQuCjADpWTLgVPASe5k0ubkfPY5F9lH4O71H/UOD
+ 9uCeQrR8JmY8yqh7KuJypfuZV6yY87MLytxHkEan5WPflnOaE8TCh/10R3LIXDl1TFlzjq4T52e
+ A4fJQs7dlZtq9BIjvsaVw7bsOZ9g==
+X-Google-Smtp-Source: AGHT+IESayc9Ykh3LqzVr2AuC96ugMENmY3SXvFs8UUnrZxFn5w0W5/UBHaqraEly00eTLOFk6KJH0+Pgg==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a05:690c:2c87:b0:6e2:b263:1040
+ with SMTP id
+ 00721157ae682-6e2c6e88722mr1437387b3.0.1728350355919; Mon, 07 Oct 2024
+ 18:19:15 -0700 (PDT)
+Date: Mon,  7 Oct 2024 18:18:38 -0700
+In-Reply-To: <20241008011852.1439154-1-tavip@google.com>
+Mime-Version: 1.0
+References: <20241008011852.1439154-1-tavip@google.com>
+X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
+Message-ID: <20241008011852.1439154-13-tavip@google.com>
+Subject: [PATCH v2 12/25] hw/misc: add support for RT500's reset controller
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, luc@lmichel.fr, damien.hedde@dahe.fr, 
+ alistair@alistair23.me, thuth@redhat.com, philmd@linaro.org, jsnow@redhat.com, 
+ crosa@redhat.com, lvivier@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3k4gEZwUKCvQpWrelckkcha.Ykimaiq-Zarahjkjcjq.knc@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.024,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,53 +97,620 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+The RT500 reset controller has two instances that have the same
+register layout but with different fields for some registers.
 
-Remove the information about the separate s390-netboot.img from
-the documentation.
+The model only provides set and clear functionality for the various
+reset lines which is common for both instances. Because of that only
+one type is implemented for both controllers.
 
-Co-authored by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+The patch includes automatically generated headers which contains the
+register layout and helpers.
+
+The header can be regenerated with the svd-rstctl0 and svd-rstctl1
+targets when the build is configured with --enable-mcux-soc-svd.
+
+Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- docs/system/s390x/bootdevices.rst | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ include/hw/arm/svd/rt500_rstctl0.h | 110 ++++++++++++
+ include/hw/arm/svd/rt500_rstctl1.h | 110 ++++++++++++
+ include/hw/misc/rt500_rstctl.h     |  32 ++++
+ hw/misc/rt500_rstctl.c             | 258 +++++++++++++++++++++++++++++
+ hw/arm/svd/meson.build             |   8 +
+ hw/misc/Kconfig                    |   3 +
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ 8 files changed, 526 insertions(+)
+ create mode 100644 include/hw/arm/svd/rt500_rstctl0.h
+ create mode 100644 include/hw/arm/svd/rt500_rstctl1.h
+ create mode 100644 include/hw/misc/rt500_rstctl.h
+ create mode 100644 hw/misc/rt500_rstctl.c
 
-diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
-index 1a7a18b43b..c97efb8fc0 100644
---- a/docs/system/s390x/bootdevices.rst
-+++ b/docs/system/s390x/bootdevices.rst
-@@ -82,23 +82,17 @@ Note that ``0`` can be used to boot the default entry.
- Booting from a network device
- -----------------------------
+diff --git a/include/hw/arm/svd/rt500_rstctl0.h b/include/hw/arm/svd/rt500_rstctl0.h
+new file mode 100644
+index 0000000000..da25f22208
+--- /dev/null
++++ b/include/hw/arm/svd/rt500_rstctl0.h
+@@ -0,0 +1,110 @@
++/*
++ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
++ *
++ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
++ */
++#pragma once
++
++#include "hw/register.h"
++
++/* Reset Controller 0 */
++#define RT500_RSTCTL0_REGS_NO (31)
++
++/* System Reset Status Register */
++REG32(RT500_RSTCTL0_SYSRSTSTAT, 0x0);
++
++/* Peripheral Reset Control Register 0 */
++REG32(RT500_RSTCTL0_PRSTCTL0, 0x10);
++
++/* Peripheral Reset Control Register 1 */
++REG32(RT500_RSTCTL0_PRSTCTL1, 0x14);
++
++/* Peripheral Reset Control Register 2 */
++REG32(RT500_RSTCTL0_PRSTCTL2, 0x18);
++
++/* Peripheral Reset Control Register 0 SET */
++REG32(RT500_RSTCTL0_PRSTCTL0_SET, 0x40);
++
++/* Peripheral Reset Control Register 1 SET */
++REG32(RT500_RSTCTL0_PRSTCTL1_SET, 0x44);
++
++/* Peripheral Reset Control Register 2 SET */
++REG32(RT500_RSTCTL0_PRSTCTL2_SET, 0x48);
++
++/* Peripheral Reset Control Register 0 CLR */
++REG32(RT500_RSTCTL0_PRSTCTL0_CLR, 0x70);
++
++/* Peripheral Reset Control Register 1 CLR */
++REG32(RT500_RSTCTL0_PRSTCTL1_CLR, 0x74);
++
++/* Peripheral Reset Control Register 2 CLR */
++REG32(RT500_RSTCTL0_PRSTCTL2_CLR, 0x78);
++
++
++#define RT500_RSTCTL0_REGISTER_ACCESS_INFO_ARRAY(_name) \
++    struct RegisterAccessInfo _name[RT500_RSTCTL0_REGS_NO] = { \
++        [0 ... RT500_RSTCTL0_REGS_NO - 1] = { \
++            .name = "", \
++            .addr = -1, \
++        }, \
++        [0x0] = { \
++            .name = "SYSRSTSTAT", \
++            .addr = 0x0, \
++            .ro = 0xFFFFFF0E, \
++            .reset = 0x1, \
++        }, \
++        [0x4] = { \
++            .name = "PRSTCTL0", \
++            .addr = 0x10, \
++            .ro = 0x820AE0F5, \
++            .reset = 0x7DF51F0A, \
++        }, \
++        [0x5] = { \
++            .name = "PRSTCTL1", \
++            .addr = 0x14, \
++            .ro = 0xFEFE7FF3, \
++            .reset = 0x101800C, \
++        }, \
++        [0x6] = { \
++            .name = "PRSTCTL2", \
++            .addr = 0x18, \
++            .ro = 0xFFFFFFFC, \
++            .reset = 0x1C000001, \
++        }, \
++        [0x10] = { \
++            .name = "PRSTCTL0_SET", \
++            .addr = 0x40, \
++            .ro = 0x820AE0F5, \
++            .reset = 0x0, \
++        }, \
++        [0x11] = { \
++            .name = "PRSTCTL1_SET", \
++            .addr = 0x44, \
++            .ro = 0xFEFE7FF3, \
++            .reset = 0x0, \
++        }, \
++        [0x12] = { \
++            .name = "PRSTCTL2_SET", \
++            .addr = 0x48, \
++            .ro = 0xFFFFFFFC, \
++            .reset = 0x0, \
++        }, \
++        [0x1C] = { \
++            .name = "PRSTCTL0_CLR", \
++            .addr = 0x70, \
++            .ro = 0x820AE0F5, \
++            .reset = 0x0, \
++        }, \
++        [0x1D] = { \
++            .name = "PRSTCTL1_CLR", \
++            .addr = 0x74, \
++            .ro = 0xFEFE7FF3, \
++            .reset = 0x0, \
++        }, \
++        [0x1E] = { \
++            .name = "PRSTCTL2_CLR", \
++            .addr = 0x78, \
++            .ro = 0xFFFFFFFC, \
++            .reset = 0x0, \
++        }, \
++    }
+diff --git a/include/hw/arm/svd/rt500_rstctl1.h b/include/hw/arm/svd/rt500_rstctl1.h
+new file mode 100644
+index 0000000000..7b0380798f
+--- /dev/null
++++ b/include/hw/arm/svd/rt500_rstctl1.h
+@@ -0,0 +1,110 @@
++/*
++ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
++ *
++ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
++ */
++#pragma once
++
++#include "hw/register.h"
++
++/* Reset Controller 1 */
++#define RT500_RSTCTL1_REGS_NO (31)
++
++/* System Reset Status Register */
++REG32(RT500_RSTCTL1_SYSRSTSTAT, 0x0);
++
++/* Peripheral Reset Control Register 0 */
++REG32(RT500_RSTCTL1_PRSTCTL0, 0x10);
++
++/* Peripheral Reset Control Register 1 */
++REG32(RT500_RSTCTL1_PRSTCTL1, 0x14);
++
++/* Peripheral Reset Control Register 2 */
++REG32(RT500_RSTCTL1_PRSTCTL2, 0x18);
++
++/* Peripheral Reset Control Register 0 SET */
++REG32(RT500_RSTCTL1_PRSTCTL0_SET, 0x40);
++
++/* Peripheral Reset Control Register 1 SET */
++REG32(RT500_RSTCTL1_PRSTCTL1_SET, 0x44);
++
++/* Peripheral Reset Control Register 2 SET */
++REG32(RT500_RSTCTL1_PRSTCTL2_SET, 0x48);
++
++/* Peripheral Reset Control Register 0 CLR */
++REG32(RT500_RSTCTL1_PRSTCTL0_CLR, 0x70);
++
++/* Peripheral Reset Control Register 1 CLR */
++REG32(RT500_RSTCTL1_PRSTCTL1_CLR, 0x74);
++
++/* Peripheral Reset Control Register 2 CLR */
++REG32(RT500_RSTCTL1_PRSTCTL2_CLR, 0x78);
++
++
++#define RT500_RSTCTL1_REGISTER_ACCESS_INFO_ARRAY(_name) \
++    struct RegisterAccessInfo _name[RT500_RSTCTL1_REGS_NO] = { \
++        [0 ... RT500_RSTCTL1_REGS_NO - 1] = { \
++            .name = "", \
++            .addr = -1, \
++        }, \
++        [0x0] = { \
++            .name = "SYSRSTSTAT", \
++            .addr = 0x0, \
++            .ro = 0xFFFFFFFF, \
++            .reset = 0x1, \
++        }, \
++        [0x4] = { \
++            .name = "PRSTCTL0", \
++            .addr = 0x10, \
++            .ro = 0xD40000FF, \
++            .reset = 0x1C0FF00, \
++        }, \
++        [0x5] = { \
++            .name = "PRSTCTL1", \
++            .addr = 0x14, \
++            .ro = 0x4E7EFF00, \
++            .reset = 0xB18100FF, \
++        }, \
++        [0x6] = { \
++            .name = "PRSTCTL2", \
++            .addr = 0x18, \
++            .ro = 0x3FFCFAE0, \
++            .reset = 0xC001011F, \
++        }, \
++        [0x10] = { \
++            .name = "PRSTCTL0_SET", \
++            .addr = 0x40, \
++            .ro = 0xD40000FF, \
++            .reset = 0x0, \
++        }, \
++        [0x11] = { \
++            .name = "PRSTCTL1_SET", \
++            .addr = 0x44, \
++            .ro = 0x4E7EFF00, \
++            .reset = 0x0, \
++        }, \
++        [0x12] = { \
++            .name = "PRSTCTL2_SET", \
++            .addr = 0x48, \
++            .ro = 0x3FFCFAE0, \
++            .reset = 0x0, \
++        }, \
++        [0x1C] = { \
++            .name = "PRSTCTL0_CLR", \
++            .addr = 0x70, \
++            .ro = 0xD40000FF, \
++            .reset = 0x0, \
++        }, \
++        [0x1D] = { \
++            .name = "PRSTCTL1_CLR", \
++            .addr = 0x74, \
++            .ro = 0x4E7EFF00, \
++            .reset = 0x0, \
++        }, \
++        [0x1E] = { \
++            .name = "PRSTCTL2_CLR", \
++            .addr = 0x78, \
++            .ro = 0x3FFCFAE0, \
++            .reset = 0x0, \
++        }, \
++    }
+diff --git a/include/hw/misc/rt500_rstctl.h b/include/hw/misc/rt500_rstctl.h
+new file mode 100644
+index 0000000000..ae7e304b2e
+--- /dev/null
++++ b/include/hw/misc/rt500_rstctl.h
+@@ -0,0 +1,32 @@
++/*
++ * QEMU model for RT500 Reset Controller
++ *
++ * Copyright (c) 2024 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_MISC_RT500_RSTCTL_H
++#define HW_MISC_RT500_RSTCTL_H
++
++#include "hw/arm/svd/rt500_rstctl0.h"
++#include "hw/arm/svd/rt500_rstctl1.h"
++#include "hw/sysbus.h"
++
++#define TYPE_RT500_RSTCTL "rt500-rstctl"
++#define RT500_RSTCTL(o) OBJECT_CHECK(RT500RstCtlState, o, TYPE_RT500_RSTCTL)
++
++#define TYPE_RT500_RSTCTL0 "rt500-rstctl0"
++#define TYPE_RT500_RSTCTL1 "rt500-rstctl1"
++
++typedef struct {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint32_t regs[RT500_RSTCTL1_REGS_NO];
++} RT500RstCtlState;
++
++#endif /* HW_MISC_RT500_RSTCTL_H */
+diff --git a/hw/misc/rt500_rstctl.c b/hw/misc/rt500_rstctl.c
+new file mode 100644
+index 0000000000..a6e818c0a0
+--- /dev/null
++++ b/hw/misc/rt500_rstctl.c
+@@ -0,0 +1,258 @@
++/*
++ * QEMU model for RT500 Reset Controller
++ *
++ * Copyright (c) 2024 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "exec/address-spaces.h"
++#include "migration/vmstate.h"
++#include "hw/misc/rt500_rstctl.h"
++
++#include "trace.h"
++
++/*
++ * There are two intances for RSTCTL with the same register names and layout but
++ * with different fields.
++ */
++#define BUILD_BUG_REG_ADDR(reg) \
++    QEMU_BUILD_BUG_ON((int)A_RT500_RSTCTL0_##reg != (int)A_RT500_RSTCTL1_##reg)
++
++#define REG(s, reg) (s->regs[R_RT500_RSTCTL0_##reg])
++#define RF_WR(s, reg, field, val) \
++    ARRAY_FIELD_DP32(s->regs, RT500_RSTCTL0_##reg, field, val)
++#define RF_RD(s, reg, field) \
++    ARRAY_FIELD_EX32(s->regs, RT500_RSTCTL0_##reg, field)
++
++#define RSTCTL_SYSRSTSTAT_WMASK (BITS(7, 4) | BIT(0))
++#define RSTCL0_PRSCTL0_WMASK (BITS(30, 26) | BITS(24, 20) | BIT(18) | \
++                              BIT(16) | BITS(12, 8) | BIT(3) | BIT(1))
++#define RSTCL0_PRSCTL1_WMASK (BIT(24) | BITS(16, 15) | BITS(3, 2))
++#define RSTCL0_PRSCTL2_WMASK (BITS(1, 0))
++#define RSTCL1_PRSCTL0_WMASK (BIT(29) | BIT(27) |  BITS(25, 8))
++#define RSTCL1_PRSCTL1_WMASK (BIT(31) | BITS(29, 28) | BITS(24, 23) | \
++                              BIT(16) | BITS(7, 0))
++#define RSTCL1_PRSCTL2_WMASK (BITS(31, 30) | BITS(17, 16) | BIT(10) | \
++                              BIT(8) | BITS(4, 0))
++
++
++/*
++ * The two RSTCLK modules have different write register masks.
++ */
++typedef struct {
++    SysBusDeviceClass parent;
++    const struct RegisterAccessInfo *reg_info;
++    int reg_info_num;
++} RT500RstCtlClass;
++
++#define RT500_RSTCTL_CLASS(klass) \
++    OBJECT_CLASS_CHECK(RT500RstCtlClass, (klass), TYPE_RT500_RSTCTL)
++#define RT500_RSTCTL_GET_CLASS(obj) \
++    OBJECT_GET_CLASS(RT500RstCtlClass, (obj), TYPE_RT500_RSTCTL)
++
++BUILD_BUG_REG_ADDR(SYSRSTSTAT);
++BUILD_BUG_REG_ADDR(PRSTCTL0);
++BUILD_BUG_REG_ADDR(PRSTCTL1);
++BUILD_BUG_REG_ADDR(PRSTCTL2);
++BUILD_BUG_REG_ADDR(PRSTCTL0_SET);
++BUILD_BUG_REG_ADDR(PRSTCTL1_SET);
++BUILD_BUG_REG_ADDR(PRSTCTL2_SET);
++BUILD_BUG_REG_ADDR(PRSTCTL0_CLR);
++BUILD_BUG_REG_ADDR(PRSTCTL1_CLR);
++BUILD_BUG_REG_ADDR(PRSTCTL2_CLR);
++
++static MemTxResult rt500_rstctl_read(void *opaque, hwaddr addr,
++                                     uint64_t *data, unsigned size,
++                                     MemTxAttrs attrs)
++{
++    RT500RstCtlState *s = opaque;
++    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
++    const struct RegisterAccessInfo *rai = &c->reg_info[addr / 4];
++    MemTxResult ret = MEMTX_OK;
++
++    switch (addr) {
++    case A_RT500_RSTCTL0_SYSRSTSTAT:
++    case A_RT500_RSTCTL0_PRSTCTL0:
++    case A_RT500_RSTCTL0_PRSTCTL1:
++    case A_RT500_RSTCTL0_PRSTCTL2:
++        *data = s->regs[addr / 4];
++        break;
++    default:
++        ret = MEMTX_ERROR;
++    }
++
++    trace_rt500_rstctl_reg_read(DEVICE(s)->id, rai->name, addr, *data);
++    return ret;
++}
++
++static MemTxResult rt500_rstctl_write(void *opaque, hwaddr addr,
++                                      uint64_t value, unsigned size,
++                                      MemTxAttrs attrs)
++{
++    RT500RstCtlState *s = opaque;
++    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
++    const struct RegisterAccessInfo *rai = &c->reg_info[addr / 4];
++    struct RegisterInfo ri = {
++        .data = &s->regs[addr / 4],
++        .data_size = 4,
++        .access = rai,
++    };
++
++    trace_rt500_rstctl_reg_write(DEVICE(s)->id, rai->name, addr, value);
++
++    switch (addr) {
++    case A_RT500_RSTCTL0_SYSRSTSTAT:
++    {
++        /* write 1 to clear bits */
++        REG(s, SYSRSTSTAT) &= ~value;
++        break;
++    }
++    case A_RT500_RSTCTL0_PRSTCTL0:
++    case A_RT500_RSTCTL0_PRSTCTL1:
++    case A_RT500_RSTCTL0_PRSTCTL2:
++    {
++        register_write(&ri, value, ~0, NULL, false);
++        break;
++    }
++    case A_RT500_RSTCTL0_PRSTCTL0_SET:
++    case A_RT500_RSTCTL0_PRSTCTL1_SET:
++    case A_RT500_RSTCTL0_PRSTCTL2_SET:
++    {
++        uint32_t tmp;
++
++        tmp = A_RT500_RSTCTL0_PRSTCTL0 + (addr - A_RT500_RSTCTL0_PRSTCTL0_SET);
++        s->regs[tmp / 4] |= value;
++        break;
++    }
++    case A_RT500_RSTCTL0_PRSTCTL0_CLR:
++    case A_RT500_RSTCTL0_PRSTCTL1_CLR:
++    case A_RT500_RSTCTL0_PRSTCTL2_CLR:
++    {
++        uint32_t tmp;
++
++        tmp = A_RT500_RSTCTL0_PRSTCTL0 + (addr - A_RT500_RSTCTL0_PRSTCTL0_CLR);
++        s->regs[tmp / 4] &= ~value;
++        break;
++    }
++    }
++
++    return MEMTX_OK;
++}
++
++static const MemoryRegionOps rt500_rstctl_ops = {
++    .read_with_attrs = rt500_rstctl_read,
++    .write_with_attrs = rt500_rstctl_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static void rt500_rstctl_reset_enter(Object *obj, ResetType type)
++{
++    RT500RstCtlState *s = RT500_RSTCTL(obj);
++    RT500RstCtlClass *c = RT500_RSTCTL_GET_CLASS(s);
++
++    for (int i = 0; i < c->reg_info_num; i++) {
++        hwaddr addr = c->reg_info[i].addr;
++
++        if (addr != -1) {
++            struct RegisterInfo ri = {
++                .data = &s->regs[addr / 4],
++                .data_size = 4,
++                .access = &c->reg_info[i],
++            };
++
++            register_reset(&ri);
++        }
++    }
++}
++
++static void rt500_rstctl_init(Object *obj)
++{
++    RT500RstCtlState *s = RT500_RSTCTL(obj);
++
++    memory_region_init_io(&s->mmio, obj, &rt500_rstctl_ops, s,
++                          TYPE_RT500_RSTCTL, sizeof(s->regs));
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static const VMStateDescription vmstate_rt500_rstcl0 = {
++    .name = "rt500-rstctl0",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, RT500RstCtlState, RT500_RSTCTL0_REGS_NO),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_rt500_rstcl1 = {
++    .name = "rt500-rstctl1",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, RT500RstCtlState, RT500_RSTCTL1_REGS_NO),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void rt500_rstctl0_class_init(ObjectClass *klass, void *data)
++{
++    RT500RstCtlClass *rc = RT500_RSTCTL_CLASS(klass);
++    static const RT500_RSTCTL0_REGISTER_ACCESS_INFO_ARRAY(reg_info);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    RESETTABLE_CLASS(klass)->phases.enter = rt500_rstctl_reset_enter;
++    dc->vmsd = &vmstate_rt500_rstcl0;
++    rc->reg_info = reg_info;
++    rc->reg_info_num = ARRAY_SIZE(reg_info);
++}
++
++static void rt500_rstctl1_class_init(ObjectClass *klass, void *data)
++{
++    RT500RstCtlClass *rc = RT500_RSTCTL_CLASS(klass);
++    static const RT500_RSTCTL1_REGISTER_ACCESS_INFO_ARRAY(reg_info);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    RESETTABLE_CLASS(klass)->phases.enter = rt500_rstctl_reset_enter;
++    dc->vmsd = &vmstate_rt500_rstcl1;
++    rc->reg_info = reg_info;
++    rc->reg_info_num = ARRAY_SIZE(reg_info);
++}
++
++static const TypeInfo rt500_rstctl_types[] = {
++    {
++        .name          = TYPE_RT500_RSTCTL,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(RT500RstCtlState),
++        .instance_init = rt500_rstctl_init,
++        .abstract      = true,
++    },
++    {
++        .name          = TYPE_RT500_RSTCTL0,
++        .parent        = TYPE_RT500_RSTCTL,
++        .class_init    = rt500_rstctl0_class_init,
++        .class_size    = sizeof(RT500RstCtlClass),
++    },
++    {
++        .name          = TYPE_RT500_RSTCTL1,
++        .parent        = TYPE_RT500_RSTCTL,
++        .class_init    = rt500_rstctl1_class_init,
++        .class_size    = sizeof(RT500RstCtlClass),
++    },
++};
++
++DEFINE_TYPES(rt500_rstctl_types);
+diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
+index adf0f8327a..eb2fab54f5 100644
+--- a/hw/arm/svd/meson.build
++++ b/hw/arm/svd/meson.build
+@@ -28,4 +28,12 @@ if get_option('mcux-soc-svd')
+     [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexspi.h',
+       '-p', 'FLEXSPI0', '-t', 'FLEXSPI',
+       '--fields', 'STS0:SEQIDLE MCR0:SWRESET INTR:IPCMDDONE'])
++  run_target('svd-rt500-rstctl0', command: svd_gen_header +
++    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/rt500_rstctl0.h',
++      '-p', 'RSTCTL0', '-t', 'RT500_RSTCTL0',
++      '--fields', 'SYSRSTSTAT: PRSTCTL*:'])
++  run_target('svd-rt500-rstctl1', command: svd_gen_header +
++    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/rt500_rstctl1.h',
++      '-p', 'RSTCTL1', '-t', 'RT500_RSTCTL1',
++      '--fields', 'SYSRSTSTAT: PRSTCTL*:'])
+ endif
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 02feb93840..4b688aead2 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -221,4 +221,7 @@ config FLEXCOMM
+ config RT500_CLKCTL
+     bool
  
--Beside the normal guest firmware (which is loaded from the file ``s390-ccw.img``
--in the data directory of QEMU, or via the ``-bios`` option), QEMU ships with
--a small TFTP network bootloader firmware for virtio-net-ccw devices, too. This
--firmware is loaded from a file called ``s390-netboot.img`` in the QEMU data
--directory. In case you want to load it from a different filename instead,
--you can specify it via the ``-global s390-ipl.netboot_fw=filename``
--command line option.
--
--The ``bootindex`` property is especially important for booting via the network.
--If you don't specify the ``bootindex`` property here, the network bootloader
--firmware code won't get loaded into the guest memory so that the network boot
--will fail. For a successful network boot, try something like this::
-+The firmware that ships with QEMU includes a small TFTP network bootloader
-+for virtio-net-ccw devices.  The ``bootindex`` property is especially
-+important for booting via the network. If you don't specify the ``bootindex``
-+property here, the network bootloader won't be taken into consideration and
-+the network boot will fail. For a successful network boot, try something
-+like this::
++config RT500_RSTCTL
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 15f9153be4..bf0988fd43 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -154,3 +154,4 @@ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
  
-  qemu-system-s390x -netdev user,id=n1,tftp=...,bootfile=... \
-                    -device virtio-net-ccw,netdev=n1,bootindex=1
- 
--The network bootloader firmware also has basic support for pxelinux.cfg-style
-+The network bootloader also has basic support for pxelinux.cfg-style
- configuration files. See the `PXELINUX Configuration page
- <https://wiki.syslinux.org/wiki/index.php?title=PXELINUX#Configuration>`__
- for details how to set up the configuration file on your TFTP server.
+ system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
+ system_ss.add(when: 'CONFIG_RT500_CLKCTL', if_true: files('rt500_clkctl0.c', 'rt500_clkctl1.c'))
++system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index b19393dd36..721ebe4bb7 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -376,3 +376,7 @@ rt500_clkctl0_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x
+ # rt500_clkctl1.c
+ rt500_clkctl1_reg_read(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] -> 0x%08x"
+ rt500_clkctl1_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] <- 0x%08x"
++
++# rt500_rstctl.c
++rt500_rstctl_reg_read(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
++rt500_rstctl_reg_write(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
 -- 
-2.45.1
+2.47.0.rc0.187.ge670bccf7e-goog
 
 
