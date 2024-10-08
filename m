@@ -4,55 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26091CED25D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 03:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05884CED25D
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 03:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy10L-00084R-VG; Mon, 07 Oct 2024 23:35:23 -0400
+	id 1sy14B-0000NO-JY; Mon, 07 Oct 2024 23:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zuoboqun@baidu.com>)
- id 1sy10H-00084B-Fr
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:35:18 -0400
-Received: from mx24.baidu.com ([111.206.215.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sy14A-0000NG-OA
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:18 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zuoboqun@baidu.com>)
- id 1sy10E-0004Qk-Hk
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:35:17 -0400
-To: Junjie Mao <junjie.mao@hotmail.com>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, "Gao,Shiyuan" <gaoshiyuan@baidu.com>,
- "david@redhat.com" <david@redhat.com>, "thuth@redhat.com" <thuth@redhat.com>, 
- "alxndr@bu.edu" <alxndr@bu.edu>, "peterx@redhat.com" <peterx@redhat.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-Thread-Topic: [PATCH 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-Thread-Index: AdsZL+fnbeIMvx7hS4K1J5o2R2S6yQ==
-Date: Tue, 8 Oct 2024 03:19:11 +0000
-Message-ID: <62225479bf3f476496df7c5fbb0b9aa9@baidu.com>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.18.84.36]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sy148-0004a0-HE
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728358756; x=1759894756;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=9yAgS0lWbUPpjnOfAInqD964GG7y4EmE2mwVRLH3fvY=;
+ b=bK14REAyH8ZbdBj4JIyUyeVvl2r7k6AhnjkhQLBwQ7AAj5FdknZGzXCH
+ GbF2y9Hp50iZOvAGAacmzRhVd29inUexXOtTD3fb8lT8qmBttyMfHobHu
+ 8RLwbBOP9wbZ7GYHnTaC+U9JkQAq6m6g0U3am/Oz+cODL5TegvxJUc743
+ lkPA8Byk3RLnN6Cl+9gRCyYJS+qE3dW3CuhVusGlrQkxFey1i9Su0gqG8
+ hCynkZkSWQ1DNUqtMC/n5scdPiFagc7qEFOD/sD+sYGZ+1m9ORa7yJ1zW
+ 1neqLECbaBx9tYTM/CMsfeZu90Dd2oshiqQhM0UrA55i5MU4BSPGMr7xV w==;
+X-CSE-ConnectionGUID: 8cU7RisyTKyTW9W0unZl/g==
+X-CSE-MsgGUID: fWS3vo7YQaai8e3lMhxJmg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="52935979"
+X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="52935979"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2024 20:39:12 -0700
+X-CSE-ConnectionGUID: SRZHXToRTWKzt/xp0fO8LA==
+X-CSE-MsgGUID: wBjaco8IRZmk1BEzl3jU2g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="80103978"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 07 Oct 2024 20:39:10 -0700
+Date: Tue, 8 Oct 2024 11:55:22 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH 1/2] hw/core/machine: Add missing 'units.h' and
+ 'error-report.h' headers
+Message-ID: <ZwStKjT13QGFvfct@intel.com>
+References: <20240930221900.59525-1-philmd@linaro.org>
+ <20240930221900.59525-2-philmd@linaro.org>
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.51.54
-X-FE-Last-Public-Client-IP: 100.100.100.49
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=111.206.215.185; envelope-from=zuoboqun@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240930221900.59525-2-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,108 +84,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Zuo,Boqun" <zuoboqun@baidu.com>
-From:  "Zuo,Boqun" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Oct 01, 2024 at 12:18:59AM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue,  1 Oct 2024 00:18:59 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH 1/2] hw/core/machine: Add missing 'units.h' and
+>  'error-report.h' headers
+> X-Mailer: git-send-email 2.45.2
+> 
+> Include the missing "qemu/units.h" to fix when refactoring code:
+> 
+>   ../hw/core/machine.c:743:34: error: use of undeclared identifier 'MiB'
+>   743 |     mc->default_ram_size = 128 * MiB;
+>       |                                  ^
+>   ../hw/core/machine.c:750:44: error: use of undeclared identifier 'TiB'
+>   750 |     mc->smbios_memory_device_size = 2047 * TiB;
+>       |                                            ^
+> 
+> and "qemu/error-report.h" to fix:
+> 
+>   ../hw/core/machine.c:1029:13: error: call to undeclared function 'error_report' [-Wimplicit-function-declaration]
+>  1029 |             error_report("NUMA node %" PRIu16 " is missing, use "
+>       |             ^
+>   ../hw/core/machine.c:1240:9: error: call to undeclared function 'warn_report' [-Wimplicit-function-declaration]
+>  1240 |         warn_report("CPU model %s is deprecated -- %s",
+>       |         ^
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/core/machine.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-On Wed, Sep 25, 2024 8:58 PM Junjie Mao wrote:
-> > As shown below, if a virtio PCI device is attached under a pci-bridge,
-> > the MR of VirtIOPCIRegion does not belong to any address space. So
-> > memory_region_find cannot be used to search for this MR.
-> >
-> > Introduce the virtio-pci and pci_bridge_pci address spaces to solve thi=
-s
-> problem.
-> >
-> > Before:
-> > memory-region: pci_bridge_pci
-> >   0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
-> >     00000000fe200000-00000000fe200fff (prio 1, i/o): virtio-blk-pci-msi=
-x
-> >       00000000fe200000-00000000fe20016f (prio 0, i/o): msix-table
-> >       00000000fe200800-00000000fe200807 (prio 0, i/o): msix-pba
-> >     000000a000400000-000000a000403fff (prio 1, i/o): virtio-pci
-> >       000000a000400000-000000a000400fff (prio 0, i/o): virtio-pci-commo=
-n-
-> virtio-blk
-> >       000000a000401000-000000a000401fff (prio 0, i/o): virtio-pci-isr-v=
-irtio-
-> blk
-> >       000000a000402000-000000a000402fff (prio 0, i/o): virtio-pci-devic=
-e-
-> virtio-blk
-> >       000000a000403000-000000a000403fff (prio 0, i/o):
-> > virtio-pci-notify-virtio-blk
-> >
-> > After:
-> > address-space: pci_bridge_pci
-> >   0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
-> >     00000000fe200000-00000000fe200fff (prio 1, i/o): virtio-blk-pci-msi=
-x
-> >       00000000fe200000-00000000fe20016f (prio 0, i/o): msix-table
-> >       00000000fe200800-00000000fe200807 (prio 0, i/o): msix-pba
-> >     000000a000400000-000000a000403fff (prio 1, i/o): virtio-pci
-> >       000000a000400000-000000a000400fff (prio 0, i/o): virtio-pci-commo=
-n-
-> virtio-blk
-> >       000000a000401000-000000a000401fff (prio 0, i/o): virtio-pci-isr-v=
-irtio-
-> blk
-> >       000000a000402000-000000a000402fff (prio 0, i/o): virtio-pci-devic=
-e-
-> virtio-blk
-> >       000000a000403000-000000a000403fff (prio 0, i/o):
-> > virtio-pci-notify-virtio-blk
-> >
-> > address-space: virtio-pci
-> >   000000a000400000-000000a000403fff (prio 1, i/o): virtio-pci
-> >     000000a000400000-000000a000400fff (prio 0, i/o): virtio-pci-common-
-> virtio-blk
-> >     000000a000401000-000000a000401fff (prio 0, i/o): virtio-pci-isr-vir=
-tio-blk
-> >     000000a000402000-000000a000402fff (prio 0, i/o): virtio-pci-device-
-> virtio-blk
-> >     000000a000403000-000000a000403fff (prio 0, i/o):
-> > virtio-pci-notify-virtio-blk
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2576
-> > Fixes: ffa8a3e ("virtio-pci: Add lookup subregion of VirtIOPCIRegion
-> > MR")
-> >
-> > Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> > Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-> > ---
-> >  hw/pci/pci_bridge.c            | 2 ++
-> >  hw/virtio/virtio-pci.c         | 3 +++
-> >  include/hw/pci/pci_bridge.h    | 1 +
-> >  include/hw/virtio/virtio-pci.h | 1 +
-> >  4 files changed, 7 insertions(+)
-> >
-> > diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c index
-> > 6a4e38856d..74683e7445 100644
-> > --- a/hw/pci/pci_bridge.c
-> > +++ b/hw/pci/pci_bridge.c
-> > @@ -380,6 +380,7 @@ void pci_bridge_initfn(PCIDevice *dev, const char
-> *typename)
-> >      sec_bus->map_irq =3D br->map_irq ? br->map_irq :
-> pci_swizzle_map_irq_fn;
-> >      sec_bus->address_space_mem =3D &br->address_space_mem;
-> >      memory_region_init(&br->address_space_mem, OBJECT(br),
-> > "pci_bridge_pci", UINT64_MAX);
-> > +    address_space_init(&br->as_mem, &br->address_space_mem,
-> > + "pci_bridge_pci");
->=20
-> I don't think this "pci_bridge_pci" address space is necessary. The
-> VirtIOPCIProxy.modern_as AddressSpace is sufficient for
-> memory_region_add() to work.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-This is because memory_region_find_rcu () and memory_region_to_address_spac=
-e() will find the memory container
-on the top level and then get the corresponding address space of it.
-If we only add "VirtIOPCIProxy.modern_as AddressSpace", memory_region_find(=
-) still cannot find a address space.
-Because "pci_bridge_pci" is the memory container on top level and it doesn'=
-t have a corresponding address space.
 
