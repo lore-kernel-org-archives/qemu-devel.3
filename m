@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05884CED25D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 03:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2749CED25F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 03:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy14B-0000NO-JY; Mon, 07 Oct 2024 23:39:19 -0400
+	id 1sy14T-0000Oz-Jg; Mon, 07 Oct 2024 23:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sy14A-0000NG-OA
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:18 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sy148-0004a0-HE
- for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728358756; x=1759894756;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=9yAgS0lWbUPpjnOfAInqD964GG7y4EmE2mwVRLH3fvY=;
- b=bK14REAyH8ZbdBj4JIyUyeVvl2r7k6AhnjkhQLBwQ7AAj5FdknZGzXCH
- GbF2y9Hp50iZOvAGAacmzRhVd29inUexXOtTD3fb8lT8qmBttyMfHobHu
- 8RLwbBOP9wbZ7GYHnTaC+U9JkQAq6m6g0U3am/Oz+cODL5TegvxJUc743
- lkPA8Byk3RLnN6Cl+9gRCyYJS+qE3dW3CuhVusGlrQkxFey1i9Su0gqG8
- hCynkZkSWQ1DNUqtMC/n5scdPiFagc7qEFOD/sD+sYGZ+1m9ORa7yJ1zW
- 1neqLECbaBx9tYTM/CMsfeZu90Dd2oshiqQhM0UrA55i5MU4BSPGMr7xV w==;
-X-CSE-ConnectionGUID: 8cU7RisyTKyTW9W0unZl/g==
-X-CSE-MsgGUID: fWS3vo7YQaai8e3lMhxJmg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="52935979"
-X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="52935979"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Oct 2024 20:39:12 -0700
-X-CSE-ConnectionGUID: SRZHXToRTWKzt/xp0fO8LA==
-X-CSE-MsgGUID: wBjaco8IRZmk1BEzl3jU2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,185,1725346800"; d="scan'208";a="80103978"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 07 Oct 2024 20:39:10 -0700
-Date: Tue, 8 Oct 2024 11:55:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH 1/2] hw/core/machine: Add missing 'units.h' and
- 'error-report.h' headers
-Message-ID: <ZwStKjT13QGFvfct@intel.com>
-References: <20240930221900.59525-1-philmd@linaro.org>
- <20240930221900.59525-2-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sy14P-0000OJ-9c
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:33 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sy14N-0004ca-BL
+ for qemu-devel@nongnu.org; Mon, 07 Oct 2024 23:39:32 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-42e5e758093so44828945e9.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Oct 2024 20:39:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728358769; x=1728963569; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/2QHPNuUKHh+7x96iKMO6DXK9Ho36Le/8pGsXBiiZM4=;
+ b=B25/KlVKqPVjZDuYT2wc2A3NJZKfCf4+o+Cpt9FdcewwRls/xe14uBBtXpGyIEfBdw
+ rbxv0S2JkYdTQNLbU3ks+boyqmqOWpFEVKPVPuFtgWIQwVEArdXgwvMXmmv+LuoGCpyX
+ tJ54iXmrPuEQSoI0TxeSrDIN4dNHCMpggddAKVXQDKZFh79QwhbxnEenMJpGd104zhF8
+ 3YXxH7MKOhc+/l+jZaIovkVTRMfMPYe8H3b5Wwt7VubeuEFEJSqH+XippE15DFPQWJrS
+ 1y97CAPdk5jsI2GTRyw2zis8EsfXaWcf1cIDzN4+FOcebwJRIl4LhAL3w0whW24007L3
+ Mvyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728358769; x=1728963569;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/2QHPNuUKHh+7x96iKMO6DXK9Ho36Le/8pGsXBiiZM4=;
+ b=P6TFJhz6ivftTucOUwl2AVXcRXAnmJmnUTy7j0jTVzsBXIaBIljr9Gd0p8TG16YEYv
+ M+aQDXSPRHUqumewmZm805DFytcb5Jd+rry0TEjZQpuJaCNwbRTPnHCcwIJiSTXWtHBn
+ lsdHsOtqClq77IJ535B24h3pzd+bwLiwAc/+zj0AZRnna/T50QKrAUR3MuIgv5aYWzRn
+ hSb7RVC9pH6J4EbElgJDgDwOYMaU3Rp6NqjVniw1UpQvWcO0v5ZoJQVrEvxxGn3kov+0
+ CK5Fq188aE0UWvQfawB2dvyQJoW69vWNt7suoS3kZtByoLJ0jUllzO1LlG5hMUAayTrK
+ 7uag==
+X-Gm-Message-State: AOJu0YxDwUdefrXR58gBDeN2f9KYOFoNMRVxS691H7S15ArARXdmENhj
+ CzAK95pL8z2p3DD7kuGFKUZv+/7FLfdGZGxytkrUAD7B0F1pRxfQNTIkguQ59DM=
+X-Google-Smtp-Source: AGHT+IF/CtIblRud/Ypi/bQ9oDCFX3vQdNTlslJTs5lP9bEL+K49nxLGIhXzvtPmu6ytb5PaRoMRlw==
+X-Received: by 2002:a05:600c:4711:b0:42c:d7da:737b with SMTP id
+ 5b1f17b1804b1-42f85ab3accmr103181255e9.9.1728358769380; 
+ Mon, 07 Oct 2024 20:39:29 -0700 (PDT)
+Received: from [10.141.170.78] ([146.70.184.62])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d169733c5sm6969605f8f.110.2024.10.07.20.39.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Oct 2024 20:39:28 -0700 (PDT)
+Message-ID: <4f7257d9-662e-43c7-9f02-2434e728f2a3@linaro.org>
+Date: Mon, 7 Oct 2024 20:39:25 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240930221900.59525-2-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/12] Rust initial PoC + meson changes for 2024-10-07
+To: Brian Cain <quic_bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, junjie.mao@intel.com,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20241007110342.1298598-1-pbonzini@redhat.com>
+ <cf288711-259e-4b06-96aa-6c681b263bee@quicinc.com>
+ <CABgObfa9Zsn47PEoNfDBOg3sbkzXa-Cz4QLocCH9E=3yz8T4Xg@mail.gmail.com>
+ <ae024a03-17df-4636-87bb-3d0313f03596@quicinc.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <ae024a03-17df-4636-87bb-3d0313f03596@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,36 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 01, 2024 at 12:18:59AM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue,  1 Oct 2024 00:18:59 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 1/2] hw/core/machine: Add missing 'units.h' and
->  'error-report.h' headers
-> X-Mailer: git-send-email 2.45.2
-> 
-> Include the missing "qemu/units.h" to fix when refactoring code:
-> 
->   ../hw/core/machine.c:743:34: error: use of undeclared identifier 'MiB'
->   743 |     mc->default_ram_size = 128 * MiB;
->       |                                  ^
->   ../hw/core/machine.c:750:44: error: use of undeclared identifier 'TiB'
->   750 |     mc->smbios_memory_device_size = 2047 * TiB;
->       |                                            ^
-> 
-> and "qemu/error-report.h" to fix:
-> 
->   ../hw/core/machine.c:1029:13: error: call to undeclared function 'error_report' [-Wimplicit-function-declaration]
->  1029 |             error_report("NUMA node %" PRIu16 " is missing, use "
->       |             ^
->   ../hw/core/machine.c:1240:9: error: call to undeclared function 'warn_report' [-Wimplicit-function-declaration]
->  1240 |         warn_report("CPU model %s is deprecated -- %s",
->       |         ^
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  hw/core/machine.c | 2 ++
->  1 file changed, 2 insertions(+)
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+SGkgQnJpYW4sDQoNCk9uIDEwLzcvMjQgMjA6MjcsIEJyaWFuIENhaW4gd3JvdGU6Pj4NCj4+
+ICAgICBBc2lkZTogUGFvbG8sIHRoYW5rcyBmb3IgeW91ciB3b3JrIGhlcmUhDQo+Pg0KPj4N
+Cj4+IFRoYW5rcyB0byBNYW5vcywgSSBhbSBqdXN0IHRoZSBzaGVwaGVyZC4gOikNCj4+DQo+
+PiAgICAgU28gZmFyIEkgdGhpbmsgdGhlIGZvY3VzIGZvciBSdXN0IHN1cHBvcnQgaGFzIGJl
+ZW4gb24gZGV2aWNlDQo+PiAgICAgbW9kZWxzLsKgIEJ1dCBpcyB0aGVyZSBhbnkgaW50ZXJl
+c3QgaW4NCj4+ICAgICBiZWluZyBhYmxlIHRvIHdyaXRlIFRDRyBwbHVnaW5zIGluIFJ1c3QN
+Cj4+DQo+Pg0KPj4gSXMgdGhlcmUgYSBnb29kIGRlZ3JlZSBvZiBBQkkgY29tcGF0aWJpbGl0
+eSBhY3Jvc3MgUUVNVSB2ZXJzaW9ucz8gSWYgDQo+PiBzbywgcGx1Z2lucyBhcmUgZXh0ZXJu
+YWwgc2hhcmVkIGxpYnJhcmllcyBhbmQgdGhlcmVmb3JlIHRoZXkgY291bGQgYmUgDQo+PiBi
+dWlsdCAod2l0aCBDYXJnbykgaW5kZXBlbmRlbnQgb2YgYW55IFFFTVUgY29kZS4NCj4+DQo+
+PiBJIGFtIG5vdCBpbnZvbHZlZCBpbiBwbHVnaW5zIHdvcmssIHNvIEkgYW0gbm90IHRoZSBi
+ZXN0IHBlcnNvbiB0byBhbnN3ZXIhDQo+IA0KPiANCj4gQWZ0ZXIgd2F0Y2hpbmcgdGhlIHJl
+Y29yZGluZyBvZiBBbGV4J3MgS1ZNIEZvcnVtIHByZXNlbnRhdGlvbiBvbiB0aGUgDQo+IHBs
+dWdpbnMsIGhlJ3MgYW5zd2VyZWQgbXkgcXVlc3Rpb24gLS0gaGUgZGVzY3JpYmVkIHRoZSBy
+dXN0IGJpbmRpbmdzIA0KPiBzcGVjaWZpY2FsbHkgYXMgIi4uLm1pZ2h0IHJlcXVpcmUgdXMg
+dG8gYmUgYSBsaXR0bGUgYml0IG1vcmUgZm9ybWFsIA0KPiBhYm91dCBzcGVjaWZ5aW5nIGEg
+cHJvcGVyIEFQSS4uLiIgLS0gc28gbWF5YmUgbm90IGEgdG9wIHByaW9yaXR5IGZvciBub3cu
+DQo+IA0KDQp0aGFua3MgZm9yIHlvdXIgaW50ZXJlc3QgYXJvdW5kIHBsdWdpbnMuDQpBcyB5
+b3Ugbm90aWNlZCwgd2UgYXJlIGZvY3VzZWQgZm9yIG5vdyBvbiBtYWtpbmcgdGhlIEFQSSBt
+b3JlIGNvbXBsZXRlIA0KYW5kIHVzZWZ1bCwgYmVmb3JlIHN0YXJ0aW5nIHRvIHRoaW5rIGFi
+b3V0IGV4dGVuZGluZyBsYW5ndWFnZXMgYXZhaWxhYmxlIA0KdG8gd3JpdGUgdGhlbS4NCg0K
+UnVzdCB3aWxsIGJlIG9uIHRvcCBvZiB0aGUgbGlzdCBmb3Igc3VyZSENCg0KUmVnYXJkcywN
+ClBpZXJyaWNrDQo=
 
