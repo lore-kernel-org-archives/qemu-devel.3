@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14EBCED274
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 07:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FDFCED274
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 07:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sy4tU-0005ih-3b; Tue, 08 Oct 2024 03:44:32 -0400
+	id 1sy56D-0008Aq-QN; Tue, 08 Oct 2024 03:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sy4tR-0005bx-Ez; Tue, 08 Oct 2024 03:44:29 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sy4tG-0004A9-KW; Tue, 08 Oct 2024 03:44:29 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20c593d6b1cso2495245ad.0; 
- Tue, 08 Oct 2024 00:44:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728373455; x=1728978255; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6fvPiUFqeTwsIjYhM+dD6WWD6sdYIbwRbf+mb8y/PZ4=;
- b=fuA4CJ1nVqe0jd/j6o/xtPN4jMWpNeVosK5mXxqYcME73OY0KROr/vnFKEluSLl4Aq
- VbvuZySX+81LV1RxaK3rAijRx7pShSyNf2Bs/5Rkoxaf/LZcHTfL9vo1cB10T5kcAUBS
- vGwqYi0+TSSegXasmeHBdYJxVTBAK/oijbXww1F/QjlO7lqb3CdR6e8N2zwA2XY7pU3v
- BZJp3/DkkfEf//o8znXZ1pucyiM+PfoUVYLBsK3JbSdyQcBVYitZ7xtg+OGSxwynZwXH
- QQvJiH8D1+q4h3nvopt7lWA4/iHTF+mPfbdB8vNIZxF+oWFtnwGX+SFLpltwgSb1hFc4
- vgDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728373455; x=1728978255;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6fvPiUFqeTwsIjYhM+dD6WWD6sdYIbwRbf+mb8y/PZ4=;
- b=BMNGQWRE+TdGfTn7oy5ffxG/9Iz2EUCA3nYj9QffIq6ybvZm6ij/l8tVcK/tBmeEPo
- 5JsjxMdH+Emdwa2IHBxRsFl0gpAnbKqj7TCcGgdxIVeIBwX9RsRtwmOyCfbdqewVn7TG
- dmurPyLC9npiwIBVfZNcO8roha4nEuQecIocTdg0Xu01fcspoIeNNE0tN75GjAUXWUjg
- ihNBsKyKGtunfgrbJXUSgMTGkInO8TimO3vLG8Hv2O004OaEVjFxrp/2OV6gxaDeuORG
- 8uTg2LXu2hSi2m4P8aqCyg8B9R7Vex6JkPtgr/Y0iKteB/3jkxoiBwwOSDnHFFek1mNR
- L5nA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDgRvG2kJfujdX+yf6kCq2FK4CB9wapDAfVZRAQozIfxvQYH7ePzzxYoQTqSFr9Akdf7zvSLuHV8qz@nongnu.org
-X-Gm-Message-State: AOJu0Yy0ShwV+13s3aTPwhzMzhMojzFoibgxN0+2HiGUTSe55A4VrMkG
- yYofNqzwuJ8jEFM64+hszU4slTbAT+HCaTMJDsYSh1KsgM5IU1fF
-X-Google-Smtp-Source: AGHT+IEEZkj0P7044ctWPwXSHiDxqJyMSfRoMLQCSYSAAweL4upvDnN84AcVyWWhtqULROonJ58DKQ==
-X-Received: by 2002:a17:902:ebcd:b0:203:a030:d0a1 with SMTP id
- d9443c01a7336-20bff18cadfmr278881505ad.58.1728373455279; 
- Tue, 08 Oct 2024 00:44:15 -0700 (PDT)
-Received: from localhost ([118.210.103.101]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c5bea1e94sm776865ad.92.2024.10.08.00.44.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Oct 2024 00:44:14 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy56B-0008A8-8b
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:57:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sy569-0005bx-Rd
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 03:57:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728374257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ypa5LEggZwEYyE+5hDvWP9/ozU5gJQ2VY7QZvpl5r+0=;
+ b=TwiYGAnnE0Z7ytpP8oVUo3ilGdDJ6xWulrcDjpy5415Qe3J5u99CpJln/tFI8fItIxlPnk
+ bFaIF9fqqFL6WnzSFqEcI+OpBfD+yBIqC9ySbjUtDDGaPUV+0Eapa9ouONdsuzpzRzh9/n
+ 8yoXj3pLTjAsalhm2EMMuidNzx05M0M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-0qv7Kr4hOMC-RNbEEMo7bg-1; Tue,
+ 08 Oct 2024 03:57:35 -0400
+X-MC-Unique: 0qv7Kr4hOMC-RNbEEMo7bg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 49DA91956058; Tue,  8 Oct 2024 07:57:34 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.61])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EC1AA300018D; Tue,  8 Oct 2024 07:57:31 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	berrange@redhat.com
+Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
+ evan.burgess@seagate.com, peter.maydell@linaro.org,
+ Alejandro Zeise <alejandro.zeise@seagate.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 02/16] crypto/hash-glib: Implement new hash API
+Date: Tue,  8 Oct 2024 09:57:09 +0200
+Message-ID: <20241008075724.2772149-3-clg@redhat.com>
+In-Reply-To: <20241008075724.2772149-1-clg@redhat.com>
+References: <20241008075724.2772149-1-clg@redhat.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 08 Oct 2024 17:44:08 +1000
-Message-Id: <D4Q994U5GSYV.2BL8PTP7YQZTG@gmail.com>
-Cc: <qemu-ppc@nongnu.org>, <fbarrat@linux.ibm.com>, <clg@kaod.org>,
- <calebs@linux.ibm.com>, <chalapathi.v@ibm.com>, <saif.abrar@linux.ibm.com>,
- <dantan@linux.vnet.ibm.com>, <milesg@linux.ibm.com>, <philmd@linaro.org>,
- <alistair@alistair23.me>
-Subject: Re: [PATCH v3 1/3] MAINTAINERS: Cover PowerPC SPI model in PowerNV
- section
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Chalapathi V" <chalapathi.v@linux.ibm.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.18.2
-References: <20240918165045.21298-1-chalapathi.v@linux.ibm.com>
- <20240918165045.21298-2-chalapathi.v@linux.ibm.com>
-In-Reply-To: <20240918165045.21298-2-chalapathi.v@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,41 +85,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Sep 19, 2024 at 2:50 AM AEST, Chalapathi V wrote:
-> From: "Philippe Mathieu-Daud=C3=A9" <philmd@linaro.org>
->
-> It is unfair to let the PowerNV SPI model to the SSI
-> maintainers. Also include the PowerNV ones.
->
-> Fixes: 29318db133 ("hw/ssi: Add SPI model")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-> ---
->  MAINTAINERS | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ffacd60f40..b11c4edaf0 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1541,8 +1541,10 @@ F: hw/ppc/pnv*
->  F: hw/intc/pnv*
->  F: hw/intc/xics_pnv.c
->  F: hw/pci-host/pnv*
-> +F: hw/ssi/pnv_spi.c
->  F: include/hw/ppc/pnv*
->  F: include/hw/pci-host/pnv*
-> +F: hw/ssi/pnv_spi*
+From: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-Should be include/hw/ssi/pnv_spi*
+Implements the new hashing API in the GLib hash driver.
+Supports creating/destroying a context, updating the context
+with input data and obtaining an output hash.
 
-Otherwise,
+Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+[ clg: - Dropped qcrypto_hash_supports() in qcrypto_glib_hash_new()
+       - Removed superfluous cast (GChecksum *) in qcrypto_glib_hash_free()
+       - Reworked qcrypto_glib_hash_finalize() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ crypto/hash-glib.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
->  F: pc-bios/skiboot.lid
->  F: tests/qtest/pnv*
->  F: tests/functional/test_ppc64_powernv.py
+diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
+index a5a2949333ae..783283facc18 100644
+--- a/crypto/hash-glib.c
++++ b/crypto/hash-glib.c
+@@ -1,6 +1,7 @@
+ /*
+  * QEMU Crypto hash algorithms
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (c) 2016 Red Hat, Inc.
+  *
+  * This library is free software; you can redistribute it and/or
+@@ -95,6 +96,72 @@ qcrypto_glib_hash_bytesv(QCryptoHashAlgo alg,
+ }
+ 
+ 
++static
++QCryptoHash *qcrypto_glib_hash_new(QCryptoHashAlgo alg,
++                                   Error **errp)
++{
++    QCryptoHash *hash;
++
++    hash = g_new(QCryptoHash, 1);
++    hash->alg = alg;
++    hash->opaque = g_checksum_new(qcrypto_hash_alg_map[alg]);
++
++    return hash;
++}
++
++static
++void qcrypto_glib_hash_free(QCryptoHash *hash)
++{
++    if (hash->opaque) {
++        g_checksum_free(hash->opaque);
++    }
++
++    g_free(hash);
++}
++
++
++static
++int qcrypto_glib_hash_update(QCryptoHash *hash,
++                             const struct iovec *iov,
++                             size_t niov,
++                             Error **errp)
++{
++    GChecksum *ctx = hash->opaque;
++
++    for (int i = 0; i < niov; i++) {
++        g_checksum_update(ctx, iov[i].iov_base, iov[i].iov_len);
++    }
++
++    return 0;
++}
++
++static
++int qcrypto_glib_hash_finalize(QCryptoHash *hash,
++                               uint8_t **result,
++                               size_t *result_len,
++                               Error **errp)
++{
++    int ret;
++    GChecksum *ctx = hash->opaque;
++
++    ret = g_checksum_type_get_length(qcrypto_hash_alg_map[hash->alg]);
++    if (ret < 0) {
++        error_setg(errp, "Unable to get hash length");
++        *result_len = 0;
++        return -1;
++    }
++
++    *result_len = ret;
++    *result = g_new(uint8_t, *result_len);
++
++    g_checksum_get_digest(ctx, *result, result_len);
++    return 0;
++}
++
+ QCryptoHashDriver qcrypto_hash_lib_driver = {
+     .hash_bytesv = qcrypto_glib_hash_bytesv,
++    .hash_new      = qcrypto_glib_hash_new,
++    .hash_update   = qcrypto_glib_hash_update,
++    .hash_finalize = qcrypto_glib_hash_finalize,
++    .hash_free     = qcrypto_glib_hash_free,
+ };
+-- 
+2.46.2
 
 
