@@ -4,76 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C5ACEF17D
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0F9CEF172
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 14:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syBAz-0006Xy-35; Tue, 08 Oct 2024 10:27:01 -0400
+	id 1syBH1-0007da-TR; Tue, 08 Oct 2024 10:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBAv-0006X6-KV
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:26:57 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syBAt-00018Y-Fo
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:26:56 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2fabd2c4ac0so62010511fa.1
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 07:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728397613; x=1729002413; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RQozRerSiRfKC4vBeczSbk4ogjlVq89iod84xYTjpH8=;
- b=qbk9y5bsRX4BdYX5AkrBawphp/l4T58y5ZIkF0ZDXnII8zWZE8Kt/zsQ1X5LGHeMsT
- Oxn1N0ATL9GFgj8a93tMNDU2HaMxIXG3Suydas6BsO/vxwPW1Ksl+o2wWhfQXUDppeCY
- 767Ws/2epaLN+rJ2ZLatCMH/HMD8ZoCGzUcoXIsQ8qhPMt8e7J9iSnZYxkyXfOctuxHY
- TKSWkQ4sdd8u46TIV/JEha8h71Xb+Ph/ceM1/+AMzj7zChpBpgHa1Pfo5dMBKqVekhsr
- gX8B7efhvWfmK4nDEXauU6cYdwJFcMZHNkjI4LuQfLee4D7BHbjEuWGAyREiTnR0nKTQ
- vORA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728397613; x=1729002413;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RQozRerSiRfKC4vBeczSbk4ogjlVq89iod84xYTjpH8=;
- b=DBBwueeB6Vri/4yiS2o/dPR0xcfMzgLWq/FTZGLGbDMvYc3HHNMCfcycqjx6N64N/m
- g4o5y8vH1IDoKso68z4C065TJWWYQGSM939upZaQ7fVEsBqegEmWVB7nWAivODp82Z37
- OjfD+q27scfBdZ8Mtr1BKFKbWK9wKF+0imelnErTQ0kOPohZrp8JKQLmsQ1yYTQ+oXqC
- tRdxNeqErbbqiftgN+QcGIn7z5cYwJBxjN5rVkQZ7ztYhlILMjg9D+t+pHhRENkTBuNL
- ciXBY1Yre+RKVWZSMCLmGEa/hEbP+03pIEHceobqTfS6HwA37BgD2vS2l/XNDRvbQ5h4
- 37Cw==
-X-Gm-Message-State: AOJu0YzL5rBavt3/gs5MpPTZsXvEPUi9NT2SebnFyt7G1UveDQ70a8hP
- R/Bckq/VZDKjT5ucH1/dNM5XhfStLcOBoIH94OTpOFYytfJiFBJ+uTIyGyESDjHFlLbHmuJanEA
- piQsqs/zdWnOizGfnLj+P4SNhjd0wCWU9ZMsU9w==
-X-Google-Smtp-Source: AGHT+IEK40RZGPZt5Ym42R8l1+Af5CABSgiP3N8qQETkX12gAxA9awW14sA1GNRaKGIg0p+kd3F0YmluVLQN8uT/C+o=
-X-Received: by 2002:a2e:be90:0:b0:2f7:9d20:3882 with SMTP id
- 38308e7fff4ca-2faf3c63ec9mr87028611fa.22.1728397613383; Tue, 08 Oct 2024
- 07:26:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1syBGz-0007dA-IS
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:33:13 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1syBGw-0001xU-BI
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 10:33:13 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:1f90:0:640:f579:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1BEE760B9E;
+ Tue,  8 Oct 2024 17:33:03 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b415::1:32] (unknown
+ [2a02:6b8:b081:b415::1:32])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 1Xi1f00i9Gk0-eRgzLCzP; Tue, 08 Oct 2024 17:33:02 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1728397982;
+ bh=aOF748tCy9rSu26cNSGX6zzCMqfan9zNKxiREQ8VqZ4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Qmy8Hq063Mq5/OBljgW38GaExkkskn5vrtkylcvQ3PJRqTpGMtSYZptosma6eRYda
+ HxMZWBI61u1CBXZuFZhNq3cTSD5waAljA8eUxhv4/kmcpEcZrMDIK9F3rZgE0B5Ckg
+ aVgSJhBfjJdbyWuQxOratEqh2fhKENB1kKiEy/+4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <6b8c47ca-4052-4018-8b5f-11b13b8f5395@yandex-team.ru>
+Date: Tue, 8 Oct 2024 17:33:01 +0300
 MIME-Version: 1.0
-References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-16-richard.henderson@linaro.org>
-In-Reply-To: <20241005200600.493604-16-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 8 Oct 2024 15:26:42 +0100
-Message-ID: <CAFEAcA-d3MHj=_Ma6MHLGLT-nW0iKA9fV7C7gmK9pnG-9NXZcA@mail.gmail.com>
-Subject: Re: [PATCH v2 15/21] target/arm: Pass MemOp to get_phys_addr_gpc
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 00/13] Live update: cpr-transfer
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <1727725244-105198-1-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,16 +83,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 5 Oct 2024 at 21:06, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Zero is the safe do-nothing value for callers to use.
-> Pass the value through from get_phys_addr.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 30.09.24 22:40, Steve Sistare wrote:
+> Some devices need new kernel software interfaces
+> to allow a descriptor to be used in a process that did not originally open it.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Hi Steve!
 
-thanks
--- PMM
+Could you please describe, which kernel version / features are required? I'm mostly interested in migration of tap and vhost-user devices.
+
+-- 
+Best regards,
+Vladimir
+
 
