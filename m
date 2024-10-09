@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF6CCEE336
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 17:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0291BCEE339
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 18:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syamT-0005Z8-BT; Wed, 09 Oct 2024 13:47:25 -0400
+	id 1syazd-0002H9-AK; Wed, 09 Oct 2024 14:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syamJ-0005Wk-RG
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:17 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syamH-0003L6-Jb
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:15 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a83562f9be9so11121066b.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 10:47:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728496032; x=1729100832; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SuqOO3LqDX2G8oXdRbMxrpr3s/uI9Id95M9jvHkmB7w=;
- b=GpgI4sqL+i4lGIlvDLBqGk8PmyxN6uw+muafZPDlYjl3wuEIhY19zkTSQvDlLfSVnX
- 497BgkkZgb7/jTqeDJ9dxeNVM6UNY8C2i+DUGais7SOZD14Zw3ZOYuEFU5msVdV+8nfm
- oZEH3+c1bAlfvdG/WnQSdY1G0XrDcut68xDQo8Jz9/L/2xTzBbfPsPq3IkROi4ag3an6
- smYz2VvIlhSZILsW+AuNDzfK8oMKI78zjYyqqOrvzXIU4eAd81f/cxZE/TkQ80GzfVq8
- lYJ22dX2kSTFX1mkBn8ApCtTSBbZ8+dYpMmeunZjY84jwV8vtmB+NG7DbDaNQFdoGxQ1
- GsTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728496032; x=1729100832;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SuqOO3LqDX2G8oXdRbMxrpr3s/uI9Id95M9jvHkmB7w=;
- b=EjdtnxanwxASiVfyUM28U39zLBMXRJL0rJoqukD1Z8zufVjcSOc50UG0gpY9hfnYdL
- CUI7bEBDH8jBgBcdZ+ftLDxpJ2xn0IjAWcbBAd46p+RlRG+kP4uMjg8lpm53g7uLPfZv
- 7/LWtgpD2d+97tbHPkIRsJP19h7X6Z0fa3qAhdrXuTtSLIKBv8eZKaaJDnuqag7UDYzy
- 7PNg+LHwvRA52wxFkGJW4q35kpNg3DN6Chvur71qMh24kPVlvZE1te/ASGYhbbGNI28T
- x6bEoP+XRqmHv65OBd+//NW/ZxO8XIAIxT0nH4+a9bI1igtNQykMN5KcnGj+LTKO/60S
- GhCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlX9gXkNDaMfu0fu5wM+8Rj3Q0pv32pcHpHorYsFlFXxG+wAfFxdzb6fEZAAanHVUlVLQMgNncKc1l@nongnu.org
-X-Gm-Message-State: AOJu0YwlKg5EPOyI6qTAQpLOWbRT69q0wfwYW4jhgPnhDU1pGAHsC6Rv
- pmo94v1C3N6OlhhLGevuAthpG6dfYNe405DdwJ1p6pXY8x8PWrdz07uIWA==
-X-Google-Smtp-Source: AGHT+IHpPn56cXSUnuNc7OvsbrP3yRPwlJeo9u73u0OTE/IEDPZeR3kQcKv5qNqIBHyjqx57xT+G0g==
-X-Received: by 2002:a17:907:c7d8:b0:a7a:9fe9:99e7 with SMTP id
- a640c23a62f3a-a998d313ca4mr304421366b.41.1728496031881; 
- Wed, 09 Oct 2024 10:47:11 -0700 (PDT)
-Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a994f38068fsm491667666b.40.2024.10.09.10.47.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 10:47:10 -0700 (PDT)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 5/5] qemu-options.hx: describe multiplexing of several
- backend devices
-Date: Wed,  9 Oct 2024 19:45:17 +0200
-Message-Id: <20241009174517.286935-6-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241009174517.286935-1-r.peniaev@gmail.com>
-References: <20241009174517.286935-1-r.peniaev@gmail.com>
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1syazb-0002Gf-Df; Wed, 09 Oct 2024 14:00:59 -0400
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
+ id 1syazZ-0005Mc-2z; Wed, 09 Oct 2024 14:00:59 -0400
+Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
+ by m0409410.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
+ 499GPrGW001254; Wed, 9 Oct 2024 19:00:48 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=+6AL44uLx9nYviSaXEq+C36CAb9PsPAuk3oUv9vofWE=; b=APz4JDeJ2xB9
+ pR3rM02AAlSjsqHek7Jrbb/RENwXTH4z30SCn8UZlJYbdsGCTk8CEfQF4rXoxsrN
+ HejZq23dka7oVHmYYewe31cDfE9mawd3IDXkNxnz4nRYn19gNKX+lhzuBeUTijv8
+ pEAuUBKSHL0EDC/EeuNv5te50QAPzkbgkCKMUkuAHoSuXN4LSEAMK+zyuYYOv5si
+ cnfWjHzxgKY9CTD2LCbkBl7r5oFGqcUoliZehNDoPwNn0jXsiKwRBQ2gtoiG5vt8
+ Z++ZP3/a+cIJQPNVQEXgBZhPcMgmfhLLOnuoAuEuVxpUCO5DwSpxhCStIFGQwbwz
+ ERoDByj8cQ==
+Received: from prod-mail-ppoint4
+ (a72-247-45-32.deploy.static.akamaitechnologies.com [72.247.45.32] (may be
+ forged))
+ by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 425wat8mdf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Oct 2024 19:00:47 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint4.akamai.com [127.0.0.1])
+ by prod-mail-ppoint4.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 499E4K5X029323; Wed, 9 Oct 2024 14:00:47 -0400
+Received: from prod-mail-relay18.dfw02.corp.akamai.com ([172.27.165.172])
+ by prod-mail-ppoint4.akamai.com (PPS) with ESMTP id 4230swe59v-1;
+ Wed, 09 Oct 2024 14:00:46 -0400
+Received: from [100.64.0.1] (unknown [172.27.166.123])
+ by prod-mail-relay18.dfw02.corp.akamai.com (Postfix) with ESMTP id C13402C6;
+ Wed,  9 Oct 2024 18:00:44 +0000 (GMT)
+Message-ID: <4b94aa38-e4b4-4322-9b1b-8484e3b78c32@akamai.com>
+Date: Wed, 9 Oct 2024 13:00:43 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] scsi: fetch unit attention when creating the request
+To: Paolo Bonzini <pbonzini@redhat.com>, "Tokarev, Michael" <mjt@tls.msk.ru>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
+ Mike Christie <michael.christie@oracle.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ Fam Zheng <fam@euphon.net>, dharnett@akamai.com,
+ "Hunt, Joshua" <johunt@akamai.com>
+References: <20230712134352.118655-1-sgarzare@redhat.com>
+ <20230712134352.118655-2-sgarzare@redhat.com>
+ <6187274e-7223-4c13-b950-57137f4422d1@akamai.com>
+ <CABgObfaP+PAAFkGjYmwxWqSdKDcd_mDrb7rC9=TfcTrvqAu1Pg@mail.gmail.com>
+Content-Language: en-US
+From: Michael Galaxy <mgalaxy@akamai.com>
+In-Reply-To: <CABgObfaP+PAAFkGjYmwxWqSdKDcd_mDrb7rC9=TfcTrvqAu1Pg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-09_16,2024-10-09_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ suspectscore=0
+ adultscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2409260000 definitions=main-2410090113
+X-Proofpoint-ORIG-GUID: PsfE6Qv8_8qap-riVecpW37eKfpGcPQy
+X-Proofpoint-GUID: PsfE6Qv8_8qap-riVecpW37eKfpGcPQy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 adultscore=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410090114
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=mgalaxy@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,89 +113,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds a few lines describing `mux-be` multiplexer configuration
-for multiplexing several backend devices with a single frontend
-device.
+Thanks for your help.
 
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
----
- qemu-options.hx | 46 ++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 42 insertions(+), 4 deletions(-)
+- Michael
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index d94e2cbbaeb1..21f112c2e445 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3782,7 +3782,7 @@ SRST
- The general form of a character device option is:
- 
- ``-chardev backend,id=id[,mux=on|off][,options]``
--    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
-+    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``mux-be``,
-     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
-     ``pty``, ``stdio``, ``braille``, ``parallel``,
-     ``spicevmc``, ``spiceport``. The specific backend will determine the
-@@ -3839,9 +3839,10 @@ The general form of a character device option is:
-     the QEMU monitor, and ``-nographic`` also multiplexes the console
-     and the monitor to stdio.
- 
--    There is currently no support for multiplexing in the other
--    direction (where a single QEMU front end takes input and output from
--    multiple chardevs).
-+    If you need to multiplex in the opposite direction (where one QEMU
-+    interface receives input and output from multiple chardev devices),
-+    please refer to the paragraph below regarding chardev ``mux-be``
-+    configuration.
- 
-     Every backend supports the ``logfile`` option, which supplies the
-     path to a file to record all data transmitted via the backend. The
-@@ -3941,6 +3942,43 @@ The available backends are:
-     Forward QEMU's emulated msmouse events to the guest. ``msmouse``
-     does not take any options.
- 
-+``-chardev mux-be,id=id``
-+    Explicitly create chardev backend multiplexer with possibility to
-+    multiplex in the opposite direction, where one QEMU interface
-+    (frontend device) receives input and output from multiple chardev
-+    backend devices.
-+
-+    For example the following is a use case of 2 backend devices: text
-+    virtual console ``vc0`` and a socket ``sock0`` connected
-+    to a single virtio hvc console frontend device with multiplexer
-+    ``mux0`` help. Virtual console renders text to an image, which
-+    can be shared over the VNC protocol, in turn socket backend provides
-+    biderectional communication to the virtio hvc console over socket.
-+    The example configuration can be the following:
-+
-+    ::
-+
-+       -chardev mux-be,id=mux0 \
-+       -chardev socket,path=/tmp/sock,server=on,wait=off,id=sock0,mux-be-id=mux0 \
-+       -chardev vc,id=vc0,mux-be-id=mux0 \
-+       -device virtconsole,chardev=mux0 \
-+       -vnc 0.0.0.0:0
-+
-+    Once QEMU starts VNC client and any TTY emulator can be used to
-+    control a single hvc console:
-+
-+    ::
-+
-+       # VNC client
-+       vncviewer :0
-+
-+       # TTY emulator
-+       socat unix-connect:/tmp/sock pty,link=/tmp/pty & \
-+       tio /tmp/pty
-+
-+    Multiplexing of several backend devices with serveral frontend devices
-+    is not supported.
-+
- ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
-     Connect to a QEMU text console. ``vc`` may optionally be given a
-     specific size.
--- 
-2.43.0
-
+On 10/9/24 11:28, Paolo Bonzini wrote:
+> !-------------------------------------------------------------------|
+>    This Message Is From an External Sender
+>    This message came from outside your organization.
+> |-------------------------------------------------------------------!
+>
+> Yes, it looks like an easy backport. Adding Michael Tokarev and qemu-stable.
+>
+> Paolo
+>
+>
+> On Wed, Oct 9, 2024 at 6:03 PM Michael Galaxy <mgalaxy@akamai.com> wrote:
+>> Hi All,
+>>
+>> We have stumbled upon this bug in our production systems on QEMU 7.2.x.
+>> This is a pretty nasty bug because it has the effect of causing the root
+>> filesystem in the guest to switch into read only mode if our block
+>> storage products change attachments to running virtual machines.
+>>
+>> Could we kindly ask to pull this identical patch for 7.2.15?
+>>
+>> Last year, it just went to master and landed in 8.0.50. We're planning
+>> to upgrade, but it will be quite some time before we get around to that,
+>> and I suspect others are also running 7.2.x in production.
+>>
+>> - Michael Galaxy
+>>
+>> On 7/12/23 08:43, Stefano Garzarella wrote:
+>>> Commit 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs") split
+>>> calls to scsi_req_new() and scsi_req_enqueue() in the virtio-scsi device.
+>>> This had no drawback, until commit 8cc5583abe ("virtio-scsi: Send
+>>> "REPORTED LUNS CHANGED" sense data upon disk hotplug events") added a
+>>> bus unit attention.
+>>>
+>>> Having the two calls separated, all requests in the batch were prepared
+>>> calling scsi_req_new() to report a sense.
+>>> Then only the first one submitted calling scsi_req_enqueue() reported the
+>>> right sense and reset it to NO_SENSE.
+>>> The others reported NO_SENSE, causing SCSI errors in Linux.
+>>>
+>>> To solve this issue, let's fetch the unit attention as early as possible
+>>> when we prepare the request, that way only the first request in the batch
+>>> will carry the right sense.
+>>>
+>>> Fixes: 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs")
+>>> Fixes: 8cc5583abe ("virtio-scsi: Send "REPORTED LUNS CHANGED" sense data upon disk hotplug events")
+>>> Reported-by: Thomas Huth <thuth@redhat.com>
+>>> Buglink: https://urldefense.com/v3/__https://bugzilla.redhat.com/show_bug.cgi?id=2176702__;!!GjvTz_vk!RKyuBiMbJ5CywoidrGSu50njz30GGlEg54dEmfsw_y2Ab8NxP2zkHyYy-Iajg9-KC0IO_9h3L-iac6O3$
+>>> Co-developed-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>>> ---
+>>>    include/hw/scsi/scsi.h |  1 +
+>>>    hw/scsi/scsi-bus.c     | 36 +++++++++++++++++++++++++++++++++---
+>>>    2 files changed, 34 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+>>> index e2bb1a2fbf..3692ca82f3 100644
+>>> --- a/include/hw/scsi/scsi.h
+>>> +++ b/include/hw/scsi/scsi.h
+>>> @@ -108,6 +108,7 @@ int cdrom_read_toc_raw(int nb_sectors, uint8_t *buf, int msf, int session_num);
+>>>    /* scsi-bus.c */
+>>>    struct SCSIReqOps {
+>>>        size_t size;
+>>> +    void (*init_req)(SCSIRequest *req);
+>>>        void (*free_req)(SCSIRequest *req);
+>>>        int32_t (*send_command)(SCSIRequest *req, uint8_t *buf);
+>>>        void (*read_data)(SCSIRequest *req);
+>>> diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+>>> index f80f4cb4fc..f083373021 100644
+>>> --- a/hw/scsi/scsi-bus.c
+>>> +++ b/hw/scsi/scsi-bus.c
+>>> @@ -412,19 +412,35 @@ static const struct SCSIReqOps reqops_invalid_opcode = {
+>>>
+>>>    /* SCSIReqOps implementation for unit attention conditions.  */
+>>>
+>>> -static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
+>>> +static void scsi_fetch_unit_attention_sense(SCSIRequest *req)
+>>>    {
+>>> +    SCSISense *ua = NULL;
+>>> +
+>>>        if (req->dev->unit_attention.key == UNIT_ATTENTION) {
+>>> -        scsi_req_build_sense(req, req->dev->unit_attention);
+>>> +        ua = &req->dev->unit_attention;
+>>>        } else if (req->bus->unit_attention.key == UNIT_ATTENTION) {
+>>> -        scsi_req_build_sense(req, req->bus->unit_attention);
+>>> +        ua = &req->bus->unit_attention;
+>>>        }
+>>> +
+>>> +    /*
+>>> +     * Fetch the unit attention sense immediately so that another
+>>> +     * scsi_req_new does not use reqops_unit_attention.
+>>> +     */
+>>> +    if (ua) {
+>>> +        scsi_req_build_sense(req, *ua);
+>>> +        *ua = SENSE_CODE(NO_SENSE);
+>>> +    }
+>>> +}
+>>> +
+>>> +static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
+>>> +{
+>>>        scsi_req_complete(req, CHECK_CONDITION);
+>>>        return 0;
+>>>    }
+>>>
+>>>    static const struct SCSIReqOps reqops_unit_attention = {
+>>>        .size         = sizeof(SCSIRequest),
+>>> +    .init_req     = scsi_fetch_unit_attention_sense,
+>>>        .send_command = scsi_unit_attention
+>>>    };
+>>>
+>>> @@ -699,6 +715,11 @@ SCSIRequest *scsi_req_alloc(const SCSIReqOps *reqops, SCSIDevice *d,
+>>>        object_ref(OBJECT(d));
+>>>        object_ref(OBJECT(qbus->parent));
+>>>        notifier_list_init(&req->cancel_notifiers);
+>>> +
+>>> +    if (reqops->init_req) {
+>>> +        reqops->init_req(req);
+>>> +    }
+>>> +
+>>>        trace_scsi_req_alloc(req->dev->id, req->lun, req->tag);
+>>>        return req;
+>>>    }
+>>> @@ -798,6 +819,15 @@ uint8_t *scsi_req_get_buf(SCSIRequest *req)
+>>>    static void scsi_clear_unit_attention(SCSIRequest *req)
+>>>    {
+>>>        SCSISense *ua;
+>>> +
+>>> +    /*
+>>> +     * scsi_fetch_unit_attention_sense() already cleaned the unit attention
+>>> +     * in this case.
+>>> +     */
+>>> +    if (req->ops == &reqops_unit_attention) {
+>>> +        return;
+>>> +    }
+>>> +
+>>>        if (req->dev->unit_attention.key != UNIT_ATTENTION &&
+>>>            req->bus->unit_attention.key != UNIT_ATTENTION) {
+>>>            return;
 
