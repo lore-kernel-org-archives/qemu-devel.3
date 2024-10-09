@@ -4,75 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B5ACED62A
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687E5CED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sySEx-00032A-8H; Wed, 09 Oct 2024 04:40:17 -0400
+	id 1sySG8-0004sC-B5; Wed, 09 Oct 2024 04:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sySEn-0002v4-Ol
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:40:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sySG3-0004rl-2f; Wed, 09 Oct 2024 04:41:23 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sySEl-0001LW-QE
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:40:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728463202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gwaHK/7FZjHwmu40oHbMCV+EFf1UdvIeS3hnoy1lHNU=;
- b=arMj7FX0hgzCTsi5WxwXg8sMjXk0NBPlIp6ju57Oo9APKg8dH/QP08qY0+Ne4pm4Au5deG
- chzJz2GmHqomyEKTgm0Ily7VhTszpvM+Jbi9Itjr7i3ojeAfNWv0mX+QUuYXpdRWQlgepI
- tlFRQili6n3kz3nzenOV9/uJH0ntyO4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-9QgfFwaVMnSlDCgAP8NMHQ-1; Wed,
- 09 Oct 2024 04:39:58 -0400
-X-MC-Unique: 9QgfFwaVMnSlDCgAP8NMHQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B8601985119; Wed,  9 Oct 2024 08:39:56 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.46])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA324300018D; Wed,  9 Oct 2024 08:39:54 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Octavian Purdila <tavip@google.com>, Paulo Neves <ptsneves@gmail.com>
-Subject: [PULL 2/2] chardev: add path option for pty backend
-Date: Wed,  9 Oct 2024 12:39:38 +0400
-Message-ID: <20241009083938.1504695-3-marcandre.lureau@redhat.com>
-In-Reply-To: <20241009083938.1504695-1-marcandre.lureau@redhat.com>
-References: <20241009083938.1504695-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sySG1-0001gc-M2; Wed, 09 Oct 2024 04:41:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=SQJmJ7gCi0nmN7oos+CcdHoJLAwgIy/4udl7e5kb3IE=; b=quhDT7suu0/KBt+gwLJZT0iXKI
+ 4oyT641+LMTqMBMY9S8wWhiA2Vtb9jvSKZP2wRnduvDTu0AmE66k1PZru7rcodOTU7FYBdKmpEUdG
+ UVYnQaOQkwARVbB0HcqYBOyG/5mJ/ElJWswwGDkUfvcDfh88+IGsZXolrjLpMzVu+/Ylah5LEiabf
+ KnFmeiX4+sFwr4BtHUZ129ZEzR7Ymp1wdLc3jQaki5AWzYrgd0kswuzCtypq7k+chC5XRycmHFaSP
+ I8wcWbPTdtoGLr/vTdchcPLJmfRiSl8Mbjb4N3sm993iKwgTIcxC1sDZNOfRtlOg42mjs0PWf/STg
+ VDwS3sj5hBXVS4kzVQUIATrzZhW0i6TsQD0sBGslOhMll27UEaFOJlCcYyjkHhONq6SaRxJ39xhef
+ wxh3rYINQjdjmX84wLHMpW5bHuHsXriOul9X8qVXrX++bnFWmuC0gNkMwvKg+ze/7VuMdJ4dbP6Du
+ U7H8B3imJaf+BcS5UHoHcu8+YsjAX8rEHoErYtbczhvzGk5MbjqpGxzxsVxXTAfZqNDIK8T8bxehL
+ 5iWRLuhhJZ3B2UU/q3JGAWRRBUrwkA0EO4hSc3lY1Hf8XdNnBfDJAxS9dBCrNUs9kXU+1MEIMtAM1
+ 7zpA7lJQRqaAYvslHSW7feSjIJ/a8XJbAF/0bWk20=;
+Received: from [2a00:23c4:8bb8:7000:6d0:70a6:da7e:f9a3]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sySFk-00098L-IJ; Wed, 09 Oct 2024 09:41:08 +0100
+Message-ID: <ea96f1e9-8bb2-4547-8835-a8ed2d0ab298@ilande.co.uk>
+Date: Wed, 9 Oct 2024 09:41:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+To: Octavian Purdila <tavip@google.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, marcandre.lureau@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, luc@lmichel.fr,
+ damien.hedde@dahe.fr, alistair@alistair23.me, thuth@redhat.com,
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, lvivier@redhat.com
+References: <20241008011852.1439154-1-tavip@google.com>
+ <20241008011852.1439154-2-tavip@google.com>
+ <7994769f-efed-4eff-aac7-aa3828f603b7@ilande.co.uk>
+ <CAGWr4cT=UWvk_v=908bhdbrg61tz8pgpa14_K+vps0d0sTZTJQ@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CAGWr4cT=UWvk_v=908bhdbrg61tz8pgpa14_K+vps0d0sTZTJQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb8:7000:6d0:70a6:da7e:f9a3
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 01/25] fifo32: add peek function
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,265 +108,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Octavian Purdila <tavip@google.com>
+On 08/10/2024 18:25, Octavian Purdila wrote:
 
-Add path option to the pty char backend which will create a symbolic
-link to the given path that points to the allocated PTY.
+> On Tue, Oct 8, 2024 at 4:27 AM Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
+>>
+>> On 08/10/2024 02:18, Octavian Purdila wrote:
+>>
+>>> Add fifo32_peek() that returns the first element from the queue
+>>> without popping it.
+>>>
+>>> Signed-off-by: Octavian Purdila <tavip@google.com>
+>>> ---
+>>>    include/qemu/fifo32.h | 28 ++++++++++++++++++++++++++++
+>>>    1 file changed, 28 insertions(+)
+>>>
+>>> diff --git a/include/qemu/fifo32.h b/include/qemu/fifo32.h
+>>> index 4e9fd1b5ef..9de1807375 100644
+>>> --- a/include/qemu/fifo32.h
+>>> +++ b/include/qemu/fifo32.h
+>>> @@ -140,6 +140,34 @@ static inline uint32_t fifo32_pop(Fifo32 *fifo)
+>>>        return ret;
+>>>    }
+>>>
+>>> +/**
+>>> + * fifo32_peek:
+>>> + * @fifo: fifo to peek at
+>>> + *
+>>> + * Returns the value from the FIFO's head without poping it. Behaviour
+>>> + * is undefined if the FIFO is empty. Clients are responsible for
+>>> + * checking for emptiness using fifo32_is_empty().
+>>> + *
+>>> + * Returns: the value from the FIFO's head
+>>> + */
+>>> +
+>>> +static inline uint32_t fifo32_peek(Fifo32 *fifo)
+>>> +{
+>>> +    uint32_t ret = 0, num;
+>>> +    const uint8_t *buf;
+>>> +
+>>> +    buf = fifo8_peek_bufptr(&fifo->fifo, 4, &num);
+>>
+>> Are you sure that you want to use fifo8_peek_bufptr() as opposed to fifo8_peek_buf()
+>> here? The reason for using the latter function (and why fifo8_*_bufptr() functions
+>> are not generally recommended) is that they will correctly handle the FIFO wraparound
+>> caused by the drifting head pointer which can occur if you don't empty the entire
+>> FIFO contents in a single *_pop() or *_pop_buf() operation.
+>>
+> 
+> I don't think that it matters in this case because the size of the
+> FIFO is always going to be a multiple of 4 and all push and pop
+> operations happen with 4 bytes as well. Am I missing something?
+> 
+> In any case, if it makes things more clear / consistent I can switch
+> to fifo8_peek_buf.
 
-This avoids having to make QMP or HMP monitor queries to find out what
-the new PTY device path is.
+I'm guess I'm just a little bit wary of the Fifo32 API since it appears that 
+fifo32_num_used(), fifo32_num_free() and fifo32_is_full() are written in a way that 
+suggests unaligned accesses can occur.
 
-Based on patch from Paulo Neves:
+Given that fifo8_push() and fifo8_pop() should assert() upon failure I don't think 
+that's possible for Fifo32, but then all my test cases use Fifo8.
 
-https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail.com/
+If you're confident from your tests that this can't happen then we can leave it as-is.
 
-Tested with the following invocations that the link is created and
-removed when qemu stops:
 
-  qemu-system-x86_64 -nodefaults -mon chardev=compat_monitor \
-  -chardev pty,path=test,id=compat_monitor0
+ATB,
 
-  qemu-system-x86_64 -nodefaults -monitor pty:test
-
-  # check QMP invocation with path set
-  qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=on,wait=off
-  nc localhost 4444
-  > {"execute": "qmp_capabilities"}
-  > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
-      "type": "pty", "data": {"path": "test" }}}}
-
-  # check QMP invocation with path not set
-  qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=on,wait=off
-  nc localhost 4444
-  > {"execute": "qmp_capabilities"}
-  > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
-      "type": "pty", "data": {}}}}
-
-Also tested that when a link path is not passed invocations still work, e.g.:
-
-  qemu-system-x86_64 -monitor pty
-
-Co-authored-by: Paulo Neves <ptsneves@gmail.com>
-Signed-off-by: Paulo Neves <ptsneves@gmail.com>
-[OP: rebase and address original patch review comments]
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240806010735.2450555-1-tavip@google.com>
----
- qapi/char.json     | 27 ++++++++++++++++++++++++++-
- chardev/char-pty.c | 33 +++++++++++++++++++++++++++++++++
- chardev/char.c     |  5 +++++
- qemu-options.hx    | 33 +++++++++++++++++++++++++++------
- 4 files changed, 91 insertions(+), 7 deletions(-)
-
-diff --git a/qapi/char.json b/qapi/char.json
-index 42eda4f98b..e045354350 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -444,6 +444,20 @@
-   'base': 'ChardevCommon',
-   'if': 'CONFIG_SPICE_PROTOCOL' }
- 
-+##
-+# @ChardevPty:
-+#
-+# Configuration info for pty implementation.
-+#
-+# @path: optional path to create a symbolic link that points to the
-+#     allocated PTY
-+#
-+# Since: 9.2
-+##
-+{ 'struct': 'ChardevPty',
-+  'data': { '*path': 'str' },
-+  'base': 'ChardevCommon' }
-+
- ##
- # @ChardevBackendKind:
- #
-@@ -655,6 +669,17 @@
- { 'struct': 'ChardevRingbufWrapper',
-   'data': { 'data': 'ChardevRingbuf' } }
- 
-+
-+##
-+# @ChardevPtyWrapper:
-+#
-+# @data: Configuration info for pty chardevs
-+#
-+# Since: 9.2
-+##
-+{ 'struct': 'ChardevPtyWrapper',
-+  'data': { 'data': 'ChardevPty' } }
-+
- ##
- # @ChardevBackend:
- #
-@@ -675,7 +700,7 @@
-             'pipe': 'ChardevHostdevWrapper',
-             'socket': 'ChardevSocketWrapper',
-             'udp': 'ChardevUdpWrapper',
--            'pty': 'ChardevCommonWrapper',
-+            'pty': 'ChardevPtyWrapper',
-             'null': 'ChardevCommonWrapper',
-             'mux': 'ChardevMuxWrapper',
-             'msmouse': 'ChardevCommonWrapper',
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index cc2f7617fe..cbb21b76ae 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -29,6 +29,7 @@
- #include "qemu/sockets.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
-+#include "qemu/option.h"
- #include "qemu/qemu-print.h"
- 
- #include "chardev/char-io.h"
-@@ -41,6 +42,7 @@ struct PtyChardev {
- 
-     int connected;
-     GSource *timer_src;
-+    char *path;
- };
- typedef struct PtyChardev PtyChardev;
- 
-@@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
-     Chardev *chr = CHARDEV(obj);
-     PtyChardev *s = PTY_CHARDEV(obj);
- 
-+    /* unlink symlink */
-+    if (s->path) {
-+        unlink(s->path);
-+        g_free(s->path);
-+    }
-+
-     pty_chr_state(chr, 0);
-     object_unref(OBJECT(s->ioc));
-     pty_chr_timer_cancel(s);
-@@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
-     int master_fd, slave_fd;
-     char pty_name[PATH_MAX];
-     char *name;
-+    char *path = backend->u.pty.data->path;
- 
-     master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-     if (master_fd < 0) {
-@@ -354,12 +363,36 @@ static void char_pty_open(Chardev *chr,
-     g_free(name);
-     s->timer_src = NULL;
-     *be_opened = false;
-+
-+    /* create symbolic link */
-+    if (path) {
-+        int res = symlink(pty_name, path);
-+
-+        if (res != 0) {
-+            error_setg_errno(errp, errno, "Failed to create PTY symlink");
-+        } else {
-+            s->path = g_strdup(path);
-+        }
-+    }
-+}
-+
-+static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
-+                           Error **errp)
-+{
-+    const char *path = qemu_opt_get(opts, "path");
-+    ChardevPty *pty;
-+
-+    backend->type = CHARDEV_BACKEND_KIND_PTY;
-+    pty = backend->u.pty.data = g_new0(ChardevPty, 1);
-+    qemu_chr_parse_common(opts, qapi_ChardevPty_base(pty));
-+    pty->path = g_strdup(path);
- }
- 
- static void char_pty_class_init(ObjectClass *oc, void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
- 
-+    cc->parse = char_pty_parse;
-     cc->open = char_pty_open;
-     cc->chr_write = char_pty_chr_write;
-     cc->chr_update_read_handler = pty_chr_update_read_handler;
-diff --git a/chardev/char.c b/chardev/char.c
-index 35623c78a3..c0cc52824b 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
-         qemu_opt_set(opts, "path", p, &error_abort);
-         return opts;
-     }
-+    if (strstart(filename, "pty:", &p)) {
-+        qemu_opt_set(opts, "backend", "pty", &error_abort);
-+        qemu_opt_set(opts, "path", p, &error_abort);
-+        return opts;
-+    }
-     if (strstart(filename, "tcp:", &p) ||
-         strstart(filename, "telnet:", &p) ||
-         strstart(filename, "tn3270:", &p) ||
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 20a1ce0d43..d5afefe5b6 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3712,7 +3712,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
-     "-chardev console,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
- #else
--    "-chardev pty,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev pty,id=id[,path=path][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev stdio,id=id[,mux=on|off][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #ifdef CONFIG_BRLAPI
-@@ -3951,12 +3951,22 @@ The available backends are:
- 
-     ``path`` specifies the name of the serial device to open.
- 
--``-chardev pty,id=id``
--    Create a new pseudo-terminal on the host and connect to it. ``pty``
--    does not take any options.
-+``-chardev pty,id=id[,path=path]``
-+    Create a new pseudo-terminal on the host and connect to it.
- 
-     ``pty`` is not available on Windows hosts.
- 
-+    If ``path`` is specified, QEMU will create a symbolic link at
-+    that location which points to the new PTY device.
-+
-+    This avoids having to make QMP or HMP monitor queries to find out
-+    what the new PTY device path is.
-+
-+    Note that while QEMU will remove the symlink when it exits
-+    gracefully, it will not do so in case of crashes or on certain
-+    startup errors. It is recommended that the user checks and removes
-+    the symlink after QEMU terminates to account for this.
-+
- ``-chardev stdio,id=id[,signal=on|off]``
-     Connect to standard input and standard output of the QEMU process.
- 
-@@ -4314,8 +4324,19 @@ SRST
- 
-             vc:80Cx24C
- 
--    ``pty``
--        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
-+    ``pty[:path]``
-+        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
-+
-+        If ``path`` is specified, QEMU will create a symbolic link at
-+        that location which points to the new PTY device.
-+
-+        This avoids having to make QMP or HMP monitor queries to find
-+        out what the new PTY device path is.
-+
-+        Note that while QEMU will remove the symlink when it exits
-+        gracefully, it will not do so in case of crashes or on certain
-+        startup errors. It is recommended that the user checks and
-+        removes the symlink after QEMU terminates to account for this.
- 
-     ``none``
-         No device is allocated. Note that for machine types which
--- 
-2.47.0
+Mark.
 
 
