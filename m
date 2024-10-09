@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEFFCED611
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71D6CED611
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syfns-0006oh-LU; Wed, 09 Oct 2024 19:09:12 -0400
+	id 1syfnx-0006qd-BM; Wed, 09 Oct 2024 19:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syfnq-0006mn-Ic
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:10 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1syfnt-0006ow-3t
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:13 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syfno-0000ho-3O
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:09 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7e6ed072cdaso207620a12.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:09:07 -0700 (PDT)
+ id 1syfnr-0000jJ-Fz
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:12 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2e2a96b23e4so275403a91.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728515346; x=1729120146;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728515350; x=1729120150;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jhy16U60jtENm6Kh0YtldQ0BHL4m1/+IxRhtKphPpfc=;
- b=kOMk5XMBab5MM8/GcskDfzA5zXmz7x21CUqKFfew0B45qWhWXQOI3xvHApXf9mDS6Y
- lXr/GPeTuyERHXVa2uhrWPgNlHLFvSLJKcVYFVhjhZSw3sUhSY/a640301sH/36lnuMN
- NWpuCcd4BfHNV9vpylZrnil3AlPz8Iuu0lN5T6f8WbtV3DPU3pNWA2/pX9nhSwantXcl
- /z0xw4B777tLTRVnf9uqIVdOGVzocT1NwRIIVT/Ndb2Kb2VUOyGP/uQuF6VJdcTjPyNX
- P9Th5FUqgug7P16c3l9os6UwSqvYcgseMSyYbLzm6VKB2cvbC1PKtPmK9f2iYsDRj/s4
- bedA==
+ :reply-to; bh=lb97YCo8PMaDnRqrQoCvwMDNjIlFQjHaZLCUrwXXHsI=;
+ b=kyCWk/m6s937XhFJrBNIhoKMS58aVFTzCK1ihvqeVYyFBDpWsrFsWLNzyKxNJBIMWX
+ ix0BeKaYO0lVcRxQ765hRGHp2oqwQzPPmcVIvN/u70vPQMlZ6/AGnkP/HyR455dtZcJ/
+ mqAcc22EuKEE1RcBmljtBWxncg/eAa/GV6VJxqtHCwNCBuDDOdMbCPLwaWYMWjoUcymN
+ NPcTKTBoBFTIeUmmKKS3i5g3VchmLr3wiYncV6oyqMRKQ5Hs9PeGfXAvHKhjC1PwS41I
+ yeZyMILZz4RvQdjnltZVhxhDfP4aIlfFtWlqC+sB00R5nBPmPMe+D3yXjdbWZz6qr/Ay
+ BgAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728515346; x=1729120146;
+ d=1e100.net; s=20230601; t=1728515350; x=1729120150;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jhy16U60jtENm6Kh0YtldQ0BHL4m1/+IxRhtKphPpfc=;
- b=sziFTSRgmiBnfQSEQAIaKBoa6dhMMbmXBIyuj86NIkxHXDYamS+n2vs+ytJgDpzk6B
- 9ZkHIxXZW4xl03mC7qo7XkeBf0YzpwAEqu/KBZJhJmmiGep5pCL4VDru0B0dCFh/sa9T
- VeaiKHQxyj5xljSFHwtJBXWgswY8Naj4BTRcv2C/9Kr+/Hq20QoeSmf91YT62D9e+p7g
- z9UMqJGDe9LkC3wdWKx5qcKUgXQ1QvHBYaoR0TGWVMuJe1Ds2mXj8vrnK+t3Bckx9/SD
- X+MqTjoZSQFq6K+9Wr3E8NiD6/l5rlHf2ma2o/1HK96KeBk+J6WH1Z7dfnSn4TrF1NBo
- FI2A==
+ bh=lb97YCo8PMaDnRqrQoCvwMDNjIlFQjHaZLCUrwXXHsI=;
+ b=q2QSnqz8PfdkOdjuLyaoyvcSpzytkXqCNZvgbFPv3AdYTtqMj77oOE6dTibolZ87Wn
+ tQs3PfRg7uucnL9MMAfKRsi28prnmTI5yDzNMO3EdZiyzyZTE3jLaWP3TBERkeBq7rRi
+ OYgatFJeygU1Hu4kjQewgcA7b91Rq8TSUzo/9TSgiSbJCWS6oGXgEc2FsItCdYEn25l4
+ YWJKk8jyisEmQjj9sLDPkl1RpAmwTylofVESuEaZwd+6Lraoe6biKMIwX4QbA89ee4pI
+ KMFvfuHVTy3+UrwNvVI5XrentnPYg7BG6kJ3m6+UZvFLH0dTVqkQfBhp20Svz2TSDE7X
+ oV6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIzlAcR/RJNQr/iktLA6BjJalS0NfZkeCdThoyj0WtsuT9TG3no7CfZ2NPdejiR9EWGVyCvcO/0h3c@nongnu.org
-X-Gm-Message-State: AOJu0Yw1xYsKe90aug10vU6BVQwCFff+Ibng3TWwra5qw6P0+cMVIVyK
- YlVKAa0aYpxCgfjdhrZ+Rh9rR0GJMebP4qzQn8HUr99KZEmRcGPRB/2HyI1+Xag=
-X-Google-Smtp-Source: AGHT+IEwrLE4P1g4XZh4ckyUDVjSdXFV+1VTVyXnPnRmJ3Ys7SBAGunw7CgyWRi90Oqjq/ldQcJ9jw==
-X-Received: by 2002:a17:90a:6886:b0:2e0:876c:8cb4 with SMTP id
- 98e67ed59e1d1-2e2a253be16mr4753193a91.30.1728515346657; 
- Wed, 09 Oct 2024 16:09:06 -0700 (PDT)
+ AJvYcCWFu6zP+syIdwRX2Q5sLe/a8/RW0/6DSA1hmVQE6c2IcM2qV09kYY1dQoxLamMAVzwL+VQPiFKv5aQl@nongnu.org
+X-Gm-Message-State: AOJu0YxGy52z/hUltePyjvCGTu13mbMsC5YLZqZvhUc+sXZwz1T98C/9
+ O46XNR9fJilqpUX+wj2HLFlTj86qBM/74HkRzVbhm14JaYLLwK0HSQGiaK4vNCLYVaQIcjwBkDN
+ 3
+X-Google-Smtp-Source: AGHT+IGd4am5nLssTGqIfRsluvKElFYqfp/ur/w677nYIlxXGniWKNoVZJv114HF1B3IFUvgQMBZ/Q==
+X-Received: by 2002:a17:90a:de83:b0:2e2:d3e1:f863 with SMTP id
+ 98e67ed59e1d1-2e2d3e21303mr70177a91.12.1728515350047; 
+ Wed, 09 Oct 2024 16:09:10 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2a55f9855sm2271902a91.2.2024.10.09.16.09.05
+ 98e67ed59e1d1-2e2a55f9855sm2271902a91.2.2024.10.09.16.09.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 16:09:06 -0700 (PDT)
+ Wed, 09 Oct 2024 16:09:09 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Wed, 09 Oct 2024 16:09:01 -0700
-Subject: [PATCH RFC 03/10] target/riscv: Protect the hashtable
- modifications with a lock
+Date: Wed, 09 Oct 2024 16:09:04 -0700
+Subject: [PATCH RFC 06/10] target/riscv: Define PMU event related
+ structures
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241009-pmu_event_machine-v1-3-dcbd7a60e3ba@rivosinc.com>
+Message-Id: <20241009-pmu_event_machine-v1-6-dcbd7a60e3ba@rivosinc.com>
 References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
 In-Reply-To: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
@@ -75,8 +76,8 @@ Cc: alexei.filippov@syntacore.com, Atish Patra <atishp@rivosinc.com>,
  palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=atishp@rivosinc.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=atishp@rivosinc.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,77 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a read/write lock to protect the hashtable access operations
-in multi-threaded scenario.
-
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/cpu.h |  1 +
- target/riscv/pmu.c | 10 +++++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ target/riscv/cpu.h | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a63a29744c26..97e408b91219 100644
+index 2ac391a7cf74..53426710f73e 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -496,6 +496,7 @@ struct ArchCPU {
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-     GHashTable *pmu_event_ctr_map;
-+    pthread_rwlock_t pmu_map_lock;
-     const GPtrArray *decoders;
- };
+@@ -189,6 +189,28 @@ typedef struct PMUFixedCtrState {
+         uint64_t counter_virt_prev[2];
+ } PMUFixedCtrState;
  
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index a88c321a6cad..21377518f4e0 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -271,12 +271,15 @@ static bool riscv_pmu_htable_lookup(RISCVCPU *cpu, uint32_t key,
-     GHashTable *table = cpu->pmu_event_ctr_map;
-     gpointer val_ptr;
++typedef uint64_t (*PMU_EVENT_CYCLE_FUNC)(RISCVCPU *);
++typedef uint64_t (*PMU_EVENT_INSTRET_FUNC)(RISCVCPU *);
++typedef uint64_t (*PMU_EVENT_TLB_FUNC)(RISCVCPU *, MMUAccessType access_type);
++
++typedef struct PMUEventInfo {
++    /* Event ID (BIT [0:55] valid) */
++    uint64_t event_id;
++    /* Supported hpmcounters for this event */
++    uint32_t counter_mask;
++    /* Bitmask of valid event bits */
++    uint64_t event_mask;
++} PMUEventInfo;
++
++typedef struct PMUEventFunc {
++    /* Get the ID of the event that can monitor cycles */
++    PMU_EVENT_CYCLE_FUNC get_cycle_id;
++    /* Get the ID of the event that can monitor cycles */
++    PMU_EVENT_INSTRET_FUNC get_intstret_id;
++    /* Get the ID of the event that can monitor TLB events*/
++    PMU_EVENT_TLB_FUNC get_tlb_access_id;
++} PMUEventFunc;
++
+ struct CPUArchState {
+     target_ulong gpr[32];
+     target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+@@ -386,6 +408,9 @@ struct CPUArchState {
+     target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
  
--    val_ptr = g_hash_table_lookup(table, GUINT_TO_POINTER(key));
-+    pthread_rwlock_rdlock(&cpu->pmu_map_lock);
-+    gpointer val_ptr = g_hash_table_lookup(table, GUINT_TO_POINTER(key));
-     if (!val_ptr) {
-+        pthread_rwlock_unlock(&cpu->pmu_map_lock);
-         return false;
-     }
+     PMUFixedCtrState pmu_fixed_ctrs[2];
++    PMUEventInfo *pmu_events;
++    PMUEventFunc pmu_efuncs;
++    int num_pmu_events;
  
-     *value = GPOINTER_TO_UINT(val_ptr);
-+    pthread_rwlock_unlock(&cpu->pmu_map_lock);
-     return true;
- }
- 
-@@ -388,9 +391,11 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-      * mapping.
-      */
-     if (!value) {
-+        pthread_rwlock_wrlock(&cpu->pmu_map_lock);
-         g_hash_table_foreach_remove(cpu->pmu_event_ctr_map,
-                                     pmu_remove_event_map,
-                                     GUINT_TO_POINTER(ctr_idx));
-+        pthread_rwlock_unlock(&cpu->pmu_map_lock);
-         return 0;
-     }
- 
-@@ -410,8 +415,10 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-         /* We don't support any raw events right now */
-         return -1;
-     }
-+    pthread_rwlock_wrlock(&cpu->pmu_map_lock);
-     g_hash_table_insert(cpu->pmu_event_ctr_map, GUINT_TO_POINTER(event_idx),
-                         GUINT_TO_POINTER(ctr_idx));
-+    pthread_rwlock_unlock(&cpu->pmu_map_lock);
- 
-     return 0;
- }
-@@ -597,4 +604,5 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
-     }
- 
-     cpu->pmu_avail_ctrs = cpu->cfg.pmu_mask;
-+    pthread_rwlock_init(&cpu->pmu_map_lock, NULL);
- }
+     target_ulong sscratch;
+     target_ulong mscratch;
 
 -- 
 2.34.1
