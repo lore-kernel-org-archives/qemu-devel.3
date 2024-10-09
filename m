@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9B5CF042E
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Oct 2024 22:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C158CF042E
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 00:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syJ2W-0000P3-Et; Tue, 08 Oct 2024 18:50:48 -0400
+	id 1syKCN-0004DN-PP; Tue, 08 Oct 2024 20:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1syJ2T-0000M8-Gm
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 18:50:45 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1syKCM-0004Cf-Jy
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 20:05:02 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1syJ2Q-0003zQ-3V
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 18:50:45 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20b9b35c7c3so64960045ad.3
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 15:50:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1syKCK-0002es-K2
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 20:05:02 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7ae3d7222d4so5232425a12.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 17:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728427832; x=1729032632;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1728432299; x=1729037099; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TAExzScegFWASJ/04/9Cr9UGs+Ru3d/LBjwKAe0bKs4=;
- b=jUbIAlOgQ1a/lqec4oZlOHdEnNWCnUZAdlkPx7TjrNi7M+RIAj5SjeZqFDInAVffQI
- tyslEr6KwAfTDxiXRsAJW3KY3cX2GVCkDgq1YRD76id6fmLo6LhnBai0M1WrJtRb/+V8
- Udjhvbz3+ueWOSyzBpGmXpz+MA6/3zgvreZlW2R4KijGJEpAyPCb6cyJjdQJkyF+xADQ
- CFUSFJu54k++fpOsusIOr1yTeHgdl7H5vke80EQOkM5UD/cWZLmalKLpuidoj5S/zawc
- TCPnIHW88Xd4DVhVT+9btNEr+SPOrpgOhEaGattR2gJk07UUDltI5/r1Uq26po6kf6s2
- VuBQ==
+ bh=hoQpjuwa20HwjACHrMlYHXe57YCg2K0w30eV5HVGvRc=;
+ b=SYMsuIHGwC3Jq0/0Pvmcsj3PZYiJvofyiTMeXa6wy1V4+xxh0iiVUrT5x9nn/v0Ku4
+ ppDaVI/KHL1NyHPEIDt6ohL4heMcs/GpggyciFeTocF59b4RGdaQTJlnmY82WW/UGx+X
+ A2M6MYoWfFqKrrz1O0A11iliqbKEvQoHcIow3OulRB6qBzUt32zGwi2xCyJYrvxZniDG
+ sSYoDastUSdctof8CANvFalV5LIAwKQNIcFB4aqFy+rPXkmMRoHVuKdDa8X6e9F1I544
+ QY4d7OwaJgRw7ew9OjedISxQpI1CKhe0U5y48z/ZqdvhnEDBOwCQJleqBova2n6YTyo2
+ btbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728427832; x=1729032632;
+ d=1e100.net; s=20230601; t=1728432299; x=1729037099;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TAExzScegFWASJ/04/9Cr9UGs+Ru3d/LBjwKAe0bKs4=;
- b=LU6dcgTuYu2pgzQwWQfVKLCx6+mCz5hTA5TKlv+648vGvRKXeU1Cex+d6wS51cRD/5
- 1Icw/l04o32+t2sp5DBy36CCb3qoV7nvhf+0vIv2DzwK3L4XZP7toa8c7/HlaFuVnMmd
- 1IUyFxaAV8v08Q1/s97wjD1isz6wb2eJVudofGDF+/b6tun15Sra4EIDn1ziFHvP9iMn
- NCKYJM8fvYRUgDWptI5F4r4jlp5DQ3lSyr2r5WzA/I6xkVNtgr/4DmSHJCsElzoiFE63
- 8iU1X1mNzT1rkjTSmLiHlVGmNwTDwGqhuRUBfsKkqPVm5r+VKC/vigJDLsff2S+dxglR
- +K8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcWaewDRByjtimoqmFQ7CyKuEeQj8Fj5rAwPxM192bEXYRnwhKj+p6eJswzA/vX5OE9+/haoo/olrF@nongnu.org
-X-Gm-Message-State: AOJu0Yw7tYN0swdt+xUfJnXGLG7deRhzOZrQFXozbWx69Vq3gsFa90qp
- Lc1kbHPSoMmDFiup93/GuDJNJtOfxPtAPFpCxQwERyUA7bX5HEnJElklXPOpwB8=
-X-Google-Smtp-Source: AGHT+IHeANDWylBzAqFHTSeiyXXIvnJTw5yM0vYdEqJo2iL4WGS+aXtnhZ3CX25yMz/ZMJo7PYb9+w==
-X-Received: by 2002:a17:903:41c4:b0:20b:b479:94dc with SMTP id
- d9443c01a7336-20c6375aeb3mr8371665ad.8.1728427832276; 
- Tue, 08 Oct 2024 15:50:32 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ bh=hoQpjuwa20HwjACHrMlYHXe57YCg2K0w30eV5HVGvRc=;
+ b=T40pB3/0ggjazjzR1GSLLtdsigSXxuxtyxI5t8NXYrn9D1rjZ83NDvQmL969y0aIwg
+ C1qjGXI6bLXpetmbFDVbfcB2lohoGn5nodXuHR1MhRw5IdfMTc78StHTfbmI30saGFmf
+ WZN4unQKQHykON1AnsQma8M03nb+XzdlNMpaVA14LEXX4Nofqh8nOg563QbokGWsLbff
+ Nmr3yq4XbWMMiYAnbv7uf9ypti2O2lFQ320/EZIjdAEBvXf3kGZgzb5Gf8pl8N002uE5
+ 8PU6cpMX/FnKTHm5B9coRYeXU9x3f1Qo7n5toU86IStEgkfxyRWc/TyHET1TrLSsPgoE
+ ZPng==
+X-Gm-Message-State: AOJu0YxtyoN4zlQ7oVC6M3uxHb8iUdyX3rIp7HZAN+JgybytIx8XgJUO
+ uwApPIpevQUDOictMEP1M6Ym4XpNuWcdjTKHcuMfslp8YS8oYJckk9A7IFqu69oho3SNNo1yQql
+ s
+X-Google-Smtp-Source: AGHT+IEeu9+lnXWIBhz7pgvstBsOBX6KI79/ZD6KPp8fSOXLhjN4UEVyBQB1oHIG/Wwjwoi0un6x8Q==
+X-Received: by 2002:a17:903:2b05:b0:20b:6d8c:463 with SMTP id
+ d9443c01a7336-20c637557d0mr12308135ad.35.1728432299121; 
+ Tue, 08 Oct 2024 17:04:59 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c138af962sm60006105ad.26.2024.10.08.15.50.31
+ d9443c01a7336-20c138cecf2sm60705105ad.104.2024.10.08.17.04.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Oct 2024 15:50:31 -0700 (PDT)
-From: Deepak Gupta <debug@rivosinc.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, bmeng.cn@gmail.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, jim.shu@sifive.com, kito.cheng@sifive.com,
- Deepak Gupta <debug@rivosinc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v16 14/20] target/riscv: AMO operations always raise store/AMO
- fault
-Date: Tue,  8 Oct 2024 15:50:04 -0700
-Message-ID: <20241008225010.1861630-15-debug@rivosinc.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20241008225010.1861630-1-debug@rivosinc.com>
-References: <20241008225010.1861630-1-debug@rivosinc.com>
+ Tue, 08 Oct 2024 17:04:58 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
+ linux-parisc@vger.kernel.org, qemu-arm@nongnu.org,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH v3 04/20] include/exec/memop: Introduce memop_atomicity_bits
+Date: Tue,  8 Oct 2024 17:04:37 -0700
+Message-ID: <20241009000453.315652-5-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241009000453.315652-1-richard.henderson@linaro.org>
+References: <20241009000453.315652-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,120 +96,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds one more word for tcg compile which can be obtained during
-unwind time to determine fault type for original operation (example AMO).
-Depending on that, fault can be promoted to store/AMO fault.
+Split out of mmu_lookup.
 
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.h         |  9 ++++++++-
- target/riscv/cpu_helper.c  | 20 ++++++++++++++++++++
- target/riscv/tcg/tcg-cpu.c |  1 +
- target/riscv/translate.c   |  2 +-
- 4 files changed, 30 insertions(+), 2 deletions(-)
+ include/exec/memop.h | 24 ++++++++++++++++++++++++
+ accel/tcg/cputlb.c   | 16 ++--------------
+ 2 files changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index d39650636c..fb93b0c859 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -46,8 +46,13 @@ typedef struct CPUArchState CPURISCVState;
- /*
-  * RISC-V-specific extra insn start words:
-  * 1: Original instruction opcode
-+ * 2: more information about instruction
-  */
--#define TARGET_INSN_START_EXTRA_WORDS 1
-+#define TARGET_INSN_START_EXTRA_WORDS 2
+diff --git a/include/exec/memop.h b/include/exec/memop.h
+index f53bf618c6..b699bf7688 100644
+--- a/include/exec/memop.h
++++ b/include/exec/memop.h
+@@ -193,4 +193,28 @@ static inline unsigned memop_alignment_bits(MemOp memop)
+     return a;
+ }
+ 
 +/*
-+ * b0: Whether a instruction always raise a store AMO or not.
++ * memop_atomicity_bits:
++ * @memop: MemOp value
++ *
++ * Extract the atomicity size from the memop.
 + */
-+#define RISCV_UW2_ALWAYS_STORE_AMO 1
- 
- #define RV(x) ((target_ulong)1 << (x - 'A'))
- 
-@@ -234,6 +239,8 @@ struct CPUArchState {
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
-     target_ulong ssp;
-+    /* env place holder for extra word 2 during unwind */
-+    target_ulong excp_uw2;
-     /* sw check code for sw check exception */
-     target_ulong sw_check_code;
- #ifdef CONFIG_USER_ONLY
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 8f7871c92b..201f7bf09e 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1757,6 +1757,22 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
-     return xinsn;
- }
- 
-+static target_ulong promote_load_fault(target_ulong orig_cause)
++static inline unsigned memop_atomicity_bits(MemOp memop)
 +{
-+    switch (orig_cause) {
-+    case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
-+        return RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
++    unsigned size = memop & MO_SIZE;
 +
-+    case RISCV_EXCP_LOAD_ACCESS_FAULT:
-+        return RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-+
-+    case RISCV_EXCP_LOAD_PAGE_FAULT:
-+        return RISCV_EXCP_STORE_PAGE_FAULT;
++    switch (memop & MO_ATOM_MASK) {
++    case MO_ATOM_NONE:
++        size = MO_8;
++        break;
++    case MO_ATOM_IFALIGN_PAIR:
++    case MO_ATOM_WITHIN16_PAIR:
++        size = size ? size - 1 : 0;
++        break;
++    default:
++        break;
 +    }
-+
-+    /* if no promotion, return original cause */
-+    return orig_cause;
++    return size;
 +}
- /*
-  * Handle Traps
-  *
-@@ -1769,6 +1785,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     CPURISCVState *env = &cpu->env;
-     bool virt = env->virt_enabled;
-     bool write_gva = false;
-+    bool always_storeamo = (env->excp_uw2 & RISCV_UW2_ALWAYS_STORE_AMO);
-     uint64_t s;
- 
-     /*
-@@ -1804,6 +1821,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         case RISCV_EXCP_STORE_AMO_ACCESS_FAULT:
-         case RISCV_EXCP_LOAD_PAGE_FAULT:
-         case RISCV_EXCP_STORE_PAGE_FAULT:
-+            if (always_storeamo) {
-+                cause = promote_load_fault(cause);
-+            }
-             write_gva = env->two_stage_lookup;
-             tval = env->badaddr;
-             if (env->two_stage_indirect_lookup) {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 6c0c319499..c62c221696 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -129,6 +129,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
-         env->pc = pc;
++
+ #endif
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index a975fe5f89..35cda1e2b0 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1767,20 +1767,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+      * Device memory type require alignment.
+      */
+     if (unlikely(flags & TLB_CHECK_ALIGNED)) {
+-        MemOp size = l->memop & MO_SIZE;
+-
+-        switch (l->memop & MO_ATOM_MASK) {
+-        case MO_ATOM_NONE:
+-            size = MO_8;
+-            break;
+-        case MO_ATOM_IFALIGN_PAIR:
+-        case MO_ATOM_WITHIN16_PAIR:
+-            size = size ? size - 1 : 0;
+-            break;
+-        default:
+-            break;
+-        }
+-        if (addr & ((1 << size) - 1)) {
++        a_bits = memop_atomicity_bits(l->memop);
++        if (addr & ((1 << a_bits) - 1)) {
+             cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
+         }
      }
-     env->bins = data[1];
-+    env->excp_uw2 = data[2];
- }
- 
- static const TCGCPUOps riscv_tcg_ops = {
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index afa2ed4e3a..0322597bf6 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1264,7 +1264,7 @@ static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-         pc_next &= ~TARGET_PAGE_MASK;
-     }
- 
--    tcg_gen_insn_start(pc_next, 0);
-+    tcg_gen_insn_start(pc_next, 0, 0);
-     ctx->insn_start_updated = false;
- }
- 
 -- 
-2.45.0
+2.43.0
 
 
