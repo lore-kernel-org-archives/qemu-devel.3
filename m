@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD67CED611
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0214CED611
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syfYO-0002br-Rt; Wed, 09 Oct 2024 18:53:13 -0400
+	id 1syfai-0003Of-FB; Wed, 09 Oct 2024 18:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syfYN-0002bU-3Z
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:53:11 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1syfag-0003OH-5k
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:55:34 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syfYL-0006TW-F3
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:53:10 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7c1324be8easo1034796a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 15:53:09 -0700 (PDT)
+ id 1syfae-000789-KA
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:55:33 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20ba8d92af9so2130965ad.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 15:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728514388; x=1729119188; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728514531; x=1729119331; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JN6fk68rLAMDo1zl1yGFaL7Tq8/hY8vZEGwQkz6c6nc=;
- b=s8bOuLgMGd+V/3FdgE42WGHPsM8FiykLf/55zBbJ+JQuanrlaNdV1Jsvg9PiAW9z/x
- p4PAg3EYD9SYJ4nDTlROraHJSbliGRzQYPL3Vyrqcr81eK2yryg8EkInl3S5df8nBHRA
- 4m7ebMoOKVFHcgocIxMYRZ1LiAJZOiVuJ9fSXeQeU+yJvxBgzmmRqIHqT1W+Nl2vOHnm
- reyYR2/+nadUxBQkHV4HwVoFvzRzgVx/1tZUOcV2mBjTLP1JE8uPQtPIAWZ0yfVPxfkt
- E4KQ4C5ss+Gopkk8yHOwebhmXrenGGS/1wID0lJ3fNzz4OP/i4QcVzorvp1/2hsCs5Ep
- X/hw==
+ bh=35YnWnvG+1k+e2SAdzafruz3LcIebfaWMB1FSUR/Kvg=;
+ b=Q3pZJeUM0SOCh6O4rZx60FMyHgNgEA0X/6WVRIkIkHu0EmguIQ9VyPDTyZGBXRJRxJ
+ NFTLaF2Iwalp4BHU2DWt/QicLzr2ut2a0eleAVbFWxRRIhbeb+UaGzQmu+LOMgOs6aRf
+ SSoegqWjE1WtnNxviH75zommYY2T/Twi2lD9IR5Xa3hgCV+D2MPCcQ8Frsj/CdOx0WlG
+ 0R0dTQIrGX9DjFQTLgVZ/Ppeeh3yDWp3NIBbPSaUk1wt8LMGF57ll1uxWmdYrgmQA56m
+ XDSsG+zE6zpLmiv6a+lFdR30BVoknd13Unr1D0ryDH13GXb83nN4WEfOt/a0a/+TbZdV
+ CAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728514388; x=1729119188;
+ d=1e100.net; s=20230601; t=1728514531; x=1729119331;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JN6fk68rLAMDo1zl1yGFaL7Tq8/hY8vZEGwQkz6c6nc=;
- b=GjtYLNDaUXRNbkl012ujCqI1vffVLlXWlWW1up8mkF73WlaIVbmlWcUUiLp1hKZKgu
- ACV6MothZI71rbvf9lnfjxMlDxH0kgC6EmLgl0XHtrQ5KDWrsVTJPo3v4gzEkzotr4xz
- FNWYpjSUbGlPu6cKJuCRainRXmlJ/K/G+56pQ6E3gQJLmWMtjatnqbKDJVRwka9T0SdE
- FLhgr0Bcy8/1o7ghZV/dlZKwjD/RR/faQuo84IGP+lgIVKOW0lv+9Wu3lL5KKnX3wf2k
- 9AHXJMPF+sq8LQp5VobDpYgt+lZb+URpzvmzQvFQRE3poAvwf5KHMBz3X10TFPal8xnl
- zstQ==
+ bh=35YnWnvG+1k+e2SAdzafruz3LcIebfaWMB1FSUR/Kvg=;
+ b=CmcCDdwDA1DTB+axJZXrl/N8V3Jleeac97LcNYhyIEK/8OHnH03OwGjD2JhIswWLJ5
+ uS6xaQGlmE+WSn1FDf8XlOkXvqwmI2GVplAgwV0+FZYrKseDST7/CLv3F5bolVsIBvjO
+ juWVfmXCXR/f/dTUa9Ey5f5q/GGJyDZ4b+RTPAktSqFACxzRGYZLw8kJZZhCPP5P/HkI
+ P5Cd3qIHOInVnx8NjxxsRS4AOlaJe2BDkKuGWdfU/kCxYB4SyFbAMO86eokrbfYT214j
+ Ue20oJEcDX01SmLEo0/78w6Mo3PePmJATdhKezrf7nMKT0y50D0DGWeeCowWJxIgC3OE
+ dQhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyYUPyp0xzyjO5hNwTdXfFC0BM1fjwhxOovF6Ot0qeXDA/+VaNm/cqsu/ELeA2ckjnzI+bRi5sQrBU@nongnu.org
-X-Gm-Message-State: AOJu0YzvNm2FcV3wQMQZp59p2l51DCgrrD7rgzcO9X+8jvImS5Iyg8Tl
- BRnWjhb0ORoL9M1kzaWWCcGH7f22OCg9AaTI809f6f25L40Oil3RlsORjUKecQk=
-X-Google-Smtp-Source: AGHT+IFMSbbug+kPlLEmzbBSQo1hsl8Rfty6Sb2Ss9F6c5Mo2j73rX1ooVnte0hR0X+pccDGw8Tqmg==
-X-Received: by 2002:a17:90b:fd1:b0:2e2:ada8:2986 with SMTP id
- 98e67ed59e1d1-2e2c8077f30mr1925072a91.16.1728514388131; 
- Wed, 09 Oct 2024 15:53:08 -0700 (PDT)
+ AJvYcCVg0J+oG0yXcGlIGLOjIYO4ui1hqyXZxZGTfnKUbatckYVn2sEm7Waebiz85sKNdl5BRp/F0JvN86yv@nongnu.org
+X-Gm-Message-State: AOJu0YzOPGeQFlPNUEuQo09kxefFC6r18clNNMMjkdzkarcROZwQSTc2
+ lhpQXsM18E/hx0RlnOht+PNxD+f7Sah8XFtgcmOArzGGzN8nKhGe8sIGKJy6o4uXYhqWjD8qvax
+ UIiQ=
+X-Google-Smtp-Source: AGHT+IHuZW8cK1sNg2ADyWzjI5f/5CnNfNDJZQ868VBN4H6NeGYEBxTuD1QeVbmnlRIaj0HA8lgzYQ==
+X-Received: by 2002:a17:902:c405:b0:20b:dad8:8aec with SMTP id
+ d9443c01a7336-20c6377fdbfmr63827235ad.48.1728514530997; 
+ Wed, 09 Oct 2024 15:55:30 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2b64aece7sm1769297a91.3.2024.10.09.15.53.07
+ d9443c01a7336-20c1398a459sm75250465ad.267.2024.10.09.15.55.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 15:53:07 -0700 (PDT)
-Message-ID: <e177a867-24b7-4fa5-8354-fb18b4976e92@linaro.org>
-Date: Wed, 9 Oct 2024 15:53:07 -0700
+ Wed, 09 Oct 2024 15:55:30 -0700 (PDT)
+Message-ID: <c483b040-31da-4d48-a78b-08c660f821a5@linaro.org>
+Date: Wed, 9 Oct 2024 15:55:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/23] accel/tcg: Split out tlbfast_flush_locked
+Subject: Re: [PATCH 03/23] accel/tcg: Split out tlbfast_{index,entry}
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-3-richard.henderson@linaro.org>
+ <20241009150855.804605-4-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-3-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +99,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> We will have a need to flush only the "fast" portion
-> of the tlb, allowing re-fill from the "full" portion.
+> Often we already have the CPUTLBDescFast structure pointer.
+> Allows future code simplification.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
+>   accel/tcg/cputlb.c | 16 ++++++++++++----
+>   1 file changed, 12 insertions(+), 4 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index b76a4eac4e..c1838412e8 100644
+> index c1838412e8..e37af24525 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -284,13 +284,18 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
->       }
+> @@ -131,20 +131,28 @@ static inline uint64_t tlb_addr_write(const CPUTLBEntry *entry)
+>       return tlb_read_idx(entry, MMU_DATA_STORE);
 >   }
 >   
-> -static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
-> +static void tlbfast_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
->   {
->       desc->n_used_entries = 0;
-> +    memset(fast->table, -1, sizeof_tlb(fast));
+> +static inline uintptr_t tlbfast_index(CPUTLBDescFast *fast, vaddr addr)
+> +{
+> +    return (addr >> TARGET_PAGE_BITS) & (fast->mask >> CPU_TLB_ENTRY_BITS);
 > +}
 > +
-> +static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
+> +static inline CPUTLBEntry *tlbfast_entry(CPUTLBDescFast *fast, vaddr addr)
 > +{
-> +    tlbfast_flush_locked(desc, fast);
->       desc->large_page_addr = -1;
->       desc->large_page_mask = -1;
->       desc->vindex = 0;
-> -    memset(fast->table, -1, sizeof_tlb(fast));
->       memset(desc->vtable, -1, sizeof(desc->vtable));
+> +    return fast->table + tlbfast_index(fast, addr);
+> +}
+> +
+>   /* Find the TLB index corresponding to the mmu_idx + address pair.  */
+>   static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
+>                                     vaddr addr)
+>   {
+> -    uintptr_t size_mask = cpu->neg.tlb.f[mmu_idx].mask >> CPU_TLB_ENTRY_BITS;
+> -
+> -    return (addr >> TARGET_PAGE_BITS) & size_mask;
+> +    return tlbfast_index(&cpu->neg.tlb.f[mmu_idx], addr);
 >   }
 >   
+>   /* Find the TLB entry corresponding to the mmu_idx + address pair.  */
+>   static inline CPUTLBEntry *tlb_entry(CPUState *cpu, uintptr_t mmu_idx,
+>                                        vaddr addr)
+>   {
+> -    return &cpu->neg.tlb.f[mmu_idx].table[tlb_index(cpu, mmu_idx, addr)];
+> +    return tlbfast_entry(&cpu->neg.tlb.f[mmu_idx], addr);
+>   }
+>   
+>   static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
