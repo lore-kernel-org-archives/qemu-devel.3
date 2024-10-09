@@ -4,91 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABC08CED62A
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B66BCED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syS9c-0000AJ-K8; Wed, 09 Oct 2024 04:34:46 -0400
+	id 1syS9f-0000Gh-LK; Wed, 09 Oct 2024 04:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS9Y-0008WN-Kl
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1syS9b-00008T-8Q
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:43 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS9W-0000j7-Kw
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728462876;
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1syS9X-0000iw-BP
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:42 -0400
+Received: from [IPV6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c] (unknown
+ [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 3EEB11520F1F;
+ Wed,  9 Oct 2024 10:34:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1728462873;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7Zi4LPCJ+gFipaWFztHkvBNKM6HH7+/tXxNNMbWDLQk=;
- b=Zz3jOPdZIAA+r7HkHHWFRpHwo66lqAzhzQ9ra5sXbHHMrQc0+9wHNyI/ukiws4YksPq8s/
- hARB3oHhf0VFrIv8jt1iDzEEzfFPeieBK5gl6MH90SsTQeSU9xk7EUXLgiH8RDsL3ttFEh
- v+hAV3tG0Wy56Mt+mLBVq9NZRcE0kYk=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-3f4_A3WXNc2JQo1b732bDg-1; Wed, 09 Oct 2024 04:34:33 -0400
-X-MC-Unique: 3f4_A3WXNc2JQo1b732bDg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2e0d77c602aso6546543a91.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 01:34:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728462872; x=1729067672;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7Zi4LPCJ+gFipaWFztHkvBNKM6HH7+/tXxNNMbWDLQk=;
- b=g31q80beh4MWGx4qvXqF0MI2kf5Zg89AfqUR2YYyIL9JVrpN8dyueCtCwENStnSY2u
- FDRUd1UATTNcueXwQFCkLWJchFTI5jOIy38jYgROg6b2lerviJOSFDc9wjyVQg93Rixf
- v2H9cISTC1xUSZbIEYZ+NNCQ6+oAPFyJ+Kz/CCgIYYCvk/HIE0x0bngn9D0pyX0hjpCm
- 4M8e/x0uR2ywhyHPm9d6QY6rZozc9C+JZY5ePIL2yCUDNZSfaWHde8QSDDrHUcKLL5AJ
- mHSrTkFV1/f0GTPPC4ch9ZY9ZNdEx+hW+z9GuaMU03f5ssa269A4IVnhI4zCIcmlhSGp
- X/vw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWs38+lruK855bFFzZsWaL0Hem4JthqmIy9zrMGAdtrK+9hX/8lS8T1NMVRcJhgYmh11YzrWyI50wkH@nongnu.org
-X-Gm-Message-State: AOJu0Yw3PQTaixYB8ekofGw8dbYYdh5RHzrJtkUw4QsGTNZ4v+j51LFL
- hISJMXvm9pGxS/gzDHqBHG7OTS+J2tXoiaZjN2riypXvUPZZJXjbuZtmjORoU0ZDFyz5nyC9sk4
- ms5cujpsggcH6mTHSwzl9kUQUMFl802DmN3bsmJmRorFw5UaxOnCcOyudz08qESQTpl0Ida2Az6
- 4ZojiIlKKQ6AIZkgybcTWhFULK13M=
-X-Received: by 2002:a17:90a:a409:b0:2d8:f99d:48d2 with SMTP id
- 98e67ed59e1d1-2e2a25546abmr2031537a91.29.1728462871964; 
- Wed, 09 Oct 2024 01:34:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+DaEzEKHvAZmgXxk3rogIakzH58R6/JVfrGmXdw7KJI47o+cZW0JEaLDv5VvNReNykq65FDQEFidHtYlG8/c=
-X-Received: by 2002:a17:90a:a409:b0:2d8:f99d:48d2 with SMTP id
- 98e67ed59e1d1-2e2a25546abmr2031523a91.29.1728462871542; Wed, 09 Oct 2024
- 01:34:31 -0700 (PDT)
+ bh=ep2hhwI6KvfY4AUamjkazDBhUwe+I5bt8VjEdrVWla0=;
+ b=h2v9m0Fx2FQzHWZ/c4KxfJdXfk1qr9FBS0eqR84g21c4Xb3QUajL+gWFuQY0i74gDulSKE
+ oOuhM4XAirIS4EYUmgxXQ7+MLgXHroX4ritfOs27HHuzCJaiUTVStKBVhSRIC50S1ZD3CL
+ iawmif3nmyK4Sc+ddUJ5WCFiNJfAw4mSYQCySVSsTnT31XCpe1u0eRUL2Kr+J/bYoEkjWY
+ 9u99CoP5u8ObQPom5CbTX2bQsFD6fzzmFWP4tT6dWlLEJ2/VyG1qJp6YWndn+yabv7uFCj
+ DXQB4NNa+bcCk478d6TNHux/w+I8rkSFjwmtb03wRoLo4sOyVtsjir9KckOs+g==
+Message-ID: <b0a518bc-a600-4d0d-b1c9-5b43f95c90b9@dupond.be>
+Date: Wed, 9 Oct 2024 10:34:33 +0200
 MIME-Version: 1.0
-References: <20240912165408.234447-1-eperezma@redhat.com>
- <20240912165408.234447-3-eperezma@redhat.com>
- <e3d8e5eb-39af-4cfd-85c6-96f49441f757@oracle.com>
-In-Reply-To: <e3d8e5eb-39af-4cfd-85c6-96f49441f757@oracle.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 9 Oct 2024 16:34:20 +0800
-Message-ID: <CACGkMEtxR2Swfb51uCeyDs3zRdHJ5xWLaK=R-WEMnuofXZ_vcA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] net: move backend cleanup to NIC cleanup
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- qemu-devel@nongnu.org, dtatulea@nvidia.com, mcoqueli@redhat.com, 
- mst@redhat.com, qemu-stable@nongnu.org, leiyang@redhat.com, 
- Ani Sinha <anisinha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH] qga: skip bind mounts in fs list
+To: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com
+References: <20241002100634.162499-2-jean-louis@dupond.be>
+Content-Language: en-US
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+In-Reply-To: <20241002100634.162499-2-jean-louis@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +72,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 18, 2024 at 11:57=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com>=
- wrote:
+On 2/10/2024 12:06, Jean-Louis Dupond wrote:
+> The filesystem list in build_fs_mount_list should skip bind mounts.
+> This because we end up in locking situations when doing fsFreeze. Like
+> mentioned in [1] and [2].
 >
+> Next to that, the build_fs_mount_list call did a fallback via
+> build_fs_mount_list_from_mtab if mountinfo did not exist.
+> There it skipped bind mounts, but this is broken for newer OS.
+> This as mounts does not return the path of the bind mount but the
+> underlying dev/partition, so S_ISDIR will never return true in
+> dev_major_minor call.
 >
+> This patch simply checks the existing devmajor:devminor tuple in the
+> mounts, and if it already exists, this means we have the same devices
+> mounted again, a bind mount. So skip this.
 >
-> On 9/12/2024 9:54 AM, Eugenio P=C3=A9rez wrote:
-> > Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
-> > structures if peer nic is present") effectively delayed the backend
-> > cleanup, allowing the frontend or the guest to access it resources as
-> > long as the frontend is still visible to the guest.
-> >
-> > However it does not clean up the resources until the qemu process is
-> > over.  This causes an effective leak if the device is deleted with
-> > device_del, as there is no way to close the vdpa device.  This makes
-> > impossible to re-add that device to this or other QEMU instances until
-> > the first instance of QEMU is finished.
-> >
-> > Move the cleanup from qemu_cleanup to the NIC deletion and to
-> > net_cleanup.
-> >
-> > Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net struc=
-tures if peer nic is present")
-> > Reported-by: Lei Yang <leiyang@redhat.com>
-> > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+> Same approach is used in open-vm-tools [3].
+>
+> [1]: https://gitlab.com/qemu-project/qemu/-/issues/592
+> [2]: https://gitlab.com/qemu-project/qemu/-/issues/520
+> [3]: https://github.com/vmware/open-vm-tools/commit/d58847b497e212737007958c945af1df22a8ab58
+>
+> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+> ---
+>   qga/commands-linux.c | 25 +++++++++++++++++++++++++
+>   1 file changed, 25 insertions(+)
+>
+> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+> index 51d5e3d927..426b040ab8 100644
+> --- a/qga/commands-linux.c
+> +++ b/qga/commands-linux.c
+> @@ -59,6 +59,22 @@ static int dev_major_minor(const char *devpath,
+>       return -1;
+>   }
+>   
+> +/*
+> + * Check if we already have the devmajor:devminor in the mounts
+> + * If thats the case return true.
+> + */
+> +static bool dev_exists(FsMountList *mounts, unsigned int devmajor, unsigned int devminor)
+> +{
+> +    FsMount *mount;
+> +
+> +    QTAILQ_FOREACH(mount, mounts, next) {
+> +        if (mount->devmajor == devmajor && mount->devminor == devminor) {
+> +            return true;
+> +        }
+> +    }
+> +    return false;
+> +}
+> +
+>   static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+>   {
+>       struct mntent *ment;
+> @@ -89,6 +105,10 @@ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+>               /* Skip bind mounts */
+>               continue;
+>           }
+> +        if (dev_exists(mounts, devmajor, devminor)) {
+> +            /* Skip already existing devices (bind mounts) */
+> +            continue;
+> +        }
+>   
+>           mount = g_new0(FsMount, 1);
+>           mount->dirname = g_strdup(ment->mnt_dir);
+> @@ -172,6 +192,11 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+>               }
+>           }
+>   
+> +        if (dev_exists(mounts, devmajor, devminor)) {
+> +            /* Skip already existing devices (bind mounts) */
+> +            continue;
+> +        }
+> +
+>           mount = g_new0(FsMount, 1);
+>           mount->dirname = g_strdup(line + dir_s);
+>           mount->devtype = g_strdup(dash + type_s);
 
-Queued.
 
-Thanks
+Ping + add kkostiuk@redhat.com as I missed him in the initial mail.
 
 
