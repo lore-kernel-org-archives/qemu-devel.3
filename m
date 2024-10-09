@@ -4,59 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B66BCED628
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D40CED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syS9f-0000Gh-LK; Wed, 09 Oct 2024 04:34:47 -0400
+	id 1sySBY-0001xX-Fz; Wed, 09 Oct 2024 04:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1syS9b-00008T-8Q
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:43 -0400
-Received: from apollo.dupie.be ([51.159.20.238])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sySBW-0001xJ-P9
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:36:42 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1syS9X-0000iw-BP
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:42 -0400
-Received: from [IPV6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c] (unknown
- [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
- by apollo.dupie.be (Postfix) with ESMTPSA id 3EEB11520F1F;
- Wed,  9 Oct 2024 10:34:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1728462873;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ep2hhwI6KvfY4AUamjkazDBhUwe+I5bt8VjEdrVWla0=;
- b=h2v9m0Fx2FQzHWZ/c4KxfJdXfk1qr9FBS0eqR84g21c4Xb3QUajL+gWFuQY0i74gDulSKE
- oOuhM4XAirIS4EYUmgxXQ7+MLgXHroX4ritfOs27HHuzCJaiUTVStKBVhSRIC50S1ZD3CL
- iawmif3nmyK4Sc+ddUJ5WCFiNJfAw4mSYQCySVSsTnT31XCpe1u0eRUL2Kr+J/bYoEkjWY
- 9u99CoP5u8ObQPom5CbTX2bQsFD6fzzmFWP4tT6dWlLEJ2/VyG1qJp6YWndn+yabv7uFCj
- DXQB4NNa+bcCk478d6TNHux/w+I8rkSFjwmtb03wRoLo4sOyVtsjir9KckOs+g==
-Message-ID: <b0a518bc-a600-4d0d-b1c9-5b43f95c90b9@dupond.be>
-Date: Wed, 9 Oct 2024 10:34:33 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sySBT-00014j-PU
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:36:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728463000; x=1759999000;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=puO2yolwMmXZ4+1/AaWo0WiUXGvYXZVPtqYsDlpyI2g=;
+ b=SIu9CUAWvipbPxcMIYm12vHTRxeK+8F+6s0HS1dtHN+kbdxcuhw630kX
+ XElaFrQpFn8UFCI/1BSs62OFt8WuOx6EswcwgYaiwR6Fy5TEKntsi+813
+ hRTHfRcLMlfnj01MEa5ivmzc/1I7jLZdmYK9W4eO+FNlc/BC2Y+vHguX5
+ L7NwHHCQQ6PQ8RsDLlZ53GEQ1iBVKhNp4cpGqskcJqwC6FVd5QiecocmS
+ WHhoFBbsZESQ3p2UGQyZj8kzZKuMazx8r+0ebA9gdEQdA3qrwdVL7lmSP
+ ubUln4k1J4M3RnOxOQdpEKENGFWbiUMwGfNmz0mEcNKKZLQRbQ5uji/4J g==;
+X-CSE-ConnectionGUID: SziPB5l9Rpi6L0Mq5zgOLA==
+X-CSE-MsgGUID: S2mKf4uzQ7yRfd9IQTz2qw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="27639446"
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="27639446"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2024 01:36:36 -0700
+X-CSE-ConnectionGUID: fWS+miooRGaMtvJG25pO9g==
+X-CSE-MsgGUID: HRCGbfD0TnGkXyc1GgsmiQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="75764406"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 09 Oct 2024 01:36:35 -0700
+Date: Wed, 9 Oct 2024 16:52:47 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Gao Shiyuan <gaoshiyuan@baidu.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v1 1/1] x86: Add support save/load HWCR MSR
+Message-ID: <ZwZEXyRvZeb4eO6q@intel.com>
+References: <20240926040808.9158-1-gaoshiyuan@baidu.com>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH] qga: skip bind mounts in fs list
-To: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com
-References: <20241002100634.162499-2-jean-louis@dupond.be>
-Content-Language: en-US
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <20241002100634.162499-2-jean-louis@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240926040808.9158-1-gaoshiyuan@baidu.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,85 +84,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/10/2024 12:06, Jean-Louis Dupond wrote:
-> The filesystem list in build_fs_mount_list should skip bind mounts.
-> This because we end up in locking situations when doing fsFreeze. Like
-> mentioned in [1] and [2].
->
-> Next to that, the build_fs_mount_list call did a fallback via
-> build_fs_mount_list_from_mtab if mountinfo did not exist.
-> There it skipped bind mounts, but this is broken for newer OS.
-> This as mounts does not return the path of the bind mount but the
-> underlying dev/partition, so S_ISDIR will never return true in
-> dev_major_minor call.
->
-> This patch simply checks the existing devmajor:devminor tuple in the
-> mounts, and if it already exists, this means we have the same devices
-> mounted again, a bind mount. So skip this.
->
-> Same approach is used in open-vm-tools [3].
->
-> [1]: https://gitlab.com/qemu-project/qemu/-/issues/592
-> [2]: https://gitlab.com/qemu-project/qemu/-/issues/520
-> [3]: https://github.com/vmware/open-vm-tools/commit/d58847b497e212737007958c945af1df22a8ab58
->
-> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Hi Shiyuan,
+
+On Thu, Sep 26, 2024 at 12:08:08PM +0800, Gao Shiyuan via wrote:
+> Date: Thu, 26 Sep 2024 12:08:08 +0800
+> From: Gao Shiyuan via <qemu-devel@nongnu.org>
+> Subject: [PATCH v1 1/1] x86: Add support save/load HWCR MSR
+> X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+> 
+> KVM commit 191c8137a939 ("x86/kvm: Implement HWCR support")
+> introduced support for emulating HWCR MSR.
+> 
+> Add support for QEMU to save/load this MSR for migration purposes.
+> 
+> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
 > ---
->   qga/commands-linux.c | 25 +++++++++++++++++++++++++
->   1 file changed, 25 insertions(+)
->
-> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> index 51d5e3d927..426b040ab8 100644
-> --- a/qga/commands-linux.c
-> +++ b/qga/commands-linux.c
-> @@ -59,6 +59,22 @@ static int dev_major_minor(const char *devpath,
->       return -1;
->   }
->   
-> +/*
-> + * Check if we already have the devmajor:devminor in the mounts
-> + * If thats the case return true.
-> + */
-> +static bool dev_exists(FsMountList *mounts, unsigned int devmajor, unsigned int devminor)
-> +{
-> +    FsMount *mount;
-> +
-> +    QTAILQ_FOREACH(mount, mounts, next) {
-> +        if (mount->devmajor == devmajor && mount->devminor == devminor) {
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
->   static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
->   {
->       struct mntent *ment;
-> @@ -89,6 +105,10 @@ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
->               /* Skip bind mounts */
->               continue;
->           }
-> +        if (dev_exists(mounts, devmajor, devminor)) {
-> +            /* Skip already existing devices (bind mounts) */
-> +            continue;
-> +        }
->   
->           mount = g_new0(FsMount, 1);
->           mount->dirname = g_strdup(ment->mnt_dir);
-> @@ -172,6 +192,11 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
->               }
->           }
->   
-> +        if (dev_exists(mounts, devmajor, devminor)) {
-> +            /* Skip already existing devices (bind mounts) */
-> +            continue;
-> +        }
-> +
->           mount = g_new0(FsMount, 1);
->           mount->dirname = g_strdup(line + dir_s);
->           mount->devtype = g_strdup(dash + type_s);
+>  target/i386/cpu.c     |  1 +
+>  target/i386/cpu.h     |  5 +++++
+>  target/i386/kvm/kvm.c | 12 ++++++++++++
+>  target/i386/machine.c | 20 ++++++++++++++++++++
+>  4 files changed, 38 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 85ef7452c0..339131a39a 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7093,6 +7093,7 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+>      env->a20_mask = ~0x0;
+>      env->smbase = 0x30000;
+>      env->msr_smi_count = 0;
+> +    env->hwcr = 0;
 
+Why we need to clear it here? This needs to be explained in the commit
+message.
 
-Ping + add kkostiuk@redhat.com as I missed him in the initial mail.
+>      env->idt.limit = 0xffff;
+>      env->gdt.limit = 0xffff;
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 14edd57a37..a19b1ceda4 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -539,6 +539,8 @@ typedef enum X86Seg {
+>  
+>  #define MSR_AMD64_TSC_RATIO_DEFAULT     0x100000000ULL
+>  
+> +#define MSR_K7_HWCR                     0xc0010015
+> +
+>  #define MSR_VM_HSAVE_PA                 0xc0010117
+>  
+>  #define MSR_IA32_XFD                    0x000001c4
+> @@ -1859,6 +1861,9 @@ typedef struct CPUArchState {
+>      uint64_t msr_lbr_depth;
+>      LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
+>  
+> +    /* Hardware Configuration MSR */
+
+We can keep the same comment as msr_hwcr in KVM to emphasize this is an
+AMD-specific MSR, i.e.,
+
+/* AMD MSRC001_0015 Hardware Configuration */
+
+> +    uint64_t hwcr;
+
+Add the msr_ prefix to indicate that this value is only intended to
+store the MSR. Currently, for similar members, some have the msr_ prefix
+and some do not, but it is better to have it for clarity.
+
+> +
+>      /* exception/interrupt handling */
+>      int error_code;
+>      int exception_is_int;
+
+-Zhao
 
 
