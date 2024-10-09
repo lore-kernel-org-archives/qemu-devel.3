@@ -4,79 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCA5CEDD8F
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A32FCEDD89
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syVx9-000385-SI; Wed, 09 Oct 2024 08:38:07 -0400
+	id 1syVyd-0003qn-9s; Wed, 09 Oct 2024 08:39:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syVx8-00037x-Fd
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:38:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syVyb-0003qD-4g
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:39:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syVx6-0004uS-J5
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:38:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syVyZ-0004vs-5Z
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:39:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728477483;
+ s=mimecast20190719; t=1728477574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qa7H+1SN9+SmIfSN5871LODTlAtZquZkS0Qc+ee7ync=;
- b=NTNeiXrfWKwADsyIPuHn+hIFEXi2OK4MXSrTchWcevUtHFSR99n+L57uIXEqieU//zy7Xi
- dzkI0CoknFFpL0oLeGXvt0rPejXWKof0x7brCX8BhGi9VV/hFCOToJVz2xic/MgEaMxR6J
- OvxxOQr6Ca7tTt5wjgIbnwGC3bl+chI=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4UJVaLgTSxUuY1A0GV7PrdO3ogStTDL4GwNbMkUArHA=;
+ b=ET00JJCCDPpKaNqqObGW479ArEjfDXAFpfJpbmK3LMtOuLEbJSaSnxTChlxvwWFq3/hd37
+ 9uXlbSNw67U9s2wHvzlsMImnbzsUaiIal2cUckUUxudG8hLd323kj/LIIAeK0kX3KL0qg1
+ 6UMM9xCuo+UIbUUo4u2BYU9hbm6Zd0k=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-YotczNNfNdiUBI24hPhEsw-1; Wed, 09 Oct 2024 08:38:01 -0400
-X-MC-Unique: YotczNNfNdiUBI24hPhEsw-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7afc3e607b7so324667585a.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:38:01 -0700 (PDT)
+ us-mta-134-LbeCNgfbOA-7KlhuV59FJg-1; Wed, 09 Oct 2024 08:39:32 -0400
+X-MC-Unique: LbeCNgfbOA-7KlhuV59FJg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43114c47615so644955e9.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:39:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728477481; x=1729082281;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1728477571; x=1729082371;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qa7H+1SN9+SmIfSN5871LODTlAtZquZkS0Qc+ee7ync=;
- b=W5h/7Ka05EOkZ4Ei/OxrhakRJPZItobmK89NGonk22rYrzzo3i7hNN6ORrwOLGW9Sv
- RpsAno7JfiXlk2vCLWIQCuni90d4bBH+6Sos2i11QUmSohMs1P3GRv4CSzZMVMfq6TRC
- sDR43Z5m3Sz+vWGHuXdlyC1lh9V2SEJuA5NM1HLIZf/qb4w9onk0LNv72PUqlBCJ458u
- nfWi8tcCliG6MTTB7lcuq6ys/4E6iVgne/CvqPXl+z7reYAtUyGo72swijVmVk1GXIN1
- FoLROfAbaqEurBQrs0rWHDObUG5IkFfBtixNzFo95F/5dyay5ZJhHEECB/++Rnaw9QGV
- mFQQ==
+ bh=4UJVaLgTSxUuY1A0GV7PrdO3ogStTDL4GwNbMkUArHA=;
+ b=IUDhqR1WewUwBusnFhE9cXG6VuDMF8d17NX5y02UoJNeCtVwRLRWnWbXQMTuI2g9E/
+ BI8KlI4fFYkv1DsKZcaXwyBstRp9RGL2+phrD/fwXMUl7kmXfpmTwsrrmtHCWQQB0xFZ
+ utFkNAKK5wu3nESUTZAWrT+88ne/+COIPAWmsOWHKRPH1gib2LA/5Nuome28WXZhvEC3
+ GHw6Bpo+iU+ARPEeTq44WGeNIoHeyCJR+M7WEKlsNZtlXWVIkdMF1v9XS/WGDpScaaQ4
+ YznqMjBkypzlbJgM4ejD5HZCuO/kb0Ybi+K8OZLpgGfExUOJHVvfX/59V+MRQaSvqOkS
+ d2DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbCNxfxOn5K78wDQgVQFE8H4FtrVuUPCFW6nxUZZ95+rd2DrjMNJDfIi9FYhlQlyscnDjXKabeXsvG@nongnu.org
-X-Gm-Message-State: AOJu0Yx/h6oYT1ROUcUPDuGJ1zR4onLRya5jPNUVMZP46UxC72Qw6v3q
- uFxvSrtKK1YpPorqme80p9dQVYjfaTTW0LReevDCr7ZhxdhiByn/07Rt6PqBwOrDCLj/C/3fPDP
- F6jAa1NLtluxc5o5kmN1KquFaHnxTGAXuYjriGkhazjunjv1y3ass
-X-Received: by 2002:a05:620a:24d:b0:7b1:113f:2e55 with SMTP id
- af79cd13be357-7b1113f2fefmr55418985a.58.1728477481260; 
- Wed, 09 Oct 2024 05:38:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRY05vq1ytVj1dDLdwDSVfgtreoeXD0JnrxOW4HWuS23+ARx4QgJ70wOp2oOqF/90XFPwYcA==
-X-Received: by 2002:a05:620a:24d:b0:7b1:113f:2e55 with SMTP id
- af79cd13be357-7b1113f2fefmr55416485a.58.1728477480871; 
- Wed, 09 Oct 2024 05:38:00 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7afcd6a7d46sm125845385a.127.2024.10.09.05.37.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:38:00 -0700 (PDT)
-Date: Wed, 9 Oct 2024 08:37:57 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yuan Liu <yuan1.liu@intel.com>
-Cc: farosas@suse.de, qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration/multifd: fix build error when qpl compression
- is enabled
-Message-ID: <ZwZ5JXZuD9wLD0-_@x1n>
-References: <20241008104527.3516755-1-yuan1.liu@intel.com>
+ AJvYcCVjLZWOQuV3zDvqCEO/jClggAIkxhjVzxqH8KIWmJRxPVuTegYUp+c8I4OY3io6VwRD7OJAAN93q+KW@nongnu.org
+X-Gm-Message-State: AOJu0Yy0Y6Cl33uYKgdSx1Nlud7xaYnsXPMVrGBzcnlJbx+Lfa8fwljt
+ l4tLN7kEUkVBpCR5NMVQsoPPuaqZTc4qGPhQXTff81pKi0kWeKRclDBSAdnr5Y5mC/P777nbL21
+ QXlNpdPeeHuB9Gy+bAA0NRL4R1WApFJodJx/jm+4xQuNSChF5Pnne
+X-Received: by 2002:a05:600c:a01:b0:42f:7717:ac04 with SMTP id
+ 5b1f17b1804b1-430ccf31b40mr18802665e9.16.1728477571070; 
+ Wed, 09 Oct 2024 05:39:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt+wGc32HuVKr4WlexmlHzKCa+u/rhOuTVxAgu1yAbGIs1qDEkmp81XgYZjWuZ4A6jTvHBRg==
+X-Received: by 2002:a05:600c:a01:b0:42f:7717:ac04 with SMTP id
+ 5b1f17b1804b1-430ccf31b40mr18802415e9.16.1728477570675; 
+ Wed, 09 Oct 2024 05:39:30 -0700 (PDT)
+Received: from [10.33.192.239] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-430ccf5f5e1sm19230175e9.26.2024.10.09.05.39.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Oct 2024 05:39:30 -0700 (PDT)
+Message-ID: <cccb21c1-f92a-4fcb-bf75-29e75844888a@redhat.com>
+Date: Wed, 9 Oct 2024 14:39:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241008104527.3516755-1-yuan1.liu@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 18/19] docs/system: Update documentation for s390x IPL
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+ <20241008011552.2645520-19-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241008011552.2645520-19-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,7 +131,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,90 +147,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 06:45:27PM +0800, Yuan Liu wrote:
-> The page_size member has been removed from the MultiFDSendParams
-> and MultiFDRecvParams. The function multifd_ram_page_size is used to
-> provide the page size in the multifd compressor.
+On 08/10/2024 03.15, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-
-I'll queue and attach:
-
-Fixes: 90fa121c6c ("migration/multifd: Inline page_size and page_count")
-
-Yuan, is qpl going to be used in production?  When reaching that point, we
-may want to add a build test in CI somehow.  Otherwise please help keep an
-eye (or whoever can still keep an eye on this..) for at least each release
-to make sure it builds and works as expected, because normal developers
-(including Fabiano and myself) do no have hardware, and as of now we don't
-check builds either (unless the library is packaged in most distros, then
-we can try).
-
-PS: it's definitely not 90fa121c6c to be blamed..  But I still added that
-tag just to make stable lookup easier.  Looks like this is an unwanted side
-effect of how we treat the compressor codes.. but I don't yet have a better
-idea.
-
-Thanks,
-
+> Update docs to show that s390x PC BIOS can support more than one boot device.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  migration/multifd-qpl.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-> index b0f1e2ba46..bbe466617f 100644
-> --- a/migration/multifd-qpl.c
-> +++ b/migration/multifd-qpl.c
-> @@ -389,7 +389,7 @@ static void multifd_qpl_compress_pages_slow_path(MultiFDSendParams *p)
->  {
->      QplData *qpl = p->compress_data;
->      MultiFDPages_t *pages = &p->data->u.ram;
-> -    uint32_t size = p->page_size;
-> +    uint32_t size = multifd_ram_page_size();
->      qpl_job *job = qpl->sw_job;
->      uint8_t *zbuf = qpl->zbuf;
->      uint8_t *buf;
-> @@ -420,7 +420,7 @@ static void multifd_qpl_compress_pages(MultiFDSendParams *p)
->  {
->      QplData *qpl = p->compress_data;
->      MultiFDPages_t *pages = &p->data->u.ram;
-> -    uint32_t size = p->page_size;
-> +    uint32_t size = multifd_ram_page_size();
->      QplHwJob *hw_job;
->      uint8_t *buf;
->      uint8_t *zbuf;
-> @@ -560,7 +560,7 @@ static int multifd_qpl_decompress_pages_slow_path(MultiFDRecvParams *p,
->                                                    Error **errp)
->  {
->      QplData *qpl = p->compress_data;
-> -    uint32_t size = p->page_size;
-> +    uint32_t size = multifd_ram_page_size();
->      qpl_job *job = qpl->sw_job;
->      uint8_t *zbuf = qpl->zbuf;
->      uint8_t *addr;
-> @@ -598,7 +598,7 @@ static int multifd_qpl_decompress_pages_slow_path(MultiFDRecvParams *p,
->  static int multifd_qpl_decompress_pages(MultiFDRecvParams *p, Error **errp)
->  {
->      QplData *qpl = p->compress_data;
-> -    uint32_t size = p->page_size;
-> +    uint32_t size = multifd_ram_page_size();
->      uint8_t *zbuf = qpl->zbuf;
->      uint8_t *addr;
->      uint32_t len;
-> @@ -677,7 +677,7 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
->      }
->      for (int i = 0; i < p->normal_num; i++) {
->          qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
-> -        assert(qpl->zlen[i] <= p->page_size);
-> +        assert(qpl->zlen[i] <= multifd_ram_page_size());
->          zbuf_len += qpl->zlen[i];
->      }
->  
-> -- 
-> 2.43.0
-> 
+>   docs/system/bootindex.rst         | 7 ++++---
+>   docs/system/s390x/bootdevices.rst | 9 ++++++---
+>   2 files changed, 10 insertions(+), 6 deletions(-)
 
--- 
-Peter Xu
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
