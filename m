@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA21CED606
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 06:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37E5CED606
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 06:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syQ0P-0005sI-2I; Wed, 09 Oct 2024 02:17:05 -0400
+	id 1syQ3R-0007yP-8j; Wed, 09 Oct 2024 02:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syQ0E-0005pE-Ga; Wed, 09 Oct 2024 02:16:54 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ3P-0007y5-CY
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:20:11 -0400
+Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syQ0B-0007vn-4L; Wed, 09 Oct 2024 02:16:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728454611; x=1759990611;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Lt669vuESF+NLlyNvW3nMfB5lZgQCn13KNvjj5g2nMs=;
- b=DdQzNPVJgeXIE7CWeig9kHBVROBiQPi0M3+OVdzjz3z6uoky9QLDmDdu
- 4CdaGpGzVlRq/aAuT/2kmbNVIbZxFkT06EehkHNyoEeUI3zHBOs3AZCqT
- +tV54mPLaiRStXDHsU3zRuPTz70pQNE8M1tINpsZl+8/l1/f+DxTFZ6Fw
- e0Au0l/+j794MI03EwJwo6DgBYYe+c8Z9lW3OYWeEPH3morC3rpcOX4eg
- jlOyOd5flkC6X0tD6w6EVgyE+zS7GSbrbQCN/Ng3riBK0OgSjPuJU+Ans
- T0NeWwpJn69MhuJ+FSkKQpGsfaW0MyXC0mgOz6/nBG78IYyf1P86aWIez Q==;
-X-CSE-ConnectionGUID: V+wZ9EyLSAmOQ7IE0iHauw==
-X-CSE-MsgGUID: KonyTcI/RSm0DLu8l//VLQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="31513105"
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="31513105"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Oct 2024 23:15:25 -0700
-X-CSE-ConnectionGUID: UnMqb4StSIaCs9/73yv3Vw==
-X-CSE-MsgGUID: kiLaGcXURCyU7A1OBQ9Q7Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="106901495"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 08 Oct 2024 23:15:20 -0700
-Date: Wed, 9 Oct 2024 14:31:31 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC v2 03/12] system/vl: Create CPU topology devices from CLI
- early
-Message-ID: <ZwYjQ2mEa2OP5r//@intel.com>
-References: <20240919061128.769139-1-zhao1.liu@intel.com>
- <20240919061128.769139-4-zhao1.liu@intel.com>
- <20241008105053.000059ee@Huawei.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ3M-00006E-V6
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:20:10 -0400
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal
+ [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id 4E1DD11400A9;
+ Wed,  9 Oct 2024 02:20:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-02.internal (MEProxy); Wed, 09 Oct 2024 02:20:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1728454805; x=
+ 1728541205; bh=KnXpyuN6J+/DXK2B2g/aRlC26AH/7jKL7enI/Eiwek0=; b=l
+ 2jojbbsNwuRhAsc0Z0Zz9s1BfQovIYD2Fvqkhbe97+UjHKIxq7etnJFyRmEq21g5
+ bHg4mSar0Y0rWU1osobvqyZU44w5G/Pk1FufT6ampKoZsToLocLYbzjJxFP3QZts
+ R8v5uftrcGbFKq7xj+xfJZ4fS9dlHYfkvlnL77Mb3g1mgbQV9CsbEKmch6Kk2nrK
+ 1U9sjCvQ2ovP7CkmUv7losJOfEP8iz1F2u0DzpmZByF5LlcrbbGt+U0kyMmM4dn7
+ 11ep5iNc3t01vksoJ1QRm3PyBWoySRfNf3275kclFpPfvS9L2fE/RuefXlZGKcs0
+ CKOp48vKf+HtXhZX35wpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1728454805; x=1728541205; bh=KnXpyuN6J+/DXK2B2g/aRlC26AH/
+ 7jKL7enI/Eiwek0=; b=GwVBOp28jWkyrMWjcKX1T8+O/DgZaCWRWsgzfvR0bOSi
+ RFHkGGQPnJfUbMwCSFWjNCq2mzQ0VydAmjsBN0vcPExCwUYLp/M7JOv3KMx6pI2p
+ mYoN0Da4LGafQP2sdtFq8bGEbtl2oFo91nsS7cpEWGK4UA1OMd9xqveUP4uy6yGj
+ yNLgamFQUNXS8ulihPlMWodHydOfQNkksKoI2BueTz0LYxA6b5CBEzLuH3u4h682
+ dZkfM1c/P4WrA1uHUqpdIytZAZjkhC/r7hUdk7vLSn69FRcUXSFCDdqqfptvaaPC
+ Airt8AoELB4EvcPQmR9rS2oWNeRKsOU3dXf5AOfJtQ==
+X-ME-Sender: <xms:kyAGZ_3n9mBvjBhKggWEz92i-yQHUdo4MFaN3vjsIY7IAdm_7kHBiw>
+ <xme:kyAGZ-EwwKjBASHu7WTgxzf1TeXEj4OXtc66tu0i52JpBTtawxZuI5p5ZvHHPAx4D
+ gm5mKkTTKYp1ohs4jQ>
+X-ME-Received: <xmr:kyAGZ_5Ni6oBLOJuyqelE3buiiDdeiPOiw7FaKP2pGLrjjm6F3qPxYqxcugD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddtjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+ hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdej
+ necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
+ drughkqeenucggtffrrghtthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeev
+ jeevtdduudegieegteffffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+ epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
+ thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrhihushhhrdhmheehse
+ hsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhn
+ uhdrohhrghdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpth
+ htohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepihhtshesihhrrhgv
+ lhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:kyAGZ03VbTSHSFPjp8PnNt0L0nI6XGxhlsPWbY95DWG8ZupGNS9slg>
+ <xmx:kyAGZyHEpqUz_krIE_29H6DPaTw-jpxxXynaozORmJzOD1Fz1emQeA>
+ <xmx:kyAGZ1_EiUnP28ki2VsRJ6CSBAFItR3mOitajwr5qcBQ-dvBYj-lLQ>
+ <xmx:kyAGZ_mHR_JkR8RALatFlmpkqUbHXsTFGR9aXTrlzVW8Fh3dzdNqWg>
+ <xmx:lSAGZ_PUw8CTe68qNt0qLLJyg7NU8XKkEUdVlSabXNKnFFQA-OAdZ3bn>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 02:20:02 -0400 (EDT)
+Date: Wed, 9 Oct 2024 08:20:01 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Ayush Mishra <ayush.m55@samsung.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
+Subject: Re: [PATCH v2] hw/nvme: Adding support for NPDAL and NPDGL
+Message-ID: <ZwYgkWsqhFyoMOu7@AALNPWKJENSEN.aal.scsc.local>
+References: <CGME20241001065838epcas5p158f96030a744df180b1b3818287c2a84@epcas5p1.samsung.com>
+ <20241001012833.3551820-1-ayush.m55@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="BKPKXS5jUeUPTgbV"
 Content-Disposition: inline
-In-Reply-To: <20241008105053.000059ee@Huawei.com>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20241001012833.3551820-1-ayush.m55@samsung.com>
+Received-SPF: pass client-ip=202.12.124.147; envelope-from=its@irrelevant.dk;
+ helo=fout-b4-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,36 +110,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 10:50:53AM +0100, Jonathan Cameron wrote:
-> Date: Tue, 8 Oct 2024 10:50:53 +0100
-> From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-> Subject: Re: [RFC v2 03/12] system/vl: Create CPU topology devices from CLI
->  early
-> X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
-> 
-> On Thu, 19 Sep 2024 14:11:19 +0800
-> Zhao Liu <zhao1.liu@intel.com> wrote:
-> 
-> > Custom topology will allow user to build CPU topology from CLI totally,
-> > and this replaces machine's default CPU creation process (*_init_cpus()
-> > in MachineClass.init()).
-> > 
-> > For the machine's initialization, there may be CPU dependencies in the
-> > remaining initialization after the CPU creation.
-> > 
-> > To address such dependencies, create the CPU topology device (including
-> > CPU devices) from the CLI earlier, so that the latter part of machine
-> > initialization can be separated after qemu_add_cli_devices_early().
-> > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Other than question of type of category from previous patch this looks
-> fine to me.
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> 
-> However, needs review from others more familiar with this code!
 
-Thanks!
+--BKPKXS5jUeUPTgbV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Zhao
+On Oct  1 06:58, Ayush Mishra wrote:
+> Adding support for new 32 bit NPDGL and NPDAL fields to address the
+> needs of larger granularities.
+>=20
+> Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
+> ---
+>  v1 -> v2: Added macros for NSFEAT in /include/block/nvme.h as suggested
+> by Klaus.
+>=20
 
+LGTM.
+
+I'll add a name to the enum when applying, but that's it.
+
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
+>  hw/nvme/ns.c         |  5 ++++-
+>  include/block/nvme.h | 17 ++++++++++++++++-
+>  2 files changed, 20 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index ea8db175db..7f51b6eec4 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -30,6 +30,7 @@
+>  void nvme_ns_init_format(NvmeNamespace *ns)
+>  {
+>      NvmeIdNs *id_ns =3D &ns->id_ns;
+> +    NvmeIdNsNvm *id_ns_nvm =3D &ns->id_ns_nvm;
+>      BlockDriverInfo bdi;
+>      int npdg, ret;
+>      int64_t nlbas;
+> @@ -55,6 +56,8 @@ void nvme_ns_init_format(NvmeNamespace *ns)
+>      }
+> =20
+>      id_ns->npda =3D id_ns->npdg =3D npdg - 1;
+> +    id_ns_nvm->npdal =3D npdg;
+> +    id_ns_nvm->npdgl =3D npdg;
+>  }
+> =20
+>  static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+> @@ -72,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+>      ns->id_ns.dlfeat =3D 0x1;
+> =20
+>      /* support DULBE and I/O optimization fields */
+> -    id_ns->nsfeat |=3D (0x4 | 0x10);
+> +    id_ns->nsfeat |=3D (NVME_DEALLOCATED_ERROR | NVME_OPTIONAL_WRITE_PER=
+F);
+> =20
+>      if (ns->params.shared) {
+>          id_ns->nmic |=3D NVME_NMIC_NS_SHARED;
+> diff --git a/include/block/nvme.h b/include/block/nvme.h
+> index 5298bc4a28..7a84664bf2 100644
+> --- a/include/block/nvme.h
+> +++ b/include/block/nvme.h
+> @@ -1413,7 +1413,12 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
+>      uint8_t     pic;
+>      uint8_t     rsvd9[3];
+>      uint32_t    elbaf[NVME_MAX_NLBAF];
+> -    uint8_t     rsvd268[3828];
+> +    uint32_t    npdgl;
+> +    uint32_t    nprg;
+> +    uint32_t    npra;
+> +    uint32_t    nors;
+> +    uint32_t    npdal;
+> +    uint8_t     rsvd288[3808];
+>  } NvmeIdNsNvm;
+> =20
+>  typedef struct QEMU_PACKED NvmeIdNsDescr {
+> @@ -1536,6 +1541,16 @@ typedef union NvmeDifTuple {
+>      } g64;
+>  } NvmeDifTuple;
+> =20
+> +enum {
+> +    NVME_THIN_PROVISIONING          =3D 1 << 0,
+> +    NVME_NS_SUPP_ATOMIC_BOUND_POW   =3D 1 << 1,
+> +    NVME_DEALLOCATED_ERROR          =3D 1 << 2,
+> +    NVME_UID_REUSE                  =3D 1 << 3,
+> +    NVME_OPTIONAL_WRITE_PERF        =3D 3 << 4,
+> +    NVME_MULTIPLE_ATOMICITY_MODE    =3D 1 << 6,
+> +    NVME_OPTIONAL_READ_PERF         =3D 1 << 7,
+> +};
+> +
+>  enum NvmeZoneAttr {
+>      NVME_ZA_FINISHED_BY_CTLR         =3D 1 << 0,
+>      NVME_ZA_FINISH_RECOMMENDED       =3D 1 << 1,
+> --=20
+> 2.43.0
+>=20
+>=20
+
+--BKPKXS5jUeUPTgbV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcGII4ACgkQTeGvMW1P
+DemQ6wf+LFXhfOa0+MWTZIVWjghCVBYYfqEE7OWIzidN+aIUw6zuELwUWlzCF3+W
+65zIMBDK1yF/Vx7rOU4m7HoFMA966rjNsTVt4PGbgmCMj/x3aQ0KxlC3MwVfnNUG
+mTeojqrCJOwaH/ClCX9VKsBRn8zpLxElGYljzfhSDBYO+D6elr8DmkNS/C/WSrPb
+j9kgNII/vHodfaOfzhLULTXb2srMFs0O/VF4azH7yDpbssJFDvM124Cxc1u81kgd
+GdQb4sahGdr+72PnCfHZ20e1dnPiNb8we9nevpxHuJ17+h52uTzDGZa8K+SUXSiG
+fneZFQ8CApThCnXITmvFraEjVmM2OQ==
+=WwMp
+-----END PGP SIGNATURE-----
+
+--BKPKXS5jUeUPTgbV--
 
