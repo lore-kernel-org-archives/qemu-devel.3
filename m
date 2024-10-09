@@ -4,112 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A4BCEE359
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8B9CEE359
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syeri-0005Ai-Lw; Wed, 09 Oct 2024 18:09:06 -0400
+	id 1syewM-00060I-Ty; Wed, 09 Oct 2024 18:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syerg-0005AZ-Vr
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:09:05 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1syewL-0005zv-JO
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:13:53 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syere-0007s4-VT
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:09:04 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1FCD61F7BC;
- Wed,  9 Oct 2024 22:09:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728511741; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
- b=gykuw312xI+8Xwn0RP+XmOQ0hApbPYF6q0OUFjJKo8ubwsxefAye0psD4NNYJJYpeLpsVq
- SP9u3kvOW57DMysMGlo2q5CtoAxXtBnIT46bKoqgzBZSqaqSd0RMsPpzD9BfpmBySEe9CO
- 5Nav4NesQJD8XFqN3eHomKtNQrAW0UI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728511741;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
- b=Teg1uNp8i2w5paa3UC+qrezafO9EZkl7RHEMgMyvKuYgO16pU6j8E8V+AkC9wPPEim/vco
- HVgmCoPNTU3bx1DA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728511741; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
- b=gykuw312xI+8Xwn0RP+XmOQ0hApbPYF6q0OUFjJKo8ubwsxefAye0psD4NNYJJYpeLpsVq
- SP9u3kvOW57DMysMGlo2q5CtoAxXtBnIT46bKoqgzBZSqaqSd0RMsPpzD9BfpmBySEe9CO
- 5Nav4NesQJD8XFqN3eHomKtNQrAW0UI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728511741;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
- b=Teg1uNp8i2w5paa3UC+qrezafO9EZkl7RHEMgMyvKuYgO16pU6j8E8V+AkC9wPPEim/vco
- HVgmCoPNTU3bx1DA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9A05B13A58;
- Wed,  9 Oct 2024 22:09:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id S7cfGPz+BmcaRQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 09 Oct 2024 22:09:00 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
-In-Reply-To: <ZwbuNnFCgN_vjniX@x1n>
-References: <ZwQ6GbVCmitlills@x1n>
- <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com> <87ed4qtpo1.fsf@suse.de>
- <ZwV-NRICDNTajTRq@x1n> <877caitno5.fsf@suse.de> <ZwWMj4FYYpOSnPbe@x1n>
- <8b92a6ee-19f7-4483-9766-6b849cc04017@oracle.com> <ZwbUTXCxxl4heZYV@x1n>
- <Zwbgur3d0cImLV99@x1n> <97268719-56f3-4d7f-aa21-c04cd0262601@oracle.com>
- <ZwbuNnFCgN_vjniX@x1n>
-Date: Wed, 09 Oct 2024 19:08:58 -0300
-Message-ID: <87plo9rksl.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1syewJ-0000Au-L1
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:13:53 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2e2b549799eso259889a91.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 15:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728512030; x=1729116830; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wZCWICugwjIMWakeSLtKR3MsCUkXYUvXz7jce3M53Fs=;
+ b=GbQm9EYroFr1OM31b+iM7lB9yUt7gEekAx6JUO98FWpIUaZSR+hLx4NrxGKfiPzDUe
+ ViUicTzI+Cv7pwahRX25P8yfNrm0MI21TydYDao3mdLCcuAwpM73HfZBWWcMv1y74kpF
+ iFTaU7BPdRLWMSCYOv93icjQbv5VecQ/3+33NhHoSWzIZhb1gRfdpTRu7cjenzL+Wx49
+ tVVSHq1WKARRrGwtpZUz+rDLXz98UW63oSChkDyEINaRk8j/lqGgLCUsSfmht0XvgN/i
+ 7TifkbKIZiQeEjO1Pg1AY3jwKsLoZ0ywyqoaiWc5+VpsDx1O8MKSYPoxQNs9k7iQqiXv
+ Y+bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728512030; x=1729116830;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wZCWICugwjIMWakeSLtKR3MsCUkXYUvXz7jce3M53Fs=;
+ b=NuDYjMzAA/m6QZcRwY+wtzVroGRJ52B0+dfZdpxX20/OWA4RySYcalYUAcrhREV7+R
+ nH//fN06iWjXUat3C8RqbzI/JlJ21NUXIMbQxUshx/RU+ZHyYE4KX238cpyi6ciJdxm5
+ 4+P7zS5JU0bAzwL70FgowsJZL0zpuob2pr7xxPuM5jzjRYrFgk40JRA2NS3lP47OPgRn
+ vzA9MXByhfrE4+tunNs3V9BLU9xrQXk9W/aC4WArZrqUICvXTZJjr+7mvCq6YdrkqWyV
+ l5cbTvhBeWg5siCFiwIH+pP4bj6cyL7dF0VzWFmLitcz78x7HQOX3MDt2WhCzg+eHvLT
+ 9gsA==
+X-Gm-Message-State: AOJu0Ywnz4bs1q7HWEmvYSO7+k7FxFA3Lh8tbaoj/Xl1ilmCk7Nse+u5
+ jKxv4kJGiaRaVSeqhDLqOtg0pwF1qFLlmYv0mgEy40TqwHmhIrdH+HZ1FbjDsAZfy8EIVQklnNr
+ yu3o=
+X-Google-Smtp-Source: AGHT+IE0y7h2omov0oOfORj4CkJqp1ubdREbLll33rqKfltJbqWfvx64MdiTzRm9qUTqStmkIVvjMQ==
+X-Received: by 2002:a17:90a:ba98:b0:2e2:cf63:224c with SMTP id
+ 98e67ed59e1d1-2e2cf6322d5mr332969a91.35.1728512029640; 
+ Wed, 09 Oct 2024 15:13:49 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e2a55fc87fsm2222991a91.7.2024.10.09.15.13.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Oct 2024 15:13:49 -0700 (PDT)
+Message-ID: <fe76f462-ef6f-46dd-881a-31d75bdfca5d@linaro.org>
+Date: Wed, 9 Oct 2024 15:13:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,redhat.com,gmail.com,habkost.net,linaro.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] build contrib/plugins using meson
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240925204845.390689-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,48 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 9/25/24 13:48, Pierrick Bouvier wrote:
+> Contrib plugins have been built out of tree so far, thanks to a Makefile.
+> However, it is quite inconvenient for maintenance, as we may break them,
+> especially for specific architectures.
+> 
+> First patches are fixing warnings for existing plugins, then we add meson
+> support, and finally, we remove Makefile for contrib/plugins.
+> 
+> Based on the proposal of Anton Kochkov on associated gitlab issue.
+> Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
+> 
+> Plugins are now deactivated by default on 32-bits hosts (since cf2a78), so we
+> can enable with meson without worrying of warnings when building plugins for 32
+> bits.
+> 
+> v2
+> --
+> 
+> - removed warnings fix for 32 bits as they were incorrect. They are not needed
+>    anymore as plugins are deprecated for 32 bits hosts.
+> 
+> Removed patches for individual plugins.
+> 
+> Pierrick Bouvier (2):
+>    meson: build contrib/plugins with meson
+>    contrib/plugins: remove Makefile for contrib/plugins
+> 
+>   configure                   | 18 --------
+>   Makefile                    | 10 -----
+>   meson.build                 |  4 ++
+>   contrib/plugins/Makefile    | 87 -------------------------------------
+>   contrib/plugins/meson.build | 23 ++++++++++
+>   5 files changed, 27 insertions(+), 115 deletions(-)
+>   delete mode 100644 contrib/plugins/Makefile
+>   create mode 100644 contrib/plugins/meson.build
+> 
 
-> On Wed, Oct 09, 2024 at 04:18:31PM -0400, Steven Sistare wrote:
->> Yes, I am also brainstorming along these lines, looking for more gotcha's,
->> but its a big design change. I don't love it so far.
->> 
->> These issues all creep in because of transfer mode.  Exec mode did not have this
->> problem, as cpr-state is written to an in-memory file.
->
-> I understand.  Hopefully we're getting there very soon..
->
-> I still have concern on having -global used in productions, and meanwhile
+Gentle ping on this series, to know if people are interested by this change.
 
-Agree, but for qtests it should be fine at least.
-
-> it might still be challenging for handshake to work as early as cpr stage
-> even for later, because at least in my mind the handshake still happens in
-> the main migration channel (where it includes channel establishments etc,
-> which is not proper during cpr stage).
-
-I don't think any form of handshake will be implemented in a
-month. Maybe it's best we keep that to the side for now.
-
-(still, thinking about that virtio-net USO thread, an early handshake
-could be a good idea, so we could perhaps inform about device
-incompatibility, etc.)
-
->
-> I don't really know whether that'll work at last..
->
-> So in my mind the previous two-steps proposal is so far the only one that
-> all seem to work, with no unpredictable side effects.
->
-> Said that, maybe we can still think about simpler solutions in the
-> following days or see others opinions, we don't need to make a decision
-> today, so maybe there's still better way to go.
-
-I thought of putting the caps on the configuration vmstate and using
-that to set them on the destination, but there's a bit of a chicken and
-egg problem because we need capabilities set as soon as
-qemu_start_incoming_migration(). Unless we sent those via the cpr
-channel. We could split migration_object_init() a bit so we can
-instantiate some parts of the migration state earlier (I'm not even sure
-what are the actual dependencies are).
+Thanks,
+Pierrick
 
