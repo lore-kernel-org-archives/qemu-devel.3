@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC41ACED618
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 07:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D84CED618
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 07:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syRAB-0000kR-C3; Wed, 09 Oct 2024 03:31:15 -0400
+	id 1syRKF-00021i-Sg; Wed, 09 Oct 2024 03:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syRA8-0000kC-OW
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:31:13 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1syRKE-00021X-Hi
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:41:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syRA4-0000Ur-Dq
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728459068; x=1759995068;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=xo5g02Xx2KyKHaRY1zGM1c4tTbdyS0pz6yItGa7TCnE=;
- b=kjR6HzIspURatab1WHis4qd3I24fRALEgDSMCTmAxzZlXScMT5XD3gZA
- 7piZHbnaZKkan0Z6askGpGpzhYsgjEHRT5X4loB4wNHkVsN4IYJf4OGAG
- yDYNIyuHb+Y+Sm1cTDZzdgmXOz/Up/jk5vmFaUMgVUzbTFe3MEopLpDrb
- 9J4X1vZbILuCowYvJ3vQJ7eT7nj85JkjyxquYZ7AbPtoEoMzYpyAbMVbe
- 32Kl0ywnQ7+0NRN3S5y+Atzhm2KDFCj8YfJxIqbC5PcxfN/VuIUDzMRZ8
- 01uVAuDrqh2NSWKEnGhl6mLXSUozIfAUXrIaOr4bXaZpF/UM8AuE4mz1E Q==;
-X-CSE-ConnectionGUID: VjVlt+SUQY6B0gHmfyS+pQ==
-X-CSE-MsgGUID: o/UPNJHoTfKaA3aG+VDUeA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="27556088"
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="27556088"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Oct 2024 00:31:03 -0700
-X-CSE-ConnectionGUID: Wc1NOWWOQfG0H5sGUGQNGQ==
-X-CSE-MsgGUID: BZdyLgUwS0qtCxDxIHbyLA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="76981104"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 09 Oct 2024 00:31:02 -0700
-Date: Wed, 9 Oct 2024 15:47:13 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Chao Gao <chao.gao@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, jmattson@google.com,
- pawan.kumar.gupta@linux.intel.com, jon@nutanix.com
-Subject: Re: [PATCH] target/i386: Add more features enumerated by CPUID.7.2.EDX
-Message-ID: <ZwY1AeJPlrniISB1@intel.com>
-References: <20240919051011.118309-1-chao.gao@intel.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1syRKC-0001uP-KO
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:41:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728459695;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=re6iQRwVUCqy/n4EUS+nquRq8taDdoQGAj162cVw64w=;
+ b=bKVaJfvvim5fURqFpEO7kJIP4eaU2V7g+Gl1zNqSeo4uFvSaCrDJodPwwuHXDZNZ4iLHg2
+ DAsD7flIjDl/IJRqEsqU6slf7+umI/7LneHL0//fAEkKo9636ka+I3s5dYw0uryzLjrcIG
+ pemuc2Auh2jjzOpql/5pVk3moHluiPM=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-118-IJ4Y4DrUMxaBPdVy6Zjnow-1; Wed, 09 Oct 2024 03:41:18 -0400
+X-MC-Unique: IJ4Y4DrUMxaBPdVy6Zjnow-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-20c5bcbc603so15983595ad.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 00:41:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728459677; x=1729064477;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=re6iQRwVUCqy/n4EUS+nquRq8taDdoQGAj162cVw64w=;
+ b=OdS2h9/IJzHFeAamBSq+CVXBdG6znus9WesulUJ5EbuQ1w0jakBNECydRzQxlGUeHf
+ JxklgCGSg3gWs2TMJ99rhB7FBGPlVm3HCYJCUAtTYE6jQT0S3XUcwA+CQhw6bTNsl3w3
+ l0ove9osFkMZnFGEFsG7Qf+tO1SGZUAc/ipm91gRovRl2MHDYeIKRh91yk7+rJvCeDp+
+ eQ6Nw207YyaoGN7QnTgCQKrunWgnlOEZZAL5zJzZmPjvNBw0clsDdhIz5JsXwbZbnBbs
+ sNdZ4SuCopsx5JDKiOZIFtLAmUR4ypvrttzSqHDNSxjmZjhkFPJiYYpuWzmqB7EbYlIG
+ /95Q==
+X-Gm-Message-State: AOJu0YyFH76dJQRSb/c+tElDolN3PS9D97om8rIGNI4+byegvuSTQlbV
+ Dbvnb19PkBhZuXkNaW2i1YqE24sC7PuL/AFf6+w5hj0urXFtoW3j7bmCaBRmXSKNBOkD/HcQzuY
+ LAQ1RboLlhDIMXEegNyA31DuBw6kpbXgWhMzH8igDaVLlFmgnNbZ9lKlw5Ex1/RPLvuNiJHH9MP
+ Pn1lQ+78CV/hSL0mAJXIReqPrZTL0=
+X-Received: by 2002:a17:902:fc44:b0:20c:5e86:9b68 with SMTP id
+ d9443c01a7336-20c636dd37emr29854215ad.4.1728459677556; 
+ Wed, 09 Oct 2024 00:41:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRfT8NvbtIECls9ofrd2l2nBLBC/r+J7S5+Vs7ork6Z0GAtlZUy0+xTHwkSidRIBFDCjpAeQY3BJSFrUnc7D8=
+X-Received: by 2002:a17:902:fc44:b0:20c:5e86:9b68 with SMTP id
+ d9443c01a7336-20c636dd37emr29853875ad.4.1728459677092; Wed, 09 Oct 2024
+ 00:41:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240919051011.118309-1-chao.gao@intel.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+References: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
+In-Reply-To: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 9 Oct 2024 15:41:06 +0800
+Message-ID: <CACGkMEvmEsFdLRgF9CLQCEo0jt3dX8wAPLjRC2pNb4ofD8dLNQ@mail.gmail.com>
+Subject: Re: [PATCH] tap-linux: Open ipvtap and macvtap
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,70 +97,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 01:10:11PM +0800, Chao Gao wrote:
-> Date: Thu, 19 Sep 2024 13:10:11 +0800
-> From: Chao Gao <chao.gao@intel.com>
-> Subject: [PATCH] target/i386: Add more features enumerated by CPUID.7.2.EDX
-> X-Mailer: git-send-email 2.46.1
-> 
-> Following 5 bits in CPUID.7.2.EDX are supported by KVM. Add their
-> supports in QEMU. Each of them indicates certain bits of IA32_SPEC_CTRL
-> are supported. Those bits can control CPU speculation behavior which can
-> be used to defend against side-channel attacks.
-> 
-> bit0: intel-psfd
->   if 1, indicates bit 7 of the IA32_SPEC_CTRL MSR is supported. Bit 7 of
->   this MSR disables Fast Store Forwarding Predictor without disabling
->   Speculative Store Bypass
-> 
-> bit1: ipred-ctrl
->   If 1, indicates bits 3 and 4 of the IA32_SPEC_CTRL MSR are supported.
->   Bit 3 of this MSR enables IPRED_DIS control for CPL3. Bit 4 of this
->   MSR enables IPRED_DIS control for CPL0/1/2
-> 
-> bit2: rrsba-ctrl
->   If 1, indicates bits 5 and 6 of the IA32_SPEC_CTRL MSR are supported.
->   Bit 5 of this MSR disables RRSBA behavior for CPL3. Bit 6 of this MSR
->   disables RRSBA behavior for CPL0/1/2
-> 
-> bit3: ddpd-u
->   If 1, indicates bit 8 of the IA32_SPEC_CTRL MSR is supported. Bit 8 of
->   this MSR disables Data Dependent Prefetcher.
-> 
-> bit4: bhi-ctrl
->   if 1, indicates bit 10 of the IA32_SPEC_CTRL MSR is supported. Bit 10
->   of this MSR enables BHI_DIS_S behavior.
-> 
-> Signed-off-by: Chao Gao <chao.gao@intel.com>
+On Tue, Oct 8, 2024 at 2:52=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
+com> wrote:
+>
+> ipvtap and macvtap create a file for each interface unlike tuntap, which
+> creates one file shared by all interfaces. Try to open a file dedicated
+> to the interface first for ipvtap and macvtap.
+>
+
+Management layers usually pass these fds via SCM_RIGHTS. Is this for
+testing purposes? (Note that we can use something like -netdev
+tap,fd=3D10 10<>/dev/tap0).
+
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  target/i386/cpu.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 85ef7452c0..18ba958f46 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1148,8 +1148,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
->      [FEAT_7_2_EDX] = {
->          .type = CPUID_FEATURE_WORD,
->          .feat_names = {
-> -            NULL, NULL, NULL, NULL,
-> -            NULL, "mcdt-no", NULL, NULL,
-> +            "intel-psfd", "ipred-ctrl", "rrsba-ctrl", "ddpd-u",
-> +            "bhi-ctrl", "mcdt-no", NULL, NULL,
+>  net/tap-linux.c | 17 ++++++++++++++---
+>  1 file changed, 14 insertions(+), 3 deletions(-)
+>
+> diff --git a/net/tap-linux.c b/net/tap-linux.c
+> index 1226d5fda2d9..22ec2f45d2b7 100644
+> --- a/net/tap-linux.c
+> +++ b/net/tap-linux.c
+> @@ -45,10 +45,21 @@ int tap_open(char *ifname, int ifname_size, int *vnet=
+_hdr,
+>      int len =3D sizeof(struct virtio_net_hdr);
+>      unsigned int features;
+>
+> -    fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
+> +
+> +    ret =3D if_nametoindex(ifname);
+> +    if (ret) {
+> +        g_autofree char *file =3D g_strdup_printf("/dev/tap%d", ret);
+> +        fd =3D open(file, O_RDWR);
+> +    } else {
+> +        fd =3D -1;
+> +    }
+> +
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "could not open %s", PATH_NET_TUN)=
+;
+> -        return -1;
+> +        fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
 
-IIUC, these bits depend on "spec-ctrl", which indicates the presence of
-IA32_SPEC_CTRL.
+Any reason tuntap were tried after the macvtap/ipvtap?
 
-Then I think we'd better add dependencies in feature_dependencies[].
+> +        if (fd < 0) {
+> +            error_setg_errno(errp, errno, "could not open %s", PATH_NET_=
+TUN);
+> +            return -1;
+> +        }
+>      }
+>      memset(&ifr, 0, sizeof(ifr));
+>      ifr.ifr_flags =3D IFF_TAP | IFF_NO_PI;
+>
+> ---
+> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+> change-id: 20241008-macvtap-b152e5abb457
+>
+> Best regards,
+> --
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 
--Zhao
+Thanks
 
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, NULL,
-> -- 
-> 2.46.1
-> 
-> 
+>
+
 
