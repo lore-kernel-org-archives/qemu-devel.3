@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ECA5CEE330
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 17:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE0FCEE338
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 17:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syaDN-0000BW-N4; Wed, 09 Oct 2024 13:11:09 -0400
+	id 1syamN-0005XH-Hv; Wed, 09 Oct 2024 13:47:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syaDM-0000BO-9q
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:11:08 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1syamH-0005WJ-DK
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:13 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syaDH-0005vX-Iw
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:11:08 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7e9f998e1e4so3602720a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 10:11:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1syamF-0003KI-I5
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:13 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a99650da839so10425966b.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 10:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728493862; x=1729098662; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W/gmR2iOxZdJatvi77n/jgss54CrDVgrCdoex4kroOw=;
- b=sQjPbHRzmmeSn9G9Q9gtFhBIfjgC67BlEs1Ptx70s+LA3MOaRvnSYuO92Ix3i4Bq8S
- QhNKGKu1rvKG8zOA0W9iFUSDmfV2k3k9rk3Wjd7UUD06TKhlXt+XucUEDRwUETVKZu/z
- /dX5kdNOepmUCJx2/Sf+p99Ow2g6UNHRrcd9qOOw2ZIcVIF4wIVCHMAtWBs+xPtATpze
- lfcktA3/l8pr+tlye4TMIYwi4HnvXhuwqkIL+XbIbZghFnVDwkZk7sRrMSdBhKOW7+iA
- 75Bg0vpySQoOJBy3Z2SWdvX+6qg5aXqe+JrEweOgsjHF7FzsuAMj0mlVNE/qOopOEnHp
- PWxQ==
+ d=gmail.com; s=20230601; t=1728496028; x=1729100828; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kP/GlD6pGrFyW69SdwNvhDWDCGBHEOF0ILopDy32tWo=;
+ b=iNWyroW6LRFdp2xpHWH+Y/W9ELOotNOhrWISiZE1qevqNVm4CsClNeuFMlbDqSJ+g4
+ dSMBNIAZ9gJPIc/nRf94DE2GuuPjWIyl5miKXyv7j15KXSToz8Tb5mZHSMm1ThtsRPvG
+ anru67yPRi+gdPKGLuGxj4Amgvky0ESvwqhksLEEIIOao0fX+ZezZmAdHs0HICq6cY46
+ plSw5ZFBqSH74SoTuHeYs8EF+FSPN/zMaz+4wXdtxNTpzLXmOlBUvnU4hojSdqnVqblq
+ Cp4fl9lqY/07bZhMMQ8lcyXp7P31maJD4Gn/LQFDtGtTpL/zDjGzISA5VE2Qu+8DEc7l
+ kLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728493862; x=1729098662;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W/gmR2iOxZdJatvi77n/jgss54CrDVgrCdoex4kroOw=;
- b=FH98UNeeYBIgDWNFdXFAdkFjbBMitOXMrkXhlWdkamNbALPv8jFaTIC82KVpsYTzwO
- wVMJHHgP1bqMpVeRpXFnnJjyCXBQX1SwqTfaaGsa4vKTk7MYiIHgqiwoN6ZvKtERsRNT
- AVwUix2wXeu0k4BHOpuImfAPweJ8lyG8b+1Wo2EWsQaxSKSZbONT2kFl7S/h4fOIOnPa
- 2ofvLxvJiNhUxPxT8L4rumFm3R5YxKT3HGlj33RLtMZWT6W4qjWo9mWp/KcSL0kO4W/2
- taLP5u6l2AYah3/KcXSzhH3cVOvOra7xWYheEyx5uIkJCUVaFk+HUXCuzOVBJWXPIu3q
- lC3Q==
-X-Gm-Message-State: AOJu0YyNHIUHJNv7j47ou9wc1yx7SkzbkIG5jwKDJHUbSLE4pG4eDL/f
- Ee8W7QARqYWVCRZ/08yR40Qb+Iln92ksexzPz4y6NzhmHEMkD/g/7Ec7uxFYMpU=
-X-Google-Smtp-Source: AGHT+IEsdQvXWZzw2ixWSTRzd+JijkEYDk8q+isjZ/BVLsAXLBbGGEwTrKtO+NRTxs/B5Y3mrquC1w==
-X-Received: by 2002:a17:902:ce88:b0:20b:9f91:c461 with SMTP id
- d9443c01a7336-20c637551aamr44683935ad.33.1728493861621; 
- Wed, 09 Oct 2024 10:11:01 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ d=1e100.net; s=20230601; t=1728496028; x=1729100828;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kP/GlD6pGrFyW69SdwNvhDWDCGBHEOF0ILopDy32tWo=;
+ b=qFH9nRqqmr0LGsBNRyd7e7Qr3tH3tyZ7eWva65UuERhouF+s7x9/YWDwW1FWSLI9oc
+ cFTLXISBmKGHhhBmDsLgTIJNCSQMyV7Lhmoaa+WT6C1+1gMCtwYEJw7ZLS6m4CSCrngw
+ A9CFzpOh8mFbbYnKh2xsKFwMvowqjF/H6SeRFHWDLVxKx8CE7C/q9jhB6GDQGKGiR63r
+ tONAAkazp2X80y+t5zoD6c7ZFMj31ISPzBCaR3wDThRXQrk0JEPTnHYj0GGIKxDeYnZi
+ Iw+PFcMPGnEypP/O9agimtChqgid/Dr9oiPSHJ8TgXbN5ze5993l9H1DkGC969qyGenx
+ dO3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvsCnE8PBkv0X0Y/Xpx52pv3FloxVfGF26zp+h3gln+DhxWSh268svL09ZGS6tFvDN4j9QR7wy5O47@nongnu.org
+X-Gm-Message-State: AOJu0YwZXIvIoRAU952wPdr6fLu1R01HEMkQneBBExH6iytJFJFP3N97
+ klwg4T1rpb7jTNk78YNqPurXdVQv3dueoiuoYeZsFYc+i96ffNdbp1BgTg==
+X-Google-Smtp-Source: AGHT+IGwLI4u2S2nqPFZM2cKL34YQQT9i2dwBn+ScSq1/uFU1n8hJcuoECsNWX6b5onLglaY302huA==
+X-Received: by 2002:a17:907:970c:b0:a99:4567:9227 with SMTP id
+ a640c23a62f3a-a998d1996c9mr288276666b.17.1728496027947; 
+ Wed, 09 Oct 2024 10:47:07 -0700 (PDT)
+Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c77812e73sm7036085ad.110.2024.10.09.10.11.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 10:11:01 -0700 (PDT)
-Message-ID: <3e2c31f1-5650-45c6-967a-f13038ba4236@linaro.org>
-Date: Wed, 9 Oct 2024 10:10:59 -0700
+ a640c23a62f3a-a994f38068fsm491667666b.40.2024.10.09.10.47.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Oct 2024 10:47:07 -0700 (PDT)
+From: Roman Penyaev <r.peniaev@gmail.com>
+To: 
+Cc: Roman Penyaev <r.peniaev@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2 0/5] chardev: implement backend chardev multiplexing
+Date: Wed,  9 Oct 2024 19:45:12 +0200
+Message-Id: <20241009174517.286935-1-r.peniaev@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/23] accel/tcg: Convert victim tlb to IntervalTree
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org
-References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <2d59794c-ae72-a3c5-85fa-01f0354c1e4c@eik.bme.hu>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <2d59794c-ae72-a3c5-85fa-01f0354c1e4c@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,33 +95,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/24 09:27, BALATON Zoltan wrote:
-> On Wed, 9 Oct 2024, Richard Henderson wrote:
->> Based-on: 20241009000453.315652-1-richard.henderson@linaro.org
->> ("[PATCH v3 00/20] accel/tcg: Introduce tlb_fill_align hook")
->>
->> The initial idea was: how much can we do with an intelligent data
->> structure for the same cost as a linear search through an array?
->>
->> This is an initial installment along these lines.  This is about
->> as far as I can go without first converting all targets to the
->> new tlb_fill_align hook.  Indeed, the final two patches will not
->> compile with all targets enabled, but hint at the direction of
->> the next steps.
->>
->> I do not expect large perf changes with this patch set.  I will
->> be happy if performance comes out even.
-> 
-> Then what's the point?
+Mux is a character backend (host side) device, which multiplexes
+multiple frontends with one backend device. The following is a
+few lines from the QEMU manpage [1]:
 
-Eventually fixing the page size > TARGET_PAGE_SIZE performance issues.
+  A multiplexer is a "1:N" device, and here the "1" end is your
+  specified chardev backend, and the "N" end is the various parts
+  of QEMU that can talk to a chardev.
 
-E.g. with a 16k or 64k aarch64 guest kernel, we still have TARGET_PAGE_SIZE at 4k, so all 
-guest pages are "large", and so run into our current behaviour of flushing the entire tlb 
-too often.
+But sadly multiple backends are not supported.
 
-Even without that, I expect further cleanups to improve performance, we're just not there yet.
+This work implements multiplexing capability of several backend
+devices, which opens up an opportunity to use a single frontend
+device on the guest, which can be manipulated from several
+backend devices.
 
+The motivation is the EVE project [2], where it would be very
+convenient to have a virtio console frontend device on the guest that
+can be controlled from multiple backend devices. The following is
+an example of the QEMU command line:
 
-r~
+   -chardev mux-be,id=mux0 \
+   -chardev socket,path=/tmp/sock,server=on,wait=off,id=sock0,mux-be-id=mux0 \
+   -chardev vc,id=vc0,mux-be-id=mux0 \
+   -device virtconsole,chardev=mux0 \
+   -vnc 0.0.0.0:0
+
+Which creates 2 backend devices: text virtual console (`vc0`) and a
+socket (`sock0`) connected to the single virtio hvc console with the
+backend multiplexer (`mux0`) help. `vc0` renders text to an image,
+which can be shared over the VNC protocol.  `sock0` is a socket
+backend which provides biderectional communication to the virtio hvc
+console.
+
+New type of multiplexer `mux-be` actually is an alias for the same
+`MuxChardev` struct, which uses same functions as for the original
+`mux` type, but supports multiplexing N backends with 1 frontend.
+
+Once QEMU starts VNC client and any TTY emulator can be used to
+control a single hvc console, for example these two different
+consoles should have similar input and output due the buffer
+multiplexing:
+
+   # VNC client
+   vncviewer :0
+
+   # TTY emulator
+   socat unix-connect:/tmp/sock pty,link=/tmp/pty
+   tio /tmp/pty
+
+Difference to the previous version:
+
+* Separate type for the backend multiplexer `mux-be`
+* Handle EAGAIN on write to the backend device
+* Support of watch of previously failed backend device
+* Proper json support of the `mux-be-id` option
+* Unit test for the `mux-be` multiplexer
+
+[1] https://www.qemu.org/docs/master/system/qemu-manpage.html#hxtool-6
+[2] https://github.com/lf-edge/eve
+
+Roman Penyaev (5):
+  chardev/char: introduce `mux-be-id=ID` option and _MUX_BE type
+  chardev/char: rename `mux_cnt` to `fe_cnt` for the `MuxChardev`
+  chardev/char-mux: implement backend chardev multiplexing
+  tests/unit/test-char: add unit test for the `mux-be` multiplexer
+  qemu-options.hx: describe multiplexing of several backend devices
+
+ chardev/char-fe.c          |  14 ++-
+ chardev/char-mux.c         | 212 +++++++++++++++++++++++++++++++-----
+ chardev/char.c             |  57 ++++++++--
+ chardev/chardev-internal.h |  33 +++++-
+ include/chardev/char.h     |   1 +
+ qapi/char.json             |   9 +-
+ qemu-options.hx            |  46 +++++++-
+ tests/unit/test-char.c     | 217 ++++++++++++++++++++++++++++++++++++-
+ 8 files changed, 538 insertions(+), 51 deletions(-)
+
+Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+
+-- 
+2.43.0
+
 
