@@ -4,89 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90362CED628
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 09:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302A7CED632
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 09:05:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sySa9-0008OB-Af; Wed, 09 Oct 2024 05:02:09 -0400
+	id 1sySdO-0002pG-9g; Wed, 09 Oct 2024 05:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sySa7-0008Nl-BE
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:02:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sySdK-0002o0-S0
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:05:27 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sySa5-0003l5-NE
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:02:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728464524;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jbMmTbZ6Gn3a4nXl+2n8f98G484vu+dgfTitnQfWbxQ=;
- b=QUP21HzIugCf/Xu1vDc4YLuJSSHUgovs2bXZtThGKVShEKNVi1DOQPbduYrYyjdX2oOneQ
- 2yq1GnBvaowHctqc4DWnIxnWbMEzJzHtku6tb9MzWp7IaV+AUb0oIFuxNmlvDgUU7NKXV8
- Y9zRPadWbbtFclo3vDCLyUW9gxwgjeQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-307-STUk421eOPqlNtJCRiSI_g-1; Wed, 09 Oct 2024 05:02:03 -0400
-X-MC-Unique: STUk421eOPqlNtJCRiSI_g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42cb830ea86so51274675e9.3
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 02:02:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728464521; x=1729069321;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jbMmTbZ6Gn3a4nXl+2n8f98G484vu+dgfTitnQfWbxQ=;
- b=hdp70IMZiBCiJqmoao3RJIOZB6huNmTw5Sb9YlxczDn9JK6HHNpUNXB/KHMEbfUN9t
- Iv6+lvBAeDezgi14qKHx+VAZOLE/RpyiT4B0QiMZwy0vJqs5CZHLiIIm6DsOEAyW/If2
- w9fL12wKMv4TSbMA4Xwq4K3Agjmrz18veT4JIrNGyGPZJxjYNekm4H9briZoF3zeTjB/
- 2hz9IB0tI4+DiAmzAV10MzDFHZ9y+r6FiEARnCNssS0uSMta/L2f+rJrOJH+OpoiG0St
- 0ZpT7EP35OAWwENpwCEWtmVbzZB2ZJkYQGGC8EqZh9DCyQGzULV32sfaZDDZOKG1UEDk
- TNvw==
-X-Gm-Message-State: AOJu0YwaX3Xu86QSnFM5u3SND5HI/PurdRUuY5W0GXkDaWEXSvxF4cy5
- jc5KUM+xXjLCoRmjJttIKxWfMV12zBq4JtA1uJFHUQdqLAnZ8TQjjqms/xJq2o3MxkBjSFsa2Ci
- nnyV/ed8LiP+oOwjylIIZaMeJJ1Oga1xdrFHX3asVCtVoIeKY4usW5SSLJ7bT+89QMUQha3KPYD
- eTKgcJQJqrkeYU6fT4ad+9w1D1iKFP2dhaPm54W+c=
-X-Received: by 2002:a05:600c:1c8b:b0:42c:b961:c902 with SMTP id
- 5b1f17b1804b1-430ccf0f0eamr12910865e9.12.1728464521127; 
- Wed, 09 Oct 2024 02:02:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlBXwQdh4ZMaTYXeqLU9CFTciDpn8oEsfXriXKSD1YsLU6WADsZpFOCCBpLiZija6KkjFtUA==
-X-Received: by 2002:a05:600c:1c8b:b0:42c:b961:c902 with SMTP id
- 5b1f17b1804b1-430ccf0f0eamr12910575e9.12.1728464520713; 
- Wed, 09 Oct 2024 02:02:00 -0700 (PDT)
-Received: from avogadro.local ([151.62.111.131])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-430ccf60b2bsm13706895e9.28.2024.10.09.02.01.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 02:01:59 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/2] gitlab-ci: add Rust-enabled CI job
-Date: Wed,  9 Oct 2024 11:01:50 +0200
-Message-ID: <20241009090151.1643088-3-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241009090151.1643088-1-pbonzini@redhat.com>
-References: <20241009090151.1643088-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sySdI-0004An-76
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:05:25 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2991896B78;
+ Wed,  9 Oct 2024 12:05:11 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4FA93150E16;
+ Wed,  9 Oct 2024 12:05:20 +0300 (MSK)
+Message-ID: <6aeffd42-9776-4cae-b6c2-c526b1acbae8@tls.msk.ru>
+Date: Wed, 9 Oct 2024 12:05:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/net_rx_pkt: Remove deadcode
+To: Jason Wang <jasowang@redhat.com>, dave@treblig.org
+Cc: dmitry.fleytman@gmail.com, akihiko.odaki@daynix.com, qemu-devel@nongnu.org
+References: <20240918225128.455043-1-dave@treblig.org>
+ <CACGkMEsbxrXaOH1U6HPAd-PXmmUHCM79DDEdqO0Tm13pCfP2Pg@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CACGkMEsbxrXaOH1U6HPAd-PXmmUHCM79DDEdqO0Tm13pCfP2Pg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,56 +85,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a job using --enable-rust, to ensure that the toolchain is installed
-correctly by the Dockerfile and that QEMU builds with Rust enabled on
-at least one platform.
+09.10.2024 11:32, Jason Wang wrote:
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .gitlab-ci.d/buildtest.yml  | 13 +++++++++++++
- .gitlab-ci.d/containers.yml |  6 ++++++
- 2 files changed, 19 insertions(+)
+> Queued.
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 669c980c4b4..6af7920b355 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -120,6 +120,19 @@ build-system-fedora:
-       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
-     MAKE_CHECK_ARGS: check-build
- 
-+build-system-fedora-rust-nightly:
-+  extends:
-+    - .native_build_job_template
-+    - .native_build_artifact_template
-+  needs:
-+    job: amd64-fedora-rust-nightly-container
-+  variables:
-+    IMAGE: fedora-rust-nightly
-+    CONFIGURE_ARGS: --disable-docs --enable-rust
-+    TARGETS: aarch64-softmmu
-+    MAKE_CHECK_ARGS: check-build
-+  allow_failure: true
-+
- check-system-fedora:
-   extends: .native_test_job_template
-   needs:
-diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
-index ae79d4c58bc..db9b4d5e57f 100644
---- a/.gitlab-ci.d/containers.yml
-+++ b/.gitlab-ci.d/containers.yml
-@@ -27,3 +27,9 @@ python-container:
-   extends: .container_job_template
-   variables:
-     NAME: python
-+
-+amd64-fedora-rust-nightly-container:
-+  extends: .container_job_template
-+  variables:
-+    NAME: fedora-rust-nightly
-+  allow_failure: true
--- 
-2.46.2
+Jason, please do a git pull first ;)
 
+/mjt
 
