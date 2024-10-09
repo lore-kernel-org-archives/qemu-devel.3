@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF1DCEDD90
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AEBCEDD89
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syWDz-00006b-Fa; Wed, 09 Oct 2024 08:55:31 -0400
+	id 1syWES-0000St-Dv; Wed, 09 Oct 2024 08:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1syWDx-00006M-55
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:55:29 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ id 1syWEO-0000KB-UD
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:55:56 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1syWDv-0007kv-KO
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:55:28 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2fad15b3eeeso72761161fa.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:55:26 -0700 (PDT)
+ id 1syWEN-0007o5-Gb
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:55:56 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a9957588566so412117866b.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728478524; x=1729083324; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728478554; x=1729083354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YMTG5YTg+luBv08NJpmgj7GPT8nN943jig8ePCMC/60=;
- b=qsDWARF0asvHZ49wWubLk8c93cjm/8ogdD+vADw81l3Ws4O+0CtmDD1JtbWSj1WXgI
- 5FdX5l6nHK9A8y5dV7uuin1gQfsaY+Zygm0Xw/sUH1UHOE1kzQzSFhgZpVLSGA0MC1bV
- x7xbIbkWmqDjbknX2IQmj+kw2rgbQsJAnXayoDHZyl78CW30kkWJpP4ZyCki6RPYbzhg
- akzkJchpPhActuHjTjInHNVOzGU2ylIsvLhzB/HY2YhViB/e8q0wz3p3uPWLSMfbyanE
- Y1Qa7gvCJWj20E1UXPI5KbW0V5s76JnSLphbPEFJo+mHCzJjVW6q3hXeERa7ZU1x7g25
- yWsA==
+ bh=KCcMVJn3TyJblm7+vpT3GQV4o3PEtTTUO4rtwUQKyA4=;
+ b=h3BQyT3eDKNIZpfELbzrl0IyYxy2gjciqzSlEsh6HFkaZAYkcyIzZFqo9t7i1c946K
+ XKEQb33PQPzJ6w+eDHqCvOF2iI8IeGG0C1apv+6QeDChz2Tvv2OnJj9VmsQ5/jPhtyLC
+ xJ3fMZRnbSO2Zg3LbmOaO83d/9YENufg8T6PHdYzAcvQbxOO2HZrCTUblBwB7q3CZXWu
+ 5mlEtDpJSV6vZruSuywBdQ8Q1kePVxdqbuv8H414l/q+QpnSFQ3uj9ltss7X0CdV7+Gi
+ 8w6UIFOibdr59dp+37mFg9yxqUnlzY4jjEdmMHFH0nOrVQFaAZh6Oa+lXE3KJPLnrZwV
+ rUuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728478524; x=1729083324;
+ d=1e100.net; s=20230601; t=1728478554; x=1729083354;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YMTG5YTg+luBv08NJpmgj7GPT8nN943jig8ePCMC/60=;
- b=Fb4SYcgz/iGtpxDgNzdwSF3+w7l5P3nn9JqrVDYe2dhejFoI5eGiBavOFvamRM40fH
- xgFjIKqNCkXY5BNWaDCFTdvu6RtJGPjJ8bd7mUjRFAshP2WDPBaAJhoPVrEyJJH4kYUy
- hZSb0usDtk8+0MN3O+LA9rDsgis2Fz3EM2SZ7VcT047M099tf7rLtkIa3KzjQ+wfJfQP
- EAEGH28FV8PbJctjtZzAY/4VZpUlTJlY9fzvztK9lVaHwLK1A5S0N0HhfHSeM+ERi4wA
- o7R4MxOWzgjZyw3KNZDJUnkIn8NNl1ogWECngBdZJLn24juO48idrqyH9Ic++4Fs4naJ
- 4GDg==
-X-Gm-Message-State: AOJu0YyxMqofNan62YeIXC6Qo/q31ZNtGq81QLPIH0VuBZZiD1ybT3mB
- P2aSB0Ld8acuaH4fo5z3bKTAwFTBxcTYNP0RHaK8qV6n7tznbgpMkFd/gyCzGc4=
-X-Google-Smtp-Source: AGHT+IECfMnkvf4c9j/TWr3woqnCGTpC3VQ64IEx4l09bcXoCROxCp8iLyKsbNAA/I30QY7uVmTP6A==
-X-Received: by 2002:a05:651c:222a:b0:2f9:d359:50e2 with SMTP id
- 38308e7fff4ca-2fb1880c946mr15388071fa.39.1728478524431; 
- Wed, 09 Oct 2024 05:55:24 -0700 (PDT)
+ bh=KCcMVJn3TyJblm7+vpT3GQV4o3PEtTTUO4rtwUQKyA4=;
+ b=EZhCP0p55+B82o+Hm7GiKQX4sfbYKxZcxkIZt+KgYT4i/IJIjePFX8flxeDdcL3Srp
+ bR0OBE+d1D+s9Ru5f+71t4RzqEesSMVjBM1RmVmAYA+O+Y7JIi74TfmhmFQnjEwNuQG9
+ nZAWNbNk82ygvg+b1FWwoEDU1E6pOkO2ByQcVbiDfY7uw+3peD4NhvVcYIW2FC+x1RaZ
+ cbBPd71q8ZKefZhZeLMf8aExNw4oZ9VwnlRNsBw9tvoStGACh2tkn/Ad4WKZ9z+8Ij/1
+ bePaAxkPhgnzA+1dS7QFnqafhZpPpvyrVF0PfZwkE/fqMz2krUDV4tz+Ex3wzc0KFVg1
+ 0LIw==
+X-Gm-Message-State: AOJu0Yx0/rNxr1Vu8myYnrdbCp0oq54ux1zYepruL8WqrpvZUV09Au7t
+ FGAHjeZcmtv9fbJZZIrNp3i0/3oQzDcV0G6/Hv/Aj5yQ7mm845eaaN8iwID2bIQ=
+X-Google-Smtp-Source: AGHT+IFlA9U7g5Lna037DR6hpsUmLvgcVVcUIL1i36Ghx39waqrijSbnXvT7bo0iAZmO0YHsySOZvA==
+X-Received: by 2002:a17:907:3e0a:b0:a99:4025:82e1 with SMTP id
+ a640c23a62f3a-a998d3279f4mr222325766b.41.1728478553820; 
+ Wed, 09 Oct 2024 05:55:53 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c8e05c0f6fsm5471729a12.57.2024.10.09.05.55.22
+ a640c23a62f3a-a99384f8258sm623238866b.16.2024.10.09.05.55.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:55:23 -0700 (PDT)
+ Wed, 09 Oct 2024 05:55:53 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DC2C45F87E;
- Wed,  9 Oct 2024 13:55:21 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A44C45F87E;
+ Wed,  9 Oct 2024 13:55:52 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Manos Pitsidianakis
  <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 1/2] dockerfiles: add a Dockerfile using a nightly Rust
- toolchain
-In-Reply-To: <20241009090151.1643088-2-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Wed, 9 Oct 2024 11:01:49 +0200")
+Subject: Re: [PATCH 2/2] gitlab-ci: add Rust-enabled CI job
+In-Reply-To: <20241009090151.1643088-3-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Wed, 9 Oct 2024 11:01:50 +0200")
 References: <20241009090151.1643088-1-pbonzini@redhat.com>
- <20241009090151.1643088-2-pbonzini@redhat.com>
+ <20241009090151.1643088-3-pbonzini@redhat.com>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Wed, 09 Oct 2024 13:55:21 +0100
-Message-ID: <87v7y1tozq.fsf@draig.linaro.org>
+Date: Wed, 09 Oct 2024 13:55:52 +0100
+Message-ID: <87o73ttoyv.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,20 +101,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> This will be useful in order to test QEMU's Rust code with nightly
-> clippy.  It can also be used to check that the code builds, until the
-> minimum supported Rust version is lowered enough to allow enabling Rust
-> in other Dockerfiles too.
+> Add a job using --enable-rust, to ensure that the toolchain is installed
+> correctly by the Dockerfile and that QEMU builds with Rust enabled on
+> at least one platform.
 >
-> Use a separate container, instead of the Fedora one, to avoid that
-> CI breaks for everyone if for some reason the rustup build turns out
-> to be shaky.
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
 Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-<snip>
 
 --=20
 Alex Benn=C3=A9e
