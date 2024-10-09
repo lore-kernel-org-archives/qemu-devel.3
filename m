@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757F6CEDDA4
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 15:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE64CEDDA7
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 15:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syYJU-0001Yt-6O; Wed, 09 Oct 2024 11:09:20 -0400
+	id 1syYJI-0001LP-1c; Wed, 09 Oct 2024 11:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syYJR-0001X5-7k
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:17 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1syYJC-0001JG-ND
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:02 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syYJP-0007za-8n
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:16 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-71e15fe56c9so1476756b3a.3
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 08:09:14 -0700 (PDT)
+ id 1syYJ9-0007w3-M5
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:01 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-71dfc78d6ddso3666726b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 08:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728486554; x=1729091354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728486538; x=1729091338; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s/iMv5B425r44+NF+z2djHWwBwMWohkmdSTVLek2FyE=;
- b=VMC4GgeTRgMmmb76P0yNO/SStyfX4zrIRvpRu2tVmH6SmS8QGcmztKaK650Uj2Q+Sn
- dp+lCGk0q5HbzxW0DiNaPNLSKAK4U7025bm+4Y9rfWcDSl63nZvFxdPpgTd9NZPN7N48
- 08A7nrez8iJshIvO8FFknb7PT8GHZXKWFslNIpyyeCc0OH3GBw1whEBm63r7j10x8uHO
- dv8wz2nDjlqu/svmSOBzfazwDvJCgWv6TE2Y8cd9+YyhBBYYjQbAj3TKf1IqfV0+N/+h
- L5YmHrHsNI1i5wnV0VX3DooeSsWoD6CEDQY2hnoAYenqeLUvU/+oIrJuUuzMLECXVd7n
- HeZw==
+ :reply-to; bh=gGugcia7xIHYiO2oiJjHlSRtV4JGvYxNcTYF4XQ4e4A=;
+ b=yGUhcHC+isQy/pN+U8znOlD8csXL0NThVlnORNwIZuiqKCJjTL5Mdb8cKxS6pmgVeC
+ pBfXSamVxeAUI2ttvat4nwlAalR9cKqL1goEfh59K5BSkvu1uIcpVNID3VOj5jHDRQgQ
+ cWNeHQyURMZi3WLvRRgnkXqgCc5sfq3HaIT3/MOZUNzAszBtIWaLU8GZxLg6f8LyhLj3
+ KRaD1IIP14L1tbap1FWt9LBKRmZE0TJ+Lr7IS17LYnVsTJBXjVv6YzogeHAk4XSpv8Ec
+ wxrvaYUrlwV47NRP3dmmqGn/HDx33nARC8eZIFcdVMTTdQ5wMGCf+mvgD1g2DHwSKb8a
+ +mag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728486554; x=1729091354;
+ d=1e100.net; s=20230601; t=1728486538; x=1729091338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s/iMv5B425r44+NF+z2djHWwBwMWohkmdSTVLek2FyE=;
- b=T2CFe8Bs55DXjfQqe5+staq7moaMAasDgM8luIuOFp8G/DZFiZ2y9f+QIIWpR3rs6J
- lzIHL8faRTHvI2C7S5lSP7/D0y1XAug6Ii7CmSBoOEuBlSYW4M5V1J3rWMiK5b+7P8PQ
- 0fJfqSOnr55iEOqoBop6mnGTqX4DcQ+SNgJfzZaGBWiMVY45MXRBzxLvCwFExJYCUc8W
- l6W4ydqkPWPaSEF77xHZHoT9IaQwnzUwt8CvcOm+OtCfXTetO1tKyedLamx9VAQtG9HG
- 5XiC8FXiL8HDtT1M6Tu2cSCbkiHQ7dWv/TQqeMbNtdyYV2rGNX3hxZ26RoI1h08ux7S4
- 8stQ==
-X-Gm-Message-State: AOJu0YzBZY65O4cOIIz7xAlSViko3dHWsmIenBJWINbu280GPKGWHvlL
- EsWVGJ5aetai9k6TXvArpkVrPMB7ZG9sS+CMKBthQyFhZE5CfMag5KQWjfuBJFDmKkUyDn7ZZ2x
- p
-X-Google-Smtp-Source: AGHT+IH+iKe/vWUjIGIl67j9gr5GVnLt4pGcHwj1L/Zoo51/5oM/67QtZTtGSjejYmidColmMY07JA==
-X-Received: by 2002:a05:6a21:114f:b0:1c1:61a9:de4a with SMTP id
- adf61e73a8af0-1d8ad7dd77cmr434700637.24.1728486553843; 
- Wed, 09 Oct 2024 08:09:13 -0700 (PDT)
+ bh=gGugcia7xIHYiO2oiJjHlSRtV4JGvYxNcTYF4XQ4e4A=;
+ b=vUt5zToOMihuNgnhBflFLraWqxRNKVKg85CL7b5bZXM27dbDKByaCeTMem/CRcNDsz
+ WYE1Q0n5XYXBrfhEZYo+HNNpnukBFN1WZ8/jxxf8mjArAVICfWMOfyxwZkeWJt4zC0Rx
+ 7VLgJbsrlCxsnNqClrFGnKIVnj6ilVjnPELm2O6lWQVPT3GXE4hKdKeK7cMuAOKWwgoN
+ iU81XZa7u72dSKYozcrz7pjH2s1HN6yz/tTPcchFRw3qvb2/2b+R51PLN5L7rGU45vYp
+ oPVXXief3ccYqyfJS6ydp8Kw9xZv8ts8ycOhznW9/Gb6KDVCFNpakvSC4Lo8LTxdLHMc
+ d9Mg==
+X-Gm-Message-State: AOJu0YwjF2WeKhriAQC2fOOR4Ksa9m4NcXG936x40FNibuZd74Q1nr8N
+ cE8oAVFBf3qT606HFv0nhfe+j+0YQn7QASMpBpfJ9YejvlP7R8VkKmlJV3t7UcZC7nvm+U8dIQQ
+ r
+X-Google-Smtp-Source: AGHT+IHTsP/44AfTBj9tBPEteHYobH5wP5qyYZEOM5DId2QpTc/CUusVD/yPrklj6PidnhzLzIG3zg==
+X-Received: by 2002:a05:6a00:928a:b0:71e:104d:6316 with SMTP id
+ d2e1a72fcca58-71e1dbc20c0mr4894864b3a.21.1728486538095; 
+ Wed, 09 Oct 2024 08:08:58 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d65278sm7881094b3a.160.2024.10.09.08.09.12
+ d2e1a72fcca58-71df0d65278sm7881094b3a.160.2024.10.09.08.08.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 08:09:13 -0700 (PDT)
+ Wed, 09 Oct 2024 08:08:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 19/23] accel/tcg: Always use IntervalTree for code lookups
-Date: Wed,  9 Oct 2024 08:08:51 -0700
-Message-ID: <20241009150855.804605-20-richard.henderson@linaro.org>
+Subject: [PATCH 01/23] util/interval-tree: Introduce interval_tree_free_nodes
+Date: Wed,  9 Oct 2024 08:08:33 -0700
+Message-ID: <20241009150855.804605-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241009150855.804605-1-richard.henderson@linaro.org>
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,295 +93,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because translation is special, we don't need the speed
-of the direct-mapped softmmu tlb.  We cache a lookups in
-DisasContextBase within the translator loop anyway.
-
-Drop the addr_code comparator from CPUTLBEntry.
-Go directly to the IntervalTree for MMU_INST_FETCH.
-Derive exec flags from read flags.
+Provide a general-purpose release-all-nodes operation, that allows
+for the IntervalTreeNode to be embeded within a larger structure.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu-all.h    |   3 +
- include/exec/tlb-common.h |   5 +-
- accel/tcg/cputlb.c        | 138 +++++++++++++++++++++++++++++---------
- 3 files changed, 110 insertions(+), 36 deletions(-)
+ include/qemu/interval-tree.h | 11 +++++++++++
+ util/interval-tree.c         | 20 ++++++++++++++++++++
+ util/selfmap.c               | 13 +------------
+ 3 files changed, 32 insertions(+), 12 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 6f09b86e7f..7f5a10962a 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -326,6 +326,9 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
-     (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
-     | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
+diff --git a/include/qemu/interval-tree.h b/include/qemu/interval-tree.h
+index 25006debe8..d90ea6d17f 100644
+--- a/include/qemu/interval-tree.h
++++ b/include/qemu/interval-tree.h
+@@ -96,4 +96,15 @@ IntervalTreeNode *interval_tree_iter_first(IntervalTreeRoot *root,
+ IntervalTreeNode *interval_tree_iter_next(IntervalTreeNode *node,
+                                           uint64_t start, uint64_t last);
  
-+/* Filter read flags to exec flags. */
-+#define TLB_EXEC_FLAGS_MASK  (TLB_MMIO)
++/**
++ * interval_tree_free_nodes:
++ * @root: root of the tree
++ * @it_offset: offset from outermost type to IntervalTreeNode
++ *
++ * Free, via g_free, all nodes under @root.  IntervalTreeNode may
++ * not be the true type of the nodes allocated; @it_offset gives
++ * the offset from the outermost type to the IntervalTreeNode member.
++ */
++void interval_tree_free_nodes(IntervalTreeRoot *root, size_t it_offset);
 +
+ #endif /* QEMU_INTERVAL_TREE_H */
+diff --git a/util/interval-tree.c b/util/interval-tree.c
+index 53465182e6..663d3ec222 100644
+--- a/util/interval-tree.c
++++ b/util/interval-tree.c
+@@ -639,6 +639,16 @@ static void rb_erase_augmented_cached(RBNode *node, RBRootLeftCached *root,
+     rb_erase_augmented(node, &root->rb_root, augment);
+ }
+ 
++static void rb_node_free(RBNode *rb, size_t rb_offset)
++{
++    if (rb->rb_left) {
++        rb_node_free(rb->rb_left, rb_offset);
++    }
++    if (rb->rb_right) {
++        rb_node_free(rb->rb_right, rb_offset);
++    }
++    g_free((void *)rb - rb_offset);
++}
+ 
  /*
-  * Flags stored in CPUTLBEntryFull.slow_flags[x].
-  * TLB_FORCE_SLOW must be set in CPUTLBEntry.addr_idx[x].
-diff --git a/include/exec/tlb-common.h b/include/exec/tlb-common.h
-index 300f9fae67..feaa471299 100644
---- a/include/exec/tlb-common.h
-+++ b/include/exec/tlb-common.h
-@@ -26,7 +26,6 @@ typedef union CPUTLBEntry {
-     struct {
-         uint64_t addr_read;
-         uint64_t addr_write;
--        uint64_t addr_code;
-         /*
-          * Addend to virtual address to get host address.  IO accesses
-          * use the corresponding iotlb value.
-@@ -35,7 +34,7 @@ typedef union CPUTLBEntry {
-     };
-     /*
-      * Padding to get a power of two size, as well as index
--     * access to addr_{read,write,code}.
-+     * access to addr_{read,write}.
-      */
-     uint64_t addr_idx[(1 << CPU_TLB_ENTRY_BITS) / sizeof(uint64_t)];
- } CPUTLBEntry;
-@@ -92,7 +91,7 @@ struct CPUTLBEntryFull {
-      * Additional tlb flags for use by the slow path. If non-zero,
-      * the corresponding CPUTLBEntry comparator must have TLB_FORCE_SLOW.
-      */
--    uint8_t slow_flags[MMU_ACCESS_COUNT];
-+    uint8_t slow_flags[2];
- 
-     /*
-      * Allow target-specific additions to this structure.
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 61daa89e06..7c8308355d 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -114,8 +114,9 @@ static inline uint64_t tlb_read_idx(const CPUTLBEntry *entry,
-                       MMU_DATA_LOAD * sizeof(uint64_t));
-     QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_write) !=
-                       MMU_DATA_STORE * sizeof(uint64_t));
--    QEMU_BUILD_BUG_ON(offsetof(CPUTLBEntry, addr_code) !=
--                      MMU_INST_FETCH * sizeof(uint64_t));
-+
-+    tcg_debug_assert(access_type == MMU_DATA_LOAD ||
-+                     access_type == MMU_DATA_STORE);
- 
- #if TARGET_LONG_BITS == 32
-     /* Use qatomic_read, in case of addr_write; only care about low bits. */
-@@ -490,8 +491,7 @@ static bool tlb_hit_page_mask_anyprot(CPUTLBEntry *tlb_entry,
-     mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
- 
-     return (page == (tlb_entry->addr_read & mask) ||
--            page == (tlb_addr_write(tlb_entry) & mask) ||
--            page == (tlb_entry->addr_code & mask));
-+            page == (tlb_addr_write(tlb_entry) & mask));
- }
- 
- static inline bool tlb_hit_page_anyprot(CPUTLBEntry *tlb_entry, vaddr page)
-@@ -1061,15 +1061,13 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
-                                    vaddr address, int flags,
-                                    MMUAccessType access_type, bool enable)
- {
--    if (enable) {
--        address |= flags & TLB_FLAGS_MASK;
--        flags &= TLB_SLOW_FLAGS_MASK;
--        if (flags) {
--            address |= TLB_FORCE_SLOW;
--        }
--    } else {
--        address = -1;
--        flags = 0;
-+    if (!enable) {
-+	address = TLB_INVALID_MASK;
-+    }
-+    address |= flags & TLB_FLAGS_MASK;
-+    flags &= TLB_SLOW_FLAGS_MASK;
-+    if (flags) {
-+        address |= TLB_FORCE_SLOW;
-     }
-     ent->addr_idx[access_type] = address;
-     full->slow_flags[access_type] = flags;
-@@ -1215,9 +1213,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-     /* Now calculate the new entry */
-     node->copy.addend = addend - addr_page;
- 
--    tlb_set_compare(full, &node->copy, addr_page, read_flags,
--                    MMU_INST_FETCH, prot & PAGE_EXEC);
--
-     if (wp_flags & BP_MEM_READ) {
-         read_flags |= TLB_WATCHPOINT;
-     }
-@@ -1392,21 +1387,52 @@ static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
+  * Interval trees.
+@@ -870,6 +880,16 @@ IntervalTreeNode *interval_tree_iter_next(IntervalTreeNode *node,
      }
  }
  
--static int probe_access_internal(CPUState *cpu, vaddr addr,
--                                 int fault_size, MMUAccessType access_type,
--                                 int mmu_idx, bool nonfault,
--                                 void **phost, CPUTLBEntryFull **pfull,
--                                 uintptr_t retaddr, bool check_mem_cbs)
-+static int probe_access_internal_code(CPUState *cpu, vaddr addr,
-+                                      int fault_size, int mmu_idx,
-+                                      bool nonfault,
-+                                      void **phost, CPUTLBEntryFull **pfull,
-+                                      uintptr_t retaddr)
++void interval_tree_free_nodes(IntervalTreeRoot *root, size_t it_offset)
 +{
-+    CPUTLBEntryTree *t = tlbtree_lookup_addr(&cpu->neg.tlb.d[mmu_idx], addr);
-+    int flags;
-+
-+    if (!t || !(t->full.prot & PAGE_EXEC)) {
-+        if (!tlb_fill_align(cpu, addr, MMU_INST_FETCH, mmu_idx,
-+                            0, fault_size, nonfault, retaddr)) {
-+            /* Non-faulting page table read failed.  */
-+            *phost = NULL;
-+            *pfull = NULL;
-+            return TLB_INVALID_MASK;
-+        }
-+        t = tlbtree_lookup_addr(&cpu->neg.tlb.d[mmu_idx], addr);
++    if (root && root->rb_root.rb_node) {
++        rb_node_free(root->rb_root.rb_node,
++                     it_offset + offsetof(IntervalTreeNode, rb));
++        root->rb_root.rb_node = NULL;
++        root->rb_leftmost = NULL;
 +    }
-+    flags = t->copy.addr_read & TLB_EXEC_FLAGS_MASK;
-+    *pfull = &t->full;
-+
-+    if (flags) {
-+        *phost = NULL;
-+        return TLB_MMIO;
-+    }
-+
-+    /* Everything else is RAM. */
-+    *phost = (void *)((uintptr_t)addr + t->copy.addend);
-+    return flags;
 +}
 +
-+static int probe_access_internal_data(CPUState *cpu, vaddr addr,
-+                                      int fault_size, MMUAccessType access_type,
-+                                      int mmu_idx, bool nonfault,
-+                                      void **phost, CPUTLBEntryFull **pfull,
-+                                      uintptr_t retaddr, bool check_mem_cbs)
- {
-     uintptr_t index = tlb_index(cpu, mmu_idx, addr);
-     CPUTLBEntry *entry = tlb_entry(cpu, mmu_idx, addr);
-     uint64_t tlb_addr = tlb_read_idx(entry, access_type);
--    vaddr page_addr = addr & TARGET_PAGE_MASK;
-     int flags = TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
-     CPUTLBEntryFull *full;
- 
--    if (!tlb_hit_page(tlb_addr, page_addr)) {
--        if (!tlbtree_hit(cpu, mmu_idx, access_type, page_addr)) {
-+    if (!tlb_hit(tlb_addr, addr)) {
-+        if (!tlbtree_hit(cpu, mmu_idx, access_type, addr)) {
-             if (!tlb_fill_align(cpu, addr, access_type, mmu_idx,
-                                 0, fault_size, nonfault, retaddr)) {
-                 /* Non-faulting page table read failed.  */
-@@ -1450,6 +1476,21 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
-     return flags;
- }
- 
-+static int probe_access_internal(CPUState *cpu, vaddr addr,
-+                                 int fault_size, MMUAccessType access_type,
-+                                 int mmu_idx, bool nonfault,
-+                                 void **phost, CPUTLBEntryFull **pfull,
-+                                 uintptr_t retaddr, bool check_mem_cbs)
-+{
-+    if (access_type == MMU_INST_FETCH) {
-+        return probe_access_internal_code(cpu, addr, fault_size, mmu_idx,
-+                                          nonfault, phost, pfull, retaddr);
-+    }
-+    return probe_access_internal_data(cpu, addr, fault_size, access_type,
-+                                      mmu_idx, nonfault, phost, pfull,
-+                                      retaddr, check_mem_cbs);
-+}
-+
- int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       MMUAccessType access_type, int mmu_idx,
-                       bool nonfault, void **phost, CPUTLBEntryFull **pfull,
-@@ -1582,9 +1623,9 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-     CPUTLBEntryFull *full;
-     void *p;
- 
--    (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
--                                cpu_mmu_index(env_cpu(env), true), false,
--                                &p, &full, 0, false);
-+    (void)probe_access_internal_code(env_cpu(env), addr, 1,
-+                                     cpu_mmu_index(env_cpu(env), true),
-+                                     false, &p, &full, 0);
-     if (p == NULL) {
-         return -1;
-     }
-@@ -1678,8 +1719,31 @@ typedef struct MMULookupLocals {
-  * tlb_fill_align will longjmp out.  Return true if the softmmu tlb for
-  * @mmu_idx may have resized.
+ /* Occasionally useful for calling from within the debugger. */
+ #if 0
+ static void debug_interval_tree_int(IntervalTreeNode *node,
+diff --git a/util/selfmap.c b/util/selfmap.c
+index 483cb617e2..d2b86da301 100644
+--- a/util/selfmap.c
++++ b/util/selfmap.c
+@@ -87,23 +87,12 @@ IntervalTreeRoot *read_self_maps(void)
+  * @root: an interval tree
+  *
+  * Free a tree of MapInfo structures.
+- * Since we allocated each MapInfo in one chunk, we need not consider the
+- * contents and can simply free each RBNode.
   */
--static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
--                        int mmu_idx, MMUAccessType access_type, uintptr_t ra)
-+static bool mmu_lookup1_code(CPUState *cpu, MMULookupPageData *data,
-+                             MemOp memop, int mmu_idx, uintptr_t ra)
-+{
-+    vaddr addr = data->addr;
-+    CPUTLBEntryTree *t = tlbtree_lookup_addr(&cpu->neg.tlb.d[mmu_idx], addr);
-+    bool maybe_resized = true;
-+
-+    if (!t || !(t->full.prot & PAGE_EXEC)) {
-+        tlb_fill_align(cpu, addr, MMU_INST_FETCH, mmu_idx,
-+                       memop, data->size, false, ra);
-+        maybe_resized = true;
-+        t = tlbtree_lookup_addr(&cpu->neg.tlb.d[mmu_idx], addr);
-+    }
-+
-+    data->full = &t->full;
-+    data->flags = t->copy.addr_read & TLB_EXEC_FLAGS_MASK;
-+    /* Compute haddr speculatively; depending on flags it might be invalid. */
-+    data->haddr = (void *)((uintptr_t)addr + t->copy.addend);
-+
-+    return maybe_resized;
-+}
-+
-+static bool mmu_lookup1_data(CPUState *cpu, MMULookupPageData *data,
-+                             MemOp memop, int mmu_idx,
-+                             MMUAccessType access_type, uintptr_t ra)
+ 
+-static void free_rbnode(RBNode *n)
+-{
+-    if (n) {
+-        free_rbnode(n->rb_left);
+-        free_rbnode(n->rb_right);
+-        g_free(n);
+-    }
+-}
+-
+ void free_self_maps(IntervalTreeRoot *root)
  {
-     vaddr addr = data->addr;
-     uintptr_t index = tlb_index(cpu, mmu_idx, addr);
-@@ -1738,6 +1802,15 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
-     return maybe_resized;
+     if (root) {
+-        free_rbnode(root->rb_root.rb_node);
++        interval_tree_free_nodes(root, offsetof(MapInfo, itree));
+         g_free(root);
+     }
  }
- 
-+static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
-+                        int mmu_idx, MMUAccessType access_type, uintptr_t ra)
-+{
-+    if (access_type == MMU_INST_FETCH) {
-+        return mmu_lookup1_code(cpu, data, memop, mmu_idx, ra);
-+    }
-+    return mmu_lookup1_data(cpu, data, memop, mmu_idx, access_type, ra);
-+}
-+
- /**
-  * mmu_watch_or_dirty
-  * @cpu: generic cpu state
-@@ -1885,13 +1958,13 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         }
-     }
- 
-+    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-+
-     /*
-      * Let the guest notice RMW on a write-only page.
-      * We have just verified that the page is writable.
--     * Subpage lookups may have left TLB_INVALID_MASK set,
--     * but addr_read will only be -1 if PAGE_READ was unset.
-      */
--    if (unlikely(tlbe->addr_read == -1)) {
-+    if (unlikely(!(full->prot & PAGE_READ))) {
-         tlb_fill_align(cpu, addr, MMU_DATA_LOAD, mmu_idx,
-                        0, size, false, retaddr);
-         /*
-@@ -1929,7 +2002,6 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     }
- 
-     hostaddr = (void *)((uintptr_t)addr + tlbe->addend);
--    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
- 
-     if (unlikely(flags & TLB_NOTDIRTY)) {
-         notdirty_write(cpu, addr, size, full, retaddr);
 -- 
 2.43.0
 
