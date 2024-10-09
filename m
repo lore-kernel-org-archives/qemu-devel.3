@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F48CEDD89
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E31CEDD8F
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syW2I-000530-Vl; Wed, 09 Oct 2024 08:43:27 -0400
+	id 1syW1o-0004jM-NH; Wed, 09 Oct 2024 08:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW21-0004sf-EK
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:43:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1n-0004jB-Lw
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1y-0005Vu-Mh
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:43:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1l-0005SI-Uf
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728477785;
+ s=mimecast20190719; t=1728477773;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ufhUOpepsGW4qLY30+zYqQtKIYZv17OEXI7XMvauCAU=;
- b=Xpt0lAzE64vOpO6vYI9hRMnsHd0iIjXAA4OE8RPdf+7qiAnFQmDtj0a9T6yU1IJ6XgP5kf
- hQtS4CHncuatrc3YdKFzLCDy1+/XVfD0ln/06cZoadC0BqXHsTQAs/U4/q/caMQClu/iBc
- c8lX1UXUR9w//AdLYBzbRiV2m8NtGgg=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jk0pKj9VCu3al6N68FkKLk/v4exRbcGJT+XXNWXH8Sw=;
+ b=C5xjV+l83RMiEfqfjLBIFIUlY/SRRyIga6QI5pOgYfGV29+pUPKRg6C/V2gcEKk0nYTMmt
+ PwLNoKSl8YyOyjtxwxPRwZO+jI+h2DDvZZoEzql6o+lAAQwQDwosBuW4yisvj9FwqxsdN9
+ s70bVk77Rc2ejtmOExe40emHVzeazco=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-u5byBmSxN-Ow4g2Wsg2qHg-1; Wed, 09 Oct 2024 08:43:04 -0400
-X-MC-Unique: u5byBmSxN-Ow4g2Wsg2qHg-1
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-82aa8af04feso684811939f.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:43:04 -0700 (PDT)
+ us-mta-683-9w0rMEd-OMic_2vnroH6cA-1; Wed, 09 Oct 2024 08:42:52 -0400
+X-MC-Unique: 9w0rMEd-OMic_2vnroH6cA-1
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-82cdb749559so1175908439f.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:42:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728477783; x=1729082583;
+ d=1e100.net; s=20230601; t=1728477770; x=1729082570;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ufhUOpepsGW4qLY30+zYqQtKIYZv17OEXI7XMvauCAU=;
- b=BqzmABID9934gg5juxlKmfy+IeucOJ39IS+9eZodfcGPzrcZ8AedGDbUz3mfVE3xg4
- w6hC0x6KV6PbEHkcCZSvjoXLoSnq8UQkIXrYR6DnBzr9W4Dd944+J9+147JVQQ/ahABt
- L54agPwzfcAO9kONIBfovm3yE08mFkYkzamjB872p+lqSYlOh+IFQHrATdoeYJS648Ic
- OnExLB0+TOe1jz/kMxDlSsTgYSpEArty1qCrN+D5S8+nprhYamA6PLMfv+r7l9towU5k
- RvU/noOgcg2lJZr3OxseU1aueM+sA0MoZBwQE7nHmW3IcoUnVYKlHE9S/vq4cHqs9+b8
- bZrg==
-X-Gm-Message-State: AOJu0Yz3WifO4mlDoYqENTvoVWBXZYeFc4HF6XxQmxMwBojq2Lk9MUUm
- VM8g1+2i0EuGbqt/n4T9mvjTglhuzDDxHd6aE4ZHGzm82p+FxgeDqNtKHxg+uz66YwWiftySCLp
- ryTCk2X6j5gcnbTmdJYdcWI6XwRjxwcDDwyXkuW2nVLrl80T9LWPktic6uLECSAzQ0AyiWcndap
- qz02RW1ZBScK69I/gDFJj6h76F2uMexEJcwg==
-X-Received: by 2002:a05:6602:6101:b0:82a:4c58:e1e0 with SMTP id
- ca18e2360f4ac-8353d4f11d4mr249867439f.12.1728477782840; 
- Wed, 09 Oct 2024 05:43:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHn5VvcapvqGxQ50KmhJFVnEWT/3/GQA3GxrhLud8Pl+7z+b3QnS8vH1AFWBM5F2i3qzn2l2g==
-X-Received: by 2002:a05:6602:6101:b0:82a:4c58:e1e0 with SMTP id
- ca18e2360f4ac-8353d4f11d4mr249862639f.12.1728477782174; 
- Wed, 09 Oct 2024 05:43:02 -0700 (PDT)
+ bh=jk0pKj9VCu3al6N68FkKLk/v4exRbcGJT+XXNWXH8Sw=;
+ b=VzBgTCSMmpQwHpjBrIB8MNFapAfacIBU63/F8Gzvi4PR+cD4xO3IaxGAxQL207HKW+
+ S0PWwvPuwycMvoT2DC/KZscgL4oGRPEIJQIX7gPkcf3vylapJzYGst/9VQ9Rh0WcNeiU
+ 8baBAc11zEBq2j5vD+0qRiBjt4YrXuuqH7LvLgKREE8bsuUwkuiqDIZ1TnRhjvle+K49
+ Pu82fgFWTqVs0pT2iZLEwq3OrCsknv3iQ8UhQuAe4D5xFH68nJ7MAqUMHbDscfvrZG+p
+ CotSG3IxPZKi8r8AVaKwQ0b3upBQbn/wAnS5mE3BxBqPCcUL4wLAd2FTz/fAb9jsm5uF
+ dIJQ==
+X-Gm-Message-State: AOJu0YwmcfAZM98/zBSToX2IOqWeLmd7fa4pdBsEK0MoS9ba5HHaS8Z9
+ yoYjypGkAD5N3oLJfqVThT07pcuIL0rdD3wr3BNBhyYVmQwvcYoV7ZOuG1QIcyMNnKoz05+tW6S
+ H840j1OhoMmsU18fIQouXgAjWDNlldvAW408zgP60kMG32CKiUY/+tlO4FJ5Q3Be2xNC6xqtYm8
+ WmQAOYNBihR2VZK2RGbKaak/5o68+5yBZtiA==
+X-Received: by 2002:a05:6602:6c04:b0:835:42ce:933d with SMTP id
+ ca18e2360f4ac-83542ce9439mr127156239f.1.1728477770594; 
+ Wed, 09 Oct 2024 05:42:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPihQ1fnKB662fomcWUObYdo/c2JzIDukLZHlNaqfEiNJJ63s+y5HaNwDhBeNP+6VanGR2mQ==
+X-Received: by 2002:a05:6602:6c04:b0:835:42ce:933d with SMTP id
+ ca18e2360f4ac-83542ce9439mr127152639f.1.1728477770098; 
+ Wed, 09 Oct 2024 05:42:50 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83503aacb18sm220272039f.30.2024.10.09.05.43.00
+ ca18e2360f4ac-83503aacb18sm220272039f.30.2024.10.09.05.42.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:43:01 -0700 (PDT)
+ Wed, 09 Oct 2024 05:42:48 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 11/12] util/iova-tree: Remove deadcode
-Date: Wed,  9 Oct 2024 08:42:37 -0400
-Message-ID: <20241009124238.371084-12-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PULL 05/12] migration: Deprecate zero-blocks capability
+Date: Wed,  9 Oct 2024 08:42:31 -0400
+Message-ID: <20241009124238.371084-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241009124238.371084-1-peterx@redhat.com>
 References: <20241009124238.371084-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,101 +101,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+From: Fabiano Rosas <farosas@suse.de>
 
-iova_tree_find_address, and iova_tree_foreach have never been
-used since the code was originally added by:
-  eecf5eedbd ("util: implement simple iova tree")
+The zero-blocks capability was meant to be used along with the block
+migration, which has been removed already in commit eef0bae3a7
+("migration: Remove block migration").
 
-Remove them.
+Setting zero-blocks is currently a noop, but the outright removal of
+the capability would cause and error in case some users are still
+setting it. Put the capability through the deprecation process.
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Link: https://lore.kernel.org/r/20240918142515.153074-1-dave@treblig.org
+Link: https://lore.kernel.org/r/20240919134626.166183-4-dave@treblig.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/qemu/iova-tree.h | 25 -------------------------
- util/iova-tree.c         | 23 -----------------------
- 2 files changed, 48 deletions(-)
+ docs/about/deprecated.rst | 6 ++++++
+ qapi/migration.json       | 5 ++++-
+ migration/options.c       | 4 ++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-index 2a10a7052e..44a45931d5 100644
---- a/include/qemu/iova-tree.h
-+++ b/include/qemu/iova-tree.h
-@@ -111,31 +111,6 @@ const DMAMap *iova_tree_find(const IOVATree *tree, const DMAMap *map);
-  */
- const DMAMap *iova_tree_find_iova(const IOVATree *tree, const DMAMap *map);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index c02bbb66f7..33ce4f9536 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -467,3 +467,9 @@ usage of providing a file descriptor to a plain file has been
+ deprecated in favor of explicitly using the ``file:`` URI with the
+ file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
+ command documentation for details on the ``fdset`` usage.
++
++``zero-blocks`` capability (since 9.2)
++''''''''''''''''''''''''''''''''''''''
++
++The ``zero-blocks`` capability was part of the block migration which
++doesn't exist anymore since it was removed in QEMU v9.1.
+diff --git a/qapi/migration.json b/qapi/migration.json
+index b66cccf107..3af6aa1740 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -479,11 +479,14 @@
+ # Features:
+ #
+ # @unstable: Members @x-colo and @x-ignore-shared are experimental.
++# @deprecated: Member @zero-blocks is deprecated as being part of
++#     block migration which was already removed.
+ #
+ # Since: 1.2
+ ##
+ { 'enum': 'MigrationCapability',
+-  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
++  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
++           { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
+            'events', 'postcopy-ram',
+            { 'name': 'x-colo', 'features': [ 'unstable' ] },
+            'release-ram',
+diff --git a/migration/options.c b/migration/options.c
+index 6f549984cb..ad8d6989a8 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -450,6 +450,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+     ERRP_GUARD();
+     MigrationIncomingState *mis = migration_incoming_get_current();
  
--/**
-- * iova_tree_find_address:
-- *
-- * @tree: the iova tree to search from
-- * @iova: the iova address to find
-- *
-- * Similar to iova_tree_find(), but it tries to find mapping with
-- * range iova=iova & size=0.
-- *
-- * Return: same as iova_tree_find().
-- */
--const DMAMap *iova_tree_find_address(const IOVATree *tree, hwaddr iova);
--
--/**
-- * iova_tree_foreach:
-- *
-- * @tree: the iova tree to iterate on
-- * @iterator: the iterator for the mappings, return true to stop
-- *
-- * Iterate over the iova tree.
-- *
-- * Return: 1 if found any overlap, 0 if not, <0 if error.
-- */
--void iova_tree_foreach(IOVATree *tree, iova_tree_iterator iterator);
--
- /**
-  * iova_tree_alloc_map:
-  *
-diff --git a/util/iova-tree.c b/util/iova-tree.c
-index 536789797e..06295e2755 100644
---- a/util/iova-tree.c
-+++ b/util/iova-tree.c
-@@ -115,13 +115,6 @@ const DMAMap *iova_tree_find_iova(const IOVATree *tree, const DMAMap *map)
-     return args.result;
- }
- 
--const DMAMap *iova_tree_find_address(const IOVATree *tree, hwaddr iova)
--{
--    const DMAMap map = { .iova = iova, .size = 0 };
--
--    return iova_tree_find(tree, &map);
--}
--
- static inline void iova_tree_insert_internal(GTree *gtree, DMAMap *range)
- {
-     /* Key and value are sharing the same range data */
-@@ -148,22 +141,6 @@ int iova_tree_insert(IOVATree *tree, const DMAMap *map)
-     return IOVA_OK;
- }
- 
--static gboolean iova_tree_traverse(gpointer key, gpointer value,
--                                gpointer data)
--{
--    iova_tree_iterator iterator = data;
--    DMAMap *map = key;
--
--    g_assert(key == value);
--
--    return iterator(map);
--}
--
--void iova_tree_foreach(IOVATree *tree, iova_tree_iterator iterator)
--{
--    g_tree_foreach(tree->tree, iova_tree_traverse, iterator);
--}
--
- void iova_tree_remove(IOVATree *tree, DMAMap map)
- {
-     const DMAMap *overlap;
++    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
++        warn_report("zero-blocks capability is deprecated");
++    }
++
+ #ifndef CONFIG_REPLICATION
+     if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+         error_setg(errp, "QEMU compiled without replication module"
 -- 
 2.45.0
 
