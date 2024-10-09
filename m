@@ -4,95 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C31CEE326
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 16:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0001DCEE330
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 16:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syZ9i-0000gS-Eh; Wed, 09 Oct 2024 12:03:19 -0400
+	id 1syZXB-0000zH-F8; Wed, 09 Oct 2024 12:27:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1syZ9V-0000Se-6S
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 12:03:05 -0400
-Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1syZX8-0000z1-EN
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 12:27:30 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mgalaxy@akamai.com>)
- id 1syZ9S-0005cB-2B
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 12:03:04 -0400
-Received: from pps.filterd (m0050093.ppops.net [127.0.0.1])
- by m0050093.ppops.net-00190b01. (8.18.1.2/8.18.1.2) with ESMTP id
- 4995wQlu007012; Wed, 9 Oct 2024 17:02:50 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=5NOUX0abEJLk+PXV5DCBwtrJPAC6cl04qnxryJYE1UA=; b=KhHhb/s0T585
- c4dNxgEYQql/A2yt+HMPCD3Qz9MbNtsiGxQzujEN3M1kba9EBvHRjgS09ETgHVK4
- yzupmCs9WAbp64zQMLE57U+J9mp4hNfr7DdyZImAi8ydsnB+FDHmkw32wAMTU2ka
- f62NtbTYXRDPIYA1SHGbuHJlKGZZLllOSlfnZKN7Ass5aLeQOZQRsLyjqj5XzefG
- ejppcITtJTAfnNQp2w4PZbnVh1LyBxxkcyxrUG6UI463PScln2Rmq16ofOjF/8Uf
- RgJ73fW23Ce5RFjXvohylQgrKX0wqcGRobpMnUEi/W6D8ibtdwGoMWPFsSij8JLo
- 1oT+u5EzBw==
-Received: from prod-mail-ppoint3
- (a72-247-45-31.deploy.static.akamaitechnologies.com [72.247.45.31] (may be
- forged))
- by m0050093.ppops.net-00190b01. (PPS) with ESMTPS id 422xqsgpge-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Oct 2024 17:02:49 +0100 (BST)
-Received: from pps.filterd (prod-mail-ppoint3.akamai.com [127.0.0.1])
- by prod-mail-ppoint3.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 499DJmCL012844; Wed, 9 Oct 2024 12:02:49 -0400
-Received: from prod-mail-relay18.dfw02.corp.akamai.com ([172.27.165.172])
- by prod-mail-ppoint3.akamai.com (PPS) with ESMTP id 423jbx95u3-1;
- Wed, 09 Oct 2024 12:02:48 -0400
-Received: from [100.64.0.1] (unknown [172.27.166.123])
- by prod-mail-relay18.dfw02.corp.akamai.com (Postfix) with ESMTP id 569162C6;
- Wed,  9 Oct 2024 16:02:47 +0000 (GMT)
-Message-ID: <6187274e-7223-4c13-b950-57137f4422d1@akamai.com>
-Date: Wed, 9 Oct 2024 11:02:46 -0500
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1syZX6-0001Cz-Bp
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 12:27:30 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E3E144E6000;
+ Wed, 09 Oct 2024 18:27:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id vd2uOlJQosNS; Wed,  9 Oct 2024 18:27:18 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id EB4BE4E600E; Wed, 09 Oct 2024 18:27:18 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E9720746F60;
+ Wed, 09 Oct 2024 18:27:18 +0200 (CEST)
+Date: Wed, 9 Oct 2024 18:27:18 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 00/23] accel/tcg: Convert victim tlb to
+ IntervalTree
+In-Reply-To: <20241009150855.804605-1-richard.henderson@linaro.org>
+Message-ID: <2d59794c-ae72-a3c5-85fa-01f0354c1e4c@eik.bme.hu>
+References: <20241009150855.804605-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] scsi: fetch unit attention when creating the request
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: Mike Christie <michael.christie@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Mark Kanda <mark.kanda@oracle.com>, Fam Zheng <fam@euphon.net>,
- dharnett@akamai.com, "Hunt, Joshua" <johunt@akamai.com>
-References: <20230712134352.118655-1-sgarzare@redhat.com>
- <20230712134352.118655-2-sgarzare@redhat.com>
-Content-Language: en-US
-From: Michael Galaxy <mgalaxy@akamai.com>
-In-Reply-To: <20230712134352.118655-2-sgarzare@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-09_14,2024-10-09_02,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- adultscore=0 suspectscore=0
- bulkscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2409260000
- definitions=main-2410090101
-X-Proofpoint-GUID: DJusg93bPZsbaYF_EVc0gaYYZMQ6ayTC
-X-Proofpoint-ORIG-GUID: DJusg93bPZsbaYF_EVc0gaYYZMQ6ayTC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- lowpriorityscore=0
- priorityscore=1501 mlxscore=0 suspectscore=0 bulkscore=0 impostorscore=0
- adultscore=0 mlxlogscore=999 spamscore=0 phishscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410090100
-Received-SPF: pass client-ip=2620:100:9001:583::1;
- envelope-from=mgalaxy@akamai.com; helo=mx0a-00190b01.pphosted.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,130 +65,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All,
-
-We have stumbled upon this bug in our production systems on QEMU 7.2.x. 
-This is a pretty nasty bug because it has the effect of causing the root 
-filesystem in the guest to switch into read only mode if our block 
-storage products change attachments to running virtual machines.
-
-Could we kindly ask to pull this identical patch for 7.2.15?
-
-Last year, it just went to master and landed in 8.0.50. We're planning 
-to upgrade, but it will be quite some time before we get around to that, 
-and I suspect others are also running 7.2.x in production.
-
-- Michael Galaxy
-
-On 7/12/23 08:43, Stefano Garzarella wrote:
-> Commit 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs") split
-> calls to scsi_req_new() and scsi_req_enqueue() in the virtio-scsi device.
-> This had no drawback, until commit 8cc5583abe ("virtio-scsi: Send
-> "REPORTED LUNS CHANGED" sense data upon disk hotplug events") added a
-> bus unit attention.
+On Wed, 9 Oct 2024, Richard Henderson wrote:
+> Based-on: 20241009000453.315652-1-richard.henderson@linaro.org
+> ("[PATCH v3 00/20] accel/tcg: Introduce tlb_fill_align hook")
 >
-> Having the two calls separated, all requests in the batch were prepared
-> calling scsi_req_new() to report a sense.
-> Then only the first one submitted calling scsi_req_enqueue() reported the
-> right sense and reset it to NO_SENSE.
-> The others reported NO_SENSE, causing SCSI errors in Linux.
+> The initial idea was: how much can we do with an intelligent data
+> structure for the same cost as a linear search through an array?
 >
-> To solve this issue, let's fetch the unit attention as early as possible
-> when we prepare the request, that way only the first request in the batch
-> will carry the right sense.
+> This is an initial installment along these lines.  This is about
+> as far as I can go without first converting all targets to the
+> new tlb_fill_align hook.  Indeed, the final two patches will not
+> compile with all targets enabled, but hint at the direction of
+> the next steps.
 >
-> Fixes: 1880ad4f4e ("virtio-scsi: Batched prepare for cmd reqs")
-> Fixes: 8cc5583abe ("virtio-scsi: Send "REPORTED LUNS CHANGED" sense data upon disk hotplug events")
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2176702
-> Co-developed-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->   include/hw/scsi/scsi.h |  1 +
->   hw/scsi/scsi-bus.c     | 36 +++++++++++++++++++++++++++++++++---
->   2 files changed, 34 insertions(+), 3 deletions(-)
+> I do not expect large perf changes with this patch set.  I will
+> be happy if performance comes out even.
+
+Then what's the point? Diffstat below does not show it's less code and if 
+it's also not more efficient then what's the reason to change it? I'm not 
+opposed to any change just don't see an explanation of what motivates this 
+series.
+
+Regards,
+BALATON Zoltan
+
 >
-> diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-> index e2bb1a2fbf..3692ca82f3 100644
-> --- a/include/hw/scsi/scsi.h
-> +++ b/include/hw/scsi/scsi.h
-> @@ -108,6 +108,7 @@ int cdrom_read_toc_raw(int nb_sectors, uint8_t *buf, int msf, int session_num);
->   /* scsi-bus.c */
->   struct SCSIReqOps {
->       size_t size;
-> +    void (*init_req)(SCSIRequest *req);
->       void (*free_req)(SCSIRequest *req);
->       int32_t (*send_command)(SCSIRequest *req, uint8_t *buf);
->       void (*read_data)(SCSIRequest *req);
-> diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-> index f80f4cb4fc..f083373021 100644
-> --- a/hw/scsi/scsi-bus.c
-> +++ b/hw/scsi/scsi-bus.c
-> @@ -412,19 +412,35 @@ static const struct SCSIReqOps reqops_invalid_opcode = {
->   
->   /* SCSIReqOps implementation for unit attention conditions.  */
->   
-> -static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
-> +static void scsi_fetch_unit_attention_sense(SCSIRequest *req)
->   {
-> +    SCSISense *ua = NULL;
-> +
->       if (req->dev->unit_attention.key == UNIT_ATTENTION) {
-> -        scsi_req_build_sense(req, req->dev->unit_attention);
-> +        ua = &req->dev->unit_attention;
->       } else if (req->bus->unit_attention.key == UNIT_ATTENTION) {
-> -        scsi_req_build_sense(req, req->bus->unit_attention);
-> +        ua = &req->bus->unit_attention;
->       }
-> +
-> +    /*
-> +     * Fetch the unit attention sense immediately so that another
-> +     * scsi_req_new does not use reqops_unit_attention.
-> +     */
-> +    if (ua) {
-> +        scsi_req_build_sense(req, *ua);
-> +        *ua = SENSE_CODE(NO_SENSE);
-> +    }
-> +}
-> +
-> +static int32_t scsi_unit_attention(SCSIRequest *req, uint8_t *buf)
-> +{
->       scsi_req_complete(req, CHECK_CONDITION);
->       return 0;
->   }
->   
->   static const struct SCSIReqOps reqops_unit_attention = {
->       .size         = sizeof(SCSIRequest),
-> +    .init_req     = scsi_fetch_unit_attention_sense,
->       .send_command = scsi_unit_attention
->   };
->   
-> @@ -699,6 +715,11 @@ SCSIRequest *scsi_req_alloc(const SCSIReqOps *reqops, SCSIDevice *d,
->       object_ref(OBJECT(d));
->       object_ref(OBJECT(qbus->parent));
->       notifier_list_init(&req->cancel_notifiers);
-> +
-> +    if (reqops->init_req) {
-> +        reqops->init_req(req);
-> +    }
-> +
->       trace_scsi_req_alloc(req->dev->id, req->lun, req->tag);
->       return req;
->   }
-> @@ -798,6 +819,15 @@ uint8_t *scsi_req_get_buf(SCSIRequest *req)
->   static void scsi_clear_unit_attention(SCSIRequest *req)
->   {
->       SCSISense *ua;
-> +
-> +    /*
-> +     * scsi_fetch_unit_attention_sense() already cleaned the unit attention
-> +     * in this case.
-> +     */
-> +    if (req->ops == &reqops_unit_attention) {
-> +        return;
-> +    }
-> +
->       if (req->dev->unit_attention.key != UNIT_ATTENTION &&
->           req->bus->unit_attention.key != UNIT_ATTENTION) {
->           return;
+> r~
+>
+> Richard Henderson (23):
+>  util/interval-tree: Introduce interval_tree_free_nodes
+>  accel/tcg: Split out tlbfast_flush_locked
+>  accel/tcg: Split out tlbfast_{index,entry}
+>  accel/tcg: Split out tlbfast_flush_range_locked
+>  accel/tcg: Fix flags usage in mmu_lookup1, atomic_mmu_lookup
+>  accel/tcg: Early exit for zero length in tlb_flush_range_by_mmuidx*
+>  accel/tcg: Flush entire tlb when a masked range wraps
+>  accel/tcg: Add IntervalTreeRoot to CPUTLBDesc
+>  accel/tcg: Populate IntervalTree in tlb_set_page_full
+>  accel/tcg: Remove IntervalTree entry in tlb_flush_page_locked
+>  accel/tcg: Remove IntervalTree entries in tlb_flush_range_locked
+>  accel/tcg: Process IntervalTree entries in tlb_reset_dirty
+>  accel/tcg: Process IntervalTree entries in tlb_set_dirty
+>  accel/tcg: Replace victim_tlb_hit with tlbtree_hit
+>  accel/tcg: Remove the victim tlb
+>  include/exec/tlb-common: Move CPUTLBEntryFull from hw/core/cpu.h
+>  accel/tcg: Delay plugin adjustment in probe_access_internal
+>  accel/tcg: Call cpu_ld*_code_mmu from cpu_ld*_code
+>  accel/tcg: Always use IntervalTree for code lookups
+>  accel/tcg: Link CPUTLBEntry to CPUTLBEntryTree
+>  accel/tcg: Remove CPUTLBDesc.fulltlb
+>  accel/tcg: Drop TCGCPUOps.tlb_fill -- NOTYET
+>  accel/tcg: Unexport tlb_set_page*
+>
+> include/exec/cpu-all.h        |   3 +
+> include/exec/exec-all.h       |  57 ----
+> include/exec/tlb-common.h     |  68 +++-
+> include/hw/core/cpu.h         |  75 +----
+> include/hw/core/tcg-cpu-ops.h |  10 -
+> include/qemu/interval-tree.h  |  11 +
+> accel/tcg/cputlb.c            | 599 +++++++++++++++++++---------------
+> util/interval-tree.c          |  20 ++
+> util/selfmap.c                |  13 +-
+> 9 files changed, 431 insertions(+), 425 deletions(-)
+>
+>
 
