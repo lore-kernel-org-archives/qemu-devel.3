@@ -4,88 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B62CF042B
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 01:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E0DCF0435
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syLeV-0005Ow-Pv; Tue, 08 Oct 2024 21:38:11 -0400
+	id 1syMys-0007fE-Bs; Tue, 08 Oct 2024 23:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syLeV-0005Oh-4s
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 21:38:11 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syLeT-0002i1-7e
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 21:38:10 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20bb39d97d1so54704665ad.2
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 18:38:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728437887; x=1729042687; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kx9e1ru/C4RfIorxCVdypn59eLRtvKXerUCvaGI/Hj0=;
- b=iDaqyXHq+Z/663Q+gL0J/0Q5BGW/QLYGTz6XiAPiIEAnoZkoRHTUqtLKGzxS6FMVXa
- Yzv9iy6FWRdGCKdNYwX7+YATIYo0ZQyDucIjByCawc5GRh+UHPIk4Az/d6QHoqkxasy/
- w0xwOZ9OHeYx07N88+utyNND3Clu3jWvBjBVEVRoNqsVOGuxcD2csO+JI1X4Uzb6CIkC
- K6H/f08FhPuTN3YaL4plWQmklyb+TXjMG7pMhBpmtP6dLEJ6xQLWUGG7g11FuuJiitXc
- T0MMAI3GSyEMESTRifXVU39MU3rL96S2a1PzwtJXPnuC2IP2Zve+nEK3dCxLWL/cyGm9
- aC0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728437887; x=1729042687;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kx9e1ru/C4RfIorxCVdypn59eLRtvKXerUCvaGI/Hj0=;
- b=VdVdhQL3kaLNkPVKpSlT7O7xSMzgywvZ/8wStBmp7fTa9tSh5JdnKxlPt6GPyaquDf
- ewhvX3TTqi3C7k3YSCNhlVoetfOvqe0acvLbuLBOIXx4x7vfYY/SyImAObpR3HCOUrTz
- G99QnfI9RB2T0NzNZgoFN26v/aujMQR6OepuVizNKNDOx+ThdTw0F2lf7IeuYC/kmFlv
- WekgBYe8pG+UeRIaKydjtFwZx4iYhvNBrGDB895935dIaSJGthAEaBga0i2MIKlF1EPE
- ckqOh8f6X34kWxSUbpsTQ/8xsX8ph0IZiyHcWXaOtkC6nTHJ3tKXxl1oTJUGRewKq23C
- jTAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXi/lvCA3fva48IbGuUjDnuLo0S3pLAw3OpXthBYFtFfZQiYLjM4CPa4UpkYjGYHSzkn4gzoa1bqrvZ@nongnu.org
-X-Gm-Message-State: AOJu0YyMAah8N4/BZfLp2UjhdrGt/2+8fKjeUi8hVEcBNdlCbIxf/P7o
- iDCcpDVeBmSK0ZMLr7Dy/HDuHltPcHOz1jqOC8EWd183zEgEE2LIIj6bbUEAS9g=
-X-Google-Smtp-Source: AGHT+IEtCClo7xFdWLUnxKQgzkGDPuVdeL+yI1DSE5v0NPhdjnMrbB3jm2ZykWOZfLgPo9p5NAUidg==
-X-Received: by 2002:a17:902:ecce:b0:20b:8ed8:9c74 with SMTP id
- d9443c01a7336-20c63802504mr12119275ad.49.1728437887598; 
- Tue, 08 Oct 2024 18:38:07 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c139876c7sm61374425ad.249.2024.10.08.18.38.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Oct 2024 18:38:07 -0700 (PDT)
-Message-ID: <9c6ed649-846b-4f1a-bcd1-b5b8a0d589f9@linaro.org>
-Date: Tue, 8 Oct 2024 18:38:05 -0700
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1syMyo-0007f4-W9
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:03:15 -0400
+Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1syMyn-0002nW-9A
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:03:14 -0400
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 679A290526F;
+ Wed,  9 Oct 2024 03:03:09 +0000 (UTC)
+Received: from pdx1-sub0-mail-a279.dreamhost.com
+ (trex-3.trex.outbound.svc.cluster.local [100.101.173.103])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 04556905372;
+ Wed,  9 Oct 2024 03:03:09 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1728442989; a=rsa-sha256;
+ cv=none;
+ b=vrmbO4+aGyPTOk2YnpgYQ5RkS5KTPWaLeBzhSGYiiPSwbN/yGE6YifIyPhSR0NKCT8eTqA
+ CkLEkJdCsPiqmZEHAqk4S4eCOQqYdoqtPwQIrJ3f+KPmR5sCE98IdsI+zAUBLTGPqTlujh
+ 1eHhL1IXu56f7tnX6fEpBRit04E3Q1cIS9CZd0wqDr4iRpK3bs4/LVCi2302yxj962kjge
+ 6KcBzmdL9trExmkf56VBv25AzHBHKabkeqHgGtLZajJVfnxaqLuQyAoaAVo2YfdUtR83Zp
+ juFv3xmBCTqHnw3ReczJypqmb4bGq9nuD4ch8QzP+EhLLzhrnjU6w36oTACaxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1728442989;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=zuqFRnQ5g+78gWUtlFavQ9YtvH2+ssaWeobdd16OhFA=;
+ b=YWk7Az6c5rwH6ug0pCQEdbtKFetF/recpOoLcUbuVXX0Dq6Lgw9eYQK5qUqIuH/cLGVA0D
+ Vj0ogKHqQsXDCffbeg/dkqU94E3DoyTCUxR9ALtCGmGi7+hQ4l9e4FeLrpplLdtZuJO4vP
+ FmpowHnYLN1XF5IpklMM3y94aGaufAYK1Gj3erO2tl+JfUYLaOlBaA/IxNnyPNoE9RNRDn
+ au70uueJDmuVTiBv479NvSMuQ03rRKrDPZm3e5KkKW1Mn9A6XeEuNC7pm+ojIN5wCnq00k
+ X5/I/uuTzNls/cz7eNawnvgLMpRd8XXpitIGNgfn+n6tj3yqJ59vHVLdhociJQ==
+ARC-Authentication-Results: i=1; rspamd-54f99b5bc4-82m9t;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Cold-Invention: 170c03b82291bff0_1728442989287_1477917783
+X-MC-Loop-Signature: 1728442989287:1068372020
+X-MC-Ingress-Time: 1728442989287
+Received: from pdx1-sub0-mail-a279.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.101.173.103 (trex/7.0.2); Wed, 09 Oct 2024 03:03:09 +0000
+Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a279.dreamhost.com (Postfix) with ESMTPSA id 4XNd4D22Nyz2q; 
+ Tue,  8 Oct 2024 20:03:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1728442988;
+ bh=zuqFRnQ5g+78gWUtlFavQ9YtvH2+ssaWeobdd16OhFA=;
+ h=Date:From:To:Cc:Subject:Content-Type;
+ b=btZyemQMhHeJllCxNHLhlK1U98FOZK+AUg1Yr9haUrykf98YaejhHUJ9c0e36MkDw
+ cW/+6ApTC7cCLvbTUudT1PS/E4Dd/69BU7/SkEk2vF+webrw063F11a6ByD7KqvD+x
+ 377HhVhehFi2ofAL+irL+XZcdoPoTlV8TVc2KetMaH5kVpO5dYO3O2JogWv7uwsuhO
+ uP7hVyZcnJ7sdwvUG1pgewDah56+qP4F8tuCHeye4Nujaye2alhHepFKQvviwhP5Qa
+ qlKYHdjX0bl9NkjzLDxb1DRLv0omUIsHC7VtLuhMGmfh3y9Zf0VfNo2W9mn3plLK3s
+ D44Pqnti3Sk0A==
+Date: Tue, 8 Oct 2024 20:01:07 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: nifan.cxl@gmail.com
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com, 
+ linux-cxl@vger.kernel.org, a.manzanares@samsung.com, nmtadam.samsung@gmail.com,
+ abhi.n@samsung.com, alok.rathore@samsung.com, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [QEMU PATCH] cxl/cxl-mailbox-utils: Fix size check for
+ cmd_firmware_update_get_info
+Message-ID: <uuxiowlqgqs7mq2dfxixw4ryx4zfbygyaji7axfcln3nstdfed@nufwcfs2nj2a>
+References: <20241008164624.78608-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/12] tcg/riscv: Add basic support for vector
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- Huang Shiyuan <swung0x48@outlook.com>,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20241007025700.47259-1-zhiwei_liu@linux.alibaba.com>
- <20241007025700.47259-3-zhiwei_liu@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241007025700.47259-3-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20241008164624.78608-1-nifan.cxl@gmail.com>
+User-Agent: NeoMutt/20240425
+Received-SPF: pass client-ip=23.83.222.61; envelope-from=dave@stgolabs.net;
+ helo=fly.ash.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,20 +114,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/24 19:56, LIU Zhiwei wrote:
-> +    }
->   
->       tcg_target_call_clobber_regs = -1u;
->       tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S0);
+On Tue, 08 Oct 2024, nifan.cxl@gmail.com wrote:\n
+>From: Fan Ni <fan.ni@samsung.com>
+>
+>In the function cmd_firmware_update_get_info for handling Get FW info
+>command (0x0200h), the vmem, pmem and DC capacity size check were
+>incorrect. The size should be aligned to 256MiB, not smaller than
+>256MiB.
 
-I believe all of the vector registers are call-clobbered?
-This needs
+Can get rid of a level of parenthesis (other cmds as well), otherwise:
 
--       tcg_target_call_clobber_regs = -1u;
-+       tcg_target_call_clobber_regs = -1;
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 
-so that all 64 registers begin as call-clobbered.
-
-
-r~
+>
+>Signed-off-by: Fan Ni <fan.ni@samsung.com>
+>---
+> hw/cxl/cxl-mailbox-utils.c | 6 +++---
+> 1 file changed, 3 insertions(+), 3 deletions(-)
+>
+>diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>index 9258e48f95..c82ad50ac8 100644
+>--- a/hw/cxl/cxl-mailbox-utils.c
+>+++ b/hw/cxl/cxl-mailbox-utils.c
+>@@ -649,9 +649,9 @@ static CXLRetCode cmd_firmware_update_get_info(const struct cxl_cmd *cmd,
+>     } QEMU_PACKED *fw_info;
+>     QEMU_BUILD_BUG_ON(sizeof(*fw_info) != 0x50);
+>
+>-    if ((cxl_dstate->vmem_size < CXL_CAPACITY_MULTIPLIER) ||
+>-        (cxl_dstate->pmem_size < CXL_CAPACITY_MULTIPLIER) ||
+>-        (ct3d->dc.total_capacity < CXL_CAPACITY_MULTIPLIER)) {
+>+    if ((!QEMU_IS_ALIGNED(cxl_dstate->vmem_size, CXL_CAPACITY_MULTIPLIER)) ||
+>+        (!QEMU_IS_ALIGNED(cxl_dstate->pmem_size, CXL_CAPACITY_MULTIPLIER)) ||
+>+        (!QEMU_IS_ALIGNED(ct3d->dc.total_capacity, CXL_CAPACITY_MULTIPLIER))) {
+>         return CXL_MBOX_INTERNAL_ERROR;
+>     }
+>
+>--
+>2.43.0
+>
 
