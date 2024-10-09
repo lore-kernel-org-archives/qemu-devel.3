@@ -4,84 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D84CED618
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 07:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645A7CED62A
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syRKF-00021i-Sg; Wed, 09 Oct 2024 03:41:39 -0400
+	id 1syRoe-0006b3-Gh; Wed, 09 Oct 2024 04:13:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syRKE-00021X-Hi
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:41:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chao.gao@intel.com>)
+ id 1syRob-0006ab-SS
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:13:02 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syRKC-0001uP-KO
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 03:41:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728459695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=re6iQRwVUCqy/n4EUS+nquRq8taDdoQGAj162cVw64w=;
- b=bKVaJfvvim5fURqFpEO7kJIP4eaU2V7g+Gl1zNqSeo4uFvSaCrDJodPwwuHXDZNZ4iLHg2
- DAsD7flIjDl/IJRqEsqU6slf7+umI/7LneHL0//fAEkKo9636ka+I3s5dYw0uryzLjrcIG
- pemuc2Auh2jjzOpql/5pVk3moHluiPM=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-IJ4Y4DrUMxaBPdVy6Zjnow-1; Wed, 09 Oct 2024 03:41:18 -0400
-X-MC-Unique: IJ4Y4DrUMxaBPdVy6Zjnow-1
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-20c5bcbc603so15983595ad.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 00:41:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728459677; x=1729064477;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=re6iQRwVUCqy/n4EUS+nquRq8taDdoQGAj162cVw64w=;
- b=OdS2h9/IJzHFeAamBSq+CVXBdG6znus9WesulUJ5EbuQ1w0jakBNECydRzQxlGUeHf
- JxklgCGSg3gWs2TMJ99rhB7FBGPlVm3HCYJCUAtTYE6jQT0S3XUcwA+CQhw6bTNsl3w3
- l0ove9osFkMZnFGEFsG7Qf+tO1SGZUAc/ipm91gRovRl2MHDYeIKRh91yk7+rJvCeDp+
- eQ6Nw207YyaoGN7QnTgCQKrunWgnlOEZZAL5zJzZmPjvNBw0clsDdhIz5JsXwbZbnBbs
- sNdZ4SuCopsx5JDKiOZIFtLAmUR4ypvrttzSqHDNSxjmZjhkFPJiYYpuWzmqB7EbYlIG
- /95Q==
-X-Gm-Message-State: AOJu0YyFH76dJQRSb/c+tElDolN3PS9D97om8rIGNI4+byegvuSTQlbV
- Dbvnb19PkBhZuXkNaW2i1YqE24sC7PuL/AFf6+w5hj0urXFtoW3j7bmCaBRmXSKNBOkD/HcQzuY
- LAQ1RboLlhDIMXEegNyA31DuBw6kpbXgWhMzH8igDaVLlFmgnNbZ9lKlw5Ex1/RPLvuNiJHH9MP
- Pn1lQ+78CV/hSL0mAJXIReqPrZTL0=
-X-Received: by 2002:a17:902:fc44:b0:20c:5e86:9b68 with SMTP id
- d9443c01a7336-20c636dd37emr29854215ad.4.1728459677556; 
- Wed, 09 Oct 2024 00:41:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRfT8NvbtIECls9ofrd2l2nBLBC/r+J7S5+Vs7ork6Z0GAtlZUy0+xTHwkSidRIBFDCjpAeQY3BJSFrUnc7D8=
-X-Received: by 2002:a17:902:fc44:b0:20c:5e86:9b68 with SMTP id
- d9443c01a7336-20c636dd37emr29853875ad.4.1728459677092; Wed, 09 Oct 2024
- 00:41:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.gao@intel.com>)
+ id 1syRoY-0006K6-0w
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:13:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728461578; x=1759997578;
+ h=date:from:to:cc:subject:message-id:references:
+ in-reply-to:mime-version;
+ bh=1GtrOjr/NcE1F2yUSx/sOCpUTAWyalnejB2scRUKGy8=;
+ b=NPb9cTrSmeVtjtQ2B/eRF2wJmgMkJOyyd8z/IDku2CSkFf9fg/H2qZmR
+ kwwgAHRhhQl/GQaTCNqXIYPsjYrHZctDZJFCWLYfTEC7a4MgNbOjzpJ/d
+ GEVQwmSJDrirXtWrDl8+YtJRIUYa8tCcjH+KJ0IJpUckbn/ExdNIcvwVv
+ cctTXAnMS5kQqQvYABmrPNe8WnO4UVfAY94d1PgZSM68zuF+17EV4wsA1
+ 4KgWi1v5QTV3AuAH/lmjxTHOhLvjn5gHJCjsouhsQ48MJxpPXiGx8oi+6
+ Vx+5etoONa4V4rRwZRUFfuKJMDUbMayY/xf/bYyAUxhV9tw3DrIEAjelD A==;
+X-CSE-ConnectionGUID: FTKenkwXThK22nMYk04opA==
+X-CSE-MsgGUID: ec8spS4BTOCsCRBAgILdyA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="31445393"
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="31445393"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2024 01:12:52 -0700
+X-CSE-ConnectionGUID: u7EqvlTtSai8si66NQQIUQ==
+X-CSE-MsgGUID: jiL+lR7ySpmWxGsk4EHUdw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="76487406"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 09 Oct 2024 01:12:51 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 9 Oct 2024 01:12:51 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 9 Oct 2024 01:12:51 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Wed, 9 Oct 2024 01:12:51 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.170)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 9 Oct 2024 01:12:50 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wGx3Qa8f9zn6lE35lLNRhxWtZa/HY9kiPU3DvhfH31/p9g4OVWgqDnh4K89EDHEwcKZ8UHob13o1Ds3HiaoKYQmEwhV7G5uzM26yAgqXexk/M+WKz5iy3vrxmdPcs3ZJFzvkAjDS94opg31oGoPacPvRYRfNofu1AsRaFwUvgT27gynVJ8LAfhkBO1X/xH/hz9enMMRokGixOidVBviwRYUGMGQqlVXyL6oo5O5JjFIQ97NXChp7IWqNF+cpMTjtGR4qLXmPxLeJuYiiMWwXoVACQW2Ode+Ip77U9pB6a3/p1Dmun065DGGdMDd6qKbcW3rM0S2wrfERsdwVX1jFhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=chCJo+kRnOCXDk7zPIQVoF09vtLc1XlOvOYmZVNm+co=;
+ b=snIRK5Y25zrSKwA0MaOVGSLuDF5CQ9bb/GYfoiC0GdXwpGDMcNArpilfTuRnCppcGlrYxe/qjIku/ghX97jBCIf1l0sh5rHGQWPuQGcN+lx6nc/ZXvy6Eu2SX6YvN5h3Ei0skEL1Z7pNHYF9mocuBprHgLx4/56dRl/UeaAsbS1C/HeL4ka1pI1lpjSTWgsv0Y+B7/rHYKvq0OMEfz1t50pjDCPJmvkqwy+mIThyl+xSOa0jmfjWQ5R9ywikPmjBiE8faODOYR6pFQAoaRs1T2HTk59Gwoy4pbOxu9UglRZkkKAwoP4gXtfBhGBK5KkGV2HaGMxpXCAhPhgvVTaqFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH3PR11MB8660.namprd11.prod.outlook.com (2603:10b6:610:1ce::13)
+ by PH8PR11MB6683.namprd11.prod.outlook.com (2603:10b6:510:1c6::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.16; Wed, 9 Oct
+ 2024 08:12:48 +0000
+Received: from CH3PR11MB8660.namprd11.prod.outlook.com
+ ([fe80::cfad:add4:daad:fb9b]) by CH3PR11MB8660.namprd11.prod.outlook.com
+ ([fe80::cfad:add4:daad:fb9b%4]) with mapi id 15.20.8048.013; Wed, 9 Oct 2024
+ 08:12:48 +0000
+Date: Wed, 9 Oct 2024 16:12:38 +0800
+From: Chao Gao <chao.gao@intel.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <jmattson@google.com>,
+ <pawan.kumar.gupta@linux.intel.com>, <jon@nutanix.com>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH] target/i386: Add more features enumerated by CPUID.7.2.EDX
+Message-ID: <ZwY69phzk3GpGvsh@intel.com>
+References: <20240919051011.118309-1-chao.gao@intel.com>
+ <ZwY1AeJPlrniISB1@intel.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZwY1AeJPlrniISB1@intel.com>
+X-ClientProxiedBy: SG2PR04CA0200.apcprd04.prod.outlook.com
+ (2603:1096:4:187::15) To CH3PR11MB8660.namprd11.prod.outlook.com
+ (2603:10b6:610:1ce::13)
 MIME-Version: 1.0
-References: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
-In-Reply-To: <20241008-macvtap-v1-1-2032caa25b6d@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 9 Oct 2024 15:41:06 +0800
-Message-ID: <CACGkMEvmEsFdLRgF9CLQCEo0jt3dX8wAPLjRC2pNb4ofD8dLNQ@mail.gmail.com>
-Subject: Re: [PATCH] tap-linux: Open ipvtap and macvtap
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR11MB8660:EE_|PH8PR11MB6683:EE_
+X-MS-Office365-Filtering-Correlation-Id: effffcee-7495-448b-6cb0-08dce83a2959
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rgIzEOrijCGm8ZBJsOG0MbcPaq95jIUTf62YHJKNnEe95mhSHFDmtT80TfjT?=
+ =?us-ascii?Q?k5hQ7Hhtd2zRuUFvU2RlOWdPoIyLSdE07HV3gWdww1Ti7+pycgX5ipUHKzrp?=
+ =?us-ascii?Q?ZtWh3LexEPfxTGGMiasP7JiEcUJcbCRFYvOxruGXvFA2Yoh4glqABELLQRXy?=
+ =?us-ascii?Q?CnBU9fXc4Mnh4L2t5rcN2Sy2YGrt7dSWCl6PBUkQao0r600q119h6ucUWiJr?=
+ =?us-ascii?Q?R0TmIW6dWpYBQSFfOPpTl4HTU27Ebtf+7EiMWva5rk1R5nl4fxyRR1E65YQV?=
+ =?us-ascii?Q?mwGxLTFFdMQHBDzu/dpF/0WwEjIVQBUSfvz2Jmj1oghGf3nK41ecLXSlRmFp?=
+ =?us-ascii?Q?vU/K5n8pfVCKZmym/qMj3kBsnaw0AEQ4T6qYGVHblE3vFVyN4XiDZ+6GTb3h?=
+ =?us-ascii?Q?wX9G+RdKyPIOKzQhpt3dlw2FvROMWxOagQfHko8YCnAKIc+49N7xDA8urzbT?=
+ =?us-ascii?Q?PTtXDJ5esD8W3v2ahYfBiAPdF7jc97yqtuu5sW/bx+bMpDUARpfqNjvtYxDH?=
+ =?us-ascii?Q?YcW7FGTUNCJogKNm/7sJb/1WkkJOeDZd9UXzavYbUtp6o4LarVrEIkJk5Uqj?=
+ =?us-ascii?Q?tFAsevr++1iw/gTWd8JW7EuDU6MWPxIpAst4PNAI+n5hCELQBlWkrTnDUKV3?=
+ =?us-ascii?Q?qaEcb4FUOu+aVpgKBl9jVXRSTVttp531r8bvXOs27rq/sQfpDybOC+2WQKNR?=
+ =?us-ascii?Q?YOx9Ofd2zg5AWGmhiV8AbCL6wlG0oMEKnRmXVmrxcwm1tTtYLmZ7jRKdkUNo?=
+ =?us-ascii?Q?H4uyJDsdvZdfn/cbtrRkWKEZjPWXSUm610hzTOoi1qjarW3ViUfoTmbcRnvA?=
+ =?us-ascii?Q?KtaN7xbbsdX81sgq3OpGiYhMJcbYpaUipiL+XbI9ZWDRx6OdlyqZWiysfIHB?=
+ =?us-ascii?Q?A7bOrJF4tAhZDsqr2MBtzzPTf5FGYEsVZrQxU3l+HdO3TleyJ3s6B5q6apf8?=
+ =?us-ascii?Q?JJYxALEw0ftadYG7ugVex2UaoKlW1a7QaKIxL3LmsM3aaO+yBqfs7VhDyhmO?=
+ =?us-ascii?Q?yOl7zH2Z4xu33wHF5rJX2yQPy0oP4XXCzK52r5xJmNLspq5TyG/fY4u4XPya?=
+ =?us-ascii?Q?mz6T8aKFzcEcUxoBphHzoP82tqy1K83eTBSkVb6xBr01iFfbjo34iXUttVEh?=
+ =?us-ascii?Q?ID1+FatMaMzEzzhYy6hdlySK6rgzNt2z0rBNPPmLQPL/1IrLQr04vr3sPwEG?=
+ =?us-ascii?Q?OZ3bah3unHPvRkwsN86bPth02B/TykJpdTG3izoye/RFkPfcU+BwQZ1T7ohb?=
+ =?us-ascii?Q?/DhwldepbILYvCkqnmk8VBYaG59x6Soh2WfGXBgcNQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR11MB8660.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mA0PwlHpOVWkrCoP06yJeG7Za4RBwI6a5v3/gW0TQKnP+pgXGJFqUNlZVByg?=
+ =?us-ascii?Q?v8xVAzrPcSrn7mwB/5FCkRW7MKHg4+PjeIF9crZy49tssc9iEA5dNmvc3bSW?=
+ =?us-ascii?Q?NoMx53jRV3owY/qYeYAake5c+JdFATWpmRpTGShjcPxMGa+plYIXv+dcKW/O?=
+ =?us-ascii?Q?Kb9jS5/QeTrL2uYyhMAO5v1FBiVStVAMuoU4O+E5cXQfas5bYpN7AiPaSU60?=
+ =?us-ascii?Q?G7bGkEOzWSYdAUhZNQ1VliMdFQXkbXd9qtMgt8znJSsIj6iuwy/1n9L1qbgv?=
+ =?us-ascii?Q?Aj276WXYWgnZI0EZgIPcnuluaG5LEBXOZTVZNSEhCK6ACJ/+VMo5ijlcWess?=
+ =?us-ascii?Q?NG5XNhkL9G0I8hblwBCS88z4lsVHgeBwnfDYIxJF7CPHW2ziBsAfFqPnyDiL?=
+ =?us-ascii?Q?WzqtZbQNMgKShJw94SEwlYJyBpoBjoZ5H989orQ+hd61clwsX5VLMW0Oy9Jn?=
+ =?us-ascii?Q?spfWzwpDU/Gb29kqXXi8/Vz4bjBPiQCHnfjzRpq7nYdv5BvKqabdGZOaz1/s?=
+ =?us-ascii?Q?I4pghHXL3+Fx0NfwbcWcEhuxYi/yUFkRlTIstbeFjuPT2dJkcQzSpwaFeq6x?=
+ =?us-ascii?Q?3Pz0CwE+U2zHI4WstHsVoD4O7TDQ1dmlp2A/Bl1KHU5ytC+DJwvRICdIGYFv?=
+ =?us-ascii?Q?k+eJtM0i8T79G2jynO0v+SbO4BjU6ZN0WL/TIbjrVJMwDvIsOq3rP7rgb901?=
+ =?us-ascii?Q?aTuxAtyMeYFEC0w3D+as1ji6f+aYULlOA5SaDz6X1fhOtanHPV7+CTJ3K0wT?=
+ =?us-ascii?Q?aldRoMk96fSRG5OE1umzxGynBT3grvxVYtSqEduWtnu5WuqONJAYAwY6zeNc?=
+ =?us-ascii?Q?3rhCwxzVcPSFF+yxogPS2Mky95AVwUWQzbwBf+TqDyt08uCdvV0X930DVwRx?=
+ =?us-ascii?Q?j1nxbiMuqieJqu0MrUnBLuqjMIB/a+fatv/6RpnWj0sMllJWeTIQ/1842MmQ?=
+ =?us-ascii?Q?0QwRSdErmlzXMpXBarMpzTqxsl4V4hgvFNm+nb7OmxDsD8BetMAkR9BXE2xI?=
+ =?us-ascii?Q?zs4mQz0Xt9UxTvYFk9xrz5sWF/JyGZAWDsC2bBoWpzm6GsYu64eIGdDC7VUm?=
+ =?us-ascii?Q?O15CsQITzDo9p0fTm9GM7EuSwgz59wG8386+PIFKjoGDd9M2bKaLrKvOEWpT?=
+ =?us-ascii?Q?63/8CQ5N48neT5EtZdW32YfQL/kyACgMer8KgVOIr4OA6NxENqRvB8Kfb9+w?=
+ =?us-ascii?Q?8/CFlL0yaec+lz3Ud/Wak74dowIT0bN9NFQMxA9qQXd+YOutI42QxMs4XKla?=
+ =?us-ascii?Q?J82CxHoxN9I84hyU622QSsk4xW+56eKGIyq8ks0kAtSq7hn3HkuJRMTWFTqT?=
+ =?us-ascii?Q?8zWMTlGsIFWAC3I6AtJ7llB5RvyiMP84m30n2FW+cnMvwBCwY7Wusnq++pAy?=
+ =?us-ascii?Q?YCBu5gnZP5OQ4R0qO47KNqQVTrbmFyWnyqvdY/uM7/BldW8gsR4ZfgCRQlqr?=
+ =?us-ascii?Q?sx3zTeAn+IChWkm6vu8n1CWXI6tKdrFiVBWUjgaQgu0KkpvEq76Aq7ofFM3J?=
+ =?us-ascii?Q?76Cph0oYQbTuMAKbPqZY9xMq311qaR22jzFoa0eyTGgNENByJM/aQ6Z83BjM?=
+ =?us-ascii?Q?0LIqxVESzrzdHgp36T+WgzqXHpamGv0IULsIaPLO?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: effffcee-7495-448b-6cb0-08dce83a2959
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB8660.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2024 08:12:48.0505 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GlNfEzbsZi8jLe0blUGmUle1bLvvjkAcHjUg0HCN4JuryNO6j51j5mEVj27WJHWPa21aP+u5MYY9UUxlgpyG3A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6683
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=chao.gao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,69 +193,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 8, 2024 at 2:52=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 85ef7452c0..18ba958f46 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -1148,8 +1148,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>>      [FEAT_7_2_EDX] = {
+>>          .type = CPUID_FEATURE_WORD,
+>>          .feat_names = {
+>> -            NULL, NULL, NULL, NULL,
+>> -            NULL, "mcdt-no", NULL, NULL,
+>> +            "intel-psfd", "ipred-ctrl", "rrsba-ctrl", "ddpd-u",
+>> +            "bhi-ctrl", "mcdt-no", NULL, NULL,
 >
-> ipvtap and macvtap create a file for each interface unlike tuntap, which
-> creates one file shared by all interfaces. Try to open a file dedicated
-> to the interface first for ipvtap and macvtap.
+>IIUC, these bits depend on "spec-ctrl", which indicates the presence of
+>IA32_SPEC_CTRL.
 >
+>Then I think we'd better add dependencies in feature_dependencies[].
 
-Management layers usually pass these fds via SCM_RIGHTS. Is this for
-testing purposes? (Note that we can use something like -netdev
-tap,fd=3D10 10<>/dev/tap0).
+(+ kvm mailing list)
 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  net/tap-linux.c | 17 ++++++++++++++---
->  1 file changed, 14 insertions(+), 3 deletions(-)
->
-> diff --git a/net/tap-linux.c b/net/tap-linux.c
-> index 1226d5fda2d9..22ec2f45d2b7 100644
-> --- a/net/tap-linux.c
-> +++ b/net/tap-linux.c
-> @@ -45,10 +45,21 @@ int tap_open(char *ifname, int ifname_size, int *vnet=
-_hdr,
->      int len =3D sizeof(struct virtio_net_hdr);
->      unsigned int features;
->
-> -    fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
-> +
-> +    ret =3D if_nametoindex(ifname);
-> +    if (ret) {
-> +        g_autofree char *file =3D g_strdup_printf("/dev/tap%d", ret);
-> +        fd =3D open(file, O_RDWR);
-> +    } else {
-> +        fd =3D -1;
-> +    }
-> +
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "could not open %s", PATH_NET_TUN)=
-;
-> -        return -1;
-> +        fd =3D RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
+Thanks for pointing that out. It seems that any of these bits imply the
+presence of IA32_SPEC_CTRL. According to SDM vol4, chapter 2, table 2.2,
+the 'Comment' column for the IA32_SPEC_CTRL MSR states:
 
-Any reason tuntap were tried after the macvtap/ipvtap?
+  If any one of the enumeration conditions for defined bit field positions holds.
 
-> +        if (fd < 0) {
-> +            error_setg_errno(errp, errno, "could not open %s", PATH_NET_=
-TUN);
-> +            return -1;
-> +        }
->      }
->      memset(&ifr, 0, sizeof(ifr));
->      ifr.ifr_flags =3D IFF_TAP | IFF_NO_PI;
->
-> ---
-> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-> change-id: 20241008-macvtap-b152e5abb457
->
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+So, it might be more appropriate to fix KVM's handling of the
+IA32_SPEC_CTRL MSR (i.e., guest_has_spec_ctrl_msr()).
 
-Thanks
+what do you think?
 
 >
-
+>-Zhao
+>
+>>              NULL, NULL, NULL, NULL,
+>>              NULL, NULL, NULL, NULL,
+>>              NULL, NULL, NULL, NULL,
+>> -- 
+>> 2.46.1
+>> 
+>> 
 
