@@ -4,42 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7741DCED611
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36ECCED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syfld-00064k-9n; Wed, 09 Oct 2024 19:06:53 -0400
+	id 1syfno-0006lr-KT; Wed, 09 Oct 2024 19:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1syflc-00064a-8O
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:06:52 -0400
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1syflb-0000ST-3U; Wed, 09 Oct 2024 19:06:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
- s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=9KzF+zCv3e3V4AWfHS69GKYm50M0FGk2dTm/QpGneI0=; b=OehDX5JWIO1cxDPmDEvq
- 2ur2snewEX3ddsZrrjX7t9fOOcdrFOKykIzTvy+hj76c1LW6bQWIwsFOpsr0Fq4jZ/apVbRCPXI1h
- IJztkqvroBR3XsQ6uwZ6sRvPM7alKsJQitpYmwPv2V0YwFCRkNNxN6MbVjPl1TQ53YzoeDFnnxxsb
- PeNlFFIUBl9LdW1KpXrJCgbvcT87+25k3WV4nSrrq8VtJXyPCg1DHb3j2/IQ8kXjUzRPONWd4FFn/
- 81CLHIbXDg8rm+v+0LXlTlFJcxXD5Zkr3YtwbpqrLdKwwuaBDGZLyRHX7ITylgbwutdsLJCRR1MIS
- n0H4uBAQER0/Lg==;
-Date: Thu, 10 Oct 2024 01:06:47 +0200
-From: Samuel Thibault <samuel.thibault@gnu.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] net/slirp: introduce slirp_os_socket to stay compatible
- with libslirp past 4.8.0
-Message-ID: <ZwcMh1Vl9VsTbIRq@begin>
-References: <20241005070753.1328079-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1syfnn-0006lY-2t
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:07 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1syfnl-0000gs-0h
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:06 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7ea12e0dc7aso184236a12.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:09:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728515343; x=1729120143;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=F4xAck7ZT8Ovl6HOOBp7iHK6etT+iXqunvWzmMhI1cQ=;
+ b=zsOLhHj/vzJNKcOak/g5MckDiFFz7R3EQZL4X8ZukepQXtfQQOwqxkAKTWKlyC36K9
+ UUXh9N1LUU9W/ybR/CpGJTlLDsQC3JsoQ4KVAKMMV0OwNE+GUI8oVQUzS9SP3jHdfnLh
+ Jm+M7XOzc4vrcwJSRWNKyUCJ1SdKacsEDMTQ8BO6GLYfHjRaeZHaRdSA4uYamiijIbf/
+ ZtWIcA9daO2n39OgzUQ1Wc7/HAe0ZuG3r3lO5SmAW7MID/tbO7FUHwO0Rgptswh9yTfT
+ 5XgURxaqq/+WBOLFsvJswnvRfjUzwSoRuJbFa0mnP30dpHmqblY1EJsfX4JHH9y1SEBg
+ 2WQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728515343; x=1729120143;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F4xAck7ZT8Ovl6HOOBp7iHK6etT+iXqunvWzmMhI1cQ=;
+ b=LcUvqeN7RFR2spfeVb0DAg3+vYeDgRDXv+oZSMXYFVd0/JoNixEE5th0nGAqRJzz8y
+ AT07/VBp0LT6ruQnk9oOb8VsAcx+bJBLkCwFumh7KJwRcYcWLtjr1DVW1cLS5W2bRrNC
+ a8AtoPXE2yO24yesC8jbBGdmsFyFO5F1nWF2i8hnXmh2vIwsU9uxpzpQbBipMxu1xqCi
+ GUjtjOBbugzqYD9VqE5ngZC4vXNiHwCAiepQF2XPI7UlabITAZgiJi1mQ23ihT1HEO/l
+ gQJIYXQHelTq6WJiwmzkhTQBx5Amv2mwH2HGg5jiFnhN2ziFdfJBEtJ5GzV8MgIeojae
+ Wl4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXsZ7wSPS8KdIvXVyoZ2OZ4f2i5kR4JDK6XeLkg6zBvFfLJQnGTbG7cjXiFfRa9IsQ+7v/w5x3PiR6l@nongnu.org
+X-Gm-Message-State: AOJu0YwV4SVTlUZM69ojTd5mJA+xdwQp4XSZoncM2z0hiDaO6PXUtDWK
+ dwahUmjtxQvX869YPDYdRNqomMHJWLFAFo6QQuj68Dw9hG0Wo0deta5gmv6BL+rKOvOIRkKogzH
+ B
+X-Google-Smtp-Source: AGHT+IFEY75V2HiL37ApCU0lYqmptRWbz1zO3vdKX+/mWGqE5TqAyme8PDdB5BH3X+7bqNPH72/3Vw==
+X-Received: by 2002:a17:90b:430f:b0:2e2:bd9a:4ff4 with SMTP id
+ 98e67ed59e1d1-2e2bd9a5225mr2748289a91.24.1728515343372; 
+ Wed, 09 Oct 2024 16:09:03 -0700 (PDT)
+Received: from atishp.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e2a55f9855sm2271902a91.2.2024.10.09.16.09.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Oct 2024 16:09:03 -0700 (PDT)
+From: Atish Patra <atishp@rivosinc.com>
+Subject: [PATCH RFC 00/10] Allow platform specific PMU event encoding
+Date: Wed, 09 Oct 2024 16:08:58 -0700
+Message-Id: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241005070753.1328079-1-mjt@tls.msk.ru>
-Organization: I am not organized
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAoNB2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDAwML3YLc0vjUstS8kvjcxOSMzLxU3SQL82RTC0MDk1QzQyWgvoKi1LT
+ MCrCZ0UpBbs5KsbW1AHjGRytoAAAA
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alexei.filippov@syntacore.com, Atish Patra <atishp@rivosinc.com>, 
+ palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
+X-Mailer: b4 0.15-dev-13183
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=atishp@rivosinc.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,75 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Currently, the pmu implementation is virt machine specific that
+implements the SBI PMU encodings. In the future, individual machines
+would want to implement their own custom event encodings as there
+is no standard event encoding defined by the ISA. There is a performance
+events TG which is working on defining standard set of events but not
+encodings. That allows flexibility for platforms to choose whatever
+encoding scheme they want. However, that means the generic pmu code
+should be flexible enough to allow that in Qemu as well.
 
-Michael Tokarev, le sam. 05 oct. 2024 10:07:53 +0300, a ecrit:
-> libslirp introduced new typedef after 4.8.0, slirp_os_socket, which
-> is defined to SOCKET on windows, which, in turn, is a 64bit number.
-> qemu uses int, so callback function prorotypes changed.
+This series aims to solve that problem by first disassociating the
+common pmu implementation and event encoding. The event encoding is
+specific to a platform and should be defined in the platform specific
+machine or cpu implementation. The newly defined callbacks can be invoked
+from machine specific cpu implementation or machine code itself depending
+on the requirement.
 
-I have fixed the code in upstream libslirp, to avoid breaking the API
-and ABI, and instead provide new functions & methods so that
-qemu/libslirp can upgrade smoothly.
+The first 5 patches in the series are generic improvements and cleanups
+where as the last 5 actually implements the disassociation for the virt
+machine. The current series can also be found at[2].
 
-> Introduce
-> slirp_os_socket locally if SLIRP_INVALID_SOCKET is not defined (this
-> define has been introduced together wiht slirp_os_socket type), for
-> libslirp <= 4.8.0, and use it in callback function definitions.
-> 
-> Link: https://gitlab.freedesktop.org/slirp/libslirp/-/commit/72f85005a2307fd0961543e3cea861ad7a4d201e
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2603
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  net/slirp.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/net/slirp.c b/net/slirp.c
-> index eb9a456ed4..fa07268cf4 100644
-> --- a/net/slirp.c
-> +++ b/net/slirp.c
-> @@ -98,6 +98,10 @@ typedef struct SlirpState {
->      GSList *fwd;
->  } SlirpState;
->  
-> +#ifndef SLIRP_INVALID_SOCKET /* after 4.8.0 */
+I recently found that Alexei has done a similar effort for SiFive FU740[1]
+but the implementation differs from this one based on how the cpu callbacks
+are invoked. For example, Alexei's series implements a single callback for
+all the events and has defined machine specific counter read/write callbacks.
+However, it just defaults to get_ticks() for every event. IMO, that is
+confusing to the users unless we can actually emulate more generic events or
+machine specific events.
 
-You can instead use SLIRP_CONFIG_VERSION_MAX >= 6, and if so set
-cfg.version to 6 and use the new fields and functions.
+I have separate callbacks for each type of events that we currently support
+in Qemu (cycle, instruction, TLB events). Separate callbacks seems a better
+approach to avoid ambiguity as we have very limited event capability in qemu.
+I am open to converging them to one callback as well if we think we will
+be extending set of events in the future.
 
-> +typedef int slirp_os_socket;
-> +#endif
-> +
->  static struct slirp_config_str *slirp_configs;
->  static QTAILQ_HEAD(, SlirpState) slirp_stacks =
->      QTAILQ_HEAD_INITIALIZER(slirp_stacks);
-> @@ -247,7 +251,7 @@ static void net_slirp_timer_mod(void *timer, int64_t expire_timer,
->      timer_mod(&t->timer, expire_timer);
->  }
->  
-> -static void net_slirp_register_poll_fd(int fd, void *opaque)
-> +static void net_slirp_register_poll_fd(slirp_os_socket fd, void *opaque)
->  {
->  #ifdef WIN32
->      AioContext *ctxt = qemu_get_aio_context();
-> @@ -260,7 +264,7 @@ static void net_slirp_register_poll_fd(int fd, void *opaque)
->  #endif
->  }
->  
-> -static void net_slirp_unregister_poll_fd(int fd, void *opaque)
-> +static void net_slirp_unregister_poll_fd(slirp_os_socket fd, void *opaque)
->  {
->  #ifdef WIN32
->      if (WSAEventSelect(fd, NULL, 0) != 0) {
-> @@ -314,7 +318,7 @@ static int slirp_poll_to_gio(int events)
->      return ret;
->  }
->  
-> -static int net_slirp_add_poll(int fd, int events, void *opaque)
-> +static int net_slirp_add_poll(slirp_os_socket fd, int events, void *opaque)
->  {
->      GArray *pollfds = opaque;
->      GPollFD pfd = {
-> -- 
-> 2.39.5
+Once we converge on the approaches, we can consolidate the patches
+so that both SiFive FU740 and virt machine can use the same abstraction.
+
+Cc: alexei.filippov@syntacore.com
+
+[1] https://lore.kernel.org/all/20240910174747.148141-1-alexei.filippov@syntacore.com/T/
+[2] https://github.com/atishp04/qemu/tree/b4/pmu_event_machine
+
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+---
+Atish Patra (10):
+      target/riscv: Fix the hpmevent mask
+      target/riscv: Introduce helper functions for pmu hashtable lookup
+      target/riscv: Protect the hashtable modifications with a lock
+      target/riscv: Use uint64 instead of uint as key
+      target/riscv: Rename the PMU events
+      target/riscv: Define PMU event related structures
+      hw/riscv/virt.c : Disassociate virt PMU events
+      target/riscv: Update event mapping hashtable for invalid events
+      target/riscv : Use the new tlb fill event functions
+      hw/riscv/virt.c: Generate the PMU node from the machine
+
+ hw/riscv/virt.c           | 102 +++++++++++++++++++++++-
+ target/riscv/cpu.h        |  52 ++++++++++--
+ target/riscv/cpu_bits.h   |   4 +-
+ target/riscv/cpu_helper.c |  21 ++---
+ target/riscv/pmu.c        | 198 +++++++++++++++++++++-------------------------
+ target/riscv/pmu.h        |   3 +-
+ 6 files changed, 246 insertions(+), 134 deletions(-)
+---
+base-commit: 19a9809808a51291008f72d051d0f9b3499fc223
+change-id: 20241008-pmu_event_machine-b87c58104e61
+--
+Regards,
+Atish patra
+
 
