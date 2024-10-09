@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC6DCF0435
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC68CF0435
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syNM4-0000zP-GR; Tue, 08 Oct 2024 23:27:16 -0400
+	id 1syNMN-0001t9-7I; Tue, 08 Oct 2024 23:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1syNM2-0000vK-32; Tue, 08 Oct 2024 23:27:14 -0400
+ id 1syNMK-0001fz-B1; Tue, 08 Oct 2024 23:27:32 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1syNM0-00050m-CP; Tue, 08 Oct 2024 23:27:13 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XNdbb1H1sz6K9Gj;
- Wed,  9 Oct 2024 11:26:51 +0800 (CST)
+ id 1syNMI-00051c-Hx; Tue, 08 Oct 2024 23:27:32 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XNdWJ5BvHz6LDCR;
+ Wed,  9 Oct 2024 11:23:08 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id BF8BB140B3C;
- Wed,  9 Oct 2024 11:27:07 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 6F6A2140114;
+ Wed,  9 Oct 2024 11:27:27 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.126.173.89) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 9 Oct 2024 05:26:48 +0200
+ 15.1.2507.39; Wed, 9 Oct 2024 05:27:08 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,10 +45,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V4 23/33] hw/arm: Changes required for reset and to
- support next boot
-Date: Wed, 9 Oct 2024 04:18:05 +0100
-Message-ID: <20241009031815.250096-24-salil.mehta@huawei.com>
+Subject: [PATCH RFC V4 24/33] arm/virt: Update the guest(via GED) about vCPU
+ hot-(un)plug events
+Date: Wed, 9 Oct 2024 04:18:06 +0100
+Message-ID: <20241009031815.250096-25-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241009031815.250096-1-salil.mehta@huawei.com>
 References: <20241009031815.250096-1-salil.mehta@huawei.com>
@@ -84,107 +84,116 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updates the firmware config with the next boot cpus information and also
-registers the reset callback to be called when guest reboots to reset the cpu.
+During any vCPU hot-(un)plug operation, the running guest VM must be notified
+about the addition of a new vCPU or the removal of an existing vCPU. This
+notification is handled via an ACPI GED event, which is eventually demultiplexed
+into a vCPU hotplug event, and then further into a specific hot-(un)plug event
+for the *targeted* vCPU.
+
+Introduce the required ACPI calls into the existing hot-(un)plug hooks, allowing
+ACPI GED events to be triggered from QEMU to the guest VM.
 
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/arm/boot.c         |  2 +-
- hw/arm/virt.c         | 18 +++++++++++++++---
- include/hw/arm/boot.h |  2 ++
- include/hw/arm/virt.h |  1 +
- 4 files changed, 19 insertions(+), 4 deletions(-)
+ hw/arm/virt.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 5301d8d318..8bf8d003eb 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -682,7 +682,7 @@ fail:
-     return -1;
- }
- 
--static void do_cpu_reset(void *opaque)
-+void do_cpu_reset(void *opaque)
- {
-     ARMCPU *cpu = opaque;
-     CPUState *cs = CPU(cpu);
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 9634011ae7..8cb66c11a1 100644
+index 8cb66c11a1..5d440f9121 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -45,6 +45,8 @@
- #include "sysemu/device_tree.h"
- #include "sysemu/numa.h"
- #include "sysemu/runstate.h"
-+#include "sysemu/reset.h"
-+#include "sysemu/sysemu.h"
- #include "sysemu/tpm.h"
- #include "sysemu/tcg.h"
- #include "sysemu/kvm.h"
-@@ -1427,7 +1429,7 @@ static FWCfgState *create_fw_cfg(const VirtMachineState *vms, AddressSpace *as)
-     char *nodename;
+@@ -3183,6 +3183,7 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ {
+     VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+     CPUState *cs = CPU(dev);
++    Error *local_err = NULL;
+     CPUArchId *cpu_slot;
  
-     fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16, as);
--    fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
-+    fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, vms->boot_cpus);
+     /* insert the cold/hot-plugged vcpu in the slot */
+@@ -3220,8 +3221,18 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+      * hot-plugged, the guest is also notified.
+      */
+     if (vms->acpi_dev) {
+-        /* TODO: update acpi hotplug state. Send cpu hotplug event to guest */
++        HotplugHandlerClass *hhc;
++        /* update acpi hotplug state and send cpu hotplug event to guest */
++        hhc = HOTPLUG_HANDLER_GET_CLASS(vms->acpi_dev);
++        hhc->plug(HOTPLUG_HANDLER(vms->acpi_dev), dev, &local_err);
++        if (local_err) {
++            goto fail;
++        }
+     }
++
++    return;
++fail:
++    error_propagate(errp, local_err);
+ }
  
-     nodename = g_strdup_printf("/fw-cfg@%" PRIx64, base);
-     qemu_fdt_add_subnode(ms->fdt, nodename);
-@@ -3197,7 +3199,13 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+@@ -3230,7 +3241,9 @@ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+     MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+     VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+     ARMCPU *cpu = ARM_CPU(dev);
++    HotplugHandlerClass *hhc;
+     CPUState *cs = CPU(dev);
++    Error *local_err = NULL;
+ 
+     if (!vms->acpi_dev) {
+         error_setg(errp, "GED does not exists or device is not realized!");
+@@ -3249,14 +3262,25 @@ static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+         return;
      }
  
-     if (vms->acpi_dev) {
--        /* TODO: register cpu for reset & update F/W info for the next boot */
-+        qemu_register_reset(do_cpu_reset, ARM_CPU(cs));
+-    /* TODO: request cpu hotplug from guest */
++    /* request cpu hotplug from guest */
++    hhc = HOTPLUG_HANDLER_GET_CLASS(vms->acpi_dev);
++    hhc->unplug_request(HOTPLUG_HANDLER(vms->acpi_dev), dev, &local_err);
++    if (local_err) {
++        goto fail;
 +    }
 +
-+    /* update the firmware information for the next boot. */
-+    vms->boot_cpus++;
-+    if (vms->fw_cfg) {
-+        fw_cfg_modify_i16(vms->fw_cfg, FW_CFG_NB_CPUS, vms->boot_cpus);
-     }
++    return;
++fail:
++    error_propagate(errp, local_err);
+ }
  
-     /*
-@@ -3263,7 +3271,11 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+                             Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
++    HotplugHandlerClass *hhc;
+     CPUState *cs = CPU(dev);
++    Error *local_err = NULL;
+     CPUArchId *cpu_slot;
+ 
+     if (!vms->acpi_dev) {
+@@ -3266,7 +3290,12 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ 
+     cpu_slot = virt_find_cpu_slot(cs);
+ 
+-    /* TODO: update the acpi cpu hotplug state for cpu hot-unplug */
++    /* update the acpi cpu hotplug state for cpu hot-unplug */
++    hhc = HOTPLUG_HANDLER_GET_CLASS(vms->acpi_dev);
++    hhc->unplug(HOTPLUG_HANDLER(vms->acpi_dev), dev, &local_err);
++    if (local_err) {
++        goto fail;
++    }
+ 
      unwire_gic_cpu_irqs(vms, cs);
      virt_update_gic(vms, cs, false);
+@@ -3282,6 +3311,10 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
  
--    /* TODO: unregister cpu for reset & update F/W info for the next boot */
-+    qemu_unregister_reset(do_cpu_reset, ARM_CPU(cs));
-+    vms->boot_cpus--;
-+    if (vms->fw_cfg) {
-+        fw_cfg_modify_i16(vms->fw_cfg, FW_CFG_NB_CPUS, vms->boot_cpus);
-+    }
- 
-     qobject_unref(dev->opts);
-     dev->opts = NULL;
-diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
-index 80c492d742..f81326a1dc 100644
---- a/include/hw/arm/boot.h
-+++ b/include/hw/arm/boot.h
-@@ -178,6 +178,8 @@ AddressSpace *arm_boot_address_space(ARMCPU *cpu,
- int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                  hwaddr addr_limit, AddressSpace *as, MachineState *ms);
- 
-+void do_cpu_reset(void *opaque);
+     cpu_slot->cpu = NULL;
+     cs->disabled = true;
 +
- /* Write a secure board setup routine with a dummy handler for SMCs */
- void arm_write_secure_board_setup_dummy_smc(ARMCPU *cpu,
-                                             const struct arm_boot_info *info,
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 0202f0252c..073d18281e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -172,6 +172,7 @@ struct VirtMachineState {
-     MemMapEntry *memmap;
-     char *pciehb_nodename;
-     const int *irqmap;
-+    uint16_t boot_cpus;
-     int fdt_size;
-     uint32_t clock_phandle;
-     uint32_t gic_phandle;
++    return;
++fail:
++    error_propagate(errp, local_err);
+ }
+ 
+ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
 -- 
 2.34.1
 
