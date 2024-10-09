@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CA1CF043C
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F411CF043B
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syNk7-0006Jb-Tw; Tue, 08 Oct 2024 23:52:07 -0400
+	id 1syNoo-0007j7-Va; Tue, 08 Oct 2024 23:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syNk6-0006Io-FF
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:52:06 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1syNon-0007il-Hb
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:56:57 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syNk4-0007sN-Df
- for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:52:06 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-71e038f3835so2467160b3a.0
- for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 20:52:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1syNol-0008Pb-1v
+ for qemu-devel@nongnu.org; Tue, 08 Oct 2024 23:56:57 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-20b90984971so65534355ad.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Oct 2024 20:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728445922; x=1729050722;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zm5uKMZ1YJ4NZYBCBWN5xcaqHfKmlW82HIGsBN15l98=;
- b=Xs2BXeILOXrLmocOUadM6kVhWrk7ZpalCGmq/1oiS2+KK1a+LKifNj5xoWtef63g0G
- oPuGwAuK+IHVY6J2Z+tYJnmZeLHp/QkXLCV5nt9f/j7osG9PyecYRT2gPHPsNwbufkjA
- xZn7CgR3Y9ZTBSKjo87+GwWfB3D+7mLD5z9vipurWk1boDqDVq5FcDertqtN/BiLKxqL
- 45NU4E1U6V3myNlv4eBeRf9bqgEvNAATry/tn3wIBvDEYbRGwtJVhAIaJ6OzTzg/scVT
- bf6YxWh10wB6qr0tyIAz35pp4oVcgancijhYZ1AxW8nFDJQ9IryFw1g5Pmrbc2Dzy5N9
- nzrQ==
+ d=bytedance.com; s=google; t=1728446213; x=1729051013; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zysoOgYWRxFsYfR8sAY5YlZkGoFfzyRqcIlflQhRqKQ=;
+ b=TP8dm8eNNDOZOgCoiKIj+IJQYGXwfkHI9aj2LaPTR4yBS+RlYUJMxfkFDWB+fYxmyJ
+ oPt20/rZWQJ2renaOCQ7LjxNnw73JEgP4WoaahNvY6Rmr324b49JKwR51pVl7VbnMfiT
+ eg2/N+9kUfl0rq4OEBlyu8+JW2oDvKfh9bZrETFsVgzcPUSw31oiDcWcsxfUs0Uwyp5J
+ YZB5tHvbS8W9Htm1sj6vocH9vJ9Dk8094322LmChX8ti5Zu5wGZsB17WKa2YV2FGouan
+ CaTeb6tsV96R+DxVs68UztaUB3MeeAmF8Ojjcl2O7hQdAPTSwzqqbV/pzY6dkw7wEK2m
+ u1mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728445922; x=1729050722;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zm5uKMZ1YJ4NZYBCBWN5xcaqHfKmlW82HIGsBN15l98=;
- b=mUAN81uqymOCq30/AdHIOns5NV87DBkRPWOPyUjE/Fi6hgHV3EcH1VRntoHqdnZ5Ud
- TEERKl6pyrNXhlXcdtCx/MLfqF9yG2oImjLlczg2rAJSggJQZ83IDFYkZMnuM5uGPeb5
- Y8vNufAoPD5rvY7RXJ/PpugG+8/hxwAeaqGT5ujn5CHcjl0h5P5ebDkhM6S/PGl2yU8q
- /OFWuDF1otQweDSluQRTnRwPQlY06AS/gwmrGtpFtfmLhbtgCRAw2+J0Ee6H1uQM3ra8
- i9lzwVFT0B6hinjE8mdk1+IivORTpywLKZVqOuZW09cQNoFNhzEPDQUt4E/yQf1pwx1R
- c5cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXY42IwBgNET5xZBhj9iy9kkV/eebdKfD9drFMnzMLX9hztC38ESTAp60uZBZoUSzk6qvxeJbZrHGSm@nongnu.org
-X-Gm-Message-State: AOJu0YwdfFonajsgrcryg5Oq72/Ar0P63oXSd292i0VBcG6AhKz+8x8p
- CVzxbD0Gnt7HvzPULjuW8RlcBh63qFsW1ogGktkoTVi7zDhBiYkzYGWDwddbRZsnzlWPORfkI5P
- b2W4J8RbATRltBOwUCPOBpiUeAWXejElOPJ23Bg==
-X-Google-Smtp-Source: AGHT+IE2jCukXJi9D80kULoWxmIOMwLrJzRvAB2QGMGRL1sw30K8fLn572MWLmNpIFlVWxkdU2h1+hkpT23efOmc5xg=
-X-Received: by 2002:a05:6a20:d497:b0:1cf:2d52:415e with SMTP id
- adf61e73a8af0-1d8a3c3a48amr1338673637.36.1728445922477; Tue, 08 Oct 2024
- 20:52:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728446213; x=1729051013;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zysoOgYWRxFsYfR8sAY5YlZkGoFfzyRqcIlflQhRqKQ=;
+ b=aILvlytVOa+USs/N2rLVd2zDzJFXKGjhQm6vGwbd54shEOpmdBFi1U5CLkpL+FE73o
+ 0M5u6DgOVKFiwYXdmcmhCtcPA+0CJrZvZZ3jKBJ7QKncbybAhqyJnT7OBymGRdvARqJY
+ avrdg8RcroKljqBGYzBcwNkrWMR86TrzARoOdrI5zXqbZx9iXJKWkEzqTBThQ62YVQEW
+ Fu47obihB/yaCJX/9Ren8K3pNrw0qeGJYqymLpqTw1o9yDUj3A4a+7McG0d8Pwz+o0HZ
+ 3DrLdk2XHoN6wXQlkbGOONZwVpp9PmZDVURrW+XlCWf4nXbfdplSAsrpytwUWqvHJv+N
+ o7OQ==
+X-Gm-Message-State: AOJu0YzoqFKsR6hVJvRiwimq+twU6wvWrKRvYLsMd/GgPFsRrq1A9yoi
+ sudNFUxsFF94Xyk8dVpibdAVgdStlcYBPnTMov3znTk5zyfz/RNcqzBgLASj78J//83R6I3IJB6
+ L
+X-Google-Smtp-Source: AGHT+IHHOAAXiK86D5kpqgvkhWQJ4mGIs4kUvfOR44j2sdswvokkRkbhranYe3I3YXGTRxdzWB7zGA==
+X-Received: by 2002:a17:902:d504:b0:20b:770b:ad2e with SMTP id
+ d9443c01a7336-20c6373ce12mr17785155ad.28.1728446213234; 
+ Tue, 08 Oct 2024 20:56:53 -0700 (PDT)
+Received: from KK6FJ77W06.bytedance.net ([203.208.167.151])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c13994f84sm62417255ad.290.2024.10.08.20.56.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 08 Oct 2024 20:56:52 -0700 (PDT)
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, imammedo@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+Subject: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+Date: Wed,  9 Oct 2024 11:56:38 +0800
+Message-Id: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
-References: <20240910174747.148141-1-alexei.filippov@syntacore.com>
- <CAKmqyKPH33Lf5YdNrdHEQ9K0ZLrnJmvcGi9DjsP6gKNQZYAxaA@mail.gmail.com>
-In-Reply-To: <CAKmqyKPH33Lf5YdNrdHEQ9K0ZLrnJmvcGi9DjsP6gKNQZYAxaA@mail.gmail.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Tue, 8 Oct 2024 20:51:51 -0700
-Message-ID: <CAHBxVyEFDkDm5Tiytiemxohj1YdqdBiKk2YSiFdQ83dqN5zvyw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] target/riscv: Add support for machine specific
- pmu's events
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Alexei Filippov <alexei.filippov@syntacore.com>, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=atishp@rivosinc.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.66,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,135 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 7, 2024 at 7:52=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
-om> wrote:
->
-> On Wed, Sep 11, 2024 at 3:49=E2=80=AFAM Alexei Filippov
-> <alexei.filippov@syntacore.com> wrote:
-> >
-> > Following original patch [1] here's a patch with support of machine
-> > specific pmu events and PoC with initial support for sifive_u's HPM.
->
-> Thanks for the patch.
->
-> I'm hesitate to support these callback functions as I feel they
-> (callbacks in the CPU to the machine in general) are clunky.
->
-> I think the cover letter, code and commit messages need more details here=
-.
->
-> First can you link to the exact spec you are trying to implement
-> (RISC-V has a habit of creating multiple "ratified" specs that are all
-> incompatible). It's really handy to point to the exact PDF in the
-> cover letter or commit message to just be really clear what you are
-> supporting.
->
+When QEMU is started with:
+-cpu host,migratable=on,host-cache-info=on,l3-cache=off
+-smp 180,sockets=2,dies=1,cores=45,threads=2
 
-This patch is trying to implement SiFive specific event encodings.
-There is no standard
-RISC-V ISA involved here.
+On Intel platform:
+CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+logical processors in the physical package".
 
-> Secondly, can you describe why this is useful? What is the point of
-> machine specific PMU events? Why do we want to support this in QEMU?
->
+When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
+CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+CPUID.04H.EAX[31:26], which matches the expected result.
 
-I happen to work on a similar implementation as well. Apologies for
-not seeing this patch earlier.
-Here is the link to the series that I have been working on to
-implement a similar feature.
-https://github.com/atishp04/qemu/tree/b4/pmu_event_machine
-I will send it to the mailing list tomorrow after some checkpatch fixes.
+As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+integer too. Otherwise we may encounter unexpected results in guest.
 
-Regarding the motivation, RISC-V ISA doesn't  define any standard
-event encodings.
-The virt machine implemented event encodings defined in the SBI PMU
-extension because
-there was nothing else available. There is an active performance
-events TG who is working on defining
-the standard events for RISC-V but not the encodings. The goal is
-provide flexibility for the platforms while
-allowing a minimum set of events that would work across platforms.
+For example, when QEMU is started with CLI above and xtopology is disabled,
+guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+as the result, even though threads-per-core should actually be 2.
 
-However, any platform would define their own event encodings and want
-to support those in their Qemu
-machine implementation. That's why, we should disassociate the event
-encodings in the pmu.c to make it
-more generic and usable across machines.
+And on AMD platform:
+CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
+result meets our expectation.
 
-> The callbacks should also have some documentation in the code base so
-> others can implement the functionality.
->
-> It might also be helpful to split this patch up a little bit more. A
-> quick read through and it seems like the patches could be a little
-> smaller, making it easier to review.
->
-> Finally, for the next version CC @Atish Patra  who has ended up being
-> the PMU person :)
->
+So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
+only for Intel platform to solve the unexpected result.
 
-Thanks for Ccing me. I completely missed this patch earlier. Few
-thoughts by looking at this series.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+---
+ target/i386/cpu.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-@Alexei:
-1. Event encoding needs to be widened to 64 bits. That's what I tried
-to achieve with my implementation
-along with a bunch of other cleanups.
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ff227a8c5c..641d4577b0 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6462,7 +6462,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         *edx = env->features[FEAT_1_EDX];
+         if (threads_per_pkg > 1) {
+-            *ebx |= threads_per_pkg << 16;
++            /*
++             * AMD requires logical processor count, but Intel needs maximum
++             * number of addressable IDs for logical processors per package.
++             */
++            if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
++                *ebx |= threads_per_pkg << 16;
++            } else {
++                *ebx |= 1 << apicid_pkg_offset(&topo_info) << 16;
++            }
+             *edx |= CPUID_HT;
+         }
+         if (!cpu->enable_pmu) {
+-- 
+2.20.1
 
-2. Why do we need machine specific counter write/read functions ? If
-we really need it, we should definitely have that
-as a separate patch as my implementation only focussed on
-disassociating the events and pmu implementation.
-
-Please take a look at the patches shared above or the mailing list
-(should land tomorrow) and let me know your thoughts.
-I am happy to collaborate on your patches so that we have more than
-just a virt machine that we can test with this series.
-
-> Alistair
->
-> >
-> > =3D=3D Test scenarios =3D=3D
-> >
-> > So, I tested this patches on current Linux master with perf.
-> > something like `perf stat -e branch-misses perf bench mem memcpy` works
-> > just fine, also 'perf record -e branch-misses perf bench mem memcpy'
-> > collect samples just fine and `perf report` works.
-> >
-> > =3D=3D ToDos / Limitations =3D=3D
-> >
-> > Second patch is only inital sifive_u's HPM support, without any
-> > filtering, events combining features or differrent counting
-> > algorithm for different events. There are also no tests, but if you
-> > have any suggestions about where I need to look to implement them, plea=
-se
-> > point me to.
-> >
-> > =3D=3D Changes since original patch =3D=3D
-> >
-> > - Rebased to current master
-> >
-> > [1] https://lore.kernel.org/all/20240625144643.34733-1-alexei.filippov@=
-syntacore.com/
-> >
-> > Alexei Filippov (2):
-> >   target/riscv: Add support for machine specific pmu's events
-> >   hw/riscv/sifive_u.c: Add initial HPM support
-> >
-> >  hw/misc/meson.build            |   1 +
-> >  hw/misc/sifive_u_pmu.c         | 384 +++++++++++++++++++++++++++++++++
-> >  hw/riscv/sifive_u.c            |  14 ++
-> >  include/hw/misc/sifive_u_pmu.h |  24 +++
-> >  target/riscv/cpu.c             |  20 +-
-> >  target/riscv/cpu.h             |   9 +
-> >  target/riscv/csr.c             |  93 +++++---
-> >  target/riscv/pmu.c             | 138 ++++++------
-> >  target/riscv/pmu.h             |  19 +-
-> >  9 files changed, 599 insertions(+), 103 deletions(-)
-> >  create mode 100644 hw/misc/sifive_u_pmu.c
-> >  create mode 100644 include/hw/misc/sifive_u_pmu.h
-> >
-> > --
-> > 2.34.1
-> >
-> >
 
