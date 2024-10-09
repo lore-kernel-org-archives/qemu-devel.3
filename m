@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C908CED628
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D427CED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syfz2-0006nN-Q2; Wed, 09 Oct 2024 19:20:44 -0400
+	id 1syg77-00081v-7T; Wed, 09 Oct 2024 19:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syfz1-0006mr-RV
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:20:43 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1syg74-00081d-L1
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:29:02 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syfz0-0002fV-CQ
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:20:43 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-71df4620966so313462b3a.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:20:41 -0700 (PDT)
+ id 1syg73-0003oO-4C
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:29:02 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-71df7632055so332070b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:29:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728516041; x=1729120841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728516539; x=1729121339; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PSicqOXYnh1t1608309lffFtZAzYcB8vJZaufCb3M2Y=;
- b=kPbeO1Op4si8giq4lRpESDd/w1YW/sBw0tUHF8uFVf+AW7uqL7eDiNvuW66f0lwwL0
- o88m+22svJqZG6XIcIJfvDmYgVYhWvs6JXTP8gdjt7Fo8M82+vsw3enGoe4ZbcNLxAcd
- ne9VKCsq+Ma5vKcSxdPHx6pcheUhA/3qL8ckLWae6EUT0Bp3dFKi3oBSYOb1nKtRh52Y
- fd56it35baDxJ4MCQtNjrEIREqjA6wCsG7I8Qtm9L6AKg3IZQhX2Rq6CPxFcF79zB61C
- dkpn9YDleZjs1ahEte7qFmy9rIz3kFiGPqulEnZ+FEzButf12C7IAa2hk7FnS9L05f7e
- KfaQ==
+ bh=wxG4FSCEmhB06nN/5jWNvLEQCwMXOd3bzKNShjSzP0A=;
+ b=u9xxg7vG09Zoe+AbimlfldnudJ1J7acFeDOM/8ZTQHcfog5ppsWw1naS/4u0+jjIht
+ ZyOUira1OeExQwbkK/6v+N9EqTAiGwylnIk/OnLh1lvqILlcdfjmu4sT2Hv1dH7kK9N9
+ 3e0No1VvhzbfVuEvTGrmyMCD2BmDDNaFTrGUojDPGQedg6hVuQvoKLMpyXR/iy4oii9S
+ YuB/nJjIDdkjqUlvfirzx6WQHhevYinxgMOZyrRhByR7WaBg0Ikzm+llwSwDjTTjCWyy
+ hln/MjbYy2i4MgBZBojhrhdC+K6x7s4j/lBr5N+7s6oSh+ZM7bYteYsWhFWQ3qIwJL/E
+ vMoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728516041; x=1729120841;
+ d=1e100.net; s=20230601; t=1728516539; x=1729121339;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PSicqOXYnh1t1608309lffFtZAzYcB8vJZaufCb3M2Y=;
- b=jtM+8l6xy3TU1OiOwXwg6Lfu2vEQ1PkInKXEhJQ0vE5oFrTQjF6bHq1wUMmeWyHSfq
- fUJKuBvtAl4tW842r0VK6z2VcZYnnWG0amSmuY5rksWc16jv0y/p1C81VndzQfEWQ7LR
- KUOU1PrS6VoUeQt3sulKJOMIODi4H8PQktc/cT5sDk8mGuRWq7tR1J9FVu/x6ve58dFt
- C+HvXPWgr8gkZ0+qZqJ6EJt1DZ8OE+wdFMHN2dIrrL8gQ6xaFW7cMhFRUxZ/66Xudv9g
- 4Fl2WpSswD1G5eiN1nRn9SFVR2ZtMqUGICfCGiBci6HVNJp04Lv2YczX4EnY7VjBHPAd
- TWpA==
+ bh=wxG4FSCEmhB06nN/5jWNvLEQCwMXOd3bzKNShjSzP0A=;
+ b=KTZwSEvD1RI++W96qX39tbHzx+FmVJnJxbtH+t+YpyIeDeRt9SrT1TDI4viuk0rTPk
+ d7sXxM9FOgxXlpHU0SRZ7Ldn0MSEcKTOnFl8aLo3Rggt4qJKSmoQ29DAStlV9oQEltse
+ ZrxvxfWFVxyvaCGic6W66WyTgEA+4JWQPoHuldcqXPFuu9/6cJqGbK45uhzkMMOEpEu8
+ wULv0sTL12wHt89rdKMErHk6mIv4X1fLSEkHbRginkTrIFPXvu3dSgca5r0eGr0wpomb
+ XpO+OBGnGQYsRSZFiaKWealgkWgyKJ1XBYhos+yXLfAVlhvMCuLkgB9IqrWy+pGAT8X/
+ Yqxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzyc0FJJXGJSW68kZU6uVHPc0fdLO0YcI2/ONgtVBRgMxWzBNX6/bp7vDxhhhaEKD1skicWMOmEInz@nongnu.org
-X-Gm-Message-State: AOJu0Yzs1Rg5KnFLSXLiOxhNNyeOiIJqLQJ95PkvPMSl50MZfJAJmA16
- myCsGK5+gb7aLORBX8wg83Z6fltwaiEquev/nFLYxyNF/myfDeKRyOWxgGF9ghhWwiqCwPEgtMH
- zLKI=
-X-Google-Smtp-Source: AGHT+IEqsFAlRz0tBDy6Ppy85t3jz5f3lT+Vi495kg12TVod+szZlX/+X7JQ6WlRdhXmhKWIsr82gA==
-X-Received: by 2002:a05:6a00:228d:b0:71d:fae5:4ee6 with SMTP id
- d2e1a72fcca58-71e1db6e1e4mr6783501b3a.5.1728516040859; 
- Wed, 09 Oct 2024 16:20:40 -0700 (PDT)
+ AJvYcCUm6ZxanSPHeGOPokJcNmz63kdeZ7JQl29F/yRSkSzyCDKw5sWM3q3pP9LFpmWC39+k2pyEnFgsUTaF@nongnu.org
+X-Gm-Message-State: AOJu0YxKM7riMAthraJpb408SmSUbi/uTrrW6uuhqCPlf1EQKLhEV4w+
+ rQYPxshHAUK39NVgnOthcjPWg0mrFIW/s2hZ3Q4zEOwZrsYunatRR/I4FRZWZfo=
+X-Google-Smtp-Source: AGHT+IENT1LACnOVwsrHM7CnTOTiq3S8NDua1nVydMxfC0P4exx3/GvkC+3+7wMQktwVLwzBIE9NUw==
+X-Received: by 2002:a05:6a21:1709:b0:1cf:3c60:b8d3 with SMTP id
+ adf61e73a8af0-1d8a3c0e379mr7881198637.19.1728516539401; 
+ Wed, 09 Oct 2024 16:28:59 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0cbdce1sm8305423b3a.2.2024.10.09.16.20.40
+ d2e1a72fcca58-71df0cbd8b8sm8294506b3a.1.2024.10.09.16.28.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 16:20:40 -0700 (PDT)
-Message-ID: <dfb9e130-bee7-43c8-8368-805fe01daf13@linaro.org>
-Date: Wed, 9 Oct 2024 16:20:39 -0700
+ Wed, 09 Oct 2024 16:28:58 -0700 (PDT)
+Message-ID: <be8521b0-706f-4f35-a385-5a5177c8ddf9@linaro.org>
+Date: Wed, 9 Oct 2024 16:28:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/23] accel/tcg: Early exit for zero length in
- tlb_flush_range_by_mmuidx*
+Subject: Re: [PATCH 07/23] accel/tcg: Flush entire tlb when a masked range
+ wraps
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-7-richard.henderson@linaro.org>
+ <20241009150855.804605-8-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-7-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +99,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> Probably never happens, but next patches will assume non-zero length.
+> We expect masked address spaces to be quite large, e.g. 56 bits
+> for AArch64 top-byte-ignore mode.  We do not expect addr+len to
+> wrap around, but it is possible with AArch64 guest flush range
+> instructions.
+> 
+> Convert this unlikely case to a full tlb flush.  This can simplify
+> the subroutines actually performing the range flush.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+>   accel/tcg/cputlb.c | 16 ++++++++++++----
+>   1 file changed, 12 insertions(+), 4 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index fd8da8586f..93b42d18ee 100644
+> index 93b42d18ee..8affa25db3 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -801,6 +801,9 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
->        * If all bits are significant, and len is small,
->        * this devolves to tlb_flush_page.
->        */
-> +    if (len == 0) {
-> +        return;
-> +    }
->       if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
+> @@ -808,8 +808,12 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
 >           tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
 >           return;
-> @@ -839,6 +842,9 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
->        * If all bits are significant, and len is small,
->        * this devolves to tlb_flush_page.
->        */
-> +    if (len == 0) {
-> +        return;
-> +    }
->       if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
+>       }
+> -    /* If no page bits are significant, this devolves to tlb_flush. */
+> -    if (bits < TARGET_PAGE_BITS) {
+> +    /*
+> +     * If no page bits are significant, this devolves to full flush.
+> +     * If addr+len wraps in len bits, fall back to full flush.
+> +     */
+> +    if (bits < TARGET_PAGE_BITS
+> +        || (bits < TARGET_LONG_BITS && (addr ^ (addr + len - 1)) >> bits)) {
+>           tlb_flush_by_mmuidx(cpu, idxmap);
+>           return;
+>       }
+> @@ -849,8 +853,12 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
 >           tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
 >           return;
+>       }
+> -    /* If no page bits are significant, this devolves to tlb_flush. */
+> -    if (bits < TARGET_PAGE_BITS) {
+> +    /*
+> +     * If no page bits are significant, this devolves to full flush.
+> +     * If addr+len wraps in len bits, fall back to full flush.
+> +     */
+> +    if (bits < TARGET_PAGE_BITS
+> +        || (bits < TARGET_LONG_BITS && (addr ^ (addr + len - 1)) >> bits)) {
+>           tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
+>           return;
+>       }
 
-If this "probably never happens", wouldn't that be better to assert that 
-len is strictly positive?
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
