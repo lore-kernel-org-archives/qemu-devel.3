@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4061CEE336
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 17:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF6CCEE336
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 17:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syamO-0005Xa-Ik; Wed, 09 Oct 2024 13:47:20 -0400
+	id 1syamT-0005Z8-BT; Wed, 09 Oct 2024 13:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syamH-0005WE-4e
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:13 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1syamJ-0005Wk-RG
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:17 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syamF-0003KP-I9
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:12 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c5b954c359so8179739a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 10:47:10 -0700 (PDT)
+ id 1syamH-0003L6-Jb
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 13:47:15 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a83562f9be9so11121066b.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 10:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728496029; x=1729100829; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728496032; x=1729100832; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1moFj93Y1ZoSXpMR1pbmEnoefXvbMoch/laHzozeBsU=;
- b=CoB3aeV2ZoBT6fuazOmR/KYbucJ4dibPqa4qJgKC8FG/pY8CuKWqttecIjgHO4TdL4
- 5wqDMA/FcBm/rLk8i/Ip1nVqfQ8P79AiVwAF9q/2dfY4gt9BIZD6tRfbU24MeSOTqm39
- 5ZGLw9sA0WWzo4ewwkFCl/ys6C0cPpW5UiN0yJk7iuScDpFqw53gZlbMub7zym3gqL08
- /9OWam9/zSX3e29Lxr3nE9y7tU09ZFqrl6sboNY9SBhGmj/psY47K0V6RmSYy8Eu/vvP
- n0/WcQQbcYcwZy3ByBAmz8QGZrHjnmrpKNDEwy8vDWVRg5lHO3rl5thpkCr2XAQyXceP
- qbLg==
+ bh=SuqOO3LqDX2G8oXdRbMxrpr3s/uI9Id95M9jvHkmB7w=;
+ b=GpgI4sqL+i4lGIlvDLBqGk8PmyxN6uw+muafZPDlYjl3wuEIhY19zkTSQvDlLfSVnX
+ 497BgkkZgb7/jTqeDJ9dxeNVM6UNY8C2i+DUGais7SOZD14Zw3ZOYuEFU5msVdV+8nfm
+ oZEH3+c1bAlfvdG/WnQSdY1G0XrDcut68xDQo8Jz9/L/2xTzBbfPsPq3IkROi4ag3an6
+ smYz2VvIlhSZILsW+AuNDzfK8oMKI78zjYyqqOrvzXIU4eAd81f/cxZE/TkQ80GzfVq8
+ lYJ22dX2kSTFX1mkBn8ApCtTSBbZ8+dYpMmeunZjY84jwV8vtmB+NG7DbDaNQFdoGxQ1
+ GsTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728496029; x=1729100829;
+ d=1e100.net; s=20230601; t=1728496032; x=1729100832;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1moFj93Y1ZoSXpMR1pbmEnoefXvbMoch/laHzozeBsU=;
- b=rF68Ayltn34mp2fvur1Ps0wg6DFF/IA4UR9szGI9DaQlsYfxLR4X46hNX6PqqvX8KP
- RtfYorKjfvUau3nUclhx8tse2/IqpfZkMKbjC/W9EFJ67aXEJiDBIVpk7Ie/V1tL6Bze
- vSR8vBeWSV8JW3ozSoqPfT4sh5PBiLmqU1S59GDkEKYADUxlWJd2eal/vlCKajGeTZEG
- alrznqzaV0mF3m02pDAJhi0c5Dfrdkj6GERBhAvlhTIoB+GM9y+TCVW5VAHaexMKqyy0
- G1lgcwYv4nrI4kVm0sbG/gOzLWlFukujO0cuc3p4JaH8PBISH4S8tcqhEOiRnW7f7Q8U
- asLA==
+ bh=SuqOO3LqDX2G8oXdRbMxrpr3s/uI9Id95M9jvHkmB7w=;
+ b=EjdtnxanwxASiVfyUM28U39zLBMXRJL0rJoqukD1Z8zufVjcSOc50UG0gpY9hfnYdL
+ CUI7bEBDH8jBgBcdZ+ftLDxpJ2xn0IjAWcbBAd46p+RlRG+kP4uMjg8lpm53g7uLPfZv
+ 7/LWtgpD2d+97tbHPkIRsJP19h7X6Z0fa3qAhdrXuTtSLIKBv8eZKaaJDnuqag7UDYzy
+ 7PNg+LHwvRA52wxFkGJW4q35kpNg3DN6Chvur71qMh24kPVlvZE1te/ASGYhbbGNI28T
+ x6bEoP+XRqmHv65OBd+//NW/ZxO8XIAIxT0nH4+a9bI1igtNQykMN5KcnGj+LTKO/60S
+ GhCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTnTTt0S/5jT1ITyHXWuYtnCrcHh97UjjRC6mv71FtUR//ywDIGfOG8JZYje+lU3LG3isgKvGtV+T8@nongnu.org
-X-Gm-Message-State: AOJu0YzHVPVKa8/ztIyjbynmV1tKCJVnkqAs4iuJIJt5Y/n99BTbRtS7
- gbvJp/Vi3b8dR4ng0c5DKhRbInlr7/d+bSsSpL09ZLrX42ZBEihR
-X-Google-Smtp-Source: AGHT+IGsbIpuugdCUjBKn7XQe060PLaJNNf1aeaLnDH5pyp80Rlg1/Lx2lTMaJtDDpCCSEd3YDlyqQ==
-X-Received: by 2002:a17:906:794e:b0:a99:4e35:9a25 with SMTP id
- a640c23a62f3a-a998d31be57mr262229866b.44.1728496028672; 
- Wed, 09 Oct 2024 10:47:08 -0700 (PDT)
+ AJvYcCXlX9gXkNDaMfu0fu5wM+8Rj3Q0pv32pcHpHorYsFlFXxG+wAfFxdzb6fEZAAanHVUlVLQMgNncKc1l@nongnu.org
+X-Gm-Message-State: AOJu0YwlKg5EPOyI6qTAQpLOWbRT69q0wfwYW4jhgPnhDU1pGAHsC6Rv
+ pmo94v1C3N6OlhhLGevuAthpG6dfYNe405DdwJ1p6pXY8x8PWrdz07uIWA==
+X-Google-Smtp-Source: AGHT+IHpPn56cXSUnuNc7OvsbrP3yRPwlJeo9u73u0OTE/IEDPZeR3kQcKv5qNqIBHyjqx57xT+G0g==
+X-Received: by 2002:a17:907:c7d8:b0:a7a:9fe9:99e7 with SMTP id
+ a640c23a62f3a-a998d313ca4mr304421366b.41.1728496031881; 
+ Wed, 09 Oct 2024 10:47:11 -0700 (PDT)
 Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a994f38068fsm491667666b.40.2024.10.09.10.47.08
+ a640c23a62f3a-a994f38068fsm491667666b.40.2024.10.09.10.47.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 10:47:08 -0700 (PDT)
+ Wed, 09 Oct 2024 10:47:10 -0700 (PDT)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 1/5] chardev/char: introduce `mux-be-id=ID` option and
- _MUX_BE type
-Date: Wed,  9 Oct 2024 19:45:13 +0200
-Message-Id: <20241009174517.286935-2-r.peniaev@gmail.com>
+Subject: [PATCH v2 5/5] qemu-options.hx: describe multiplexing of several
+ backend devices
+Date: Wed,  9 Oct 2024 19:45:17 +0200
+Message-Id: <20241009174517.286935-6-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241009174517.286935-1-r.peniaev@gmail.com>
 References: <20241009174517.286935-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,85 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patch introduces `mux-be-id=ID` option for all chardev devices
-and TYPE_CHARDEV_MUX_BE type for distinction different types
-of multiplexers: frontend (current "mux" type) and backend
-(new "mux-be" type). Actual attach of the chardev to the
-multiplexer and mux-be implementation will follow.
+This adds a few lines describing `mux-be` multiplexer configuration
+for multiplexing several backend devices with a single frontend
+device.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
 ---
- chardev/char.c         | 3 +++
- include/chardev/char.h | 1 +
- qapi/char.json         | 9 ++++++++-
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ qemu-options.hx | 46 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index ba847b6e9eff..4b3e45b2a128 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -918,6 +918,9 @@ QemuOptsList qemu_chardev_opts = {
-         },{
-             .name = "mux",
-             .type = QEMU_OPT_BOOL,
-+        },{
-+            .name = "mux-be-id",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "signal",
-             .type = QEMU_OPT_BOOL,
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index 01df55f9e8c8..f68f949f6ebc 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -232,6 +232,7 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+diff --git a/qemu-options.hx b/qemu-options.hx
+index d94e2cbbaeb1..21f112c2e445 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3782,7 +3782,7 @@ SRST
+ The general form of a character device option is:
  
- #define TYPE_CHARDEV_NULL "chardev-null"
- #define TYPE_CHARDEV_MUX "chardev-mux"
-+#define TYPE_CHARDEV_MUX_BE "chardev-mux-be"
- #define TYPE_CHARDEV_RINGBUF "chardev-ringbuf"
- #define TYPE_CHARDEV_PTY "chardev-pty"
- #define TYPE_CHARDEV_CONSOLE "chardev-console"
-diff --git a/qapi/char.json b/qapi/char.json
-index ef58445ceec9..30748784513b 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -199,11 +199,15 @@
- # @logappend: true to append instead of truncate (default to false to
- #     truncate)
- #
-+# @mux-be-id: id of the mux-be device for backend multiplexing
-+#     (since: 9.2)
-+#
- # Since: 2.6
- ##
- { 'struct': 'ChardevCommon',
-   'data': { '*logfile': 'str',
--            '*logappend': 'bool' } }
-+            '*logappend': 'bool',
-+            '*mux-be-id': 'str' } }
+ ``-chardev backend,id=id[,mux=on|off][,options]``
+-    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
++    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``mux-be``,
+     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
+     ``pty``, ``stdio``, ``braille``, ``parallel``,
+     ``spicevmc``, ``spiceport``. The specific backend will determine the
+@@ -3839,9 +3839,10 @@ The general form of a character device option is:
+     the QEMU monitor, and ``-nographic`` also multiplexes the console
+     and the monitor to stdio.
  
- ##
- # @ChardevFile:
-@@ -440,6 +444,8 @@
- #
- # @mux: Since 1.5
- #
-+# @mux-be: Since 9.2
-+#
- # @msmouse: Since 1.5
- #
- # @wctablet: Since 2.9
-@@ -482,6 +488,7 @@
-             'pty',
-             'null',
-             'mux',
-+            'mux-be',
-             'msmouse',
-             'wctablet',
-             { 'name': 'braille', 'if': 'CONFIG_BRLAPI' },
+-    There is currently no support for multiplexing in the other
+-    direction (where a single QEMU front end takes input and output from
+-    multiple chardevs).
++    If you need to multiplex in the opposite direction (where one QEMU
++    interface receives input and output from multiple chardev devices),
++    please refer to the paragraph below regarding chardev ``mux-be``
++    configuration.
+ 
+     Every backend supports the ``logfile`` option, which supplies the
+     path to a file to record all data transmitted via the backend. The
+@@ -3941,6 +3942,43 @@ The available backends are:
+     Forward QEMU's emulated msmouse events to the guest. ``msmouse``
+     does not take any options.
+ 
++``-chardev mux-be,id=id``
++    Explicitly create chardev backend multiplexer with possibility to
++    multiplex in the opposite direction, where one QEMU interface
++    (frontend device) receives input and output from multiple chardev
++    backend devices.
++
++    For example the following is a use case of 2 backend devices: text
++    virtual console ``vc0`` and a socket ``sock0`` connected
++    to a single virtio hvc console frontend device with multiplexer
++    ``mux0`` help. Virtual console renders text to an image, which
++    can be shared over the VNC protocol, in turn socket backend provides
++    biderectional communication to the virtio hvc console over socket.
++    The example configuration can be the following:
++
++    ::
++
++       -chardev mux-be,id=mux0 \
++       -chardev socket,path=/tmp/sock,server=on,wait=off,id=sock0,mux-be-id=mux0 \
++       -chardev vc,id=vc0,mux-be-id=mux0 \
++       -device virtconsole,chardev=mux0 \
++       -vnc 0.0.0.0:0
++
++    Once QEMU starts VNC client and any TTY emulator can be used to
++    control a single hvc console:
++
++    ::
++
++       # VNC client
++       vncviewer :0
++
++       # TTY emulator
++       socat unix-connect:/tmp/sock pty,link=/tmp/pty & \
++       tio /tmp/pty
++
++    Multiplexing of several backend devices with serveral frontend devices
++    is not supported.
++
+ ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
+     Connect to a QEMU text console. ``vc`` may optionally be given a
+     specific size.
 -- 
 2.43.0
 
