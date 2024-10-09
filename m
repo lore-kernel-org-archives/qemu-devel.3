@@ -4,77 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034E1CEDD97
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 14:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2ADBCEDD98
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 14:01:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syXDq-0005TL-RN; Wed, 09 Oct 2024 09:59:26 -0400
+	id 1syXFM-0006U0-DY; Wed, 09 Oct 2024 10:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syXDp-0005TC-Hf
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 09:59:25 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syXDn-0006Du-Mz
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 09:59:25 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c721803a89so9089390a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 06:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728482362; x=1729087162; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l0I3hgXYskFaM1WPaQBMv7Pv3MdsYJHuri7ua6DX/GE=;
- b=v/V1Ska6G6bg5TNRf90QQ4GFAmqfWDPchWhI0UsOBIglrouheboHIoyt6X8nOZRzA3
- z3I12c8uqMjrcCMfwb1GDGZMtvICOe+tBo077QvPWOamUezttbsaohZZkcRM0/5P/2sH
- 137RyhmByxLl7fDXVdDZUIxqbeY/YxPH3FijBvPMCebSXWjVskoCCE/+TsYFVp2xo3V2
- PHoryxs7oAZnkYQ9lL7VwLLpn1hO78ZvKn8vkv8+Xo18nj+WQ/cBKsJycPQqARKNZN5k
- Gfbk24ru9eQdD30ZOwnUhjkgZtB6/aGjnsDGUI/pu6RYW5EuKxiJpMgPmYg7r0ihM95Q
- tKzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728482362; x=1729087162;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l0I3hgXYskFaM1WPaQBMv7Pv3MdsYJHuri7ua6DX/GE=;
- b=e2XxhHNGVsllBJT1WZ/1YwS87rxFFBQ2lR51OZs9ijAk1mA2LbmYr/QnzQuHyKgvEB
- TEtTgsN7EC8c+7VsiibcEM8EVe4STVE+sHtdn4Oi++Ksb6mIkoxhW5cwckCHQZfJDFEs
- q34RjWn7mSStmmOL6euROE3sWJZmO9oX4/FGi963/HjxyBT53q4etvnRS2wuMQ9YFeyX
- w4PS3sQF6zJIsOitv5ehPuKB15jUWce4A+1+2TT564CRBXHKBmXf5MIrNANjlSRZ8P2y
- XnFNzqOLK3ou5mLFfeNpgMR7JaYc9mx+ZTrCFSMRli5HBUqltXMmM5QnfxpXGjTbBwg2
- v/Zw==
-X-Gm-Message-State: AOJu0YzUHO000C9+tf1NCx6C5pNzVYa63YSlQdfJDuVt9PAFZpNdWXQh
- ntoUercPevdtj1zx0FjvHJE0/T3X0daeecIdcN+4mpz1uRjsxnD9ck133OyEQKao/0WRnurw7WG
- DuIOjvLT0M4Z37WgeElfwWvfkqfoHKgQWroi3Iw==
-X-Google-Smtp-Source: AGHT+IFcaDAmv5R+/Xh7CHX50o4jgaS6RwlGJuW4592TQfJL+6zctEsY3T1VEpWaMxyXf+D46/DImjU/Acw+HiHxBUI=
-X-Received: by 2002:a05:6402:2813:b0:5c2:6d16:ad5e with SMTP id
- 4fb4d7f45d1cf-5c91d63e0e4mr2429095a12.19.1728482361560; Wed, 09 Oct 2024
- 06:59:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1syXFJ-0006TY-K0; Wed, 09 Oct 2024 10:00:57 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1syXFH-0006YG-3k; Wed, 09 Oct 2024 10:00:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=TfYLdrvKYAXnUX53NJ0IkTTTspmHx1drZrKFGujD1So=; b=xmPzVx3oqD+D
+ XgmaaMdnsumGrMlRhoSZndcLEi4rOh4/d2Lv1c2sMKR5WbQZNaDsLQDHBFoFA7tSRymHDAib3BnVq
+ vap3eK8w4jsLBoDQ/w6Tkx0TGtXNrdT/L6twGLnDbdwxCuPlUYWoudOx/weIPd/vehxPOZEFpu1lg
+ kENIRKrygYO4zfsBc7ue/+s5c1lp+mTOg5pmOABdCx5Sv1lJUFfRpFCsV5tYY0uIYhdY6opD++M5x
+ wBEX7j3gGXi+NWmfZLbIQeHYAWo3DewaD385wCcZT8nhXY8JpzBLjtrRHwWobE3RBjaY1EuvVrg7O
+ jB93Qp17Uonwrhpy3W9fTA==;
+Received: from [130.117.225.1] (helo=dev007.ch-qa.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1syXBf-00AR1a-2M;
+ Wed, 09 Oct 2024 16:00:38 +0200
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V . Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH 0/2] block/preallocate: fix image truncation logic
+Date: Wed,  9 Oct 2024 16:58:49 +0300
+Message-ID: <20241009140051.771660-1-den@openvz.org>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-References: <20241005200600.493604-1-richard.henderson@linaro.org>
- <20241005200600.493604-14-richard.henderson@linaro.org>
- <CAFEAcA_jXTuB6c8oVcXmi66zcXn5-PYM7W9z1wf7-fzXg7_Oiw@mail.gmail.com>
- <5c33b223-10cc-4ad6-a3e8-15082266b31d@linaro.org>
-In-Reply-To: <5c33b223-10cc-4ad6-a3e8-15082266b31d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 9 Oct 2024 14:59:10 +0100
-Message-ID: <CAFEAcA9jwsD3p3Voj=q1Tcv0CZ7u2mADdfo6oQrGXr5FfFQQBg@mail.gmail.com>
-Subject: Re: [PATCH v2 13/21] target/arm: Pass MemOp to get_phys_addr
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,111 +62,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 8 Oct 2024 at 18:32, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 10/8/24 07:45, Peter Maydell wrote:
-> > On Sat, 5 Oct 2024 at 21:06, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> Zero is the safe do-nothing value for callers to use.
-> >>
-> >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> >> ---
-> >>   target/arm/internals.h      | 3 ++-
-> >>   target/arm/ptw.c            | 2 +-
-> >>   target/arm/tcg/m_helper.c   | 8 ++++----
-> >>   target/arm/tcg/tlb_helper.c | 2 +-
-> >>   4 files changed, 8 insertions(+), 7 deletions(-)
-> >
-> >> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-> >> index 23d7f73035..f7354f3c6e 100644
-> >> --- a/target/arm/tcg/m_helper.c
-> >> +++ b/target/arm/tcg/m_helper.c
-> >> @@ -222,7 +222,7 @@ static bool v7m_stack_write(ARMCPU *cpu, uint32_t addr, uint32_t value,
-> >>       int exc;
-> >>       bool exc_secure;
-> >>
-> >> -    if (get_phys_addr(env, addr, MMU_DATA_STORE, mmu_idx, &res, &fi)) {
-> >> +    if (get_phys_addr(env, addr, MMU_DATA_STORE, 0, mmu_idx, &res, &fi)) {
-> >>           /* MPU/SAU lookup failed */
-> >>           if (fi.type == ARMFault_QEMU_SFault) {
-> >>               if (mode == STACK_LAZYFP) {
-> >> @@ -311,7 +311,7 @@ static bool v7m_stack_read(ARMCPU *cpu, uint32_t *dest, uint32_t addr,
-> >>       bool exc_secure;
-> >>       uint32_t value;
-> >>
-> >> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
-> >> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
-> >>           /* MPU/SAU lookup failed */
-> >>           if (fi.type == ARMFault_QEMU_SFault) {
-> >>               qemu_log_mask(CPU_LOG_INT,
-> >
-> > We do actually know what kind of memory operation we're doing here:
-> > it's a 4-byte access. (It should never be unaligned because an M-profile
-> > SP can't ever be un-4-aligned, though I forget whether our implementation
-> > really enforces that.)
-> >
-> >> @@ -2009,7 +2009,7 @@ static bool v7m_read_half_insn(ARMCPU *cpu, ARMMMUIdx mmu_idx, bool secure,
-> >>                         "...really SecureFault with SFSR.INVEP\n");
-> >>           return false;
-> >>       }
-> >> -    if (get_phys_addr(env, addr, MMU_INST_FETCH, mmu_idx, &res, &fi)) {
-> >> +    if (get_phys_addr(env, addr, MMU_INST_FETCH, 0, mmu_idx, &res, &fi)) {
-> >>           /* the MPU lookup failed */
-> >>           env->v7m.cfsr[env->v7m.secure] |= R_V7M_CFSR_IACCVIOL_MASK;
-> >>           armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_MEM, env->v7m.secure);
-> >
-> > Similarly this is a 16-bit load that in theory should never
-> > be possible to be unaligned.
-> >
-> >> @@ -2045,7 +2045,7 @@ static bool v7m_read_sg_stack_word(ARMCPU *cpu, ARMMMUIdx mmu_idx,
-> >>       ARMMMUFaultInfo fi = {};
-> >>       uint32_t value;
-> >>
-> >> -    if (get_phys_addr(env, addr, MMU_DATA_LOAD, mmu_idx, &res, &fi)) {
-> >> +    if (get_phys_addr(env, addr, MMU_DATA_LOAD, 0, mmu_idx, &res, &fi)) {
-> >>           /* MPU/SAU lookup failed */
-> >>           if (fi.type == ARMFault_QEMU_SFault) {
-> >>               qemu_log_mask(CPU_LOG_INT,
-> >
-> > and this is another 4-byte load via sp.
-> >
-> >> diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-> >> index 885bf4ec14..1d8b7bcaa2 100644
-> >> --- a/target/arm/tcg/tlb_helper.c
-> >> +++ b/target/arm/tcg/tlb_helper.c
-> >> @@ -344,7 +344,7 @@ bool arm_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-> >>        * return false.  Otherwise populate fsr with ARM DFSR/IFSR fault
-> >>        * register format, and signal the fault.
-> >>        */
-> >> -    ret = get_phys_addr(&cpu->env, address, access_type,
-> >> +    ret = get_phys_addr(&cpu->env, address, access_type, 0,
-> >>                           core_to_arm_mmu_idx(&cpu->env, mmu_idx),
-> >>                           &res, fi);
-> >>       if (likely(!ret)) {
->
-> The question is: if it should be impossible for them to be misaligned, should we pass an
-> argument that checks alignment and then (!) potentially raise a guest exception.
->
-> I suspect the answer is no.
->
-> If it should be impossible, no alignment fault is ever visible to the guest in this
-> context, then we should at most assert(), otherwise do nothing.
->
-> We *can* pass, e.g. MO_32 or MO_16 for documentation purposes, if you like.  Without
-> additional adornment, this does not imply alignment enforcement (i.e. MO_ALIGN).  But this
-> would be functionally indistinguishable from 0 (which I imperfectly documented with "or 0"
-> in the function block comments).
+Recent QEMU changes around preallocate_set_perm mandates that it is not
+possible to poll on aio_context inside this function anymore. Thus
+truncate operation has been moved inside bottom half. This bottom half
+is scheduled from preallocate_set_perm() and that is all.
 
-Mmm. I think I thought when I started reviewing this series that we might
-have a bigger set of "we put in 0 here but is that the right thing?"
-callsites. But I think in working through it it turns out there aren't
-very many and for all of those "don't check alignment" is the right thing.
+This approach proven to be problematic in a lot of places once
+additional operations are executed over preallocate filter in
+production. The code validates that permissions have been really changed
+just after the call to the set operation.
 
-thanks
--- PMM
+All permissions operations or block driver graph changes are performed
+inside the quiscent state in terms of the block layer. This means that
+there are no in-flight packets which is guaranteed by the passing
+through bdrv_drain() section.
+
+The idea is that we should effectively disable preallocate filter inside
+bdrv_drain() and unblock permission changes. This section is definitely
+not on the hot path and additional single truncate operation will not
+hurt.
+
+Unfortunately bdrv_drain_begin() callback according to the documentation
+also disallow waiting inside. Thus original approach with the bottom
+half is not changed. bdrv_drain_begin() schedules the operation and in
+order to ensure that it has been really executed before completion of
+the section increments the amount of in-flight requests.
+
+In addition to this we should disable lifting WRITE permission when
+truncate() operation is not fully completed yet.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Kevin Wolf <kwolf@redhat.com>
 
