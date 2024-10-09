@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB06CEE356
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:02:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A4BCEE359
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syeks-0002ia-IF; Wed, 09 Oct 2024 18:02:02 -0400
+	id 1syeri-0005Ai-Lw; Wed, 09 Oct 2024 18:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syekq-0002iG-BB
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:02:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syeko-0006mO-Cu
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:02:00 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 499M0LNd020749;
- Wed, 9 Oct 2024 22:01:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- C6CWbYpf9gcVNeuL6I1K7yXuLQYXYo48bEP1QkGXzsw=; b=BFrgChc5ZPwywdiO
- KB0EsAFpGuPg0eF9EY3LIII5hpkhPTDUpO976gFo2mLg9hQEpuR+XWNzeuIWdCyv
- e4DXxKQrLa9Y2unXL1Ign5rw23igSwiElU8M3VzdmqU3YMxJ5630C+a7AgHeNUpU
- r2tmETjMQMZ+J1/NwjXMtAvJbYmD77oSw6xU9rM1gmD5v/BibkODwW5MffxDhAx+
- rlBEL/p1cEggzmiT309prn60BKtH5hYrmPr4ZBsVB7U1D9lDKih04dRHKXXF6LGs
- L26SvXcD0QznJNgmDXztsfSXiEV7vrL1cKXs6fD3LMEtFrnMLzaiJ4lbj8F6OKvG
- FzKnDQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42627yr081-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Oct 2024 22:01:53 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 499M1q1H022678;
- Wed, 9 Oct 2024 22:01:52 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42627yr07w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Oct 2024 22:01:52 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 499LfE54013838;
- Wed, 9 Oct 2024 22:01:51 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fssccf4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Oct 2024 22:01:51 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 499M1nGl50528700
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 9 Oct 2024 22:01:49 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8567C20067;
- Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 356D22006C;
- Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
-Message-ID: <991185a8191694b489cf7d2374ffa99fc6a5ee82.camel@linux.ibm.com>
-Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Date: Thu, 10 Oct 2024 00:01:48 +0200
-In-Reply-To: <94ebebf2-e775-4fd2-8fcf-921610261a7e@linaro.org>
-References: <20240923162208.90745-1-iii@linux.ibm.com>
- <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
- <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
- <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
- <7cf5d0a94cc52ac9f8144eb5d1cc83811755ea98.camel@linux.ibm.com>
- <7531a0890a2f804b9e5e89e80d019ea53c738eab.camel@linux.ibm.com>
- <94ebebf2-e775-4fd2-8fcf-921610261a7e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syerg-0005AZ-Vr
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:09:05 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1syere-0007s4-VT
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:09:04 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1FCD61F7BC;
+ Wed,  9 Oct 2024 22:09:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1728511741; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
+ b=gykuw312xI+8Xwn0RP+XmOQ0hApbPYF6q0OUFjJKo8ubwsxefAye0psD4NNYJJYpeLpsVq
+ SP9u3kvOW57DMysMGlo2q5CtoAxXtBnIT46bKoqgzBZSqaqSd0RMsPpzD9BfpmBySEe9CO
+ 5Nav4NesQJD8XFqN3eHomKtNQrAW0UI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1728511741;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
+ b=Teg1uNp8i2w5paa3UC+qrezafO9EZkl7RHEMgMyvKuYgO16pU6j8E8V+AkC9wPPEim/vco
+ HVgmCoPNTU3bx1DA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1728511741; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
+ b=gykuw312xI+8Xwn0RP+XmOQ0hApbPYF6q0OUFjJKo8ubwsxefAye0psD4NNYJJYpeLpsVq
+ SP9u3kvOW57DMysMGlo2q5CtoAxXtBnIT46bKoqgzBZSqaqSd0RMsPpzD9BfpmBySEe9CO
+ 5Nav4NesQJD8XFqN3eHomKtNQrAW0UI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1728511741;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=E5N+utB1lCc8DDUPqjBqT91upKkQWDnpGGcYpQ7uFIA=;
+ b=Teg1uNp8i2w5paa3UC+qrezafO9EZkl7RHEMgMyvKuYgO16pU6j8E8V+AkC9wPPEim/vco
+ HVgmCoPNTU3bx1DA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9A05B13A58;
+ Wed,  9 Oct 2024 22:09:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id S7cfGPz+BmcaRQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 09 Oct 2024 22:09:00 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
+In-Reply-To: <ZwbuNnFCgN_vjniX@x1n>
+References: <ZwQ6GbVCmitlills@x1n>
+ <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com> <87ed4qtpo1.fsf@suse.de>
+ <ZwV-NRICDNTajTRq@x1n> <877caitno5.fsf@suse.de> <ZwWMj4FYYpOSnPbe@x1n>
+ <8b92a6ee-19f7-4483-9766-6b849cc04017@oracle.com> <ZwbUTXCxxl4heZYV@x1n>
+ <Zwbgur3d0cImLV99@x1n> <97268719-56f3-4d7f-aa21-c04cd0262601@oracle.com>
+ <ZwbuNnFCgN_vjniX@x1n>
+Date: Wed, 09 Oct 2024 19:08:58 -0300
+Message-ID: <87plo9rksl.fsf@suse.de>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Pi4Ex1u_KwkFGu4F-PcWPB5EF8M07tSv
-X-Proofpoint-ORIG-GUID: bkp9TDUSI7q5ybfbFNoKqe3ewZd7CKaY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-09_20,2024-10-09_02,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410090135
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[nongnu.org,redhat.com,gmail.com,habkost.net,linaro.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,83 +126,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-10-08 at 11:17 -0700, Richard Henderson wrote:
-> On 10/5/24 13:35, Ilya Leoshkevich wrote:
-> > > How can we handle the long-running syscalls?
-> > > Just waiting sounds unsatisfying.
-> > > Sending a reserved host signal may alter the guest's behaviour if
-> > > a
-> > > syscall like pause() is interrupted.
-> > > What do you think about SIGSTOP-ping the "in_syscall" threads?
-> > > A quick experiment shows that it should be completely invisible
-> > > to
-> > > the
-> > > guest - the following program continues to run after
-> > > SIGSTOP/SIGCONT:
-> > >=20
-> > > #include <sys/syscall.h>
-> > > #include <unistd.h>
-> > > int main(void) { syscall(__NR_pause); };
-> >=20
-> > Hmm, no, that won't work: SIGSTOP would stop all threads.
-> >=20
-> > So I wonder if reserving a host signal for interrupting
-> > "in_syscall"
-> > threads would be an acceptable tradeoff?
->=20
-> Could work, yes.=C2=A0 We already steal SIGRTMIN for guest abort (to
-> distinguish from host=20
-> abort), and remap guest __SIGRTMIN to host SIGRTMIN+1.=C2=A0 Grabbing
-> SIGRTMIN+1 should work=20
-> ok, modulo the existing problem of presenting the guest with an
-> incomplete set of signals.
->=20
-> I've wondered from time to time about multiplexing signals in this
-> space, but I think that=20
-> runs afoul of having a consistent mapping for interprocess signaling.
->=20
->=20
-> r~
+Peter Xu <peterx@redhat.com> writes:
 
-I tried to think through how this would work in conjunction with
-start_exclusive(), and there is one problem I don't see a good solution
-for. Maybe you will have an idea.
+> On Wed, Oct 09, 2024 at 04:18:31PM -0400, Steven Sistare wrote:
+>> Yes, I am also brainstorming along these lines, looking for more gotcha's,
+>> but its a big design change. I don't love it so far.
+>> 
+>> These issues all creep in because of transfer mode.  Exec mode did not have this
+>> problem, as cpr-state is written to an in-memory file.
+>
+> I understand.  Hopefully we're getting there very soon..
+>
+> I still have concern on having -global used in productions, and meanwhile
 
-The way I'm thinking of implementing this is as follows:
+Agree, but for qtests it should be fine at least.
 
-- Reserve the host's SIGRTMIN+1 and tweak host_signal_handler() to do
-  nothing for this signal.
+> it might still be challenging for handshake to work as early as cpr stage
+> even for later, because at least in my mind the handshake still happens in
+> the main migration channel (where it includes channel establishments etc,
+> which is not proper during cpr stage).
 
-- In gdb_try_stop(), call start_exclusive(). After it returns, some
-  threads will be parked in exclusive_idle(). Some other threads will
-  be on their way to getting parked, and this needs to actually happen
-  before gdb_try_stop() can proceed. For example, the ones that are
-  executing handle_pending_signal() may change memory and CPU state.
-  IIUC start_exclusive() will not wait for them, because they are not
-  "running". I think a global counter protected by qemu_cpu_list_lock
-  and paired with a new condition variable should be enough for this.
+I don't think any form of handshake will be implemented in a
+month. Maybe it's best we keep that to the side for now.
 
-- Threads executing long-running syscalls will need to be interrupted
-  by SIGRTMIN+1. These syscalls will return -EINTR and will need
-  to be manually restarted so as not to disturb poorly written guests.
-  This needs to happen only if there are no pending guest signals.
+(still, thinking about that virtio-net USO thread, an early handshake
+could be a good idea, so we could perhaps inform about device
+incompatibility, etc.)
 
-- Here is a minor problem: how to identify threads which need to be
-  signalled? in_syscall may not be enough. But maybe signalling all
-  threads won't hurt too much. The parked ones won't notice anyway.
+>
+> I don't really know whether that'll work at last..
+>
+> So in my mind the previous two-steps proposal is so far the only one that
+> all seem to work, with no unpredictable side effects.
+>
+> Said that, maybe we can still think about simpler solutions in the
+> following days or see others opinions, we don't need to make a decision
+> today, so maybe there's still better way to go.
 
-- But here is the major problem: what if we signal a thread just before
-  it starts executing a long-running syscall? Such thread will be stuck
-  and we'll need to signal it again. But how to determine that this
-  needs to be done?
-
-  An obvious solution is to signal all threads in a loop with a 0.1s
-  delay until the counter reaches n_threads. But it's quite ugly.
-
-  Ideally SIGRTMIN+1 should be blocked most of the time. Then we should
-  identify all places where long-running syscalls may be invoked and
-  unblock SIGRTMIN+1 atomically with executing them. But I'm not aware
-  of such mechanism (I have an extremely vague recollection that
-  someone managed to abuse rseq for this, but we shouldn't be relying
-  on rseq being available anyway).
+I thought of putting the caps on the configuration vmstate and using
+that to set them on the destination, but there's a bit of a chicken and
+egg problem because we need capabilities set as soon as
+qemu_start_incoming_migration(). Unless we sent those via the cpr
+channel. We could split migration_object_init() a bit so we can
+instantiate some parts of the migration state earlier (I'm not even sure
+what are the actual dependencies are).
 
