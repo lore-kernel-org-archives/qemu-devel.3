@@ -4,125 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42897CF0436
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB4ECED63E
 	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 09:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syTHS-000179-2O; Wed, 09 Oct 2024 05:46:54 -0400
+	id 1syTHB-00011d-5w; Wed, 09 Oct 2024 05:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syTHN-00013h-HF
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:46:49 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1syTH9-00011V-NK
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:46:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syTHK-0008QL-UI
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:46:49 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1syTH2-0008O3-5L
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 05:46:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728467206;
+ s=mimecast20190719; t=1728467183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rao/h3uwP6dsDVfqZilTa994liven7KE5ZLfTav9oDM=;
- b=e4413+GvDVoKhIjGg+BNnE/4/vpzbczBAdYKxTznYlfinqQuSf7Vae+JjuPt+KOwVKeF/K
- Z2d9T5szc7B1xqksoxsCEekMdmy3aoN5cVaZNFA/4WdPWkraXZfDr13CJlU7zNRrBDCveq
- 0ftrgD+biVesX5b8K+p5c8V6nMJTmro=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=upTJFESi6s3M2ikjJTWoXl0uVdD0+7/PKJNyEQuwSzM=;
+ b=CBMQFKAOCB1CtVjcGSrRhcQpKqY/j/kc5ESCNZimSifxX8BX0/LVNQRSl+jbEsFMnn5ycK
+ kAuNJZFd34DLNUR9qlwqqC24na5e7pUCV37NVrSA6xa7J+HOlx/na5vJnJrH1bcd5j/y7R
+ fm18oODXY28eG8PI28k0GrAN9DxhfCo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-fjhoUqZGPCmSreSLkMNmaw-1; Wed, 09 Oct 2024 05:46:44 -0400
-X-MC-Unique: fjhoUqZGPCmSreSLkMNmaw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43052e05c8fso12807525e9.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 02:46:44 -0700 (PDT)
+ us-mta-325-wrrDGlCsOtqYPf63XiCJxQ-1; Wed, 09 Oct 2024 05:46:21 -0400
+X-MC-Unique: wrrDGlCsOtqYPf63XiCJxQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d3256c0a2so854084f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 02:46:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728467203; x=1729072003;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rao/h3uwP6dsDVfqZilTa994liven7KE5ZLfTav9oDM=;
- b=vYBEgnXUpMh+ktoArR7e6GPrA7num5dyczRnOyMNQULFgOz8pFk2EgBHSSNhQb0YeN
- 54xy5DUSIsbqE7EG7fG+dYS/RbX8/SQ1tJ0g1wBO1CejgIqbCyJt8+nhdO4l9FdAwk32
- d916lp3yhqsSHTAB/SC/ymZYNwQNfz7rOwM3Msl1crPV28ttqcGnzyEVgxJbPlhI298y
- GUnMuJ842CAA4Vqx170STzPC9887kOS+TyaOA0N5M1CpOoFshBYEH83TST5aJcm39hVu
- yKX4R9ZGZxidUPi6s6IiCkr+p6vZJaUTjWvM213J+JOdCeVwG1pikXIgPx380584Em3X
- o1RQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQSz6B2ddbq9mHrcTw/gYM0WTlwl7ygyWXoXoZ4xkEKAhZ00jqHF9jq+tKLRBdfH8jEn0Z+6OuWr1W@nongnu.org
-X-Gm-Message-State: AOJu0YxUA0RZqpDRu5H1xbRhZ/0W+9hmgSkXDhUkEqSLsz+GsKmXtoGc
- ZDeWdp+cvdUFPZLcIWRPzIW8hO+oDbfqVuee8WktSKUsIAPyngExoC/bO4JvWdrjaqWXetwRoYa
- 0Czdr8o9EbP9vNUgWMiMD8mwzHCzbK0KvgL+/IcHY7orIqJ74/YVdhOOi1mmyQRk=
-X-Received: by 2002:a05:600c:3593:b0:42f:5ca3:d784 with SMTP id
- 5b1f17b1804b1-430ccf20504mr15616205e9.14.1728467203509; 
- Wed, 09 Oct 2024 02:46:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCOWrNhHdpvsIXdIuoOw6QcGQbhewoO2T8lsPfM17ixSyeA+zqFN5zhhn3/hMg5UcS5+nGjw==
-X-Received: by 2002:a05:600c:3593:b0:42f:5ca3:d784 with SMTP id
- 5b1f17b1804b1-430ccf20504mr15616005e9.14.1728467203039; 
- Wed, 09 Oct 2024 02:46:43 -0700 (PDT)
-Received: from [10.33.192.239] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ d=1e100.net; s=20230601; t=1728467180; x=1729071980;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=upTJFESi6s3M2ikjJTWoXl0uVdD0+7/PKJNyEQuwSzM=;
+ b=shqmr9AFXqkndlujT2qK774hz1LofdHADdLqxOpYUy2RzgFtGF92nq/G8XkO77Bld/
+ OpikxElkINTS6RNmEj/PjWy++5oVfjLgeVefJgLHlX/zUyrACmnJY3GkXUCFpYw3oUba
+ eZ7Xqoupqp8nJWvwCczUQDSjJ6j7ClEqZ7WsRk0Ym6F/ytLogNeRAd7H9FDXX481gwju
+ oVod6sbJ+jX+D/yRYkWkZKO4sS6jNrTYwFDBKJe3TLTHj8j5hfTzOKvFd3Wqz8ChhRlY
+ tFotO3aEuoJD9kfOCyIwTB7VWyUzrm/wTNTEFEJbrN0cOg+zHay75TdRzXpHkC+iPJET
+ 7xfA==
+X-Gm-Message-State: AOJu0YxQFHgdL7vwTv1pSd3kor4pYwmf/eHPkzM/5cxqfblimKst+clN
+ 6nN2I4JJRoKCmPp8FoC2Bxh4zQw8ZTiKckCRJ4h9QdC4MOEWNqommvi/0M0hIlV2VO4hGzYXPAO
+ dwRZmcUaZfc/yKAfSvomSLIREKsu9K6oe0yoKXOscAHR+RXYUjF1AqSNFGwu7c7Fd48rl9Nc+X1
+ ZUvGstzO4jpgrm7bT3MGz5oF+Kf+EBKRGA8DIIVoE=
+X-Received: by 2002:a05:6000:1007:b0:374:be10:3eb7 with SMTP id
+ ffacd0b85a97d-37d3aa840ddmr1177539f8f.38.1728467180176; 
+ Wed, 09 Oct 2024 02:46:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+vipz0UwNJqjl/h11yKUaGQNiDLP43TTrkkCx8hFwp96YGuAIylcHdVjf8brIV9+h6oyxtQ==
+X-Received: by 2002:a05:6000:1007:b0:374:be10:3eb7 with SMTP id
+ ffacd0b85a97d-37d3aa840ddmr1177516f8f.38.1728467179607; 
+ Wed, 09 Oct 2024 02:46:19 -0700 (PDT)
+Received: from avogadro.local ([151.62.111.131])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-430ccf45dacsm14876125e9.16.2024.10.09.02.46.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 02:46:42 -0700 (PDT)
-Message-ID: <afc6ae81-6a17-4172-a00b-90e4790af6b1@redhat.com>
-Date: Wed, 9 Oct 2024 11:46:41 +0200
+ ffacd0b85a97d-37d3af05948sm1152320f8f.33.2024.10.09.02.46.18
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Oct 2024 02:46:19 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/14] Rust initial PoC + meson changes for 2024-10-07
+Date: Wed,  9 Oct 2024 11:46:01 +0200
+Message-ID: <20241009094616.1648511-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/19] pc-bios/s390-ccw: Remove panics from ISO IPL path
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com
-References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
- <20241008011552.2645520-8-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241008011552.2645520-8-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -131,7 +83,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,50 +99,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/10/2024 03.15, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Remove panic-on-error from IPL ISO El Torito specific functions so that error
-> recovery may be possible in the future.
-> 
-> Functions that would previously panic now provide a return code.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
-...
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 414c3f1b47..7984de62fe 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -678,8 +678,10 @@ static bool is_iso_bc_entry_compatible(IsoBcSection *s)
->       if (s->unused || !s->sector_count) {
->           return false;
->       }
-> -    read_iso_sector(bswap32(s->load_rba), magic_sec,
-> -                    "Failed to read image sector 0");
-> +    if (virtio_read(bswap32(s->load_rba), magic_sec)) {
-> +        puts("Failed to read image sector 0");
-> +        return false;
-> +    }
->   
->       /* Checking bytes 8 - 32 for S390 Linux magic */
->       return !memcmp(magic_sec + 8, linux_s390_magic, 24);
-> @@ -699,21 +701,28 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
->       uint8_t *temp = sec + ISO_SECTOR_SIZE;
->       int level = 0;
->   
-> -    read_iso_sector(ISO_PRIMARY_VD_SECTOR, sec,
-> -                    "Failed to read ISO primary descriptor");
-> +    if (virtio_read(ISO_PRIMARY_VD_SECTOR, sec)) {
-> +        puts("Failed to read ISO primary descriptor");
-> +        return -EIO;
-> +    }
+The following changes since commit b5ab62b3c0050612c7f9b0b4baeb44ebab42775a:
 
-iso_get_file_size() seems to return an uint32_t value, so returning a 
-negative error code won't work here. I think you either have to change the 
-return type to signed "long" and fix the caller site, too, or return 0 for 
-errors here?
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-04 19:28:37 +0100)
 
-  Thomas
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 5011e4c2aca4831204aea15223359d29af9a853e:
+
+  gitlab-ci: add Rust-enabled CI job (2024-10-09 11:37:51 +0200)
+
+----------------------------------------------------------------
+* first commit for Rust support
+* add CI job using Fedora + Rust nightly
+* fix detection of ATOMIC128 on x86_64
+
+----------------------------------------------------------------
+Manos Pitsidianakis (7):
+      build-sys: Add rust feature option
+      rust: add bindgen step as a meson dependency
+      .gitattributes: add Rust diff and merge attributes
+      meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
+      rust: add crate to expose bindings and interfaces
+      rust: add utility procedural macro crate
+      rust: add PL011 device model
+
+Paolo Bonzini (6):
+      Require meson version 1.5.0
+      configure, meson: detect Rust toolchain
+      meson: define qemu_isa_flags
+      meson: ensure -mcx16 is passed when detecting ATOMIC128
+      dockerfiles: add a Dockerfile using a nightly Rust toolchain
+      gitlab-ci: add Rust-enabled CI job
+
+Pierrick Bouvier (1):
+      meson: fix machine option for x86_version
+
+ MAINTAINERS                                        |  21 +
+ configure                                          | 170 +++++-
+ meson.build                                        | 158 +++++-
+ rust/wrapper.h                                     |  47 ++
+ .gitattributes                                     |   3 +
+ .gitlab-ci.d/buildtest.yml                         |  13 +
+ .gitlab-ci.d/containers.yml                        |   6 +
+ Kconfig                                            |   1 +
+ Kconfig.host                                       |   3 +
+ hw/arm/Kconfig                                     |  30 +-
+ meson_options.txt                                  |   3 +
+ python/scripts/vendor.py                           |   4 +-
+ python/wheels/meson-1.2.3-py3-none-any.whl         | Bin 964928 -> 0 bytes
+ python/wheels/meson-1.5.0-py3-none-any.whl         | Bin 0 -> 959846 bytes
+ pythondeps.toml                                    |   2 +-
+ rust/.gitignore                                    |   3 +
+ rust/Kconfig                                       |   1 +
+ rust/hw/Kconfig                                    |   2 +
+ rust/hw/char/Kconfig                               |   3 +
+ rust/hw/char/meson.build                           |   1 +
+ rust/hw/char/pl011/.gitignore                      |   2 +
+ rust/hw/char/pl011/Cargo.lock                      | 134 +++++
+ rust/hw/char/pl011/Cargo.toml                      |  26 +
+ rust/hw/char/pl011/README.md                       |  31 ++
+ rust/hw/char/pl011/meson.build                     |  26 +
+ rust/hw/char/pl011/src/device.rs                   | 599 +++++++++++++++++++++
+ rust/hw/char/pl011/src/device_class.rs             |  70 +++
+ rust/hw/char/pl011/src/lib.rs                      | 586 ++++++++++++++++++++
+ rust/hw/char/pl011/src/memory_ops.rs               |  59 ++
+ rust/hw/meson.build                                |   1 +
+ rust/meson.build                                   |   4 +
+ rust/qemu-api-macros/Cargo.lock                    |  47 ++
+ rust/qemu-api-macros/Cargo.toml                    |  25 +
+ rust/qemu-api-macros/README.md                     |   1 +
+ rust/qemu-api-macros/meson.build                   |  25 +
+ rust/qemu-api-macros/src/lib.rs                    |  43 ++
+ rust/qemu-api/.gitignore                           |   2 +
+ rust/qemu-api/Cargo.lock                           |   7 +
+ rust/qemu-api/Cargo.toml                           |  26 +
+ rust/qemu-api/README.md                            |  17 +
+ rust/qemu-api/build.rs                             |  14 +
+ rust/qemu-api/meson.build                          |  24 +
+ rust/qemu-api/src/definitions.rs                   |  97 ++++
+ rust/qemu-api/src/device_class.rs                  | 128 +++++
+ rust/qemu-api/src/lib.rs                           | 166 ++++++
+ rust/qemu-api/src/tests.rs                         |  49 ++
+ rust/rustfmt.toml                                  |   7 +
+ scripts/archive-source.sh                          |   6 +-
+ scripts/make-release                               |   5 +-
+ scripts/meson-buildoptions.sh                      |   3 +
+ scripts/rust/rust_root_crate.sh                    |  13 +
+ scripts/rust/rustc_args.py                         |  84 +++
+ subprojects/.gitignore                             |  11 +
+ subprojects/arbitrary-int-1-rs.wrap                |   7 +
+ subprojects/bilge-0.2-rs.wrap                      |   7 +
+ subprojects/bilge-impl-0.2-rs.wrap                 |   7 +
+ subprojects/either-1-rs.wrap                       |   7 +
+ subprojects/itertools-0.11-rs.wrap                 |   7 +
+ .../packagefiles/arbitrary-int-1-rs/meson.build    |  19 +
+ subprojects/packagefiles/bilge-0.2-rs/meson.build  |  29 +
+ .../packagefiles/bilge-impl-0.2-rs/meson.build     |  45 ++
+ subprojects/packagefiles/either-1-rs/meson.build   |  24 +
+ .../packagefiles/itertools-0.11-rs/meson.build     |  30 ++
+ .../packagefiles/proc-macro-error-1-rs/meson.build |  40 ++
+ .../proc-macro-error-attr-1-rs/meson.build         |  32 ++
+ .../packagefiles/proc-macro2-1-rs/meson.build      |  31 ++
+ subprojects/packagefiles/quote-1-rs/meson.build    |  29 +
+ subprojects/packagefiles/syn-2-rs/meson.build      |  40 ++
+ .../packagefiles/unicode-ident-1-rs/meson.build    |  20 +
+ subprojects/proc-macro-error-1-rs.wrap             |   7 +
+ subprojects/proc-macro-error-attr-1-rs.wrap        |   7 +
+ subprojects/proc-macro2-1-rs.wrap                  |   7 +
+ subprojects/quote-1-rs.wrap                        |   7 +
+ subprojects/syn-2-rs.wrap                          |   7 +
+ subprojects/unicode-ident-1-rs.wrap                |   7 +
+ subprojects/unicode-ident-1-rs/meson.build         |  20 +
+ .../docker/dockerfiles/fedora-rust-nightly.docker  | 173 ++++++
+ tests/docker/dockerfiles/opensuse-leap.docker      |   2 +-
+ tests/lcitool/mappings.yml                         |   2 +-
+ tests/lcitool/refresh                              |  26 +
+ 80 files changed, 3413 insertions(+), 35 deletions(-)
+ create mode 100644 rust/wrapper.h
+ delete mode 100644 python/wheels/meson-1.2.3-py3-none-any.whl
+ create mode 100644 python/wheels/meson-1.5.0-py3-none-any.whl
+ create mode 100644 rust/.gitignore
+ create mode 100644 rust/Kconfig
+ create mode 100644 rust/hw/Kconfig
+ create mode 100644 rust/hw/char/Kconfig
+ create mode 100644 rust/hw/char/meson.build
+ create mode 100644 rust/hw/char/pl011/.gitignore
+ create mode 100644 rust/hw/char/pl011/Cargo.lock
+ create mode 100644 rust/hw/char/pl011/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/README.md
+ create mode 100644 rust/hw/char/pl011/meson.build
+ create mode 100644 rust/hw/char/pl011/src/device.rs
+ create mode 100644 rust/hw/char/pl011/src/device_class.rs
+ create mode 100644 rust/hw/char/pl011/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+ create mode 100644 rust/hw/meson.build
+ create mode 100644 rust/meson.build
+ create mode 100644 rust/qemu-api-macros/Cargo.lock
+ create mode 100644 rust/qemu-api-macros/Cargo.toml
+ create mode 100644 rust/qemu-api-macros/README.md
+ create mode 100644 rust/qemu-api-macros/meson.build
+ create mode 100644 rust/qemu-api-macros/src/lib.rs
+ create mode 100644 rust/qemu-api/.gitignore
+ create mode 100644 rust/qemu-api/Cargo.lock
+ create mode 100644 rust/qemu-api/Cargo.toml
+ create mode 100644 rust/qemu-api/README.md
+ create mode 100644 rust/qemu-api/build.rs
+ create mode 100644 rust/qemu-api/meson.build
+ create mode 100644 rust/qemu-api/src/definitions.rs
+ create mode 100644 rust/qemu-api/src/device_class.rs
+ create mode 100644 rust/qemu-api/src/lib.rs
+ create mode 100644 rust/qemu-api/src/tests.rs
+ create mode 100644 rust/rustfmt.toml
+ create mode 100755 scripts/rust/rust_root_crate.sh
+ create mode 100644 scripts/rust/rustc_args.py
+ create mode 100644 subprojects/arbitrary-int-1-rs.wrap
+ create mode 100644 subprojects/bilge-0.2-rs.wrap
+ create mode 100644 subprojects/bilge-impl-0.2-rs.wrap
+ create mode 100644 subprojects/either-1-rs.wrap
+ create mode 100644 subprojects/itertools-0.11-rs.wrap
+ create mode 100644 subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/bilge-0.2-rs/meson.build
+ create mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+ create mode 100644 subprojects/packagefiles/either-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/itertools-0.11-rs/meson.build
+ create mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/quote-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/syn-2-rs/meson.build
+ create mode 100644 subprojects/packagefiles/unicode-ident-1-rs/meson.build
+ create mode 100644 subprojects/proc-macro-error-1-rs.wrap
+ create mode 100644 subprojects/proc-macro-error-attr-1-rs.wrap
+ create mode 100644 subprojects/proc-macro2-1-rs.wrap
+ create mode 100644 subprojects/quote-1-rs.wrap
+ create mode 100644 subprojects/syn-2-rs.wrap
+ create mode 100644 subprojects/unicode-ident-1-rs.wrap
+ create mode 100644 subprojects/unicode-ident-1-rs/meson.build
+ create mode 100644 tests/docker/dockerfiles/fedora-rust-nightly.docker
+-- 
+2.46.2
 
 
