@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E975CED62A
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2700BCED62A
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syS8B-0007TK-6S; Wed, 09 Oct 2024 04:33:15 -0400
+	id 1syS8w-000898-2I; Wed, 09 Oct 2024 04:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS88-0007P9-9A
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:33:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1syS8t-00087t-Tz
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:34:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS86-0000eG-CE
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:33:11 -0400
+ id 1syS8q-0000h8-UQ
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:33:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728462789;
+ s=mimecast20190719; t=1728462836;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vKWBpydi6OZCHyGeTeMfrvombmHdOWqRZkheNIWbPxM=;
- b=cRn/t5gQk66B7NEvjZYExUs5cfN4qCFHIG2456i2qiv2d4aKRToCaciRh/xnMbScpMAKcv
- Nye4TwVZsNjxG+Pu430ry4Vo5bB28J044uxLhxQuHejIJPRYx++4LURBO35egcRwt2p2Q1
- dvHdLDNCeLgkJLIGhLvE41b6Hve0FCI=
+ bh=l5HKFK89dn5rttwnPrqVrQzyCKq5vCMiAgMxHpkHRhI=;
+ b=HngCL/7rZnomoYIcW3iWoDvpjfL41QFq8fDeIrChQ/nmMSebIsGLaJY4rWlm94RYIyi46G
+ o20yp5ZWbdabUrEkg7zhTcPSrbIXhFljdFcQa/zGtiyMQ+UcQGFUhSq7d4qrhJX4IzLoV5
+ KATsZYoWIM0XLip4N5ramMJmmnGNSKs=
 Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
  [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-Z11z44LQNtGkOnRHFIGuyQ-1; Wed, 09 Oct 2024 04:33:05 -0400
-X-MC-Unique: Z11z44LQNtGkOnRHFIGuyQ-1
+ us-mta-179-9MfBh2xdNA-35wqIwlIA_g-1; Wed, 09 Oct 2024 04:33:52 -0400
+X-MC-Unique: 9MfBh2xdNA-35wqIwlIA_g-1
 Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2e29df9d3abso636755a91.3
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 01:33:05 -0700 (PDT)
+ 98e67ed59e1d1-2e2a047d06fso623577a91.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 01:33:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728462784; x=1729067584;
+ d=1e100.net; s=20230601; t=1728462831; x=1729067631;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vKWBpydi6OZCHyGeTeMfrvombmHdOWqRZkheNIWbPxM=;
- b=tJN7ELjPFPLfflbkrfGwuY1LOeYiGpjAIKEQTH93rKnFOIg3dsv4cMeB9KmzLc5Ccf
- Z73ENB9kRNLE3ndCeC5elxFthTI5UqfZqc2L+K3rVBq5trmoM1/Rzr+hGXxXv/0CcDan
- YspNiEVBdqGtRmuBBjq6Ia8bStOILFm9Kfq2uxQJdyvDJHLcxDjIQ+x4hP8vvbAg4Sk4
- yRfS71XCMZDZwb/uyBM1JHwzSxXH3gWn4qd17WRQbncq/JUVQ4G3dkKaZnXs0tZ4A6ZS
- Y4mFN4N/49Ss+OPaWMB8Mhbqgvx8gNS7QZ2R3UEAtfPhD4ahZD+Pt67Q+izrNRVcuxsw
- bchQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX//SrnmA9XCX0dm+kRR8aXpjpKtGWguWr0PMXtuWnz0mowgT9mVt3OWDHzAlkQU33aM0C9SstY20PZ@nongnu.org
-X-Gm-Message-State: AOJu0YwtQ4gzcL9CR+v9drxBzlAR0iEUXdr3zqYmUwixPLSyKBKkqab3
- zR/dYABsB6zlfuhrLVDJqOL0iohIlTs3C70OG6WbFxOvr63F7Fz0Ws17cc57LhvvrB5Fl+6zVnZ
- l0gFXyZTozuYtCKrSHgKXhELkBs3WUw2SoXbupA1ZLGi5Tnt0oKQSuQCJUU3HkGcw7agMSX6a2o
- xXKBrgXoOSVNqzQ4tGozGU3FiUUO4=
-X-Received: by 2002:a17:90a:d816:b0:2e1:f0ee:7d with SMTP id
- 98e67ed59e1d1-2e2a246d38dmr2185983a91.18.1728462784653; 
- Wed, 09 Oct 2024 01:33:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJsI1vZDgT4/bhSYNVx+++MTgp2K0VE1zQLHyoFXxIanEqlalaG6gNWD7KwCquE7QTrt5a8tJzvHeg0IVAE7Y=
-X-Received: by 2002:a17:90a:d816:b0:2e1:f0ee:7d with SMTP id
- 98e67ed59e1d1-2e2a246d38dmr2185966a91.18.1728462784229; Wed, 09 Oct 2024
- 01:33:04 -0700 (PDT)
+ bh=l5HKFK89dn5rttwnPrqVrQzyCKq5vCMiAgMxHpkHRhI=;
+ b=OXRD3YbXf/yJ0E9ePA4gazSBYlrLoxZWMt+w8xpRB89n7mVXqkSa1MYX5p8yr5GtGB
+ hAMc/mVBq8Bkc6zS3ypb6dwTYojc2MQ8pSepQwqCGxynVovG3RgdcFgodBK6Ex40mQyp
+ knng0Km+FMZrPnMZM6GrOOyuGE0dQN+d/qXKT5rpg7lTQOKZtnAOcG8Hdk6+dWHtZ8Rw
+ vSHTaiSPZO0+POjQjVhaB0iC4/5X5F8JJr4DRd6PqCWu4mCj1iAB0i5wiMBodxSyPFCP
+ MSn0gXBsgXe7ikGJn5SeESOmX2B9wBriK0ZDYANHxjJiXwSQEzE60PmU0uj8zCIzjstY
+ S7uA==
+X-Gm-Message-State: AOJu0Yw3H/Th0xeNKbLXOGWqjzDTegF5d0Vp7jVCvtzycRrAfXPvL8Ex
+ Yj0+1ubVwqYoevLYwtvig9koEmA6I0f6K9EgDv7OBWibxq63Y7GcaxB4mcRqK1mXPw8kFEWiOhB
+ wvVTY23WX2Mza2LCQW24x4IcRkRAXq5QAqlrkfFRQHlqsIyYjD+FDf04bmU/xt5keJFjughm9qF
+ eVcgvwdcFFB/wOfMDf/PFXAHcCgFDW1uIlOZVQ4w==
+X-Received: by 2002:a17:90a:e518:b0:2d8:9226:aa94 with SMTP id
+ 98e67ed59e1d1-2e2a22e6ef7mr2162556a91.1.1728462831447; 
+ Wed, 09 Oct 2024 01:33:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHn44GuRM1nKI+90u+conhBU0XmcD0LuPR1syxDulKscZjNO6DFawphTTUNSy0Nln4LiV7L+EWsce+2UXzigtA=
+X-Received: by 2002:a17:90a:e518:b0:2d8:9226:aa94 with SMTP id
+ 98e67ed59e1d1-2e2a22e6ef7mr2162538a91.1.1728462831048; Wed, 09 Oct 2024
+ 01:33:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240918225128.455043-1-dave@treblig.org>
-In-Reply-To: <20240918225128.455043-1-dave@treblig.org>
+References: <20240918205258.444880-1-dave@treblig.org>
+In-Reply-To: <20240918205258.444880-1-dave@treblig.org>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 9 Oct 2024 16:32:53 +0800
-Message-ID: <CACGkMEsbxrXaOH1U6HPAd-PXmmUHCM79DDEdqO0Tm13pCfP2Pg@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/net_rx_pkt: Remove deadcode
+Date: Wed, 9 Oct 2024 16:33:40 +0800
+Message-ID: <CACGkMEtppjXh3dT8WZ5ja_XOQX6h+Mi2BM-A+MufDr=oMc-CRg@mail.gmail.com>
+Subject: Re: [PATCH] net: Remove deadcode
 To: dave@treblig.org
-Cc: dmitry.fleytman@gmail.com, akihiko.odaki@daynix.com, qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -99,12 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 19, 2024 at 6:51=E2=80=AFAM <dave@treblig.org> wrote:
+On Thu, Sep 19, 2024 at 4:53=E2=80=AFAM <dave@treblig.org> wrote:
 >
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 >
-> net_rx_pkt_get_l3_hdr_offset and net_rx_pkt_get_iovec_len haven't
-> been used since they were added.
+> net_hub_port_find is unused since 2018's commit
+>   af1a5c3eb4 ("net: Remove the deprecated "vlan" parameter")
+>
+> qemu_receive_packet_iov is unused since commit
+>   ffbd2dbd8e ("e1000e: Perform software segmentation for loopback")
+>
+> in turn it was the last user of qemu_net_queue_receive_iov.
 >
 > Remove them.
 >
