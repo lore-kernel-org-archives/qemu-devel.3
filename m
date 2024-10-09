@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D40CED628
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7966CCED62A
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sySBY-0001xX-Fz; Wed, 09 Oct 2024 04:36:44 -0400
+	id 1sySEY-0002ta-Cr; Wed, 09 Oct 2024 04:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sySBW-0001xJ-P9
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:36:42 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1sySEX-0002tS-JS
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:39:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sySBT-00014j-PU
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:36:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728463000; x=1759999000;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=puO2yolwMmXZ4+1/AaWo0WiUXGvYXZVPtqYsDlpyI2g=;
- b=SIu9CUAWvipbPxcMIYm12vHTRxeK+8F+6s0HS1dtHN+kbdxcuhw630kX
- XElaFrQpFn8UFCI/1BSs62OFt8WuOx6EswcwgYaiwR6Fy5TEKntsi+813
- hRTHfRcLMlfnj01MEa5ivmzc/1I7jLZdmYK9W4eO+FNlc/BC2Y+vHguX5
- L7NwHHCQQ6PQ8RsDLlZ53GEQ1iBVKhNp4cpGqskcJqwC6FVd5QiecocmS
- WHhoFBbsZESQ3p2UGQyZj8kzZKuMazx8r+0ebA9gdEQdA3qrwdVL7lmSP
- ubUln4k1J4M3RnOxOQdpEKENGFWbiUMwGfNmz0mEcNKKZLQRbQ5uji/4J g==;
-X-CSE-ConnectionGUID: SziPB5l9Rpi6L0Mq5zgOLA==
-X-CSE-MsgGUID: S2mKf4uzQ7yRfd9IQTz2qw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="27639446"
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="27639446"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Oct 2024 01:36:36 -0700
-X-CSE-ConnectionGUID: fWS+miooRGaMtvJG25pO9g==
-X-CSE-MsgGUID: HRCGbfD0TnGkXyc1GgsmiQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="75764406"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 09 Oct 2024 01:36:35 -0700
-Date: Wed, 9 Oct 2024 16:52:47 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Gao Shiyuan <gaoshiyuan@baidu.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] x86: Add support save/load HWCR MSR
-Message-ID: <ZwZEXyRvZeb4eO6q@intel.com>
-References: <20240926040808.9158-1-gaoshiyuan@baidu.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1sySEV-0001JS-PW
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:39:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728463185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=PLLPhh6HTSu0AqwVb1vgVWNJ3vb1YIQnEFeXJTdL0mQ=;
+ b=blEUljGNBOzSpQEUA8qsV1iE2DChV0nBw73Of70nw3cN++4TS5XO2p3LBLf2lbN5XXp/L9
+ yk5uiSgiXf3xj7P6OahQ+OPmw+TDsce4NC8Pwpst0ctlGzic8qmzSLrVPy79I1WxqS4lv5
+ jP1khE2iD+1/oijhyxGb6acsV6G/bXQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-eLhT_UtuPIe3VxC0SoZv8w-1; Wed,
+ 09 Oct 2024 04:39:44 -0400
+X-MC-Unique: eLhT_UtuPIe3VxC0SoZv8w-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E82F195F12F; Wed,  9 Oct 2024 08:39:43 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.46])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B1E7F1956052; Wed,  9 Oct 2024 08:39:41 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ peter.maydell@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 0/2] chardev patches
+Date: Wed,  9 Oct 2024 12:39:36 +0400
+Message-ID: <20241009083938.1504695-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240926040808.9158-1-gaoshiyuan@baidu.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,77 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shiyuan,
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On Thu, Sep 26, 2024 at 12:08:08PM +0800, Gao Shiyuan via wrote:
-> Date: Thu, 26 Sep 2024 12:08:08 +0800
-> From: Gao Shiyuan via <qemu-devel@nongnu.org>
-> Subject: [PATCH v1 1/1] x86: Add support save/load HWCR MSR
-> X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-> 
-> KVM commit 191c8137a939 ("x86/kvm: Implement HWCR support")
-> introduced support for emulating HWCR MSR.
-> 
-> Add support for QEMU to save/load this MSR for migration purposes.
-> 
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> ---
->  target/i386/cpu.c     |  1 +
->  target/i386/cpu.h     |  5 +++++
->  target/i386/kvm/kvm.c | 12 ++++++++++++
->  target/i386/machine.c | 20 ++++++++++++++++++++
->  4 files changed, 38 insertions(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 85ef7452c0..339131a39a 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7093,6 +7093,7 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
->      env->a20_mask = ~0x0;
->      env->smbase = 0x30000;
->      env->msr_smi_count = 0;
-> +    env->hwcr = 0;
+The following changes since commit 2af37e791906cfda42cb9604a16d218e56994bb1:
 
-Why we need to clear it here? This needs to be explained in the commit
-message.
+  Merge tag 'pull-request-2024-10-07' of https://gitlab.com/thuth/qemu into staging (2024-10-07 12:55:02 +0100)
 
->      env->idt.limit = 0xffff;
->      env->gdt.limit = 0xffff;
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 14edd57a37..a19b1ceda4 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -539,6 +539,8 @@ typedef enum X86Seg {
->  
->  #define MSR_AMD64_TSC_RATIO_DEFAULT     0x100000000ULL
->  
-> +#define MSR_K7_HWCR                     0xc0010015
-> +
->  #define MSR_VM_HSAVE_PA                 0xc0010117
->  
->  #define MSR_IA32_XFD                    0x000001c4
-> @@ -1859,6 +1861,9 @@ typedef struct CPUArchState {
->      uint64_t msr_lbr_depth;
->      LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
->  
-> +    /* Hardware Configuration MSR */
+are available in the Git repository at:
 
-We can keep the same comment as msr_hwcr in KVM to emphasize this is an
-AMD-specific MSR, i.e.,
+  https://gitlab.com/marcandre.lureau/qemu.git tags/chr-pull-request
 
-/* AMD MSRC001_0015 Hardware Configuration */
+for you to fetch changes up to b74cb8761c68275240af0826086590a03a1f419d:
 
-> +    uint64_t hwcr;
+  chardev: add path option for pty backend (2024-10-09 12:13:05 +0400)
 
-Add the msr_ prefix to indicate that this value is only intended to
-store the MSR. Currently, for similar members, some have the msr_ prefix
-and some do not, but it is better to have it for clarity.
+----------------------------------------------------------------
+chardev: introduce 'reconnect-ms' and deprecate 'reconnect'
+chardev: add path option for pty backend
 
-> +
->      /* exception/interrupt handling */
->      int error_code;
->      int exception_is_int;
+----------------------------------------------------------------
 
--Zhao
+Daniil Tatianin (1):
+  chardev: introduce 'reconnect-ms' and deprecate 'reconnect'
+
+Octavian Purdila (1):
+  chardev: add path option for pty backend
+
+ docs/about/deprecated.rst     |  6 +++++
+ qapi/char.json                | 44 ++++++++++++++++++++++++++++++++---
+ include/chardev/char-socket.h |  2 +-
+ chardev/char-pty.c            | 33 ++++++++++++++++++++++++++
+ chardev/char-socket.c         | 33 +++++++++++++++++++-------
+ chardev/char.c                |  8 +++++++
+ qemu-options.hx               | 33 +++++++++++++++++++++-----
+ 7 files changed, 140 insertions(+), 19 deletions(-)
+
+-- 
+2.47.0
 
 
