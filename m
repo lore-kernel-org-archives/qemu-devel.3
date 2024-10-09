@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37E5CED606
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 06:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80926CED60C
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 06:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syQ3R-0007yP-8j; Wed, 09 Oct 2024 02:20:13 -0400
+	id 1syQ6K-0000EG-Lb; Wed, 09 Oct 2024 02:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ3P-0007y5-CY
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:20:11 -0400
-Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ6F-0000Dt-5O
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:23:07 -0400
+Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ3M-00006E-V6
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:20:10 -0400
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal
- [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 4E1DD11400A9;
- Wed,  9 Oct 2024 02:20:05 -0400 (EDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1syQ6D-0000Oc-6q
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 02:23:06 -0400
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal
+ [10.202.2.47])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 273E4254008F;
+ Wed,  9 Oct 2024 02:23:04 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Wed, 09 Oct 2024 02:20:05 -0400
+ by phl-compute-07.internal (MEProxy); Wed, 09 Oct 2024 02:23:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-type:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1728454805; x=
- 1728541205; bh=KnXpyuN6J+/DXK2B2g/aRlC26AH/7jKL7enI/Eiwek0=; b=l
- 2jojbbsNwuRhAsc0Z0Zz9s1BfQovIYD2Fvqkhbe97+UjHKIxq7etnJFyRmEq21g5
- bHg4mSar0Y0rWU1osobvqyZU44w5G/Pk1FufT6ampKoZsToLocLYbzjJxFP3QZts
- R8v5uftrcGbFKq7xj+xfJZ4fS9dlHYfkvlnL77Mb3g1mgbQV9CsbEKmch6Kk2nrK
- 1U9sjCvQ2ovP7CkmUv7losJOfEP8iz1F2u0DzpmZByF5LlcrbbGt+U0kyMmM4dn7
- 11ep5iNc3t01vksoJ1QRm3PyBWoySRfNf3275kclFpPfvS9L2fE/RuefXlZGKcs0
- CKOp48vKf+HtXhZX35wpg==
+ :reply-to:subject:subject:to:to; s=fm1; t=1728454983; x=
+ 1728541383; bh=utG1qaiHaxw0hPEGfVYJgD7iWHm8Jg+Ujvz6ioXWgSU=; b=c
+ xYF14n84zAcJakrnEDA/U7vcfkvNY12VXCCBTWtLCh7ZchhcbWM8NGeAOy7QpB91
+ Ae7GaE5p3DYRPfTnO4NzI11S+mm7Z+Qik/fK4xDdlU6ae74dAK7dwNXW62Xu+cqC
+ fBeHupBYjwTmuR5IJj9iadTEQP32CLJXgQMW5I7VXVHz4VcXGrdYugWx/lJ8KugO
+ xXxxcatagQ3opHu0g4fo6iFLTJWos02pWQBjyAX/TmmoXT2gKK8Kk3gazq/KQm1X
+ wO7LPdUn9uX2/A7b8K3CM/vBzSdoA5smh0HzCbyXMPYrsV1NyS8M1WfaGeUJlGy4
+ pkqXyiElrUaBcdypp7KeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:content-type:date:date
  :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:subject:subject:to
  :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1728454805; x=1728541205; bh=KnXpyuN6J+/DXK2B2g/aRlC26AH/
- 7jKL7enI/Eiwek0=; b=GwVBOp28jWkyrMWjcKX1T8+O/DgZaCWRWsgzfvR0bOSi
- RFHkGGQPnJfUbMwCSFWjNCq2mzQ0VydAmjsBN0vcPExCwUYLp/M7JOv3KMx6pI2p
- mYoN0Da4LGafQP2sdtFq8bGEbtl2oFo91nsS7cpEWGK4UA1OMd9xqveUP4uy6yGj
- yNLgamFQUNXS8ulihPlMWodHydOfQNkksKoI2BueTz0LYxA6b5CBEzLuH3u4h682
- dZkfM1c/P4WrA1uHUqpdIytZAZjkhC/r7hUdk7vLSn69FRcUXSFCDdqqfptvaaPC
- Airt8AoELB4EvcPQmR9rS2oWNeRKsOU3dXf5AOfJtQ==
-X-ME-Sender: <xms:kyAGZ_3n9mBvjBhKggWEz92i-yQHUdo4MFaN3vjsIY7IAdm_7kHBiw>
- <xme:kyAGZ-EwwKjBASHu7WTgxzf1TeXEj4OXtc66tu0i52JpBTtawxZuI5p5ZvHHPAx4D
- gm5mKkTTKYp1ohs4jQ>
-X-ME-Received: <xmr:kyAGZ_5Ni6oBLOJuyqelE3buiiDdeiPOiw7FaKP2pGLrjjm6F3qPxYqxcugD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddtjecutefuodetggdotefrod
+ fm2; t=1728454983; x=1728541383; bh=utG1qaiHaxw0hPEGfVYJgD7iWHm8
+ Jg+Ujvz6ioXWgSU=; b=j1iEL8gxBUGuaaSeIyEm5L5E5UdawKwVDfhAGDDisijD
+ C+BwEwLAo8MJtV6qBchtfligZuG0ES/PqD8tQFz/bsVW+nP8nrDmMIPosIE66OPA
+ kIAGhw8SUZvmnQmFaVY94AZvEbk2t/POzFyL9YfXL8Hn2a82ccUrBwcJjNnXFv8O
+ 0m95BRCGzFiYJKqOKksC4zKxPx2cJX1ergwWZjfK2tg2p2wPYpomaW8CCC3QmxRy
+ OiiWPnweix1XNTUdlLSwkN9NBLwlulNS+GqVL6rNyLZbUvldTllFJWuXyvjjhbgT
+ H6znHZsTH0tRq/3GhSUbnzHH/QAlUgrRcf3p2y8CJQ==
+X-ME-Sender: <xms:RyEGZ6PRDlG3afo1CwyU9Bd8gZqP9YJXQ20w1XQBwrydk7lC9w1xxg>
+ <xme:RyEGZ4_Q4be2jPWmYwmDgc4uJoD6ZInCVxTxFX9bhlhWKZncSbhXcX6oe_S0R6nZ2
+ ZKQLwq3bgXeThVxCio>
+X-ME-Received: <xmr:RyEGZxSfumlN89cNvCWUfYkODIZLMuAdov3aupllbyHM5MIJlaN4JmLS0tBZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddtlecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdej
- necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
- drughkqeenucggtffrrghtthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeev
- jeevtdduudegieegteffffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
- epmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphht
- thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrhihushhhrdhmheehse
- hsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhn
- uhdrohhrghdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpth
- htohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepihhtshesihhrrhgv
- lhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:kyAGZ03VbTSHSFPjp8PnNt0L0nI6XGxhlsPWbY95DWG8ZupGNS9slg>
- <xmx:kyAGZyHEpqUz_krIE_29H6DPaTw-jpxxXynaozORmJzOD1Fz1emQeA>
- <xmx:kyAGZ1_EiUnP28ki2VsRJ6CSBAFItR3mOitajwr5qcBQ-dvBYj-lLQ>
- <xmx:kyAGZ_mHR_JkR8RALatFlmpkqUbHXsTFGR9aXTrlzVW8Fh3dzdNqWg>
- <xmx:lSAGZ_PUw8CTe68qNt0qLLJyg7NU8XKkEUdVlSabXNKnFFQA-OAdZ3bn>
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+ evuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
+ uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgje
+ efffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
+ gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+ tghpthhtoheprghruhhnrdhkkhgrsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqh
+ gvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghushgthhes
+ khgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpd
+ hrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohep
+ ihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:RyEGZ6sftfIxxVAYvUn-_9MHorTVowJH2JfVrsugI9xQWty-46M6mw>
+ <xmx:RyEGZyfiecnN0QQ7iJKeRUodgcUksH_KYbzPFErrBnZOg1T_0lKH-Q>
+ <xmx:RyEGZ-3w7hh5LBGiMAUMrk8TZ5wlo4Iv8tLUgxwNLWSP36XXbDOLkw>
+ <xmx:RyEGZ28US131rWMEb0tEYX2JAXOXY-qMRwgYh1fLbH2HUzx2OS8Xkg>
+ <xmx:RyEGZ6Tlr3sMmoi8ZXOB4L_rZO0MknFisfSmymX-SVdzNiS80WMpU6aN>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 02:20:02 -0400 (EDT)
-Date: Wed, 9 Oct 2024 08:20:01 +0200
+ 9 Oct 2024 02:23:03 -0400 (EDT)
+Date: Wed, 9 Oct 2024 08:23:02 +0200
 From: Klaus Jensen <its@irrelevant.dk>
-To: Ayush Mishra <ayush.m55@samsung.com>
-Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it
-Subject: Re: [PATCH v2] hw/nvme: Adding support for NPDAL and NPDGL
-Message-ID: <ZwYgkWsqhFyoMOu7@AALNPWKJENSEN.aal.scsc.local>
-References: <CGME20241001065838epcas5p158f96030a744df180b1b3818287c2a84@epcas5p1.samsung.com>
- <20241001012833.3551820-1-ayush.m55@samsung.com>
+To: Arun Kumar <arun.kka@samsung.com>
+Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: [PATCH v2] hw/nvme: i/o cmd set independent namespace data
+ structure
+Message-ID: <ZwYhRtp8_kI9fHnw@AALNPWKJENSEN.aal.scsc.local>
+References: <CGME20240925061501epcas5p26c161f5c7cae08faa15a8db8391ab417@epcas5p2.samsung.com>
+ <20240925004407.3521406-1-arun.kka@samsung.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="BKPKXS5jUeUPTgbV"
+ protocol="application/pgp-signature"; boundary="Bl3W+EOEjETE/w1V"
 Content-Disposition: inline
-In-Reply-To: <20241001012833.3551820-1-ayush.m55@samsung.com>
-Received-SPF: pass client-ip=202.12.124.147; envelope-from=its@irrelevant.dk;
- helo=fout-b4-smtp.messagingengine.com
+In-Reply-To: <20240925004407.3521406-1-arun.kka@samsung.com>
+Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b7-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,116 +113,224 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---BKPKXS5jUeUPTgbV
+--Bl3W+EOEjETE/w1V
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Oct  1 06:58, Ayush Mishra wrote:
-> Adding support for new 32 bit NPDGL and NPDAL fields to address the
-> needs of larger granularities.
+On Sep 25 06:14, Arun Kumar wrote:
+> add support for i/o command set independent namespace data
+> structure(cns=3D8h and cns=3D1fh)
 >=20
-> Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
-> ---
->  v1 -> v2: Added macros for NSFEAT in /include/block/nvme.h as suggested
-> by Klaus.
->=20
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> Signed-off-by: Arun Kumar <arun.kka@samsung.com>
 
-LGTM.
-
-I'll add a name to the enum when applying, but that's it.
+Looks good.
 
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
->  hw/nvme/ns.c         |  5 ++++-
->  include/block/nvme.h | 17 ++++++++++++++++-
->  2 files changed, 20 insertions(+), 2 deletions(-)
+> ---
+>  hw/nvme/ctrl.c       | 31 +++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c         |  6 +++++-
+>  hw/nvme/nvme.h       |  1 +
+>  hw/nvme/trace-events |  1 +
+>  include/block/nvme.h | 22 ++++++++++++++++++++--
+>  5 files changed, 58 insertions(+), 3 deletions(-)
 >=20
-> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-> index ea8db175db..7f51b6eec4 100644
-> --- a/hw/nvme/ns.c
-> +++ b/hw/nvme/ns.c
-> @@ -30,6 +30,7 @@
->  void nvme_ns_init_format(NvmeNamespace *ns)
->  {
->      NvmeIdNs *id_ns =3D &ns->id_ns;
-> +    NvmeIdNsNvm *id_ns_nvm =3D &ns->id_ns_nvm;
->      BlockDriverInfo bdi;
->      int npdg, ret;
->      int64_t nlbas;
-> @@ -55,6 +56,8 @@ void nvme_ns_init_format(NvmeNamespace *ns)
->      }
-> =20
->      id_ns->npda =3D id_ns->npdg =3D npdg - 1;
-> +    id_ns_nvm->npdal =3D npdg;
-> +    id_ns_nvm->npdgl =3D npdg;
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..cef2c3fa19 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -5498,6 +5498,33 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCt=
+rl *n, NvmeRequest *req)
+>      return nvme_c2h(n, (uint8_t *)&list, sizeof(list), req);
 >  }
 > =20
->  static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-> @@ -72,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
->      ns->id_ns.dlfeat =3D 0x1;
-> =20
->      /* support DULBE and I/O optimization fields */
-> -    id_ns->nsfeat |=3D (0x4 | 0x10);
-> +    id_ns->nsfeat |=3D (NVME_DEALLOCATED_ERROR | NVME_OPTIONAL_WRITE_PER=
-F);
+> +static uint16_t nvme_identify_ns_ind(NvmeCtrl *n, NvmeRequest *req, bool=
+ alloc)
+> +{
+> +    NvmeNamespace *ns;
+> +    NvmeIdentify *c =3D (NvmeIdentify *)&req->cmd;
+> +    uint32_t nsid =3D le32_to_cpu(c->nsid);
+> +
+> +    trace_pci_nvme_identify_ns_ind(nsid);
+> +
+> +    if (!nvme_nsid_valid(n, nsid) || nsid =3D=3D NVME_NSID_BROADCAST) {
+> +        return NVME_INVALID_NSID | NVME_DNR;
+> +    }
+> +
+> +    ns =3D nvme_ns(n, nsid);
+> +    if (unlikely(!ns)) {
+> +        if (alloc) {
+> +            ns =3D nvme_subsys_ns(n->subsys, nsid);
+> +            if (!ns) {
+> +                return nvme_rpt_empty_id_struct(n, req);
+> +            }
+> +        } else {
+> +            return nvme_rpt_empty_id_struct(n, req);
+> +        }
+> +    }
+> +
+> +    return nvme_c2h(n, (uint8_t *)&ns->id_ns_ind, sizeof(NvmeIdNsInd), r=
+eq);
+> +}
+> +
+>  static uint16_t nvme_identify_ns_csi(NvmeCtrl *n, NvmeRequest *req,
+>                                       bool active)
+>  {
+> @@ -5732,6 +5759,10 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeReq=
+uest *req)
+>          return nvme_identify_sec_ctrl_list(n, req);
+>      case NVME_ID_CNS_CS_NS:
+>          return nvme_identify_ns_csi(n, req, true);
+> +    case NVME_ID_CNS_CS_IND_NS:
+> +        return nvme_identify_ns_ind(n, req, false);
+> +    case NVME_ID_CNS_CS_IND_NS_ALLOCATED:
+> +        return nvme_identify_ns_ind(n, req, true);
+>      case NVME_ID_CNS_CS_NS_PRESENT:
+>          return nvme_identify_ns_csi(n, req, false);
+>      case NVME_ID_CNS_CTRL:
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index ea8db175db..6dbdcb49bf 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -62,6 +62,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+>      static uint64_t ns_count;
+>      NvmeIdNs *id_ns =3D &ns->id_ns;
+>      NvmeIdNsNvm *id_ns_nvm =3D &ns->id_ns_nvm;
+> +    NvmeIdNsInd *id_ns_ind =3D &ns->id_ns_ind;
+>      uint8_t ds;
+>      uint16_t ms;
+>      int i;
+> @@ -75,7 +76,9 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+>      id_ns->nsfeat |=3D (0x4 | 0x10);
 > =20
 >      if (ns->params.shared) {
->          id_ns->nmic |=3D NVME_NMIC_NS_SHARED;
+> -        id_ns->nmic |=3D NVME_NMIC_NS_SHARED;
+> +        id_ns->nmic |=3D NVME_ID_NS_IND_NMIC_SHRNS;
+> +        id_ns_ind->nmic =3D NVME_ID_NS_IND_NMIC_SHRNS;
+> +        id_ns_ind->nstat =3D NVME_ID_NS_IND_NSTAT_NRDY;
+>      }
+> =20
+>      /* Substitute a missing EUI-64 by an autogenerated one */
+> @@ -770,6 +773,7 @@ static void nvme_ns_realize(DeviceState *dev, Error *=
+*errp)
+>          subsys->namespaces[nsid] =3D ns;
+> =20
+>          ns->id_ns.endgid =3D cpu_to_le16(0x1);
+> +        ns->id_ns_ind.endgrpid =3D cpu_to_le16(0x1);
+> =20
+>          if (ns->params.detached) {
+>              return;
+> diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+> index bed8191bd5..b0268efe84 100644
+> --- a/hw/nvme/nvme.h
+> +++ b/hw/nvme/nvme.h
+> @@ -228,6 +228,7 @@ typedef struct NvmeNamespace {
+>      int64_t      moff;
+>      NvmeIdNs     id_ns;
+>      NvmeIdNsNvm  id_ns_nvm;
+> +    NvmeIdNsInd  id_ns_ind;
+>      NvmeLBAF     lbaf;
+>      unsigned int nlbaf;
+>      size_t       lbasz;
+> diff --git a/hw/nvme/trace-events b/hw/nvme/trace-events
+> index 3a67680c6a..6be0bfa1c1 100644
+> --- a/hw/nvme/trace-events
+> +++ b/hw/nvme/trace-events
+> @@ -56,6 +56,7 @@ pci_nvme_identify(uint16_t cid, uint8_t cns, uint16_t c=
+trlid, uint8_t csi) "cid
+>  pci_nvme_identify_ctrl(void) "identify controller"
+>  pci_nvme_identify_ctrl_csi(uint8_t csi) "identify controller, csi=3D0x%"=
+PRIx8""
+>  pci_nvme_identify_ns(uint32_t ns) "nsid %"PRIu32""
+> +pci_nvme_identify_ns_ind(uint32_t nsid) "nsid %"PRIu32""
+>  pci_nvme_identify_ctrl_list(uint8_t cns, uint16_t cntid) "cns 0x%"PRIx8"=
+ cntid %"PRIu16""
+>  pci_nvme_identify_pri_ctrl_cap(uint16_t cntlid) "identify primary contro=
+ller capabilities cntlid=3D%"PRIu16""
+>  pci_nvme_identify_sec_ctrl_list(uint16_t cntlid, uint8_t numcntl) "ident=
+ify secondary controller list cntlid=3D%"PRIu16" numcntl=3D%"PRIu8""
 > diff --git a/include/block/nvme.h b/include/block/nvme.h
-> index 5298bc4a28..7a84664bf2 100644
+> index bb231d0b9a..47af651354 100644
 > --- a/include/block/nvme.h
 > +++ b/include/block/nvme.h
-> @@ -1413,7 +1413,12 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
->      uint8_t     pic;
->      uint8_t     rsvd9[3];
->      uint32_t    elbaf[NVME_MAX_NLBAF];
-> -    uint8_t     rsvd268[3828];
-> +    uint32_t    npdgl;
-> +    uint32_t    nprg;
-> +    uint32_t    npra;
-> +    uint32_t    nors;
-> +    uint32_t    npdal;
-> +    uint8_t     rsvd288[3808];
+> @@ -1068,6 +1068,7 @@ enum NvmeIdCns {
+>      NVME_ID_CNS_CS_NS                 =3D 0x05,
+>      NVME_ID_CNS_CS_CTRL               =3D 0x06,
+>      NVME_ID_CNS_CS_NS_ACTIVE_LIST     =3D 0x07,
+> +    NVME_ID_CNS_CS_IND_NS             =3D 0x08,
+>      NVME_ID_CNS_NS_PRESENT_LIST       =3D 0x10,
+>      NVME_ID_CNS_NS_PRESENT            =3D 0x11,
+>      NVME_ID_CNS_NS_ATTACHED_CTRL_LIST =3D 0x12,
+> @@ -1077,6 +1078,7 @@ enum NvmeIdCns {
+>      NVME_ID_CNS_CS_NS_PRESENT_LIST    =3D 0x1a,
+>      NVME_ID_CNS_CS_NS_PRESENT         =3D 0x1b,
+>      NVME_ID_CNS_IO_COMMAND_SET        =3D 0x1c,
+> +    NVME_ID_CNS_CS_IND_NS_ALLOCATED   =3D 0x1f,
+>  };
+> =20
+>  typedef struct QEMU_PACKED NvmeIdCtrl {
+> @@ -1400,6 +1402,20 @@ typedef struct QEMU_PACKED NvmeIdNsNvm {
+>      uint8_t     rsvd268[3828];
 >  } NvmeIdNsNvm;
 > =20
->  typedef struct QEMU_PACKED NvmeIdNsDescr {
-> @@ -1536,6 +1541,16 @@ typedef union NvmeDifTuple {
->      } g64;
->  } NvmeDifTuple;
-> =20
-> +enum {
-> +    NVME_THIN_PROVISIONING          =3D 1 << 0,
-> +    NVME_NS_SUPP_ATOMIC_BOUND_POW   =3D 1 << 1,
-> +    NVME_DEALLOCATED_ERROR          =3D 1 << 2,
-> +    NVME_UID_REUSE                  =3D 1 << 3,
-> +    NVME_OPTIONAL_WRITE_PERF        =3D 3 << 4,
-> +    NVME_MULTIPLE_ATOMICITY_MODE    =3D 1 << 6,
-> +    NVME_OPTIONAL_READ_PERF         =3D 1 << 7,
-> +};
+> +typedef struct QEMU_PACKED NvmeIdNsInd {
+> +    uint8_t     nsfeat;
+> +    uint8_t     nmic;
+> +    uint8_t     rescap;
+> +    uint8_t     fpi;
+> +    uint32_t    anagrpid;
+> +    uint8_t     nsattr;
+> +    uint8_t     rsvd9;
+> +    uint16_t    nvmsetid;
+> +    uint16_t    endgrpid;
+> +    uint8_t     nstat;
+> +    uint8_t     rsvd15[4081];
+> +} NvmeIdNsInd;
 > +
->  enum NvmeZoneAttr {
->      NVME_ZA_FINISHED_BY_CTLR         =3D 1 << 0,
->      NVME_ZA_FINISH_RECOMMENDED       =3D 1 << 1,
+>  typedef struct QEMU_PACKED NvmeIdNsDescr {
+>      uint8_t nidt;
+>      uint8_t nidl;
+> @@ -1420,8 +1436,9 @@ enum NvmeNsIdentifierType {
+>      NVME_NIDT_CSI               =3D 0x04,
+>  };
+> =20
+> -enum NvmeIdNsNmic {
+> -    NVME_NMIC_NS_SHARED         =3D 1 << 0,
+> +enum NvmeIdNsIndependent {
+> +    NVME_ID_NS_IND_NMIC_SHRNS   =3D 0x01,
+> +    NVME_ID_NS_IND_NSTAT_NRDY   =3D 0x01,
+>  };
+> =20
+>  enum NvmeCsi {
+> @@ -1854,6 +1871,7 @@ static inline void _nvme_check_size(void)
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeLBAF) !=3D 4);
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeLBAFE) !=3D 16);
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeIdNs) !=3D 4096);
+> +    QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsInd) !=3D 4096);
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsNvm) !=3D 4096);
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeIdNsZoned) !=3D 4096);
+>      QEMU_BUILD_BUG_ON(sizeof(NvmeSglDescriptor) !=3D 16);
 > --=20
 > 2.43.0
 >=20
 >=20
 
---BKPKXS5jUeUPTgbV
+--Bl3W+EOEjETE/w1V
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcGII4ACgkQTeGvMW1P
-DemQ6wf+LFXhfOa0+MWTZIVWjghCVBYYfqEE7OWIzidN+aIUw6zuELwUWlzCF3+W
-65zIMBDK1yF/Vx7rOU4m7HoFMA966rjNsTVt4PGbgmCMj/x3aQ0KxlC3MwVfnNUG
-mTeojqrCJOwaH/ClCX9VKsBRn8zpLxElGYljzfhSDBYO+D6elr8DmkNS/C/WSrPb
-j9kgNII/vHodfaOfzhLULTXb2srMFs0O/VF4azH7yDpbssJFDvM124Cxc1u81kgd
-GdQb4sahGdr+72PnCfHZ20e1dnPiNb8we9nevpxHuJ17+h52uTzDGZa8K+SUXSiG
-fneZFQ8CApThCnXITmvFraEjVmM2OQ==
-=WwMp
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmcGIUYACgkQTeGvMW1P
+Den6QggAne5mTIATqGaGN6SAetiFrIjqf92TFFzGMlpvI4VD5dPVibvL/i0TpQkm
+pS3GlcryTWh2cIiJsK/qWTC3PcR2bZ1EBoH5QrcgXW+aexkzsY26qAUiRyuFZvtv
+rIcjY8kP6/sBkiZ/tJB4r76XX8Qy/pxpBUb3bROYH3yzff7IKfYQwZC0AWIgx+2L
+MRHgsAIO9MEHYtTc04lCJLIkPVYiZc3xRpxHJnoEef2+ejIUNLgi4cf9/IQYX+KT
+J4YiLoWbei+2WipM8NodeH/6TIPgvMpPfF0hk7RbcdG+y53W9utztvd5NB6gwsAz
+90K056Qnt6HdCAZ2XRh4yYcBuA7pvw==
+=Mu7a
 -----END PGP SIGNATURE-----
 
---BKPKXS5jUeUPTgbV--
+--Bl3W+EOEjETE/w1V--
 
