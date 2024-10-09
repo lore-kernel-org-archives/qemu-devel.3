@@ -4,121 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0F1CEE324
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 21:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB06CEE356
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 22:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syeIw-0007Wi-2y; Wed, 09 Oct 2024 17:33:10 -0400
+	id 1syeks-0002ia-IF; Wed, 09 Oct 2024 18:02:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1syeIu-0007WW-Ql; Wed, 09 Oct 2024 17:33:08 -0400
-Received: from mout.gmx.net ([212.227.17.20])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syekq-0002iG-BB
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:02:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1syeIt-0002P1-5r; Wed, 09 Oct 2024 17:33:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1728509583; x=1729114383; i=deller@gmx.de;
- bh=rkDvT9+2mExNwBaDhV8t5TZC64P4RCKtBdbeRNAEl30=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=UZkFAHfyNpJvgmUVMhxwqzYt4RqNPwEuA34avq7QfZO8R09tIk8LCdntGT8xerWZ
- YyPJRzLq/TH+rS22gm6+n7+I8fmqAMSR4STt2FK5K8hRWYlxSSdXx0X+4qU8b7gSF
- X77I5KYL7BXZYylqsyAtrlSSKsuiaqNkpCAmXbZu6LKG+AT/KrF+ZYsGl6/Vf52qG
- UaIROZZtLZWsJUuu6BTWcHrDj8fOtxZIteGLDAgVSCkv4x3LKy/Xh28LwbU7LdzHC
- Nu7bVnNv8D+WVffYLxqunZQoCtwiVKiUA7r3PUNRTgQY4xY8jA9uBmd3x9Ot9KegQ
- sAP0ykuOSwMTDq8yvQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.79]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9yc-1tFcxJ2v5u-00NNAS; Wed, 09
- Oct 2024 23:33:03 +0200
-Message-ID: <a361e907-596c-43c4-a4fe-575f88f40bea@gmx.de>
-Date: Wed, 9 Oct 2024 23:33:02 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/20] target/hppa: Implement TCGCPUOps.tlb_fill_align
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: deller@kernel.org, peter.maydell@linaro.org, alex.bennee@linaro.org,
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-References: <20241009000453.315652-1-richard.henderson@linaro.org>
- <20241009000453.315652-12-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20241009000453.315652-12-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syeko-0006mO-Cu
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 18:02:00 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 499M0LNd020749;
+ Wed, 9 Oct 2024 22:01:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ C6CWbYpf9gcVNeuL6I1K7yXuLQYXYo48bEP1QkGXzsw=; b=BFrgChc5ZPwywdiO
+ KB0EsAFpGuPg0eF9EY3LIII5hpkhPTDUpO976gFo2mLg9hQEpuR+XWNzeuIWdCyv
+ e4DXxKQrLa9Y2unXL1Ign5rw23igSwiElU8M3VzdmqU3YMxJ5630C+a7AgHeNUpU
+ r2tmETjMQMZ+J1/NwjXMtAvJbYmD77oSw6xU9rM1gmD5v/BibkODwW5MffxDhAx+
+ rlBEL/p1cEggzmiT309prn60BKtH5hYrmPr4ZBsVB7U1D9lDKih04dRHKXXF6LGs
+ L26SvXcD0QznJNgmDXztsfSXiEV7vrL1cKXs6fD3LMEtFrnMLzaiJ4lbj8F6OKvG
+ FzKnDQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42627yr081-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Oct 2024 22:01:53 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 499M1q1H022678;
+ Wed, 9 Oct 2024 22:01:52 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42627yr07w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Oct 2024 22:01:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 499LfE54013838;
+ Wed, 9 Oct 2024 22:01:51 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fssccf4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Oct 2024 22:01:51 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 499M1nGl50528700
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 9 Oct 2024 22:01:49 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8567C20067;
+ Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 356D22006C;
+ Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  9 Oct 2024 22:01:49 +0000 (GMT)
+Message-ID: <991185a8191694b489cf7d2374ffa99fc6a5ee82.camel@linux.ibm.com>
+Subject: Re: [PATCH 00/18] Stop all qemu-cpu threads on a breakpoint
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Date: Thu, 10 Oct 2024 00:01:48 +0200
+In-Reply-To: <94ebebf2-e775-4fd2-8fcf-921610261a7e@linaro.org>
+References: <20240923162208.90745-1-iii@linux.ibm.com>
+ <8c7ed3d0-15c2-426b-baf5-304a984d2559@linaro.org>
+ <7164df57c9c3eae2e6f27be7f6c890081740b2cc.camel@linux.ibm.com>
+ <6d820efe-7f0b-4b6b-946d-e1815934e4e9@linaro.org>
+ <7cf5d0a94cc52ac9f8144eb5d1cc83811755ea98.camel@linux.ibm.com>
+ <7531a0890a2f804b9e5e89e80d019ea53c738eab.camel@linux.ibm.com>
+ <94ebebf2-e775-4fd2-8fcf-921610261a7e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:bD7oFH1vU3EXPpnn1BLwkmNvyJnjjoCpYJ+btSFH5G+EeEuk7Jt
- 9HumUJeBMC5OaqfDW6zV8ZPxf5Ck6V1V6RQxE30mQhur5aC7+tPHI89zd7Jtdu0+r6APj+X
- 264FrJFtouqvcm5wzY3i3R4nRA6HQdHQIuZDERtCQlTJtsx4QDZxm28DMphL4zaG5AMhcsL
- bcy68JcX7Mqob7+cRqvKA==
-UI-OutboundReport: notjunk:1;M01:P0:UGpnr7cjCNc=;2nOC3CXvrFvA8Esk+oFjJbdLhyH
- wzE8Z6RyJw0xtzKoqJLuDLvdqsgXQrCiSXjNO6r+7jKNufzH/hFhYh1nrBiFKXFSVv3F9Zf09
- w2q7BTmRXOIiDI7iyAxxm54iTGO00Vz4PErR5Jj1FDO+jlY7LdWttW+WF8sLl56WQ/b+g5x7l
- HRjJrXUShT0k42UEMj6K4wUZOZgbN2u+OqkxHu823vFtLjZffOa8tqIKCUfqfp7pqJTpQPMA+
- F3ODl4Z5Dxd8vZYGhrqIrJm7XyDPUOsieUFJ3HwQoE7nfiTzyjlla6GCfJmIICKf8LOPAGnEu
- /37gXag9S2F7DdWSKMMlge0g20BZTAY4/pt7Lrh5FDvKEL8/pdH4cjATqD6eAvbTBTJfTECmH
- jF1eRvztf/fev4YPnGNztvZDcStpoEaFqy8S/WN+4d63PmIxu6Job3n4mBMH+vmschxTn93YM
- LA2HaTWiKAEUHQoUR3pUHTQ/9MjNicltfwJiGyL8N5oB5+e3lWZ+REk1AYuO/BvKpKDgcYKhi
- UGKK2O/+YL1KdOmsKbVlbw8ruMMVZfdlxs8wSrxXJnox4/y/MWaAQIHdtcjNT/aiYuPWI7TQS
- L+47wCvTFLAdmiOgUE9MEtpHP3K/nidFwSeLT+VK726Ns2h3F1jZrg6O588i2wKClxlAyeKdc
- unSoBBlWSL/c4TH3+8LzAldSobWRGNZlLSyCKLXGcIl36hAkiWqcxqnOoQd377nWl2Vkb3N/n
- FlTKguBAi62pxDEMHs+Og+Q5Qss8iTQHtSlDMbARZeLRL3I3ki0Jvd8P0vprdZqwSz0YnopWC
- BMrxWZY4VYft7DLOxr7uYFdA==
-Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Pi4Ex1u_KwkFGu4F-PcWPB5EF8M07tSv
+X-Proofpoint-ORIG-GUID: bkp9TDUSI7q5ybfbFNoKqe3ewZd7CKaY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-09_20,2024-10-09_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410090135
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -136,20 +123,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/24 02:04, Richard Henderson wrote:
-> Convert hppa_cpu_tlb_fill to hppa_cpu_tlb_fill_align so that we
-> can recognize alignment exceptions in the correct priority order.
->
-> Resolves: https://bugzilla.kernel.org/show_bug.cgi?id=3D219339
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 2024-10-08 at 11:17 -0700, Richard Henderson wrote:
+> On 10/5/24 13:35, Ilya Leoshkevich wrote:
+> > > How can we handle the long-running syscalls?
+> > > Just waiting sounds unsatisfying.
+> > > Sending a reserved host signal may alter the guest's behaviour if
+> > > a
+> > > syscall like pause() is interrupted.
+> > > What do you think about SIGSTOP-ping the "in_syscall" threads?
+> > > A quick experiment shows that it should be completely invisible
+> > > to
+> > > the
+> > > guest - the following program continues to run after
+> > > SIGSTOP/SIGCONT:
+> > >=20
+> > > #include <sys/syscall.h>
+> > > #include <unistd.h>
+> > > int main(void) { syscall(__NR_pause); };
+> >=20
+> > Hmm, no, that won't work: SIGSTOP would stop all threads.
+> >=20
+> > So I wonder if reserving a host signal for interrupting
+> > "in_syscall"
+> > threads would be an acceptable tradeoff?
+>=20
+> Could work, yes.=C2=A0 We already steal SIGRTMIN for guest abort (to
+> distinguish from host=20
+> abort), and remap guest __SIGRTMIN to host SIGRTMIN+1.=C2=A0 Grabbing
+> SIGRTMIN+1 should work=20
+> ok, modulo the existing problem of presenting the guest with an
+> incomplete set of signals.
+>=20
+> I've wondered from time to time about multiplexing signals in this
+> space, but I think that=20
+> runs afoul of having a consistent mapping for interprocess signaling.
+>=20
+>=20
+> r~
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
+I tried to think through how this would work in conjunction with
+start_exclusive(), and there is one problem I don't see a good solution
+for. Maybe you will have an idea.
 
-> ---
->   target/hppa/cpu.h        |  6 +++---
->   target/hppa/cpu.c        |  2 +-
->   target/hppa/mem_helper.c | 21 ++++++++++++---------
->   3 files changed, 16 insertions(+), 13 deletions(-)
+The way I'm thinking of implementing this is as follows:
 
+- Reserve the host's SIGRTMIN+1 and tweak host_signal_handler() to do
+  nothing for this signal.
+
+- In gdb_try_stop(), call start_exclusive(). After it returns, some
+  threads will be parked in exclusive_idle(). Some other threads will
+  be on their way to getting parked, and this needs to actually happen
+  before gdb_try_stop() can proceed. For example, the ones that are
+  executing handle_pending_signal() may change memory and CPU state.
+  IIUC start_exclusive() will not wait for them, because they are not
+  "running". I think a global counter protected by qemu_cpu_list_lock
+  and paired with a new condition variable should be enough for this.
+
+- Threads executing long-running syscalls will need to be interrupted
+  by SIGRTMIN+1. These syscalls will return -EINTR and will need
+  to be manually restarted so as not to disturb poorly written guests.
+  This needs to happen only if there are no pending guest signals.
+
+- Here is a minor problem: how to identify threads which need to be
+  signalled? in_syscall may not be enough. But maybe signalling all
+  threads won't hurt too much. The parked ones won't notice anyway.
+
+- But here is the major problem: what if we signal a thread just before
+  it starts executing a long-running syscall? Such thread will be stuck
+  and we'll need to signal it again. But how to determine that this
+  needs to be done?
+
+  An obvious solution is to signal all threads in a loop with a 0.1s
+  delay until the counter reaches n_threads. But it's quite ugly.
+
+  Ideally SIGRTMIN+1 should be blocked most of the time. Then we should
+  identify all places where long-running syscalls may be invoked and
+  unblock SIGRTMIN+1 atomically with executing them. But I'm not aware
+  of such mechanism (I have an extremely vague recollection that
+  someone managed to abuse rseq for this, but we shouldn't be relying
+  on rseq being available anyway).
 
