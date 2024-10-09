@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC09CED628
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868B8CED628
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 08:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syS3z-0004qm-FM; Wed, 09 Oct 2024 04:28:55 -0400
+	id 1syS58-0005TP-CY; Wed, 09 Oct 2024 04:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS3x-0004qX-Jf
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:28:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1syS56-0005Ss-7z
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:30:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1syS3v-0008P8-V6
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:28:53 -0400
+ id 1syS52-0008TI-PZ
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 04:30:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728462530;
+ s=mimecast20190719; t=1728462599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qVAGNi3B+zaqDsLtRotXeOeufFoRjHnbuO1Ir4cRYYQ=;
- b=A1KVrpLotmIJL6x+jNUfhcYSKGw3gbtjcl/6kxgoX+Hm0rHPEkrjkN48wocYa1XUNcOSL9
- atsj6ucMWf6DPclmaHDYGVcd5Yy/Y6bz6YGkuNV4oIgzi/Q90JoQpZY1CdE5+HJzgc808H
- aGg6ybaAATT+fMV+0eF7S4SsDZsa9aM=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XY8WLAyt0GXUVzQv2IFoTNv6tSwcGxjOqmof9Lst9/E=;
+ b=XT1A4TtfbCX+L/6GnjEvVPLx6TA0t0jBkkPbv+7Dh4VLCj9O3MYR2UBPiJ9V+aMBFlpJBa
+ NiI3fjFfgkuGzjPsk95e0yChMm4PDuXWHcIgl91SrM7J24I7qXtg//xpJLFapdTaH3NvO2
+ TFRIYlsQZgd7d8f5Ny/k+7ONCbzLhrI=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-d4zIX_YHOgujzjZF-n85sA-1; Wed, 09 Oct 2024 04:28:48 -0400
-X-MC-Unique: d4zIX_YHOgujzjZF-n85sA-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2e28d7928d8so1754860a91.3
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 01:28:48 -0700 (PDT)
+ us-mta-74-basPnnCzN0y66y8_xnIxMA-1; Wed, 09 Oct 2024 04:29:58 -0400
+X-MC-Unique: basPnnCzN0y66y8_xnIxMA-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2e291d608feso1046506a91.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 01:29:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728462527; x=1729067327;
+ d=1e100.net; s=20230601; t=1728462597; x=1729067397;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qVAGNi3B+zaqDsLtRotXeOeufFoRjHnbuO1Ir4cRYYQ=;
- b=MvHfEqmuUcN8lqse6HL2ImJ6Ev6k7zeDnAzG3kCSI7tbbYlD+0laifoAj4u1F3R77G
- Bv/R6f0cYJrJYEMLV14Aiu02+oZPAdMn8EptLXEXVeIfxCd+Ex8fBrib4gQ3YVTYwIA1
- BtzVKDpMi6p3mTYrXkENzAZ7A8JucuD+u/b7OJ+OU8glIaSuyLbc0WVATbiNyWfE6p3i
- sK7j/ZeNsZoIITG1eYjIIzYGFke0FNsxH2SuRl75lhwbhbrNsgBiTkkhqJQR6NOiEk9w
- +spjtx9iEV2cjJmghWlIlwKXUXP9CtqrJ1cSL/QWlhZIl/qL3ij60yOghkjz7JKHj4y1
- y1eA==
+ bh=XY8WLAyt0GXUVzQv2IFoTNv6tSwcGxjOqmof9Lst9/E=;
+ b=HF8GswnNdehvxI7sWEQwbSwVE6++ZwZgITn68TcouVPfkVWtRUZlRy3ogkeZ/9kMtw
+ 8dg9bEaMLDRKX7lhd9AYChJEelVGD45gyvtErcndmAoN7k2qGokpWtUaauKDvlObyCxg
+ NZeg3B3V+yIuOfgyiRIptz2DtQcuqLGxZ1nuadIk1swCFpITlxdNaW7hAD881bWhSUiz
+ CKY2gNvcTuBDlOC/y5KbXSv0vejw19VVvfbh+eHlvODZntuvfPbj101jWvgnVF8rqfSO
+ 0q+GoEwjpnkfKMt5EFVKwNUAddJbWKU4W1a3hFbJNxXYJB5z3/AJ1UgYbgy4zTavGBMA
+ gc6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLP4VMZJnEyKQA9POOG3cmhM0Py+VCizv2q4D3phsltNoklpgTP0JLgq4R3uBn7lFnEujVqbfgmXNP@nongnu.org
-X-Gm-Message-State: AOJu0YxrWBBFZrHvNyUCvEsiFfv1Ss4Rz09XxIha3e1gTYX6WqO7tjxz
- bygAVr4YeucbI0PelHTgpgQp3jPDRtIx7zHPFbWjBIH7ej4v3bBVpDAFt974yfdkdp28W9oIWpA
- UPm46B3mLL3jkMYMGKhc9zbgsbqBbySmwIEPmKMzcHYGdkxgsbKBCq3ZcFe9Qo7QKsCilbU4vRl
- SPp+sunThuReUlJNADgslMgcISNlHRNcn2H04V5Q==
-X-Received: by 2002:a17:90b:23d2:b0:2e0:9160:1842 with SMTP id
- 98e67ed59e1d1-2e2a21e7c97mr2278376a91.1.1728462527677; 
- Wed, 09 Oct 2024 01:28:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHaYw052rn7hGGSKjBdHha8J9jonvL8PCmkQ6+x5Uhyu0CNP3+HvDGw/ldblWJrgWF+0zZcBlS459r5wjUgZ+o=
-X-Received: by 2002:a17:90b:23d2:b0:2e0:9160:1842 with SMTP id
- 98e67ed59e1d1-2e2a21e7c97mr2278355a91.1.1728462527258; Wed, 09 Oct 2024
- 01:28:47 -0700 (PDT)
+ AJvYcCVWDESDxsAqHtILii0z3kGuYinbYsmbCskob4ZGx2C0iYAdSqUAsbaek1bUVV0ciOGBrC21zGGDwgV/@nongnu.org
+X-Gm-Message-State: AOJu0YyIWIzucj2igDJiccsbY6/zljcNAeC3a0MoorHGiD7bmV+J9kq+
+ udj2UTu4OZUfMs6Ei0CWVObZqSK+qd6BI88tLSvTdqfrk8iOF40+L7z7ycA+tmzW1Or3bzOB2UU
+ uNNAFdABumiSANAgVUpgU02Tf03TE7bJtoyJ6iHf95JSZf4dp0V1Sclh1n5I7fj9N19Hb0kIDA8
+ nyOgc/0LVXDt9VZ8w7hjk26DpqF0ggXBllK43m3Q==
+X-Received: by 2002:a17:90a:f0d1:b0:2e2:abab:c450 with SMTP id
+ 98e67ed59e1d1-2e2ababc590mr1362710a91.11.1728462597259; 
+ Wed, 09 Oct 2024 01:29:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJac4AVbqU2sbU3z0QEVeND/ku7QvQnkus/jiSAdnS4m5KedZMaPFDFh9S85XuwT57Dwxka4MA3YJXPQjHxYc=
+X-Received: by 2002:a17:90a:f0d1:b0:2e2:abab:c450 with SMTP id
+ 98e67ed59e1d1-2e2ababc590mr1362689a91.11.1728462596737; Wed, 09 Oct 2024
+ 01:29:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240929160045.2133423-1-lulu@redhat.com>
- <20240929160045.2133423-2-lulu@redhat.com>
-In-Reply-To: <20240929160045.2133423-2-lulu@redhat.com>
+ <20240929160045.2133423-3-lulu@redhat.com>
+In-Reply-To: <20240929160045.2133423-3-lulu@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 9 Oct 2024 16:28:34 +0800
-Message-ID: <CACGkMEvMndysLRjsBdxov+RQ4YJvSmPNgAev9HP0tnM-rb71eg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] virtio_net: Add the check for vdpa's mac address
+Date: Wed, 9 Oct 2024 16:29:45 +0800
+Message-ID: <CACGkMEttbUdfPweKghNuo7TJuxbTg3Zuh_HZPCX7ZoTrY4OqSg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] virtio_net: Add the 2rd acceptable situation for
+ Mac setup.
 To: Cindy Lu <lulu@redhat.com>
 Cc: mst@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,17 +103,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, Sep 30, 2024 at 12:01=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote:
 >
-> When using a VDPA device, it is important to ensure that the MAC
-> address is correctly set. The MAC address in the hardware should
-> match the MAC address from the QEMU command line. This is a recommended
-> configuration and will allow the system to boot.
+> When using a VDPA device, the following situations are
+> also acceptable: the hardware MAC address is not 0,
+> and the MAC address in the QEMU command line is 0.
+>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> ---
+>  hw/net/virtio-net.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 7aa7308244..5c610d8078 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3607,6 +3607,18 @@ static bool virtio_net_check_vdpa_mac(NetClientSta=
+te *nc, VirtIONet *n,
+>          if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0))=
+ {
+>              return true;
+>          }
+> +        /*
+> +         * 2.The hardware MAC address is not 0,
+> +         *  and the MAC address in the QEMU command line is 0.
+> +         *  In this situation, the hardware MAC address will overwrite
+> +         *  the QEMU command line address.
 
-Would there be a case that the system can boot even without the
-suggested setting here? Can we even know about that?
-
-I'm asking since if there's one, we break them. At least we can have a
-new parameter for strict checking.
+Please explain how such overwrite works. For example, "Function X and
+Y will let the hardware mac address overwrite the cli mac"
 
 Thanks
+
+> +         */
+> +        if (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) =3D=3D 0) {
+> +            /* overwrite the mac address with hardware address*/
+> +            memcpy(&n->mac[0], &hwcfg.mac, sizeof(n->mac));
+> +            memcpy(&n->nic_conf.macaddr, &hwcfg.mac, sizeof(n->mac));
+> +            return true;
+> +        }
+>      }
+>
+>      error_setg(errp,
+> --
+> 2.45.0
+>
 
 
