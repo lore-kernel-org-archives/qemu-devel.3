@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A261DCED608
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 05:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB02CED606
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 05:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syPdY-00075T-5e; Wed, 09 Oct 2024 01:53:28 -0400
+	id 1syPgG-0007u6-8i; Wed, 09 Oct 2024 01:56:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syPdV-00074u-Iz; Wed, 09 Oct 2024 01:53:25 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1syPgE-0007tb-26; Wed, 09 Oct 2024 01:56:14 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1syPdU-0005KI-1v; Wed, 09 Oct 2024 01:53:25 -0400
+ id 1syPgC-0005hl-Im; Wed, 09 Oct 2024 01:56:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728453204; x=1759989204;
+ t=1728453373; x=1759989373;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=0ilS+TEIzCQiqFlC+TTsmPgQDdJ1qwzqdbAsWGUD5hs=;
- b=Zr5rhHR/G921f8tCbQh+PSJu9VdXNQFAc+FtmAISd5L3gwEnOpf4o+A9
- Xzz5bF5j7MD7/fqQ7iWLvHzOOnCW7Lqf2FjH0vb/Ws+St7mGSLrL5es7M
- h0trpNmyV4Wp1DDK7IYy61E1Q0vEIYtEAGAjUmddcXq5FKsp9jrVPRXDP
- 68+G0bzg1tojCZ4Z3jeHYwamYoS8OiWAu9X3KsgbJ+ikFIYmy6/yCctU5
- tY5TWdvj1mrGBheOwxI1gcQB6t2iLzyccTyusJigqP9fj8MezoGQl+WCd
- WNxvYBZqX5W2UTEZ2VKtLCcr44ocqun7G8plm7QWYfX3QsBRbwI+y53WT g==;
-X-CSE-ConnectionGUID: LFAD0MRmRWa+8+rmffJ5Bw==
-X-CSE-MsgGUID: akM9yqJqTGuPu8w/ppfq9Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="27546157"
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="27546157"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Oct 2024 22:53:21 -0700
-X-CSE-ConnectionGUID: 1uy9UXJzR5WlZmqSMcANiA==
-X-CSE-MsgGUID: DtsvWWfiTvid0l0/6LauKA==
+ bh=wMTrGWrNqEJ/3vJS5OVwKl/YUiB1j9er0HSj6wg9YsY=;
+ b=Im4+wQaIYH7ip9BTyRfyhZHAf+xyuRmSySilpoUrkV2JdI1Q2jQcTaTs
+ /a4hcrJJaifGSoW9+KuSYmxsuheMIXPAOnjhagetRLpWgYphCwD7VpX+5
+ bZqWNYRDXUcfIjMF1WLsfRiuZXWeihCuLvPw3VUW0fuq84I5q1p/rfKZg
+ 8ugpuXdn8maxWkwPD7kVlzyEx0ALCB8YMQ/oxUbJp8C3CyA1bT+eJTbco
+ jo5EFum2z7M3l0RaottR2c68Wc+wtOflhCnXqNUmqagOPzTpLluIdnZ1P
+ weLuQ1SQ3Y4fLHlB7YO5F0SVBDPNwpZaNhb15CIPtE5ugG2KSn2ZPK74J Q==;
+X-CSE-ConnectionGUID: Gt5WaDHUTWiVprxUKbGGnw==
+X-CSE-MsgGUID: MCKDr+PwSYCtffGoqFnN3Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="27623663"
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="27623663"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Oct 2024 22:55:01 -0700
+X-CSE-ConnectionGUID: tj+D1EMQTfGPh480WuhJkQ==
+X-CSE-MsgGUID: jqH4fZ4+RSaVVwxcKVhkAw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="76449252"
+X-IronPort-AV: E=Sophos;i="6.11,189,1725346800"; d="scan'208";a="81154308"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 08 Oct 2024 22:53:15 -0700
-Date: Wed, 9 Oct 2024 14:09:26 +0800
+ by orviesa004.jf.intel.com with ESMTP; 08 Oct 2024 22:54:55 -0700
+Date: Wed, 9 Oct 2024 14:11:06 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
@@ -66,17 +66,17 @@ Cc: Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC v2 01/12] qdev: Allow qdev_device_add() to add specific
- category device
-Message-ID: <ZwYeFofVARVuL1i6@intel.com>
+Subject: Re: [RFC v2 03/12] system/vl: Create CPU topology devices from CLI
+ early
+Message-ID: <ZwYeek8iaoE2fu+C@intel.com>
 References: <20240919061128.769139-1-zhao1.liu@intel.com>
- <20240919061128.769139-2-zhao1.liu@intel.com>
- <20241008101425.00003b90@Huawei.com>
+ <20240919061128.769139-4-zhao1.liu@intel.com>
+ <20241008105545.000013e0@Huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241008101425.00003b90@Huawei.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241008105545.000013e0@Huawei.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -101,45 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 10:14:25AM +0100, Jonathan Cameron wrote:
-> Date: Tue, 8 Oct 2024 10:14:25 +0100
+On Tue, Oct 08, 2024 at 10:55:45AM +0100, Jonathan Cameron wrote:
+> Date: Tue, 8 Oct 2024 10:55:45 +0100
 > From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-> Subject: Re: [RFC v2 01/12] qdev: Allow qdev_device_add() to add specific
->  category device
+> Subject: Re: [RFC v2 03/12] system/vl: Create CPU topology devices from CLI
+>  early
 > X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 > 
-> On Thu, 19 Sep 2024 14:11:17 +0800
-> Zhao Liu <zhao1.liu@intel.com> wrote:
 > 
-> > Topology devices need to be created and realized before board
-> > initialization.
-> > 
-> > Allow qdev_device_add() to specify category to help create topology
-> > devices early.
-> > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> It's not immediately obvious what the category parameter is.
-> Can you use DeviceCategory rather than long?
-
-...
-
-> > -DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-> > +DeviceState *qdev_device_add_from_qdict(const QDict *opts, long *category,
-> >                                          bool from_json, Error **errp)
-> >  {
-> >      ERRP_GUARD();
-> > @@ -655,6 +655,10 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-> >          return NULL;
-> >      }
-> >  
-> > +    if (category && !test_bit(*category, dc->categories)) {
-> > +        return NULL;
-> > +    }
 > > +
+> > +static void qemu_add_cli_devices_early(void)
+> > +{
+> > +    long category = DEVICE_CATEGORY_CPU_DEF;
+> > +
+> > +    qemu_add_devices(&category);
+> > +}
+> > +
+> >  static void qemu_init_board(void)
+> >  {
+> >      /* process plugin before CPUs are created, but once -smp has been parsed */
+> > @@ -2631,6 +2662,9 @@ static void qemu_init_board(void)
+> >      /* From here on we enter MACHINE_PHASE_INITIALIZED.  */
+> >      machine_run_board_init(current_machine, mem_path, &error_fatal);
+> >  
+> > +    /* Create CPU topology device if any. */
+> > +    qemu_add_cli_devices_early();
+> I wonder if this is too generic a name?
+> 
+> There are various other things we might want to do early.
+> Maybe qemu_add_cli_cpu_def()
 
-The category parameter is a bit not a bitmap, so, YES.
-
-Thanks,
-Zhao
+Sure, it makes sense.
 
 
