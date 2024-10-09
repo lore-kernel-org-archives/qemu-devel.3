@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CB3CF0433
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8A2CF0433
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 03:24:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syNIa-00027t-4d; Tue, 08 Oct 2024 23:23:40 -0400
+	id 1syNIt-0002jt-Iv; Tue, 08 Oct 2024 23:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1syNIW-00024b-Nv; Tue, 08 Oct 2024 23:23:36 -0400
+ id 1syNIq-0002h8-CF; Tue, 08 Oct 2024 23:23:56 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1syNIU-0004fX-WE; Tue, 08 Oct 2024 23:23:36 -0400
+ id 1syNIo-0004gY-Cc; Tue, 08 Oct 2024 23:23:56 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XNdQp2LWQz6LDBS;
- Wed,  9 Oct 2024 11:19:14 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XNdWq5Wlyz6K998;
+ Wed,  9 Oct 2024 11:23:35 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 0C66E140447;
- Wed,  9 Oct 2024 11:23:33 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 693C6140A90;
+ Wed,  9 Oct 2024 11:23:52 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.126.173.89) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 9 Oct 2024 05:23:13 +0200
+ 15.1.2507.39; Wed, 9 Oct 2024 05:23:33 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,10 +45,9 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V4 12/33] arm/virt: Create GED device before *disabled*
- vCPU Objects are destroyed
-Date: Wed, 9 Oct 2024 04:17:54 +0100
-Message-ID: <20241009031815.250096-13-salil.mehta@huawei.com>
+Subject: [PATCH RFC V4 13/33] arm/virt: Init PMU at host for all possible vCPUs
+Date: Wed, 9 Oct 2024 04:17:55 +0100
+Message-ID: <20241009031815.250096-14-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241009031815.250096-1-salil.mehta@huawei.com>
 References: <20241009031815.250096-1-salil.mehta@huawei.com>
@@ -84,57 +83,83 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACPI CPU hotplug state (is_present=_STA.PRESENT, is_enabled=_STA.ENABLED) for
-all the possible vCPUs MUST be initialized during machine init. This is done
-during the creation of the GED device. VMM/Qemu MUST expose/fake the ACPI state
-of the disabled vCPUs to the Guest kernel as 'present' (_STA.PRESENT) always
-i.e. ACPI persistent. if the 'disabled' vCPU objectes are destroyed before the
-GED device has been created then their ACPI hotplug state might not get
-initialized correctly as acpi_persistent flag is part of the CPUState. This will
-expose wrong status of the unplugged vCPUs to the Guest kernel.
+The PMU for all possible vCPUs must be initialized during VM initialization.
+Refactor the existing code to accommodate possible vCPUs. This assumes that all
+processors being used are identical. It is an architectural constraint of ARM
+CPUs that all vCPUs MUST have identical feature sets, at least until the ARM
+specification is updated to allow otherwise.
 
-Hence, moving the GED device creation before disabled vCPU objects get destroyed
-as part of the post CPU init routine.
+Past discussion for reference:
+Link: https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00131.html
 
+Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/arm/virt.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ hw/arm/virt.c         | 9 +++++----
+ include/hw/arm/virt.h | 1 +
+ include/hw/core/cpu.h | 5 +++++
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3986f6d9fc..e40e6c23e4 100644
+index e40e6c23e4..696e0a9f75 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -2452,6 +2452,16 @@ static void machvirt_init(MachineState *machine)
+@@ -2033,12 +2033,13 @@ static void finalize_gic_version(VirtMachineState *vms)
+  */
+ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
+ {
++    CPUArchIdList *possible_cpus = vms->parent.possible_cpus;
+     int max_cpus = MACHINE(vms)->smp.max_cpus;
+-    bool aarch64, pmu, steal_time;
++    bool aarch64, steal_time;
+     CPUState *cpu;
  
-     create_gic(vms, sysmem);
+     aarch64 = object_property_get_bool(OBJECT(first_cpu), "aarch64", NULL);
+-    pmu = object_property_get_bool(OBJECT(first_cpu), "pmu", NULL);
++    vms->pmu = object_property_get_bool(OBJECT(first_cpu), "pmu", NULL);
+     steal_time = object_property_get_bool(OBJECT(first_cpu),
+                                           "kvm-steal-time", NULL);
  
-+    /*
-+     * ACPI CPU Hotplug state MUST be initialized before destroying disabled
-+     * vCPUs in the cpu post init routine
-+     */
-+    if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-+        vms->acpi_dev = create_acpi_ged(vms);
-+    } else {
-+        create_gpio_devices(vms, VIRT_GPIO, sysmem);
-+    }
+@@ -2065,8 +2066,8 @@ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
+             memory_region_add_subregion(sysmem, pvtime_reg_base, pvtime);
+         }
+ 
+-        CPU_FOREACH(cpu) {
+-            if (pmu) {
++        CPU_FOREACH_POSSIBLE(cpu, possible_cpus) {
++            if (vms->pmu) {
+                 assert(arm_feature(&ARM_CPU(cpu)->env, ARM_FEATURE_PMU));
+                 if (kvm_irqchip_in_kernel()) {
+                     kvm_arm_pmu_set_irq(ARM_CPU(cpu), VIRTUAL_PMU_IRQ);
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index b5bfb75f71..98ce68eae1 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -161,6 +161,7 @@ struct VirtMachineState {
+     bool mte;
+     bool dtb_randomness;
+     bool second_ns_uart_present;
++    bool pmu;
+     OnOffAuto acpi;
+     VirtGICType gic_version;
+     VirtIOMMUType iommu;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index bcc62fbf0c..fa6f1dbec9 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -607,6 +607,11 @@ extern CPUTailQ cpus_queue;
+ #define CPU_FOREACH_SAFE(cpu, next_cpu) \
+     QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
+ 
++#define CPU_FOREACH_POSSIBLE(cpu, poslist) \
++    for (int iter = 0; \
++         iter < (poslist)->len && ((cpu) = (poslist)->cpus[iter].cpu, 1); \
++         iter++)
 +
-     virt_cpu_post_init(vms, sysmem);
+ extern __thread CPUState *current_cpu;
  
-     fdt_add_pmu_nodes(vms);
-@@ -2504,12 +2514,6 @@ static void machvirt_init(MachineState *machine)
- 
-     create_pcie(vms);
- 
--    if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
--        vms->acpi_dev = create_acpi_ged(vms);
--    } else {
--        create_gpio_devices(vms, VIRT_GPIO, sysmem);
--    }
--
-     if (vms->secure && !vmc->no_secure_gpio) {
-         create_gpio_devices(vms, VIRT_SECURE_GPIO, secure_sysmem);
-     }
+ /**
 -- 
 2.34.1
 
