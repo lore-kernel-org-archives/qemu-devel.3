@@ -4,80 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA12CEDD8F
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F12CEDD89
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syW48-0002l6-PM; Wed, 09 Oct 2024 08:45:22 -0400
+	id 1syW7d-0005RQ-Bn; Wed, 09 Oct 2024 08:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW3x-0002My-6N
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:45:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syW7a-0005R8-6t
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:48:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW3u-000675-U3
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:45:08 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1syW7Y-0006cd-Ma
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:48:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728477905;
+ s=mimecast20190719; t=1728478132;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IGH2t+Aydc23FcuIBLI+pqNneU77CC+KunJmPkybxKc=;
- b=Gcnep5pAGQ4bav6iywNNUI5G48wfLUTcxvxf43/XZRoPNy3nuHiPImyY+wevt6yaQDWqiq
- X3q5OzLV96aNtR+shsmd4ajHYkKp/JVJ3vomHl+5FJ0dGB/5GpLWw3U3lzSZU8M2zIMqZ1
- /EIWU+MWlKw5XngulQWZQfMP+62QHM4=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ys5TMLVa+GY/DBNpsvpxOcs38uva2NokkGPi7dbndUU=;
+ b=ATMi+c0SQ05UOXxESVsAfwDV6F4W0/CLG37T0zypt+8h6EK995rwhx5sXfH65KOAZf75sz
+ CylkaWOH7JHJYjWn4oRXhjRuHy7neGMP3im4qjfwWqiKYAX+MPE2wMczM0PwpiHspruQMa
+ nYVgKIEe7rrHT7QTz7dkKkBA8J92sms=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-U2iell8VN0yFdcbFNGRnfQ-1; Wed, 09 Oct 2024 08:45:04 -0400
-X-MC-Unique: U2iell8VN0yFdcbFNGRnfQ-1
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-83546bebd9eso9703139f.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:45:04 -0700 (PDT)
+ us-mta-441-tQjtEir_Otmr8hlBcEhLTA-1; Wed, 09 Oct 2024 08:48:50 -0400
+X-MC-Unique: tQjtEir_Otmr8hlBcEhLTA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43057565db5so5014565e9.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:48:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728477903; x=1729082703;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IGH2t+Aydc23FcuIBLI+pqNneU77CC+KunJmPkybxKc=;
- b=Vy51GXXvpV7PX4nuIpfQtv3rw6M1b+uWjaNvlvvMs271Eit8/AgPQZrPn2yZuKRl7l
- wXho6hSd2643vrlavPtS2epUauKkbGDKCNad1yZMi0zRR4R6+j82RuFyrpBOZsz1kLAU
- s/FOLen1Fo6SuUTm98p+ccK92kg7dSoblCKSIXZm5I7vp4IhhL3tYGfAMdDmHr1tAWSR
- zMG7N83wm0dDDTZw8aW7gSDbPliYGI5kroE/qrrndtmNwy69W9fbfemT1jaVfn8FkCiW
- Dy/L2YYGwQ/dMC4zz4jtO0kkP00yvttAD8fRlJxfeXjnm1bf2JtyfB3cIbQB0rRqJvXx
- uH0A==
-X-Gm-Message-State: AOJu0Yy5MzGTH0xFg4Fno11VIzZFrDxjO4lUS+bLfy8MI4/7VeSufRk2
- EZrSjE+0R4JNkyXhsWwfJl/bpgBYTFhQQGkpcpYGHLOmf7Tb0hKbwZiZB3jlfJXnmPsTGlJSCTw
- y7ahEhnxkc61eFQSUBtOr2ZUk3D7+tYxWMtRws/WSALQ7FavjgLWE3s+Zqr1aPonQLJ2N4zNP8i
- Y6QBeXzVH6KB3TczY2QelpmbmJROt1/h6Szg==
-X-Received: by 2002:a05:6602:2c8e:b0:834:d7b6:4fea with SMTP id
- ca18e2360f4ac-8353d4b3213mr274012139f.6.1728477903183; 
- Wed, 09 Oct 2024 05:45:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrU8PjdHvSpNXppZoVUZohAIQnw8xDqIhxyvtV6r1Fy2OyqbvTlR1lAEkrX3HwaO00Nf4UGw==
-X-Received: by 2002:a05:6602:2c8e:b0:834:d7b6:4fea with SMTP id
- ca18e2360f4ac-8353d4b3213mr274006339f.6.1728477902695; 
- Wed, 09 Oct 2024 05:45:02 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83503aaca17sm217708839f.29.2024.10.09.05.45.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:45:01 -0700 (PDT)
-Date: Wed, 9 Oct 2024 08:44:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <ppandit@redhat.com>, Julia Suvorova <jusual@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v4 0/4] KVM: Dynamic sized memslots array
-Message-ID: <ZwZ6ywR0FjxJZBEL@x1n>
-References: <20240917163835.194664-1-peterx@redhat.com>
+ d=1e100.net; s=20230601; t=1728478129; x=1729082929;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ys5TMLVa+GY/DBNpsvpxOcs38uva2NokkGPi7dbndUU=;
+ b=bYbnAuOqMi2ZP0kInWmFtScdbi0zXxfvQDXZhY3C6ppSLLcvwDUHNk6ps6HHr0JxDH
+ nfOQiSvgo+CTUXZmBQTmg8fY9N4XRJVw1b6D41x7B60ZSfKDnGbNwOIGI/2cMarlAnRs
+ 5/eOAzCSNQ6+a6A6ATlvaHawG21mkbHJ2YkFXaE2N7J4iUiFI4JVgj5gMIx0ZmJWCkzx
+ 42vAjlAd2ffb8emS+tFtJOUwrHDzXs+Wi32/Px6QBkK05d41uaEPx65psugdtjE2sukW
+ Nry0M0qyrSL2+SYkiWIEO+PtyDW8g5X0bdJA25UyKtf0yf+86WOv0MGMFFY8yWfYl8sR
+ WHAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0HeXQODcDi336LnaaTxLEz4l79FjWsQ1UoTwFkX7ZlP85fWQMNuVSjYg4yKZrhER6pyozFJnlbGxi@nongnu.org
+X-Gm-Message-State: AOJu0YymF8Vu4WTcr8JfyJSgQLHRFdz/1U5Sc8d7a4BstWaBCupF28OV
+ hiHMXbASs/Z/RDcGM3n7ryb2d6ZhkW4PLXZ8OpH4fi5WUsaq3ruvIHdHZ6EyG9+9ERUPPdYBpmV
+ R7b6CYuAQFhNeTuhkdi9VFIoUeLMjcIgq4LXaQBI0adx2AerFRpy2
+X-Received: by 2002:a05:600c:3b87:b0:42f:8515:e4ad with SMTP id
+ 5b1f17b1804b1-430699df69emr16716835e9.14.1728478129332; 
+ Wed, 09 Oct 2024 05:48:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdeTUCQ+PoEeHFri3nIr/UfhUhRTWZYDhWae5KH1F3cmy/4sUT4URJccbUXaoTfX7q1RKxqA==
+X-Received: by 2002:a05:600c:3b87:b0:42f:8515:e4ad with SMTP id
+ 5b1f17b1804b1-430699df69emr16716725e9.14.1728478128895; 
+ Wed, 09 Oct 2024 05:48:48 -0700 (PDT)
+Received: from [10.33.192.239] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-430d748f0a5sm19295635e9.48.2024.10.09.05.48.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Oct 2024 05:48:48 -0700 (PDT)
+Message-ID: <f483f958-5b42-42f6-9bd6-c4b1f8fe8d7a@redhat.com>
+Date: Wed, 9 Oct 2024 14:48:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240917163835.194664-1-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 19/19] tests/qtest: Add s390x boot order tests to
+ cdrom-test.c
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
+ <20241008011552.2645520-20-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241008011552.2645520-20-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,42 +148,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping - Paolo, could you help have a look?  Thanks!
+On 08/10/2024 03.15, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Add two new qtests to verify that a valid IPL device can successfully boot after
+> failed IPL attempts from one or more invalid devices.
+> 
+> cdrom-test/as-fallback-device: Defines the primary boot target as a device that
+> is invalid for IPL and a second boot target that is valid for IPL. Ensures that
+> the valid device will be selected after the initial failed IPL.
+> 
+> cdrom-test/as-last-option: Defines the maximum number of boot devices (8)
+> where only the final entry in the boot order is valid. Ensures that a valid
+> device will be selected even after multiple failed IPL attempts from both
+> virtio-blk and virtio-scsi device types.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   tests/qtest/cdrom-test.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
+> 
+> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+> index 9d72b24e4b..123c067589 100644
+> --- a/tests/qtest/cdrom-test.c
+> +++ b/tests/qtest/cdrom-test.c
+> @@ -213,6 +213,30 @@ static void add_s390x_tests(void)
+>                           "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
+>                           "-device virtio-blk,drive=d2,bootindex=1 "
+>                           "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
+> +    qtest_add_data_func("cdrom/boot/as-fallback-device",
+> +                        "-device virtio-serial -device virtio-scsi "
+> +                        "-device virtio-blk,drive=d1,bootindex=1 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
+> +                        "-device virtio-blk,drive=d2,bootindex=2 "
+> +                        "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
+> +    qtest_add_data_func("cdrom/boot/as-last-option",
+> +                        "-device virtio-serial -device virtio-scsi "
+> +                        "-device virtio-blk,drive=d1,bootindex=1 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
+> +                        "-device virtio-blk,drive=d2,bootindex=2 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d2 "
+> +                        "-device virtio-blk,drive=d3,bootindex=3 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d3 "
+> +                        "-device scsi-hd,drive=d4,bootindex=4 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d4 "
+> +                        "-device scsi-hd,drive=d5,bootindex=5 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d5 "
+> +                        "-device virtio-blk,drive=d6,bootindex=6 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d6 "
+> +                        "-device scsi-hd,drive=d7,bootindex=7 "
+> +                        "-drive driver=null-co,read-zeroes=on,if=none,id=d7 "
+> +                        "-device virtio-blk,drive=d8,bootindex=8 "
+> +                        "-drive if=none,id=d8,media=cdrom,file=", test_cdboot);
 
-On Tue, Sep 17, 2024 at 12:38:31PM -0400, Peter Xu wrote:
-> v4:
-> - Remove restriction on kvm reports smaller than the default alloc size
->   (KVM_MEMSLOTS_NR_ALLOC_DEFAULT) [Fabiano]
-> 
-> v1: https://lore.kernel.org/r/20240904191635.3045606-1-peterx@redhat.com
-> v2: https://lore.kernel.org/r/20240904223510.3519358-1-peterx@redhat.com
-> v3: https://lore.kernel.org/r/20240909145413.3748429-1-peterx@redhat.com
-> 
-> This series make KVM memslots to be allocated dynamically in QEMU.  It
-> fixes a migration performance regression that I observed, reducing precopy
-> dirty sync process from ~86ms to ~3ms each time.
-> 
-> Patch 1 is the fix to the problem, while the rest three patches are
-> cleanups.
-> 
-> Thanks,
-> 
-> Peter Xu (4):
->   KVM: Dynamic sized kvm memslots array
->   KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
->   KVM: Rename KVMMemoryListener.nr_used_slots to nr_slots_used
->   KVM: Rename KVMState->nr_slots to nr_slots_max
-> 
->  include/sysemu/kvm_int.h |   7 +--
->  accel/kvm/kvm-all.c      | 105 ++++++++++++++++++++++++++++++---------
->  accel/kvm/trace-events   |   1 +
->  3 files changed, 87 insertions(+), 26 deletions(-)
-> 
-> -- 
-> 2.45.0
-> 
+Could you please use a scsi-hd for the good device here in the second test, 
+too? ... so we make sure that the good drive detection also works with 
+virtio-scsi devices and not only with virtio-blk devices.
 
--- 
-Peter Xu
+  Thanks,
+   Thomas
 
 
