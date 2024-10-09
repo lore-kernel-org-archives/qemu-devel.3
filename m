@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34AECEDD89
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B8ACEDD90
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syW1p-0004jV-VM; Wed, 09 Oct 2024 08:42:57 -0400
+	id 1syW1g-0004hK-DG; Wed, 09 Oct 2024 08:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1p-0004jN-4A
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1d-0004h8-Us
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1n-0005Sd-2y
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:56 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1c-0005Q8-FD
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728477774;
+ s=mimecast20190719; t=1728477763;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y/0kDNEZEHcHY+mJQf631i4X5DtZp/zqgZgP9eV3P4g=;
- b=NQ5YuJUQQUMnlDZB3U8pVe9iuqvBZqnh7hkPYKYJxO5wFcYBz6JG4Pn05AfOzbbuVKLov6
- Dy9GiIpAnkKcjD45m1a72YEK+S66QEnTxTWSbNwpOdIyfmtT0ZnFJf/IotkrpWGoI9/9du
- PwCDsvc/1uDyHXOT7rx/pOVbUPsGw6s=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4nb+8tiOqGgKjwOS264AkApkrCHN7lS055Icz/qATWk=;
+ b=SIDpgpQiceCU0RQbQJabtJDWOnUSg4p5Ed3F634by9CboNg5jYlvASVqfQgLOBTBu9wdcL
+ Ln11Rdl7ny9Q2IdKKSuJ1i7crHzonU3MWdYS6a9Kb/LbWRUcm5J9pznH2XMeYDXp8Hncjt
+ cH/cbwr18S0SsAunXmtMoEPbdlmtby0=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-6TsXy6sfOBa6X7zAQjtOmw-1; Wed, 09 Oct 2024 08:42:53 -0400
-X-MC-Unique: 6TsXy6sfOBa6X7zAQjtOmw-1
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-82ced069d94so638574639f.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:42:53 -0700 (PDT)
+ us-mta-642-RbAUJKE2MkamFRYhbuzu9g-1; Wed, 09 Oct 2024 08:42:42 -0400
+X-MC-Unique: RbAUJKE2MkamFRYhbuzu9g-1
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-82cedb7a183so557391539f.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:42:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728477772; x=1729082572;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=y/0kDNEZEHcHY+mJQf631i4X5DtZp/zqgZgP9eV3P4g=;
- b=lQJ3jpAfbJnDWJLYrkHrCWwMWPV5EE9aqaAB06+hEkEv424rXk3nif+8jn1tYBtR7C
- EJjh8EPpBLG/Gqs5fpO2yYZQlHguVAQdpoS4N9H/NArHoyUmNN+kqh63ZyKNbA523fzc
- /rDrl31IK/JCY+uMAR/2YUWneTzMclkoQjvdGv/9z0BSOoY1MoT2McAr/iLL+9vQ0skA
- DX6+W18V0fTVMLcZhQ3dBF7sNZmXjU8vphqn9XCXkKp0dwLxGIetgIEHKBtJyHD8tWx4
- 8+f041UhZIqfG77fmRb93bAXhMCkJtkD7Lx79TkLniY7d3Xlc4itFv5+TbC9/5aPdyt2
- XG7w==
-X-Gm-Message-State: AOJu0YxT0fbLtYLCjd7+gzYM3IOWaOKP6AoGLlK7NHHXsKILKYUeKra9
- COAZt9UOv4kq9CykJciiM+flHCq4iuJyeNhNzktGPY2wprlkJIPIuI5hfoLqhnaHwKrl64h/Y9A
- H56X6m3Y30/Pp5UzSbGGLbkQFci2XPUkci6v7ais6rFrK5veNTwPmLje3QvuPYFyBoc36YI5kwX
- AXdVcQ/vtNjueZ8fokIZ2DZdBHv5Oa2+kXUw==
-X-Received: by 2002:a05:6602:2b83:b0:834:f744:d067 with SMTP id
- ca18e2360f4ac-8353d4a7cdamr298917939f.8.1728477772430; 
- Wed, 09 Oct 2024 05:42:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6H/uWXP97Zaa7s2yDrynU93ec9ZX+eQE1V3QcJlP4ZilTQQlWrAhVddifAnr37JCd0+MmJg==
-X-Received: by 2002:a05:6602:2b83:b0:834:f744:d067 with SMTP id
- ca18e2360f4ac-8353d4a7cdamr298914939f.8.1728477772015; 
- Wed, 09 Oct 2024 05:42:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728477761; x=1729082561;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4nb+8tiOqGgKjwOS264AkApkrCHN7lS055Icz/qATWk=;
+ b=ZV1e+yQEbYS5eWEDb22k7aQ52knuieOAp8KN82J+qk4Fek7bFTmfDbhaqMWjs4MZe7
+ dGeGrtBjVUcUnkGGpuaUOWro0LUulKqbPZeqSu6yiKWlLYTPlAex60uOjAv/zUbY1CaE
+ yu4w9RBnXNpGWSOiNdMPX/C4vl+Ppf5LNYRJHUY8+pdViASMs/SZMCApetDPRRKN+cXx
+ n0mcN0CNLBPXtrHUsMVw199BfNSqdzK91xb5L0wU/zJMTlnLAk8UcXHb6FV/LoLNYbTg
+ 8nzkAeXfnLlY76ikA0NXLfl6p6qwnzscDlPejSXHPAN5J0TMSwgFMEtSuKi6TORWXOWc
+ iUEQ==
+X-Gm-Message-State: AOJu0YxMVzb+zFDraA73/ttTDHLOwDQ4T4vyIQPLhgsF0H/vzEOK8Tx9
+ /eoJrVgEdea3o00gN632hQWkAwDmRPWq4pMOAOOiPtwd263F3+Af7mdsF1FDf/4wTYladvirwF2
+ ghrooa9Q2wQoEFpEVZCnM87AmFVDJCkVjVDbDQqqXMIIZoQhq5RBAU4UlSLnRqZL95lRth1iXRL
+ qDuzXcjC/N4qQWTcsV2Ij7vyQVrCGf1cbInQ==
+X-Received: by 2002:a05:6602:2cd0:b0:835:3a07:740 with SMTP id
+ ca18e2360f4ac-8353d491666mr254619539f.6.1728477761367; 
+ Wed, 09 Oct 2024 05:42:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGvPfmtsypEc3jLKrKsC3jTKwdIECJl1+7KrZic/S7qN6YeOEAoJMBiZ6OZ+4RjCE8Kjt2nw==
+X-Received: by 2002:a05:6602:2cd0:b0:835:3a07:740 with SMTP id
+ ca18e2360f4ac-8353d491666mr254615139f.6.1728477760942; 
+ Wed, 09 Oct 2024 05:42:40 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83503aacb18sm220272039f.30.2024.10.09.05.42.50
+ ca18e2360f4ac-83503aacb18sm220272039f.30.2024.10.09.05.42.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:42:51 -0700 (PDT)
+ Wed, 09 Oct 2024 05:42:40 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 06/12] migration: Remove unused socket_send_channel_create_sync
-Date: Wed,  9 Oct 2024 08:42:32 -0400
-Message-ID: <20241009124238.371084-7-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PULL 00/12] Migration 20241009 patches
+Date: Wed,  9 Oct 2024 08:42:26 -0400
+Message-ID: <20241009124238.371084-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20241009124238.371084-1-peterx@redhat.com>
-References: <20241009124238.371084-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -101,63 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+The following changes since commit 2af37e791906cfda42cb9604a16d218e56994bb1:
 
-socket_send_channel_create_sync only use was removed by
-  d0edb8a173 ("migration: Create the postcopy preempt channel asynchronously")
+  Merge tag 'pull-request-2024-10-07' of https://gitlab.com/thuth/qemu into staging (2024-10-07 12:55:02 +0100)
 
-Remove it.
+are available in the Git repository at:
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240919134626.166183-5-dave@treblig.org
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/socket.h |  1 -
- migration/socket.c | 18 ------------------
- 2 files changed, 19 deletions(-)
+  https://gitlab.com/peterx/qemu.git tags/migration-20241009-pull-request
 
-diff --git a/migration/socket.h b/migration/socket.h
-index 46c233ecd2..04ebbe95a1 100644
---- a/migration/socket.h
-+++ b/migration/socket.h
-@@ -22,7 +22,6 @@
- #include "qemu/sockets.h"
- 
- void socket_send_channel_create(QIOTaskFunc f, void *data);
--QIOChannel *socket_send_channel_create_sync(Error **errp);
- 
- void socket_start_incoming_migration(SocketAddress *saddr, Error **errp);
- 
-diff --git a/migration/socket.c b/migration/socket.c
-index 9ab89b1e08..5ec65b8c03 100644
---- a/migration/socket.c
-+++ b/migration/socket.c
-@@ -42,24 +42,6 @@ void socket_send_channel_create(QIOTaskFunc f, void *data)
-                                      f, data, NULL, NULL);
- }
- 
--QIOChannel *socket_send_channel_create_sync(Error **errp)
--{
--    QIOChannelSocket *sioc = qio_channel_socket_new();
--
--    if (!outgoing_args.saddr) {
--        object_unref(OBJECT(sioc));
--        error_setg(errp, "Initial sock address not set!");
--        return NULL;
--    }
--
--    if (qio_channel_socket_connect_sync(sioc, outgoing_args.saddr, errp) < 0) {
--        object_unref(OBJECT(sioc));
--        return NULL;
--    }
--
--    return QIO_CHANNEL(sioc);
--}
--
- struct SocketConnectData {
-     MigrationState *s;
-     char *hostname;
+for you to fetch changes up to 2e49d6a20b2193378e508b01de82eaffc5adc3bc:
+
+  migration/multifd: fix build error when qpl compression is enabled (2024-10-09 08:30:53 -0400)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Ani's patch to complete the memory API on coalesced IO / eventfd notifies
+- Fabiano's Coverity fix on using pstrcpy() over strncpy()
+- Dave's series on removing/deprecating zero-blocks and uffd cleanups
+- Juraj's one more fix on multifd/cancel test where it can fail when
+  cancellation happens too slow on src
+- Dave's one more remove deadcode patch in iova-tree.c
+- Yuan's build fix for multifd qpl compressor
+
+----------------------------------------------------------------
+
+Ani Sinha (1):
+  memory: notify hypervisor of all eventfds during listener
+    (de)registration
+
+Dr. David Alan Gilbert (7):
+  migration: Remove migrate_cap_set
+  migration: Remove unused migrate_zero_blocks
+  migration: Remove unused socket_send_channel_create_sync
+  util/userfaultfd: Return -errno on error
+  migration/postcopy: Use uffd helpers
+  util/userfaultfd: Remove unused uffd_poll_events
+  util/iova-tree: Remove deadcode
+
+Fabiano Rosas (2):
+  migration/multifd: Ensure packet->ramblock is null-terminated
+  migration: Deprecate zero-blocks capability
+
+Juraj Marcin (1):
+  tests/migration-test: Wait for cancellation sooner in multifd cancel
+
+Yuan Liu (1):
+  migration/multifd: fix build error when qpl compression is enabled
+
+ docs/about/deprecated.rst    |  6 +++
+ qapi/migration.json          |  5 ++-
+ include/qemu/iova-tree.h     | 25 -----------
+ include/qemu/userfaultfd.h   |  1 -
+ migration/options.h          |  2 -
+ migration/socket.h           |  1 -
+ migration/multifd-nocomp.c   |  4 +-
+ migration/multifd-qpl.c      | 10 ++---
+ migration/options.c          | 31 ++------------
+ migration/postcopy-ram.c     | 48 ++++++---------------
+ migration/socket.c           | 18 --------
+ system/memory.c              | 83 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/migration-test.c | 12 +++++-
+ util/iova-tree.c             | 23 ----------
+ util/userfaultfd.c           | 49 ++++++---------------
+ 15 files changed, 141 insertions(+), 177 deletions(-)
+
 -- 
 2.45.0
 
