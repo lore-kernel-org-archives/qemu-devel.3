@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E31CEDD8F
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA12CEDD8F
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 12:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syW1o-0004jM-NH; Wed, 09 Oct 2024 08:42:56 -0400
+	id 1syW48-0002l6-PM; Wed, 09 Oct 2024 08:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1n-0004jB-Lw
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW3x-0002My-6N
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:45:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW1l-0005SI-Uf
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:42:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syW3u-000675-U3
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 08:45:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728477773;
+ s=mimecast20190719; t=1728477905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jk0pKj9VCu3al6N68FkKLk/v4exRbcGJT+XXNWXH8Sw=;
- b=C5xjV+l83RMiEfqfjLBIFIUlY/SRRyIga6QI5pOgYfGV29+pUPKRg6C/V2gcEKk0nYTMmt
- PwLNoKSl8YyOyjtxwxPRwZO+jI+h2DDvZZoEzql6o+lAAQwQDwosBuW4yisvj9FwqxsdN9
- s70bVk77Rc2ejtmOExe40emHVzeazco=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IGH2t+Aydc23FcuIBLI+pqNneU77CC+KunJmPkybxKc=;
+ b=Gcnep5pAGQ4bav6iywNNUI5G48wfLUTcxvxf43/XZRoPNy3nuHiPImyY+wevt6yaQDWqiq
+ X3q5OzLV96aNtR+shsmd4ajHYkKp/JVJ3vomHl+5FJ0dGB/5GpLWw3U3lzSZU8M2zIMqZ1
+ /EIWU+MWlKw5XngulQWZQfMP+62QHM4=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-9w0rMEd-OMic_2vnroH6cA-1; Wed, 09 Oct 2024 08:42:52 -0400
-X-MC-Unique: 9w0rMEd-OMic_2vnroH6cA-1
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-82cdb749559so1175908439f.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:42:51 -0700 (PDT)
+ us-mta-453-U2iell8VN0yFdcbFNGRnfQ-1; Wed, 09 Oct 2024 08:45:04 -0400
+X-MC-Unique: U2iell8VN0yFdcbFNGRnfQ-1
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-83546bebd9eso9703139f.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 05:45:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728477770; x=1729082570;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jk0pKj9VCu3al6N68FkKLk/v4exRbcGJT+XXNWXH8Sw=;
- b=VzBgTCSMmpQwHpjBrIB8MNFapAfacIBU63/F8Gzvi4PR+cD4xO3IaxGAxQL207HKW+
- S0PWwvPuwycMvoT2DC/KZscgL4oGRPEIJQIX7gPkcf3vylapJzYGst/9VQ9Rh0WcNeiU
- 8baBAc11zEBq2j5vD+0qRiBjt4YrXuuqH7LvLgKREE8bsuUwkuiqDIZ1TnRhjvle+K49
- Pu82fgFWTqVs0pT2iZLEwq3OrCsknv3iQ8UhQuAe4D5xFH68nJ7MAqUMHbDscfvrZG+p
- CotSG3IxPZKi8r8AVaKwQ0b3upBQbn/wAnS5mE3BxBqPCcUL4wLAd2FTz/fAb9jsm5uF
- dIJQ==
-X-Gm-Message-State: AOJu0YwmcfAZM98/zBSToX2IOqWeLmd7fa4pdBsEK0MoS9ba5HHaS8Z9
- yoYjypGkAD5N3oLJfqVThT07pcuIL0rdD3wr3BNBhyYVmQwvcYoV7ZOuG1QIcyMNnKoz05+tW6S
- H840j1OhoMmsU18fIQouXgAjWDNlldvAW408zgP60kMG32CKiUY/+tlO4FJ5Q3Be2xNC6xqtYm8
- WmQAOYNBihR2VZK2RGbKaak/5o68+5yBZtiA==
-X-Received: by 2002:a05:6602:6c04:b0:835:42ce:933d with SMTP id
- ca18e2360f4ac-83542ce9439mr127156239f.1.1728477770594; 
- Wed, 09 Oct 2024 05:42:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPihQ1fnKB662fomcWUObYdo/c2JzIDukLZHlNaqfEiNJJ63s+y5HaNwDhBeNP+6VanGR2mQ==
-X-Received: by 2002:a05:6602:6c04:b0:835:42ce:933d with SMTP id
- ca18e2360f4ac-83542ce9439mr127152639f.1.1728477770098; 
- Wed, 09 Oct 2024 05:42:50 -0700 (PDT)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ d=1e100.net; s=20230601; t=1728477903; x=1729082703;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IGH2t+Aydc23FcuIBLI+pqNneU77CC+KunJmPkybxKc=;
+ b=Vy51GXXvpV7PX4nuIpfQtv3rw6M1b+uWjaNvlvvMs271Eit8/AgPQZrPn2yZuKRl7l
+ wXho6hSd2643vrlavPtS2epUauKkbGDKCNad1yZMi0zRR4R6+j82RuFyrpBOZsz1kLAU
+ s/FOLen1Fo6SuUTm98p+ccK92kg7dSoblCKSIXZm5I7vp4IhhL3tYGfAMdDmHr1tAWSR
+ zMG7N83wm0dDDTZw8aW7gSDbPliYGI5kroE/qrrndtmNwy69W9fbfemT1jaVfn8FkCiW
+ Dy/L2YYGwQ/dMC4zz4jtO0kkP00yvttAD8fRlJxfeXjnm1bf2JtyfB3cIbQB0rRqJvXx
+ uH0A==
+X-Gm-Message-State: AOJu0Yy5MzGTH0xFg4Fno11VIzZFrDxjO4lUS+bLfy8MI4/7VeSufRk2
+ EZrSjE+0R4JNkyXhsWwfJl/bpgBYTFhQQGkpcpYGHLOmf7Tb0hKbwZiZB3jlfJXnmPsTGlJSCTw
+ y7ahEhnxkc61eFQSUBtOr2ZUk3D7+tYxWMtRws/WSALQ7FavjgLWE3s+Zqr1aPonQLJ2N4zNP8i
+ Y6QBeXzVH6KB3TczY2QelpmbmJROt1/h6Szg==
+X-Received: by 2002:a05:6602:2c8e:b0:834:d7b6:4fea with SMTP id
+ ca18e2360f4ac-8353d4b3213mr274012139f.6.1728477903183; 
+ Wed, 09 Oct 2024 05:45:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrU8PjdHvSpNXppZoVUZohAIQnw8xDqIhxyvtV6r1Fy2OyqbvTlR1lAEkrX3HwaO00Nf4UGw==
+X-Received: by 2002:a05:6602:2c8e:b0:834:d7b6:4fea with SMTP id
+ ca18e2360f4ac-8353d4b3213mr274006339f.6.1728477902695; 
+ Wed, 09 Oct 2024 05:45:02 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-83503aacb18sm220272039f.30.2024.10.09.05.42.48
+ ca18e2360f4ac-83503aaca17sm217708839f.29.2024.10.09.05.45.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 05:42:48 -0700 (PDT)
+ Wed, 09 Oct 2024 05:45:01 -0700 (PDT)
+Date: Wed, 9 Oct 2024 08:44:59 -0400
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com
-Subject: [PULL 05/12] migration: Deprecate zero-blocks capability
-Date: Wed,  9 Oct 2024 08:42:31 -0400
-Message-ID: <20241009124238.371084-6-peterx@redhat.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20241009124238.371084-1-peterx@redhat.com>
-References: <20241009124238.371084-1-peterx@redhat.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <ppandit@redhat.com>, Julia Suvorova <jusual@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v4 0/4] KVM: Dynamic sized memslots array
+Message-ID: <ZwZ6ywR0FjxJZBEL@x1n>
+References: <20240917163835.194664-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240917163835.194664-1-peterx@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -101,76 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Ping - Paolo, could you help have a look?  Thanks!
 
-The zero-blocks capability was meant to be used along with the block
-migration, which has been removed already in commit eef0bae3a7
-("migration: Remove block migration").
+On Tue, Sep 17, 2024 at 12:38:31PM -0400, Peter Xu wrote:
+> v4:
+> - Remove restriction on kvm reports smaller than the default alloc size
+>   (KVM_MEMSLOTS_NR_ALLOC_DEFAULT) [Fabiano]
+> 
+> v1: https://lore.kernel.org/r/20240904191635.3045606-1-peterx@redhat.com
+> v2: https://lore.kernel.org/r/20240904223510.3519358-1-peterx@redhat.com
+> v3: https://lore.kernel.org/r/20240909145413.3748429-1-peterx@redhat.com
+> 
+> This series make KVM memslots to be allocated dynamically in QEMU.  It
+> fixes a migration performance regression that I observed, reducing precopy
+> dirty sync process from ~86ms to ~3ms each time.
+> 
+> Patch 1 is the fix to the problem, while the rest three patches are
+> cleanups.
+> 
+> Thanks,
+> 
+> Peter Xu (4):
+>   KVM: Dynamic sized kvm memslots array
+>   KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
+>   KVM: Rename KVMMemoryListener.nr_used_slots to nr_slots_used
+>   KVM: Rename KVMState->nr_slots to nr_slots_max
+> 
+>  include/sysemu/kvm_int.h |   7 +--
+>  accel/kvm/kvm-all.c      | 105 ++++++++++++++++++++++++++++++---------
+>  accel/kvm/trace-events   |   1 +
+>  3 files changed, 87 insertions(+), 26 deletions(-)
+> 
+> -- 
+> 2.45.0
+> 
 
-Setting zero-blocks is currently a noop, but the outright removal of
-the capability would cause and error in case some users are still
-setting it. Put the capability through the deprecation process.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20240919134626.166183-4-dave@treblig.org
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- docs/about/deprecated.rst | 6 ++++++
- qapi/migration.json       | 5 ++++-
- migration/options.c       | 4 ++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index c02bbb66f7..33ce4f9536 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -467,3 +467,9 @@ usage of providing a file descriptor to a plain file has been
- deprecated in favor of explicitly using the ``file:`` URI with the
- file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
- command documentation for details on the ``fdset`` usage.
-+
-+``zero-blocks`` capability (since 9.2)
-+''''''''''''''''''''''''''''''''''''''
-+
-+The ``zero-blocks`` capability was part of the block migration which
-+doesn't exist anymore since it was removed in QEMU v9.1.
-diff --git a/qapi/migration.json b/qapi/migration.json
-index b66cccf107..3af6aa1740 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -479,11 +479,14 @@
- # Features:
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
-+# @deprecated: Member @zero-blocks is deprecated as being part of
-+#     block migration which was already removed.
- #
- # Since: 1.2
- ##
- { 'enum': 'MigrationCapability',
--  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
-+  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
-+           { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
-            'events', 'postcopy-ram',
-            { 'name': 'x-colo', 'features': [ 'unstable' ] },
-            'release-ram',
-diff --git a/migration/options.c b/migration/options.c
-index 6f549984cb..ad8d6989a8 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -450,6 +450,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-     ERRP_GUARD();
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
-+    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
-+        warn_report("zero-blocks capability is deprecated");
-+    }
-+
- #ifndef CONFIG_REPLICATION
-     if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-         error_setg(errp, "QEMU compiled without replication module"
 -- 
-2.45.0
+Peter Xu
 
 
