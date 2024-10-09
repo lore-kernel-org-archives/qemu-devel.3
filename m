@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE64CEDDA7
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 15:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57733CEDDA4
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 15:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syYJI-0001LP-1c; Wed, 09 Oct 2024 11:09:08 -0400
+	id 1syYJV-0001a1-W2; Wed, 09 Oct 2024 11:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syYJC-0001JG-ND
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:02 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1syYJU-0001ZB-J0
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:20 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1syYJ9-0007w3-M5
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:01 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-71dfc78d6ddso3666726b3a.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 08:08:59 -0700 (PDT)
+ id 1syYJS-00080P-Pb
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 11:09:20 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-71e15fe56c9so1476805b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 08:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728486538; x=1729091338; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728486557; x=1729091357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gGugcia7xIHYiO2oiJjHlSRtV4JGvYxNcTYF4XQ4e4A=;
- b=yGUhcHC+isQy/pN+U8znOlD8csXL0NThVlnORNwIZuiqKCJjTL5Mdb8cKxS6pmgVeC
- pBfXSamVxeAUI2ttvat4nwlAalR9cKqL1goEfh59K5BSkvu1uIcpVNID3VOj5jHDRQgQ
- cWNeHQyURMZi3WLvRRgnkXqgCc5sfq3HaIT3/MOZUNzAszBtIWaLU8GZxLg6f8LyhLj3
- KRaD1IIP14L1tbap1FWt9LBKRmZE0TJ+Lr7IS17LYnVsTJBXjVv6YzogeHAk4XSpv8Ec
- wxrvaYUrlwV47NRP3dmmqGn/HDx33nARC8eZIFcdVMTTdQ5wMGCf+mvgD1g2DHwSKb8a
- +mag==
+ :reply-to; bh=y/9VaB8UKZR/34uiKoujjlQexVYllhaoIzyzusyrgR4=;
+ b=oa2ZRzTkGJY03KyazUMFhSI0xkAsUyzEdTf4VmN5PIgfTLHn+pNcPy+LdVpjxTBZ83
+ 5tglmSKuoC/ITqOCGnF13hSz6VL2vCy1qUhTjeG8odLuBEaN1V2y2nVWX5wdHlfS1P4a
+ Z0/0EWA3sx3pX90T5nD3bzIqFoSs7JX4rtAZ9AhPWd7DqPD0Hs0DnMTqjYysgxSpiT81
+ XGC8lRvJZ13sQF3R+o98shyVnf2IQsIKfdEWtmSH077EFnKAV4w9qc8BD5e99yNdPHat
+ 0hMIfnLAfVNgnlorvzLX9vyu3HysgZbAfk8qbuT0rFsa5LcawAthTbawIIV3rGNwWPE2
+ t3Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728486538; x=1729091338;
+ d=1e100.net; s=20230601; t=1728486557; x=1729091357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gGugcia7xIHYiO2oiJjHlSRtV4JGvYxNcTYF4XQ4e4A=;
- b=vUt5zToOMihuNgnhBflFLraWqxRNKVKg85CL7b5bZXM27dbDKByaCeTMem/CRcNDsz
- WYE1Q0n5XYXBrfhEZYo+HNNpnukBFN1WZ8/jxxf8mjArAVICfWMOfyxwZkeWJt4zC0Rx
- 7VLgJbsrlCxsnNqClrFGnKIVnj6ilVjnPELm2O6lWQVPT3GXE4hKdKeK7cMuAOKWwgoN
- iU81XZa7u72dSKYozcrz7pjH2s1HN6yz/tTPcchFRw3qvb2/2b+R51PLN5L7rGU45vYp
- oPVXXief3ccYqyfJS6ydp8Kw9xZv8ts8ycOhznW9/Gb6KDVCFNpakvSC4Lo8LTxdLHMc
- d9Mg==
-X-Gm-Message-State: AOJu0YwjF2WeKhriAQC2fOOR4Ksa9m4NcXG936x40FNibuZd74Q1nr8N
- cE8oAVFBf3qT606HFv0nhfe+j+0YQn7QASMpBpfJ9YejvlP7R8VkKmlJV3t7UcZC7nvm+U8dIQQ
- r
-X-Google-Smtp-Source: AGHT+IHTsP/44AfTBj9tBPEteHYobH5wP5qyYZEOM5DId2QpTc/CUusVD/yPrklj6PidnhzLzIG3zg==
-X-Received: by 2002:a05:6a00:928a:b0:71e:104d:6316 with SMTP id
- d2e1a72fcca58-71e1dbc20c0mr4894864b3a.21.1728486538095; 
- Wed, 09 Oct 2024 08:08:58 -0700 (PDT)
+ bh=y/9VaB8UKZR/34uiKoujjlQexVYllhaoIzyzusyrgR4=;
+ b=MWryf/bjDqsotaWKnPcq7JMp7PCoHTnbh5wXIV+g5BuOXsB4vSfyyf9dzWCDHuHJzQ
+ H34wbSOY9iFa57CvuGMQrL8Bk4DHC06R536jl2YohdyhwZNqFRbZuwhAJqTn5b8LH/yX
+ gP4mZktoyVRvUhBBJUYE74/rw1Lrj1IiqhOo8X2kjcO/yW8MalzbkoqRaORvAVlbrvS9
+ IpM8sjX7gmf7Y/HCDKXzPH18mqeU4gTs8gOYREwxYZJiANPAG51GYy4eCWX47hUXsOvc
+ LydYAPPKCUmlajtX2/T8JZke5XWioDD9KT9XL6gr4I3m7skIwuPUQBqAeQN40+xPTEwZ
+ Zrsg==
+X-Gm-Message-State: AOJu0YzPUJCAf2FVj/harXkm4saQXCpgDy6R4RNgE0r+jr3HRPIgAJLT
+ 1wLMRCTTMw/ROKKWnSlbpUs9ivAdXhEq1+tjrNs/10/mzte0pXIx+NvjRFmPNmhMhQ4M3QFoxEl
+ S
+X-Google-Smtp-Source: AGHT+IEZfm2sQtDYrRys4aZEV9UBsYmfgLvgFbYzKIhBM8I9d4qW+oIRGBhN46jowJtOlINnxyBOZA==
+X-Received: by 2002:a05:6a00:23c1:b0:71e:210:be12 with SMTP id
+ d2e1a72fcca58-71e267f710cmr440700b3a.21.1728486557301; 
+ Wed, 09 Oct 2024 08:09:17 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71df0d65278sm7881094b3a.160.2024.10.09.08.08.57
+ d2e1a72fcca58-71df0d65278sm7881094b3a.160.2024.10.09.08.09.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 08:08:57 -0700 (PDT)
+ Wed, 09 Oct 2024 08:09:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 01/23] util/interval-tree: Introduce interval_tree_free_nodes
-Date: Wed,  9 Oct 2024 08:08:33 -0700
-Message-ID: <20241009150855.804605-2-richard.henderson@linaro.org>
+Subject: [NOTYET PATCH 23/23] accel/tcg: Unexport tlb_set_page*
+Date: Wed,  9 Oct 2024 08:08:55 -0700
+Message-ID: <20241009150855.804605-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241009150855.804605-1-richard.henderson@linaro.org>
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,103 +93,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a general-purpose release-all-nodes operation, that allows
-for the IntervalTreeNode to be embeded within a larger structure.
+The new tlb_fill_align hook returns page data via structure
+rather than by function call, so we can make tlb_set_page_full
+be local to cputlb.c.  There are no users of tlb_set_page
+or tlb_set_page_with_attrs, so those can be eliminated.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/interval-tree.h | 11 +++++++++++
- util/interval-tree.c         | 20 ++++++++++++++++++++
- util/selfmap.c               | 13 +------------
- 3 files changed, 32 insertions(+), 12 deletions(-)
+ include/exec/exec-all.h | 57 -----------------------------------------
+ accel/tcg/cputlb.c      | 27 ++-----------------
+ 2 files changed, 2 insertions(+), 82 deletions(-)
 
-diff --git a/include/qemu/interval-tree.h b/include/qemu/interval-tree.h
-index 25006debe8..d90ea6d17f 100644
---- a/include/qemu/interval-tree.h
-+++ b/include/qemu/interval-tree.h
-@@ -96,4 +96,15 @@ IntervalTreeNode *interval_tree_iter_first(IntervalTreeRoot *root,
- IntervalTreeNode *interval_tree_iter_next(IntervalTreeNode *node,
-                                           uint64_t start, uint64_t last);
- 
-+/**
-+ * interval_tree_free_nodes:
-+ * @root: root of the tree
-+ * @it_offset: offset from outermost type to IntervalTreeNode
-+ *
-+ * Free, via g_free, all nodes under @root.  IntervalTreeNode may
-+ * not be the true type of the nodes allocated; @it_offset gives
-+ * the offset from the outermost type to the IntervalTreeNode member.
-+ */
-+void interval_tree_free_nodes(IntervalTreeRoot *root, size_t it_offset);
-+
- #endif /* QEMU_INTERVAL_TREE_H */
-diff --git a/util/interval-tree.c b/util/interval-tree.c
-index 53465182e6..663d3ec222 100644
---- a/util/interval-tree.c
-+++ b/util/interval-tree.c
-@@ -639,6 +639,16 @@ static void rb_erase_augmented_cached(RBNode *node, RBRootLeftCached *root,
-     rb_erase_augmented(node, &root->rb_root, augment);
- }
- 
-+static void rb_node_free(RBNode *rb, size_t rb_offset)
-+{
-+    if (rb->rb_left) {
-+        rb_node_free(rb->rb_left, rb_offset);
-+    }
-+    if (rb->rb_right) {
-+        rb_node_free(rb->rb_right, rb_offset);
-+    }
-+    g_free((void *)rb - rb_offset);
-+}
- 
- /*
-  * Interval trees.
-@@ -870,6 +880,16 @@ IntervalTreeNode *interval_tree_iter_next(IntervalTreeNode *node,
-     }
- }
- 
-+void interval_tree_free_nodes(IntervalTreeRoot *root, size_t it_offset)
-+{
-+    if (root && root->rb_root.rb_node) {
-+        rb_node_free(root->rb_root.rb_node,
-+                     it_offset + offsetof(IntervalTreeNode, rb));
-+        root->rb_root.rb_node = NULL;
-+        root->rb_leftmost = NULL;
-+    }
-+}
-+
- /* Occasionally useful for calling from within the debugger. */
- #if 0
- static void debug_interval_tree_int(IntervalTreeNode *node,
-diff --git a/util/selfmap.c b/util/selfmap.c
-index 483cb617e2..d2b86da301 100644
---- a/util/selfmap.c
-+++ b/util/selfmap.c
-@@ -87,23 +87,12 @@ IntervalTreeRoot *read_self_maps(void)
-  * @root: an interval tree
-  *
-  * Free a tree of MapInfo structures.
-- * Since we allocated each MapInfo in one chunk, we need not consider the
-- * contents and can simply free each RBNode.
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 72240ef426..8e2ab26902 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -184,63 +184,6 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                vaddr len,
+                                                uint16_t idxmap,
+                                                unsigned bits);
+-
+-/**
+- * tlb_set_page_full:
+- * @cpu: CPU context
+- * @mmu_idx: mmu index of the tlb to modify
+- * @addr: virtual address of the entry to add
+- * @full: the details of the tlb entry
+- *
+- * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
+- * @full must be filled, except for xlat_section, and constitute
+- * the complete description of the translated page.
+- *
+- * This is generally called by the target tlb_fill function after
+- * having performed a successful page table walk to find the physical
+- * address and attributes for the translation.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; @full->lg_page_size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+-                       CPUTLBEntryFull *full);
+-
+-/**
+- * tlb_set_page_with_attrs:
+- * @cpu: CPU to add this TLB entry for
+- * @addr: virtual address of page to add entry for
+- * @paddr: physical address of the page
+- * @attrs: memory transaction attributes
+- * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
+- * @mmu_idx: MMU index to insert TLB entry for
+- * @size: size of the page in bytes
+- *
+- * Add an entry to this CPU's TLB (a mapping from virtual address
+- * @addr to physical address @paddr) with the specified memory
+- * transaction attributes. This is generally called by the target CPU
+- * specific code after it has been called through the tlb_fill()
+- * entry point and performed a successful page table walk to find
+- * the physical address and attributes for the virtual address
+- * which provoked the TLB miss.
+- *
+- * At most one entry for a given virtual address is permitted. Only a
+- * single TARGET_PAGE_SIZE region is mapped; the supplied @size is only
+- * used by tlb_flush_page.
+- */
+-void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+-                             hwaddr paddr, MemTxAttrs attrs,
+-                             int prot, int mmu_idx, vaddr size);
+-/* tlb_set_page:
+- *
+- * This function is equivalent to calling tlb_set_page_with_attrs()
+- * with an @attrs argument of MEMTXATTRS_UNSPECIFIED. It's provided
+- * as a convenience for CPUs which don't use memory transaction attributes.
+- */
+-void tlb_set_page(CPUState *cpu, vaddr addr,
+-                  hwaddr paddr, int prot,
+-                  int mmu_idx, vaddr size);
+ #else
+ static inline void tlb_init(CPUState *cpu)
+ {
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 55c7bf737b..5efd6e536c 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1066,8 +1066,8 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+  * Called from TCG-generated code, which is under an RCU read-side
+  * critical section.
   */
+-void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+-                       vaddr addr, CPUTLBEntryFull *full)
++static void tlb_set_page_full(CPUState *cpu, int mmu_idx,
++                              vaddr addr, CPUTLBEntryFull *full)
+ {
+     CPUTLB *tlb = &cpu->neg.tlb;
+     CPUTLBDesc *desc = &tlb->d[mmu_idx];
+@@ -1218,29 +1218,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+     qemu_spin_unlock(&tlb->c.lock);
+ }
  
--static void free_rbnode(RBNode *n)
+-void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+-                             hwaddr paddr, MemTxAttrs attrs, int prot,
+-                             int mmu_idx, uint64_t size)
 -{
--    if (n) {
--        free_rbnode(n->rb_left);
--        free_rbnode(n->rb_right);
--        g_free(n);
--    }
+-    CPUTLBEntryFull full = {
+-        .phys_addr = paddr,
+-        .attrs = attrs,
+-        .prot = prot,
+-        .lg_page_size = ctz64(size)
+-    };
+-
+-    assert(is_power_of_2(size));
+-    tlb_set_page_full(cpu, mmu_idx, addr, &full);
 -}
 -
- void free_self_maps(IntervalTreeRoot *root)
- {
-     if (root) {
--        free_rbnode(root->rb_root.rb_node);
-+        interval_tree_free_nodes(root, offsetof(MapInfo, itree));
-         g_free(root);
-     }
- }
+-void tlb_set_page(CPUState *cpu, vaddr addr,
+-                  hwaddr paddr, int prot,
+-                  int mmu_idx, uint64_t size)
+-{
+-    tlb_set_page_with_attrs(cpu, addr, paddr, MEMTXATTRS_UNSPECIFIED,
+-                            prot, mmu_idx, size);
+-}
+-
+ /*
+  * Note: tlb_fill_align() can trigger a resize of the TLB.
+  * This means that all of the caller's prior references to the TLB table
 -- 
 2.43.0
 
