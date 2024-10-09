@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3255ACED611
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D348DCED639
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syfnv-0006pY-N4; Wed, 09 Oct 2024 19:09:16 -0400
+	id 1syfnz-0006sD-Cn; Wed, 09 Oct 2024 19:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syfnr-0006nf-N2
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:11 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1syfns-0006og-Ir
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:12 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1syfnp-0000i7-9P
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:10 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e221a7e7baso274151a91.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:09:08 -0700 (PDT)
+ id 1syfnq-0000if-Aw
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:09:12 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7db90a28cf6so1069516a12.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728515348; x=1729120148;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728515349; x=1729120149;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IvdoegZ6AwTbZGebnJ5OefWg6Yz9UTpv5gPPyIUdjh8=;
- b=yyP//fRLyMwqT5iI6wSu1M6Wo5Eb9QdfE3kGs6cotu9i5hlNmPVInHO9s7vj+bTfZe
- YoEfDul5cq/HXOlkWWjZ7AoICcXcBKFNtrSb0XMiEGMblNokZjgxWdatxUX/YlGOyAZM
- DlbYIn+OP1r1NmKB+hPJb2TgFgX7sXp91B6RhR5/BgbLgrR+WUZr8YvaJGzDh8lkgYNh
- TAEtVwXrMcvCRrdW3wURdfLrw4E60n5abWZatF2ydLeFJ9QFBh6ND23HgJKsjSTQb0Ws
- TAutGAhTSG899gfJTFHDXewaCpO7FdOm5K8laKqmY8YxKHxc+ymNDRiZwRZQUXqFP8Md
- +AXA==
+ :reply-to; bh=l6Qd68gXr50zgdCGJsb3cbda8j3GTng40cjgoB9Psjo=;
+ b=PxYOUPVrUmD+fHQe7UxXETeAVP4xf0/Hj4bmEX5Z6WOSDZG+tMLLm7JAF1t+EM2bhv
+ zMMNx/+TOGKv5phPrFIHB7XDHbDO1jfPpeOZlTbRoZ9Yscv+LcEIYGl1sgWsWbhjnM0k
+ Ag6y24suSJbh/yirYIr4AVPIM40aDbAwKowe0YqFXsXP5j0aQz26CnajC9mk/FhcSoMb
+ Jlo+AwKR8Rk11St5USTBkmBaIrJ/sILpqdWojN3sT6TR+lmgZftvo5NoP0m4o2oo6f8p
+ oDy+8dt/6XipUkawKip2xPX1ZMMvBjlPPis5CuM7G0qF1DhQE3DwKjCn3ivnMbYIfa+b
+ r9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728515348; x=1729120148;
+ d=1e100.net; s=20230601; t=1728515349; x=1729120149;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IvdoegZ6AwTbZGebnJ5OefWg6Yz9UTpv5gPPyIUdjh8=;
- b=Av5lThVgB4VwMkb3hUweHCAorjAGi2pk+ZDKHdUYqeiQ1dghzKLOZrTgqeaKbdWf1e
- Gjs9TW3/7oQWRG2bHpJIn15f6kzsLeUvEUTwb0N36YvzZKmY4mkkZ+WxUcaK0+u/WONV
- fy13EvWoZL6O7vqL6uDLap93ISJ3QWUi76DOR26Thkks7PV9tjTA6UmqSjyx/GtYr5ka
- zjw/ubLv8OjbIAtn5BIp+vgENkelMbXZ07bh4X+cI/H5rtDfnvUr+o4TuaM25YLKmlEP
- gckMSyubaPM5aX5EOYa71mEjcdI80t2bs+CTve/LO9vckXYDq9Rdyd6DqBGLB7499riR
- 3ZAQ==
+ bh=l6Qd68gXr50zgdCGJsb3cbda8j3GTng40cjgoB9Psjo=;
+ b=ZTyTn7Ksl8IrFtdediKUxn7IHClapZAMvd4g/eciQ+lRiUQ+m4Y344sDU8nVbInu3z
+ XuDHWIvyDT0ya5gd9d2abdP+nevbEqhSwaA59iig9v6ypWqh7AhwoJ/I6r4g+ODA7aZ/
+ hupyTAy4QXWYi9JjkdYfD5e5bIoG5c3ktRGZGvjMSwDh5ChhVBkwXn7ail7IeU2sOCjs
+ YpgYvUPQbpHrXE/i4owcJDkdcYPtPvhvLedGFBEo+EyjzO+qsIu77Cr//jD3rpsnEMsd
+ HFvlE3vIhI82qEqC19QrTDb1IvANf6iPrwCATfmYBiGLsGCoy/kLXbO21AiTEV0P/eux
+ fR2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkQFUcw1YIYQYO/aKfFm51ZevSM3NqKXHYDSDq84TweHKzjGcwvlN7jMa//LBDS835AbNL/XsxV6sn@nongnu.org
-X-Gm-Message-State: AOJu0Yw17fGGATRiRyE1Scg+O14z0w/gOxbre4cBEMGWFjdCCsRs8U8m
- t/YauWAKH8ksIY+53v/F1lZneRLH2CI4CZ8k/riMDQ/zjApPRpn542aEeDqUHkQ=
-X-Google-Smtp-Source: AGHT+IFM5dewSyuLQZRh1cyyivbPcufR3D+JNCo8h9++Lc+MovvRsJbrf9BvhDZqgNzAXH/9tr/zEg==
-X-Received: by 2002:a17:90b:4f85:b0:2c9:5a85:f8dd with SMTP id
- 98e67ed59e1d1-2e2a236bbd1mr4795438a91.18.1728515347812; 
- Wed, 09 Oct 2024 16:09:07 -0700 (PDT)
+ AJvYcCU8vZMVLY4UQrXdeePaxrupae1ossZYvdJqCFldYdwluWey3s7Hvdznipkl2vTPVH9m2Bw90V5rzIcB@nongnu.org
+X-Gm-Message-State: AOJu0Yylwnmwf97axZM/27rclgmmKQ5cqKgZZN5+w3MnveqLJMhIKhiu
+ TXRqKYfUw3wyZdSBS5IxxIwksl2TtOqViSG+5A5GHQ+QEtKhTTbkFEaFoqZ9zV0=
+X-Google-Smtp-Source: AGHT+IEPpyqCjBdGiif4YEFrweI7j4LNnovzaplsrm/q9wFuxXd/slkjVZKYrQj7nZiBlfSYATgD2w==
+X-Received: by 2002:a17:90b:fd1:b0:2e2:ada8:2986 with SMTP id
+ 98e67ed59e1d1-2e2c8077f30mr1989841a91.16.1728515348789; 
+ Wed, 09 Oct 2024 16:09:08 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2a55f9855sm2271902a91.2.2024.10.09.16.09.06
+ 98e67ed59e1d1-2e2a55f9855sm2271902a91.2.2024.10.09.16.09.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Oct 2024 16:09:07 -0700 (PDT)
+ Wed, 09 Oct 2024 16:09:08 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Wed, 09 Oct 2024 16:09:02 -0700
-Subject: [PATCH RFC 04/10] target/riscv: Use uint64 instead of uint as key
+Date: Wed, 09 Oct 2024 16:09:03 -0700
+Subject: [PATCH RFC 05/10] target/riscv: Rename the PMU events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241009-pmu_event_machine-v1-4-dcbd7a60e3ba@rivosinc.com>
+Message-Id: <20241009-pmu_event_machine-v1-5-dcbd7a60e3ba@rivosinc.com>
 References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
 In-Reply-To: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
@@ -74,8 +74,8 @@ Cc: alexei.filippov@syntacore.com, Atish Patra <atishp@rivosinc.com>,
  palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=atishp@rivosinc.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=atishp@rivosinc.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,70 +97,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The event ID can be a upto 56 bit value when sscofpmf is implemented.
-Change the event to counter hashtable to store the keys as 64 bit value
-instead of uint.
+The current PMU events are defined by SBI PMU
+specification.  As there is no standard event encoding
+scheme, Virt machine chooses to use the SBI PMU encoding.
+A platform may choose to implement a different event
+encoding scheme completely.
+
+Rename the event names to reflect the reality.
+
+No functional changes introduced.
 
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/pmu.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h        | 26 +++++++++++++++-----
+ target/riscv/cpu_helper.c |  8 +++---
+ target/riscv/pmu.c        | 62 ++++++++++++++++++-----------------------------
+ target/riscv/pmu.h        |  2 +-
+ 4 files changed, 48 insertions(+), 50 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 97e408b91219..2ac391a7cf74 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -820,14 +820,28 @@ enum {
+ /*
+  * The event id are encoded based on the encoding specified in the
+  * SBI specification v0.3
++ *
++ * The event encoding is specified in the SBI specification
++ * Event idx is a 20bits wide number encoded as follows:
++ * event_idx[19:16] = type
++ * event_idx[15:0] = code
++ * The code field in cache events are encoded as follows:
++ * event_idx.code[15:3] = cache_id
++ * event_idx.code[2:1] = op_id
++ * event_idx.code[0:0] = result_id
+  */
+ 
+-enum riscv_pmu_event_idx {
+-    RISCV_PMU_EVENT_HW_CPU_CYCLES = 0x01,
+-    RISCV_PMU_EVENT_HW_INSTRUCTIONS = 0x02,
+-    RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS = 0x10019,
+-    RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS = 0x1001B,
+-    RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS = 0x10021,
++enum virt_pmu_event_idx {
++    /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
++    VIRT_PMU_EVENT_HW_CPU_CYCLES = 0x01,
++    /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
++    VIRT_PMU_EVENT_HW_INSTRUCTIONS = 0x02,
++    /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
++    VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS = 0x10019,
++    /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
++    VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS = 0x1001B,
++    /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
++    VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS = 0x10021,
+ };
+ 
+ /* used by tcg/tcg-cpu.c*/
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 203c0a92ab75..0f1655a221bd 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1295,17 +1295,17 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+ 
+ static void pmu_tlb_fill_incr_ctr(RISCVCPU *cpu, MMUAccessType access_type)
+ {
+-    enum riscv_pmu_event_idx pmu_event_type;
++    enum virt_pmu_event_idx pmu_event_type;
+ 
+     switch (access_type) {
+     case MMU_INST_FETCH:
+-        pmu_event_type = RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS;
++        pmu_event_type = VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS;
+         break;
+     case MMU_DATA_LOAD:
+-        pmu_event_type = RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS;
++        pmu_event_type = VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS;
+         break;
+     case MMU_DATA_STORE:
+-        pmu_event_type = RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS;
++        pmu_event_type = VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS;
+         break;
+     default:
+         return;
 diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 21377518f4e0..2531d4f1a9c1 100644
+index 2531d4f1a9c1..c436b08d1043 100644
 --- a/target/riscv/pmu.c
 +++ b/target/riscv/pmu.c
-@@ -265,14 +265,14 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
-     counter_arr[env->priv] += delta;
+@@ -38,40 +38,24 @@ void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
+ {
+     uint32_t fdt_event_ctr_map[15] = {};
+ 
+-   /*
+-    * The event encoding is specified in the SBI specification
+-    * Event idx is a 20bits wide number encoded as follows:
+-    * event_idx[19:16] = type
+-    * event_idx[15:0] = code
+-    * The code field in cache events are encoded as follows:
+-    * event_idx.code[15:3] = cache_id
+-    * event_idx.code[2:1] = op_id
+-    * event_idx.code[0:0] = result_id
+-    */
+-
+-   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
+-   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
+-   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
++   fdt_event_ctr_map[0] = cpu_to_be32(VIRT_PMU_EVENT_HW_CPU_CYCLES);
++   fdt_event_ctr_map[1] = cpu_to_be32(VIRT_PMU_EVENT_HW_CPU_CYCLES);
+    fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
+ 
+-   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
+-   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
+-   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
++   fdt_event_ctr_map[3] = cpu_to_be32(VIRT_PMU_EVENT_HW_INSTRUCTIONS);
++   fdt_event_ctr_map[4] = cpu_to_be32(VIRT_PMU_EVENT_HW_INSTRUCTIONS);
+    fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
+ 
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
+-   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
++   fdt_event_ctr_map[6] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS);
++   fdt_event_ctr_map[7] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS);
+    fdt_event_ctr_map[8] = cpu_to_be32(cmask);
+ 
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
+-   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
++   fdt_event_ctr_map[9] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS);
++   fdt_event_ctr_map[10] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS);
+    fdt_event_ctr_map[11] = cpu_to_be32(cmask);
+ 
+-   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
+-   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
++   fdt_event_ctr_map[12] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS);
++   fdt_event_ctr_map[13] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS);
+    fdt_event_ctr_map[14] = cpu_to_be32(cmask);
+ 
+    /* This a OpenSBI specific DT property documented in OpenSBI docs */
+@@ -290,7 +274,7 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
+     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
  }
  
--static bool riscv_pmu_htable_lookup(RISCVCPU *cpu, uint32_t key,
-+static bool riscv_pmu_htable_lookup(RISCVCPU *cpu, uint64_t key,
-                                     uint32_t *value)
+-int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
++int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum virt_pmu_event_idx event_idx)
  {
-     GHashTable *table = cpu->pmu_event_ctr_map;
-     gpointer val_ptr;
+     uint32_t ctr_idx;
+     int ret;
+@@ -329,7 +313,7 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
+     }
  
-     pthread_rwlock_rdlock(&cpu->pmu_map_lock);
--    gpointer val_ptr = g_hash_table_lookup(table, GUINT_TO_POINTER(key));
-+    val_ptr = g_hash_table_lookup(table, &key);
-     if (!val_ptr) {
-         pthread_rwlock_unlock(&cpu->pmu_map_lock);
+     cpu = env_archcpu(env);
+-    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS,
++    if (!riscv_pmu_htable_lookup(cpu, VIRT_PMU_EVENT_HW_INSTRUCTIONS,
+                                  &ctr_idx)) {
          return false;
-@@ -378,9 +378,10 @@ static int64_t pmu_icount_ticks_to_ns(int64_t value)
- int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-                                uint32_t ctr_idx)
- {
--    uint32_t event_idx;
-+    uint64_t event_idx;
-     RISCVCPU *cpu = env_archcpu(env);
-     uint32_t mapped_ctr_idx;
-+    gint64 *eid_ptr;
+     }
+@@ -348,7 +332,7 @@ bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env, uint32_t target_ctr)
+     }
  
-     if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->pmu_event_ctr_map) {
-         return -1;
-@@ -415,8 +416,10 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+     cpu = env_archcpu(env);
+-    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES,
++    if (!riscv_pmu_htable_lookup(cpu, VIRT_PMU_EVENT_HW_CPU_CYCLES,
+                                 &ctr_idx)) {
+         return false;
+     }
+@@ -406,11 +390,11 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+     }
+ 
+     switch (event_idx) {
+-    case RISCV_PMU_EVENT_HW_CPU_CYCLES:
+-    case RISCV_PMU_EVENT_HW_INSTRUCTIONS:
+-    case RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS:
+-    case RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
+-    case RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
++    case VIRT_PMU_EVENT_HW_CPU_CYCLES:
++    case VIRT_PMU_EVENT_HW_INSTRUCTIONS:
++    case VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS:
++    case VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
++    case VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
+         break;
+     default:
          /* We don't support any raw events right now */
-         return -1;
-     }
-+    eid_ptr = g_new(gint64, 1);
-+    *eid_ptr = event_idx;
-     pthread_rwlock_wrlock(&cpu->pmu_map_lock);
--    g_hash_table_insert(cpu->pmu_event_ctr_map, GUINT_TO_POINTER(event_idx),
-+    g_hash_table_insert(cpu->pmu_event_ctr_map, eid_ptr,
-                         GUINT_TO_POINTER(ctr_idx));
-     pthread_rwlock_unlock(&cpu->pmu_map_lock);
+@@ -464,7 +448,7 @@ static bool pmu_hpmevent_set_of_if_clear(CPURISCVState *env, uint32_t ctr_idx)
+ }
  
-@@ -597,7 +600,8 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
+ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
+-                                  enum riscv_pmu_event_idx evt_idx)
++                                  enum virt_pmu_event_idx evt_idx)
+ {
+     uint32_t ctr_idx;
+     CPURISCVState *env = &cpu->env;
+@@ -473,8 +457,8 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
+     uint64_t curr_ctr_val, curr_ctrh_val;
+     uint64_t ctr_val;
+ 
+-    if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
+-        evt_idx != RISCV_PMU_EVENT_HW_INSTRUCTIONS) {
++    if (evt_idx != VIRT_PMU_EVENT_HW_CPU_CYCLES &&
++        evt_idx != VIRT_PMU_EVENT_HW_INSTRUCTIONS) {
          return;
      }
  
--    cpu->pmu_event_ctr_map = g_hash_table_new(g_direct_hash, g_direct_equal);
-+    cpu->pmu_event_ctr_map = g_hash_table_new_full(g_int64_hash, g_int64_equal,
-+                                                   g_free, NULL);
-     if (!cpu->pmu_event_ctr_map) {
-         error_setg(errp, "Unable to allocate PMU event hash table");
-         return;
+@@ -533,8 +517,8 @@ void riscv_pmu_timer_cb(void *priv)
+     RISCVCPU *cpu = priv;
+ 
+     /* Timer event was triggered only for these events */
+-    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
+-    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
++    pmu_timer_trigger_irq(cpu, VIRT_PMU_EVENT_HW_CPU_CYCLES);
++    pmu_timer_trigger_irq(cpu, VIRT_PMU_EVENT_HW_INSTRUCTIONS);
+ }
+ 
+ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
+diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+index 3853d0e2629e..75a22d596b69 100644
+--- a/target/riscv/pmu.h
++++ b/target/riscv/pmu.h
+@@ -30,7 +30,7 @@ void riscv_pmu_timer_cb(void *priv);
+ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+                                uint32_t ctr_idx);
+-int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
++int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum virt_pmu_event_idx event_idx);
+ void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
 
 -- 
 2.34.1
