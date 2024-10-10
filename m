@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BE8CF07DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 09:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1964FCF07DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 09:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sypT4-00019H-Hz; Thu, 10 Oct 2024 05:28:22 -0400
+	id 1sypUX-0001kV-Is; Thu, 10 Oct 2024 05:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1sypT3-000198-Ht
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:28:21 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1sypT1-0003vb-1i
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:28:21 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c924667851so814888a12.3
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 02:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728552497; x=1729157297; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QaYY9X9pUCStJ66Iupj9x96nWBsnt7lR9iGUBryB4Dk=;
- b=PgUQ68IsnjaWae4xeiIm1Bvup0JLqKnz9ztxU1an0gsbZdRmKm9rRRI31WIUL9UNl7
- FEth5Z2MtDL/C9gl4eJ0jvertXDK6P3IGHeeRYP8P8x7O7f3YArSpFtlVqdQsz51w3M6
- zfEEcnrtpr+9foQLHijWSNYulGuOZc12nrihaV7L9yMLZQtiQcRmlJ85lvSGkRFoFgzn
- 0sQeneatVqYB5V/211aZSfFNIYIBYQXx12ijrzQqs7nIB2+boyET4vOpUol0II+v97qx
- oBBdtwqJWLa2Mf+DANeORqoXrsut6DHF/vWt7mBwFc3cAIk9s7QwdZfPcm5IK+jfESbO
- K4wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728552497; x=1729157297;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QaYY9X9pUCStJ66Iupj9x96nWBsnt7lR9iGUBryB4Dk=;
- b=iOv51bbqwjkeF9FN0DXQuCLl9e/rtmLdUcZIOjUT6XtB9Z/k2VS4q1McDXX4Vu+YgE
- rjhpZn6EEWzoh0/PA+ZkmVfsW9i2g02YfPGn/pogvS8qeujzd+v/V1JeJx0my/nnGiIB
- 9GDaGDYqlSOv904JKuu5eV0qjn6xhiza+9OEqNjpS+r7h5KE6l2XBtpD8t6vuT9yUb37
- H/yx+hIR6Ht6tYp+WbGpqGI80rPkqg5VYef8MtRMf6t1NIpFC4xq1D7SmQj4he4YFO71
- HMmgDHO8w/4gILUiEkXkm0j6HR6U4l9ni/FK5TpawVD5L9oYPpFrS0Tg9gSwQ07N42E7
- EzdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzMaSNrXyQiKvUd3NQQg+30WhVbFPchv3CVK+vLh73DKmOKUmjql3Udm3GAOzii6F0ebipHNdt1xJp@nongnu.org
-X-Gm-Message-State: AOJu0YzATjIAQqzLi9e0VuJmy7JuI+tJ++4psOpSK501KGGYUacSTVGX
- /BbxAhXHrfaFHaE10nGfAVxeFyZDHyM7JlgePm4LdIOwMBEEykBqV8FY1A==
-X-Google-Smtp-Source: AGHT+IG2jOKCngOz4u+2GABtvu0Ro+GRGFLB7fO0aJJv1V0/8b//4/AwJcuvRr9gCpAdULb0CCtWog==
-X-Received: by 2002:a17:906:7309:b0:a99:4dc1:b931 with SMTP id
- a640c23a62f3a-a999e8f728cmr289576566b.64.1728552497043; 
- Thu, 10 Oct 2024 02:28:17 -0700 (PDT)
-Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80dc5easm62490866b.170.2024.10.10.02.28.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Oct 2024 02:28:16 -0700 (PDT)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 1/1] chardev/char: fix qemu_chr_is_busy() check
-Date: Thu, 10 Oct 2024 11:26:19 +0200
-Message-Id: <20241010092619.323489-1-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUV-0001kD-O1
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:29:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUU-00041j-6e
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:29:51 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A6XLxu029153;
+ Thu, 10 Oct 2024 09:29:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=tNrIMaIFg/sBa
+ lnXDItBwVSU7MCj5OSIYKMxf0+uv/w=; b=D8qQYCahbiInfkT/GVNBJAZ8CBdaH
+ Wjp+ZOKupLJ4vHC9PUE/v/Je5HKnIBmB4RldMTOFLHPyZnH3JlIs3qkDHeKs8MUV
+ bRmlX8d0uD9XYyrvccW9Vdp6DrujjwpLT4Dugg5bkk3UIfSNEeg/7bBYMTa5zmw3
+ bABJW4nXnx7StTd32Xcwc0U9mbLYolpb18uNBAA+EqBvisNrnvmff/TCLGXgc6xI
+ pY8ELqEJ+PL4BKy1LI4KzzAmCstQcKOxN3yBUaQ1Q4o9xw3aifaCoAYvCW4FyZGU
+ xbHqEAuLBU9HqKwExgFJTyQhYXpf6JbNuLBs8FKvQhfrsbmw6nqgzEK4A==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4269rn8us2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Oct 2024 09:29:48 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49A9H0wZ030174;
+ Thu, 10 Oct 2024 09:29:48 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423gsmxygn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Oct 2024 09:29:47 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49A9Tkgg57475472
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Oct 2024 09:29:46 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EB5182004B;
+ Thu, 10 Oct 2024 09:29:45 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A03CC20040;
+ Thu, 10 Oct 2024 09:29:45 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.88.135])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Oct 2024 09:29:45 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 2/4] gdbstub: Move phy_memory_mode to GDBSystemState
+Date: Thu, 10 Oct 2024 11:26:57 +0200
+Message-ID: <20241010092938.226868-3-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241010092938.226868-1-iii@linux.ibm.com>
+References: <20241010092938.226868-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zJuXRJXGSY6_rZkVLwH1YpM1i5XhNR6z
+X-Proofpoint-GUID: zJuXRJXGSY6_rZkVLwH1YpM1i5XhNR6z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-10_05,2024-10-09_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999
+ adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410100060
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +107,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`mux_cnt` struct member never goes negative or decrements,
-so mux chardev can be !busy only when there are no
-frontends attached. This patch fixes the always-true
-check.
+Follow the convention that all the pieces of the global stub state must
+be inside a single struct. While at it, convert phy_memory_mode to
+bool.
 
-Fixes: a4afa548fc6d ("char: move front end handlers in CharBackend")
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- chardev/char.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gdbstub/system.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index c0cc52824b48..f54dc3a86286 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -333,7 +333,7 @@ static bool qemu_chr_is_busy(Chardev *s)
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index c9f236e94f7..2e31e42f7dd 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -35,6 +35,7 @@
+ typedef struct {
+     CharBackend chr;
+     Chardev *mon_chr;
++    bool phy_memory_mode;
+ } GDBSystemState;
+ 
+ GDBSystemState gdbserver_system_state;
+@@ -445,14 +446,12 @@ void gdb_qemu_exit(int code)
+ /*
+  * Memory access
+  */
+-static int phy_memory_mode;
+-
+ int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
+                                uint8_t *buf, int len, bool is_write)
  {
-     if (CHARDEV_IS_MUX(s)) {
-         MuxChardev *d = MUX_CHARDEV(s);
--        return d->mux_cnt >= 0;
-+        return d->mux_cnt > 0;
-     } else {
-         return s->be != NULL;
+     CPUClass *cc;
+ 
+-    if (phy_memory_mode) {
++    if (gdbserver_system_state.phy_memory_mode) {
+         if (is_write) {
+             cpu_physical_memory_write(addr, buf, len);
+         } else {
+@@ -491,7 +490,8 @@ bool gdb_can_reverse(void)
+ void gdb_handle_query_qemu_phy_mem_mode(GArray *params,
+                                         void *ctx)
+ {
+-    g_string_printf(gdbserver_state.str_buf, "%d", phy_memory_mode);
++    g_string_printf(gdbserver_state.str_buf, "%d",
++                    gdbserver_system_state.phy_memory_mode);
+     gdb_put_strbuf();
+ }
+ 
+@@ -503,9 +503,9 @@ void gdb_handle_set_qemu_phy_mem_mode(GArray *params, void *ctx)
      }
+ 
+     if (!gdb_get_cmd_param(params, 0)->val_ul) {
+-        phy_memory_mode = 0;
++        gdbserver_system_state.phy_memory_mode = false;
+     } else {
+-        phy_memory_mode = 1;
++        gdbserver_system_state.phy_memory_mode = true;
+     }
+     gdb_put_packet("OK");
+ }
 -- 
-2.34.1
+2.46.2
 
 
