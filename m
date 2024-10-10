@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF7FCFC5E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 16:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2A7CFC5E2
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 16:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sywLk-0006u4-TR; Thu, 10 Oct 2024 12:49:16 -0400
+	id 1sywS9-0008B2-Ez; Thu, 10 Oct 2024 12:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sywLK-0006sh-KS
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:48:58 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sywLI-0008Ae-2w
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:48:50 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7db90a28cf6so1638789a12.0
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 09:48:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728578925; x=1729183725; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dx8LRZ6j50gd0TOpBMtXfdA3hs01aeUMPC+WO9ZDUdM=;
- b=jI9V1K39DoCf4zXoD9/KmO4TCYbbyP2cppt/u2OnbaxwGNndfFiSoyVPDA3MnAibD/
- w3FNyXCvJVDp5pYK7NupRaAeG/wNKUEb4i6ra28YFxVBd2jVS9LnXiWEOeonvpMkvYRJ
- LZEsi6OYO4C3hD9drfh1xsMRitcD/ZJ7W9i9ceV854SOOQ195a7d0tVvOe2oQCu/v5lG
- CTLlEQKiMlKVI8zSnqF0ZoxVS47+ZNU7zFzpXnIPxrVhn06qRJAwY5eIVCz5bMHR7AVz
- ZLsp7mEd9GKpNQIRvv6HmDOfwmG052CBacnsS9k5NIgULjFVGojZjPmXyEj2BLsP34s6
- upaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728578925; x=1729183725;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dx8LRZ6j50gd0TOpBMtXfdA3hs01aeUMPC+WO9ZDUdM=;
- b=HS/nfirJFCSDYtzR1+g/fzPRPzfQ3QlhJ1L76gBGwTIqx97Jy0muJOG2PuZMUoqmzX
- yv8MnrIN+1iI9plpmL/kLTIpnRNwWulcbcjmXHAJ0D9Qbr1H0KRUurkrOq+2vI6mBUza
- zxNJGJSTiZ/kPpt984FGxOkvjXBHYnYAYJzxHB2CeDdZNfHCILC1uxF439d6YKu4Wgh9
- +V8u6oy/p7ErLWXQm8xPr9ns/gxdz6d4N7uHlcnXXDTwnkBA4U77KvZxQAcLxUMJmvjj
- Ap+PQOoy8rrxeJEdZHACl9mvfuOiH2kxxH1rCr+JhNmPvaFJ6aqgOEQGemO6O+E80av+
- PZlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0UGefWJXqybZLk5yzQiXm4xmpbHbH245/xmlv4BocWOm0E5W122LFkpzR28zVkgVI4ReP5ZgvGr+E@nongnu.org
-X-Gm-Message-State: AOJu0Yy/ItVKB8NCZYueQnoZMjsZ0Edd0MdqYyp8ZGVFbuM7Lq+922T6
- 1Xhd2skvYPrOo6xyxnw2pk99EIotY9GS+fBruYjsunUPeLYJfB0KxD9ghHpRzFI=
-X-Google-Smtp-Source: AGHT+IGvZiW7zbJ/sZTCCLbcBf9DB+1UT1kqH7HyyNOWR7HjHrOdkHaHSaVUO97qbKzrvKQZQQwdwg==
-X-Received: by 2002:a17:902:e543:b0:206:aa47:adc0 with SMTP id
- d9443c01a7336-20c804faed7mr64469285ad.24.1728578925369; 
- Thu, 10 Oct 2024 09:48:45 -0700 (PDT)
-Received: from [192.168.100.35] ([45.176.89.169])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c93c5927csm7111155ad.93.2024.10.10.09.48.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Oct 2024 09:48:44 -0700 (PDT)
-Message-ID: <5f62b35e-2b43-4a95-a6bb-2d2a9b020fef@linaro.org>
-Date: Thu, 10 Oct 2024 13:48:42 -0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sywS5-0008Ae-R1
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:55:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sywS4-0000ZN-3B
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:55:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728579346;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=XBfZZa0Bj0Ph0CoBbr6Ixqccz4iCxg/EHl3zIVDQ5rs=;
+ b=XrJG1zLgpUc+pXjGtLI7Dm3MmcApP0OnIX4JYBm8+ENTEo5FVshYMfsA5768kCEa7mWR/t
+ sMNU+B1rmkzHyIwMFwMW9tsc0PWKSkX8q5zDQ9I/8Jrbg7Mlymm1Jc0pralCkHROAs/PSm
+ oLwTouSvu6Y1x2kPs6q1B4Y1FRii6hE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-CkX644gYOJ-XsMse0WtW4g-1; Thu,
+ 10 Oct 2024 12:55:43 -0400
+X-MC-Unique: CkX644gYOJ-XsMse0WtW4g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F7871955EA8; Thu, 10 Oct 2024 16:55:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D95F419560AD; Thu, 10 Oct 2024 16:55:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9132921E6A28; Thu, 10 Oct 2024 18:55:37 +0200 (CEST)
+Resent-To: michael.roth@amd.com, xieyongji@bytedance.com,
+ Coiby.Xu@gmail.com, eduardo@habkost.net, mark.cave-ayland@ilande.co.uk,
+ philmd@linaro.org, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Thu, 10 Oct 2024 18:55:37 +0200
+Resent-Message-ID: <87ttdjhp86.fsf@pond.sub.org>
+X-From-Line: armbru@redhat.com  Thu Oct 10 17:01:44 2024
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 26CB621E688F; Thu, 10 Oct 2024 17:01:44 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: xieyongji@bytedance.com, kwolf@redhat.com, hreitz@redhat.com,
+ Coiby.Xu@gmail.com, pbonzini@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, mark.cave-ayland@ilande.co.uk, michael.roth@amd.com,
+ kkostiuk@redhat.com, qemu-block@nongnu.org, philmd@linaro.org
+Subject: [PATCH v2 5/7] target/i386/cpu: Improve errors for out of bounds
+ property values
+Date: Thu, 10 Oct 2024 17:01:42 +0200
+Message-ID: <20241010150144.986655-6-armbru@redhat.com>
+In-Reply-To: <20241010150144.986655-1-armbru@redhat.com>
+References: <20241010150144.986655-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 16/17] crypto: drop obsolete back compat logic for old
- nettle
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Kunwu <chentao@kylinos.cn>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20241010162024.988284-1-berrange@redhat.com>
- <20241010162024.988284-17-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241010162024.988284-17-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x533.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,44 +95,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 13:20, Daniel P. Berrangé wrote:
-> The nettle 2.x series declared all the hash functions with 'int' for
-> the data size. Since we dropped support for anything older than 3.4
-> we can assume nettle is using 'size_t' and thus avoid the back compat
-> looping logic.
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   crypto/hash-nettle.c | 17 +++--------------
->   1 file changed, 3 insertions(+), 14 deletions(-)
-> 
-> diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
-> index 570ce8a645..3b847aa60e 100644
-> --- a/crypto/hash-nettle.c
-> +++ b/crypto/hash-nettle.c
-> @@ -135,20 +135,9 @@ int qcrypto_nettle_hash_update(QCryptoHash *hash,
->       union qcrypto_hash_ctx *ctx = hash->opaque;
->   
->       for (int i = 0; i < niov; i++) {
-> -        /*
-> -         * Some versions of nettle have functions
-> -         * declared with 'int' instead of 'size_t'
-> -         * so to be safe avoid writing more than
-> -         * UINT_MAX bytes at a time
-> -         */
-> -        size_t len = iov[i].iov_len;
-> -        uint8_t *base = iov[i].iov_base;
-> -        while (len) {
-> -            size_t shortlen = MIN(len, UINT_MAX);
-> -            qcrypto_hash_alg_map[hash->alg].write(ctx, len, base);
-> -            len -= shortlen;
-> -            base += len;
-> -        }
-> +        qcrypto_hash_alg_map[hash->alg].write(ctx,
-> +                                              iov[i].iov_len,
-> +                                              iov[i].iov_base);
+The error message for a "stepping" value that is out of bounds is a
+bit odd:
 
-Yay!
+    $ qemu-system-x86_64 -cpu qemu64,stepping=16
+    qemu-system-x86_64: can't apply global qemu64-x86_64-cpu.stepping=16: Property .stepping doesn't take value 16 (minimum: 0, maximum: 15)
+
+The "can't apply global" part is an unfortunate artifact of -cpu's
+implementation.  Left for another day.
+
+The remainder feels overly verbose.  Change it to
+
+    qemu64-x86_64-cpu: can't apply global qemu64-x86_64-cpu.stepping=16: parameter 'stepping' can be at most 15
+
+Likewise for "family", "model", and "tsc-frequency".
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ target/i386/cpu.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 4f8fa60432..de2c7041c5 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -31,7 +31,6 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/qapi-visit-machine.h"
+-#include "qapi/qmp/qerror.h"
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/i386/topology.h"
+@@ -5455,8 +5454,8 @@ static void x86_cpuid_version_set_family(Object *obj, Visitor *v,
+         return;
+     }
+     if (value > max) {
+-        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
+-                   name ? name : "null", value, (int64_t)0, (int64_t)max);
++        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
++                   name ? name : "null", max);
+         return;
+     }
+ 
+@@ -5494,8 +5493,8 @@ static void x86_cpuid_version_set_model(Object *obj, Visitor *v,
+         return;
+     }
+     if (value > max) {
+-        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
+-                   name ? name : "null", value, (int64_t)0, (int64_t)max);
++        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
++                   name ? name : "null", max);
+         return;
+     }
+ 
+@@ -5528,8 +5527,8 @@ static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
+         return;
+     }
+     if (value > max) {
+-        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
+-                   name ? name : "null", value, (int64_t)0, (int64_t)max);
++        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
++                   name ? name : "null", max);
+         return;
+     }
+ 
+@@ -5623,16 +5622,15 @@ static void x86_cpuid_set_tsc_freq(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
+ {
+     X86CPU *cpu = X86_CPU(obj);
+-    const int64_t min = 0;
+     const int64_t max = INT64_MAX;
+     int64_t value;
+ 
+     if (!visit_type_int(v, name, &value, errp)) {
+         return;
+     }
+-    if (value < min || value > max) {
+-        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
+-                   name ? name : "null", value, min, max);
++    if (value < 0 || value > max) {
++        error_setg(errp, "parameter '%s' can be at most %" PRId64,
++                   name ? name : "null", max);
+         return;
+     }
+ 
+-- 
+2.46.0
+
 
 
