@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FAF0CF11CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 11:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634F5CF11CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 11:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syrF7-0004YC-7V; Thu, 10 Oct 2024 07:22:05 -0400
+	id 1syrFg-000625-GB; Thu, 10 Oct 2024 07:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syrF1-0004QF-8g
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:22:01 -0400
+ id 1syrFe-00061W-8W
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:22:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syrEz-0005Q0-29
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:21:58 -0400
+ id 1syrFc-0005Sw-9A
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:22:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728559315;
+ s=mimecast20190719; t=1728559355;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ixfUsPV4qk2YULGiNyE6HscMIrTovvQekp1HbM7eq+I=;
- b=RfmQDT1KPZhgNJJQLXP1VUXhmj2g9bNlPQJPEw/qLLzFwMb1v20wJvf56gftC76SMhak3n
- VURaRNDhPNeUJLPK7cMNr17It282Pb5bh3ELwnViRw5ujI18qioUb4urPmevM4c4j9CbIx
- iluNMHLx75NUqfAgLmeNot1JJvzUXJU=
+ bh=O9SiOR6ja5HTFqFRNQGd7ugnoPAl8BrAKxJEaaQ3nc0=;
+ b=BxjQ3sKrUrEEJP7s+8Rrk3CWxLCawCxRiNXjhk5ghXE10L2x0stjeNRvx2YQOpZG9Gggcq
+ NzcodDcpXFXdhPqky/5gTwD0WfZd6qsmxVXMuh8/koecRh7l7K656mBkRNrUWE5/X1Tm0o
+ xjIvzq5A5NhFKrgvbGzS/b2BrePbGQU=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-li0SJv-yMNmV8rK2R6GnNg-1; Thu,
- 10 Oct 2024 07:21:50 -0400
-X-MC-Unique: li0SJv-yMNmV8rK2R6GnNg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-xAXlbn1IMqq8LaiLhz0YsA-1; Thu,
+ 10 Oct 2024 07:22:32 -0400
+X-MC-Unique: xAXlbn1IMqq8LaiLhz0YsA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4FBE919560AF; Thu, 10 Oct 2024 11:21:49 +0000 (UTC)
+ id B78DE19560B0; Thu, 10 Oct 2024 11:22:29 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A76AF19560A2; Thu, 10 Oct 2024 11:21:46 +0000 (UTC)
-Date: Thu, 10 Oct 2024 12:21:42 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 623911956086; Thu, 10 Oct 2024 11:22:27 +0000 (UTC)
+Date: Thu, 10 Oct 2024 12:22:23 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
 Cc: qemu-devel@nongnu.org, kris.conklin@seagate.com,
  jonathan.henze@seagate.com, evan.burgess@seagate.com,
  peter.maydell@linaro.org, Alejandro Zeise <alejandro.zeise@seagate.com>
-Subject: Re: [PATCH v5 08/16] crypto/hash: Implement and use new hash API
-Message-ID: <Zwe4xhgoJ_nK39Pm@redhat.com>
+Subject: Re: [PATCH v5 09/16] tests/unit/test-crypto-hash: accumulative hashing
+Message-ID: <Zwe475xViWb4_9xm@redhat.com>
 References: <20241008075724.2772149-1-clg@redhat.com>
- <20241008075724.2772149-9-clg@redhat.com>
+ <20241008075724.2772149-10-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241008075724.2772149-9-clg@redhat.com>
+In-Reply-To: <20241008075724.2772149-10-clg@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -90,33 +90,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 09:57:15AM +0200, Cédric Le Goater wrote:
+On Tue, Oct 08, 2024 at 09:57:16AM +0200, Cédric Le Goater wrote:
 > From: Alejandro Zeise <alejandro.zeise@seagate.com>
 > 
-> Changes the public hash API implementation to support accumulative hashing.
-> 
-> Implementations for the public functions are added to call the new
-> driver functions that implement context creation, updating,
-> finalization, and destruction.
-> 
-> Additionally changes the "shortcut" functions to use these 4 new core
-> functions.
+> Added an accumulative hashing test. Checks for functionality of
+> the new hash create, update, finalize and free functions.
 > 
 > Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> [ clg: - Reworked qcrypto_hash_bytesv() error handling
->        - Used hash->driver int qcrypto_hash_new(), qcrypto_hash_free()
->          qcrypto_hash_updatev()
->        - Introduced qcrypto_hash_supports() check in
->          qcrypto_hash_new()
->        - Introduced g_autofree variables in qcrypto_hash_finalize_digest()
->          and qcrypto_hash_finalize_base64()
->        - Re-arrranged code in qcrypto_hash_digestv() and
->          qcrypto_hash_digest()
->        - Checkpatch fixes ]
+> [ clg: - Improved test_hash_accumulate() with g_autofree variables ]
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  crypto/hash.c | 161 ++++++++++++++++++++++++++++++++++++++++----------
->  1 file changed, 131 insertions(+), 30 deletions(-)
+>  tests/unit/test-crypto-hash.c | 46 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
