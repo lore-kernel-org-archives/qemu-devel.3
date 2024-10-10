@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E96FCED611
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2D3CEDDA3
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sygea-0007Ho-9p; Wed, 09 Oct 2024 20:03:40 -0400
+	id 1sygfN-0007l8-WD; Wed, 09 Oct 2024 20:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygeV-0007Hc-Tn
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:03:36 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1sygfK-0007iU-NW
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:04:26 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygeM-0000YV-0N
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:03:32 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-208cf673b8dso3010145ad.3
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:03:25 -0700 (PDT)
+ id 1sygfJ-0000ep-83
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:04:26 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7e9ff6fb4c6so405883a12.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728518604; x=1729123404; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728518662; x=1729123462; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Fb08XXJrl+ZwravU7jGQqNAXaygFJQf5H/aUoDAYFEo=;
- b=QSlN/AIPK5xj5hPpoW2p7I39J0mrYSBniBPCYpt70K6tcTfPiAxhG0O5lrh6Qtn8dS
- /rY/jrkVYzaIbop/b8ZjLukE8otJhHDX5NPk235zehnHpuN6kIm9iMAKOMpVNh47FQf3
- E0+tJIH5jSLHmNx0vwqxNId+m8+o4B8vg7F/Hf+NA6SGm3PV5F9DeI9jjRIGbZSReAPh
- zHU18AYnprqNcLI8iirkPeYV3DcB2CXjDzyazw2lrpo3cXlsuSknRX7IR4krFXtgEVW0
- gpeqWxq1I5BPDs8dOTMC7d7pmLFeNIsL+AFB8+2pidq2/hn+xCLcMS4cXU5WLOtBsn5W
- FX4Q==
+ bh=d0cC76b1pAmmOqkQ3Rr6TwcHb3Sfc+pPx3AM2zfU2Pc=;
+ b=oksmuyph+7qcG5GvRv2CVKStj/1LYHpZOCM+oEl1MpU4kXuF3RHeMvlFo8XDECDMj/
+ N0i6aedPfV/h7jKqNIz2NBMO4cP2dATivSJmDuJV/ttvO77NYFP1mVBTwKMDcd1Jd4Y7
+ vvg86kDQ424QUX/ug3BFkFeS23sHl1TO5YXYoiUgiWQiZqiTgAQ+R6fHB/nRmPXX7deh
+ ZBZpUL1ZQ8une5RCZaEdpT6dKf341u3pkHwaNbXYrJPsO+IowwIbt+Mx5l8VukFyZ9G/
+ 4PXlMHh/nX+3Gi8vvCdbqF+iJp4CtDHZzodreIvVunRwTcZT+0TQT2veguCSinUSJOi1
+ GHSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728518604; x=1729123404;
+ d=1e100.net; s=20230601; t=1728518662; x=1729123462;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fb08XXJrl+ZwravU7jGQqNAXaygFJQf5H/aUoDAYFEo=;
- b=WI9BMCjx51PpDw/0V19yNZtASRrUVum9zl1X5mipseSRiHU22XdtM3pwVTyEaR9RQw
- joDc1iJn3sCdwl8ffpsTuZWSUHh5c8mhgTntRAMufZqIrdnx5HRAbUOGANAMvSVyr5qk
- L5P7nQaslYAlj0JZapJ12BGo6gJ+5SL/d1UDv3J34hDW0OtM80wfqA4cBwgP4k5d/cJt
- mU/2A8fcVTXlfkswwBW/rwQUKuY5X06HnD+6jbTxJI99YdI3/189pwAzu7yfqYphI2a3
- xLvNwX+YzL55CEisXIreRbIIAMbLbqrijK2aV73dZgmCDvzGuQr03FGIl4b4TWQX6DvA
- HWQg==
+ bh=d0cC76b1pAmmOqkQ3Rr6TwcHb3Sfc+pPx3AM2zfU2Pc=;
+ b=vHjesd+AV6YBTNEF72iy/FCXQzEyvucfH2fHWeWe42mSdOu+DG3kx8htnByPNcz7hk
+ CgMxyTnPVl0YF3cv4t8YgFUbNmNnZ2wqDR89Wjn63zPMHzu3mZ1hP1+EBqMc3fYESJNX
+ 8Vtx7f6nMIZAtymgBBKr7mCXt5cA8oapuyESAnfSFB48PWgG3+IDIWtWjdy29wRGoe0u
+ V79MSe8ngElyIwIE6UM7O8XX+rU8YV+l+6rVpxfeImq98G+9qSE3/L52agN82YdXJo5y
+ OY3uHGQNH+AzyMCByGx20j7Pd3VSYVJU3ET2MHhJTeLcIdjAsmTwYTDcNHrsKuAhCh4Q
+ Lmtw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxkaA836A0t1raBKaNkkY5C+e3uAU6JkHfC0Mh7CnM70R3lQI2gOG4BWbZ9nhEtaWtpxHxeO2n2zoH@nongnu.org
-X-Gm-Message-State: AOJu0YyaIwu5tpnfaM2sOh0srmQoMNq8dMWDOuq8hGbceqTOpEQJ6Gbp
- PnQjnc63YTjlOYWWD6OsngWrSrMHpvKbuHOhLOzgiyp5bchd2zyCzUDeCxERjHo=
-X-Google-Smtp-Source: AGHT+IET40/TpnsmKV5vimt3fVlyFPJKPQfIy8MXPy4BQ2soBggbPxyNq0WOYl0QBGwQ/pC03qQ0Jw==
-X-Received: by 2002:a17:902:e54d:b0:203:a030:d0a1 with SMTP id
- d9443c01a7336-20c6378f6fcmr70071345ad.58.1728518604073; 
- Wed, 09 Oct 2024 17:03:24 -0700 (PDT)
+ AJvYcCWqx37ScCiNi9RnyhfhM2ZHOgJv3vXety4+L5B73x7EW41jCem8e/EGlam1VH6iPfxV8ofpOIQb5NPE@nongnu.org
+X-Gm-Message-State: AOJu0Yx+zI0HnuHCcSleU6ODhkoO8O7a11sLYBrjURMQRtNhFmKfY+fm
+ 7dQL/RSoCvbPanQX8vulyQKaAxAwA7GS5eQw/kR5hHEnQ7qlDsV70U+UUfeQdJg=
+X-Google-Smtp-Source: AGHT+IFMJbeKGMy8rX3C/FyZNlCM6fy4zfsXT2V+sVdHm2J32h2IMzpQUzWRb375Tjl2VSn6aKPP9g==
+X-Received: by 2002:a05:6a21:1507:b0:1c0:e997:7081 with SMTP id
+ adf61e73a8af0-1d8a3c44a20mr7734506637.29.1728518662300; 
+ Wed, 09 Oct 2024 17:04:22 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c82ea44aesm2700605ad.232.2024.10.09.17.03.23
+ d2e1a72fcca58-71df0d66319sm8313449b3a.156.2024.10.09.17.04.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 17:03:23 -0700 (PDT)
-Message-ID: <dcfaafd5-473a-465d-832f-c8761abc050f@linaro.org>
-Date: Wed, 9 Oct 2024 17:03:22 -0700
+ Wed, 09 Oct 2024 17:04:21 -0700 (PDT)
+Message-ID: <a8424dd9-399a-498a-870a-dab6e6b96c7e@linaro.org>
+Date: Wed, 9 Oct 2024 17:04:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/23] accel/tcg: Process IntervalTree entries in
- tlb_reset_dirty
+Subject: Re: [PATCH 13/23] accel/tcg: Process IntervalTree entries in
+ tlb_set_dirty
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-13-richard.henderson@linaro.org>
+ <20241009150855.804605-14-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-13-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-14-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,50 +99,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> Update the addr_write copy within each interval tree node.
-> Tidy the iteration within the other two loops as well.
+> Update the addr_write copy within an interval tree node.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+>   accel/tcg/cputlb.c | 17 +++++++++++------
+>   1 file changed, 11 insertions(+), 6 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 709ad75616..95f78afee6 100644
+> index 95f78afee6..ec989f1290 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -1024,17 +1024,20 @@ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length)
->   
+> @@ -1063,13 +1063,18 @@ static void tlb_set_dirty(CPUState *cpu, vaddr addr)
+>       addr &= TARGET_PAGE_MASK;
 >       qemu_spin_lock(&cpu->neg.tlb.c.lock);
 >       for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
-> -        unsigned int i;
-> -        unsigned int n = tlb_n_entries(&cpu->neg.tlb.f[mmu_idx]);
+> -        tlb_set_dirty1_locked(tlb_entry(cpu, mmu_idx, addr), addr);
+> -    }
 > +        CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
-> +        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
+> +        CPUTLBEntryTree *node;
 >   
-> -        for (i = 0; i < n; i++) {
-> -            tlb_reset_dirty_range_locked(&cpu->neg.tlb.f[mmu_idx].table[i],
-> -                                         start1, length);
-> +        for (size_t i = 0, n = tlb_n_entries(fast); i < n; i++) {
-> +            tlb_reset_dirty_range_locked(&fast->table[i], start1, length);
->           }
->   
-> -        for (i = 0; i < CPU_VTLB_SIZE; i++) {
-> -            tlb_reset_dirty_range_locked(&cpu->neg.tlb.d[mmu_idx].vtable[i],
-> -                                         start1, length);
-> +        for (size_t i = 0; i < CPU_VTLB_SIZE; i++) {
-> +            tlb_reset_dirty_range_locked(&desc->vtable[i], start1, length);
+> -    for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+> -        int k;
+> -        for (k = 0; k < CPU_VTLB_SIZE; k++) {
+> -            tlb_set_dirty1_locked(&cpu->neg.tlb.d[mmu_idx].vtable[k], addr);
+> +        tlb_set_dirty1_locked(tlb_entry(cpu, mmu_idx, addr), addr);
+> +
+> +        for (int k = 0; k < CPU_VTLB_SIZE; k++) {
+> +            tlb_set_dirty1_locked(&desc->vtable[k], addr);
 > +        }
 > +
-> +        for (CPUTLBEntryTree *t = tlbtree_lookup_range(desc, 0, -1); t;
-> +             t = tlbtree_lookup_range_next(t, 0, -1)) {
-
-How about introducing interval_tree_foreach function, that runs on every 
-node? Running with [0,0xffffffff...] does the job, but it's not really 
-obvious when reading the code.
-
-> +            tlb_reset_dirty_range_locked(&t->copy, start1, length);
+> +        node = tlbtree_lookup_addr(desc, addr);
+> +        if (node) {
+> +            tlb_set_dirty1_locked(&node->copy, addr);
 >           }
 >       }
 >       qemu_spin_unlock(&cpu->neg.tlb.c.lock);
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
