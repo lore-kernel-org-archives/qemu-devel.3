@@ -4,68 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D86CF11FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 15:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBE2CF11FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 15:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syufz-0000Vg-Qv; Thu, 10 Oct 2024 11:02:03 -0400
+	id 1syuft-0000RD-Ut; Thu, 10 Oct 2024 11:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syufx-0000UG-SZ
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 11:02:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1syufs-0000Qm-Gv
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 11:01:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syufv-0003H7-Cj
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 11:02:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1syufr-0003G7-5H
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 11:01:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728572518;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1728572514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vZt4Dd3LqTpgwx9DBVhF3dGEkd/idUZIN+u8mRAj5Lg=;
- b=LTb6fiE3O8xLynEO9fK338QkmlKlmGxIMUjurK1hhokGfM/yJBc/2GrQ8oL2/qhmo8lwas
- mMNuaXPsWR6vHYUDZ07Sosf3f9SZP4WDGnNRDnjzadzAuvN+rJS+QA6qTrrNTQN1OaCell
- sBmlC0lF4QQ506hEhcziJU5+3LC02HA=
+ bh=tbTxFKTc7FOmFJue3XENbry9tNShHeglELKqzrahlAc=;
+ b=gnO+qRzZzfly2nyM+keAQt3jINf0dGUBM9BKuznX7yD1S08rLOGUlH+FDeuQdN2WrOyUe3
+ CU7qxBHc6EX4ZS1V3xGZ904Td0xl9s5cIpwySfHctal/UJpT7u1gkwXaw8BZDmVIAdu2S7
+ 3d9AIK4BeRW4iSNGeSfpLkdGgATPPFQ=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-wGrd1y6nM-uUdfPzgSzIyg-1; Thu,
- 10 Oct 2024 11:01:56 -0400
-X-MC-Unique: wGrd1y6nM-uUdfPzgSzIyg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-QRCaD69uOymdtQrVX6K_8g-1; Thu,
+ 10 Oct 2024 11:01:50 -0400
+X-MC-Unique: QRCaD69uOymdtQrVX6K_8g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 405B31955F42; Thu, 10 Oct 2024 15:01:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3323119560AA; Thu, 10 Oct 2024 15:01:46 +0000 (UTC)
-Date: Thu, 10 Oct 2024 16:01:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, xieyongji@bytedance.com, kwolf@redhat.com,
- hreitz@redhat.com, Coiby.Xu@gmail.com, pbonzini@redhat.com,
- eduardo@habkost.net, mark.cave-ayland@ilande.co.uk,
- michael.roth@amd.com, kkostiuk@redhat.com, qemu-block@nongnu.org
-Subject: Re: [PATCH 1/7] error: Drop superfluous #include "qapi/qmp/qerror.h"
-Message-ID: <ZwfsVOG8IkSzuKp0@redhat.com>
-References: <20241010145630.985335-1-armbru@redhat.com>
- <20241010145630.985335-2-armbru@redhat.com>
+ id 4D5021955DC4; Thu, 10 Oct 2024 15:01:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0039E1956089; Thu, 10 Oct 2024 15:01:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 19A1121E691E; Thu, 10 Oct 2024 17:01:44 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: xieyongji@bytedance.com, kwolf@redhat.com, hreitz@redhat.com,
+ Coiby.Xu@gmail.com, pbonzini@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, mark.cave-ayland@ilande.co.uk, michael.roth@amd.com,
+ kkostiuk@redhat.com, qemu-block@nongnu.org, philmd@linaro.org
+Subject: [PATCH v2 1/7] error: Drop superfluous #include "qapi/qmp/qerror.h"
+Date: Thu, 10 Oct 2024 17:01:38 +0200
+Message-ID: <20241010150144.986655-2-armbru@redhat.com>
+In-Reply-To: <20241010150144.986655-1-armbru@redhat.com>
+References: <20241010150144.986655-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241010145630.985335-2-armbru@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,26 +82,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 10, 2024 at 04:56:24PM +0200, Markus Armbruster wrote:
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qga/commands-bsd.c   | 1 -
->  qga/commands-linux.c | 1 -
->  qga/commands-posix.c | 1 -
->  3 files changed, 3 deletions(-)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qga/commands-bsd.c   | 1 -
+ qga/commands-linux.c | 1 -
+ qga/commands-posix.c | 1 -
+ 3 files changed, 3 deletions(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
+diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
+index 9ce48af311..94ff6fee6a 100644
+--- a/qga/commands-bsd.c
++++ b/qga/commands-bsd.c
+@@ -12,7 +12,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qga-qapi-commands.h"
+-#include "qapi/qmp/qerror.h"
+ #include "qapi/error.h"
+ #include "qemu/queue.h"
+ #include "commands-common.h"
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 51d5e3d927..9b1746b24f 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -15,7 +15,6 @@
+ #include "qapi/error.h"
+ #include "qga-qapi-commands.h"
+ #include "qapi/error.h"
+-#include "qapi/qmp/qerror.h"
+ #include "commands-common.h"
+ #include "cutils.h"
+ #include <mntent.h>
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index c2bd0b4316..389c5eeb5d 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -18,7 +18,6 @@
+ #include <dirent.h>
+ #include "qga-qapi-commands.h"
+ #include "qapi/error.h"
+-#include "qapi/qmp/qerror.h"
+ #include "qemu/host-utils.h"
+ #include "qemu/sockets.h"
+ #include "qemu/base64.h"
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.46.0
 
 
