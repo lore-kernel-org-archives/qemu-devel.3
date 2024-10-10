@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CDCCED611
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Oct 2024 23:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E96FCED611
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sygYJ-0005JI-VF; Wed, 09 Oct 2024 19:57:12 -0400
+	id 1sygea-0007Ho-9p; Wed, 09 Oct 2024 20:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygYH-0005J2-Pa
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:57:09 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1sygeV-0007Hc-Tn
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:03:36 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygYG-00080W-4r
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 19:57:09 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2e2a999b287so367426a91.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 16:57:07 -0700 (PDT)
+ id 1sygeM-0000YV-0N
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:03:32 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-208cf673b8dso3010145ad.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728518226; x=1729123026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728518604; x=1729123404; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SzJzot95uLiiIhluUuJhuKKNTvBmjrxKwrri2fTcU1Q=;
- b=txtviRU0pV1HMwWbXIrwjgGXNVatWrwP2M+nL9gCSawLDlc5XDw6cP65ld+2/40lZk
- RPVnWlZYBsMOtNwd1SD5o29nZKuhT1WJ2CqKt2PRiN7l/KwWoWH3imWgb9GdEpRDLIwN
- Ids1yrAMnNySrPQHi4wH7aZN/CJXNbE94P98dNwRQcKODF7D/3J6i5wwimT+sef7sw4f
- MDFh+MQPsEwfSMtzH5JkXvz54lLiGvUJDPg8994Fz/187vTA2ozz23n3pqLkEHKYsgVx
- dU2fOxT0K32Dik1SWrCzG7BmNPxY5OQrZhVCufMtFpSl21S10YCxmc2IwaxkZfikawn+
- 8Mjg==
+ bh=Fb08XXJrl+ZwravU7jGQqNAXaygFJQf5H/aUoDAYFEo=;
+ b=QSlN/AIPK5xj5hPpoW2p7I39J0mrYSBniBPCYpt70K6tcTfPiAxhG0O5lrh6Qtn8dS
+ /rY/jrkVYzaIbop/b8ZjLukE8otJhHDX5NPk235zehnHpuN6kIm9iMAKOMpVNh47FQf3
+ E0+tJIH5jSLHmNx0vwqxNId+m8+o4B8vg7F/Hf+NA6SGm3PV5F9DeI9jjRIGbZSReAPh
+ zHU18AYnprqNcLI8iirkPeYV3DcB2CXjDzyazw2lrpo3cXlsuSknRX7IR4krFXtgEVW0
+ gpeqWxq1I5BPDs8dOTMC7d7pmLFeNIsL+AFB8+2pidq2/hn+xCLcMS4cXU5WLOtBsn5W
+ FX4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728518226; x=1729123026;
+ d=1e100.net; s=20230601; t=1728518604; x=1729123404;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SzJzot95uLiiIhluUuJhuKKNTvBmjrxKwrri2fTcU1Q=;
- b=kUPg9A6caHWCOJZoQsq74Jn1k2/oC8gGo9dvHnPo+tZIHbE2q+yeH6PkZGI62uc3FP
- /2r1lk71XvTOUaN5lCgNOyNAa9DHe3+7wrFRZIdT8qPrTkcKjtk4lHFWZB2Ha4p12EYz
- fFT0Mu3qQmq6x8/uktPZfL0lG3WoPmJTWPEUmR97jbeLfQ9nmdSs3ZAeTIIB6ckHmVRq
- 7uQzM5uJo6YMPNnCu3bt2CrgD/WOxL6bv4b5Ic2oI5LrNDqwcGV5B34uPy+EdelL3Hf8
- LRRHeXEH9DCE3uJwEyVHfysl+iIivod63onCGp6A7ljwartFKhQWyLl9+egzsHSRYbfd
- H1Zg==
+ bh=Fb08XXJrl+ZwravU7jGQqNAXaygFJQf5H/aUoDAYFEo=;
+ b=WI9BMCjx51PpDw/0V19yNZtASRrUVum9zl1X5mipseSRiHU22XdtM3pwVTyEaR9RQw
+ joDc1iJn3sCdwl8ffpsTuZWSUHh5c8mhgTntRAMufZqIrdnx5HRAbUOGANAMvSVyr5qk
+ L5P7nQaslYAlj0JZapJ12BGo6gJ+5SL/d1UDv3J34hDW0OtM80wfqA4cBwgP4k5d/cJt
+ mU/2A8fcVTXlfkswwBW/rwQUKuY5X06HnD+6jbTxJI99YdI3/189pwAzu7yfqYphI2a3
+ xLvNwX+YzL55CEisXIreRbIIAMbLbqrijK2aV73dZgmCDvzGuQr03FGIl4b4TWQX6DvA
+ HWQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLKsH+XkWJoCOQsNfwyFAZ3HR5mgnffgeCo+jflbbq3ezIDRupuVit1+y/SXxohr8yU4wcKPg5eI8/@nongnu.org
-X-Gm-Message-State: AOJu0YxGSykdP+ArVlFPZ4Y7rGjWBbt5N17giZFN99Qp2Z66WnZgL51p
- BsxKJdZIL87ArUGJy6m2pTCcn6jwFmNTrxBa/7w6AHzxTGo+afmo9ypp0u64fQA+3K2kZ4Q2qb1
- mOBM=
-X-Google-Smtp-Source: AGHT+IHn9AKQtIak9x+pXjWJ4X1+C6+50poaqVZc63EInh3DOVqj1iitQoxnOVUdvpLHXL+ArvVjIw==
-X-Received: by 2002:a17:90a:3044:b0:2d3:c638:ec67 with SMTP id
- 98e67ed59e1d1-2e2a18413a7mr4473314a91.0.1728518226604; 
- Wed, 09 Oct 2024 16:57:06 -0700 (PDT)
+ AJvYcCVxkaA836A0t1raBKaNkkY5C+e3uAU6JkHfC0Mh7CnM70R3lQI2gOG4BWbZ9nhEtaWtpxHxeO2n2zoH@nongnu.org
+X-Gm-Message-State: AOJu0YyaIwu5tpnfaM2sOh0srmQoMNq8dMWDOuq8hGbceqTOpEQJ6Gbp
+ PnQjnc63YTjlOYWWD6OsngWrSrMHpvKbuHOhLOzgiyp5bchd2zyCzUDeCxERjHo=
+X-Google-Smtp-Source: AGHT+IET40/TpnsmKV5vimt3fVlyFPJKPQfIy8MXPy4BQ2soBggbPxyNq0WOYl0QBGwQ/pC03qQ0Jw==
+X-Received: by 2002:a17:902:e54d:b0:203:a030:d0a1 with SMTP id
+ d9443c01a7336-20c6378f6fcmr70071345ad.58.1728518604073; 
+ Wed, 09 Oct 2024 17:03:24 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2a55fe0cdsm2307570a91.23.2024.10.09.16.57.05
+ d9443c01a7336-20c82ea44aesm2700605ad.232.2024.10.09.17.03.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 16:57:06 -0700 (PDT)
-Message-ID: <bcd17259-0b64-45c6-81aa-02263bd3fc87@linaro.org>
-Date: Wed, 9 Oct 2024 16:57:05 -0700
+ Wed, 09 Oct 2024 17:03:23 -0700 (PDT)
+Message-ID: <dcfaafd5-473a-465d-832f-c8761abc050f@linaro.org>
+Date: Wed, 9 Oct 2024 17:03:22 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/23] accel/tcg: Remove IntervalTree entries in
- tlb_flush_range_locked
+Subject: Re: [PATCH 12/23] accel/tcg: Process IntervalTree entries in
+ tlb_reset_dirty
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-12-richard.henderson@linaro.org>
+ <20241009150855.804605-13-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-12-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +99,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> Flush a masked range of pages from the IntervalTree cache.
-> When the mask is not used there is a redundant comparison,
-> but that is better than duplicating code at this point.
+> Update the addr_write copy within each interval tree node.
+> Tidy the iteration within the other two loops as well.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 25 +++++++++++++++++++++++++
->   1 file changed, 25 insertions(+)
+>   accel/tcg/cputlb.c | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 772656c7f8..709ad75616 100644
+> index 709ad75616..95f78afee6 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -311,6 +311,13 @@ static CPUTLBEntryTree *tlbtree_lookup_range(CPUTLBDesc *desc, vaddr s, vaddr l)
->       return i ? container_of(i, CPUTLBEntryTree, itree) : NULL;
->   }
+> @@ -1024,17 +1024,20 @@ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length)
 >   
-> +static CPUTLBEntryTree *tlbtree_lookup_range_next(CPUTLBEntryTree *prev,
-> +                                                  vaddr s, vaddr l)
-> +{
-> +    IntervalTreeNode *i = interval_tree_iter_next(&prev->itree, s, l);
-> +    return i ? container_of(i, CPUTLBEntryTree, itree) : NULL;
-> +}
-> +
->   static CPUTLBEntryTree *tlbtree_lookup_addr(CPUTLBDesc *desc, vaddr addr)
->   {
->       return tlbtree_lookup_range(desc, addr, addr);
-> @@ -744,6 +751,8 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
->       CPUTLBDesc *d = &cpu->neg.tlb.d[midx];
->       CPUTLBDescFast *f = &cpu->neg.tlb.f[midx];
->       vaddr mask = MAKE_64BIT_MASK(0, bits);
-> +    CPUTLBEntryTree *node;
-> +    vaddr addr_mask, last_mask, last_imask;
+>       qemu_spin_lock(&cpu->neg.tlb.c.lock);
+>       for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+> -        unsigned int i;
+> -        unsigned int n = tlb_n_entries(&cpu->neg.tlb.f[mmu_idx]);
+> +        CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
+> +        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
 >   
->       /*
->        * Check if we need to flush due to large pages.
-> @@ -764,6 +773,22 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
->           vaddr page = addr + i;
->           tlb_flush_vtlb_page_mask_locked(cpu, midx, page, mask);
->       }
-> +
-> +    addr_mask = addr & mask;
-> +    last_mask = addr_mask + len - 1;
-> +    last_imask = last_mask | ~mask;
-> +    node = tlbtree_lookup_range(d, addr_mask, last_imask);
-> +    while (node) {
-> +        CPUTLBEntryTree *next =
-> +            tlbtree_lookup_range_next(node, addr_mask, last_imask);
-> +        vaddr page_mask = node->itree.start & mask;
-> +
-> +        if (page_mask >= addr_mask && page_mask < last_mask) {
-> +            interval_tree_remove(&node->itree, &d->iroot);
-> +            g_free(node); > +        }
-> +        node = next;
-> +    }
->   }
+> -        for (i = 0; i < n; i++) {
+> -            tlb_reset_dirty_range_locked(&cpu->neg.tlb.f[mmu_idx].table[i],
+> -                                         start1, length);
+> +        for (size_t i = 0, n = tlb_n_entries(fast); i < n; i++) {
+> +            tlb_reset_dirty_range_locked(&fast->table[i], start1, length);
+>           }
 >   
->   typedef struct {
+> -        for (i = 0; i < CPU_VTLB_SIZE; i++) {
+> -            tlb_reset_dirty_range_locked(&cpu->neg.tlb.d[mmu_idx].vtable[i],
+> -                                         start1, length);
+> +        for (size_t i = 0; i < CPU_VTLB_SIZE; i++) {
+> +            tlb_reset_dirty_range_locked(&desc->vtable[i], start1, length);
+> +        }
+> +
+> +        for (CPUTLBEntryTree *t = tlbtree_lookup_range(desc, 0, -1); t;
+> +             t = tlbtree_lookup_range_next(t, 0, -1)) {
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+How about introducing interval_tree_foreach function, that runs on every 
+node? Running with [0,0xffffffff...] does the job, but it's not really 
+obvious when reading the code.
+
+> +            tlb_reset_dirty_range_locked(&t->copy, start1, length);
+>           }
+>       }
+>       qemu_spin_unlock(&cpu->neg.tlb.c.lock);
 
