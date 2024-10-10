@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB7ACF07A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 05:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A7ACF07A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 05:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sylzp-0005CW-Vy; Thu, 10 Oct 2024 01:45:58 -0400
+	id 1sym0q-0005Vz-06; Thu, 10 Oct 2024 01:47:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sylzm-0005BK-Fy
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 01:45:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sym0d-0005PF-B6
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 01:46:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sylzj-0005RV-Fx
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 01:45:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sym0b-0005TL-22
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 01:46:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728539149;
+ s=mimecast20190719; t=1728539199;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Lnh8njgHvzOJMnQbUUgo9D/0zEeWTxODyuvxrQJK11U=;
- b=I2ua++bMZb7D3ZJTpTOlfCdw46HLkowGPiTe9ycuyp0IXJe+8Y/Byac40KJgLkqubsrVSq
- r2SPGnhDINPrCyxe06ltr3PWIU5t0HtPp5DMvcwV9y/vIm2XL9coqSm+jZUbokKA0C5AU3
- bKdoOUrf42T0n3Hy36J+Go+8yqI2OJ0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8cqlvRpTD5SxWt+ULyo4+JQ3tB4VhuKqYYk9b+WRZ54=;
+ b=A4CPHOZmvtDy/2wndTAF+Hgvw8oII6Ylt323xzi+NBqSldhqOi0J0ueEgHzoC30qdVuDah
+ w786Ry8Na0u/kOs858dPfFEagSV7GTBHwY36ciEsF0ZWiGXzsuSUUgUTYPJPl5zPrwZhu5
+ Fb1nnbh7Bk9W3X1953xRV23g6/IPLls=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-76uRNlzoMhCmZXYGyBuvKQ-1; Thu, 10 Oct 2024 01:45:47 -0400
-X-MC-Unique: 76uRNlzoMhCmZXYGyBuvKQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a994cd8089aso43409266b.2
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 22:45:47 -0700 (PDT)
+ us-mta-101-c7AT7mCFNvCNXPTKnrKUlw-1; Thu, 10 Oct 2024 01:46:37 -0400
+X-MC-Unique: c7AT7mCFNvCNXPTKnrKUlw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9127ea1c4so304229a12.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 22:46:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728539146; x=1729143946;
+ d=1e100.net; s=20230601; t=1728539196; x=1729143996;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Lnh8njgHvzOJMnQbUUgo9D/0zEeWTxODyuvxrQJK11U=;
- b=s9GsqU1nHKUYSp5iNH48bJptkIs5UUacLShNKLVv0onjlyMsX1z3mn79s25Dyg87Ft
- TT99Q84AT07tdaqhAN1Uw022NlXMdm5vLn3Rl/bjaMVannpHl9JyPrDMtaBbnpuV0Xaa
- +zSR2U7T25xRhbixe5V/Z3s8UeQqpO/bX4O+wLzbhyI7YbdLINWCmgtrjQcqj3LA8B5n
- oEOb0puGfnL9HRd9fu/Lq5VEt0ATFeIdOAexUDQ73bHs5/ybUwCBokktGpmykcSE6hKJ
- yY30MBHYse3CUam/rU+TVB9Tp/fF7odI2PvKMGsulSoPhwI8Vleim0GGxWIk+slxl48h
- mcdQ==
+ bh=8cqlvRpTD5SxWt+ULyo4+JQ3tB4VhuKqYYk9b+WRZ54=;
+ b=EKEPJ/Z3US9DZu2MAALPuPgQc5G2q+33oSnhZTch+eT98b8dE+COsjwyvUOQIrkUsw
+ cCdXBpG2Eu7+1kot4/59XQAAq8JgNrGfteyccBvndnua4scXpLQF1WDpGtXAy1NXchoX
+ MkvXjBtp1AetsZ02QwnfixiVdunkjW1p2lWwcb+MF2TFwAg7QxsAVOZyb1O6T6zc2S2n
+ vegBTFC0tCcveAv4UiQSGM4kWjGk95eGiDRpBn6Bc6f8ffO8UUpySTDa+fTlb6z7PPaA
+ eFlztVAfBgUff9frR2xh3G9lafq6G/PDOlwFJcxj6QegMq5jmBl7NZ0hYI2V8y+hQjCS
+ usBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYgx8Hvk30vA8olOxQYjofko/YUIq/nVrXY979CjBJxctgK1xYYSW3UlyTBq8tPu13kiZ1gANu09rT@nongnu.org
-X-Gm-Message-State: AOJu0YyAY6PWq9nc6PtCsFeJ5AW8eohbpVFzbgh9udL6LKuLEWZyGWiI
- BJbw+TVsXW0N0YblV/9bIw/ASy0AEBFa90eQDVDaQYEY3TS/EI/fh+0k2OtrLoEVnIbaPUpLNUC
- Mp0z3YORQlH/PLPBIc57hvEbljgv0jyFiXv8y6yoHYJj/na/CGplpUjiLqAvYkrM=
-X-Received: by 2002:a17:907:96a2:b0:a99:59c6:3265 with SMTP id
- a640c23a62f3a-a998d122dd6mr413202066b.9.1728539146583; 
- Wed, 09 Oct 2024 22:45:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEy6FpYkc5icbVLX1yxXfn5SWeqM3mtE/er46H5501Fp+o9o4SNfANhaw0stVfxKxWsr68esQ==
-X-Received: by 2002:a17:907:96a2:b0:a99:59c6:3265 with SMTP id
- a640c23a62f3a-a998d122dd6mr413199966b.9.1728539146060; 
- Wed, 09 Oct 2024 22:45:46 -0700 (PDT)
+ AJvYcCWMtSYIsWhC195o+ZhnO7m47rZ8XhYbyapBu3wK6H5li2/0wMEEF9bgwdy5GsVt+YC4+EfYJ00EKfzz@nongnu.org
+X-Gm-Message-State: AOJu0Yzcf/XuKjgXdhnNrCafxSwDu/IAiZ3fskJmwfbTZcJSz32fXbJ8
+ 4AAH9/N2JxT62fxaIgsDvjgsp+SZ/RmZYJbPs56CDUnqN/z7W5aHFx6Bp32AjqJ8KL62x5216cM
+ sB5dizyL2vsDHnarjpC1q8l8iskPUnvgQt5JHN/5npS70cTIAYZvdpI5LOkG/3Xc=
+X-Received: by 2002:a05:6402:35c5:b0:5c9:2a18:9814 with SMTP id
+ 4fb4d7f45d1cf-5c92a189dbdmr2351214a12.1.1728539196199; 
+ Wed, 09 Oct 2024 22:46:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMJ8TOcvoZMBiFRO26eauz4482PgLWtnzbgPMqakBYVNNOra0CNMKuSoQoE6EaGmo/aH4Mvw==
+X-Received: by 2002:a05:6402:35c5:b0:5c9:2a18:9814 with SMTP id
+ 4fb4d7f45d1cf-5c92a189dbdmr2351205a12.1.1728539195768; 
+ Wed, 09 Oct 2024 22:46:35 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-26.web.vodafone.de. [109.42.51.26])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80ef8c1sm34644566b.195.2024.10.09.22.45.45
+ 4fb4d7f45d1cf-5c9371533c4sm293282a12.54.2024.10.09.22.46.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 22:45:45 -0700 (PDT)
-Message-ID: <cde51c74-3e40-4ca8-b315-a0340168ab2f@redhat.com>
-Date: Thu, 10 Oct 2024 07:45:44 +0200
+ Wed, 09 Oct 2024 22:46:34 -0700 (PDT)
+Message-ID: <4007e335-9305-4668-be63-f7d455016971@redhat.com>
+Date: Thu, 10 Oct 2024 07:46:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/19] pc-bios/s390-ccw: Remove panics from ECKD IPL
- path
+Subject: Re: [PATCH v3 19/19] tests/qtest: Add s390x boot order tests to
+ cdrom-test.c
 To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org
 Cc: frankja@linux.ibm.com
 References: <20241008011552.2645520-1-jrossi@linux.ibm.com>
- <20241008011552.2645520-9-jrossi@linux.ibm.com>
- <704bffd2-09b7-4ce0-8fb4-d6f33145bcca@redhat.com>
- <a3717113-4961-4dc2-935f-96399ec904e2@linux.ibm.com>
+ <20241008011552.2645520-20-jrossi@linux.ibm.com>
+ <f483f958-5b42-42f6-9bd6-c4b1f8fe8d7a@redhat.com>
+ <95a53006-7a91-4f9c-a421-a11796af134d@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,7 +123,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <a3717113-4961-4dc2-935f-96399ec904e2@linux.ibm.com>
+In-Reply-To: <95a53006-7a91-4f9c-a421-a11796af134d@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -154,34 +154,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 10/10/2024 03.37, Jared Rossi wrote:
 > 
 > 
-> On 10/9/24 6:53 AM, Thomas Huth wrote:
+> On 10/9/24 8:48 AM, Thomas Huth wrote:
 >> On 08/10/2024 03.15, jrossi@linux.ibm.com wrote:
->>> [snip...]
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> Add two new qtests to verify that a valid IPL device can successfully 
+>>> boot after
+>>> failed IPL attempts from one or more invalid devices.
+>>>
+>>> cdrom-test/as-fallback-device: Defines the primary boot target as a 
+>>> device that
+>>> is invalid for IPL and a second boot target that is valid for IPL. 
+>>> Ensures that
+>>> the valid device will be selected after the initial failed IPL.
+>>>
+>>> cdrom-test/as-last-option: Defines the maximum number of boot devices (8)
+>>> where only the final entry in the boot order is valid. Ensures that a valid
+>>> device will be selected even after multiple failed IPL attempts from both
+>>> virtio-blk and virtio-scsi device types.
+>>>
+>>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>> ---
+>>>   tests/qtest/cdrom-test.c | 24 ++++++++++++++++++++++++
+>>>   1 file changed, 24 insertions(+)
+>>>
+>>> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+>>> index 9d72b24e4b..123c067589 100644
+>>> --- a/tests/qtest/cdrom-test.c
+>>> +++ b/tests/qtest/cdrom-test.c
+>>> @@ -213,6 +213,30 @@ static void add_s390x_tests(void)
+>>>                           "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d1 "
+>>>                           "-device virtio-blk,drive=d2,bootindex=1 "
+>>>                           "-drive if=none,id=d2,media=cdrom,file=", 
+>>> test_cdboot);
+>>> +    qtest_add_data_func("cdrom/boot/as-fallback-device",
+>>> +                        "-device virtio-serial -device virtio-scsi "
+>>> +                        "-device virtio-blk,drive=d1,bootindex=1 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d1 "
+>>> +                        "-device virtio-blk,drive=d2,bootindex=2 "
+>>> +                        "-drive if=none,id=d2,media=cdrom,file=", 
+>>> test_cdboot);
+>>> +    qtest_add_data_func("cdrom/boot/as-last-option",
+>>> +                        "-device virtio-serial -device virtio-scsi "
+>>> +                        "-device virtio-blk,drive=d1,bootindex=1 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d1 "
+>>> +                        "-device virtio-blk,drive=d2,bootindex=2 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d2 "
+>>> +                        "-device virtio-blk,drive=d3,bootindex=3 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d3 "
+>>> +                        "-device scsi-hd,drive=d4,bootindex=4 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d4 "
+>>> +                        "-device scsi-hd,drive=d5,bootindex=5 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d5 "
+>>> +                        "-device virtio-blk,drive=d6,bootindex=6 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d6 "
+>>> +                        "-device scsi-hd,drive=d7,bootindex=7 "
+>>> +                        "-drive driver=null-co,read- 
+>>> zeroes=on,if=none,id=d7 "
+>>> +                        "-device virtio-blk,drive=d8,bootindex=8 "
+>>> +                        "-drive if=none,id=d8,media=cdrom,file=", 
+>>> test_cdboot);
 >>
->> load_eckd_segments() returns a value of type block_number_t which is an 
->> unsigned type, so returning a negative error value will likely not work as 
->> expected...
+>> Could you please use a scsi-hd for the good device here in the second 
+>> test, too? ... so we make sure that the good drive detection also works 
+>> with virtio-scsi devices and not only with virtio-blk devices.
 >>
->> ...
->>> @@ -317,21 +352,28 @@ static void run_eckd_boot_script(block_number_t 
->>> bmt_block_nr,
->>>             do {
->>>               block_nr = load_eckd_segments(block_nr, ldipl, &address);
->>> -        } while (block_nr != -1);
->>> +        } while (block_nr >= 0);
->> [snip...]
+>>  Thanks,
+>>   Thomas
+>>
 > 
-> There already exists a special block number defined in bootmap.h, 
-> NULL_BLOCK_NR 0xffffffffffffffffULL. Therefore I would propose simply adding 
-> another as ERROR_BLOCK_NR 0xfffffffffffffffeULL.
-> 
-> ERROR_BLOCK_NR would replace the negative error codes and NULL_BLOCK_NR 
-> would represent expected end of chunk.  Does this seem reasonable?
+> Do you mean use "scsi-cd" instead?
 
-Sounds like a good idea.
-
-Alternatively, you could do casting to signed long here and there, but 
-that's ugly, too.
+Oh, right, sorry for the confusion!
 
   Thomas
 
