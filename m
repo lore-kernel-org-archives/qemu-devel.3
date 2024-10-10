@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49259CF11CD
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81573CF11CE
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syqke-0001wm-3K; Thu, 10 Oct 2024 06:50:36 -0400
+	id 1syqlK-0002Yi-0f; Thu, 10 Oct 2024 06:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syqkd-0001wZ-3G
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:50:35 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syqkb-0000jz-HD
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:50:34 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2fac6b3c220so11682651fa.2
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 03:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728557431; x=1729162231; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r7eVMJ9rcEipcV+gHgHTv2JLBDt2AYcvL+WMBWxTXpk=;
- b=bdI9dNk+0zUNu5HVOwLyEqmihugD3kgTyfWF03Nvje/alAMl79aIVHc7IEpmfakRPS
- 6wv3P7+p5ZDzlj1cohap+veZ5N+kHfeaeW2Tor0ZRxEp6+Tcg5jE7o0f2c58paU5bznj
- 5nwkllHcV0/NYVcm3UDJxWozWDippFGpNIaG/NMCdbJPlZrfPg2QlBQTJ8R8dY3lOELr
- xjYqyuNb23pjBUMjTLxwQCcfymR1NGVs7QqHbN0T4H8hH1QqAOCGOzoIjuD49Z/gDN0Q
- n1JaDpq86L33nNy4kTGRplBtflWqFGpRqn6KgfrHwLMn4382R7TuYYAJ422jTwGXTqGh
- LhfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728557431; x=1729162231;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r7eVMJ9rcEipcV+gHgHTv2JLBDt2AYcvL+WMBWxTXpk=;
- b=S/G0MyMt476aimY9saBVuoLMQFW0M8+4NIrWaYUOnWh8GzQuM6MdXR1pqFM4+Jykpn
- 3TFjVNgz5mLoM69D9svs9++MhOJ9JjOR3/D/0QrjrkLK1nP8fFCPrWVJk70rz2yKaQqO
- xWge5BF5NiQcFMqCH+scQqRd5eSDxMmxDxARo4Wyxls8LJITYmT3Ub4yHP43dmO9YAw+
- uZ7iQNAdsJV1WumOB3iHz+DlxcIAG1WxL5eaBWriFJOGq2U2qbgJLgqhpw6VJmUAzAa7
- wdgho/uPfZyueFw2rXsoNKWkwY7I4f3of/dPjsNfDkOO3lL/llj4choMwXUeyeYS98U8
- gXWQ==
-X-Gm-Message-State: AOJu0YzcZKkowszu5vphP/LLvmsb/22hEKlNlbF/faIr8heFUxMfwora
- 9A+3V+DHa0WdSvW+PxPy1oGVpK31z1FFDmFSBT9bJivdXiHRQPbVPT9S1zXbNWsg7DR+v6qdifU
- y+a9SVmyYlNYE+Sb3JyCvBXsTQjZZsA==
-X-Google-Smtp-Source: AGHT+IF8YPzZavys2atF65jnGZ82McrxOXKcaLZILN2GQkZ29UiHr5AxFYntPKxkSF6VuwoNgfACDBf231Hc8GidF6E=
-X-Received: by 2002:a2e:a58c:0:b0:2fa:d84a:bda5 with SMTP id
- 38308e7fff4ca-2fb1871e891mr57345871fa.7.1728557431244; Thu, 10 Oct 2024
- 03:50:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqlI-0002YU-NY
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:51:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqlH-0000pe-2q
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:51:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728557474;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JgdJcoeq7kmDxf7erL+yPELjg5AC4Cd1xVKYLMXxL3o=;
+ b=PQdDQ36OSgnLYBfBo6ecG95Kcf0ZBdw1N84RcV/8ihCL3BRj6oIjVg6Jw9D8rNgUW2z/gt
+ WUYsngGCyqYf4j2lq4KJjAJReKybQjbKc5wt3CABswpvUIGX3c2BXjdC9Ndo5JUPkwqUjA
+ Se80xKYR0FdRhp9JoQLBBXF4LaEdvSQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-gfqL2x4qMbW9AVBSGrnjCw-1; Thu,
+ 10 Oct 2024 06:51:10 -0400
+X-MC-Unique: gfqL2x4qMbW9AVBSGrnjCw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA6D8195609D; Thu, 10 Oct 2024 10:51:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CFE619560AA; Thu, 10 Oct 2024 10:51:05 +0000 (UTC)
+Date: Thu, 10 Oct 2024 11:51:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com,
+ peter.maydell@linaro.org, Alejandro Zeise <alejandro.zeise@seagate.com>
+Subject: Re: [PATCH v5 06/16] util/iov: Introduce iov_send_recv_with_flags()
+Message-ID: <ZwexlYYF41xHW8cy@redhat.com>
+References: <20241008075724.2772149-1-clg@redhat.com>
+ <20241008075724.2772149-7-clg@redhat.com>
 MIME-Version: 1.0
-References: <20241010092619.323489-1-r.peniaev@gmail.com>
- <CAJ+F1CL8VPo64DVty94FY4KyKr1h8_dbmrqLfy06VuMzoNyYYA@mail.gmail.com>
-In-Reply-To: <CAJ+F1CL8VPo64DVty94FY4KyKr1h8_dbmrqLfy06VuMzoNyYYA@mail.gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Thu, 10 Oct 2024 12:50:19 +0200
-Message-ID: <CACZ9PQV0n7nXYDcNZO2N0L56RMHQgoyAJfi-603DP+ftFK_nQg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] chardev/char: fix qemu_chr_is_busy() check
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000a9d10006241d2371"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241008075724.2772149-7-clg@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,84 +86,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a9d10006241d2371
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Oct 08, 2024 at 09:57:13AM +0200, Cédric Le Goater wrote:
+> From: Alejandro Zeise <alejandro.zeise@seagate.com>
+> 
+> In order to support a new update function, a flag needs to be passed
+> to the kernel via the socket send call (MSG_MORE) to notify it that
+> more data is to be expected to calculate the hash correctly.
+> 
+> Add a new iov helper for this purpose.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> [ clg: - Split iov changes from original patch
+>        - Checkpatch fixes ]
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  include/qemu/iov.h | 27 +++++++++++++++++++++++++++
+>  util/iov.c         | 25 ++++++++++++++++++-------
+>  2 files changed, 45 insertions(+), 7 deletions(-)
 
-On Thu, Oct 10, 2024, 12:20 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.=
-com>
-wrote:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> Hi Roman
->
-> On Thu, Oct 10, 2024 at 1:28=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
-m> wrote:
->
->> `mux_cnt` struct member never goes negative or decrements,
->> so mux chardev can be !busy only when there are no
->> frontends attached. This patch fixes the always-true
->> check.
->>
->> Fixes: a4afa548fc6d ("char: move front end handlers in CharBackend")
->> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
->> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
->> Cc: qemu-devel@nongnu.org
->
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> That would be worth some new tests for chardev removal. It seems to be
-> lacking. And mux probably need extra fixing. I can take a look if you don=
-'t.
->
 
-I assume no one removes mux device, so no one observes the error. Please,
-go ahead, I'm not sure I do fully understand what exactly should be fixed.
 
---
-Roman
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
---000000000000a9d10006241d2371
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Thu, Oct 10, 2024, 12:20 Marc-Andr=C3=A9 Lureau &lt=
-;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandre.lureau@gmail.com</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 =
-0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div=
- dir=3D"ltr">Hi Roman<br></div><br><div class=3D"gmail_quote"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Thu, Oct 10, 2024 at 1:28=E2=80=AFPM Roman Peny=
-aev &lt;<a href=3D"mailto:r.peniaev@gmail.com" target=3D"_blank" rel=3D"nor=
-eferrer">r.peniaev@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">`mux_cnt` struct member never goes negative or =
-decrements,<br>
-so mux chardev can be !busy only when there are no<br>
-frontends attached. This patch fixes the always-true<br>
-check.<br>
-<br>
-Fixes: a4afa548fc6d (&quot;char: move front end handlers in CharBackend&quo=
-t;)<br>
-Signed-off-by: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com" tar=
-get=3D"_blank" rel=3D"noreferrer">r.peniaev@gmail.com</a>&gt;<br>
-Cc: &quot;Marc-Andr=C3=A9 Lureau&quot; &lt;<a href=3D"mailto:marcandre.lure=
-au@redhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redhat=
-.com</a>&gt;<br>
-Cc: <a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank" rel=3D"noref=
-errer">qemu-devel@nongnu.org</a></blockquote><div><br></div><div>Reviewed-b=
-y: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com=
-" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redhat.com</a>&gt;<=
-/div><div><br></div><div>That would be worth some new tests for chardev rem=
-oval. It seems to be lacking. And mux probably need extra fixing. I can tak=
-e a look if you don&#39;t.</div></div></div></blockquote></div></div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">I assume no one removes mux device,=
- so no one observes the error. Please, go ahead, I&#39;m not sure I do full=
-y understand what exactly should=C2=A0be fixed.=C2=A0</div><div dir=3D"auto=
-"><br></div><div dir=3D"auto">--</div><div dir=3D"auto">Roman</div></div>
-
---000000000000a9d10006241d2371--
 
