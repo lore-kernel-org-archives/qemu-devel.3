@@ -4,95 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FB0D24442
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 19:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28411D24442
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 20:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syz7w-0001Im-RO; Thu, 10 Oct 2024 15:47:13 -0400
+	id 1syzPj-0003vX-SB; Thu, 10 Oct 2024 16:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syz7s-0001IV-7y
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 15:47:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1syzPh-0003vE-5U
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 16:05:33 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1syz7q-0000mB-55
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 15:47:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728589624;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SGTXn71lUCdWA14hvnNyvE/yaBY/pamjvpDOeK4zFaU=;
- b=ZWIm3fqhkscT594HtgEOEN9i526IyaedQedNdpyqInOmFrKQJfXhCppwFELmRnZifmUgzM
- WvaWecUGtM14yS/i27UxLfa02yeAkQmySRYb9Ru0k5+I0a58gr6BN3fwNI+o+TA5sGaWwB
- jBs5J1Rgz2vQuURGPBeN48f79iO2UOY=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-0pOojUiFOCSm6dqfNfkqTQ-1; Thu, 10 Oct 2024 15:47:03 -0400
-X-MC-Unique: 0pOojUiFOCSm6dqfNfkqTQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b117fc111eso82437085a.1
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 12:47:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728589623; x=1729194423;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SGTXn71lUCdWA14hvnNyvE/yaBY/pamjvpDOeK4zFaU=;
- b=qp1L+toP2g7RIloePAAWO69hiReMfCDs/kgLC+N7eV7+oQJj7bE9sQaxotUic85YUs
- umYIPGRK01BG+TRO2aV/fT3qdTotrHhsBqPwGjjmPzQX+QAe3pVamWLtaa6fHI0+hUVl
- bbREq6wxKuY1Qp8NZR3Nne8zMCKmEWSLg+n+WkISb7pKtbhnTGjIFj+rc+4yRa9O7Vqd
- d8fZob6zYNZnFZkds3nu6Kpt7Dc7DHc4iO+A0S/3A9Gfrp0DZ70DuuaF8Djs4olf/ygv
- 1W1zcn1Z6dKLBfVRP7O14cVDuUGsY9TaNftu5s9IBlqlvaQ+wQ/vjjySR8xN1OAE6Yld
- pipA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJIYkb+lDiphcO+axyN0/jjXBhsc9abOpsHkB40W4h5IvD+9YtKdzAcTrVwB7zTtXNkhzs6MhWCCpG@nongnu.org
-X-Gm-Message-State: AOJu0YwtKIC5HuGUbSF+di1p2e3VNTU2xZO+ap/RmBKQrnYJG8eYtuos
- bfrpfaJwu5QnatFsvu/sG1JggVuIqXMlpN2LWUGqncV9HPqNb7PraUGizXLmRWsBCGy67iUJtEk
- vJGpKmazwfnyFeax8MScHLTFEiITBW4AdlPmZulAYjLIHg/ptSQnI
-X-Received: by 2002:a05:620a:17aa:b0:7b1:1223:5a02 with SMTP id
- af79cd13be357-7b11a352e20mr30162885a.8.1728589622718; 
- Thu, 10 Oct 2024 12:47:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfhh8cCraLCqIggyKvtDRVlLNszpE0Gk8YslB9tV5zeuEUSX40/6DgVVfClTlDTj317bwsKQ==
-X-Received: by 2002:a05:620a:17aa:b0:7b1:1223:5a02 with SMTP id
- af79cd13be357-7b11a352e20mr30160785a.8.1728589622168; 
- Thu, 10 Oct 2024 12:47:02 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b1147aec68sm72903285a.0.2024.10.10.12.47.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Oct 2024 12:47:01 -0700 (PDT)
-Date: Thu, 10 Oct 2024 15:46:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Jiang Jiacheng <jiangjiacheng@huawei.com>, qemu-devel@nongnu.org,
- Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 0/7] migration: query-migrationthreads enhancements and
- cleanups
-Message-ID: <ZwgvMzB3JZ1y3_WC@x1n>
-References: <20240930195837.825728-1-peterx@redhat.com>
- <87o744e5pa.fsf@pond.sub.org> <ZvwGSgDnW8KfgFEh@redhat.com>
- <ZvwQB1Calv407MH0@x1n> <87h69vavvr.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1syzPd-0002qT-DT
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 16:05:31 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49AJteBY003088;
+ Thu, 10 Oct 2024 20:05:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=7Zyb66ykufe6WjSp0o5Qk2cDpso4K53Zkk8riVly7nQ=; b=
+ QSbIHwPeBGxWZjZp9ryzZRj/4SYcqtlhVIVncAI18LLkUgQjOh7+IZul8ipi6fhm
+ e2FNOAF10XuKjuXgvhZbOfgCByiikCP6jq9FABmpGGAlI0Ix0C3ARLWS5awGBrdL
+ CzZoDiToa0dQWTJ9zlOj4roaTJfPxDtV7kkGC0zAcmwUW1ZCegq04jD62fseDv2s
+ QnbzzxwjyEepO4yTf51SbmNSEwSg+aKehR5nNsPs1wIekLhuAJjWWdHxdRxj7nxs
+ bdiofpTYzMRVYg9owM5KF37vrvYNVhrPC+ubQZ38sQxQQtya5PuhWB9tgSMiwNwy
+ NTL84djfYN1+qHnz5kyggQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42308dukx0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Oct 2024 20:05:20 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 49AIpeZU017288; Thu, 10 Oct 2024 20:05:19 GMT
+Received: from nam11-co1-obe.outbound.protection.outlook.com
+ (mail-co1nam11lp2168.outbound.protection.outlook.com [104.47.56.168])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 422uwgvdtj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Oct 2024 20:05:19 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FvYOMGRsuuNgCzMhm0iucXIcl/Q81zK9zj09BWYEj/CvGSh6wNfv6Ya5iV08k9caVN3ztajYIrFa2rLwIxjv5pN9vIc8Igea9X4cKD0nxY352C3LGS5xC8QlZ6zuAyhZhFW1X+chOlqY7fFN2PhKgfenKMkkDqzD6/0c9DnKk3ZejpfcR4Lq0h/B3nIaeDgGb/RlOYNUCJwGHeFKp9Ogq6UQAZCNcnumkX20jqYyna/dd5ka8JnFJpBsSLDIY3E4PKjxlFIG4Kf4PBuPnJstwQgjhICVLbdS1iBgELDHliZEa+GMdW021HGMSF6/BBaNxffETeV3T8jvNWarGDtvKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7Zyb66ykufe6WjSp0o5Qk2cDpso4K53Zkk8riVly7nQ=;
+ b=ft1xWE+ZyPZHDbjZanzz2enYqLiXxzta9pNgMmWKoGnh34P2Jfe5cp3PkpFIAJxgvyGcbvFGCwFhpN0n5rLh+7JWUNQksD+00usx6vSRMDOBS6g/zq9faZyA2wnmJFUyxQ/GxNZhgEzqnSpGNFphcFQkDeAZ3ItOX4SLRbTnQTYWblFHG/kYLCuOtswmoL2Hjr+t7OhiI85VbwI9f5WTG8wCIMJ/MjHKk10/b//Bmg0Bpbkrh+tSaTJyLGs6FP+JyVMllZzoyevCpAWmBKrWjxYP72Ubrjkcwl5SYX0AJa4+GGmi2JrlFG53DB3EYHO8gPw6L/EZ37KaoNRkfCAstw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7Zyb66ykufe6WjSp0o5Qk2cDpso4K53Zkk8riVly7nQ=;
+ b=XKY5AwzqEnoc/I8a4bBq+FGiDLGU3EjHDazbMwVxB4cjIMIxv8cBC3JVNjtotwLKFNhuwpsPqo5fneEb64EV9ALuKJ6c78+/mDcUQ+vzawmDJ9hGYH3sInI+SlyeRWQ6c9i3eVbKz4eqCWcucGvFjzzxhcJDzvkRxZWWWmDdf2Y=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by SN7PR10MB6364.namprd10.prod.outlook.com (2603:10b6:806:26c::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.16; Thu, 10 Oct
+ 2024 20:05:16 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%4]) with mapi id 15.20.8048.013; Thu, 10 Oct 2024
+ 20:05:16 +0000
+Message-ID: <1f70668d-fd01-4e09-8d09-6bb11294df30@oracle.com>
+Date: Thu, 10 Oct 2024 16:05:08 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 13/13] migration: cpr-transfer mode
+To: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <ZwQ6GbVCmitlills@x1n>
+ <eb41bce1-a776-4bb2-adb8-23fdc7cff1fb@oracle.com> <87ed4qtpo1.fsf@suse.de>
+ <ZwV-NRICDNTajTRq@x1n> <877caitno5.fsf@suse.de> <ZwWMj4FYYpOSnPbe@x1n>
+ <8b92a6ee-19f7-4483-9766-6b849cc04017@oracle.com> <ZwbUTXCxxl4heZYV@x1n>
+ <Zwbgur3d0cImLV99@x1n> <97268719-56f3-4d7f-aa21-c04cd0262601@oracle.com>
+ <ZwbuNnFCgN_vjniX@x1n> <87plo9rksl.fsf@suse.de>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <87plo9rksl.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO2P265CA0111.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:c::27) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h69vavvr.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SN7PR10MB6364:EE_
+X-MS-Office365-Filtering-Correlation-Id: 538f8c42-e116-4c77-7b0e-08dce966db9b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7416014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bk1icVYzYk8yN2x2MHV6WENreWN6Y0JTMktScEhGZ1Jod3dTKzFZZm1MU08v?=
+ =?utf-8?B?dTU4U1ZySFFaMVQ5ZlhlOUkvNW5KMDFJcUU2RXE0RTVGZm9SM25hNnZ0UFQr?=
+ =?utf-8?B?YUNJbVBURnM1ZUtSTEp1ZUJqY0hJVXg0c0QyYzBZNDRhMVdBenhOUGNveWxX?=
+ =?utf-8?B?NDJQeXlnZ2h5NlBBQVE1a0lZMnFieUdiREo4Ly9GdVBVaUZNcThZQTkvQ2wz?=
+ =?utf-8?B?LzdaOEhxU3hMWmRhVEdDazBFMDEzY2oxT3hrMkFSK0VMODVMdXptUXlyaXIv?=
+ =?utf-8?B?dWg1VGFBR2RXR2FKMXN0QjA1MnFodjFjY1paZTVWdHFaRlV5UVRkZm9xTVB5?=
+ =?utf-8?B?MVNwREx6MDg1eGk2TUppT0VzRndidU9GV2ljU3dFeDJoQjAzZXVaT2NObmNO?=
+ =?utf-8?B?OHpYTHlOMks0TExKNlNxeURZOHFXZFFsOCtWdnMxSUhzOHQ1eit5ZENtQmhE?=
+ =?utf-8?B?emVkT1pWSm00M1VBRlZVdlhmbkJNZEJZRGw3a0wxVTFuNTg3aXJhR1FBaUZM?=
+ =?utf-8?B?dG5IeTJiYitOZTVmUi9IcC94cnRrTFY1bHdvTUhrRHdEM0RKY3ovNDNkZC91?=
+ =?utf-8?B?QnhXMHVaTERmM1k0TVVNQ0pwc3hBZS9qSE5ZczdRZy9GM0pPZUhCdGJndXpC?=
+ =?utf-8?B?S3Z4MFBjUGVXcGkvL2p5V0ltUlNOV3dtN2RabnJjNjFtaTF2b0I0V3VJNWtn?=
+ =?utf-8?B?RUFEUU40Wk4ybUdBa0xDcHR0QXNyTm5IRVZqWkowYkRlZ284V3E3Njk3MDNn?=
+ =?utf-8?B?VlpHSlpHNUFlYldwOHJ0ZlEwY2lpTi9QZUNsd210eEhCOFF0M1ZHYjJjdUNn?=
+ =?utf-8?B?NXVZVzJZOGRHNzlrZU9kckpDOWt4RXczRWdPU0FyVldBVndVTDh2cFpQdllF?=
+ =?utf-8?B?NlFGTVZoaHkrMGFOMFUxRHRXamZ5c05WUnRpc2NIWFdMbUw4R2psTG95a1lI?=
+ =?utf-8?B?R1I4czcwUFNWWUxaUWVvZmhtOW1WOGtmbURFdS8wZnZWQlRRM3FjSG1XSklK?=
+ =?utf-8?B?cVRYNXhZK3RWdS9JWHhCR1VqaUNPRkZzQ3dmWHYzWlRtdnVTZHoxOWNVSHR3?=
+ =?utf-8?B?cFV6UXlXbzRmV3c1UDVYMzRSaVd4OVFGK2ppMmlnUnNxOGlRYUNVNVYyMlFO?=
+ =?utf-8?B?cXRWN1hyK3NJVFExYXQxNG1JQkl4OFUvZHV2LzkyREpJaTR5YVRPbWJaL3l5?=
+ =?utf-8?B?MzVBVHJ4aW8waWNIekh6QXA3TEtnOUc5SzVoeEx3S3hpVzk0L21NRkJPNllj?=
+ =?utf-8?B?VjBteUlyeS9uQk5tTTNGb0FETnhMMzQxejVzQVZxdjIzS1pteXZsVzB5TWxl?=
+ =?utf-8?B?b2pJa3JENXFGelNZNFBwRCtRWG9hUVFCMThFaHQ2NHpBaEdNbjFtbVM0Mm12?=
+ =?utf-8?B?MERQV1NTWVdFdVZSQVc0QmpDaGFrZVVuUVRsQkRZbmhCR2pSQ3FOK1JSdlBY?=
+ =?utf-8?B?Z094bitLdHlQVkY3MTNwWUZCTDdZL3p1UnZUZXJrM3paaXNDazk1QzdhbEFh?=
+ =?utf-8?B?K3NWYjYzb1Y4aTJqM0tvZkZEZ2libTRyZW15REgwaEs3V2NQcjg3WGl2V1Uw?=
+ =?utf-8?B?KytOTHZ1VU1Ya090b3BNd2xQVytnTVIwQ0d2UTg5WEI0TFF6SFV1dlhXYWxw?=
+ =?utf-8?B?MWFlSTdiR0pKbkpqMFVNTUt1QkwwSlRLRURFSG90RWp6WXpKYW4rS2Z3dkd3?=
+ =?utf-8?B?TVVROHNjUkNnRHdCclEzY3ZmZno3dU4rRmdocTdUakJ3QlBpSXlXK3RRPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(7416014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ODgwSnV2V3liOEhZQWZNaERLOEdSUkhOQ25pUUFBY2NON2xrdVNFMHlxYkdC?=
+ =?utf-8?B?WE1nSzZEb1FnQU5qNTVwUDhhSFBDT1ZSbU9PNm5qNXEyNmd5NlVJMWpaZHE1?=
+ =?utf-8?B?dnNoZEhuVnZWcjJ0YVhDK0ppcTdXY1QwdFp3NmJSUmU5WjV4bi8raFJDZUQ3?=
+ =?utf-8?B?SFFGQzJqdW95UHMzNU9JdXlYZDZodXN1YnRiTUhtSWxqcjhxVXpLdjJNQm5U?=
+ =?utf-8?B?S2h0bldzQlludlp5N29NUWRuUzg0dlFrQWhIZnhCd1pHQnF2blhmVkJYVStC?=
+ =?utf-8?B?WEQxRi9jNDNBVHdSUXhScE14R3ZXL0t5VUMzVVpzREllbldxdGhJWU51N2lD?=
+ =?utf-8?B?VGlIM3BWbWdET1VmQ3E0d3pjZEF5ZzJpejhWOHpGYUY3UWJ2Wk9tdi9oR3Bq?=
+ =?utf-8?B?VWZIeUJmTy9jdExYcXVoa2FVcTg1NzdnbzRoMFl4Nys4Ty9jVHUxODErVFZJ?=
+ =?utf-8?B?TXphNHIyUlU5bUkvVlhPOWZCVnRuZGlwYnEzRUZHSlNFeTVraGllK2ROWU4w?=
+ =?utf-8?B?VnllV21scFdFSVB4UFY0eFY2RFJ2bGNPZmhzNGs2b21aYnc2S1lIZWsrc1U4?=
+ =?utf-8?B?TEh2T0wwcytvK0p2cC9vcHl5bDFNWHhvd2lPSTdDdUdlVEduRWR2UjZDREkx?=
+ =?utf-8?B?WW9IY0F4UkE3cnZlM0xsTGZ2clRoZ243NG5kdzJRczdHWThiMUg1dXl4UWlE?=
+ =?utf-8?B?RXYyWHFXWjN1QnZmOHhNTnAzTU5ZaFdNT1VlNkx1MnVDMlV2TE1qclYrZDBk?=
+ =?utf-8?B?aS9va2hIWEdKVUJJM3dyZTBWaktDRDVNNk9PMUIweHd6bmJmd0dwbTI5OENG?=
+ =?utf-8?B?M2VFUk05QnMzS3RhRFR4TFUxOGVoZjVhR1ozVDVxV2JJRGNKaytnNG1GNVhz?=
+ =?utf-8?B?UnNkV0tsQXZyMllmaDNTSmx1M2VaWGNzNmI4RnA4Zi8yNWhlOTlmRXl1TlpV?=
+ =?utf-8?B?bFVENE5RcHV4UlQxQU9QV1FxZzBkUWE1RVBpRkZJMFg0bHhaSUw2bWpVMHB5?=
+ =?utf-8?B?djlPWkV2cHNFbklTbnJkZEtaejVQU0NSTXVUUC9NWTNvUFl4eUY1TGN5MFJN?=
+ =?utf-8?B?b1l4Ym93QTZFVjdiVWJIaWoycWN2eVVGUnBNT05sNi9iNmRzdXlqRzhEamp4?=
+ =?utf-8?B?bVkxTm1pZ3lmS20rb0ZDdGg4NlVxVUpkUUFhKzdMKytrTGlXUDZhc0hHODNL?=
+ =?utf-8?B?VS91RUo2N0ZYNUtLMUoyajg5cUhSNjcyaWJuZ1hVSFhuWVUxcUxrREVLTjM2?=
+ =?utf-8?B?SExKRnhHRmpPN2M2LzJkcWR0K1hzUTg5RGJ1ZStkU3dDUGlKTndEUDVRR2xE?=
+ =?utf-8?B?bzNlTDNTUEhFazNIOS9OTWluRjNkbFcyeklwMUM3dmRPUC9xUDY5ZkVWLysx?=
+ =?utf-8?B?SzlLdXFFU2pIL3lDMlBXa2laOW00OXpnSHJ1OW9jOWRKbW5JMVhaY2tMZHNv?=
+ =?utf-8?B?amdiTmN4Mlg5N3hTYnR3alR4Z1FZMEduaW40MHBjQnpYMWU0L2F4QjFUZ21U?=
+ =?utf-8?B?TkorQ0YraU9YLzZLNHNUR0tJSFZLNW9sTFlGRDZ2TGFrNTZuSmJVRzdkekRi?=
+ =?utf-8?B?V3ZsOGplSDN3Wi81TGhFSk5QVTNIL1F5ZG5LV004YzkyU3FMMmZFNVJ3dHVk?=
+ =?utf-8?B?YjJ1ckFQNW9jNFBLMmZIbVJRS2ExakF4eVBja1VkV2dzVmFpUEgyQ0MzL2tO?=
+ =?utf-8?B?L0l3eTRBODZYNE5XblIzdW82dTc3bGwxeWxST09TNHo4NU9WSHppWG1JRlc4?=
+ =?utf-8?B?V3Y2TnYycE14WTcxL3NyajZwaHduUk1PakozOEtPZHZocUR2ZC9vcWhVcEgv?=
+ =?utf-8?B?cHU3d1ovanFFRHJOaWc4TFZ0WDlZRGtPSGNvNVZqQmd2dUxVNFk1d3dJTnBz?=
+ =?utf-8?B?a2laYXFFZFFIcE5QVjlkWUl3Z25JYlY5S0ROTkZRTlZOYmd0MzNJT2pFUVpB?=
+ =?utf-8?B?NTFERlM4elJ3dlpoM01iZXQvQ01xWWYrRW42K1N4WTZLOVd2ZWNSeDNZdGJq?=
+ =?utf-8?B?RnpsMUlKZ1NiYkRDbS9FVjhrcjRybGFvN2lmbFllUUN3T0VjTHJpUnNNazYx?=
+ =?utf-8?B?OERNTnBBemRQWnZSaDJQQVNVam50anUxZVY5YlVyMFFiQnN2cXJNRFJLLzdm?=
+ =?utf-8?B?NXhRZzRzU3N1SW5KR1ovMHRzY3l2eWt2WE1WT2x6TG9RWURZcnJydHFVdkI0?=
+ =?utf-8?B?SUE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: VWk54OAbaTl1q9AFrScP7beckfCOCrXNi+mBrVhgHyvgEvrMGSKYy6+BhZN0ceP21vaXEMVbnZz10pG6KLwEx/c/V5aTilQLb/wMxr7AhrCdB4aYr6El7kCJp4Jc+UHMmAqYMJt36wTGnej+T7D/lAtJx9JDG86WkYxxkmyfeMLJhkLrxxRw96v0MEDVQ4k3ckRF/CK/yUSAZ104wTeuBTme4TCG1bYwBhYXOCkI5OFv3FK2o8ESb+k7lvCEEyrOkMlOvhzcQQkJsCEI9qGM9kXEnEZ2BdQ0GH4RBCrpA2B+rnhhKzd/TivFrb6FGbw7rZ59nI04ZTolBaGQ9LwyaIS1RonChmcrDeKSYRZCpBnxS0LsOAefTtVRkvyx+YchBLUNzOalAfEZ3FaiQ9yWWybMFqDzx2n1sAaRB29Avmn9FlnTSihTS0sFvdwxw4gUEXPzkPTlUHObCbDWGAzikgdLZ9ZXBmG3Okove2A1enwsAUaa8jWDCIBgAgXcojQsjyrDtgm3ZPDlYIwJ+1zswjXkwAwv86f4AZSlS0x09P10R61aOepFuc3HpFv+eUAv+N0Q6cZ4mrIwse2BmBM6DelEvt6QYWvhw1yyEW7WLXE=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 538f8c42-e116-4c77-7b0e-08dce966db9b
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2024 20:05:16.2249 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 586ePiJGzWofTUxAEcZRXSkiIbW/MO7H5zmi+o/Bufe7ag8M/LnbZlSfrz66BcU7GTHLmcBW3q6z2yvtnuZBqWoozH2qmeyFMm1KwHH7Dj4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6364
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-10_14,2024-10-10_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxlogscore=999
+ spamscore=0 adultscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2409260000 definitions=main-2410100131
+X-Proofpoint-ORIG-GUID: 2gOaEUcrzBjpLq_CAGBNfj1JEsube2ZG
+X-Proofpoint-GUID: 2gOaEUcrzBjpLq_CAGBNfj1JEsube2ZG
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,80 +222,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 02, 2024 at 07:58:48AM +0200, Markus Armbruster wrote:
+On 10/9/2024 6:08 PM, Fabiano Rosas wrote:
 > Peter Xu <peterx@redhat.com> writes:
 > 
-> > On Tue, Oct 01, 2024 at 03:25:14PM +0100, Daniel P. Berrangé wrote:
-> >> On Tue, Oct 01, 2024 at 07:46:09AM +0200, Markus Armbruster wrote:
-> >> > Command query-migrationthreads went in without a QAPI ACK.  Issues
-> >> > review should have caught:
-> >> > 
-> >> > * Flawed documentation.  Fixed in commit e6c60bf02d1.
-> >> > 
-> >> > * It should have been spelled query-migration-threads.  Not worth fixing
-> >> >   now, I guess.
-> >> > 
-> >> > * What are the use cases?  The commit message doesn't tell!  If it's
-> >> >   just for debugging, the command should be marked unstable.
-> >> 
-> >> It is hard to use too.
-> >> 
-> >> Lets say a mgmt app wants to restrict migration threads to some
-> >> certain pCPUs. It can't call query-migrationthreads beforehand
-> >> as the threads don't exist until migration is started. If it
-> >> calls after migration is started, then there's a window where
-> >> threads are running on arbitrary pCPUs that QEMU has access
-> >> to. There's no synchronization point where threads have been
-> >> created & can be queried, but are not yet sending data (and
-> >> thus burning CPU time)
-> >
-> > Indeed, I suppose tricks needed if to work with such model, e.g., mgmt
-> > needs to turn bw=0, start migration, query TIDs, then restore bw.
-> >
-> > However that still lacks at least the dest multifd threads, as currently it
-> > only reports src multifd threads TIDs.  I don't see why a serious mgmt
-> > would like to pin and care only src threads, not dest threads, which can
-> > also eat as much (or even more) pCPU resources.
+>> On Wed, Oct 09, 2024 at 04:18:31PM -0400, Steven Sistare wrote:
+>>> Yes, I am also brainstorming along these lines, looking for more gotcha's,
+>>> but its a big design change. I don't love it so far.
+>>>
+>>> These issues all creep in because of transfer mode.  Exec mode did not have this
+>>> problem, as cpr-state is written to an in-memory file.
+>>
+>> I understand.  Hopefully we're getting there very soon..
+>>
+>> I still have concern on having -global used in productions, and meanwhile
 > 
-> Sounds like there's a use case for management applications querying
-> TIDs, but query-migrationthreads falls short of serving it.
+> Agree, but for qtests it should be fine at least.
 > 
-> > For real debugging purpose, I actually don't see a major value out of it
-> > either, because GDB can provide all information that this API wants to
-> > provide, and only better with thread stacks if we want.
+>> it might still be challenging for handshake to work as early as cpr stage
+>> even for later, because at least in my mind the handshake still happens in
+>> the main migration channel (where it includes channel establishments etc,
+>> which is not proper during cpr stage).
 > 
-> True.
-> 
-> > Since I don't see how this can be used right, it didn't get proper QAPI
-> > reviews, and further I highly suspect whether this API is consumed by
-> > anyone at all.. in any serious way.  Shall we remove this API (with/without
-> > going through the deprecation process)?
-> 
-> If we decide we want to serve the management application use case now,
-> we should provide a suitable interface, then deprecate
-> query-migrationthreads.
-> 
-> If we decide not now or not at all, we can deprecate it right away.
-> Removal without deprecation is also possible, but I doubt breaking our
-> compatibility promise is justified.
-> 
-> > I added the author Jiacheng too.
-> 
-> Users of query-migrationthreads, please speak up!
+> I don't think any form of handshake will be implemented in a
+> month. Maybe it's best we keep that to the side for now.
 
-I'll go ahead and remove it.  The current plan is I'll skip the deprecation
-procedure for this one because I don't expect anyone would read the
-deprecation notification at all... aka, no real user I can ever think of,
-who only cares about source pinning not dest.
+Agreed, and a handshake in the main migration channel, which would be the
+cleanest to implement, occurs too late. We should not rely on it to solve this
+cpr problem.
 
-I'll pick patch 2 out and send separately, which is still a cleanup without
-the query-migrationthreads API.
+I have a new proposal which I will send in a new thread.
 
-We can keep the discussion going in the new patch.
+- Steve
 
-Thanks,
-
--- 
-Peter Xu
+> (still, thinking about that virtio-net USO thread, an early handshake
+> could be a good idea, so we could perhaps inform about device
+> incompatibility, etc.)
+> 
+>>
+>> I don't really know whether that'll work at last..
+>>
+>> So in my mind the previous two-steps proposal is so far the only one that
+>> all seem to work, with no unpredictable side effects.
+>>
+>> Said that, maybe we can still think about simpler solutions in the
+>> following days or see others opinions, we don't need to make a decision
+>> today, so maybe there's still better way to go.
+> 
+> I thought of putting the caps on the configuration vmstate and using
+> that to set them on the destination, but there's a bit of a chicken and
+> egg problem because we need capabilities set as soon as
+> qemu_start_incoming_migration(). Unless we sent those via the cpr
+> channel. We could split migration_object_init() a bit so we can
+> instantiate some parts of the migration state earlier (I'm not even sure
+> what are the actual dependencies are).
 
 
