@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81573CF11CE
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4404BCF11CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 11:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syqlK-0002Yi-0f; Thu, 10 Oct 2024 06:51:18 -0400
+	id 1syrAT-0008Gb-OB; Thu, 10 Oct 2024 07:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syqlI-0002YU-NY
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:51:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1syrAS-0008GC-Im
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:17:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syqlH-0000pe-2q
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:51:16 -0400
+ id 1syrAP-0004hL-Eb
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 07:17:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728557474;
+ s=mimecast20190719; t=1728559030;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JgdJcoeq7kmDxf7erL+yPELjg5AC4Cd1xVKYLMXxL3o=;
- b=PQdDQ36OSgnLYBfBo6ecG95Kcf0ZBdw1N84RcV/8ihCL3BRj6oIjVg6Jw9D8rNgUW2z/gt
- WUYsngGCyqYf4j2lq4KJjAJReKybQjbKc5wt3CABswpvUIGX3c2BXjdC9Ndo5JUPkwqUjA
- Se80xKYR0FdRhp9JoQLBBXF4LaEdvSQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=S0ItoMevl0mgIMAEGzznGsyPGdd04lN5yi44a/lagDI=;
+ b=eVSThl4rGRLLIxbxj6SRGIS0Fh3ALtsk001I+PUn+cUw6b3EpTek52tk3qvL56O+l8WWun
+ nae9W4WneNjJdPFTe6GbwJMWl5vnIIThJ4ETX3HtJ3pJhre+jTTU1oaZz86P0igQxIYfIF
+ m/Cis3CZSEUGM8HFZRRqqA9pSyYrz04=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-gfqL2x4qMbW9AVBSGrnjCw-1; Thu,
- 10 Oct 2024 06:51:10 -0400
-X-MC-Unique: gfqL2x4qMbW9AVBSGrnjCw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-AmG-VtsGP8OiVVIzFrnjYQ-1; Thu,
+ 10 Oct 2024 07:17:07 -0400
+X-MC-Unique: AmG-VtsGP8OiVVIzFrnjYQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA6D8195609D; Thu, 10 Oct 2024 10:51:08 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4406619560A2; Thu, 10 Oct 2024 11:17:06 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.110])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CFE619560AA; Thu, 10 Oct 2024 10:51:05 +0000 (UTC)
-Date: Thu, 10 Oct 2024 11:51:01 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEFFC19560A2; Thu, 10 Oct 2024 11:17:02 +0000 (UTC)
+Date: Thu, 10 Oct 2024 12:16:58 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
 Cc: qemu-devel@nongnu.org, kris.conklin@seagate.com,
  jonathan.henze@seagate.com, evan.burgess@seagate.com,
  peter.maydell@linaro.org, Alejandro Zeise <alejandro.zeise@seagate.com>
-Subject: Re: [PATCH v5 06/16] util/iov: Introduce iov_send_recv_with_flags()
-Message-ID: <ZwexlYYF41xHW8cy@redhat.com>
+Subject: Re: [PATCH v5 07/16] crypto/hash-afalg: Implement new hash API
+Message-ID: <Zwe3qpF0eGWMOqUR@redhat.com>
 References: <20241008075724.2772149-1-clg@redhat.com>
- <20241008075724.2772149-7-clg@redhat.com>
+ <20241008075724.2772149-8-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241008075724.2772149-7-clg@redhat.com>
+In-Reply-To: <20241008075724.2772149-8-clg@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -90,26 +90,33 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 08, 2024 at 09:57:13AM +0200, Cédric Le Goater wrote:
+On Tue, Oct 08, 2024 at 09:57:14AM +0200, Cédric Le Goater wrote:
 > From: Alejandro Zeise <alejandro.zeise@seagate.com>
 > 
-> In order to support a new update function, a flag needs to be passed
-> to the kernel via the socket send call (MSG_MORE) to notify it that
-> more data is to be expected to calculate the hash correctly.
+> Updates the afalg hash driver to support the new accumulative
+> hashing changes as part of the patch series.
 > 
-> Add a new iov helper for this purpose.
+> Implements opening/closing of contexts, updating hash data
+> and finalizing the hash digest.
+> 
+> In order to support the update function, a flag needs to be passed
+> to the kernel via the socket send call (MSG_MORE) to notify it that more
+> data is to be expected to calculate the hash correctly.
+> As a result, a new function was added to the iov helper utils to allow
+> passing a flag to the socket send call.
 > 
 > Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> [ clg: - Split iov changes from original patch
->        - Checkpatch fixes ]
+> [ clg: - Handled qcrypto_afalg_hash_ctx_new() errors in
+>          qcrypto_afalg_hash_new()
+>        - Freed alg_name in qcrypto_afalg_hash_new()
+>        - Reworked qcrypto_afalg_recv_from_kernel()
+>        - Split iov changes from original patch ]
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  include/qemu/iov.h | 27 +++++++++++++++++++++++++++
->  util/iov.c         | 25 ++++++++++++++++++-------
->  2 files changed, 45 insertions(+), 7 deletions(-)
+>  crypto/hash-afalg.c | 127 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 127 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
 
 
 With regards,
