@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6CAAD2444F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 21:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F8FD24455
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 21:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz154-0003ar-GL; Thu, 10 Oct 2024 17:52:22 -0400
+	id 1sz13t-0007XM-Ec; Thu, 10 Oct 2024 17:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz14x-0003IQ-87
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:52:16 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz13j-0007Nt-6N
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:51:05 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz14v-0004rA-KJ
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:52:14 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20b93887decso13215655ad.3
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 14:52:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz13g-0004fA-Dg
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:50:58 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20c56b816faso13723975ad.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 14:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728597132; x=1729201932; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728597051; x=1729201851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FKivURGKdC6DPaBQQIskyUVxHkTiYj2NkLjEjmDT2qw=;
- b=XXW3NgsqkWjQr4H1DGVTdrVptCm9y/HoUyEtb5xQ9DzDLmhLUh6620yV4GpyBFEK7N
- GHE6AW5jf4+BJq0TYmHg78yLLu13z/yi3WAEb7xl0Y4vJ3EHnBlH0nhMPNK55nWCFkNS
- KfVkGJRxkxGoSEBEbcvzpcSEDVysZDmCT7qP9JlZnP9K+MosR8XHiRqLZTenpRiokOTM
- QiIAsImTtu4T+R+Ld0f++hbQskNZLuDOmBj8UNyk2HVQd7UN9D89Q5aE9x34M3NF+y4m
- NLHjdUVb0VZKtHxFXg0x51gjO9/40E3NtXTuOgZ8YYBuV8oG4+HOayk3X88Kc6DOgcLr
- bNgA==
+ bh=L/eEZSTQpqPfWDWhUcjUtkLny/Dd9OUObCuW9KXLFI8=;
+ b=br9n6WMsLMrU7+oW01NcgOPs24xavYBIzuHxErplGv4Dd2QKL00f+ed4uI6aj6VLRL
+ yvu6uGBiw3/cTF40uBXsL7tkeW3PMvzKx2Ah2vNg2jDVXYqHnzgkA1MNarnWw9XGKbe7
+ MDM6peznIU9I2utGhI6Zs5CLxF3fZIn3JIrxZKnneMIHponMw+9JspUpGIs39oRNy1VK
+ hEVJSmxiTzEf0MAKHzirjeQQVuvjtHkFinW576SWl4JZBp6Cyt3OnifGyz7DfIAb5qQA
+ 6Zut+9CA9TqGcJu54bW0VSJlybE1Q3td9w3QcB5Q8jUURdlwzQiaIlH/5vL1rck1NJ+4
+ es1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728597132; x=1729201932;
+ d=1e100.net; s=20230601; t=1728597051; x=1729201851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FKivURGKdC6DPaBQQIskyUVxHkTiYj2NkLjEjmDT2qw=;
- b=V81vWdAjskoojI5Kbmt2gtzeQXpTztS92lDDt8ZrVbTK0h0XFaKoYqVUdGAmSyyT6x
- nYJWsiCFdEJcnbhpARt6zZEWNn1MPRJ52hc0Rn4Jx2w9FStSs/vHK+9dnSgXItrZQfBm
- S6l8sF6yqnvN1oEpIKtoQPfeW00DX849z8VXWa/JcXqzIun0cT8qJfGZ+0KrVDyR7cBs
- tNgWXNd+6JJsQjxfYw/ufwbAGXJwKGxFmY7yqRZ+wh6TnPwG5xNOFhgEOT0HYguXG+M0
- vpDNZCAmzJWqZeN+9dJT0N3xpCzKX2Ir1OGedomXauaHyrBefIkic9WLBVlnvn8d6MBR
- aRZQ==
-X-Gm-Message-State: AOJu0YwVuZBR+/WxOF+LvAx7EXv5DMk33YHabPxnm3HnJFIifO0S0uKB
- IrCJaVIbGAYoSYae3uFMl309Rq88Q4EVNSN/+2CRfg599eSoe6YwII6WuxzV00FIWRadcmPCx1g
- Q
-X-Google-Smtp-Source: AGHT+IGD0WXHrbT5G72RE4OIpGOfTkgt1FTARFWUoy0pCXC9MR9lHgu6gt5Tsa7+SNAcqo4nkZMzIA==
-X-Received: by 2002:a17:902:da8d:b0:20b:8bd0:7387 with SMTP id
- d9443c01a7336-20ca16d3988mr5136375ad.52.1728597132046; 
- Thu, 10 Oct 2024 14:52:12 -0700 (PDT)
+ bh=L/eEZSTQpqPfWDWhUcjUtkLny/Dd9OUObCuW9KXLFI8=;
+ b=twXVgttXiYSDTrCSDUcVrY/NmTl45eZHB/SO4zXLkA0kA55TVCjujAlIBqUn0DjR2G
+ Ebe4syMFvCFJ4NoJk9t6UCRjB3GKeFnMskOYOTN0jsMCdtGqqwfPCFNIEH00B1Z2H0vS
+ TOUQ+y0XfZ95kUDyn8tCw53C/LTqyTJD7SSM0GeOhLBxOqujpGaxdUHpLY2KTiWMKqVv
+ mM4LfeA/nrQt79wLRzLKcZsiAmLxe5AzbiTJ9AKX4RsDY4pcwiPV7LU39rIu+cUIanIl
+ Wwa0aO5wlgRcdoMuMBUMQkSDXGPL18tbKHVeN2+PtCuRMvUhHKpJZLvsQY6TzEM2kIh5
+ hRUg==
+X-Gm-Message-State: AOJu0YxLBnfzNwCl73X9+20bYxt38S9/G4hBHriGVQPO9vzV8XMig5PU
+ yeqTD+JKjuyQLCMAOpvBKNpDIzmQf66+m73azSSbDtvE6s49wFauuBH+Nq649wmsgQ+Dci9w2EE
+ n
+X-Google-Smtp-Source: AGHT+IFOrjRSzt5g9GCOZU/lFWpJZ0gBZ/5amXdYzd649oGkGX4kdcftaxz5qBKqpFBAS3xnR/lc3Q==
+X-Received: by 2002:a17:902:d490:b0:20b:a9f3:7996 with SMTP id
+ d9443c01a7336-20ca16b6a37mr4695565ad.51.1728597051601; 
+ Thu, 10 Oct 2024 14:50:51 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.89.169])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c36d723sm13656025ad.306.2024.10.10.14.52.09
+ d9443c01a7336-20c8c348a05sm13714415ad.282.2024.10.10.14.50.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 10 Oct 2024 14:52:11 -0700 (PDT)
+ Thu, 10 Oct 2024 14:50:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>,
@@ -65,17 +65,18 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
  =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v2 14/16] target/mips: Expose MIPSCPU::is_big_endian property
-Date: Thu, 10 Oct 2024 18:50:12 -0300
-Message-ID: <20241010215015.44326-15-philmd@linaro.org>
+Subject: [PATCH v2 04/16] target/mips: Replace MO_TE by mo_endian_env() in
+ get_pte()
+Date: Thu, 10 Oct 2024 18:50:02 -0300
+Message-ID: <20241010215015.44326-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241010215015.44326-1-philmd@linaro.org>
 References: <20241010215015.44326-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -98,67 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the "big-endian" property and set the CP0C0_BE bit in CP0_Config0.
+Replace compile-time MO_TE evaluation by runtime mo_endian_env()
+one, which expand target endianness from vCPU env.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- target/mips/cpu.h |  3 +++
- target/mips/cpu.c | 12 ++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ target/mips/tcg/sysemu/tlb_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 3e906a175a3..070e11fe0da 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1209,6 +1209,9 @@ struct ArchCPU {
+diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+index 3836137750e..e98bb959517 100644
+--- a/target/mips/tcg/sysemu/tlb_helper.c
++++ b/target/mips/tcg/sysemu/tlb_helper.c
+@@ -601,7 +601,7 @@ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, MemOp op,
+         return false;
+     }
  
-     Clock *clock;
-     Clock *count_div; /* Divider for CP0_Count clock */
-+
-+    /* Properties */
-+    bool is_big_endian;
- };
- 
- /**
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 89655b1900f..04bf4b11db2 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -200,10 +200,8 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
- 
-     /* Reset registers to their default values */
-     env->CP0_PRid = env->cpu_model->CP0_PRid;
--    env->CP0_Config0 = env->cpu_model->CP0_Config0;
--#if TARGET_BIG_ENDIAN
--    env->CP0_Config0 |= (1 << CP0C0_BE);
--#endif
-+    env->CP0_Config0 = deposit32(env->cpu_model->CP0_Config0,
-+                                 CP0C0_BE, 1, cpu->is_big_endian);
-     env->CP0_Config1 = env->cpu_model->CP0_Config1;
-     env->CP0_Config2 = env->cpu_model->CP0_Config2;
-     env->CP0_Config3 = env->cpu_model->CP0_Config3;
-@@ -541,6 +539,11 @@ static const struct SysemuCPUOps mips_sysemu_ops = {
- };
- #endif
- 
-+static Property mips_cpu_properties[] = {
-+    DEFINE_PROP_BOOL("big-endian", MIPSCPU, is_big_endian, TARGET_BIG_ENDIAN),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
- #ifdef CONFIG_TCG
- #include "hw/core/tcg-cpu-ops.h"
- /*
-@@ -571,6 +574,7 @@ static void mips_cpu_class_init(ObjectClass *c, void *data)
-     DeviceClass *dc = DEVICE_CLASS(c);
-     ResettableClass *rc = RESETTABLE_CLASS(c);
- 
-+    device_class_set_props(dc, mips_cpu_properties);
-     device_class_set_parent_realize(dc, mips_cpu_realizefn,
-                                     &mcc->parent_realize);
-     resettable_class_set_parent_phases(rc, NULL, mips_cpu_reset_hold, NULL,
+-    oi = make_memop_idx(op | MO_TE, ptw_mmu_idx);
++    oi = make_memop_idx(op | mo_endian_env(env), ptw_mmu_idx);
+     if (op == MO_64) {
+         *pte = cpu_ldq_mmu(env, vaddr, oi, 0);
+     } else {
 -- 
 2.45.2
 
