@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4AFECED611
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB656CEDDA3
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sygtx-0003NS-Qp; Wed, 09 Oct 2024 20:19:33 -0400
+	id 1sygyH-00051d-I5; Wed, 09 Oct 2024 20:24:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygtw-0003NJ-1F
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:19:32 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1sygyF-00051M-Vo
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:23:59 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygtt-0003Ib-IK
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:19:31 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7e9f355dd5dso150487a12.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:19:29 -0700 (PDT)
+ id 1sygyE-00042Q-DL
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:23:59 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7ea0ff74b15so195748a12.3
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728519568; x=1729124368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728519837; x=1729124637; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r9mont+MjhVPO1kutSQjn+mT+7O2jKyUJ35wz2oqUPM=;
- b=AfGBkDXt1nf/POGHaPk4JySeDOcTcJpIhwsCYzabIreYwFLYEujYmastiCFqWieQY3
- JRx5b/zUsoWk8+x3bBHgCn+W2VdNyTinRAjmq499TlAOOspAJw9+LgrY0T4UVH9AmuW7
- EVNE3F7OIieisG3pEWBChwfmCRwrKfRkjM5LZ+6PLYFbpkprae5MoJJJRYHD2pHyg+0T
- llz4HILJ4NMfg7DKy12mXsDRPFS9u+lRdqq9wHlq+MHrlIaiakHEO1Q+TikItNZP82bS
- LjAawNg4Xm3Sl15YEWpXFNtCMMDrDZh/RvWDiV7sZFUBGHVKkd3XSS+8/LSimI2k+Vxt
- JyfQ==
+ bh=iJLWOt9kK8ZViWbwNa7SGeOWpd/yG0CKREpAbHlXAd0=;
+ b=P1q7K9X6ralQ8Xq8eeOmr3pG1JzoyPdVOBOWWZc+rkwS8IgQKrja2QG8n7IozyxrlI
+ pwPgGix9UTGXPu8VZkCQToGtPyKwmNelFqwIphdNesKgxAa7QitcXbMnwkqNeArpuWXE
+ uQLYjZdAMDSeuis4TKgPEpeIaKyYxC8UQVZ1YOp7CZYZWAj7XDqP4AvPvjbUUd4W/ZeH
+ yQpEROO5RrJDgk3M9UwkobLOSL8UlDIC8pDdcffj7yop+1TDj08/GoqwtTwCdR2u2zGV
+ 1pSCfOlCUuYi/DSo2SZKmnoTTU5I7TbzYhWt9bWIuE6JL4UQbJ+4iINTANTGQehHMCjW
+ fH1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728519568; x=1729124368;
+ d=1e100.net; s=20230601; t=1728519837; x=1729124637;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r9mont+MjhVPO1kutSQjn+mT+7O2jKyUJ35wz2oqUPM=;
- b=mYDlLgcRr4E35JMsG3WK+rG+XGXgAjQT17cGqlsJ3AHDokMwNmB1bS+S20jMaMF5v/
- OIqWRVV2GkP6CFXplUqGPQ0ojUnU55FNDvE+vdNAkldgy8eIlnyBiG0fvUzn0n2kgWuZ
- 515/2b4nHkKePKkhVZUzP0LB15h5OfvqFFoFes2OIkRyZUHZZ0NbDHFG7cF450QrbvZm
- 6kntSaqj3+KEHVG4KYabz5+Oy88CWtMhZf7JA1FejfCabhXtBhidmuyIqKnGc4yZ6VBP
- xcU3/OdYiSRih5RbGnBrrhA8e71lEKcFeke2bxz3uJKlH0fTbtZQ1htrx+Et2WP3JaDQ
- fYkQ==
+ bh=iJLWOt9kK8ZViWbwNa7SGeOWpd/yG0CKREpAbHlXAd0=;
+ b=UMAZ5s4WB0MhVaLLGy7/MfMF4Rdya+T4mS/i9jQm0NYbizE57cpRlrS6SxkNymfUt/
+ 1JicDmi/mwXQr2sLhCOiN30izJ5/EHsE5ZE8+E09w8CRqTxpcYx9g0AXrCYb5yPEqhVG
+ 1LWr0kHpm7BQ1BmL+huu6YNuarKBxFuj2njsC7QMsOD+qSv6ex3quO/L/CfAdWdnq8ay
+ 2UUrAzr/5eM6uBu4eXk8z9qBOvBwx2L0EmB9KgLFU9DLoLCtPGgdJte5gkqcsW548dhr
+ 3YHCvSFL5gRHPfH2zWsxGIB4Hx4pYfUjGOCbm05nzIWM5JHqlJ9ZTv7OjthxvfRzVzla
+ Z24w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIA/jULnJFPsZBHZtIOjzDmDdptb8ySYo86kHKjoiilB3BzNecBDPGvIPwUzcC1DdXytQf6nPVxIFY@nongnu.org
-X-Gm-Message-State: AOJu0YzagFdiQn5K0ZtRDSGmZ9DHXzc/BtTmf0MtAk0VxoJ4VnmR2PsR
- qpv9cqMbWGBB+8EOIG/bs+xDq7Rf8SYZFccGH3p/KBVuBw7kDUdAHICQqLVTvRo=
-X-Google-Smtp-Source: AGHT+IG4tri9bzXHcXl5ehC7uO91BQgxHAilawGTRdlKfg3eaxCkDjkZbproSxTPWs9ZnMl10YH32A==
-X-Received: by 2002:a05:6a21:9103:b0:1d2:e807:b940 with SMTP id
- adf61e73a8af0-1d8a3cf65d5mr5920260637.50.1728519568182; 
- Wed, 09 Oct 2024 17:19:28 -0700 (PDT)
+ AJvYcCX2r03s/YIkn28oVNsJGyN847XOYcBqWGbakgUbr3YPcuOscaeDAxwfMujUasio6o67SwVAj7hcJ4cj@nongnu.org
+X-Gm-Message-State: AOJu0YwT9PVZN520b/BHgKiLdjXnVhKCjUAAY00+WF5TzfHqrq93HQ5K
+ 4VzStAoqI4I4BS0VKvB9CcDmehSVpmsDf5zBZVhf9FGnvBVt+iRIEVftx55M/dc=
+X-Google-Smtp-Source: AGHT+IEfiGlHtAOAWkgI3zdTovSt1JyXnQikOEMywJ1UorRbXCXlGsNJCFsy1SGwuYl/ZRDk2/6fEA==
+X-Received: by 2002:a17:902:e546:b0:20b:532d:bb17 with SMTP id
+ d9443c01a7336-20c63915469mr72287875ad.54.1728519836818; 
+ Wed, 09 Oct 2024 17:23:56 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e2aaba5a1sm6904b3a.175.2024.10.09.17.19.27
+ d9443c01a7336-20c8c0f2272sm77905ad.136.2024.10.09.17.23.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 17:19:27 -0700 (PDT)
-Message-ID: <f79fd425-4010-4d56-9cb3-8d6471fcbb3a@linaro.org>
-Date: Wed, 9 Oct 2024 17:19:27 -0700
+ Wed, 09 Oct 2024 17:23:56 -0700 (PDT)
+Message-ID: <32195e57-9e94-4060-80cb-911505813788@linaro.org>
+Date: Wed, 9 Oct 2024 17:23:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/23] accel/tcg: Delay plugin adjustment in
- probe_access_internal
+Subject: Re: [PATCH 18/23] accel/tcg: Call cpu_ld*_code_mmu from cpu_ld*_code
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-18-richard.henderson@linaro.org>
+ <20241009150855.804605-19-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-18-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-19-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,45 +98,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> Remove force_mmio and place the expression into the IF
-> expression, behind the short-circuit logic expressions
-> that might eliminate its computation.
+> Ensure a common entry point for all code lookups.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+>   accel/tcg/cputlb.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 561f66c723..59ee766d51 100644
+> index 59ee766d51..61daa89e06 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -1403,7 +1403,6 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
->       uint64_t tlb_addr = tlb_read_idx(entry, access_type);
->       vaddr page_addr = addr & TARGET_PAGE_MASK;
->       int flags = TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
-> -    bool force_mmio = check_mem_cbs && cpu_plugin_mem_cbs_enabled(cpu);
->       CPUTLBEntryFull *full;
+> @@ -2954,28 +2954,28 @@ uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
+>   {
+>       CPUState *cs = env_cpu(env);
+>       MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
+> -    return do_ld1_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+> +    return cpu_ldb_code_mmu(env, addr, oi, 0);
+>   }
 >   
->       if (!tlb_hit_page(tlb_addr, page_addr)) {
-> @@ -1434,9 +1433,14 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
->       *pfull = full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
->       flags |= full->slow_flags[access_type];
+>   uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
+>   {
+>       CPUState *cs = env_cpu(env);
+>       MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
+> -    return do_ld2_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+> +    return cpu_ldw_code_mmu(env, addr, oi, 0);
+>   }
 >   
-> -    /* Fold all "mmio-like" bits into TLB_MMIO.  This is not RAM.  */
-> -    if (unlikely(flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED))
-> -        || (access_type != MMU_INST_FETCH && force_mmio)) {
-> +    /*
-> +     * Fold all "mmio-like" bits, and required plugin callbacks, to TLB_MMIO.
-> +     * These cannot be treated as RAM.
-> +     */
-> +    if ((flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED))
-> +        || (access_type != MMU_INST_FETCH
-> +            && check_mem_cbs
-> +            && cpu_plugin_mem_cbs_enabled(cpu))) {
->           *phost = NULL;
->           return TLB_MMIO;
->       }
+>   uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
+>   {
+>       CPUState *cs = env_cpu(env);
+>       MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
+> -    return do_ld4_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+> +    return cpu_ldl_code_mmu(env, addr, oi, 0);
+>   }
+>   
+>   uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+>   {
+>       CPUState *cs = env_cpu(env);
+>       MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
+> -    return do_ld8_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+> +    return cpu_ldq_code_mmu(env, addr, oi, 0);
+>   }
+>   
+>   uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
+
+This will still call the same functions behind _code_mmu variants, but I 
+guess it's more coherent overall.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
