@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EAD5CF07C4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 08:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE566CF07D5
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 08:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syofa-0006Eq-AJ; Thu, 10 Oct 2024 04:37:14 -0400
+	id 1syp0z-0001nG-FE; Thu, 10 Oct 2024 04:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syofR-0006DF-Pt
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:37:06 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1syofO-00076g-JS
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:37:04 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2fac187eef2so6738901fa.3
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 01:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728549420; x=1729154220; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=68oPv/5lbNaKJwpFDSbXIcpydRwcruQgV79enYFEGiA=;
- b=A8sXHpL6anIfhMdbvlnSKpcd5quENwfEe76YoFYkBP/E4Wx+eYUqrZR82hEbJ3BhG0
- gbyBc+wOaR1K+whiY0VYfLvhV+ffBCKpMewdiBlrxHkA1q6lefjz2QoOTbfwIg4NO56W
- /F7Ql3c7kTITNLwW2/yODP/JdEx84+VZYmuzHDFEchrLOLiI+lHn7NEL4ogbddh6Zg57
- jdhCyxb1Kn88HULoWmJtRHLcEYQ3W+pd7+rfdRjSi6huKerlha7aHvLkmeRR0jk2JrVS
- OT0gAioHxNY5hXoiaGn+oCDkAZuEZp4mr3xFJty3qEJkyPFwmRsPqZSrW0zZ/LuTZVzs
- 7lbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728549420; x=1729154220;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=68oPv/5lbNaKJwpFDSbXIcpydRwcruQgV79enYFEGiA=;
- b=JUf1VxiB1DVPa6BT4PyJpP3wloItiss2mznA56Tfn9tZgJTeBKy4arn2HD4oyd+CB0
- bIRku3nazL4jQCksOfa470IFiFJ/f0OlE5Edm6sesg4ghkz0vfjIBFinYOkltII36Oeb
- JCGfWhCVpJTWWrvncOTMdBaIXK/C3JslrlsYwX+mwvMuoITHkYLiWLwjhyBHLA1nF4Tg
- +N7tgLHg06UyDL1psXFbmeqV0aiIrRMS2XYJInai0vm7eWCp//sm8nra6rU9o5Qw1sFu
- E0er45w+SCtaOPhIg72BPkfrqbjrwzK3g63X2Kffvv3eeuiBt5JNIXW688Be4tlXH8PR
- 5ecQ==
-X-Gm-Message-State: AOJu0YytejZ5rNISRBfel8Y197SRLMtuHBI+kizDW0F8ogmVfWYwjt8f
- pCbyLakGKN2dPeBW+s9g8waoHw2TW2p/lkYaX9TgmjvBQ4UVL1hghIG0NP3EyRBBffvG2+KFMSs
- KwMOx3x9yUjkhj27bpmh3/GMM/To=
-X-Google-Smtp-Source: AGHT+IHr0E41COjjJsHBUmeDXz2n6rocqhodGsgv+oCW2TUfWs+A0BP+Lf2lK2nirMrvURhvSqFpqI7YDcTiOR2l5kE=
-X-Received: by 2002:a2e:bc1f:0:b0:2fa:cf5b:1e8e with SMTP id
- 38308e7fff4ca-2fb1872ba6amr34044381fa.2.1728549419910; Thu, 10 Oct 2024
- 01:36:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syp0v-0001mx-Td
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:59:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1syp0t-0000lJ-R9
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:59:17 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A3q0Dm010535;
+ Thu, 10 Oct 2024 08:59:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=0k/90225PfmsawXvOrc4u45sff
+ LLNM+hO3b+T8MZoCE=; b=Cx/tb2IBuI6V3sN+m8220HH7fkcDWzbiIGANETpToV
+ nsvJBE6dlPpjPOp20lEpuhNrGaCbj4bvFfhvjIakXSng1eWBrOk8lE4l3OCxrGdr
+ ZQ41OYSlhsu1jwMLn17kkbLr1FJfC+zUjUMkUs7bY/MzT0ZloeocTOPIy+4z34lG
+ eK/uJvVslBUynERLwoiW3c0pYuLv9o761rZVL+ogcLMPvT0zcS9u56WRfXZgo2qE
+ NpVK8VDDEYTJIpOufg6UuCYDpwRxHnJQAuLdopiD5ZclWOfQWD/Wvis1iJhKzLdX
+ 5zONMRg1Fl7pMxM62lmoVbX5CE8gllkbTgq3pebgOhEw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4267cmsde9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Oct 2024 08:59:12 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49A8tGlx013833;
+ Thu, 10 Oct 2024 08:59:11 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fsseyy6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Oct 2024 08:59:11 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49A8x77p53149974
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Oct 2024 08:59:07 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C4FA2004E;
+ Thu, 10 Oct 2024 08:59:07 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5A8CC20040;
+ Thu, 10 Oct 2024 08:59:07 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.88.135])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Oct 2024 08:59:07 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] tests/tcg: Do not use inttypes.h in multiarch/system/memory.c
+Date: Thu, 10 Oct 2024 10:58:55 +0200
+Message-ID: <20241010085906.226249-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-References: <20241009174517.286935-1-r.peniaev@gmail.com>
- <CAJ+F1C+JrO3zVEcFKSB2nm6xyY8HmLhAg_ZSXfwTzQcf3+rE+A@mail.gmail.com>
-In-Reply-To: <CAJ+F1C+JrO3zVEcFKSB2nm6xyY8HmLhAg_ZSXfwTzQcf3+rE+A@mail.gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Thu, 10 Oct 2024 10:34:58 +0200
-Message-ID: <CACZ9PQWb0J9buW_hpNf6HqnrLHcE5TBdxY6cqivRRB+CCNCQjA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] chardev: implement backend chardev multiplexing
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zcSvPXeL6-1uo30zgKK91f6CtIHwzN-K
+X-Proofpoint-GUID: zcSvPXeL6-1uo30zgKK91f6CtIHwzN-K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-10_05,2024-10-09_02,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ phishscore=0 mlxlogscore=964 mlxscore=0 spamscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410100056
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,55 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+make check-tcg fails on Fedora with the following error message:
 
-On Wed, Oct 9, 2024 at 8:23=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
+    alpha-linux-gnu-gcc [...] qemu/tests/tcg/multiarch/system/memory.c -o memory [...]
+    qemu/tests/tcg/multiarch/system/memory.c:17:10: fatal error: inttypes.h: No such file or directory
+       17 | #include <inttypes.h>
+          |          ^~~~~~~~~~~~
+    compilation terminated.
 
-[cut]
+The reason is that Fedora has cross-compilers, but no cross-glibc
+headers. Fix by hardcoding the format specifiers and dropping the
+include.
 
->
->
-> Please rebase, it fails to apply cleanly on master.
+An alternative fix would be to introduce a configure check for
+inttypes.h. But this would make it impossible to use Fedora
+cross-compilers for softmmu tests, which used to work so far.
 
-Yep.
+Fixes: ecbcc9ead2f8 ("tests/tcg: add a system test to check memory instrumentation")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/multiarch/system/memory.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
->
-> Can you try to split MuxChardev in a base common class? You could have Mu=
-xBase or simply Mux abstract, with MuxFe (for 'mux') & MuxBe (for 'mux-be')=
-. This should clarify the code a bit and avoid sharing the same struct with=
- unused fields.
+diff --git a/tests/tcg/multiarch/system/memory.c b/tests/tcg/multiarch/system/memory.c
+index 65a6038a241..7508f6b916d 100644
+--- a/tests/tcg/multiarch/system/memory.c
++++ b/tests/tcg/multiarch/system/memory.c
+@@ -14,7 +14,6 @@
+ 
+ #include <stdint.h>
+ #include <stdbool.h>
+-#include <inttypes.h>
+ #include <minilib.h>
+ 
+ #ifndef CHECK_UNALIGNED
+@@ -511,8 +510,8 @@ int main(void)
+     int i;
+     bool ok = true;
+ 
+-    ml_printf("Test data start: 0x%"PRIxPTR"\n", &test_data[0]);
+-    ml_printf("Test data end: 0x%"PRIxPTR"\n", &test_data[TEST_SIZE]);
++    ml_printf("Test data start: 0x%lx\n", (unsigned long)&test_data[0]);
++    ml_printf("Test data end: 0x%lx\n", (unsigned long)&test_data[TEST_SIZE]);
+ 
+     /* Run through the unsigned tests first */
+     for (i = 0; i < ARRAY_SIZE(init_ufns) && ok; i++) {
+@@ -529,8 +528,8 @@ int main(void)
+         ok = do_signed_reads(true);
+     }
+ 
+-    ml_printf("Test data read: %"PRId32"\n", test_read_count);
+-    ml_printf("Test data write: %"PRId32"\n", test_write_count);
++    ml_printf("Test data read: %lu\n", (unsigned long)test_read_count);
++    ml_printf("Test data write: %lu\n", (unsigned long)test_write_count);
+     ml_printf("Test complete: %s\n", ok ? "PASSED" : "FAILED");
+     return ok ? 0 : -1;
+ }
+-- 
+2.46.2
 
-I can give it a try. Let's see how it goes.
-
---
-Roman
-
-
->
-> Thanks for the tests, that helps a lot!
->
->>
->>  chardev/char-fe.c          |  14 ++-
->>  chardev/char-mux.c         | 212 +++++++++++++++++++++++++++++++-----
->>  chardev/char.c             |  57 ++++++++--
->>  chardev/chardev-internal.h |  33 +++++-
->>  include/chardev/char.h     |   1 +
->>  qapi/char.json             |   9 +-
->>  qemu-options.hx            |  46 +++++++-
->>  tests/unit/test-char.c     | 217 ++++++++++++++++++++++++++++++++++++-
->>  8 files changed, 538 insertions(+), 51 deletions(-)
->>
->> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
->> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
->> Cc: qemu-devel@nongnu.org
->>
->> --
->> 2.43.0
->>
->>
->
->
-> --
-> Marc-Andr=C3=A9 Lureau
 
