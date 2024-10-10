@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B92CEDDA3
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C28CEDDA3
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 00:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syglk-0000ha-UJ; Wed, 09 Oct 2024 20:11:05 -0400
+	id 1sygnR-0001Nb-OP; Wed, 09 Oct 2024 20:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sygli-0000gN-1g
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:11:02 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1sygnQ-0001NR-3G
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:12:48 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syglg-0001sy-66
- for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:11:01 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7db90a28cf6so1093130a12.0
- for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:10:59 -0700 (PDT)
+ id 1sygnN-00023n-Up
+ for qemu-devel@nongnu.org; Wed, 09 Oct 2024 20:12:47 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2e2d1858cdfso77616a91.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Oct 2024 17:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728519058; x=1729123858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728519164; x=1729123964; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NaRmKnK0sOe7YHiifiFufAPMmqmP8oGQl4kXWwOmgXg=;
- b=GG2+0CW8zOv3gDk7W1ZdLKPY2eJwKNiEQjzvgKb72uQKS8TcPT6MdNhXiBWMTEMc5C
- qJPIOFKJEnNOtnz1nXM6gQf1QMxB+PqCWyyZMWbPQr9qrYDs3YtAJmyQb94O8DwdR44t
- ZklfugaNohFMkK+S+WfBEwiIhDHpVxAilKcKG5B4hFHXiXfZw2AC47fal8BLJfLS/Y5g
- a8YnPacALw8Ot0PnPru5FwVXNhEpzfeEbPkRc0OJXg8FVS6su6lOENaMnRwlh53IDoDW
- J/+83bznjszGj1hV6vx1WGzCpfKo2TZDr5957rZ8Hrw+6cCRGQe2vAjpiXm4C3cBoOVX
- QwSQ==
+ bh=vJ672/VxZX/bhuRaPwLKTUs+vxI22kwq/zYcsUx9myY=;
+ b=CarUxEOO93FNYvIV6jUa1lPSUkVWLhoHJFvAtuLL22j3L6sT2FRzrK0q+ECmujFh2u
+ cS1Qp6QUz11GNpvUNOfdAU8CtbQEIZQlnB25vszy4KvWrT5MQj63bwYbuOQlXsOhMLX3
+ 2SAFbl9nYbu59vipanLQDKHgCV4m1GHc/BorHdAWjFunyvYcE5aWEiXRRtr7LS+WN87E
+ 6jtMEo9m9vw1X7u1CppjfkO+mjHX7aBJ7dHfo5dteA5Xc+JAfh8zlbnWornY5YbX561B
+ wt59tNAO96wm5ouq7pzgMVvEm7KbDe6U4SqFeK+gabqVa0Qr8IL3Pel3RqXH2GvrNW6o
+ LL+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728519058; x=1729123858;
+ d=1e100.net; s=20230601; t=1728519164; x=1729123964;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NaRmKnK0sOe7YHiifiFufAPMmqmP8oGQl4kXWwOmgXg=;
- b=qQCxg2VrQAKctOkT20JvZa0uSZIC2mLRZRBZ0hBYATRTe4xHe+Ax6WdLBP5xXu/sbD
- 6lE5vknDHWwDkPMPrKBzmS8Dtq7Op00YKfiOMY9KY8zdMUjoMTECLkcXNX+p8D7bMoMj
- qluAVSdb7fdYRZzfUryn0rkqroTmChpIXATYOjl8qtlkVTo5P0mW3ey2nLyoFOh3giuV
- FfpzkIB9ZK74PhageWtOqk6v4M4PC50qt7Mwt86aaK0jCv6jUPpZL78g+BMN7p7T/yAZ
- CnGpBof7x+g5UoE2hNq2WKyQRS2/p+UL6Rjhgy3b9l8VKwx8DAaV21OnWWj0idVTADUE
- 3nRA==
+ bh=vJ672/VxZX/bhuRaPwLKTUs+vxI22kwq/zYcsUx9myY=;
+ b=kB9KFs8xJgu/WFziLsZ+eounGjjQXgDDp+NOWj4eUlzOBIF9wKHe+G2VAxaCwLdRKr
+ 3/dthDarcox0LN0VEjNdabuPgNh0v2XaOM/unIcwFDhEPCvEjArxyrtt361Ul01onqg+
+ GgbKFYJ3NKjY11JJCMfN0w8A0eYBAKaoRGODyifUQ4BMfhFTLIgJusbWhOAcVrbodULb
+ FBzq3hnBGkosk/sJR86jQFNXE4ZLn5lB/eoQWCf/7m/LsV5F75CoYp1q/QnsBJxz5KP8
+ JBd4BIeptyIKDzhEdo5s1LRFUQPkka5U1dMxwRbRWXmqOQE2xoEkSjJzp7dkNJWDprgC
+ 5wcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0qEE7vQhKxo6eiGzs0aCkYUuFLRrSdPrlGENI+WR1qY8gb3xdmZWRVE/R/WIsYRu2/Ye8WioHPKob@nongnu.org
-X-Gm-Message-State: AOJu0YwqNp5IHKvbmIoMlnUsMmMzUdI0zEOM5nYLTlUG4Gy6wZr0qob+
- g5POE1xbeGcFw5dL1QnAPSroNzfkcY4i3LfF4zmMQTXMhbPcE6KRpqo+EPXgb0eXGaepMjhHqxw
- TjfI=
-X-Google-Smtp-Source: AGHT+IFHzoHSFZMQgbGWVosWhqmUf3dT7dMft5rkjy/PrD089SKhJxH6lIJetO9Ja/2IZYXfdAsoHQ==
-X-Received: by 2002:a17:90a:ee8e:b0:2d8:85fc:464c with SMTP id
- 98e67ed59e1d1-2e2c8059fe0mr2201340a91.11.1728519058370; 
- Wed, 09 Oct 2024 17:10:58 -0700 (PDT)
+ AJvYcCX0nYNAFuCoB0urhF4SkFI+NkSpXsBcHycjrriEFL8ofxAtkOkz6PJAgaCq5V/UrnK6n+mZJwvHaCZf@nongnu.org
+X-Gm-Message-State: AOJu0YyzuEQ1wJVSMv0g8tOn01hFAnHUOV0hjRt/cB2ztq8psNd1Aoad
+ zKNwVxMH3WHGehno7VhVs6AcsX7JZt0f3cMWmo70WBJf+sd/f1T3p6VyycUBuoY=
+X-Google-Smtp-Source: AGHT+IGwBth7thShkGp4Hb5sUL8aM5y6XEaENpqsVG3WMn1UdVa85E731K0Pj3RbY/yWQH874ZioHQ==
+X-Received: by 2002:a17:90b:3613:b0:2e2:cf5c:8ee3 with SMTP id
+ 98e67ed59e1d1-2e2cf5c9025mr761597a91.10.1728519164367; 
+ Wed, 09 Oct 2024 17:12:44 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2a571a2ecsm2322682a91.33.2024.10.09.17.10.57
+ 98e67ed59e1d1-2e2d5fa5f49sm29343a91.46.2024.10.09.17.12.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Oct 2024 17:10:57 -0700 (PDT)
-Message-ID: <a55f268b-ca9c-49b9-b6f2-8bb9c0b966d0@linaro.org>
-Date: Wed, 9 Oct 2024 17:10:57 -0700
+ Wed, 09 Oct 2024 17:12:42 -0700 (PDT)
+Message-ID: <47e0d746-17fb-4e0f-87c1-cd9cfda4bde3@linaro.org>
+Date: Wed, 9 Oct 2024 17:12:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/23] accel/tcg: Replace victim_tlb_hit with tlbtree_hit
+Subject: Re: [PATCH 15/23] accel/tcg: Remove the victim tlb
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-15-richard.henderson@linaro.org>
+ <20241009150855.804605-16-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241009150855.804605-15-richard.henderson@linaro.org>
+In-Reply-To: <20241009150855.804605-16-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,118 +98,164 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/9/24 08:08, Richard Henderson wrote:
-> Change from a linear search on the victim tlb
-> to a balanced binary tree search on the interval tree.
+> This has been functionally replaced by the IntervalTree.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/cputlb.c | 62 +++++++++++++++++++++++-----------------------
->   1 file changed, 31 insertions(+), 31 deletions(-)
+>   include/hw/core/cpu.h |  8 ------
+>   accel/tcg/cputlb.c    | 64 -------------------------------------------
+>   2 files changed, 72 deletions(-)
 > 
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index b567abe3e2..87b864f5c4 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -198,9 +198,6 @@ struct CPUClass {
+>    */
+>   #define NB_MMU_MODES 16
+>   
+> -/* Use a fully associative victim tlb of 8 entries. */
+> -#define CPU_VTLB_SIZE 8
+> -
+>   /*
+>    * The full TLB entry, which is not accessed by generated TCG code,
+>    * so the layout is not as critical as that of CPUTLBEntry. This is
+> @@ -282,11 +279,6 @@ typedef struct CPUTLBDesc {
+>       /* maximum number of entries observed in the window */
+>       size_t window_max_entries;
+>       size_t n_used_entries;
+> -    /* The next index to use in the tlb victim table.  */
+> -    size_t vindex;
+> -    /* The tlb victim table, in two parts.  */
+> -    CPUTLBEntry vtable[CPU_VTLB_SIZE];
+> -    CPUTLBEntryFull vfulltlb[CPU_VTLB_SIZE];
+>       CPUTLBEntryFull *fulltlb;
+>       /* All active tlb entries for this address space. */
+>       IntervalTreeRoot iroot;
 > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index ec989f1290..b10b0a357c 100644
+> index b10b0a357c..561f66c723 100644
 > --- a/accel/tcg/cputlb.c
 > +++ b/accel/tcg/cputlb.c
-> @@ -1398,36 +1398,38 @@ static void io_failed(CPUState *cpu, CPUTLBEntryFull *full, vaddr addr,
->       }
+> @@ -328,8 +328,6 @@ static void tlb_mmu_flush_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast)
+>       tlbfast_flush_locked(desc, fast);
+>       desc->large_page_addr = -1;
+>       desc->large_page_mask = -1;
+> -    desc->vindex = 0;
+> -    memset(desc->vtable, -1, sizeof(desc->vtable));
+>       interval_tree_free_nodes(&desc->iroot, offsetof(CPUTLBEntryTree, itree));
 >   }
 >   
-> -/* Return true if ADDR is present in the victim tlb, and has been copied
-> -   back to the main tlb.  */
-> -static bool victim_tlb_hit(CPUState *cpu, size_t mmu_idx, size_t index,
-> -                           MMUAccessType access_type, vaddr page)
-> +/*
-> + * Return true if ADDR is present in the interval tree,
-> + * and has been copied back to the main tlb.
-> + */
-> +static bool tlbtree_hit(CPUState *cpu, int mmu_idx,
-> +                        MMUAccessType access_type, vaddr addr)
->   {
-> -    size_t vidx;
-> +    CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
-> +    CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
-> +    CPUTLBEntryTree *node;
-> +    size_t index;
+> @@ -501,15 +499,6 @@ static inline bool tlb_hit_page_anyprot(CPUTLBEntry *tlb_entry, vaddr page)
+>       return tlb_hit_page_mask_anyprot(tlb_entry, page, -1);
+>   }
 >   
->       assert_cpu_is_self(cpu);
-> -    for (vidx = 0; vidx < CPU_VTLB_SIZE; ++vidx) {
-> -        CPUTLBEntry *vtlb = &cpu->neg.tlb.d[mmu_idx].vtable[vidx];
-> -        uint64_t cmp = tlb_read_idx(vtlb, access_type);
+> -/**
+> - * tlb_entry_is_empty - return true if the entry is not in use
+> - * @te: pointer to CPUTLBEntry
+> - */
+> -static inline bool tlb_entry_is_empty(const CPUTLBEntry *te)
+> -{
+> -    return te->addr_read == -1 && te->addr_write == -1 && te->addr_code == -1;
+> -}
 > -
-> -        if (cmp == page) {
-> -            /* Found entry in victim tlb, swap tlb and iotlb.  */
-> -            CPUTLBEntry tmptlb, *tlb = &cpu->neg.tlb.f[mmu_idx].table[index];
+>   /* Called with tlb_c.lock held */
+>   static bool tlb_flush_entry_mask_locked(CPUTLBEntry *tlb_entry,
+>                                           vaddr page,
+> @@ -527,28 +516,6 @@ static inline bool tlb_flush_entry_locked(CPUTLBEntry *tlb_entry, vaddr page)
+>       return tlb_flush_entry_mask_locked(tlb_entry, page, -1);
+>   }
+>   
+> -/* Called with tlb_c.lock held */
+> -static void tlb_flush_vtlb_page_mask_locked(CPUState *cpu, int mmu_idx,
+> -                                            vaddr page,
+> -                                            vaddr mask)
+> -{
+> -    CPUTLBDesc *d = &cpu->neg.tlb.d[mmu_idx];
+> -    int k;
 > -
-> -            qemu_spin_lock(&cpu->neg.tlb.c.lock);
-> -            copy_tlb_helper_locked(&tmptlb, tlb);
-> -            copy_tlb_helper_locked(tlb, vtlb);
-> -            copy_tlb_helper_locked(vtlb, &tmptlb);
-> -            qemu_spin_unlock(&cpu->neg.tlb.c.lock);
-> -
-> -            CPUTLBEntryFull *f1 = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-> -            CPUTLBEntryFull *f2 = &cpu->neg.tlb.d[mmu_idx].vfulltlb[vidx];
-> -            CPUTLBEntryFull tmpf;
-> -            tmpf = *f1; *f1 = *f2; *f2 = tmpf;
-> -            return true;
+> -    assert_cpu_is_self(cpu);
+> -    for (k = 0; k < CPU_VTLB_SIZE; k++) {
+> -        if (tlb_flush_entry_mask_locked(&d->vtable[k], page, mask)) {
+> -            tlb_n_used_entries_dec(cpu, mmu_idx);
 > -        }
-> +    node = tlbtree_lookup_addr(desc, addr);
-> +    if (!node) {
-> +        /* There is no cached mapping for this page. */
-> +        return false;
->       }
-> -    return false;
-> +
-> +    if (!tlb_hit(tlb_read_idx(&node->copy, access_type), addr)) {
-> +        /* This access is not permitted. */
-> +        return false;
-> +    }
-
-This is not something we were checking before. If this is an addition, 
-maybe it would be better to split this out of this commit. Or maybe I 
-missed a step in previous commits :)
-
-> +
-> +    /* Install the cached entry. */
-> +    index = tlbfast_index(fast, addr);
-> +    qemu_spin_lock(&cpu->neg.tlb.c.lock);
-> +    copy_tlb_helper_locked(&fast->table[index], &node->copy);
-> +    qemu_spin_unlock(&cpu->neg.tlb.c.lock);
-> +
-> +    desc->fulltlb[index] = node->full;
-> +    return true;
->   }
+> -    }
+> -}
+> -
+> -static inline void tlb_flush_vtlb_page_locked(CPUState *cpu, int mmu_idx,
+> -                                              vaddr page)
+> -{
+> -    tlb_flush_vtlb_page_mask_locked(cpu, mmu_idx, page, -1);
+> -}
+> -
+>   static void tlbfast_flush_range_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
+>                                          vaddr addr, vaddr len, vaddr mask)
+>   {
+> @@ -593,7 +560,6 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
 >   
->   static void notdirty_write(CPUState *cpu, vaddr mem_vaddr, unsigned size,
-> @@ -1469,7 +1471,7 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
->       CPUTLBEntryFull *full;
+>       tlbfast_flush_range_locked(desc, &cpu->neg.tlb.f[midx],
+>                                  page, TARGET_PAGE_SIZE, -1);
+> -    tlb_flush_vtlb_page_locked(cpu, midx, page);
 >   
->       if (!tlb_hit_page(tlb_addr, page_addr)) {
-> -        if (!victim_tlb_hit(cpu, mmu_idx, index, access_type, page_addr)) {
-> +        if (!tlbtree_hit(cpu, mmu_idx, access_type, page_addr)) {
->               if (!tlb_fill_align(cpu, addr, access_type, mmu_idx,
->                                   0, fault_size, nonfault, retaddr)) {
->                   /* Non-faulting page table read failed.  */
-> @@ -1749,8 +1751,7 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
+>       node = tlbtree_lookup_addr(desc, page);
+>       if (node) {
+> @@ -769,11 +735,6 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
 >   
->       /* If the TLB entry is for a different page, reload and try again.  */
->       if (!tlb_hit(tlb_addr, addr)) {
-> -        if (!victim_tlb_hit(cpu, mmu_idx, index, access_type,
-> -                            addr & TARGET_PAGE_MASK)) {
-> +        if (!tlbtree_hit(cpu, mmu_idx, access_type, addr)) {
->               tlb_fill_align(cpu, addr, access_type, mmu_idx,
->                              memop, data->size, false, ra);
->               maybe_resized = true;
-> @@ -1929,8 +1930,7 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
->       /* Check TLB entry and enforce page permissions.  */
->       flags = TLB_FLAGS_MASK;
->       if (!tlb_hit(tlb_addr_write(tlbe), addr)) {
-> -        if (!victim_tlb_hit(cpu, mmu_idx, index, MMU_DATA_STORE,
-> -                            addr & TARGET_PAGE_MASK)) {
-> +        if (!tlbtree_hit(cpu, mmu_idx, MMU_DATA_STORE, addr)) {
->               tlb_fill_align(cpu, addr, MMU_DATA_STORE, mmu_idx,
->                              mop, size, false, retaddr);
->               did_tlb_fill = true;
+>       tlbfast_flush_range_locked(d, f, addr, len, mask);
+>   
+> -    for (vaddr i = 0; i < len; i += TARGET_PAGE_SIZE) {
+> -        vaddr page = addr + i;
+> -        tlb_flush_vtlb_page_mask_locked(cpu, midx, page, mask);
+> -    }
+> -
+>       addr_mask = addr & mask;
+>       last_mask = addr_mask + len - 1;
+>       last_imask = last_mask | ~mask;
+> @@ -1031,10 +992,6 @@ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length)
+>               tlb_reset_dirty_range_locked(&fast->table[i], start1, length);
+>           }
+>   
+> -        for (size_t i = 0; i < CPU_VTLB_SIZE; i++) {
+> -            tlb_reset_dirty_range_locked(&desc->vtable[i], start1, length);
+> -        }
+> -
+>           for (CPUTLBEntryTree *t = tlbtree_lookup_range(desc, 0, -1); t;
+>                t = tlbtree_lookup_range_next(t, 0, -1)) {
+>               tlb_reset_dirty_range_locked(&t->copy, start1, length);
+> @@ -1068,10 +1025,6 @@ static void tlb_set_dirty(CPUState *cpu, vaddr addr)
+>   
+>           tlb_set_dirty1_locked(tlb_entry(cpu, mmu_idx, addr), addr);
+>   
+> -        for (int k = 0; k < CPU_VTLB_SIZE; k++) {
+> -            tlb_set_dirty1_locked(&desc->vtable[k], addr);
+> -        }
+> -
+>           node = tlbtree_lookup_addr(desc, addr);
+>           if (node) {
+>               tlb_set_dirty1_locked(&node->copy, addr);
+> @@ -1230,23 +1183,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+>       /* Note that the tlb is no longer clean.  */
+>       tlb->c.dirty |= 1 << mmu_idx;
+>   
+> -    /* Make sure there's no cached translation for the new page.  */
+> -    tlb_flush_vtlb_page_locked(cpu, mmu_idx, addr_page);
+> -
+> -    /*
+> -     * Only evict the old entry to the victim tlb if it's for a
+> -     * different page; otherwise just overwrite the stale data.
+> -     */
+> -    if (!tlb_hit_page_anyprot(te, addr_page) && !tlb_entry_is_empty(te)) {
+> -        unsigned vidx = desc->vindex++ % CPU_VTLB_SIZE;
+> -        CPUTLBEntry *tv = &desc->vtable[vidx];
+> -
+> -        /* Evict the old entry into the victim tlb.  */
+> -        copy_tlb_helper_locked(tv, te);
+> -        desc->vfulltlb[vidx] = desc->fulltlb[index];
+> -        tlb_n_used_entries_dec(cpu, mmu_idx);
+> -    }
+> -
+>       /* Replace an old IntervalTree entry, or create a new one. */
+>       node = tlbtree_lookup_addr(desc, addr_page);
+>       if (!node) {
 
-Else, hurrah!
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
