@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754F9CF07DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E13ECEE323
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 09:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sypUZ-0001lR-B2; Thu, 10 Oct 2024 05:29:55 -0400
+	id 1sypUa-0001lx-0x; Thu, 10 Oct 2024 05:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUX-0001kU-5h
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUX-0001ks-OK
  for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:29:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUV-000421-8X
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:29:52 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A3p856009556;
- Thu, 10 Oct 2024 09:29:49 GMT
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sypUV-00042N-Vj
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 05:29:53 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A8K1VO003803;
+ Thu, 10 Oct 2024 09:29:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=dFuj6Hn6kok/C
- BdjstBhKZXei+/iC/1+QozKCBxd9fg=; b=X4R3XwlF0hIJCtul4nPZu6itMj2ZR
- AgTNWuTy/QwZ2kjFtCrzozN5NOxMRa65zyjjT6JT2sG7ZCLjchKTGorD/8AL0nhT
- HGUbwQ5e7xC3jxSztDhFZ3wClj3Ug2g5xJ9BFT4KMSCRuxQqhhImGAtDxyIj3hsE
- jssiR2qC94M4ofT6TVoqs8AUH/cApxviwMvxHr0lKMSmxJo2/WpQHJ8uIWwITB43
- 1c5jj+HgjVm6hxZKld2V7FprNf53pfGfwh7L8+KJFfDhu4honWJnVdsx4hs3Wvf7
- uuUmx3pBIlLiHkaLJPwnUBS43O9RWiVK8rfIAam75JSc29z8K9Op0oUlA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4267cmshrb-1
+ :mime-version:content-transfer-encoding; s=pp1; bh=ETncT5lCyhzwG
+ nMjBB6nolyPPKdi2oajEmG/BBYp5h8=; b=GccHQ2P7W1YOgEJwBnDb1RzxFCkK3
+ aR9yCL27axgnamCOgdw4rMRo/cwKpiF8c5zEZkjMG5IucXZFW42u60EMCDQ4udkh
+ TBzm9cU8w5Bq9Cmz5DVUbXcl4MZ6fVJqKqaY29RZg9ecMcWjn/i67gQQRI4UvmXV
+ 4ChA+xw5iVEBwIRAVPIzPFUFynA1DUqAJVD5TqzvVFCkH5SZcCVuZniIoeoTp8d6
+ hkTgJcYjnyVlSa4hueAKnfsWWuxwJ8CrYEGi+u8Ig/DIpPtUty+XTsPDc0Kv99FZ
+ 0vX4S7KMZ6eCkIbZhWhkXorEnbnjaRtJjqEMuayb6NGaCBGSjyudMolzQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 426bapgapu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Oct 2024 09:29:48 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49A6MGlv022847;
- Thu, 10 Oct 2024 09:29:47 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423h9k6uwn-1
+ Thu, 10 Oct 2024 09:29:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49A8jhvY011505;
+ Thu, 10 Oct 2024 09:29:49 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423g5xy2xu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Oct 2024 09:29:46 +0000
+ Thu, 10 Oct 2024 09:29:49 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49A9TjPT57934148
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49A9TlLM29426406
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Oct 2024 09:29:45 GMT
+ Thu, 10 Oct 2024 09:29:47 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 09FD72004B;
- Thu, 10 Oct 2024 09:29:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 809E32004E;
+ Thu, 10 Oct 2024 09:29:47 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8FAFE20040;
- Thu, 10 Oct 2024 09:29:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3313020040;
+ Thu, 10 Oct 2024 09:29:47 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.88.135])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Oct 2024 09:29:44 +0000 (GMT)
+ Thu, 10 Oct 2024 09:29:47 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 1/4] gdbstub: Make gdb_get_char() static
-Date: Thu, 10 Oct 2024 11:26:56 +0200
-Message-ID: <20241010092938.226868-2-iii@linux.ibm.com>
+Subject: [PATCH 4/4] gdbstub: Factor out gdb_try_stop()
+Date: Thu, 10 Oct 2024 11:26:59 +0200
+Message-ID: <20241010092938.226868-5-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241010092938.226868-1-iii@linux.ibm.com>
 References: <20241010092938.226868-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Jw85FKBZWbwLiOZ32C70tQstAKQxF3UL
-X-Proofpoint-GUID: Jw85FKBZWbwLiOZ32C70tQstAKQxF3UL
+X-Proofpoint-ORIG-GUID: apvGy05YBMZw16HXZYjxSd0gsXoRWazf
+X-Proofpoint-GUID: apvGy05YBMZw16HXZYjxSd0gsXoRWazf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-10_05,2024-10-09_02,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- phishscore=0 mlxlogscore=920 mlxscore=0 spamscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410100062
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ mlxlogscore=821
+ malwarescore=0 impostorscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 mlxscore=0 adultscore=0
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410100062
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -107,42 +107,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's user-only since commit a7e0f9bd2ace ("gdbstub: abstract target
-specific details from gdb_put_packet_binary").
+Move checking and setting allow_stop_reply into a function.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- gdbstub/internals.h | 2 --
- gdbstub/user.c      | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ gdbstub/gdbstub.c   | 15 +++++++++++----
+ gdbstub/internals.h |  2 ++
+ gdbstub/system.c    |  6 ++----
+ gdbstub/user.c      | 11 ++++-------
+ 4 files changed, 19 insertions(+), 15 deletions(-)
 
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index b1def7e71d2..c45934b52b8 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1422,11 +1422,10 @@ static void handle_v_attach(GArray *params, void *user_ctx)
+     gdbserver_state.g_cpu = cpu;
+     gdbserver_state.c_cpu = cpu;
+ 
+-    if (gdbserver_state.allow_stop_reply) {
++    if (gdb_try_stop()) {
+         g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
+         gdb_append_thread_id(cpu, gdbserver_state.str_buf);
+         g_string_append_c(gdbserver_state.str_buf, ';');
+-        gdbserver_state.allow_stop_reply = false;
+ cleanup:
+         gdb_put_strbuf();
+     }
+@@ -2016,12 +2015,11 @@ static void handle_gen_set(GArray *params, void *user_ctx)
+ 
+ static void handle_target_halt(GArray *params, void *user_ctx)
+ {
+-    if (gdbserver_state.allow_stop_reply) {
++    if (gdb_try_stop()) {
+         g_string_printf(gdbserver_state.str_buf, "T%02xthread:", GDB_SIGNAL_TRAP);
+         gdb_append_thread_id(gdbserver_state.c_cpu, gdbserver_state.str_buf);
+         g_string_append_c(gdbserver_state.str_buf, ';');
+         gdb_put_strbuf();
+-        gdbserver_state.allow_stop_reply = false;
+     }
+     /*
+      * Remove all the breakpoints when this query is issued,
+@@ -2493,3 +2491,12 @@ void gdb_create_default_process(GDBState *s)
+     process->target_xml = NULL;
+ }
+ 
++bool gdb_try_stop(void)
++{
++    if (!gdbserver_state.allow_stop_reply) {
++        return false;
++    }
++
++    gdbserver_state.allow_stop_reply = false;
++    return true;
++}
 diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index bf5a5c63029..5acc36846f3 100644
+index 5acc36846f3..310861e581b 100644
 --- a/gdbstub/internals.h
 +++ b/gdbstub/internals.h
-@@ -142,8 +142,6 @@ void gdb_create_default_process(GDBState *s);
- int gdb_signal_to_target(int sig);
- int gdb_target_signal_to_gdb(int sig);
+@@ -215,4 +215,6 @@ void gdb_breakpoint_remove_all(CPUState *cs);
+ int gdb_target_memory_rw_debug(CPUState *cs, hwaddr addr,
+                                uint8_t *buf, int len, bool is_write);
  
--int gdb_get_char(void); /* user only */
--
- /**
-  * gdb_continue() - handle continue in mode specific way.
-  */
++bool gdb_try_stop(void);
++
+ #endif /* GDBSTUB_INTERNALS_H */
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 2e31e42f7dd..64cfcf25221 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -141,7 +141,7 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+         return;
+     }
+ 
+-    if (!gdbserver_state.allow_stop_reply) {
++    if (!gdb_try_stop()) {
+         return;
+     }
+ 
+@@ -211,7 +211,6 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+ 
+ send_packet:
+     gdb_put_packet(buf->str);
+-    gdbserver_state.allow_stop_reply = false;
+ 
+     /* disable single step if it was enabled */
+     cpu_single_step(cpu, 0);
+@@ -428,10 +427,9 @@ void gdb_exit(int code)
+ 
+     trace_gdbstub_op_exiting((uint8_t)code);
+ 
+-    if (gdbserver_state.allow_stop_reply) {
++    if (gdb_try_stop()) {
+         snprintf(buf, sizeof(buf), "W%02x", (uint8_t)code);
+         gdb_put_packet(buf);
+-        gdbserver_state.allow_stop_reply = false;
+     }
+ 
+     qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
 diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 0b4bfa9c488..1fef5201f4e 100644
+index 1fef5201f4e..17bcb9d70d9 100644
 --- a/gdbstub/user.c
 +++ b/gdbstub/user.c
-@@ -103,7 +103,7 @@ typedef struct {
+@@ -181,10 +181,9 @@ void gdb_exit(int code)
  
- static GDBUserState gdbserver_user_state;
+     trace_gdbstub_op_exiting((uint8_t)code);
  
--int gdb_get_char(void)
-+static int gdb_get_char(void)
- {
-     uint8_t ch;
-     int ret;
+-    if (gdbserver_state.allow_stop_reply) {
++    if (gdb_try_stop()) {
+         snprintf(buf, sizeof(buf), "W%02x", (uint8_t)code);
+         gdb_put_packet(buf);
+-        gdbserver_state.allow_stop_reply = false;
+     }
+ 
+ }
+@@ -222,7 +221,7 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
+ 
+     if (sig != 0) {
+         gdb_set_stop_cpu(cpu);
+-        if (gdbserver_state.allow_stop_reply) {
++        if (gdb_try_stop()) {
+             g_string_printf(gdbserver_state.str_buf,
+                             "T%02xthread:", gdb_target_signal_to_gdb(sig));
+             gdb_append_thread_id(cpu, gdbserver_state.str_buf);
+@@ -231,7 +230,6 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
+                 g_string_append(gdbserver_state.str_buf, reason);
+             }
+             gdb_put_strbuf();
+-            gdbserver_state.allow_stop_reply = false;
+         }
+     }
+     /*
+@@ -276,13 +274,12 @@ void gdb_signalled(CPUArchState *env, int sig)
+     char buf[4];
+ 
+     if (!gdbserver_state.init || gdbserver_user_state.fd < 0 ||
+-        !gdbserver_state.allow_stop_reply) {
++        !gdb_try_stop()) {
+         return;
+     }
+ 
+     snprintf(buf, sizeof(buf), "X%02x", gdb_target_signal_to_gdb(sig));
+     gdb_put_packet(buf);
+-    gdbserver_state.allow_stop_reply = false;
+ }
+ 
+ static void gdb_accept_init(int fd)
+@@ -502,7 +499,7 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+         gdbserver_user_state.fork_peer_pid = pid;
+         gdbserver_user_state.fork_peer_tid = pid;
+ 
+-        if (!gdbserver_state.allow_stop_reply) {
++        if (!gdb_try_stop()) {
+             goto fail;
+         }
+         g_string_printf(gdbserver_state.str_buf,
 -- 
 2.46.2
 
