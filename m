@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C56CF11F4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 13:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CB1CF11F4
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 13:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syt3x-0008Ix-V4; Thu, 10 Oct 2024 09:18:42 -0400
+	id 1syt5w-0004SK-80; Thu, 10 Oct 2024 09:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1syrui-0006jS-ME; Thu, 10 Oct 2024 08:05:04 -0400
-Received: from mta-03.yadro.com ([89.207.88.253])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1syt5p-0004Os-LT
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 09:20:37 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1syruf-00063d-A9; Thu, 10 Oct 2024 08:05:04 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 9818AE0017
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1728561896; bh=fFVBRLoXNPpVTe8dVSdU2KVuUrjPCM3c0blcCfYlR0I=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=OpQrbX/9govS306llGMDe/r9nsqvaRVqAxv8OJ+VsPKDEtjVHcBwHZg01A7715zMr
- VKsFXbryDMQR3J5o7du54JImmL3fsY/sEg5Qj/6QgqDhOaCMu08zv0ilNNMvl7I4l2
- 2Ara/UQ4gP+IW2w82DfMZs+5LNRqxes5Mmh6374eZ/iTqCBEhmZxEvLu//DG9+pFgE
- 3YxKNcJl6HqkNT8jRxvlaTWp6u+0F+hDJ2IwEfMlhCueHisjeYHxZKHKYX2gKSyfsw
- rgBuhyxjYDCTvfzX0eyRKx0RyLcfX46Slnouq4GpFPW/Zk+euUxGz/I1TKCNrFaLZR
- vT9mCmi1JMcnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1728561896; bh=fFVBRLoXNPpVTe8dVSdU2KVuUrjPCM3c0blcCfYlR0I=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=bCes0XtJUcy5o04pxQ3Vt6Sj7uvk0fLnv8gjlUsZyzRXeAbELCiK9HfkHbC9LkCih
- O/L61fYwRU5QulfPVY047QFflkPXGNwkzIFy7/QBwb7MvAkATFxihkeYLMASh4KaQl
- pm9LorLExL95ffKyKaNfZx8sa1cWnjrOXE/pNUMaTLGus2brMSwrLi25o7EcWTzdpj
- nbTq3qjNlECC0L2nN57L2yfiMqJVqIBy2Y37kFS+jLyH+FY/8pVPkXD5Ae8jjuBSd7
- H7xV9YuGHSW0up+ju/z4tPIKNhvW/oWi4GBzF184UJ7HwAtqqTiaTBl6CK1nJTs2/6
- mUXhJMqZNKfmQ==
-Message-ID: <d3c4174e-1659-4409-9b42-7562e40ad0a8@yadro.com>
-Date: Thu, 10 Oct 2024 15:04:55 +0300
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1syt5m-0000Na-TH
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 09:20:37 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:3f48:0:640:7695:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0CEEF609D6;
+ Thu, 10 Oct 2024 16:20:25 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a408::1:13] (unknown
+ [2a02:6b8:b081:a408::1:13])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id MKjYIc0IkW20-IT10Afi5; Thu, 10 Oct 2024 16:20:24 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1728566424;
+ bh=PiFzHf2MOgd7KXzYc4/O+2V3oMizwL0AO7/UdY+Motg=;
+ h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
+ b=qCyxtgV2SjdFUaDPllBSIiJnBN4xZLhJVyoWzbql7H/x3YC9RuPKJc2DOBa86nWoF
+ qdUngDnf3gC21y94aAWIh0vcRhurezXQBmNka7U7KSWYDhIvQ4rRet/JLxfa1c+ue0
+ sW1Bb/OJ+OYuqMDb/y/ubkVv0lnr83Q7Yk98iLQY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Content-Type: multipart/alternative;
+ boundary="------------P2FywPgBrskyX7ElxuEgwyJD"
+Message-ID: <4701f00c-4cea-4817-b11d-3f13440ab1ca@yandex-team.ru>
+Date: Thu, 10 Oct 2024 16:20:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 02/10] target/riscv: Introduce helper functions for
- pmu hashtable lookup
-To: Atish Patra <atishp@rivosinc.com>, <qemu-riscv@nongnu.org>,
- <qemu-devel@nongnu.org>
-CC: <alexei.filippov@syntacore.com>, <palmer@dabbelt.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
- <bin.meng@windriver.com>, <dbarboza@ventanamicro.com>,
- <alistair.francis@wdc.com>
-References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <20241009-pmu_event_machine-v1-2-dcbd7a60e3ba@rivosinc.com>
+Subject: Re: [PATCH v2] chardev: introduce 'reconnect-ms' and deprecate
+ 'reconnect'
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org, Peter Krempa <pkrempa@redhat.com>,
+ Michal Privoznik <mprivozn@redhat.com>
+References: <20240913094604.269135-1-d-tatianin@yandex-team.ru>
+ <fa326630-8304-4700-9995-d98287356c1f@yandex-team.ru>
+ <CAJ+F1CJuReS0R08QvWfgeDeDN8xD+=xYWrybBEDONvo5H-HtHQ@mail.gmail.com>
 Content-Language: en-US
-From: Alexei Filippov <alexei.filippov@yadro.com>
-In-Reply-To: <20241009-pmu_event_machine-v1-2-dcbd7a60e3ba@rivosinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.253;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-03.yadro.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+In-Reply-To: <CAJ+F1CJuReS0R08QvWfgeDeDN8xD+=xYWrybBEDONvo5H-HtHQ@mail.gmail.com>
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 10 Oct 2024 09:18:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,149 +84,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a multi-part message in MIME format.
+--------------P2FywPgBrskyX7ElxuEgwyJD
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 10/10/24 11:32 AM, Marc-André Lureau wrote:
 
-On 10.10.2024 02:09, Atish Patra wrote:
-> The pmu implementation requires hashtable lookup operation sprinkled
-> through the file. Add a helper function that allows to consolidate
-> the implementation and extend it in the future easily.
-> 
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
->   target/riscv/pmu.c | 56 ++++++++++++++++++++++++++----------------------------
->   1 file changed, 27 insertions(+), 29 deletions(-)
-> 
-> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> index e05ab067d2f2..a88c321a6cad 100644
-> --- a/target/riscv/pmu.c
-> +++ b/target/riscv/pmu.c
-> @@ -265,6 +265,21 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
->       counter_arr[env->priv] += delta;
->   }
->   
-> +static bool riscv_pmu_htable_lookup(RISCVCPU *cpu, uint32_t key,
-> +                                    uint32_t *value)
-> +{
-> +    GHashTable *table = cpu->pmu_event_ctr_map;
-> +    gpointer val_ptr;
-> +
-> +    val_ptr = g_hash_table_lookup(table, GUINT_TO_POINTER(key));
-> +    if (!val_ptr) {
-> +        return false;
-> +    }
-> +
-> +    *value = GPOINTER_TO_UINT(val_ptr);
-> +    return true;
-> +}
-> +
->   void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
->                                    bool new_virt)
->   {
-> @@ -277,18 +292,15 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
->       uint32_t ctr_idx;
->       int ret;
->       CPURISCVState *env = &cpu->env;
-> -    gpointer value;
->   
->       if (!cpu->cfg.pmu_mask) {
->           return 0;
->       }
-> -    value = g_hash_table_lookup(cpu->pmu_event_ctr_map,
-> -                                GUINT_TO_POINTER(event_idx));
-> -    if (!value) {
-> +
-> +    if (!riscv_pmu_htable_lookup(cpu, event_idx, &ctr_idx)) {
->           return -1;
->       }
->   
-> -    ctr_idx = GPOINTER_TO_UINT(value);
->       if (!riscv_pmu_counter_enabled(cpu, ctr_idx)) {
->           return -1;
->       }
-> @@ -306,7 +318,6 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
->                                           uint32_t target_ctr)
-Not sure about this kind of functions, this hardcoded dublication aren't 
-scalable, check it in my patch.
->   {
->       RISCVCPU *cpu;
-> -    uint32_t event_idx;
->       uint32_t ctr_idx;
->   
->       /* Fixed instret counter */
-> @@ -315,14 +326,8 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
->       }
->   
->       cpu = env_archcpu(env);
-> -    if (!cpu->pmu_event_ctr_map) {
-> -        return false;
-> -    }
-> -
-> -    event_idx = RISCV_PMU_EVENT_HW_INSTRUCTIONS;
-> -    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
-> -                               GUINT_TO_POINTER(event_idx)));
-> -    if (!ctr_idx) {
-> +    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS,
-> +                                 &ctr_idx)) {
->           return false;
->       }
->   
-> @@ -332,7 +337,6 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
->   bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env, uint32_t target_ctr)
->   {
->       RISCVCPU *cpu;
-> -    uint32_t event_idx;
->       uint32_t ctr_idx;
->   
->       /* Fixed mcycle counter */
-> @@ -341,16 +345,8 @@ bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env, uint32_t target_ctr)
->       }
->   
->       cpu = env_archcpu(env);
-> -    if (!cpu->pmu_event_ctr_map) {
-> -        return false;
-> -    }
-> -
-> -    event_idx = RISCV_PMU_EVENT_HW_CPU_CYCLES;
-> -    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
-> -                               GUINT_TO_POINTER(event_idx)));
-> -
-> -    /* Counter zero is not used for event_ctr_map */
-> -    if (!ctr_idx) {
-> +    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES,
-> +                                &ctr_idx)) {
->           return false;
->       }
->   
-> @@ -381,6 +377,7 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
->   {
->       uint32_t event_idx;
->       RISCVCPU *cpu = env_archcpu(env);
-> +    uint32_t mapped_ctr_idx;
->   
->       if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->pmu_event_ctr_map) {
->           return -1;
-> @@ -398,8 +395,7 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
->       }
->   
->       event_idx = value & MHPMEVENT_IDX_MASK;
-> -    if (g_hash_table_lookup(cpu->pmu_event_ctr_map,
-> -                            GUINT_TO_POINTER(event_idx))) {
-> +    if (riscv_pmu_htable_lookup(cpu, event_idx, &mapped_ctr_idx)) {
->           return 0;
->       }
->   
-> @@ -472,8 +468,10 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
->           return;
->       }
->   
-> -    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
-> -                               GUINT_TO_POINTER(evt_idx)));
-> +    if (!riscv_pmu_htable_lookup(cpu, evt_idx, &ctr_idx)) {
-> +        return;
-> +    }
-> +
->       if (!riscv_pmu_counter_enabled(cpu, ctr_idx)) {
->           return;
->       }
-> 
+> Hi Vladimir
+>
+> On Mon, Sep 30, 2024 at 5:17 PM Vladimir Sementsov-Ogievskiy 
+> <vsementsov@yandex-team.ru> wrote:
+>
+>     Hi Mark-Andre!
+>
+>     Could you please take a look? We have collected acks for QAPI
+>     changes, could this be queued?
+>
+>
+> While writing to 9.2 changelog, I realize that we should probably have 
+> addressed a few more things:
+> - change -netdev stream to use reconnect-ms too, for consistency
+> - update the qemu documentation to use reconnect-ms
+> - update code and tests to use reconnect-ms
+> Could you look at it? thanks
+
+Hi!
+
+No problem, I'll take a look at those as well. I'll have some time after 
+next week.
+
+Thanks!
+
+>
+>     On 13.09.24 12:46, Daniil Tatianin wrote:
+>     > The 'reconnect' option only allows to specify the time in seconds,
+>     > which is way too long for certain workflows.
+>     >
+>     > We have a lightweight disk backend server, which takes about 20ms to
+>     > live update, but due to this limitation in QEMU, previously the
+>     guest
+>     > disk controller would hang for one second because it would take this
+>     > long for QEMU to reinitialize the socket connection.
+>     >
+>     > Introduce a new option called 'reconnect-ms', which is the same as
+>     > 'reconnect', except the value is treated as milliseconds. These are
+>     > mutually exclusive and specifying both results in an error.
+>     >
+>     > 'reconnect' is also deprecated by this commit to make it possible to
+>     > remove it in the future as to not keep two options that control the
+>     > same thing.
+>     >
+>     > Reviewed-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+>     > Acked-by: Peter Krempa<pkrempa@redhat.com>
+>     > Signed-off-by: Daniil Tatianin<d-tatianin@yandex-team.ru>
+>
+>     -- 
+>     Best regards,
+>     Vladimir
+>
+>
+>
+>
+> -- 
+> Marc-André Lureau
+--------------P2FywPgBrskyX7ElxuEgwyJD
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>On 10/10/24 11:32 AM, Marc-André Lureau wrote:</p>
+    <blockquote type="cite"
+cite="mid:CAJ+F1CJuReS0R08QvWfgeDeDN8xD+=xYWrybBEDONvo5H-HtHQ@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">
+        <div dir="ltr">Hi Vladimir<br>
+        </div>
+        <br>
+        <div class="gmail_quote">
+          <div dir="ltr" class="gmail_attr">On Mon, Sep 30, 2024 at
+            5:17 PM Vladimir Sementsov-Ogievskiy &lt;<a
+              href="mailto:vsementsov@yandex-team.ru"
+              moz-do-not-send="true" class="moz-txt-link-freetext">vsementsov@yandex-team.ru</a>&gt;
+            wrote:<br>
+          </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi
+            Mark-Andre!<br>
+            <br>
+            Could you please take a look? We have collected acks for
+            QAPI changes, could this be queued?<br>
+            <br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>While writing to 9.2 changelog, I realize that we should
+            probably have addressed a few more things:</div>
+          <div>- change -netdev stream to use reconnect-ms too, for
+            consistency<br>
+          </div>
+          <div>- update the qemu documentation to use reconnect-ms</div>
+          <div>- update code and tests to use reconnect-ms<br>
+          </div>
+          <div> </div>
+          <div>Could you look at it? thanks<br>
+          </div>
+        </div>
+      </div>
+    </blockquote>
+    <p>Hi!<br>
+      <br>
+      No problem, I'll take a look at those as well. I'll have some time
+      after next week.<br>
+      <br>
+      Thanks!<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:CAJ+F1CJuReS0R08QvWfgeDeDN8xD+=xYWrybBEDONvo5H-HtHQ@mail.gmail.com">
+      <div dir="ltr">
+        <div class="gmail_quote">
+          <div><br>
+          </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+            On 13.09.24 12:46, Daniil Tatianin wrote:<br>
+            &gt; The 'reconnect' option only allows to specify the time
+            in seconds,<br>
+            &gt; which is way too long for certain workflows.<br>
+            &gt; <br>
+            &gt; We have a lightweight disk backend server, which takes
+            about 20ms to<br>
+            &gt; live update, but due to this limitation in QEMU,
+            previously the guest<br>
+            &gt; disk controller would hang for one second because it
+            would take this<br>
+            &gt; long for QEMU to reinitialize the socket connection.<br>
+            &gt; <br>
+            &gt; Introduce a new option called 'reconnect-ms', which is
+            the same as<br>
+            &gt; 'reconnect', except the value is treated as
+            milliseconds. These are<br>
+            &gt; mutually exclusive and specifying both results in an
+            error.<br>
+            &gt; <br>
+            &gt; 'reconnect' is also deprecated by this commit to make
+            it possible to<br>
+            &gt; remove it in the future as to not keep two options that
+            control the<br>
+            &gt; same thing.<br>
+            &gt; <br>
+            &gt; Reviewed-by: Vladimir Sementsov-Ogievskiy&lt;<a
+              href="mailto:vsementsov@yandex-team.ru" target="_blank"
+              moz-do-not-send="true" class="moz-txt-link-freetext">vsementsov@yandex-team.ru</a>&gt;<br>
+            &gt; Acked-by: Peter Krempa&lt;<a
+              href="mailto:pkrempa@redhat.com" target="_blank"
+              moz-do-not-send="true" class="moz-txt-link-freetext">pkrempa@redhat.com</a>&gt;<br>
+            &gt; Signed-off-by: Daniil Tatianin&lt;<a
+              href="mailto:d-tatianin@yandex-team.ru" target="_blank"
+              moz-do-not-send="true" class="moz-txt-link-freetext">d-tatianin@yandex-team.ru</a>&gt;<br>
+            <br>
+            -- <br>
+            Best regards,<br>
+            Vladimir<br>
+            <br>
+            <br>
+          </blockquote>
+        </div>
+        <br clear="all">
+        <br>
+        <span class="gmail_signature_prefix">-- </span><br>
+        <div dir="ltr" class="gmail_signature">Marc-André Lureau<br>
+        </div>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------P2FywPgBrskyX7ElxuEgwyJD--
 
