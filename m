@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D2CCFC5E4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C48CFC5E7
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 16:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syvvk-00075b-5Y; Thu, 10 Oct 2024 12:22:24 -0400
+	id 1syvvp-00078w-0c; Thu, 10 Oct 2024 12:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syvvi-00072Z-Ev
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:22 -0400
+ id 1syvvm-00077u-Pc
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syvvg-0004R8-RX
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:22 -0400
+ id 1syvvl-0004Rb-Ct
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728577340;
+ s=mimecast20190719; t=1728577344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TPFSRzGNJjnEKqcriP1dWRJwKWCmt7CdpH9nc6BP1+w=;
- b=PYYMFzrm4bTHtIejNoEf4Qiz1C4YtqxGGHskHToT5MATrLaJTKMI5qLkx2DtTOhlPJKzDs
- EXkwQMdUQqBGRNSa0QTEb+WEuBSCSYsdOiUVKXZJJrsaWTEIz+hn69ECvMFHx26LsBfY2F
- Sj/EHZO6Q9KLS+e9NRSpgNGCkXlkmpQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kT3aGvUcuMqLA9BKCOREUSBudqYFPF5d/C7lc+Fqp0o=;
+ b=I1fRd8lN3FalBSSXQC4feNDr0OgBLwVz2w+CGRVKaXPrFaRFKgoicTkDcGF2kTWQCmo9wD
+ 0VbbchiILxFtxjNiq2VBFYNIGz+R4gOWcQ3wfojtrMxJQlALSvvhO4QQKkOu/wtL2BUDsD
+ iJNznpZIR/P3pW5zWboNcRCbfYgEUPQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-XLdMcoiIP3GYTQt4gWf7Dw-1; Thu,
- 10 Oct 2024 12:22:16 -0400
-X-MC-Unique: XLdMcoiIP3GYTQt4gWf7Dw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-iXU3l2z-MROoYD5EzBg5GQ-1; Thu,
+ 10 Oct 2024 12:22:23 -0400
+X-MC-Unique: iXU3l2z-MROoYD5EzBg5GQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 132941955E85; Thu, 10 Oct 2024 16:22:16 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EDC11955DD4; Thu, 10 Oct 2024 16:22:22 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BE9B300019E; Thu, 10 Oct 2024 16:22:13 +0000 (UTC)
+ id 85DD8300019E; Thu, 10 Oct 2024 16:22:20 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kunwu <chentao@kylinos.cn>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alejandro Zeise <alejandro.zeise@seagate.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 10/17] crypto/hash-glib: Remove old hash API functions
-Date: Thu, 10 Oct 2024 17:20:17 +0100
-Message-ID: <20241010162024.988284-11-berrange@redhat.com>
+Subject: [PULL 13/17] crypto/hash-nettle: Remove old hash API functions
+Date: Thu, 10 Oct 2024 17:20:20 +0100
+Message-ID: <20241010162024.988284-14-berrange@redhat.com>
 In-Reply-To: <20241010162024.988284-1-berrange@redhat.com>
 References: <20241010162024.988284-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,7 +88,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-Removes old hash implement-ion in the GLib hash driver.
+Removes old hash implementation in the nettle hash driver.
 
 Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
@@ -97,28 +97,28 @@ Signed-off-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/hash-glib.c | 53 ----------------------------------------------
+ crypto/hash-nettle.c | 53 --------------------------------------------
  1 file changed, 53 deletions(-)
 
-diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
-index 783283facc..02a6ec1edf 100644
---- a/crypto/hash-glib.c
-+++ b/crypto/hash-glib.c
-@@ -44,58 +44,6 @@ gboolean qcrypto_hash_supports(QCryptoHashAlgo alg)
+diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
+index 07e18ce26c..570ce8a645 100644
+--- a/crypto/hash-nettle.c
++++ b/crypto/hash-nettle.c
+@@ -104,58 +104,6 @@ gboolean qcrypto_hash_supports(QCryptoHashAlgo alg)
      return false;
  }
  
 -
 -static int
--qcrypto_glib_hash_bytesv(QCryptoHashAlgo alg,
--                         const struct iovec *iov,
--                         size_t niov,
--                         uint8_t **result,
--                         size_t *resultlen,
--                         Error **errp)
+-qcrypto_nettle_hash_bytesv(QCryptoHashAlgo alg,
+-                           const struct iovec *iov,
+-                           size_t niov,
+-                           uint8_t **result,
+-                           size_t *resultlen,
+-                           Error **errp)
 -{
--    int i, ret;
--    GChecksum *cs;
+-    size_t i;
+-    union qcrypto_hash_ctx ctx;
 -
 -    if (!qcrypto_hash_supports(alg)) {
 -        error_setg(errp,
@@ -127,50 +127,50 @@ index 783283facc..02a6ec1edf 100644
 -        return -1;
 -    }
 -
--    cs = g_checksum_new(qcrypto_hash_alg_map[alg]);
+-    qcrypto_hash_alg_map[alg].init(&ctx);
 -
 -    for (i = 0; i < niov; i++) {
--        g_checksum_update(cs, iov[i].iov_base, iov[i].iov_len);
+-        /* Some versions of nettle have functions
+-         * declared with 'int' instead of 'size_t'
+-         * so to be safe avoid writing more than
+-         * UINT_MAX bytes at a time
+-         */
+-        size_t len = iov[i].iov_len;
+-        uint8_t *base = iov[i].iov_base;
+-        while (len) {
+-            size_t shortlen = MIN(len, UINT_MAX);
+-            qcrypto_hash_alg_map[alg].write(&ctx, len, base);
+-            len -= shortlen;
+-            base += len;
+-        }
 -    }
 -
--    ret = g_checksum_type_get_length(qcrypto_hash_alg_map[alg]);
--    if (ret < 0) {
--        error_setg(errp, "%s",
--                   "Unable to get hash length");
--        goto error;
--    }
 -    if (*resultlen == 0) {
--        *resultlen = ret;
+-        *resultlen = qcrypto_hash_alg_map[alg].len;
 -        *result = g_new0(uint8_t, *resultlen);
--    } else if (*resultlen != ret) {
+-    } else if (*resultlen != qcrypto_hash_alg_map[alg].len) {
 -        error_setg(errp,
--                   "Result buffer size %zu is smaller than hash %d",
--                   *resultlen, ret);
--        goto error;
+-                   "Result buffer size %zu is smaller than hash %zu",
+-                   *resultlen, qcrypto_hash_alg_map[alg].len);
+-        return -1;
 -    }
 -
--    g_checksum_get_digest(cs, *result, resultlen);
+-    qcrypto_hash_alg_map[alg].result(&ctx, *resultlen, *result);
 -
--    g_checksum_free(cs);
 -    return 0;
--
-- error:
--    g_checksum_free(cs);
--    return -1;
 -}
 -
--
  static
- QCryptoHash *qcrypto_glib_hash_new(QCryptoHashAlgo alg,
-                                    Error **errp)
-@@ -159,7 +107,6 @@ int qcrypto_glib_hash_finalize(QCryptoHash *hash,
+ QCryptoHash *qcrypto_nettle_hash_new(QCryptoHashAlgo alg, Error **errp)
+ {
+@@ -223,7 +171,6 @@ int qcrypto_nettle_hash_finalize(QCryptoHash *hash,
  }
  
  QCryptoHashDriver qcrypto_hash_lib_driver = {
--    .hash_bytesv = qcrypto_glib_hash_bytesv,
-     .hash_new      = qcrypto_glib_hash_new,
-     .hash_update   = qcrypto_glib_hash_update,
-     .hash_finalize = qcrypto_glib_hash_finalize,
+-    .hash_bytesv = qcrypto_nettle_hash_bytesv,
+     .hash_new      = qcrypto_nettle_hash_new,
+     .hash_update   = qcrypto_nettle_hash_update,
+     .hash_finalize = qcrypto_nettle_hash_finalize,
 -- 
 2.46.0
 
