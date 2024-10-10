@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B1BCF11CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8FFCF11CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syqSc-0004zl-Ou; Thu, 10 Oct 2024 06:31:58 -0400
+	id 1syqWs-0006LR-8p; Thu, 10 Oct 2024 06:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syqSa-0004zQ-OZ
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:31:57 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syqSZ-0005xV-A5
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:31:56 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5c8af23a4fcso920977a12.0
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 03:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728556314; x=1729161114; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H1G+pjpLn2GOdI+rwjFTLXfPNvFegxvIu0XfXLq6fzA=;
- b=IBoETuk25rBAvLN0XJE/XiwXYQuMhmfvdtL+Fiv9sXcWWd/CaHioLc2TN44NsBIPdZ
- EK3lvZjMGs65SCv3w0UMTId6hjIrhqxV4qy0Tqi/fxxp6BwZmOsOi2ygG9gyw0+swF9X
- hDw+C1Dm6/gnQFO8eGXAg4F9/gcbe2dcAQtroCEod+bAH/LYS0O4eQ+/mMZgOlCTQAvJ
- 84YluA2eD+qPjXO5k7I7zzShQdZa8KyPfRW0atcrr8XDJNgK2aQBR+ckuJOSal5Cybfd
- Qi+vdmAm/nTjM+tZZr1VDgmvfsNKcAY0SXBrkf9DXCtaFsRpLmzD+6F5hSRLhUHOf7y5
- 4mHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728556314; x=1729161114;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H1G+pjpLn2GOdI+rwjFTLXfPNvFegxvIu0XfXLq6fzA=;
- b=vdONgByTw8CvSSIKWta4Heedd4egVVHDnm8QNcYyoRrtC2ZM+yyqzRKv3CWkQujDJQ
- JkEIXje+vuu/PD+vdHrFHrRoK4cuWjEi9R3lkwj+sJnIHu0xyNppOZzGM3lFQn4kVpCx
- QBhSMzIljC24m06jOvCEGj5KowR+baFr++HFbqmdubC0K9rHF1aGEdPWUgPC4Uj5Zead
- GH58UMIAVwRX3+1uKyMcoaHAmP7NWbfg3lFmH7Kzw3aiKB6P/9EhT5EbSXJeFN4EK6cP
- gwzw5QhmQxcNYEcdUXhXaGD3tcvlYGNMlNVK/x8pqq5vDqQ+TY6L7Xp5Ov6gzRzIhdy9
- koVQ==
-X-Gm-Message-State: AOJu0YypZysetd0FYxL8sSKWk46qB0Hhk7BQggxFx1BHRIwcvpyawW+9
- 5ilxJra85AE7p7QHkGHsy0MC06Y7T6hrKsMRpww9nHJNDycr41jBUKTsm872x7+10SVkfHc4ajS
- 1h/2ISDRxN8P8HMP/Ew572+h4PjFASK6VlT5RIQ==
-X-Google-Smtp-Source: AGHT+IHXWCaOuM26uI4vYxRXMejs44Sq/vl9y9MIMUEOp9FtK2w6fzGYcpXyhYXcgFA771r/xnv8Frul05iB2+FclDE=
-X-Received: by 2002:a05:6402:2712:b0:5c5:c447:e4c0 with SMTP id
- 4fb4d7f45d1cf-5c93241dddcmr1744450a12.4.1728556313592; Thu, 10 Oct 2024
- 03:31:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqWq-0006Kk-J9
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:36:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqWo-0006lR-ES
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:36:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728556576;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1aBYu+pkAgL56rGuLAbmWW2UhxVTGfFPSDlMp45b2wQ=;
+ b=H3ju2f71LSp+CZlWjRBYJcmnAYRNsACIRmVuVQIfR8lg0GyKB4CZUIM9nBPAh1x2NOIwAL
+ g0fxIwnOD8moXiHp7LbQf5n5hsL9PWOMEESNQomeopzeuW8/s4MLdlHiNM/5SuT0FWFb8j
+ /JQi2Zuox+yropFXmrLqQ79p+/bbns4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-TywQQwK6O2yTnZD_DgGbEw-1; Thu,
+ 10 Oct 2024 06:36:14 -0400
+X-MC-Unique: TywQQwK6O2yTnZD_DgGbEw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A18F819560AF; Thu, 10 Oct 2024 10:36:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9B0C19560AA; Thu, 10 Oct 2024 10:36:10 +0000 (UTC)
+Date: Thu, 10 Oct 2024 11:36:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com,
+ peter.maydell@linaro.org, Alejandro Zeise <alejandro.zeise@seagate.com>
+Subject: Re: [PATCH v5 04/16] crypto/hash-gnutls: Implement new hash API
+Message-ID: <ZweuF3Gc9aQWssWm@redhat.com>
+References: <20241008075724.2772149-1-clg@redhat.com>
+ <20241008075724.2772149-5-clg@redhat.com>
 MIME-Version: 1.0
-References: <20241009000453.315652-1-richard.henderson@linaro.org>
- <20241009000453.315652-6-richard.henderson@linaro.org>
-In-Reply-To: <20241009000453.315652-6-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Oct 2024 11:31:42 +0100
-Message-ID: <CAFEAcA862FYbm-Mojww38m2n8SqWwKSHDr8irLbj9--TA-PJyQ@mail.gmail.com>
-Subject: Re: [PATCH v3 05/20] accel/tcg: Add TCGCPUOps.tlb_fill_align
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241008075724.2772149-5-clg@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +86,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 9 Oct 2024 at 01:05, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Add a new callback to handle softmmu paging.  Return the page
-> details directly, instead of passing them indirectly to
-> tlb_set_page.  Handle alignment simultaneously with paging so
-> that faults are handled with target-specific priority.
->
-> Route all calls the two hooks through a tlb_fill_align
-> function local to cputlb.c.
->
-> As yet no targets implement the new hook.
-> As yet cputlb.c does not use the new alignment check.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Oct 08, 2024 at 09:57:11AM +0200, Cédric Le Goater wrote:
+> From: Alejandro Zeise <alejandro.zeise@seagate.com>
+> 
+> Implements the new hashing API in the gnutls hash driver.
+> Supports creating/destroying a context, updating the context
+> with input data and obtaining an output hash.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> [ clg: - Dropped qcrypto_hash_supports() in qcrypto_gnutls_hash_new()
+>        - Reworked qcrypto_gnutls_hash_finalize()
+>        - Handled gnutls_hash_init() errors in qcrypto_gnutls_hash_new()
+>        - Replaced gnutls_hash_deinit() by gnutls_hash_output() in
+>          qcrypto_gnutls_hash_finalize()
+>        - Freed resources with gnutls_hash_deinit() in
+>          qcrypto_gnutls_hash_free() ]
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
+>  crypto/hash-gnutls.c | 78 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 78 insertions(+)
 
-Other than the typos Helge spotted
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
--- PMM
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
