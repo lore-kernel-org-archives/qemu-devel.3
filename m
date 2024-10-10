@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D60CF11CE
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65576CF11CD
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 10:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syqf1-00005v-HY; Thu, 10 Oct 2024 06:44:47 -0400
+	id 1syqjo-00017g-D5; Thu, 10 Oct 2024 06:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syqf0-00005f-TF
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:44:46 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1syqez-0008D9-8Y
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:44:46 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c9428152c0so145099a12.1
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 03:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728557083; x=1729161883; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BX/60HY1SQilc1djhjB/a1kYJ5/dGdDi3/gVE9ZXjRA=;
- b=pydFnU4KmMUY+aKA313vPi/lfxxun5MntdZhHv0Lii8XeEsWUmeXILyaMCbaIyRxD4
- blZvNkljDTJd4Eq/JyOx3lLFO9/l5LrsjSbL0d22LTJUXKnZJ82BsnNb/6vmYoD9cp+1
- eRV58oQRwzSeow477qKd0YqaXppw/EgwhKrMVSQ1vCJhdTBW4g+J1Iys7cylZHRUM3sa
- 77oCS1amolJmZTL/S1QiqDwhkYOVQFR0XEvpK5KyJUz+Jlm5kwkBDJ4T4sbCGiodOfeD
- qQ09UX/2Mif/ARfDTUbMt+adRIeLxuNzFL484lJ2R4DwXZYzWF1ILJFlcGhPaLoY47e0
- 3u+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728557083; x=1729161883;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BX/60HY1SQilc1djhjB/a1kYJ5/dGdDi3/gVE9ZXjRA=;
- b=RLW7CuhTkLuJQOvy/WgFvxsqQMAd7jY1Q+6ga9Jy58mLflMUk6N9MZzUqsjZxvomj4
- QzqdDOcg3cNpRlsG7P9ABPGoBCvgisJFwZNGSzo7nSGEA40phcR+3PblohqwWGMJzl9l
- U0BIQK6J5o76i/qL6kM4J9ULjyT3xRb1Bof3iTeiRSb0bv72JFYq6Af3UoAe9mKshwx/
- x8CYBKihxl9Mdy7b82S3qqqwFWJMka7kdnDsTUoM4iHSbTh6jSwxSmiUpX2SVodyj1vX
- 5GRMvhMW+kml0BKRawUJeB+VmtvyG8W5a4I/1o4JKm0iAzWt4FR0MBr5KS4EQDjEDVf2
- yTJQ==
-X-Gm-Message-State: AOJu0Yyvz4jLEVwOTt092JjYPSkvUkwQrchpB9cyw7jQc3/Q0KhmHzni
- GovcJJ0ny6P4YIXfPzT7mViG1tHQt9buLFkMlYeFoSeShl4YEYqXD0ic7lch89UnWERi6w82H+L
- SjH79G2z9CLFVJP96DL2BQ0aHgLIiKgRihOOFrQ==
-X-Google-Smtp-Source: AGHT+IHZMWiUZgylwth4eNH4y3+UYvrysEu+bCAnCgwYWQMyWAJs0RSCwqbbOpDohzoAn4H+jeuGr31Qt7J4TGKbEx4=
-X-Received: by 2002:a05:6402:3512:b0:5c5:c5c0:74ec with SMTP id
- 4fb4d7f45d1cf-5c91d675a01mr4875352a12.24.1728557083380; Thu, 10 Oct 2024
- 03:44:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqjm-00017J-Eo
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:49:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1syqji-0000Rk-Hs
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 06:49:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728557376;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e/xoM8qUbw0rN2/fxymj9vxYQw7PqRTlmPrwk2GM4ys=;
+ b=c9b78YaD6A7o9YtyGi3GXLn6H3t2trsD/6dNRfLr3PXCC5DI3Q9Uh8ezpSuyME8JwsjbS+
+ 0iGdVRgP4V/3bXblvhLqu9NL7p7aE0F4xgaa+nNs2LX4mOcigxxskmifPthrWseBn9/3C2
+ ShymHcuDdg+/M/+9tZxPMIC0QmNz83M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-54aPbH2QOBqY6rcnlRorLQ-1; Thu,
+ 10 Oct 2024 06:49:31 -0400
+X-MC-Unique: 54aPbH2QOBqY6rcnlRorLQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5223819560AA; Thu, 10 Oct 2024 10:49:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.110])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B58FD19560AE; Thu, 10 Oct 2024 10:49:26 +0000 (UTC)
+Date: Thu, 10 Oct 2024 11:49:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com,
+ peter.maydell@linaro.org, Alejandro Zeise <alejandro.zeise@seagate.com>
+Subject: Re: [PATCH v5 05/16] crypto/hash-nettle: Implement new hash API
+Message-ID: <ZwexMpP8SidNul6G@redhat.com>
+References: <20241008075724.2772149-1-clg@redhat.com>
+ <20241008075724.2772149-6-clg@redhat.com>
 MIME-Version: 1.0
-References: <20241009000453.315652-1-richard.henderson@linaro.org>
- <20241009000453.315652-7-richard.henderson@linaro.org>
-In-Reply-To: <20241009000453.315652-7-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Oct 2024 11:44:31 +0100
-Message-ID: <CAFEAcA-mSsFgjoBWi13dXqZUbys2N81YVXLD_ZfuuGo+Xfy-gQ@mail.gmail.com>
-Subject: Re: [PATCH v3 06/20] accel/tcg: Use the alignment test in
- tlb_fill_align
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org, 
- linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241008075724.2772149-6-clg@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,43 +86,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 9 Oct 2024 at 01:05, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> When we have a tlb miss, defer the alignment check to
-> the new tlb_fill_align hook.  Move the existing alignment
-> check so that we only perform it with a tlb hit.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Oct 08, 2024 at 09:57:12AM +0200, Cédric Le Goater wrote:
+> From: Alejandro Zeise <alejandro.zeise@seagate.com>
+> 
+> Implements the new hashing API in the nettle hash driver.
+> Supports creating/destroying a context, updating the context
+> with input data and obtaining an output hash.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> [ clg: - Dropped qcrypto_hash_supports() in qcrypto_nettle_hash_new() ]
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  crypto/hash-nettle.c | 70 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> @@ -1754,8 +1767,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
->           * Lookup both pages, recognizing exceptions from either.  If the
->           * second lookup potentially resized, refresh first CPUTLBEntryFull.
->           */
-> -        mmu_lookup1(cpu, &l->page[0], l->mmu_idx, type, ra);
-> -        if (mmu_lookup1(cpu, &l->page[1], l->mmu_idx, type, ra)) {
-> +        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
-> +        if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
+> 
+> diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
+> index 8b08a9c67531..07e18ce26cba 100644
+> --- a/crypto/hash-nettle.c
+> +++ b/crypto/hash-nettle.c
 
-Is 0 the right thing here ? Given that alignment-requirements can
-differ per-page, what happens for the case of an unaligned access
-that crosses a page boundary where the first page is "memory that
-doesn't care about alignment" and the second page is "memory that
-does enforce alignment" ?
+> +static
+> +int qcrypto_nettle_hash_update(QCryptoHash *hash,
+> +                               const struct iovec *iov,
+> +                               size_t niov,
+> +                               Error **errp)
+> +{
+> +    union qcrypto_hash_ctx *ctx = hash->opaque;
+> +
+> +    for (int i = 0; i < niov; i++) {
+> +        /*
+> +         * Some versions of nettle have functions
+> +         * declared with 'int' instead of 'size_t'
+> +         * so to be safe avoid writing more than
+> +         * UINT_MAX bytes at a time
+> +         */
 
-For Arm this is moot, because an access that crosses a page
-boundary into something with different memory attributes is
-CONSTRAINED UNPREDICTABLE (per Arm ARM rev K.a B2.15.3), but
-maybe other architectures are less flexible.
+This is copying the pre-existing code, and I've just
+realized this is now obsolete. We bumped min nettle
+to 3.4 ages ago and >= 3.0 is using size_t, so we can
+simplify now.
 
-Also, the comment does say "recognizing exceptions from either",
-and we aren't going to do that for alignment issues in page 2,
-so if we're OK with ignoring this we should update the comment.
+No need to change this though. I'll do that as a 
+distinct patch to make it a visible change.
 
-thanks
--- PMM
+> +        size_t len = iov[i].iov_len;
+> +        uint8_t *base = iov[i].iov_base;
+> +        while (len) {
+> +            size_t shortlen = MIN(len, UINT_MAX);
+> +            qcrypto_hash_alg_map[hash->alg].write(ctx, len, base);
+> +            len -= shortlen;
+> +            base += len;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
