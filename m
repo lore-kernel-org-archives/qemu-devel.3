@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B759CFC5EB
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 17:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0F3CFC5EC
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 18:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syxPa-0001dZ-Ge; Thu, 10 Oct 2024 13:57:18 -0400
+	id 1syxaX-0003p3-M3; Thu, 10 Oct 2024 14:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syxPU-0001dB-Ub
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 13:57:13 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1syxaV-0003og-LY
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 14:08:35 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1syxPT-0006aX-Ct
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 13:57:12 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7e9f98f2147so734575a12.1
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 10:57:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1syxaS-0007fy-Qu
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 14:08:34 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20c7edf2872so10678305ad.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 11:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728583029; x=1729187829; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+JlzchucIHSkQoiWmAqvtvT8vIMQTa8p2/7pusd7dRI=;
- b=cunNSpRj+Ae4scY4ZOuvakKHcfnHfXijaQYcJ53uwqYu4f31rTKyaWTBLW3JdRUzmh
- js2STZSGq8XOPVW/9iPNY2BeErX8LATVLJz0WYFuaKEKP7ie926j5GetBH5odCXZyyj1
- aKVD+uznmsbgQwuUcxSPC71yNbJn926Gl1ukyevQ294EbqMCgTM8jQdfd4pl+hVUP4O2
- WcLcH/BrkmlGGlPbhz5bh/cE67bU43CwQV2/+YYBMyms2RiZMr6NavrBPGxvPSWJwE+R
- 4EdGzBHWrn7zT5ANTlxO8VlVgudN5qNQ8k7+g5eTv6cgRlXaTwNg/o+rBU63aCOCLi7B
- 4PBg==
+ d=linaro.org; s=google; t=1728583710; x=1729188510; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kLHzcvlVCjQ02B6oJ8jXqKHu+mhXnZaoAUIs7MZo2k0=;
+ b=Dq7tKxhGx1jGikWtIw3eBxFXtU/YTtleXTN31J4CDlBbRlFc07I2B1OZRgu3Rlzvtt
+ Njm9WsgWsvaraeymN2LkWo6wskuh+aVUnhEHIuhdJk9TELPM4dyAM5E2zNUmzdF+VobE
+ JJDFppFo5l3P+ppskG8WxI4YL7fxlTf4vWotyNTQjycPR889ey5b8OcKUlxPGCOOMiCa
+ H/Ettvb7VB8cluhzUanmnI81EVNcfXUQwvvVe8oCMWUyb58G57P46td6wamYFth+BsUW
+ JL9/uq9fL643WbY6eemRHxvEP6b4bzWbcvnOFBYe+N4bdomtFzOUSAQPDq21E1BiOS2c
+ lNbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728583029; x=1729187829;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1728583710; x=1729188510;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+JlzchucIHSkQoiWmAqvtvT8vIMQTa8p2/7pusd7dRI=;
- b=Q9Eto+8y+S+2a+OruhVfHfCzfK38QyPDnqP8eV0kjFAh5JvQlnaPSGWmdmJ4siv6TH
- Dsp8COkRHeJHTUHaATWryCvNQX+inbyHHReUD9eRdggamNYv4WerA85+OSOdGo4FbPl3
- 43/8POuL9GY4DueIhPUoVsJGRkwjRdylyZwNWhjPZYZeqLHLv/O5dQDNtjXyjJ/JjFfd
- l61/2fOlBXI8lh+zmC5+O4GuoqugkXowoU6IPm3tSxTP/bHxyw+dkRMBpqYcPxmGpifR
- KgE8zsY9gHEgqEOA0NbptmavfNQ9qdD8GkXgWM2Lk8mQKf6Vohk9oW1fKx8osZYknOEq
- /cCA==
+ bh=kLHzcvlVCjQ02B6oJ8jXqKHu+mhXnZaoAUIs7MZo2k0=;
+ b=PJMdWir9ZCGiLoDP4JwXm4jgiUeByn8+daVXIcmFGlXUTIeNsXwJnZHxwnTUX0u7Y+
+ DcpCh37shR+V80jd012cca9p1RJclayHmwLfvy+5pPDVMxC4lB8ieoIm/z3DJ5HjtMRz
+ i0YY7HNN7Tx6rdzWwRCKOSK1Gqy2TFt7a83WUeg3y0PK5QzkwIpbJ6+eMQMcGSEi0m14
+ na5xKA6ejtjU/rkoXLpIOCCNypGYvUsKARI+BGveSVoTCQlNUg2Xjz8AA8vFofHS5hQ7
+ TmIItAtLdQ4hAuqLPR0RCRYavczMSDhJg3MWXsOgTBNYiCkt2kbPd7J7rnMPSRitKrOr
+ leBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbCf7Sg+K5jXKcDtE/ezpBmZkCWAWFNyKUMz18T7a7jgdFQY23iVXzpHM5bAf9mRFZA6z5PDdO/ozZ@nongnu.org
-X-Gm-Message-State: AOJu0YzjkBAjG9guYsJTTKIs4lEVjrnWN7Ee6GSVXKtfwNGvfhBTXb0c
- y689xFbC3bAlY9+L1e1gWgyo1TIJD+cRBwDDUY7Gs4P+vMAw33hXF3ziAhniYwk=
-X-Google-Smtp-Source: AGHT+IEYH5lbC6qUTixtdya1d9zex10D7WmZnrpmwMZcStGNhOiYKMu1jPWFjFWHZhR23aiPAe+Yaw==
-X-Received: by 2002:a05:6a21:1192:b0:1cf:27bf:8e03 with SMTP id
- adf61e73a8af0-1d8a3c1fff6mr10461519637.26.1728583029615; 
- Thu, 10 Oct 2024 10:57:09 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e2aa93854sm1286118b3a.113.2024.10.10.10.57.08
+ AJvYcCVe0raTB6SQj9z2015+KI48Bh09pQswLLfAn4zqaTGbdyfzRRFAhtceg8P1U4um8trNrbGPtKsDm1iD@nongnu.org
+X-Gm-Message-State: AOJu0YywFIE7QZER8StLc6PssJQUDoPhX1bMo1VLjqNsq+dppDnlTlBG
+ tRWGilXweHd5bkSKNXVhuCIvbUSfrtWgqhvliznQRCTzG1j/DBM5mVs0L4Xx8O/8bBui888ancV
+ Y
+X-Google-Smtp-Source: AGHT+IGYvQHODsOhLtCAuE0iah80rXnlAlMKZyx47KbuBkW6Ew7ycdMfC24lDV7RIt9GyNzKqOj9Mg==
+X-Received: by 2002:a17:903:1c6:b0:202:4bd9:aea5 with SMTP id
+ d9443c01a7336-20c804965efmr66898745ad.14.1728583710244; 
+ Thu, 10 Oct 2024 11:08:30 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.89.169])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c8c348d07sm11930185ad.276.2024.10.10.11.08.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Oct 2024 10:57:09 -0700 (PDT)
-Message-ID: <cfb92ca4-6b2f-4062-9645-a2b6f62e2cf8@linaro.org>
-Date: Thu, 10 Oct 2024 10:57:08 -0700
+ Thu, 10 Oct 2024 11:08:29 -0700 (PDT)
+Message-ID: <bc818785-f761-41e2-bb05-c41f08d71241@linaro.org>
+Date: Thu, 10 Oct 2024 15:08:26 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] gdbstub: Introduce ldtul_$endian_p() helpers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20241010175246.15779-1-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 07/13] hw/xtensa/xtfpga: Remove TARGET_BIG_ENDIAN #ifdef'ry
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240930073450.33195-1-philmd@linaro.org>
+ <20240930073450.33195-8-philmd@linaro.org>
+ <c592f4de-f6df-4363-8060-c1ac569e2947@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20241010175246.15779-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c592f4de-f6df-4363-8060-c1ac569e2947@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,15 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMTAvMjQgMTA6NTIsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBP
-bmx5IHVucmV2aWV3ZWQgcGF0Y2hlcyBmcm9tIHYyOg0KPiBodHRwczovL2xvcmUua2VybmVs
-Lm9yZy9xZW11LWRldmVsLzIwMjQxMDA0MTYzMDQyLjg1OTIyLTEtcGhpbG1kQGxpbmFyby5v
-cmcvDQo+IA0KPiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSAoMik6DQo+ICAgIGV4ZWMvdHN3
-YXA6IE1hc3NhZ2UgdGFyZ2V0X25lZWRzX2Jzd2FwKCkgZGVmaW5pdGlvbg0KPiAgICBnZGJz
-dHViL2hlbHBlcnM6IEludHJvZHVjZSBsZHR1bF8kZW5kaWFuX3AoKSBoZWxwZXJzDQo+IA0K
-PiAgIGluY2x1ZGUvZXhlYy90c3dhcC5oICAgICAgfCAyICstDQo+ICAgaW5jbHVkZS9nZGJz
-dHViL2hlbHBlcnMuaCB8IDQgKysrKw0KPiAgIDIgZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRp
-b25zKCspLCAxIGRlbGV0aW9uKC0pDQo+IA0KDQpGb3IgdGhlIHNlcmllczoNClJldmlld2Vk
-LWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
+On 3/10/24 18:35, Richard Henderson wrote:
+> On 9/30/24 00:34, Philippe Mathieu-Daudé wrote:
+>> Move code evaluation from preprocessor to compiler so
+>> both if() ladders are processed. Mostly style change.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/xtensa/xtfpga.c | 12 +++++++-----
+>>   1 file changed, 7 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+>> index 955e8867a3..228f00b045 100644
+>> --- a/hw/xtensa/xtfpga.c
+>> +++ b/hw/xtensa/xtfpga.c
+>> @@ -415,8 +415,7 @@ static void xtfpga_init(const XtfpgaBoardDesc 
+>> *board, MachineState *machine)
+>>               }
+>>           }
+>>           if (entry_point != env->pc) {
+>> -            uint8_t boot[] = {
+>> -#if TARGET_BIG_ENDIAN
+>> +            uint8_t boot_be[] = {
+>>                   0x60, 0x00, 0x08,       /* j    1f */
+>>                   0x00,                   /* .literal_position */
+>>                   0x00, 0x00, 0x00, 0x00, /* .literal entry_pc */
+
+                                              ^^^^^^^^^^^^^^^^
+
+>> @@ -425,7 +424,8 @@ static void xtfpga_init(const XtfpgaBoardDesc 
+>> *board, MachineState *machine)
+>>                   0x10, 0xff, 0xfe,       /* l32r a0, entry_pc */
+>>                   0x12, 0xff, 0xfe,       /* l32r a2, entry_a2 */
+>>                   0x0a, 0x00, 0x00,       /* jx   a0 */
+>> -#else
+>> +            };
+>> +            uint8_t boot_le[] = {
+> 
+> Fix these to use static const?
+
+We use memcpy() to up update $pc/$a2 in place.
+
+> 
+> 
+> r~
 
 
