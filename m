@@ -4,60 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D5BCFC5E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 16:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AA2CFC5E4
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 16:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syvvW-0006uI-Bd; Thu, 10 Oct 2024 12:22:10 -0400
+	id 1syvvb-0006wx-H3; Thu, 10 Oct 2024 12:22:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syvvP-0006sy-Su
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1syvva-0006wc-O0
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1syvvM-0004N2-Hb
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:03 -0400
+ id 1syvvZ-0004QE-7P
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 12:22:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728577317;
+ s=mimecast20190719; t=1728577331;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=W1VnErksa+PLpB6HrokKStF1bcmhwH2sddh4YxgzDLM=;
- b=S2eMlx1Fr528eSumb70rEocZHjOutwMz2x50lhFfL24QOcRaNCka2ZAUlNZUc7Hwl51h9U
- zjErKdYrkXsabxFzgmV9bphoZB5vxtY3Qzn5+d5oHy/hPjOZK/wb3nbtXbiYKZNJO/srQb
- dMm5Turp3RwoDZAfUX8+n/xQryp7TJY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bhhdFqpAPQXyEI0DSJUUVq7n++aiHimBFeKo9MfvBfo=;
+ b=QEWyOIQDBPibq7+JyBhgEhnnRbDXPQC/LodD9YGY8pexuy6/MVfVX8Xo3udyRGYuewuMZI
+ 6surL6usczLzf0rcSucPxiG8vO3QaR+Log+R23k7zb+U3Y+jzyDPJslIvgR3QW9EWsn2IS
+ +KuUz0VrSn9gRqYO8GTLgClIJSDzXlE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-jE4POAJxMge-EpRgVxtHbg-1; Thu,
- 10 Oct 2024 12:21:53 -0400
-X-MC-Unique: jE4POAJxMge-EpRgVxtHbg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-pAejfRpWNByIE0SR3njnuw-1; Thu,
+ 10 Oct 2024 12:22:10 -0400
+X-MC-Unique: pAejfRpWNByIE0SR3njnuw-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96B261955D60; Thu, 10 Oct 2024 16:21:52 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D8141955F29; Thu, 10 Oct 2024 16:22:04 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.110])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E93FD30001A5; Thu, 10 Oct 2024 16:20:25 +0000 (UTC)
+ id 830CD300019E; Thu, 10 Oct 2024 16:22:02 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kunwu <chentao@kylinos.cn>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Alejandro Zeise <alejandro.zeise@seagate.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 00/17] Crypto fixes patches
-Date: Thu, 10 Oct 2024 17:20:07 +0100
-Message-ID: <20241010162024.988284-1-berrange@redhat.com>
+Subject: [PULL 05/17] crypto/hash-nettle: Implement new hash API
+Date: Thu, 10 Oct 2024 17:20:12 +0100
+Message-ID: <20241010162024.988284-6-berrange@redhat.com>
+In-Reply-To: <20241010162024.988284-1-berrange@redhat.com>
+References: <20241010162024.988284-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -82,60 +86,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 838fc0a8769d7cc6edfe50451ba4e3368395f5c1:
+From: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-  Merge tag 'chr-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2024-10-09 15:06:56 +0100)
+Implements the new hashing API in the nettle hash driver.
+Supports creating/destroying a context, updating the context
+with input data and obtaining an output hash.
 
-are available in the Git repository at:
+Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+[ clg: - Dropped qcrypto_hash_supports() in qcrypto_nettle_hash_new() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/hash-nettle.c | 70 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
 
-  https://gitlab.com/berrange/qemu tags/crypto-fixes-pull-request
-
-for you to fetch changes up to 08e702043fbee7b366d1d27c1b6682090c46c0d6:
-
-  tests/unit: Add a assert for test_io_channel_unix_listen_cleanup (2024-10-10 13:41:45 +0100)
-
-----------------------------------------------------------------
-Introduce new cryptography hashing APIs
-
-----------------------------------------------------------------
-
-Alejandro Zeise (15):
-  crypto: accumulative hashing API
-  crypto/hash-glib: Implement new hash API
-  crypto/hash-gcrypt: Implement new hash API
-  crypto/hash-gnutls: Implement new hash API
-  crypto/hash-nettle: Implement new hash API
-  util/iov: Introduce iov_send_recv_with_flags()
-  crypto/hash-afalg: Implement new hash API
-  crypto/hash: Implement and use new hash API
-  tests/unit/test-crypto-hash: accumulative hashing
-  crypto/hash-glib: Remove old hash API functions
-  crypto/hash-gcrypt: Remove old hash API functions
-  crypto/hash-gnutls: Remove old hash API functions
-  crypto/hash-nettle: Remove old hash API functions
-  crypto/hash-afalg: Remove old hash API functions
-  crypto/hashpriv: Remove old hash API function
-
-Daniel P. Berrangé (1):
-  crypto: drop obsolete back compat logic for old nettle
-
-Kunwu (1):
-  tests/unit: Add a assert for test_io_channel_unix_listen_cleanup
-
- crypto/hash-afalg.c                 | 167 ++++++++++++++++++++--------
- crypto/hash-gcrypt.c                | 112 ++++++++++---------
- crypto/hash-glib.c                  |  92 ++++++++-------
- crypto/hash-gnutls.c                |  97 ++++++++++------
- crypto/hash-nettle.c                |  94 ++++++++--------
- crypto/hash.c                       | 161 ++++++++++++++++++++++-----
- crypto/hashpriv.h                   |  13 ++-
- include/crypto/hash.h               | 119 ++++++++++++++++++++
- include/qemu/iov.h                  |  27 +++++
- tests/unit/test-crypto-hash.c       |  46 ++++++++
- tests/unit/test-io-channel-socket.c |   6 +-
- util/iov.c                          |  25 +++--
- 12 files changed, 705 insertions(+), 254 deletions(-)
-
+diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
+index 8b08a9c675..07e18ce26c 100644
+--- a/crypto/hash-nettle.c
++++ b/crypto/hash-nettle.c
+@@ -1,6 +1,7 @@
+ /*
+  * QEMU Crypto hash algorithms
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (c) 2016 Red Hat, Inc.
+  *
+  * This library is free software; you can redistribute it and/or
+@@ -155,7 +156,76 @@ qcrypto_nettle_hash_bytesv(QCryptoHashAlgo alg,
+     return 0;
+ }
+ 
++static
++QCryptoHash *qcrypto_nettle_hash_new(QCryptoHashAlgo alg, Error **errp)
++{
++    QCryptoHash *hash;
++
++    hash = g_new(QCryptoHash, 1);
++    hash->alg = alg;
++    hash->opaque = g_new(union qcrypto_hash_ctx, 1);
++
++    qcrypto_hash_alg_map[alg].init(hash->opaque);
++    return hash;
++}
++
++static
++void qcrypto_nettle_hash_free(QCryptoHash *hash)
++{
++    union qcrypto_hash_ctx *ctx = hash->opaque;
++
++    g_free(ctx);
++    g_free(hash);
++}
++
++static
++int qcrypto_nettle_hash_update(QCryptoHash *hash,
++                               const struct iovec *iov,
++                               size_t niov,
++                               Error **errp)
++{
++    union qcrypto_hash_ctx *ctx = hash->opaque;
++
++    for (int i = 0; i < niov; i++) {
++        /*
++         * Some versions of nettle have functions
++         * declared with 'int' instead of 'size_t'
++         * so to be safe avoid writing more than
++         * UINT_MAX bytes at a time
++         */
++        size_t len = iov[i].iov_len;
++        uint8_t *base = iov[i].iov_base;
++        while (len) {
++            size_t shortlen = MIN(len, UINT_MAX);
++            qcrypto_hash_alg_map[hash->alg].write(ctx, len, base);
++            len -= shortlen;
++            base += len;
++        }
++    }
++
++    return 0;
++}
++
++static
++int qcrypto_nettle_hash_finalize(QCryptoHash *hash,
++                                 uint8_t **result,
++                                 size_t *result_len,
++                                 Error **errp)
++{
++    union qcrypto_hash_ctx *ctx = hash->opaque;
++
++    *result_len = qcrypto_hash_alg_map[hash->alg].len;
++    *result = g_new(uint8_t, *result_len);
++
++    qcrypto_hash_alg_map[hash->alg].result(ctx, *result_len, *result);
++
++    return 0;
++}
+ 
+ QCryptoHashDriver qcrypto_hash_lib_driver = {
+     .hash_bytesv = qcrypto_nettle_hash_bytesv,
++    .hash_new      = qcrypto_nettle_hash_new,
++    .hash_update   = qcrypto_nettle_hash_update,
++    .hash_finalize = qcrypto_nettle_hash_finalize,
++    .hash_free     = qcrypto_nettle_hash_free,
+ };
 -- 
 2.46.0
 
