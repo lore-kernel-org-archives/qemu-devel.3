@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EA7CF11F4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 13:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C71CF11F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 13:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syt3y-0008Jc-VF; Thu, 10 Oct 2024 09:18:42 -0400
+	id 1syt3w-0008FP-EE; Thu, 10 Oct 2024 09:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sys0F-0002NF-OQ; Thu, 10 Oct 2024 08:10:47 -0400
+ id 1syrff-0003mX-Og; Thu, 10 Oct 2024 07:49:31 -0400
 Received: from mta-03.yadro.com ([89.207.88.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sys0B-0007xE-Su; Thu, 10 Oct 2024 08:10:47 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 5509BE0025
+ id 1syrfc-0000ez-EN; Thu, 10 Oct 2024 07:49:31 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com 271F4E000B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1728562239; bh=5ldrKwiDs77wuenUZ9504d6+wAiq19PndC1ktBl9WBc=;
+ t=1728560960; bh=0lTK80os3XtA7KvfezUh3FBr5cgL23Qc5mGV/l6i3HI=;
  h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=KzyVNUP3ZlwY2F2K6sIsuNgP9AHRTlO5uVPdPXdEAPhGX4+PHLmDGB2WsHTcFCgGu
- 1p+fz1TEz5CRixC7dIkU5NFN1jd0n40BtqbOEFCMH7pwOcH7f7RTknsK5tztU0e2QO
- NVVX3QkWX3W4ksssMQAjcHYV4sn5A1n/IfWRv5Q8Gh/ZkcFdZXBfn50YTEMCi0Yf13
- IICgyp9A8WYYh2ymGJEwKSixEOrj89+SwjRwYMWlMWhvI+PQfyIGO+kGamZc6B8riV
- D4F0MXUsiNs3OlVjGU3uPRMkJ29qEt3Gu9ICDquFk+tuq2CFYbIj6WF/8ZmTq+7Jcs
- qdeHZgQm8TNUw==
+ b=axSb9HHNtr4z4uHTfMc7zQ/14TvfsL5iG3cwpUOv+GOFw/y/MItM6OH5L5lPpsIUL
+ ZP8yB42NeY9CXJxBQXcS28mIHtnqJ5CtGuGt+ETkbFUrizpLjOxZwS1ExHpXlC8M1j
+ P+aHG5+ooS+Q4l7B6LcHmVu/ihZlTcUlqKqVxa7cAmJBxSyhc6l9cW/OKO/IjdJUZJ
+ Yybtmxz7Si1PaKZTcU0d+d+wB3V+1Xcdb7LuxHFDLU55U54HPpn7VfelCM3sSx4Q4v
+ KUDFDugRvemEZ6ODNtrYLC6O1YPFth6s7GcMaZgliaZUpT265ViJPCeAvN9NpLBVzT
+ RLCVlNzB4QWhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1728562239; bh=5ldrKwiDs77wuenUZ9504d6+wAiq19PndC1ktBl9WBc=;
+ t=1728560960; bh=0lTK80os3XtA7KvfezUh3FBr5cgL23Qc5mGV/l6i3HI=;
  h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=RISEzklm81HpBAn7B+D2wjJcAjzjV+j64yI5AB7SBJQzLxANOdFmTwhYK8mkejllz
- f9Fc0IwUWjLz+tdoFM+qpwUOUIDE6BYmztW3zuJerNwWWog1CUjBTv2wHtQ/BZaUyx
- +4TjQLhuX4rqbQHHV/UjCk3R/szG8uEbewmypUE0dDs7QP44XIXnnnUN4TXaVRcp3x
- HeqIFqkdzkD4pEbrX87UCVgLmbu49eEPLvYe+i1AGGxIl/2OE2Kc0deVeZPmgKQWCP
- DjBkt9xvobs3kjT2Orkun23LDAvRMvTaHBkh6A/OebxImHFRbNG6YFgtgD3JbEJRY+
- CUg5OarnjLY0w==
-Message-ID: <3746b775-0fa1-4eca-a25c-b961cf083451@yadro.com>
-Date: Thu, 10 Oct 2024 15:10:37 +0300
+ b=edIqFWRm2AG6UYI5cvWMT+/aYYLREBAkZ8qoJsyA+JWwqy+Ct42WQA+P+e+kjEhrr
+ icQwz9znT8RgJWphJQhXCPalus8QzlCmlN8BhxDCt3Kvxt9lVZcM6iVUUu0sFVtejO
+ nL4jHPTcUXA2GQ/yLLi+j+dzUaDa2FWoTuRA5FzNqyz2iQdSOLgu7G58rzRm9MIBGL
+ 28vtbBdDH3VuqwZLyQW9lJzoehoM4dIpAeW3GatgfZRnbmk3IA4ap5EnsI9uStT+cg
+ 8E/agm2jYa9ssn2mkfVXgKqB0Hq6vq4j8ma5e55oPixGX6r9BmaFv++DSCWRCeNhlE
+ yiVoO6h6NWJAg==
+Message-ID: <71a77e97-e55d-41e4-9b3b-bef07c45b015@yadro.com>
+Date: Thu, 10 Oct 2024 14:49:18 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 05/10] target/riscv: Rename the PMU events
-To: Atish Patra <atishp@rivosinc.com>, <qemu-riscv@nongnu.org>,
- <qemu-devel@nongnu.org>
-CC: <alexei.filippov@syntacore.com>, <palmer@dabbelt.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
- <bin.meng@windriver.com>, <dbarboza@ventanamicro.com>,
- <alistair.francis@wdc.com>
-References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <20241009-pmu_event_machine-v1-5-dcbd7a60e3ba@rivosinc.com>
+Subject: Re: [RFC PATCH 0/2] target/riscv: Add support for machine specific
+ pmu's events
+To: Atish Kumar Patra <atishp@rivosinc.com>, Alistair Francis
+ <alistair23@gmail.com>
+CC: Alexei Filippov <alexei.filippov@syntacore.com>, <palmer@dabbelt.com>,
+ <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
+ <liwei1518@gmail.com>, <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
+References: <20240910174747.148141-1-alexei.filippov@syntacore.com>
+ <CAKmqyKPH33Lf5YdNrdHEQ9K0ZLrnJmvcGi9DjsP6gKNQZYAxaA@mail.gmail.com>
+ <CAHBxVyEFDkDm5Tiytiemxohj1YdqdBiKk2YSiFdQ83dqN5zvyw@mail.gmail.com>
 Content-Language: en-US
 From: Alexei Filippov <alexei.filippov@yadro.com>
-In-Reply-To: <20241009-pmu_event_machine-v1-5-dcbd7a60e3ba@rivosinc.com>
+In-Reply-To: <CAHBxVyEFDkDm5Tiytiemxohj1YdqdBiKk2YSiFdQ83dqN5zvyw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
  T-EXCH-12.corp.yadro.com (172.17.11.143)
 Received-SPF: permerror client-ip=89.207.88.253;
  envelope-from=alexei.filippov@syntacore.com; helo=mta-03.yadro.com
@@ -84,238 +86,141 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10.10.2024 02:09, Atish Patra wrote:
-> The current PMU events are defined by SBI PMU
-> specification.  As there is no standard event encoding
-> scheme, Virt machine chooses to use the SBI PMU encoding.
-> A platform may choose to implement a different event
-> encoding scheme completely.
+On 09.10.2024 06:51, Atish Kumar Patra wrote:
+> On Mon, Oct 7, 2024 at 7:52 PM Alistair Francis <alistair23@gmail.com> wrote:
+>>
+>> On Wed, Sep 11, 2024 at 3:49 AM Alexei Filippov
+>> <alexei.filippov@syntacore.com> wrote:
+>>>
+>>> Following original patch [1] here's a patch with support of machine
+>>> specific pmu events and PoC with initial support for sifive_u's HPM.
+>>
+>> Thanks for the patch.
+>>
+>> I'm hesitate to support these callback functions as I feel they
+>> (callbacks in the CPU to the machine in general) are clunky.
+>>
+>> I think the cover letter, code and commit messages need more details here.
+>>
+>> First can you link to the exact spec you are trying to implement
+>> (RISC-V has a habit of creating multiple "ratified" specs that are all
+>> incompatible). It's really handy to point to the exact PDF in the
+>> cover letter or commit message to just be really clear what you are
+>> supporting.
+>>
 > 
-> Rename the event names to reflect the reality.
+> This patch is trying to implement SiFive specific event encodings.
+> There is no standard
+> RISC-V ISA involved here.
 > 
-> No functional changes introduced.
+>> Secondly, can you describe why this is useful? What is the point of
+>> machine specific PMU events? Why do we want to support this in QEMU?
+>>
 > 
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
->   target/riscv/cpu.h        | 26 +++++++++++++++-----
->   target/riscv/cpu_helper.c |  8 +++---
->   target/riscv/pmu.c        | 62 ++++++++++++++++++-----------------------------
->   target/riscv/pmu.h        |  2 +-
->   4 files changed, 48 insertions(+), 50 deletions(-)
+> I happen to work on a similar implementation as well. Apologies for
+> not seeing this patch earlier.
+> Here is the link to the series that I have been working on to
+> implement a similar feature.
+> https://github.com/atishp04/qemu/tree/b4/pmu_event_machine
+> I will send it to the mailing list tomorrow after some checkpatch fixes.
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 97e408b91219..2ac391a7cf74 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -820,14 +820,28 @@ enum {
->   /*
->    * The event id are encoded based on the encoding specified in the
->    * SBI specification v0.3
-> + *
-> + * The event encoding is specified in the SBI specification
-> + * Event idx is a 20bits wide number encoded as follows:
-> + * event_idx[19:16] = type
-> + * event_idx[15:0] = code
-> + * The code field in cache events are encoded as follows:
-> + * event_idx.code[15:3] = cache_id
-> + * event_idx.code[2:1] = op_id
-> + * event_idx.code[0:0] = result_id
->    */
->   
-> -enum riscv_pmu_event_idx {
-> -    RISCV_PMU_EVENT_HW_CPU_CYCLES = 0x01,
-> -    RISCV_PMU_EVENT_HW_INSTRUCTIONS = 0x02,
-> -    RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS = 0x10019,
-> -    RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS = 0x1001B,
-> -    RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS = 0x10021,
-> +enum virt_pmu_event_idx {
-> +    /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
-> +    VIRT_PMU_EVENT_HW_CPU_CYCLES = 0x01,
-> +    /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
-> +    VIRT_PMU_EVENT_HW_INSTRUCTIONS = 0x02,
-> +    /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
-> +    VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS = 0x10019,
-> +    /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
-> +    VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS = 0x1001B,
-> +    /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
-> +    VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS = 0x10021,
-Pretty sure, this is not a good idea to rename them since the generic 
-event even do not include TLB_* events as far as I know. It's acctually 
-better to just leave generic naming as is and let the machine handle 
-machine specific events separatly.
->   };
->   
->   /* used by tcg/tcg-cpu.c*/
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 203c0a92ab75..0f1655a221bd 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1295,17 +1295,17 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
->   
->   static void pmu_tlb_fill_incr_ctr(RISCVCPU *cpu, MMUAccessType access_type)
->   {
-> -    enum riscv_pmu_event_idx pmu_event_type;
-> +    enum virt_pmu_event_idx pmu_event_type;
->   
->       switch (access_type) {
->       case MMU_INST_FETCH:
-> -        pmu_event_type = RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS;
-> +        pmu_event_type = VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS;
->           break;
->       case MMU_DATA_LOAD:
-> -        pmu_event_type = RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS;
-> +        pmu_event_type = VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS;
->           break;
->       case MMU_DATA_STORE:
-> -        pmu_event_type = RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS;
-> +        pmu_event_type = VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS;
->           break;
->       default:
->           return;
-> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> index 2531d4f1a9c1..c436b08d1043 100644
-> --- a/target/riscv/pmu.c
-> +++ b/target/riscv/pmu.c
-> @@ -38,40 +38,24 @@ void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
->   {
->       uint32_t fdt_event_ctr_map[15] = {};
->   
-> -   /*
-> -    * The event encoding is specified in the SBI specification
-> -    * Event idx is a 20bits wide number encoded as follows:
-> -    * event_idx[19:16] = type
-> -    * event_idx[15:0] = code
-> -    * The code field in cache events are encoded as follows:
-> -    * event_idx.code[15:3] = cache_id
-> -    * event_idx.code[2:1] = op_id
-> -    * event_idx.code[0:0] = result_id
-> -    */
-> -
-> -   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
-> -   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
-> -   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
-> +   fdt_event_ctr_map[0] = cpu_to_be32(VIRT_PMU_EVENT_HW_CPU_CYCLES);
-> +   fdt_event_ctr_map[1] = cpu_to_be32(VIRT_PMU_EVENT_HW_CPU_CYCLES);
->      fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
->   
-> -   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
-> -   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
-> -   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
-> +   fdt_event_ctr_map[3] = cpu_to_be32(VIRT_PMU_EVENT_HW_INSTRUCTIONS);
-> +   fdt_event_ctr_map[4] = cpu_to_be32(VIRT_PMU_EVENT_HW_INSTRUCTIONS);
->      fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
->   
-> -   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
-> -   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
-> -   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
-> +   fdt_event_ctr_map[6] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS);
-> +   fdt_event_ctr_map[7] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS);
->      fdt_event_ctr_map[8] = cpu_to_be32(cmask);
->   
-> -   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
-> -   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
-> -   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
-> +   fdt_event_ctr_map[9] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS);
-> +   fdt_event_ctr_map[10] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS);
->      fdt_event_ctr_map[11] = cpu_to_be32(cmask);
->   
-> -   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
-> -   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
-> -   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
-> +   fdt_event_ctr_map[12] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS);
-> +   fdt_event_ctr_map[13] = cpu_to_be32(VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS);
->      fdt_event_ctr_map[14] = cpu_to_be32(cmask);
-Ok, I guess it's time to do smthng generic to this function, cz if 
-number of supported machines will go up it's going to be a problem I guess.
->   
->      /* This a OpenSBI specific DT property documented in OpenSBI docs */
-> @@ -290,7 +274,7 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
->       riscv_pmu_icount_update_priv(env, newpriv, new_virt);
->   }
->   
-> -int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-> +int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum virt_pmu_event_idx event_idx)
->   {
->       uint32_t ctr_idx;
->       int ret;
-> @@ -329,7 +313,7 @@ bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
->       }
->   
->       cpu = env_archcpu(env);
-> -    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS,
-> +    if (!riscv_pmu_htable_lookup(cpu, VIRT_PMU_EVENT_HW_INSTRUCTIONS,
->                                    &ctr_idx)) {
->           return false;
->       }
-> @@ -348,7 +332,7 @@ bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env, uint32_t target_ctr)
->       }
->   
->       cpu = env_archcpu(env);
-> -    if (!riscv_pmu_htable_lookup(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES,
-> +    if (!riscv_pmu_htable_lookup(cpu, VIRT_PMU_EVENT_HW_CPU_CYCLES,
->                                   &ctr_idx)) {
->           return false;
->       }
-> @@ -406,11 +390,11 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
->       }
->   
->       switch (event_idx) {
-> -    case RISCV_PMU_EVENT_HW_CPU_CYCLES:
-> -    case RISCV_PMU_EVENT_HW_INSTRUCTIONS:
-> -    case RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS:
-> -    case RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
-> -    case RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
-> +    case VIRT_PMU_EVENT_HW_CPU_CYCLES:
-> +    case VIRT_PMU_EVENT_HW_INSTRUCTIONS:
-> +    case VIRT_PMU_EVENT_CACHE_DTLB_READ_MISS:
-> +    case VIRT_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
-> +    case VIRT_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
->           break;
->       default:
->           /* We don't support any raw events right now */
-> @@ -464,7 +448,7 @@ static bool pmu_hpmevent_set_of_if_clear(CPURISCVState *env, uint32_t ctr_idx)
->   }
->   
->   static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-> -                                  enum riscv_pmu_event_idx evt_idx)
-> +                                  enum virt_pmu_event_idx evt_idx)
->   {
->       uint32_t ctr_idx;
->       CPURISCVState *env = &cpu->env;
-> @@ -473,8 +457,8 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
->       uint64_t curr_ctr_val, curr_ctrh_val;
->       uint64_t ctr_val;
->   
-> -    if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
-> -        evt_idx != RISCV_PMU_EVENT_HW_INSTRUCTIONS) {
-> +    if (evt_idx != VIRT_PMU_EVENT_HW_CPU_CYCLES &&
-> +        evt_idx != VIRT_PMU_EVENT_HW_INSTRUCTIONS) {
->           return;
->       }
->   
-> @@ -533,8 +517,8 @@ void riscv_pmu_timer_cb(void *priv)
->       RISCVCPU *cpu = priv;
->   
->       /* Timer event was triggered only for these events */
-> -    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
-> -    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
-> +    pmu_timer_trigger_irq(cpu, VIRT_PMU_EVENT_HW_CPU_CYCLES);
-> +    pmu_timer_trigger_irq(cpu, VIRT_PMU_EVENT_HW_INSTRUCTIONS);
->   }
->   
->   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
-> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-> index 3853d0e2629e..75a22d596b69 100644
-> --- a/target/riscv/pmu.h
-> +++ b/target/riscv/pmu.h
-> @@ -30,7 +30,7 @@ void riscv_pmu_timer_cb(void *priv);
->   void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
->   int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
->                                  uint32_t ctr_idx);
-> -int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
-> +int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum virt_pmu_event_idx event_idx);
->   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
->   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
->                             uint32_t ctr_idx);
+> Regarding the motivation, RISC-V ISA doesn't  define any standard
+> event encodings.
+> The virt machine implemented event encodings defined in the SBI PMU
+> extension because
+> there was nothing else available. There is an active performance
+> events TG who is working on defining
+> the standard events for RISC-V but not the encodings. The goal is
+> provide flexibility for the platforms while
+> allowing a minimum set of events that would work across platforms.
 > 
+> However, any platform would define their own event encodings and want
+> to support those in their Qemu
+> machine implementation. That's why, we should disassociate the event
+> encodings in the pmu.c to make it
+> more generic and usable across machines.
+> 
+>> The callbacks should also have some documentation in the code base so
+>> others can implement the functionality.
+>>
+>> It might also be helpful to split this patch up a little bit more. A
+>> quick read through and it seems like the patches could be a little
+>> smaller, making it easier to review.
+>>
+>> Finally, for the next version CC @Atish Patra  who has ended up being
+>> the PMU person :)
+>>
+> 
+> Thanks for Ccing me. I completely missed this patch earlier. Few
+> thoughts by looking at this series.
+> 
+> @Alexei:
+> 1. Event encoding needs to be widened to 64 bits. That's what I tried
+Hi, Atish, thanks for the review. Does we really need to wide up? Can 
+you please share why?
+> to achieve with my implementation
+> along with a bunch of other cleanups.
+> 
+> 2. Why do we need machine specific counter write/read functions ? If
+> we really need it, we should definitely have that
+> as a separate patch as my implementation only focussed on
+> disassociating the events and pmu implementation.
+Ok, I saw your path and I think we should have this. Just because it's 
+more scalable solution. Any event could count differently, but every 1 
+of those must count something, as described in their own specs. This 
+will make life of perf folks much easier, cz they will be able to debug 
+perf on qemu. Same to sbi folks i guess.
+> 
+> Please take a look at the patches shared above or the mailing list
+> (should land tomorrow) and let me know your thoughts.
+> I am happy to collaborate on your patches so that we have more than
+> just a virt machine that we can test with this series.
+Thanks for your series, I have some thoughts about it, I'll describe 
+them on your patchset.
+> 
+>> Alistair
+>>
+>>>
+>>> == Test scenarios ==
+>>>
+>>> So, I tested this patches on current Linux master with perf.
+>>> something like `perf stat -e branch-misses perf bench mem memcpy` works
+>>> just fine, also 'perf record -e branch-misses perf bench mem memcpy'
+>>> collect samples just fine and `perf report` works.
+>>>
+>>> == ToDos / Limitations ==
+>>>
+>>> Second patch is only inital sifive_u's HPM support, without any
+>>> filtering, events combining features or differrent counting
+>>> algorithm for different events. There are also no tests, but if you
+>>> have any suggestions about where I need to look to implement them, please
+>>> point me to.
+>>>
+>>> == Changes since original patch ==
+>>>
+>>> - Rebased to current master
+>>>
+>>> [1] https://lore.kernel.org/all/20240625144643.34733-1-alexei.filippov@syntacore.com/
+>>>
+>>> Alexei Filippov (2):
+>>>    target/riscv: Add support for machine specific pmu's events
+>>>    hw/riscv/sifive_u.c: Add initial HPM support
+>>>
+>>>   hw/misc/meson.build            |   1 +
+>>>   hw/misc/sifive_u_pmu.c         | 384 +++++++++++++++++++++++++++++++++
+>>>   hw/riscv/sifive_u.c            |  14 ++
+>>>   include/hw/misc/sifive_u_pmu.h |  24 +++
+>>>   target/riscv/cpu.c             |  20 +-
+>>>   target/riscv/cpu.h             |   9 +
+>>>   target/riscv/csr.c             |  93 +++++---
+>>>   target/riscv/pmu.c             | 138 ++++++------
+>>>   target/riscv/pmu.h             |  19 +-
+>>>   9 files changed, 599 insertions(+), 103 deletions(-)
+>>>   create mode 100644 hw/misc/sifive_u_pmu.c
+>>>   create mode 100644 include/hw/misc/sifive_u_pmu.h
+>>>
+>>> --
+>>> 2.34.1
+>>>
+>>>
 
