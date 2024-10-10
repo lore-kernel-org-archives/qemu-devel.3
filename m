@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A444CF07BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 08:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE91CF07C4
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 08:34:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1syoPI-0003eJ-SZ; Thu, 10 Oct 2024 04:20:24 -0400
+	id 1syobi-0005Ho-Ki; Thu, 10 Oct 2024 04:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1syoPG-0003e2-M1
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:20:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1syoPE-0005PG-Am
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:20:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728548418;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/xMErXb4WbToGTuB6R8DGHTKXDL2G4YCt9Ujp5uhNnc=;
- b=aej6IxIiSOzrZTxoYk/ohxZXfbeBMN0JDY8YmQIQXf+hcP09q6gwPnv8K7wkkQntsGQYH5
- PufFGrXtk75Zbf0/VxLmOvsLce5+ElMwg9IdYRpxEw2JUbPTby4fNLny21aCx7mXQOMRs5
- NG5KevTS3+Mb2csomKzCrNGWVzQGMxE=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-22E63EuZPLSL5ywBngvGDg-1; Thu, 10 Oct 2024 04:20:15 -0400
-X-MC-Unique: 22E63EuZPLSL5ywBngvGDg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a996c29edaaso47728966b.0
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 01:20:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1syobg-0005HL-Cw
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:33:12 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1syobe-0006jw-PM
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 04:33:12 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-4603f47b2c8so8371871cf.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 01:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1728549189; x=1729153989; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=r+tAbAgbaEO80v9lH6g9xEjpCRljsF54Bm2x6HorED4=;
+ b=KhRQJtQ0K7PQ1X17wiVfA3OiQuxpu0eifHQkHl0qKXB7dJapqEOAzEqDeHyfee2xP/
+ yQepHNT+YWiB20A4J0Krc0WTgu4v8TLz5bziI5XqS+cpHViWhy7mtXn/PJBNZzyOT8Ki
+ 0Wtas+NF31LVT1/oX6SCYMM6DHDmEoTvz1XWwBOwlhRa6VV3d6pen/Oy0WlCsd0a71GF
+ Qm7WnTlv6VxI0zuOzvwoxhnp9aL5m7ye9Oi8T1DeRIPwkzuvjzE7CFtSfSY2DNjpgm86
+ rfRDCq2bzPIar2oD5iOmGXBIjYMhmvrv6frU/AyhimqfKbiiO79h8dp8ai4vThAvBmZx
+ 9Yww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728548414; x=1729153214;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/xMErXb4WbToGTuB6R8DGHTKXDL2G4YCt9Ujp5uhNnc=;
- b=A+Q23VPsul0znFHVzxfp3z01UzpXFt5yUdOmrvl9CVyYd9/I3vvN1KVOzHcIr0+lGy
- At6zk4HtImaYdckQWMfylW56/cr2SUS9fatQIkfwnVJjp5fwWNr3kTn33WDToVssksXI
- mTBeL4N6KcBF7S9h93w1zndOEbMvsb6lb+SMZnSBzrG7EUa9g7lfR0cnnjcV7SJyd9/p
- ISucHq/mZTXIycTxLtNCSqiTRnapEk6yNWZNlL1w+g8Gvmsb/1zOZ3fJOJK3myg1aSbE
- xXjwaHuLbEjxdVjDcEgbG0Du0g4Zb65L2FcU5G5s+BZORqwg7hi8LbTp/zLvdMB7PYOy
- t9pQ==
+ d=1e100.net; s=20230601; t=1728549189; x=1729153989;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r+tAbAgbaEO80v9lH6g9xEjpCRljsF54Bm2x6HorED4=;
+ b=sl/nAwl7AavIMKpuZMa1LTEct9QR05QcUa9OcGXpnZVI9Jz/fPQP/1kTnpQ7HU/X6i
+ ivHjRou2SLdBVxeJBZL2biHTIN2VnwI/x+n0eCq9SyKFah/rbNWQMovXmIiEIrEF1bWh
+ g3kwdRo7BC7v2wAPNSqZUfV76oRkyKzhXj2kxZUtjWAac9e3yTSwQXaucBbD9PcbaQKx
+ OEGKK3vdu1ZcAz7RDNjDHgE/eUy9iImkDUQWCWAMvXGd8bWWeSSQ6iwcVeI38uafxZah
+ CRPnYg6LSQWedUOPlK9Eh5gzBl6xz2hnx9Yl5YGB6OL2jqX1nbxUyWOz93Bs/Dk6RX3Z
+ 6f+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVckixzK5QsTAtnO2vbbbj7VzOA7zE2Ag0TD6oh/KB64Qq5XhxFh0bf2MWY1aqk/uDpk+rI6KELEb40@nongnu.org
-X-Gm-Message-State: AOJu0YwTDsIlPZYBvP4UHKJwN46yDZoKJQjG170ZfxR16Ca8gmOaHrMx
- gI2+K8kCLTAno1Bctss5VOQB4HhxCdH7el78gPOcrPks0zytE95c+zfv7Evp5N8HJaIBOvr5Tz1
- mv3q702LrZvmUIiSx2lo8Wps0oJA3ymqIEjxASF5biTu9X9z1QLSw
-X-Received: by 2002:a17:907:e698:b0:a99:42a3:db9b with SMTP id
- a640c23a62f3a-a998d3156cemr468075366b.48.1728548414013; 
- Thu, 10 Oct 2024 01:20:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBDHCVrDuQzn+hwwtEGKz1SOFZVK+D8CZgrXj67xXX7bGHZM3EH7fdNjjFpeWdL1Eer9qGoA==
-X-Received: by 2002:a17:907:e698:b0:a99:42a3:db9b with SMTP id
- a640c23a62f3a-a998d3156cemr468071666b.48.1728548413222; 
- Thu, 10 Oct 2024 01:20:13 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
- [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80c0723sm52163766b.135.2024.10.10.01.20.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Oct 2024 01:20:12 -0700 (PDT)
-Date: Thu, 10 Oct 2024 10:20:08 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: yaozhenguo <yaozhenguo1@gmail.com>
-Cc: alex.bennee@linaro.org, mst@redhat.com, qemu-devel@nongnu.org, 
- yaozhenguo@jd.com
-Subject: Re: [PATCH V3] virtio/vhost-user: fix qemu abort when hotunplug
- vhost-user-net device
-Message-ID: <hgkoxnyvewuo54otuoc32aaa4vh7o7qkmq3u7g4c4omy66giwp@3cbqzkx4oezj>
-References: <20241010061824.74819-1-yaozhenguo@jd.com>
+ AJvYcCXnCc8WyuLXRSZ87HxooAPDZIeQpnprqHwiygt/XzSnBOJt8J7uONno/ZakKw6f/pu9RiMuDcDR0M7h@nongnu.org
+X-Gm-Message-State: AOJu0Yw/w8bJMRGPiNOd7ksW/j+iI0LXi/EdVKgBlPdbIZ2bAZdX+MNT
+ iwQPYLtp8jQlyUSVAs2aq0RaaVy0ocwW6vh3ejXz7KjtyD9o2DTeKbdpI8B2VI8DNo+xuzFKyxz
+ wBzMMSB1aZsH7iXRYKd+hcni9Pbc=
+X-Google-Smtp-Source: AGHT+IH/q+fuYVJ/eBIn/ivIyI8dcwXKOcB5N6uz3/Vie6Lvz32bbwE/skQKL242aDKIo5VGU26sCsLMK5o6b/Xa00k=
+X-Received: by 2002:a05:622a:590b:b0:458:5441:362a with SMTP id
+ d75a77b69052e-45fb0e84e13mr74914431cf.58.1728549189254; Thu, 10 Oct 2024
+ 01:33:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241010061824.74819-1-yaozhenguo@jd.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240913094604.269135-1-d-tatianin@yandex-team.ru>
+ <fa326630-8304-4700-9995-d98287356c1f@yandex-team.ru>
+In-Reply-To: <fa326630-8304-4700-9995-d98287356c1f@yandex-team.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 10 Oct 2024 12:32:57 +0400
+Message-ID: <CAJ+F1CJuReS0R08QvWfgeDeDN8xD+=xYWrybBEDONvo5H-HtHQ@mail.gmail.com>
+Subject: Re: [PATCH v2] chardev: introduce 'reconnect-ms' and deprecate
+ 'reconnect'
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org, 
+ devel@lists.libvirt.org, Peter Krempa <pkrempa@redhat.com>, 
+ Michal Privoznik <mprivozn@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000067052f06241b386f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,206 +96,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 10, 2024 at 02:18:24PM GMT, yaozhenguo wrote:
->During the hot-unplugging of vhost-user-net type network cards,
->the vhost_user_cleanup function may add the same rcu node to
->the rcu linked list.
->The function call relationship in this case is as follows:
->
->vhost_user_cleanup
->    ->vhost_user_host_notifier_remove
->        ->call_rcu(n, vhost_user_host_notifier_free, rcu);
->    ->g_free_rcu(n, rcu);
->
->When this happens, QEMU will abort in try_dequeue:
->
->if (head == &dummy && qatomic_mb_read(&tail) == &dummy.next) {
->    abort();
->}
->
->backtrace is as follows::
->0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
->1  raise () at /usr/lib64/libc.so.6
->2  abort () at /usr/lib64/libc.so.6
->3  try_dequeue () at ../util/rcu.c:235
->4  call_rcu_thread (0) at ../util/rcu.c:288
->5  qemu_thread_start (0) at ../util/qemu-thread-posix.c:541
->6  start_thread () at /usr/lib64/libc.so.6
->7  clone3 () at /usr/lib64/libc.so.6
->
->The reason for the abort is that adding two identical nodes to
->the rcu linked list will cause the rcu linked list to become a ring,
->but when the dummy node is added after the two identical nodes,
->the ring is opened. But only one node is added to list with
->rcu_call_count added twice. This will cause rcu try_dequeue abort.
->
->This happens when n->addr != 0. In some scenarios, this does happen.
->For example, this situation will occur when using a 32-queue DPU
->vhost-user-net type network card for hot-unplug testing, because
->VhostUserHostNotifier->addr will be cleared during the processing of
->VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG. However,it is asynchronous,
->so we cannot guarantee that VhostUserHostNotifier->addr is zero in
->vhost_user_cleanup. Therefore, it is necessary to merge g_free_rcu
->and vhost_user_host_notifier_free into one rcu node.
->
->Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNotifiers")
->Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
->---
->   V1->V2: add n->addr check in vhost_user_get_vring_base and vhost_user_backend_handle_vring_host_notifier to prevent submit same node to rcu list.
->   V2->V3: 1. change "free" to "destroy"
->           2. move "!n->addr && !destroy" checking to vhost_user_host_notifier_remove
->           3. move "!n" checking to vhost_user_host_notifier_remove
->---
-> hw/virtio/vhost-user.c         | 43 ++++++++++++++++++----------------
-> include/hw/virtio/vhost-user.h |  1 +
-> 2 files changed, 24 insertions(+), 20 deletions(-)
+--00000000000067052f06241b386f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Some checkpatch errors:
+Hi Vladimir
 
-$ ./scripts/checkpatch.pl --strict --branch master..HEAD --codespell
-ERROR: braces {} are necessary for all arms of this statement
-#98: FILE: hw/virtio/vhost-user.c:1207:
-+    if (!n)
-[...]
+On Mon, Sep 30, 2024 at 5:17=E2=80=AFPM Vladimir Sementsov-Ogievskiy <
+vsementsov@yandex-team.ru> wrote:
 
-ERROR: braces {} are necessary for all arms of this statement
-#100: FILE: hw/virtio/vhost-user.c:1209:
-+    if (!destroy && !n->addr)
-[...]
-
-total: 2 errors, 0 warnings, 96 lines checked
-
+> Hi Mark-Andre!
 >
->diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->index 00561daa06..f80d0af76f 100644
->--- a/hw/virtio/vhost-user.c
->+++ b/hw/virtio/vhost-user.c
->@@ -1185,9 +1185,16 @@ static int vhost_user_set_vring_num(struct vhost_dev *dev,
+> Could you please take a look? We have collected acks for QAPI changes,
+> could this be queued?
 >
-> static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
-> {
->-    assert(n && n->unmap_addr);
->-    munmap(n->unmap_addr, qemu_real_host_page_size());
->-    n->unmap_addr = NULL;
->+    if (n->unmap_addr) {
->+        munmap(n->unmap_addr, qemu_real_host_page_size());
->+        n->unmap_addr = NULL;
->+    }
->+    if (n->destroy) {
->+        memory_region_transaction_begin();
->+        object_unparent(OBJECT(&n->mr));
->+        memory_region_transaction_commit();
->+        g_free(n);
->+    }
-> }
 >
-> /*
->@@ -1195,17 +1202,25 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
->  * under rcu.
->  */
-> static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
->-                                            VirtIODevice *vdev)
->+                                            VirtIODevice *vdev, bool destroy)
-> {
->+    if (!n)
->+        return;
->+    if (!destroy && !n->addr)
+While writing to 9.2 changelog, I realize that we should probably have
+addressed a few more things:
+- change -netdev stream to use reconnect-ms too, for consistency
+- update the qemu documentation to use reconnect-ms
+- update code and tests to use reconnect-ms
 
-IIUC if `destroy` is false and `n->addr` is NULL, we don't have anything 
-to do, so we can early return, right?
+Could you look at it? thanks
 
-Maybe we can put a comment on that condition.
-
->+        return;
-
-Better to use a single if here in this way:
-       if (!n || (!destroy && !n->addr)) {
-           return;
-       }
-
-The rest LGTM!
-
-Thanks,
-Stefano
-
->+
->     if (n->addr) {
->         if (vdev) {
->+            memory_region_transaction_begin();
->             virtio_queue_set_host_notifier_mr(vdev, n->idx, &n->mr, false);
->+            memory_region_transaction_commit();
->         }
->         assert(!n->unmap_addr);
->         n->unmap_addr = n->addr;
->         n->addr = NULL;
->-        call_rcu(n, vhost_user_host_notifier_free, rcu);
->     }
->+    n->destroy = destroy;
->+    call_rcu(n, vhost_user_host_notifier_free, rcu);
-> }
+On 13.09.24 12:46, Daniil Tatianin wrote:
+> > The 'reconnect' option only allows to specify the time in seconds,
+> > which is way too long for certain workflows.
+> >
+> > We have a lightweight disk backend server, which takes about 20ms to
+> > live update, but due to this limitation in QEMU, previously the guest
+> > disk controller would hang for one second because it would take this
+> > long for QEMU to reinitialize the socket connection.
+> >
+> > Introduce a new option called 'reconnect-ms', which is the same as
+> > 'reconnect', except the value is treated as milliseconds. These are
+> > mutually exclusive and specifying both results in an error.
+> >
+> > 'reconnect' is also deprecated by this commit to make it possible to
+> > remove it in the future as to not keep two options that control the
+> > same thing.
+> >
+> > Reviewed-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> > Acked-by: Peter Krempa<pkrempa@redhat.com>
+> > Signed-off-by: Daniil Tatianin<d-tatianin@yandex-team.ru>
 >
-> static int vhost_user_set_vring_base(struct vhost_dev *dev,
->@@ -1279,9 +1294,7 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
->     struct vhost_user *u = dev->opaque;
+> --
+> Best regards,
+> Vladimir
 >
->     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
->-    if (n) {
->-        vhost_user_host_notifier_remove(n, dev->vdev);
->-    }
->+    vhost_user_host_notifier_remove(n, dev->vdev, false);
 >
->     ret = vhost_user_write(dev, &msg, NULL, 0);
->     if (ret < 0) {
->@@ -1562,7 +1575,7 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
->      * new mapped address.
->      */
->     n = fetch_or_create_notifier(user, queue_idx);
->-    vhost_user_host_notifier_remove(n, vdev);
->+    vhost_user_host_notifier_remove(n, vdev, false);
->
->     if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
->         return 0;
->@@ -2736,15 +2749,7 @@ static int vhost_user_set_inflight_fd(struct vhost_dev *dev,
-> static void vhost_user_state_destroy(gpointer data)
-> {
->     VhostUserHostNotifier *n = (VhostUserHostNotifier *) data;
->-    if (n) {
->-        vhost_user_host_notifier_remove(n, NULL);
->-        object_unparent(OBJECT(&n->mr));
->-        /*
->-         * We can't free until vhost_user_host_notifier_remove has
->-         * done it's thing so schedule the free with RCU.
->-         */
->-        g_free_rcu(n, rcu);
->-    }
->+    vhost_user_host_notifier_remove(n, NULL, true);
-> }
->
-> bool vhost_user_init(VhostUserState *user, CharBackend *chr, Error **errp)
->@@ -2765,9 +2770,7 @@ void vhost_user_cleanup(VhostUserState *user)
->     if (!user->chr) {
->         return;
->     }
->-    memory_region_transaction_begin();
->     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
->-    memory_region_transaction_commit();
->     user->chr = NULL;
-> }
->
->diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
->index 324cd8663a..9a3f238b43 100644
->--- a/include/hw/virtio/vhost-user.h
->+++ b/include/hw/virtio/vhost-user.h
->@@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
->     void *addr;
->     void *unmap_addr;
->     int idx;
->+    bool destroy;
-> } VhostUserHostNotifier;
->
-> /**
->-- 
->2.41.0
 >
 
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--00000000000067052f06241b386f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Vladimir<br></div><br><div class=3D"gm=
+ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 30, 2024 at 5:=
+17=E2=80=AFPM Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vsementsov=
+@yandex-team.ru">vsementsov@yandex-team.ru</a>&gt; wrote:<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">Hi Mark-Andre!<br>
+<br>
+Could you please take a look? We have collected acks for QAPI changes, coul=
+d this be queued?<br>
+<br></blockquote><div><br></div><div>While writing to 9.2 changelog, I real=
+ize that we should probably have addressed a few more things:</div><div>- c=
+hange -netdev stream to use reconnect-ms too, for consistency<br></div><div=
+>- update the qemu documentation to use reconnect-ms</div><div>- update cod=
+e and tests to use reconnect-ms<br></div><div>=C2=A0</div><div>Could you lo=
+ok at it? thanks<br></div><div><br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+On 13.09.24 12:46, Daniil Tatianin wrote:<br>
+&gt; The &#39;reconnect&#39; option only allows to specify the time in seco=
+nds,<br>
+&gt; which is way too long for certain workflows.<br>
+&gt; <br>
+&gt; We have a lightweight disk backend server, which takes about 20ms to<b=
+r>
+&gt; live update, but due to this limitation in QEMU, previously the guest<=
+br>
+&gt; disk controller would hang for one second because it would take this<b=
+r>
+&gt; long for QEMU to reinitialize the socket connection.<br>
+&gt; <br>
+&gt; Introduce a new option called &#39;reconnect-ms&#39;, which is the sam=
+e as<br>
+&gt; &#39;reconnect&#39;, except the value is treated as milliseconds. Thes=
+e are<br>
+&gt; mutually exclusive and specifying both results in an error.<br>
+&gt; <br>
+&gt; &#39;reconnect&#39; is also deprecated by this commit to make it possi=
+ble to<br>
+&gt; remove it in the future as to not keep two options that control the<br=
+>
+&gt; same thing.<br>
+&gt; <br>
+&gt; Reviewed-by: Vladimir Sementsov-Ogievskiy&lt;<a href=3D"mailto:vsement=
+sov@yandex-team.ru" target=3D"_blank">vsementsov@yandex-team.ru</a>&gt;<br>
+&gt; Acked-by: Peter Krempa&lt;<a href=3D"mailto:pkrempa@redhat.com" target=
+=3D"_blank">pkrempa@redhat.com</a>&gt;<br>
+&gt; Signed-off-by: Daniil Tatianin&lt;<a href=3D"mailto:d-tatianin@yandex-=
+team.ru" target=3D"_blank">d-tatianin@yandex-team.ru</a>&gt;<br>
+<br>
+-- <br>
+Best regards,<br>
+Vladimir<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
+
+--00000000000067052f06241b386f--
 
