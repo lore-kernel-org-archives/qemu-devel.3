@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC72ED2444F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 21:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EADD24455
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 21:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz13a-0007JU-F5; Thu, 10 Oct 2024 17:50:50 -0400
+	id 1sz13L-0007HU-8M; Thu, 10 Oct 2024 17:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz13X-0007JC-7x
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:50:47 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz13C-0007Fk-0G
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:50:27 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz13V-0004eV-Kt
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:50:46 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e01eff831so1079956b3a.2
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 14:50:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sz139-0004cr-MP
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 17:50:25 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20b7eb9e81eso14387205ad.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 14:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728597044; x=1729201844; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AU8VwDQMvjX8OObel+UKUH0COTVBKCyib/wItdKMSMg=;
- b=OS4BppR+dXksYqPZ60kG1brxIiLmtvHKRll2iVRlA6UcLf1WoPZ59Rz2ksMPHRVyle
- dH7T3qzJSMA38rUSdwHEekmeYTH8R7oJXhejxj3tHvBLpQexC6PDFe/e5QnOpvvFSxbs
- lVeEOL+8herEByxEWtL9/PCD9eeg+pGYNW9BcYUgHTaWMJWi5zYSAda/1qL5HqpQIVgp
- lXtwP+tirW66B/d4JpRqymwkHW4AFcKcYoaJTI35Of7RM4sfH6qmBCs0TVXY7blm0mGm
- J6v/nAq2V16/O71WTj3yi/+yp2pn0QqORPIKDuwct8et1GezyqQTrUEQ1MM1LfsVu/TQ
- pF7w==
+ d=linaro.org; s=google; t=1728597019; x=1729201819; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=y6VDUacv/t+N2b53bBz4BEo9jleuzzWeufmM8SdWIsc=;
+ b=Io4BV64IFiS8+AafVqwrCs6Tu0UW1+bWfKIRM+/CSHscTba6q6zlnQfH/I7GcYpss8
+ wjuGvLNFUs6BviGMq5jSIBzzC45mAOzbhrEIQTFIZFsfOcslVbJkLVmdvWIMJDvKwajG
+ rXMRSe9lYLDR/yv1GacZ+9RGg3VZEgVzj6PFByUYCQ86u/35MW4CgKmJk21ByWcIclOP
+ ecgcN18oRdZ3xnpxV8eN6rNq77M40N2qaLCI8R4tynx9A692HBgXQ6cmkl32GdD6d9Fx
+ iFcVEhOahXvtk2qm2nPI+rcuii/srWichWAV7Wr4av8anmONrtVvH5XwzSAbbGs1kUNs
+ zlBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728597044; x=1729201844;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AU8VwDQMvjX8OObel+UKUH0COTVBKCyib/wItdKMSMg=;
- b=U7JAux378cKgYGUL0keqDAYAyQTRg2N36EEedYUSOTrj2/tPC30WqearoFh2n2PIst
- xTCGRkox3SjDlPZrfnqrINNBeD2aBAya4Z48Dykp90QTNDObY5aNAXgSbz3SgdqT5NUd
- OYtSRj/2lQhqLQIbyek/tEVlLvE15CX0uDMIHjBSE06PTa0YIzUZH/C+5cyoUlXpqixv
- ZyLwCdfqTJip5PlIEn8o0O7k3yb73mryB8fRtwoxmZOog/aMeWx4Thi6LnOkvLCjYRYJ
- PZ4h4HwMapP8T57n3w/pYmkMeVICxHyPABOlpse+4IkCEhb4jP9aufhTSmhlcrgVLqVJ
- QTGQ==
-X-Gm-Message-State: AOJu0Yxapf/lgL172RptadqZCc1Jm/vmcpKN7HMWCuIWFkqiSgmxLZuT
- jquAdWpAJC9JnIVv9NTUIBmCNkDRWgwfq53039cNooX61bm0hiEZW/QdZMgxJsCWg4jN4lA5dzq
- f
-X-Google-Smtp-Source: AGHT+IESdkW4mTIXmfX8UBrQfZ/UpdQB8SLWsOHmtT1UQQXdQjezS7te6L2Cso3h3/KJzC+iq4QFVQ==
-X-Received: by 2002:a05:6a21:139b:b0:1d2:eb9d:9972 with SMTP id
- adf61e73a8af0-1d8bcf110e0mr587566637.20.1728597043674; 
- Thu, 10 Oct 2024 14:50:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728597019; x=1729201819;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y6VDUacv/t+N2b53bBz4BEo9jleuzzWeufmM8SdWIsc=;
+ b=JT2LeX3rCqLkTIzZTNY6MKT2Q7qEqy9H6RbwSy9khEA27GfEE4OjSElJy73mw8TLlb
+ WFR261yJzYmqGeWUHyIdbCKv5MDYRsopvhPe6LYPkGkcx3E5bEOIvai6Xgt/aQcvWdn/
+ TQXelfIH3XatHjxovKFWlLxjenqQhNuQQ4moxBUsOmij42nGAs8TAACu42RCXl/4GYvX
+ 9MdRYZEgjyR9QZ5qbcK9sZFCn2AdSwDm9YBQ0agBLGpOD23CVJQDTMtQ0w7nOmFUPrwb
+ jW/Zae7Gjbl0Xm1X5Gg7k7Wc1fMbQgFr7RZexOmWigpnPUGitayvImhXFGMJHmEr2aMR
+ ED7A==
+X-Gm-Message-State: AOJu0YzimRz96g225yFITmdhuZQ6iga4hS66yAm/WDwuyAzFXxuc2Iu3
+ Lqqna3oVFqW2tnO5XMIZxOlOhM3ZCEqGfdi520Gb+EX2O00z05OqLguHqIx9O0mdJjhTey9OVJI
+ j
+X-Google-Smtp-Source: AGHT+IEGVEekTTvprkC9EOXfNjW3PFCtDSfcE2s0oVrWDUvjyb8RYGhHx69eAxilBhn8WakV2uCYrQ==
+X-Received: by 2002:a17:903:2b0c:b0:20b:9379:f1f7 with SMTP id
+ d9443c01a7336-20ca169e6b5mr4236645ad.40.1728597019591; 
+ Thu, 10 Oct 2024 14:50:19 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.89.169])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e2aab58d2sm1547005b3a.142.2024.10.10.14.50.41
+ d9443c01a7336-20c8bad344asm13777225ad.19.2024.10.10.14.50.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 10 Oct 2024 14:50:43 -0700 (PDT)
+ Thu, 10 Oct 2024 14:50:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>,
@@ -65,17 +64,16 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
  =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v2 03/16] target/mips: Introduce mo_endian_env() helper
-Date: Thu, 10 Oct 2024 18:50:01 -0300
-Message-ID: <20241010215015.44326-4-philmd@linaro.org>
+Subject: [PATCH v2 00/16] target/mips: Remove target-specific endianness
+ knowledge
+Date: Thu, 10 Oct 2024 18:49:58 -0300
+Message-ID: <20241010215015.44326-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241010215015.44326-1-philmd@linaro.org>
-References: <20241010215015.44326-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -98,32 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce mo_endian_env() which returns the endian
-MemOp corresponding to the vCPU env.
+Since v1:
+- Addressed rth review comment (adding new patches)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
----
- target/mips/internal.h | 5 +++++
- 1 file changed, 5 insertions(+)
+Get vCPU endianness from CP0::BE bit.
+Propagate endianness at the board level, using QOM property.
+Remove target-specific endianness knowledge from target/.
 
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index 84c8e5e1ae7..91c786cff8a 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -230,6 +230,11 @@ static inline bool mips_env_is_bigendian(CPUMIPSState *env)
-     return extract32(env->CP0_Config0, CP0C0_BE, 1);
- }
- 
-+static inline MemOp mo_endian_env(CPUMIPSState *env)
-+{
-+    return mips_env_is_bigendian(env) ? MO_BE : MO_LE;
-+}
-+
- static inline void restore_pamask(CPUMIPSState *env)
- {
-     if (env->hflags & MIPS_HFLAG_ELPA) {
+Philippe Mathieu-Daudé (16):
+  target/mips: Declare mips_env_is_bigendian() in 'internal.h'
+  target/mips: Rename cpu_is_bigendian() -> disas_is_bigendian()
+  target/mips: Introduce mo_endian_env() helper
+  target/mips: Replace MO_TE by  mo_endian_env() in get_pte()
+  target/mips: Convert mips16e decr_and_load/store() macros to functions
+  target/mips: Factor mo_endian_rev() out of MXU code
+  target/mips: Explode MO_TExx -> MO_TE | MO_xx
+  target/mips: Rename unused sysemu argument of OP_LD_ATOMIC()
+  target/mips: Introduce mo_endian() helper
+  target/mips: Replace MO_TE by mo_endian()
+  target/mips: Have gen_addiupc() expand $pc during translation
+  target/mips: Use gen_op_addr_addi() when possible
+  target/mips: Use tcg_constant_tl() instead of tcg_gen_movi_tl()
+  target/mips: Expose MIPSCPU::is_big_endian property
+  hw/mips/cps: Set the vCPU 'cpu-big-endian' property
+  hw/mips: Have mips_cpu_create_with_clock() take an endianness argument
+
+ include/hw/mips/cps.h                     |   1 +
+ target/mips/cpu.h                         |   7 +-
+ target/mips/internal.h                    |  10 ++
+ target/mips/tcg/translate.h               |  13 +-
+ hw/mips/cps.c                             |   4 +
+ hw/mips/fuloong2e.c                       |   2 +-
+ hw/mips/jazz.c                            |   2 +-
+ hw/mips/loongson3_virt.c                  |   2 +-
+ hw/mips/malta.c                           |   5 +-
+ hw/mips/mipssim.c                         |   2 +-
+ target/mips/cpu.c                         |  17 +-
+ target/mips/tcg/ldst_helper.c             |  15 +-
+ target/mips/tcg/msa_helper.c              |   2 +-
+ target/mips/tcg/mxu_translate.c           |  18 +-
+ target/mips/tcg/sysemu/tlb_helper.c       |   2 +-
+ target/mips/tcg/translate.c               | 193 ++++++++++------------
+ target/mips/tcg/tx79_translate.c          |   8 +-
+ target/mips/tcg/micromips_translate.c.inc |  34 ++--
+ target/mips/tcg/mips16e_translate.c.inc   | 118 +++++++------
+ target/mips/tcg/nanomips_translate.c.inc  | 150 +++++++----------
+ 20 files changed, 293 insertions(+), 312 deletions(-)
+
 -- 
 2.45.2
 
