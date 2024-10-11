@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFECD0EE3F
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 20:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0076CD0EE38
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 21:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szMWK-0003qZ-Of; Fri, 11 Oct 2024 16:45:56 -0400
+	id 1szMrb-00082p-Hi; Fri, 11 Oct 2024 17:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1szMWH-0003py-5h
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 16:45:53 -0400
+ id 1szMrX-00082T-V1
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 17:07:52 -0400
 Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1szMWF-0002SG-HQ
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 16:45:52 -0400
+ id 1szMrV-0004xw-Ig
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 17:07:51 -0400
 Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71df1fe11c1so2036242b3a.2
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 13:45:50 -0700 (PDT)
+ d2e1a72fcca58-71e4e481692so13710b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 14:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728679549; x=1729284349;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728680867; x=1729285667;
  darn=nongnu.org; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n2DfuRyeZF47307DoPYcO3eVWdPDyJaZwtbw690pN7A=;
- b=Wgk4aiNMqOBXYM5htZ8CTUSJ3u/GfElABnm/OXhO/cbUkSw67MzQBzeBTgp3P95tU0
- OTq7knDulcCaUeXMBSrJm/DRoMzp76vZbLzzuaCqr+bvTcPvSaEPkQET0bAHMSNEqT1J
- O0k0sY8Wq90EX4hnpnR34DaOhUxcHQ3+86tYLj4is1kutyR8uD/smtKD7WrBOjSo9GgO
- C6j9BCCN46tNOVQtzF3VwWo6Q5GmU/A0GQBckLbI3+V2WM1VgvI5DBexOf84PanCQHkK
- pdJsTdkSJL2VtvGT/DSm97JYohE7M06aUaKDrrl+nwhQ9eyr1p+aK/j2MGYT1NaavG2p
- 31kA==
+ bh=IcaPMSEikXRLKNfvJPIZ/QakjhFegjjA1ZgrzfrkIMQ=;
+ b=rkNzSPY3yG0LixZN9m1ASjzQC+esD9NBLeWmewrQ/Gwij+uP+6Zj/6nME0DZQqcQpP
+ zB1zJAcspTzHoaxEFJdx7Ec/OsoGvoDkCoJBBjNeCMA5hTOgiXoOB5H2ldPDrSOT6OD0
+ 7ruS122AEhMkCEOXOcblvBpN4Slysnpgpy9swo5kJUX9PzkNeUCBWhRBRjYthrhI2DJ+
+ s6a7q3nwDqYRV7C/11DsARmowNGoxqnVgcXW9ING1anmxhZVHBpZI/ENzhLXRAuPSUkk
+ eX9LD7dbd7sX1oUFoR5rjhrDo5Euq7PwdTJrqy3VawzV2zi99D3LBa1KB0WHZi7oVAM+
+ ysvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728679549; x=1729284349;
+ d=1e100.net; s=20230601; t=1728680867; x=1729285667;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n2DfuRyeZF47307DoPYcO3eVWdPDyJaZwtbw690pN7A=;
- b=cyfpZdQfmUx3Qhm4+w17YcMx7fFupTImETziFTIZ4Osc37ehwfrRFbBFgVnn/GefCF
- Viv9XlGEIOPpCVC2jEynSp7bEFb0E/BlYpH/HH6O+hxU+F0b7XeFSDJc/n0liPxnCF20
- nedIaL3yl5XCJwoBusLSvupqE4bOwRVjf2C+3BP+/SpmpONrkpvSioGfSZHiBrwCgQSX
- qh+8+ohPRPtmmqApBeGUD+uMD658j2cDUXB3yFk48gVHgGRTmO2dLmQdtaK5BiFtqb17
- KdiapZp42zs1Qr8RUu2tbILskJzu2oIhpBdgdkooUSRUXIzmFx7TGmoMxfwnD84hrrBg
- T0mw==
+ bh=IcaPMSEikXRLKNfvJPIZ/QakjhFegjjA1ZgrzfrkIMQ=;
+ b=Zmw7bQRS2/4Q2uRtTzBqUnE0RZEYyuow34og5mZkQwor3Rh/4CKDPRY6N4Z5wasM3R
+ Dp4p6h6QknetwQbR/xredeoLVoPM5Apxj+pPpmdbTKbMGxhYO/hDthUbsg5v81hRWe0q
+ TIzg2iOvkFnULlQuBCnfthmuR0KSJzFvTy7tTcxl0eYtxjFuhq7uk3fWPchyYt0JUXiP
+ ot6pnqpFHQ6IHLZ31gJOordHctAG2rANju4uRgiEdlpniTlCWBrcHGEwKx4jdQ73x+f4
+ K6B1kklm5AkOlKKWCOlJOQLxXTDf7ExEfnUk0RQ6j0LrN7mu3T/3QoyilfkMEP+OtLag
+ tbZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdaJKraq6wsQmmM6s3QS8XyDa+WSbYwlvq0z1KMhasYFRal76JW66w7t3ZBHXAws0CTsjuBPeNZJrG@nongnu.org
-X-Gm-Message-State: AOJu0Yxoq6fmtbvRPX4W6lsOQ5Ni0YL6XyT8UoRQJCpjEQvw5KoOsZfp
- yJdFg8uLsaKO68X4vcK2R6bpRdb2n6QOaxpjLOvtUy4gt6aKOojqP0qv+mzt9LzqCM9GkwkXoTG
- tIIHNzhrYofifSlUFsGF3lK8kSqiGhZlroQoV8w==
-X-Google-Smtp-Source: AGHT+IG03S/mwcu0rUGMnZOvyWeGMKhDnsOae9vgHboK0J/VOsI4Ls3fUgtFbwNS5xtffJn889gtSJS88cfODghS8HM=
-X-Received: by 2002:a05:6a21:1707:b0:1d0:2531:ddb1 with SMTP id
- adf61e73a8af0-1d8bcfc235dmr5024352637.43.1728679548840; Fri, 11 Oct 2024
- 13:45:48 -0700 (PDT)
+ AJvYcCVusrxQKnRyah6PdpbHHB4eVFEof2WGcrM4ZYx0gYzMBn9TbfrlSr5psGIwIvvYlPPWxYzxhLZB8LtV@nongnu.org
+X-Gm-Message-State: AOJu0YxRY5NXyEiDO1DvnhYvjy/9YKWrg3cHeLNfffephf4j3L6Di/0f
+ 48ovfB86/M++nSgaEVfzprKbmSY7ucBf5O8o2I+JgTUEsz/dYqi00/aJ7nOgzKAT4CctkcUMTOn
+ WUjAhEuG3cHPcKRYExOMMqmin7Jc6rnylaZIQUQ==
+X-Google-Smtp-Source: AGHT+IHYzLKacqiJnI47D6YzxoDIErbvG0tTLbpBoCoxYzt3LaaO3raukXOSh+6jko1o2Lx73mchUJT5InuproLZjA4=
+X-Received: by 2002:a05:6a00:189a:b0:71e:4655:59ce with SMTP id
+ d2e1a72fcca58-71e4c03044cmr1630827b3a.0.1728680867214; Fri, 11 Oct 2024
+ 14:07:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <20241009-pmu_event_machine-v1-6-dcbd7a60e3ba@rivosinc.com>
- <fd89dafa-279d-436c-9569-f2fdc289bac9@yadro.com>
-In-Reply-To: <fd89dafa-279d-436c-9569-f2fdc289bac9@yadro.com>
+ <43613048-ba0b-4fc0-9ee2-b987a6dc86e4@yadro.com>
+In-Reply-To: <43613048-ba0b-4fc0-9ee2-b987a6dc86e4@yadro.com>
 From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Fri, 11 Oct 2024 13:45:37 -0700
-Message-ID: <CAHBxVyE2C3sRJNbLOwhOZCnXAUTsEdh-mCewVAEJDDAURL10ug@mail.gmail.com>
-Subject: Re: [PATCH RFC 06/10] target/riscv: Define PMU event related
- structures
+Date: Fri, 11 Oct 2024 14:07:36 -0700
+Message-ID: <CAHBxVyG7mNWU+r0dd-R2oL4SftOhWsTpLzcmDMAOKALvjh8qHg@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/10] Allow platform specific PMU event encoding
 To: Alexei Filippov <alexei.filippov@yadro.com>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
  alexei.filippov@syntacore.com, palmer@dabbelt.com, liwei1518@gmail.com, 
@@ -81,7 +79,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,83 +95,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 10, 2024 at 5:44=E2=80=AFAM Alexei Filippov
+On Thu, Oct 10, 2024 at 5:51=E2=80=AFAM Alexei Filippov
 <alexei.filippov@yadro.com> wrote:
 >
 >
 >
-> On 10.10.2024 02:09, Atish Patra wrote:
+> On 10.10.2024 02:08, Atish Patra wrote:
+> > Currently, the pmu implementation is virt machine specific that
+> > implements the SBI PMU encodings. In the future, individual machines
+> > would want to implement their own custom event encodings as there
+> > is no standard event encoding defined by the ISA. There is a performanc=
+e
+> > events TG which is working on defining standard set of events but not
+> > encodings. That allows flexibility for platforms to choose whatever
+> > encoding scheme they want. However, that means the generic pmu code
+> > should be flexible enough to allow that in Qemu as well.
+> >
+> > This series aims to solve that problem by first disassociating the
+> > common pmu implementation and event encoding. The event encoding is
+> > specific to a platform and should be defined in the platform specific
+> > machine or cpu implementation. The newly defined callbacks can be invok=
+ed
+> > from machine specific cpu implementation or machine code itself dependi=
+ng
+> > on the requirement.
+> >
+> > The first 5 patches in the series are generic improvements and cleanups
+> > where as the last 5 actually implements the disassociation for the virt
+> > machine. The current series can also be found at[2].
+> >
+> > I recently found that Alexei has done a similar effort for SiFive FU740=
+[1]
+> > but the implementation differs from this one based on how the cpu callb=
+acks
+> > are invoked. For example, Alexei's series implements a single callback =
+for
+> > all the events and has defined machine specific counter read/write call=
+backs.
+> > However, it just defaults to get_ticks() for every event. IMO, that is
+> > confusing to the users unless we can actually emulate more generic even=
+ts or
+> > machine specific events.
+> >
+> > I have separate callbacks for each type of events that we currently sup=
+port
+> > in Qemu (cycle, instruction, TLB events). Separate callbacks seems a be=
+tter
+> > approach to avoid ambiguity as we have very limited event capability in=
+ qemu.
+> > I am open to converging them to one callback as well if we think we wil=
+l
+> > be extending set of events in the future.
+> >
+> > Once we converge on the approaches, we can consolidate the patches
+> > so that both SiFive FU740 and virt machine can use the same abstraction=
+.
+> >
+> > Cc: alexei.filippov@syntacore.com
+> >
+> Thanks for CCing me and your patch. Your done a great work, but still I
+> do not think this approach with per event callback are scalable enough.
+> I'll suggest to collaborate to work your and mine solution to unite them
+> to one patch set. Let me know what do you think.
+
+Yes. We should definitely collaborate and send a single series to support b=
+oth
+virt and sifive machines. You had a question about widening the
+hpmevent in your series.
+
+(Answering here to keep the discussion in 1 place)
+
+As per the section 18.1. Count Overflow Control, only top 8 bits are reserv=
+ed.
+Thus, a platform can implement their event encoding to upto 56 bit wide.
+
+> > [1] https://lore.kernel.org/all/20240910174747.148141-1-alexei.filippov=
+@syntacore.com/T/
+> > [2] https://github.com/atishp04/qemu/tree/b4/pmu_event_machine
+> >
 > > Signed-off-by: Atish Patra <atishp@rivosinc.com>
 > > ---
-> >   target/riscv/cpu.h | 25 +++++++++++++++++++++++++
-> >   1 file changed, 25 insertions(+)
+> > Atish Patra (10):
+> >        target/riscv: Fix the hpmevent mask
+> >        target/riscv: Introduce helper functions for pmu hashtable looku=
+p
+> >        target/riscv: Protect the hashtable modifications with a lock
+> >        target/riscv: Use uint64 instead of uint as key
+> >        target/riscv: Rename the PMU events
+> >        target/riscv: Define PMU event related structures
+> >        hw/riscv/virt.c : Disassociate virt PMU events
+> >        target/riscv: Update event mapping hashtable for invalid events
+> >        target/riscv : Use the new tlb fill event functions
+> >        hw/riscv/virt.c: Generate the PMU node from the machine
 > >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 2ac391a7cf74..53426710f73e 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -189,6 +189,28 @@ typedef struct PMUFixedCtrState {
-> >           uint64_t counter_virt_prev[2];
-> >   } PMUFixedCtrState;
-> >
-> > +typedef uint64_t (*PMU_EVENT_CYCLE_FUNC)(RISCVCPU *);
-> > +typedef uint64_t (*PMU_EVENT_INSTRET_FUNC)(RISCVCPU *);
-> > +typedef uint64_t (*PMU_EVENT_TLB_FUNC)(RISCVCPU *, MMUAccessType acces=
-s_type);
-> > +
-> > +typedef struct PMUEventInfo {
-> > +    /* Event ID (BIT [0:55] valid) */
-> > +    uint64_t event_id;
-> > +    /* Supported hpmcounters for this event */
-> > +    uint32_t counter_mask;
-> > +    /* Bitmask of valid event bits */
-> > +    uint64_t event_mask;
-> > +} PMUEventInfo;
-> > +
-> > +typedef struct PMUEventFunc {
-> > +    /* Get the ID of the event that can monitor cycles */
-> > +    PMU_EVENT_CYCLE_FUNC get_cycle_id;
-> > +    /* Get the ID of the event that can monitor cycles */
-> > +    PMU_EVENT_INSTRET_FUNC get_intstret_id;
-> > +    /* Get the ID of the event that can monitor TLB events*/
-> > +    PMU_EVENT_TLB_FUNC get_tlb_access_id;
-> Ok, this is kinda interesting decision, but it's not scalable. AFAIU
-
-Yes it is not scalable if there is a need to scale as mentioned earlier.
-Do you have any other events that can be emulated in Qemu ?
-
-Having said that, I am okay with single call back though but not too sure
-about read/write callback unless there is a use case to support those.
-
-> none spec provide us full enum of existing events. So anytime when
-> somebody will try to implement their own pmu events they would have to
-> add additional callbacks, and this structure never will be fulled
-> properly. And then we ended up with structure 1000+ callback with only 5
-> machines wich supports pmu events. I suggest my approach with only
-> read/write callbacks, where machine can decide by itself how to handle
-> any of machine specific events.
-
-Lot of these events are microarchitectural events which can't be
-supported in Qemu.
-I don't think it's a good idea at all to add dummy values for all the
-events defined in a platform
-which is harder to debug for a user.
-
-
-> > +} PMUEventFunc;
-> > +
-> >   struct CPUArchState {
-> >       target_ulong gpr[32];
-> >       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
-> > @@ -386,6 +408,9 @@ struct CPUArchState {
-> >       target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
-> >
-> >       PMUFixedCtrState pmu_fixed_ctrs[2];
-> > +    PMUEventInfo *pmu_events;
-> > +    PMUEventFunc pmu_efuncs;
-> > +    int num_pmu_events;
-> >
-> >       target_ulong sscratch;
-> >       target_ulong mscratch;
+> >   hw/riscv/virt.c           | 102 +++++++++++++++++++++++-
+> >   target/riscv/cpu.h        |  52 ++++++++++--
+> >   target/riscv/cpu_bits.h   |   4 +-
+> >   target/riscv/cpu_helper.c |  21 ++---
+> >   target/riscv/pmu.c        | 198 +++++++++++++++++++++----------------=
+---------
+> >   target/riscv/pmu.h        |   3 +-
+> >   6 files changed, 246 insertions(+), 134 deletions(-)
+> > ---
+> > base-commit: 19a9809808a51291008f72d051d0f9b3499fc223
+> > change-id: 20241008-pmu_event_machine-b87c58104e61
+> > --
+> > Regards,
+> > Atish patra
 > >
 
