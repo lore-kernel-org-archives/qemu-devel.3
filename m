@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01EC5D2446B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 04:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66262D24468
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 04:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz6ou-0004Ob-NT; Fri, 11 Oct 2024 00:00:04 -0400
+	id 1sz6pw-0005I1-PA; Fri, 11 Oct 2024 00:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sz6or-0004NW-7q; Fri, 11 Oct 2024 00:00:01 -0400
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1sz6pu-0005Hl-Sg; Fri, 11 Oct 2024 00:01:06 -0400
+Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sz6op-0006R4-Mh; Fri, 11 Oct 2024 00:00:00 -0400
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-509fc9d2074so477499e0c.3; 
- Thu, 10 Oct 2024 20:59:59 -0700 (PDT)
+ id 1sz6pt-0006ii-9h; Fri, 11 Oct 2024 00:01:06 -0400
+Received: by mail-vs1-xe2d.google.com with SMTP id
+ ada2fe7eead31-4a46222afb3so194920137.2; 
+ Thu, 10 Oct 2024 21:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728619198; x=1729223998; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728619264; x=1729224064; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l89AYc8XCaPwenDg14ziDugjNtw8rWMmRU0xmJlBtGQ=;
- b=VtNOtxoEl1mvzwQPYRhXK+RScgBmlDtiqT115xJdE7BKnlkJle25flX876d4JZpLyv
- YVWZ+BeIQmxCyur1qK+FLKRo3t18NSBi1UUryHODP0RagGa78QRP+rc29AqY9pANWLKZ
- 5bmi80+ryXZ6GcSd9XfYzV+cQG+e6oHujT2ORm7COGJMfFo5Z/U/LOJBy/pbx57ac2Lw
- kTEblle928JMrBGBZtv6jZ7vhzKO4pe5J6Itg/1I8eLhi6PoOrZ1R6E8z8fDKwJmd6t2
- RZXm7y56CzbUFHaLYimDopBdWpWKB9oEFdr1QcOanzkZU6Tw7uJJAhJXivStPa4mbW3+
- SWbQ==
+ bh=wPvvkgjBLr1noDzXbQsDqPccMDQTOtvaFtnxWjTDJG0=;
+ b=hx0PY8FPOhBkgPqO9wPpsbK3hlhK/W9hwfZHX1gtDuxGdsnLRXLv3xHa5m0c8zBGtW
+ D+luYEXlP47JOaoNMI/Zim0DkEicZU0zcM91zq/imuwq3yobNwtAn0cHDVOL3fALT6QZ
+ A07J+PWbt2XXCW+52rzZwlyBX9IojP89GY4sGszcPiVpKQxKq97K/AWvlL+ht7aUSJ2U
+ AlYXkNbEBfzlcQCUKTZESqAzjupvwXLDD1/cUsa/DSL/qyP2Q7LAUJ/M7UFOW6fxm+/E
+ C+N0CycJuwWeCwVjVp0RzU00oHgEgAgGRXCrdnQBw2qu6psP0i4wiS0gZ0NZR2QiIR2I
+ /iNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728619198; x=1729223998;
+ d=1e100.net; s=20230601; t=1728619264; x=1729224064;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l89AYc8XCaPwenDg14ziDugjNtw8rWMmRU0xmJlBtGQ=;
- b=QXMfJgN+1pPDh6yph5szmDxowmZDLW5WMUbdCusS+g5ooKm782a98M6fqn4Lm866fY
- VGUUC/DWJTRsZ3dC9rD5yueaBHxy/qZjY0yBP2IowEJfKLJ7vJzilNGcRnxeuR7WwQBl
- ZfkcIkYdmVFwB/AuW11aaqF3Z986xjqRIBRTYi9EdmMmxfbyyjnZLa4boc7iapqRKwWO
- N9MQ8ChHzh/ASsORBGQl/fd+63yB4BlGC6XZtJzb87Y/Yu7MGiCpazOVoLKKKvRjDbaP
- RsOqwNWfyJmEkvGBzS/893gWB3aTjimaFl03DlfUZEufebLlZbTNFeRzGvmsGxRKmt1d
- 9cDQ==
+ bh=wPvvkgjBLr1noDzXbQsDqPccMDQTOtvaFtnxWjTDJG0=;
+ b=Y0vmx3+QF5mx5+fUpx8lPYwCxxSIBoqyncctmwCOblMsk2o86oYp+kXxXbCuI3bflF
+ s7MdaLb1uUCsH2iBk38G4vhtpnQeMFobdNysv7MYHsdWma47pg31AJyCnKSafzjWf7Z7
+ gbrzzxSFfACCeA3aLBbeq2Vo9SNiYSUNsRudYBSQWMINvBlV0lcRu/6nw8/RLwwrYIL9
+ PP/1WCKjj3zRoySPMPEeYcgLW0igf/yBfJHzg9NwnIpBBkGOMjGl/ZO8V4CclpJwRtgw
+ 6RVDzdLQKh5VmSldNmnkqkLEACV5YtPcEfr3tdLJeIsblGf7vGYsePxsDMFB/PdJ2pxg
+ q+Zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmcoIqHqH4Aq3ifffVJWFCN8sN8R1PHwVX+MFIGQsmIGBojEjbQZsHrqyPF3DuJeuxWmS1zOTxdJlh@nongnu.org
-X-Gm-Message-State: AOJu0Yyc2MYvJ8wW/0hsfx5D3fLnJBEzH5N8D6hZJwYRQ6O2MCoeK/jk
- KeMsrHD6v7zTf+FWMVx8DCbeGhIc4VtGsxczUyCV2o858t88hKvGJbe1jqo0FoISPU1xlZtMApS
- A9gcBzFIRSOKAVbhAp/zg49zghHa5HXWx
-X-Google-Smtp-Source: AGHT+IF+DClzt9xGA6xq3K2sycNEKj6eEUyCm4SQfw9zfdhTo+z/WzOhpjfWjiuQiCyF9BNcDDy2vt3EPTOjRTCc6k4=
-X-Received: by 2002:a05:6122:3d01:b0:50c:9834:57b3 with SMTP id
- 71dfb90a1353d-50d1f3b9805mr720185e0c.4.1728619198318; Thu, 10 Oct 2024
- 20:59:58 -0700 (PDT)
+ AJvYcCVwLSDWUBs4yKjzIcE38xUY6pUUB3mKO6M5DEU/64tkoi+wwf7Gy8Pj5wL38NEBOKRnnbISKY6+6zsz@nongnu.org
+X-Gm-Message-State: AOJu0Yz8NGyauQvJT+aDm/8B387c4YVBb84V2cyHMEFx44XJUkRWsv+E
+ gRDx0UNB6MNnQzJ/NPlvJAehOQgQbr8LKlHL/JrvXT30m9VKDRnoe1dI1V3eysH/y87VlNdEQ3k
+ Enu98Ll8FqiToRHD1sSYsafTXLuo=
+X-Google-Smtp-Source: AGHT+IFXSyQl4ajuMsvwxh7A+cDtOkhfj7n43WvQ73+poDG1GBrKqDbgkS28osaBApeiwxoNICkkyOXME9QTwrOVylU=
+X-Received: by 2002:a05:6102:3754:b0:49b:dffb:dd41 with SMTP id
+ ada2fe7eead31-4a4659b00c2mr900844137.16.1728619263808; Thu, 10 Oct 2024
+ 21:01:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
- <20241007033400.50163-4-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20241007033400.50163-4-zhiwei_liu@linux.alibaba.com>
+ <20241007033400.50163-6-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20241007033400.50163-6-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 11 Oct 2024 13:59:32 +1000
-Message-ID: <CAKmqyKMoJ_ixn4xK0w_qrrdwy8DSaDW-8dkDqcuzPNYw+77Cug@mail.gmail.com>
-Subject: Re: [PATCH v1 3/7] target/riscv: Read pte and satp based on SXL in PTW
+Date: Fri, 11 Oct 2024 14:00:37 +1000
+Message-ID: <CAKmqyKNtySaO4o5NSVF0wFJBo0SYSEG+ZEQP7f0bujyN7DU0uA@mail.gmail.com>
+Subject: Re: [PATCH v1 5/7] target/riscv: Enable 32-bit only registers for
+ RV64 with sxl32
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
  bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,50 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 7, 2024 at 1:36=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
+On Mon, Oct 7, 2024 at 1:52=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
 .com> wrote:
 >
 > From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 >
-> Satp and PTE are always SXLEN-bit. when SXLEN is 32,
-> read PTE as 4 bytes, and treat satp as SATP32.
+> Allow reading 32-bit only registers like timeh and stimecmph when
+> booting a 32-bit Linux kernel on RV64 when sxl32 is true.
 >
 > Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
 > ---
->  target/riscv/cpu_helper.c | 4 ++--
+>  target/riscv/csr.c | 4 ++--
 >  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 077f6d77c3..773789e02e 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -851,7 +851,7 @@ static int get_physical_address(CPURISCVState *env, h=
-waddr *physical,
->                  vm =3D get_field(env->vsatp, SATP64_MODE);
->              }
->          } else {
-> -            if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> +            if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
->                  base =3D (hwaddr)get_field(env->satp, SATP32_PPN) << PGS=
-HIFT;
->                  vm =3D get_field(env->satp, SATP32_MODE);
->              } else {
-> @@ -972,7 +972,7 @@ restart:
->              return TRANSLATE_PMP_FAIL;
->          }
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 93a5cf87ed..c412ac8e31 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -161,7 +161,7 @@ skip_ext_pmu_check:
 >
-> -        if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> +        if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
->              pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
->          } else {
->              pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
-> --
-> 2.43.0
->
->
+>  static RISCVException ctr32(CPURISCVState *env, int csrno)
+>  {
+> -    if (riscv_cpu_mxl(env) !=3D MXL_RV32) {
+> +    if (env->xl !=3D MXL_RV32) {
+
+Why not riscv_cpu_sxl()?
+
+Alistair
 
