@@ -4,73 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8080DD0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99AE6D0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJDD-00082T-MJ; Fri, 11 Oct 2024 13:13:59 -0400
+	id 1szJJT-0004hH-IH; Fri, 11 Oct 2024 13:20:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ76-0000hD-06
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1szJ8Q-0000wP-F9
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:09:05 -0400
+Received: from mail-co1nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::600]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFZs-0004Wo-30
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:21:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728652867;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=x+ggIoBaMj2R6F9eH6cEtv4h0m1WXCB4RfcKG4Zja5M=;
- b=gNSrQ+5jUOsUQuYGq0NsBmWNdoyvsFUV0YlJJOZOmNEIpg/Dz2PXedWPp2ZtMb9CbN9JnY
- qykjqFOPUzwCxjdpr7tDiCOAt8MZcI6EvR6IAp2UdMSHhjDcCuDE/LMakEkZ6Lu9KwD0Lg
- uYOnsT7d0t+xXhmUMLumJWmLPmOe7PI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-WDFvBM_9P4SiXyplw4dIzQ-1; Fri,
- 11 Oct 2024 09:21:04 -0400
-X-MC-Unique: WDFvBM_9P4SiXyplw4dIzQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10EEC1955F41; Fri, 11 Oct 2024 13:21:03 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 39B841956052; Fri, 11 Oct 2024 13:20:59 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 17/17] tests/functional: Convert the Avocado sh4 tuxrun test
-Date: Fri, 11 Oct 2024 15:19:34 +0200
-Message-ID: <20241011131937.377223-18-thuth@redhat.com>
-In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
-References: <20241011131937.377223-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1szDq7-0000JE-VH
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:29:50 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RWP324PG7aT9MGnUYNbxNDBq4F7F/BUXn3pQTi+oB2yi0oNA0nGnTxlOptMJNOBFNbtuNoN3EzGj7wrdrNTOGbGMDl5icuSQDomp6Zj5IwODwiEGnqC2juj2H0UwA3SzC7cdRxVtiBdpoDC9j+WDtD26dUte87sU9NjPYvTdkuilh+9wiP+vz7CS2+AK3nk92VW4LQUUsOkeccZwDZr9cwhvZZxdXTLuB5Tg+KRUKBh+EuNiKKx02denPX1qf5GYfns4CofUZmKZrL/FRkYSWMYadF/gVy8dHzAozKalpjkNv+yV9fxLgt3IgkERdLp4R0Rgzpffr96OukxpT9Ye/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UjTN7LrK7c5m+uh/IeHbaU++HSPM1uTv0ghAVgZnT1g=;
+ b=e+QsDxzwrQgv4c8CCdmMq0jlMKqmibc5p3n0TDeWMtsrB25g7rUegSvGrhhmw71biz0Xv0w0+O/tuoHYzsE508pC+vyIYE1O5w5wM2ejqpTh+wrxcudENWcppL8OyS2mZHiWMs3qztBRzQJ+HQZcVU8fC6wgcExlI+n0XxZIvt0nfI6c9Fb3GXLa/rQ+99sTGxsAKr+1i6dU8TvtVvGxC0lILUnl86qElJA/NLViGAvkVnwiP814bQc4R05HrFufoaZD0MVJIUunp1nS/5jrQlN9fUNL3KNEYgfgACUNuJelOdGPuwaO/ziEVyOAsf8NKdO2+r/ireg8AXCqNTYGSg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UjTN7LrK7c5m+uh/IeHbaU++HSPM1uTv0ghAVgZnT1g=;
+ b=cEyl+m8cFKQ+ww7VhC4JLXX/x7J+HovaNzMFKSqng2pxDaAhXmqeB+OXtvBx9vr3tBJ9OG74NNe5AhZIaQgQV9ZkY0Qjic60ZgsPwW/2D/lRMlcgoykZpwudtXWHSkxTtZM9PoAJeHNjkgxbUgjFxV8WlIPPvuokB314fvRg4sc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
+ by DS0PR12MB8071.namprd12.prod.outlook.com (2603:10b6:8:df::5) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8048.19; Fri, 11 Oct 2024 11:29:40 +0000
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48%6]) with mapi id 15.20.8048.017; Fri, 11 Oct 2024
+ 11:29:40 +0000
+Message-ID: <9e4161ef-222a-0d4f-caf6-41c9c6830f0c@amd.com>
+Date: Fri, 11 Oct 2024 13:29:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] accel/kvm: check for KVM_CAP_MEMORY_ATTRIBUTES on vm
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: erbse.13@gmx.de
+References: <20241011085944.25815-1-pbonzini@redhat.com>
+From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
+In-Reply-To: <20241011085944.25815-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR3P281CA0003.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:1d::22) To IA1PR12MB8189.namprd12.prod.outlook.com
+ (2603:10b6:208:3f0::13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|DS0PR12MB8071:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1a369782-ee27-481b-ef3e-08dce9e7ff03
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?K0svS2RZZFdLUHlDN3JFOGVlZWl1MXIzaW42K0Q1WkdNck5ROVlvbzdMTmlk?=
+ =?utf-8?B?YmlGSDExN3hsSWhuVm1VSmw1c1g4NE5TdnNWSUV6VlBwVUxvdFljYWVaTU9v?=
+ =?utf-8?B?bG11Q3FNVllqeTNFdVVGNnFKVjhkTDl6VktoWEIvb3RXSE8wbmpDdzNFbURJ?=
+ =?utf-8?B?cTRkQ0tEVlkwbjJPMkoyeE5Md3dTWWdHYm40OTVuVk12Sk0vMzJnWWtIRlpJ?=
+ =?utf-8?B?UllOWmttYmJxYnJNN1k2Q0VyNjNLbGthQ0ViT3JJZFFlUXNRZzVuckFjV1Bn?=
+ =?utf-8?B?blhzM21CNWJ0Y1A3dFdFMldUbVEzZUdzUEFIV3UzRUJpNCswYkxWb3B3ZEpQ?=
+ =?utf-8?B?cFVJUWRGMnlNVlhyVGwzN2JlVHJ1QWlRdmJLUDMrN3JXR1RzVFUxVUZFOTBI?=
+ =?utf-8?B?UkhhVGhHL2dXY0ltZ3kzTmRvbGJqN3JJZWd0b2Q3czh4RHd4anQ2dUJEeGl4?=
+ =?utf-8?B?L2dpaVcvUW4zZ3JTYXNkT1drRzRjTzJvUE5DWVl2TVV2REF6VTdUNnQ5WGY3?=
+ =?utf-8?B?MGZBN3k4MjNNazZFeFVEaFNRaTVxNXAxOEZTamVhMW1KcGFpZzFsdXRzQmxt?=
+ =?utf-8?B?VThNdTM5aFg3NUxuNnlsUlVQeFhsRzVSODNCblZiWmFoeWVxbWM0NFFrZGFX?=
+ =?utf-8?B?VWV3d3Q5NHpxWEo0SEZibkFqM1R5S2ZRMDdJaERUcjFZRVROci82UkcwL2N6?=
+ =?utf-8?B?NmhySDloLy82bkQ5V3pvbjJKM3FSTWgrekJaamZhejFTdTlaSXl3ZExBWnRO?=
+ =?utf-8?B?T1huK25naS9NUlRpRHBJSDF5cVFhVUxuY3YvcktTTHA5OFJaUlhKMmUreDF1?=
+ =?utf-8?B?bm9WYWVpYVJNN3Uzb0pmMFU5TjVZbFRpaGdFM0NXQ1JjYWFUSllHTDhJWlBK?=
+ =?utf-8?B?cFBLaEVBRmlpS1hraFNOaXExdndBMUNKK3BTbGdDK3Vvem5oQVlQMXlRRElN?=
+ =?utf-8?B?SlJMNU8vUDhxdndnamJNWFhmWVBMR2FRMXhCaE9UUUFWK0cwWlFnSEdiN3N6?=
+ =?utf-8?B?WkZRSGNOOGdDZjRzalg0NFgwVHJYWkwxNHg0bVJ0UEdyRmlKbytXQnJDR0RC?=
+ =?utf-8?B?dHRtZnR4MWFVWW1xa1RuVkJ4aEVvU0R4Y1BUL3N1elBUTVRIa1JGdHZTRlpY?=
+ =?utf-8?B?YnNRZTRESko5TVNhcGVQYWJKQ2VwL2tnSXVBVXJ3azFOdENzNTd3RHduRkZk?=
+ =?utf-8?B?NDBtbWd4Q3NGemt2MTBpOXBrUVVsQThwTVB5cUxHeW5wTTVjb3h6czJBcUM4?=
+ =?utf-8?B?cTBrM2xlK1VsOXhuR3JQelgrTVJHSTIwUmxNWFdyUUIwQmNRU2M5bVhUZXNU?=
+ =?utf-8?B?NWxoUlVRdUZiYUt4bW1Pa1Rxc2NLU1RIcm44THFFYlRwZHRKZjJnOTk1S0Jy?=
+ =?utf-8?B?VCttTmJWMGtQeER1ZlJhdUhHdHh3b2JKbXFGaEo5aHN1azI3c2paUnQ0cjZX?=
+ =?utf-8?B?UWhrYnR5UUxBNCtUWXJ0NmgrbExTU3I4QlNUZFZQOEEvbmZiTnE5ellXNERh?=
+ =?utf-8?B?NnNHZ21XanQ1MHZjVkhxK1RWeVI0SnU0MzA5b2JVL2JmQzZGSkpnSGlFU09s?=
+ =?utf-8?B?a282UURxOUttcUp0VTY3WnZSNzU5LzhBUmhyRTJzQkZzRk56OTdxQzUrNUMx?=
+ =?utf-8?B?dHB3Q3RuaHVzZkNRc0R6cmVOTGswVEQvbnRDVTVnWjlEZUV2WUdrczdWeE81?=
+ =?utf-8?B?TzdZQ3lyT3RzeUk2UUhyN3p1cUJ5WVpGV3hEU29nNnZDOUxFK2tTdk9BPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MkdNd0s0Ly9YL0h3eUt5OGgxQXVsdVdlbDFsWHJ2M1ZNVnhXU2Y2NnhMREdH?=
+ =?utf-8?B?MzlJN3N2WjNMWXhabUlZZ1Z1cDBURGZqYkJ1NVNwS3l1cFYyTFVMNE01TDJx?=
+ =?utf-8?B?K2pnQVRyUlh5K1JZcWlzT0pNc05rZUpodWx6bWp5Mll4Qmx3QmJWYmNDd2M2?=
+ =?utf-8?B?dnFmclRIRVZCSmhxT3RSa0xlL3lHWnBuSW5zZWdERkpSb1NvWUVSelJ2aE5w?=
+ =?utf-8?B?ZllLWklWZFRuRkhFT3VjUFIvclI2cXBBRnRhVERPQ0tDd3ljWVBObUlKUGxv?=
+ =?utf-8?B?R3EvMVR5UmFSeDBwVDUveWRqTEJiaDRlbXBMMHlIR285UzFyV2k2c1FEc1pC?=
+ =?utf-8?B?QnBzd2lweEpHYVU3czlkcGlXQ1JlUVNsM2xPM0lKMnZicVRzR2lJeXhLaDZP?=
+ =?utf-8?B?MjRxb1p0ZHlPVGtKN001a2k2ZERkMnJ3TyszU1BRUmpyMGk2T3VxSkVHQklu?=
+ =?utf-8?B?TnRWNWlncE92Q2VOZFk5ZmV2SlJQc25HaFFLVUFlbEhpM2dTakh0bEtKUVV3?=
+ =?utf-8?B?NUthZlpubG4yTzZHZDZPRVlqUW1HMngxWU16RGhtQ0xHalI5ME5lMk1IWlBD?=
+ =?utf-8?B?allHN1ozYzhWRnFGak01Q05uS0xhdHVIdkM0VVJkL1FCOWdYaG9xUW5nZGcz?=
+ =?utf-8?B?cHl0a204TTIvK1psZVhIaExITlpWOHArSzY4YjlkNTlFYXBOemxuL1pFM2dL?=
+ =?utf-8?B?bFc5RmJiN1A1TUtjdXpkWnY5QzZUR0xWSC9TS1ZPLzRkdHJZSER1aGIzR2ZL?=
+ =?utf-8?B?OWVrL3RUcG42dXNnbnFNN3FpU3d4WGl4VXZ6ZTdrMU4yNzltbjhFM1IrK3pF?=
+ =?utf-8?B?eUpFYzByY3lXcWZTdGJrUk9UMlVTWm1OZStoRm1ycE5MSlhiM2tCbnkwYjg4?=
+ =?utf-8?B?UGNxMnRSVlMwaUs5TGoxVERmT2FYMlVRYlYvYkxnbWp0M3ppSm1neW9PK1Vz?=
+ =?utf-8?B?M2Fpa1MxZHQzcjhRMTdoTFQxSVlNVnB4L29uVVRONWhqbE5BR2ZyWEFMa3Na?=
+ =?utf-8?B?a2Z3Q2Q5bEsrZG0vRld6WnJHelJZKzEyOWhTa3hjdUxVelBCOWRGeVRITjBH?=
+ =?utf-8?B?MDcrNUFwVHlEcjkydW50SG1menVneXBYbGdBR1FMTTZlTmUwVlQzeW9hdDhx?=
+ =?utf-8?B?aC9VYmNrSm9WYm94U2dpLzRQVFNEa0EyQTFrMUVSQ1pjTWg4bTVzS09udzJB?=
+ =?utf-8?B?RHM0UkVFa2RKM2hnVzhKaG9BT2RGMWtTZWNodWEvZ2lLRXd3OG94YlVjb29K?=
+ =?utf-8?B?M3pKSXVENDJ0OVpmM3pOTythMks2akQzaXlvRHhsWU4yNTdoZFNwb1FRdTlk?=
+ =?utf-8?B?WCt3aGhuclhreGwzUmNtOTl5bXdGeUhUMzZjcEd2bHB0QjRJQ1VQOG9aT25D?=
+ =?utf-8?B?TndYYlhLeFJZZkpBOWtoMTVZbS8xV01jUnBWRlRWc3VHVXprUjJyVCtQUG1v?=
+ =?utf-8?B?MkovajQwWHNkR0lLQ2cwZWVLVE1oeVNialJNZFJ4NUkxcTUxWTRiYnp3Z1pM?=
+ =?utf-8?B?TVQwK0ptNVh2TVpQMmltUHlzSVZ5T1RkSEJsYVIyZnNoRmV4VTlNcUVrbXNw?=
+ =?utf-8?B?bm1KNmxLS2pSYXRXVzNVWldkR1hocHJ1NmJ5WmxYVnkwbWxXUER2L1BablBR?=
+ =?utf-8?B?Vkc5dzNyTHp1eUpyaFZ4SjVPS2lEeWRnS1A4dFVTWlEyOWhGbzA2d3VrUnAv?=
+ =?utf-8?B?d0tBODR5ZzhrV1VJNEtCN2ZSZzAxSzV2OGFnM1NLbnFvQVF1VjNDNTJHYXRO?=
+ =?utf-8?B?SmIzbWVEcmpHMzZXWW02L0IrbUQ4NE1xaUZzUVZQa21uTG94cUI0a2pSODd0?=
+ =?utf-8?B?SXVRR09ndkR2OW9BSXRLTEQrcFRSdXZLL0dhZTNnamxxNkRUQUI3TkVMTHBI?=
+ =?utf-8?B?V3EyeGFPajd0bE10N2Q4ZXJwOHJLTHVPRlVoc1RyNnRaRkI4aGtHWkR1TXFx?=
+ =?utf-8?B?OEhDY3kzWXVWY2FESzVKN3ZTT3VEZU5JeEF5SEQ1UEV2QW14N29xT29qOHJD?=
+ =?utf-8?B?ZDhuL0gwNkUwUnkzVTJDRmtlS0NHelRUMVN1S0F4dHFxSjg1b0FRbUJicVc2?=
+ =?utf-8?B?Q1N3Ylo1L3RkNU1YMEFlTS9USzVLdDg0RGtkdUZuYzNkL1prQ2xPUE5XV2pj?=
+ =?utf-8?Q?udq7k9p9QAE1VlepMJIlxgvQp?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a369782-ee27-481b-ef3e-08dce9e7ff03
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Oct 2024 11:29:40.6532 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: wSdE8gkWiYlRgs7vBfc4ZwaBe+HGRSS30VqzAQDk2M33P4TwM3ERr+fnIE/ILzc8NAotwz1A4Ne8bTxfVjZHFw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8071
+Received-SPF: permerror client-ip=2a01:111:f403:2416::600;
+ envelope-from=Pankaj.Gupta@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -55
+X-Spam_score: -5.6
+X-Spam_bar: -----
+X-Spam_report: (-5.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ NICE_REPLY_A=-3.342, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,334 +174,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the test into a new file so that it can be run via
-qemu-system-sh4 in the functional framework.
+On 10/11/2024 10:59 AM, Paolo Bonzini wrote:
+> The exact set of available memory attributes can vary by VM.  In the
+> future it might vary depending on enabled capabilities, too.  Query the
+> extension on the VM level instead of on the KVM level, and only after
+> architecture-specific initialization.
+> 
+> Inspired by an analogous patch by Tom Dohrmann.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Since this was the last test in tests/avocado/tuxrun_baselines.py,
-we can now delete that file completely.
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/avocado/tuxrun_baselines.py   | 228 ----------------------------
- tests/functional/meson.build        |   2 +
- tests/functional/test_sh4_tuxrun.py |  57 +++++++
- 3 files changed, 59 insertions(+), 228 deletions(-)
- delete mode 100644 tests/avocado/tuxrun_baselines.py
- create mode 100755 tests/functional/test_sh4_tuxrun.py
-
-diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-deleted file mode 100644
-index c358095e1f..0000000000
---- a/tests/avocado/tuxrun_baselines.py
-+++ /dev/null
-@@ -1,228 +0,0 @@
--# Functional test that boots known good tuxboot images the same way
--# that tuxrun (www.tuxrun.org) does. This tool is used by things like
--# the LKFT project to run regression tests on kernels.
--#
--# Copyright (c) 2023 Linaro Ltd.
--#
--# Author:
--#  Alex Bennée <alex.bennee@linaro.org>
--#
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--import os
--import time
--import tempfile
--
--from avocado import skip, skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import process
--from avocado.utils.path import find_command
--
--class TuxRunBaselineTest(QemuSystemTest):
--    """
--    :avocado: tags=accel:tcg
--    """
--
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0'
--    # Tests are ~10-40s, allow for --debug/--enable-gcov overhead
--    timeout = 100
--
--    def get_tag(self, tagname, default=None):
--        """
--        Get the metadata tag or return the default.
--        """
--        utag = self._get_unique_tag_val(tagname)
--        print(f"{tagname}/{default} -> {utag}")
--        if utag:
--            return utag
--
--        return default
--
--    def setUp(self):
--        super().setUp()
--
--        # We need zstd for all the tuxrun tests
--        # See https://github.com/avocado-framework/avocado/issues/5609
--        zstd = find_command('zstd', False)
--        if zstd is False:
--            self.cancel('Could not find "zstd", which is required to '
--                        'decompress rootfs')
--        self.zstd = zstd
--
--        # Process the TuxRun specific tags, most machines work with
--        # reasonable defaults but we sometimes need to tweak the
--        # config. To avoid open coding everything we store all these
--        # details in the metadata for each test.
--
--        # The tuxboot tag matches the root directory
--        self.tuxboot = self.get_tag('tuxboot')
--
--        # Most Linux's use ttyS0 for their serial port
--        self.console = self.get_tag('console', "ttyS0")
--
--        # Does the machine shutdown QEMU nicely on "halt"
--        self.shutdown = self.get_tag('shutdown')
--
--        # The name of the kernel Image file
--        self.image = self.get_tag('image', "Image")
--
--        self.root = self.get_tag('root', "vda")
--
--        # Occasionally we need extra devices to hook things up
--        self.extradev = self.get_tag('extradev')
--
--        self.qemu_img = super().get_qemu_img()
--
--    def wait_for_console_pattern(self, success_message, vm=None):
--        wait_for_console_pattern(self, success_message,
--                                 failure_message='Kernel panic - not syncing',
--                                 vm=vm)
--
--    def fetch_tuxrun_assets(self, csums=None, dt=None):
--        """
--        Fetch the TuxBoot assets. They are stored in a standard way so we
--        use the per-test tags to fetch details.
--        """
--        base_url = f"https://storage.tuxboot.com/20230331/{self.tuxboot}/"
--
--        # empty hash if we weren't passed one
--        csums = {} if csums is None else csums
--        ksum = csums.get(self.image, None)
--        isum = csums.get("rootfs.ext4.zst", None)
--
--        kernel_image =  self.fetch_asset(base_url + self.image,
--                                         asset_hash = ksum,
--                                         algorithm = "sha256")
--        disk_image_zst = self.fetch_asset(base_url + "rootfs.ext4.zst",
--                                         asset_hash = isum,
--                                         algorithm = "sha256")
--
--        cmd = f"{self.zstd} -d {disk_image_zst} -o {self.workdir}/rootfs.ext4"
--        process.run(cmd)
--
--        if dt:
--            dsum = csums.get(dt, None)
--            dtb = self.fetch_asset(base_url + dt,
--                                   asset_hash = dsum,
--                                   algorithm = "sha256")
--        else:
--            dtb = None
--
--        return (kernel_image, self.workdir + "/rootfs.ext4", dtb)
--
--    def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
--        """
--        Setup to run and add the common parameters to the system
--        """
--        self.vm.set_console(console_index=console_index)
--
--        # all block devices are raw ext4's
--        blockdev = "driver=raw,file.driver=file," \
--            + f"file.filename={disk},node-name=hd0"
--
--        kcmd_line = self.KERNEL_COMMON_COMMAND_LINE
--        kcmd_line += f" root=/dev/{self.root}"
--        kcmd_line += f" console={self.console}"
--
--        self.vm.add_args('-kernel', kernel,
--                         '-append', kcmd_line,
--                         '-blockdev', blockdev)
--
--        # Sometimes we need extra devices attached
--        if self.extradev:
--            self.vm.add_args('-device', self.extradev)
--
--        self.vm.add_args('-device',
--                         f"{drive},drive=hd0")
--
--        # Some machines need an explicit DTB
--        if dtb:
--            self.vm.add_args('-dtb', dtb)
--
--    def run_tuxtest_tests(self, haltmsg):
--        """
--        Wait for the system to boot up, wait for the login prompt and
--        then do a few things on the console. Trigger a shutdown and
--        wait to exit cleanly.
--        """
--        self.wait_for_console_pattern("Welcome to TuxTest")
--        time.sleep(0.2)
--        exec_command(self, 'root')
--        time.sleep(0.2)
--        exec_command(self, 'cat /proc/interrupts')
--        time.sleep(0.1)
--        exec_command(self, 'cat /proc/self/maps')
--        time.sleep(0.1)
--        exec_command(self, 'uname -a')
--        time.sleep(0.1)
--        exec_command_and_wait_for_pattern(self, 'halt', haltmsg)
--
--        # Wait for VM to shut down gracefully if it can
--        if self.shutdown == "nowait":
--            self.vm.shutdown()
--        else:
--            self.vm.wait()
--
--    def common_tuxrun(self,
--                      csums=None,
--                      dt=None,
--                      drive="virtio-blk-device",
--                      haltmsg="reboot: System halted",
--                      console_index=0):
--        """
--        Common path for LKFT tests. Unless we need to do something
--        special with the command line we can process most things using
--        the tag metadata.
--        """
--        (kernel, disk, dtb) = self.fetch_tuxrun_assets(csums, dt)
--
--        self.prepare_run(kernel, disk, drive, dtb, console_index)
--        self.vm.launch()
--        self.run_tuxtest_tests(haltmsg)
--
--
--    #
--    # The tests themselves. The configuration is derived from how
--    # tuxrun invokes qemu (with minor tweaks like using -blockdev
--    # consistently). The tuxrun equivalent is something like:
--    #
--    # tuxrun --device qemu-{ARCH} \
--    #        --kernel https://storage.tuxboot.com/{TUXBOOT}/{IMAGE}
--    #
--
--    # Note: some segfaults caused by unaligned userspace access
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--    def test_sh4(self):
--        """
--        :avocado: tags=arch:sh4
--        :avocado: tags=machine:r2d
--        :avocado: tags=cpu:sh7785
--        :avocado: tags=tuxboot:sh4
--        :avocado: tags=image:zImage
--        :avocado: tags=root:sda
--        :avocado: tags=console:ttySC1
--        :avocado: tags=flaky
--        """
--        sums = { "rootfs.ext4.zst" :
--                 "3592a7a3d5a641e8b9821449e77bc43c9904a56c30d45da0694349cfd86743fd",
--                 "zImage" :
--                 "29d9b2aba604a0f53a5dc3b5d0f2b8e35d497de1129f8ee5139eb6fdf0db692f" }
--
--        # The test is currently too unstable to do much in userspace
--        # so we skip common_tuxrun and do a minimal boot and shutdown.
--        (kernel, disk, dtb) = self.fetch_tuxrun_assets(csums=sums)
--
--        # the console comes on the second serial port
--        self.prepare_run(kernel, disk,
--                         "driver=ide-hd,bus=ide.0,unit=0",
--                         console_index=1)
--        self.vm.launch()
--
--        self.wait_for_console_pattern("Welcome to TuxTest")
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
--        exec_command_and_wait_for_pattern(self, 'halt',
--                                          "reboot: System halted")
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c17c9b0700..51d1037d96 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -156,8 +156,10 @@ tests_s390x_system_thorough = [
- 
- tests_sh4_system_thorough = [
-   'sh4_r2d',
-+  'sh4_tuxrun',
- ]
- 
-+
- tests_sparc_system_thorough = [
-   'sparc_sun4m',
- ]
-diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/test_sh4_tuxrun.py
-new file mode 100755
-index 0000000000..352cb360ef
---- /dev/null
-+++ b/tests/functional/test_sh4_tuxrun.py
-@@ -0,0 +1,57 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots known good tuxboot images the same way
-+# that tuxrun (www.tuxrun.org) does. This tool is used by things like
-+# the LKFT project to run regression tests on kernels.
-+#
-+# Copyright (c) 2023 Linaro Ltd.
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import time
-+
-+from unittest import skipUnless
-+from qemu_test import Asset, exec_command_and_wait_for_pattern, exec_command
-+from qemu_test.tuxruntest import TuxRunBaselineTest
-+
-+class TuxRunSh4Test(TuxRunBaselineTest):
-+
-+    ASSET_SH4_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/sh4/zImage',
-+        '29d9b2aba604a0f53a5dc3b5d0f2b8e35d497de1129f8ee5139eb6fdf0db692f')
-+    ASSET_SH4_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/sh4/rootfs.ext4.zst',
-+        '3592a7a3d5a641e8b9821449e77bc43c9904a56c30d45da0694349cfd86743fd')
-+
-+    # Note: some segfaults caused by unaligned userspace access
-+    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
-+    def test_sh4(self):
-+        self.set_machine('r2d')
-+        self.cpu='sh7785'
-+        self.root='sda'
-+        self.console='ttySC1'
-+
-+        # The test is currently too unstable to do much in userspace
-+        # so we skip common_tuxrun and do a minimal boot and shutdown.
-+        (kernel, disk, dtb) = self.fetch_tuxrun_assets(self.ASSET_SH4_KERNEL,
-+                                                       self.ASSET_SH4_ROOTFS)
-+
-+        # the console comes on the second serial port
-+        self.prepare_run(kernel, disk,
-+                         "driver=ide-hd,bus=ide.0,unit=0",
-+                         console_index=1)
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern("Welcome to TuxTest")
-+        time.sleep(0.1)
-+        exec_command(self, 'root')
-+        time.sleep(0.1)
-+        exec_command_and_wait_for_pattern(self, 'halt',
-+                                          "reboot: System halted")
-+
-+if __name__ == '__main__':
-+    TuxRunBaselineTest.main()
--- 
-2.46.1
+> ---
+>   accel/kvm/kvm-all.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 4287e254df8..482c5b24cf6 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -2604,12 +2604,6 @@ static int kvm_init(MachineState *ms)
+>           goto err;
+>       }
+>   
+> -    kvm_supported_memory_attributes = kvm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
+> -    kvm_guest_memfd_supported =
+> -        kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+> -        kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
+> -        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+> -
+>       kvm_immediate_exit = kvm_check_extension(s, KVM_CAP_IMMEDIATE_EXIT);
+>       s->nr_slots_max = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
+>   
+> @@ -2723,6 +2717,12 @@ static int kvm_init(MachineState *ms)
+>           goto err;
+>       }
+>   
+> +    kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
+> +    kvm_guest_memfd_supported =
+> +        kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+> +        kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
+> +        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+> +
+>       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+>           s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>       }
 
 
