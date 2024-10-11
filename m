@@ -4,67 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438CAD24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B012D24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ41-0000ky-3H; Fri, 11 Oct 2024 13:04:29 -0400
+	id 1szJGm-0007Z8-TC; Fri, 11 Oct 2024 13:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1szJ3z-0000hu-45
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:27 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1szIu0-0000Ot-J1
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 12:54:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=Ny+BSiVefvk0ZMxyxY5jJ/ox0PnbAIotPo5Wo2LKZTs=; b=A+gz1v79zbYY8F2z
- GIoA5M4hlx3+UQfnBxbtaJFeUnuHTz9/kKSUtayM6WazHwSf0QfQQ+XxYmUirY6v4y8x379ObIAvb
- jAnnBuA6qC8oIcjdeKvlUVFRoaiJSfgybsF0QGQqP/6kvdnn+J3tfCKx6sxnbu5kq0WSsapyIq++N
- yT4FeNmCqANyeD/aC01BPuEaBDIH1O1vwluPL5LdVnIe5Mqawc7sd+jakPRZi6wiIK8bs48r5d0ey
- ztR7XfcEpXONdQJa4/NgMkDZCX9ySg071DwXGPKAFb1sbGzvJz47rQ96zgaMdysw9C/tjXyqU4TfA
- gBQIVhwnEeagAicTGA==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1szIto-00AZ2q-2i;
- Fri, 11 Oct 2024 16:53:56 +0000
-Date: Fri, 11 Oct 2024 16:53:56 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: Yichen Wang <yichen.wang@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v6 00/12] Use Intel DSA accelerator to offload zero page
- checking in multifd live migration.
-Message-ID: <ZwlYJCpoNB_TkIBR@gallifrey>
-References: <20241009234610.27039-1-yichen.wang@bytedance.com>
- <ZwlTCgqjbFbJduyI@x1n>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szJ7c-0000wP-AZ
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:12 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szEk1-0006Md-Gl
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 08:27:34 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c8784e3bc8so2582771a12.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 05:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728649651; x=1729254451; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=so01qP/5pXwY3S9DexgRYUl7xLaihnKYbpO0b2ej86U=;
+ b=GtErz6qcVftdEtBeD3fXjNIVGwVEkduL5iOVAYmrWVB03YvO1/xFECuUv0C9XU7dNM
+ JOifvzqAPg5SeKy4VuM7YMpbAm8Ekfm/NfNFgxQ8YghN8BR/NjwgXriPpK46gegm43V5
+ e1nThO8N7EtUxwrrJ0Gf2u7SXeHWlVhL0NtB9KcppSe5hK+B5ARgjz/garkX3KgwsHgN
+ lfN6gVzVsCcfhtHBlJjH2yGBSroWxZLAizyZ9diwpYQavgn/A+WK4QGpw19cPABkehh+
+ YAT9MREeK+9W+g8bD32bLVrS06D8Uz0MRNSrBbeDI7GSgAMU6z5sY2jWE9vOPi190Vz8
+ FClw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728649651; x=1729254451;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=so01qP/5pXwY3S9DexgRYUl7xLaihnKYbpO0b2ej86U=;
+ b=ktE3ESMITf3I2LUKOl/JEeBF7HvEWlFucWlxXiW4LXL7yooHjL/+jTWzZuowuKBy3z
+ d9Gve557RE1O4g52cOg5pTX22/IKZWyJGUfNhRdaxCkpscvBJaHVzu7ZLUpruwP58tq5
+ 2olEAcysTt9Ergz2UceHx3NcKxiJmYyL7r6RGukn6sJiCIdp2M9Vr2Rio8NIDis7fN+S
+ pb3+MLyvMME7KFkF7ovW4+kZEQaPQ+E+IMB6USR07k7yIp0pXgfsWVdwnph8itYWWVSw
+ zyxnSzWaeLV5AxUj4r23pLtJ1W0Zy3nYOfdNsgDxgbCy6e1nf+C2+r1sQzcaJc35FYfh
+ z+Cg==
+X-Gm-Message-State: AOJu0YwmIWg3ns225k2lhYrvVOreoOSXdIEIgP56favxxkV6RFPrqUUT
+ iKMBPk6l/Qt7R9En3VwoaFP7QCkyfW5NyijT7IJ8hN1jCdvRzBy5ZEtPOp//KPX8rvgCtCGVS/L
+ yS5JGJjnwROHMxZ1srfPWpINkM3bC/UspmHRchZtKyA4r0/4i
+X-Google-Smtp-Source: AGHT+IHkiKkW0fqG6GLzzZCixKWU7Wf0y10AmUPGbJn7BeMwtLOi0u1k/Vnbbx8qI0sffuWy6t9qOYDB/IqTYnWJfEw=
+X-Received: by 2002:a05:6402:3513:b0:5c9:57bd:e9d with SMTP id
+ 4fb4d7f45d1cf-5c957bd0fc9mr330433a12.19.1728649651037; Fri, 11 Oct 2024
+ 05:27:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <ZwlTCgqjbFbJduyI@x1n>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 16:52:40 up 156 days,  4:06,  1 user,  load average: 0.03, 0.03, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+References: <20241011111249.47530-1-pbonzini@redhat.com>
+In-Reply-To: <20241011111249.47530-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 11 Oct 2024 13:27:20 +0100
+Message-ID: <CAFEAcA-vwCaKhdmcPUubiFQe93z3=7Y3aLo4u6ZbessKzwNDKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] docs: fix and cleanup footnotes
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,39 +87,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
+On Fri, 11 Oct 2024 at 12:12, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> Sphinx 8.1.0 got a lot better at detecting unreferenced footnotes, and
+> we have three of them---which causes the build to fail when the latest
+> version of sphinx is installed from Pip.
 
-> The doc update is still missing under docs/, we may need that for a final
-> merge.
-> 
-> Are you using this in production?  How it performs in real life?  What is
-> the major issue to solve for you?  Is it "zero detect eats cpu too much",
-> or "migration too slow", or "we're doing experiment with the new hardwares,
-> and see how it goes if we apply it on top of migrations"?
-> 
-> There're a lot of new code added for dsa just for this optimization on zero
-> page detection.  We'd better understand the major benefits, and also
-> whether that's applicable to other part of qemu or migration-only.  I
-> actually wonder if we're going to support enqcmd whether migration is the
-> best starting point (rather than other places where we emulate tons of
-> devices, and maybe some backends can speedup IOs with enqcmd in some
-> form?).. but it's more of a pure question.
+In particular we hit this on the macos14 CI job now:
 
-The other thing that worries me here is that there's not much abstraction,
-I'm sure there's a whole bunch of offload cards that could do tricks like
-this; how do we avoid having this much extra code for each one?
+https://gitlab.com/qemu-project/qemu/-/jobs/8054823697
 
-Dave
+I'll give this a bit more time on-list for review from
+others if they want to, but I plan to apply this directly
+to fix that CI job on Monday.
 
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+-- PMM
 
