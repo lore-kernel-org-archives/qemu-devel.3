@@ -4,89 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B20CD0EE3F
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82260D0EE3F
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szNrD-0008Rw-Bv; Fri, 11 Oct 2024 18:11:35 -0400
+	id 1szOF7-0003P7-4Z; Fri, 11 Oct 2024 18:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szNrC-0008QK-7s
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:11:34 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szNr9-0003F3-6c
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:11:34 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-5398996acbeso2935721e87.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 15:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728684689; x=1729289489; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=unsVltNUFL0Z5VZfJot5DeP2qCj7b8KICAcuxr+k0Ho=;
- b=O4J2oMn90wT5BDkjPzQsX+bx4h4PWYQKpGnTN4khjQrGU1CBt8f1gJ2f1D35WYKM8V
- N1YTjpDrz7DA+f2ps1/qSEb8a5lyAg6CsydrTZOS6TFPVk/uQMFijZfKSIATJ5MgU61+
- roV9rnrS/RfADvnczFKSf+pwn5z+B65Lv3MOaU1G+HxUGZRyrAHYNz9IoidujgFsJ5f4
- x5FO/t9FnjbEzetBQnzYDIknY3W4q3g7ueILdWEX7nFRGqFqsIgWI3PyGP4X0atCgFw/
- cfeADAEHgCZS7j8IY/HDYojk1JRFMb4lXAk4S7M05zy72up+XzPNiAxH0cQlAMX2XWp8
- fxvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728684689; x=1729289489;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=unsVltNUFL0Z5VZfJot5DeP2qCj7b8KICAcuxr+k0Ho=;
- b=SOJX4rM1boc61/JxxQgB4nVkZ+2Wj1F7+UfzqjgVvPind1lDTYSxN3dYMViKVbeiLw
- EpTdjOsmHriCOqQFEiW9PERtYz4yb3xWo1qLVInquatNBr97h/hMhKKkWD7eqygKOV3y
- GYsaHz3kEsVbSjSQhyE2FjiEGHduqFeBUzpqpWDE3XcgvFhuHoqIAdUNSmGE2FFxHpVK
- agSuiwlPCC949hXgY7NPrlT2BCArDyNMZIAdoEBauPNUxjLj2IJSUN1/GMJNwAFiUqBY
- QSQZr9jg6Ede91LTqR+G7FnkdDeUw6B2qXFBbd1Zka1Zo+OKjJ6cOIbVVuID4y3c9Udq
- 6Krg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLgR9uEmpoXERt0CUVABTvOT/IIXUSrJr8DvgFYbqwM8QBvgApmmv4k5sjaJ56OTNsMhD8/44lm0td@nongnu.org
-X-Gm-Message-State: AOJu0YzAS1TAc25a9L8fOMa7/mgbB0/gwYPu6UYTnObPlDpWdPrcBL8o
- +qIisxkjJ18q6/uZ4lOmBAG3fkumpcezE66EsC2HEZXYOOXGjbpIrdbT8tIZBeA=
-X-Google-Smtp-Source: AGHT+IFgIoJ4CkpH8RuXzjuazmltGBuysSoTzuwOOHYI3PxOue+8FcHxZTHiJ1eTFOJid8U8PVvxRg==
-X-Received: by 2002:a05:6512:6606:b0:539:dc87:fd3a with SMTP id
- 2adb3069b0e04-539dc87ff49mr1897228e87.6.1728684688527; 
- Fri, 11 Oct 2024 15:11:28 -0700 (PDT)
-Received: from [192.168.222.92] ([91.209.212.130])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-539dc70b8d9sm324712e87.125.2024.10.11.15.11.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 15:11:27 -0700 (PDT)
-Message-ID: <a7aa5078-0787-4fa5-95d4-62dbd9a89ac9@linaro.org>
-Date: Fri, 11 Oct 2024 19:11:18 -0300
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1szOF5-0003Oo-ND
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:36:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1szOF3-0006C0-0K
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:36:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BK2mIa001094
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=AKh/ciTfkR0DB
+ 9FoPqfvDo4YiYEmNNOru+FBQxJn2mg=; b=p4PqCVhN7l+CCkOi2cp5AE0jjXioB
+ qwGkLM2L8LIGWTD745mRXI1krWyj6/kheNIaTmb5isfJcMG4UJ+H15GXWOEE0F66
+ 0RiXDyhVMayzZGFq48BDa1J1s8QnmJfeZO75Mx9PE4o+P6l2Rqlw7d483zKcvDCa
+ YKyXbsk1YCFKfel7/h7z05QQcLLugIXU0F+jSE88LeXKoFf+uOTbIHwo1Ik1Kb2q
+ edp80CvuaOSoEM5Z6wH5L2SumODHrCpwb4R8pTL8QwS8MHK6/ckQJgGOZw/QngsY
+ +dA7vmtEZVjrWgslRQEhLuLUW/ziXEJdOQh+oAwFIl/OkaPWZwLEfRd3w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 427aq28fdm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:10 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49BMa9pi001004
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:09 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 427aq28fdg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2024 22:36:09 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49BKOIEX013833;
+ Fri, 11 Oct 2024 22:36:08 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 423fssr4bn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2024 22:36:08 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49BMa8NO46203378
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Oct 2024 22:36:08 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 119FB58053;
+ Fri, 11 Oct 2024 22:36:08 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D9225805F;
+ Fri, 11 Oct 2024 22:36:07 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 11 Oct 2024 22:36:07 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, marcandre.lureau@gmail.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH 1/2] tpm: Use new ptm_cap_n structure for PTM_GET_CAPABILITY
+Date: Fri, 11 Oct 2024 18:35:55 -0400
+Message-ID: <20241011223556.2953808-2-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241011223556.2953808-1-stefanb@linux.ibm.com>
+References: <20241011223556.2953808-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] hw: Strengthen SysBus & QBus API
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Zhao Liu <zhao1.liu@linux.intel.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20240208181245.96617-1-philmd@linaro.org>
- <2758986e-72f4-4706-a3d3-c63c6283af86@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2758986e-72f4-4706-a3d3-c63c6283af86@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qtFpxXy-ZfBq6d-YwMQM4sDnROptewj5
+X-Proofpoint-ORIG-GUID: P1du-bCxmjSAllvvCdLMypmRMe1vkFrO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-11_19,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410110157
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,68 +115,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/10/24 05:56, Paolo Bonzini wrote:
-> On 2/8/24 19:12, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> This series ensure following is called *before* a
->> device is realized:
->> - qbus_new()
->> - sysbus_init_mmio()
->> - qdev_init_gpio_in_named_with_opaque()
->>
->> and these are called *after* it is:
->> - sysbus_mmio_map()
->> - sysbus_connect_irq(),
->> - qdev_connect_gpio_out()
->> - qdev_connect_gpio_out_named()
-> 
-> This series is missing a _why_.  The original vision for qdev was that 
-> the whole machine would be realized at once from vl.c, and therefore 
-> there would be no need for realizing subcomponents by hand.
-> 
-> This probably will never happen, but it is still worth explaining why 
-> it's now considered so conceptually wrong, that it is (or will be) 
-> enforced by the API.
+Use the new ptm_cap_n structure for getting the PTM_GET_CAPABILITY response
+from swtpm. Previously only 17 bits could possibly have been set in ptm_cap
+(=uint64_t) in big endian order and those bits are now found in the 2nd
+32bit word in the response in the caps field.
 
-When looking at a roadmap toward "dynamic machines" with Markus we
-needed to clarify the QOM life cycle before thinking about possible
-DSL to declare machines and components. See:
+This data structure makes it now clear that the 1st 32bit word carries the
+tpm_result like all the other response structures of all other commands
+do.
 
-= Problem 4: The /machine/unattached/ orphanage =
-= Problem 5: QOM lacks a clear life cycle =
-= Problem 7: Design of the machine specification DSL =
-in https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/,
-in particular:
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ backends/tpm/tpm_emulator.c | 14 ++++++++------
+ backends/tpm/tpm_ioctl.h    | 13 ++++++++++++-
+ backends/tpm/trace-events   |  2 +-
+ 3 files changed, 21 insertions(+), 8 deletions(-)
 
-     '''
-     We need to manage a state transition from "object created,
-     but not ready for use" to "object configured and ready for
-     use".  In what order do the objects change state?
-     '''
-
-and:
-
-     '''
-     Ideally, a composite object's components go through the life
-     cycle together.  First, create all the components and assign
-     parents.  This also creates all the properties.  Then configure
-     the object by setting property values.  Finally, complete / realize
-     all components.
-     '''
-
-We need a better QOM documentation, "Device Life-cycle" in
-docs/devel/qom.rst doesn't reallyr describe the life cycle, and
-doesn't mention the "realization" API contract.
-Since you have more experience and historical view on the APIs,
-I wouldn't mind if you want to clarify that; otherwise I'll try
-to do it.
-
-Regards,
-
-Phil.
-
-
-> Paolo
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 5a8fba9bde..b0e2fb3fc7 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -72,7 +72,7 @@ struct TPMEmulator {
+     CharBackend ctrl_chr;
+     QIOChannel *data_ioc;
+     TPMVersion tpm_version;
+-    ptm_cap caps; /* capabilities of the TPM */
++    uint32_t caps; /* capabilities of the TPM */
+     uint8_t cur_locty_number; /* last set locality */
+     Error *migration_blocker;
+ 
+@@ -239,13 +239,15 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
+ 
+ static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
+ {
++    ptm_cap_n cap_n;
++
+     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_CAPABILITY,
+-                             &tpm_emu->caps, 0, sizeof(tpm_emu->caps)) < 0) {
++                             &cap_n, 0, sizeof(cap_n)) < 0) {
+         error_report("tpm-emulator: probing failed : %s", strerror(errno));
+         return -1;
+     }
+ 
+-    tpm_emu->caps = be64_to_cpu(tpm_emu->caps);
++    tpm_emu->caps = be32_to_cpu(cap_n.u.resp.caps);
+ 
+     trace_tpm_emulator_probe_caps(tpm_emu->caps);
+ 
+@@ -254,7 +256,7 @@ static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
+ 
+ static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
+ {
+-    ptm_cap caps = 0;
++    uint32_t caps = 0;
+     const char *tpm = NULL;
+ 
+     /* check for min. required capabilities */
+@@ -527,8 +529,8 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
+ static int tpm_emulator_block_migration(TPMEmulator *tpm_emu)
+ {
+     Error *err = NULL;
+-    ptm_cap caps = PTM_CAP_GET_STATEBLOB | PTM_CAP_SET_STATEBLOB |
+-                   PTM_CAP_STOP;
++    uint32_t caps = PTM_CAP_GET_STATEBLOB | PTM_CAP_SET_STATEBLOB |
++                    PTM_CAP_STOP;
+ 
+     if (!TPM_EMULATOR_IMPLEMENTS_ALL_CAPS(tpm_emu, caps)) {
+         error_setg(&tpm_emu->migration_blocker,
+diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
+index 1933ab6855..ee2dd15d35 100644
+--- a/backends/tpm/tpm_ioctl.h
++++ b/backends/tpm/tpm_ioctl.h
+@@ -29,6 +29,16 @@
+ 
+ typedef uint32_t ptm_res;
+ 
++/* PTM_GET_CAPABILITY: Get supported capabilities (ioctl's) */
++struct ptm_cap_n {
++    union {
++        struct {
++            ptm_res tpm_result; /* will always be TPM_SUCCESS (0) */
++            uint32_t caps;
++        } resp; /* response */
++    } u;
++};
++
+ /* PTM_GET_TPMESTABLISHED: get the establishment bit */
+ struct ptm_est {
+     union {
+@@ -242,7 +252,8 @@ struct ptm_lockstorage {
+     } u;
+ };
+ 
+-typedef uint64_t ptm_cap;
++typedef uint64_t ptm_cap; /* CUSE-only; use ptm_cap_n otherwise */
++typedef struct ptm_cap_n ptm_cap_n;
+ typedef struct ptm_est ptm_est;
+ typedef struct ptm_reset_est ptm_reset_est;
+ typedef struct ptm_loc ptm_loc;
+diff --git a/backends/tpm/trace-events b/backends/tpm/trace-events
+index cb5cfa6510..05e30533ce 100644
+--- a/backends/tpm/trace-events
++++ b/backends/tpm/trace-events
+@@ -16,7 +16,7 @@ tpm_util_show_buffer_content(const char *buf) "%s"
+ # tpm_emulator.c
+ tpm_emulator_set_locality(uint8_t locty) "setting locality to %d"
+ tpm_emulator_handle_request(void) "processing TPM command"
+-tpm_emulator_probe_caps(uint64_t caps) "capabilities: 0x%"PRIx64
++tpm_emulator_probe_caps(uint32_t caps) "capabilities: 0x%x"
+ tpm_emulator_set_buffer_size(uint32_t buffersize, uint32_t minsize, uint32_t maxsize) "buffer size: %u, min: %u, max: %u"
+ tpm_emulator_startup_tpm_resume(bool is_resume, size_t buffersize) "is_resume: %d, buffer size: %zu"
+ tpm_emulator_get_tpm_established_flag(uint8_t flag) "got established flag: %d"
+-- 
+2.46.2
 
 
