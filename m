@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99226D0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D54CD24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJVH-00032n-BU; Fri, 11 Oct 2024 13:32:39 -0400
+	id 1szJEj-0003FI-Nm; Fri, 11 Oct 2024 13:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1szJVD-0002n1-PU
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:32:35 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1szJ7h-0003l6-Px
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:18 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1szJVB-0006nd-MW
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:32:35 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20cb47387ceso3779435ad.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 10:32:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1szEWI-0004um-6D
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 08:13:24 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20caea61132so2622035ad.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 05:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728667952; x=1729272752; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=i5UB0IS8EtRnVbRF1ECxgjtk2pBnzhjPLZ/sGzwq3sY=;
- b=gEUu7IOJS8sbNcdI/E5dRVkKzdQpAmhaDTa5gxlxg8HRuY5VnOtyNDsWPVBsQjtUtl
- c+kP4RaLwv1eKE2VyIo3Z6KzM45K7kZJUey8ORGRd2gFZTfW3ftEr5QNikh7QnqpAbGg
- Z5O3OKI3b/21w03Lzx2j0UIxguT7LOqZ7IUrWIGYQPFwISNtjGNhqRqX8rY6kgTtqX3Y
- pxqTRCAIp21RDYFwgL5KaNtQsmKKErardhW+WxJyjsciOJx10byBO0afMDykZfAvcqTq
- lGExQlN/09eljynjBVnrwG7DOxte4pmn5gl5fU5IvtQFhz9nqDelSrJIuvZOacMoL+fo
- 4BIA==
+ d=bytedance.com; s=google; t=1728648801; x=1729253601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LNfE2FvcIsikcgtI6Krtxtj2etktds/RmL9xP+AY0Zg=;
+ b=frgDzAB+UkIhdo5oCQWUCKNVZBwL3F0qNfeEF1ub6k90zBP3m3ICkv3NrVVIDPeH9C
+ AKZFfRoe0woQ0cNWnSp9JbbwZ0cK8X71BK0OQmxAq1Uq9C+iIxM1t0KV9/Uv8GC78V1U
+ hoEhVYNNnjkTSMWgqKQicaPehitE65IPnCpmnl8Y+AdDJF+HxOYg+yLgiz3YHfsRVwmd
+ dz+hoXoFJv21e1/L3oGLrD7zM+iP2eWIz5ityXQ6A58+yTAUoppfadamQycuLT9vdt51
+ 6N4DN5O/4MwczlynNJEfa3YLNosO1VXtmQTJ+q04fwuoTjTn+0jdeU9elyZx0m/eU5lT
+ NIww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728667952; x=1729272752;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i5UB0IS8EtRnVbRF1ECxgjtk2pBnzhjPLZ/sGzwq3sY=;
- b=rg83pb/IZyhQNPtBB20j4WWU+OKKb2bGC+YhMGqzqhbx8Bdl7LFS5VdhFbooNSUbDx
- MG1pBlpcpsw6B1GUzWJgm88bko8w8JIROSMJ15ffsJMgyEDqVKx7yUNw3PBJi/EqjP0r
- +AE0jeTM9ZOj0rVcuEWdbIfTypXXrwzxT81sw7Boe8KBx2bDmUkv9U//rLmJHU/xK5yo
- ug553byj9r+syPXSxYpgA/Qs3Ry76jrNSPOZA2UhkoV3XZFT8Xzo290fItpq5hRDMf25
- xwMvlFoKSD8jqBmAV8GFyubvD0xIm3CCCywgzvfiHnHKt7oRiOQBeHFzbCgtQP+VLoAZ
- WK6w==
-X-Gm-Message-State: AOJu0YxvaQZfVDCfjwqRrDOOxpxvANZACWLFHOOG927JVLjGv7IX2vBo
- X0NzQ/Cgf3Isjzpnmbt0fwKu4bvaJX2DZqBSkBcvKRQ7u4ey5uuNfLw571ZDqJU=
-X-Google-Smtp-Source: AGHT+IH9lD1GXhvGNI0bfHyuoYYmfMIqaFoKR69JF+K3MNogqsvJnXbI2KRKtwnLSIaPt88IuBDnQA==
-X-Received: by 2002:a17:902:d544:b0:20c:5e86:9b5e with SMTP id
- d9443c01a7336-20ca14253f7mr47605955ad.3.1728667951956; 
- Fri, 11 Oct 2024 10:32:31 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ d=1e100.net; s=20230601; t=1728648801; x=1729253601;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LNfE2FvcIsikcgtI6Krtxtj2etktds/RmL9xP+AY0Zg=;
+ b=fwuxPcuZKWCIfuSAVQ3siSibb9aVl2Xh33ixJKIRpho4pxylNqy1cFIWDRNGKhWDud
+ jl1MX5PyGC/W+Nfc4kflMHmiB4avh8Od8R21osJukPrhoVxPB6fYpPH6r/clSsUfNfSQ
+ XBa9elAy/GAGWinx4eNz6UnwkBloHzO+p2BOl5RUd95gF9tdb8ExXYCxGnYj9mWq3SMJ
+ 0CQieLGoJSkDaqbFsaalqU5Gw634oSyw86nYxaBRC7X813bS/+Jlf2PPHhgai3XW7alz
+ stnTJjT2OrGROn9krTYMw3WDz01969k757Ih9GwB2Y4V+iT5dcn9FpdKUa1uz2P0rm7n
+ JiJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXf1Q5CBMqEW2YbILhymIixIZBAOZB6pITP5xJ8378tgR3Yv67LuiNcCT7xUzDRpKGruDjjmQ4rf8Bm@nongnu.org
+X-Gm-Message-State: AOJu0YxFqlmMbhBfsfGyWaXsmtHmN+ICA8gTEXmPAXacgomJ1vEBbCuo
+ DTY6kcULprzk6HZhDmlIZ0QN/y27ZZnr8eY+vfFjUx+4nIJ/anz/zA0JkRMjUg3Lx2fkGpN2RuH
+ JRBU=
+X-Google-Smtp-Source: AGHT+IEh4LLc/+bqY6X2nvxu4aasx8ocawMKkkbF/iDndQ0VGJj1wrdQKntd1Rko8JvCmZqGM+N92w==
+X-Received: by 2002:a17:903:240e:b0:20b:a89a:1d3a with SMTP id
+ d9443c01a7336-20ca14661b7mr46470025ad.28.1728648800931; 
+ Fri, 11 Oct 2024 05:13:20 -0700 (PDT)
+Received: from TF4D9JK212.bytedance.net ([139.177.225.232])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8badc3b2sm25679375ad.12.2024.10.11.10.32.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 10:32:31 -0700 (PDT)
-Message-ID: <596073dd-3d02-41b2-a03a-3041d2d01057@linaro.org>
-Date: Fri, 11 Oct 2024 10:32:29 -0700
+ d9443c01a7336-20c8bc13551sm22569305ad.88.2024.10.11.05.13.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 11 Oct 2024 05:13:20 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, k.jensen@samsung.com,
+ Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v14 06/10] block/nvme: add reservation command protocol
+ constants
+Date: Fri, 11 Oct 2024 20:12:27 +0800
+Message-Id: <20241011121231.18333-7-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+In-Reply-To: <20241011121231.18333-1-luchangqi.123@bytedance.com>
+References: <20241011121231.18333-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: drop --enable-avx* options
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20241010091322.1790604-1-pbonzini@redhat.com>
- <ZwedYPrdBaOz0n2U@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ZwedYPrdBaOz0n2U@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,70 +102,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 02:24, Daniel P. Berrangé wrote:
-> On Thu, Oct 10, 2024 at 11:13:22AM +0200, Paolo Bonzini wrote:
->> Just detect compiler support and always enable the optimizations if
->> it is avilable; warn if the user did request AVX2/AVX512 use via
->> -Dx86_version= but the intrinsics are not available.
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   meson.build                   | 30 +++++++++++++++++++-----------
->>   meson_options.txt             |  4 ----
->>   scripts/meson-buildoptions.sh |  6 ------
->>   3 files changed, 19 insertions(+), 21 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index e4b2af138da..b4418d54e0a 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -2955,22 +2955,16 @@ config_host_data.set('CONFIG_ASM_HWPROBE_H',
->>                        cc.has_header_symbol('asm/hwprobe.h',
->>                                             'RISCV_HWPROBE_EXT_ZBA'))
->>   
->> -config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
->> -  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX2') \
->> -  .require(cc.links('''
->> -    #include <cpuid.h>
->> +if have_cpuid_h
->> +  have_avx2 = cc.links('''
->>       #include <immintrin.h>
->>       static int __attribute__((target("avx2"))) bar(void *a) {
->>         __m256i x = *(__m256i *)a;
->>         return _mm256_testz_si256(x, x);
->>       }
->>       int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
->> -  '''), error_message: 'AVX2 not available').allowed())
->> -
->> -config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
->> -  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX512BW') \
->> -  .require(cc.links('''
->> -    #include <cpuid.h>
->> +  ''')
->> +  have_avx512bw = cc.links('''
->>       #include <immintrin.h>
->>       static int __attribute__((target("avx512bw"))) bar(void *a) {
->>         __m512i *x = a;
->> @@ -2978,7 +2972,21 @@ config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
->>         return res[1];
->>       }
->>       int main(int argc, char *argv[]) { return bar(argv[0]); }
->> -  '''), error_message: 'AVX512BW not available').allowed())
->> +  ''')
->> +  if get_option('x86_version') >= '3' and not have_avx2
->> +    warning('Cannot enable AVX optimizations due to missing intrinsics')
->> +  elif get_option('x86_version') >= '4' and not have_avx512bw
->> +    warning('Cannot enable AVX512 optimizations due to missing intrinsics')
->> +  endif
-> 
-> Should these perhaps be error() rather than warning() ?
-> 
-> We only support GCC & CLang. If both GCC 7.4.0 and CLang 10.0 (our
-> min versions) have the intrinsics, then I'd say this is an impossible
-> scenario if x86_version is large, and thus would deserve error()
-Agreed.  Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Add constants for the NVMe persistent command protocol.
+The constants include the reservation command opcode and
+reservation type values defined in section 7 of the NVMe
+2.0 specification.
 
-r~
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+---
+ include/block/nvme.h | 61 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index bb231d0b9a..8b125f7769 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -633,7 +633,11 @@ enum NvmeIoCommands {
+     NVME_CMD_WRITE_ZEROES       = 0x08,
+     NVME_CMD_DSM                = 0x09,
+     NVME_CMD_VERIFY             = 0x0c,
++    NVME_CMD_RESV_REGISTER      = 0x0d,
++    NVME_CMD_RESV_REPORT        = 0x0e,
++    NVME_CMD_RESV_ACQUIRE       = 0x11,
+     NVME_CMD_IO_MGMT_RECV       = 0x12,
++    NVME_CMD_RESV_RELEASE       = 0x15,
+     NVME_CMD_COPY               = 0x19,
+     NVME_CMD_IO_MGMT_SEND       = 0x1d,
+     NVME_CMD_ZONE_MGMT_SEND     = 0x79,
+@@ -641,6 +645,63 @@ enum NvmeIoCommands {
+     NVME_CMD_ZONE_APPEND        = 0x7d,
+ };
+ 
++typedef enum {
++    NVME_RESV_REGISTER_ACTION_REGISTER      = 0x00,
++    NVME_RESV_REGISTER_ACTION_UNREGISTER    = 0x01,
++    NVME_RESV_REGISTER_ACTION_REPLACE       = 0x02,
++} NvmeReservationRegisterAction;
++
++typedef enum {
++    NVME_RESV_RELEASE_ACTION_RELEASE        = 0x00,
++    NVME_RESV_RELEASE_ACTION_CLEAR          = 0x01,
++} NvmeReservationReleaseAction;
++
++typedef enum {
++    NVME_RESV_ACQUIRE_ACTION_ACQUIRE            = 0x00,
++    NVME_RESV_ACQUIRE_ACTION_PREEMPT            = 0x01,
++    NVME_RESV_ACQUIRE_ACTION_PREEMPT_AND_ABORT  = 0x02,
++} NvmeReservationAcquireAction;
++
++typedef enum {
++    NVME_RESV_WRITE_EXCLUSIVE               = 0x01,
++    NVME_RESV_EXCLUSIVE_ACCESS              = 0x02,
++    NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY     = 0x03,
++    NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY    = 0x04,
++    NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS      = 0x05,
++    NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS     = 0x06,
++} NvmeResvType;
++
++typedef enum {
++    NVME_RESV_PTPL_NO_CHANGE = 0x00,
++    NVME_RESV_PTPL_DISABLE   = 0x02,
++    NVME_RESV_PTPL_ENABLE    = 0x03,
++} NvmeResvPTPL;
++
++typedef enum NVMEPrCap {
++    /* Persist Through Power Loss */
++    NVME_PR_CAP_PTPL = 1 << 0,
++    /* Write Exclusive reservation type */
++    NVME_PR_CAP_WR_EX = 1 << 1,
++    /* Exclusive Access reservation type */
++    NVME_PR_CAP_EX_AC = 1 << 2,
++    /* Write Exclusive Registrants Only reservation type */
++    NVME_PR_CAP_WR_EX_RO = 1 << 3,
++    /* Exclusive Access Registrants Only reservation type */
++    NVME_PR_CAP_EX_AC_RO = 1 << 4,
++    /* Write Exclusive All Registrants reservation type */
++    NVME_PR_CAP_WR_EX_AR = 1 << 5,
++    /* Exclusive Access All Registrants reservation type */
++    NVME_PR_CAP_EX_AC_AR = 1 << 6,
++
++    NVME_PR_CAP_ALL = (NVME_PR_CAP_PTPL |
++                      NVME_PR_CAP_WR_EX |
++                      NVME_PR_CAP_EX_AC |
++                      NVME_PR_CAP_WR_EX_RO |
++                      NVME_PR_CAP_EX_AC_RO |
++                      NVME_PR_CAP_WR_EX_AR |
++                      NVME_PR_CAP_EX_AC_AR),
++} NvmePrCap;
++
+ typedef struct QEMU_PACKED NvmeDeleteQ {
+     uint8_t     opcode;
+     uint8_t     flags;
+-- 
+2.20.1
+
 
