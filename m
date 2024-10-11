@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E7DD2444F
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Oct 2024 23:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8887FD2444F
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 01:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz2HQ-0000Xq-8n; Thu, 10 Oct 2024 19:09:12 -0400
+	id 1sz4gh-0006Iy-Oc; Thu, 10 Oct 2024 21:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sz2HO-0000Xf-7N
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 19:09:10 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sz4gg-0006If-Tr; Thu, 10 Oct 2024 21:43:27 -0400
+Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1sz2HL-0003mO-S1
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 19:09:09 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-71dfccba177so2097951b3a.0
- for <qemu-devel@nongnu.org>; Thu, 10 Oct 2024 16:09:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sz4gf-0001xq-3Z; Thu, 10 Oct 2024 21:43:26 -0400
+Received: by mail-vs1-xe2d.google.com with SMTP id
+ ada2fe7eead31-4a40afdcb95so538790137.2; 
+ Thu, 10 Oct 2024 18:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728601745; x=1729206545; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eoOIefwcl2zyGqbInaCBGQitWpP7kAS3EJcvu7ps+iU=;
- b=ljwjVZDyhdXgezmPbowMKe4JzM8j9eYBfylDwWmmZQ4bUxzEMzA8t/r2qgZpT3wFgQ
- E5NbE4+TOHap3plgpDIyl8HmLVXiDfE9leB1exY58DTG0lAABVFW+eRzLrTjBjvltuQX
- S/RMZp2Ltvsw3dEnvL5iRGcREX6y61nKfQnDmOOLCd4V5RMwwQVHs+RyAcFeSOGf2nTT
- 6vnPDEhFi9g6oDjLWJr9QU3eOw/NxMBze4KdMvFx0sesuFYxBsJa71cn8IIy5/aRkzV/
- QoGqDqAmJdddpvDOCh1sPQABrgfrAWgXir7GNfHeCxzuYv5btLD/uBjcztyWKQEk2N31
- mp8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728601745; x=1729206545;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1728611003; x=1729215803; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eoOIefwcl2zyGqbInaCBGQitWpP7kAS3EJcvu7ps+iU=;
- b=q4murfEMPiVtb4wAofkYVEH57801J3SKP+aGGVT3JIP9EZY4qgcxTQolmmBTRB77yU
- 4GQ/jMCFaQbjUbdIVB7encW0g6ZX14bTLhIB5OHFGkcM9YBmTSoU2mw65cbEikb7cFTv
- augT3UcGFO/A4ngGeJfN7+V4b1PcwMxs4U1iYTSNd+MRaWlmjVAO0xDngEfTozMEtbET
- F+XT1ASb5yeYQabYpCXBAC9D4tdH9G8aIiZswIk9iVbgn8qznEm3LyzZsVdjhBXG7rXj
- 5b8yuRW8XdzwVt6iEzv4d9IQrJIwzs3kLPw8q0y5UBXzL8HV1yfmihVv7EOqAfa/KIJa
- x6QA==
+ bh=MojceMVibMvQ1nODpYlDWAPIdfRbNthEGeRQJJgQdwo=;
+ b=dJsDn5qegCSLS5pvrunVe0j2EwgR781jr6X6O0welOmE5kzppAd1qUYZNobNKTxmov
+ i1nd1mqwjVxG474z1oufluqu/C9U2ki3SYT6vyz7YbnuGaFYJ1Mus39kfQvEdGOTof5k
+ jmXCkQBIH3TiMMKwe9wp+IEKGmbh11kYsPZ6e7u10lnk6E2Mum8AmL/21Nzto4ML6lNt
+ 2gaCSumlrW8qwM52WuQlZOxm1F0b5xs5EvfOHmPM03Rp1xGPnJfpEwPR1q3Mm9TkYPgE
+ drxxWLU9oQGrwftTEJ5auxqLtpVcLnY2EJrWQCVug8GQMhy5+MwqE0PXL/0bA6db/arl
+ S7Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728611003; x=1729215803;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MojceMVibMvQ1nODpYlDWAPIdfRbNthEGeRQJJgQdwo=;
+ b=bNOfpVSDEh4IWXK+KUVrX2yGPtxBEqY1WKAAyac2UV6jyHRXkGdzlosqS+xuYwfqXA
+ AzGrFO0zBm9Fg2w0TNpVxIO+fnSCotLDASiqNP03kaNedEMQmbEqIi9rU7Qtm87IPmkE
+ ChAplSQ33pShdVI4CDpoo1J5BRshkI7cYP28WaomuSL/rbj/2brZbEtyFTxl4NPkUHQY
+ DzXgek1H9qT+tNa9nzugqhlSRcMzWgdj+AFQVzQniZR0zo1q034keZ0IZ9Gfmc6JuJU9
+ Y9pWJXoarFIQZ0W+0a8zL/13B3BZ5IyLzejOCRQx4vSuQJy3pvRf1LpyMq33fnOmwa2Z
+ 6CPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4XvM5LkAyKytrKgNXbj+aqP9i4AKg9X9wC3/jAnUyAdfrBL35OAyN2xteH2BivHjbairllwe7+poM@nongnu.org
-X-Gm-Message-State: AOJu0YxCElC5KXTY/RQIyDUADlHsIM0uS4fuayDio63hTjvpG+lTLT89
- hgiLWV53SQcHEkuQZgaVvxFYaXFpDIoG6/FZE97nq7VJ+Y2qXBaN
-X-Google-Smtp-Source: AGHT+IEnssj6iLPq8FvP3tyJbWCzWYVHNFcOJBhMOpVp2twnK6mEBduZuY76xG+FeTMmbAdxBpA6uA==
-X-Received: by 2002:a05:6a20:7f9f:b0:1d7:86c:189e with SMTP id
- adf61e73a8af0-1d8ae0cfe7amr7855544637.12.1728601745487; 
- Thu, 10 Oct 2024 16:09:05 -0700 (PDT)
-Received: from fan ([2601:646:8f03:9fee:c165:c800:4280:d79b])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ea44907c42sm1531066a12.39.2024.10.10.16.09.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Oct 2024 16:09:05 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 10 Oct 2024 16:08:51 -0700
-To: Davidlohr Bueso <dave@stgolabs.net>
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH -qemu] hw/cxl: Support get/set mctp response payload size
-Message-ID: <Zwheg1hFMG_MYggX@fan>
-References: <20241010014157.175548-1-dave@stgolabs.net>
+ AJvYcCW4ofv1EkCMYUOF24VVCi1gY1dclNNhl+ujdnnEtpQKeS/nKxbAeMNl07pL5MLXrMJVAOyffbeG0IUh@nongnu.org
+X-Gm-Message-State: AOJu0YyA76q0JZeRzpxQ1mr28cDabb+K/OKw3tYGICfZhXd1g7BcdKxY
+ WMBNxMk0aJrd9h2OzkEl/66VeLvEKOVttaEs5wPHQpRYTEIHCVBswuqKSbAcUjHMaNvdLXc9A4D
+ Qp0XsSMpg+9lhiX5AH3DfLsoH1Is=
+X-Google-Smtp-Source: AGHT+IHyJHIwDqW0tRTYvGGG77vo4PSuy7Jv+crjK/8FqsSyqtmzOCZsz718/LuCX3AC/PezKTLtgSy/Nml5gauovEI=
+X-Received: by 2002:a05:6102:5125:b0:49b:d12f:40b0 with SMTP id
+ ada2fe7eead31-4a46595e8a9mr1246953137.1.1728611002758; Thu, 10 Oct 2024
+ 18:43:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241010014157.175548-1-dave@stgolabs.net>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
+ <20240924124407.766495-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240924124407.766495-2-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 11 Oct 2024 11:42:56 +1000
+Message-ID: <CAKmqyKPFKFR60u=df3_0zO4bNLXjneGJcaEDcHV9BQSbNPSBtQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] target/riscv/kvm: set 'aia_mode' to default in error
+ path
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,149 +94,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 09, 2024 at 06:41:57PM -0700, Davidlohr Bueso wrote:
-> Add Get/Set Response Message Limit commands.
-> 
-> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+On Tue, Sep 24, 2024 at 10:46=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> When failing to set the selected AIA mode, 'aia_mode' is left untouched.
+> This means that 'aia_mode' will not reflect the actual AIA mode,
+> retrieved in 'default_aia_mode',
+>
+> This is benign for now, but it will impact QMP query commands that will
+> expose the 'aia_mode' value, retrieving the wrong value.
+>
+> Set 'aia_mode' to 'default_aia_mode' if we fail to change the AIA mode
+> in KVM.
+>
+> While we're at it, rework the log/warning messages to be a bit less
+> verbose. Instead of:
+>
+> KVM AIA: default mode is emul
+> qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode
+>
+> We can use a single warning message:
+>
+> qemu-system-riscv64: warning: KVM AIA: failed to set KVM AIA mode 'auto',=
+ using default host mode 'emul'
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The commit log may include the cxl spec reference. Otherwise,
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
+Alistair
 
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 68 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 65 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index c2d776bc96eb..98416af794bb 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -7,6 +7,8 @@
->   * COPYING file in the top-level directory.
->   */
->  
-> +#include <math.h>
-> +
->  #include "qemu/osdep.h"
->  #include "hw/pci/msi.h"
->  #include "hw/pci/msix.h"
-> @@ -56,6 +58,8 @@ enum {
->      INFOSTAT    = 0x00,
->          #define IS_IDENTIFY   0x1
->          #define BACKGROUND_OPERATION_STATUS    0x2
-> +        #define GET_RESPONSE_MSG_LIMIT   0x3
-> +        #define SET_RESPONSE_MSG_LIMIT   0x4
->      EVENTS      = 0x01,
->          #define GET_RECORDS   0x0
->          #define CLEAR_RECORDS   0x1
-> @@ -393,7 +397,7 @@ static CXLRetCode cmd_infostat_identify(const struct cxl_cmd *cmd,
->          uint16_t pcie_subsys_vid;
->          uint16_t pcie_subsys_id;
->          uint64_t sn;
-> -    uint8_t max_message_size;
-> +        uint8_t max_message_size;
->          uint8_t component_type;
->      } QEMU_PACKED *is_identify;
->      QEMU_BUILD_BUG_ON(sizeof(*is_identify) != 18);
-> @@ -422,12 +426,58 @@ static CXLRetCode cmd_infostat_identify(const struct cxl_cmd *cmd,
->          is_identify->component_type = 0x3; /* Type 3 */
+>  target/riscv/kvm/kvm-cpu.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 341af901c5..970a7ab2f1 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1711,18 +1711,26 @@ void kvm_riscv_aia_create(MachineState *machine, =
+uint64_t group_shift,
+>          error_report("KVM AIA: failed to get current KVM AIA mode");
+>          exit(1);
 >      }
->  
-> -    /* TODO: Allow this to vary across different CCIs */
-> -    is_identify->max_message_size = 9; /* 512 bytes - MCTP_CXL_MAILBOX_BYTES */
-> +    is_identify->max_message_size = (uint8_t)log2(cci->payload_max);
->      *len_out = sizeof(*is_identify);
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +/* CXL r3.1 section 8.2.9.1.3: Get Response Message Limit (Opcode 0003h) */
-> +static CXLRetCode cmd_get_response_msg_limit(const struct cxl_cmd *cmd,
-> +                                             uint8_t *payload_in,
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out,
-> +                                             CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint8_t rsp_limit;
-> +    } QEMU_PACKED *get_rsp_msg_limit = (void *)payload_out;
-> +    QEMU_BUILD_BUG_ON(sizeof(*get_rsp_msg_limit) != 1);
+> -    qemu_log("KVM AIA: default mode is %s\n",
+> -             kvm_aia_mode_str(default_aia_mode));
+>
+> -    if (default_aia_mode !=3D aia_mode) {
+> +    if (default_aia_mode =3D=3D aia_mode) {
+> +        qemu_log("KVM AIA: using default host mode '%s'\n",
+> +                  kvm_aia_mode_str(default_aia_mode));
+> +    } else {
+>          ret =3D kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+>                                  KVM_DEV_RISCV_AIA_CONFIG_MODE,
+>                                  &aia_mode, true, NULL);
+> -        if (ret < 0)
+> -            warn_report("KVM AIA: failed to set KVM AIA mode");
+> -        else
+> -            qemu_log("KVM AIA: set current mode to %s\n",
+> +        if (ret < 0) {
+> +            warn_report("KVM AIA: failed to set KVM AIA mode '%s', using=
+ "
+> +                        "default host mode '%s'",
+> +                        kvm_aia_mode_str(aia_mode),
+> +                        kvm_aia_mode_str(default_aia_mode));
 > +
-> +    get_rsp_msg_limit->rsp_limit = (uint8_t)log2(cci->payload_max);
-> +
-> +    *len_out = sizeof(*get_rsp_msg_limit);
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
-> +/* CXL r3.1 section 8.2.9.1.4: Set Response Message Limit (Opcode 0004h) */
-> +static CXLRetCode cmd_set_response_msg_limit(const struct cxl_cmd *cmd,
-> +                                             uint8_t *payload_in,
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out,
-> +                                             CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint8_t rsp_limit;
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    QEMU_BUILD_BUG_ON(sizeof(*in) != 1);
-> +    struct {
-> +        uint8_t rsp_limit;
-> +    } QEMU_PACKED *out = (void *)payload_out;
-> +    QEMU_BUILD_BUG_ON(sizeof(*out) != 1);
-> +
-> +    if (in->rsp_limit < 8 || in->rsp_limit > 10) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    cci->payload_max = 1 << in->rsp_limit;
-> +    out->rsp_limit = in->rsp_limit;
-> +
-> +    *len_out = sizeof(*out);
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  static void cxl_set_dsp_active_bm(PCIBus *b, PCIDevice *d,
->                                    void *private)
->  {
-> @@ -3000,6 +3050,10 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
->  
->  static const struct cxl_cmd cxl_cmd_set_t3_mctp[256][256] = {
->      [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
-> +    [INFOSTAT][GET_RESPONSE_MSG_LIMIT] = { "GET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_get_response_msg_limit, 0, 0 },
-> +    [INFOSTAT][SET_RESPONSE_MSG_LIMIT] = { "SET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_set_response_msg_limit, 1, 0 },
->      [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
->      [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
->                                0 },
-> @@ -3035,6 +3089,10 @@ void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
->  
->  static const struct cxl_cmd cxl_cmd_set_t3_fm_owned_ld_mctp[256][256] = {
->      [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0,  0},
-> +    [INFOSTAT][GET_RESPONSE_MSG_LIMIT] = { "GET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_get_response_msg_limit, 0, 0 },
-> +    [INFOSTAT][SET_RESPONSE_MSG_LIMIT] = { "SET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_set_response_msg_limit, 1, 0 },
->      [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
->                                0 },
->      [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-> @@ -3055,6 +3113,10 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
->  
->  static const struct cxl_cmd cxl_cmd_set_usp_mctp[256][256] = {
->      [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
-> +    [INFOSTAT][GET_RESPONSE_MSG_LIMIT] = { "GET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_get_response_msg_limit, 0, 0 },
-> +    [INFOSTAT][SET_RESPONSE_MSG_LIMIT] = { "SET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_set_response_msg_limit, 1, 0 },
->      [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported,
->                                0, 0 },
->      [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-> -- 
-> 2.46.1
-> 
-
--- 
-Fan Ni
+> +            /* failed to change AIA mode, use default */
+> +            aia_mode =3D default_aia_mode;
+> +        } else {
+> +            qemu_log("KVM AIA: setting current mode to %s\n",
+>                       kvm_aia_mode_str(aia_mode));
+> +        }
+>      }
+>
+>      ret =3D kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+> --
+> 2.45.2
+>
+>
 
