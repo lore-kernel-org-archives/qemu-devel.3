@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFCED24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0684ED0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJQL-0004II-83; Fri, 11 Oct 2024 13:27:33 -0400
+	id 1szJSB-0008Kh-9F; Fri, 11 Oct 2024 13:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJQ3-00046V-K2
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:27:19 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJRv-00089T-Ig
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:29:14 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJQ1-0005oK-Ea
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:27:15 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJRu-0006FB-16
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:29:11 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4CFF321EE9;
- Fri, 11 Oct 2024 17:27:11 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 514B521A9A;
+ Fri, 11 Oct 2024 17:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728667631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1728667748; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5SXTbwaUJzr5s1EDKf8BOrrNBNBs0i8zXFRGz5HZuYw=;
- b=Y0KgeXOq60ulIvYl75tg2YeeBbiSNycqM8CWxIO68udK/5PupX7XLmTvMIeFAeHJZEFBAg
- I/6SLtb/yDkajeJC7FukWnr85kF+uiZqVPwnYDFzAAN93Mytj3oqObARB0D/mEcYgRXP7i
- Npb2BivR+TjmAlYrXzPT18ITX24akkg=
+ bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
+ b=PK3HJlHQrBEtqG/Y1z3hb8yPKiWeVDCssHwnJeNCSSEEg/pCQHk1dKp5UrNnX6IANeM0WF
+ fZy5PSc99C7GJF2NbiaTKb46DAfObMbBfc/sRA1aoC3pz1sqReD5t6CWUK2h5Gm4NxcqCm
+ xit0nhdHSwENgfibMTE8S5P9x0lNSkg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728667631;
+ s=susede2_ed25519; t=1728667748;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5SXTbwaUJzr5s1EDKf8BOrrNBNBs0i8zXFRGz5HZuYw=;
- b=bw37ew4x7S6R/AqGNeeAO24CmmgfjAqNBv5AjEchr1eEB6Luverb9FI0ngXaY0v2E7hQU7
- H+apZAcCiucc/zAg==
+ bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
+ b=9GNvMTXXbyaj05YzkL6FX+sEsV0IYDNiXLkz45glfihoLIiGJ9oUdr2QtbbOUl43Q2luBT
+ a6kZm4KKfV0nCUCQ==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728667631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1728667747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5SXTbwaUJzr5s1EDKf8BOrrNBNBs0i8zXFRGz5HZuYw=;
- b=Y0KgeXOq60ulIvYl75tg2YeeBbiSNycqM8CWxIO68udK/5PupX7XLmTvMIeFAeHJZEFBAg
- I/6SLtb/yDkajeJC7FukWnr85kF+uiZqVPwnYDFzAAN93Mytj3oqObARB0D/mEcYgRXP7i
- Npb2BivR+TjmAlYrXzPT18ITX24akkg=
+ bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
+ b=Dd+c8bstOTnf7uRIYoHeDYPRnBEMDfzGR2MEW/AuH94W7jQRlra4W/zJGo3+nk7Ib24MaQ
+ SpuIw1IARWtpcgami42lZKGNKk+i1aZZzcY5f0m9p9yo5aiE8ATq55fe0WLO4QkKXyALcr
+ 7sr9bmdfFaF0lgUn3OFsk/TpdCKaTuU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728667631;
+ s=susede2_ed25519; t=1728667747;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=5SXTbwaUJzr5s1EDKf8BOrrNBNBs0i8zXFRGz5HZuYw=;
- b=bw37ew4x7S6R/AqGNeeAO24CmmgfjAqNBv5AjEchr1eEB6Luverb9FI0ngXaY0v2E7hQU7
- H+apZAcCiucc/zAg==
+ bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
+ b=MqdIOCIn7xHNGxWl0xdDuemQFjggG2hN/R9VqRTX5ngWqh9D6FJRZOZ3Xv86fGRXNOgO7J
+ h9WLEo6BjOCV6aBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CA7F31370C;
- Fri, 11 Oct 2024 17:27:10 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CBAEB1370C;
+ Fri, 11 Oct 2024 17:29:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id j9YZJO5fCWdYSwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Oct 2024 17:27:10 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3mOhJGJgCWfPSwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Oct 2024 17:29:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com, Markus Armbruster
- <armbru@redhat.com>, Prasad Pandit <ppandit@redhat.com>, =?utf-8?Q?Daniel?=
- =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, "Dr . David Alan
- Gilbert"
- <dave@treblig.org>, Julia Suvorova <jusual@redhat.com>, Jiang Jiacheng
- <jiangjiacheng@huawei.com>
-Subject: Re: [PATCH] migration: Remove interface query-migrationthreads
-In-Reply-To: <20241011153417.516715-1-peterx@redhat.com>
-References: <20241011153417.516715-1-peterx@redhat.com>
-Date: Fri, 11 Oct 2024 14:27:08 -0300
-Message-ID: <87y12ur1n7.fsf@suse.de>
+Cc: peterx@redhat.com, Yong Huang <yong.huang@smartx.com>, Hailiang Zhang
+ <zhanghailiang@xfusion.com>
+Subject: Re: [PATCH] migration: Put thread names together with macros
+In-Reply-To: <20241011153652.517440-1-peterx@redhat.com>
+References: <20241011153652.517440-1-peterx@redhat.com>
+Date: Fri, 11 Oct 2024 14:29:04 -0300
+Message-ID: <87v7xyr1jz.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
  RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
  FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
  imap1.dmz-prg2.suse.org:helo]
@@ -122,44 +118,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> This reverts two commits:
+> Keep migration thread names together, so it's easier to see a list of all
+> possible migration threads.
 >
-> 671326201dac8fe91222ba0045709f04a8ec3af4
-> 1b1f4ab69c41279a45ccd0d3178e83471e6e4ec1
+> Still two functional changes below besides the macro defintions:
 >
-> Meanwhile it adds an entry to removed-features.rst for the
-> query-migrationthreads QMP command.
+>   - There's one dirty rate thread that we overlooked before, now we add
+>   that too and name it as "mig/dirtyrate" following the old rules.
 >
-> This patch originates from another patchset [1] that wanted to cleanup the
-> interface and add corresponding HMP command, as lots of things are missing
-> in the query report; so far it only reports the main thread and multifd
-> sender threads; all the rest migration threads are not reported, including
-> multifd recv threads.
+>   - The old name "mig/src/rp-thr" has "-thr" but it may not be useful if
+>   it's a thread name anyway, while "rp" can be slightly hard to read.
+>   Taking this chance to rename it to "mig/src/return", hopefully a better
+>   name.
 >
-> As pointed out by Dan in the follow up discussions [1], the API is designed
-> in an awkward way where CPU pinning may not cover the whole lifecycle of
-> even the thread being reported.  When asked, we also didn't get chance to
-> hear from the developer who introduced this feature to explain how this API
-> can be properly used.
->
-> OTOH, this feature from debugging POV isn't very helpful either, as all
-> these information can be easily obtained by GDB.  Esepcially, if with
-> "-name $VM,debug-threads=on" we do already have names for each migration
-> threads (which covers more than multifd sender threads).
->
-> So it looks like the API isn't helpful in any form as of now, besides it
-> only adds maintenance burden to migration code, even if not much.
->
-> Considering that so far there's totally no justification on how to use this
-> interface correctly, let's remove this interface instead of cleaning it up.
->
-> In this special case, we even go beyond normal deprecation procedure,
-> because a deprecation process would only make sense when there are existing
-> users. In this specific case, we expect zero serious users with this API.
->
-> [1] https://lore.kernel.org/qemu-devel/20240930195837.825728-1-peterx@redhat.com/
->
-> Cc: Jiang Jiacheng <jiangjiacheng@huawei.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
