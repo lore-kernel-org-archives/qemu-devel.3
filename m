@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F1DD0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A333CD24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ4Y-0001DW-NI; Fri, 11 Oct 2024 13:05:02 -0400
+	id 1szJ4c-0001JC-Mn; Fri, 11 Oct 2024 13:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4U-0000hu-GI
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1szJ4S-0000hD-2E
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHdH-0007CB-C8
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:32:49 -0400
+ id 1szHdy-0007FV-Nj
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660766;
+ s=mimecast20190719; t=1728660810;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mV7Tp8dmnhymCVmSWJYoL4oQgjfzsvl281g33/SIjEw=;
- b=Cf0MTJ0Z5COwqhkLfhYyqUhe6rptHXftiXR9DjSzdfszKdzr2h6bdZQ3kYZ6EKUw+hs4/3
- +enzvRJ6TPy8id5te9utHDGoroEprt0Z7eXNMVaq9CNfV+WQRl5HXy6jJu8HklWtR4Q//H
- DyL8f2LkDjaFRb7FcC6Y7ZY6Y6WGxr8=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dl6dcOfhmNp3NrxHyKacGU/S0XBvVsXoKUJy7DRsnQc=;
+ b=OKgzqj6y7VCRCJp8ljgFr7vjDmES9nW4A7M70kS+i/t4J5kJps0jHXciKUM0kWxI7nFtkm
+ hGs2trYv0MRc4TmXnjOhdb4qoorWxG4jlokcBMLQnmHhhR/Ebxw/9ddyz06k+hhs+M6H/l
+ F64hF/SYAJbJJdIuNHZYlKRMl8o1pX8=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-xmkHKUoQNEWgwl3bDIhidg-1; Fri, 11 Oct 2024 11:32:45 -0400
-X-MC-Unique: xmkHKUoQNEWgwl3bDIhidg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a996be26171so346442666b.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:32:45 -0700 (PDT)
+ us-mta-433-bh0bVuhdMBuoAa5BFWppjA-1; Fri, 11 Oct 2024 11:33:28 -0400
+X-MC-Unique: bh0bVuhdMBuoAa5BFWppjA-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9465e3547so741150a12.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660764; x=1729265564;
+ d=1e100.net; s=20230601; t=1728660806; x=1729265606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mV7Tp8dmnhymCVmSWJYoL4oQgjfzsvl281g33/SIjEw=;
- b=PJOCmhvtgG0O03mItg9FPLmGR6AMaBH3XGzlVJH7zG7Ojz9zatCruneZR6J9jSFspC
- lSHqilBam4n/modtGIu+rEKrNNTo81H7P/YeNxwlYLbwGjjK6QaSR9mmVds7LDTRNXUH
- MPHoczqAarLwhNPpJnRxcnFKxY/imCGel4tkzOAQJv0AMdyswCGJIEBv5TEIIsbtrzHp
- 11YGqeaz+7ftG+6tGRJ6tXyhBAHPJXzyiLcZ71tXaR4XIi+1VqB5yjjQV99yj99noweS
- g8EpgGgxuljUhByIrpeUZAMfcaW+NYK7YZTd21sAAhVG8jL4WBzL2uCe2enrTsjWha70
- 92KA==
-X-Gm-Message-State: AOJu0YzI8dgzju7qysO0JYvi0V8NmAedxhrkm6Anin5ydcC1gPL4nX35
- YV5+xcV+6YEOpBPL1jbSKsrgrzjArccx2zpUPkK/KXfpLRrv3uDX0yQyo1M0dMsQ93fr+9ogO7T
- TYJHEAJRw8YezxQSBaMpI6m3tkp0zn7od+1gq6aSRhiDDVUsHiTz/9c+JwYN6dCaSdw6PaTrpnK
- +SnC7IdpMjfKp0KtqW/HBVPitKcs+tFEy/iazkQOw=
-X-Received: by 2002:a17:907:7e8d:b0:a99:a18d:9793 with SMTP id
- a640c23a62f3a-a99b8775270mr270687066b.7.1728660763658; 
- Fri, 11 Oct 2024 08:32:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHryCFwHWbBC7X7Zb8eTdneHOdO6Pw4LqT82/31zgi+BTc7NwY/+0fysN1bk9KpABsSw9rm8A==
-X-Received: by 2002:a17:907:7e8d:b0:a99:a18d:9793 with SMTP id
- a640c23a62f3a-a99b8775270mr270684766b.7.1728660763172; 
- Fri, 11 Oct 2024 08:32:43 -0700 (PDT)
+ bh=dl6dcOfhmNp3NrxHyKacGU/S0XBvVsXoKUJy7DRsnQc=;
+ b=cSL7pknbJCnSBQLh8VUTUz/TZTryC+/KiFia0ansDCczw9V3F/IxlRXgpocrOsMf6r
+ jtj+nDbmhb7CdpZYsXC2XVRI/Kes1LRh9ZNMkBhxw/DWcCDQr1j903+SqAUVh6aNmwaA
+ rw+DMKx5YXss1XjJy9sUV2CTl2cyJtrKDIhYUEB2YSane5J4XkM2syRZuEP6xEYqPYMm
+ y7dxlj1w2Ey05NoPyvIYgcOK+5xQLWMxwcAI/vR8XuvGiXlcUj3mrj9Jwz+1Z0+TU2+p
+ KOLz3zxExzotF7DsikqgZtaTM92PkPJPT9T+Y+sLYwANYwG7FFTazRftxm4MgOQtT8Cr
+ VmcA==
+X-Gm-Message-State: AOJu0Ywr8IOi/TQWiMs+OCbSMuw8fmGCbAIP+X0slECAzBv4lVJJRaRM
+ 1XsCfcu70grJoAqhQ7uH73JOSW9/1C7JnyvLgHkdmPPHEu9k+uKuYTvdTr9Z49MHHYQnEq3oQW+
+ mpvrSoigUhbXh3bBmVrYf+DkbzntanFe17JSXSQSlSIAWn/vgQrZi0Je2CaCbsv/P5K19MHs+Vi
+ qgqdB9R0k2MVmtw5vpuOfKV/lVH8FfUUSCvs1n5IQ=
+X-Received: by 2002:a05:6402:26cf:b0:5c5:c059:63c6 with SMTP id
+ 4fb4d7f45d1cf-5c948c88336mr2251755a12.2.1728660806046; 
+ Fri, 11 Oct 2024 08:33:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSXtniGKImJ8V8RYL40QFNziA/aVy/eusWDt39Efn6WOwREBlD134jmzrQ7q8+f7lht8TzSw==
+X-Received: by 2002:a05:6402:26cf:b0:5c5:c059:63c6 with SMTP id
+ 4fb4d7f45d1cf-5c948c88336mr2251729a12.2.1728660805526; 
+ Fri, 11 Oct 2024 08:33:25 -0700 (PDT)
 Received: from avogadro.local ([151.81.124.37])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80bfabfsm221280266b.122.2024.10.11.08.32.42
+ 4fb4d7f45d1cf-5c9372ae701sm2012038a12.85.2024.10.11.08.33.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:32:42 -0700 (PDT)
+ Fri, 11 Oct 2024 08:33:22 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v3 02/18] build-sys: Add rust feature option
-Date: Fri, 11 Oct 2024 17:32:10 +0200
-Message-ID: <20241011153227.81770-3-pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PULL v3 12/18] meson: define qemu_isa_flags
+Date: Fri, 11 Oct 2024 17:32:20 +0200
+Message-ID: <20241011153227.81770-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
 References: <20241011153227.81770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,151 +106,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Create a separate variable for compiler flags that enable
+specific instruction set extensions, so that they can be used with
+cc.compiles/cc.links.
 
-Add rust feature in meson.build, configure, to prepare for adding Rust
-code in the followup commits.
+Note that -mfpmath=sse is a code generation option but it does not
+enable new instructions, therefore I did not make it part of
+qemu_isa_flags.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Link: https://lore.kernel.org/r/14642d80fbccbc60f7aa78b449a7deb5e2784ed9.1727961605.git.manos.pitsidianakis@linaro.org
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                   |  5 +++++
- meson.build                   | 22 +++++++++++++++++++++-
- Kconfig                       |  1 +
- Kconfig.host                  |  3 +++
- meson_options.txt             |  3 +++
- rust/Kconfig                  |  0
- scripts/meson-buildoptions.sh |  3 +++
- 7 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 rust/Kconfig
+ meson.build | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 72359066d39..fb3188c053e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4188,6 +4188,11 @@ F: docs/sphinx/
- F: docs/_templates/
- F: docs/devel/docs.rst
- 
-+Rust build system integration
-+M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+S: Maintained
-+F: rust/Kconfig
-+
- Miscellaneous
- -------------
- Performance Tools and Tests
 diff --git a/meson.build b/meson.build
-index e6a65463ff9..93ddaef500f 100644
+index 76335bb2a51..65ea45cef03 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -70,6 +70,19 @@ if host_os == 'darwin' and \
-   all_languages += ['objc']
-   objc = meson.get_compiler('objc')
+@@ -335,6 +335,10 @@ elif host_os == 'windows'
+   endif
  endif
-+have_rust = false
-+if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
-+  rustc = meson.get_compiler('rust')
-+  have_rust = true
-+  if rustc.version().version_compare('<1.80.0')
-+    if get_option('rust').enabled()
-+      error('rustc version ' + rustc.version() + ' is unsupported: Please upgrade to at least 1.80.0')
-+    else
-+      warning('rustc version ' + rustc.version() + ' is unsupported: Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
-+      have_rust = false
-+    endif
-+  endif
-+endif
  
- dtrace = not_found
- stap = not_found
-@@ -2158,6 +2171,7 @@ endif
- 
- config_host_data = configuration_data()
- 
-+config_host_data.set('CONFIG_HAVE_RUST', have_rust)
- audio_drivers_selected = []
- if have_system
-   audio_drivers_available = {
-@@ -3097,7 +3111,8 @@ host_kconfig = \
-   (host_os == 'linux' ? ['CONFIG_LINUX=y'] : []) + \
-   (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=y'] : []) + \
-   (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=y'] : []) + \
--  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : [])
-+  (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
-+  (have_rust ? ['CONFIG_HAVE_RUST=y'] : [])
- 
- ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
- 
-@@ -4308,6 +4323,11 @@ if 'objc' in all_languages
- else
-   summary_info += {'Objective-C compiler': false}
++# Choose instruction set (currently x86-only)
++
++qemu_isa_flags = []
++
+ # __sync_fetch_and_and requires at least -march=i486. Many toolchains
+ # use i686 as default anyway, but for those that don't, an explicit
+ # specification is necessary
+@@ -351,7 +355,7 @@ if host_arch == 'i386' and not cc.links('''
+     sfaa(&val);
+     return val;
+   }''')
+-  qemu_common_flags = ['-march=i486'] + qemu_common_flags
++  qemu_isa_flags += ['-march=i486']
  endif
-+summary_info += {'Rust support':      have_rust}
-+if have_rust
-+  summary_info += {'rustc version':      rustc.version()}
-+  summary_info += {'rustc':      ' '.join(rustc.cmd_array())}
-+endif
- option_cflags = (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') != 'plain'
-   option_cflags += ['-O' + get_option('optimization')]
-diff --git a/Kconfig b/Kconfig
-index fb6a24a2de8..63ca7f46df7 100644
---- a/Kconfig
-+++ b/Kconfig
-@@ -4,3 +4,4 @@ source accel/Kconfig
- source target/Kconfig
- source hw/Kconfig
- source semihosting/Kconfig
-+source rust/Kconfig
-diff --git a/Kconfig.host b/Kconfig.host
-index 17f405004b3..4ade7899d67 100644
---- a/Kconfig.host
-+++ b/Kconfig.host
-@@ -52,3 +52,6 @@ config VFIO_USER_SERVER_ALLOWED
  
- config HV_BALLOON_POSSIBLE
-     bool
-+
-+config HAVE_RUST
-+    bool
-diff --git a/meson_options.txt b/meson_options.txt
-index 5ee1d95c9ca..5a5c2300261 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -373,3 +373,6 @@ option('hexagon_idef_parser', type : 'boolean', value : true,
+ # Pick x86-64 baseline version
+@@ -367,29 +371,31 @@ if host_arch in ['i386', 'x86_64']
+     else
+       # present on basically all processors but technically not part of
+       # x86-64-v1, so only include -mneeded for x86-64 version 2 and above
+-      qemu_common_flags = ['-mcx16'] + qemu_common_flags
++      qemu_isa_flags += ['-mcx16']
+     endif
+   endif
+   if get_option('x86_version') >= '2'
+-    qemu_common_flags = ['-mpopcnt'] + qemu_common_flags
+-    qemu_common_flags = cc.get_supported_arguments('-mneeded') + qemu_common_flags
++    qemu_isa_flags += ['-mpopcnt']
++    qemu_isa_flags += cc.get_supported_arguments('-mneeded')
+   endif
+   if get_option('x86_version') >= '3'
+-    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
++    qemu_isa_flags += ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c']
+   endif
  
- option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value: '1',
-        description: 'tweak required x86_64 architecture version beyond compiler default')
+   # add required vector instruction set (each level implies those below)
+   if get_option('x86_version') == '1'
+-    qemu_common_flags = ['-msse2'] + qemu_common_flags
++    qemu_isa_flags += ['-msse2']
+   elif get_option('x86_version') == '2'
+-    qemu_common_flags = ['-msse4.2'] + qemu_common_flags
++    qemu_isa_flags += ['-msse4.2']
+   elif get_option('x86_version') == '3'
+-    qemu_common_flags = ['-mavx2'] + qemu_common_flags
++    qemu_isa_flags += ['-mavx2']
+   elif get_option('x86_version') == '4'
+-    qemu_common_flags = ['-mavx512f', '-mavx512bw', '-mavx512cd', '-mavx512dq', '-mavx512vl'] + qemu_common_flags
++    qemu_isa_flags += ['-mavx512f', '-mavx512bw', '-mavx512cd', '-mavx512dq', '-mavx512vl']
+   endif
+ endif
+ 
++qemu_common_flags = qemu_isa_flags + qemu_common_flags
 +
-+option('rust', type: 'feature', value: 'auto',
-+       description: 'Rust support')
-diff --git a/rust/Kconfig b/rust/Kconfig
-new file mode 100644
-index 00000000000..e69de29bb2d
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 3bee1c56df3..6d08605b771 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -172,6 +172,7 @@ meson_options_help() {
-   printf "%s\n" '  rbd             Ceph block device driver'
-   printf "%s\n" '  rdma            Enable RDMA-based migration'
-   printf "%s\n" '  replication     replication support'
-+  printf "%s\n" '  rust            Rust support'
-   printf "%s\n" '  rutabaga-gfx    rutabaga_gfx support'
-   printf "%s\n" '  sdl             SDL user interface'
-   printf "%s\n" '  sdl-image       SDL Image support for icons'
-@@ -456,6 +457,8 @@ _meson_option_parse() {
-     --disable-replication) printf "%s" -Dreplication=disabled ;;
-     --enable-rng-none) printf "%s" -Drng_none=true ;;
-     --disable-rng-none) printf "%s" -Drng_none=false ;;
-+    --enable-rust) printf "%s" -Drust=enabled ;;
-+    --disable-rust) printf "%s" -Drust=disabled ;;
-     --enable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=enabled ;;
-     --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=disabled ;;
-     --enable-safe-stack) printf "%s" -Dsafe_stack=true ;;
+ if get_option('prefer_static')
+   qemu_ldflags += get_option('b_pie') ? '-static-pie' : '-static'
+ endif
 -- 
 2.46.2
 
