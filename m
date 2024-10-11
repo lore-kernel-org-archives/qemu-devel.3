@@ -4,103 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0684ED0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA31D0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJSB-0008Kh-9F; Fri, 11 Oct 2024 13:29:31 -0400
+	id 1szJGd-0006UI-1q; Fri, 11 Oct 2024 13:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJRv-00089T-Ig
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:29:14 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1szJRu-0006FB-16
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:29:11 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ76-0003Vw-03
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFZo-0004Un-MQ
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:21:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728652864;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GVVahyK6aiG7rFiHC9ll3BUOZPbdp7wyzMUyWTHzn+g=;
+ b=Dz+SDplIro5CakysydjH5X2/fBhByZl7ZQQXqpimxhGmSEmS1CaUibdx0dBHWNQN/r/t93
+ 5psGo/ezX/Abgue470veaj/3bE+iIo+p0HvcLIfEIONa23JJKBIoixWBbuNCcPi00XenW6
+ a5fFl7Fv3lfmrqZzPrb/S5OVwIgoIVY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-eV-Y9c6hMQGPQRAkEQl6lg-1; Fri,
+ 11 Oct 2024 09:20:56 -0400
+X-MC-Unique: eV-Y9c6hMQGPQRAkEQl6lg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 514B521A9A;
- Fri, 11 Oct 2024 17:29:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728667748; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
- b=PK3HJlHQrBEtqG/Y1z3hb8yPKiWeVDCssHwnJeNCSSEEg/pCQHk1dKp5UrNnX6IANeM0WF
- fZy5PSc99C7GJF2NbiaTKb46DAfObMbBfc/sRA1aoC3pz1sqReD5t6CWUK2h5Gm4NxcqCm
- xit0nhdHSwENgfibMTE8S5P9x0lNSkg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728667748;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
- b=9GNvMTXXbyaj05YzkL6FX+sEsV0IYDNiXLkz45glfihoLIiGJ9oUdr2QtbbOUl43Q2luBT
- a6kZm4KKfV0nCUCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1728667747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
- b=Dd+c8bstOTnf7uRIYoHeDYPRnBEMDfzGR2MEW/AuH94W7jQRlra4W/zJGo3+nk7Ib24MaQ
- SpuIw1IARWtpcgami42lZKGNKk+i1aZZzcY5f0m9p9yo5aiE8ATq55fe0WLO4QkKXyALcr
- 7sr9bmdfFaF0lgUn3OFsk/TpdCKaTuU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1728667747;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=97rDNKO5Hkg7bspbSWVuqyDTVHtATm436zImSqKJ8WI=;
- b=MqdIOCIn7xHNGxWl0xdDuemQFjggG2hN/R9VqRTX5ngWqh9D6FJRZOZ3Xv86fGRXNOgO7J
- h9WLEo6BjOCV6aBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CBAEB1370C;
- Fri, 11 Oct 2024 17:29:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 3mOhJGJgCWfPSwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Oct 2024 17:29:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Yong Huang <yong.huang@smartx.com>, Hailiang Zhang
- <zhanghailiang@xfusion.com>
-Subject: Re: [PATCH] migration: Put thread names together with macros
-In-Reply-To: <20241011153652.517440-1-peterx@redhat.com>
-References: <20241011153652.517440-1-peterx@redhat.com>
-Date: Fri, 11 Oct 2024 14:29:04 -0300
-Message-ID: <87v7xyr1jz.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F3DF1955F44; Fri, 11 Oct 2024 13:20:52 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 496501955E7B; Fri, 11 Oct 2024 13:20:49 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 14/17] tests/functional: Convert the Avocado mips64el tuxrun
+ test
+Date: Fri, 11 Oct 2024 15:19:31 +0200
+Message-ID: <20241011131937.377223-15-thuth@redhat.com>
+In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
+References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,22 +87,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Move the test into a new file so that it can be run via
+qemu-system-mips64el in the functional framework.
 
-> Keep migration thread names together, so it's easier to see a list of all
-> possible migration threads.
->
-> Still two functional changes below besides the macro defintions:
->
->   - There's one dirty rate thread that we overlooked before, now we add
->   that too and name it as "mig/dirtyrate" following the old rules.
->
->   - The old name "mig/src/rp-thr" has "-thr" but it may not be useful if
->   it's a thread name anyway, while "rp" can be slightly hard to read.
->   Taking this chance to rename it to "mig/src/return", hopefully a better
->   name.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/tuxrun_baselines.py        | 16 -----------
+ tests/functional/meson.build             |  1 +
+ tests/functional/test_mips64el_tuxrun.py | 35 ++++++++++++++++++++++++
+ 3 files changed, 36 insertions(+), 16 deletions(-)
+ create mode 100755 tests/functional/test_mips64el_tuxrun.py
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index e0e6a56067..18dc7ddaab 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -192,22 +192,6 @@ def common_tuxrun(self,
+     #        --kernel https://storage.tuxboot.com/{TUXBOOT}/{IMAGE}
+     #
+ 
+-    def test_mips64el(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=machine:malta
+-        :avocado: tags=tuxboot:mips64el
+-        :avocado: tags=image:vmlinux
+-        :avocado: tags=root:sda
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = { "rootfs.ext4.zst" :
+-                 "fba585368f5915b1498ed081863474b2d7ec4e97cdd46d21bdcb2f9698f83de4",
+-                 "vmlinux" :
+-                 "d4e08965e2155c4cccce7c5f34d18fe34c636cda2f2c9844387d614950155266" }
+-
+-        self.common_tuxrun(csums=sums, drive="driver=ide-hd,bus=ide.0,unit=0")
+-
+     def test_ppc32(self):
+         """
+         :avocado: tags=arch:ppc
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index eef48edf52..48445edfab 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -108,6 +108,7 @@ tests_mips64el_system_thorough = [
+   'mips64el_fuloong2e',
+   'mips64el_loongson3v',
+   'mips64el_malta',
++  'mips64el_tuxrun',
+ ]
+ 
+ tests_or1k_system_thorough = [
+diff --git a/tests/functional/test_mips64el_tuxrun.py b/tests/functional/test_mips64el_tuxrun.py
+new file mode 100755
+index 0000000000..819549a27b
+--- /dev/null
++++ b/tests/functional/test_mips64el_tuxrun.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots known good tuxboot images the same way
++# that tuxrun (www.tuxrun.org) does. This tool is used by things like
++# the LKFT project to run regression tests on kernels.
++#
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import Asset
++from qemu_test.tuxruntest import TuxRunBaselineTest
++
++class TuxRunMips64ELTest(TuxRunBaselineTest):
++
++    ASSET_MIPS64EL_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/mips64el/vmlinux',
++        'd4e08965e2155c4cccce7c5f34d18fe34c636cda2f2c9844387d614950155266')
++    ASSET_MIPS64EL_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/mips64el/rootfs.ext4.zst',
++        'fba585368f5915b1498ed081863474b2d7ec4e97cdd46d21bdcb2f9698f83de4')
++
++    def test_mips64el(self):
++        self.set_machine('malta')
++        self.root="sda"
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_MIPS64EL_KERNEL,
++                           rootfs_asset=self.ASSET_MIPS64EL_ROOTFS,
++                           drive="driver=ide-hd,bus=ide.0,unit=0")
++
++if __name__ == '__main__':
++    TuxRunBaselineTest.main()
+-- 
+2.46.1
+
 
