@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37480CFD2E4
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D45CFD2E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szB7f-000351-0n; Fri, 11 Oct 2024 04:35:43 -0400
+	id 1szBMR-0005Hz-VO; Fri, 11 Oct 2024 04:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szB7c-00034o-Pr
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:35:40 -0400
+ id 1szBMR-0005Ho-2C
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:50:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szB7a-0005gB-UO
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:35:40 -0400
+ id 1szBMP-0007Vq-72
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728635737;
+ s=mimecast20190719; t=1728636655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=G5kIcRFA38/+mHvsnhBT5k4Ky00HLdTEYJyCgu1xduY=;
- b=fPMNmDUh6nwa1/o1ZFZqKbqfW+Qi3yNqeriYxF6OnPCnKvA+Di/quLaJSasZmDbnUvJW83
- QGFJIbNaC3fPuF4RrHI82N9HFau/o5L/63dXmHRuyGJBJSo5dpiphl47/79FNzzddPoDKP
- nki96BuE/dSOnwRGkZDW8swsbwHsrrY=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OgoG8JgwXVz3g5onUJt7t2xCU8/TZqbsVMYU5eI+0xg=;
+ b=St3/cJc6Oeuet2VfyZYn2WtXPusNmTzN7u8EbXOajotMYQ+SMtAK9KWvJjZTpRRfKu+WfP
+ CSMgWTQrsdenvR9RWBVfalewToxy22vWq/nfBqRtwdHHTE9Z0cPSaMg7LPwTIswssmULGL
+ rxDPhMqTPyCEg5K1uNMzD72mW3X/igE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-K8Eo9QKmPTmD8AXQlk6-0g-1; Fri, 11 Oct 2024 04:35:36 -0400
-X-MC-Unique: K8Eo9QKmPTmD8AXQlk6-0g-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5c92ad674aeso1248594a12.3
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:35:36 -0700 (PDT)
+ us-mta-408-WraLTEzSPi2r8HX8yB2eRA-1; Fri, 11 Oct 2024 04:50:52 -0400
+X-MC-Unique: WraLTEzSPi2r8HX8yB2eRA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a995c3a984dso143433266b.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:50:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728635734; x=1729240534;
+ d=1e100.net; s=20230601; t=1728636650; x=1729241450;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=G5kIcRFA38/+mHvsnhBT5k4Ky00HLdTEYJyCgu1xduY=;
- b=oe1qaTxEmfzG35kLoAsrG5AD/0wglExUZIkhgADknzQftAPxx6CSuzDtOpSSLmSRIh
- ClkbCrhSaB5RHn7bKuNfQ+tWKzfJF/4Qv6SxBD+zNhUBZO6o5GW3Ij0Q/PFyN5lJ9FcO
- Q62OPgrgRisp8V5RoEp7QlvaQ3ZPfntF+lgKqoTewp3ANIkysJUb3Vp4Wc7RAMD9fide
- g/G0/a91whMZFzqUe5Y7RhuRuv+l/EDnitD0J3VvkmqIOrFyOHDGFBZvkY6hL+fHj0tC
- uYir7h6ucZNJy9IpVOAFM1CjA3/wHDjVhKbRlonpX5o1iF+xiydhnBlSIIRMCaVY1Sa+
- b/uA==
-X-Gm-Message-State: AOJu0Yw9lW9SsXguGFhyQE5HT3Yb7y7o/GrJ5Dp4yr7hjUEWbmVVGQ1h
- +7WITPT+L99c4lOOzaj3LGCmvaubYI53xjGNP+2pZOldW0rxkOHjxcj5j2Vv9gYBOlKhwxEv/pZ
- RBnyXkivwzsJzAEMtPdksv35am69gssRVdiddBa1g75q0JaPihIK8V8x3CZ3+v2hgCVqnchUuUr
- VhZ70V2n8tA5MX4/a21OFTlqsuVpPILWaNIsRVMNM=
-X-Received: by 2002:a05:6402:4347:b0:5c9:5665:8df5 with SMTP id
- 4fb4d7f45d1cf-5c95665905amr79660a12.34.1728635734510; 
- Fri, 11 Oct 2024 01:35:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOya3Y0Hc/cyLMozmr0l3wDKaqCclQoNEvU3D3tVF/gkpyoebJoWWEVJaKn3SbfNL+wpG57g==
-X-Received: by 2002:a05:6402:4347:b0:5c9:5665:8df5 with SMTP id
- 4fb4d7f45d1cf-5c95665905amr79643a12.34.1728635733976; 
- Fri, 11 Oct 2024 01:35:33 -0700 (PDT)
+ bh=OgoG8JgwXVz3g5onUJt7t2xCU8/TZqbsVMYU5eI+0xg=;
+ b=h/uN02jXvBr645mVSgLr0NiEvv7e3DIFCKaCNRZZuUgVn8kl9bVRVc9yQjqMeJrvK9
+ FLMjg/6dOdyBrD808fqGk2wmwPNw3R9JygFjU0PZddWkXiQRvZ+mUy7wbQYIBmloF0DX
+ 0y/31wvVVy+A7xfAEcEMfn2IK8ogDyz5yv4vLACo4VxEI5ArLxY6pFZuqGHZaIMdyTl+
+ tAmkYJkjL7Cekr2J3A5T2nm1dtl82Ycj+hkv3YIv2oLsrYmpX+xgBQB9jAXynF6VzStt
+ XiQVt+DzIfq3YnJeDy9fu+p4tPgeYAbYNS4vmF82zECPhfB2QyVxE3PifG0V95ARNTlR
+ iAjQ==
+X-Gm-Message-State: AOJu0Yz8bFn2V5mJUkvUsytE+KRyE2S+E0Vp+cURHOr+DPxY8w5JVB7j
+ z37//KYj6vaR8mAtS080Vf9SUb+wToAwqvtDefp7gFb95WgdvmNQ8PkXIWz/fKxy31UIrbH57Z1
+ 1mpZ68nRjcOC6AKzTJkawezdHab2ZskQ8oIlxQptoOSvUkONFRWC8GwpMxT6yr0T6pSuOT5kCEO
+ jwxlli/oWaRHbzWzSpxXpMF2eDyenG/dnSFzRT2OM=
+X-Received: by 2002:a17:907:7206:b0:a99:541d:8c0f with SMTP id
+ a640c23a62f3a-a99b95a75bfmr178047666b.40.1728636650130; 
+ Fri, 11 Oct 2024 01:50:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7ZFks3chAlBPSldxIxbug+c1ERI2T4l0tpED7r7o3PFXe6muTfPGe3lqHeIg0cHnnOfAJgg==
+X-Received: by 2002:a17:907:7206:b0:a99:541d:8c0f with SMTP id
+ a640c23a62f3a-a99b95a75bfmr178028566b.40.1728636645600; 
+ Fri, 11 Oct 2024 01:50:45 -0700 (PDT)
 Received: from avogadro.local ([151.81.124.37])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c937263299sm1682535a12.77.2024.10.11.01.35.33
+ a640c23a62f3a-a99a80dcd03sm190412966b.174.2024.10.11.01.50.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 01:35:33 -0700 (PDT)
+ Fri, 11 Oct 2024 01:50:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH v2] scripts/archive-source: find directory name for subprojects
-Date: Fri, 11 Oct 2024 10:35:32 +0200
-Message-ID: <20241011083532.15023-1-pbonzini@redhat.com>
+Cc: Tom Dohrmann <erbse.13@gmx.de>
+Subject: [PATCH] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
+Date: Fri, 11 Oct 2024 10:50:44 +0200
+Message-ID: <20241011085044.19004-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -99,62 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rust subprojects have the semantic version (followed by -rs) in the subproject
-name, but the full version (without -rs) is used by crates.io for the root
-directory of the tarball.  Teach scripts/archive-source.sh to look for the
-root directory name in wrap files.
+From: Tom Dohrmann <erbse.13@gmx.de>
 
+KVM_CAP_READONLY_MEM used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, this extension is not
+always available on all VM types [1,2].
+
+Query the extension on the VM level instead of on the KVM level.
+
+[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-2-seanjc@google.com/
+[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-1-erbse.13@gmx.de/
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
+Link: https://lore.kernel.org/r/20240903062953.3926498-1-erbse.13@gmx.de
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
-v1->v2:
-- put local dir on separate line
-- use :- to print default even if $dir is empty
-- use error function and invert "if test -f" condition
-- simplify sed script to avoid jumps
+ accel/kvm/kvm-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- scripts/archive-source.sh | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 65af8063e4b..3f9c51ce2cb 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -48,13 +48,34 @@ function tree_ish() {
-     echo "$retval"
- }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 482c5b24cf6..801cff16a5a 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2683,7 +2683,7 @@ static int kvm_init(MachineState *ms)
+     }
  
-+function subproject_dir() {
-+    if test ! -f "subprojects/$1.wrap"; then
-+      error "scripts/archive-source.sh should only process wrap subprojects"
-+    fi
-+
-+    # Print the directory key of the wrap file, defaulting to the
-+    # subproject name.  The wrap file is in ini format and should
-+    # have a single section only.  There should be only one section
-+    # named "[wrap-*]", which helps keeping the script simple.
-+    local dir
-+    dir=$(sed -n \
-+      -e '/^\[wrap-[a-z][a-z]*\]$/,/^\[/{' \
-+      -e    '/^directory *= */!b' \
-+      -e    's///p' \
-+      -e    'q' \
-+      -e '}' \
-+      "subprojects/$1.wrap")
-+
-+    echo "${dir:-$1}"
-+}
-+
- git archive --format tar "$(tree_ish)" > "$tar_file"
- test $? -ne 0 && error "failed to archive qemu"
+     kvm_readonly_mem_allowed =
+-        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
++        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
  
- for sp in $subprojects; do
-     meson subprojects download $sp
-     test $? -ne 0 && error "failed to download subproject $sp"
--    tar --append --file "$tar_file" --exclude=.git subprojects/$sp
-+    tar --append --file "$tar_file" --exclude=.git subprojects/"$(subproject_dir $sp)"
-     test $? -ne 0 && error "failed to append subproject $sp to $tar_file"
- done
- exit 0
+     kvm_resamplefds_allowed =
+         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
 -- 
 2.46.2
 
