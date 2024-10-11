@@ -4,61 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E30CFD2FD
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 09:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A44CCFD2FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 09:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szBcK-0001hZ-GW; Fri, 11 Oct 2024 05:07:24 -0400
+	id 1szBe0-0002Gr-Rj; Fri, 11 Oct 2024 05:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1szBcH-0001hB-Uh
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 05:07:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szBdv-0002Fo-4t
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 05:09:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1szBcE-0001Ji-4M
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 05:07:21 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szBdt-0001TL-2U
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 05:09:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728637636;
+ s=mimecast20190719; t=1728637740;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=WEYCaYfe9yg7amMWdOmkXI0AsPzyBuohYqzNg8hUGAQ=;
- b=I11DijoMz4EtGJuCXC7IA1ChUuKWfJgaQ5WqcO/pQHQk26s5+Nl/dXJMl8MxUcjWTJjDLm
- ZM5r0vaS2xkgJxaWQV2db5vp21BUgSjrSSSGr4tDUuq4LDRpSyP21Yn9k9JfAhWEAar4yB
- xycxR3qn81vXGowcHE2GxzMfu6k03yg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-09dnO1OJP5qveUOHVaCmCA-1; Fri,
- 11 Oct 2024 05:07:12 -0400
-X-MC-Unique: 09dnO1OJP5qveUOHVaCmCA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 835CF1955D4D; Fri, 11 Oct 2024 09:07:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.47])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC2AC19560AA; Fri, 11 Oct 2024 09:07:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C0CFA21E6A28; Fri, 11 Oct 2024 11:07:07 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>,
- John Snow <jsnow@redhat.com>, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Better QAPI/QOM integration
-Date: Fri, 11 Oct 2024 11:07:07 +0200
-Message-ID: <87wmif9fes.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mAZXKd3ptVRM3rVAai4OTgdpOM9cZHdmARW8utAHs1g=;
+ b=ZHUNFko4opmPrSntMzZzxINslZC/dDI+EF5IZe56xu7tztLC5KiVs0iXtjo8TrxiJg4dwR
+ 5ONl6T0Bg328HvpuVam+UgeMYP8TTAe03fiXnHRGV9DaPgMr3fODMyzeBR37EzgmGrOiUi
+ Oj+YO6RMz9kjfQW6eoReQI9fL2ehxuU=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-4HwcvkrNNjuSA0FDLSQkYg-1; Fri, 11 Oct 2024 05:08:52 -0400
+X-MC-Unique: 4HwcvkrNNjuSA0FDLSQkYg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a9942ef051eso71590766b.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 02:08:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728637731; x=1729242531;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mAZXKd3ptVRM3rVAai4OTgdpOM9cZHdmARW8utAHs1g=;
+ b=qUjPaYcNooe2YklkGcQmUAz9Br3mKp/kswKtbFOh9GXkNJFHIp+gdQgi2MEWOwbu3B
+ NucVeOkPo5eUhGkAwdkgt8+qp08r6NLBr0j85z0ttEIwytsLJRG+YhLcdiTVIj/qUL03
+ dtHuZzortvt3mZTxXJSUtfnL93dtF6hs1wVMQ543UiMtRa2BQd1m4E9FKXdf4l5itQmj
+ HW51r00FZ1KGI3dC8gsRTCnw8WTazqfxAnrLkh3uhr6XTv/MrjGf7ZBE4mXP/q/vQ5au
+ 9MX+UUOmB2S59hAzgc1rvgK4GXW3WC7djUHSpGKuFLovbw0wxKNxCzMPrhrtFZfbfRJQ
+ T4Tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQUplLqX7jRqwXDBCBtkdWkxWaQFetVrazLsznekjKCuEUADQFlaO9p1+p8u8iafgR++A0Kfp2sNJc@nongnu.org
+X-Gm-Message-State: AOJu0YxmsRBOZgBlOBa/It0zQRS3rGk1OECHS+sMcXbCxrOKhVJepccV
+ a6aVYWZJlSguXREEsxvV1toTVj060VqGXvILZWNrbotXdcPxADWdmXOMoGjGvWVILI1k3UkF9ge
+ D0ibdwCVAQmxQfs5AWqi72rzqO1sYd+oloUHYF61Nr0lBYA4xpYrr
+X-Received: by 2002:a05:6402:234c:b0:5c8:967d:cf47 with SMTP id
+ 4fb4d7f45d1cf-5c948ccf321mr1690276a12.19.1728637731601; 
+ Fri, 11 Oct 2024 02:08:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHegWwMgDt5sgEoVygc4k3pN5rizfNsf46uL4QVEGEd4XkiLipUOG1L1lQqIYTB12BhP9cqUg==
+X-Received: by 2002:a05:6402:234c:b0:5c8:967d:cf47 with SMTP id
+ 4fb4d7f45d1cf-5c948ccf321mr1690254a12.19.1728637731189; 
+ Fri, 11 Oct 2024 02:08:51 -0700 (PDT)
+Received: from [192.168.10.81] ([151.81.124.37])
+ by smtp.googlemail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5c9372940e3sm1724178a12.81.2024.10.11.02.08.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Oct 2024 02:08:50 -0700 (PDT)
+Message-ID: <2a543dd0-11e7-4357-97d9-31979a1a87ff@redhat.com>
+Date: Fri, 11 Oct 2024 11:08:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] sched_attr: Do not define for glibc >= 2.41
+To: Khem Raj <raj.khem@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20241011054806.1014276-1-raj.khem@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241011054806.1014276-1-raj.khem@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,207 +141,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This memo is heavily indebted to Kevin Wolf.  Its mistakes, however, are
-mine.
+On 10/11/24 07:48, Khem Raj wrote:
+> glibc 2.41+ has added [1] definitions for sched_setattr and sched_getattr functions
+> and struct sched_attr. Therefore, it needs to be checked for here as well before
+> defining sched_attr
+> 
+> Fixes builds with glibc/trunk
+> 
+> [1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=21571ca0d70302909cf72707b2a7736cf12190a0;hp=298bc488fdc047da37482f4003023cb9adef78f8
+> 
+> Signed-off-by: Khem Raj <raj.khem@gmail.com>
+> Cc: Laurent Vivier <laurent@vivier.eu> (m
 
-= Critique of current state =
+Hi, I think it would be better to test in meson.build (with 
+cc.has_type), as is already done in several other places in 
+linux-user/syscall.c.
 
-1. QOM properties serve several purposes: initial configuration
-(external interface), run time control and monitoring (external
-interface), and internal purposes like versioning.  Which purpose(s) a
-property serves is often unclear.  Documentation of the external
-interfaces is for the most part poor to nonexistent.
+Thanks,
 
-2. QOM properties get created in handwritten C code.  Creation can
-depend on state, typically other properties.  This makes QOM
-introspection problematic.  It also leads to (commonly undocumented)
-restrictions like "must set property X before property Y".
+Paolo
 
-3. QOM introspection uses a primitive, under-documented type system that
-is weakly connected to QAPI via names: when qom-list-properties reports
-a property's type as "T", and "T" is also the name of a QAPI type, then
-the property's type is probably that QAPI type.  This is not documented.
-
-4. QOM doesn't define a life cycle.  Various classes define one of the
-form create - set configuration properties - configuration done -
-operate.  Variations of "configuration done": realize() for DeviceClass,
-complete() for UserCreatableClass, possibly more via
-machine_init_done_notifiers.
-
-5. There are two external interfaces for object creation: one for the
-subtypes of DeviceClass (QMP: device_add), and one for objects providing
-interface UserCreatableClass (QMP: object-add).  The former still
-bypasses the QAPI type system.  The latter defines the configuration
-interface in the QAPI schema, enabling QAPI introspection.  Properties
-used for initial configuration need to be specified twice: once in
-handwritten C, and once in the QAPI schema.  Additionally, the type
-needs to me made user creatable: once in handwritten C (put
-TYPE_USER_CREATABLE into .interface), and twice in the QAPI schema (enum
-ObjectType, union ObjectOptions).  Bothersome, and risks inconsistency.
-Doing DeviceClass the same way feels unappealing due to the sheer number
-of devices and properties.
-
-6. We convert configuration data back and forth.
-
-   QMP/JSON-text
-       |
-       |  JSON parser
-       v
-   QMP/QObject
-       |
-       |  QObject input visitor
-       v
-   ObjectOptions
-       |
-       |  QObject output visitor
-       v
-    QObject
-       |
-       |  convert & delete members "qom-type" and "id"
-       v
-     QDict
-       |
-       |  qobject_input_visitor_new()
-       v
-   same wrapped in QObject input visitor
-       |
-       |  for all members: set property
-       v
-   configuration data in the object
-
-7. QAPI uses IDs to refer to things.  For QOM things, it also uses QOM
-paths.  Both are of QAPI type 'str'; what is being references is not
-expressed in the schema, only in documentation (hopefully).  QOM does
-this better: link<T>.
-
-
-= Goals =
-
-Addressing all of the above in one go is not feasible.  Smaller steps
-are.  Here's one: specify the configuration interface in the QAPI schema
-instead of burying it in handwritten C code.
-
-For subclasses of DeviceClass, the configuration moves from C code to
-the QAPI schema.
-
-For classes providing interface UserCreatableClass, handwritten C code
-duplicating QAPI schema definitions goes away.
-
-Properties that are just for configuration are not created in C anymore.
-If needed, QAPI-generated code could create them (read-only).
-
-Introspection of object-add remains unchanged.
-
-Introspection of device_add becomes possible.
-
-
-= Proposal =
-
-Kevin posted RFC patches that work towards the goals above:
-
-    Subject: [RFC PATCH 00/12] QOM/QAPI integration part 1
-    Date: Wed, 3 Nov 2021 18:29:50 +0100
-    Message-Id: <20211103173002.209906-1-kwolf@redhat.com>
-    https://lore.kernel.org/qemu-devel/20211103173002.209906-1-kwolf@redhat.com/
-
-Aside: yes, it's been a while.  At the time, I didn't get how this
-works, and why it's good.  Later I did (with Kevin's patient help), but
-had doubts on whether the benefits justify the investment.  Since then,
-I've seen potential benefits in various contexts, and I've come around.
-
-The QAPI schema has QAPI type definitions ("enum", "struct", "union",
-"alternate"), and QMP definitions ("command", "event").
-
-The QMP definitions use QAPI types.  For convenience, they can define
-QAPI types implicitly in places (e.g. with "data", but not with
-"returns".  The code generated for QMP is mostly about marshaling
-(command and event argument value) and unmarshaling (command return
-value).
-
-Kevin proposes to add a QOM definition "class".  As for QMP definitions,
-"class" uses QAPI types (possibly defined implicitly), and the generated
-code is mostly about unmarshaling (instance configuration value).
-
-Syntax:
-
-    CLASS = { 'class': STRING,
-              'parent': STRING,
-              (
-              '*config': ( MEMBERS | STRING ),
-              |
-              'config': STRING,
-              'config-boxed': true,
-              )
-              '*if': COND,
-              '*features': FEATURES }
-
-The value of @class is the name of the QOM class.
-
-@parent is the name of the QOM parent class.
-
-@if and @features work as usual.
-
-@config and @config-boxed work like command's @data and @boxed: they
-specify the arguments of a (handwritten) C function.  For a command,
-that's qmp_COMMAND_NAME(), for a class, it's CLASS_NAME_config().
-
-If you embed a boxed argument type in the state struct,
-CLASS_NAME_config() can be as simple as
-
-    static bool CLASS_NAME_config(Object *obj, CLASS_NAME_Options *cfg,
-                                  Error **errp)
-    {
-        obj->cfg = *cfg;
-        return true;
-    }
-
-"class" implicitly defines a QAPI type 'qom-config:CLASS-NAME' to hold
-its instance configuration, i.e. the product type of the class's @config
-with its parent class's 'qom-config:PARENT-NAME'.  This is for use in
-object-add's argument type ObjectOptions, and later in device-add's
-QAPIfied argument type.
-
-As long as we define the argument type of instance creation commands
-like object-add manually in the QAPI schema, we need the instance
-configuration to be a QAPI type.  Use of a name prefix like 'qom-config:
-has no precedence in QAPI.  Better ideas welcome.
-
-We could perhaps keep the type out of QAPI if we generated some more.
-Whether that's worthwhile is unclear.
-
-QOM classes provide a new method .instance_config() that consume their
-instance configuration.  qmp_object_add() has to shunt configuration
-data from ObjectOptions to the .instance_config() involved, i.e. the
-class's and all its parents'.  Employs visitor wizardry.
-
-Incremental QAPIfication of QOM instance configuration makes this
-somewhat hairy.  Support for unconverted parent classes in particular:
-first, the .instance_config consume their arguments from the visitor,
-then what's left in the visitor gets consumed the old-fashioned way with
-object_property_set().
-
-
-= Check against critique of current state =
-
-1. Configuration is now clearly separate from other QOM properties: it's
-in the QAPI schema.
-
-2. Configuration is now compile-time static: it's in the QAPI schema.
-Restrictions like "must set property X before property Y" are no longer
-possible.  Introspection is reliably complete.
-
-3. The weakness of QOM introspection no longer matters, since we can use
-query-qmp-schema instead.
-
-4. Life cycle is out of scope.
-
-5. Duplication around object-add is reduced (we drop the handwritten C
-code), but not yet eliminated (we still need to add to both ObjectType
-and ObjectOptions in the schema).  Further work seems desirable there,
-and might be necessary to make full QAPIfication of device_add
-practical.  We have more than 2000 devices...
-
-6. We still convert configuration data back and forth.  I figure we
-can't get rid of that as long as we need visitor wizardry.
+> ---
+>   linux-user/syscall.c | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 1354e75694..9e6eebbf1a 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -359,7 +359,13 @@ _syscall3(int, sys_sched_getaffinity, pid_t, pid, unsigned int, len,
+>   #define __NR_sys_sched_setaffinity __NR_sched_setaffinity
+>   _syscall3(int, sys_sched_setaffinity, pid_t, pid, unsigned int, len,
+>             unsigned long *, user_mask_ptr);
+> -/* sched_attr is not defined in glibc */
+> +/* sched_attr is not defined in glibc < 2.41 */
+> +#include <stdio.h>
+> +
+> +#if defined(__GLIBC__) && defined(__GLIBC_MINOR__)
+> +# if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 41)
+> +    /* do nothing */
+> +# else
+>   struct sched_attr {
+>       uint32_t size;
+>       uint32_t sched_policy;
+> @@ -372,6 +378,8 @@ struct sched_attr {
+>       uint32_t sched_util_min;
+>       uint32_t sched_util_max;
+>   };
+> +# endif
+> +#endif
+>   #define __NR_sys_sched_getattr __NR_sched_getattr
+>   _syscall4(int, sys_sched_getattr, pid_t, pid, struct sched_attr *, attr,
+>             unsigned int, size, unsigned int, flags);
+> 
+> 
 
 
