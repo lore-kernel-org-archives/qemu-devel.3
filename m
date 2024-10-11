@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A13AD24469
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 03:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A850BD24463
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 03:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz6CL-0001pa-EA; Thu, 10 Oct 2024 23:20:13 -0400
+	id 1sz6FM-0004zS-5n; Thu, 10 Oct 2024 23:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CJ-0001oG-9J
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CG-0002nE-SN
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728616808;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GMfIQhe17p2ivo5PbtzSl9PDX/c5D9ZRqiDdt6z+ru4=;
- b=NY0E3FR1GFcnlKs42gJrsORegY9GzHuLSw6ePwJnaT44uANnjLXdmfUIYRxFlnCN9I6wE6
- g8XIE1PF2HRtnWS5eJsgo6sCoK1AYuO8U4UT6mGyi6U+AvUygtgngHVvwASpHFR/JyHRnt
- 1ExUTNOE5AvTmIrkTTXF0oVuVDbk+Io=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-qyd83dGJNMuzVPau9pt3vw-1; Thu,
- 10 Oct 2024 23:20:04 -0400
-X-MC-Unique: qyd83dGJNMuzVPau9pt3vw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0141119560B0; Fri, 11 Oct 2024 03:20:04 +0000 (UTC)
-Received: from fedora.nay.redhat.com (unknown [10.66.57.68])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34F191956089; Fri, 11 Oct 2024 03:19:59 +0000 (UTC)
-From: Dehan Meng <demeng@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: demeng@redhat.com, kkostiuk@redhat.com, michael.roth@amd.com,
- peter.maydell@linaro.org
-Subject: [PATCH v2 4/4] For correcting code style: Variable declarations moved
- to the beginning of blocks Followed the coding style of using snake_case for
- variable names. And merged redundant route and networkroute variables.
-Date: Fri, 11 Oct 2024 11:19:37 +0800
-Message-Id: <20241011031937.92216-5-demeng@redhat.com>
-In-Reply-To: <20241011031937.92216-1-demeng@redhat.com>
-References: <20241011031937.92216-1-demeng@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sz6FK-0004z7-Ht; Thu, 10 Oct 2024 23:23:18 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sz6FF-0002y5-Gv; Thu, 10 Oct 2024 23:23:18 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-84fdb038aaaso230312241.3; 
+ Thu, 10 Oct 2024 20:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1728616992; x=1729221792; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/Kmn639IsS4UYWYBUd0KXRR5/POzdf7Mg6P0434qjJA=;
+ b=PdLDZqZreewWoueigI6Ak+58+gIewED/4qSNyyiWG1m5dHYNJXDCYHNw+Y8fl3VnIB
+ GqRR3kiXIz6UY+o5mRlwA0hPHe4NEWWsQqRjAXfgxmbh/NYCPdwAk0eYSoYqVvq7Ad1U
+ iwbR0tboB8fxlU6PUNY8+Xy5F/XvQaLlvox4LRjqN4Q9/IHUout3/v+iWqBBXeBrMXiL
+ QEvVSM8iy5YFGQ3OgmPxONB/b92iUsVz4xKPNi3QbORJaSLLg4eHYASJV/NzfeYqzCl+
+ HkKvOUJ6YphJnR5XBL3SOVXX8rOpj9XMJ6x7juEga0Q2koRmgODJLIn2n0nIgwUnhwBH
+ ng0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728616992; x=1729221792;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/Kmn639IsS4UYWYBUd0KXRR5/POzdf7Mg6P0434qjJA=;
+ b=r8ZqgRXtlcA5hP4Jv5DquwmBCOK+M5AgsJ499vHUUl7AS+UK7al1GAepKY0F/U5gMG
+ JuLEkx35CqwJZvmHvNvDdHPjWCgf5M7MZvRrDpeuaQcEjk7AyRECS/cG3S8S7ySWayeu
+ 752mRfTHDlhT29owDgseM7LHUjB93pr0gkfkwRiCrbkQWbV98J0cLkfRRT877YPwnhim
+ EAFba7vELVeU8bWHiSqOishzpVX7NVTZpvK5mnJHli06P30MfnFsLazWmKqOW7vSoWuf
+ PADqMuf0YAPLSAIOZsrGaEe2TS36/ma27geyJuUlcDqhYHeoZ7Z0/jEb0zTJpmNtKabB
+ vhQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHf7YvpEJWje209EFm8ILSlu3d3FFSirshAGxC1Es7jLkb23ipCA4RtcPaKKvJJRe9zpSjMZMt3s9W@nongnu.org
+X-Gm-Message-State: AOJu0YyW7fv2PyLpwyF3eNHFhoXC6VxfbGZJt4IjHWlQTY54oQKaePP4
+ Ys4aNZt2GQMLMelgA5xsWEOMQ5bP+CL4EIcFdJma5eINCbgKLntPrcG9UDYAt6cqr+XLV2Z5cSw
+ QOUSFDm6YTBOBRmL4G8xs7Pd2fbM=
+X-Google-Smtp-Source: AGHT+IGiN2cZOm2ng5DYaBlB/kO87lNEeW6xpxxlOl8wEwfbUr5mnihLdXVHe1ALSQzoo6YFsVU6vZT/mG7U9JhfOR0=
+X-Received: by 2002:a05:6102:3051:b0:4a3:d4bd:257a with SMTP id
+ ada2fe7eead31-4a465a4e8ddmr742847137.23.1728616991626; Thu, 10 Oct 2024
+ 20:23:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240925115808.77874-1-cleger@rivosinc.com>
+ <20240925115808.77874-4-cleger@rivosinc.com>
+In-Reply-To: <20240925115808.77874-4-cleger@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 11 Oct 2024 13:22:45 +1000
+Message-ID: <CAKmqyKNYJjudgxA6z4dF5AP31NFn3ZOePMadjiVumja29oti5w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] target/riscv: Implement Ssdbltrp exception handling
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,174 +96,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Dehan Meng <demeng@redhat.com>
----
- qga/commands-linux.c | 116 ++++++++++++++++++++-----------------------
- 1 file changed, 53 insertions(+), 63 deletions(-)
+On Wed, Sep 25, 2024 at 9:59=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@riv=
+osinc.com> wrote:
+>
+> When the Ssdbltrp ISA extension is enabled, if a trap happens in S-mode
+> while SSTATUS.SDT isn't cleared, generate a double trap exception to
+> M-mode.
+>
+> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
+> ---
+>  target/riscv/cpu.c        |  2 +-
+>  target/riscv/cpu_bits.h   |  1 +
+>  target/riscv/cpu_helper.c | 47 ++++++++++++++++++++++++++++++++++-----
+>  3 files changed, 43 insertions(+), 7 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index cf06cd741a..65347ccd5a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -284,7 +284,7 @@ static const char * const riscv_excp_names[] =3D {
+>      "load_page_fault",
+>      "reserved",
+>      "store_page_fault",
+> -    "reserved",
+> +    "double_trap",
+>      "reserved",
+>      "reserved",
+>      "reserved",
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index 3a5588d4df..5557a86348 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -699,6 +699,7 @@ typedef enum RISCVException {
+>      RISCV_EXCP_INST_PAGE_FAULT =3D 0xc, /* since: priv-1.10.0 */
+>      RISCV_EXCP_LOAD_PAGE_FAULT =3D 0xd, /* since: priv-1.10.0 */
+>      RISCV_EXCP_STORE_PAGE_FAULT =3D 0xf, /* since: priv-1.10.0 */
+> +    RISCV_EXCP_DOUBLE_TRAP =3D 0x10,
+>      RISCV_EXCP_SW_CHECK =3D 0x12, /* since: priv-1.13.0 */
+>      RISCV_EXCP_HW_ERR =3D 0x13, /* since: priv-1.13.0 */
+>      RISCV_EXCP_INST_GUEST_PAGE_FAULT =3D 0x14,
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 395d8235ce..69da3c3384 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -575,7 +575,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *en=
+v)
+>          mstatus_mask |=3D MSTATUS_FS;
+>      }
+>      bool current_virt =3D env->virt_enabled;
+> -
+> +    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
+> +        mstatus_mask |=3D MSTATUS_SDT;
+> +    }
+>      g_assert(riscv_has_ext(env, RVH));
+>
+>      if (current_virt) {
+> @@ -1707,6 +1709,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      CPURISCVState *env =3D &cpu->env;
+>      bool virt =3D env->virt_enabled;
+>      bool write_gva =3D false;
+> +    bool vsmode_exc;
+>      uint64_t s;
+>      int mode;
+>
+> @@ -1721,6 +1724,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>          !(env->mip & (1 << cause));
+>      bool vs_injected =3D env->hvip & (1 << cause) & env->hvien &&
+>          !(env->mip & (1 << cause));
+> +    bool smode_double_trap =3D false;
+> +    uint64_t hdeleg =3D async ? env->hideleg : env->hedeleg;
+>      target_ulong tval =3D 0;
+>      target_ulong tinst =3D 0;
+>      target_ulong htval =3D 0;
+> @@ -1837,13 +1842,35 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>                  !async &&
+>                  mode =3D=3D PRV_M;
+>
+> +    vsmode_exc =3D env->virt_enabled && (((hdeleg >> cause) & 1) || vs_i=
+njected);
+> +    /*
+> +     * Check double trap condition only if already in S-mode and targeti=
+ng
+> +     * S-mode
+> +     */
+> +    if (cpu->cfg.ext_ssdbltrp && env->priv =3D=3D PRV_S && mode =3D=3D P=
+RV_S) {
+> +        bool dte =3D (env->menvcfg & MENVCFG_DTE) !=3D 0;
+> +        bool sdt =3D (env->mstatus & MSTATUS_SDT) !=3D 0;
+> +        /* In VS or HS */
+> +        if (riscv_has_ext(env, RVH)) {
+> +            if (vsmode_exc) {
+> +                /* VS -> VS */
+> +                /* Stay in VS mode, use henvcfg instead of menvcfg*/
+> +                dte =3D (env->henvcfg & HENVCFG_DTE) !=3D 0;
+> +            } else if (env->virt_enabled) {
+> +                /* VS -> HS */
+> +                dte =3D false;
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 4f0e38be81..c6cca630ef 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -2094,12 +2094,12 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
-     return head;
- }
- 
--static char *hexToIPAddress(const void *hexValue, int is_ipv6)
-+static char *hex_to_ip_address(const void *hex_value, int is_ipv6)
- {
-     if (is_ipv6) {
-         char addr[INET6_ADDRSTRLEN];
-         struct in6_addr in6;
--        const char *hexStr = (const char *)hexValue;
-+        const char *hex_str = (const char *)hex_value;
-         int i;
- 
-         for (i = 0; i < 16; i++) {
-@@ -2111,11 +2111,11 @@ static char *hexToIPAddress(const void *hexValue, int is_ipv6)
- 
-         return g_strdup(addr);
-     } else {
--        unsigned int hexInt = *(unsigned int *)hexValue;
--        unsigned int byte1 = (hexInt >> 24) & 0xFF;
--        unsigned int byte2 = (hexInt >> 16) & 0xFF;
--        unsigned int byte3 = (hexInt >> 8) & 0xFF;
--        unsigned int byte4 = hexInt & 0xFF;
-+        unsigned int hex_int = *(unsigned int *)hex_value;
-+        unsigned int byte1 = (hex_int >> 24) & 0xFF;
-+        unsigned int byte2 = (hex_int >> 16) & 0xFF;
-+        unsigned int byte3 = (hex_int >> 8) & 0xFF;
-+        unsigned int byte4 = hex_int & 0xFF;
- 
-         return g_strdup_printf("%u.%u.%u.%u", byte4, byte3, byte2, byte1);
-     }
-@@ -2131,6 +2131,7 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-     int firstLine;
-     int is_ipv6;
-     int i;
-+    char iface[IFNAMSIZ];
- 
-     for (i = 0; i < 2; i++) {
-         firstLine = 1;
-@@ -2146,72 +2147,61 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-                 firstLine = 0;
-                 continue;
-             }
--            GuestNetworkRoute *route = NULL;
--            GuestNetworkRoute *networkroute;
--            char Iface[IFNAMSIZ];
--            if (is_ipv6) {
--                char Destination[33], Source[33], NextHop[33];
--                int DesPrefixlen, SrcPrefixlen, Metric, RefCnt, Use, Flags;
- 
--                /* Parse the line and extract the values */
-+            GuestNetworkRoute *route = g_new0(GuestNetworkRoute, 1);
-+
-+            if (is_ipv6) {
-+                char destination[33], source[33], next_hop[33];
-+                int des_prefixlen, src_prefixlen, metric, refcnt, use, flags;
-                 if (sscanf(line, "%32s %x %32s %x %32s %x %x %x %x %s",
--                           Destination, &DesPrefixlen, Source,
--                           &SrcPrefixlen, NextHop, &Metric, &RefCnt,
--                           &Use, &Flags, Iface) != 10) {
-+                           destination, &des_prefixlen, source,
-+                           &src_prefixlen, next_hop, &metric, &refcnt,
-+                           &use, &flags, iface) != 10) {
-                     continue;
-                 }
- 
--                route = g_new0(GuestNetworkRoute, 1);
--                networkroute = route;
--                networkroute->iface = g_strdup(Iface);
--                networkroute->destination = hexToIPAddress(Destination, 1);
--                networkroute->metric = Metric;
--                networkroute->source = hexToIPAddress(Source, 1);
--                networkroute->desprefixlen = g_strdup_printf(
--                    "%d", DesPrefixlen
--                );
--                networkroute->srcprefixlen = g_strdup_printf(
--                    "%d", SrcPrefixlen
--                );
--                networkroute->nexthop = hexToIPAddress(NextHop, 1);
--                networkroute->has_flags = true;
--                networkroute->flags = Flags;
--                networkroute->has_refcnt = true;
--                networkroute->refcnt = RefCnt;
--                networkroute->has_use = true;
--                networkroute->use = Use;
--                networkroute->version = 6;
--            } else {
--                unsigned int Destination, Gateway, Mask, Flags;
--                int RefCnt, Use, Metric, MTU, Window, IRTT;
-+                route->iface = g_strdup(iface);
-+                route->destination = hex_to_ip_address(destination, 1);
-+                route->source = hex_to_ip_address(source, 1);
-+                route->nexthop = hex_to_ip_address(next_hop, 1);
-+                route->desprefixlen = g_strdup_printf("%d", des_prefixlen);
-+                route->srcprefixlen = g_strdup_printf("%d", src_prefixlen);
-+                route->metric = metric;
-+                route->has_flags = true;
-+                route->flags = flags;
-+                route->has_refcnt = true;
-+                route->refcnt = refcnt;
-+                route->has_use = true;
-+                route->use = use;
-+                route->version = 6;
- 
--                /* Parse the line and extract the values */
-+            } else {
-+                unsigned int destination, gateway, mask, flags;
-+                int refcnt, use, metric, mtu, window, irtt;
-                 if (sscanf(line, "%s %X %X %x %d %d %d %X %d %d %d",
--                           Iface, &Destination, &Gateway, &Flags, &RefCnt,
--                           &Use, &Metric, &Mask, &MTU, &Window, &IRTT) != 11) {
-+                           iface, &destination, &gateway, &flags, &refcnt,
-+                           &use, &metric, &mask, &mtu, &window, &irtt) != 11) {
-                     continue;
-                 }
- 
--                route = g_new0(GuestNetworkRoute, 1);
--                networkroute = route;
--                networkroute->iface = g_strdup(Iface);
--                networkroute->destination = hexToIPAddress(&Destination, 0);
--                networkroute->gateway = hexToIPAddress(&Gateway, 0);
--                networkroute->mask = hexToIPAddress(&Mask, 0);
--                networkroute->metric = Metric;
--                networkroute->has_flags = true;
--                networkroute->flags = Flags;
--                networkroute->has_refcnt = true;
--                networkroute->refcnt = RefCnt;
--                networkroute->has_use = true;
--                networkroute->use = Use;
--                networkroute->has_mtu = true;
--                networkroute->mtu = MTU;
--                networkroute->has_window = true;
--                networkroute->window = Window;
--                networkroute->has_irtt = true;
--                networkroute->irtt = IRTT;
--                networkroute->version = 4;
-+                route->iface = g_strdup(iface);
-+                route->destination = hex_to_ip_address(&destination, 0);
-+                route->gateway = hex_to_ip_address(&gateway, 0);
-+                route->mask = hex_to_ip_address(&mask, 0);
-+                route->metric = metric;
-+                route->has_flags = true;
-+                route->flags = flags;
-+                route->has_refcnt = true;
-+                route->refcnt = refcnt;
-+                route->has_use = true;
-+                route->use = use;
-+                route->has_mtu = true;
-+                route->mtu = mtu;
-+                route->has_window = true;
-+                route->window = window;
-+                route->has_irtt = true;
-+                route->irtt = irtt;
-+                route->version = 4;
-             }
- 
-             QAPI_LIST_APPEND(tail, route);
--- 
-2.40.1
+I don't follow why this is false
 
+Alistair
 
