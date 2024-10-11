@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D534D0EE3F
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BC6D1A427
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szORN-0001wF-Kb; Fri, 11 Oct 2024 18:48:57 -0400
+	id 1szOUl-0002sQ-KR; Fri, 11 Oct 2024 18:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szORL-0001vY-GB
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:48:55 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szOUj-0002ru-Ok
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:52:25 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szORJ-0007QH-MH
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:48:55 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5369f1c7cb8so3384245e87.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 15:48:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szOUh-0007ms-P2
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:52:25 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2fb18f14242so23316201fa.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 15:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728686931; x=1729291731; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728687142; x=1729291942; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tZhMRCgmLWFPhC4H+JhuZkE6JNbUMDBXIFaFEmfcb7o=;
- b=V8yrNxyXSR7BjWgsJBoxzbu6s3GDBYDUb39Ae9kLMCzGA4fiEOk2gfTHb9Wy4ADM34
- 0u5pWjbpeChIyWpixsqw4l/4sEP3qmFNPB/QAaXdjLQ3TWU/vGtw3OpsuDINSaRVWV8T
- K56zENN6imFlxXI5Gy7y6S6ImuEOmhgeth0IHFHntQMdsdUoPOHyQa6EiPd4E4ABhypd
- i6HRWJGiqDvROPOjBzqTpYXWlJW/cuNwxymjug8WeqJoTrS9PHc/fBjB/PAGbDosFbNr
- w7xNy9lJwZzr3Si5CvjpZfKi+5sBcqTlKwzQ4sxWOlUSOyyGfvRIvZQzAfQZuMRTwmTe
- wjLA==
+ bh=dnzofjFPSUL3WKzP+FhJgxzB0pSOdKYfbeozcKbG5Lo=;
+ b=YxpkaRnWUyoeIcIWQCLss9tY1sTQ05HMhmyYwUOwt+w4mH0i8GKz5a2ncJk9IlS4bb
+ 9qaRWh6lGyV6YqX/FSa+ouxJJedBp1dm2Jty5uzMbVU+J+Vfmz4c4i4V1Y8DHsjIHVFe
+ NRQ9OXHAxvEbTAoR+zmW4rk6CFqu5TFkU1QJh6BIWQl8PaNBZjoPsBzp6HhEMEMxET8k
+ zcarITCYttVCqqQw5ZR5IPpmdTDkPE/Fjqf4ksjNAf8ssDQmAOuFj7sNbQXb/vXiAAhj
+ 7ZfpuA4mpwGXaP54aWwZT9OA0SGJzv0fI/4JekYXxc0DSXZVMNtcNySLsLzu7YetumHt
+ xj8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728686931; x=1729291731;
+ d=1e100.net; s=20230601; t=1728687142; x=1729291942;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tZhMRCgmLWFPhC4H+JhuZkE6JNbUMDBXIFaFEmfcb7o=;
- b=Pg1HaqY+4sIAI4G2dS1rjVAXTg/DgMrPDeKq4fHNHWEX47X6ltg/430KoSCuVq5vp8
- DvB4fvvX9U8e+V46ez8QZT0ankCc4bli7Xa5UP8b7ts8X5j7Q1LWK84DnlJos274U5f6
- rbIxp4KLehm2i6nYpLwkv+sBcOjBgK7Wvfen9QVc2k4I/kcLIlpgiuXv6z2V8PaccgFL
- WNcj9vFYoSeXIX/svI/Z7CO1YP9L8gDg8iWUuANjsoiLKX4Aaru38YNtb+Cm4rd42Rxz
- BoSRjvhVXbO1tG9J9HOz/HbSjfJXLYRseGotTM/KfKwu7pjGJ197Wk3UEy5WGg/qhZUR
- q96A==
-X-Gm-Message-State: AOJu0YywCYJnF4Mt9roy+auDW0pbV2kr4fKFSc5Ob0TcNVR5eSsm2Zn7
- nS2KROgyhJK2w7QgzIdwkdqgn68m5iCzCVy+s0KsMC0M4+9iyaoCMGbwP2SmWjY=
-X-Google-Smtp-Source: AGHT+IHNCgKTW+eZtvYaut9Md2M6WoxaqGwkLm8N0i65wPK/nBtbNw9xsANbBUvFnCkmP5krdoX/mw==
-X-Received: by 2002:ac2:4c46:0:b0:536:796b:4d94 with SMTP id
- 2adb3069b0e04-539e57316a5mr547872e87.41.1728686931250; 
- Fri, 11 Oct 2024 15:48:51 -0700 (PDT)
+ bh=dnzofjFPSUL3WKzP+FhJgxzB0pSOdKYfbeozcKbG5Lo=;
+ b=JHtL732FDfL1fcagnGUJAc0A1Kfl3IgTdzFnvEQ8ilT8/qJPPUO6lewQ5c2fp+B0CN
+ bve4oD7/maCSKh+C16igr8KwGbwwn7jxZ6zNXkPrkOy2iFRz6GRu8u5hdatfpsCp+J+N
+ YdEnSgECbi4pntxaCXfzCA59Z0eCsB6XjbwI1YhKYUzWiWYDKKNLiSP0pdDUJUqxpEiF
+ JH7RlhzuTGnpgDK+vXladX76qkNFidnVQhBgXqRKs9g9GwZOdE16iZXJT9R8DFNgdIIv
+ RMWyPdAVN91Mh8FTPEqrPVaRC1vGJM9AVeQO67D16JniFtNj06lSOrsN3mgHFZuHj7px
+ gCww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhRi9oCUnHJe7eFnb5uY+9qRm2eTy0yWp8jYL5AUOPIo8Cdfb4ojAbXUqz0jNoQqQt8J0gqcez2ZZR@nongnu.org
+X-Gm-Message-State: AOJu0YxobgRQtso7Y/7vbQsd3eHOz82SUPYOsTsIqQGa7IXAS9KVE+09
+ OeYz7zb4OodxASDKDJ3+bdwqeIAKeWun0u4EhewVoLudsLoh+MiR8+uktfFWMXs=
+X-Google-Smtp-Source: AGHT+IGTg0S8j4FYojJFYVkX5vKBH9mqqx6AA/Eut0cgMrCG9vgLKGX6aYYOwZlWNCB4NeoGTdzDkA==
+X-Received: by 2002:a05:651c:556:b0:2f3:f441:af24 with SMTP id
+ 38308e7fff4ca-2fb32779b16mr18140581fa.26.1728687141791; 
+ Fri, 11 Oct 2024 15:52:21 -0700 (PDT)
 Received: from [192.168.222.92] ([91.209.212.130])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-539cb6c1237sm731915e87.3.2024.10.11.15.48.41
+ 38308e7fff4ca-2fb245b19f0sm6058001fa.71.2024.10.11.15.52.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 15:48:49 -0700 (PDT)
-Message-ID: <61c38817-3b6e-4bc1-a65a-d2208869c53d@linaro.org>
-Date: Fri, 11 Oct 2024 19:48:37 -0300
+ Fri, 11 Oct 2024 15:52:20 -0700 (PDT)
+Message-ID: <ee2dcb64-1a4c-4b13-b0d9-83e1a58dbbcb@linaro.org>
+Date: Fri, 11 Oct 2024 19:52:10 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
- accessing it
-To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Subject: Re: [PATCH 16/17] Revert "hw/sh4/r2d: Realize IDE controller before
+ accessing it"
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-8-philmd@linaro.org>
- <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
- <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org
+References: <20241011131937.377223-1-thuth@redhat.com>
+ <20241011131937.377223-17-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+In-Reply-To: <20241011131937.377223-17-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,66 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/10/24 05:23, Thomas Huth wrote:
-> On 03/05/2024 23.34, Guenter Roeck wrote:
->> Hi,
->>
->> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
->>> We should not wire IRQs on unrealized device.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
->>
->> qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
->> and sh4eb emulations. Error log is as follows.
->>
->> ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
->> ata1.00: 16384 sectors, multi 16: LBA48
->> ata1.00: configured for PIO
->> scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 
->> ANSI: 5
->> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
->> sd 0:0:0:0: [sda] Write Protect is off
->> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't 
->> support DPO or FUA
->> ata1: lost interrupt (Status 0x58)
->>
->> [ and more similar errors ]
->>
->> qemu command line:
->>
->> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
->>     -snapshot -drive file=rootfs.ext2,format=raw,if=ide \
->>     -append "root=/dev/sda console=ttySC1,115200 noiotrap" \
->>     -serial null -serial stdio -monitor null -nographic -no-reboot
->>
->> Bisect points to this patch (see below). Reverting it fixes the problem.
-
-Sorry Guenter for missing your email :(
-
+On 11/10/24 10:19, Thomas Huth wrote:
+> This reverts commit 3c5f86a22686ef475a8259c0d8ee714f61c770c9.
 > 
->   Hi Philippe!
+> Changing the order here caused a regression with the "tuxrun"
+> kernels (from https://storage.tuxboot.com/20230331/) - ATA commands
+> fail with a "ata1: lost interrupt (Status 0x58)" message.
+> Apparently we need to wire the interrupt here first before
+> realizing the device, so revert the change to the original
+> behavior.
 > 
-> Today I noticed that our sh4 test from tests/avocado/tuxrun_baselines.py 
-> is failing (which is not run by default, that's why nobody noticed), and 
-> bisection took me to the same result that Guenter already reported.
+> Reported-by: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/sh4/r2d.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-"not run by default" because flaky.
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Having a quick look, the problem seems hw/ide/core.c uses non-QOM
-shortcuts. In particular ide_bus_init_output_irq() expects a preset
-IRQ. Not something trivial to fix.
 
-> 
-> So unless you have a clue how to fix it in a better way, I think we 
-> should revert this patch?
-
-This patch is what we want long term, and reveals a long standing issue.
-I'm not objecting in reverting it short term (I doubt I'll have time to
-look at it right now).
-
-Regards,
-
-Phil.
 
