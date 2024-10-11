@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95402D1A428
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D534D0EE3F
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szOF6-0003P3-Ow; Fri, 11 Oct 2024 18:36:17 -0400
+	id 1szORN-0001wF-Kb; Fri, 11 Oct 2024 18:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1szOF5-0003On-IR
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:36:15 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1szOF3-0006CD-E5
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:36:15 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BK32WS002078
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:mime-version; s=pp1; bh=gWpKGtkgB0sfc
- tupZy+hV2BgJ2Rq/JiwXRAKAoEZtt0=; b=QzK5r/JOxp67OufuE4MZ1hBKl7Pvt
- 5rGhVr1ywf3G8rctgXLL978NrdsIa+tp73NIhoq5MzfY05lLYEcGa3JGN0tADy5z
- SR6+OSgnanwYppD7R8SBtieV9A3gCCuyb98zFdBJtY/XHkjiL3rvVKAUz2AxJWfP
- Zicy6uzp0J+vn619p/wIDqMzYlp9xnqAImHySHqWYfrDio0IdYDmTRP+viN3eevM
- d7xLEvrpng+xeTB2DMAcFBoDG2gMYL82Am4UL3XbmbOlJaXYhlZmHDXWLds1jdHJ
- lySjOssoPM0Cf96Z3OYyB6cy8guWq2ShK/aRph4HiUjkVW5A8fUj6e3Aw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 427aq28fdt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:10 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49BMaAA0001171
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 22:36:10 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 427aq28fdj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 22:36:10 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49BMTuoF010703;
- Fri, 11 Oct 2024 22:36:09 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 423j0jyr2e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 22:36:09 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49BMa8qB49742272
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Oct 2024 22:36:09 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF36C58053;
- Fri, 11 Oct 2024 22:36:08 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 36E6A5805F;
- Fri, 11 Oct 2024 22:36:08 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Oct 2024 22:36:08 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, marcandre.lureau@gmail.com,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 2/2] tpm_emulator: Read control channel response in 2 passes
-Date: Fri, 11 Oct 2024 18:35:56 -0400
-Message-ID: <20241011223556.2953808-3-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011223556.2953808-1-stefanb@linux.ibm.com>
-References: <20241011223556.2953808-1-stefanb@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JSQmtTMm_JaAE5ytuEkfTRO2Csonjds1
-X-Proofpoint-ORIG-GUID: ByZzkeYiaNTCDKRXhgIEH-naaqG0JJv7
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szORL-0001vY-GB
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:48:55 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szORJ-0007QH-MH
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:48:55 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5369f1c7cb8so3384245e87.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 15:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728686931; x=1729291731; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tZhMRCgmLWFPhC4H+JhuZkE6JNbUMDBXIFaFEmfcb7o=;
+ b=V8yrNxyXSR7BjWgsJBoxzbu6s3GDBYDUb39Ae9kLMCzGA4fiEOk2gfTHb9Wy4ADM34
+ 0u5pWjbpeChIyWpixsqw4l/4sEP3qmFNPB/QAaXdjLQ3TWU/vGtw3OpsuDINSaRVWV8T
+ K56zENN6imFlxXI5Gy7y6S6ImuEOmhgeth0IHFHntQMdsdUoPOHyQa6EiPd4E4ABhypd
+ i6HRWJGiqDvROPOjBzqTpYXWlJW/cuNwxymjug8WeqJoTrS9PHc/fBjB/PAGbDosFbNr
+ w7xNy9lJwZzr3Si5CvjpZfKi+5sBcqTlKwzQ4sxWOlUSOyyGfvRIvZQzAfQZuMRTwmTe
+ wjLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728686931; x=1729291731;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tZhMRCgmLWFPhC4H+JhuZkE6JNbUMDBXIFaFEmfcb7o=;
+ b=Pg1HaqY+4sIAI4G2dS1rjVAXTg/DgMrPDeKq4fHNHWEX47X6ltg/430KoSCuVq5vp8
+ DvB4fvvX9U8e+V46ez8QZT0ankCc4bli7Xa5UP8b7ts8X5j7Q1LWK84DnlJos274U5f6
+ rbIxp4KLehm2i6nYpLwkv+sBcOjBgK7Wvfen9QVc2k4I/kcLIlpgiuXv6z2V8PaccgFL
+ WNcj9vFYoSeXIX/svI/Z7CO1YP9L8gDg8iWUuANjsoiLKX4Aaru38YNtb+Cm4rd42Rxz
+ BoSRjvhVXbO1tG9J9HOz/HbSjfJXLYRseGotTM/KfKwu7pjGJ197Wk3UEy5WGg/qhZUR
+ q96A==
+X-Gm-Message-State: AOJu0YywCYJnF4Mt9roy+auDW0pbV2kr4fKFSc5Ob0TcNVR5eSsm2Zn7
+ nS2KROgyhJK2w7QgzIdwkdqgn68m5iCzCVy+s0KsMC0M4+9iyaoCMGbwP2SmWjY=
+X-Google-Smtp-Source: AGHT+IHNCgKTW+eZtvYaut9Md2M6WoxaqGwkLm8N0i65wPK/nBtbNw9xsANbBUvFnCkmP5krdoX/mw==
+X-Received: by 2002:ac2:4c46:0:b0:536:796b:4d94 with SMTP id
+ 2adb3069b0e04-539e57316a5mr547872e87.41.1728686931250; 
+ Fri, 11 Oct 2024 15:48:51 -0700 (PDT)
+Received: from [192.168.222.92] ([91.209.212.130])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-539cb6c1237sm731915e87.3.2024.10.11.15.48.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Oct 2024 15:48:49 -0700 (PDT)
+Message-ID: <61c38817-3b6e-4bc1-a65a-d2208869c53d@linaro.org>
+Date: Fri, 11 Oct 2024 19:48:37 -0300
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-11_19,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 mlxlogscore=739
- mlxscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410110157
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
+ accessing it
+To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Guenter Roeck <linux@roeck-us.net>
+References: <20240208181245.96617-1-philmd@linaro.org>
+ <20240208181245.96617-8-philmd@linaro.org>
+ <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
+ <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,66 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Error responses from swtpm are always only 4 bytes long. Therefore, read
-the entire response in 2 passes and stop if the first 4 bytes indicate an
-error response with no subsequent bytes readable. Read the rest in a 2nd
-pass, if needed. This avoids getting stuck while waiting for too many bytes
-if only 4 bytes were sent due to an error message. The 'getting stuck'
-condition has not been observed in practice so far, though.
+On 11/10/24 05:23, Thomas Huth wrote:
+> On 03/05/2024 23.34, Guenter Roeck wrote:
+>> Hi,
+>>
+>> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
+>>> We should not wire IRQs on unrealized device.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+>>
+>> qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
+>> and sh4eb emulations. Error log is as follows.
+>>
+>> ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
+>> ata1.00: 16384 sectors, multi 16: LBA48
+>> ata1.00: configured for PIO
+>> scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 
+>> ANSI: 5
+>> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
+>> sd 0:0:0:0: [sda] Write Protect is off
+>> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't 
+>> support DPO or FUA
+>> ata1: lost interrupt (Status 0x58)
+>>
+>> [ and more similar errors ]
+>>
+>> qemu command line:
+>>
+>> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
+>>     -snapshot -drive file=rootfs.ext2,format=raw,if=ide \
+>>     -append "root=/dev/sda console=ttySC1,115200 noiotrap" \
+>>     -serial null -serial stdio -monitor null -nographic -no-reboot
+>>
+>> Bisect points to this patch (see below). Reverting it fixes the problem.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2615
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- backends/tpm/tpm_emulator.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+Sorry Guenter for missing your email :(
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index b0e2fb3fc7..1b2e890668 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -129,6 +129,9 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
-     uint32_t cmd_no = cpu_to_be32(cmd);
-     ssize_t n = sizeof(uint32_t) + msg_len_in;
-     uint8_t *buf = NULL;
-+    ptm_res res;
-+    off_t o = 0;
-+    int to_read;
- 
-     WITH_QEMU_LOCK_GUARD(&tpm->mutex) {
-         buf = g_alloca(n);
-@@ -140,11 +143,29 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
-             return -1;
-         }
- 
--        if (msg_len_out != 0) {
--            n = qemu_chr_fe_read_all(dev, msg, msg_len_out);
-+        /*
-+         * Any response will be at least 4 bytes long. Error responses are only
-+         * 4 bytes (=sizeof(ptm_res)), though. Therefore, read response in 2
-+         * passes, returning when an error response is encountered.
-+         */
-+        to_read = sizeof(res);
-+        while (msg_len_out > 0) {
-+            n = qemu_chr_fe_read_all(dev, (uint8_t *)msg + o, to_read);
-             if (n <= 0) {
-                 return -1;
-             }
-+            msg_len_out -= to_read;
-+            if (msg_len_out == 0) {
-+                return 0;
-+            }
-+
-+            memcpy(&res, msg, sizeof(res));
-+            if (res) {
-+                return 0;
-+            }
-+
-+            o = to_read;
-+            to_read = msg_len_out;
-         }
-     }
- 
--- 
-2.46.2
+> 
+>   Hi Philippe!
+> 
+> Today I noticed that our sh4 test from tests/avocado/tuxrun_baselines.py 
+> is failing (which is not run by default, that's why nobody noticed), and 
+> bisection took me to the same result that Guenter already reported.
 
+"not run by default" because flaky.
+
+Having a quick look, the problem seems hw/ide/core.c uses non-QOM
+shortcuts. In particular ide_bus_init_output_irq() expects a preset
+IRQ. Not something trivial to fix.
+
+> 
+> So unless you have a clue how to fix it in a better way, I think we 
+> should revert this patch?
+
+This patch is what we want long term, and reveals a long standing issue.
+I'm not objecting in reverting it short term (I doubt I'll have time to
+look at it right now).
+
+Regards,
+
+Phil.
 
