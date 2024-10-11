@@ -4,132 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD485CFC61B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337F5CFC61B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szArR-0000CJ-Oh; Fri, 11 Oct 2024 04:18:57 -0400
+	id 1szAvc-00018H-On; Fri, 11 Oct 2024 04:23:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1szArQ-0000CA-Vt
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:18:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szAvb-000182-MI
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:23:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1szArN-0003Ru-E9
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:18:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szAvY-0003uz-V4
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:23:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728634731;
+ s=mimecast20190719; t=1728634991;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OWHz4dio5v2bcOfx1lDETEcIErAWvAKFXb04jALG9t8=;
- b=CgwiC2k+p3W1wX1SrdpvWpbd6dGA7rwJtxsVhAnLe3SzJYBJmvQbTcbD991zSdsiyH/269
- E+jt+tCmfrZih9vQHg5sW5hqS6/lxrPccAfETt7sgzJsrxGTcYEQeYvj3VS1yXMwN89fjv
- PiQyDrkMdpx6ID8kc0M2t9ahaz+6QHY=
+ bh=lt3VTaRF/0/u6wWOl51+A4Q497ci783+afO9LxibqQw=;
+ b=JKotz+RL+DtxCGuocnQcApGhc/8e+HYJl/OvAySfocjRWbzd16u65tv187r2PrFU2OhTtL
+ 3i+UnIp4STWjBXruBh8Pe1rxquV2XMv6QImgWqKRS64wL7cgypJulBYw4tO2T3TkqrN7KY
+ 2GqL+mGV0ZpZv91U0oBC6yNtZH9BcvI=
 Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
  [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-VvK1RoqmOQOYgaQo4UtStg-1; Fri, 11 Oct 2024 04:18:47 -0400
-X-MC-Unique: VvK1RoqmOQOYgaQo4UtStg-1
+ us-mta-463-Fd3lX1OqOrmW6JqPdd6_Dg-1; Fri, 11 Oct 2024 04:23:10 -0400
+X-MC-Unique: Fd3lX1OqOrmW6JqPdd6_Dg-1
 Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2fad296738fso12574511fa.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:18:47 -0700 (PDT)
+ 38308e7fff4ca-2f759001cb1so15935431fa.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:23:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728634726; x=1729239526;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OWHz4dio5v2bcOfx1lDETEcIErAWvAKFXb04jALG9t8=;
- b=CAePpliyuEu5Uw/gWk8pv65b++QBSLV/3aoiiYf+HvUTXfpYWx4V6fwE9qNiVqzfvv
- kABmVMY3bfc/BKhwBXbiVN/yM7wrw6xc/waXGFlf8ukS45x1zjFTvVI5vxFFf3iZaeLN
- T++vO9P7g3TRo1kEh7pEKXFYP5yhjHdk4RRxRB0IuOKKS1RHnm/MRpaq1KW1PN1Cu49y
- P/4XyCgN03rnB4LPwxTWRjbqgRFZfVHmFeftAkDqnm9eUXM7Ra6+TrZoUjLvSsJvAv2F
- c+ruseH+RAH8IJLr2W8Eyo+Dej1DBY6AidXAwvkTx6cVWk4Qm0fLczT4JTPt0gfnppyG
- lDvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrZJOhEAkhO5UKCbDWQahGLyjGYnse6tLx3KwKh95jjTGWNGFWZu6lopmot8jOVuupev1IwDLIBWm/@nongnu.org
-X-Gm-Message-State: AOJu0YxodvcMg0nhlL5SmqyEw9/9qL57Bkx8Es9cLjCiS48e094NRTQm
- X1yDYBKR0Cr12fQmDHGn2NkhD6iVuP3jW2UEClVloP52XRIu0Kenk3vbvaz/vB+KRT0bS4KZZJI
- qZECVH1yg7WWf1nyj3PdBcMysEJc0ZV3STgPFW9YhVsOWpS/OG4Qi
-X-Received: by 2002:a05:6512:31c5:b0:539:937f:7806 with SMTP id
- 2adb3069b0e04-539da5ae41dmr603678e87.61.1728634725879; 
- Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9BGdjd/xqIK1sWCUmSW52nOIDiEZ+RhhTcteIUxOlzEDNoVjkVpZ2/OrfOowx/DjeJFnAtA==
-X-Received: by 2002:a05:6512:31c5:b0:539:937f:7806 with SMTP id
- 2adb3069b0e04-539da5ae41dmr603667e87.61.1728634725431; 
- Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c749:9100:c078:eec6:f2f4:dd3b?
- (p200300cbc7499100c078eec6f2f4dd3b.dip0.t-ipconnect.de.
- [2003:cb:c749:9100:c078:eec6:f2f4:dd3b])
+ d=1e100.net; s=20230601; t=1728634989; x=1729239789;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lt3VTaRF/0/u6wWOl51+A4Q497ci783+afO9LxibqQw=;
+ b=cTbVjlUrZYx/hZquPCkwTALUiGdK5uUHRIShmJirSXM/9AGxRL288//71CMIHBSToB
+ 81sc01Fs/lfZ1oBwvV+p0bTFCMmrcppNkAhepJeIcpgZq1LLmzYnromckFjYtoXDxQr+
+ SjFAJQ9lqS7vOwznJ94Xo4tv7rMZVPMCc+zFhtPcTSMSBhrxp3ivWaWZu5z8JUKlK2zk
+ qPeqb7PslMdjpG9zJg1n1C+Sqe/3g2Tj2cF1iS4HI8HH1ZqRDDS4MU4dBYS3lqe2KcP8
+ qit6CM08b7ZzRpm+GS0gwbypIyuaXa+SAgFQxctvOSLX8cBdWIEpePFPO/bZJddQd3L6
+ pczw==
+X-Gm-Message-State: AOJu0YzwUo0kWZmaVRbp6QYqHmDJgXWntVZbCVOPK1R36wULUa069vlb
+ wuo9rgjO73a+h5buf4fxU/6s3M8LA3ovGwHR0HNj2ycXsdTk1E5nvMlrHlT7SZkZSlI/W8NdwWv
+ 0jTkSOMWP93iKn9xwZtj5Wt8uAT8Y/RHmGwgQHIZy1G/9zII/VmGM
+X-Received: by 2002:a05:651c:210f:b0:2fa:c59d:1af7 with SMTP id
+ 38308e7fff4ca-2fb326feb98mr12154971fa.9.1728634988662; 
+ Fri, 11 Oct 2024 01:23:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+3D6Nynz7UbDvwO4d4xkDA5oabW1f3vOnhc7RMpBbmonkgcfc9jkp57BWd0bumw0PLpRSpg==
+X-Received: by 2002:a05:651c:210f:b0:2fa:c59d:1af7 with SMTP id
+ 38308e7fff4ca-2fb326feb98mr12154681fa.9.1728634988124; 
+ Fri, 11 Oct 2024 01:23:08 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-51-26.web.vodafone.de. [109.42.51.26])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-430d70b4420sm68806625e9.34.2024.10.11.01.18.43
+ a640c23a62f3a-a99a7ede515sm184273266b.45.2024.10.11.01.23.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
-Message-ID: <f8702c07-442e-488c-8093-2b6ff89c82a2@redhat.com>
-Date: Fri, 11 Oct 2024 10:18:43 +0200
+ Fri, 11 Oct 2024 01:23:07 -0700 (PDT)
+Message-ID: <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+Date: Fri, 11 Oct 2024 10:23:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] virtio-pci: fix memory_region_find for
- VirtIOPCIRegion's MR
-To: Gao Shiyuan <gaoshiyuan@baidu.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: zuoboqun@baidu.com, qemu-devel@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>, wangliang44@baidu.com
-References: <20241009095827.67393-1-gaoshiyuan@baidu.com>
+Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
+ accessing it
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Guenter Roeck <linux@roeck-us.net>
+References: <20240208181245.96617-1-philmd@linaro.org>
+ <20240208181245.96617-8-philmd@linaro.org>
+ <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20241009095827.67393-1-gaoshiyuan@baidu.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -154,88 +153,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.10.24 11:58, Gao Shiyuan wrote:
-> As shown below, if a virtio PCI device is attached under a pci-bridge, the MR
-> of VirtIOPCIRegion does not belong to any address space. So memory_region_find
-> cannot be used to search for this MR.
+On 03/05/2024 23.34, Guenter Roeck wrote:
+> Hi,
 > 
-> Introduce the virtio-pci and pci_bridge address spaces to solve this problem.
+> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
+>> We should not wire IRQs on unrealized device.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 > 
-> Before:
-> memory-region: pci_bridge_pci
->    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->      00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
->        00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
->        00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
->      0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->        0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->        0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->        0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->        0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
+> qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
+> and sh4eb emulations. Error log is as follows.
 > 
-> After:
-> address-space: virtio-pci-cfg-mem-as
->    0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->      0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->      0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->      0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->      0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
+> ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
+> ata1.00: 16384 sectors, multi 16: LBA48
+> ata1.00: configured for PIO
+> scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 ANSI: 5
+> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
+> sd 0:0:0:0: [sda] Write Protect is off
+> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+> ata1: lost interrupt (Status 0x58)
 > 
-> address-space: pci_bridge_pci_mem
->    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->      00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
->        00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
->        00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
->      0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
->        0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
->        0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
->        0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
->        0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
+> [ and more similar errors ]
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2576
-> Fixes: ffa8a3e3b2e6 ("virtio-pci: Add lookup subregion of VirtIOPCIRegion MR")
+> qemu command line:
 > 
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-> Signed-off-by: Wang Liang <wangliang44@baidu.com>
+> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
+> 	-snapshot -drive file=rootfs.ext2,format=raw,if=ide \
+> 	-append "root=/dev/sda console=ttySC1,115200 noiotrap" \
+> 	-serial null -serial stdio -monitor null -nographic -no-reboot
+> 
+> Bisect points to this patch (see below). Reverting it fixes the problem.
 
-Why the two additional SOB?
+  Hi Philippe!
 
-You're the author and you sent out the patch.
+Today I noticed that our sh4 test from tests/avocado/tuxrun_baselines.py is 
+failing (which is not run by default, that's why nobody noticed), and 
+bisection took me to the same result that Guenter already reported.
 
-If the other two were co-authors, it should be something like
+So unless you have a clue how to fix it in a better way, I think we should 
+revert this patch?
 
-
-Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
-Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-Co-developed-by: Wang Liang <wangliang44@baidu.com>
-Signed-off-by: Wang Liang <wangliang44@baidu.com>
-Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-
-[...]
-
->   
->   static void virtio_pci_reset(DeviceState *qdev)
-> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-> index 5cd452115a..bd12fbe4ef 100644
-> --- a/include/hw/pci/pci_bridge.h
-> +++ b/include/hw/pci/pci_bridge.h
-> @@ -72,6 +72,8 @@ struct PCIBridge {
->        */
->       MemoryRegion address_space_mem;
->       MemoryRegion address_space_io;
-> +    AddressSpace as_mem;
-> +    AddressSpace as_io;
-
-address_space_mem vs. as_mem is really confusing, likely 
-"address_space_mem" shpuld be called "mem_mr" ot sth. like that. Anyhow, 
-that's independent of your patch
-
-Acked-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
+  Thomas
 
 
