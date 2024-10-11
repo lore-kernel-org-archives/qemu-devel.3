@@ -4,92 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8FBD24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A5ED0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ4a-0001Fq-T6; Fri, 11 Oct 2024 13:05:05 -0400
+	id 1szJ48-0000qN-4a; Fri, 11 Oct 2024 13:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4S-0000wP-24
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1szJ43-0000hD-Dp; Fri, 11 Oct 2024 13:04:31 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHdt-0007FC-Sy
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660805;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I1CI3G168F3cDdpDRHRzVTftyK0R2VTAU16G+izB978=;
- b=NpQp3vJ9lexH3YMHGZFDwnuafLH8dr8xupe8uiMxPFevDVkFuwetX/OkcUHzOEib6V5hzw
- jng/q1vgnyS+cTJyTEPUpCG4GuNrRujVPJgiTk9CcAtfAlpk61TkulbifjTIjYNf/S85W3
- Hk+VsoZHlGjPRMKAUWSdlF86yj0799Q=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-7_4ZJp4dMryiteM0txn-xA-1; Fri, 11 Oct 2024 11:33:24 -0400
-X-MC-Unique: 7_4ZJp4dMryiteM0txn-xA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a9953ddfa4fso171386566b.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660801; x=1729265601;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=I1CI3G168F3cDdpDRHRzVTftyK0R2VTAU16G+izB978=;
- b=W1UCRtbnu8Faadj3vQJN1Qj7h/OrNuXmsYtjVCPs73BdbA/hVxRQx9owOFUVW6lg+J
- m/UpMWhD3YfQkzAV4tpYbusJC3sfwprrezdvbXZhPwmkAWQ4jAQsDXrYbwZG9NQg3kqb
- FOBoCWlXk18j7IuqKGCbmiMSmUoMGt1YHUbPOyCyiTaLRi7lWhF6nCy1JwTtZsegMKgn
- /lRGpZWs20Nk+3j99j2y+N2XhNbEbhX8qbatyOv8fsallrq+ZA8auJ9n5gO1Eey9VLHZ
- vUjw713DweQEqjBRhCgJJ+QlsakeUhld8WOexOJqnDnrJN0BVhWc3MnCUVdWBq6SyOoD
- lGjw==
-X-Gm-Message-State: AOJu0YxQfE2RAbLoz4HJy5irsmJjM09fhC5qRnyuOiEerds0DBAniHhU
- 5eKto4MPbY6CyqLj7OZYj2oJKCdmPkgEExgRtWYNmqEt91Ym29w3W7K+IjX01GMPgg1OzOIro1D
- pyZqvvJCgM6pbipKL/KsbF8dSkCKT96MI/W7eA8N7FHzOY+0IsnA5i/xdciS8QXaRbPIf69qeYv
- wF5OHkQX9Nss72RnEL5ztK7DyJZS7BRF9TAZQm9R4=
-X-Received: by 2002:a17:907:940c:b0:a8d:29b7:ecf3 with SMTP id
- a640c23a62f3a-a99b930e9d1mr246662566b.13.1728660801108; 
- Fri, 11 Oct 2024 08:33:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkP1+4bvqxexjBw67VG4ebB/NujhnJL4e9wuXRZclQYpvUwZCvBEmIvnC73c863713ieHwfw==
-X-Received: by 2002:a17:907:940c:b0:a8d:29b7:ecf3 with SMTP id
- a640c23a62f3a-a99b930e9d1mr246659966b.13.1728660800682; 
- Fri, 11 Oct 2024 08:33:20 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99c0c89bfasm57964666b.162.2024.10.11.08.33.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:33:20 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL v3 11/18] meson: fix machine option for x86_version
-Date: Fri, 11 Oct 2024 17:32:19 +0200
-Message-ID: <20241011153227.81770-12-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1szIhv-0007Hs-4o; Fri, 11 Oct 2024 12:41:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=0zqa5tnDqkjjfS8FhzEtcztGzsWJG65KY93UHFJK5fo=; b=VMpoc7pKBrS/mCqk
+ TWuNOyOzamuuTJ6UI6YtqpfdzasAUJS/EPiC4aGXrekv516kF5hLBOPVH8Qy1oZOrW0Pb2sQ+qr05
+ RaDWBMS73abzJkaGHxSUpnnJfNRVBkC8opakvkCANUyarIZT5Ju4JgWx1tMyE5Dj4xtlr3XWwvWae
+ lk6rP1jn4wN/sBDd48/+aIF4RckIH2HqQLdmM37Bp6W47UxT5jWd9lZx9z1UgOZ/oL4/YQzuMkD56
+ S2PBPIgeQDdP4x5ZkDHDzfGX+RvhqhgQPX5WANPfVKDOKP3lPYyuHfuSXSvR3am51OkLfZR97QlKb
+ 9clAtXaCRH7rowW1Kg==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1szIhc-00AYxy-3C;
+ Fri, 11 Oct 2024 16:41:20 +0000
+Date: Fri, 11 Oct 2024 16:41:20 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] linux-user/vm86: Fix compilation with Clang
+Message-ID: <ZwlVMKJG3adNfNTR@gallifrey>
+References: <20241011161845.417342-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20241011161845.417342-1-thuth@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 16:41:03 up 156 days,  3:55,  1 user,  load average: 0.00, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +69,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+* Thomas Huth (thuth@redhat.com) wrote:
+> Since commit 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
+> a bunch of other "static inline" function are now unused, too. Clang
+> warns about such unused "static inline" functions in .c files, so the
+> build currently breaks when compiling with "--enable-werror". Remove
+> the unused functions to get it going again.
+> 
+> Fixes: 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-s/mbmi1/mbmi/
+Sorry about that - thanks for the fix!
 
-When configuring with -Dx86_version >= 3, meson step works, but
-compilation fails because option -mbmi1 is unknown.
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Link: https://lore.kernel.org/r/20241004223715.1275428-1-pierrick.bouvier@linaro.org
-Cc: qemu-stable@nongnu.org
-Fixes: ef7d1adfa85 ("meson: allow configuring the x86-64 baseline", 2024-06-28)
-Revieved-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/meson.build b/meson.build
-index b91863736ea..76335bb2a51 100644
---- a/meson.build
-+++ b/meson.build
-@@ -375,7 +375,7 @@ if host_arch in ['i386', 'x86_64']
-     qemu_common_flags = cc.get_supported_arguments('-mneeded') + qemu_common_flags
-   endif
-   if get_option('x86_version') >= '3'
--    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi1', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
-+    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
-   endif
- 
-   # add required vector instruction set (each level implies those below)
+> ---
+>  linux-user/vm86.c | 65 -----------------------------------------------
+>  1 file changed, 65 deletions(-)
+> 
+> diff --git a/linux-user/vm86.c b/linux-user/vm86.c
+> index 31a2d707cf..5091d53fb8 100644
+> --- a/linux-user/vm86.c
+> +++ b/linux-user/vm86.c
+> @@ -47,30 +47,6 @@ static inline void vm_putw(CPUX86State *env, uint32_t segptr,
+>      cpu_stw_data(env, segptr + (reg16 & 0xffff), val);
+>  }
+>  
+> -static inline void vm_putl(CPUX86State *env, uint32_t segptr,
+> -                           unsigned int reg16, unsigned int val)
+> -{
+> -    cpu_stl_data(env, segptr + (reg16 & 0xffff), val);
+> -}
+> -
+> -static inline unsigned int vm_getb(CPUX86State *env,
+> -                                   uint32_t segptr, unsigned int reg16)
+> -{
+> -    return cpu_ldub_data(env, segptr + (reg16 & 0xffff));
+> -}
+> -
+> -static inline unsigned int vm_getw(CPUX86State *env,
+> -                                   uint32_t segptr, unsigned int reg16)
+> -{
+> -    return cpu_lduw_data(env, segptr + (reg16 & 0xffff));
+> -}
+> -
+> -static inline unsigned int vm_getl(CPUX86State *env,
+> -                                   uint32_t segptr, unsigned int reg16)
+> -{
+> -    return cpu_ldl_data(env, segptr + (reg16 & 0xffff));
+> -}
+> -
+>  void save_v86_state(CPUX86State *env)
+>  {
+>      CPUState *cs = env_cpu(env);
+> @@ -131,19 +107,6 @@ static inline void return_to_32bit(CPUX86State *env, int retval)
+>      env->regs[R_EAX] = retval;
+>  }
+>  
+> -static inline int set_IF(CPUX86State *env)
+> -{
+> -    CPUState *cs = env_cpu(env);
+> -    TaskState *ts = get_task_state(cs);
+> -
+> -    ts->v86flags |= VIF_MASK;
+> -    if (ts->v86flags & VIP_MASK) {
+> -        return_to_32bit(env, TARGET_VM86_STI);
+> -        return 1;
+> -    }
+> -    return 0;
+> -}
+> -
+>  static inline void clear_IF(CPUX86State *env)
+>  {
+>      CPUState *cs = env_cpu(env);
+> @@ -162,34 +125,6 @@ static inline void clear_AC(CPUX86State *env)
+>      env->eflags &= ~AC_MASK;
+>  }
+>  
+> -static inline int set_vflags_long(unsigned long eflags, CPUX86State *env)
+> -{
+> -    CPUState *cs = env_cpu(env);
+> -    TaskState *ts = get_task_state(cs);
+> -
+> -    set_flags(ts->v86flags, eflags, ts->v86mask);
+> -    set_flags(env->eflags, eflags, SAFE_MASK);
+> -    if (eflags & IF_MASK)
+> -        return set_IF(env);
+> -    else
+> -        clear_IF(env);
+> -    return 0;
+> -}
+> -
+> -static inline int set_vflags_short(unsigned short flags, CPUX86State *env)
+> -{
+> -    CPUState *cs = env_cpu(env);
+> -    TaskState *ts = get_task_state(cs);
+> -
+> -    set_flags(ts->v86flags, flags, ts->v86mask & 0xffff);
+> -    set_flags(env->eflags, flags, SAFE_MASK);
+> -    if (flags & IF_MASK)
+> -        return set_IF(env);
+> -    else
+> -        clear_IF(env);
+> -    return 0;
+> -}
+> -
+>  static inline unsigned int get_vflags(CPUX86State *env)
+>  {
+>      CPUState *cs = env_cpu(env);
+> -- 
+> 2.46.1
+> 
 -- 
-2.46.2
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
