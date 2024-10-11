@@ -4,93 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB651CFC60D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 07:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD485CFC61B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szAGk-0003wp-1z; Fri, 11 Oct 2024 03:41:02 -0400
+	id 1szArR-0000CJ-Oh; Fri, 11 Oct 2024 04:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1szAGi-0003wg-4P
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 03:41:00 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1szAGf-0007mI-P8
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 03:40:59 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-37d4fd00574so819321f8f.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 00:40:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728632455; x=1729237255;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8mDip/0ow4XhgssxP8kgnUXoLAwS2RmrmHC/lIU88cg=;
- b=Hcdiam+Uq5wObpnSYquq9l9L5cLIlxwL0t1LoqAIp8t6YqXVqwOsEJaFu7fpXWRn7a
- 14KTa/8la7x+gI46Dn20DFWMrRi54lzJSFlJyvTPfO+zd8kuaM0vTurHylBrKpGORlul
- AUzywDUR+jH5ThopCwyYe+h3vNhQ3KpWqe8XcWgjgoiEUejpLSDoMVpBeVoKalloV60M
- UBApx4aJgIqTkWaOfTJzijhr2pWjtgVsfXEpOd8D2L2/end+j1y0UsdjqPM9XeweldCS
- LHcDA6Wu79R//ldgNmr6C26e12qDeTex8z/lmv2GXSV6b6o88y9xHXUAWJICn/Xi6c3p
- 2smg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1szArQ-0000CA-Vt
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:18:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1szArN-0003Ru-E9
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:18:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728634731;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=OWHz4dio5v2bcOfx1lDETEcIErAWvAKFXb04jALG9t8=;
+ b=CgwiC2k+p3W1wX1SrdpvWpbd6dGA7rwJtxsVhAnLe3SzJYBJmvQbTcbD991zSdsiyH/269
+ E+jt+tCmfrZih9vQHg5sW5hqS6/lxrPccAfETt7sgzJsrxGTcYEQeYvj3VS1yXMwN89fjv
+ PiQyDrkMdpx6ID8kc0M2t9ahaz+6QHY=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-278-VvK1RoqmOQOYgaQo4UtStg-1; Fri, 11 Oct 2024 04:18:47 -0400
+X-MC-Unique: VvK1RoqmOQOYgaQo4UtStg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2fad296738fso12574511fa.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:18:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728632455; x=1729237255;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8mDip/0ow4XhgssxP8kgnUXoLAwS2RmrmHC/lIU88cg=;
- b=qT9vtqRzNwmHUegEoQltRFLW9PPgpEcTsirx3dI8roTHL+IffWkDcckD8J3YFgHPMH
- bgdgEbjlzHunmqZpp1AtXPqKqOn4iNZWCF9VpyDrVD0n6SV5TnmS/3HAp5iwA2n2xDhj
- RHiwRg3BCqX+3cn3Wouw0GySWkYSfB6X5cFZP/4EhqRaLOLE6rM2FFxvxY+P2qHYnD6t
- wrJjowFhF76y3jL1fqpdYI36FK/jnW6D1WrK2SLjY16oVHAgtQ/6EK7YN1E9Xuw1Vz/o
- hR6xjCNV8Nr45XrDCQ+EDDUJChBlQcWoe++6U4W1EH37bqqwKJxD7Od6/6ySzDb35Lz/
- ZkBQ==
+ d=1e100.net; s=20230601; t=1728634726; x=1729239526;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OWHz4dio5v2bcOfx1lDETEcIErAWvAKFXb04jALG9t8=;
+ b=CAePpliyuEu5Uw/gWk8pv65b++QBSLV/3aoiiYf+HvUTXfpYWx4V6fwE9qNiVqzfvv
+ kABmVMY3bfc/BKhwBXbiVN/yM7wrw6xc/waXGFlf8ukS45x1zjFTvVI5vxFFf3iZaeLN
+ T++vO9P7g3TRo1kEh7pEKXFYP5yhjHdk4RRxRB0IuOKKS1RHnm/MRpaq1KW1PN1Cu49y
+ P/4XyCgN03rnB4LPwxTWRjbqgRFZfVHmFeftAkDqnm9eUXM7Ra6+TrZoUjLvSsJvAv2F
+ c+ruseH+RAH8IJLr2W8Eyo+Dej1DBY6AidXAwvkTx6cVWk4Qm0fLczT4JTPt0gfnppyG
+ lDvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCANyIE5t/u9GsQLzrrebCtnm6QudTquiGCvsZq2o+0JIrtYWYInEKYGNJENC4JFO1oe2iRe33GBBH@nongnu.org
-X-Gm-Message-State: AOJu0YwxUb1t+FsjTcbq88g/LvdJgg3M1a2Wgcu+GrzBNzrP5VlQvd9D
- 7zQGKLLUC3aXUnDIFZIj94huomxwpY9VXMZM3njvhnNUDmT1Jvcv0aF2AQPTg0YkEsO1Ad661V1
- m
-X-Google-Smtp-Source: AGHT+IGWo1yhhAqe+RwYPK8XY5kaHbyd0yk1WgppbPsNNXFObopaTKoNvzbdK4bKcuizfY3L7XSImw==
-X-Received: by 2002:a05:6000:128f:b0:37d:364c:b410 with SMTP id
- ffacd0b85a97d-37d55304616mr1272751f8f.33.1728632455264; 
- Fri, 11 Oct 2024 00:40:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
- ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ AJvYcCWrZJOhEAkhO5UKCbDWQahGLyjGYnse6tLx3KwKh95jjTGWNGFWZu6lopmot8jOVuupev1IwDLIBWm/@nongnu.org
+X-Gm-Message-State: AOJu0YxodvcMg0nhlL5SmqyEw9/9qL57Bkx8Es9cLjCiS48e094NRTQm
+ X1yDYBKR0Cr12fQmDHGn2NkhD6iVuP3jW2UEClVloP52XRIu0Kenk3vbvaz/vB+KRT0bS4KZZJI
+ qZECVH1yg7WWf1nyj3PdBcMysEJc0ZV3STgPFW9YhVsOWpS/OG4Qi
+X-Received: by 2002:a05:6512:31c5:b0:539:937f:7806 with SMTP id
+ 2adb3069b0e04-539da5ae41dmr603678e87.61.1728634725879; 
+ Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9BGdjd/xqIK1sWCUmSW52nOIDiEZ+RhhTcteIUxOlzEDNoVjkVpZ2/OrfOowx/DjeJFnAtA==
+X-Received: by 2002:a05:6512:31c5:b0:539:937f:7806 with SMTP id
+ 2adb3069b0e04-539da5ae41dmr603667e87.61.1728634725431; 
+ Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c749:9100:c078:eec6:f2f4:dd3b?
+ (p200300cbc7499100c078eec6f2f4dd3b.dip0.t-ipconnect.de.
+ [2003:cb:c749:9100:c078:eec6:f2f4:dd3b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d4b6bcf04sm3260388f8f.33.2024.10.11.00.40.54
+ 5b1f17b1804b1-430d70b4420sm68806625e9.34.2024.10.11.01.18.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 00:40:54 -0700 (PDT)
-Message-ID: <1c90b0b6-b8c7-48bd-b31b-961080210231@rivosinc.com>
-Date: Fri, 11 Oct 2024 09:40:53 +0200
+ Fri, 11 Oct 2024 01:18:45 -0700 (PDT)
+Message-ID: <f8702c07-442e-488c-8093-2b6ff89c82a2@redhat.com>
+Date: Fri, 11 Oct 2024 10:18:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] target/riscv: Add Smdbltrp CSRs handling
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue
- <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-References: <20240925115808.77874-1-cleger@rivosinc.com>
- <20240925115808.77874-6-cleger@rivosinc.com>
- <CAKmqyKP0ZX7C+grozW2y=YGeQAJZ0Thm5L7Q=GwiCQ=4-Dz2=A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] virtio-pci: fix memory_region_find for
+ VirtIOPCIRegion's MR
+To: Gao Shiyuan <gaoshiyuan@baidu.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: zuoboqun@baidu.com, qemu-devel@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>, wangliang44@baidu.com
+References: <20241009095827.67393-1-gaoshiyuan@baidu.com>
 Content-Language: en-US
-From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-In-Reply-To: <CAKmqyKP0ZX7C+grozW2y=YGeQAJZ0Thm5L7Q=GwiCQ=4-Dz2=A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241009095827.67393-1-gaoshiyuan@baidu.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,89 +154,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/10/2024 05:30, Alistair Francis wrote:
-> On Wed, Sep 25, 2024 at 10:02 PM Clément Léger <cleger@rivosinc.com> wrote:
->>
->> Add `ext_smdbltrp`in RISCVCPUConfig and implement MSTATUS.MDT behavior.
->>
->> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->> ---
->>  target/riscv/cpu_bits.h |  1 +
->>  target/riscv/cpu_cfg.h  |  1 +
->>  target/riscv/csr.c      | 15 +++++++++++++++
->>  3 files changed, 17 insertions(+)
->>
->> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
->> index 5557a86348..62bab1bf55 100644
->> --- a/target/riscv/cpu_bits.h
->> +++ b/target/riscv/cpu_bits.h
->> @@ -561,6 +561,7 @@
->>  #define MSTATUS_SDT         0x01000000
->>  #define MSTATUS_GVA         0x4000000000ULL
->>  #define MSTATUS_MPV         0x8000000000ULL
->> +#define MSTATUS_MDT         0x40000000000ULL /* Smdbltrp extension */
->>
->>  #define MSTATUS64_UXL       0x0000000300000000ULL
->>  #define MSTATUS64_SXL       0x0000000C00000000ULL
->> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
->> index dd804f95d4..4c4caa2b39 100644
->> --- a/target/riscv/cpu_cfg.h
->> +++ b/target/riscv/cpu_cfg.h
->> @@ -78,6 +78,7 @@ struct RISCVCPUConfig {
->>      bool ext_sstc;
->>      bool ext_smcntrpmf;
->>      bool ext_ssdbltrp;
->> +    bool ext_smdbltrp;
->>      bool ext_svadu;
->>      bool ext_svinval;
->>      bool ext_svnapot;
->> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->> index d8280ec956..cc1940447a 100644
->> --- a/target/riscv/csr.c
->> +++ b/target/riscv/csr.c
->> @@ -1617,6 +1617,14 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
->>          }
->>      }
->>
->> +    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
->> +        mask |= MSTATUS_MDT;
->> +        if ((val & MSTATUS_MDT) != 0) {
->> +            mstatus &= ~MSTATUS_MIE;
->> +            val &= ~MSTATUS_MIE;
->> +        }
->> +    }
+On 09.10.24 11:58, Gao Shiyuan wrote:
+> As shown below, if a virtio PCI device is attached under a pci-bridge, the MR
+> of VirtIOPCIRegion does not belong to any address space. So memory_region_find
+> cannot be used to search for this MR.
 > 
-> This should also be set to 1 on reset
-
-Yes, this is actually done in patch 7/8. I'll squash this change in this
-commit
-
+> Introduce the virtio-pci and pci_bridge address spaces to solve this problem.
 > 
-> Alistair
+> Before:
+> memory-region: pci_bridge_pci
+>    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
+>      00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
+>        00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
+>        00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
+>      0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
+>        0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
+>        0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
+>        0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
+>        0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
 > 
->> +
->>      if (xl != MXL_RV32 || env->debugger) {
->>          if (riscv_has_ext(env, RVH)) {
->>              mask |= MSTATUS_MPV | MSTATUS_GVA;
->> @@ -1655,6 +1663,13 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
->>      uint64_t valh = (uint64_t)val << 32;
->>      uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
->>
->> +    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
->> +        mask |= MSTATUS_MDT;
->> +        if ((val & MSTATUS_MDT) != 0) {
->> +            env->mstatus &= ~MSTATUS_MIE;
->> +            val &= ~MSTATUS_MIE;
->> +        }
->> +    }
->>      env->mstatus = (env->mstatus & ~mask) | (valh & mask);
->>
->>      return RISCV_EXCP_NONE;
->> --
->> 2.45.2
->>
->>
+> After:
+> address-space: virtio-pci-cfg-mem-as
+>    0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
+>      0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
+>      0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
+>      0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
+>      0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
+> 
+> address-space: pci_bridge_pci_mem
+>    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
+>      00000000fe840000-00000000fe840fff (prio 1, i/o): virtio-net-pci-msix
+>        00000000fe840000-00000000fe84003f (prio 0, i/o): msix-table
+>        00000000fe840800-00000000fe840807 (prio 0, i/o): msix-pba
+>      0000380000000000-0000380000003fff (prio 1, i/o): virtio-pci
+>        0000380000000000-0000380000000fff (prio 0, i/o): virtio-pci-common-virtio-net
+>        0000380000001000-0000380000001fff (prio 0, i/o): virtio-pci-isr-virtio-net
+>        0000380000002000-0000380000002fff (prio 0, i/o): virtio-pci-device-virtio-net
+>        0000380000003000-0000380000003fff (prio 0, i/o): virtio-pci-notify-virtio-net
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2576
+> Fixes: ffa8a3e3b2e6 ("virtio-pci: Add lookup subregion of VirtIOPCIRegion MR")
+> 
+> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
+> Signed-off-by: Wang Liang <wangliang44@baidu.com>
+
+Why the two additional SOB?
+
+You're the author and you sent out the patch.
+
+If the other two were co-authors, it should be something like
+
+
+Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
+Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
+Co-developed-by: Wang Liang <wangliang44@baidu.com>
+Signed-off-by: Wang Liang <wangliang44@baidu.com>
+Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+
+[...]
+
+>   
+>   static void virtio_pci_reset(DeviceState *qdev)
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index 5cd452115a..bd12fbe4ef 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -72,6 +72,8 @@ struct PCIBridge {
+>        */
+>       MemoryRegion address_space_mem;
+>       MemoryRegion address_space_io;
+> +    AddressSpace as_mem;
+> +    AddressSpace as_io;
+
+address_space_mem vs. as_mem is really confusing, likely 
+"address_space_mem" shpuld be called "mem_mr" ot sth. like that. Anyhow, 
+that's independent of your patch
+
+Acked-by: David Hildenbrand <david@redhat.com>
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
