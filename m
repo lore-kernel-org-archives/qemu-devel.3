@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0076CD0EE38
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 21:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97960D0EE3F
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 21:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szMrb-00082p-Hi; Fri, 11 Oct 2024 17:07:55 -0400
+	id 1szMzl-0000tF-J4; Fri, 11 Oct 2024 17:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1szMrX-00082T-V1
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 17:07:52 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1szMrV-0004xw-Ig
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 17:07:51 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71e4e481692so13710b3a.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 14:07:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728680867; x=1729285667;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IcaPMSEikXRLKNfvJPIZ/QakjhFegjjA1ZgrzfrkIMQ=;
- b=rkNzSPY3yG0LixZN9m1ASjzQC+esD9NBLeWmewrQ/Gwij+uP+6Zj/6nME0DZQqcQpP
- zB1zJAcspTzHoaxEFJdx7Ec/OsoGvoDkCoJBBjNeCMA5hTOgiXoOB5H2ldPDrSOT6OD0
- 7ruS122AEhMkCEOXOcblvBpN4Slysnpgpy9swo5kJUX9PzkNeUCBWhRBRjYthrhI2DJ+
- s6a7q3nwDqYRV7C/11DsARmowNGoxqnVgcXW9ING1anmxhZVHBpZI/ENzhLXRAuPSUkk
- eX9LD7dbd7sX1oUFoR5rjhrDo5Euq7PwdTJrqy3VawzV2zi99D3LBa1KB0WHZi7oVAM+
- ysvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728680867; x=1729285667;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IcaPMSEikXRLKNfvJPIZ/QakjhFegjjA1ZgrzfrkIMQ=;
- b=Zmw7bQRS2/4Q2uRtTzBqUnE0RZEYyuow34og5mZkQwor3Rh/4CKDPRY6N4Z5wasM3R
- Dp4p6h6QknetwQbR/xredeoLVoPM5Apxj+pPpmdbTKbMGxhYO/hDthUbsg5v81hRWe0q
- TIzg2iOvkFnULlQuBCnfthmuR0KSJzFvTy7tTcxl0eYtxjFuhq7uk3fWPchyYt0JUXiP
- ot6pnqpFHQ6IHLZ31gJOordHctAG2rANju4uRgiEdlpniTlCWBrcHGEwKx4jdQ73x+f4
- K6B1kklm5AkOlKKWCOlJOQLxXTDf7ExEfnUk0RQ6j0LrN7mu3T/3QoyilfkMEP+OtLag
- tbZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVusrxQKnRyah6PdpbHHB4eVFEof2WGcrM4ZYx0gYzMBn9TbfrlSr5psGIwIvvYlPPWxYzxhLZB8LtV@nongnu.org
-X-Gm-Message-State: AOJu0YxRY5NXyEiDO1DvnhYvjy/9YKWrg3cHeLNfffephf4j3L6Di/0f
- 48ovfB86/M++nSgaEVfzprKbmSY7ucBf5O8o2I+JgTUEsz/dYqi00/aJ7nOgzKAT4CctkcUMTOn
- WUjAhEuG3cHPcKRYExOMMqmin7Jc6rnylaZIQUQ==
-X-Google-Smtp-Source: AGHT+IHYzLKacqiJnI47D6YzxoDIErbvG0tTLbpBoCoxYzt3LaaO3raukXOSh+6jko1o2Lx73mchUJT5InuproLZjA4=
-X-Received: by 2002:a05:6a00:189a:b0:71e:4655:59ce with SMTP id
- d2e1a72fcca58-71e4c03044cmr1630827b3a.0.1728680867214; Fri, 11 Oct 2024
- 14:07:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1szMzj-0000sk-AZ; Fri, 11 Oct 2024 17:16:19 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1szMzh-0005sQ-FH; Fri, 11 Oct 2024 17:16:19 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B959F97994;
+ Sat, 12 Oct 2024 00:16:00 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60EE5152A46;
+ Sat, 12 Oct 2024 00:16:13 +0300 (MSK)
+Message-ID: <e7502239-3b27-43e1-9776-0aa51245a87d@tls.msk.ru>
+Date: Sat, 12 Oct 2024 00:16:13 +0300
 MIME-Version: 1.0
-References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <43613048-ba0b-4fc0-9ee2-b987a6dc86e4@yadro.com>
-In-Reply-To: <43613048-ba0b-4fc0-9ee2-b987a6dc86e4@yadro.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Fri, 11 Oct 2024 14:07:36 -0700
-Message-ID: <CAHBxVyG7mNWU+r0dd-R2oL4SftOhWsTpLzcmDMAOKALvjh8qHg@mail.gmail.com>
-Subject: Re: [PATCH RFC 00/10] Allow platform specific PMU event encoding
-To: Alexei Filippov <alexei.filippov@yadro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- alexei.filippov@syntacore.com, palmer@dabbelt.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=atishp@rivosinc.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 10/23] linux-user: Remove unused handle_vm86_fault
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org
+References: <20241004160331.1282441-1-mjt@tls.msk.ru>
+ <20241004160331.1282441-11-mjt@tls.msk.ru>
+ <c48513a2-a58f-4d41-a1c4-f04b82325894@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <c48513a2-a58f-4d41-a1c4-f04b82325894@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,112 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 10, 2024 at 5:51=E2=80=AFAM Alexei Filippov
-<alexei.filippov@yadro.com> wrote:
->
->
->
-> On 10.10.2024 02:08, Atish Patra wrote:
-> > Currently, the pmu implementation is virt machine specific that
-> > implements the SBI PMU encodings. In the future, individual machines
-> > would want to implement their own custom event encodings as there
-> > is no standard event encoding defined by the ISA. There is a performanc=
-e
-> > events TG which is working on defining standard set of events but not
-> > encodings. That allows flexibility for platforms to choose whatever
-> > encoding scheme they want. However, that means the generic pmu code
-> > should be flexible enough to allow that in Qemu as well.
-> >
-> > This series aims to solve that problem by first disassociating the
-> > common pmu implementation and event encoding. The event encoding is
-> > specific to a platform and should be defined in the platform specific
-> > machine or cpu implementation. The newly defined callbacks can be invok=
-ed
-> > from machine specific cpu implementation or machine code itself dependi=
-ng
-> > on the requirement.
-> >
-> > The first 5 patches in the series are generic improvements and cleanups
-> > where as the last 5 actually implements the disassociation for the virt
-> > machine. The current series can also be found at[2].
-> >
-> > I recently found that Alexei has done a similar effort for SiFive FU740=
-[1]
-> > but the implementation differs from this one based on how the cpu callb=
-acks
-> > are invoked. For example, Alexei's series implements a single callback =
-for
-> > all the events and has defined machine specific counter read/write call=
-backs.
-> > However, it just defaults to get_ticks() for every event. IMO, that is
-> > confusing to the users unless we can actually emulate more generic even=
-ts or
-> > machine specific events.
-> >
-> > I have separate callbacks for each type of events that we currently sup=
-port
-> > in Qemu (cycle, instruction, TLB events). Separate callbacks seems a be=
-tter
-> > approach to avoid ambiguity as we have very limited event capability in=
- qemu.
-> > I am open to converging them to one callback as well if we think we wil=
-l
-> > be extending set of events in the future.
-> >
-> > Once we converge on the approaches, we can consolidate the patches
-> > so that both SiFive FU740 and virt machine can use the same abstraction=
-.
-> >
-> > Cc: alexei.filippov@syntacore.com
-> >
-> Thanks for CCing me and your patch. Your done a great work, but still I
-> do not think this approach with per event callback are scalable enough.
-> I'll suggest to collaborate to work your and mine solution to unite them
-> to one patch set. Let me know what do you think.
+On 11.10.2024 19:02, Thomas Huth wrote:
+> On 04/10/2024 18.03, Michael Tokarev wrote:
+>> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>>
+>> handle_vm86_fault has been unused since:
+>>    1ade5b2fed ("linux-user/i386: Split out maybe_handle_vm86_trap")
+>>
+>> Remove it, and it's local macros.
 
-Yes. We should definitely collaborate and send a single series to support b=
-oth
-virt and sifive machines. You had a question about widening the
-hpmevent in your series.
+> FYI, looks like this broke compiling with Clang:
+> 
+> ../../devel/qemu/linux-user/vm86.c:50:20: error: unused function 
+> 'vm_putl' [-Werror,-Wunused-function]
+>     50 | static inline void vm_putl(CPUX86State *env, uint32_t segptr,
+>        |                    ^~~~~~~
+> ../../devel/qemu/linux-user/vm86.c:56:28: error: unused function 
+> 'vm_getb' [-Werror,-Wunused-function]
+...
 
-(Answering here to keep the discussion in 1 place)
+Hm. I built it with clang before sending the MR.
+But it was clang16 - the most recent one on bookworm.  It
+does not show this issue :)
 
-As per the section 18.1. Count Overflow Control, only top 8 bits are reserv=
-ed.
-Thus, a platform can implement their event encoding to upto 56 bit wide.
+Apparently I should upgrade clang somehow.
 
-> > [1] https://lore.kernel.org/all/20240910174747.148141-1-alexei.filippov=
-@syntacore.com/T/
-> > [2] https://github.com/atishp04/qemu/tree/b4/pmu_event_machine
-> >
-> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> > ---
-> > Atish Patra (10):
-> >        target/riscv: Fix the hpmevent mask
-> >        target/riscv: Introduce helper functions for pmu hashtable looku=
-p
-> >        target/riscv: Protect the hashtable modifications with a lock
-> >        target/riscv: Use uint64 instead of uint as key
-> >        target/riscv: Rename the PMU events
-> >        target/riscv: Define PMU event related structures
-> >        hw/riscv/virt.c : Disassociate virt PMU events
-> >        target/riscv: Update event mapping hashtable for invalid events
-> >        target/riscv : Use the new tlb fill event functions
-> >        hw/riscv/virt.c: Generate the PMU node from the machine
-> >
-> >   hw/riscv/virt.c           | 102 +++++++++++++++++++++++-
-> >   target/riscv/cpu.h        |  52 ++++++++++--
-> >   target/riscv/cpu_bits.h   |   4 +-
-> >   target/riscv/cpu_helper.c |  21 ++---
-> >   target/riscv/pmu.c        | 198 +++++++++++++++++++++----------------=
----------
-> >   target/riscv/pmu.h        |   3 +-
-> >   6 files changed, 246 insertions(+), 134 deletions(-)
-> > ---
-> > base-commit: 19a9809808a51291008f72d051d0f9b3499fc223
-> > change-id: 20241008-pmu_event_machine-b87c58104e61
-> > --
-> > Regards,
-> > Atish patra
-> >
+Thank you for the fix!
+
+/mjt
 
