@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51587D0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:20:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F00D24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJGU-0005vF-NA; Fri, 11 Oct 2024 13:17:26 -0400
+	id 1szJFa-0004zH-6a; Fri, 11 Oct 2024 13:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1szJ7s-0000hD-KJ
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:34 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1szJ7n-00054C-0o
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:27 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1szEVa-0004pP-2K
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 08:12:39 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c896b9b3e1so2782947a12.2
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 05:12:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1szEVv-0004rk-Ji
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 08:13:00 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20c9978a221so13132265ad.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 05:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728648756; x=1729253556; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=puJWoXBog/8ydctWkSxGOTiyURIuNNY5UfOdUVQ+f3s=;
- b=efSkZ7VxmqyO7QGVHUgC0HJiXWJTx4S9aMY5GCwENywNt+U5Pjwn8DrRnHsrsHLtui
- +UtCUqhYqAdyxRtRHNvaIAwz8bjneSv3fJ2mXxMAC6vHOTAX4UVbPutG2TGJjZzb4yYL
- Escu0gYLZIfd4HWIKXjg8sdmUpX6TnVQ+bs/444CrmrW9h4Hz4cY1Lx5lpTPO4gT5brG
- RXJmEaNvUapb5jwasS3Kr0pSXlN38S/x/X6hbO1/uGxqJfmz2mFaDRH7kS1I0KjLwN1f
- dwrmE/veYq8SR2yx7kFQMS6AqK9nysqPVF87SPoC9EZ2ypZ9D0h75Ku64CQnrF97JmF+
- WgWQ==
+ d=bytedance.com; s=google; t=1728648778; x=1729253578; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
+ b=lz5nv3J8tdNvEOjkpIgCPgojMTlGFLTeJ8HnKWUsysAGRR6q4SFtIePW1HkM+QDr08
+ c8LNDqxfvkKtat3Tb/PeIHmuZSF0JYO+7dlbdNEVffFLbbTCY+MNfO1jc7KpU+AOvpTJ
+ mLHA/LkOrspzLf4nLe/BX13rmsHP4a10ScqTZ9BNThO0atz0G+KNu798GCSmMFYAEdu9
+ wFYYDaqEHsW68hZ1MjpfWmdxx2WKjsQv4vIDlg6jKH+sqS0zYvUrmCtSmPwZCra47w/4
+ 8dk+1BqHHU+2QECsnkz36NJJLNIbD/wCMr4zSxELq0sd7T0Co9qAbixOJtxdii87L3xW
+ XxZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728648756; x=1729253556;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=puJWoXBog/8ydctWkSxGOTiyURIuNNY5UfOdUVQ+f3s=;
- b=ckWNPdnw5i003WxTBCuLkAtjzEOAAWx9ZpcngdbGHR5jaAhjgdXor3umunvzaDbL+I
- UtBVN9HZ2aiDBIQn0LIEFAjPBHIAcmLQXufvC1YQtIcV5dAamZVYyB7QFo/08qywildG
- Koji8fGhRcXWVCd3Y0FhP+Vhy7mg+QIjC7XIPn/JkQY07sIXRjIM43rXnEOTBJr/9uGr
- 7a44WLkNiaRnNQFg4OZtnYQEH8Mn45c6cakCbk1KVUu2y0pMmCTSS+HiIApzBJR/xoQi
- L7q3yoh3CLn+JApylQJLGfgnX41QYVnlp9AbSNVxmqnMvHWKaVv0wLVVggwOqWusFeKZ
- Sy9A==
-X-Gm-Message-State: AOJu0Yw+fzszSa25TXpjrMZCUVFsi91qWly2U00hVz+Vj2FzOFt7hHh0
- Z/163QvHtm7foEI8sQXRbmZX8JfmmPydQ1bWSb3GDWIf8WZfo6vixkmaWFy6P+GBYGkLkeEgnje
- RzMFAZebIODu+jKd4ImPUKBX51nAYuduucGNdWQ==
-X-Google-Smtp-Source: AGHT+IGlgJCk120RDcia8DtaaK3bs9F0zbHRivGQXfWxGUUdW71bnLktdNciAU4N6zRSwroTuCFRUqkI5CuHDDRZZh0=
-X-Received: by 2002:a05:6402:270d:b0:5c9:36c4:ceb6 with SMTP id
- 4fb4d7f45d1cf-5c948d75f09mr1594460a12.33.1728648756043; Fri, 11 Oct 2024
- 05:12:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728648778; x=1729253578;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
+ b=UEKHuqvSDdzjQTRBbTnAWNfIoT+m6tIul2ThLKlNXsrHzyERjakHEVElo5JMeebg5/
+ oXXfdrpZAkEF6rwRVi99F7RVSPLlfDeZSgDZemnptZColI0WfrqH8H0hAaGPouynPXuB
+ rlWm+Qn+xZZwNhsKrnrJugFRn97LkOQbOAp/H0/mIv1kzW5jtaa5uPw2il5ZFe4uK9/G
+ td/ohrD1lgI5o+FLMLHq8JD3SCHHgXygPUVH+L8vwQrfWikODQRm87yCfSmVwdGc4yOd
+ zQyM4eXFI/p1b0C5xRx28GTjO+OZKIB1q/hC1snFDasC1n/lFg7nICoVB0HCzpSioA5D
+ ztcg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFbggkj+lmyGkv4+v4wb6eiH1CHbjHHBD9peiC/jBsdMptXNNzMUJEIKD9Odtxh+QLfHjlq/ZElN6I@nongnu.org
+X-Gm-Message-State: AOJu0YxIOkuPBDDmgLysgFdptTlyTdBf0hqbPN9rcD1PKGw5jthF2u0o
+ jXOnD26EwdOwfIuMTf4YOL5+n5dN4m9GgqGkfn4R78GF4QwHacTVj9aa5xtMe44=
+X-Google-Smtp-Source: AGHT+IGqJ4u58f3/ekJdJVOUQpD+AfDwRiLQyZEFQAkFrlz2hVOJNcioccaWkZfycD9lCYhykNgmcw==
+X-Received: by 2002:a17:902:d2c1:b0:20c:8abc:733a with SMTP id
+ d9443c01a7336-20ca16ebe21mr32049825ad.53.1728648778262; 
+ Fri, 11 Oct 2024 05:12:58 -0700 (PDT)
+Received: from TF4D9JK212.bytedance.net ([139.177.225.232])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c8bc13551sm22569305ad.88.2024.10.11.05.12.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 11 Oct 2024 05:12:57 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, k.jensen@samsung.com,
+ Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v14 02/10] block/raw: add persistent reservation in/out driver
+Date: Fri, 11 Oct 2024 20:12:23 +0800
+Message-Id: <20241011121231.18333-3-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+In-Reply-To: <20241011121231.18333-1-luchangqi.123@bytedance.com>
+References: <20241011121231.18333-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-References: <20241011083532.15023-1-pbonzini@redhat.com>
-In-Reply-To: <20241011083532.15023-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 11 Oct 2024 13:12:24 +0100
-Message-ID: <CAFEAcA_RNb-bZ4F1czfCXJ1ARahw1Hr9wSk-1vY=k5D7=y+P1A@mail.gmail.com>
-Subject: Re: [PATCH v2] scripts/archive-source: find directory name for
- subprojects
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,18 +100,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 11 Oct 2024 at 09:35, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> Rust subprojects have the semantic version (followed by -rs) in the subproject
-> name, but the full version (without -rs) is used by crates.io for the root
-> directory of the tarball.  Teach scripts/archive-source.sh to look for the
-> root directory name in wrap files.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
+Add persistent reservation in/out operations for raw driver.
+The following methods are implemented: bdrv_co_pr_read_keys,
+bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
+bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/raw-format.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-thanks
--- PMM
+diff --git a/block/raw-format.c b/block/raw-format.c
+index ac7e8495f6..3746bc1bd3 100644
+--- a/block/raw-format.c
++++ b/block/raw-format.c
+@@ -454,6 +454,55 @@ raw_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
+     return bdrv_co_ioctl(bs->file->bs, req, buf);
+ }
+ 
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
++                    uint32_t num_keys, uint64_t *keys)
++{
++
++    return bdrv_co_pr_read_keys(bs->file->bs, generation, num_keys, keys);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
++                           uint64_t *key, BlockPrType *type)
++{
++    return bdrv_co_pr_read_reservation(bs->file->bs, generation, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_register(BlockDriverState *bs, uint64_t old_key,
++                   uint64_t new_key, BlockPrType type,
++                   bool ptpl, bool ignore_key)
++{
++    return bdrv_co_pr_register(bs->file->bs, old_key, new_key,
++                               type, ptpl, ignore_key);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    return bdrv_co_pr_reserve(bs->file->bs, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    return bdrv_co_pr_release(bs->file->bs, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_clear(BlockDriverState *bs, uint64_t key)
++{
++    return bdrv_co_pr_clear(bs->file->bs, key);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
++                  uint64_t new_key, BlockPrType type, bool abort)
++{
++    return bdrv_co_pr_preempt(bs->file->bs, old_key, new_key, type, abort);
++}
++
+ static int GRAPH_RDLOCK raw_has_zero_init(BlockDriverState *bs)
+ {
+     return bdrv_has_zero_init(bs->file->bs);
+@@ -672,6 +721,13 @@ BlockDriver bdrv_raw = {
+     .strong_runtime_opts  = raw_strong_runtime_opts,
+     .mutable_opts         = mutable_opts,
+     .bdrv_cancel_in_flight = raw_cancel_in_flight,
++    .bdrv_co_pr_read_keys    = raw_co_pr_read_keys,
++    .bdrv_co_pr_read_reservation = raw_co_pr_read_reservation,
++    .bdrv_co_pr_register     = raw_co_pr_register,
++    .bdrv_co_pr_reserve      = raw_co_pr_reserve,
++    .bdrv_co_pr_release      = raw_co_pr_release,
++    .bdrv_co_pr_clear        = raw_co_pr_clear,
++    .bdrv_co_pr_preempt      = raw_co_pr_preempt,
+ };
+ 
+ static void bdrv_raw_init(void)
+-- 
+2.20.1
+
 
