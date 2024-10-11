@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0459BCFD34D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 11:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2049CFD342
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 11:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szDZz-00076O-LX; Fri, 11 Oct 2024 07:13:07 -0400
+	id 1szDa1-00076t-63; Fri, 11 Oct 2024 07:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szDZy-00076A-Do
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:13:06 -0400
+ id 1szDZz-00076Q-Sp
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:13:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szDZu-00073g-IU
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:13:06 -0400
+ id 1szDZx-00073m-RQ
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:13:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728645181;
+ s=mimecast20190719; t=1728645184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C47oi+p/U14aTwO300CpbdGtBMf6xzPszQtxxdH6ifk=;
- b=MpEMMcgqta/dh57BfrsCib+LeiYbl+ox/P9rfzoMY8Nh22Gsps04pReg4r0k/VwyzWa/yS
- iaLMdcOnF07hgDxRwddtdYlskzEKn3aCXjMcbZD3YdICTOGG4VqUTN5NaTAE/uuzHEUe4j
- 3vJGMzv16aVVmgZvABGyztnq93ryDvk=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k/34HEPxRiOlQhIJ2aUohMKJaHMgtsEfmqX+JGgRPwc=;
+ b=NxCJbZgjQk/cwWJdJTNHj1hpeimAib+iECIo4EEaOmqLpRYOSiUMJF99OQLI+xPCdL6+hN
+ h1ZEeUwN6kXo4Cfi6itLirzT0kIQ+HsMKf5kgzHUaZ563nXg4cmMpk98kym7NElRWBWAiM
+ lq5WJG6JVfgOl/4n2n7MnV4szOQOVfk=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-aIZQ0jLWPU23UNk7ltdGXw-1; Fri, 11 Oct 2024 07:13:00 -0400
-X-MC-Unique: aIZQ0jLWPU23UNk7ltdGXw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2fb3110b82aso4866441fa.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 04:13:00 -0700 (PDT)
+ us-mta-240-pdMGIz22M3uuUOoImyBe3w-1; Fri, 11 Oct 2024 07:13:02 -0400
+X-MC-Unique: pdMGIz22M3uuUOoImyBe3w-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5c93572b437so1247236a12.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 04:13:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728645178; x=1729249978;
+ d=1e100.net; s=20230601; t=1728645181; x=1729249981;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C47oi+p/U14aTwO300CpbdGtBMf6xzPszQtxxdH6ifk=;
- b=kLZ0cSp+HPVM9olV3A/tcnTdm8PiWwI8tW45mtX2nzRt3+xIBTdereO8WGZ+43B7HU
- 5y7XVAQI0B/UpXbqTKGw4VMP8zzD7sN0y02VBVQAI7wxjOsb3EiwwlZgzEzCV3X6kWwI
- g6JB6NrDpaQ5glSME2aaiS0hqvW4nDJ1ARDMT2IJYHEML4ULoZnubfBgK6oOMErnLKXa
- TfOOEuHQAKr+QdW1Ab0tEo7UG4Ssy8QkvkXe39+vVHM5MawoZ21B3m/7SBkaBepjwoOQ
- WMqa2wGSGcYN99z1N1n0KikqUtUXuy0mjCra6iiOjFAiZI5uYGK5k+FAFfd52CnrRP70
- X8yw==
-X-Gm-Message-State: AOJu0YyuE0Mk1PZL0bdnXL6Yo97ri4PArX3/nW1hRzno2dZwbw2c+A1K
- qr4vG6zaJFlnG1hTVwBWsujNGwqNRSVZ+FURUuVS+J/reOrBKC5lJXERPtvP3vi9GOKyGHAu3ug
- dKgbXkEWTXB878MojnlCL2mJXTD8/rBr5RUWNuHSfDiRhi5m5ue0Po3pamSfvtUpIjeoY0fJm6Q
- D3ZvwaYZSLdDIwtcLkKwvdRZgvFpSKo5ZgytNCEP8=
-X-Received: by 2002:a05:651c:551:b0:2f3:f4e2:869c with SMTP id
- 38308e7fff4ca-2fb32b242ddmr12744961fa.44.1728645177917; 
- Fri, 11 Oct 2024 04:12:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1COeZhZy9aOy7ENEf+NpEn8qbRm08p8dbK7DAwkdrN3hVBqaf+fPJNGwx1lFZmMTMWvuDYw==
-X-Received: by 2002:a05:651c:551:b0:2f3:f4e2:869c with SMTP id
- 38308e7fff4ca-2fb32b242ddmr12744651fa.44.1728645177272; 
- Fri, 11 Oct 2024 04:12:57 -0700 (PDT)
+ bh=k/34HEPxRiOlQhIJ2aUohMKJaHMgtsEfmqX+JGgRPwc=;
+ b=WnBQsfsGWUZ0maVheqoCwQpYoEnlUDqGiutLOB7Hv8omss6++Whg55mtHmwVfMe0ey
+ 2m2x9xe5xhiSYr7qLMdL24YoKakcLcA99TcAVwHngk7rH1HNR67Ld28VkPk1TuBus9UN
+ 9YoMGVjdtMWqQ3gN7sI5pvy1XM+i06Y9gNDrlunfYDtY24h0bzdlJvcd6j+ipVgwjd8H
+ IWq9eHzSUfFIOT46kKAuyBiX9sVNPEThuyapV5aboWCiU9AIf95fZ/NDMxYwk+6E76Ei
+ 0gUq5b37sb04ZPn0f363zIV+1eEGDwgdJw3n415vej76e/3E/0c25OQ10PQka2ij6c1q
+ NXSA==
+X-Gm-Message-State: AOJu0Yz4EMH/I19A/xo8BhpgmQfpV3rVB8WVOBNy4HHAEiZxwhGNwlJ0
+ bUrhaXVGaR/rFSRGHJSr8NZ7uVsraDjPnKZXaqxIR7MWjPch6qC3Z375xWrRyMnycLOC6qIHuOR
+ jS3RorCJK8uFlS2JmLfhDO7IbtvVbWhJBl3Rm4ozQ9kRq1aoMeMxtri3e7ZF+pI6uzlPuGxBjty
+ dZXmDIgkCe/rpX3aGmuxiEk0Bk1uPIn9zdsoHBl/4=
+X-Received: by 2002:a17:907:96aa:b0:a99:4261:e9f7 with SMTP id
+ a640c23a62f3a-a99b940efe8mr170211466b.39.1728645180862; 
+ Fri, 11 Oct 2024 04:13:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWKkeHQJZeMv3wrXeJOVPHVgx3cXa7M6RWN0JqeXCoqaQG5cXTLOJNqPDK5C6vXaQkXPqKmw==
+X-Received: by 2002:a17:907:96aa:b0:a99:4261:e9f7 with SMTP id
+ a640c23a62f3a-a99b940efe8mr170208766b.39.1728645180298; 
+ Fri, 11 Oct 2024 04:13:00 -0700 (PDT)
 Received: from avogadro.local ([151.81.124.37])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c937293d10sm1819484a12.79.2024.10.11.04.12.55
+ a640c23a62f3a-a99a80de516sm200061066b.168.2024.10.11.04.12.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 04:12:55 -0700 (PDT)
+ Fri, 11 Oct 2024 04:12:59 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v2 2/3] docs: avoid footnotes consisting of just URLs
-Date: Fri, 11 Oct 2024 13:12:48 +0200
-Message-ID: <20241011111249.47530-3-pbonzini@redhat.com>
+Subject: [PATCH v2 3/3] docs: use consistent markup for footnotes
+Date: Fri, 11 Oct 2024 13:12:49 +0200
+Message-ID: <20241011111249.47530-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241011111249.47530-1-pbonzini@redhat.com>
 References: <20241011111249.47530-1-pbonzini@redhat.com>
@@ -102,110 +102,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the footnotes with inline links whenever the footnote text
-consists of nothing but the URL.  While at it, make the link texts
-consistent in the surrounding areas, for example avoiding usage of
-"here" for the link's text.
+Unfortunately, the definition of the footnote syntax requires
+the author to use the awkward escaped space "\ " in the really common
+case of "footnote marker at end of word or sentence"; and in fact the rST
+documentation's examples of footnote syntax contain only artificial
+examples that do *not* use the syntax.  This resulted in ugly rendering
+of footnotes throughout QEMU's documentation.  Ensure the space is escaped
+whenever the footnote must attach to the preceding word, and also use
+a named reference for clarity.
 
-In the case of acpi-bits.rst this fixes a build failure with Sphinx
-8.1.0, because the FOSDEM link was duplicated in the paragraph and the
-new version is a lot stricter about unreferenced footnotes.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/testing/acpi-bits.rst | 26 +++++++++++++-------------
- docs/specs/rapl-msr.rst          | 25 ++++++++++++-------------
- 2 files changed, 25 insertions(+), 26 deletions(-)
+ docs/devel/atomics.rst              | 6 +++---
+ docs/devel/build-system.rst         | 2 +-
+ docs/devel/loads-stores.rst         | 2 +-
+ docs/devel/maintainers.rst          | 4 ++--
+ docs/devel/migration/mapped-ram.rst | 4 ++--
+ docs/specs/fw_cfg.rst               | 4 ++--
+ 6 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/docs/devel/testing/acpi-bits.rst b/docs/devel/testing/acpi-bits.rst
-index 78aeb6aa3c4..764e0ef51a5 100644
---- a/docs/devel/testing/acpi-bits.rst
-+++ b/docs/devel/testing/acpi-bits.rst
-@@ -30,15 +30,20 @@ OS modules are generally written using low level languages such as C and
- low level assembly machine language. Writing test routines in a low level
- language makes things more cumbersome. These and other reasons makes using
- bios-bits very attractive for testing bioses. More details on the inspiration
--for developing biosbits and its real life uses can be found in [#a]_ and [#b]_.
-+for developing biosbits and its real life uses were presented `at Plumbers
-+in 2011 <Plumbers_>`__ and `at Linux.conf.au in 2012 <Linux.conf.au_>`__.
+diff --git a/docs/devel/atomics.rst b/docs/devel/atomics.rst
+index 6bf032f9005..95c7b77c01e 100644
+--- a/docs/devel/atomics.rst
++++ b/docs/devel/atomics.rst
+@@ -204,7 +204,7 @@ They come in six kinds:
+   before the second with respect to the other components of the system.
+   Therefore, unlike ``smp_rmb()`` or ``qatomic_load_acquire()``,
+   ``smp_read_barrier_depends()`` can be just a compiler barrier on
+-  weakly-ordered architectures such as Arm or PPC\ [#]_.
++  weakly-ordered architectures such as Arm or PPC\ [#alpha]_.
  
--For QEMU, we maintain a fork of bios bits in gitlab along with all the
--dependent submodules `here <https://gitlab.com/qemu-project/biosbits-bits>`__.
--This fork contains numerous fixes, a newer acpica and changes specific to
--running these functional QEMU tests using bits. The author of this document
--is the sole maintainer of the QEMU fork of bios bits repository. For more
--information, please see author's `FOSDEM talk on this bios-bits based test
--framework <https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/>`__.
-+For QEMU, we maintain a fork of bios bits in `gitlab`_, along with all
-+the dependent submodules.  This fork contains numerous fixes, a newer
-+acpica and changes specific to running these functional QEMU tests using
-+bits. The author of this document is the current maintainer of the QEMU
-+fork of bios bits repository. For more information, please see `the
-+author's FOSDEM presentation <FOSDEM_>`__ on this bios-bits based test framework.
-+
-+.. _Plumbers: https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
-+.. _Linux.conf.au: https://www.youtube.com/watch?v=36QIepyUuhg
-+.. _gitlab: https://gitlab.com/qemu-project/biosbits-bits
-+.. _FOSDEM: https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
+   Note that the first load really has to have a _data_ dependency and not
+   a control dependency.  If the address for the second load is dependent
+@@ -212,7 +212,7 @@ They come in six kinds:
+   than actually loading the address itself, then it's a _control_
+   dependency and a full read barrier or better is required.
  
- *********************************
- Description of the test framework
-@@ -148,8 +153,3 @@ Under ``tests/functional/`` as the root we have:
+-.. [#] The DEC Alpha is an exception, because ``smp_read_barrier_depends()``
++.. [#alpha] The DEC Alpha is an exception, because ``smp_read_barrier_depends()``
+    needs a processor barrier.  On strongly-ordered architectures such
+    as x86 or s390, ``smp_rmb()`` and ``qatomic_load_acquire()`` can
+    also be compiler barriers only.
+@@ -295,7 +295,7 @@ Acquire/release pairing and the *synchronizes-with* relation
+ ------------------------------------------------------------
  
- Author: Ani Sinha <anisinha@redhat.com>
+ Atomic operations other than ``qatomic_set()`` and ``qatomic_read()`` have
+-either *acquire* or *release* semantics [#rmw]_.  This has two effects:
++either *acquire* or *release* semantics\ [#rmw]_.  This has two effects:
  
--References:
-------------
--.. [#a] https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
--.. [#b] https://www.youtube.com/watch?v=36QIepyUuhg
--.. [#c] https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
-diff --git a/docs/specs/rapl-msr.rst b/docs/specs/rapl-msr.rst
-index 1202ee89bee..aaf0db9f91b 100644
---- a/docs/specs/rapl-msr.rst
-+++ b/docs/specs/rapl-msr.rst
-@@ -9,11 +9,12 @@ The consumption is reported via MSRs (model specific registers) like
- MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are 64 bits
- registers that represent the accumulated energy consumption in micro Joules.
+ .. [#rmw] Read-modify-write operations can have both---acquire applies to the
+           read part, and release to the write.
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index fa1c59d9fd8..d42045a2325 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -333,7 +333,7 @@ into each emulator:
  
--Thanks to the MSR Filtering patch [#a]_ not all MSRs are handled by KVM. Some
--of them can now be handled by the userspace (QEMU). It uses a mechanism called
--"MSR filtering" where a list of MSRs is given at init time of a VM to KVM so
--that a callback is put in place. The design of this patch uses only this
--mechanism for handling the MSRs between guest/host.
-+Thanks to KVM's `MSR filtering <msr-filter-patch_>`__ functionality,
-+not all MSRs are handled by KVM. Some of them can now be handled by the
-+userspace (QEMU); a list of MSRs is given at VM creation time to KVM, and
-+a userspace exit occurs when they are accessed.
-+
-+.. _msr-filter-patch: https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
+ ``default-configs/targets/*.mak``
+   These files mostly define symbols that appear in the ``*-config-target.h``
+-  file for each emulator [#cfgtarget]_.  However, the ``TARGET_ARCH``
++  file for each emulator\ [#cfgtarget]_.  However, the ``TARGET_ARCH``
+   and ``TARGET_BASE_ARCH`` will also be used to select the ``hw/`` and
+   ``target/`` subdirectories that are compiled into each target.
  
- At the moment the following MSRs are involved:
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index ec627aa9c06..9471bac8599 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -95,7 +95,7 @@ guest CPU state in case of a guest CPU exception.  This is passed
+ to ``cpu_restore_state()``.  Therefore the value should either be 0,
+ to indicate that the guest CPU state is already synchronized, or
+ the result of ``GETPC()`` from the top level ``HELPER(foo)``
+-function, which is a return address into the generated code [#gpc]_.
++function, which is a return address into the generated code\ [#gpc]_.
  
-@@ -92,9 +93,12 @@ found by the sysconf system call. A typical value of clock ticks per second is
- package has 4 cores, 400 ticks maximum can be scheduled on all the cores
- of the package for a period of 1 second.
+ .. [#gpc] Note that ``GETPC()`` should be used with great care: calling
+           it in other functions that are *not* the top level
+diff --git a/docs/devel/maintainers.rst b/docs/devel/maintainers.rst
+index 5c907d901cd..88a613ed74f 100644
+--- a/docs/devel/maintainers.rst
++++ b/docs/devel/maintainers.rst
+@@ -99,9 +99,9 @@ members of the QEMU community, you should make arrangements to attend
+ a `KeySigningParty <https://wiki.qemu.org/KeySigningParty>`__ (for
+ example at KVM Forum) or make alternative arrangements to have your
+ key signed by an attendee. Key signing requires meeting another
+-community member **in person** [#]_ so please make appropriate
++community member **in person**\ [#2020]_ so please make appropriate
+ arrangements.
  
--The /proc/[pid]/stat [#b]_ is a sysfs file that can give the executed time of a
--process with the [pid] as the process ID. It gives the amount of ticks the
--process has been scheduled in userspace (utime) and kernel space (stime).
-+`/proc/[pid]/stat <stat_>`__ is a procfs file that can give the executed
-+time of a process with the [pid] as the process ID. It gives the amount
-+of ticks the process has been scheduled in userspace (utime) and kernel
-+space (stime).
-+
-+.. _stat: https://man7.org/linux/man-pages/man5/proc.5.html
+-.. [#] In recent pandemic times we have had to exercise some
++.. [#2020] In recent pandemic times we have had to exercise some
+        flexibility here. Maintainers still need to sign their pull
+        requests though.
+diff --git a/docs/devel/migration/mapped-ram.rst b/docs/devel/migration/mapped-ram.rst
+index d352b546e96..b08c2b433c4 100644
+--- a/docs/devel/migration/mapped-ram.rst
++++ b/docs/devel/migration/mapped-ram.rst
+@@ -44,7 +44,7 @@ Use-cases
  
- By reading those metrics for a thread, one can calculate the ratio of time the
- package has spent executing the thread.
-@@ -148,8 +152,3 @@ Current Limitations
- - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at the
-   moment.
+ The mapped-ram feature was designed for use cases where the migration
+ stream will be directed to a file in the filesystem and not
+-immediately restored on the destination VM [#]_. These could be
++immediately restored on the destination VM\ [#alternatives]_. These could be
+ thought of as snapshots. We can further categorize them into live and
+ non-live.
  
--References
------------
--
--.. [#a] https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
--.. [#b] https://man7.org/linux/man-pages/man5/proc.5.html
+@@ -70,7 +70,7 @@ mapped-ram in this scenario is portability since background-snapshot
+ depends on async dirty tracking (KVM_GET_DIRTY_LOG) which is not
+ supported outside of Linux.
+ 
+-.. [#] While this same effect could be obtained with the usage of
++.. [#alternatives] While this same effect could be obtained with the usage of
+        snapshots or the ``file:`` migration alone, mapped-ram provides
+        a performance increase for VMs with larger RAM sizes (10s to
+        100s of GiBs), specially if the VM has been stopped beforehand.
+diff --git a/docs/specs/fw_cfg.rst b/docs/specs/fw_cfg.rst
+index 5ad47a901c9..31ae31576b1 100644
+--- a/docs/specs/fw_cfg.rst
++++ b/docs/specs/fw_cfg.rst
+@@ -54,11 +54,11 @@ Data Register
+ -------------
+ 
+ * Read/Write (writes ignored as of QEMU v2.4, but see the DMA interface)
+-* Location: platform dependent (IOport [#]_ or MMIO)
++* Location: platform dependent (IOport\ [#placement]_ or MMIO)
+ * Width: 8-bit (if IOport), 8/16/32/64-bit (if MMIO)
+ * Endianness: string-preserving
+ 
+-.. [#]
++.. [#placement]
+     On platforms where the data register is exposed as an IOport, its
+     port number will always be one greater than the port number of the
+     selector register. In other words, the two ports overlap, and can not
 -- 
 2.46.2
 
