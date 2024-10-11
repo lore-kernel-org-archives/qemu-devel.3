@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2865BD24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F27D0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:13:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ4U-0001AL-JH; Fri, 11 Oct 2024 13:04:58 -0400
+	id 1szJ7w-0005fv-An; Fri, 11 Oct 2024 13:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4R-0000hD-0j
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHe8-0007Gs-2g
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660819;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZQtmuw2xMVAabxXMNCF1evpW+a0kJgwO3J3KK4HJSHE=;
- b=JzU/tPQvLQCNbDrIHYUMtf27bSAhT77sW1LDHzsayrtNPGOccid7JsJE+hQgCjIQiVERKW
- JZ9bqYtJLv5zdDccGDl9PdHiP1XOQ+4l5mpeqENH49UpZVKjAmJouzwIyj1dea3LmIKjSx
- vuCzln3HkrPPhAA43UUDoM1kNmDdg2A=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-Bt7RkumMOoW_wKQoLKH_9w-1; Fri, 11 Oct 2024 11:33:38 -0400
-X-MC-Unique: Bt7RkumMOoW_wKQoLKH_9w-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a99d1730c26so21792566b.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1szJ4X-0000wP-VE
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:05:02 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1szHTj-0005sV-Tp
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:22:57 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20c803787abso15159725ad.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728660174; x=1729264974; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1CogMR7I7WuqqzE6cNx48xEoXofErOXlHnvljTI0ZmU=;
+ b=vYIg4B3GEeJQQppUtlecq2fVGVtvUZz/O+yYJ4+l+u55BxWWhFo4v2uj09ueV30CZn
+ Ixcaqg5KnAAJH1SGFvTFlYWPihcX3EAJBjXuZb5yexJPPUZKJVW1nr+b/K3dWqSqIrK4
+ eAM9kQjbmdmDybtqDFzkA8ORs9k5wLc0TMxe/1T3hpwyCrYXey1MtRvc2zHDBJsJMYTh
+ 8/nQF5UIWpzHUPNh4zSbCAslGPtrLLrYsKGc0HTXF0uh0wlHOMlOt2UFawpwSfsR2G6w
+ QtbIRjIrryBZ/xVY+8YWa4deEKT2i5zgYYsmFTf3BV3inrH7UQr7YIm8v/kZWaU1Gp9p
+ Q8Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660817; x=1729265617;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZQtmuw2xMVAabxXMNCF1evpW+a0kJgwO3J3KK4HJSHE=;
- b=Z6bpvfc3Pc6JQ6eRkJo/YQoJ7HcZGjSmhUrPrLDJCUOnpfOwjIL+Sk3I/gai49Ityk
- rXmjNCJgSydLjamXgpyqxCVY7Fhble7ytUzQpCKqP53+uqpnUBsM1LdJPvz9VagE6Gob
- zoRNU7v1CWxkVE+Sr+JZxkHmiRMCVyP+TYYTsj1T4jpl7D/CUI3dft8K0927LdOUx5sE
- VNg66fCJPRH6CBbz388tuqovJkw0cCeuS/vQCyHwdmd5Lz/I4XRXWQ8tZGb2ZKIXfSUY
- rJH9EC6i/0sl3XIGKdaiOVlSX6AXDY9IdkEhMB4uuoVwkGC+6IRM6gsZQlXbgUE157aH
- 05WA==
-X-Gm-Message-State: AOJu0YwkKiHUu0OWZN2WOYytgMuOiddPbNwT6rpCczKV2p1GVNTnadpS
- NL3d6tiQpy9jiGbNuoSpx5Q1mhl+KfdSdLbCBBJA1Mb4SJhNqa3P4XQiW4xwDHSKN4u5rsPMGv8
- VyxZkx/hoNP2CUsBWIKYER4CpyxG5S01lm0twn1erEGwJdeaIR40JsaAbZKVNiRi1KihHxE2cQL
- sOjQwhdGuIB3KDNIIXa1Br+KJ3P6AuxHFEsVYZMpc=
-X-Received: by 2002:a17:907:7ea1:b0:a8d:250a:52a8 with SMTP id
- a640c23a62f3a-a99b93a8506mr240095166b.3.1728660816732; 
- Fri, 11 Oct 2024 08:33:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFhy0k8oQ+ywfujnrXt/UJo2cW2dY0m+WYz+ikTS6WVY/CFqAaIXXwS1Jx7CSIRiQy3TTJ4/Q==
-X-Received: by 2002:a17:907:7ea1:b0:a8d:250a:52a8 with SMTP id
- a640c23a62f3a-a99b93a8506mr240092766b.3.1728660816224; 
- Fri, 11 Oct 2024 08:33:36 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
+ d=1e100.net; s=20230601; t=1728660174; x=1729264974;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1CogMR7I7WuqqzE6cNx48xEoXofErOXlHnvljTI0ZmU=;
+ b=KIIlANwb7UBFtJrW3Bm3MQEgwBpGmDo38RSSW6NqnFfQCjlZRQZmnxvnMemTOhAMZ4
+ uAkVNO6+YyydhjbBlIdPa0ZIVZuzDJgX3TrxbgB4iZoNLHLd6ML/bDcWRaKHmln8cG8B
+ cKYy2tv3jPtsr+ZfiGNFMsE7hBEVCc7LjR+35XkRCQg2GqeWg8pMz/fxW8KHOhJNdLqx
+ dwcymrY6BgyiKdzTYLg7G6ChP56NwUEfYW4GBXS9UbZ2+m0JBBB4AXoPDV0q8A+xoiN8
+ EJkOWJnr8EYaEgAM6LJlx7LFDdF2dhpytp61xmoqJfhoyqbV0sIdJlB2f84nPvbuTEPp
+ rGhQ==
+X-Gm-Message-State: AOJu0Yx3522eTuh6p1u58Njoufy9UEeADpodHvValW4gq920ZZZfq6BY
+ wcfXM/GVmyzRLfx3HBVdDrEG+cy6ZZfOVBzkX4uj+pYIVCmKX4zeoNWbGi6sY4efaSoml3/D9xo
+ d
+X-Google-Smtp-Source: AGHT+IGtuBfJ5Y8/O99TVzmcr+ylQwPmRJHu4yyYUgnd8FAVtIUhSM+5WEIdXBhH7Jp50Bxnudz0dA==
+X-Received: by 2002:a17:902:e88a:b0:20b:5e34:1842 with SMTP id
+ d9443c01a7336-20ca03ff886mr53673925ad.25.1728660174181; 
+ Fri, 11 Oct 2024 08:22:54 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80dcdc3sm226855066b.172.2024.10.11.08.33.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:33:34 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v3 15/18] gitlab-ci: add Rust-enabled CI job
-Date: Fri, 11 Oct 2024 17:32:23 +0200
-Message-ID: <20241011153227.81770-16-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+ d9443c01a7336-20c8c348986sm24499055ad.258.2024.10.11.08.22.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Oct 2024 08:22:53 -0700 (PDT)
+Message-ID: <b5bf5d17-2451-4d6e-9a4e-6fb4e94ad308@linaro.org>
+Date: Fri, 11 Oct 2024 08:22:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/20] accel/tcg: Use the alignment test in
+ tlb_fill_align
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, deller@kernel.org, alex.bennee@linaro.org,
+ linux-parisc@vger.kernel.org, qemu-arm@nongnu.org
+References: <20241009000453.315652-1-richard.henderson@linaro.org>
+ <20241009000453.315652-7-richard.henderson@linaro.org>
+ <CAFEAcA-mSsFgjoBWi13dXqZUbys2N81YVXLD_ZfuuGo+Xfy-gQ@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-mSsFgjoBWi13dXqZUbys2N81YVXLD_ZfuuGo+Xfy-gQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,58 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a job using --enable-rust, to ensure that the toolchain is installed
-correctly by the Dockerfile and that QEMU builds with Rust enabled on
-at least one platform.
+On 10/10/24 03:44, Peter Maydell wrote:
+> On Wed, 9 Oct 2024 at 01:05, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> When we have a tlb miss, defer the alignment check to
+>> the new tlb_fill_align hook.  Move the existing alignment
+>> check so that we only perform it with a tlb hit.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> 
+>> @@ -1754,8 +1767,8 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>>            * Lookup both pages, recognizing exceptions from either.  If the
+>>            * second lookup potentially resized, refresh first CPUTLBEntryFull.
+>>            */
+>> -        mmu_lookup1(cpu, &l->page[0], l->mmu_idx, type, ra);
+>> -        if (mmu_lookup1(cpu, &l->page[1], l->mmu_idx, type, ra)) {
+>> +        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+>> +        if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
+> 
+> Is 0 the right thing here ? Given that alignment-requirements can
+> differ per-page, what happens for the case of an unaligned access
+> that crosses a page boundary where the first page is "memory that
+> doesn't care about alignment" and the second page is "memory that
+> does enforce alignment" ?
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .gitlab-ci.d/buildtest.yml  | 13 +++++++++++++
- .gitlab-ci.d/containers.yml |  6 ++++++
- 2 files changed, 19 insertions(+)
+I can't think of anything else that makes sense.  The access to the second page is 
+"aligned" in the sense that it begins at offset 0.
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 669c980c4b4..6af7920b355 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -120,6 +120,19 @@ build-system-fedora:
-       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
-     MAKE_CHECK_ARGS: check-build
- 
-+build-system-fedora-rust-nightly:
-+  extends:
-+    - .native_build_job_template
-+    - .native_build_artifact_template
-+  needs:
-+    job: amd64-fedora-rust-nightly-container
-+  variables:
-+    IMAGE: fedora-rust-nightly
-+    CONFIGURE_ARGS: --disable-docs --enable-rust
-+    TARGETS: aarch64-softmmu
-+    MAKE_CHECK_ARGS: check-build
-+  allow_failure: true
-+
- check-system-fedora:
-   extends: .native_test_job_template
-   needs:
-diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
-index ae79d4c58bc..db9b4d5e57f 100644
---- a/.gitlab-ci.d/containers.yml
-+++ b/.gitlab-ci.d/containers.yml
-@@ -27,3 +27,9 @@ python-container:
-   extends: .container_job_template
-   variables:
-     NAME: python
-+
-+amd64-fedora-rust-nightly-container:
-+  extends: .container_job_template
-+  variables:
-+    NAME: fedora-rust-nightly
-+  allow_failure: true
--- 
-2.46.2
+Anyway, alignment as a page property is unique to Arm and...
 
+
+> For Arm this is moot, because an access that crosses a page
+> boundary into something with different memory attributes is
+> CONSTRAINED UNPREDICTABLE (per Arm ARM rev K.a B2.15.3), but
+> maybe other architectures are less flexible.
+
+... as you say.
+
+> Also, the comment does say "recognizing exceptions from either",
+> and we aren't going to do that for alignment issues in page 2,
+> so if we're OK with ignoring this we should update the comment.
+
+The second page can still raise page faults.  How would you re-word this?
+
+
+r~
 
