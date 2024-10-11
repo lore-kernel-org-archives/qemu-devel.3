@@ -4,65 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D239D24470
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694ACD0EE12
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJJ9-0003b9-2r; Fri, 11 Oct 2024 13:20:07 -0400
+	id 1szJDH-0000Bq-PW; Fri, 11 Oct 2024 13:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1szJ86-0000wP-GZ
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:43 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ7B-0004Pd-Ch
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1szE80-00020e-ET
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 07:48:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1728647285; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=LhvAQZVq6zQugAdDltO5fIFd+w4LbVTw1bsZ6HniKjHj/NEZxuueztbr2J3o7XmdlsSZXvXkWfutBYLP251hT/dqnxUKmr6JpYgkfcKVXlzGk4c3xf/cDKF2imPjDHYn1WMdSW9/y5fMbuV7tLXbjZLQMAuNHeRuDpAMpxKsXfM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1728647285;
- h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
- bh=5sFyEQoNNfTMnrZMF9tqgJD3gpPzf6HZ6Qu2TFjkOfw=; 
- b=mg5eSFOHEbMJNhvL4zcXpKxTrfazTjOO+EM+fNWIDgmsCYuOU9+T9Vxz4DbsmLNXQvoevZm9Wl/h9jYaV/CGbbE4Sdu4adQENbtOjJPTCYGL/3uz0SxAdtl+SBxy8sEEcxLYmRoxWBsl6nLBtNhXdLK7ngjzWQr+phXptJjH01Q=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728647285; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
- bh=5sFyEQoNNfTMnrZMF9tqgJD3gpPzf6HZ6Qu2TFjkOfw=;
- b=ED5+4AIHsC7E2fAxCDaFi5uFq394+h5+nY1+ICnPAh+1BVHF80hnBlnEun3Zl0Uh
- NwgJLn6ux2RsdR63S0SMnODgcYIeKTMrSJCHsH56g2SmEtAzwWKBQrgfs4NpcrMP6H7
- peUb6uDUIDOgDTc5CfX/IGjcbiPfR11eFkTWmdKg=
-Received: by mx.zohomail.com with SMTPS id 1728647284424419.6132558453404;
- Fri, 11 Oct 2024 04:48:04 -0700 (PDT)
-Message-ID: <e5180507-82e0-4bd2-8418-15bb831130e2@collabora.com>
-Date: Fri, 11 Oct 2024 14:48:01 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFYz-0004Jz-F0
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:20:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728652812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OfD2T2DNljJ4PR1x+jFli4y7dytYo55E8P6pXj2fAdg=;
+ b=ikYartBXeAbeyiRZmy8hlN1pV4+5AspE9O9attLd5PN19eJX9wbSI2vKBD9UY6R+6rbrsf
+ kejb+b8PaCgSngDgWm90OQzYJ18b3vaBzjhPDSleyFPkWauwpHL43+jp0GNap9isgu8Qld
+ Eu8SjxA/jPADEZ0ZZe/3ERSFJ7SXk8w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-wuLlgpvaMmikJYqAbfnQMg-1; Fri,
+ 11 Oct 2024 09:20:11 -0400
+X-MC-Unique: wuLlgpvaMmikJYqAbfnQMg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 207981955F3D; Fri, 11 Oct 2024 13:20:10 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E9001956052; Fri, 11 Oct 2024 13:20:07 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 03/17] tests/functional: Convert the Avocado aarch64 tuxrun
+ tests
+Date: Fri, 11 Oct 2024 15:19:20 +0200
+Message-ID: <20241011131937.377223-4-thuth@redhat.com>
+In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
+References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 00/13] Support blob memory and venus on qemu
-To: Akihiro Suda <suda.kyoto@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <CAG8fp8Rbh6a+asyt1iowS2U=HE_qicxUGZC1vz8wHdtB0OtNmQ@mail.gmail.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <CAG8fp8Rbh6a+asyt1iowS2U=HE_qicxUGZC1vz8wHdtB0OtNmQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -81,18 +87,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 03:59, Akihiro Suda wrote:
->> And I think this series is ready to merge once the tree re-opens.
-> 
-> Hi, is there any remaining blocker toward merging the patch set?
+Move the tests to a new file so that they can be run via
+qemu-system-aarch64 in the functional framework.
 
-There is no blocker. Patches will be merged once Michael will do it.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS                             |  1 +
+ tests/avocado/tuxrun_baselines.py       | 31 ---------------
+ tests/functional/meson.build            |  2 +
+ tests/functional/test_aarch64_tuxrun.py | 50 +++++++++++++++++++++++++
+ 4 files changed, 53 insertions(+), 31 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_tuxrun.py
 
-Michael, please feel free to apply the patches to staging. Thanks in
-advance!
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d7a11fe601..ab9da679f5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -987,6 +987,7 @@ F: hw/arm/virt*
+ F: include/hw/arm/virt.h
+ F: docs/system/arm/virt.rst
+ F: tests/functional/test_aarch64_virt.py
++F: tests/functional/test_aarch64_tuxrun.py
+ 
+ Xilinx Zynq
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 56c8bdb2dc..dffa4f6339 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -192,37 +192,6 @@ def common_tuxrun(self,
+     #        --kernel https://storage.tuxboot.com/{TUXBOOT}/{IMAGE}
+     #
+ 
+-    def test_arm64(self):
+-        """
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=machine:virt
+-        :avocado: tags=tuxboot:arm64
+-        :avocado: tags=console:ttyAMA0
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = {"Image" :
+-                "ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7",
+-                "rootfs.ext4.zst" :
+-                "bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061"}
+-        self.common_tuxrun(csums=sums)
+-
+-    def test_arm64be(self):
+-        """
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=endian:big
+-        :avocado: tags=machine:virt
+-        :avocado: tags=tuxboot:arm64be
+-        :avocado: tags=console:ttyAMA0
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = { "Image" :
+-                 "e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4",
+-                 "rootfs.ext4.zst" :
+-                 "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
+-        self.common_tuxrun(csums=sums)
+-
+     def test_armv5(self):
+         """
+         :avocado: tags=arch:arm
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index c90c02517a..222bfbcc62 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -13,6 +13,7 @@ endif
+ test_timeouts = {
+   'aarch64_raspi4' : 120,
+   'aarch64_sbsaref' : 600,
++  'aarch64_tuxrun' : 120,
+   'aarch64_virt' : 360,
+   'acpi_bits' : 240,
+   'arm_raspi2' : 120,
+@@ -41,6 +42,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+   'aarch64_sbsaref',
++  'aarch64_tuxrun',
+   'aarch64_virt',
+   'multiprocess',
+ ]
+diff --git a/tests/functional/test_aarch64_tuxrun.py b/tests/functional/test_aarch64_tuxrun.py
+new file mode 100755
+index 0000000000..da56aee4ed
+--- /dev/null
++++ b/tests/functional/test_aarch64_tuxrun.py
+@@ -0,0 +1,50 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots known good tuxboot images the same way
++# that tuxrun (www.tuxrun.org) does. This tool is used by things like
++# the LKFT project to run regression tests on kernels.
++#
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import Asset
++from qemu_test.tuxruntest import TuxRunBaselineTest
++
++class TuxRunAarch64Test(TuxRunBaselineTest):
++
++    ASSET_ARM64_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/arm64/Image',
++        'ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7')
++    ASSET_ARM64_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/arm64/rootfs.ext4.zst',
++        'bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061')
++
++    def test_arm64(self):
++        self.set_machine('virt')
++        self.cpu='cortex-a57'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
++                           rootfs_asset=self.ASSET_ARM64_ROOTFS)
++
++    ASSET_ARM64BE_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/arm64be/Image',
++        'e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4')
++    ASSET_ARM64BE_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/arm64be/rootfs.ext4.zst',
++        'e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7')
++
++    def test_arm64be(self):
++        self.set_machine('virt')
++        self.cpu='cortex-a57'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_ARM64BE_KERNEL,
++                           rootfs_asset=self.ASSET_ARM64BE_ROOTFS)
++
++if __name__ == '__main__':
++    TuxRunBaselineTest.main()
 -- 
-Best regards,
-Dmitry
+2.46.1
 
 
