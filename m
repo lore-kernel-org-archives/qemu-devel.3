@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA313D0EE24
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 19:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342C9CF043A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 19:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szLMh-00020r-2G; Fri, 11 Oct 2024 15:31:55 -0400
+	id 1szLZZ-0003OO-FR; Fri, 11 Oct 2024 15:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raj.khem@gmail.com>)
- id 1szLMb-00020P-1q
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 15:31:51 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raj.khem@gmail.com>)
- id 1szLMW-0003EY-RE
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 15:31:46 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20bb610be6aso25161715ad.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 12:31:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728675103; x=1729279903; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PO9IbOEY2YqKRkyInUx1mFCEKdNyF6F1Ade1P8ET5cM=;
- b=X3X/PkBqkfh2oTnVO9pAth7AIJd5Ne80orDrXTNk/cJJf6mdmzL9bu8gmeG6jH1GnR
- bkEMWGAaEkAkTbvc9EORFlS4FmCvH9Fe3u8o5A+BMzwqGb/o/Bbo71Y7xbYoQCXNrtgQ
- 5HRrzAZE5Qou40Y+O7oJxQ706e9UwStTKFs6b1UVHBCNHY/vn0FlMjuHFG8wLSJV/30n
- 8uTsVC0ETy4vsPokldGw0BCtN8wOt3L6Ri3yS/N8t707vjXEb0Ejt3WC+GQG9Rq+Ws3x
- OFNQQJioB6351EGYdvojEATnlYQjDBihjp+xeumTDTWuOjo3LR6yXJqYr/yckz8u9vmi
- aWgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728675103; x=1729279903;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PO9IbOEY2YqKRkyInUx1mFCEKdNyF6F1Ade1P8ET5cM=;
- b=K3X31NNuvHdknW5P8UcnhDjhiG8YvVt80acZ9o0cp4OYATGyivVrgqlV16YtlE7nbP
- c2GxVasHb4XHOFgQ/OS9twOzcL7BvXjTYuSlqOjY9QQ9Ng38MAMFgLpleBdUdi0JHrfh
- vH2pyWqiWlGfPiDmnJWawogp9bgGCHsqyjPUtcw1LCUqNNx0sfyV98mwYq27/2m4POny
- BQ0yFM/O7SF2EkZuaQwCJWPmH3fQatSgwEAq5u1SGy/Tn9a9GB4Iyolqgm4mMJBiful/
- xoI0a2JEsYatNItIvqoWJ5uBgwrOZHldhxPZGCUP9cL5ecB1flcnPXHxLR4p0/kiQzuI
- LzCw==
-X-Gm-Message-State: AOJu0YxWyAwGwQqYK1sZdfMljusz9BkH4fhylN1UvHETC7GDQDWtfFQS
- zz40Z5A7yrfIoS4SkMLM2xTSe57qyfKfFPHRVJe68kPHnsvbdEUpZAecLqJ/
-X-Google-Smtp-Source: AGHT+IFHIEUEnOF2eowKWLbmMJR2/rx9rLlqHF2Mjo+/1rBeB4NWOHO0cl406VU5J335aX8QI6m/5A==
-X-Received: by 2002:a17:902:d2c5:b0:20c:a644:817f with SMTP id
- d9443c01a7336-20ca6448261mr49539675ad.7.1728675103070; 
- Fri, 11 Oct 2024 12:31:43 -0700 (PDT)
-Received: from apollo.hsd1.ca.comcast.net ([2601:646:9d80:4380::f083])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8bc13551sm26871055ad.88.2024.10.11.12.31.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 12:31:42 -0700 (PDT)
-From: Khem Raj <raj.khem@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Khem Raj <raj.khem@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2] sched_attr: Do not define for glibc >= 2.41
-Date: Fri, 11 Oct 2024 12:31:40 -0700
-Message-ID: <20241011193140.1047648-1-raj.khem@gmail.com>
-X-Mailer: git-send-email 2.47.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1szLZX-0003Mt-8B; Fri, 11 Oct 2024 15:45:11 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1szLZT-0004Jb-Bp; Fri, 11 Oct 2024 15:45:10 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DBCCB9795C;
+ Fri, 11 Oct 2024 22:44:42 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6E62B1529D1;
+ Fri, 11 Oct 2024 22:44:55 +0300 (MSK)
+Message-ID: <140b967a-0e88-46ba-b495-39a5bccd4aca@tls.msk.ru>
+Date: Fri, 11 Oct 2024 22:44:54 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] scsi: fetch unit attention when creating the request
+To: Michael Galaxy <mgalaxy@akamai.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-stable <qemu-stable@nongnu.org>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
+ Mike Christie <michael.christie@oracle.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Fam Zheng <fam@euphon.net>,
+ dharnett@akamai.com, "Hunt, Joshua" <johunt@akamai.com>
+References: <20230712134352.118655-1-sgarzare@redhat.com>
+ <20230712134352.118655-2-sgarzare@redhat.com>
+ <6187274e-7223-4c13-b950-57137f4422d1@akamai.com>
+ <CABgObfaP+PAAFkGjYmwxWqSdKDcd_mDrb7rC9=TfcTrvqAu1Pg@mail.gmail.com>
+ <4b94aa38-e4b4-4322-9b1b-8484e3b78c32@akamai.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <4b94aa38-e4b4-4322-9b1b-8484e3b78c32@akamai.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=raj.khem@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,45 +113,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-glibc 2.41+ has added [1] definitions for sched_setattr and sched_getattr functions
-and struct sched_attr. Therefore, it needs to be checked for here as well before
-defining sched_attr
+On 09.10.2024 21:00, Michael Galaxy wrote:
+> Thanks for your help.
+> 
+> - Michael
+> 
+> On 10/9/24 11:28, Paolo Bonzini wrote:
+>> Yes, it looks like an easy backport. Adding Michael Tokarev and 
+>> qemu-stable.
+>>
+>> Paolo
+>>
+>>
+>> On Wed, Oct 9, 2024 at 6:03 PM Michael Galaxy <mgalaxy@akamai.com> wrote:
+>>> Hi All,
+>>>
+>>> We have stumbled upon this bug in our production systems on QEMU 7.2.x.
+>>> This is a pretty nasty bug because it has the effect of causing the root
+>>> filesystem in the guest to switch into read only mode if our block
+>>> storage products change attachments to running virtual machines.
+>>>
+>>> Could we kindly ask to pull this identical patch for 7.2.15?
+>>>
+>>> Last year, it just went to master and landed in 8.0.50. We're planning
+>>> to upgrade, but it will be quite some time before we get around to that,
+>>> and I suspect others are also running 7.2.x in production.
 
-Define sched_attr conditionally on SCHED_ATTR_SIZE_VER0
+I picked this one up for 7.2.next.  The change applies cleanly
+to 7.2, but I yet to try to even build-test it (I'm traveling
+currently).
 
-Fixes builds with glibc/trunk
+https://gitlab.com/mjt0k/qemu/-/commits/staging-7.2/
 
-[1] https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=21571ca0d70302909cf72707b2a7736cf12190a0;hp=298bc488fdc047da37482f4003023cb9adef78f8
+Thanks,
 
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Cc: Laurent Vivier <laurent@vivier.eu>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
----
-v2: Use SCHED_ATTR_SIZE_VER0 instead of glibc version check
-
- linux-user/syscall.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1354e75694..caecbb765d 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -359,7 +359,8 @@ _syscall3(int, sys_sched_getaffinity, pid_t, pid, unsigned int, len,
- #define __NR_sys_sched_setaffinity __NR_sched_setaffinity
- _syscall3(int, sys_sched_setaffinity, pid_t, pid, unsigned int, len,
-           unsigned long *, user_mask_ptr);
--/* sched_attr is not defined in glibc */
-+/* sched_attr is not defined in glibc < 2.41 */
-+#ifndef SCHED_ATTR_SIZE_VER0
- struct sched_attr {
-     uint32_t size;
-     uint32_t sched_policy;
-@@ -372,6 +373,7 @@ struct sched_attr {
-     uint32_t sched_util_min;
-     uint32_t sched_util_max;
- };
-+#endif
- #define __NR_sys_sched_getattr __NR_sched_getattr
- _syscall4(int, sys_sched_getattr, pid_t, pid, struct sched_attr *, attr,
-           unsigned int, size, unsigned int, flags);
+/mjt
 
