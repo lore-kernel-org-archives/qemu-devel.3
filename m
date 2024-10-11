@@ -4,119 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AC8D24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE38FD0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJMx-0004Yr-0A; Fri, 11 Oct 2024 13:24:03 -0400
+	id 1szJEX-0002Ej-8e; Fri, 11 Oct 2024 13:15:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1szJMo-00049x-MV; Fri, 11 Oct 2024 13:23:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ7B-0003Vw-Bi
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1szJMm-0005Gw-5r; Fri, 11 Oct 2024 13:23:54 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BEwEYJ014379;
- Fri, 11 Oct 2024 17:23:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:from:subject:to:cc:references:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- 36JLlCOmLs2p/IH/fJ8MHwYax3e/Jt8+3zgGG3y5LPE=; b=GnFTWmMgj+zxMvXG
- +SGjpawozbFY8VKYtrb/mmcxZdNcdfm/JPDu6ZkvdD5birpvm6KBrLTtpuwUaqkG
- 0Sngc37VHyIIVJipjV+AcNl0lzjNwLZX3R6rwIRmtB88Pk13rwVghAPE7X5wg0Dh
- if4MGyF72LE7Hu4KrzYM9OeTw+GWNqtYj7nnR5A+PAxf7Hp/wp1O0/usQMij0uQv
- LXBHHTQGHu+JRZbSvCQEt1GMHie5CkV4vbQQETL/jaqriJPCRYzQ663RtOc7A8Tn
- x7lkkvaHF5EQ1/A2XD81tjmkl8qvWRkoqsz7shfVr5LxPvY1qcehCHHwcGYP/Euv
- +H050Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0njx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:23:02 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49BHN11I020969;
- Fri, 11 Oct 2024 17:23:01 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0njs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:23:01 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49BEefZS022856;
- Fri, 11 Oct 2024 17:23:00 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 423h9kenv2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:23:00 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49BHMuM79765186
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Oct 2024 17:22:56 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9874520043;
- Fri, 11 Oct 2024 17:22:56 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFBDE20040;
- Fri, 11 Oct 2024 17:22:52 +0000 (GMT)
-Received: from [9.39.17.157] (unknown [9.39.17.157])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Oct 2024 17:22:52 +0000 (GMT)
-Message-ID: <84adb86d-a60c-4468-84a3-5bdc545bc161@linux.ibm.com>
-Date: Fri, 11 Oct 2024 22:52:52 +0530
-User-Agent: Mozilla Thunderbird
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Subject: Re: [PATCH v16 03/13] hw/ppc/spapr_pci: Do not reject VFs created
- after a PF
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
- <20240913-reuse-v16-3-d016b4b4f616@daynix.com>
- <3cc3456d-a47d-4960-9d5e-10cf1c8b4beb@redhat.com>
-Content-Language: en-US
-In-Reply-To: <3cc3456d-a47d-4960-9d5e-10cf1c8b4beb@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 5xlgVMVJLAIG8La36nBbuWLyIB1Aht8e
-X-Proofpoint-ORIG-GUID: qrFE37GSQXS5pR6chAGwI2hHXjWYkzgy
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFYy-0004Jt-KF
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:20:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728652812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iExu0BKUjo7aDQdE9TBBJh4waWrgjWK9Bk9xyIATP/0=;
+ b=fdTB8PMw7Fjr0LatQ6qH9xA9K5q4K3crOdtL+TsMKskcaFe2Rz++Uo2mMuF6P+OmQMa5J6
+ rBakbltG9BPqpNuLREmU+4aRO8rMhE0FvEeYMrlj3zEJWaaAJRcVnXXJaEAKEE2LyGMPyD
+ ackHRr4qaBLOLTJ/iG5Tb9AhOgPxuoU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-g6v04WiFPy2gb6K7UpXmEg-1; Fri,
+ 11 Oct 2024 09:20:08 -0400
+X-MC-Unique: g6v04WiFPy2gb6K7UpXmEg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E80711955F3F; Fri, 11 Oct 2024 13:20:06 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E0CD31955E8F; Fri, 11 Oct 2024 13:20:03 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 02/17] tests/functional: Convert the Avocado ppc64 tuxrun tests
+Date: Fri, 11 Oct 2024 15:19:19 +0200
+Message-ID: <20241011131937.377223-3-thuth@redhat.com>
+In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
+References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-11_14,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- bulkscore=0 lowpriorityscore=0 mlxlogscore=999 impostorscore=0
- phishscore=0 clxscore=1015 adultscore=0 malwarescore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410110118
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,95 +86,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/24 7:57 PM, Cédric Le Goater wrote:
-> Adding :
->
->   Harsh for QEMU/PPC pseries machine,
->   Shivaprasad for KVM/PPC VFIO and IOMMU support.
->
-> Thanks,
->
-> C.
->
->
-> On 9/13/24 05:44, Akihiko Odaki wrote:
->> A PF may automatically create VFs and the PF may be function 0.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/ppc/spapr_pci.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->> index f63182a03c41..ed4454bbf79e 100644
->> --- a/hw/ppc/spapr_pci.c
->> +++ b/hw/ppc/spapr_pci.c
->> @@ -1573,7 +1573,9 @@ static void spapr_pci_pre_plug(HotplugHandler 
->> *plug_handler,
->>        * hotplug, we do not allow functions to be hotplugged to a
->>        * slot that already has function 0 present
->>        */
->> -    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 
->> 0)] &&
->> +    if (plugged_dev->hotplugged &&
->> +        !pci_is_vf(pdev) &&
+Move the tests to a new file so that they can be run via
+qemu-system-ppc64 in the functional framework.
 
-I see there is history to this change. The reverted[1] virtio-net-pci 
-SRIOV emulation support
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/avocado/tuxrun_baselines.py     |  92 ---------------------
+ tests/functional/test_ppc64_tuxrun.py | 110 ++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+), 92 deletions(-)
+ create mode 100755 tests/functional/test_ppc64_tuxrun.py
 
-needed this as the VFs were explicitly specified with -device 
-virtio-net-pci,sriov-pf=X
-
-property. I see the pre_plug handlers for the VFs cant be reached now 
-with the reverted
-
-code base for the other devices(nvme and igb) supporting the SRIOV 
-emulation.
-
-
-Do the VFs really reach this path in today's code base ? Other than the 
-above
-
-workflow, the pre_plug() handlers wont be called for VFs when the
-
-echo X > /<sys-fs-pf-path>/sriov_numvfs inside the guest too. I don't 
-see the
-
-workflow(PF automatically creating VFs) to hit this path. Could you 
-clarify how?
-
-
-I see before the revert of virito-net-pci sriov use-case, the out of 
-order VF hot|cold
-
-plug post PF are prevented here. Even if we allowed VFs to continue 
-here, PFs were
-
-prevented in pcie_sriov_register_device() which is followed sequentially 
-anyway. Now,
-
-as the pcie_sriov_register_device() is no longer there, this check 
-actually makes
-
-sense as this would be the only place we avoid the out of order plugging.
-
-
-On a side note, for testing this fulky on PPC, we need more work on Qemu 
-today as the
-
-open-sriov[2] is supported only on PowerVM.
-
-
-Thanks,
-
-Shivaprasad
-
-
-Reference :
-
-[1] - Atleast till commit b0fdaee5d1
-
-[2] - 
-https://lore.kernel.org/linuxppc-dev/20180105164552.36371-1-bryantly@linux.vnet.ibm.com/
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 736e4aa289..56c8bdb2dc 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -182,63 +182,6 @@ def common_tuxrun(self,
+         self.vm.launch()
+         self.run_tuxtest_tests(haltmsg)
+ 
+-    def ppc64_common_tuxrun(self, sums, prefix):
+-        # add device args to command line.
+-        self.require_netdev('user')
+-        self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+-                         '-device', 'virtio-net,netdev=vnet')
+-        self.vm.add_args('-netdev', '{"type":"user","id":"hostnet0"}',
+-                         '-device', '{"driver":"virtio-net-pci","netdev":'
+-                         '"hostnet0","id":"net0","mac":"52:54:00:4c:e3:86",'
+-                         '"bus":"pci.0","addr":"0x9"}')
+-        self.vm.add_args('-device', '{"driver":"qemu-xhci","p2":15,"p3":15,'
+-                         '"id":"usb","bus":"pci.0","addr":"0x2"}')
+-        self.vm.add_args('-device', '{"driver":"virtio-scsi-pci","id":"scsi0"'
+-                         ',"bus":"pci.0","addr":"0x3"}')
+-        self.vm.add_args('-device', '{"driver":"virtio-serial-pci","id":'
+-                         '"virtio-serial0","bus":"pci.0","addr":"0x4"}')
+-        self.vm.add_args('-device', '{"driver":"scsi-cd","bus":"scsi0.0"'
+-                         ',"channel":0,"scsi-id":0,"lun":0,"device_id":'
+-                         '"drive-scsi0-0-0-0","id":"scsi0-0-0-0"}')
+-        self.vm.add_args('-device', '{"driver":"virtio-balloon-pci",'
+-                         '"id":"balloon0","bus":"pci.0","addr":"0x6"}')
+-        self.vm.add_args('-audiodev', '{"id":"audio1","driver":"none"}')
+-        self.vm.add_args('-device', '{"driver":"usb-tablet","id":"input0"'
+-                         ',"bus":"usb.0","port":"1"}')
+-        self.vm.add_args('-device', '{"driver":"usb-kbd","id":"input1"'
+-                         ',"bus":"usb.0","port":"2"}')
+-        self.vm.add_args('-device', '{"driver":"VGA","id":"video0",'
+-                         '"vgamem_mb":16,"bus":"pci.0","addr":"0x7"}')
+-        self.vm.add_args('-object', '{"qom-type":"rng-random","id":"objrng0"'
+-                         ',"filename":"/dev/urandom"}',
+-                         '-device', '{"driver":"virtio-rng-pci","rng":"objrng0"'
+-                         ',"id":"rng0","bus":"pci.0","addr":"0x8"}')
+-        self.vm.add_args('-object', '{"qom-type":"cryptodev-backend-builtin",'
+-                         '"id":"objcrypto0","queues":1}',
+-                         '-device', '{"driver":"virtio-crypto-pci",'
+-                         '"cryptodev":"objcrypto0","id":"crypto0","bus"'
+-                         ':"pci.0","addr":"0xa"}')
+-        self.vm.add_args('-device', '{"driver":"spapr-pci-host-bridge"'
+-                         ',"index":1,"id":"pci.1"}')
+-        self.vm.add_args('-device', '{"driver":"spapr-vscsi","id":"scsi1"'
+-                         ',"reg":12288}')
+-        self.vm.add_args('-m', '2G,slots=32,maxmem=4G',
+-                         '-object', 'memory-backend-ram,id=ram1,size=1G',
+-                         '-device', 'pc-dimm,id=dimm1,memdev=ram1')
+-
+-        # Create a temporary qcow2 and launch the test-case
+-        with tempfile.NamedTemporaryFile(prefix=prefix,
+-                                         suffix='.qcow2') as qcow2:
+-            process.run(self.qemu_img + ' create -f qcow2 ' +
+-                        qcow2.name + ' 1G')
+-
+-            self.vm.add_args('-drive', 'file=' + qcow2.name +
+-                         ',format=qcow2,if=none,id='
+-                         'drive-virtio-disk1',
+-                         '-device', 'virtio-blk-pci,bus=pci.0,'
+-                         'addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1'
+-                         ',bootindex=2')
+-            self.common_tuxrun(csums=sums, drive="scsi-hd")
+ 
+     #
+     # The tests themselves. The configuration is derived from how
+@@ -436,41 +379,6 @@ def test_ppc32(self):
+ 
+         self.common_tuxrun(csums=sums, drive="virtio-blk-pci")
+ 
+-    def test_ppc64(self):
+-        """
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=cpu:POWER10
+-        :avocado: tags=endian:big
+-        :avocado: tags=console:hvc0
+-        :avocado: tags=tuxboot:ppc64
+-        :avocado: tags=image:vmlinux
+-        :avocado: tags=extradev:driver=spapr-vscsi
+-        :avocado: tags=root:sda
+-        """
+-        sums = { "rootfs.ext4.zst" :
+-                 "1d953e81a4379e537fc8e41e05a0a59d9b453eef97aa03d47866c6c45b00bdff",
+-                 "vmlinux" :
+-                 "f22a9b9e924174a4c199f4c7e5d91a2339fcfe51c6eafd0907dc3e09b64ab728" }
+-        self.ppc64_common_tuxrun(sums, prefix='tuxrun_ppc64_')
+-
+-    def test_ppc64le(self):
+-        """
+-        :avocado: tags=arch:ppc64
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=cpu:POWER10
+-        :avocado: tags=console:hvc0
+-        :avocado: tags=tuxboot:ppc64le
+-        :avocado: tags=image:vmlinux
+-        :avocado: tags=extradev:driver=spapr-vscsi
+-        :avocado: tags=root:sda
+-        """
+-        sums = { "rootfs.ext4.zst" :
+-                 "b442678c93fb8abe1f7d3bfa20556488de6b475c22c8fed363f42cf81a0a3906",
+-                 "vmlinux" :
+-                 "979eb61b445a010fb13e2b927126991f8ceef9c590fa2be0996c00e293e80cf2" }
+-        self.ppc64_common_tuxrun(sums, prefix='tuxrun_ppc64le_')
+-
+     def test_riscv32(self):
+         """
+         :avocado: tags=arch:riscv32
+diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
+new file mode 100755
+index 0000000000..552b53c97a
+--- /dev/null
++++ b/tests/functional/test_ppc64_tuxrun.py
+@@ -0,0 +1,110 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots known good tuxboot images the same way
++# that tuxrun (www.tuxrun.org) does. This tool is used by things like
++# the LKFT project to run regression tests on kernels.
++#
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import tempfile
++
++from qemu_test import run_cmd, Asset
++from qemu_test.tuxruntest import TuxRunBaselineTest
++
++class TuxRunPPC64Test(TuxRunBaselineTest):
++
++    def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
++        self.set_machine('pseries')
++        self.cpu='POWER10'
++        self.console='hvc0'
++        self.root='sda'
++        self.extradev='spapr-vscsi'
++        # add device args to command line.
++        self.require_netdev('user')
++        self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
++                         '-device', 'virtio-net,netdev=vnet')
++        self.vm.add_args('-netdev', '{"type":"user","id":"hostnet0"}',
++                         '-device', '{"driver":"virtio-net-pci","netdev":'
++                         '"hostnet0","id":"net0","mac":"52:54:00:4c:e3:86",'
++                         '"bus":"pci.0","addr":"0x9"}')
++        self.vm.add_args('-device', '{"driver":"qemu-xhci","p2":15,"p3":15,'
++                         '"id":"usb","bus":"pci.0","addr":"0x2"}')
++        self.vm.add_args('-device', '{"driver":"virtio-scsi-pci","id":"scsi0"'
++                         ',"bus":"pci.0","addr":"0x3"}')
++        self.vm.add_args('-device', '{"driver":"virtio-serial-pci","id":'
++                         '"virtio-serial0","bus":"pci.0","addr":"0x4"}')
++        self.vm.add_args('-device', '{"driver":"scsi-cd","bus":"scsi0.0"'
++                         ',"channel":0,"scsi-id":0,"lun":0,"device_id":'
++                         '"drive-scsi0-0-0-0","id":"scsi0-0-0-0"}')
++        self.vm.add_args('-device', '{"driver":"virtio-balloon-pci",'
++                         '"id":"balloon0","bus":"pci.0","addr":"0x6"}')
++        self.vm.add_args('-audiodev', '{"id":"audio1","driver":"none"}')
++        self.vm.add_args('-device', '{"driver":"usb-tablet","id":"input0"'
++                         ',"bus":"usb.0","port":"1"}')
++        self.vm.add_args('-device', '{"driver":"usb-kbd","id":"input1"'
++                         ',"bus":"usb.0","port":"2"}')
++        self.vm.add_args('-device', '{"driver":"VGA","id":"video0",'
++                         '"vgamem_mb":16,"bus":"pci.0","addr":"0x7"}')
++        self.vm.add_args('-object', '{"qom-type":"rng-random","id":"objrng0"'
++                         ',"filename":"/dev/urandom"}',
++                         '-device', '{"driver":"virtio-rng-pci","rng":"objrng0"'
++                         ',"id":"rng0","bus":"pci.0","addr":"0x8"}')
++        self.vm.add_args('-object', '{"qom-type":"cryptodev-backend-builtin",'
++                         '"id":"objcrypto0","queues":1}',
++                         '-device', '{"driver":"virtio-crypto-pci",'
++                         '"cryptodev":"objcrypto0","id":"crypto0","bus"'
++                         ':"pci.0","addr":"0xa"}')
++        self.vm.add_args('-device', '{"driver":"spapr-pci-host-bridge"'
++                         ',"index":1,"id":"pci.1"}')
++        self.vm.add_args('-device', '{"driver":"spapr-vscsi","id":"scsi1"'
++                         ',"reg":12288}')
++        self.vm.add_args('-m', '2G,slots=32,maxmem=4G',
++                         '-object', 'memory-backend-ram,id=ram1,size=1G',
++                         '-device', 'pc-dimm,id=dimm1,memdev=ram1')
++
++        # Create a temporary qcow2 and launch the test-case
++        with tempfile.NamedTemporaryFile(prefix=prefix,
++                                         suffix='.qcow2') as qcow2:
++            run_cmd([self.qemu_img, 'create', '-f', 'qcow2', qcow2.name, ' 1G'])
++
++            self.vm.add_args('-drive', 'file=' + qcow2.name +
++                         ',format=qcow2,if=none,id='
++                         'drive-virtio-disk1',
++                         '-device', 'virtio-blk-pci,bus=pci.0,'
++                         'addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1'
++                         ',bootindex=2')
++            self.common_tuxrun(kernel_asset, rootfs_asset=rootfs_asset,
++                               drive="scsi-hd")
++
++    ASSET_PPC64_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/ppc64/vmlinux',
++        '1d953e81a4379e537fc8e41e05a0a59d9b453eef97aa03d47866c6c45b00bdff')
++    ASSET_PPC64_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/ppc64/rootfs.ext4.zst',
++        'f22a9b9e924174a4c199f4c7e5d91a2339fcfe51c6eafd0907dc3e09b64ab728')
++
++    def test_ppc64(self):
++        self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64_KERNEL,
++                                 rootfs_asset=self.ASSET_PPC64_ROOTFS,
++                                 prefix='tuxrun_ppc64_')
++
++    ASSET_PPC64LE_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/ppc64le/vmlinux',
++        '979eb61b445a010fb13e2b927126991f8ceef9c590fa2be0996c00e293e80cf2')
++    ASSET_PPC64LE_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/ppc64le/rootfs.ext4.zst',
++        'b442678c93fb8abe1f7d3bfa20556488de6b475c22c8fed363f42cf81a0a3906')
++
++    def test_ppc64le(self):
++        self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64LE_KERNEL,
++                                 rootfs_asset=self.ASSET_PPC64LE_ROOTFS,
++                                 prefix='tuxrun_ppc64le_')
++
++
++if __name__ == '__main__':
++    TuxRunBaselineTest.main()
+-- 
+2.46.1
 
 
