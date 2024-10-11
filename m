@@ -4,81 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2100D24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910FFD24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ4W-0001C4-Q0; Fri, 11 Oct 2024 13:05:00 -0400
+	id 1szJ93-00074Z-6O; Fri, 11 Oct 2024 13:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4T-0000hD-Q4
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ5V-0000hD-UY
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:06:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHdg-0007ED-C0
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szGOw-0003q8-To
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 10:13:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660791;
+ s=mimecast20190719; t=1728656032;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZkqswzW9dFZWPavxaROlpLneVmZFWmvHp+0g7ynwSbY=;
- b=dLU/SH20uKiMkgHHwTaeULNshPXh1RIMzI1Mbuiyp6MiumOSrnN7kx/8BdUVBLuZvyg0j0
- vnsjk1q1usnaGh+9Gg00DgjmZUkd+to4X/NWkB1qaMOSRaGoAjq0iaAEu07ZQ01nfz66WX
- bzinYDwvPu3e8Arh1nNdad7osTvB1jM=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-ddqFp_4SNqGvn9cKxfPi6A-1; Fri, 11 Oct 2024 11:33:09 -0400
-X-MC-Unique: ddqFp_4SNqGvn9cKxfPi6A-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5c94ccfb210so517741a12.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660787; x=1729265587;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZkqswzW9dFZWPavxaROlpLneVmZFWmvHp+0g7ynwSbY=;
- b=NK4sCZqVvVGtJqDBPbG2Ey8k5ZNr5lV0tmQUmn1Z6Cva8u3pyvtdWQs7crox97g2ig
- /zPtd+LBt2DO6RQsCbUs6Y8x/s3bXYYHOaMaaNckBLlLpXf5y9hanYaB29c4hkbJwZJA
- AJEwO4x+bfpdS85wb2wf4RcyliluqoCxVQKb0lVUI78lIp4kNeLeQ6bmOvCMrVpPPioG
- WqzV/rGbGs+0W9juTqKVTk++JVU/DX2NDtrRnFCZrrYp01OnDfzQN+4RnjpyxQCM52aO
- gLf7jQ8y6HVgWx0votdPO3VeBz4lAU5dXCf1MIkEqV5ZO6dF+doQO6cocrxsb24N3nlC
- 5G3g==
-X-Gm-Message-State: AOJu0YzqcVa3l+GHCa3JgHAw8Lmmx5knHpeVuiA6bfCIsUO1oyWxsr+1
- hgmZ8CwDf1FqypRRTab2ZOY1/wYp9FmdL2Brug2ZR+wfpbmi67glJIYl5iByWd1r/ycG2UpPgvj
- TkGM5GpHrtxuxoIOAACvuqxpNcALf5BQbBM7ktbRpF+vFy39IqecwfmpR+GKJ6puK/+q+qqsX1k
- v/frRLZi8EctWOVZMtjj/4IZjtgTVfxkWJbrDakH4=
-X-Received: by 2002:a05:6402:2684:b0:5c8:9f6d:8af2 with SMTP id
- 4fb4d7f45d1cf-5c948c73849mr2040124a12.4.1728660787579; 
- Fri, 11 Oct 2024 08:33:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHXVyRxwrIetUmaCIy/oNcOv1DtpcDzzC5z/nXVSSjrsfiR1RDGmHtE3sDzuIrny3K//+8ZmQ==
-X-Received: by 2002:a05:6402:2684:b0:5c8:9f6d:8af2 with SMTP id
- 4fb4d7f45d1cf-5c948c73849mr2040098a12.4.1728660787044; 
- Fri, 11 Oct 2024 08:33:07 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c937119cb7sm2018030a12.36.2024.10.11.08.33.05
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:33:05 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL v3 08/18] scripts/archive-source: find directory name for
- subprojects
-Date: Fri, 11 Oct 2024 17:32:16 +0200
-Message-ID: <20241011153227.81770-9-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TF00fTa6MvOpDcs7ABOjf8hKTP1XWeiqIDZz2APxFwM=;
+ b=FtBfBVwkQhygfFvqcTlteWhdAt/fhscZs6jEJwpzSQIk1YFgKJGbn3T8nJ7pDB8TK0AxW3
+ oSVdgldk34VVoN09euBLxSp2z8RYws17oyCSyXiCrY6WxQpxdoIGStKTMoWaxC7V1ZewAz
+ y1V+iFMQrbYOjdHYM0c7uIP0azzWitY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-S5Vx6CG4M36yBKC-tBPadQ-1; Fri,
+ 11 Oct 2024 10:13:51 -0400
+X-MC-Unique: S5Vx6CG4M36yBKC-tBPadQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E3801955F41; Fri, 11 Oct 2024 14:13:50 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C6ABF1955F42; Fri, 11 Oct 2024 14:13:46 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
+Subject: [PATCH] MAINTAINERS: A new maintainer for the qtests
+Date: Fri, 11 Oct 2024 16:13:44 +0200
+Message-ID: <20241011141344.379781-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,57 +80,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rust subprojects have the semantic version (followed by -rs) in the subproject
-name, but the full version (without -rs) is used by crates.io for the root
-directory of the tarball.  Teach scripts/archive-source.sh to look for the
-root directory name in wrap files.
+Since I blundered into becoming the maintainer of the new functional
+test  framework in QEMU (tests/functional/) recently, I need to drop
+some other duties - it's getting too much for me otherwise. Laurent
+is also quite busy with other projects nowadays, so I looked around
+for help.
+Fabiano did quite a lot of work in the qtests in the past already,
+and is also already a maintainer for migration, so I thought he
+would be a very good fit, thus I asked him whether he would be
+interested to help out with the qtests and he agreed.
+Thank you very much, Fabiano!
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- scripts/archive-source.sh | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 65af8063e4b..9d9b2e2d5e2 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -48,13 +48,34 @@ function tree_ish() {
-     echo "$retval"
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d7a11fe601..d8e4d2d587 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3250,7 +3250,7 @@ F: tests/qtest/qmp-cmd-test.c
+ T: git https://repo.or.cz/qemu/armbru.git qapi-next
  
-+function subproject_dir() {
-+    if test ! -f "subprojects/$1.wrap"; then
-+      error "scripts/archive-source.sh should only process wrap subprojects"
-+    fi
-+
-+    # Print the directory key of the wrap file, defaulting to the
-+    # subproject name.  The wrap file is in ini format and should
-+    # have a single section only.  There should be only one section
-+    # named "[wrap-*]", which helps keeping the script simple.
-+    local dir
-+    dir=$(sed -n \
-+      -e '/^\[wrap-[a-z][a-z]*\]$/,/^\[/{' \
-+      -e    '/^directory *= */!b' \
-+      -e    's///p' \
-+      -e    'q' \
-+      -e '}' \
-+      "subprojects/$1.wrap")
-+
-+    echo "${dir:-$1}"
-+}
-+
- git archive --format tar "$(tree_ish)" > "$tar_file"
- test $? -ne 0 && error "failed to archive qemu"
- 
- for sp in $subprojects; do
-     meson subprojects download $sp
-     test $? -ne 0 && error "failed to download subproject $sp"
--    tar --append --file "$tar_file" --exclude=.git subprojects/$sp
-+    tar --append --file "$tar_file" --exclude=.git subprojects/"$(subproject_dir $sp)"
-     test $? -ne 0 && error "failed to append subproject $sp to $tar_file"
- done
- exit 0
+ qtest
+-M: Thomas Huth <thuth@redhat.com>
++M: Fabiano Rosas <farosas@suse.de>
+ M: Laurent Vivier <lvivier@redhat.com>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
+@@ -3268,7 +3268,7 @@ M: Alexander Bulekov <alxndr@bu.edu>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ R: Bandan Das <bsd@redhat.com>
+ R: Stefan Hajnoczi <stefanha@redhat.com>
+-R: Thomas Huth <thuth@redhat.com>
++R: Fabiano Rosas <farosas@suse.de>
+ R: Darren Kenny <darren.kenny@oracle.com> 
+ R: Qiuhao Li <Qiuhao.Li@outlook.com>
+ S: Maintained
 -- 
-2.46.2
+2.46.1
 
 
