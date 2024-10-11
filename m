@@ -4,88 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AF8D0EE12
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F14D24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJIr-0001rn-3H; Fri, 11 Oct 2024 13:19:49 -0400
+	id 1szJMw-0004RR-4I; Fri, 11 Oct 2024 13:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1szJ7h-0003aE-IV
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:08:18 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1szEWN-0004vC-Pa
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 08:13:31 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20c805a0753so16927935ad.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 05:13:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1728648806; x=1729253606; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Tjqh17JUE1WkBpchsBFPlHMHCUXRZeQxBDgeEciSrXM=;
- b=b9utYs0/amEyOh566GS5xhCCz11IVtONLnkiqjZtctIaKuq0dXxy9Ej0ZafZC6WT5N
- B70Hlr8poPyl77HevRX1J5pHs4MQVzw/5qIT9y0Yld07pJdOySzWEX9bREMh08uXO6DX
- bazlx7ZQ9A+xVte/ysLr+garDb65RAW6HkkPWvjC9TbKhtNMshxRTJu047lThdsTOvpJ
- 3UU2K0MZ4vmntiHPJx8OqCLkWOnRTR1dsMbi65HmNnifq4pouxwplGRzFWBziia8DoeR
- Poftag7fOmgrQh46sUQKbBpNE+K5YXloT4Ke+9I8FcFEG349FcbxXlm04L2LAkThtl2J
- n2bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728648806; x=1729253606;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Tjqh17JUE1WkBpchsBFPlHMHCUXRZeQxBDgeEciSrXM=;
- b=VV1Wnt/XTr+0H1dXPWfrdW/qtdST73vOUKZ/3wW836K8tE2e0Cj3xgjv2vgqM8jdDe
- fGnSGn2cf/3T+xORtnNuo/MK/5h9p9hEIVUVt+HYYeJmI/qxav29AyksPtdO+VImTcdc
- 1IkU57iIVDNu9qppDMFwVpuea/+pwGcgZwMOJheq+MDOqfCyPjaR3KKSNpJDaHGfruIK
- 2cpiKqc73dX7bL7nAzSFOsMuJYOr+Mc68S4z8/7ubQVsc39UoLZthzIbrWbjpDpBPLBo
- pHw3FgOAgpVtCVHWmyRQfy7YVch+Z77/Ij3vAdXp5/VMHBsxNbWqey1J5mUt81qU/oG2
- YSrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeLmr85ffXCvhwPeCIgNK3idycGN3+aSRyF6kXJrLlCnWZqbqc7+olca/lnjGCaOPNsDfVXWfNfrBx@nongnu.org
-X-Gm-Message-State: AOJu0Yxv3P31JfmlObjCSHf47gBc05zrS1IP8TrHdV09uCtx8TWaG/2Z
- H5UwxRReRJQNTBSMwwPm90rYTYYUGEK82lVXK97DGPlvScLSheVRSZdOaWOWFJs=
-X-Google-Smtp-Source: AGHT+IHr3k/GjowYMBaarGF5ocWNMxBhuHUNF9vLD3vpoOBjQNJwn6N7i9YrHNtn0084x+6Cc74yog==
-X-Received: by 2002:a17:902:e845:b0:20b:a6f5:2780 with SMTP id
- d9443c01a7336-20ca1459d58mr42210685ad.17.1728648806488; 
- Fri, 11 Oct 2024 05:13:26 -0700 (PDT)
-Received: from TF4D9JK212.bytedance.net ([139.177.225.232])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8bc13551sm22569305ad.88.2024.10.11.05.13.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 11 Oct 2024 05:13:26 -0700 (PDT)
-From: Changqi Lu <luchangqi.123@bytedance.com>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, k.jensen@samsung.com,
- Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v14 07/10] hw/nvme: add helper functions for converting
- reservation types
-Date: Fri, 11 Oct 2024 20:12:28 +0800
-Message-Id: <20241011121231.18333-8-luchangqi.123@bytedance.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
-In-Reply-To: <20241011121231.18333-1-luchangqi.123@bytedance.com>
-References: <20241011121231.18333-1-luchangqi.123@bytedance.com>
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1szJMl-0003z7-H2; Fri, 11 Oct 2024 13:23:53 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1szJMi-0005G3-Vq; Fri, 11 Oct 2024 13:23:51 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BEwEoE014539;
+ Fri, 11 Oct 2024 17:22:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:from:subject:to:cc:references
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=G
+ pZtBiSP1QneRu5tbDsJnrYS5N+q2b05QMElLaNGoAs=; b=Rn1PapjFNA3ZhN8OP
+ kMsnascj5mKKNRT0aSKYC0FlOk/n3ZmR2jMrmVhhUnG00ahbpNeUqoLjySvOpFWw
+ hALxhbwegnZyXnL9FkSo2PPGUxdWbtP2dSRs7wSu5u0sqt37BDTlmKjdNsFyFnV9
+ kXylusEmPD4BUU9u4Jm82donvaetCNq5o8RerHBVBbA3SebzPUuU8zEtK9aUEyRm
+ GSsE1RQeTsYlvG0jp8BkWp3leDhibBc/c+35vNWS5Z3rBfXah/hQAlP2BlwALheO
+ ZdKH0da1gfZjPrSx+eXmWOV1CJVxNFtRGVjvE1tRZg8I1DUX13Y3/lSIkSX8PpwB
+ r73MQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0njg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2024 17:22:55 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49BHMtYx020772;
+ Fri, 11 Oct 2024 17:22:55 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0nja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2024 17:22:55 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49BFd8mF022852;
+ Fri, 11 Oct 2024 17:22:54 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 423jg1een2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2024 17:22:54 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49BHMoh352756834
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Oct 2024 17:22:50 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8DF3B2004B;
+ Fri, 11 Oct 2024 17:22:50 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E47720040;
+ Fri, 11 Oct 2024 17:22:46 +0000 (GMT)
+Received: from [9.39.17.157] (unknown [9.39.17.157])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 11 Oct 2024 17:22:46 +0000 (GMT)
+Message-ID: <8128049b-1070-481d-bd54-f98ee5c2e598@linux.ibm.com>
+Date: Fri, 11 Oct 2024 22:52:44 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Subject: Re: [PATCH v16 02/13] hw/ppc/spapr_pci: Do not create DT for disabled
+ PCI device
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
+ <20240913-reuse-v16-2-d016b4b4f616@daynix.com>
+ <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
+Content-Language: en-US
+In-Reply-To: <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: UPkxwc663Yodo10a2bZa8kgl1v5YDI7W
+X-Proofpoint-ORIG-GUID: ZHDcn2Qy0BwF2i7Ueygq9By0W68rQ5kM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-11_14,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=899 impostorscore=0
+ phishscore=0 clxscore=1011 adultscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410110118
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,115 +131,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit introduces two helper functions
-that facilitate the conversion between the
-reservation types used in the NVME protocol
-and those used in the block layer.
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
----
- hw/nvme/nvme.h | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+On 9/18/24 7:57 PM, Cédric Le Goater wrote:
+> Hello,
+>
+> Adding :
+>
+>   Harsh for QEMU/PPC pseries machine,
+>   Shivaprasad for KVM/PPC VFIO and IOMMU support.
+>
+> Could you please give us your feedback on these changes ?
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+>  On 9/13/24 05:44, Akihiko Odaki wrote:
+>> Disabled means it is a disabled SR-IOV VF or it is powered off, and
+>> hidden from the guest.
 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index bed8191bd5..6d0e456348 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -474,6 +474,90 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
-     }
- }
- 
-+static inline NvmeResvType block_pr_type_to_nvme(BlockPrType type)
-+{
-+    switch (type) {
-+    case BLK_PR_WRITE_EXCLUSIVE:
-+        return NVME_RESV_WRITE_EXCLUSIVE;
-+    case BLK_PR_EXCLUSIVE_ACCESS:
-+        return NVME_RESV_EXCLUSIVE_ACCESS;
-+    case BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY:
-+        return NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY;
-+    case BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
-+        return NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY;
-+    case BLK_PR_WRITE_EXCLUSIVE_ALL_REGS:
-+        return NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS;
-+    case BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS:
-+        return NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS;
-+    }
-+
-+    return 0;
-+}
-+
-+static inline BlockPrType nvme_pr_type_to_block(NvmeResvType type)
-+{
-+    switch (type) {
-+    case NVME_RESV_WRITE_EXCLUSIVE:
-+        return BLK_PR_WRITE_EXCLUSIVE;
-+    case NVME_RESV_EXCLUSIVE_ACCESS:
-+        return BLK_PR_EXCLUSIVE_ACCESS;
-+    case NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY:
-+        return BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY;
-+    case NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY:
-+        return BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
-+    case NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS:
-+        return BLK_PR_WRITE_EXCLUSIVE_ALL_REGS;
-+    case NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS:
-+        return BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS;
-+    }
-+
-+    return 0;
-+}
-+
-+static inline uint8_t nvme_pr_cap_to_block(uint16_t nvme_pr_cap)
-+{
-+    uint8_t res = 0;
-+
-+    res |= (nvme_pr_cap & NVME_PR_CAP_PTPL) ?
-+           NVME_PR_CAP_PTPL : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX) ?
-+           BLK_PR_CAP_WR_EX : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC) ?
-+           BLK_PR_CAP_EX_AC : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_RO) ?
-+           BLK_PR_CAP_WR_EX_RO : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_RO) ?
-+           BLK_PR_CAP_EX_AC_RO : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_AR) ?
-+           BLK_PR_CAP_WR_EX_AR : 0;
-+    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_AR) ?
-+           BLK_PR_CAP_EX_AC_AR : 0;
-+
-+    return res;
-+}
-+
-+static inline uint8_t block_pr_cap_to_nvme(uint8_t block_pr_cap)
-+{
-+    uint16_t res = 0;
-+
-+    res |= (block_pr_cap & BLK_PR_CAP_PTPL) ?
-+              NVME_PR_CAP_PTPL : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_WR_EX) ?
-+              NVME_PR_CAP_WR_EX : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_EX_AC) ?
-+              NVME_PR_CAP_EX_AC : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_RO) ?
-+              NVME_PR_CAP_WR_EX_RO : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_RO) ?
-+              NVME_PR_CAP_EX_AC_RO : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_AR) ?
-+              NVME_PR_CAP_WR_EX_AR : 0;
-+    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_AR) ?
-+              NVME_PR_CAP_EX_AC_AR : 0;
-+
-+    return res;
-+}
-+
- typedef struct NvmeSQueue {
-     struct NvmeCtrl *ctrl;
-     uint16_t    sqid;
--- 
-2.20.1
+I see you are taking care of not powering on VFs in the following 8th 
+patch in
 
+the series. Without it, this patch doesn't hold. Hope this patch and the 
+8th patch
+
+  go together.
+
+
+Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+
+
+Thanks,
+
+Shivaprasad
+
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/ppc/spapr_pci.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+>> index 7cf9904c3546..f63182a03c41 100644
+>> --- a/hw/ppc/spapr_pci.c
+>> +++ b/hw/ppc/spapr_pci.c
+>> @@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus 
+>> *bus, PCIDevice *pdev,
+>>           return;
+>>       }
+>> +    if (!pdev->enabled) {
+>> +        return;
+>> +    }
+>>       err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
+>>       if (err < 0) {
+>>           p->err = err;
+>>
 
