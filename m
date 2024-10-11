@@ -4,58 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910FFD24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12065D0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ93-00074Z-6O; Fri, 11 Oct 2024 13:09:41 -0400
+	id 1szJ4W-0001Bd-KC; Fri, 11 Oct 2024 13:05:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ5V-0000hD-UY
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:06:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szJ4Q-0000wP-Eu
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szGOw-0003q8-To
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 10:13:57 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szHeI-0007HW-8P
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728656032;
+ s=mimecast20190719; t=1728660829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=TF00fTa6MvOpDcs7ABOjf8hKTP1XWeiqIDZz2APxFwM=;
- b=FtBfBVwkQhygfFvqcTlteWhdAt/fhscZs6jEJwpzSQIk1YFgKJGbn3T8nJ7pDB8TK0AxW3
- oSVdgldk34VVoN09euBLxSp2z8RYws17oyCSyXiCrY6WxQpxdoIGStKTMoWaxC7V1ZewAz
- y1V+iFMQrbYOjdHYM0c7uIP0azzWitY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-S5Vx6CG4M36yBKC-tBPadQ-1; Fri,
- 11 Oct 2024 10:13:51 -0400
-X-MC-Unique: S5Vx6CG4M36yBKC-tBPadQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E3801955F41; Fri, 11 Oct 2024 14:13:50 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6ABF1955F42; Fri, 11 Oct 2024 14:13:46 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
-Subject: [PATCH] MAINTAINERS: A new maintainer for the qtests
-Date: Fri, 11 Oct 2024 16:13:44 +0200
-Message-ID: <20241011141344.379781-1-thuth@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WfhsGNsaqM9wxDXFff8BXw/V55q8RaN7jwv0zZZjFLo=;
+ b=c34Cvvl4YTZCJkgvNAjwdZsso0CTt/aRRjYoMEya65RcRRgi7YR7wWKM/0nWHuY3whzhnv
+ GllR4Y7cLXxYqTm2k2bZ9lumjdbe8K3Z10Yzb2mVWCAwTWsMVLLGrCnhmPiwad6O6p6swM
+ wM9pU6NbX7RgcoR1EdTee8oJ9vmmcLo=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500-epkQlto-Nv2xa03X3PMyTw-1; Fri, 11 Oct 2024 11:33:47 -0400
+X-MC-Unique: epkQlto-Nv2xa03X3PMyTw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-53691cd5a20so2100407e87.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728660825; x=1729265625;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WfhsGNsaqM9wxDXFff8BXw/V55q8RaN7jwv0zZZjFLo=;
+ b=Pehbmi6C39DJqOHoo+Ce0tjWZCqRfoxeEO/sP2avR63gwvuOo+UhMIgdvUH7gIpFGj
+ f/sz5kwbqmkSTU9waGB74yToTQwlPQ+BQl8cfNUFt8Zu8B69OcSnq9KNRwmXsOuh+uv9
+ BkYr62Cf3aqe8Klvqq6sjaOsnbT5BTA3pQWwegESXUfr4fm9+Z/nyLybbGgIa4AO0zJm
+ mIabac0bLGByHddoKGfOCCwyz9WvHS9Pa+xNpKKjgv83NYM+fXg1s47nXwsNs4OmoTZo
+ jyb3Kgrm6uJhnG1aTr3LuQ5ECUgHeBlVPplqL8FfuGehpYXNqydOPOVgcdFtntOSj0/m
+ 9zZA==
+X-Gm-Message-State: AOJu0Ywn4SwlmSDoQAkXFRSJ3bOK44206fV0f7DSQkouMM2r5nBDeuky
+ 7HtXIBJl9hl9yYH6R0lulQn7T1xa1cOkDHm5SkPnBfJ7V7w5d8BIXnYpVc8wFVeWGYYJNKaVKvw
+ 2pGv/mXO8ckhnnjkg4XSdehPrC1viX0GPyrr/n3sbBxrd5RECtc2JebtaByIwK7pxrAvrIQ9mLD
+ a6RjM3QFF9YttCPJfFaYlksBNeg1mhvE/eskAx/rI=
+X-Received: by 2002:a05:6512:3343:b0:539:948a:aadb with SMTP id
+ 2adb3069b0e04-539da552df1mr2043762e87.42.1728660825191; 
+ Fri, 11 Oct 2024 08:33:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrcu0tWijA/3+gvmB+CGED6zswP+C0YKq8/AD3IEUbLbcW3hC0BpICG3wH+uP48kbhQ8aLBw==
+X-Received: by 2002:a05:6512:3343:b0:539:948a:aadb with SMTP id
+ 2adb3069b0e04-539da552df1mr2043733e87.42.1728660824555; 
+ Fri, 11 Oct 2024 08:33:44 -0700 (PDT)
+Received: from avogadro.local ([151.81.124.37])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a99a7ec56d8sm226391566b.17.2024.10.11.08.33.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Oct 2024 08:33:42 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL v3 17/18] docs: avoid footnotes consisting of just URLs
+Date: Fri, 11 Oct 2024 17:32:25 +0200
+Message-ID: <20241011153227.81770-18-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
+References: <20241011153227.81770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,45 +102,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since I blundered into becoming the maintainer of the new functional
-test  framework in QEMU (tests/functional/) recently, I need to drop
-some other duties - it's getting too much for me otherwise. Laurent
-is also quite busy with other projects nowadays, so I looked around
-for help.
-Fabiano did quite a lot of work in the qtests in the past already,
-and is also already a maintainer for migration, so I thought he
-would be a very good fit, thus I asked him whether he would be
-interested to help out with the qtests and he agreed.
-Thank you very much, Fabiano!
+Replace the footnotes with inline links whenever the footnote text
+consists of nothing but the URL.  While at it, make the link texts
+consistent in the surrounding areas, for example avoiding usage of
+"here" for the link's text.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+In the case of acpi-bits.rst this fixes a build failure with Sphinx
+8.1.0, because the FOSDEM link was duplicated in the paragraph and the
+new version is a lot stricter about unreferenced footnotes.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/devel/testing/acpi-bits.rst | 26 +++++++++++++-------------
+ docs/specs/rapl-msr.rst          | 25 ++++++++++++-------------
+ 2 files changed, 25 insertions(+), 26 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d7a11fe601..d8e4d2d587 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3250,7 +3250,7 @@ F: tests/qtest/qmp-cmd-test.c
- T: git https://repo.or.cz/qemu/armbru.git qapi-next
+diff --git a/docs/devel/testing/acpi-bits.rst b/docs/devel/testing/acpi-bits.rst
+index 78aeb6aa3c4..9a4d716ebff 100644
+--- a/docs/devel/testing/acpi-bits.rst
++++ b/docs/devel/testing/acpi-bits.rst
+@@ -30,15 +30,20 @@ OS modules are generally written using low level languages such as C and
+ low level assembly machine language. Writing test routines in a low level
+ language makes things more cumbersome. These and other reasons makes using
+ bios-bits very attractive for testing bioses. More details on the inspiration
+-for developing biosbits and its real life uses can be found in [#a]_ and [#b]_.
++for developing biosbits and its real life uses were presented `at Plumbers
++in 2011 <Plumbers_>`__ and `at Linux.conf.au in 2012 <Linux.conf.au_>`__.
  
- qtest
--M: Thomas Huth <thuth@redhat.com>
-+M: Fabiano Rosas <farosas@suse.de>
- M: Laurent Vivier <lvivier@redhat.com>
- R: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
-@@ -3268,7 +3268,7 @@ M: Alexander Bulekov <alxndr@bu.edu>
- R: Paolo Bonzini <pbonzini@redhat.com>
- R: Bandan Das <bsd@redhat.com>
- R: Stefan Hajnoczi <stefanha@redhat.com>
--R: Thomas Huth <thuth@redhat.com>
-+R: Fabiano Rosas <farosas@suse.de>
- R: Darren Kenny <darren.kenny@oracle.com> 
- R: Qiuhao Li <Qiuhao.Li@outlook.com>
- S: Maintained
+-For QEMU, we maintain a fork of bios bits in gitlab along with all the
+-dependent submodules `here <https://gitlab.com/qemu-project/biosbits-bits>`__.
+-This fork contains numerous fixes, a newer acpica and changes specific to
+-running these functional QEMU tests using bits. The author of this document
+-is the sole maintainer of the QEMU fork of bios bits repository. For more
+-information, please see author's `FOSDEM talk on this bios-bits based test
+-framework <https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/>`__.
++For QEMU, we maintain a fork of bios bits in `gitlab`_, along with all
++the dependent submodules.  This fork contains numerous fixes, a newer
++acpica and changes specific to running these functional QEMU tests using
++bits. The author of this document is the current maintainer of the QEMU
++fork of bios bits repository. For more information, please see `the
++author's FOSDEM presentation <FOSDEM_>`__ on this bios-bits based test framework.
++
++.. _Plumbers: https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
++.. _Linux.conf.au: https://www.youtube.com/watch?v=36QIepyUuhg
++.. _gitlab: https://gitlab.com/qemu-project/biosbits-bits
++.. _FOSDEM: https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
+ 
+ *********************************
+ Description of the test framework
+@@ -148,8 +153,3 @@ Under ``tests/functional/`` as the root we have:
+ 
+ Author: Ani Sinha <anisinha@redhat.com>
+ 
+-References:
+------------
+-.. [#a] https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
+-.. [#b] https://www.youtube.com/watch?v=36QIepyUuhg
+-.. [#c] https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
+diff --git a/docs/specs/rapl-msr.rst b/docs/specs/rapl-msr.rst
+index 1202ee89bee..aaf0db9f91b 100644
+--- a/docs/specs/rapl-msr.rst
++++ b/docs/specs/rapl-msr.rst
+@@ -9,11 +9,12 @@ The consumption is reported via MSRs (model specific registers) like
+ MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are 64 bits
+ registers that represent the accumulated energy consumption in micro Joules.
+ 
+-Thanks to the MSR Filtering patch [#a]_ not all MSRs are handled by KVM. Some
+-of them can now be handled by the userspace (QEMU). It uses a mechanism called
+-"MSR filtering" where a list of MSRs is given at init time of a VM to KVM so
+-that a callback is put in place. The design of this patch uses only this
+-mechanism for handling the MSRs between guest/host.
++Thanks to KVM's `MSR filtering <msr-filter-patch_>`__ functionality,
++not all MSRs are handled by KVM. Some of them can now be handled by the
++userspace (QEMU); a list of MSRs is given at VM creation time to KVM, and
++a userspace exit occurs when they are accessed.
++
++.. _msr-filter-patch: https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
+ 
+ At the moment the following MSRs are involved:
+ 
+@@ -92,9 +93,12 @@ found by the sysconf system call. A typical value of clock ticks per second is
+ package has 4 cores, 400 ticks maximum can be scheduled on all the cores
+ of the package for a period of 1 second.
+ 
+-The /proc/[pid]/stat [#b]_ is a sysfs file that can give the executed time of a
+-process with the [pid] as the process ID. It gives the amount of ticks the
+-process has been scheduled in userspace (utime) and kernel space (stime).
++`/proc/[pid]/stat <stat_>`__ is a procfs file that can give the executed
++time of a process with the [pid] as the process ID. It gives the amount
++of ticks the process has been scheduled in userspace (utime) and kernel
++space (stime).
++
++.. _stat: https://man7.org/linux/man-pages/man5/proc.5.html
+ 
+ By reading those metrics for a thread, one can calculate the ratio of time the
+ package has spent executing the thread.
+@@ -148,8 +152,3 @@ Current Limitations
+ - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at the
+   moment.
+ 
+-References
+-----------
+-
+-.. [#a] https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
+-.. [#b] https://man7.org/linux/man-pages/man5/proc.5.html
 -- 
-2.46.1
+2.46.2
 
 
