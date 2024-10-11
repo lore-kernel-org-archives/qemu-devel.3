@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880DFD24468
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 03:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A13AD24469
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 03:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz6CH-0001mw-5i; Thu, 10 Oct 2024 23:20:09 -0400
+	id 1sz6CL-0001pa-EA; Thu, 10 Oct 2024 23:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CE-0001lQ-JD
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:06 -0400
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CJ-0001oG-9J
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CD-0002n4-97
- for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:06 -0400
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sz6CG-0002nE-SN
+ for qemu-devel@nongnu.org; Thu, 10 Oct 2024 23:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728616804;
+ s=mimecast20190719; t=1728616808;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=En4E4bV6p0hB9ksV+UIpl4B2QQPRkJ/JelXvBFQNfuk=;
- b=hGA1BL/xJZ8IVr1sSg+ri/KwohK/vUE6rs6dSR0j7FlKt5NYXcTDJYQoO6idqfFJfG2cSM
- ynWRD0q8ymcdazykFHOIhO+7EkQRUvn8SVUwgjjMegVG3vivzTO5OviqjQ6U1YaUeicTyr
- VuqlMcsSSkmGWd3RTYzvL1hUw0DHeM4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GMfIQhe17p2ivo5PbtzSl9PDX/c5D9ZRqiDdt6z+ru4=;
+ b=NY0E3FR1GFcnlKs42gJrsORegY9GzHuLSw6ePwJnaT44uANnjLXdmfUIYRxFlnCN9I6wE6
+ g8XIE1PF2HRtnWS5eJsgo6sCoK1AYuO8U4UT6mGyi6U+AvUygtgngHVvwASpHFR/JyHRnt
+ 1ExUTNOE5AvTmIrkTTXF0oVuVDbk+Io=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-YjUdR7vEMOOpSOyOvv8Nxw-1; Thu,
- 10 Oct 2024 23:20:00 -0400
-X-MC-Unique: YjUdR7vEMOOpSOyOvv8Nxw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-qyd83dGJNMuzVPau9pt3vw-1; Thu,
+ 10 Oct 2024 23:20:04 -0400
+X-MC-Unique: qyd83dGJNMuzVPau9pt3vw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61A69195608C; Fri, 11 Oct 2024 03:19:59 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0141119560B0; Fri, 11 Oct 2024 03:20:04 +0000 (UTC)
 Received: from fedora.nay.redhat.com (unknown [10.66.57.68])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8789B1956089; Fri, 11 Oct 2024 03:19:55 +0000 (UTC)
+ id 34F191956089; Fri, 11 Oct 2024 03:19:59 +0000 (UTC)
 From: Dehan Meng <demeng@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: demeng@redhat.com, kkostiuk@redhat.com, michael.roth@amd.com,
  peter.maydell@linaro.org
-Subject: [PATCH v2 3/4] Avoiding freeing line prematurely. It's now only freed
- at the end of the function.
-Date: Fri, 11 Oct 2024 11:19:36 +0800
-Message-Id: <20241011031937.92216-4-demeng@redhat.com>
+Subject: [PATCH v2 4/4] For correcting code style: Variable declarations moved
+ to the beginning of blocks Followed the coding style of using snake_case for
+ variable names. And merged redundant route and networkroute variables.
+Date: Fri, 11 Oct 2024 11:19:37 +0800
+Message-Id: <20241011031937.92216-5-demeng@redhat.com>
 In-Reply-To: <20241011031937.92216-1-demeng@redhat.com>
 References: <20241011031937.92216-1-demeng@redhat.com>
 MIME-Version: 1.0
@@ -84,34 +85,171 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Dehan Meng <demeng@redhat.com>
 ---
- qga/commands-linux.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ qga/commands-linux.c | 116 ++++++++++++++++++++-----------------------
+ 1 file changed, 53 insertions(+), 63 deletions(-)
 
 diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index b905f33a57..4f0e38be81 100644
+index 4f0e38be81..c6cca630ef 100644
 --- a/qga/commands-linux.c
 +++ b/qga/commands-linux.c
-@@ -2137,8 +2137,7 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-         is_ipv6 = (i == 1);
-         fp = fopen(routeFiles[i], "r");
-         if (fp == NULL) {
--            error_setg_errno(errp, errno, "open(\"%s\")", routeFiles[i]);
--            free(line);
-+            error_setg_errno(errp, errno, "open(\"%s\")", route_files[i]);
-             continue;
-         }
- 
-@@ -2218,9 +2217,8 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-             QAPI_LIST_APPEND(tail, route);
-         }
- 
--        free(line);
-         fclose(fp);
-     }
--
-+    free(line);
+@@ -2094,12 +2094,12 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
      return head;
  }
+ 
+-static char *hexToIPAddress(const void *hexValue, int is_ipv6)
++static char *hex_to_ip_address(const void *hex_value, int is_ipv6)
+ {
+     if (is_ipv6) {
+         char addr[INET6_ADDRSTRLEN];
+         struct in6_addr in6;
+-        const char *hexStr = (const char *)hexValue;
++        const char *hex_str = (const char *)hex_value;
+         int i;
+ 
+         for (i = 0; i < 16; i++) {
+@@ -2111,11 +2111,11 @@ static char *hexToIPAddress(const void *hexValue, int is_ipv6)
+ 
+         return g_strdup(addr);
+     } else {
+-        unsigned int hexInt = *(unsigned int *)hexValue;
+-        unsigned int byte1 = (hexInt >> 24) & 0xFF;
+-        unsigned int byte2 = (hexInt >> 16) & 0xFF;
+-        unsigned int byte3 = (hexInt >> 8) & 0xFF;
+-        unsigned int byte4 = hexInt & 0xFF;
++        unsigned int hex_int = *(unsigned int *)hex_value;
++        unsigned int byte1 = (hex_int >> 24) & 0xFF;
++        unsigned int byte2 = (hex_int >> 16) & 0xFF;
++        unsigned int byte3 = (hex_int >> 8) & 0xFF;
++        unsigned int byte4 = hex_int & 0xFF;
+ 
+         return g_strdup_printf("%u.%u.%u.%u", byte4, byte3, byte2, byte1);
+     }
+@@ -2131,6 +2131,7 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+     int firstLine;
+     int is_ipv6;
+     int i;
++    char iface[IFNAMSIZ];
+ 
+     for (i = 0; i < 2; i++) {
+         firstLine = 1;
+@@ -2146,72 +2147,61 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+                 firstLine = 0;
+                 continue;
+             }
+-            GuestNetworkRoute *route = NULL;
+-            GuestNetworkRoute *networkroute;
+-            char Iface[IFNAMSIZ];
+-            if (is_ipv6) {
+-                char Destination[33], Source[33], NextHop[33];
+-                int DesPrefixlen, SrcPrefixlen, Metric, RefCnt, Use, Flags;
+ 
+-                /* Parse the line and extract the values */
++            GuestNetworkRoute *route = g_new0(GuestNetworkRoute, 1);
++
++            if (is_ipv6) {
++                char destination[33], source[33], next_hop[33];
++                int des_prefixlen, src_prefixlen, metric, refcnt, use, flags;
+                 if (sscanf(line, "%32s %x %32s %x %32s %x %x %x %x %s",
+-                           Destination, &DesPrefixlen, Source,
+-                           &SrcPrefixlen, NextHop, &Metric, &RefCnt,
+-                           &Use, &Flags, Iface) != 10) {
++                           destination, &des_prefixlen, source,
++                           &src_prefixlen, next_hop, &metric, &refcnt,
++                           &use, &flags, iface) != 10) {
+                     continue;
+                 }
+ 
+-                route = g_new0(GuestNetworkRoute, 1);
+-                networkroute = route;
+-                networkroute->iface = g_strdup(Iface);
+-                networkroute->destination = hexToIPAddress(Destination, 1);
+-                networkroute->metric = Metric;
+-                networkroute->source = hexToIPAddress(Source, 1);
+-                networkroute->desprefixlen = g_strdup_printf(
+-                    "%d", DesPrefixlen
+-                );
+-                networkroute->srcprefixlen = g_strdup_printf(
+-                    "%d", SrcPrefixlen
+-                );
+-                networkroute->nexthop = hexToIPAddress(NextHop, 1);
+-                networkroute->has_flags = true;
+-                networkroute->flags = Flags;
+-                networkroute->has_refcnt = true;
+-                networkroute->refcnt = RefCnt;
+-                networkroute->has_use = true;
+-                networkroute->use = Use;
+-                networkroute->version = 6;
+-            } else {
+-                unsigned int Destination, Gateway, Mask, Flags;
+-                int RefCnt, Use, Metric, MTU, Window, IRTT;
++                route->iface = g_strdup(iface);
++                route->destination = hex_to_ip_address(destination, 1);
++                route->source = hex_to_ip_address(source, 1);
++                route->nexthop = hex_to_ip_address(next_hop, 1);
++                route->desprefixlen = g_strdup_printf("%d", des_prefixlen);
++                route->srcprefixlen = g_strdup_printf("%d", src_prefixlen);
++                route->metric = metric;
++                route->has_flags = true;
++                route->flags = flags;
++                route->has_refcnt = true;
++                route->refcnt = refcnt;
++                route->has_use = true;
++                route->use = use;
++                route->version = 6;
+ 
+-                /* Parse the line and extract the values */
++            } else {
++                unsigned int destination, gateway, mask, flags;
++                int refcnt, use, metric, mtu, window, irtt;
+                 if (sscanf(line, "%s %X %X %x %d %d %d %X %d %d %d",
+-                           Iface, &Destination, &Gateway, &Flags, &RefCnt,
+-                           &Use, &Metric, &Mask, &MTU, &Window, &IRTT) != 11) {
++                           iface, &destination, &gateway, &flags, &refcnt,
++                           &use, &metric, &mask, &mtu, &window, &irtt) != 11) {
+                     continue;
+                 }
+ 
+-                route = g_new0(GuestNetworkRoute, 1);
+-                networkroute = route;
+-                networkroute->iface = g_strdup(Iface);
+-                networkroute->destination = hexToIPAddress(&Destination, 0);
+-                networkroute->gateway = hexToIPAddress(&Gateway, 0);
+-                networkroute->mask = hexToIPAddress(&Mask, 0);
+-                networkroute->metric = Metric;
+-                networkroute->has_flags = true;
+-                networkroute->flags = Flags;
+-                networkroute->has_refcnt = true;
+-                networkroute->refcnt = RefCnt;
+-                networkroute->has_use = true;
+-                networkroute->use = Use;
+-                networkroute->has_mtu = true;
+-                networkroute->mtu = MTU;
+-                networkroute->has_window = true;
+-                networkroute->window = Window;
+-                networkroute->has_irtt = true;
+-                networkroute->irtt = IRTT;
+-                networkroute->version = 4;
++                route->iface = g_strdup(iface);
++                route->destination = hex_to_ip_address(&destination, 0);
++                route->gateway = hex_to_ip_address(&gateway, 0);
++                route->mask = hex_to_ip_address(&mask, 0);
++                route->metric = metric;
++                route->has_flags = true;
++                route->flags = flags;
++                route->has_refcnt = true;
++                route->refcnt = refcnt;
++                route->has_use = true;
++                route->use = use;
++                route->has_mtu = true;
++                route->mtu = mtu;
++                route->has_window = true;
++                route->window = window;
++                route->has_irtt = true;
++                route->irtt = irtt;
++                route->version = 4;
+             }
+ 
+             QAPI_LIST_APPEND(tail, route);
 -- 
 2.40.1
 
