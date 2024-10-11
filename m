@@ -4,81 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45ABCD0EE12
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09619D24470
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ6b-0003aM-40; Fri, 11 Oct 2024 13:07:09 -0400
+	id 1szJBW-00048f-Ty; Fri, 11 Oct 2024 13:12:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4S-0000wP-Ps
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ78-0001hX-Mj
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHdk-0007ER-Rt
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFZR-0004Ni-HF
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:20:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660795;
+ s=mimecast20190719; t=1728652840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JSHSGZwo3B3W3JAQwLzmcf+U1xCaYdABBOB0a79R2WY=;
- b=QsvNJbDhlKIoU6twc0EDQJqbdaMYUw7wHWT64LOgCbIKyo6fGKlPxtsVolNQuWQc3iA9xu
- SXb8DCxqWPenIFQxaTYpv3DIxc3LZSaA7kpYOalX5XUuDh3lL8VE0xn662D8wYQW61ZchE
- 0kVSP2onMhDzRhJqx3MbPbJ54WiCsZE=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-c9cFcY2sOR2jmofMZV5_ZA-1; Fri, 11 Oct 2024 11:33:13 -0400
-X-MC-Unique: c9cFcY2sOR2jmofMZV5_ZA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a994e6c8244so148431266b.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660791; x=1729265591;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JSHSGZwo3B3W3JAQwLzmcf+U1xCaYdABBOB0a79R2WY=;
- b=aejAe9+SWOG6XKpu3I55S5/8u2fab9L5TpxPrjcmiJl3BxY7JkuahW0+5EB63k82k3
- oVNJWlUKwPOJigzpfuVJNsVLc7uxdWPmnTt2BWChGB0tgif0OFEV8CXDpcNeyzO0zOYx
- K9s1Z6f2pow5fd0wzqZnEcASh+B2PldQm4DelWf0O9wgcXlQlwhkjZD6BUNoPAOU+p0o
- zbEuzwpvBrCCSAWAt1eZCOHtkP4fWNGC7rXTha1WXclkG1hUeqqnyuaEVtuVRJO7jmUW
- 0svmkQjF3/PSNCcTLeYdxmIbWtsZ1+Ms1+5BCcK+afDCOUR1glQTec4/KT+R0TW2iofa
- 5hPw==
-X-Gm-Message-State: AOJu0Yzu+xlf1KRv/qD4sUBsqDGvwvClqtDgYdbKl1nN0AbyserAyonu
- NOwCr3P2O89fZIUSEwmeqAuIVNbNhMqY0XDKOFeJcoXIpkyW7YvZ1YbJXG/m+JCW4xUdVoJEeo6
- 4dis0oV46ca/4aPRjJuTejRH+7qIYwrZ8WH9Kcaa9+ia4irHUZxxt7/HM3YaLKsW3arubzRIps4
- n7YNG5bFyIlaBLxA++jaLRQ70RzGgzTbUwNoVUjy8=
-X-Received: by 2002:a17:907:d850:b0:a99:8ed2:7e51 with SMTP id
- a640c23a62f3a-a99b95a5eaamr256222066b.53.1728660791066; 
- Fri, 11 Oct 2024 08:33:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcTb7aQ2M08qFDzdaFsVS0SmEurZzZTu6P6KZ0D6I/I5vL93uDZAbT7Q8D7rOniQ8IkaoA6A==
-X-Received: by 2002:a17:907:d850:b0:a99:8ed2:7e51 with SMTP id
- a640c23a62f3a-a99b95a5eaamr256218866b.53.1728660790484; 
- Fri, 11 Oct 2024 08:33:10 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80f2593sm221244466b.215.2024.10.11.08.33.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:33:09 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: [PULL v3 09/18] rust: add utility procedural macro crate
-Date: Fri, 11 Oct 2024 17:32:17 +0200
-Message-ID: <20241011153227.81770-10-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+ bh=QKbaSKgzF0euuiH9rV3sdS0N+O3fcLp7omaVV0/V7/U=;
+ b=PAF+BjbXYSrnij6SbFXXgDgsMDPD3jFOTgbslXT6ACLhCXy32AoytuHHCW69zax8v7fDxF
+ VA06he7HYlY6aixK9W+5MIZ5YcCUpl5O5TPvN1s2sbSMRwIbMJzNytuINQoNb4n64aBiYI
+ W4DfZbQi3zzlLOuNRRAohEnTinLxn6c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-5gVXZP4HOLCtO4r1OzV9Sw-1; Fri,
+ 11 Oct 2024 09:20:37 -0400
+X-MC-Unique: 5gVXZP4HOLCtO4r1OzV9Sw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82EBF1955F2E; Fri, 11 Oct 2024 13:20:36 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 47A1F1955E8F; Fri, 11 Oct 2024 13:20:32 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 10/17] tests/functional: Convert the Avocado x86_64 tuxrun test
+Date: Fri, 11 Oct 2024 15:19:27 +0200
+Message-ID: <20241011131937.377223-11-thuth@redhat.com>
+In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
+References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,7 +70,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,501 +86,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Move the tests to a new file so that they can be run via
+qemu-system-x86_64 in the functional framework.
 
-This commit adds a helper crate library, qemu-api-macros for derive (and
-other procedural) macros to be used along qemu-api.
-
-It needs to be a separate library because in Rust, procedural macros, or
-macros that can generate arbitrary code, need to be special separate
-compilation units.
-
-Only one macro is introduced in this patch, #[derive(Object)]. It
-generates a constructor to register a QOM TypeInfo on init and it must
-be used on types that implement qemu_api::definitions::ObjectImpl trait.
-
-Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/r/dd645642406a6dc2060c6f3f17db2bc77ed67b59.1727961605.git.manos.pitsidianakis@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  1 +
- rust/meson.build                              |  1 +
- rust/qemu-api-macros/Cargo.lock               | 47 +++++++++++++++++++
- rust/qemu-api-macros/Cargo.toml               | 25 ++++++++++
- rust/qemu-api-macros/README.md                |  1 +
- rust/qemu-api-macros/meson.build              | 25 ++++++++++
- rust/qemu-api-macros/src/lib.rs               | 43 +++++++++++++++++
- rust/qemu-api/meson.build                     |  3 ++
- scripts/archive-source.sh                     |  4 +-
- scripts/make-release                          |  4 +-
- subprojects/.gitignore                        |  4 ++
- .../packagefiles/proc-macro2-1-rs/meson.build | 31 ++++++++++++
- .../packagefiles/quote-1-rs/meson.build       | 29 ++++++++++++
- subprojects/packagefiles/syn-2-rs/meson.build | 40 ++++++++++++++++
- subprojects/proc-macro2-1-rs.wrap             |  7 +++
- subprojects/quote-1-rs.wrap                   |  7 +++
- subprojects/syn-2-rs.wrap                     |  7 +++
- subprojects/unicode-ident-1-rs.wrap           |  7 +++
- subprojects/unicode-ident-1-rs/meson.build    | 20 ++++++++
- 19 files changed, 304 insertions(+), 2 deletions(-)
- create mode 100644 rust/qemu-api-macros/Cargo.lock
- create mode 100644 rust/qemu-api-macros/Cargo.toml
- create mode 100644 rust/qemu-api-macros/README.md
- create mode 100644 rust/qemu-api-macros/meson.build
- create mode 100644 rust/qemu-api-macros/src/lib.rs
- create mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson.build
- create mode 100644 subprojects/packagefiles/quote-1-rs/meson.build
- create mode 100644 subprojects/packagefiles/syn-2-rs/meson.build
- create mode 100644 subprojects/proc-macro2-1-rs.wrap
- create mode 100644 subprojects/quote-1-rs.wrap
- create mode 100644 subprojects/syn-2-rs.wrap
- create mode 100644 subprojects/unicode-ident-1-rs.wrap
- create mode 100644 subprojects/unicode-ident-1-rs/meson.build
+ tests/avocado/tuxrun_baselines.py      | 18 -------------
+ tests/functional/meson.build           |  1 +
+ tests/functional/test_x86_64_tuxrun.py | 36 ++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 18 deletions(-)
+ create mode 100755 tests/functional/test_x86_64_tuxrun.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index de583a16914..dbc56c5c612 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3295,6 +3295,7 @@ Rust
- M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- S: Maintained
- F: rust/qemu-api
-+F: rust/qemu-api-macros
- F: rust/rustfmt.toml
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 72b0ad4951..6d00b06713 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -310,21 +310,3 @@ def test_sh4(self):
+         time.sleep(0.1)
+         exec_command_and_wait_for_pattern(self, 'halt',
+                                           "reboot: System halted")
+-
+-    def test_x86_64(self):
+-        """
+-        :avocado: tags=arch:x86_64
+-        :avocado: tags=machine:q35
+-        :avocado: tags=cpu:Nehalem
+-        :avocado: tags=tuxboot:x86_64
+-        :avocado: tags=image:bzImage
+-        :avocado: tags=root:sda
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = { "bzImage" :
+-                 "2bc7480a669ee9b6b82500a236aba0c54233debe98cb968268fa230f52f03461",
+-                 "rootfs.ext4.zst" :
+-                 "b72ac729769b8f51c6dffb221113c9a063c774dbe1d66af30eb593c4e9999b4b" }
+-
+-        self.common_tuxrun(csums=sums,
+-                           drive="driver=ide-hd,bus=ide.0,unit=0")
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 9cdfa1c257..84012810f7 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -169,6 +169,7 @@ tests_x86_64_system_quick = [
  
- SLIRP
-diff --git a/rust/meson.build b/rust/meson.build
-index 4a58d106b1d..7a32b1b1950 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -1 +1,2 @@
-+subdir('qemu-api-macros')
- subdir('qemu-api')
-diff --git a/rust/qemu-api-macros/Cargo.lock b/rust/qemu-api-macros/Cargo.lock
-new file mode 100644
-index 00000000000..fdc0fce116c
+ tests_x86_64_system_thorough = [
+   'acpi_bits',
++  'x86_64_tuxrun',
+   'linux_initrd',
+   'multiprocess',
+   'netdev_ethtool',
+diff --git a/tests/functional/test_x86_64_tuxrun.py b/tests/functional/test_x86_64_tuxrun.py
+new file mode 100755
+index 0000000000..4f96139871
 --- /dev/null
-+++ b/rust/qemu-api-macros/Cargo.lock
-@@ -0,0 +1,47 @@
-+# This file is automatically @generated by Cargo.
-+# It is not intended for manual editing.
-+version = 3
++++ b/tests/functional/test_x86_64_tuxrun.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots known good tuxboot images the same way
++# that tuxrun (www.tuxrun.org) does. This tool is used by things like
++# the LKFT project to run regression tests on kernels.
++#
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+[[package]]
-+name = "proc-macro2"
-+version = "1.0.86"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "5e719e8df665df0d1c8fbfd238015744736151d4445ec0836b8e628aae103b77"
-+dependencies = [
-+ "unicode-ident",
-+]
++from qemu_test import Asset
++from qemu_test.tuxruntest import TuxRunBaselineTest
 +
-+[[package]]
-+name = "qemu_api_macros"
-+version = "0.1.0"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "syn",
-+]
++class TuxRunX86Test(TuxRunBaselineTest):
 +
-+[[package]]
-+name = "quote"
-+version = "1.0.36"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
-+dependencies = [
-+ "proc-macro2",
-+]
++    ASSET_X86_64_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/x86_64/bzImage',
++        '2bc7480a669ee9b6b82500a236aba0c54233debe98cb968268fa230f52f03461')
++    ASSET_X86_64_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/x86_64/rootfs.ext4.zst',
++        'b72ac729769b8f51c6dffb221113c9a063c774dbe1d66af30eb593c4e9999b4b')
 +
-+[[package]]
-+name = "syn"
-+version = "2.0.72"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "dc4b9b9bf2add8093d3f2c0204471e951b2285580335de42f9d2534f3ae7a8af"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "unicode-ident",
-+]
++    def test_x86_64(self):
++        self.set_machine('q35')
++        self.cpu="Nehalem"
++        self.root='sda'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
++                           rootfs_asset=self.ASSET_X86_64_ROOTFS,
++                           drive="driver=ide-hd,bus=ide.0,unit=0")
 +
-+[[package]]
-+name = "unicode-ident"
-+version = "1.0.12"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
-diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-api-macros/Cargo.toml
-new file mode 100644
-index 00000000000..144cc3650fa
---- /dev/null
-+++ b/rust/qemu-api-macros/Cargo.toml
-@@ -0,0 +1,25 @@
-+[package]
-+name = "qemu_api_macros"
-+version = "0.1.0"
-+edition = "2021"
-+authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
-+license = "GPL-2.0-or-later"
-+readme = "README.md"
-+homepage = "https://www.qemu.org"
-+description = "Rust bindings for QEMU - Utility macros"
-+repository = "https://gitlab.com/qemu-project/qemu/"
-+resolver = "2"
-+publish = false
-+keywords = []
-+categories = []
-+
-+[lib]
-+proc-macro = true
-+
-+[dependencies]
-+proc-macro2 = "1"
-+quote = "1"
-+syn = "2"
-+
-+# Do not include in any global workspace
-+[workspace]
-diff --git a/rust/qemu-api-macros/README.md b/rust/qemu-api-macros/README.md
-new file mode 100644
-index 00000000000..f60f54ac4be
---- /dev/null
-+++ b/rust/qemu-api-macros/README.md
-@@ -0,0 +1 @@
-+# `qemu-api-macros` - Utility macros for defining QEMU devices
-diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
-new file mode 100644
-index 00000000000..48af91ed389
---- /dev/null
-+++ b/rust/qemu-api-macros/meson.build
-@@ -0,0 +1,25 @@
-+add_languages('rust', required: true, native: true)
-+
-+quote_dep = dependency('quote-1-rs', native: true)
-+syn_dep = dependency('syn-2-rs', native: true)
-+proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
-+
-+_qemu_api_macros_rs = import('rust').proc_macro(
-+  'qemu_api_macros',
-+  files('src/lib.rs'),
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_args: [
-+    '--cfg', 'use_fallback',
-+    '--cfg', 'feature="syn-error"',
-+    '--cfg', 'feature="proc-macro"',
-+  ],
-+  dependencies: [
-+    proc_macro2_dep,
-+    quote_dep,
-+    syn_dep,
-+  ],
-+)
-+
-+qemu_api_macros = declare_dependency(
-+  link_with: _qemu_api_macros_rs,
-+)
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-new file mode 100644
-index 00000000000..59aba592d9a
---- /dev/null
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -0,0 +1,43 @@
-+// Copyright 2024, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use proc_macro::TokenStream;
-+use quote::{format_ident, quote};
-+use syn::{parse_macro_input, DeriveInput};
-+
-+#[proc_macro_derive(Object)]
-+pub fn derive_object(input: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(input as DeriveInput);
-+
-+    let name = input.ident;
-+    let module_static = format_ident!("__{}_LOAD_MODULE", name);
-+
-+    let expanded = quote! {
-+        #[allow(non_upper_case_globals)]
-+        #[used]
-+        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
-+        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
-+        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
-+        pub static #module_static: extern "C" fn() = {
-+            extern "C" fn __register() {
-+                unsafe {
-+                    ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::definitions::ObjectImpl>::TYPE_INFO);
-+                }
-+            }
-+
-+            extern "C" fn __load() {
-+                unsafe {
-+                    ::qemu_api::bindings::register_module_init(
-+                        Some(__register),
-+                        ::qemu_api::bindings::module_init_type::MODULE_INIT_QOM
-+                    );
-+                }
-+            }
-+
-+            __load
-+        };
-+    };
-+
-+    TokenStream::from(expanded)
-+}
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 439ef73c29e..c72d34b607d 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -14,6 +14,9 @@ _qemu_api_rs = static_library(
-     '--cfg', 'MESON',
-     # '--cfg', 'feature="allocator"',
-   ],
-+  dependencies: [
-+    qemu_api_macros,
-+  ],
- )
- 
- qemu_api = declare_dependency(
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 9d9b2e2d5e2..62a2cf45d28 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -26,7 +26,9 @@ sub_file="${sub_tdir}/submodule.tar"
- # independent of what the developer currently has initialized
- # in their checkout, because the build environment is completely
- # different to the host OS.
--subprojects="keycodemapdb libvfio-user berkeley-softfloat-3 berkeley-testfloat-3"
-+subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
-+  berkeley-testfloat-3 proc-macro2-1-rs quote-1-rs
-+  syn-2-rs unicode-ident-1-rs"
- sub_deinit=""
- 
- function cleanup() {
-diff --git a/scripts/make-release b/scripts/make-release
-index 6e0433de24d..cf7d694ef73 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -17,7 +17,9 @@ if [ $# -ne 2 ]; then
- fi
- 
- # Only include wraps that are invoked with subproject()
--SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3 berkeley-testfloat-3"
-+SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
-+  berkeley-testfloat-3 proc-macro2-1-rs quote-1-rs
-+  syn-2-rs unicode-ident-1-rs"
- 
- src="$1"
- version="$2"
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index adca0266be6..b6888182ca4 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -6,3 +6,7 @@
- /keycodemapdb
- /libvfio-user
- /slirp
-+/proc-macro2-1.0.84
-+/quote-1.0.36
-+/syn-2.0.66
-+/unicode-ident-1.0.12
-diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-new file mode 100644
-index 00000000000..818ec59336b
---- /dev/null
-+++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-@@ -0,0 +1,31 @@
-+project('proc-macro2-1-rs', 'rust',
-+  version: '1.0.84',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
-+
-+subproject('unicode-ident-1-rs', required: true)
-+
-+unicode_ident_dep = dependency('unicode-ident-1-rs', native: true)
-+
-+_proc_macro2_rs = static_library(
-+  'proc_macro2',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  rust_args: [
-+    '--cfg', 'feature="proc-macro"',
-+    '--cfg', 'span_locations',
-+    '--cfg', 'wrap_proc_macro',
-+  ],
-+  dependencies: [
-+    unicode_ident_dep,
-+  ],
-+  native: true,
-+)
-+
-+proc_macro2_dep = declare_dependency(
-+  link_with: _proc_macro2_rs,
-+)
-+
-+meson.override_dependency('proc-macro2-1-rs', proc_macro2_dep, native: true)
-diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subprojects/packagefiles/quote-1-rs/meson.build
-new file mode 100644
-index 00000000000..d36609bd3c8
---- /dev/null
-+++ b/subprojects/packagefiles/quote-1-rs/meson.build
-@@ -0,0 +1,29 @@
-+project('quote-1-rs', 'rust',
-+  version: '1.12.0',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
-+
-+subproject('proc-macro2-1-rs', required: true)
-+
-+proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
-+
-+_quote_rs = static_library(
-+  'quote',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  rust_args: [
-+    '--cfg', 'feature="proc-macro"',
-+  ],
-+  dependencies: [
-+    proc_macro2_dep,
-+  ],
-+  native: true,
-+)
-+
-+quote_dep = declare_dependency(
-+  link_with: _quote_rs,
-+)
-+
-+meson.override_dependency('quote-1-rs', quote_dep, native: true)
-diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
-new file mode 100644
-index 00000000000..a53335f3092
---- /dev/null
-+++ b/subprojects/packagefiles/syn-2-rs/meson.build
-@@ -0,0 +1,40 @@
-+project('syn-2-rs', 'rust',
-+  version: '2.0.66',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
-+
-+subproject('proc-macro2-1-rs', required: true)
-+subproject('quote-1-rs', required: true)
-+subproject('unicode-ident-1-rs', required: true)
-+
-+proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
-+quote_dep = dependency('quote-1-rs', native: true)
-+unicode_ident_dep = dependency('unicode-ident-1-rs', native: true)
-+
-+_syn_rs = static_library(
-+  'syn',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  rust_args: [
-+    '--cfg', 'feature="full"',
-+    '--cfg', 'feature="derive"',
-+    '--cfg', 'feature="parsing"',
-+    '--cfg', 'feature="printing"',
-+    '--cfg', 'feature="clone-impls"',
-+    '--cfg', 'feature="proc-macro"',
-+  ],
-+  dependencies: [
-+    quote_dep,
-+    proc_macro2_dep,
-+    unicode_ident_dep,
-+  ],
-+  native: true,
-+)
-+
-+syn_dep = declare_dependency(
-+  link_with: _syn_rs,
-+)
-+
-+meson.override_dependency('syn-2-rs', syn_dep, native: true)
-diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
-new file mode 100644
-index 00000000000..7053e2c013c
---- /dev/null
-+++ b/subprojects/proc-macro2-1-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = proc-macro2-1.0.84
-+source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.84/download
-+source_filename = proc-macro2-1.0.84.0.tar.gz
-+source_hash = ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6
-+#method = cargo
-+patch_directory = proc-macro2-1-rs
-diff --git a/subprojects/quote-1-rs.wrap b/subprojects/quote-1-rs.wrap
-new file mode 100644
-index 00000000000..6e7ea69049f
---- /dev/null
-+++ b/subprojects/quote-1-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = quote-1.0.36
-+source_url = https://crates.io/api/v1/crates/quote/1.0.36/download
-+source_filename = quote-1.0.36.0.tar.gz
-+source_hash = 0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7
-+#method = cargo
-+patch_directory = quote-1-rs
-diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
-new file mode 100644
-index 00000000000..13ffdac3c3b
---- /dev/null
-+++ b/subprojects/syn-2-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = syn-2.0.66
-+source_url = https://crates.io/api/v1/crates/syn/2.0.66/download
-+source_filename = syn-2.0.66.0.tar.gz
-+source_hash = c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5
-+#method = cargo
-+patch_directory = syn-2-rs
-diff --git a/subprojects/unicode-ident-1-rs.wrap b/subprojects/unicode-ident-1-rs.wrap
-new file mode 100644
-index 00000000000..4609f96ed97
---- /dev/null
-+++ b/subprojects/unicode-ident-1-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = unicode-ident-1.0.12
-+source_url = https://crates.io/api/v1/crates/unicode-ident/1.0.12/download
-+source_filename = unicode-ident-1.0.12.tar.gz
-+source_hash = 3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b
-+#method = cargo
-+patch_directory = unicode-ident-1-rs
-diff --git a/subprojects/unicode-ident-1-rs/meson.build b/subprojects/unicode-ident-1-rs/meson.build
-new file mode 100644
-index 00000000000..54f23768545
---- /dev/null
-+++ b/subprojects/unicode-ident-1-rs/meson.build
-@@ -0,0 +1,20 @@
-+project('unicode-ident-1-rs', 'rust',
-+  version: '1.0.12',
-+  license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
-+  default_options: [])
-+
-+_unicode_ident_rs = static_library(
-+  'unicode_ident',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  dependencies: [],
-+  native: true,
-+)
-+
-+unicode_ident_dep = declare_dependency(
-+  link_with: _unicode_ident_rs,
-+)
-+
-+meson.override_dependency('unicode-ident-1-rs', unicode_ident_dep, native: true)
++if __name__ == '__main__':
++    TuxRunBaselineTest.main()
 -- 
-2.46.2
+2.46.1
 
 
