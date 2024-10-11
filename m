@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7082D0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035F4D0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 18:15:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJrZ-0003Lo-4b; Fri, 11 Oct 2024 13:55:41 -0400
+	id 1szK9g-0005pI-PQ; Fri, 11 Oct 2024 14:14:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1szJrY-0003Lf-4z
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:55:40 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1szK9e-0005ol-IR
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:14:22 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1szJrW-0001Ml-0x
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:55:39 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20ca388d242so7060855ad.2
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 10:55:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
+ id 1szK9c-0003EM-Ro
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:14:22 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-27d0e994ae3so1111838fac.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 11:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728669336; x=1729274136; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0qpKZPbd+SK3pAJV1JjVK/MXxmXPesGdKRMToQ976pI=;
- b=fodVvwFUrgAXMfYGAfCu6p+Hdw9qqNIE2HlXIECmftQWnW/LxL9IdQga8fnHJx5O/H
- xMeARrIVkwl9JrOHe3dxdYn/tYd49hPaHYkroWOvtFC2Pj0QfyY80d2UjlJAg61w56Aj
- uTCST6YDfOwt9Z1ABfWbjfqAjy+JBlxFpMhMioBZz8n/BgmX4x0oOGt4tqvoevO7XCHZ
- 4R5qnR8VIhb31FPhkF0SBay/47TPsxaNCTf6L6IDje41pknhhOsmEjpz9oYxnzO9RwiF
- bTptgBixZYCBbuT4yX2Y8irvoTpNY4h3Q1WVSHWP33QGUVdjADLcF2Ghu8YIOP8MjkvX
- /qsw==
+ d=gmail.com; s=20230601; t=1728670459; x=1729275259; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L4O3LWabg15STyQXYpP/TLRokT3+tDXwcYmsZ+S5u5M=;
+ b=XgXDK57xHLKE8yBnkuSnfBp8T90/oqcniHIaMo/dMwPBc63tzzrjUhuvOK2rS8/OVH
+ wU+g2TQ3Ih+RaDrBJPDK7NhmT51rKcb7CFpivaQzcPaHdOIsFuGIQvDRb+Ju+n3nypDp
+ 1ZIM9TyHdDQDqxND2WB+qjT4y+CWFTJPv1YRkkHuCfQIdjXIuMKO8UpfVgDaa4VmFBtk
+ i7AeiRrfk9xiFSr3q2VFmmL38orUwg87vhdA3id8MR8vIU4E+Gyv6oZu/KrhWwZI7Jmy
+ gGOYdnFeqZxThUfBpxCoaAQ1IFrohtybJ/OOUPJnUKxILI8OKoAUhsQlfOahOuGg/Kw5
+ ldJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728669336; x=1729274136;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0qpKZPbd+SK3pAJV1JjVK/MXxmXPesGdKRMToQ976pI=;
- b=OhKuBCdcG0pqnqmTPhBHMueDgLw9MtSOvGXtxBnONHlqnZLC5k7mYCFwsb5JZf18Yu
- smiB4OUVWz+8w1ww2uFzrYC9bYtyucso4goG939DyGlUxUIFDVG+G60JfcIEeECJqkfK
- NDSqVhKIFm1jYAGGpBBwclElHYYKem9tGo67I1zC+vZPSiYjcUhoRC/lwBs3uCtPKsHB
- 4hM30gvARc0Q2PYv9EScvC8KbSPvH0Kym5MexQX2fY71SAfcyG/Gf5fsiPNgbv2xAZWh
- /f7dNWJkGZpsqWBfbIEKoVxpN+B3l6R0mWxUA4mkbEmn/O9convavf3hUjEBZHywEeHm
- RfkQ==
+ d=1e100.net; s=20230601; t=1728670459; x=1729275259;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L4O3LWabg15STyQXYpP/TLRokT3+tDXwcYmsZ+S5u5M=;
+ b=pMVOugmRzdxQAIO4u8jp9BT+4rJoGMKvbaU9rBkFTgfR7zw5aqF5eEmR52YsFVG2Io
+ 141ITEgq51PX9OBqBoH7aDR0p+Zzdtca0NDcrSZkaz1Imclkyl6K2uEKLlCuK+q1yZDo
+ KK9yzgz7Sh2lIzafBbcWVS7iTWRAuJKSYWxBraEqxxR36OVcF0rz9M5SRHgeYf6OYCzM
+ s5lsAHraAi350cVQ2E5Q23saoF3bXaa8roUuiZHRqmBNUImUIAgCf+nKvjZvNU3rdYci
+ WqMWxPEcBAKevwfaJzZ2q/JrfEQ5kYVwtTNReS7vp82oXbQS0urlhs3O3Y0G2fJkBYm9
+ EfLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4uH3HY7VrWXhGo8TURhz09GtueCi2VvtEZ4ssoGE4j4bDFljymgZGjrjFvQR4CB4EIZHtocb5YEq5@nongnu.org
-X-Gm-Message-State: AOJu0YxN7ehLR4xdgAxaiX0+m0Vl3ipwtLfu/BxoszAj8LDTfeBDRjXx
- afUvsiisQzUEwC4cYzH+d0pw6WEZc0p2ODx0oL/B2WIMVhRPAPrmoalvwSGynNA=
-X-Google-Smtp-Source: AGHT+IHC+Rgn/Q8Mi+6CDVvIv2A8u+MoYoszFsXFNPSpaoEiO+T3/xzyp/OGiHPNBUQOZMaX9mKjvQ==
-X-Received: by 2002:a17:903:22c7:b0:206:96bf:b0cf with SMTP id
- d9443c01a7336-20cba9edd5bmr8104805ad.0.1728669335903; 
- Fri, 11 Oct 2024 10:55:35 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ea448e3fe4sm2703785a12.10.2024.10.11.10.55.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 10:55:35 -0700 (PDT)
-Message-ID: <1c96d9bf-7e40-4e7c-b90e-3b873cb1957b@linaro.org>
-Date: Fri, 11 Oct 2024 10:55:34 -0700
+ AJvYcCWCzap4cNuxJMLKS6jIKDZvvHEGH2AYuFsz8cI2sMH6aDVSOTFneQdqDY8tErP8WnH7XiBuJXdftEYg@nongnu.org
+X-Gm-Message-State: AOJu0YwckvX75kmM9Bpl+7fRV7uCtVQdFwpgLaUV/g79+SnPcm1r8DQ9
+ EfNs4KWBGjw0egMoyfovx7eWUhorlrqhR4X7r94D1+nG5yRYwDDFXqOjLUvqie9i4hyob+GDr0X
+ rc6GlOFEw0kQUFRIfqO5l40gmA/Y=
+X-Google-Smtp-Source: AGHT+IFd44ffgzW7GaS8tj9hCmmDrCXvA0mPVV5wkpQxYDgBYD0KzzPZqCASJFg3XqFnXzrXfQhLbAWJt9B27lpgTVs=
+X-Received: by 2002:a05:6870:b69b:b0:270:172c:32ae with SMTP id
+ 586e51a60fabf-28887477218mr370305fac.32.1728670458613; Fri, 11 Oct 2024
+ 11:14:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/23] accel/tcg: Always use IntervalTree for code lookups
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241009150855.804605-1-richard.henderson@linaro.org>
- <20241009150855.804605-20-richard.henderson@linaro.org>
- <c81af2ad-fe0d-4f9f-8bc2-23bcd49354ea@linaro.org>
- <ad8716ae-2d7b-43bb-9653-ed8d9e4b83df@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ad8716ae-2d7b-43bb-9653-ed8d9e4b83df@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
+ <6109eea4230bb3aa7caf6deff526878231aa2136.camel@linux.ibm.com>
+ <CAFUsyf+wYJVQHFaJZZ2mE0e3MRXMoQsr+-vk3T0qU3LYd3Dujw@mail.gmail.com>
+ <731d741bb01c8157a076a3614d20732a3ea448db.camel@linux.ibm.com>
+ <CAFUsyfKhLpZF1RvwVK06jud6ArPEcG7M61cKNoQVWXLRgNaaog@mail.gmail.com>
+In-Reply-To: <CAFUsyfKhLpZF1RvwVK06jud6ArPEcG7M61cKNoQVWXLRgNaaog@mail.gmail.com>
+From: Noah Goldstein <goldstein.w.n@gmail.com>
+Date: Fri, 11 Oct 2024 13:14:07 -0500
+Message-ID: <CAFUsyfKgw_DAfowOoFxUpHOR+Jw6hH9oV5JGNXKe0Ph=miRFxw@mail.gmail.com>
+Subject: Re: [PATCH v1] linux-user: Add option to run `execve`d programs
+ through QEMU
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: laurent@vivier.eu, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=goldstein.w.n@gmail.com; helo=mail-oa1-x2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,64 +96,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMTEvMjQgMDc6NDcsIFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPiBPbiAxMC85
-LzI0IDE3OjM1LCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+IEBAIC0xMDYxLDE1ICsx
-MDYxLDEzIEBAIHN0YXRpYyBpbmxpbmUgdm9pZCB0bGJfc2V0X2NvbXBhcmUoQ1BVVExCRW50
-cnlGdWxsICpmdWxsLA0KPj4+IENQVVRMQkVudHJ5ICplbnQsDQo+Pj4gIMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCB2YWRkciBhZGRyZXNzLCBpbnQgZmxhZ3MsDQo+Pj4gIMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBNTVVBY2Nlc3NUeXBlIGFjY2Vzc190eXBlLCBib29sIGVuYWJsZSkNCj4+PiAgwqAg
-ew0KPj4+IC3CoMKgwqAgaWYgKGVuYWJsZSkgew0KPj4+IC3CoMKgwqDCoMKgwqDCoCBhZGRy
-ZXNzIHw9IGZsYWdzICYgVExCX0ZMQUdTX01BU0s7DQo+Pj4gLcKgwqDCoMKgwqDCoMKgIGZs
-YWdzICY9IFRMQl9TTE9XX0ZMQUdTX01BU0s7DQo+Pj4gLcKgwqDCoMKgwqDCoMKgIGlmIChm
-bGFncykgew0KPj4+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFkZHJlc3MgfD0gVExCX0ZP
-UkNFX1NMT1c7DQo+Pj4gLcKgwqDCoMKgwqDCoMKgIH0NCj4+PiAtwqDCoMKgIH0gZWxzZSB7
-DQo+Pj4gLcKgwqDCoMKgwqDCoMKgIGFkZHJlc3MgPSAtMTsNCj4+PiAtwqDCoMKgwqDCoMKg
-wqAgZmxhZ3MgPSAwOw0KPj4+ICvCoMKgwqAgaWYgKCFlbmFibGUpIHsNCj4+PiArwqDCoMKg
-IGFkZHJlc3MgPSBUTEJfSU5WQUxJRF9NQVNLOw0KPj4+ICvCoMKgwqAgfQ0KPj4+ICvCoMKg
-wqAgYWRkcmVzcyB8PSBmbGFncyAmIFRMQl9GTEFHU19NQVNLOw0KPj4+ICvCoMKgwqAgZmxh
-Z3MgJj0gVExCX1NMT1dfRkxBR1NfTUFTSzsNCj4+PiArwqDCoMKgIGlmIChmbGFncykgew0K
-Pj4+ICvCoMKgwqDCoMKgwqDCoCBhZGRyZXNzIHw9IFRMQl9GT1JDRV9TTE9XOw0KPj4+ICDC
-oMKgwqDCoMKgIH0NCj4+DQo+PiBJJ20gbm90IHN1cmUgdG8gZm9sbG93IHRoaXMgY2hhbmdl
-IGNvcnJlY3RseS4NCj4+IEFmdGVyLCB0aGUgZmluYWwgYWRkcmVzcyBhbmQgZmxhZ3MgdmFs
-dWUgZGVwZW5kIG9uIGZsYWdzIGluIHBhcmFtZXRlciwgd2hpbGUgYmVmb3JlLCBpdA0KPj4g
-dXNlZCB0byBkZXBlbmQgb24gZmxhZ3MgJiBlbmFibGUgcGFyYW1ldGVyLg0KPiANCj4gVGhp
-cyBkZXNlcnZlcyB0byBiZSBzcGxpdCBvdXQ7IEkgZXZlbiB0aG91Z2h0IGFib3V0IGl0IE1v
-bmRheSBuaWdodCBidXQgdGhlbiBmb3Jnb3Qgd2hlbiBJDQo+IHJlc3RhcnRlZCBvbiBUdWVz
-ZGF5IG1vcm5pbmcuDQo+DQoNCkFncmVlLg0KDQo+IEJlZm9yZSwgYWRkcmVzcyBpcyAtMSBm
-b3IgZGlzYWJsZWQsIG1vc3RseSBiZWNhdXNlIHRoYXQgbWlycm9ycyB3aGF0IHlvdSBnZXQg
-d2l0aCBtZW1zZXQNCj4gdG8gaW5pdGlhbGl6ZSB0aGUgdGxiLiAgQWxsIG9mIHRoZSBmbGFn
-cyBhcmUgZGlzY2FyZGVkLiAgQnV0IHRoZSBvbmx5IHRoaW5nIHRoYXQncw0KPiBpbXBvcnRh
-bnQgaXMgdGhhdCBUTEJfSU5WQUxJRF9NQVNLIGlzIHNldC4NCj4gID4gQWZ0ZXIsIFRMQl9J
-TlZBTElEX01BU0sgaXMgc3RpbGwgc2V0LCBidXQgdGhlIGZsYWdzIGFyZSByZXRhaW5lZC4g
-DQpUaGlzIGlzIGJlY2F1c2Ugd2Ugd2FudA0KPiBhIHNvdXJjZSBvZiB0aG9zZSBmbGFncyB0
-byB1c2UgZm9yIE1NVV9JTlNUX0ZFVENILiAgV2l0aCB0aGlzIHBhdGNoIHNldCB3ZSBubyBs
-b25nZXIgc3RvcmUNCj4gZmxhZ3MgZm9yIGV4ZWN1dGUgYW5kIGluc3RlYWQgZ3JhYiB0aGVt
-IGZyb20gdGhlIGZsYWdzIGZvciByZWFkLiAgRnJvbSB0bGJfc2V0X3BhZ2VfZnVsbC4uLg0K
-Pg0KDQpUaGF0J3Mgc3VidGxlLiBXaGVuIHNldHRpbmcgdG8gVExCX0lOVkFMSURfTUFTSywg
-aXQgc2VlbXMgdG8gaW1wbHkgd2UgDQp3b24ndCBjaGVjayBhbnkgZmxhZyBvbiB0aGlzIGVu
-dHJ5LiBNYXliZSBqdXN0IGEgY29tbWVudCBhZGRlZCBoZXJlIA0Kd291bGQgY2xhcmlmeSB0
-aGlzLg0KDQo+IA0KPj4+IEBAIC0xMjE1LDkgKzEyMTMsNiBAQCB2b2lkIHRsYl9zZXRfcGFn
-ZV9mdWxsKENQVVN0YXRlICpjcHUsIGludCBtbXVfaWR4LA0KPj4+ICDCoMKgwqDCoMKgIC8q
-IE5vdyBjYWxjdWxhdGUgdGhlIG5ldyBlbnRyeSAqLw0KPj4+ICDCoMKgwqDCoMKgIG5vZGUt
-PmNvcHkuYWRkZW5kID0gYWRkZW5kIC0gYWRkcl9wYWdlOw0KPj4+IC3CoMKgwqAgdGxiX3Nl
-dF9jb21wYXJlKGZ1bGwsICZub2RlLT5jb3B5LCBhZGRyX3BhZ2UsIHJlYWRfZmxhZ3MsDQo+
-Pj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIE1NVV9JTlNUX0ZF
-VENILCBwcm90ICYgUEFHRV9FWEVDKTsNCj4+PiAtDQo+Pj4gIMKgwqDCoMKgwqAgaWYgKHdw
-X2ZsYWdzICYgQlBfTUVNX1JFQUQpIHsNCj4+PiAgwqDCoMKgwqDCoMKgwqDCoMKgIHJlYWRf
-ZmxhZ3MgfD0gVExCX1dBVENIUE9JTlQ7DQo+Pj4gIMKgwqDCoMKgwqAgfQ0KPiANCj4gLi4u
-IHdlIGNhbiBzZWUgdGhhdCB0aGUgb25seSBkaWZmZXJlbmNlIGJldHdlZW4gdGhlIHR3byBp
-cyB0aGUgd2F0Y2hwb2ludCBiaXQuDQo+IEltcG9ydGFudGx5LCBUTEJfTU1JTyBpcyBjb21t
-b24gdG8gYWxsIHRocmVlIGNvbXBhcmF0b3JzLg0KPg0KPj4gU291bmRzIGdvb2QgdG8gaGF2
-ZSBhIGZhc3QgcGF0aCBmb3IgY29kZSBmZXRjaC4gRGlkIHlvdSBtZWFzdXJlIHRoZSBiZW5l
-Zml0LCBvciBqdXN0DQo+PiBpbXBsZW1lbnRlZCB0aGlzIHRoaW5raW5nIGl0J3Mgd29ydGg/
-DQo+IA0KPiBUaGlzIGlzIG5vdCBhYm91dCBhIGZhc3QgcGF0aCBmb3IgY29kZSBmZXRjaCwg
-YnV0IGFsd2F5cyB1c2luZyB0aGUgKnNsb3cqIHBhdGguICBUaGUNCj4gb2JqZWN0IGlzIHRv
-IHJlcHVycG9zZSBvbmUgd29yZCBmcm9tIENQVVRMQkVudHJ5LCByZW1vdmVkIGhlcmUgYW5k
-IGFkZGVkIGJhY2sgaW4gdGhlIG5leHQNCj4gcGF0Y2gsIHRvIGxpbmsgQ1BVVExCRW50cnkg
-dG8gQ1BVVExCRW50cnlUcmVlIHdpdGhvdXQgY2hhbmdpbmcgc2l6ZW9mKENQVVRMQkVudHJ5
-KS4NCj4NCg0KSSBtaXNzZWQgdGhlIGZhY3QgdGhhdCBNTVVfSU5TVF9GRVRDSCB3YXMgdXNl
-ZCBvbmx5IHdoZW4gZmV0Y2hpbmcgY29kZSANCmF0IHRyYW5zbGF0aW9uIHRpbWUuDQoNCj4g
-DQo+IHJ+DQo=
+On Wed, Oct 2, 2024 at 11:42=E2=80=AFAM Noah Goldstein <goldstein.w.n@gmail=
+.com> wrote:
+>
+> On Wed, Oct 2, 2024 at 11:39=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.c=
+om> wrote:
+> >
+> > On Wed, 2024-10-02 at 09:05 -0500, Noah Goldstein wrote:
+> > > On Wed, Oct 2, 2024 at 3:08=E2=80=AFAM Ilya Leoshkevich <iii@linux.ib=
+m.com>
+> > > wrote:
+> > > >
+> > > > On Fri, 2024-08-30 at 15:36 -0700, Noah Goldstein wrote:
+> > > > > The new option '-qemu-children' makes it so that on `execve` the
+> > > > > child
+> > > > > process will be launch by the same `qemu` executable that is
+> > > > > currently
+> > > > > running along with its current commandline arguments.
+> > > > >
+> > > > > The motivation for the change is to make it so that plugins
+> > > > > running
+> > > > > through `qemu` can continue to run on children.  Why not just
+> > > > > `binfmt`?: Plugins can be desirable regardless of
+> > > > > system/architecture
+> > > > > emulation, and can sometimes be useful for elf files that can run
+> > > > > natively. Enabling `binfmt` for all natively runnable elf files
+> > > > > may
+> > > > > not be desirable.
+> > > >
+> > > > Another reason to have this is that one may not have root
+> > > > permissions
+> > > > to configure binfmt-misc.
+> > > >
+> > > +1
+> > >
+> > > > There was a similar patch posted to the mailing list some years
+> > > > back,
+> > > > which I used to cherry-pick when I needed this. I'm not sure what
+> > > > happened to that discussion though.
+> > >
+> > > Yes(ish):
+> > > https://patchwork.ozlabs.org/project/qemu-devel/patch/1455515507-2687=
+7-1-git-send-email-petrosagg@resin.io/
+> >
+> > Thanks for finding this! Don't we need the shebang handling here as
+> > well?
+> >
+> I don't think so. In this case we aren't making it so execve can point to
+> some arbitrary impl, just that we propagate the current running qemu
+> env.
+>
+
+ping
+> > Laurent, do you per chance know why was it not accepted back
+> > then?Unfortunately I cannot find any discussion associated with v3 or
+> > v4
+> > [1]. There were some concerns regarding v1 [2], but from what I can see
+> > they all were addressed.
+> >
+> > [1]
+> > https://patchew.org/QEMU/20200730160106.16613-1-rj.bcjesus@gmail.com/
+> > [2]
+> > https://patchwork.kernel.org/project/qemu-devel/patch/1453091602-21843-=
+1-git-send-email-petrosagg@gmail.com/
 
