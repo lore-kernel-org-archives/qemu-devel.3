@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85924D0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 18:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78153D0EE20
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 19:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szKkn-0005TO-8A; Fri, 11 Oct 2024 14:52:45 -0400
+	id 1szKs7-00071q-Js; Fri, 11 Oct 2024 15:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ved@rivosinc.com>) id 1szKkk-0005SW-Ve
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:52:43 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1szKrz-00071F-WB
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 15:00:12 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ved@rivosinc.com>) id 1szKkj-0007n8-8U
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:52:42 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3e4d624ac53so865806b6e.2
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 11:52:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1szKry-0000Ad-BJ
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 15:00:11 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20caccadbeeso8054755ad.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 12:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728672755; x=1729277555;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=irZVYvpZUapOC37LWmJjffcjitIBdllmEIpXJj/9rWM=;
- b=OtFntmD24CB6dClkAf8h7gaVmDENcQkIrpxacTRd7GqyPmKPCFCqKwOQ00D7oSxYTl
- nUMTRxLBKVNAtVVKKl3n5uM/jfKcozp4sbkk/pL1C4F2K83ier27damO8pKQDFhrhk7o
- 3Gmj8Ff9KTMhFMacZfGl0ssF6I95/AOn+FPnULnCAfoV+wbikvKT+jh4D3yTVQNQyV0T
- 461E4oYWhh+tjhhtI60gj8Ppq5/SRfOyQCLe741ESWgh/EBeMKF6LDFAm5c+iZn2+y1g
- PaIyd5dAPXUv0565MVE3+qED1jETiTooVqAHaMfudLc9psJpmqnIY62rsdiaEx3McezM
- AHvw==
+ d=linaro.org; s=google; t=1728673208; x=1729278008; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YBamzvrkO2AVdUFg/eWNF/7TlRFyTmsrUURSSA6u0kg=;
+ b=LQIYfrnlfdb5Msc4+OZkZ7Jkg4b+Ns3EeC7k26pEeY7nSBqkfCo8k1U1s/gAfCNlaz
+ O9jZ99SRon7yW3TJNCkS3yT6yTDiVIvKxTXFi8FqYQP1Aa1Ssi7y1P3mi7aFERmjWDWE
+ GiMtT5/evqvAfk7M/5giKPJY96kpikCetjJCfiZptZ7+ePoyR0cPJhCiBU4dkIx9wI9e
+ gA8UJP8Kn336vwofKzWEdUWGzJ/9TnRlrBaGetzRoEkGxuQ8Nl8OtD8EMYyaqSUWU1XY
+ XWveLcE5KHuach9oJzlGvZ4A7G+5t48or4H7kUuMRB447FcWw2UrhvRP9kV8b2QNczcs
+ /5dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728672755; x=1729277555;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=irZVYvpZUapOC37LWmJjffcjitIBdllmEIpXJj/9rWM=;
- b=v47J73kO29b4l+8UhKY5O9SkJS8XYVIv/dMPNoo+6leRj/dg2Frn7q87nC3mVfhMa0
- jMfWnZL1wW5+CwSsH76zvhku7tkj+062QW6dy34Sq3LrPfwuVh+u0/vmE1FEYjj45+E6
- e1AUdYVIpyC8gskRQmXPjuKR5GRLGWJ/BqfQFERcjof9BuMEHgVjU+J7TFTTlNlFc6Iy
- nqKS/S5rnNW1RPbUD7s8vYExybnB7LSpkJA9cZFwCXeIqwlqvpf5HHs0OXoA91k7i9vg
- 3gfxpASc0/DwASI97ErxH4+DIu5HIdbOXZmR9H7xarI4DoaUNRJN3UuiSLfcAR+w9wOr
- 1vcw==
+ d=1e100.net; s=20230601; t=1728673208; x=1729278008;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YBamzvrkO2AVdUFg/eWNF/7TlRFyTmsrUURSSA6u0kg=;
+ b=C3jVxsF0lp/IQDT/zsbN0F/lHEWewugmebOMHL+wy+0KqAbtPQzaoScQBV8yjZtusD
+ 5EW+/pAZcdoOAy7cUZV5roURrlho17hqAWLsYmaUOoIxgQxgUg8y0rBYedN1Z3Fp8GTW
+ te5HVi/gYiNr6w17IOZYbY8q4dkXzHXTDwS7zMG24Xicv8rZd3w7UCG6qHZtFXk5EZPS
+ ZNrLQKSEfKBOiO3ErTOCDMfQUhwcplBQNpSWrLjr1aXwv0YOOZq1ycipwhAO0kkIg9JD
+ b77IRznNq04owZqGw4tJRkRN+ywM6gBHbWWxrJCNxszo59ZSV3g4VwK+9HrfXh3TgZNf
+ 0xfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwo23oQnMiv5Ymerl7CmVK/LjlGWiXNnTvCG/h5XhxP+fWIFY6K1CNKpmG379iE6+Fu/NRtt7+me2I@nongnu.org
-X-Gm-Message-State: AOJu0YyFv5FQbBQl6tEvSDAr/FZkF0BfMUL2DTDTJ4Kb+GT5E4yt8Dt/
- bgh65iV12fnVoFCy3fQIoY4BJJwdSP5Mqmp3qQA03aKJDc2aEGyfli+Zgidb9WQ=
-X-Google-Smtp-Source: AGHT+IECw5NFO5rwjtf8P5oZTJReMIKRETN8h/oXqXHvqtr4p2g1e7yRDwwXrjwQv1BaUoPRQTJskg==
-X-Received: by 2002:a05:6808:1528:b0:3e3:ae35:f418 with SMTP id
- 5614622812f47-3e5d2343610mr361779b6e.47.1728672754554; 
- Fri, 11 Oct 2024 11:52:34 -0700 (PDT)
-Received: from ved-XPS-8940 ([12.0.166.162]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5eb11a894acsm514430eaf.40.2024.10.11.11.52.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 11:52:34 -0700 (PDT)
-Date: Fri, 11 Oct 2024 13:52:32 -0500
-From: Ved Shanbhogue <ved@rivosinc.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: =?iso-8859-1?Q?Cl=E9ment_L=E9ger?= <cleger@rivosinc.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 2/8] target/riscv: Implement Ssdbltrp sret, mret and
- mnret behavior
-Message-ID: <Zwlz8LUEGB4Fa611@ved-XPS-8940>
-References: <20240925115808.77874-1-cleger@rivosinc.com>
- <20240925115808.77874-3-cleger@rivosinc.com>
- <CAKmqyKPrHtsjAnc8kX__BeHvxoMvm+MmYLWSgh5TKdx0FE8o9A@mail.gmail.com>
+ AJvYcCUO2iJv2OVWxyJ8UOuo7RDjLK+306qIKdiIwlp3Ft45R2XwADrJVhqSJrw3OBpGTNfIwbbi7iLQikY1@nongnu.org
+X-Gm-Message-State: AOJu0YzDCBY2PIoIsWU25qE4vPIg6rQIZGcAF3aEundno6PE3agADp+9
+ ZfJC/Zwz3nd86oLa3vcuZxQf/TEeLWTrsIjxAyqOBzSBzeEWuSPGmNZvIdWuUDE=
+X-Google-Smtp-Source: AGHT+IGdslKGFF/deWnUtDFCxtZcsvvZPaGdEkF1GvxxQzFuBfgLIByeZ3D8Ya9VsBqPwwBCP0OlqA==
+X-Received: by 2002:a17:902:cec3:b0:20b:5be:a403 with SMTP id
+ d9443c01a7336-20ca1429594mr42032475ad.11.1728673208450; 
+ Fri, 11 Oct 2024 12:00:08 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c8c215edfsm26373955ad.210.2024.10.11.12.00.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Oct 2024 12:00:08 -0700 (PDT)
+Message-ID: <2f5ed4cb-2a60-4078-86e0-ade89420f39d@linaro.org>
+Date: Fri, 11 Oct 2024 12:00:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAKmqyKPrHtsjAnc8kX__BeHvxoMvm+MmYLWSgh5TKdx0FE8o9A@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=ved@rivosinc.com; helo=mail-oi1-x22a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: Use probe_access_full_mmu in ptw_translate
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, pbonzini@redhat.com, qemu-stable@nongnu.org
+References: <20241009002029.317490-1-richard.henderson@linaro.org>
+ <6bb33897-348e-4a0d-9027-2c86bef2ce3a@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <6bb33897-348e-4a0d-9027-2c86bef2ce3a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,37 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alistair Francis wrote:
->> When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
->> when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
->> when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
->> to VU from HS.
->
->I don't see mret being mentioned in the spec. Where do you see that
->V/SSTATUS.SDT should be cleared?
->
+On 10/8/24 20:48, Philippe Mathieu-Daudé wrote:
+> On 8/10/24 21:20, Richard Henderson wrote:
+>> The probe_access_full_mmu function was designed for this purpose,
+>> and does not report the memory operation event to plugins.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/i386/tcg/sysemu/excp_helper.c | 10 ++++------
+>>   1 file changed, 4 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+>> index 8fb05b1f53..8f4dc08535 100644
+>> --- a/target/i386/tcg/sysemu/excp_helper.c
+>> +++ b/target/i386/tcg/sysemu/excp_helper.c
+>> @@ -62,12 +62,11 @@ typedef struct PTETranslate {
+>>   static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
+> 
+> We can remove the @ra argument; maybe clearer to do it in a
+> separate commit.
 
-Ssdbltrp specifies:
-    In S-mode, the SRET instruction sets sstatus.SDT to 0,
-    and if the new privilege mode is VU, it also sets
-    vsstatus.SDT to 0. However, in VS-mode, only vsstatus.SDT
-    is set to to 0.
+Good idea.
 
-    The MRET instructions sets sstatus.SDT to 0, if the new
-    privilege mode is U, VS, or VU. Additionally, if it is
-    VU, then vsstatus.SDT is also set to 0.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
-Smdbltrp specifies:
-    The MRET and SRET instructions, when executed in M-mode,
-    set the MDT bit to 0. If the new privilege mode is U, VS,
-    or VU, then sstatus.SDT is also set to 0. Additionally,
-    if it is VU, then vsstatus.SDT is also set to 0.
-
-    The MNRET instruction sets the MDT bit to 0 if the new
-    privilege mode is not M. If it is U, VS, or VU, then
-    sstatus.SDT is also set to 0. Additionally, if it is VU,
-    then vsstatus.SDT is also set to 0.
-
-regards
-ved
 
