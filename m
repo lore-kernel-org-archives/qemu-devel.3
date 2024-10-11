@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3ACD0EE12
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0BFD0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ6z-00042F-8I; Fri, 11 Oct 2024 13:07:33 -0400
+	id 1szJ4U-00019m-5d; Fri, 11 Oct 2024 13:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4U-0000hD-3Z
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1szJ4O-0000hD-N9
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHdX-0007DQ-Im
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:05 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1szHhU-0007kf-1T
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:37:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660782;
+ s=mimecast20190719; t=1728661018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6DbehZlttuAvRWwiYZMnj8a7+ZQoZJPyuQGCQjndPlg=;
- b=GLT8TaFnksScPdM6/Rl9KX1M0vpAjRR/tx4Ht7MB5rbCdgsnQ7zhMWkEkrniGSFFPoY7/c
- ALPWfZo+9IHa/PePgYiXWN6FP24gzLZztCGJGwJYBQygqYVXmZ3Rxj4RYIDIjQ+epknoB0
- kzhLFt797B1sTgU5WG43Ot4SAIkETFQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Lv94tKV1lDi8MQTPf5ChoE9o9wiYCJxcEuRjAmBncHY=;
+ b=Hf62aJ9SZxcHmFeAydR5LjY5pS51VB8z5zdw2srRYguH/NHZPsYCTlYYfqOI0HD7XKaEXC
+ yf1znLlm79+HnKTCXLGfk9QYX382rl5u36leR8YFh60YyoQ9n2jvPFdluyJk9Yk5rhoREj
+ dt2oz50mcOs/511nHOat/hcfYD2stpU=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-YRpffWhYMVa2hLL6YqNgKg-1; Fri, 11 Oct 2024 11:33:01 -0400
-X-MC-Unique: YRpffWhYMVa2hLL6YqNgKg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a9959df649aso160986766b.1
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:01 -0700 (PDT)
+ us-mta-372-rO6cOYDuPT6noYCOGPZ46Q-1; Fri, 11 Oct 2024 11:36:57 -0400
+X-MC-Unique: rO6cOYDuPT6noYCOGPZ46Q-1
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-8353599024bso167175239f.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:36:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660779; x=1729265579;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6DbehZlttuAvRWwiYZMnj8a7+ZQoZJPyuQGCQjndPlg=;
- b=igVCv+04sIey12XzTsrf4Tm0empC0uIBh+9XG4kRxIz64c+sTaL67otvz4gZHIPYCV
- eU9NEepDiO1jZBLiZI9c/aiIQ+dqbOv7ZGkMkvBBSv3H1FZdJy2gl5qcT+CCJZ/EJCTD
- DIHbCOXxxNX5jHKp9m1CiNozMocC8Gcc5sLXq11EynCF4cSE5WJ7M6GhQtDn/V6ZAKGd
- C14Ql3aNhwQlK7WNGOG89413/NYNQEo3qLdMjW66VzW5vQJQST5qYZfF3Snkgbtm4G29
- Sng+6j5d2ZIZUKIlzlIo1WIekxFY1zKFXvYjWVEfTypfmBRG6iEusBYNqRLlbBc5q7UR
- FsHw==
-X-Gm-Message-State: AOJu0YwUw1LSiKrSggDVV53VsCzJWn4nJOPIA1SNXkO+lvBvBoAel3M+
- X9R5G0vHkZFOg4lGFccD7k+SpeEjRETgaU2T0ODmItlXt2KFYG0FvPBqixqLgp6c5QUtGYsqfvP
- 1uNWKrQ6ClAa8VmD70jWWp+FUSJpEDojZQNvD9++NbrNFGHm2rx9Z7xf9pobYZKvs9+EzFPPjeB
- rqrote3Ok/RdxgKnH9JLPiH7i0sTOXC7AvN5pUskg=
-X-Received: by 2002:a17:907:7ea0:b0:a99:4e35:9a25 with SMTP id
- a640c23a62f3a-a99e3e448b8mr4951666b.44.1728660778992; 
- Fri, 11 Oct 2024 08:32:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEd6dKcEVQeXImMg6X2cIvVnP9H1eSwNVOvD6ZxjT4wnGLbhw8L2jOuH0AQyoTiwzBFpJXa4w==
-X-Received: by 2002:a17:907:7ea0:b0:a99:4e35:9a25 with SMTP id
- a640c23a62f3a-a99e3e448b8mr4948266b.44.1728660778444; 
- Fri, 11 Oct 2024 08:32:58 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a80dcdc3sm226799066b.172.2024.10.11.08.32.56
+ d=1e100.net; s=20230601; t=1728661016; x=1729265816;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Lv94tKV1lDi8MQTPf5ChoE9o9wiYCJxcEuRjAmBncHY=;
+ b=j4G1kBKyb9j8/BfVLiMkiKBku1hC9HRq6v9t6K+hsLry+6Tejq1ToHA/v9FEFR6vbp
+ sLmz2F+KCHSNKbp0JASd+tCvgQR0hoiBkmHQ+E/cZKSXCHI1eOWhedwlZ8pPsFz/yO5+
+ 7aiThHqZ8sELw2kbmmw+jzZokYMn/PqjAofQFzY7s/68MBb/yrnSgm003OrdS5F4CTf9
+ cuonwoO51QNhRBUhX5ltWJLtIQC0fd1gMb1EJ+a1GaZ9TIs8+/Qa8MrT82BTln0c4Vbv
+ axVuUsVEMrX8FdH1k+aeaidwQjbiGy8nAIHqirN7SlrrMccuz15J54qUEh3KeF5WWVXN
+ 4sIA==
+X-Gm-Message-State: AOJu0Yzs18MJZDU9B6jOQPCZES7I04soU33xIypA2Zi+IIIY0ry1Esbo
+ 4s9wnuAK/ehJ1AMlsVUHrZvQULZOpzo78oAg0DsMHAo7PqRR/34LJzjpkZpwQYvTSE2ZMwSpGa0
+ Qr2GBqRKey3ewmRscdmLFmxaxZ8F3KUQvxjxZZolEp63L0RZmvgMmno7vR9NiP+EEUIYaZ0kRQM
+ tpXOrGHRuxeEUXjNR6hZ8DVhfYrvg+A0vljg==
+X-Received: by 2002:a05:6602:1642:b0:82d:129f:acb6 with SMTP id
+ ca18e2360f4ac-83794d4446amr217058839f.14.1728661016213; 
+ Fri, 11 Oct 2024 08:36:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1cjnlyjtSux1aCaTYccr0H+w9sOXiqJQzORh+WErFSIHEcbW22GsmogUXDImUMTomxHiHYw==
+X-Received: by 2002:a05:6602:1642:b0:82d:129f:acb6 with SMTP id
+ ca18e2360f4ac-83794d4446amr217046639f.14.1728661014242; 
+ Fri, 11 Oct 2024 08:36:54 -0700 (PDT)
+Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4dbadaab1d1sm692480173.155.2024.10.11.08.36.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:32:57 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Fri, 11 Oct 2024 08:36:53 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v3 06/18] meson.build: add HAVE_GLIB_WITH_ALIGNED_ALLOC flag
-Date: Fri, 11 Oct 2024 17:32:14 +0200
-Message-ID: <20241011153227.81770-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
+ Yong Huang <yong.huang@smartx.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Subject: [PATCH] migration: Put thread names together with macros
+Date: Fri, 11 Oct 2024 11:36:52 -0400
+Message-ID: <20241011153652.517440-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,57 +99,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Keep migration thread names together, so it's easier to see a list of all
+possible migration threads.
 
-Rust crates, introduced from the next commit onwards, can optionally use
-the glib allocator API and need to know whether g_aligned_alloc etc are
-available.
+Still two functional changes below besides the macro defintions:
 
-This commit adds a define in config_host_data that depends on glib
-version >= 2.72.
+  - There's one dirty rate thread that we overlooked before, now we add
+  that too and name it as "mig/dirtyrate" following the old rules.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/r/23f7b0cc9801d315f5d7835e30d775e133ec2fb9.1727961605.git.manos.pitsidianakis@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+  - The old name "mig/src/rp-thr" has "-thr" but it may not be useful if
+  it's a thread name anyway, while "rp" can be slightly hard to read.
+  Taking this chance to rename it to "mig/src/return", hopefully a better
+  name.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- meson.build | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ migration/migration.h    | 14 ++++++++++++++
+ migration/colo.c         |  3 ++-
+ migration/dirtyrate.c    |  6 ++++--
+ migration/migration.c    |  9 +++++----
+ migration/multifd.c      |  6 +++---
+ migration/postcopy-ram.c |  6 ++++--
+ migration/savevm.c       |  3 ++-
+ 7 files changed, 34 insertions(+), 13 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index b9a83dfc744..aea419a8317 100644
---- a/meson.build
-+++ b/meson.build
-@@ -948,7 +948,9 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
- ################
+diff --git a/migration/migration.h b/migration/migration.h
+index 38aa1402d5..b9ce5aa4ff 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -28,6 +28,20 @@
+ #include "sysemu/runstate.h"
+ #include "migration/misc.h"
  
- # When bumping glib minimum version, please check also whether to increase
--# the _WIN32_WINNT setting in osdep.h according to the value from glib
-+# the _WIN32_WINNT setting in osdep.h according to the value from glib.
-+# You should also check if any of the glib.version() checks
-+# below can also be removed.
- glib_req_ver = '>=2.66.0'
- glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
-                     method: 'pkg-config')
-@@ -998,6 +1000,9 @@ glib = declare_dependency(dependencies: [glib_pc, gmodule],
- # TODO: remove this check and the corresponding workaround (qtree) when
- # the minimum supported glib is >= 2.75.3
- glib_has_gslice = glib.version().version_compare('<2.75.3')
-+# Check whether glib has the aligned_alloc family of functions.
-+# <https://docs.gtk.org/glib/func.aligned_alloc.html>
-+glib_has_aligned_alloc = glib.version().version_compare('>=2.72.0')
++#define  MIGRATION_THREAD_SNAPSHOT          "mig/snapshot"
++#define  MIGRATION_THREAD_DIRTY_RATE        "mig/dirtyrate"
++
++#define  MIGRATION_THREAD_SRC_MAIN          "mig/src/main"
++#define  MIGRATION_THREAD_SRC_MULTIFD       "mig/src/send_%d"
++#define  MIGRATION_THREAD_SRC_RETURN        "mig/src/return"
++#define  MIGRATION_THREAD_SRC_TLS           "mig/src/tls"
++
++#define  MIGRATION_THREAD_DST_COLO          "mig/dst/colo"
++#define  MIGRATION_THREAD_DST_MULTIFD       "mig/src/recv_%d"
++#define  MIGRATION_THREAD_DST_FAULT         "mig/dst/fault"
++#define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
++#define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
++
+ struct PostcopyBlocktimeContext;
  
- # override glib dep to include the above refinements
- meson.override_dependency('glib-2.0', glib)
-@@ -2529,6 +2534,7 @@ config_host_data.set('CONFIG_TIMERFD', cc.has_function('timerfd_create'))
- config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
- config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
- config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
-+config_host_data.set('HAVE_GLIB_WITH_ALIGNED_ALLOC', glib_has_aligned_alloc)
- config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
- config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul'))
- config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
+ #define  MIGRATION_RESUME_ACK_VALUE  (1)
+diff --git a/migration/colo.c b/migration/colo.c
+index 6449490221..9590f281d0 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -935,7 +935,8 @@ void coroutine_fn colo_incoming_co(void)
+     assert(bql_locked());
+     assert(migration_incoming_colo_enabled());
+ 
+-    qemu_thread_create(&th, "mig/dst/colo", colo_process_incoming_thread,
++    qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
++                       colo_process_incoming_thread,
+                        mis, QEMU_THREAD_JOINABLE);
+ 
+     mis->colo_incoming_co = qemu_coroutine_self();
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 233acb0855..a74a6aeb56 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -29,6 +29,7 @@
+ #include "sysemu/runstate.h"
+ #include "exec/memory.h"
+ #include "qemu/xxhash.h"
++#include "migration.h"
+ 
+ /*
+  * total_dirty_pages is procted by BQL and is used
+@@ -839,8 +840,9 @@ void qmp_calc_dirty_rate(int64_t calc_time,
+ 
+     init_dirtyrate_stat(config);
+ 
+-    qemu_thread_create(&thread, "get_dirtyrate", get_dirtyrate_thread,
+-                       (void *)&config, QEMU_THREAD_DETACHED);
++    qemu_thread_create(&thread, MIGRATION_THREAD_DIRTY_RATE,
++                       get_dirtyrate_thread, (void *)&config,
++                       QEMU_THREAD_DETACHED);
+ }
+ 
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index f5f428e764..7609e0feed 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2484,7 +2484,7 @@ static int open_return_path_on_source(MigrationState *ms)
+ 
+     trace_open_return_path_on_source();
+ 
+-    qemu_thread_create(&ms->rp_state.rp_thread, "mig/src/rp-thr",
++    qemu_thread_create(&ms->rp_state.rp_thread, MIGRATION_THREAD_SRC_RETURN,
+                        source_return_path_thread, ms, QEMU_THREAD_JOINABLE);
+     ms->rp_state.rp_thread_created = true;
+ 
+@@ -3473,7 +3473,8 @@ static void *migration_thread(void *opaque)
+     Error *local_err = NULL;
+     int ret;
+ 
+-    thread = migration_threads_add("live_migration", qemu_get_thread_id());
++    thread = migration_threads_add(MIGRATION_THREAD_SRC_MAIN,
++                                   qemu_get_thread_id());
+ 
+     rcu_register_thread();
+ 
+@@ -3823,10 +3824,10 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+     }
+ 
+     if (migrate_background_snapshot()) {
+-        qemu_thread_create(&s->thread, "mig/snapshot",
++        qemu_thread_create(&s->thread, MIGRATION_THREAD_SNAPSHOT,
+                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+     } else {
+-        qemu_thread_create(&s->thread, "mig/src/main",
++        qemu_thread_create(&s->thread, MIGRATION_THREAD_SRC_MAIN,
+                 migration_thread, s, QEMU_THREAD_JOINABLE);
+     }
+     s->migration_thread_running = true;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 9b200f4ad9..697fe86fdf 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -723,7 +723,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     args->p = p;
+ 
+     p->tls_thread_created = true;
+-    qemu_thread_create(&p->tls_thread, "mig/src/tls",
++    qemu_thread_create(&p->tls_thread, MIGRATION_THREAD_SRC_TLS,
+                        multifd_tls_handshake_thread, args,
+                        QEMU_THREAD_JOINABLE);
+     return true;
+@@ -841,7 +841,7 @@ bool multifd_send_setup(void)
+                           + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
+         }
+-        p->name = g_strdup_printf("mig/src/send_%d", i);
++        p->name = g_strdup_printf(MIGRATION_THREAD_SRC_MULTIFD, i);
+         p->write_flags = 0;
+ 
+         if (!multifd_new_send_channel_create(p, &local_err)) {
+@@ -1259,7 +1259,7 @@ int multifd_recv_setup(Error **errp)
+                 + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
+         }
+-        p->name = g_strdup_printf("mig/dst/recv_%d", i);
++        p->name = g_strdup_printf(MIGRATION_THREAD_DST_MULTIFD, i);
+         p->normal = g_new0(ram_addr_t, page_count);
+         p->zero = g_new0(ram_addr_t, page_count);
+     }
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 83f6160a36..a535fd2e30 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1230,7 +1230,8 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+         return -1;
+     }
+ 
+-    postcopy_thread_create(mis, &mis->fault_thread, "mig/dst/fault",
++    postcopy_thread_create(mis, &mis->fault_thread,
++                           MIGRATION_THREAD_DST_FAULT,
+                            postcopy_ram_fault_thread, QEMU_THREAD_JOINABLE);
+     mis->have_fault_thread = true;
+ 
+@@ -1250,7 +1251,8 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+          * This thread needs to be created after the temp pages because
+          * it'll fetch RAM_CHANNEL_POSTCOPY PostcopyTmpPage immediately.
+          */
+-        postcopy_thread_create(mis, &mis->postcopy_prio_thread, "mig/dst/preempt",
++        postcopy_thread_create(mis, &mis->postcopy_prio_thread,
++                               MIGRATION_THREAD_DST_PREEMPT,
+                                postcopy_preempt_thread, QEMU_THREAD_JOINABLE);
+         mis->preempt_thread_status = PREEMPT_THREAD_CREATED;
+     }
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 7e1e27182a..e796436979 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2131,7 +2131,8 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+     }
+ 
+     mis->have_listen_thread = true;
+-    postcopy_thread_create(mis, &mis->listen_thread, "mig/dst/listen",
++    postcopy_thread_create(mis, &mis->listen_thread,
++                           MIGRATION_THREAD_DST_LISTEN,
+                            postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+     trace_loadvm_postcopy_handle_listen("return");
+ 
 -- 
-2.46.2
+2.45.0
 
 
