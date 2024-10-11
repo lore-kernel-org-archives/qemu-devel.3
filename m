@@ -4,52 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA708D2447B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 06:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39A9D2447B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 06:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz8oE-0007l6-0e; Fri, 11 Oct 2024 02:07:30 -0400
+	id 1sz9RY-00067A-AK; Fri, 11 Oct 2024 02:48:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=wcaR=RH=kaod.org=clg@ozlabs.org>)
- id 1sz8o8-0007kl-Gh; Fri, 11 Oct 2024 02:07:24 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <erbse.13@gmx.de>) id 1sz9RV-00066r-A8
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 02:48:05 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=wcaR=RH=kaod.org=clg@ozlabs.org>)
- id 1sz8o4-0005Nb-Vg; Fri, 11 Oct 2024 02:07:23 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XPx3n3cqWz4xN6;
- Fri, 11 Oct 2024 17:07:17 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XPx3l3mq2z4wb7;
- Fri, 11 Oct 2024 17:07:15 +1100 (AEDT)
-Message-ID: <f73939b8-999a-42ad-ada0-2f8045752ff5@kaod.org>
-Date: Fri, 11 Oct 2024 08:07:14 +0200
+ (Exim 4.90_1) (envelope-from <erbse.13@gmx.de>) id 1sz9RT-0001BS-Bv
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 02:48:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1728629275; x=1729234075; i=erbse.13@gmx.de;
+ bh=lRYoZ8ZEfCljSmCfJERXD2hAZ7vpp+9eIza9Jf6ArUA=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-Id:In-Reply-To:
+ References:MIME-Version:Content-Transfer-Encoding:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=mcy13GH2c7B4b6bNWJ8EqrvoZWXM9i4Sdx/BcE0wuAqorXMKoi0NsjtqwU9gbllf
+ HVhT/dB+YBmaHBjw3h+U7aTFB0NQHXVaMd3V0VqBzLHcbPLWgYmugic32HMIgV5tV
+ Ru+HdLBVjpa5EP6RJi0YC9rp5RNHXruIKDTM7d6uewT0F6PqOdSnqnoO7SWW69Pn1
+ trJcJJxrYT9+t1mOld9xlz4aSBiTmM1x4rUYKHYh+uKVnvqrbVK+d7h2dHfgzGlYK
+ 7sPkcEijyjPCcu/jUQ0e+rajnUoz97H0iD0hjPKiYIgIeOLZY6Y2+pv8oa/ROf+1o
+ UNZrke6CdfTRCAQybg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from server ([88.152.43.130]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1Ygz-1sxlaq0h5f-001DVC; Fri, 11
+ Oct 2024 08:47:55 +0200
+From: Tom Dohrmann <erbse.13@gmx.de>
+To: qemu-devel@nongnu.org,
+	Paolo Bonzini <pbonzini@redhat.com>
+Cc: Tom Dohrmann <erbse.13@gmx.de>,
+	kvm@vger.kernel.org
+Subject: Ping: [PATCH] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
+Date: Fri, 11 Oct 2024 06:47:33 +0000
+Message-Id: <20241011064733.1123414-1-erbse.13@gmx.de>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240903062953.3926498-1-erbse.13@gmx.de>
+References: <20240903062953.3926498-1-erbse.13@gmx.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/14] ppc/spapr: remove deprecated machine pseries-2.3
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com
-References: <20241007153838.1085522-1-harshpb@linux.ibm.com>
- <20241007153838.1085522-4-harshpb@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241007153838.1085522-4-harshpb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=wcaR=RH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:yBu2dyWc2rfrxhheMUw1/2gv0CZRx+bb9aEGiRV4t12nG6Z2+rV
+ xABtV7yRCNtIR62RpiLJuuoEAK08SPtfKWWfAGKBUvE1UmB8f7d9G5yRiMdhFbL5rAMVMbw
+ E3uHRQbwL0xZNnVihp2phu9lIP3lyeHYpELh81TvOp79Aau5yd+FeD8Wbv6uxCTPQbAv/KK
+ sgCBtkfucoBkozorjhItg==
+UI-OutboundReport: notjunk:1;M01:P0:Ji03cwJ+J28=;cQrWFO3UDht6/S+lT2Gsx8Keypb
+ fTHArrX58iqM2zv7CW8U/TcW6hyDgCTYltUMTsVMh9snCDP053opKzDQNTitOcB/92HrLE/b+
+ zxNFCeP1u49dIGHBVQrSzSzn7P8WGTHN9fKj6hJ/HhrV4VmTU35PmNc4uI0lgVbBlJCogNN15
+ a6K2j6/4jcm8cgOgeGALOcQTEXPXHKyu+0gyQ+ltJtgSiwydwzkG+mezx38YUiMQrMZ6cvbUB
+ PukxhyIVQv++ceuieF8+uYlr0EGwlpj/YDBLDj3oyvkLLP6T8ogMWfqOfEGyPcv/07Lfy4Moj
+ 7KDG1lPzsfY6K6PFHNEN4augZYWr4m1y35G6JRVaG4BVrAFPmicsAgFMOerqxtTgqBKDw9n0O
+ muHGKp/4dijFnuktgAaaMlUSO6xSU2fGBB8/0ONrS3yfQMmvDSqkE1FRcBR/7jfqeUUnurpHb
+ QougsDgXbLa7fYQ8N/9fDYKjZi1Hvyu2C6/gTeTLRDDXuXnAFbR5EdR3l/HGUKAJimwV+CxeF
+ CZfqOanuwGudoKK2XXDHIBbYLjeDHeJSRnIP1i939qTcQzVXr1s1qIExL4jo1v3+gqEnhfoys
+ U2Pr9Crm35otfpoT1EHFjH16m6UPiPVGnYtB1H6e0053pu9IxvVSt2EM4LKYMwE1RG17pmmy6
+ 3ecTzP1OGQpKL9m5Cj5/+h02mu0DZkHEyHoBRZ4rrCy7kLvEUwRN7x+PxMfMthIstf4Z/2Oug
+ mMylFhiRikU5w6bSJxPlGoVh9s1AHU38j54Kkfz5aJ2fjg0GJH+D8v/eczwEbAovhnlT4nl2V
+ n5gt2NRQ4NPhlxHHpg/sMPvSj0O5GgoTwbTjpBnWdPd1I=
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=erbse.13@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,149 +91,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/24 17:38, Harsh Prateek Bora wrote:
-> Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
-> deprecated with reasons mentioned in its commit log.
-> Removing pseries-2.3 specific code with this patch for now.
-> 
-> While at it, also remove the dynamic-reconfiguration option which was
-> introduced to disable it by default for legacy machines until pseries-2.3.
-> 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+I haven't heard anything about this patch for a while.
+https://patchew.org/QEMU/20240903062953.3926498-1-erbse.13@gmx.de/
 
+=46rom 5c1ad1ff44438402ec824a224ac4659c8044ec7e Mon Sep 17 00:00:00 2001
+From: Tom Dohrmann <erbse.13@gmx.de>
+Date: Tue, 3 Sep 2024 06:25:04 +0000
+Subject: [PATCH] accel/kvm: check for KVM_CAP_READONLY_MEM on VM
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+KVM_CAP_READONLY_MEM used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, this extension is not
+always available on all VM types [1,2].
 
-Thanks,
+Query the extension on the VM level instead of on the KVM level.
 
-C.
+[1] https://patchwork.kernel.org/project/kvm/patch/20240809190319.1710470-=
+2-seanjc@google.com/
+[2] https://patchwork.kernel.org/project/kvm/patch/20240902144219.3716974-=
+1-erbse.13@gmx.de/
 
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Tom Dohrmann <erbse.13@gmx.de>
+=2D--
+ accel/kvm/kvm-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> ---
->   include/hw/pci-host/spapr.h |  1 -
->   hw/ppc/spapr.c              | 15 ---------------
->   hw/ppc/spapr_pci.c          | 35 -----------------------------------
->   3 files changed, 51 deletions(-)
-> 
-> diff --git a/include/hw/pci-host/spapr.h b/include/hw/pci-host/spapr.h
-> index 3778aac27b..79187e80fd 100644
-> --- a/include/hw/pci-host/spapr.h
-> +++ b/include/hw/pci-host/spapr.h
-> @@ -53,7 +53,6 @@ struct SpaprPhbState {
->       uint32_t index;
->       uint64_t buid;
->       char *dtbusname;
-> -    bool dr_enabled;
->   
->       MemoryRegion memspace, iospace;
->       hwaddr mem_win_addr, mem_win_size, mem64_win_addr, mem64_win_size;
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 34d655d0b3..599a59910c 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -5349,21 +5349,6 @@ static void spapr_machine_2_4_class_options(MachineClass *mc)
->   
->   DEFINE_SPAPR_MACHINE(2, 4);
->   
-> -/*
-> - * pseries-2.3
-> - */
-> -
-> -static void spapr_machine_2_3_class_options(MachineClass *mc)
-> -{
-> -    static GlobalProperty compat[] = {
-> -        { "spapr-pci-host-bridge", "dynamic-reconfiguration", "off" },
-> -    };
-> -    spapr_machine_2_4_class_options(mc);
-> -    compat_props_add(mc->compat_props, hw_compat_2_3, hw_compat_2_3_len);
-> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
-> -}
-> -DEFINE_SPAPR_MACHINE(2, 3);
-> -
->   static void spapr_machine_register_types(void)
->   {
->       type_register_static(&spapr_machine_info);
-> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-> index 5c0024bef9..8f1964ce52 100644
-> --- a/hw/ppc/spapr_pci.c
-> +++ b/hw/ppc/spapr_pci.c
-> @@ -1237,10 +1237,6 @@ static void add_drcs(SpaprPhbState *phb, PCIBus *bus)
->       int i;
->       uint8_t chassis;
->   
-> -    if (!phb->dr_enabled) {
-> -        return;
-> -    }
-> -
->       chassis = chassis_from_bus(bus);
->   
->       if (pci_bus_is_root(bus)) {
-> @@ -1260,10 +1256,6 @@ static void remove_drcs(SpaprPhbState *phb, PCIBus *bus)
->       int i;
->       uint8_t chassis;
->   
-> -    if (!phb->dr_enabled) {
-> -        return;
-> -    }
-> -
->       chassis = chassis_from_bus(bus);
->   
->       for (i = PCI_SLOT_MAX * PCI_FUNC_MAX - 1; i >= 0; i--) {
-> @@ -1548,17 +1540,6 @@ static void spapr_pci_pre_plug(HotplugHandler *plug_handler,
->       PCIBus *bus = PCI_BUS(qdev_get_parent_bus(DEVICE(pdev)));
->       uint32_t slotnr = PCI_SLOT(pdev->devfn);
->   
-> -    if (!phb->dr_enabled) {
-> -        /* if this is a hotplug operation initiated by the user
-> -         * we need to let them know it's not enabled
-> -         */
-> -        if (plugged_dev->hotplugged) {
-> -            error_setg(errp, "Bus '%s' does not support hotplugging",
-> -                       phb->parent_obj.bus->qbus.name);
-> -            return;
-> -        }
-> -    }
-> -
->       if (IS_PCI_BRIDGE(plugged_dev)) {
->           if (!bridge_has_valid_chassis_nr(OBJECT(plugged_dev), errp)) {
->               return;
-> @@ -1591,14 +1572,6 @@ static void spapr_pci_plug(HotplugHandler *plug_handler,
->       SpaprDrc *drc = drc_from_dev(phb, pdev);
->       uint32_t slotnr = PCI_SLOT(pdev->devfn);
->   
-> -    /*
-> -     * If DR is disabled we don't need to do anything in the case of
-> -     * hotplug or coldplug callbacks.
-> -     */
-> -    if (!phb->dr_enabled) {
-> -        return;
-> -    }
-> -
->       g_assert(drc);
->   
->       if (IS_PCI_BRIDGE(plugged_dev)) {
-> @@ -1673,12 +1646,6 @@ static void spapr_pci_unplug_request(HotplugHandler *plug_handler,
->       PCIDevice *pdev = PCI_DEVICE(plugged_dev);
->       SpaprDrc *drc = drc_from_dev(phb, pdev);
->   
-> -    if (!phb->dr_enabled) {
-> -        error_setg(errp, "Bus '%s' does not support hotplugging",
-> -                   phb->parent_obj.bus->qbus.name);
-> -        return;
-> -    }
-> -
->       g_assert(drc);
->       g_assert(drc->dev == plugged_dev);
->   
-> @@ -2089,8 +2056,6 @@ static Property spapr_phb_properties[] = {
->                          SPAPR_PCI_MEM64_WIN_SIZE),
->       DEFINE_PROP_UINT64("io_win_size", SpaprPhbState, io_win_size,
->                          SPAPR_PCI_IO_WIN_SIZE),
-> -    DEFINE_PROP_BOOL("dynamic-reconfiguration", SpaprPhbState, dr_enabled,
-> -                     true),
->       /* Default DMA window is 0..1GB */
->       DEFINE_PROP_UINT64("dma_win_addr", SpaprPhbState, dma_win_addr, 0),
->       DEFINE_PROP_UINT64("dma_win_size", SpaprPhbState, dma_win_size, 0x40000000),
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 75d11a07b2..acc23092e7 100644
+=2D-- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2603,7 +2603,7 @@ static int kvm_init(MachineState *ms)
+     }
+
+     kvm_readonly_mem_allowed =3D
+-        (kvm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
++        (kvm_vm_check_extension(s, KVM_CAP_READONLY_MEM) > 0);
+
+     kvm_resamplefds_allowed =3D
+         (kvm_check_extension(s, KVM_CAP_IRQFD_RESAMPLE) > 0);
+=2D-
+2.34.1
 
 
