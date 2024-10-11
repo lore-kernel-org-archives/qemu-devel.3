@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B718D24464
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 01:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA3D2D24467
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 02:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sz4uu-0000JL-6A; Thu, 10 Oct 2024 21:58:08 -0400
+	id 1sz5jf-0005MT-0w; Thu, 10 Oct 2024 22:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sz4ur-0000Ix-2N; Thu, 10 Oct 2024 21:58:05 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1sz5jT-0005Lh-Rl; Thu, 10 Oct 2024 22:50:24 -0400
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sz4up-0003HK-6q; Thu, 10 Oct 2024 21:58:04 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-4a4575edca3so497574137.0; 
- Thu, 10 Oct 2024 18:58:02 -0700 (PDT)
+ id 1sz5jR-0008CI-Sb; Thu, 10 Oct 2024 22:50:23 -0400
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-50c9feaed3dso447122e0c.1; 
+ Thu, 10 Oct 2024 19:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728611882; x=1729216682; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728615020; x=1729219820; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ni2losCWUiuq/VOKYga9osJjI39bTzIqU9bjfUJ6+v4=;
- b=Ow4zglXmJlQfLiyz5LqsD+1kMSm83gmtwXvphl3v/U8xY8T45KOvIEkNsw/3m9jENa
- NpUoWhX8SkK99VpAUt7XQskEQWhPii3dtCyYGLWdqnb+UDAH9Ozza/mJHApv2L/7CQ8n
- ZnlKx3krSFoeF6bThkCSzi0Cr829CysnEOM2Vm3rdVxWlIsCu2Vwp/OxFvt/UKztItpf
- hwKu35Y5fcEypiGrtRwHz6EgAyw2WGqx1++LBk/YuHmYJUb0BXXB5w+SLK8F4NlUSlx0
- KLrzHlGQmsy2wwcab6BlS5rzomwTg0fKoK7SH/6LJ6cFQSW2HKA2Ru192QdLMaWzrrjC
- bO8w==
+ bh=iNMQkLFk+9ZRIz+MPIM9NUlFmJ4F31yA05yVQR3LYwg=;
+ b=XlPyLOqxfzlShuOZSYcURoYGe6HiJ+43FAL6NJHpUePnbFLwsLIAUy38KU7ddbbCAQ
+ ItjM3CGT7zMhzEVruihHybK4X6VNNaMt+H4a1DchoOzKIOXiDMxwsrN8p/FqqpGrC7Lj
+ S+QS1IsfV4bO0NBhLMrCQIxpQjiX0thNUGsZkqkiXoySHpCV3zNss0CGlIhW7Ymqs3qx
+ UME/sePK2QSIb3lS6oRJk4I6D8qO1/QgFlVulmoDekmHFgROuwafTCv+aYa2x9ezabCE
+ gkdvkO/9jbGKkxp5yrlRuyZgpyx4l8ph7hrc4ktv8GLDmzGE8ZdPN0c7FJmGWOBby6a8
+ hRQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728611882; x=1729216682;
+ d=1e100.net; s=20230601; t=1728615020; x=1729219820;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ni2losCWUiuq/VOKYga9osJjI39bTzIqU9bjfUJ6+v4=;
- b=W50A2ZHcktRhgYvaDpeMDa6HQcgmnYMsKITHIOxECIIEPA1ccZkfmOBjfQIgidcf7O
- +F6IeeXUcvTkSDyVNcnJR9RAV0j/aOBE16d+OHMdTO2ywDPr9hjpAuVlzK4BBolPeLqG
- 41JM4Uu5eQ5cp6cdpoaFRc9e7cgomRE1HozixYRkIhOM12vfN8RjHAkgeVxyT7c1V6ii
- YPMC+6qFU+NO/yRLr2wlp8NewFFXuM/capRruDTht+0ynwNEij2VXHJb0/QvGVaFtbb/
- rUXDxowzQyOzfopNC37JPKy477r2pk7+fmJXGgo8hUwD+zjb89gYa8jKBpjQ5KBMTKfH
- axaA==
+ bh=iNMQkLFk+9ZRIz+MPIM9NUlFmJ4F31yA05yVQR3LYwg=;
+ b=hZRUrdG1gFJyRKyXtV7tNHnv/gmjHITLF3BSYYucGT1IxpSJ2wEA+SRTVzgzKxvV2H
+ FZcpwIUUXAZ+UwqlJKr6+it0QmQP0cbN8RAtYLa9BrsFCYvLfu8J01L3tASk9aJ8NMQ7
+ 01FPBZ9gIvInQ6o0YII4BZSQBuH45HgPjguRWaXwL+aB8Vj9hbaS+G9JU+cfNlT98bN+
+ 8++bEG9WzwoKo6XDTi8fvkvI9HYReKDoipURrQ6HQG/FnY6KzIpP/5Am6g0R9lWdilcK
+ w4lPsiAReWJz8lA2tWKBtw5P3E37PW7Ir1V+E28W06yNVdjH61+ex3B4S9zN/QHJTjs/
+ cwWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsmqpLR6QnVKk6NO7+/HVUw2fVUxgBZTlib2DM3HtnGC1AQMVUCTmYj2iQwa/LCHX8KBb7CA/+f/f8@nongnu.org
-X-Gm-Message-State: AOJu0YxOodHXAlBVJzXRt6xzkLeaLhCOPBLFBwH4ToVrVpVgvmr6gwn0
- g2xLNl/knsgmEGdPsk4uiCiuVvexdk4hru559LaTiy0Jc9MKCkBZyLxL8+Acg+QHr29vkheJVwn
- a2TV6yR8bN0Z+99Ejp0EuWoTcXOU=
-X-Google-Smtp-Source: AGHT+IHvi/Yl07tJI3fEdRFXbqx2ld+LSzPOcSqdPUXJtwKBoQw62z3DASbtObYOZfRj4gCrM5M25SyvoI8adoNReW4=
-X-Received: by 2002:a05:6102:c91:b0:4a3:be1b:8df4 with SMTP id
- ada2fe7eead31-4a4659c8a6dmr1271267137.16.1728611881676; Thu, 10 Oct 2024
- 18:58:01 -0700 (PDT)
+ AJvYcCUAq49ioPPE0qpSRan9RfzEahsv+RJuDnT1P2jj4MgaeCOS2SNfxm0SnSBdH1CfPcQVMozalYZUVunF@nongnu.org
+X-Gm-Message-State: AOJu0YzMP8Cd/y36d0Vgo+vlWPFD25yk3WAe1daAnBPOnxg7XkpnSOhF
+ VbsiSx0ZPK95RBphBNMViz8oasdkvx2+FY1PJ441i3UGfz4MrwSFL6WciQGcJjcUKqZO3q+OljU
+ i5HHQtrcc4moUkJmxmgg6P8hVBUc=
+X-Google-Smtp-Source: AGHT+IFPazW1PRsA3FMK/GLm3JVV11yWM9/seEawjXd0ernluBMZMz7lchWbLqFruIPylDJFO5VMch91xkqwoMNb3kc=
+X-Received: by 2002:a05:6122:3b02:b0:50b:c245:a040 with SMTP id
+ 71dfb90a1353d-50d1f4d8ff7mr577726e0c.7.1728615019996; Thu, 10 Oct 2024
+ 19:50:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240924124407.766495-1-dbarboza@ventanamicro.com>
- <20240924124407.766495-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20240924124407.766495-4-dbarboza@ventanamicro.com>
+References: <20240925115808.77874-1-cleger@rivosinc.com>
+ <20240925115808.77874-2-cleger@rivosinc.com>
+In-Reply-To: <20240925115808.77874-2-cleger@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 11 Oct 2024 11:57:35 +1000
-Message-ID: <CAKmqyKMMRCFvWYa1GjwkbJsBh8q_OgtA2UVdaNEJsr=N66hvkQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] target/riscv/kvm: add kvm-aia bools props
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
+Date: Fri, 11 Oct 2024 12:49:53 +1000
+Message-ID: <CAKmqyKO7N6zr9Fa2-sufdtxPobdPUWqkis9iMEY47C3HPmzFnw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] target/riscv: Add Ssdbltrp CSRs handling
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,128 +96,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 24, 2024 at 10:46=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Wed, Sep 25, 2024 at 10:02=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
+vosinc.com> wrote:
 >
-> Boolean properties are preferrable in comparision to string properties
-> since they don't require a string parsing.
+> Add ext_ssdbltrp in RISCVCPUConfig and implement MSTATUS.SDT,
+> {H|M}ENVCFG.DTE and modify the availability of MTVAL2 based on the
+> presence of the Ssdbltrp ISA extension.
 >
-> Add three bools that represents the available kvm-aia mode:
-> riscv-aia-emul, riscv-aia-hwaccel, riscv-aia-auto. They work like the
-> existing riscv-aia string property, i.e. if no bool is set we'll default
-> to riscv-aia-auto, if the host supports it.
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 77 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 77 insertions(+)
->
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 32f3dd6a43..e256e3fc48 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1671,6 +1671,62 @@ static void riscv_set_kvm_aia(Object *obj, const c=
-har *val, Error **errp)
->      }
->  }
->
-> +static void riscv_set_kvm_aia_bool(uint32_t aia_bool, bool val)
-> +{
-> +    bool default_aia_mode =3D KVM_DEV_RISCV_AIA_MODE_AUTO;
-> +
-> +    g_assert(aia_bool <=3D KVM_DEV_RISCV_AIA_MODE_AUTO);
-> +
-> +    if (val) {
-> +        aia_mode =3D aia_bool;
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Setting an aia_bool to 'false' does nothing if
-> +     * aia_mode isn't set to aia_bool.
-> +     */
-> +    if (aia_mode !=3D aia_bool) {
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Return to default value if we're disabling the
-> +     * current set aia_mode.
-> +     */
-> +    aia_mode =3D default_aia_mode;
-> +}
-> +
-> +static bool riscv_get_kvm_aia_emul(Object *obj, Error **errp)
-> +{
-> +    return aia_mode =3D=3D KVM_DEV_RISCV_AIA_MODE_EMUL;
-> +}
-> +
-> +static void riscv_set_kvm_aia_emul(Object *obj,  bool val, Error **errp)
-> +{
-> +    riscv_set_kvm_aia_bool(KVM_DEV_RISCV_AIA_MODE_EMUL, val);
-> +}
-> +
-> +static bool riscv_get_kvm_aia_hwaccel(Object *obj, Error **errp)
-> +{
-> +    return aia_mode =3D=3D KVM_DEV_RISCV_AIA_MODE_HWACCEL;
-> +}
-> +
-> +static void riscv_set_kvm_aia_hwaccel(Object *obj,  bool val, Error **er=
-rp)
-> +{
-> +    riscv_set_kvm_aia_bool(KVM_DEV_RISCV_AIA_MODE_HWACCEL, val);
-> +}
-> +
-> +static bool riscv_get_kvm_aia_auto(Object *obj, Error **errp)
-> +{
-> +    return aia_mode =3D=3D KVM_DEV_RISCV_AIA_MODE_AUTO;
-> +}
-> +
-> +static void riscv_set_kvm_aia_auto(Object *obj,  bool val, Error **errp)
-> +{
-> +    riscv_set_kvm_aia_bool(KVM_DEV_RISCV_AIA_MODE_AUTO, val);
-> +}
-> +
->  void kvm_arch_accel_class_init(ObjectClass *oc)
->  {
->      object_class_property_add_str(oc, "riscv-aia", riscv_get_kvm_aia,
-> @@ -1681,6 +1737,27 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
->          "if the host supports it");
->      object_property_set_default_str(object_class_property_find(oc, "risc=
-v-aia"),
->                                      "auto");
-> +
-> +    object_class_property_add_bool(oc, "riscv-aia-emul",
-> +                                   riscv_get_kvm_aia_emul,
-> +                                   riscv_set_kvm_aia_emul);
-> +    object_class_property_set_description(oc, "riscv-aia-emul",
-> +        "Set KVM AIA mode to 'emul'. Changing KVM AIA modes relies on ho=
-st "
-> +        "support. Default mode is 'auto' if the host supports it");
-> +
-> +    object_class_property_add_bool(oc, "riscv-aia-hwaccel",
-> +                                   riscv_get_kvm_aia_hwaccel,
-> +                                   riscv_set_kvm_aia_hwaccel);
-> +    object_class_property_set_description(oc, "riscv-aia-hwaccel",
-> +        "Set KVM AIA mode to 'hwaccel'. Changing KVM AIA modes relies on=
- host "
-> +        "support. Default mode is 'auto' if the host supports it");
-> +
-> +    object_class_property_add_bool(oc, "riscv-aia-auto",
-> +                                   riscv_get_kvm_aia_auto,
-> +                                   riscv_set_kvm_aia_auto);
-> +    object_class_property_set_description(oc, "riscv-aia-auto",
-> +        "Set KVM AIA mode to 'auto'. Changing KVM AIA modes "
-> +        "relies on host support");
+> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
 
-This seems more confusing. What should happen if a user sets multiple to tr=
-ue?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/cpu.h        |  1 +
+>  target/riscv/cpu_bits.h   |  6 ++++++
+>  target/riscv/cpu_cfg.h    |  1 +
+>  target/riscv/cpu_helper.c | 16 ++++++++++++++
+>  target/riscv/csr.c        | 45 ++++++++++++++++++++++++++++++---------
+>  5 files changed, 59 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index a84e719d3f..ee984bf270 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -553,6 +553,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_=
+ulong geilen);
+>  bool riscv_cpu_vector_enabled(CPURISCVState *env);
+>  void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+>  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt);
+>  G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+>                                                 MMUAccessType access_type=
+,
+>                                                 int mmu_idx, uintptr_t re=
+taddr);
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index da1723496c..3a5588d4df 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -558,6 +558,7 @@
+>  #define MSTATUS_TVM         0x00100000 /* since: priv-1.10 */
+>  #define MSTATUS_TW          0x00200000 /* since: priv-1.10 */
+>  #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
+> +#define MSTATUS_SDT         0x01000000
+>  #define MSTATUS_GVA         0x4000000000ULL
+>  #define MSTATUS_MPV         0x8000000000ULL
+>
+> @@ -588,6 +589,7 @@ typedef enum {
+>  #define SSTATUS_XS          0x00018000
+>  #define SSTATUS_SUM         0x00040000 /* since: priv-1.10 */
+>  #define SSTATUS_MXR         0x00080000
+> +#define SSTATUS_SDT         0x01000000
+>
+>  #define SSTATUS64_UXL       0x0000000300000000ULL
+>
+> @@ -777,11 +779,13 @@ typedef enum RISCVException {
+>  #define MENVCFG_CBIE                       (3UL << 4)
+>  #define MENVCFG_CBCFE                      BIT(6)
+>  #define MENVCFG_CBZE                       BIT(7)
+> +#define MENVCFG_DTE                        (1ULL << 59)
+>  #define MENVCFG_ADUE                       (1ULL << 61)
+>  #define MENVCFG_PBMTE                      (1ULL << 62)
+>  #define MENVCFG_STCE                       (1ULL << 63)
+>
+>  /* For RV32 */
+> +#define MENVCFGH_DTE                       BIT(27)
+>  #define MENVCFGH_ADUE                      BIT(29)
+>  #define MENVCFGH_PBMTE                     BIT(30)
+>  #define MENVCFGH_STCE                      BIT(31)
+> @@ -795,11 +799,13 @@ typedef enum RISCVException {
+>  #define HENVCFG_CBIE                       MENVCFG_CBIE
+>  #define HENVCFG_CBCFE                      MENVCFG_CBCFE
+>  #define HENVCFG_CBZE                       MENVCFG_CBZE
+> +#define HENVCFG_DTE                        MENVCFG_DTE
+>  #define HENVCFG_ADUE                       MENVCFG_ADUE
+>  #define HENVCFG_PBMTE                      MENVCFG_PBMTE
+>  #define HENVCFG_STCE                       MENVCFG_STCE
+>
+>  /* For RV32 */
+> +#define HENVCFGH_DTE                        MENVCFGH_DTE
+>  #define HENVCFGH_ADUE                       MENVCFGH_ADUE
+>  #define HENVCFGH_PBMTE                      MENVCFGH_PBMTE
+>  #define HENVCFGH_STCE                       MENVCFGH_STCE
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index ae2a945b5f..dd804f95d4 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -77,6 +77,7 @@ struct RISCVCPUConfig {
+>      bool ext_smstateen;
+>      bool ext_sstc;
+>      bool ext_smcntrpmf;
+> +    bool ext_ssdbltrp;
+>      bool ext_svadu;
+>      bool ext_svinval;
+>      bool ext_svnapot;
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 9d0400035f..395d8235ce 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -63,6 +63,22 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetc=
+h)
+>  #endif
 >  }
 >
->  void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+> +{
+> +#ifdef CONFIG_USER_ONLY
+> +    return false;
+> +#else
+> +    if (!riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +        return false;
+> +    }
+> +    if (virt) {
+> +        return (env->henvcfg & HENVCFG_DTE) !=3D 0;
+> +    } else {
+> +        return (env->menvcfg & MENVCFG_DTE) !=3D 0;
+> +    }
+> +#endif
+> +}
+> +
+>  void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>                            uint64_t *cs_base, uint32_t *pflags)
+>  {
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index e5de72453c..d8280ec956 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -540,6 +540,15 @@ static RISCVException aia_hmode32(CPURISCVState *env=
+, int csrno)
+>      return hmode32(env, csrno);
+>  }
+>
+> +static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
+> +{
+> +    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +        return RISCV_EXCP_NONE;
+> +    }
+> +
+> +    return hmode(env, csrno);
+> +}
+> +
+>  static RISCVException pmp(CPURISCVState *env, int csrno)
+>  {
+>      if (riscv_cpu_cfg(env)->pmp) {
+> @@ -1402,7 +1411,7 @@ static const target_ulong vs_delegable_excps =3D DE=
+LEGABLE_EXCPS &
+>        (1ULL << (RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT)));
+>  static const target_ulong sstatus_v1_10_mask =3D SSTATUS_SIE | SSTATUS_S=
+PIE |
+>      SSTATUS_UIE | SSTATUS_UPIE | SSTATUS_SPP | SSTATUS_FS | SSTATUS_XS |
+> -    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS;
+> +    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS | SSTATUS_SDT;
+>
+>  /*
+>   * Spec allows for bits 13:63 to be either read-only or writable.
+> @@ -1600,6 +1609,14 @@ static RISCVException write_mstatus(CPURISCVState =
+*env, int csrno,
+>          mask |=3D MSTATUS_VS;
+>      }
+>
+> +    if (riscv_env_smode_dbltrp_enabled(env, env->virt_enabled)) {
+> +        mask |=3D MSTATUS_SDT;
+> +        if ((val & MSTATUS_SDT) !=3D 0) {
+> +            mstatus &=3D ~MSTATUS_SIE;
+> +            val &=3D ~MSTATUS_SIE;
+> +        }
+> +    }
+> +
+>      if (xl !=3D MXL_RV32 || env->debugger) {
+>          if (riscv_has_ext(env, RVH)) {
+>              mask |=3D MSTATUS_MPV | MSTATUS_GVA;
+> @@ -2354,7 +2371,8 @@ static RISCVException write_menvcfg(CPURISCVState *=
+env, int csrno,
+>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+>          mask |=3D (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>                  (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+> -                (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+> +                (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+> +                (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>      }
+>      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
+>
+> @@ -2374,7 +2392,8 @@ static RISCVException write_menvcfgh(CPURISCVState =
+*env, int csrno,
+>      const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+>      uint64_t mask =3D (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>                      (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+> -                    (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+> +                    (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+> +                    (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>      uint64_t valh =3D (uint64_t)val << 32;
+>
+>      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
+> @@ -2425,9 +2444,10 @@ static RISCVException read_henvcfg(CPURISCVState *=
+env, int csrno,
+>       * henvcfg.pbmte is read_only 0 when menvcfg.pbmte =3D 0
+>       * henvcfg.stce is read_only 0 when menvcfg.stce =3D 0
+>       * henvcfg.adue is read_only 0 when menvcfg.adue =3D 0
+> +     * henvcfg.dte is read_only 0 when menvcfg.dte =3D 0
+>       */
+> -    *val =3D env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_AD=
+UE) |
+> -                           env->menvcfg);
+> +    *val =3D env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_AD=
+UE |
+> +                             HENVCFG_DTE) | env->menvcfg);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -2435,6 +2455,7 @@ static RISCVException write_henvcfg(CPURISCVState *=
+env, int csrno,
+>                                      target_ulong val)
+>  {
+>      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENV=
+CFG_CBZE;
+> +    uint64_t menvcfg_mask;
+>      RISCVException ret;
+>
+>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> @@ -2443,7 +2464,11 @@ static RISCVException write_henvcfg(CPURISCVState =
+*env, int csrno,
+>      }
+>
+>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> -        mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG=
+_ADUE);
+> +        menvcfg_mask =3D HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
+> +        if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +            menvcfg_mask |=3D HENVCFG_DTE;
+> +        }
+> +        mask |=3D env->menvcfg & menvcfg_mask;
+>      }
+>
+>      env->henvcfg =3D (env->henvcfg & ~mask) | (val & mask);
+> @@ -2461,8 +2486,8 @@ static RISCVException read_henvcfgh(CPURISCVState *=
+env, int csrno,
+>          return ret;
+>      }
+>
+> -    *val =3D (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_A=
+DUE) |
+> -                            env->menvcfg)) >> 32;
+> +    *val =3D (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_A=
+DUE |
+> +                              HENVCFG_DTE) | env->menvcfg)) >> 32;
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -2470,7 +2495,7 @@ static RISCVException write_henvcfgh(CPURISCVState =
+*env, int csrno,
+>                                       target_ulong val)
+>  {
+>      uint64_t mask =3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+> -                                    HENVCFG_ADUE);
+> +                                    HENVCFG_ADUE | HENVCFG_DTE);
+>      uint64_t valh =3D (uint64_t)val << 32;
+>      RISCVException ret;
+>
+> @@ -5246,7 +5271,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
+>      [CSR_VSATP]       =3D { "vsatp",       hmode,   read_vsatp,    write=
+_vsatp,
+>                            .min_priv_ver =3D PRIV_VERSION_1_12_0         =
+       },
+>
+> -    [CSR_MTVAL2]      =3D { "mtval2",      hmode,   read_mtval2,   write=
+_mtval2,
+> +    [CSR_MTVAL2]      =3D { "mtval2", dbltrp_hmode, read_mtval2, write_m=
+tval2,
+>                            .min_priv_ver =3D PRIV_VERSION_1_12_0         =
+       },
+>      [CSR_MTINST]      =3D { "mtinst",      hmode,   read_mtinst,   write=
+_mtinst,
+>                            .min_priv_ver =3D PRIV_VERSION_1_12_0         =
+       },
 > --
 > 2.45.2
 >
