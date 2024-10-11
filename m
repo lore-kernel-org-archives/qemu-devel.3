@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035F4D0EE19
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 18:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85924D0EE19
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 18:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szK9g-0005pI-PQ; Fri, 11 Oct 2024 14:14:24 -0400
+	id 1szKkn-0005TO-8A; Fri, 11 Oct 2024 14:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1szK9e-0005ol-IR
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:14:22 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <ved@rivosinc.com>) id 1szKkk-0005SW-Ve
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:52:43 -0400
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <goldstein.w.n@gmail.com>)
- id 1szK9c-0003EM-Ro
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:14:22 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-27d0e994ae3so1111838fac.3
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 11:14:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ved@rivosinc.com>) id 1szKkj-0007n8-8U
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 14:52:42 -0400
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3e4d624ac53so865806b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 11:52:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728670459; x=1729275259; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L4O3LWabg15STyQXYpP/TLRokT3+tDXwcYmsZ+S5u5M=;
- b=XgXDK57xHLKE8yBnkuSnfBp8T90/oqcniHIaMo/dMwPBc63tzzrjUhuvOK2rS8/OVH
- wU+g2TQ3Ih+RaDrBJPDK7NhmT51rKcb7CFpivaQzcPaHdOIsFuGIQvDRb+Ju+n3nypDp
- 1ZIM9TyHdDQDqxND2WB+qjT4y+CWFTJPv1YRkkHuCfQIdjXIuMKO8UpfVgDaa4VmFBtk
- i7AeiRrfk9xiFSr3q2VFmmL38orUwg87vhdA3id8MR8vIU4E+Gyv6oZu/KrhWwZI7Jmy
- gGOYdnFeqZxThUfBpxCoaAQ1IFrohtybJ/OOUPJnUKxILI8OKoAUhsQlfOahOuGg/Kw5
- ldJA==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1728672755; x=1729277555;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=irZVYvpZUapOC37LWmJjffcjitIBdllmEIpXJj/9rWM=;
+ b=OtFntmD24CB6dClkAf8h7gaVmDENcQkIrpxacTRd7GqyPmKPCFCqKwOQ00D7oSxYTl
+ nUMTRxLBKVNAtVVKKl3n5uM/jfKcozp4sbkk/pL1C4F2K83ier27damO8pKQDFhrhk7o
+ 3Gmj8Ff9KTMhFMacZfGl0ssF6I95/AOn+FPnULnCAfoV+wbikvKT+jh4D3yTVQNQyV0T
+ 461E4oYWhh+tjhhtI60gj8Ppq5/SRfOyQCLe741ESWgh/EBeMKF6LDFAm5c+iZn2+y1g
+ PaIyd5dAPXUv0565MVE3+qED1jETiTooVqAHaMfudLc9psJpmqnIY62rsdiaEx3McezM
+ AHvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728670459; x=1729275259;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L4O3LWabg15STyQXYpP/TLRokT3+tDXwcYmsZ+S5u5M=;
- b=pMVOugmRzdxQAIO4u8jp9BT+4rJoGMKvbaU9rBkFTgfR7zw5aqF5eEmR52YsFVG2Io
- 141ITEgq51PX9OBqBoH7aDR0p+Zzdtca0NDcrSZkaz1Imclkyl6K2uEKLlCuK+q1yZDo
- KK9yzgz7Sh2lIzafBbcWVS7iTWRAuJKSYWxBraEqxxR36OVcF0rz9M5SRHgeYf6OYCzM
- s5lsAHraAi350cVQ2E5Q23saoF3bXaa8roUuiZHRqmBNUImUIAgCf+nKvjZvNU3rdYci
- WqMWxPEcBAKevwfaJzZ2q/JrfEQ5kYVwtTNReS7vp82oXbQS0urlhs3O3Y0G2fJkBYm9
- EfLg==
+ d=1e100.net; s=20230601; t=1728672755; x=1729277555;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=irZVYvpZUapOC37LWmJjffcjitIBdllmEIpXJj/9rWM=;
+ b=v47J73kO29b4l+8UhKY5O9SkJS8XYVIv/dMPNoo+6leRj/dg2Frn7q87nC3mVfhMa0
+ jMfWnZL1wW5+CwSsH76zvhku7tkj+062QW6dy34Sq3LrPfwuVh+u0/vmE1FEYjj45+E6
+ e1AUdYVIpyC8gskRQmXPjuKR5GRLGWJ/BqfQFERcjof9BuMEHgVjU+J7TFTTlNlFc6Iy
+ nqKS/S5rnNW1RPbUD7s8vYExybnB7LSpkJA9cZFwCXeIqwlqvpf5HHs0OXoA91k7i9vg
+ 3gfxpASc0/DwASI97ErxH4+DIu5HIdbOXZmR9H7xarI4DoaUNRJN3UuiSLfcAR+w9wOr
+ 1vcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCzap4cNuxJMLKS6jIKDZvvHEGH2AYuFsz8cI2sMH6aDVSOTFneQdqDY8tErP8WnH7XiBuJXdftEYg@nongnu.org
-X-Gm-Message-State: AOJu0YwckvX75kmM9Bpl+7fRV7uCtVQdFwpgLaUV/g79+SnPcm1r8DQ9
- EfNs4KWBGjw0egMoyfovx7eWUhorlrqhR4X7r94D1+nG5yRYwDDFXqOjLUvqie9i4hyob+GDr0X
- rc6GlOFEw0kQUFRIfqO5l40gmA/Y=
-X-Google-Smtp-Source: AGHT+IFd44ffgzW7GaS8tj9hCmmDrCXvA0mPVV5wkpQxYDgBYD0KzzPZqCASJFg3XqFnXzrXfQhLbAWJt9B27lpgTVs=
-X-Received: by 2002:a05:6870:b69b:b0:270:172c:32ae with SMTP id
- 586e51a60fabf-28887477218mr370305fac.32.1728670458613; Fri, 11 Oct 2024
- 11:14:18 -0700 (PDT)
+ AJvYcCWwo23oQnMiv5Ymerl7CmVK/LjlGWiXNnTvCG/h5XhxP+fWIFY6K1CNKpmG379iE6+Fu/NRtt7+me2I@nongnu.org
+X-Gm-Message-State: AOJu0YyFv5FQbBQl6tEvSDAr/FZkF0BfMUL2DTDTJ4Kb+GT5E4yt8Dt/
+ bgh65iV12fnVoFCy3fQIoY4BJJwdSP5Mqmp3qQA03aKJDc2aEGyfli+Zgidb9WQ=
+X-Google-Smtp-Source: AGHT+IECw5NFO5rwjtf8P5oZTJReMIKRETN8h/oXqXHvqtr4p2g1e7yRDwwXrjwQv1BaUoPRQTJskg==
+X-Received: by 2002:a05:6808:1528:b0:3e3:ae35:f418 with SMTP id
+ 5614622812f47-3e5d2343610mr361779b6e.47.1728672754554; 
+ Fri, 11 Oct 2024 11:52:34 -0700 (PDT)
+Received: from ved-XPS-8940 ([12.0.166.162]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5eb11a894acsm514430eaf.40.2024.10.11.11.52.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Oct 2024 11:52:34 -0700 (PDT)
+Date: Fri, 11 Oct 2024 13:52:32 -0500
+From: Ved Shanbhogue <ved@rivosinc.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: =?iso-8859-1?Q?Cl=E9ment_L=E9ger?= <cleger@rivosinc.com>,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 2/8] target/riscv: Implement Ssdbltrp sret, mret and
+ mnret behavior
+Message-ID: <Zwlz8LUEGB4Fa611@ved-XPS-8940>
+References: <20240925115808.77874-1-cleger@rivosinc.com>
+ <20240925115808.77874-3-cleger@rivosinc.com>
+ <CAKmqyKPrHtsjAnc8kX__BeHvxoMvm+MmYLWSgh5TKdx0FE8o9A@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240830223601.2796327-1-goldstein.w.n@gmail.com>
- <6109eea4230bb3aa7caf6deff526878231aa2136.camel@linux.ibm.com>
- <CAFUsyf+wYJVQHFaJZZ2mE0e3MRXMoQsr+-vk3T0qU3LYd3Dujw@mail.gmail.com>
- <731d741bb01c8157a076a3614d20732a3ea448db.camel@linux.ibm.com>
- <CAFUsyfKhLpZF1RvwVK06jud6ArPEcG7M61cKNoQVWXLRgNaaog@mail.gmail.com>
-In-Reply-To: <CAFUsyfKhLpZF1RvwVK06jud6ArPEcG7M61cKNoQVWXLRgNaaog@mail.gmail.com>
-From: Noah Goldstein <goldstein.w.n@gmail.com>
-Date: Fri, 11 Oct 2024 13:14:07 -0500
-Message-ID: <CAFUsyfKgw_DAfowOoFxUpHOR+Jw6hH9oV5JGNXKe0Ph=miRFxw@mail.gmail.com>
-Subject: Re: [PATCH v1] linux-user: Add option to run `execve`d programs
- through QEMU
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: laurent@vivier.eu, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=goldstein.w.n@gmail.com; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAKmqyKPrHtsjAnc8kX__BeHvxoMvm+MmYLWSgh5TKdx0FE8o9A@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=ved@rivosinc.com; helo=mail-oi1-x22a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,67 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 2, 2024 at 11:42=E2=80=AFAM Noah Goldstein <goldstein.w.n@gmail=
-.com> wrote:
+Alistair Francis wrote:
+>> When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
+>> when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
+>> when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
+>> to VU from HS.
 >
-> On Wed, Oct 2, 2024 at 11:39=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.c=
-om> wrote:
-> >
-> > On Wed, 2024-10-02 at 09:05 -0500, Noah Goldstein wrote:
-> > > On Wed, Oct 2, 2024 at 3:08=E2=80=AFAM Ilya Leoshkevich <iii@linux.ib=
-m.com>
-> > > wrote:
-> > > >
-> > > > On Fri, 2024-08-30 at 15:36 -0700, Noah Goldstein wrote:
-> > > > > The new option '-qemu-children' makes it so that on `execve` the
-> > > > > child
-> > > > > process will be launch by the same `qemu` executable that is
-> > > > > currently
-> > > > > running along with its current commandline arguments.
-> > > > >
-> > > > > The motivation for the change is to make it so that plugins
-> > > > > running
-> > > > > through `qemu` can continue to run on children.  Why not just
-> > > > > `binfmt`?: Plugins can be desirable regardless of
-> > > > > system/architecture
-> > > > > emulation, and can sometimes be useful for elf files that can run
-> > > > > natively. Enabling `binfmt` for all natively runnable elf files
-> > > > > may
-> > > > > not be desirable.
-> > > >
-> > > > Another reason to have this is that one may not have root
-> > > > permissions
-> > > > to configure binfmt-misc.
-> > > >
-> > > +1
-> > >
-> > > > There was a similar patch posted to the mailing list some years
-> > > > back,
-> > > > which I used to cherry-pick when I needed this. I'm not sure what
-> > > > happened to that discussion though.
-> > >
-> > > Yes(ish):
-> > > https://patchwork.ozlabs.org/project/qemu-devel/patch/1455515507-2687=
-7-1-git-send-email-petrosagg@resin.io/
-> >
-> > Thanks for finding this! Don't we need the shebang handling here as
-> > well?
-> >
-> I don't think so. In this case we aren't making it so execve can point to
-> some arbitrary impl, just that we propagate the current running qemu
-> env.
+>I don't see mret being mentioned in the spec. Where do you see that
+>V/SSTATUS.SDT should be cleared?
 >
 
-ping
-> > Laurent, do you per chance know why was it not accepted back
-> > then?Unfortunately I cannot find any discussion associated with v3 or
-> > v4
-> > [1]. There were some concerns regarding v1 [2], but from what I can see
-> > they all were addressed.
-> >
-> > [1]
-> > https://patchew.org/QEMU/20200730160106.16613-1-rj.bcjesus@gmail.com/
-> > [2]
-> > https://patchwork.kernel.org/project/qemu-devel/patch/1453091602-21843-=
-1-git-send-email-petrosagg@gmail.com/
+Ssdbltrp specifies:
+    In S-mode, the SRET instruction sets sstatus.SDT to 0,
+    and if the new privilege mode is VU, it also sets
+    vsstatus.SDT to 0. However, in VS-mode, only vsstatus.SDT
+    is set to to 0.
+
+    The MRET instructions sets sstatus.SDT to 0, if the new
+    privilege mode is U, VS, or VU. Additionally, if it is
+    VU, then vsstatus.SDT is also set to 0.
+
+Smdbltrp specifies:
+    The MRET and SRET instructions, when executed in M-mode,
+    set the MDT bit to 0. If the new privilege mode is U, VS,
+    or VU, then sstatus.SDT is also set to 0. Additionally,
+    if it is VU, then vsstatus.SDT is also set to 0.
+
+    The MNRET instruction sets the MDT bit to 0 if the new
+    privilege mode is not M. If it is U, VS, or VU, then
+    sstatus.SDT is also set to 0. Additionally, if it is VU,
+    then vsstatus.SDT is also set to 0.
+
+regards
+ved
 
