@@ -4,118 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F14D24470
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5404AD0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJMw-0004RR-4I; Fri, 11 Oct 2024 13:24:02 -0400
+	id 1szJJu-0006cA-6r; Fri, 11 Oct 2024 13:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1szJMl-0003z7-H2; Fri, 11 Oct 2024 13:23:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1szJMi-0005G3-Vq; Fri, 11 Oct 2024 13:23:51 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BEwEoE014539;
- Fri, 11 Oct 2024 17:22:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:from:subject:to:cc:references
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=G
- pZtBiSP1QneRu5tbDsJnrYS5N+q2b05QMElLaNGoAs=; b=Rn1PapjFNA3ZhN8OP
- kMsnascj5mKKNRT0aSKYC0FlOk/n3ZmR2jMrmVhhUnG00ahbpNeUqoLjySvOpFWw
- hALxhbwegnZyXnL9FkSo2PPGUxdWbtP2dSRs7wSu5u0sqt37BDTlmKjdNsFyFnV9
- kXylusEmPD4BUU9u4Jm82donvaetCNq5o8RerHBVBbA3SebzPUuU8zEtK9aUEyRm
- GSsE1RQeTsYlvG0jp8BkWp3leDhibBc/c+35vNWS5Z3rBfXah/hQAlP2BlwALheO
- ZdKH0da1gfZjPrSx+eXmWOV1CJVxNFtRGVjvE1tRZg8I1DUX13Y3/lSIkSX8PpwB
- r73MQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0njg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:22:55 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49BHMtYx020772;
- Fri, 11 Oct 2024 17:22:55 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42767x0nja-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:22:55 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49BFd8mF022852;
- Fri, 11 Oct 2024 17:22:54 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 423jg1een2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Oct 2024 17:22:54 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49BHMoh352756834
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Oct 2024 17:22:50 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8DF3B2004B;
- Fri, 11 Oct 2024 17:22:50 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E47720040;
- Fri, 11 Oct 2024 17:22:46 +0000 (GMT)
-Received: from [9.39.17.157] (unknown [9.39.17.157])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Oct 2024 17:22:46 +0000 (GMT)
-Message-ID: <8128049b-1070-481d-bd54-f98ee5c2e598@linux.ibm.com>
-Date: Fri, 11 Oct 2024 22:52:44 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szJIc-0001A8-Q6
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:19:38 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szJIa-0004Zn-Bl
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:19:34 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5398df2c871so3118665e87.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 10:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728667170; x=1729271970; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vCYIkA6N8w4z57nqIf/uV0mFAKf3819lBstuP/bqVNA=;
+ b=sxPjcWob7Vo7J3mMa10mVjexEDQ8gihGjS3UFu7omjMFF7oHLfFlWXk4rS2bYOxn7p
+ LAZ0GAVvK+Rs4wEdr7DO+5+IrhA+QqJha0zObRTKDBh92kEjGoSOwYaK9hepULOzc0XE
+ HwcWHccMn3zqoJMecdALGACrEFypTkDqiMup0roErBFbFmX+IxftLLEq+S8Tu6mCBqws
+ 5ao1pA37isbiRVG1ylZVnkP/dsXcyMgvRfUMzxc9OkyNnTw5xwFTf1F1r3D1KCH6CfNr
+ eWSwG9/GmnmVOozQXaYKUG/k2A257l9RCxqYu+iu65AKKjGUNu1Ai59AOzc1VmidWyf1
+ z78w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728667170; x=1729271970;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vCYIkA6N8w4z57nqIf/uV0mFAKf3819lBstuP/bqVNA=;
+ b=MUGwzQTJIjHOJ/XnosDY/v1XT7LZMdMIxhiBVk8GW7IlA5tDifGYKctnTV5q7gPpxx
+ oLKS9XJURi0uy1VHK47q8sip8DraSl4ItZ/Jyu+zIR5wmlBFuZKCU3akhcPibWGrNOEF
+ xQqBOusE62D0tmM3q1U44wZf1fabwZhyBadwFCGHShYwvL4DMaCWzWLoOHADrGMAClsk
+ YhXUAQ8CYm3OEhFlu4SPfmj29TFbt5hl5vOWLLC57C3u+AbGIzZ/mwTcU6wEs9BF9qWa
+ cDWXiORbzmicosCbasveMndRnWarbKWGD2U1YTeENLOLh5O+nR73+gDVkPHwyie4IrMr
+ WHFQ==
+X-Gm-Message-State: AOJu0YwT9Ls3E9zrENk/P1xmPuYDYqQDoci7+XUw0coKsCPs+wWG0IA1
+ 5/hCGH1kss3nzQ8KzzQ6xQeJph27e/AroEbnMCRx9nvWK6b2sh6cfHicNnHGiRLRevD4hXAwZRZ
+ IK5uECoEMkBCqE6flNHXW8j281dFbL156ieja3w==
+X-Google-Smtp-Source: AGHT+IGGE3nQ1euCDr4CfjmZ5DRO/5gkEGHLicUvmVNvVStnApv81HUNSzDT5hEBUIDAtHIKegkmLf9kOubxPfoGSG8=
+X-Received: by 2002:a05:6512:33ca:b0:536:7362:5923 with SMTP id
+ 2adb3069b0e04-539da3b439cmr1825490e87.1.1728667169929; Fri, 11 Oct 2024
+ 10:19:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Subject: Re: [PATCH v16 02/13] hw/ppc/spapr_pci: Do not create DT for disabled
- PCI device
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
- <20240913-reuse-v16-2-d016b4b4f616@daynix.com>
- <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
-Content-Language: en-US
-In-Reply-To: <b143662e-67a1-4edf-8bfa-cf43039989a8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: UPkxwc663Yodo10a2bZa8kgl1v5YDI7W
-X-Proofpoint-ORIG-GUID: ZHDcn2Qy0BwF2i7Ueygq9By0W68rQ5kM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-11_14,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- bulkscore=0 lowpriorityscore=0 mlxlogscore=899 impostorscore=0
- phishscore=0 clxscore=1011 adultscore=0 malwarescore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410110118
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20241010162024.988284-1-berrange@redhat.com>
+In-Reply-To: <20241010162024.988284-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 11 Oct 2024 18:19:18 +0100
+Message-ID: <CAFEAcA-e_1WFLun2HptTt2bSzXkSMBnxKAK_UzUhwRh_fb66Fg@mail.gmail.com>
+Subject: Re: [PULL 00/17] Crypto fixes patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Kunwu <chentao@kylinos.cn>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,62 +90,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 9/18/24 7:57 PM, Cédric Le Goater wrote:
-> Hello,
+On Thu, 10 Oct 2024 at 17:24, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> Adding :
+> The following changes since commit 838fc0a8769d7cc6edfe50451ba4e3368395f5=
+c1:
 >
->   Harsh for QEMU/PPC pseries machine,
->   Shivaprasad for KVM/PPC VFIO and IOMMU support.
+>   Merge tag 'chr-pull-request' of https://gitlab.com/marcandre.lureau/qem=
+u into staging (2024-10-09 15:06:56 +0100)
 >
-> Could you please give us your feedback on these changes ?
+> are available in the Git repository at:
 >
-> Thanks,
+>   https://gitlab.com/berrange/qemu tags/crypto-fixes-pull-request
 >
-> C.
+> for you to fetch changes up to 08e702043fbee7b366d1d27c1b6682090c46c0d6:
 >
+>   tests/unit: Add a assert for test_io_channel_unix_listen_cleanup (2024-=
+10-10 13:41:45 +0100)
 >
+> ----------------------------------------------------------------
+> Introduce new cryptography hashing APIs
 >
->  On 9/13/24 05:44, Akihiko Odaki wrote:
->> Disabled means it is a disabled SR-IOV VF or it is powered off, and
->> hidden from the guest.
-
-I see you are taking care of not powering on VFs in the following 8th 
-patch in
-
-the series. Without it, this patch doesn't hold. Hope this patch and the 
-8th patch
-
-  go together.
+> ----------------------------------------------------------------
 
 
-Reviewed-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-Thanks,
-
-Shivaprasad
-
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/ppc/spapr_pci.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->> index 7cf9904c3546..f63182a03c41 100644
->> --- a/hw/ppc/spapr_pci.c
->> +++ b/hw/ppc/spapr_pci.c
->> @@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus 
->> *bus, PCIDevice *pdev,
->>           return;
->>       }
->> +    if (!pdev->enabled) {
->> +        return;
->> +    }
->>       err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
->>       if (err < 0) {
->>           p->err = err;
->>
+-- PMM
 
