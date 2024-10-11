@@ -4,131 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337F5CFC61B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37480CFD2E4
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 08:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szAvc-00018H-On; Fri, 11 Oct 2024 04:23:16 -0400
+	id 1szB7f-000351-0n; Fri, 11 Oct 2024 04:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szAvb-000182-MI
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:23:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szB7c-00034o-Pr
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:35:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szAvY-0003uz-V4
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:23:15 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1szB7a-0005gB-UO
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 04:35:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728634991;
+ s=mimecast20190719; t=1728635737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lt3VTaRF/0/u6wWOl51+A4Q497ci783+afO9LxibqQw=;
- b=JKotz+RL+DtxCGuocnQcApGhc/8e+HYJl/OvAySfocjRWbzd16u65tv187r2PrFU2OhTtL
- 3i+UnIp4STWjBXruBh8Pe1rxquV2XMv6QImgWqKRS64wL7cgypJulBYw4tO2T3TkqrN7KY
- 2GqL+mGV0ZpZv91U0oBC6yNtZH9BcvI=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=G5kIcRFA38/+mHvsnhBT5k4Ky00HLdTEYJyCgu1xduY=;
+ b=fPMNmDUh6nwa1/o1ZFZqKbqfW+Qi3yNqeriYxF6OnPCnKvA+Di/quLaJSasZmDbnUvJW83
+ QGFJIbNaC3fPuF4RrHI82N9HFau/o5L/63dXmHRuyGJBJSo5dpiphl47/79FNzzddPoDKP
+ nki96BuE/dSOnwRGkZDW8swsbwHsrrY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-Fd3lX1OqOrmW6JqPdd6_Dg-1; Fri, 11 Oct 2024 04:23:10 -0400
-X-MC-Unique: Fd3lX1OqOrmW6JqPdd6_Dg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2f759001cb1so15935431fa.0
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:23:10 -0700 (PDT)
+ us-mta-616-K8Eo9QKmPTmD8AXQlk6-0g-1; Fri, 11 Oct 2024 04:35:36 -0400
+X-MC-Unique: K8Eo9QKmPTmD8AXQlk6-0g-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5c92ad674aeso1248594a12.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 01:35:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728634989; x=1729239789;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1728635734; x=1729240534;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lt3VTaRF/0/u6wWOl51+A4Q497ci783+afO9LxibqQw=;
- b=cTbVjlUrZYx/hZquPCkwTALUiGdK5uUHRIShmJirSXM/9AGxRL288//71CMIHBSToB
- 81sc01Fs/lfZ1oBwvV+p0bTFCMmrcppNkAhepJeIcpgZq1LLmzYnromckFjYtoXDxQr+
- SjFAJQ9lqS7vOwznJ94Xo4tv7rMZVPMCc+zFhtPcTSMSBhrxp3ivWaWZu5z8JUKlK2zk
- qPeqb7PslMdjpG9zJg1n1C+Sqe/3g2Tj2cF1iS4HI8HH1ZqRDDS4MU4dBYS3lqe2KcP8
- qit6CM08b7ZzRpm+GS0gwbypIyuaXa+SAgFQxctvOSLX8cBdWIEpePFPO/bZJddQd3L6
- pczw==
-X-Gm-Message-State: AOJu0YzwUo0kWZmaVRbp6QYqHmDJgXWntVZbCVOPK1R36wULUa069vlb
- wuo9rgjO73a+h5buf4fxU/6s3M8LA3ovGwHR0HNj2ycXsdTk1E5nvMlrHlT7SZkZSlI/W8NdwWv
- 0jTkSOMWP93iKn9xwZtj5Wt8uAT8Y/RHmGwgQHIZy1G/9zII/VmGM
-X-Received: by 2002:a05:651c:210f:b0:2fa:c59d:1af7 with SMTP id
- 38308e7fff4ca-2fb326feb98mr12154971fa.9.1728634988662; 
- Fri, 11 Oct 2024 01:23:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+3D6Nynz7UbDvwO4d4xkDA5oabW1f3vOnhc7RMpBbmonkgcfc9jkp57BWd0bumw0PLpRSpg==
-X-Received: by 2002:a05:651c:210f:b0:2fa:c59d:1af7 with SMTP id
- 38308e7fff4ca-2fb326feb98mr12154681fa.9.1728634988124; 
- Fri, 11 Oct 2024 01:23:08 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-26.web.vodafone.de. [109.42.51.26])
+ bh=G5kIcRFA38/+mHvsnhBT5k4Ky00HLdTEYJyCgu1xduY=;
+ b=oe1qaTxEmfzG35kLoAsrG5AD/0wglExUZIkhgADknzQftAPxx6CSuzDtOpSSLmSRIh
+ ClkbCrhSaB5RHn7bKuNfQ+tWKzfJF/4Qv6SxBD+zNhUBZO6o5GW3Ij0Q/PFyN5lJ9FcO
+ Q62OPgrgRisp8V5RoEp7QlvaQ3ZPfntF+lgKqoTewp3ANIkysJUb3Vp4Wc7RAMD9fide
+ g/G0/a91whMZFzqUe5Y7RhuRuv+l/EDnitD0J3VvkmqIOrFyOHDGFBZvkY6hL+fHj0tC
+ uYir7h6ucZNJy9IpVOAFM1CjA3/wHDjVhKbRlonpX5o1iF+xiydhnBlSIIRMCaVY1Sa+
+ b/uA==
+X-Gm-Message-State: AOJu0Yw9lW9SsXguGFhyQE5HT3Yb7y7o/GrJ5Dp4yr7hjUEWbmVVGQ1h
+ +7WITPT+L99c4lOOzaj3LGCmvaubYI53xjGNP+2pZOldW0rxkOHjxcj5j2Vv9gYBOlKhwxEv/pZ
+ RBnyXkivwzsJzAEMtPdksv35am69gssRVdiddBa1g75q0JaPihIK8V8x3CZ3+v2hgCVqnchUuUr
+ VhZ70V2n8tA5MX4/a21OFTlqsuVpPILWaNIsRVMNM=
+X-Received: by 2002:a05:6402:4347:b0:5c9:5665:8df5 with SMTP id
+ 4fb4d7f45d1cf-5c95665905amr79660a12.34.1728635734510; 
+ Fri, 11 Oct 2024 01:35:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOya3Y0Hc/cyLMozmr0l3wDKaqCclQoNEvU3D3tVF/gkpyoebJoWWEVJaKn3SbfNL+wpG57g==
+X-Received: by 2002:a05:6402:4347:b0:5c9:5665:8df5 with SMTP id
+ 4fb4d7f45d1cf-5c95665905amr79643a12.34.1728635733976; 
+ Fri, 11 Oct 2024 01:35:33 -0700 (PDT)
+Received: from avogadro.local ([151.81.124.37])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a7ede515sm184273266b.45.2024.10.11.01.23.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 01:23:07 -0700 (PDT)
-Message-ID: <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
-Date: Fri, 11 Oct 2024 10:23:05 +0200
+ 4fb4d7f45d1cf-5c937263299sm1682535a12.77.2024.10.11.01.35.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Oct 2024 01:35:33 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v2] scripts/archive-source: find directory name for subprojects
+Date: Fri, 11 Oct 2024 10:35:32 +0200
+Message-ID: <20241011083532.15023-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
- accessing it
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-8-philmd@linaro.org>
- <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -153,48 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/05/2024 23.34, Guenter Roeck wrote:
-> Hi,
-> 
-> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
->> We should not wire IRQs on unrealized device.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-> 
-> qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
-> and sh4eb emulations. Error log is as follows.
-> 
-> ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
-> ata1.00: 16384 sectors, multi 16: LBA48
-> ata1.00: configured for PIO
-> scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 ANSI: 5
-> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
-> sd 0:0:0:0: [sda] Write Protect is off
-> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
-> ata1: lost interrupt (Status 0x58)
-> 
-> [ and more similar errors ]
-> 
-> qemu command line:
-> 
-> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
-> 	-snapshot -drive file=rootfs.ext2,format=raw,if=ide \
-> 	-append "root=/dev/sda console=ttySC1,115200 noiotrap" \
-> 	-serial null -serial stdio -monitor null -nographic -no-reboot
-> 
-> Bisect points to this patch (see below). Reverting it fixes the problem.
+Rust subprojects have the semantic version (followed by -rs) in the subproject
+name, but the full version (without -rs) is used by crates.io for the root
+directory of the tarball.  Teach scripts/archive-source.sh to look for the
+root directory name in wrap files.
 
-  Hi Philippe!
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+v1->v2:
+- put local dir on separate line
+- use :- to print default even if $dir is empty
+- use error function and invert "if test -f" condition
+- simplify sed script to avoid jumps
 
-Today I noticed that our sh4 test from tests/avocado/tuxrun_baselines.py is 
-failing (which is not run by default, that's why nobody noticed), and 
-bisection took me to the same result that Guenter already reported.
+ scripts/archive-source.sh | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-So unless you have a clue how to fix it in a better way, I think we should 
-revert this patch?
-
-  Thomas
+diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+index 65af8063e4b..3f9c51ce2cb 100755
+--- a/scripts/archive-source.sh
++++ b/scripts/archive-source.sh
+@@ -48,13 +48,34 @@ function tree_ish() {
+     echo "$retval"
+ }
+ 
++function subproject_dir() {
++    if test ! -f "subprojects/$1.wrap"; then
++      error "scripts/archive-source.sh should only process wrap subprojects"
++    fi
++
++    # Print the directory key of the wrap file, defaulting to the
++    # subproject name.  The wrap file is in ini format and should
++    # have a single section only.  There should be only one section
++    # named "[wrap-*]", which helps keeping the script simple.
++    local dir
++    dir=$(sed -n \
++      -e '/^\[wrap-[a-z][a-z]*\]$/,/^\[/{' \
++      -e    '/^directory *= */!b' \
++      -e    's///p' \
++      -e    'q' \
++      -e '}' \
++      "subprojects/$1.wrap")
++
++    echo "${dir:-$1}"
++}
++
+ git archive --format tar "$(tree_ish)" > "$tar_file"
+ test $? -ne 0 && error "failed to archive qemu"
+ 
+ for sp in $subprojects; do
+     meson subprojects download $sp
+     test $? -ne 0 && error "failed to download subproject $sp"
+-    tar --append --file "$tar_file" --exclude=.git subprojects/$sp
++    tar --append --file "$tar_file" --exclude=.git subprojects/"$(subproject_dir $sp)"
+     test $? -ne 0 && error "failed to append subproject $sp to $tar_file"
+ done
+ exit 0
+-- 
+2.46.2
 
 
