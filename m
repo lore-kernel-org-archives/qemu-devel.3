@@ -4,80 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12065D0EE12
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C211D0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJ4W-0001Bd-KC; Fri, 11 Oct 2024 13:05:00 -0400
+	id 1szJDN-0000hx-BB; Fri, 11 Oct 2024 13:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szJ4Q-0000wP-Eu
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:04:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ7I-0004AI-Bn
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1szHeI-0007HW-8P
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 11:33:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFYt-0004J1-NJ
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728660829;
+ s=mimecast20190719; t=1728652806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WfhsGNsaqM9wxDXFff8BXw/V55q8RaN7jwv0zZZjFLo=;
- b=c34Cvvl4YTZCJkgvNAjwdZsso0CTt/aRRjYoMEya65RcRRgi7YR7wWKM/0nWHuY3whzhnv
- GllR4Y7cLXxYqTm2k2bZ9lumjdbe8K3Z10Yzb2mVWCAwTWsMVLLGrCnhmPiwad6O6p6swM
- wM9pU6NbX7RgcoR1EdTee8oJ9vmmcLo=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-epkQlto-Nv2xa03X3PMyTw-1; Fri, 11 Oct 2024 11:33:47 -0400
-X-MC-Unique: epkQlto-Nv2xa03X3PMyTw-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-53691cd5a20so2100407e87.3
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 08:33:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728660825; x=1729265625;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WfhsGNsaqM9wxDXFff8BXw/V55q8RaN7jwv0zZZjFLo=;
- b=Pehbmi6C39DJqOHoo+Ce0tjWZCqRfoxeEO/sP2avR63gwvuOo+UhMIgdvUH7gIpFGj
- f/sz5kwbqmkSTU9waGB74yToTQwlPQ+BQl8cfNUFt8Zu8B69OcSnq9KNRwmXsOuh+uv9
- BkYr62Cf3aqe8Klvqq6sjaOsnbT5BTA3pQWwegESXUfr4fm9+Z/nyLybbGgIa4AO0zJm
- mIabac0bLGByHddoKGfOCCwyz9WvHS9Pa+xNpKKjgv83NYM+fXg1s47nXwsNs4OmoTZo
- jyb3Kgrm6uJhnG1aTr3LuQ5ECUgHeBlVPplqL8FfuGehpYXNqydOPOVgcdFtntOSj0/m
- 9zZA==
-X-Gm-Message-State: AOJu0Ywn4SwlmSDoQAkXFRSJ3bOK44206fV0f7DSQkouMM2r5nBDeuky
- 7HtXIBJl9hl9yYH6R0lulQn7T1xa1cOkDHm5SkPnBfJ7V7w5d8BIXnYpVc8wFVeWGYYJNKaVKvw
- 2pGv/mXO8ckhnnjkg4XSdehPrC1viX0GPyrr/n3sbBxrd5RECtc2JebtaByIwK7pxrAvrIQ9mLD
- a6RjM3QFF9YttCPJfFaYlksBNeg1mhvE/eskAx/rI=
-X-Received: by 2002:a05:6512:3343:b0:539:948a:aadb with SMTP id
- 2adb3069b0e04-539da552df1mr2043762e87.42.1728660825191; 
- Fri, 11 Oct 2024 08:33:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrcu0tWijA/3+gvmB+CGED6zswP+C0YKq8/AD3IEUbLbcW3hC0BpICG3wH+uP48kbhQ8aLBw==
-X-Received: by 2002:a05:6512:3343:b0:539:948a:aadb with SMTP id
- 2adb3069b0e04-539da552df1mr2043733e87.42.1728660824555; 
- Fri, 11 Oct 2024 08:33:44 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a7ec56d8sm226391566b.17.2024.10.11.08.33.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2024 08:33:42 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL v3 17/18] docs: avoid footnotes consisting of just URLs
-Date: Fri, 11 Oct 2024 17:32:25 +0200
-Message-ID: <20241011153227.81770-18-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
-References: <20241011153227.81770-1-pbonzini@redhat.com>
+ bh=OUgsTaBnHviGRvhwISvHm7Ex/ZTmQ4HeHoZthDt3Qsg=;
+ b=EKDK3tBI+dGI/XsLBctGcvMpltkYtFLnO2jEflgpXnisfL+YqiZYh4AZxbocE7miSZqay9
+ 3N4wSvQVNrrZxJQg9EMF2O8//gWXX65leenogo3VwpKWWizIu3thhWL/AgnZuVSrevUNpk
+ fdLOo7Ug7/bCz9OJvMVQeAG+jdeOjio=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-bneyTQ9kM32OWukVG5Iscw-1; Fri,
+ 11 Oct 2024 09:20:04 -0400
+X-MC-Unique: bneyTQ9kM32OWukVG5Iscw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A4471955F29; Fri, 11 Oct 2024 13:20:03 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 264E91956052; Fri, 11 Oct 2024 13:19:59 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 01/17] tests/functional: Add a base class for the TuxRun tests
+Date: Fri, 11 Oct 2024 15:19:18 +0200
+Message-ID: <20241011131937.377223-2-thuth@redhat.com>
+In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
+References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -86,7 +70,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,112 +86,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the footnotes with inline links whenever the footnote text
-consists of nothing but the URL.  While at it, make the link texts
-consistent in the surrounding areas, for example avoiding usage of
-"here" for the link's text.
+Add a base class for the TuxRun tests, based on the code from
+tests/avocado/tuxrun_baselines.py (the test have to be put into
+separate file in the following commits, depending on the target
+architecture that gets tested).
 
-In the case of acpi-bits.rst this fixes a build failure with Sphinx
-8.1.0, because the FOSDEM link was duplicated in the paragraph and the
-new version is a lot stricter about unreferenced footnotes.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/acpi-bits.rst | 26 +++++++++++++-------------
- docs/specs/rapl-msr.rst          | 25 ++++++++++++-------------
- 2 files changed, 25 insertions(+), 26 deletions(-)
+ tests/functional/qemu_test/tuxruntest.py | 158 +++++++++++++++++++++++
+ 1 file changed, 158 insertions(+)
+ create mode 100644 tests/functional/qemu_test/tuxruntest.py
 
-diff --git a/docs/devel/testing/acpi-bits.rst b/docs/devel/testing/acpi-bits.rst
-index 78aeb6aa3c4..9a4d716ebff 100644
---- a/docs/devel/testing/acpi-bits.rst
-+++ b/docs/devel/testing/acpi-bits.rst
-@@ -30,15 +30,20 @@ OS modules are generally written using low level languages such as C and
- low level assembly machine language. Writing test routines in a low level
- language makes things more cumbersome. These and other reasons makes using
- bios-bits very attractive for testing bioses. More details on the inspiration
--for developing biosbits and its real life uses can be found in [#a]_ and [#b]_.
-+for developing biosbits and its real life uses were presented `at Plumbers
-+in 2011 <Plumbers_>`__ and `at Linux.conf.au in 2012 <Linux.conf.au_>`__.
- 
--For QEMU, we maintain a fork of bios bits in gitlab along with all the
--dependent submodules `here <https://gitlab.com/qemu-project/biosbits-bits>`__.
--This fork contains numerous fixes, a newer acpica and changes specific to
--running these functional QEMU tests using bits. The author of this document
--is the sole maintainer of the QEMU fork of bios bits repository. For more
--information, please see author's `FOSDEM talk on this bios-bits based test
--framework <https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/>`__.
-+For QEMU, we maintain a fork of bios bits in `gitlab`_, along with all
-+the dependent submodules.  This fork contains numerous fixes, a newer
-+acpica and changes specific to running these functional QEMU tests using
-+bits. The author of this document is the current maintainer of the QEMU
-+fork of bios bits repository. For more information, please see `the
-+author's FOSDEM presentation <FOSDEM_>`__ on this bios-bits based test framework.
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+new file mode 100644
+index 0000000000..904da6f609
+--- /dev/null
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -0,0 +1,158 @@
++# Functional test that boots known good tuxboot images the same way
++# that tuxrun (www.tuxrun.org) does. This tool is used by things like
++# the LKFT project to run regression tests on kernels.
++#
++# Copyright (c) 2023 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+.. _Plumbers: https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
-+.. _Linux.conf.au: https://www.youtube.com/watch?v=36QIepyUuhg
-+.. _gitlab: https://gitlab.com/qemu-project/biosbits-bits
-+.. _FOSDEM: https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
- 
- *********************************
- Description of the test framework
-@@ -148,8 +153,3 @@ Under ``tests/functional/`` as the root we have:
- 
- Author: Ani Sinha <anisinha@redhat.com>
- 
--References:
-------------
--.. [#a] https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
--.. [#b] https://www.youtube.com/watch?v=36QIepyUuhg
--.. [#c] https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
-diff --git a/docs/specs/rapl-msr.rst b/docs/specs/rapl-msr.rst
-index 1202ee89bee..aaf0db9f91b 100644
---- a/docs/specs/rapl-msr.rst
-+++ b/docs/specs/rapl-msr.rst
-@@ -9,11 +9,12 @@ The consumption is reported via MSRs (model specific registers) like
- MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are 64 bits
- registers that represent the accumulated energy consumption in micro Joules.
- 
--Thanks to the MSR Filtering patch [#a]_ not all MSRs are handled by KVM. Some
--of them can now be handled by the userspace (QEMU). It uses a mechanism called
--"MSR filtering" where a list of MSRs is given at init time of a VM to KVM so
--that a callback is put in place. The design of this patch uses only this
--mechanism for handling the MSRs between guest/host.
-+Thanks to KVM's `MSR filtering <msr-filter-patch_>`__ functionality,
-+not all MSRs are handled by KVM. Some of them can now be handled by the
-+userspace (QEMU); a list of MSRs is given at VM creation time to KVM, and
-+a userspace exit occurs when they are accessed.
++import os
++import time
 +
-+.. _msr-filter-patch: https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
- 
- At the moment the following MSRs are involved:
- 
-@@ -92,9 +93,12 @@ found by the sysconf system call. A typical value of clock ticks per second is
- package has 4 cores, 400 ticks maximum can be scheduled on all the cores
- of the package for a period of 1 second.
- 
--The /proc/[pid]/stat [#b]_ is a sysfs file that can give the executed time of a
--process with the [pid] as the process ID. It gives the amount of ticks the
--process has been scheduled in userspace (utime) and kernel space (stime).
-+`/proc/[pid]/stat <stat_>`__ is a procfs file that can give the executed
-+time of a process with the [pid] as the process ID. It gives the amount
-+of ticks the process has been scheduled in userspace (utime) and kernel
-+space (stime).
++from qemu_test import QemuSystemTest
++from qemu_test import exec_command, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
++from qemu_test import has_cmd, run_cmd, get_qemu_img
 +
-+.. _stat: https://man7.org/linux/man-pages/man5/proc.5.html
- 
- By reading those metrics for a thread, one can calculate the ratio of time the
- package has spent executing the thread.
-@@ -148,8 +152,3 @@ Current Limitations
- - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at the
-   moment.
- 
--References
------------
--
--.. [#a] https://patchwork.kernel.org/project/kvm/patch/20200916202951.23760-7-graf@amazon.com/
--.. [#b] https://man7.org/linux/man-pages/man5/proc.5.html
++class TuxRunBaselineTest(QemuSystemTest):
++
++    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0'
++    # Tests are ~10-40s, allow for --debug/--enable-gcov overhead
++    timeout = 100
++
++    def get_tag(self, tagname, default=None):
++        """
++        Get the metadata tag or return the default.
++        """
++        utag = self._get_unique_tag_val(tagname)
++        print(f"{tagname}/{default} -> {utag}")
++        if utag:
++            return utag
++
++        return default
++
++    def setUp(self):
++        super().setUp()
++
++        # We need zstd for all the tuxrun tests
++        # See https://github.com/avocado-framework/avocado/issues/5609
++        (has_zstd, msg) = has_cmd('zstd')
++        if has_zstd is False:
++            self.skipTest(msg)
++        self.zstd = 'zstd'
++
++        # Pre-init TuxRun specific settings: Most machines work with
++        # reasonable defaults but we sometimes need to tweak the
++        # config. To avoid open coding everything we store all these
++        # details in the metadata for each test.
++
++        # The tuxboot tag matches the root directory
++        self.tuxboot = self.arch
++
++        # Most Linux's use ttyS0 for their serial port
++        self.console = "ttyS0"
++
++        # Does the machine shutdown QEMU nicely on "halt"
++        self.wait_for_shutdown = True
++
++        self.root = "vda"
++
++        # Occasionally we need extra devices to hook things up
++        self.extradev = None
++
++        self.qemu_img = get_qemu_img(self)
++
++    def wait_for_console_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(self, success_message,
++                                 failure_message='Kernel panic - not syncing',
++                                 vm=vm)
++
++    def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
++        """
++        Fetch the TuxBoot assets.
++        """
++        kernel_image =  kernel_asset.fetch()
++        disk_image_zst = rootfs_asset.fetch()
++
++        run_cmd([self.zstd, "-f", "-d", disk_image_zst,
++                 "-o", self.workdir + "/rootfs.ext4"])
++
++        dtb = dtb_asset.fetch() if dtb_asset is not None else None
++
++        return (kernel_image, self.workdir + "/rootfs.ext4", dtb)
++
++    def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
++        """
++        Setup to run and add the common parameters to the system
++        """
++        self.vm.set_console(console_index=console_index)
++
++        # all block devices are raw ext4's
++        blockdev = "driver=raw,file.driver=file," \
++            + f"file.filename={disk},node-name=hd0"
++
++        kcmd_line = self.KERNEL_COMMON_COMMAND_LINE
++        kcmd_line += f" root=/dev/{self.root}"
++        kcmd_line += f" console={self.console}"
++
++        self.vm.add_args('-kernel', kernel,
++                         '-append', kcmd_line,
++                         '-blockdev', blockdev)
++
++        # Sometimes we need extra devices attached
++        if self.extradev:
++            self.vm.add_args('-device', self.extradev)
++
++        self.vm.add_args('-device',
++                         f"{drive},drive=hd0")
++
++        # Some machines need an explicit DTB
++        if dtb:
++            self.vm.add_args('-dtb', dtb)
++
++    def run_tuxtest_tests(self, haltmsg):
++        """
++        Wait for the system to boot up, wait for the login prompt and
++        then do a few things on the console. Trigger a shutdown and
++        wait to exit cleanly.
++        """
++        self.wait_for_console_pattern("Welcome to TuxTest")
++        time.sleep(0.2)
++        exec_command(self, 'root')
++        time.sleep(0.2)
++        exec_command(self, 'cat /proc/interrupts')
++        time.sleep(0.1)
++        exec_command(self, 'cat /proc/self/maps')
++        time.sleep(0.1)
++        exec_command(self, 'uname -a')
++        time.sleep(0.1)
++        exec_command_and_wait_for_pattern(self, 'halt', haltmsg)
++
++        # Wait for VM to shut down gracefully if it can
++        if self.wait_for_shutdown:
++            self.vm.wait()
++        else:
++            self.vm.shutdown()
++
++    def common_tuxrun(self,
++                      kernel_asset,
++                      rootfs_asset,
++                      dtb_asset=None,
++                      drive="virtio-blk-device",
++                      haltmsg="reboot: System halted",
++                      console_index=0):
++        """
++        Common path for LKFT tests. Unless we need to do something
++        special with the command line we can process most things using
++        the tag metadata.
++        """
++        (kernel, disk, dtb) = self.fetch_tuxrun_assets(kernel_asset, rootfs_asset,
++                                                       dtb_asset)
++
++        self.prepare_run(kernel, disk, drive, dtb, console_index)
++        self.vm.launch()
++        self.run_tuxtest_tests(haltmsg)
++        os.remove(disk)
 -- 
-2.46.2
+2.46.1
 
 
