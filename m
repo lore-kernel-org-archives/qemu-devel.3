@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694ACD0EE12
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52997D0EE12
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 17:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szJDH-0000Bq-PW; Fri, 11 Oct 2024 13:14:03 -0400
+	id 1szJCV-0006I2-1Q; Fri, 11 Oct 2024 13:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ7B-0004Pd-Ch
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szJ76-0000wP-2U
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 13:07:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFYz-0004Jz-F0
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:20:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szFZp-0004V8-6A
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 09:21:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728652812;
+ s=mimecast20190719; t=1728652864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OfD2T2DNljJ4PR1x+jFli4y7dytYo55E8P6pXj2fAdg=;
- b=ikYartBXeAbeyiRZmy8hlN1pV4+5AspE9O9attLd5PN19eJX9wbSI2vKBD9UY6R+6rbrsf
- kejb+b8PaCgSngDgWm90OQzYJ18b3vaBzjhPDSleyFPkWauwpHL43+jp0GNap9isgu8Qld
- Eu8SjxA/jPADEZ0ZZe/3ERSFJ7SXk8w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JREXIIvl302nrjZLS5RAoHzWxTFKuXAGwAHQ6gMR2Hg=;
+ b=WRyfxEXkPK1ibg3y6QZieL3Jg3wrvmh1pzLK3FIeo7ZInoMtp6tyPAxxxajZhKpb/X0noy
+ LryTY0eWGZUiMQuUn9ulKLugg/1fTpGY/+7wgsCcbNYtJKK+3Wwc2+SIntMJlCYLmYudRe
+ OwWv84z/1+yXGgb7rwwb0NiuphFRkGU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-wuLlgpvaMmikJYqAbfnQMg-1; Fri,
- 11 Oct 2024 09:20:11 -0400
-X-MC-Unique: wuLlgpvaMmikJYqAbfnQMg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-DufTexF8MpaGj1B6Ka8pYQ-1; Fri,
+ 11 Oct 2024 09:21:01 -0400
+X-MC-Unique: DufTexF8MpaGj1B6Ka8pYQ-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 207981955F3D; Fri, 11 Oct 2024 13:20:10 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D19411955D5F; Fri, 11 Oct 2024 13:20:59 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.77])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E9001956052; Fri, 11 Oct 2024 13:20:07 +0000 (UTC)
+ id 5D1951955E8F; Fri, 11 Oct 2024 13:20:55 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -52,17 +52,16 @@ Cc: Guenter Roeck <linux@roeck-us.net>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 03/17] tests/functional: Convert the Avocado aarch64 tuxrun
- tests
-Date: Fri, 11 Oct 2024 15:19:20 +0200
-Message-ID: <20241011131937.377223-4-thuth@redhat.com>
+Subject: [PATCH 16/17] Revert "hw/sh4/r2d: Realize IDE controller before
+ accessing it"
+Date: Fri, 11 Oct 2024 15:19:33 +0200
+Message-ID: <20241011131937.377223-17-thuth@redhat.com>
 In-Reply-To: <20241011131937.377223-1-thuth@redhat.com>
 References: <20241011131937.377223-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,148 +86,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the tests to a new file so that they can be run via
-qemu-system-aarch64 in the functional framework.
+This reverts commit 3c5f86a22686ef475a8259c0d8ee714f61c770c9.
 
+Changing the order here caused a regression with the "tuxrun"
+kernels (from https://storage.tuxboot.com/20230331/) - ATA commands
+fail with a "ata1: lost interrupt (Status 0x58)" message.
+Apparently we need to wire the interrupt here first before
+realizing the device, so revert the change to the original
+behavior.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                             |  1 +
- tests/avocado/tuxrun_baselines.py       | 31 ---------------
- tests/functional/meson.build            |  2 +
- tests/functional/test_aarch64_tuxrun.py | 50 +++++++++++++++++++++++++
- 4 files changed, 53 insertions(+), 31 deletions(-)
- create mode 100755 tests/functional/test_aarch64_tuxrun.py
+ hw/sh4/r2d.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d7a11fe601..ab9da679f5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -987,6 +987,7 @@ F: hw/arm/virt*
- F: include/hw/arm/virt.h
- F: docs/system/arm/virt.rst
- F: tests/functional/test_aarch64_virt.py
-+F: tests/functional/test_aarch64_tuxrun.py
- 
- Xilinx Zynq
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index 56c8bdb2dc..dffa4f6339 100644
---- a/tests/avocado/tuxrun_baselines.py
-+++ b/tests/avocado/tuxrun_baselines.py
-@@ -192,37 +192,6 @@ def common_tuxrun(self,
-     #        --kernel https://storage.tuxboot.com/{TUXBOOT}/{IMAGE}
-     #
- 
--    def test_arm64(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        :avocado: tags=tuxboot:arm64
--        :avocado: tags=console:ttyAMA0
--        :avocado: tags=shutdown:nowait
--        """
--        sums = {"Image" :
--                "ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7",
--                "rootfs.ext4.zst" :
--                "bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061"}
--        self.common_tuxrun(csums=sums)
--
--    def test_arm64be(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=endian:big
--        :avocado: tags=machine:virt
--        :avocado: tags=tuxboot:arm64be
--        :avocado: tags=console:ttyAMA0
--        :avocado: tags=shutdown:nowait
--        """
--        sums = { "Image" :
--                 "e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4",
--                 "rootfs.ext4.zst" :
--                 "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
--        self.common_tuxrun(csums=sums)
--
-     def test_armv5(self):
-         """
-         :avocado: tags=arch:arm
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c90c02517a..222bfbcc62 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -13,6 +13,7 @@ endif
- test_timeouts = {
-   'aarch64_raspi4' : 120,
-   'aarch64_sbsaref' : 600,
-+  'aarch64_tuxrun' : 120,
-   'aarch64_virt' : 360,
-   'acpi_bits' : 240,
-   'arm_raspi2' : 120,
-@@ -41,6 +42,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-   'aarch64_sbsaref',
-+  'aarch64_tuxrun',
-   'aarch64_virt',
-   'multiprocess',
- ]
-diff --git a/tests/functional/test_aarch64_tuxrun.py b/tests/functional/test_aarch64_tuxrun.py
-new file mode 100755
-index 0000000000..da56aee4ed
---- /dev/null
-+++ b/tests/functional/test_aarch64_tuxrun.py
-@@ -0,0 +1,50 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots known good tuxboot images the same way
-+# that tuxrun (www.tuxrun.org) does. This tool is used by things like
-+# the LKFT project to run regression tests on kernels.
-+#
-+# Copyright (c) 2023 Linaro Ltd.
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from qemu_test.tuxruntest import TuxRunBaselineTest
-+
-+class TuxRunAarch64Test(TuxRunBaselineTest):
-+
-+    ASSET_ARM64_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/arm64/Image',
-+        'ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7')
-+    ASSET_ARM64_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/arm64/rootfs.ext4.zst',
-+        'bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061')
-+
-+    def test_arm64(self):
-+        self.set_machine('virt')
-+        self.cpu='cortex-a57'
-+        self.console='ttyAMA0'
-+        self.wait_for_shutdown=False
-+        self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
-+                           rootfs_asset=self.ASSET_ARM64_ROOTFS)
-+
-+    ASSET_ARM64BE_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/arm64be/Image',
-+        'e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4')
-+    ASSET_ARM64BE_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/arm64be/rootfs.ext4.zst',
-+        'e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7')
-+
-+    def test_arm64be(self):
-+        self.set_machine('virt')
-+        self.cpu='cortex-a57'
-+        self.console='ttyAMA0'
-+        self.wait_for_shutdown=False
-+        self.common_tuxrun(kernel_asset=self.ASSET_ARM64BE_KERNEL,
-+                           rootfs_asset=self.ASSET_ARM64BE_ROOTFS)
-+
-+if __name__ == '__main__':
-+    TuxRunBaselineTest.main()
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index e5ac6751bd..7eecd79fcc 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -286,9 +286,9 @@ static void r2d_init(MachineState *machine)
+     dinfo = drive_get(IF_IDE, 0, 0);
+     dev = qdev_new("mmio-ide");
+     busdev = SYS_BUS_DEVICE(dev);
++    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
+     qdev_prop_set_uint32(dev, "shift", 1);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+-    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
+     sysbus_mmio_map(busdev, 0, 0x14001000);
+     sysbus_mmio_map(busdev, 1, 0x1400080c);
+     mmio_ide_init_drives(dev, dinfo, NULL);
 -- 
 2.46.1
 
