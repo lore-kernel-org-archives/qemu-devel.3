@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC47D1A435
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 06:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD0BD1A431
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 07:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szVwj-0004Xn-Cc; Sat, 12 Oct 2024 02:49:50 -0400
+	id 1szW6s-0005mN-AF; Sat, 12 Oct 2024 03:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1szVwh-0004XY-2d
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 02:49:47 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1szW6o-0005m9-GW
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:00:14 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1szVwe-00071y-Qx
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 02:49:46 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-71e15fe56c9so1976605b3a.3
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 23:49:44 -0700 (PDT)
+ id 1szW6h-0008Bu-R8
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:00:13 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20cb7088cbcso6246505ad.0
+ for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 00:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728715783; x=1729320583;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728716406; x=1729321206;
  darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=shEvOsIqnFEdJAF59XGhekSu58mftGKg5A0X7iIHXlY=;
- b=jxzNEaKKw//ixLd0HPYZ2JTpKz1sDXSzAh4osQtbyr0K4kVbAwGwyJ0Bb4MNoKIYrE
- NVNRmCxmu8lV6Dpw9MMVirhj+Jqc830vyHE92+bf3vzKVmyFXCQ7Z3hK9ohk3Yj24xCW
- /XMiosRW4CEDi1zxckoxtsZjiY/WR2c/9lAcY0Ihe/ZyTZrF3ChLiSar7KS/s4HrxpBf
- V6xuKcRFMi76NZVhAx5yWQ6Jh8ly8HLwgfRjqEUr4HMrQ16u4vjQKT1E8RSGM6R5BaPR
- EJg/0cvQZkJ4r/GF/1TU5X4RaCZC7FHy4WkA3Dauu+iQVgYVTwAiUgtBq52X4X2vJrz9
- EV+g==
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V/x8ylieZ3pJFBks2PjrJhcV7QIQZP1C7HKTU/rWtQ8=;
+ b=umRXL7ZtnZUEqS1wtYhrULBJOzso6jqd1JmkJ0nAvjUM24LoI5kkWQHtcuGj56tT72
+ 2GelwEkzvz/F+xFKpbi4YSy3JqPOb2sBSt77MXxCFY8bSpcq/9cT20sDpKXofuH7pMkK
+ ooNGR1sFesg32RH2pDpnNvvJhAnJPWom4FkLB7cDz96sTS+3ANwHUxQCzEETM9ozZTe5
+ Ykl3A0eLrlBaaPC4CpBcsoHo9hTfEbQVpeOWDf/FkfCjJYkSiedf/NZ8owzqUGm2UvcZ
+ +7zUFkhJRvMPJUAB4lq9E4TPZ7v31G3QSW037j0XVh/zla9ZZFW5LkRyLUCVK7yERhJ9
+ 8EfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728715783; x=1729320583;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=shEvOsIqnFEdJAF59XGhekSu58mftGKg5A0X7iIHXlY=;
- b=NQoF+uJcHToTjcD+Rn0Inm5lxvFqkIjYf85MeI6PjXZXKPPLVcqdi7TKVmBq8iQBSk
- EpFZ/7w5/w0vUMS0CbTRW+tMGNtEzSVoyWR/qcmCU1Ok6IO5kkLMNUk4o+g145MNqMzj
- BsP4O/8gyEypnDQ5R077pHiu4OkEEBYgy23dxOPo6RvKQSRCJ+tvngBwo/Pk16HwD85J
- MhCwCieak4cODBLWVstNQFqWyB8gNbQwFrbbm7wAY0oWpex8HREhnbVOuNfzRSk8B8O+
- IfAcm3F0cB980USRWg68OkZzbGZK/zB7/mWBWzAd6DLk/tExhyusOmsfiLg0DjsViMkk
- BUPQ==
-X-Gm-Message-State: AOJu0YzGy3tlmqZl9JILxxOkCEJsbOW3Jd7Txl5DHp0saZR04sJeXfaQ
- ql4F0Q+mdSNKouWGlyurNSQVsYIzvbNRmTx9kazMooutCOCTGIh/NhewFu845pc=
-X-Google-Smtp-Source: AGHT+IEq884tq7XRmBjgoLKz0poIU48SytuDy11jCkVqq96xCT8i6KmoSQ3EIhlA86a4SsK0T2xKRw==
-X-Received: by 2002:a05:6a20:6724:b0:1d8:acec:f5c2 with SMTP id
- adf61e73a8af0-1d8bcfaa1b6mr5301068637.36.1728715782761; 
- Fri, 11 Oct 2024 23:49:42 -0700 (PDT)
-Received: from localhost ([157.82.207.107])
- by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-7ea6ffeb587sm274072a12.44.2024.10.11.23.49.40
+ d=1e100.net; s=20230601; t=1728716406; x=1729321206;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=V/x8ylieZ3pJFBks2PjrJhcV7QIQZP1C7HKTU/rWtQ8=;
+ b=EbS5QViLWfhu4yUWmusGFfhYLOA8O3VJKMR57gicfqHJfCztfOfQP5JHHrKLt2F2ha
+ WMj+QY+GgJna9pSqNkO2IbxNLqS3vhFM5V8AYlzCQq4PtaXqoG/VY8zwDml9Fn52VM0P
+ eJ66Bln4T+YyfK4/Egbyb4B0TUbZGn5MCdUrRECdnCE8NgRnbNUBm6V7XMOUCtbkY2G+
+ Nd5sNk+N4YwC7ipIZVUnG9cLb7VeK/ytUnMxdUv5dv3k/axif448vMGOG8i2nfXENS8n
+ GdDrX3VxQziChJlEqhEymQDeswQ6G7lQM8DYZMDWS8DcQAwMwiZL+ShOYUxJxJc7fnKc
+ LTIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1Z97Pd0ozuqNnNowKSan8178kH9wWSSZr192LjYNI9nBomNRRwBB4M6uzH+xVmNSBBos9G93EAkYo@nongnu.org
+X-Gm-Message-State: AOJu0YyS41PULT/wB6ni+IAjivZJSGFgAcnbVk5+L0S2uU27OJY8VEfz
+ qHA8VGInqZXItyzOM5Y/yX13TsPFebbT2AeXhkp+UejIM8VfOJIj/M2F/fTds1Q=
+X-Google-Smtp-Source: AGHT+IGxP48LdDTxKx+bI370oCGUEyjKLbFqi+rlZlX+OiZcd7vqFtbZSwSEticGSI4mooKpGRGAVA==
+X-Received: by 2002:a17:902:e888:b0:20c:7a1f:96e5 with SMTP id
+ d9443c01a7336-20ca16bdda2mr71924095ad.41.1728716405865; 
+ Sat, 12 Oct 2024 00:00:05 -0700 (PDT)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c8bc0133fsm32620975ad.80.2024.10.12.00.00.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 23:49:42 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 12 Oct 2024 15:49:36 +0900
-Subject: [PATCH v2] dma: Fix function names in documentation
+ Sat, 12 Oct 2024 00:00:05 -0700 (PDT)
+Message-ID: <602b3bbd-06b8-4ac5-a250-7113d83923da@daynix.com>
+Date: Sat, 12 Oct 2024 16:00:02 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241012-dma-v2-1-6afddf5f3c8d@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAP8bCmcC/1WMQQ7CIBBFr9LMWgzQmoAr72G6IMNgZ1EwYEibh
- ruL3bl8P/+9AwplpgL34YBMlQun2EFfBsDFxRcJ9p1BSz0pKY3wqxNSaxUskjHWQH++MwXezsp
- z7rxw+aS8n9Gqfuu/X5VQAqfRogx4C6N7eLdH3q6YVphba18n6pzzlwAAAA==
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/19] UI-related fixes & shareable 2d memory with
+ -display dbus
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, belmouss@redhat.com,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,67 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure the function names match.
+On 2024/10/08 21:50, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> This series adds Listener.Unix.Map interface to -display dbus, to allow shared
+> memory for the display (similar to Listener.Win32.Map interface).
+> 
+> While working on it, I collected a few fixes. I can re-send them in a different
+> series or queue them once they are reviewed.
+> 
+> thanks
+> 
+> v2 (after Akhiko Odaki review):
+>   - rebased
+>   - introduce qemu_pixman_shareable, to reduce #ifdef usage
+>   - fixed bad mmap testing
+>   - fixed mingw cross-compilation
+> 
+> Marc-André Lureau (19):
+>    hw/audio/hda: free timer on exit
+>    hw/audio/hda: fix memory leak on audio setup
+>    ui/dbus: fix leak on message filtering
+>    ui/win32: fix potential use-after-free with dbus shared memory
+>    ui/dbus: fix filtering all update messages
+>    ui/dbus: discard display messages on disable
+>    ui/dbus: discard pending CursorDefine on new one
+>    util/memfd: report potential errors on free
+>    ui/pixman: generalize shared_image_destroy
+>    ui/dbus: do not limit to one listener per connection / bus name
+>    ui/dbus: add trace for can_share_map
+>    ui/surface: allocate shared memory on !win32
+>    meson: find_program('gdbus-codegen') directly
+>    ui/dbus: make Listener.Win32.Map win32-specific
+>    ui/dbus: add Listener.Unix.Map interface XML
+>    ui/dbus: implement Unix.Map
+>    virtio-gpu: allocate shareable 2d resources on !win32
+>    ui: refactor using a common qemu_pixman_shareable
+>    tests: add basic -display dbus Map.Unix test
+> 
+>   meson.build                     |   2 +-
+>   include/hw/virtio/virtio-gpu.h  |   4 +-
+>   include/ui/qemu-pixman.h        |  24 +++++
+>   include/ui/surface.h            |  14 ++-
+>   hw/audio/hda-codec.c            |  33 ++++---
+>   hw/display/virtio-gpu.c         |  69 ++++----------
+>   tests/qtest/dbus-display-test.c |  72 ++++++++++++++-
+>   ui/console.c                    |  78 ++++++----------
+>   ui/dbus-console.c               |  23 +----
+>   ui/dbus-listener.c              | 159 ++++++++++++++++++++++++++++----
+>   ui/qemu-pixman.c                |  71 ++++++++++++++
+>   util/memfd.c                    |   9 +-
+>   ui/dbus-display1.xml            |  49 ++++++++++
+>   ui/trace-events                 |   1 +
+>   14 files changed, 440 insertions(+), 168 deletions(-)
+> 
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Changes in v2:
-- s/space/memory/ (Peter Maydell)
-- Covered more function names
-- Link to v1: https://lore.kernel.org/r/20241008-dma-v1-1-c439c0fc5f3a@daynix.com
----
- include/sysemu/dma.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/include/sysemu/dma.h b/include/sysemu/dma.h
-index a1ac5bc1b543..5a49a306284d 100644
---- a/include/sysemu/dma.h
-+++ b/include/sysemu/dma.h
-@@ -152,7 +152,7 @@ static inline MemTxResult dma_memory_read(AddressSpace *as, dma_addr_t addr,
- }
- 
- /**
-- * address_space_write: Write to address space from DMA controller.
-+ * dma_memory_write: Write to address space from DMA controller.
-  *
-  * Return a MemTxResult indicating whether the operation succeeded
-  * or failed (eg unassigned memory, device rejected the transaction,
-@@ -189,7 +189,7 @@ MemTxResult dma_memory_set(AddressSpace *as, dma_addr_t addr,
-                            uint8_t c, dma_addr_t len, MemTxAttrs attrs);
- 
- /**
-- * address_space_map: Map a physical memory region into a host virtual address.
-+ * dma_memory_map: Map a physical memory region into a host virtual address.
-  *
-  * May map a subset of the requested range, given by and returned in @plen.
-  * May return %NULL and set *@plen to zero(0), if resources needed to perform
-@@ -216,16 +216,15 @@ static inline void *dma_memory_map(AddressSpace *as,
- }
- 
- /**
-- * address_space_unmap: Unmaps a memory region previously mapped
-- *                      by dma_memory_map()
-+ * dma_memory_unmap: Unmaps a memory region previously mapped by dma_memory_map()
-  *
-  * Will also mark the memory as dirty if @dir == %DMA_DIRECTION_FROM_DEVICE.
-  * @access_len gives the amount of memory that was actually read or written
-  * by the caller.
-  *
-  * @as: #AddressSpace used
-- * @buffer: host pointer as returned by address_space_map()
-- * @len: buffer length as returned by address_space_map()
-+ * @buffer: host pointer as returned by dma_memory_map()
-+ * @len: buffer length as returned by dma_memory_map()
-  * @dir: indicates the transfer direction
-  * @access_len: amount of data actually transferred
-  */
-
----
-base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-change-id: 20241008-dma-0221f9ce8898
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+For the whole series:
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
