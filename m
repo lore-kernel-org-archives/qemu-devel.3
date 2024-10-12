@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF91D1A441
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 07:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBC8D1A443
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 07:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szWJg-0007XW-9c; Sat, 12 Oct 2024 03:13:32 -0400
+	id 1szWj7-0004cE-NX; Sat, 12 Oct 2024 03:39:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1szWJf-0007XK-3B; Sat, 12 Oct 2024 03:13:31 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1szWJc-0001CO-O1; Sat, 12 Oct 2024 03:13:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1728717209; x=1760253209;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=yIUI9kHzniRLdxWChq1x156eZCzJa9nmlhRfAoAyv+I=;
- b=TAUQ/8YtA4+mAHSqWC7AqVCqmgHAg3GS8mzh6/CUbpa8yB99HSTDXz1D
- oPgFZkkQMKjrg3czJ1e+BMnRdJX5+R5gq3RhhqxX3OVlJ+APTJ6RE2Vn2
- er+1pAwQciIh+H4e+JDG3rLiDeokfxJCmjV8PLjdo+VM+/H/AJB3r3ZCl
- vGcn+pMgGgjdA/gPaLIiCR2a4mLrEuOQIx/U/Kpx8QJKKDQsp8o3g5pPC
- ubpmax1RwxZU4MZ2xyBrVV+FWa4flf+aO0l2KhTLnbVtqMs7ApUtSdvxs
- wceK1NYAweEzhnoerv6XaDb6iHI1CALE8lwYNPzhNz9D2vNDxdUaqf1cC w==;
-X-CSE-ConnectionGUID: CZBo7B43TZCVKir1KJDI5Q==
-X-CSE-MsgGUID: 7VP6MxQcSz6F22VdXANzxg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28256933"
-X-IronPort-AV: E=Sophos;i="6.11,198,1725346800"; d="scan'208";a="28256933"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2024 00:13:24 -0700
-X-CSE-ConnectionGUID: 6wWebLfFSqmRrgEa6BYDng==
-X-CSE-MsgGUID: z8AxWSpnRVGjFZuJwXKt+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,198,1725346800"; d="scan'208";a="81732808"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.38])
- ([10.124.224.38])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Oct 2024 00:13:21 -0700
-Message-ID: <00f25e56-72e4-485a-a6a4-6b0c5563330d@intel.com>
-Date: Sat, 12 Oct 2024 15:13:19 +0800
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1szWj5-0004Xb-Gx
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:39:47 -0400
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1szWj3-0004ED-3N
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:39:47 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5e8038d4931so1618438eaf.2
+ for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 00:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1728718782; x=1729323582;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TfUEplD38YviOYL4MDo7kAXbkr2eDZCWenj06SLfBkQ=;
+ b=SroeBiFZ05KLkfFD+q/1YNlZtjNb+UDZ9/yvdTBePykoajRQpDXk2DCJXmmaUE8krD
+ XATBSjOUYAJ82L5uEPzFgQG4YCCIRO30g46peOkH3p7UGH5vPHq/kdspo5+1HEIRTRPD
+ IAN7ZZ1r9tzZsAQqyv2/KRuCbWjBuEF+T3om0G1K6cUZW8YjX4o/ruFj6aU7h6jN57jW
+ 0wKo1IGGpndvN6Ta9vFlUkKeGq+9ObE8DtPmSBjbuLfcTGp6Nvhlmf8ecSyAQWaIE1zP
+ K9n10E+s2yiSulv2CE7ncLTQugMUpa1JM81HcMDWO31RsVahlNkgSG7m11rqgzIu4jTF
+ SJOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728718782; x=1729323582;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TfUEplD38YviOYL4MDo7kAXbkr2eDZCWenj06SLfBkQ=;
+ b=dHPYMCnpbSaF200QlhdP0+N0ZXtWGckbtiwkXI3cWhIOYkcvDWByFppT0FKYjefzVt
+ jMvaMCH3lCY9+E/VrosR+1UZmf36HcHH6WNxf0HNb8YoV0th+WWT72Y5KCOLvzLSA6zU
+ Qsfs3hNs01DtoY6G7Sc0l4Wm7DxNuSsgbFPYwrqvqUapbCpLAWE1HYdr/TosNmUDNcd+
+ 6Nsgmla5907dqzNJnMspGMfcXxQTiY8mbCMuCx94YCvU1TAXAemEajRHGgOa+RnssfGp
+ zZMKtCQYw4ibWRh/+k1zglKNnTIhFUAePwDaegbfFskyawRQQtWbqkYNRn/d5uMnRGzp
+ W2mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1D1s3837bsmtFrOfw846M8hSfTtjE+V4DtUM+p88C4eKt9Kapn99BWZcVfeeWzST/5YyY1KDRFnwX@nongnu.org
+X-Gm-Message-State: AOJu0YwzRMpBVWcPkpgBEkzFA5XIP9HPjie+2IxrTNu5N8F8YQbSVQ2l
+ tMfeajk6lhKAfUqPu2O6u00j1GO2t5uztUOTjnVV5bcBbqT1lbdyFoxc5qCF6oBKQ9crfcIi+oz
+ TEBEh8AhcfUZQqpPCI/HKisVLH3PxP3fuocVFKA==
+X-Google-Smtp-Source: AGHT+IEO32QF6PfmZgrwKU0DLMA+G3JNy5LzNnLZyv7BzbFjCOUfsN7qPAL06dhAR2BUlxTc/g9SXB2ciTU+zIIzCNE=
+X-Received: by 2002:a05:6870:79e:b0:267:dfce:95eb with SMTP id
+ 586e51a60fabf-2886dce9beamr2926919fac.5.1728718781660; Sat, 12 Oct 2024
+ 00:39:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
- processors in the physical package
-To: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, imammedo@redhat.com, xieyongji@bytedance.com,
- chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.15,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.649, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+References: <20241011153652.517440-1-peterx@redhat.com>
+ <87v7xyr1jz.fsf@suse.de>
+In-Reply-To: <87v7xyr1jz.fsf@suse.de>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Sat, 12 Oct 2024 15:39:25 +0800
+Message-ID: <CAK9dgmZ89J1N6iY+1xRYJwb8K8FVWqx7MbtLFMFvasDVTDDdqg@mail.gmail.com>
+Subject: Re: [PATCH] migration: Put thread names together with macros
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Content-Type: multipart/alternative; boundary="000000000000e5d655062442b43a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc36.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,73 +91,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/2024 11:56 AM, Chuang Xu wrote:
-> When QEMU is started with:
-> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
-> -smp 180,sockets=2,dies=1,cores=45,threads=2
-> 
-> On Intel platform:
-> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
-> logical processors in the physical package".
-> 
-> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
-> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
-> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
-> CPUID.04H.EAX[31:26], which matches the expected result.
-> 
-> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
-> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
-> integer too. Otherwise we may encounter unexpected results in guest.
-> 
-> For example, when QEMU is started with CLI above and xtopology is disabled,
-> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
-> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
-> as the result, even though threads-per-core should actually be 2.
-> 
-> And on AMD platform:
-> CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
-> result meets our expectation.
+--000000000000e5d655062442b43a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-So for AMD platform, what's result for the same situation with xtopology 
-disabled? Does AMD uses another algorithm to calculate other than 
-CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) ?
+On Sat, Oct 12, 2024 at 1:29=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
+te:
 
-> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer
-> only for Intel platform to solve the unexpected result.
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> ---
->   target/i386/cpu.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index ff227a8c5c..641d4577b0 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6462,7 +6462,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->           }
->           *edx = env->features[FEAT_1_EDX];
->           if (threads_per_pkg > 1) {
-> -            *ebx |= threads_per_pkg << 16;
-> +            /*
-> +             * AMD requires logical processor count, but Intel needs maximum
-> +             * number of addressable IDs for logical processors per package.
-> +             */
-> +            if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-> +                *ebx |= threads_per_pkg << 16;
-> +            } else {
-> +                *ebx |= 1 << apicid_pkg_offset(&topo_info) << 16;
-> +            }
+> Peter Xu <peterx@redhat.com> writes:
+>
+> > Keep migration thread names together, so it's easier to see a list of a=
+ll
+> > possible migration threads.
+> >
+> > Still two functional changes below besides the macro defintions:
+> >
+> >   - There's one dirty rate thread that we overlooked before, now we add
+> >   that too and name it as "mig/dirtyrate" following the old rules.
+> >
+> >   - The old name "mig/src/rp-thr" has "-thr" but it may not be useful i=
+f
+> >   it's a thread name anyway, while "rp" can be slightly hard to read.
+> >   Taking this chance to rename it to "mig/src/return", hopefully a bett=
+er
+> >   name.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>
 
-you need to handle the overflow case when the number of logical 
-processors > 255.
+Acked-by: Hyman Huang <yong.huang@smartx.com>
 
->               *edx |= CPUID_HT;
->           }
->           if (!cpu->enable_pmu) {
+--=20
+Best regards
 
+--000000000000e5d655062442b43a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_defa=
+ult" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br></div><=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Sat, Oct 12, 2024 at 1:29=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"mailto:=
+farosas@suse.de" target=3D"_blank">farosas@suse.de</a>&gt; wrote:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);p=
+adding-left:1ex">Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com" target=
+=3D"_blank">peterx@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Keep migration thread names together, so it&#39;s easier to see a list=
+ of all<br>
+&gt; possible migration threads.<br>
+&gt;<br>
+&gt; Still two functional changes below besides the macro defintions:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0- There&#39;s one dirty rate thread that we overlooked bef=
+ore, now we add<br>
+&gt;=C2=A0 =C2=A0that too and name it as &quot;mig/dirtyrate&quot; followin=
+g the old rules.<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0- The old name &quot;mig/src/rp-thr&quot; has &quot;-thr&q=
+uot; but it may not be useful if<br>
+&gt;=C2=A0 =C2=A0it&#39;s a thread name anyway, while &quot;rp&quot; can be=
+ slightly hard to read.<br>
+&gt;=C2=A0 =C2=A0Taking this chance to rename it to &quot;mig/src/return&qu=
+ot;, hopefully a better<br>
+&gt;=C2=A0 =C2=A0name.<br>
+&gt;<br>
+&gt; Signed-off-by: Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com" targe=
+t=3D"_blank">peterx@redhat.com</a>&gt;<br>
+<br>
+Reviewed-by: Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de" target=3D=
+"_blank">farosas@suse.de</a>&gt;<br>
+</blockquote></div><br clear=3D"all"><div><div style=3D"font-family:&quot;c=
+omic sans ms&quot;,sans-serif" class=3D"gmail_default">Acked-by: Hyman Huan=
+g &lt;<a href=3D"mailto:yong.huang@smartx.com">yong.huang@smartx.com</a>&gt=
+;</div><br></div><span class=3D"gmail_signature_prefix">-- </span><br><div =
+dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><font face=3D"comic =
+sans ms, sans-serif">Best regards</font></div></div></div>
+</div>
+
+--000000000000e5d655062442b43a--
 
