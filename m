@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6A0CF2566
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 13:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F308BCF2568
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 13:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szcNj-0007CP-2U; Sat, 12 Oct 2024 09:42:08 -0400
+	id 1szcUQ-0000AS-L2; Sat, 12 Oct 2024 09:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1szcNe-0007C8-V6; Sat, 12 Oct 2024 09:42:02 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1szcUM-0000A9-EU; Sat, 12 Oct 2024 09:48:58 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1szcNd-0004IP-BU; Sat, 12 Oct 2024 09:42:02 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37d4fd00574so1535122f8f.0; 
- Sat, 12 Oct 2024 06:41:59 -0700 (PDT)
+ id 1szcUJ-0004th-HR; Sat, 12 Oct 2024 09:48:58 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43058268d91so25913105e9.0; 
+ Sat, 12 Oct 2024 06:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728740519; x=1729345319; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1728740933; x=1729345733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wsupazMnCPw+QOmcribO4MLjxraI3Fs4bmrt2mvfNqM=;
- b=PtiDXxPXAqQVCzQ84kvNcDv0fqdFR/DNH/P+dUzUR38wwb7a//+V/KftM7oH54BmnQ
- FTVhBR290R+HTgn+mql96FfrN9HzwPAgRDkl2pbzjZ2knfO/xypk6VdP3IPSyf/SpO/L
- d5SZSCQXwth2LoEWo7LM7BPunP2G4e9Vp/ENya057dqc9lY85zBh28XHRMUx0T3vTCcj
- m/uo1LdJqUmpN4MRWGRZgQe1iU935MbwmO8RB2jmJcggEpmGF6Qy+F67GsoypbjicmNL
- QkBAksBwr1512quiKRKjMHq2tluRR4Ttt8+wCiBciPjIgbSnR8ICMAk5pxif1JmBrinm
- i0UA==
+ bh=b68f4+hawR+Pot/6Et04Wdy2hEPXLocMeMbvW4uK5Cc=;
+ b=jsBc5ZoYFENSbuIF9qWpAuheFSbF0njUsU4gu6z24nTsGerQ3mo91r0yGS6jjeL4op
+ pk5gM00PMgPFkhRMqruvP323TCDOPJZK07sQTwnFd7q2oqa/SLE4pQuJjHLehoz1pZ3E
+ GQ+o5tG3OZem9qCQJlkj9MPTeTvIDP9GNcRBiSCVlUXNkCLAbz1dTE5H/PGZoa+M4omH
+ G/xlClQCuA0Am+6Nve2g3F+fQPtyVVGcvq/+fGEMEzTlotO/AUiaCOz9pE624jSYQf71
+ G4hGJpZkM5SvlJStq55F5HtgxG3Hxz0FiALLCDu0oNDORV1tbylfHZupAJ/lgtCRI4W8
+ 5F8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728740519; x=1729345319;
+ d=1e100.net; s=20230601; t=1728740933; x=1729345733;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wsupazMnCPw+QOmcribO4MLjxraI3Fs4bmrt2mvfNqM=;
- b=mdYSt3yGvDsv9aNSkneh9q1keQcVLnFv4lsgSnnzrdMAP2D5S/8BrJ5vHde+pixL3q
- 3Y/5cNDDvERo+/yolRlXPegNODKEK7vdYRU+RtN8RKqGwwXQf+wR2iRhYSHBYkh7OrxN
- Dz/+eM7nqiZ+wRF2RqPnZ6gDVcDHyHwnSoldrHlQGIsLBsK3AkbaKAwn89tkAETARW+U
- qp9KN38QFSlHxtUXv6q/EbavCVj0qiDmWQfAlq/8J+Cvip8mkXQ9VB+iuNb3M9dfhFte
- IrDQ90ZXPCvdW10vmhaakInktkuYzPa0CiWoPs+1i+6wT6GvQeHxprp2z3v9t3shpiTL
- 7W8w==
+ bh=b68f4+hawR+Pot/6Et04Wdy2hEPXLocMeMbvW4uK5Cc=;
+ b=kw0bvqvvvP3CHwuRJ8xNDNHgGMa9HNzyxg5x8GX6etRHGqaplwymOGpQorONV4IU+K
+ vr460PO/qdAs7tRu5e4AZQKHRMGZkp4mMC3WE7j1nR8tjGd9JavYkTmwrnwT42orPfAj
+ obMIAfa95KyvvzLrpTrf8b7Yh5OBn964KwSuZfGpd/2rarSx4AGEeE4vCAhSnZUFW+Uo
+ qPH8W6uuiSaPoQY6+BM2eF3bhdqH494SC78fWoSlqOl7eZlnL6u/IdkXPBygV0I2R1B6
+ pxnUKQi68QJYPKqapv+ZiNQopASv+ApbrYRHOgsJfryeI1zN4I444HYoT+F5LVf1vAem
+ V05A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/WVJhETsrwPtStss1h4p9C/YN9FJUufNBAh/OUgl7ItOVyZlv47h1cO3W9VvwkW5ZW20afK1poLU=@nongnu.org,
- AJvYcCUhR18M+07/vytJYlevjfq0LZnHv9NWbZXKiTIoQvQLiY9IUFlX1e8bC2XIK/OeVRwRuGT0JnKZ6JtFfg==@nongnu.org,
- AJvYcCXoL3bkGXpwQBeNp4YmldN4K+EJDXiN8lgdBKT93h8wLq/cfsQToe/jZA9aBSsCx8PCv3f87kmIYA==@nongnu.org
-X-Gm-Message-State: AOJu0YxlZbkikTk8oH0BC5W//gO4/UniX/CZT3/Wn8ttdxYuuKYkWQP+
- InysQh72EP4oxyoSr/my3X5loFSgTA0QyshfLjXWxKsG16DEJ5yV
-X-Google-Smtp-Source: AGHT+IGfLhGvjkundvEA6bk9Y6DkAO2B67WQmniqI9bzII2NmNCJq1HfZrMVWFDxGioCo9q1JH8JdA==
-X-Received: by 2002:adf:e7cf:0:b0:37d:43d1:2064 with SMTP id
- ffacd0b85a97d-37d552d3843mr4445974f8f.30.1728740518457; 
- Sat, 12 Oct 2024 06:41:58 -0700 (PDT)
+ AJvYcCU5L0B7U4hiTJQhi7RlfZroakLv0BPcI8LS5ATsrbLtUxoMjPeGk8Cj4x1xYdMeKVjpndRpJAH9iew=@nongnu.org,
+ AJvYcCWs8PVqKB0z5VAo752aK4zLO9V6DRuyy4oApiEkKNtwwXuhFbr6FcqT7QZLA/FWSIOr513RTty1hdOX@nongnu.org
+X-Gm-Message-State: AOJu0YyGuitWz0prkJlxRvKCRHf+f95ndPy7brcNnGRFMT8cvDsXqdVD
+ WxKGDAgd3xqZYNZGy/56dnbQlnh4hbiQpUdyXvhWyzOpUSefuwQ6
+X-Google-Smtp-Source: AGHT+IFKlC3gnwJllLEq3FXVkulbfsmKAnZ9+coMzypRzFR2+aqV5YqebuP0M8s4StTMBao1/kudNw==
+X-Received: by 2002:a05:600c:228c:b0:42f:80f4:ab2b with SMTP id
+ 5b1f17b1804b1-4311dee6f58mr53684515e9.19.1728740933037; 
+ Sat, 12 Oct 2024 06:48:53 -0700 (PDT)
 Received: from [127.0.0.1] (dynamic-077-011-117-250.77.11.pool.telefonica.de.
  [77.11.117.250]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d4b6bd134sm6386384f8f.41.2024.10.12.06.41.57
+ ffacd0b85a97d-37d4b7edea7sm6365107f8f.93.2024.10.12.06.48.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Oct 2024 06:41:58 -0700 (PDT)
-Date: Sat, 12 Oct 2024 13:41:57 +0000
+ Sat, 12 Oct 2024 06:48:52 -0700 (PDT)
+Date: Sat, 12 Oct 2024 13:48:52 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 2/2] hw/ppc/e500: Reuse TYPE_GPIO_PWR
-In-Reply-To: <d094728d-a7bd-4e16-b3c1-82065ca9bf08@linaro.org>
-References: <20241005100228.28094-1-shentey@gmail.com>
- <20241005100228.28094-3-shentey@gmail.com>
- <d094728d-a7bd-4e16-b3c1-82065ca9bf08@linaro.org>
-Message-ID: <1692441A-C91F-4A87-B8CB-82E42EE815EA@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Corey Minyard <cminyard@mvista.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_08/23=5D_hw/ppc/ppce500=5Fccs?=
+ =?US-ASCII?Q?r=3A_Log_access_to_unimplemented_registers?=
+In-Reply-To: <a201615f-90b1-1d8e-75ea-0766e231a0a8@eik.bme.hu>
+References: <20241005194603.23139-1-shentey@gmail.com>
+ <20241005194603.23139-9-shentey@gmail.com>
+ <a201615f-90b1-1d8e-75ea-0766e231a0a8@eik.bme.hu>
+Message-ID: <8A01056C-6D93-4318-8AA3-1F3FE048516D@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,77 +108,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 7=2E Oktober 2024 21:13:22 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
-hilmd@linaro=2Eorg>:
->On 5/10/24 07:02, Bernhard Beschow wrote:
->> Taking inspiration from the ARM virt machine, port away from
->> qemu_allocate_irq() by reusing TYPE_GPIO_PWR=2E
+Am 6=2E Oktober 2024 17:12:16 UTC schrieb BALATON Zoltan <balaton@eik=2Ebm=
+e=2Ehu>:
+>On Sat, 5 Oct 2024, Bernhard Beschow wrote:
+>> The CCSR space is just a container which is meant to be covered by plat=
+form
+>> device memory regions=2E However, QEMU only implements a subset of thes=
+e devices=2E
+>> Add some logging to see which devices a guest attempts to access=2E
 >>=20
 >> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
 >> ---
->>   hw/ppc/e500=2Ec  | 16 ++++------------
->>   hw/ppc/Kconfig |  1 +
->>   2 files changed, 5 insertions(+), 12 deletions(-)
+>> hw/ppc/ppce500_ccsr=2Ec | 32 +++++++++++++++++++++++++++++++-
+>> hw/ppc/trace-events   |  3 +++
+>> 2 files changed, 34 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/hw/ppc/ppce500_ccsr=2Ec b/hw/ppc/ppce500_ccsr=2Ec
+>> index 5d0e1e0e89=2E=2E6659560674 100644
+>> --- a/hw/ppc/ppce500_ccsr=2Ec
+>> +++ b/hw/ppc/ppce500_ccsr=2Ec
+>> @@ -13,12 +13,42 @@
+>>=20
+>> #include "qemu/osdep=2Eh"
+>> #include "ppce500_ccsr=2Eh"
+>> +#include "qemu/log=2Eh"
+>> +#include "trace=2Eh"
+>> +
+>> +static uint64_t ppce500_ccsr_io_read(void *opaque, hwaddr addr, unsign=
+ed size)
+>> +{
+>> +    uint64_t value =3D 0;
+>> +
+>> +    trace_ppce500_ccsr_io_read(addr, value, size);
+>> +    qemu_log_mask(LOG_UNIMP,
+>> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] -> 0\n",
+>> +                  __func__, addr);
 >
+>I'm not sure having both unimp log and traces is the best way=2E I though=
+t unimp log with an unimplemented device area would be the simplest and lea=
+st intrusive for the code but if you prefer traces then maybe we don't need=
+ unimp logs=2E But adding these otherwise empty functions (which won't get =
+populated as subdevices have their own regions) still bothers me a bit but =
+not enough to block this if others have no opinion on it=2E
 >
->> @@ -892,13 +890,6 @@ static DeviceState *ppce500_init_mpic(PPCE500Machi=
-neState *pms,
->>       return dev;
->>   }
->>   -static void ppce500_power_off(void *opaque, int line, int on)
->> -{
->> -    if (on) {
->> -        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
->> -    }
->> -}
->> -
->>   void ppce500_init(MachineState *machine)
->>   {
->>       MemoryRegion *address_space_mem =3D get_system_memory();
->> @@ -1086,7 +1077,7 @@ void ppce500_init(MachineState *machine)
->>       sysbus_create_simple("e500-spin", pmc->spin_base, NULL);
->>         if (pmc->has_mpc8xxx_gpio) {
->> -        qemu_irq poweroff_irq;
->> +        DeviceState *gpio_pwr_dev;
->
->Can we keep a reference in PPCE500MachineState?
+>I also had this patch:
+>https://patchew=2Eorg/QEMU/cover=2E1728232526=2Egit=2Ebalaton@eik=2Ebme=
+=2Ehu/
+>which I first thought might help but that's about guest_errors not unimp =
+logs so does not apply here=2E What other unimp logs get in the way here th=
+at makes traces a better choice?
 
-I considered turning it into an embedded attribute, but decided against it=
-, because 1/ the device isn't part of the SoC (and therefore ideally user-c=
-reateable), 2/ only used by the ppce500 machine, 3/ would be inconsistent w=
-ith surrounding code, and 4/ "gpio-pwr" would require exposing the struct f=
-irst (ARM virt also has no embedded attribute)=2E That all seemed like a lo=
-t of churn for what I want to achieve which is having the same solution for=
- the same problem across two machines=2E
-
-There is surely a lot of room for cleaning up e500 beyond my e500 cleanup =
-series, but unless there is demand for it, I'd stop there (patches welcome)=
-=2E Now that this series doesn't touch ARM much it'd actually make sense to=
- merge it there=2E
-
->
->Otherwise,
->Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
-
-So, is creating an anonymous device okay for you? Does your R-b stand neve=
-rtheless?
+I have some rough implementations of a few other device models with unimp =
+logging=2E Having a dedicated trace here allows to see which unoccupied CCS=
+R regions a guest pokes=2E The unimp logging here actually disturbs the abo=
+ve, so I'd remove it here=2E
 
 Best regards,
 Bernhard
 
 >
->>             dev =3D qdev_new("mpc8xxx_gpio");
->>           s =3D SYS_BUS_DEVICE(dev);
->> @@ -1096,8 +1087,9 @@ void ppce500_init(MachineState *machine)
->>                                       sysbus_mmio_get_region(s, 0));
->>             /* Power Off GPIO at Pin 0 */
->> -        poweroff_irq =3D qemu_allocate_irq(ppce500_power_off, NULL, 0)=
-;
->> -        qdev_connect_gpio_out(dev, 0, poweroff_irq);
->> +        gpio_pwr_dev =3D sysbus_create_simple("gpio-pwr", -1, NULL);
->> +        qdev_connect_gpio_out(dev, 0, qdev_get_gpio_in_named(gpio_pwr_=
-dev,
->> +                                                             "shutdown=
-", 0));
->>       }
+>Regards,
+>BALATON Zoltan
+>
+>> +
+>> +    return value;
+>> +}
+>> +
+>> +static void ppce500_ccsr_io_write(void *opaque, hwaddr addr, uint64_t =
+value,
+>> +                                  unsigned size)
+>> +{
+>> +    trace_ppce500_ccsr_io_write(addr, value, size);
+>> +    qemu_log_mask(LOG_UNIMP,
+>> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] <- 0x%" PRIx=
+32 "\n",
+>> +                  __func__, addr, (uint32_t)value);
+>> +}
+>> +
+>> +static const MemoryRegionOps ppce500_ccsr_ops =3D {
+>> +    =2Eread =3D ppce500_ccsr_io_read,
+>> +    =2Ewrite =3D ppce500_ccsr_io_write,
+>> +    =2Eendianness =3D DEVICE_NATIVE_ENDIAN,
+>> +};
+>>=20
+>> static void ppce500_ccsr_init(Object *obj)
+>> {
+>>     PPCE500CCSRState *s =3D CCSR(obj);
+>>=20
+>> -    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC85XX_CCSRB=
+AR_SIZE);
+>> +    memory_region_init_io(&s->ccsr_space, obj, &ppce500_ccsr_ops, obj,
+>> +                          "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
+>>     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->ccsr_space);
+>> }
+>>=20
+>> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
+>> index 1f125ce841=2E=2Eca4c231c9f 100644
+>> --- a/hw/ppc/trace-events
+>> +++ b/hw/ppc/trace-events
+>> @@ -143,6 +143,9 @@ ppc_irq_cpu(const char *action) "%s"
+>> ppc_dcr_read(uint32_t addr, uint32_t val) "DRCN[0x%x] -> 0x%x"
+>> ppc_dcr_write(uint32_t addr, uint32_t val) "DRCN[0x%x] <- 0x%x"
+>>=20
+>> +ppce500_ccsr_io_read(uint32_t index, uint32_t val, uint8_t size) "[0x%=
+" PRIx32 "] -> 0x%08x (size: 0x%" PRIu8 ")"
+>> +ppce500_ccsr_io_write(uint32_t index, uint32_t val, uint8_t size) "[0x=
+%" PRIx32 "] <- 0x%08x (size: 0x%" PRIu8 ")"
+>> +
+>> # prep_systemio=2Ec
+>> prep_systemio_read(uint32_t addr, uint32_t val) "read addr=3D0x%x val=
+=3D0x%x"
+>> prep_systemio_write(uint32_t addr, uint32_t val) "write addr=3D0x%x val=
+=3D0x%x"
+>>=20
 
