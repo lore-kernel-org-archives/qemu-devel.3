@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F308BCF2568
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 13:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFF4CF2568
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 14:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szcUQ-0000AS-L2; Sat, 12 Oct 2024 09:49:03 -0400
+	id 1szchW-0002Zm-Mu; Sat, 12 Oct 2024 10:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1szcUM-0000A9-EU; Sat, 12 Oct 2024 09:48:58 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szchT-0002Ze-TN
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 10:02:32 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1szcUJ-0004th-HR; Sat, 12 Oct 2024 09:48:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43058268d91so25913105e9.0; 
- Sat, 12 Oct 2024 06:48:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1szchR-0006Ep-TI
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 10:02:31 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c95a962c2bso1007796a12.2
+ for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 07:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728740933; x=1729345733; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b68f4+hawR+Pot/6Et04Wdy2hEPXLocMeMbvW4uK5Cc=;
- b=jsBc5ZoYFENSbuIF9qWpAuheFSbF0njUsU4gu6z24nTsGerQ3mo91r0yGS6jjeL4op
- pk5gM00PMgPFkhRMqruvP323TCDOPJZK07sQTwnFd7q2oqa/SLE4pQuJjHLehoz1pZ3E
- GQ+o5tG3OZem9qCQJlkj9MPTeTvIDP9GNcRBiSCVlUXNkCLAbz1dTE5H/PGZoa+M4omH
- G/xlClQCuA0Am+6Nve2g3F+fQPtyVVGcvq/+fGEMEzTlotO/AUiaCOz9pE624jSYQf71
- G4hGJpZkM5SvlJStq55F5HtgxG3Hxz0FiALLCDu0oNDORV1tbylfHZupAJ/lgtCRI4W8
- 5F8w==
+ d=linaro.org; s=google; t=1728741748; x=1729346548; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=K7pmsHaLUG5d9DOmfDbeYFCj16FD89Y17saK2WNiUyI=;
+ b=VZOkNHysjccq3zMok2TlfpEqdcG56MxSkBx/hp/CYAIvnjcqZ+nd27mJOG1uc71u/D
+ s0wuJM+OzD+zJj4O8Z1o+K5AQ19YWAM7SL+LBtb60Ox2Xz8htanAYLRSqskEsUkyQGyS
+ SPUgvNiAZ6S68n5QmH/Jeuvlvr3/klOkhXf2dXU8A0XoGsPdU/KVLp8d7jUX623aF8B8
+ slFUyAd4EHvAhfpwPnD4FRd/8I93dLCF4aanQa3JGH1+OSFdFtCzAugoB+6qrOpu4xHL
+ KIICVGg1M/Jf1QaJMM8peAc/Df8gQeG3KAZZvraaWvdczWlZvPLsRdPnjvpZ5hoCD9rW
+ ncGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728740933; x=1729345733;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b68f4+hawR+Pot/6Et04Wdy2hEPXLocMeMbvW4uK5Cc=;
- b=kw0bvqvvvP3CHwuRJ8xNDNHgGMa9HNzyxg5x8GX6etRHGqaplwymOGpQorONV4IU+K
- vr460PO/qdAs7tRu5e4AZQKHRMGZkp4mMC3WE7j1nR8tjGd9JavYkTmwrnwT42orPfAj
- obMIAfa95KyvvzLrpTrf8b7Yh5OBn964KwSuZfGpd/2rarSx4AGEeE4vCAhSnZUFW+Uo
- qPH8W6uuiSaPoQY6+BM2eF3bhdqH494SC78fWoSlqOl7eZlnL6u/IdkXPBygV0I2R1B6
- pxnUKQi68QJYPKqapv+ZiNQopASv+ApbrYRHOgsJfryeI1zN4I444HYoT+F5LVf1vAem
- V05A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5L0B7U4hiTJQhi7RlfZroakLv0BPcI8LS5ATsrbLtUxoMjPeGk8Cj4x1xYdMeKVjpndRpJAH9iew=@nongnu.org,
- AJvYcCWs8PVqKB0z5VAo752aK4zLO9V6DRuyy4oApiEkKNtwwXuhFbr6FcqT7QZLA/FWSIOr513RTty1hdOX@nongnu.org
-X-Gm-Message-State: AOJu0YyGuitWz0prkJlxRvKCRHf+f95ndPy7brcNnGRFMT8cvDsXqdVD
- WxKGDAgd3xqZYNZGy/56dnbQlnh4hbiQpUdyXvhWyzOpUSefuwQ6
-X-Google-Smtp-Source: AGHT+IFKlC3gnwJllLEq3FXVkulbfsmKAnZ9+coMzypRzFR2+aqV5YqebuP0M8s4StTMBao1/kudNw==
-X-Received: by 2002:a05:600c:228c:b0:42f:80f4:ab2b with SMTP id
- 5b1f17b1804b1-4311dee6f58mr53684515e9.19.1728740933037; 
- Sat, 12 Oct 2024 06:48:53 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-011-117-250.77.11.pool.telefonica.de.
- [77.11.117.250]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d4b7edea7sm6365107f8f.93.2024.10.12.06.48.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Oct 2024 06:48:52 -0700 (PDT)
-Date: Sat, 12 Oct 2024 13:48:52 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- Corey Minyard <cminyard@mvista.com>, qemu-ppc@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_08/23=5D_hw/ppc/ppce500=5Fccs?=
- =?US-ASCII?Q?r=3A_Log_access_to_unimplemented_registers?=
-In-Reply-To: <a201615f-90b1-1d8e-75ea-0766e231a0a8@eik.bme.hu>
-References: <20241005194603.23139-1-shentey@gmail.com>
- <20241005194603.23139-9-shentey@gmail.com>
- <a201615f-90b1-1d8e-75ea-0766e231a0a8@eik.bme.hu>
-Message-ID: <8A01056C-6D93-4318-8AA3-1F3FE048516D@gmail.com>
+ d=1e100.net; s=20230601; t=1728741748; x=1729346548;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K7pmsHaLUG5d9DOmfDbeYFCj16FD89Y17saK2WNiUyI=;
+ b=oAtoVRPXHJetSgreoJBnCwKLKptKRyTArTaXkfKRWV+rA+1mMK6U4gzoi+jnXPYYtn
+ li1hheUuB2TlIYG3+SyF1BCTFAChdyfJwm3Tj/gk2YVUU6ZssCGUPT7Q3qYyvDudZDG+
+ XYSIcFnv8cwpAM0l5T7mZLi/7CzYn6Ti34JRctsp0RyTPTmXjEBv8Zs9NtWbCnbp8dWc
+ VOfEp+GUvJOfZy+fvKnnIo9eyfhxRBaZ7wOK5Cf5GnSSQKNO/RMpv08jLIrIi6Y6459V
+ kClVrlWjfeAvR3wxeNOEp+S3KR70xM0ecb2BzMuBzPoqStk9+4oSW63gr61XVm2LOKhR
+ kSyw==
+X-Gm-Message-State: AOJu0Yx0hnCTtkq65WeeHZ1IVev+xan8CCexeoM4NwYdT58CkqBc4jtJ
+ 49f1AtM1vFUJqrU53gXUB67F7OKIRRM3pz0X5HVZ7I5S2L9baaZrfANuK7ojo6QljyYXp8UM35r
+ HdD8BpcvZeN9LFAlC3sV7NUXpLXCRk8FBmhFEdw==
+X-Google-Smtp-Source: AGHT+IHturYe7bOUDJpQOOXqLcEBBsJce5E/C1yXO+Lh8Wv2qmDfqKPoVNpiY3NXEvxNEDA26jJjbux9PadesqBSqeE=
+X-Received: by 2002:a05:6402:5188:b0:5c9:59e6:e908 with SMTP id
+ 4fb4d7f45d1cf-5c959e6f56amr2304735a12.6.1728741747812; Sat, 12 Oct 2024
+ 07:02:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+References: <20241011153227.81770-1-pbonzini@redhat.com>
+ <CAFEAcA88y9gV-YMNxvQPdGR2tA-sjsaFYr_TiG=GmQGr8+QkKA@mail.gmail.com>
+In-Reply-To: <CAFEAcA88y9gV-YMNxvQPdGR2tA-sjsaFYr_TiG=GmQGr8+QkKA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 12 Oct 2024 15:02:15 +0100
+Message-ID: <CAFEAcA9vXEexRC4kZWEXoyMHQm_M33NRuZnSi7hq2wdPyCVGNQ@mail.gmail.com>
+Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,119 +88,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 6=2E Oktober 2024 17:12:16 UTC schrieb BALATON Zoltan <balaton@eik=2Ebm=
-e=2Ehu>:
->On Sat, 5 Oct 2024, Bernhard Beschow wrote:
->> The CCSR space is just a container which is meant to be covered by plat=
-form
->> device memory regions=2E However, QEMU only implements a subset of thes=
-e devices=2E
->> Add some logging to see which devices a guest attempts to access=2E
->>=20
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->> hw/ppc/ppce500_ccsr=2Ec | 32 +++++++++++++++++++++++++++++++-
->> hw/ppc/trace-events   |  3 +++
->> 2 files changed, 34 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/hw/ppc/ppce500_ccsr=2Ec b/hw/ppc/ppce500_ccsr=2Ec
->> index 5d0e1e0e89=2E=2E6659560674 100644
->> --- a/hw/ppc/ppce500_ccsr=2Ec
->> +++ b/hw/ppc/ppce500_ccsr=2Ec
->> @@ -13,12 +13,42 @@
->>=20
->> #include "qemu/osdep=2Eh"
->> #include "ppce500_ccsr=2Eh"
->> +#include "qemu/log=2Eh"
->> +#include "trace=2Eh"
->> +
->> +static uint64_t ppce500_ccsr_io_read(void *opaque, hwaddr addr, unsign=
-ed size)
->> +{
->> +    uint64_t value =3D 0;
->> +
->> +    trace_ppce500_ccsr_io_read(addr, value, size);
->> +    qemu_log_mask(LOG_UNIMP,
->> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] -> 0\n",
->> +                  __func__, addr);
+On Sat, 12 Oct 2024 at 11:54, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
->I'm not sure having both unimp log and traces is the best way=2E I though=
-t unimp log with an unimplemented device area would be the simplest and lea=
-st intrusive for the code but if you prefer traces then maybe we don't need=
- unimp logs=2E But adding these otherwise empty functions (which won't get =
-populated as subdevices have their own regions) still bothers me a bit but =
-not enough to block this if others have no opinion on it=2E
+> On Fri, 11 Oct 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > The following changes since commit b5ab62b3c0050612c7f9b0b4baeb44ebab42775a:
+> >
+> >   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-04 19:28:37 +0100)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> >
+> > for you to fetch changes up to 381d2c36e1242f849a55f4622e50b9a69cb92842:
+> >
+> >   docs: use consistent markup for footnotes (2024-10-11 13:08:32 +0200)
+> >
+> > v2->v3: new patches
+> > - scripts/archive-source: find directory name for subprojects
+> > - docs: fix invalid footnote syntax
+> > - docs: avoid footnotes consisting of just URLs
+> > - docs: use consistent markup for footnotes
+> >
+> > ----------------------------------------------------------------
+> > * first commit for Rust support
+> > * add CI job using Fedora + Rust nightly
+> > * fix detection of ATOMIC128 on x86_64
+> > * fix compilation with Sphinx 8.1.0
+> >
 >
->I also had this patch:
->https://patchew=2Eorg/QEMU/cover=2E1728232526=2Egit=2Ebalaton@eik=2Ebme=
-=2Ehu/
->which I first thought might help but that's about guest_errors not unimp =
-logs so does not apply here=2E What other unimp logs get in the way here th=
-at makes traces a better choice?
-
-I have some rough implementations of a few other device models with unimp =
-logging=2E Having a dedicated trace here allows to see which unoccupied CCS=
-R regions a guest pokes=2E The unimp logging here actually disturbs the abo=
-ve, so I'd remove it here=2E
-
-Best regards,
-Bernhard
-
+> Hi; 'make vm-build-openbsd' seems to still fail. It looks
+> like the wrap file subprojects/unicode-ident-1-rs.wrap says
+> "directory = unicode-ident-1.0.12" and the script correctly
+> parses that out of the file, but the directory is actually
+> named "unicode-ident-1-rs" (differently from the other rust ones),
+> so we don't find it.
 >
->Regards,
->BALATON Zoltan
 >
->> +
->> +    return value;
->> +}
->> +
->> +static void ppce500_ccsr_io_write(void *opaque, hwaddr addr, uint64_t =
-value,
->> +                                  unsigned size)
->> +{
->> +    trace_ppce500_ccsr_io_write(addr, value, size);
->> +    qemu_log_mask(LOG_UNIMP,
->> +                  "%s: unimplemented [0x%" HWADDR_PRIx "] <- 0x%" PRIx=
-32 "\n",
->> +                  __func__, addr, (uint32_t)value);
->> +}
->> +
->> +static const MemoryRegionOps ppce500_ccsr_ops =3D {
->> +    =2Eread =3D ppce500_ccsr_io_read,
->> +    =2Ewrite =3D ppce500_ccsr_io_write,
->> +    =2Eendianness =3D DEVICE_NATIVE_ENDIAN,
->> +};
->>=20
->> static void ppce500_ccsr_init(Object *obj)
->> {
->>     PPCE500CCSRState *s =3D CCSR(obj);
->>=20
->> -    memory_region_init(&s->ccsr_space, obj, "e500-ccsr", MPC85XX_CCSRB=
-AR_SIZE);
->> +    memory_region_init_io(&s->ccsr_space, obj, &ppce500_ccsr_ops, obj,
->> +                          "e500-ccsr", MPC85XX_CCSRBAR_SIZE);
->>     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->ccsr_space);
->> }
->>=20
->> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
->> index 1f125ce841=2E=2Eca4c231c9f 100644
->> --- a/hw/ppc/trace-events
->> +++ b/hw/ppc/trace-events
->> @@ -143,6 +143,9 @@ ppc_irq_cpu(const char *action) "%s"
->> ppc_dcr_read(uint32_t addr, uint32_t val) "DRCN[0x%x] -> 0x%x"
->> ppc_dcr_write(uint32_t addr, uint32_t val) "DRCN[0x%x] <- 0x%x"
->>=20
->> +ppce500_ccsr_io_read(uint32_t index, uint32_t val, uint8_t size) "[0x%=
-" PRIx32 "] -> 0x%08x (size: 0x%" PRIu8 ")"
->> +ppce500_ccsr_io_write(uint32_t index, uint32_t val, uint8_t size) "[0x=
-%" PRIx32 "] <- 0x%08x (size: 0x%" PRIu8 ")"
->> +
->> # prep_systemio=2Ec
->> prep_systemio_read(uint32_t addr, uint32_t val) "read addr=3D0x%x val=
-=3D0x%x"
->> prep_systemio_write(uint32_t addr, uint32_t val) "write addr=3D0x%x val=
-=3D0x%x"
->>=20
+> make: Entering directory '/home/peter.maydell/qemu-openbsd/build'
+> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/meson introspect
+> --targets --tests --benchmarks |
+> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
+> scripts/mtest2make.py > Makefile.mtest
+> { \
+>   echo 'ninja-targets = \'; \
+>   /usr/bin/ninja -t targets all | sed 's/:.*//; $!s/$/ \\/'; \
+>   echo 'build-files = \'; \
+>   /usr/bin/ninja -t query build.ninja | sed -n '1,/^  input:/d; /^
+> outputs:/q; s/$/ \\/p'; \
+> } > Makefile.ninja.tmp && mv Makefile.ninja.tmp Makefile.ninja
+> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
+> /home/peter.maydell/qemu-openbsd/tests/vm/openbsd  --debug
+> --genisoimage /usr/bin/genisoimage    --source-path
+> /home/peter.maydell/qemu-openbsd --image
+> "/home/peter.maydell/.cache/qemu-vm/images/openbsd.img"  --build-image
+> /home/peter.maydell/.cache/qemu-vm/images/openbsd.img
+> Image file exists, skipping build:
+> /home/peter.maydell/.cache/qemu-vm/images/openbsd.img
+> Use --force option to overwrite
+> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
+> /home/peter.maydell/qemu-openbsd/tests/vm/openbsd  --debug  --jobs 8
+> --verbose    --image
+> "/home/peter.maydell/.cache/qemu-vm/images/openbsd.img"  --snapshot
+> --build-qemu /home/peter.maydell/qemu-openbsd --
+> DEBUG:root:Creating archive
+> /home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar
+> for src_dir dir: /home/peter.maydell/qemu-openbsd
+> Download keycodemapdb...
+>   -> Already downloaded
+> Download libvfio-user...
+>   -> Already downloaded
+> Download berkeley-softfloat-3...
+>   -> Already downloaded
+> Download berkeley-testfloat-3...
+>   -> Already downloaded
+> Download arbitrary-int-1-rs...
+>   -> Already downloaded
+> Download bilge-0.2-rs...
+>   -> Already downloaded
+> Download bilge-impl-0.2-rs...
+>   -> Already downloaded
+> Download either-1-rs...
+>   -> Already downloaded
+> Download itertools-0.11-rs...
+>   -> Already downloaded
+> Download proc-macro2-1-rs...
+>   -> Already downloaded
+> Download proc-macro-error-1-rs...
+>   -> Already downloaded
+> Download proc-macro-error-attr-1-rs...
+>   -> Already downloaded
+> Download quote-1-rs...
+>   -> Already downloaded
+> Download syn-2-rs...
+>   -> Already downloaded
+> Download unicode-ident-1-rs...
+>   -> Already downloaded
+> tar: subprojects/unicode-ident-1.0.12: Cannot stat: No such file or directory
+> tar: Exiting with failure status due to previous errors
+> failed to append subproject unicode-ident-1-rs to
+> /home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar
+> Failed to prepare guest environment
+> Traceback (most recent call last):
+>   File "/home/peter.maydell/qemu-openbsd/tests/vm/basevm.py", line 654, in main
+>     vm.add_source_dir(args.build_qemu)
+>   File "/home/peter.maydell/qemu-openbsd/tests/vm/basevm.py", line
+> 277, in add_source_dir
+>     subprocess.check_call(["./scripts/archive-source.sh", tarfile],
+>   File "/usr/lib/python3.10/subprocess.py", line 369, in check_call
+>     raise CalledProcessError(retcode, cmd)
+> subprocess.CalledProcessError: Command
+> '['./scripts/archive-source.sh',
+> '/home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar']'
+> returned non-zero exit status 1.
+> make: *** [/home/peter.maydell/qemu-openbsd/tests/vm/Makefile.include:110:
+> vm-build-openbsd] Error 2
+> make: Leaving directory '/home/peter.maydell/qemu-openbsd/build'
+
+Deleting the whole subprojects/unicode-ident-1-rs/ subdirectory
+seems to have fixed this -- it then realised it needed to
+do the download and put it in the right place. I guess that was a
+leftover from trying to build the previous version of the pullreq.
+But it suggests that something is missing in the dependencies,
+since it thought it had already downloaded it even though
+the directory it needed to put it in wasn't on disk...
+
+thanks
+-- PMM
 
