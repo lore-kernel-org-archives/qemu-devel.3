@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBC8D1A443
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 07:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13918D1A44A
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 08:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szWj7-0004cE-NX; Sat, 12 Oct 2024 03:39:49 -0400
+	id 1szX9r-0000V1-3M; Sat, 12 Oct 2024 04:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1szWj5-0004Xb-Gx
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:39:47 -0400
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1szX9o-0000U0-Jh
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 04:07:24 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1szWj3-0004ED-3N
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 03:39:47 -0400
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5e8038d4931so1618438eaf.2
- for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 00:39:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1szX9m-00076N-H6
+ for qemu-devel@nongnu.org; Sat, 12 Oct 2024 04:07:24 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20b90984971so26540685ad.3
+ for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 01:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1728718782; x=1729323582;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728720441; x=1729325241;
  darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TfUEplD38YviOYL4MDo7kAXbkr2eDZCWenj06SLfBkQ=;
- b=SroeBiFZ05KLkfFD+q/1YNlZtjNb+UDZ9/yvdTBePykoajRQpDXk2DCJXmmaUE8krD
- XATBSjOUYAJ82L5uEPzFgQG4YCCIRO30g46peOkH3p7UGH5vPHq/kdspo5+1HEIRTRPD
- IAN7ZZ1r9tzZsAQqyv2/KRuCbWjBuEF+T3om0G1K6cUZW8YjX4o/ruFj6aU7h6jN57jW
- 0wKo1IGGpndvN6Ta9vFlUkKeGq+9ObE8DtPmSBjbuLfcTGp6Nvhlmf8ecSyAQWaIE1zP
- K9n10E+s2yiSulv2CE7ncLTQugMUpa1JM81HcMDWO31RsVahlNkgSG7m11rqgzIu4jTF
- SJOA==
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c9/KxBQsv3l0dljXkJqxkRh1WUn1vafXumv2nx4CPD0=;
+ b=HmjJrFXxmsIfUN7CoYTz4/Gp+ZxErpu8AfIe98BSTJ7fbD9UZgnzE5CMLSBIejNizU
+ UySk5IgJrORqYVD9NfC1xxVXeTeDvAXmI0Age1liBOwsJkTnXEast2q6E3h7r07qpE4B
+ ToZ34Fxg7bnH/wrvr27EWWGWqwVC9sGdu6BJY06UOWCLDuKtgZEyYZ5/SZh2YxGl9CKG
+ x+VDM5Tee3XMz8H8WmqrzGwoyT+cSN05z0ggoqlNW9YHpoxSvEUZgGEgrHP/AyNkMNp+
+ o95Z/7OAwA5el7VAwx2oaR4mVXx39imxvRRYAMRSYXf3CwMT+uK8f2dAXcvR74HLFPBP
+ Il0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728718782; x=1729323582;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TfUEplD38YviOYL4MDo7kAXbkr2eDZCWenj06SLfBkQ=;
- b=dHPYMCnpbSaF200QlhdP0+N0ZXtWGckbtiwkXI3cWhIOYkcvDWByFppT0FKYjefzVt
- jMvaMCH3lCY9+E/VrosR+1UZmf36HcHH6WNxf0HNb8YoV0th+WWT72Y5KCOLvzLSA6zU
- Qsfs3hNs01DtoY6G7Sc0l4Wm7DxNuSsgbFPYwrqvqUapbCpLAWE1HYdr/TosNmUDNcd+
- 6Nsgmla5907dqzNJnMspGMfcXxQTiY8mbCMuCx94YCvU1TAXAemEajRHGgOa+RnssfGp
- zZMKtCQYw4ibWRh/+k1zglKNnTIhFUAePwDaegbfFskyawRQQtWbqkYNRn/d5uMnRGzp
- W2mw==
+ d=1e100.net; s=20230601; t=1728720441; x=1729325241;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c9/KxBQsv3l0dljXkJqxkRh1WUn1vafXumv2nx4CPD0=;
+ b=l/0KEiIMenU2gYog+jmsDQI3N/xPyMDRI91rAxNjtuD4LdYv2jmbs7e6yrek6EFSa5
+ F9cCN+tBt+4Zg67CQ2cKQLVk8yumYGHqDu3D3Pw5SqbIAyP90+cAZi4ywPXPMYPh5Ro0
+ 6zVNDnQbw/6m+X9jT8LV2q7qJEpqeDIbjeazYAV9xTQDTQOyfo+GGGta1Q3mnlnQt5fj
+ Lx9yUMineUUK91pR7jk2+pUu5yj0XXGK2okRcEOBFKsJ9h3gxU8cJHkq/eG3QBDPh/ua
+ NpiOqGcVu2OL8Wwk1xaxsfezWUsp4i5Ks/2xJi9KRDj/iWqt/fDXZL6OTzc4HtbXR8oG
+ 1s+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1D1s3837bsmtFrOfw846M8hSfTtjE+V4DtUM+p88C4eKt9Kapn99BWZcVfeeWzST/5YyY1KDRFnwX@nongnu.org
-X-Gm-Message-State: AOJu0YwzRMpBVWcPkpgBEkzFA5XIP9HPjie+2IxrTNu5N8F8YQbSVQ2l
- tMfeajk6lhKAfUqPu2O6u00j1GO2t5uztUOTjnVV5bcBbqT1lbdyFoxc5qCF6oBKQ9crfcIi+oz
- TEBEh8AhcfUZQqpPCI/HKisVLH3PxP3fuocVFKA==
-X-Google-Smtp-Source: AGHT+IEO32QF6PfmZgrwKU0DLMA+G3JNy5LzNnLZyv7BzbFjCOUfsN7qPAL06dhAR2BUlxTc/g9SXB2ciTU+zIIzCNE=
-X-Received: by 2002:a05:6870:79e:b0:267:dfce:95eb with SMTP id
- 586e51a60fabf-2886dce9beamr2926919fac.5.1728718781660; Sat, 12 Oct 2024
- 00:39:41 -0700 (PDT)
+ AJvYcCWDipN1m80DhcVVfic1lh5Lmifmjfp1bV4DFkVaoJrtXFbXdMXx8frcIRLMf8EIpN7LrdASLR/ofw9E@nongnu.org
+X-Gm-Message-State: AOJu0YzkpGDoIuKctm+A2oH0iXIG1Sp4tX4M2HBYSokrXYbk3lQR18zj
+ 5MX+tbWZoZwRNmmvZqPJEio5Xt5QrbB31KWl6HN9v/NGlf5gPKKR/9+ZuHQQUII=
+X-Google-Smtp-Source: AGHT+IHdiJguaGKJcEIufmU8/SWVUTGXrHBj2QRR3ETWUVVIlyNZSdJHXc55u2gyWrfAQj+k3sUXbA==
+X-Received: by 2002:a17:902:ce81:b0:20b:8036:f784 with SMTP id
+ d9443c01a7336-20ca167bce0mr82079455ad.32.1728720440736; 
+ Sat, 12 Oct 2024 01:07:20 -0700 (PDT)
+Received: from [157.82.207.107] ([157.82.207.107])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20c8c33ff19sm33537835ad.272.2024.10.12.01.07.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 12 Oct 2024 01:07:20 -0700 (PDT)
+Message-ID: <16a3bae8-47f9-49c3-b464-07d2b25bd144@daynix.com>
+Date: Sat, 12 Oct 2024 17:07:14 +0900
 MIME-Version: 1.0
-References: <20241011153652.517440-1-peterx@redhat.com>
- <87v7xyr1jz.fsf@suse.de>
-In-Reply-To: <87v7xyr1jz.fsf@suse.de>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Sat, 12 Oct 2024 15:39:25 +0800
-Message-ID: <CAK9dgmZ89J1N6iY+1xRYJwb8K8FVWqx7MbtLFMFvasDVTDDdqg@mail.gmail.com>
-Subject: Re: [PATCH] migration: Put thread names together with macros
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Content-Type: multipart/alternative; boundary="000000000000e5d655062442b43a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc36.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/devel: Prohibit calling object_unparent() for memory
+ region
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+ <CAFEAcA_n1nURHRAt6LXZSJ_b20VarMdbV56=_XTunMYQPosObA@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA_n1nURHRAt6LXZSJ_b20VarMdbV56=_XTunMYQPosObA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,86 +113,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e5d655062442b43a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2024/10/08 22:33, Peter Maydell wrote:
+> On Thu, 29 Aug 2024 at 06:46, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+> 
+> Hi; sorry it's taken me so long to get back to this patch,
+> but I've now re-read some of the discussion in the other threads.
+> I generally agree with your reasoning and think we do need
+> to update the docs here.
+> 
+> I think we could be more specific in this commit message; I've
+> suggested some expansions of it below. (Partly this is for
+> my own benefit working through what's going on.)
+> 
+>> Previously it was allowed to call object_unparent() for a memory region
+>> in instance_finalize() of its parent. However, such a call typically
+>> has no effect because child objects get unparented before
+>> instance_finalize().
+> 
+> "because child objects are properties of their owner object, and
+> (since commit 76a6e1cc7cc3a) we delete an object's properties before
+> calling the object's instance_finalize method. Deleting the
+> child property will unparent the child; the later calls to
+> object_unparent() in its owner's instance_finalize will do nothing.".
+> 
+>> Worse, memory regions typically gets finalized when they get unparented
+>> before instance_finalize().
+> 
+> "before instance_finalize(), because the only reference to the
+> MemoryRegion is the one we hold because it is a child property
+> of its owner, and so when object_finalize_child_property()
+> calls object_unref(child) the refcount drops to zero and
+> we finalize the MR."
+> 
+>> This means calling object_unparent() for
+>> them in instance_finalize() is to call the function for an object
+>> already finalized, which should be avoided.
+> 
+> "This doesn't cause any bad effects in the common case where we
+> know that the memory allocated for the MemoryRegion itself
+> is still valid, such as in the common case where the MR
+> struct is directly embedded in its owner's device state struct.
+> But it could potentially cause a crash if the MemoryRegion
+> struct was somewhere else and was freed.
 
-On Sat, Oct 12, 2024 at 1:29=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
-te:
+It won't cause a crash even if the MR struct is not embedded as long as 
+the data structure is freed in the instance_finalize callback. I suggest 
+the following:
 
-> Peter Xu <peterx@redhat.com> writes:
->
-> > Keep migration thread names together, so it's easier to see a list of a=
-ll
-> > possible migration threads.
-> >
-> > Still two functional changes below besides the macro defintions:
-> >
-> >   - There's one dirty rate thread that we overlooked before, now we add
-> >   that too and name it as "mig/dirtyrate" following the old rules.
-> >
-> >   - The old name "mig/src/rp-thr" has "-thr" but it may not be useful i=
-f
-> >   it's a thread name anyway, while "rp" can be slightly hard to read.
-> >   Taking this chance to rename it to "mig/src/return", hopefully a bett=
-er
-> >   name.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
->
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->
+"This doesn't cause any bad effects in the common case where the
+data structure is managed by the owner because the memory allocated for
+the MemoryRegion itself is valid until the owner is also finalized.
+However, it is still semantically wrong to touch the MemoryRegion after
+its finalization and confusing."
 
-Acked-by: Hyman Huang <yong.huang@smartx.com>
+Your other suggestions look good so I'll apply them with v2.
 
---=20
-Best regards
+> 
+> Update the documentation to explicitly prohibit calling
+> object_unparent() in instance_finalize."
+> 
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+>> ---
+>>   docs/devel/memory.rst | 14 +++++++-------
+>>   1 file changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+>> index 69c5e3f914ac..83760279e3db 100644
+>> --- a/docs/devel/memory.rst
+>> +++ b/docs/devel/memory.rst
+>> @@ -168,11 +168,10 @@ and VFIOQuirk in hw/vfio/pci.c.
+> 
+> Don't we need also to change the paragraph before this, which
+> reads:
+> 
+>> If however the memory region is part of a dynamically allocated data
+>> structure, you should call object_unparent() to destroy the memory region
+>> before the data structure is freed.  For an example see VFIOMSIXInfo
+>> and VFIOQuirk in hw/vfio/pci.c.
+> 
+> ?
+> 
+> Otherwise we have a paragraph that says "you should call
+> object_unparent()" followed by one that says "do not call
+> object_unparent()".
 
---000000000000e5d655062442b43a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+You are right. I'll remove the statement.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_defa=
-ult" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br></div><=
-/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
-n Sat, Oct 12, 2024 at 1:29=E2=80=AFAM Fabiano Rosas &lt;<a href=3D"mailto:=
-farosas@suse.de" target=3D"_blank">farosas@suse.de</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);p=
-adding-left:1ex">Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com" target=
-=3D"_blank">peterx@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Keep migration thread names together, so it&#39;s easier to see a list=
- of all<br>
-&gt; possible migration threads.<br>
-&gt;<br>
-&gt; Still two functional changes below besides the macro defintions:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0- There&#39;s one dirty rate thread that we overlooked bef=
-ore, now we add<br>
-&gt;=C2=A0 =C2=A0that too and name it as &quot;mig/dirtyrate&quot; followin=
-g the old rules.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0- The old name &quot;mig/src/rp-thr&quot; has &quot;-thr&q=
-uot; but it may not be useful if<br>
-&gt;=C2=A0 =C2=A0it&#39;s a thread name anyway, while &quot;rp&quot; can be=
- slightly hard to read.<br>
-&gt;=C2=A0 =C2=A0Taking this chance to rename it to &quot;mig/src/return&qu=
-ot;, hopefully a better<br>
-&gt;=C2=A0 =C2=A0name.<br>
-&gt;<br>
-&gt; Signed-off-by: Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com" targe=
-t=3D"_blank">peterx@redhat.com</a>&gt;<br>
-<br>
-Reviewed-by: Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de" target=3D=
-"_blank">farosas@suse.de</a>&gt;<br>
-</blockquote></div><br clear=3D"all"><div><div style=3D"font-family:&quot;c=
-omic sans ms&quot;,sans-serif" class=3D"gmail_default">Acked-by: Hyman Huan=
-g &lt;<a href=3D"mailto:yong.huang@smartx.com">yong.huang@smartx.com</a>&gt=
-;</div><br></div><span class=3D"gmail_signature_prefix">-- </span><br><div =
-dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><font face=3D"comic =
-sans ms, sans-serif">Best regards</font></div></div></div>
-</div>
+> 
+> (Also that paragraph's reference to VFIOMSIXInfo is now
+> out of date -- in 2017 we removed the embedded MemoryRegion
+> from that struct.)
+> 
+>>   You must not destroy a memory region as long as it may be in use by a
+>>   device or CPU.  In order to do this, as a general rule do not create or
+>> -destroy memory regions dynamically during a device's lifetime, and only
+>> -call object_unparent() in the memory region owner's instance_finalize
+>> -callback.  The dynamically allocated data structure that contains the
+>> -memory region then should obviously be freed in the instance_finalize
+>> -callback as well.
+>> +destroy memory regions dynamically during a device's lifetime, and do not
+>> +call object_unparent().  The dynamically allocated data structure that contains
+>> +the memory region then should be freed in the instance_finalize callback, which
+>> +is called after it gets unparented.
+> 
+> I think some of these lines are a touch over-length, and should
+> be wrapped a bit earlier.
 
---000000000000e5d655062442b43a--
+I'll wrap them by 72 columns.
+
+> 
+> Also, this now says "don't unparent in finalize", but
+> vfio_bars_finalize() has code which follows the old documentation:
+> 
+>      if (vdev->vga) {
+>          vfio_vga_quirk_finalize(vdev);
+>          for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+>              object_unparent(OBJECT(&vdev->vga->region[i].mem));
+>          }
+>          g_free(vdev->vga);
+>      }
+> 
+> Is this wrong and needs changing?
+
+I'll add a patch to remove object_unparent() calls from hw/vfio/pci.c 
+with v2.
+
+Regards,
+Akihiko Odaki
+
+> 
+>>   If you break this rule, the following situation can happen:
+>>
+>> @@ -199,8 +198,9 @@ but nevertheless it is used in a few places.
+>>
+>>   For regions that "have no owner" (NULL is passed at creation time), the
+>>   machine object is actually used as the owner.  Since instance_finalize is
+>> -never called for the machine object, you must never call object_unparent
+>> -on regions that have no owner, unless they are aliases or containers.
+>> +never called for the machine object, you must never free regions that have no
+>> +owner, unless they are aliases or containers, which you can manually call
+>> +object_unparent() for.
+> 
+> thanks
+> -- PMM
+
 
