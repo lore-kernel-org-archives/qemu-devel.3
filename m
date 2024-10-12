@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BC6D1A427
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Oct 2024 22:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6B0D1A431
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 03:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szOUl-0002sQ-KR; Fri, 11 Oct 2024 18:52:27 -0400
+	id 1szSyK-0002fj-Sj; Fri, 11 Oct 2024 23:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szOUj-0002ru-Ok
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:52:25 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1szOUh-0007ms-P2
- for qemu-devel@nongnu.org; Fri, 11 Oct 2024 18:52:25 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2fb18f14242so23316201fa.3
- for <qemu-devel@nongnu.org>; Fri, 11 Oct 2024 15:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728687142; x=1729291942; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dnzofjFPSUL3WKzP+FhJgxzB0pSOdKYfbeozcKbG5Lo=;
- b=YxpkaRnWUyoeIcIWQCLss9tY1sTQ05HMhmyYwUOwt+w4mH0i8GKz5a2ncJk9IlS4bb
- 9qaRWh6lGyV6YqX/FSa+ouxJJedBp1dm2Jty5uzMbVU+J+Vfmz4c4i4V1Y8DHsjIHVFe
- NRQ9OXHAxvEbTAoR+zmW4rk6CFqu5TFkU1QJh6BIWQl8PaNBZjoPsBzp6HhEMEMxET8k
- zcarITCYttVCqqQw5ZR5IPpmdTDkPE/Fjqf4ksjNAf8ssDQmAOuFj7sNbQXb/vXiAAhj
- 7ZfpuA4mpwGXaP54aWwZT9OA0SGJzv0fI/4JekYXxc0DSXZVMNtcNySLsLzu7YetumHt
- xj8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728687142; x=1729291942;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dnzofjFPSUL3WKzP+FhJgxzB0pSOdKYfbeozcKbG5Lo=;
- b=JHtL732FDfL1fcagnGUJAc0A1Kfl3IgTdzFnvEQ8ilT8/qJPPUO6lewQ5c2fp+B0CN
- bve4oD7/maCSKh+C16igr8KwGbwwn7jxZ6zNXkPrkOy2iFRz6GRu8u5hdatfpsCp+J+N
- YdEnSgECbi4pntxaCXfzCA59Z0eCsB6XjbwI1YhKYUzWiWYDKKNLiSP0pdDUJUqxpEiF
- JH7RlhzuTGnpgDK+vXladX76qkNFidnVQhBgXqRKs9g9GwZOdE16iZXJT9R8DFNgdIIv
- RMWyPdAVN91Mh8FTPEqrPVaRC1vGJM9AVeQO67D16JniFtNj06lSOrsN3mgHFZuHj7px
- gCww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhRi9oCUnHJe7eFnb5uY+9qRm2eTy0yWp8jYL5AUOPIo8Cdfb4ojAbXUqz0jNoQqQt8J0gqcez2ZZR@nongnu.org
-X-Gm-Message-State: AOJu0YxobgRQtso7Y/7vbQsd3eHOz82SUPYOsTsIqQGa7IXAS9KVE+09
- OeYz7zb4OodxASDKDJ3+bdwqeIAKeWun0u4EhewVoLudsLoh+MiR8+uktfFWMXs=
-X-Google-Smtp-Source: AGHT+IGTg0S8j4FYojJFYVkX5vKBH9mqqx6AA/Eut0cgMrCG9vgLKGX6aYYOwZlWNCB4NeoGTdzDkA==
-X-Received: by 2002:a05:651c:556:b0:2f3:f441:af24 with SMTP id
- 38308e7fff4ca-2fb32779b16mr18140581fa.26.1728687141791; 
- Fri, 11 Oct 2024 15:52:21 -0700 (PDT)
-Received: from [192.168.222.92] ([91.209.212.130])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2fb245b19f0sm6058001fa.71.2024.10.11.15.52.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Oct 2024 15:52:20 -0700 (PDT)
-Message-ID: <ee2dcb64-1a4c-4b13-b0d9-83e1a58dbbcb@linaro.org>
-Date: Fri, 11 Oct 2024 19:52:10 -0300
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1szSyI-0002fF-Le
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 23:39:14 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1szSyG-00030L-Vq
+ for qemu-devel@nongnu.org; Fri, 11 Oct 2024 23:39:14 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4XQTk92d5pz8PbP;
+ Fri, 11 Oct 2024 23:38:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+ :from:to:cc:subject:message-id:mime-version:content-type; s=
+ default; bh=cQb2Usm/gjzkJx/SRPq8rr0TltwAK0wfRcI+OkYfmFo=; b=fBtk
+ 8LugS0nF5jVFV0WNnytbDS0Wv4yB8V6xGqmTX/e57IChjCuGOP4V0q5UmXKUXy/h
+ 8X1gTyeXMrwUZ2WYiLKSbkkKj81SfI/KArYzIj9BuJVJ6BqbDo54znysd564TY4m
+ Wsdo3U6fCNT2YR56NOKQd5SLp+940CIS1UK0IxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+ :cc:subject:message-id:mime-version:content-type; q=dns; s=
+ default; b=qRkZ0+hFtKHaVSjut+ly4fClaG7mrE+21u7GZlBGOL53apqhaOtsj
+ rClLoS5IZIJs2ZoOxfWY/X7cG4iSBrN13nVdnOEPxd4b0yylTOc/bf8fdBQPXyvZ
+ hXpC0+TiK0SvlMyT57fQUVdFVd73KPBhIsO3iTvLJ/S+WR+JAeMdpg=
+Received: from humpty.home.comstyle.com (unknown
+ [IPv6:2001:470:b050:3:bb6c:4c6b:152d:3d85])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4XQTk90Y7Wz8PbN;
+ Fri, 11 Oct 2024 23:38:57 -0400 (EDT)
+Date: Fri, 11 Oct 2024 23:38:55 -0400
+From: Brad Smith <brad@comstyle.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Marc-Andr_ Lureau <marcandre.lureau@redhat.com>,
+ "Daniel P. Berrang_" <berrange@redhat.com>,
+ Philippe Mathieu-Daud_ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] meson.build: Remove ncurses workaround for OpenBSD
+Message-ID: <ZwnvT4srOStQopOr@humpty.home.comstyle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/17] Revert "hw/sh4/r2d: Realize IDE controller before
- accessing it"
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, qemu-arm@nongnu.org
-References: <20241011131937.377223-1-thuth@redhat.com>
- <20241011131937.377223-17-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241011131937.377223-17-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,23 +75,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/10/24 10:19, Thomas Huth wrote:
-> This reverts commit 3c5f86a22686ef475a8259c0d8ee714f61c770c9.
-> 
-> Changing the order here caused a regression with the "tuxrun"
-> kernels (from https://storage.tuxboot.com/20230331/) - ATA commands
-> fail with a "ata1: lost interrupt (Status 0x58)" message.
-> Apparently we need to wire the interrupt here first before
-> realizing the device, so revert the change to the original
-> behavior.
-> 
-> Reported-by: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/sh4/r2d.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+meson.build: Remove ncurses workaround for OpenBSD
 
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+OpenBSD 7.5 has upgraded to ncurses 6.4.
 
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+ meson.build | 2 +-
+ ui/curses.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 4ea1984fc5..22e7629d81 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1374,7 +1374,7 @@ iconv = not_found
+ curses = not_found
+ if have_system and get_option('curses').allowed()
+   curses_test = '''
+-    #if defined(__APPLE__) || defined(__OpenBSD__)
++    #ifdef __APPLE__
+     #define _XOPEN_SOURCE_EXTENDED 1
+     #endif
+     #include <locale.h>
+diff --git a/ui/curses.c b/ui/curses.c
+index ec61615f7c..4d0be9b37d 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -38,7 +38,7 @@
+ #include "ui/input.h"
+ #include "sysemu/sysemu.h"
+ 
+-#if defined(__APPLE__) || defined(__OpenBSD__)
++#ifdef __APPLE__
+ #define _XOPEN_SOURCE_EXTENDED 1
+ #endif
+ 
+-- 
+2.46.1
 
 
