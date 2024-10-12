@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E9FCF2564
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 12:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6A0CF2566
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 13:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szaxj-0001W2-EI; Sat, 12 Oct 2024 08:11:11 -0400
+	id 1szcNj-0007CP-2U; Sat, 12 Oct 2024 09:42:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1szaxh-0001Ts-Se
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 08:11:09 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1szcNe-0007C8-V6; Sat, 12 Oct 2024 09:42:02 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1szaxd-0002O1-WA
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 08:11:09 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20c6f492d2dso30521835ad.0
- for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 05:11:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1szcNd-0004IP-BU; Sat, 12 Oct 2024 09:42:02 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-37d4fd00574so1535122f8f.0; 
+ Sat, 12 Oct 2024 06:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1728735064; x=1729339864;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vhzeFZq5rUX+9oZUukYcR2ebS6hy2Xlti8Kskef03cg=;
- b=XT/+5mYICJYrzLmIEc6apUkRbCj98dJzJDINbz6BVhyEUchmrDDPYwc6+v3VKbKOq1
- Kj6i24Tlge7i77w8pT4Kzg1/8wnLkin8mY6F4yYHWT6Fsl0mk2S/oklBUYxJzovctnAX
- morHdTdXsFYfmoh/8TOkluNAjMMnHWoel9PTE2//iDe6bH4dR67hq8nBqWNWg0cY31Dc
- YKFU9oBRjSVs9RgFJpLP/DNyFUvDpUMAmtc/mdYGqoKySUdZA8u1fLtv7jqXCLl6/4lF
- UG0JdqzkctL1RRghAKWt+OXXVaKa7EEIAxgf8hBG+eRVuzUEVNuVhwIo0sFlaLUI3a4o
- Xktw==
+ d=gmail.com; s=20230601; t=1728740519; x=1729345319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wsupazMnCPw+QOmcribO4MLjxraI3Fs4bmrt2mvfNqM=;
+ b=PtiDXxPXAqQVCzQ84kvNcDv0fqdFR/DNH/P+dUzUR38wwb7a//+V/KftM7oH54BmnQ
+ FTVhBR290R+HTgn+mql96FfrN9HzwPAgRDkl2pbzjZ2knfO/xypk6VdP3IPSyf/SpO/L
+ d5SZSCQXwth2LoEWo7LM7BPunP2G4e9Vp/ENya057dqc9lY85zBh28XHRMUx0T3vTCcj
+ m/uo1LdJqUmpN4MRWGRZgQe1iU935MbwmO8RB2jmJcggEpmGF6Qy+F67GsoypbjicmNL
+ QkBAksBwr1512quiKRKjMHq2tluRR4Ttt8+wCiBciPjIgbSnR8ICMAk5pxif1JmBrinm
+ i0UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728735064; x=1729339864;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vhzeFZq5rUX+9oZUukYcR2ebS6hy2Xlti8Kskef03cg=;
- b=rZl3QRpLvFVAl/khWWvwPSV1fyni9Xi6Ep5V4TLAsdmWIU3iCE4owy9oZ/+Xcbdo6o
- WH7ineBr/+1WcCIBZs7qBrpvDEpdvSp63lFKpza/N4viifZHFiMn2zWLGUYrRhfGa6km
- cXEVNTRC2xN3mgK9Xh7Od6+wPLFcI4vUDCgRtxxD1s3z3W/H3vHDuF0LNIBmCpjSAX4g
- KO7208KULEAU1OIWeTIdQg7xAYt7JMekva4pWdZmj+g6AwaO5R7q8cwQchkdaZ2+dewk
- PZXYxhLrlTKcl3bXoR7XT+lxCfG6FXykq9U5+3rc4XwQzrH/yRkMh3j3u0jQkyLXb468
- iJdQ==
-X-Gm-Message-State: AOJu0Yz9gCvER5OHlZtD50lZwSsWx8j0V39mPcajd84cLn4qQSueIQej
- 4YbRhQX86/FTPopgqVpHp6PQV1BCOzC2btv4um/2717CuUf3vSTaGhBUF+z4Prs=
-X-Google-Smtp-Source: AGHT+IGstB/XASE/X8nf60W/GmSEkqoCvKGDNut8vHmuxdU8tIlVCRtTt/e1OuE2M06WnfQmQn4hmA==
-X-Received: by 2002:a17:903:8c7:b0:20c:6bff:fc8a with SMTP id
- d9443c01a7336-20cbb1a96a5mr42297015ad.2.1728735064477; 
- Sat, 12 Oct 2024 05:11:04 -0700 (PDT)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8bad34dasm36203675ad.53.2024.10.12.05.11.00
+ d=1e100.net; s=20230601; t=1728740519; x=1729345319;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wsupazMnCPw+QOmcribO4MLjxraI3Fs4bmrt2mvfNqM=;
+ b=mdYSt3yGvDsv9aNSkneh9q1keQcVLnFv4lsgSnnzrdMAP2D5S/8BrJ5vHde+pixL3q
+ 3Y/5cNDDvERo+/yolRlXPegNODKEK7vdYRU+RtN8RKqGwwXQf+wR2iRhYSHBYkh7OrxN
+ Dz/+eM7nqiZ+wRF2RqPnZ6gDVcDHyHwnSoldrHlQGIsLBsK3AkbaKAwn89tkAETARW+U
+ qp9KN38QFSlHxtUXv6q/EbavCVj0qiDmWQfAlq/8J+Cvip8mkXQ9VB+iuNb3M9dfhFte
+ IrDQ90ZXPCvdW10vmhaakInktkuYzPa0CiWoPs+1i+6wT6GvQeHxprp2z3v9t3shpiTL
+ 7W8w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/WVJhETsrwPtStss1h4p9C/YN9FJUufNBAh/OUgl7ItOVyZlv47h1cO3W9VvwkW5ZW20afK1poLU=@nongnu.org,
+ AJvYcCUhR18M+07/vytJYlevjfq0LZnHv9NWbZXKiTIoQvQLiY9IUFlX1e8bC2XIK/OeVRwRuGT0JnKZ6JtFfg==@nongnu.org,
+ AJvYcCXoL3bkGXpwQBeNp4YmldN4K+EJDXiN8lgdBKT93h8wLq/cfsQToe/jZA9aBSsCx8PCv3f87kmIYA==@nongnu.org
+X-Gm-Message-State: AOJu0YxlZbkikTk8oH0BC5W//gO4/UniX/CZT3/Wn8ttdxYuuKYkWQP+
+ InysQh72EP4oxyoSr/my3X5loFSgTA0QyshfLjXWxKsG16DEJ5yV
+X-Google-Smtp-Source: AGHT+IGfLhGvjkundvEA6bk9Y6DkAO2B67WQmniqI9bzII2NmNCJq1HfZrMVWFDxGioCo9q1JH8JdA==
+X-Received: by 2002:adf:e7cf:0:b0:37d:43d1:2064 with SMTP id
+ ffacd0b85a97d-37d552d3843mr4445974f8f.30.1728740518457; 
+ Sat, 12 Oct 2024 06:41:58 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-011-117-250.77.11.pool.telefonica.de.
+ [77.11.117.250]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d4b6bd134sm6386384f8f.41.2024.10.12.06.41.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Oct 2024 05:11:03 -0700 (PDT)
-Message-ID: <4c472991-f296-4c7d-beee-0332ff29d9b0@daynix.com>
-Date: Sat, 12 Oct 2024 21:10:58 +0900
+ Sat, 12 Oct 2024 06:41:58 -0700 (PDT)
+Date: Sat, 12 Oct 2024 13:41:57 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 2/2] hw/ppc/e500: Reuse TYPE_GPIO_PWR
+In-Reply-To: <d094728d-a7bd-4e16-b3c1-82065ca9bf08@linaro.org>
+References: <20241005100228.28094-1-shentey@gmail.com>
+ <20241005100228.28094-3-shentey@gmail.com>
+ <d094728d-a7bd-4e16-b3c1-82065ca9bf08@linaro.org>
+Message-ID: <1692441A-C91F-4A87-B8CB-82E42EE815EA@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 03/13] hw/ppc/spapr_pci: Do not reject VFs created
- after a PF
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240913-reuse-v16-0-d016b4b4f616@daynix.com>
- <20240913-reuse-v16-3-d016b4b4f616@daynix.com>
- <3cc3456d-a47d-4960-9d5e-10cf1c8b4beb@redhat.com>
- <84adb86d-a60c-4468-84a3-5bdc545bc161@linux.ibm.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <84adb86d-a60c-4468-84a3-5bdc545bc161@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,117 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/12 2:22, Shivaprasad G Bhat wrote:
-> On 9/18/24 7:57 PM, Cédric Le Goater wrote:
->> Adding :
->>
->>   Harsh for QEMU/PPC pseries machine,
->>   Shivaprasad for KVM/PPC VFIO and IOMMU support.
->>
->> Thanks,
->>
->> C.
->>
->>
->> On 9/13/24 05:44, Akihiko Odaki wrote:
->>> A PF may automatically create VFs and the PF may be function 0.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   hw/ppc/spapr_pci.c | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->>> index f63182a03c41..ed4454bbf79e 100644
->>> --- a/hw/ppc/spapr_pci.c
->>> +++ b/hw/ppc/spapr_pci.c
->>> @@ -1573,7 +1573,9 @@ static void spapr_pci_pre_plug(HotplugHandler 
->>> *plug_handler,
->>>        * hotplug, we do not allow functions to be hotplugged to a
->>>        * slot that already has function 0 present
->>>        */
->>> -    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 
->>> 0)] &&
->>> +    if (plugged_dev->hotplugged &&
->>> +        !pci_is_vf(pdev) &&
-> 
-> I see there is history to this change. The reverted[1] virtio-net-pci 
-> SRIOV emulation support
-> 
-> needed this as the VFs were explicitly specified with -device virtio- 
-> net-pci,sriov-pf=X
-> 
-> property. I see the pre_plug handlers for the VFs cant be reached now 
-> with the reverted
-> 
-> code base for the other devices(nvme and igb) supporting the SRIOV 
-> emulation.
-> 
-> 
-> Do the VFs really reach this path in today's code base ? Other than the 
-> above
-> 
-> workflow, the pre_plug() handlers wont be called for VFs when the
-> 
-> echo X > /<sys-fs-pf-path>/sriov_numvfs inside the guest too. I don't 
-> see the
-> 
-> workflow(PF automatically creating VFs) to hit this path. Could you 
-> clarify how?
-> 
-> 
-> I see before the revert of virito-net-pci sriov use-case, the out of 
-> order VF hot|cold
-> 
-> plug post PF are prevented here. Even if we allowed VFs to continue 
-> here, PFs were
-> 
-> prevented in pcie_sriov_register_device() which is followed sequentially 
-> anyway. Now,
-> 
-> as the pcie_sriov_register_device() is no longer there, this check 
-> actually makes
-> 
-> sense as this would be the only place we avoid the out of order plugging.
 
-VFs are always plugged after its paired PF. Currently, VFs are plugged 
-when the guest writes sriov_numvfs. With "[PATCH v16 08/13] pcie_sriov: 
-Reuse SR-IOV VF device instances", which follows this patch, VFs will 
-plug while the PF is being realized.
 
-I have no idea why you can't reproduce the issue by writing 
-sriov_numvfs, but it is easy to reproduce it with "[PATCH v16 08/13] 
-pcie_sriov: Reuse SR-IOV VF device instances" applied. You can use the 
-following command:
-qemu-system-ppc64 -nographic -monitor stdio -serial none <<< 'device_add 
-igb'
+Am 7=2E Oktober 2024 21:13:22 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+hilmd@linaro=2Eorg>:
+>On 5/10/24 07:02, Bernhard Beschow wrote:
+>> Taking inspiration from the ARM virt machine, port away from
+>> qemu_allocate_irq() by reusing TYPE_GPIO_PWR=2E
+>>=20
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>   hw/ppc/e500=2Ec  | 16 ++++------------
+>>   hw/ppc/Kconfig |  1 +
+>>   2 files changed, 5 insertions(+), 12 deletions(-)
+>
+>
+>> @@ -892,13 +890,6 @@ static DeviceState *ppce500_init_mpic(PPCE500Machi=
+neState *pms,
+>>       return dev;
+>>   }
+>>   -static void ppce500_power_off(void *opaque, int line, int on)
+>> -{
+>> -    if (on) {
+>> -        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+>> -    }
+>> -}
+>> -
+>>   void ppce500_init(MachineState *machine)
+>>   {
+>>       MemoryRegion *address_space_mem =3D get_system_memory();
+>> @@ -1086,7 +1077,7 @@ void ppce500_init(MachineState *machine)
+>>       sysbus_create_simple("e500-spin", pmc->spin_base, NULL);
+>>         if (pmc->has_mpc8xxx_gpio) {
+>> -        qemu_irq poweroff_irq;
+>> +        DeviceState *gpio_pwr_dev;
+>
+>Can we keep a reference in PPCE500MachineState?
 
-It should say:
-Error: PCI: slot 18 function 0 already occupied by igbvf, additional 
-functions can no longer be exposed to guest.
+I considered turning it into an embedded attribute, but decided against it=
+, because 1/ the device isn't part of the SoC (and therefore ideally user-c=
+reateable), 2/ only used by the ppce500 machine, 3/ would be inconsistent w=
+ith surrounding code, and 4/ "gpio-pwr" would require exposing the struct f=
+irst (ARM virt also has no embedded attribute)=2E That all seemed like a lo=
+t of churn for what I want to achieve which is having the same solution for=
+ the same problem across two machines=2E
 
-Regards,
-Akihiko Odaki
+There is surely a lot of room for cleaning up e500 beyond my e500 cleanup =
+series, but unless there is demand for it, I'd stop there (patches welcome)=
+=2E Now that this series doesn't touch ARM much it'd actually make sense to=
+ merge it there=2E
 
-> 
-> 
-> On a side note, for testing this fulky on PPC, we need more work on Qemu 
-> today as the
-> 
-> open-sriov[2] is supported only on PowerVM.
-> 
-> 
-> Thanks,
-> 
-> Shivaprasad
-> 
-> 
-> Reference :
-> 
-> [1] - Atleast till commit b0fdaee5d1
-> 
-> [2] - https://lore.kernel.org/linuxppc-dev/20180105164552.36371-1- 
-> bryantly@linux.vnet.ibm.com/
-> 
+>
+>Otherwise,
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
 
+So, is creating an anonymous device okay for you? Does your R-b stand neve=
+rtheless?
+
+Best regards,
+Bernhard
+
+>
+>>             dev =3D qdev_new("mpc8xxx_gpio");
+>>           s =3D SYS_BUS_DEVICE(dev);
+>> @@ -1096,8 +1087,9 @@ void ppce500_init(MachineState *machine)
+>>                                       sysbus_mmio_get_region(s, 0));
+>>             /* Power Off GPIO at Pin 0 */
+>> -        poweroff_irq =3D qemu_allocate_irq(ppce500_power_off, NULL, 0)=
+;
+>> -        qdev_connect_gpio_out(dev, 0, poweroff_irq);
+>> +        gpio_pwr_dev =3D sysbus_create_simple("gpio-pwr", -1, NULL);
+>> +        qdev_connect_gpio_out(dev, 0, qdev_get_gpio_in_named(gpio_pwr_=
+dev,
+>> +                                                             "shutdown=
+", 0));
+>>       }
 
