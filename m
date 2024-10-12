@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFF4CF2568
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 14:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8462DCF2566
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Oct 2024 14:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szchW-0002Zm-Mu; Sat, 12 Oct 2024 10:02:34 -0400
+	id 1szclV-0003qm-Tr; Sat, 12 Oct 2024 10:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1szchT-0002Ze-TN
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 10:02:32 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1szclP-0003qN-8B; Sat, 12 Oct 2024 10:06:35 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1szchR-0006Ep-TI
- for qemu-devel@nongnu.org; Sat, 12 Oct 2024 10:02:31 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c95a962c2bso1007796a12.2
- for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 07:02:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1szclK-0006tO-F1; Sat, 12 Oct 2024 10:06:35 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43111cff9d3so21122725e9.1; 
+ Sat, 12 Oct 2024 07:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728741748; x=1729346548; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=K7pmsHaLUG5d9DOmfDbeYFCj16FD89Y17saK2WNiUyI=;
- b=VZOkNHysjccq3zMok2TlfpEqdcG56MxSkBx/hp/CYAIvnjcqZ+nd27mJOG1uc71u/D
- s0wuJM+OzD+zJj4O8Z1o+K5AQ19YWAM7SL+LBtb60Ox2Xz8htanAYLRSqskEsUkyQGyS
- SPUgvNiAZ6S68n5QmH/Jeuvlvr3/klOkhXf2dXU8A0XoGsPdU/KVLp8d7jUX623aF8B8
- slFUyAd4EHvAhfpwPnD4FRd/8I93dLCF4aanQa3JGH1+OSFdFtCzAugoB+6qrOpu4xHL
- KIICVGg1M/Jf1QaJMM8peAc/Df8gQeG3KAZZvraaWvdczWlZvPLsRdPnjvpZ5hoCD9rW
- ncGQ==
+ d=gmail.com; s=20230601; t=1728741988; x=1729346788; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UNDAr0y6ERcyEBg9QJJv0SNUjqAg/Vhk9oSPvoNOt1M=;
+ b=RJmGwlh2185LZePQQt1IfO4E9VtuloXQH9TbHn2L3irGTK9rrnrWWrLI7gv37On/S2
+ gNV2bMLhAaGBl3ReAYaKEEj7/04e/7lJKREQHcQIkPz5dONN4MGrBgxEdP0NJB+oauVQ
+ kCY6eFZwNR5LSlLdC0iyp1n+PQmiEoECS6xLTk7Gsxp7GzLyKHYb+uuSpSbkL3c1nAmQ
+ E0VnUkagzsqHLvn0FcVbLGgxPKfsPil4HlNhh5BTCLvrpqyqBfAVR/RHqDiI/UgOYdS7
+ Tu6rb5NogSUM3sGwH1VYTsNpgUdCyEZvOH2gOyfvmZJhpt7C6eQxDp7YSIqaxqmP62O0
+ riJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728741748; x=1729346548;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K7pmsHaLUG5d9DOmfDbeYFCj16FD89Y17saK2WNiUyI=;
- b=oAtoVRPXHJetSgreoJBnCwKLKptKRyTArTaXkfKRWV+rA+1mMK6U4gzoi+jnXPYYtn
- li1hheUuB2TlIYG3+SyF1BCTFAChdyfJwm3Tj/gk2YVUU6ZssCGUPT7Q3qYyvDudZDG+
- XYSIcFnv8cwpAM0l5T7mZLi/7CzYn6Ti34JRctsp0RyTPTmXjEBv8Zs9NtWbCnbp8dWc
- VOfEp+GUvJOfZy+fvKnnIo9eyfhxRBaZ7wOK5Cf5GnSSQKNO/RMpv08jLIrIi6Y6459V
- kClVrlWjfeAvR3wxeNOEp+S3KR70xM0ecb2BzMuBzPoqStk9+4oSW63gr61XVm2LOKhR
- kSyw==
-X-Gm-Message-State: AOJu0Yx0hnCTtkq65WeeHZ1IVev+xan8CCexeoM4NwYdT58CkqBc4jtJ
- 49f1AtM1vFUJqrU53gXUB67F7OKIRRM3pz0X5HVZ7I5S2L9baaZrfANuK7ojo6QljyYXp8UM35r
- HdD8BpcvZeN9LFAlC3sV7NUXpLXCRk8FBmhFEdw==
-X-Google-Smtp-Source: AGHT+IHturYe7bOUDJpQOOXqLcEBBsJce5E/C1yXO+Lh8Wv2qmDfqKPoVNpiY3NXEvxNEDA26jJjbux9PadesqBSqeE=
-X-Received: by 2002:a05:6402:5188:b0:5c9:59e6:e908 with SMTP id
- 4fb4d7f45d1cf-5c959e6f56amr2304735a12.6.1728741747812; Sat, 12 Oct 2024
- 07:02:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728741988; x=1729346788;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UNDAr0y6ERcyEBg9QJJv0SNUjqAg/Vhk9oSPvoNOt1M=;
+ b=GZhu4N1sf6KsSDsB+iUFtKWfqm4c250gY3mva5SBQKagBIzL8nIQee91P8ya4v6f8T
+ R4VxvgDE/QMflPcIxaEafS42c/p1jnrh34mxht1WecXw2Yn/478ggr//WrsWJCliAuRI
+ xOgT4MIg0sHqLP0rLCzaZc206prDBorTyV8SbQPzSX3iuzgh5IN0T1eUDJJS7nyN76Xr
+ PDA3L+Hjk5NPSrXQNBnHUDJhwvRbP3s21QHWwh34/DOwb0ekriOK6HBnEfm0ZqzXYAbd
+ AmVlVd/xthXyoV4fqtZS2k613oBJb+z4azdDAz9dA6L4N2WaxahtZOLSJsvKD2k3XUUn
+ +qwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBeRJGoxKxksIC/PbP0Aq5kA0jrG4DX9aSWzt+ETgcEorMcoou9adYrgVu6Uc7csGMHES2ZaslcKQ=@nongnu.org,
+ AJvYcCXUrIXTfYvj5kRvmBASBK+oOh5t8GnZu5+RU+wNpPx7/guoI+TeMG0pZxL3X/5bxbC99rxggZlRfhQm@nongnu.org
+X-Gm-Message-State: AOJu0YyHWvzGxQLNwaCjlY4aOt2bfvqv35OgeXc2ymh9nlXah/vnI9U0
+ bsww2m3M7sQmIQX7c6O1zcflHQXyRWc/tt9Csm/lbegAE+jpRrWg
+X-Google-Smtp-Source: AGHT+IHtFzxuu/TqIuM58VeXC+YzFNfxxZQW9a+z1YKVZ5hEbY4rUIrup1zBXPb/UgRU5sCEIE0dBg==
+X-Received: by 2002:adf:a111:0:b0:37d:4a80:c395 with SMTP id
+ ffacd0b85a97d-37d551b965dmr4039199f8f.21.1728741987920; 
+ Sat, 12 Oct 2024 07:06:27 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-011-117-250.77.11.pool.telefonica.de.
+ [77.11.117.250]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d4b6cfa8fsm6408759f8f.49.2024.10.12.07.06.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 12 Oct 2024 07:06:27 -0700 (PDT)
+Date: Sat, 12 Oct 2024 14:06:25 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Thomas Huth <thuth@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>
+CC: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Guenter Roeck <linux@roeck-us.net>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_07/11=5D_hw/sh4/r2d=3A_Real?=
+ =?US-ASCII?Q?ize_IDE_controller_before_accessing_it?=
+In-Reply-To: <08586e5f-6a5e-445c-b74b-e2c12560020f@redhat.com>
+References: <20240208181245.96617-1-philmd@linaro.org>
+ <20240208181245.96617-8-philmd@linaro.org>
+ <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
+ <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
+ <61c38817-3b6e-4bc1-a65a-d2208869c53d@linaro.org>
+ <08586e5f-6a5e-445c-b74b-e2c12560020f@redhat.com>
+Message-ID: <7CE8EB57-0A75-4AF1-B941-4BC88F9C042D@gmail.com>
 MIME-Version: 1.0
-References: <20241011153227.81770-1-pbonzini@redhat.com>
- <CAFEAcA88y9gV-YMNxvQPdGR2tA-sjsaFYr_TiG=GmQGr8+QkKA@mail.gmail.com>
-In-Reply-To: <CAFEAcA88y9gV-YMNxvQPdGR2tA-sjsaFYr_TiG=GmQGr8+QkKA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 12 Oct 2024 15:02:15 +0100
-Message-ID: <CAFEAcA9vXEexRC4kZWEXoyMHQm_M33NRuZnSi7hq2wdPyCVGNQ@mail.gmail.com>
-Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,131 +107,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 12 Oct 2024 at 11:54, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Fri, 11 Oct 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > The following changes since commit b5ab62b3c0050612c7f9b0b4baeb44ebab42775a:
-> >
-> >   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-04 19:28:37 +0100)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> >
-> > for you to fetch changes up to 381d2c36e1242f849a55f4622e50b9a69cb92842:
-> >
-> >   docs: use consistent markup for footnotes (2024-10-11 13:08:32 +0200)
-> >
-> > v2->v3: new patches
-> > - scripts/archive-source: find directory name for subprojects
-> > - docs: fix invalid footnote syntax
-> > - docs: avoid footnotes consisting of just URLs
-> > - docs: use consistent markup for footnotes
-> >
-> > ----------------------------------------------------------------
-> > * first commit for Rust support
-> > * add CI job using Fedora + Rust nightly
-> > * fix detection of ATOMIC128 on x86_64
-> > * fix compilation with Sphinx 8.1.0
-> >
->
-> Hi; 'make vm-build-openbsd' seems to still fail. It looks
-> like the wrap file subprojects/unicode-ident-1-rs.wrap says
-> "directory = unicode-ident-1.0.12" and the script correctly
-> parses that out of the file, but the directory is actually
-> named "unicode-ident-1-rs" (differently from the other rust ones),
-> so we don't find it.
->
->
-> make: Entering directory '/home/peter.maydell/qemu-openbsd/build'
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/meson introspect
-> --targets --tests --benchmarks |
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
-> scripts/mtest2make.py > Makefile.mtest
-> { \
->   echo 'ninja-targets = \'; \
->   /usr/bin/ninja -t targets all | sed 's/:.*//; $!s/$/ \\/'; \
->   echo 'build-files = \'; \
->   /usr/bin/ninja -t query build.ninja | sed -n '1,/^  input:/d; /^
-> outputs:/q; s/$/ \\/p'; \
-> } > Makefile.ninja.tmp && mv Makefile.ninja.tmp Makefile.ninja
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
-> /home/peter.maydell/qemu-openbsd/tests/vm/openbsd  --debug
-> --genisoimage /usr/bin/genisoimage    --source-path
-> /home/peter.maydell/qemu-openbsd --image
-> "/home/peter.maydell/.cache/qemu-vm/images/openbsd.img"  --build-image
-> /home/peter.maydell/.cache/qemu-vm/images/openbsd.img
-> Image file exists, skipping build:
-> /home/peter.maydell/.cache/qemu-vm/images/openbsd.img
-> Use --force option to overwrite
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B
-> /home/peter.maydell/qemu-openbsd/tests/vm/openbsd  --debug  --jobs 8
-> --verbose    --image
-> "/home/peter.maydell/.cache/qemu-vm/images/openbsd.img"  --snapshot
-> --build-qemu /home/peter.maydell/qemu-openbsd --
-> DEBUG:root:Creating archive
-> /home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar
-> for src_dir dir: /home/peter.maydell/qemu-openbsd
-> Download keycodemapdb...
->   -> Already downloaded
-> Download libvfio-user...
->   -> Already downloaded
-> Download berkeley-softfloat-3...
->   -> Already downloaded
-> Download berkeley-testfloat-3...
->   -> Already downloaded
-> Download arbitrary-int-1-rs...
->   -> Already downloaded
-> Download bilge-0.2-rs...
->   -> Already downloaded
-> Download bilge-impl-0.2-rs...
->   -> Already downloaded
-> Download either-1-rs...
->   -> Already downloaded
-> Download itertools-0.11-rs...
->   -> Already downloaded
-> Download proc-macro2-1-rs...
->   -> Already downloaded
-> Download proc-macro-error-1-rs...
->   -> Already downloaded
-> Download proc-macro-error-attr-1-rs...
->   -> Already downloaded
-> Download quote-1-rs...
->   -> Already downloaded
-> Download syn-2-rs...
->   -> Already downloaded
-> Download unicode-ident-1-rs...
->   -> Already downloaded
-> tar: subprojects/unicode-ident-1.0.12: Cannot stat: No such file or directory
-> tar: Exiting with failure status due to previous errors
-> failed to append subproject unicode-ident-1-rs to
-> /home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar
-> Failed to prepare guest environment
-> Traceback (most recent call last):
->   File "/home/peter.maydell/qemu-openbsd/tests/vm/basevm.py", line 654, in main
->     vm.add_source_dir(args.build_qemu)
->   File "/home/peter.maydell/qemu-openbsd/tests/vm/basevm.py", line
-> 277, in add_source_dir
->     subprocess.check_call(["./scripts/archive-source.sh", tarfile],
->   File "/usr/lib/python3.10/subprocess.py", line 369, in check_call
->     raise CalledProcessError(retcode, cmd)
-> subprocess.CalledProcessError: Command
-> '['./scripts/archive-source.sh',
-> '/home/peter.maydell/qemu-openbsd/build/vm-test-w7gx56ds.tmp/data-993a1.tar']'
-> returned non-zero exit status 1.
-> make: *** [/home/peter.maydell/qemu-openbsd/tests/vm/Makefile.include:110:
-> vm-build-openbsd] Error 2
-> make: Leaving directory '/home/peter.maydell/qemu-openbsd/build'
 
-Deleting the whole subprojects/unicode-ident-1-rs/ subdirectory
-seems to have fixed this -- it then realised it needed to
-do the download and put it in the right place. I guess that was a
-leftover from trying to build the previous version of the pullreq.
-But it suggests that something is missing in the dependencies,
-since it thought it had already downloaded it even though
-the directory it needed to put it in wasn't on disk...
 
-thanks
--- PMM
+Am 12=2E Oktober 2024 09:40:27 UTC schrieb Thomas Huth <thuth@redhat=2Ecom=
+>:
+>On 12/10/2024 00=2E48, Philippe Mathieu-Daud=C3=A9 wrote:
+>> On 11/10/24 05:23, Thomas Huth wrote:
+>>> On 03/05/2024 23=2E34, Guenter Roeck wrote:
+>>>> Hi,
+>>>>=20
+>>>> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daud=C3=A9=
+ wrote:
+>>>>> We should not wire IRQs on unrealized device=2E
+>>>>>=20
+>>>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>>>>> Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
+>>>>> Reviewed-by: Yoshinori Sato <ysato@users=2Esourceforge=2Ejp>
+>>>>=20
+>>>> qemu 9=2E0 fails to boot Linux from ide/ata drives with the sh4
+>>>> and sh4eb emulations=2E Error log is as follows=2E
+>>>>=20
+>>>> ata1=2E00: ATA-7: QEMU HARDDISK, 2=2E5+, max UDMA/100
+>>>> ata1=2E00: 16384 sectors, multi 16: LBA48
+>>>> ata1=2E00: configured for PIO
+>>>> scsi 0:0:0:0: Direct-Access=C2=A0=C2=A0=C2=A0=C2=A0 ATA=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 QEMU HARDDISK=C2=A0=C2=A0=C2=A0 2=2E5+ PQ: 0 ANSI: 5
+>>>> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8=2E39 MB/8=2E00 Mi=
+B)
+>>>> sd 0:0:0:0: [sda] Write Protect is off
+>>>> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't =
+support DPO or FUA
+>>>> ata1: lost interrupt (Status 0x58)
+>>>>=20
+>>>> [ and more similar errors ]
+>>>>=20
+>>>> qemu command line:
+>>>>=20
+>>>> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0-snapshot -drive file=3Drootfs=2Eext2,format=
+=3Draw,if=3Dide \
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0-append "root=3D/dev/sda console=3DttySC1,115=
+200 noiotrap" \
+>>>> =C2=A0=C2=A0=C2=A0=C2=A0-serial null -serial stdio -monitor null -nog=
+raphic -no-reboot
+>>>>=20
+>>>> Bisect points to this patch (see below)=2E Reverting it fixes the pro=
+blem=2E
+>>=20
+>> Sorry Guenter for missing your email :(
+>>=20
+>>>=20
+>>> =C2=A0=C2=A0Hi Philippe!
+>>>=20
+>>> Today I noticed that our sh4 test from tests/avocado/tuxrun_baselines=
+=2Epy is failing (which is not run by default, that's why nobody noticed), =
+and bisection took me to the same result that Guenter already reported=2E
+>>=20
+>> "not run by default" because flaky=2E
+>>=20
+>> Having a quick look, the problem seems hw/ide/core=2Ec uses non-QOM
+>> shortcuts=2E In particular ide_bus_init_output_irq() expects a preset
+>> IRQ=2E Not something trivial to fix=2E
+>
+>I wonder whether the other spots that use ide_bus_init_output_irq() or si=
+milar constructs are broken now, too=2E Bernhard apparently already fixed (=
+reverted) one in commit 143f3fd3d8b51d6526c8ea80e8a2a085f6f01cdf=2E
+>
+>But what about fc432ba0f58343c8912b80e9056315bb9bd8df92 ?
+
+There is an indirection going on in pmac_ide_irq() which triggers real_*_i=
+rq=2E These get wired via sysbus API after realize() while ide_bus_init_out=
+put_irq() wires to pmac_ide_irq()=2E So fc432ba0f58343c8912b80e9056315bb9bd=
+8df92 seems safe to me (haven't tested it though)=2E
+
+Best regards,
+Bernhard
+
+>
+> Thomas
+>
 
