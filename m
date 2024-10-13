@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99CFCF2576
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 16:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38295CF2576
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 16:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t015w-0000Uf-NB; Sun, 13 Oct 2024 12:05:24 -0400
+	id 1t016w-0000r3-AX; Sun, 13 Oct 2024 12:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t015u-0000U3-IX
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 12:05:23 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1t016i-0000oT-5F
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 12:06:12 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t015s-0003wf-Jx
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 12:05:22 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20cd76c513cso3856395ad.3
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 09:05:18 -0700 (PDT)
+ id 1t016g-00045H-GY
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 12:06:11 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-20cb89a4e4cso9671855ad.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 09:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728835518; x=1729440318; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728835569; x=1729440369; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RaU9boDu2rnmlDQKp9zBDa7bTygI+G1ZrCS5IdrFr8w=;
- b=M21NPKFe+y/oELF4pez1xSum+8CJQxFVkFTMtL0+t/1w/qZ7RzGS6EFT443wJxN+rY
- n+Tdanjg3j2lHLQKehqHJQK1Av++P+kw7GhGV0byjtmjG9XzIAfQiqKTCZMc/H5BqhvW
- hfhMOVtNKZAFQJNs/GPXbn0m6JF4v/2BBnV6hyks75FDcBwd+ZeERDeVsI4SxpBCGUd0
- PIyI8gAmUdXxYOgfzPS1XhKRR70CdQu4D6N2hcPNrFWlTTuq+Z9Mue9rn5ey2qV6W2Lx
- 7xhCoEOBjbqEQ3cBzhmK19kJJbHUdxA4ykPhpLmSl0kHXJOPz0i9jeq9BnRod3b32w8e
- XiWw==
+ bh=f/8jOx+Rh5vhol+XfHLwCekRjgovMvlYbe3eDuUj1CI=;
+ b=F5n+NWxN12gP5jzLr8/+eC4A/bCaHm9qt074u8a6DtYtRdP1c51BgsLtpuxtBBOevl
+ UKuZxrPaNdNY0FDoaPSFu2pttixCt3N1H3LCnrsKcu3xOik8OuwM97+nhSlFQ5/Nll2L
+ GNwPaMqZy8omOgqJvfV95pHuKcIUVILVWlPb6so2jgDW2IAJnoIyWVpKvzFXpAFpWgZV
+ RJR+HQkrb3ISSKkxDYLHjnwbF6CXTKbdlMfsxSvUfWroyXl9Fv7WSjBZM0PX89FAR+AY
+ v5TaWH1RmEtGGeoZpknFYRC7AK2TNgYIrYPovlqkMJMZincueVrnzJXmojWxmveGwWgJ
+ 93Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728835518; x=1729440318;
+ d=1e100.net; s=20230601; t=1728835569; x=1729440369;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RaU9boDu2rnmlDQKp9zBDa7bTygI+G1ZrCS5IdrFr8w=;
- b=f832QjbvZyR3f76sG9JdDKCS2ga8g47DRTIiL97NwpN4KmzeY4VUpbu5FYFV6CXk+P
- 6DyjrRbVt4nECR4ACu4SBI9qhslxY63pGacjYlANmH/RAeWHldQKX9UydrLF29fQnaCG
- 46CDaIukmj1kV5vbesgVBgVE+ZFay1xXiFp+KdBb/YM9M86ijOj9fVuBZ97JpwuFoAbO
- vxYJjK1Ny6QeCGmF/eH/ACNsc2MgQMye5d/pS6eI/cgfVbc0kZ0Voeq9iBX7CEJVVvQA
- RLtiUe2fpumMXnuvNyZ+leJPfHgr/c7HeqFW3s6oPXwnyfv/ua4cW8BYPG9joPX59Zie
- lqLw==
+ bh=f/8jOx+Rh5vhol+XfHLwCekRjgovMvlYbe3eDuUj1CI=;
+ b=EKYoyoI/v/tOXlZ8F5aQuE/cyLNXHMjnjFbBXS16YBiUG7zJ3tSOLkmpAOkL23jYGD
+ 4wYgikblT+AMfr8tRTiRIOYj1jfwH8B1N4G3W7DOP3eisWM2OCgl5LYSOMaGrR/2XnQB
+ 7cq+mWUrhUiltVLdaF7meVOtxfq0oSnsURliExN/616qabdlH5jBwGmk9BKCcuRlsLdt
+ fsxSAlNjmXd/waP/3AZF5D5FbfWpcJMbtGIdJ7gSrxYZVS6724KcPPAzQ1AZXpfT7hDD
+ m+jNZH2ga03tR9bCq/gUNwtN/LIhya4TKxk2FGGRX1M5servxdyI1yEcDxrOZISLJ6xL
+ Xp+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJsGbDp6i2yPnoZxp8E4a360Y6fUEA7EEmHiGUkSSuJSHuv/fQmBsw3Ac9zrPhr56QCeXCqawxwTwk@nongnu.org
-X-Gm-Message-State: AOJu0Yw3bqmoF56/Qpxuwvsw6lChVL1c9y6+hY8Jv6x9MZ5jZQjDQ5YJ
- w7Uh1KhMmmx7MuWiwD9tsRQ5+TgzLI0MOGOieIk2V5BLvQ1899Z24uN6Q/NfgUM=
-X-Google-Smtp-Source: AGHT+IHO/eDnZwvqRRLNCRAO3OTCYHHIC6ghwBsX4mx0wZlJPEPRuc1jlTUeZvjsdCq7vNwd+Pl10w==
-X-Received: by 2002:a17:902:c40f:b0:207:18f5:7e78 with SMTP id
- d9443c01a7336-20ca16ca0d0mr113985745ad.48.1728835517736; 
- Sun, 13 Oct 2024 09:05:17 -0700 (PDT)
+ AJvYcCXb+Py4Y/7L2K8WcOnJmv+oAbovu9O3vcHD0leFklocJB4BwlcIdQyc2QnLfbT02t3iXUIMVySx8Rqi@nongnu.org
+X-Gm-Message-State: AOJu0YyhRLryVFDiRCs58Ksx5/Z83AJDj/ITOrIyRh3gGu8L4DlabStT
+ 9CQRQ4H/XaUOxI4Pm3pG5WEZ+Hla6zRKAguOD/CXoGms+zJm9N/TTeZpMST4B/A=
+X-Google-Smtp-Source: AGHT+IG7n4bj27CTmlgyy2d4qgR+SG/nIXbvYJValRo9HE7qR4/B25Pj84q9iZtGvKEEdiu80Eqc0Q==
+X-Received: by 2002:a17:902:d501:b0:20b:951f:6dff with SMTP id
+ d9443c01a7336-20ca131e652mr126576655ad.0.1728835568784; 
+ Sun, 13 Oct 2024 09:06:08 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c0e806bsm51088905ad.125.2024.10.13.09.05.17
+ d9443c01a7336-20c8c35522fsm51506195ad.296.2024.10.13.09.06.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Oct 2024 09:05:17 -0700 (PDT)
-Message-ID: <040de42c-619b-4f69-87e2-fafae27fd8cc@linaro.org>
-Date: Sun, 13 Oct 2024 09:05:15 -0700
+ Sun, 13 Oct 2024 09:06:08 -0700 (PDT)
+Message-ID: <cc7d6d0f-9436-44e2-bd79-5bb6589c17f3@linaro.org>
+Date: Sun, 13 Oct 2024 09:06:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/16] target/mips: Replace MO_TE by mo_endian()
+Subject: Re: [PATCH v2 11/16] target/mips: Have gen_addiupc() expand $pc
+ during translation
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang
@@ -72,14 +73,14 @@ Cc: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang
  <hpoussin@reactos.org>, Aleksandar Rikalo <arikalo@gmail.com>,
  Aurelien Jarno <aurelien@aurel32.net>
 References: <20241010215015.44326-1-philmd@linaro.org>
- <20241010215015.44326-11-philmd@linaro.org>
+ <20241010215015.44326-12-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241010215015.44326-11-philmd@linaro.org>
+In-Reply-To: <20241010215015.44326-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +104,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/10/24 14:50, Philippe Mathieu-Daudé wrote:
-> +++ b/target/mips/tcg/msa_helper.c
-> @@ -8213,7 +8213,7 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
->   
->   #if !defined(CONFIG_USER_ONLY)
->   #define MEMOP_IDX(DF)                                                   \
-> -    MemOpIdx oi = make_memop_idx(MO_TE | DF | MO_UNALN,                 \
-> +    MemOpIdx oi = make_memop_idx(mo_endian(dc) | DF | MO_UNALN,                 \
->                                    mips_env_mmu_index(env));
->   #else
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/mips/tcg/translate.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
 
-This one is not within a translation context.
-Surely this should be mo_endian_env().
-
-I would have expected this not to compile?
-
-The rest of the changes appear correct, based on filenames.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
