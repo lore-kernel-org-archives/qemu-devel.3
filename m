@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC5BCF2591
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98493CF2579
 	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 18:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t03cz-0001ID-Ds; Sun, 13 Oct 2024 14:47:41 -0400
+	id 1t03d0-0001JO-U9; Sun, 13 Oct 2024 14:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cx-0001Hb-2b
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:39 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1t03cy-0001Hu-EG
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:40 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cv-0002Sm-Ik
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:38 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20c693b68f5so36113385ad.1
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 11:47:36 -0700 (PDT)
+ id 1t03cw-0002Su-IJ
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:40 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-20cb7088cbcso13897995ad.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 11:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728845255; x=1729450055; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=FT2FD47rkaLyAzs8B0mZU/dWJ/XoGwgqpz4vaRTUS3U=;
- b=RCQeDDtfFiBDIuL/Y+za3DFjLJlzWyIQRZLFEeEHQD9tffy3AIUAK3/s4QbRgtHYNh
- xXS62unE83iN2VA6iTbhLJAWHjG8AUwqUYYb9yZGjXTeA69ATPH0rrW7EeFdNxwH5c44
- 4PQ6o1HK96pQKhe+gcQXRYl8b1OpOLg/3H5rIqtoS5IdFSzHM8YGKY+l2nTaMMKrUBgw
- 3XFnwBUgv60tKNrxOIyu2h0VBXcngDCuU2lCPA73nNZOToP9sUtSyfW1LxhC74Ykb2r/
- K4UK5v9Es9ov25Fp/CstzO4pGmOS3aDKwdSK1C7lZgvofy3TuaBg3zMuntP4HPSD5I8M
- hRaA==
+ d=linaro.org; s=google; t=1728845257; x=1729450057; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SF1qZZsN9Tce3zMt/Ww343xHn3LIQsfZL/xAHrr77pE=;
+ b=LmwrBdA2lePbQS47fTiEqEtedR6qZ50j+BNFGnJVNpPkPY4o4+Tw5s+6B3MDmFf4UN
+ hOzeQnw6XqkxeguYeod3xjNqY6d78W/PC/lKioJYm2mSZPkMzFrL3FFS0CJaIpmQdTZc
+ mfCnex1ZCU1kpYoWtL0AxXM81vkyS7Cm6OaWIZPLj0v7kh6npFSbgroXAuATPJoxaill
+ /D2kSS14X1JOmNqukVXH85JBecI178q2xDhS9yGo6Z1Y8uWd0rhSqJNjmnMlUppFgaMg
+ Hz/r473GQG9ZBqepkuNIV7Cm8wNDiNhfxxQowd72YNm/hb6QndMt+GggmM4mXn4OIj5n
+ PU3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728845255; x=1729450055;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FT2FD47rkaLyAzs8B0mZU/dWJ/XoGwgqpz4vaRTUS3U=;
- b=TeN0YENDpC3thOim8hCjOJ/HtErNOLqUhCLqiOe9qcoLuyoKNB8tv9WNMLBqVkP8K8
- BtRcfG3VMhQ3BPgqACD5dxbNgLwpB3VNWwQsOTABG6DUDGQaFUJh2sXvr+bW6tWovtek
- yVuEsTXsfG1Ou6UAu6na+/VKQe11I3sOUTwrUOqgD6zCzkgFelH4ZPec4Ap3S4EEPxPL
- ZmHsui/gGf4GFXtFW/A9i2yclD7MhHs/sFOIZrcGfwLFE40iOGSpN5292aq+Ne2VTC52
- 4ynKH99wxErgURPQCc4Jdtd2d1oCbwLp7WUhD/MSdnmSo1z9iLu13FKFEqyLYo8BnKpa
- Ho9w==
-X-Gm-Message-State: AOJu0YwCo/GZOIIVknit2plnPkfbJ5sJXXuN514cuh0/08wIK0aFI/g4
- O1S7itiJnDOBAMlKnL/zFPqkjW1WRFv8nsUtUhcv7LtqvX8g7OaDojXXyAQ+nrvM3FMce1nKHkW
- X
-X-Google-Smtp-Source: AGHT+IENN8o15LRfzGB0JvrDa7L7k/juH9E6rTukzX5Mx0zhBxnkjnQtcIdRPjNi6nGxppcVgaUsuQ==
-X-Received: by 2002:a17:903:1c7:b0:20c:c62f:d0e1 with SMTP id
- d9443c01a7336-20cc62fd5d5mr57584265ad.55.1728845255366; 
- Sun, 13 Oct 2024 11:47:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728845257; x=1729450057;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SF1qZZsN9Tce3zMt/Ww343xHn3LIQsfZL/xAHrr77pE=;
+ b=SMOdxKMLyT6iiNwmtlI5pAd2cXSd1ZOrN/yYEALV9yIueUQQxKnpfxOGEesNCZ3WFM
+ lTar7lbTb3xtc8DWC5PsQxm230cjbwVQJH+tD92RgvUQrcGxAs6QTBe5n9XvhIdIXD97
+ OWT/jzff/R96dqbu3NuAhFBO/2isdcWHa9pfJNMXwF+vCsH6QEdqcaVNZG+Di/NeB34K
+ We3fJ2/wqTQVD6Rb4z+2iGLZi55LmS0OZ4BK76nouRA6VU2NFqe7oSSvbbqaefBlXy2/
+ +vzGmUH3fgUYJz5KjqGrrlN733+sZscjRFbJr5dVlmejyzdw9oVL6UCm8eUfP0YcTbiv
+ jM8g==
+X-Gm-Message-State: AOJu0YymDI7BQpiGDH+BH2yR2L7JT+f961RHdzSnBCPcJ1kZcFG0WYcu
+ DkfNqZAL/gofixET6ACfWcW/IFZ50lZyN7tdrhvk+dMoF7zlMqsjN2YwuDYLPzc5hbMFY8yreKN
+ z
+X-Google-Smtp-Source: AGHT+IH34Gj+9ie+Ww5w99Nayxeq539t7+VFC56usb2+HbjbwkCaQnGw1VaJ0XIbNwvsU3RKZisR+g==
+X-Received: by 2002:a17:902:db0e:b0:20c:7720:59b8 with SMTP id
+ d9443c01a7336-20ca142a448mr132609625ad.6.1728845257298; 
+ Sun, 13 Oct 2024 11:47:37 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c35522fsm52811805ad.296.2024.10.13.11.47.34
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-20c8c35522fsm52811805ad.296.2024.10.13.11.47.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 11:47:34 -0700 (PDT)
+ Sun, 13 Oct 2024 11:47:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 0/3] target/i386: Use probe_access_full_mmu in ptw_translate
-Date: Sun, 13 Oct 2024 11:47:30 -0700
-Message-ID: <20241013184733.1423747-1-richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 2/3] target/i386: Use probe_access_full_mmu in ptw_translate
+Date: Sun, 13 Oct 2024 11:47:32 -0700
+Message-ID: <20241013184733.1423747-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241013184733.1423747-1-richard.henderson@linaro.org>
+References: <20241013184733.1423747-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,23 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes for v2:
-  - Improve probe_access_full{,_mmu} documentation
-  - Remove ra parameter from ptw_translate
+The probe_access_full_mmu function was designed for this purpose,
+and does not report the memory operation event to plugins.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/i386/tcg/sysemu/excp_helper.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-r~
-
-
-Richard Henderson (3):
-  include/exec: Improve probe_access_full{,_mmu} documentation
-  target/i386: Use probe_access_full_mmu in ptw_translate
-  target/i386: Remove ra parameter from ptw_translate
-
- include/exec/exec-all.h              | 29 ++++++++++++++--------------
- target/i386/tcg/sysemu/excp_helper.c | 28 +++++++++++++--------------
- 2 files changed, 27 insertions(+), 30 deletions(-)
-
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 8fb05b1f53..8f4dc08535 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -62,12 +62,11 @@ typedef struct PTETranslate {
+ 
+ static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
+ {
+-    CPUTLBEntryFull *full;
+     int flags;
+ 
+     inout->gaddr = addr;
+-    flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
+-                              inout->ptw_idx, true, &inout->haddr, &full, ra);
++    flags = probe_access_full_mmu(inout->env, addr, 0, MMU_DATA_STORE,
++                                  inout->ptw_idx, &inout->haddr, NULL);
+ 
+     if (unlikely(flags & TLB_INVALID_MASK)) {
+         TranslateFault *err = inout->err;
+@@ -429,9 +428,8 @@ do_check_protect_pse36:
+         CPUTLBEntryFull *full;
+         int flags, nested_page_size;
+ 
+-        flags = probe_access_full(env, paddr, 0, access_type,
+-                                  MMU_NESTED_IDX, true,
+-                                  &pte_trans.haddr, &full, 0);
++        flags = probe_access_full_mmu(env, paddr, 0, access_type,
++                                      MMU_NESTED_IDX, &pte_trans.haddr, &full);
+         if (unlikely(flags & TLB_INVALID_MASK)) {
+             *err = (TranslateFault){
+                 .error_code = env->error_code,
 -- 
 2.43.0
 
