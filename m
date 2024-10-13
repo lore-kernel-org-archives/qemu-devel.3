@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AEC7CF258E
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4855CF2591
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t06q1-0007HF-1T; Sun, 13 Oct 2024 18:13:21 -0400
+	id 1t06pR-00077k-2N; Sun, 13 Oct 2024 18:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pg-0007CP-Ok
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:13:01 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1t06pQ-00077J-75
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:44 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pf-0000xB-B2
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:13:00 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2e2a97c2681so2633640a91.2
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:58 -0700 (PDT)
+ id 1t06pO-0000tt-CK
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:43 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2e2a999b287so2850979a91.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728857578; x=1729462378; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728857561; x=1729462361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nPsGlRApUHllpr7HECmYu85LwKI3gq1PeB/gQzKhtMY=;
- b=a5eVqYWvGSmnfNWZMVOyApLbkdqJSqPmd1kq8lKCw8RJ4d15JR6JnZHiByyvEDEmXf
- N7768V2wn5RPh4kH0A0JLJSIskaQb+K9jUnHTscJTbDzmdTQ6UALuThB/GQ+8K7lrHti
- gcELCjrtYRmZuLhCbzCr+/bwfoWZfBm33wBXJhiMqfkdwHXQEnHq55AcPh6SsoNv+K6P
- 0YB7KCX4zAF1u4Wi6NmwZwaGrfXFBXXtq3fMluyaTjNjZYklKF7RWBJIh0rlrTXM4gYt
- /dg9MXsXkIDdt5sIK7jGfzlLo8bKiXJMS3BSG3cc1MVFVyhhcV4KdljPShLjm5PGqi/F
- o0aQ==
+ bh=t8ym6NLxoNvu+SOj1YsRaeOvfI7iJrafTEN4muCnoIE=;
+ b=PqXzSt9nkLrEQLmFXdYaeSzAtNrSSJ9aM3c5+Ohl8HPp2NH/HPuI8xQuiKe6urdXr3
+ Y/859erIANdDpfnjIoD6pUf4VeuTNPYW5PSGoSViQqws/qNCYvBvef/4FD/6JmJbe8Mq
+ HQa2++Y5ZxamOP5OZ/v8il+EU16xgZB1F9JYhA9jfUGhlYT+rPgyjXvDcxJA+tx5sa5D
+ MPN4kGM6OePuxcQ6xmL2nCFaS/Tee+S6q1qlkpoWRlSQQ7fI+gF6BPLNNGDLFFsec75R
+ J+kA9WaaB+kUxxlkncUeVSN1H7+9+fBcSemw/Vhx3RNpNGVShuLUvUN72yANFWIRBr2q
+ ILRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728857578; x=1729462378;
+ d=1e100.net; s=20230601; t=1728857561; x=1729462361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nPsGlRApUHllpr7HECmYu85LwKI3gq1PeB/gQzKhtMY=;
- b=W0u99OF+JTpmJQsZU2Uta0EVddGCtGudoEHxeMq/Ujz0IrxUqS1e/mxDoSUucf+YlG
- qH2+ouI1QvFZ8YonRKmePTxw7lSU1+hgw+gUYdBbCb1MACJ1rAlpUNBVzYfRK1Rru16R
- NDoCh/8qGZeaaRNnWpgrj1Q9SoGnAqB6uQ9EhFTf/J20WQi+CGzsvi9Gl3J/bkNCVC9Y
- Pi2lBeqsFuCZqZiBvEyhIpcNnvXi9BJXronFAKFyY/cQb2NffZXK74TJhgrbSLQD/DpX
- PL9O2mb+cX1v01mRjDxmNuzDYPYJSUccH70S8zMPKJsu4AAMZa60A7oW3BDoMzvTb934
- Qt3A==
-X-Gm-Message-State: AOJu0YxnsKyxVS0jV/e0ZpBWWrZha6Zqo+PgoZPaR7TcGW/QY4XbALnq
- ycXwjXPfIVYiV+HARxqJu2dW0e3MDPm+YWXCypOBT9V1toBzHUlfVqEfLgsJ2uBpzPWNIpXS3a+
- A
-X-Google-Smtp-Source: AGHT+IE4nIwz6w08ekeXRdEwDegLKka9MgNchvoOvimoEiuvQBp8xoACW+i9qBtGCwecY+miEzU6/w==
-X-Received: by 2002:a17:90b:1056:b0:2e0:db81:4f79 with SMTP id
- 98e67ed59e1d1-2e2f0a2fb2cmr11105444a91.2.1728857578022; 
- Sun, 13 Oct 2024 15:12:58 -0700 (PDT)
+ bh=t8ym6NLxoNvu+SOj1YsRaeOvfI7iJrafTEN4muCnoIE=;
+ b=JvP4+SiZI8eb71x82ddPeLzlK6glFbxa5z74ZJWBwo7Cr2wYglcy7+18YKjA16Vugr
+ xsdXPjdih+gEDjEZ/JaDzz4g8ZEsgoz/XBCCizCkgNBZYBD8KSPmIfCnTzObX1V+PoFv
+ hZQItCqecjiXBs1iprMQPXNxNb7cHi/v4pzBeyrdH0H+gcnH+UqX/Jz7goe/VIihlX7e
+ 0UcBVMYcBWnFQs8FNKWSxxCXeQW7SKiMi/pCriiPeuxVVzbAsBH7toiutf4MOf2gt5T0
+ Bmd9YcCfTJybbeymySGDV48ARZ/cBWxFFdWl0cj9nGpPYzYahzpqafxLrFx4D4xfu6G1
+ 2MTw==
+X-Gm-Message-State: AOJu0YxqWMLs1oJgnDfqvudmQqTSahPvQWrOqIWtuBTMdU9N+vQ423nA
+ xRIxCukaEtMsCTpOFCeL/z0wLW9n4kSzlISZXJeJ7z8l4BWPwiJZmsjtOBjnia58BVREdEGgqnV
+ 9
+X-Google-Smtp-Source: AGHT+IHWnNiIXpnTD8cm8+35JeXmrYMBP90R1Lxi3XKuJdKRPVisipex8kl+OarBqksPeznQczuUnA==
+X-Received: by 2002:a17:90b:d97:b0:2e2:ebbb:7619 with SMTP id
+ 98e67ed59e1d1-2e2f0ab98cfmr11287608a91.9.1728857561006; 
+ Sun, 13 Oct 2024 15:12:41 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.57
+ 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 15:12:57 -0700 (PDT)
+ Sun, 13 Oct 2024 15:12:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 23/27] target/arm: Pass MemOp through get_phys_addr_twostage
-Date: Sun, 13 Oct 2024 15:12:31 -0700
-Message-ID: <20241013221235.1585193-24-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 05/27] target/i386/gdbstub: Expose orig_ax
+Date: Sun, 13 Oct 2024 15:12:13 -0700
+Message-ID: <20241013221235.1585193-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241013221235.1585193-1-richard.henderson@linaro.org>
 References: <20241013221235.1585193-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,59 +94,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass memop through get_phys_addr_twostage with its
-recursion with get_phys_addr_nogpc.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Copy XML files describing orig_ax from GDB and glue them with
+CPUX86State.orig_ax.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20240912093012.402366-5-iii@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/ptw.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ target/i386/cpu.h                     |  1 +
+ target/i386/cpu.c                     |  1 +
+ target/i386/gdbstub.c                 | 51 +++++++++++++++++++++++++++
+ configs/targets/i386-linux-user.mak   |  2 +-
+ configs/targets/x86_64-linux-user.mak |  2 +-
+ gdb-xml/i386-32bit-linux.xml          | 11 ++++++
+ gdb-xml/i386-64bit-linux.xml          | 11 ++++++
+ 7 files changed, 77 insertions(+), 2 deletions(-)
+ create mode 100644 gdb-xml/i386-32bit-linux.xml
+ create mode 100644 gdb-xml/i386-64bit-linux.xml
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 0445c3ccf3..f1fca086a4 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3301,7 +3301,7 @@ static bool get_phys_addr_disabled(CPUARMState *env,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 9c39384ac0..4c63e7b045 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2226,6 +2226,7 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags);
  
- static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
-                                    vaddr address,
--                                   MMUAccessType access_type,
-+                                   MMUAccessType access_type, MemOp memop,
-                                    GetPhysAddrResult *result,
-                                    ARMMMUFaultInfo *fi)
- {
-@@ -3313,7 +3313,8 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
-     ARMSecuritySpace ipa_space;
-     uint64_t hcr;
+ int x86_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+ int x86_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
++void x86_cpu_gdb_init(CPUState *cs);
  
--    ret = get_phys_addr_nogpc(env, ptw, address, access_type, 0, result, fi);
-+    ret = get_phys_addr_nogpc(env, ptw, address, access_type,
-+                              memop, result, fi);
+ void x86_cpu_list(void);
+ int cpu_x86_support_mca_broadcast(CPUX86State *env);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ff227a8c5c..0d30191482 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7831,6 +7831,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
  
-     /* If S1 fails, return early.  */
-     if (ret) {
-@@ -3339,7 +3340,8 @@ static bool get_phys_addr_twostage(CPUARMState *env, S1Translate *ptw,
-     cacheattrs1 = result->cacheattrs;
-     memset(result, 0, sizeof(*result));
+     mce_init(cpu);
  
--    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type, 0, result, fi);
-+    ret = get_phys_addr_nogpc(env, ptw, ipa, access_type,
-+                              memop, result, fi);
-     fi->s2addr = ipa;
++    x86_cpu_gdb_init(cs);
+     qemu_init_vcpu(cs);
  
-     /* Combine the S1 and S2 perms.  */
-@@ -3469,7 +3471,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-         if (arm_feature(env, ARM_FEATURE_EL2) &&
-             !regime_translation_disabled(env, ARMMMUIdx_Stage2, ptw->in_space)) {
-             return get_phys_addr_twostage(env, ptw, address, access_type,
--                                          result, fi);
-+                                          memop, result, fi);
-         }
-         /* fall through */
+     /*
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index cc5eceeb7e..04c49e802d 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -18,8 +18,13 @@
+  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
++#include "accel/tcg/vcpu-state.h"
+ #include "cpu.h"
++#include "exec/gdbstub.h"
+ #include "gdbstub/helpers.h"
++#ifdef CONFIG_LINUX_USER
++#include "linux-user/qemu.h"
++#endif
  
+ #ifdef TARGET_X86_64
+ static const int gpr_map[16] = {
+@@ -406,3 +411,49 @@ int x86_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     /* Unrecognised register.  */
+     return 0;
+ }
++
++#ifdef CONFIG_LINUX_USER
++
++#define IDX_ORIG_AX 0
++
++static int x86_cpu_gdb_read_linux_register(CPUState *cs, GByteArray *mem_buf,
++                                           int n)
++{
++    X86CPU *cpu = X86_CPU(cs);
++    CPUX86State *env = &cpu->env;
++
++    switch (n) {
++    case IDX_ORIG_AX:
++        return gdb_get_reg(env, mem_buf, get_task_state(cs)->orig_ax);
++    }
++    return 0;
++}
++
++static int x86_cpu_gdb_write_linux_register(CPUState *cs, uint8_t *mem_buf,
++                                            int n)
++{
++    X86CPU *cpu = X86_CPU(cs);
++    CPUX86State *env = &cpu->env;
++
++    switch (n) {
++    case IDX_ORIG_AX:
++        return gdb_write_reg(env, mem_buf, &get_task_state(cs)->orig_ax);
++    }
++    return 0;
++}
++
++#endif
++
++void x86_cpu_gdb_init(CPUState *cs)
++{
++#ifdef CONFIG_LINUX_USER
++    gdb_register_coprocessor(cs, x86_cpu_gdb_read_linux_register,
++                             x86_cpu_gdb_write_linux_register,
++#ifdef TARGET_X86_64
++                             gdb_find_static_feature("i386-64bit-linux.xml"),
++#else
++                             gdb_find_static_feature("i386-32bit-linux.xml"),
++#endif
++                             0);
++#endif
++}
+diff --git a/configs/targets/i386-linux-user.mak b/configs/targets/i386-linux-user.mak
+index 5b2546a430..b72a156473 100644
+--- a/configs/targets/i386-linux-user.mak
++++ b/configs/targets/i386-linux-user.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=i386
+ TARGET_SYSTBL_ABI=i386
+ TARGET_SYSTBL=syscall_32.tbl
+-TARGET_XML_FILES= gdb-xml/i386-32bit.xml
++TARGET_XML_FILES= gdb-xml/i386-32bit.xml gdb-xml/i386-32bit-linux.xml
+diff --git a/configs/targets/x86_64-linux-user.mak b/configs/targets/x86_64-linux-user.mak
+index 9ceefbb615..86042814d3 100644
+--- a/configs/targets/x86_64-linux-user.mak
++++ b/configs/targets/x86_64-linux-user.mak
+@@ -2,4 +2,4 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall_64.tbl
+-TARGET_XML_FILES= gdb-xml/i386-64bit.xml
++TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-linux.xml
+diff --git a/gdb-xml/i386-32bit-linux.xml b/gdb-xml/i386-32bit-linux.xml
+new file mode 100644
+index 0000000000..5ffe5616e6
+--- /dev/null
++++ b/gdb-xml/i386-32bit-linux.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2010-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.i386.linux">
++  <reg name="orig_eax" bitsize="32" type="int"/>
++</feature>
+diff --git a/gdb-xml/i386-64bit-linux.xml b/gdb-xml/i386-64bit-linux.xml
+new file mode 100644
+index 0000000000..0f26990d2f
+--- /dev/null
++++ b/gdb-xml/i386-64bit-linux.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2010-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.i386.linux">
++  <reg name="orig_rax" bitsize="64" type="int"/>
++</feature>
 -- 
 2.43.0
 
