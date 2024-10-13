@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD43BCF2579
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 17:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43804CF2579
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 17:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t021i-0003u3-1N; Sun, 13 Oct 2024 13:05:06 -0400
+	id 1t02Q0-00075h-SI; Sun, 13 Oct 2024 13:30:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t021f-0003tj-62
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:05:03 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1t02Pz-00074e-7F
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:30:11 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t021d-0000hJ-K7
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:05:02 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-208cf673b8dso36954315ad.3
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 10:05:00 -0700 (PDT)
+ id 1t02Px-0003OZ-G9
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:30:10 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-207115e3056so28669415ad.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 10:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728839100; x=1729443900; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728840607; x=1729445407; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eMPR8XFDaREuizFpqyXhMG4at6FcQdNYioA1oliHzzk=;
- b=GGiaOIDo1HjthVNOcSAO2U7ODmsBoJTVkX2/NvnxrjIdI9VvTOxVC3VQWFEQT5xOGh
- 2m4HROu55CG1jkgDNPQ3YvzozKWAQTnoH1jN9TNza7Ed3MkZEI9mehQSaazuGcYgrrUB
- U/YSzBkTakKUSQ2GKQrk3R7c4BPRrXoflaoYQY5f6f98/D2m2d996a5Oy2v3oP20nxfo
- LZ17LNGUE/l3hn0c0icS/zwoJ0Q2FzqGvEGQjFB+FaPKs7pSbUJ33SCCFA4dAT3tIP8w
- RUK5ln+bCVEzquDmn8j1a3pGhSHzwY/eEynxF6fo9BVoWuNUuESQYAFM226IRz/TGbjk
- 0fKA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D83f+KcDMnwyLbifqJUEWjwJAIEKpC5jUUm4zFbphN8=;
+ b=Z0GpGmAJ5zHEDjQilxt8Ojxc5RtzxrJJiTTGNGXNxKU5od0ke21lJD08tEgFKOKtm7
+ OzKM5QMVIlrCz0YAdyG8+dW8NAinanVdBsNdjuJWVCNGQGqNC76mOQqdMYIBRdJALdWF
+ l0I7gyWhAbGHxgTWXIcUAMtK0ZEVIxNL+TtweW8OJRo7v3ZZ9AvlaeEkZE7IqLs+UiHQ
+ 6ume8Wd0joYVvlAolXxxWs+VeE7q10u2t9QW0RILb7RdIxz4URalClOXl7bmTPR0pNrR
+ aDpjn4vk2XnH7hs26HiXRsbWxGLqNssk0Ssi1xDThVlmHkbeB/FmigkcZqZD9acDLNQK
+ 1sbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728839100; x=1729443900;
+ d=1e100.net; s=20230601; t=1728840607; x=1729445407;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eMPR8XFDaREuizFpqyXhMG4at6FcQdNYioA1oliHzzk=;
- b=ggBmPCPVLFckC2b2YJqow4epdE6KytAr3SPo8qRFXDgWICY4ubQCKFUP4caA71Ffaj
- 08ddAPC0wos++A2SGewWs+hgdhkqUF6bQdApkLVxIv415DiD5IE+oDnitUqo/VTB5TTk
- HHxCxczHYs1UW7eGSAc7OGBARZoXiAqBKLOUn6mqkbQDK2rZlbFmvQ5qn9QpWYMT76Vl
- MfL0mXq5Wf4SShrkyoGkw4gzVJPgX2T8Rz60kbozHBpu+V7F7C4w7ojjRE9xCI/EYo+n
- 45EHjJ99oFKAjmCNGuo1vcsf5nbtPInjI+C661wKYtxXliAF67BIiODDVehBWAaxBfHu
- rzgQ==
+ bh=D83f+KcDMnwyLbifqJUEWjwJAIEKpC5jUUm4zFbphN8=;
+ b=kt6s7yZmg2uyH6OKgidizAJvV2eJvJqjTZerILxF0A1lFgCEOo/3PcCk7cZhAH1aR9
+ VqB4SFnf1EYsL7A1IWgiMbIZRtZbkthPOfDjRsEcykBvWjGw8Z/UzIjKZBJkE5QfspCm
+ QKvddya9tdYh5bk8pbggwZsClNG3JO3YBa2an2OLihGjEdUytl7PbfOqIgKOk8j+Zrde
+ NPPmubY/LSioCOSRY/Yvv+TLu5wURARD70uzf+twNQDy7Lzx6qYUY3fc6XwOukqcELBx
+ eMxkggNe7V782JlZuVwzXF0XkWocqaVDuHLlnMFyuQOGe1S7cNJ2+nlM8qRgXgvv9AuL
+ qILQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHESUmFIbDb7EkxQVJOvYv+SXodqX1vMnq5IO7x6GW4bj1l4RPWN2K6AzsPxhnYHdrXq7WpNVXq/6b@nongnu.org
-X-Gm-Message-State: AOJu0YwXkaV1+6YLDHNQh4Z24NU/NUYlYwq3vmR0v4a5n1R+gIOf7c6x
- IvRqcRb7euuHwxujkWpk9tURXFXR0yzMgutp+37bN8KOZbCcO+GndPwOgNtsZ4U=
-X-Google-Smtp-Source: AGHT+IFi7Eqey1biUT4EqwOCahxQtTBM0aNckwRRgXBqdD1LblqUjDjXCAKgAUBA4T+7heNiKnNW2Q==
-X-Received: by 2002:a17:902:c40d:b0:20c:5a64:9bc6 with SMTP id
- d9443c01a7336-20ca16e9c53mr116142195ad.50.1728839099716; 
- Sun, 13 Oct 2024 10:04:59 -0700 (PDT)
+ AJvYcCW2J7d2Ex0gAnQ2Keu/RHVtLEqBTxCKdfZqN/rbJdGfEadwRfu4CyI/YJlR6GKglT41n7qZXNmdZkwR@nongnu.org
+X-Gm-Message-State: AOJu0YyCIF1zaHdZKfx6uZIPBxBdxxe8E5cBj2YjT76Yb5tY4v0EKrcw
+ SgBzhTaJoXcl+yCBonbcU7cYvFP+t40MBsEuaLhX0vtPbNieLL3eVmdVmZWeQOM=
+X-Google-Smtp-Source: AGHT+IGrPfoTMUDK3lDrcjzWYjo4g56J97q5vrKmHF0FsqXrzbBDO+Mc+3b/FMGfWtqYt85ZF0wr6A==
+X-Received: by 2002:a17:902:d481:b0:20c:a387:7dc9 with SMTP id
+ d9443c01a7336-20ca3877fd7mr118200965ad.29.1728840607421; 
+ Sun, 13 Oct 2024 10:30:07 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c351060sm51867935ad.292.2024.10.13.10.04.58
+ d9443c01a7336-20c8c0e7513sm52020925ad.137.2024.10.13.10.30.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Oct 2024 10:04:59 -0700 (PDT)
-Message-ID: <ce85edae-0f6d-474e-9101-c98f2d32ab06@linaro.org>
-Date: Sun, 13 Oct 2024 10:04:57 -0700
+ Sun, 13 Oct 2024 10:30:06 -0700 (PDT)
+Message-ID: <e504719e-aa6a-41c5-b2f2-31e3400807b5@linaro.org>
+Date: Sun, 13 Oct 2024 10:30:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg: remove singlestep_enabled from DisasContextBase
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241010083641.1785069-1-pbonzini@redhat.com>
+Subject: Re: [PATCH] target/arm: Store FPSR cumulative exception bits in
+ env->vfp.fpsr
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20241011162401.3672735-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241010083641.1785069-1-pbonzini@redhat.com>
+In-Reply-To: <20241011162401.3672735-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,19 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 01:36, Paolo Bonzini wrote:
-> It is used in a couple of places only, both within the same target.  Those can
-> use the cflags just as well, so remove the separate field.
+On 10/11/24 09:24, Peter Maydell wrote:
+> Currently we store the FPSR cumulative exception bits in the
+> float_status fields, and use env->vfp.fpsr only for the NZCV bits.
+> (The QC bit is stored in env->vfp.qc[].)
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   include/exec/translator.h   | 2 --
->   accel/tcg/translator.c      | 1 -
->   target/mips/tcg/translate.c | 5 +++--
->   3 files changed, 3 insertions(+), 5 deletions(-)
+> This works for TCG, but if QEMU was built without CONFIG_TCG (i.e.
+> with KVM support only) then we use the stub versions of
+> vfp_get_fpsr_from_host() and vfp_set_fpsr_to_host() which do nothing,
+> throwing away the cumulative exception bit state.  The effect is that
+> if the FPSR state is round-tripped from KVM to QEMU then we lose the
+> cumulative exception bits.  In particular, this will happen if the VM
+> is migrated.  There is no user-visible bug when using KVM with a QEMU
+> binary that was built with CONFIG_TCG.
 
+Ok, noted.
+
+> -    int i = vfp_exceptbits_to_host(val);
+> -    set_float_exception_flags(i, &env->vfp.fp_status);
+> +    set_float_exception_flags(0, &env->vfp.fp_status);
+>       set_float_exception_flags(0, &env->vfp.fp_status_f16);
+>       set_float_exception_flags(0, &env->vfp.standard_fp_status);
+>       set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
+
+I will note that this affects can_use_fpu() in softfpu.c, at least for the first operation 
+after setting FPSR: without float_flag_inexact set, we will always use the slow path.
+
+In glibc, when manipulating FPSR, it tends to come in pairs: feholdsetround + 
+feresetround.  With this, half of the time we'll be setting the exception flags to 0, and 
+half of the time we'll be restoring old values.  The latter set is reasonably like to have 
+inexact set.
+
+It might be worthwhile to set float_flag_inexact in all of these when IXC is set.  We will 
+still sum to the same result when reading later.
+
+That said, this fixes a bug and is not wrong so
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-And queued.
 
 
 r~
