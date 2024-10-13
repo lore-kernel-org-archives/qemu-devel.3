@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A34CF2591
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D88CF2594
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t06pc-0007BE-FQ; Sun, 13 Oct 2024 18:12:56 -0400
+	id 1t06py-0007Fj-JL; Sun, 13 Oct 2024 18:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pY-00079x-W0
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:54 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1t06pc-0007BM-UH
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:57 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pW-0000vG-RC
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:52 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7db637d1e4eso2474319a12.2
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:49 -0700 (PDT)
+ id 1t06pb-0000wH-4X
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:56 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2e2e88cb0bbso1768458a91.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728857568; x=1729462368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728857574; x=1729462374; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RgjF9MWTX9WVkUUJb/RiYkmVHDzeAEtDtYq3Lai+k+w=;
- b=vnJuaoA2IDm0kzoxKpCpuFWkoTe5F2Fek3+Plm0lu/o6uGhELFau2bA5axqsyc5yqe
- znFcaUifBZlc9cw7Xk+PUkDf3khFxRfYY7RKguWWcqROIi5tuLDVjafphd31TIauukwn
- 0NN5whNLUNBKCORTSPo9nVR/AcEycw1lR4wZ60Mr4okc6aW8kphpX1VXVW7XMx6mK8tL
- ThRGvD+6dmZOvntBrUQJdd3+20hrJtiLjHq2KnyKXSnTa8CXm6HuSseEJ0WOKH+heKO1
- od8wtkpKuQ430AwOLLMsdNlaA0yP/obADWF2AJC6CE7gE7Ju1nW9pgTJ/emk40XaBunQ
- tPfA==
+ bh=qyIQGMW9LXzuIdZhtsfgRRXnueKIctdP5fxMu5c0xxA=;
+ b=Ha8hBcWJZBqC0dqeRMt42qSIFViRbZwvlZJqcgb78f94Zwc5mRtwnEp12MP5RJTuH8
+ en2rp4MJQju5XVVGKAqPeAOV5OOyE4T4mP4wssthd3vyOlsaHtkHS0DBjGQ8cJvKb+z1
+ zrg8KRPmbysjfd/bCKDJaSZualYeNsCUxclkqExeREXFDlVGtQsjXm5UYXw1KixWX3d2
+ bvVOKq2ulGWx8hGtwJCkg9vV8xCpx7QEg7het7ECbIlIzQcdVAzJz//J0QD95Eh+/qbr
+ bKI60w1if33ImZyOBd1aGTeD0g3ZZJm9Ep8aP3cXIFA5o7HhCZEZsIW1Ms7Vus2ue22b
+ SjQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728857568; x=1729462368;
+ d=1e100.net; s=20230601; t=1728857574; x=1729462374;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RgjF9MWTX9WVkUUJb/RiYkmVHDzeAEtDtYq3Lai+k+w=;
- b=V/daUymmCmhdvdJjMZC62li8iAaAZKzgxYDf6GfU3KABaj7BvkLJuirtjfz7LEChkd
- DFkgzxrJhLx5wcE6Zm4vtwFvE9yWETkjITyaNp89nGsv6yQzEVvQTAjmicVoRHdtSSv7
- Kvqwt/ubsJxt2XFBQxUfIJCG0/xVW3msU9N6qEJLCa0OVEmkPY1AxtAprKarWLiTl6Dq
- Y1oUrT2eD0ZE41NShmKplvoZLmVXl9KJhqkQYaeoVzhEf3zDH996DziZn3II8TIMDS9P
- 6NBnTbibVD0uZNrgJnAEi77GJenvU+V4jszQtFzxbSodJdyRHOmbuAOJWdY6MXiH/L3k
- SPKA==
-X-Gm-Message-State: AOJu0Yze1e53G7tnDf5XzF/OoHeYyUYx4cLqea4CxTvjyjWiwnSGJtLk
- 0F+c+7xEdwI3asrIe9GOhXeRx4AhNaOhi/9FYaKzcJrdTE38W/BQaUaLoaqaSf+9MNvfMq0u/rG
- 9
-X-Google-Smtp-Source: AGHT+IFuAgqUImcufDPhNQv4l0lS9jLsvCkAbNeL7sItYiaU+WXXHRdP1eKYBPCU0eWoPkve+O+3Fg==
-X-Received: by 2002:a17:90b:f16:b0:2e2:a850:6921 with SMTP id
- 98e67ed59e1d1-2e2f0a49228mr12723574a91.1.1728857568482; 
- Sun, 13 Oct 2024 15:12:48 -0700 (PDT)
+ bh=qyIQGMW9LXzuIdZhtsfgRRXnueKIctdP5fxMu5c0xxA=;
+ b=iFWKOSskvaDAsCkzVm3yo+b/TpoaRQ9a0BEq4/mpNN50RUJc3Pn7AEgMLUHa2MnrQs
+ D7GojFfexhjeOjeCj+RXTGmZpUCWcHSOL7Rkd1S+4bHtC53bBU6fk2oVpm/h4Ar6tOFC
+ N8hmKgwYyuESxEqxUjsnux4+FETz/4nRE6fP4tqWQib2+Wg/7q4j1YD3srY5Pp75Rr5z
+ bNJKeyALjsI4N1bMfhLVqlHPXB7VZxG7ypx9LxPR3pDfqtelGAWblb3vOjdBVoeYWtdY
+ 66TUpF9Y/xIGKpFHglv5Ut/yhWCELZWa5a6kPv/UTtA93XRLaXzpVoR/aTMO9V/Q1BCj
+ l40A==
+X-Gm-Message-State: AOJu0YwLrcm2JJP00urSPLwNiW3Z605SrEQh+jIEU3ycRnvT44coQH3k
+ ZGT5qwoj05E3rflII6O4DiQuHlUAf0Qdt6BQ0/i2zu3s2hV7BNHRA/ITbDGjm1QyydESFIrI62L
+ D
+X-Google-Smtp-Source: AGHT+IGw5ei1TeTL1x5T8u6u4Ks7+rpPGkZB8Rw6zCGDuF6yYpXwTHw5uTtODfZt5x35gLBHvoxAeA==
+X-Received: by 2002:a17:90a:be08:b0:2e2:991c:d796 with SMTP id
+ 98e67ed59e1d1-2e2f0aa561bmr12164691a91.9.1728857573821; 
+ Sun, 13 Oct 2024 15:12:53 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.47
+ 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 15:12:48 -0700 (PDT)
+ Sun, 13 Oct 2024 15:12:53 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 12/27] accel/tcg: Add TCGCPUOps.tlb_fill_align
-Date: Sun, 13 Oct 2024 15:12:20 -0700
-Message-ID: <20241013221235.1585193-13-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PULL 18/27] target/hppa: Implement TCGCPUOps.tlb_fill_align
+Date: Sun, 13 Oct 2024 15:12:26 -0700
+Message-ID: <20241013221235.1585193-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241013221235.1585193-1-richard.henderson@linaro.org>
 References: <20241013221235.1585193-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,226 +94,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new callback to handle softmmu paging.  Return the page
-details directly, instead of passing them indirectly to
-tlb_set_page.  Handle alignment simultaneously with paging so
-that faults are handled with target-specific priority.
+Convert hppa_cpu_tlb_fill to hppa_cpu_tlb_fill_align so that we
+can recognize alignment exceptions in the correct priority order.
 
-Route all calls of the two hooks through a tlb_fill_align
-function local to cputlb.c.
-
-As yet no targets implement the new hook.
-As yet cputlb.c does not use the new alignment check.
-
+Resolves: https://bugzilla.kernel.org/show_bug.cgi?id=219339
+Tested-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h         |  4 +--
- include/hw/core/tcg-cpu-ops.h | 26 +++++++++++++++
- include/qemu/typedefs.h       |  1 +
- accel/tcg/cputlb.c            | 61 ++++++++++++++++++++++-------------
- 4 files changed, 67 insertions(+), 25 deletions(-)
+ target/hppa/cpu.h        |  6 +++---
+ target/hppa/cpu.c        |  2 +-
+ target/hppa/mem_helper.c | 21 ++++++++++++---------
+ 3 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 04e9ad4996..d21a24c82f 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -205,7 +205,7 @@ struct CPUClass {
-  * so the layout is not as critical as that of CPUTLBEntry. This is
-  * also why we don't want to combine the two structs.
-  */
--typedef struct CPUTLBEntryFull {
-+struct CPUTLBEntryFull {
-     /*
-      * @xlat_section contains:
-      *  - in the lower TARGET_PAGE_BITS, a physical section number
-@@ -261,7 +261,7 @@ typedef struct CPUTLBEntryFull {
-             bool guarded;
-         } arm;
-     } extra;
--} CPUTLBEntryFull;
-+};
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 526855f982..e45ba50a59 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -363,9 +363,9 @@ void hppa_cpu_dump_state(CPUState *cs, FILE *f, int);
+ void hppa_ptlbe(CPUHPPAState *env);
+ hwaddr hppa_cpu_get_phys_page_debug(CPUState *cs, vaddr addr);
+ void hppa_set_ior_and_isr(CPUHPPAState *env, vaddr addr, bool mmu_disabled);
+-bool hppa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                       MMUAccessType access_type, int mmu_idx,
+-                       bool probe, uintptr_t retaddr);
++bool hppa_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
++                             MMUAccessType access_type, int mmu_idx,
++                             MemOp memop, int size, bool probe, uintptr_t ra);
+ void hppa_cpu_do_interrupt(CPUState *cpu);
+ bool hppa_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 7cf2e2f266..c38439c180 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -226,7 +226,7 @@ static const TCGCPUOps hppa_tcg_ops = {
+     .restore_state_to_opc = hppa_restore_state_to_opc,
  
- /*
-  * Data elements that are per MMU mode, minus the bits accessed by
-diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
-index 34318cf0e6..663efb9133 100644
---- a/include/hw/core/tcg-cpu-ops.h
-+++ b/include/hw/core/tcg-cpu-ops.h
-@@ -13,6 +13,7 @@
- #include "exec/breakpoint.h"
- #include "exec/hwaddr.h"
- #include "exec/memattrs.h"
-+#include "exec/memop.h"
- #include "exec/mmu-access-type.h"
- #include "exec/vaddr.h"
- 
-@@ -131,6 +132,31 @@ struct TCGCPUOps {
-      * same function signature.
-      */
-     bool (*cpu_exec_halt)(CPUState *cpu);
-+    /**
-+     * @tlb_fill_align: Handle a softmmu tlb miss
-+     * @cpu: cpu context
-+     * @out: output page properties
-+     * @addr: virtual address
-+     * @access_type: read, write or execute
-+     * @mmu_idx: mmu context
-+     * @memop: memory operation for the access
-+     * @size: memory access size, or 0 for whole page
-+     * @probe: test only, no fault
-+     * @ra: host return address for exception unwind
-+     *
-+     * If the access is valid, fill in @out and return true.
-+     * Otherwise if probe is true, return false.
-+     * Otherwise raise an exception and do not return.
-+     *
-+     * The alignment check for the access is deferred to this hook,
-+     * so that the target can determine the priority of any alignment
-+     * fault with respect to other potential faults from paging.
-+     * Zero may be passed for @memop to skip any alignment check
-+     * for non-memory-access operations such as probing.
-+     */
-+    bool (*tlb_fill_align)(CPUState *cpu, CPUTLBEntryFull *out, vaddr addr,
-+                           MMUAccessType access_type, int mmu_idx,
-+                           MemOp memop, int size, bool probe, uintptr_t ra);
-     /**
-      * @tlb_fill: Handle a softmmu tlb miss
-      *
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 9d222dc376..3d84efcac4 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -40,6 +40,7 @@ typedef struct ConfidentialGuestSupport ConfidentialGuestSupport;
- typedef struct CPUArchState CPUArchState;
- typedef struct CPUPluginState CPUPluginState;
- typedef struct CPUState CPUState;
-+typedef struct CPUTLBEntryFull CPUTLBEntryFull;
- typedef struct DeviceState DeviceState;
- typedef struct DirtyBitmapSnapshot DirtyBitmapSnapshot;
- typedef struct DisasContextBase DisasContextBase;
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 35cda1e2b0..d72f454e9e 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1221,22 +1221,35 @@ void tlb_set_page(CPUState *cpu, vaddr addr,
+ #ifndef CONFIG_USER_ONLY
+-    .tlb_fill = hppa_cpu_tlb_fill,
++    .tlb_fill_align = hppa_cpu_tlb_fill_align,
+     .cpu_exec_interrupt = hppa_cpu_exec_interrupt,
+     .cpu_exec_halt = hppa_cpu_has_work,
+     .do_interrupt = hppa_cpu_do_interrupt,
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index d38054da8a..b8c3e55170 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -424,12 +424,11 @@ void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+     }
  }
  
- /*
-- * Note: tlb_fill() can trigger a resize of the TLB. This means that all of the
-- * caller's prior references to the TLB table (e.g. CPUTLBEntry pointers) must
-- * be discarded and looked up again (e.g. via tlb_entry()).
-+ * Note: tlb_fill_align() can trigger a resize of the TLB.
-+ * This means that all of the caller's prior references to the TLB table
-+ * (e.g. CPUTLBEntry pointers) must be discarded and looked up again
-+ * (e.g. via tlb_entry()).
-  */
--static void tlb_fill(CPUState *cpu, vaddr addr, int size,
--                     MMUAccessType access_type, int mmu_idx, uintptr_t retaddr)
-+static bool tlb_fill_align(CPUState *cpu, vaddr addr, MMUAccessType type,
-+                           int mmu_idx, MemOp memop, int size,
-+                           bool probe, uintptr_t ra)
+-bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+-                       MMUAccessType type, int mmu_idx,
+-                       bool probe, uintptr_t retaddr)
++bool hppa_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
++                             MMUAccessType type, int mmu_idx,
++                             MemOp memop, int size, bool probe, uintptr_t ra)
  {
--    bool ok;
-+    const TCGCPUOps *ops = cpu->cc->tcg_ops;
-+    CPUTLBEntryFull full;
+-    HPPACPU *cpu = HPPA_CPU(cs);
+-    CPUHPPAState *env = &cpu->env;
++    CPUHPPAState *env = cpu_env(cs);
+     int prot, excp, a_prot;
+     hwaddr phys;
  
--    /*
--     * This is not a probe, so only valid return is success; failure
--     * should result in exception + longjmp to the cpu loop.
--     */
--    ok = cpu->cc->tcg_ops->tlb_fill(cpu, addr, size,
--                                    access_type, mmu_idx, false, retaddr);
--    assert(ok);
-+    if (ops->tlb_fill_align) {
-+        if (ops->tlb_fill_align(cpu, &full, addr, type, mmu_idx,
-+                                memop, size, probe, ra)) {
-+            tlb_set_page_full(cpu, mmu_idx, addr, &full);
-+            return true;
-+        }
-+    } else {
-+        /* Legacy behaviour is alignment before paging. */
-+        if (addr & ((1u << memop_alignment_bits(memop)) - 1)) {
-+            ops->do_unaligned_access(cpu, addr, type, mmu_idx, ra);
-+        }
-+        if (ops->tlb_fill(cpu, addr, size, type, mmu_idx, probe, ra)) {
-+            return true;
-+        }
-+    }
-+    assert(probe);
-+    return false;
+@@ -445,7 +444,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+         break;
+     }
+ 
+-    excp = hppa_get_physical_address(env, addr, mmu_idx, a_prot, 0,
++    excp = hppa_get_physical_address(env, addr, mmu_idx, a_prot, memop,
+                                      &phys, &prot);
+     if (unlikely(excp >= 0)) {
+         if (probe) {
+@@ -454,7 +453,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+         trace_hppa_tlb_fill_excp(env, addr, size, type, mmu_idx);
+ 
+         /* Failure.  Raise the indicated exception.  */
+-        raise_exception_with_ior(env, excp, retaddr, addr,
++        raise_exception_with_ior(env, excp, ra, addr,
+                                  MMU_IDX_MMU_DISABLED(mmu_idx));
+     }
+ 
+@@ -468,8 +467,12 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+      * the large page protection mask.  We do not require this,
+      * because we record the large page here in the hppa tlb.
+      */
+-    tlb_set_page(cs, addr & TARGET_PAGE_MASK, phys & TARGET_PAGE_MASK,
+-                 prot, mmu_idx, TARGET_PAGE_SIZE);
++    memset(out, 0, sizeof(*out));
++    out->phys_addr = phys;
++    out->prot = prot;
++    out->attrs = MEMTXATTRS_UNSPECIFIED;
++    out->lg_page_size = TARGET_PAGE_BITS;
++
+     return true;
  }
  
- static inline void cpu_unaligned_access(CPUState *cpu, vaddr addr,
-@@ -1351,22 +1364,22 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
- 
-     if (!tlb_hit_page(tlb_addr, page_addr)) {
-         if (!victim_tlb_hit(cpu, mmu_idx, index, access_type, page_addr)) {
--            if (!cpu->cc->tcg_ops->tlb_fill(cpu, addr, fault_size, access_type,
--                                            mmu_idx, nonfault, retaddr)) {
-+            if (!tlb_fill_align(cpu, addr, access_type, mmu_idx,
-+                                0, fault_size, nonfault, retaddr)) {
-                 /* Non-faulting page table read failed.  */
-                 *phost = NULL;
-                 *pfull = NULL;
-                 return TLB_INVALID_MASK;
-             }
- 
--            /* TLB resize via tlb_fill may have moved the entry.  */
-+            /* TLB resize via tlb_fill_align may have moved the entry.  */
-             index = tlb_index(cpu, mmu_idx, addr);
-             entry = tlb_entry(cpu, mmu_idx, addr);
- 
-             /*
-              * With PAGE_WRITE_INV, we set TLB_INVALID_MASK immediately,
--             * to force the next access through tlb_fill.  We've just
--             * called tlb_fill, so we know that this entry *is* valid.
-+             * to force the next access through tlb_fill_align.  We've just
-+             * called tlb_fill_align, so we know that this entry *is* valid.
-              */
-             flags &= ~TLB_INVALID_MASK;
-         }
-@@ -1613,7 +1626,7 @@ typedef struct MMULookupLocals {
-  *
-  * Resolve the translation for the one page at @data.addr, filling in
-  * the rest of @data with the results.  If the translation fails,
-- * tlb_fill will longjmp out.  Return true if the softmmu tlb for
-+ * tlb_fill_align will longjmp out.  Return true if the softmmu tlb for
-  * @mmu_idx may have resized.
-  */
- static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data,
-@@ -1631,7 +1644,8 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data,
-     if (!tlb_hit(tlb_addr, addr)) {
-         if (!victim_tlb_hit(cpu, mmu_idx, index, access_type,
-                             addr & TARGET_PAGE_MASK)) {
--            tlb_fill(cpu, addr, data->size, access_type, mmu_idx, ra);
-+            tlb_fill_align(cpu, addr, access_type, mmu_idx,
-+                           0, data->size, false, ra);
-             maybe_resized = true;
-             index = tlb_index(cpu, mmu_idx, addr);
-             entry = tlb_entry(cpu, mmu_idx, addr);
-@@ -1821,8 +1835,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     if (!tlb_hit(tlb_addr, addr)) {
-         if (!victim_tlb_hit(cpu, mmu_idx, index, MMU_DATA_STORE,
-                             addr & TARGET_PAGE_MASK)) {
--            tlb_fill(cpu, addr, size,
--                     MMU_DATA_STORE, mmu_idx, retaddr);
-+            tlb_fill_align(cpu, addr, MMU_DATA_STORE, mmu_idx,
-+                           0, size, false, retaddr);
-             index = tlb_index(cpu, mmu_idx, addr);
-             tlbe = tlb_entry(cpu, mmu_idx, addr);
-         }
-@@ -1836,7 +1850,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-      * but addr_read will only be -1 if PAGE_READ was unset.
-      */
-     if (unlikely(tlbe->addr_read == -1)) {
--        tlb_fill(cpu, addr, size, MMU_DATA_LOAD, mmu_idx, retaddr);
-+        tlb_fill_align(cpu, addr, MMU_DATA_LOAD, mmu_idx,
-+                       0, size, false, retaddr);
-         /*
-          * Since we don't support reads and writes to different
-          * addresses, and we do have the proper page loaded for
 -- 
 2.43.0
 
