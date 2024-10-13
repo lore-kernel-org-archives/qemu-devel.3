@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7834CCF2591
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 05:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 270E9CF2592
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 06:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1szqzr-00084o-HF; Sun, 13 Oct 2024 01:18:27 -0400
+	id 1szrkJ-0005Ai-Pz; Sun, 13 Oct 2024 02:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szqzp-00083z-CU
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 01:18:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szrkI-0005AX-Bg
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 02:06:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szqzm-0002c5-Ih
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 01:18:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1szrkG-0006iK-WB
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 02:06:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728796700;
+ s=mimecast20190719; t=1728799581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hgqjkYwE78eBRA3nhIfbiuKbglo8XFWOlFpzrsPkqA4=;
- b=aR2mFw+KNa/yy/gwKubdvo339OY3hTlBK+DzawbthUnY7/5+lDwKlNB46nr5LzMZN/fSYL
- MrYU+N8Cu9WIyDavFZ+YG0CUzOj5ZAv5D0z9gEbETlGQXtbcztofttg+rgyfV2eNGdqEIs
- lwM7OuHKaEOfH30sn6VzWlshiCHbPv0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=289C7CIeT3zJ+SZNesx3NE8Uxuesb6LYNNFL0+sWx4c=;
+ b=aEFCsh8SmZUXYEzGw51puzfBQ5LeeVocer/pYT5hsy/xJkmWVZudSNHIE5JvgURZayIQef
+ TeqyzLZZO0OlDrqBFl4rTDqnPkecmdVWN+R00O5Mf462ODH+0ElkNwWe60zGCXGOLhqk5D
+ sHZSyytDOEKOo9mWCOgN2lwdNMa0Ge8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-8V2Bko3bMwa3aozfqRFgVA-1; Sun, 13 Oct 2024 01:18:18 -0400
-X-MC-Unique: 8V2Bko3bMwa3aozfqRFgVA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a996c29ee23so207146266b.0
- for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 22:18:18 -0700 (PDT)
+ us-mta-568-iyZof4wROWuR-rw1LkraQg-1; Sun, 13 Oct 2024 02:06:19 -0400
+X-MC-Unique: iyZof4wROWuR-rw1LkraQg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43114c476c2so21369125e9.1
+ for <qemu-devel@nongnu.org>; Sat, 12 Oct 2024 23:06:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728796697; x=1729401497;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hgqjkYwE78eBRA3nhIfbiuKbglo8XFWOlFpzrsPkqA4=;
- b=hhCbICzkKrNXdjvulrzGYl/eFHzb1cakQtvm2B+U62JMIgHTfmqJ8bcGnJj37hC7Tn
- zTgFxPaRsH5D2G99eydKT+mpARrP1m+P4YP6YxlSWe65zvU1J+tk/K34BFPZs1tQFQ3K
- NN5Xc/wqLZ3hKgaq91Qxl9HO4iMtFmAlsV7G/Pd4G8yd+XWouonWzGVOG6jAs7i6j6nh
- CO4sRDsjpn9uUQKk9FGBAaJt2xL92AeNNy3EKXj+Nihak+9CMY2wXek/jAwd2fA81CVu
- Cjp+h/hJFlIR2ZJv0KcLgAyxVKc1u265pNEAHiYoHnIFTo2ofPZLZ6bUeWTd8wjgsqpM
- lENw==
-X-Gm-Message-State: AOJu0Yz4A0zLuyzXSeJOp05o8c9A7bWglfHPaIYC3iLL+NSSNJvfZUMf
- ojo897hqAhsgLVKkBNgrIT9n3o524eH72q+8+iWoMSY7XdSiNlNb8H0ku7jCt9mRixbV4Ca5Rgj
- kYCrBJoe4luok08agzQ5hXqps7HTIgZPAA4x7IUBGMrKYvETdSp7D
-X-Received: by 2002:a17:907:848:b0:a99:3318:e7c3 with SMTP id
- a640c23a62f3a-a99e3e4c294mr436777366b.43.1728796697365; 
- Sat, 12 Oct 2024 22:18:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcyn9JAMEFeqAYluaBEWZwnLkLdV3T+5IA8TiqfwWrda2A07+qRC5x9AezFyHxXTrOINPV2w==
-X-Received: by 2002:a17:907:848:b0:a99:3318:e7c3 with SMTP id
- a640c23a62f3a-a99e3e4c294mr436775266b.43.1728796696920; 
- Sat, 12 Oct 2024 22:18:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728799578; x=1729404378;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=289C7CIeT3zJ+SZNesx3NE8Uxuesb6LYNNFL0+sWx4c=;
+ b=RMfkPGAF4Nj/1w59s3n7/PnoEot2TlmnXsYBGWpq45GBpqQ9JKgOq1NsGiwaD263W4
+ iK7WDoi+nLBRti2GU1AaghPmyXEZ1/K9t+Je36UJgtTreqrTV8RwEp0Zz/dtoz7fr3YK
+ hNcdkDOsjsn9WNh8T3fbM6dXBCR8BXVRtCUeCVg1f+XR/uA1bjSUV4CFMRumK83iF+x/
+ Dzfbs0vRDueysm/J0FoeOHL3aVSfnD5Kqh2pbMFbgKLJeOyX3+QhgCcVqJr+bwBnWcbR
+ 8ERRezkNDoKHj5qQmaDHm8kuGScq8FAKmmO604ImSP0ma2MI5hDFQg8wYZAgv9QVJSKx
+ XcnA==
+X-Gm-Message-State: AOJu0YxukRcgZxTmqju/Bk9CbUYfObr2V0O1Yx4qWge+LoW0drj7WOPh
+ pN/f0lcL5bGdcCk0zh1H6N0U5eG7GTiJInQN5NlNYDNpGZVb4UA0WdPw11U6o7MwWxPjD+CsKMM
+ BAN7ibI1ZrtxM2uSjMnzxw/zmLfJz9LcoCW9ZsUxSfOL8fxma6FG3
+X-Received: by 2002:adf:e50e:0:b0:37d:4ef1:1820 with SMTP id
+ ffacd0b85a97d-37d5529e91amr4675062f8f.40.1728799577889; 
+ Sat, 12 Oct 2024 23:06:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWgoTbR8VPSXPTLGV1kz4XDhz5MxSgNP/cZNP7vK64d0+wdqPGBocl7rYPD5F2saBqjZC9RQ==
+X-Received: by 2002:adf:e50e:0:b0:37d:4ef1:1820 with SMTP id
+ ffacd0b85a97d-37d5529e91amr4675040f8f.40.1728799577518; 
+ Sat, 12 Oct 2024 23:06:17 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-51-26.web.vodafone.de. [109.42.51.26])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99a7f2457fsm400229266b.51.2024.10.12.22.18.14
+ ffacd0b85a97d-37d4b6cfa8fsm7737365f8f.49.2024.10.12.23.06.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Oct 2024 22:18:15 -0700 (PDT)
-Message-ID: <41feaca3-5d41-4aa7-8774-5f2b3911135a@redhat.com>
-Date: Sun, 13 Oct 2024 07:18:13 +0200
+ Sat, 12 Oct 2024 23:06:16 -0700 (PDT)
+Message-ID: <efd27fca-d73a-4152-a405-5e44d2ce2395@redhat.com>
+Date: Sun, 13 Oct 2024 08:06:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
- accessing it
-To: Guenter Roeck <linux@roeck-us.net>, Bernhard Beschow <shentey@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>
-References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-8-philmd@linaro.org>
- <3434b32e-036a-485c-b3c2-3dd111e6152d@roeck-us.net>
- <7735d722-1047-49b2-ae2b-c95ead698a54@redhat.com>
- <61c38817-3b6e-4bc1-a65a-d2208869c53d@linaro.org>
- <08586e5f-6a5e-445c-b74b-e2c12560020f@redhat.com>
- <7CE8EB57-0A75-4AF1-B941-4BC88F9C042D@gmail.com>
- <f7fe9a16-4c21-442a-b5dc-9d367450346b@roeck-us.net>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] tests/vm: update openbsd image to 7.6
+To: Brad Smith <brad@comstyle.com>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, Alex Benn_e <alex.bennee@linaro.org>,
+ Philippe Mathieu-Daud_ <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <ZwtANoy5IzByoQgU@humpty.home.comstyle.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -130,10 +119,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <f7fe9a16-4c21-442a-b5dc-9d367450346b@roeck-us.net>
+In-Reply-To: <ZwtANoy5IzByoQgU@humpty.home.comstyle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -142,7 +131,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,82 +147,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/2024 06.53, Guenter Roeck wrote:
-> On 10/12/24 07:06, Bernhard Beschow wrote:
->>
->>
->> Am 12. Oktober 2024 09:40:27 UTC schrieb Thomas Huth <thuth@redhat.com>:
->>> On 12/10/2024 00.48, Philippe Mathieu-Daudé wrote:
->>>> On 11/10/24 05:23, Thomas Huth wrote:
->>>>> On 03/05/2024 23.34, Guenter Roeck wrote:
->>>>>> Hi,
->>>>>>
->>>>>> On Thu, Feb 08, 2024 at 07:12:40PM +0100, Philippe Mathieu-Daudé wrote:
->>>>>>> We should not wire IRQs on unrealized device.
->>>>>>>
->>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>>>>>> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
->>>>>>
->>>>>> qemu 9.0 fails to boot Linux from ide/ata drives with the sh4
->>>>>> and sh4eb emulations. Error log is as follows.
->>>>>>
->>>>>> ata1.00: ATA-7: QEMU HARDDISK, 2.5+, max UDMA/100
->>>>>> ata1.00: 16384 sectors, multi 16: LBA48
->>>>>> ata1.00: configured for PIO
->>>>>> scsi 0:0:0:0: Direct-Access     ATA      QEMU HARDDISK    2.5+ PQ: 0 
->>>>>> ANSI: 5
->>>>>> sd 0:0:0:0: [sda] 16384 512-byte logical blocks: (8.39 MB/8.00 MiB)
->>>>>> sd 0:0:0:0: [sda] Write Protect is off
->>>>>> sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't 
->>>>>> support DPO or FUA
->>>>>> ata1: lost interrupt (Status 0x58)
->>>>>>
->>>>>> [ and more similar errors ]
->>>>>>
->>>>>> qemu command line:
->>>>>>
->>>>>> qemu-system-sh4eb -M r2d -kernel arch/sh/boot/zImage \
->>>>>>      -snapshot -drive file=rootfs.ext2,format=raw,if=ide \
->>>>>>      -append "root=/dev/sda console=ttySC1,115200 noiotrap" \
->>>>>>      -serial null -serial stdio -monitor null -nographic -no-reboot
->>>>>>
->>>>>> Bisect points to this patch (see below). Reverting it fixes the problem.
->>>>
->>>> Sorry Guenter for missing your email :(
->>>>
->>>>>
->>>>>    Hi Philippe!
->>>>>
->>>>> Today I noticed that our sh4 test from tests/avocado/ 
->>>>> tuxrun_baselines.py is failing (which is not run by default, that's why 
->>>>> nobody noticed), and bisection took me to the same result that Guenter 
->>>>> already reported.
->>>>
->>>> "not run by default" because flaky.
->>>>
->>>> Having a quick look, the problem seems hw/ide/core.c uses non-QOM
->>>> shortcuts. In particular ide_bus_init_output_irq() expects a preset
->>>> IRQ. Not something trivial to fix.
->>>
->>> I wonder whether the other spots that use ide_bus_init_output_irq() or 
->>> similar constructs are broken now, too. Bernhard apparently already fixed 
->>> (reverted) one in commit 143f3fd3d8b51d6526c8ea80e8a2a085f6f01cdf.
->>>
->>> But what about fc432ba0f58343c8912b80e9056315bb9bd8df92 ?
->>
->> There is an indirection going on in pmac_ide_irq() which triggers 
->> real_*_irq. These get wired via sysbus API after realize() while 
->> ide_bus_init_output_irq() wires to pmac_ide_irq(). So 
->> fc432ba0f58343c8912b80e9056315bb9bd8df92 seems safe to me (haven't tested 
->> it though).
->>
-> 
-> Not sure if that answers the question, but booting from ide works
-> for both mac99 and g3beige emulations.
+On 13/10/2024 05.36, Brad Smith wrote:
+> tests/vm: update openbsd image to 7.6
 
-Ok, thank you both, that sounds like we should be safe with macio IDE, indeed!
+Maybe change the patch description to something more meaningful, e.g. a 
+comment about the removed py3-tomli package ?
 
-  Thomas
+> Signed-off-by: Brad Smith <brad@comstyle.com>
+> ---
+>   tests/vm/openbsd | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+
+Anyway:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
 
 
