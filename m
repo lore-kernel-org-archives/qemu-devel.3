@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAA6CF2579
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 18:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A9ACF258E
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 20:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t03d0-0001J7-CX; Sun, 13 Oct 2024 14:47:42 -0400
+	id 1t05ZP-0007K3-4u; Sun, 13 Oct 2024 16:52:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cz-0001II-3A
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:41 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cx-0002T3-I9
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:40 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20c8b557f91so26393585ad.2
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 11:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728845258; x=1729450058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A367cDE3XXnX+J9PB6YWwLbOv7CCrH8XOGA6B2dAonQ=;
- b=CPdsdk/vadBarphoKLgzZcGC0QcDHf6YHRWApiwV7OORvsuQAMieRWu1Q2NgWGoyZ6
- pIKZKKyo5ZGC6nfnbsPAUN+bgESCFZTylQ7XOTR9HA8HgnkYm/F7kMy4+jELz6TOKNAe
- sEKsNMN/gM3S43NOpBKZxqC3c34s6Q9ONlZf+jQhoxr8HOte9MlphJAqq4OtHk13WVr/
- dUvbzh13fiIjv76yGJBlYPUeMUrSkGba4TuhnvP7Vywocl7tOyLrECuZNaQFHHlKnSZ8
- yPZjSBIXxwlYle2zVZTEdBuubIV7mn7az3LGce5K3dTPGiYrHRA3kMtQFcrg3SVpVLwl
- /n3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728845258; x=1729450058;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A367cDE3XXnX+J9PB6YWwLbOv7CCrH8XOGA6B2dAonQ=;
- b=TDXk39DHLbK7LkH/ImwrdojC1QV/ZvU1r2GtT3Z27/LNlxY+koeQGO+h65T99qPzNv
- /HKY6ukWVIXPJ+tGKMhzYJeiBZ2InBYqUShQ6G6OelYN90B6gdBptSXjwECWOb0wea51
- 51Qr8MKI84JiC8pgEW9WEekVATOxevsdC4IZu4LV8/mG8Y+fFD7R3JgFXgCK2PgNX88u
- YinLeqMESJGNgaX4L9J6FWDy2TBwhiQ1ZO08/LwOe/+p/jGhHZCW/BM8JXqzMd14uJCK
- X4fvC51L6fppTWKiTvXXL/CvbHibAGaKxIlj7SbfAO2m687Amk79UGRydy6j78+V6vFD
- A23Q==
-X-Gm-Message-State: AOJu0Yz55BYnXHOkg0Kv69D+E9UnZB/kTvXkZw4ks93XS+Y0LAOKqtfd
- 1p7Fh75bMywRWAzoVDHKRf+cc/+zpKRP+bzC2sKKqNGu+HC2h0PmcQMfNoVAEq6Mouw1NUWwzW0
- J
-X-Google-Smtp-Source: AGHT+IGvRfsXpMvrKqM+XTdNzkMe9S1y4G3+HE4CMWfWELYQl37UJe7I3yNOkN7wblaHIpYPU4gJ/Q==
-X-Received: by 2002:a17:903:11c6:b0:20c:7661:dce8 with SMTP id
- d9443c01a7336-20ca167d499mr158830245ad.36.1728845258183; 
- Sun, 13 Oct 2024 11:47:38 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c35522fsm52811805ad.296.2024.10.13.11.47.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 11:47:37 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 3/3] target/i386: Remove ra parameter from ptw_translate
-Date: Sun, 13 Oct 2024 11:47:33 -0700
-Message-ID: <20241013184733.1423747-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241013184733.1423747-1-richard.henderson@linaro.org>
-References: <20241013184733.1423747-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t05ZM-0007Jp-43; Sun, 13 Oct 2024 16:52:04 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t05ZK-00016Z-49; Sun, 13 Oct 2024 16:52:03 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C46ED97E90;
+ Sun, 13 Oct 2024 23:51:31 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 53981153E03;
+ Sun, 13 Oct 2024 23:51:47 +0300 (MSK)
+Message-ID: <c30d7b5b-f6f9-4a01-bf37-2c13e999a423@tls.msk.ru>
+Date: Sun, 13 Oct 2024 23:51:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/vm86: Fix compilation with Clang
+To: Thomas Huth <thuth@redhat.com>, dave@treblig.org, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-trivial@nongnu.org
+References: <20241011161845.417342-1-thuth@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241011161845.417342-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,100 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This argument is no longer used.
+On 11.10.2024 19:18, Thomas Huth wrote:
+> Since commit 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
+> a bunch of other "static inline" function are now unused, too. Clang
+> warns about such unused "static inline" functions in .c files, so the
+> build currently breaks when compiling with "--enable-werror". Remove
+> the unused functions to get it going again.
+> 
+> Fixes: 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/i386/tcg/sysemu/excp_helper.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 8f4dc08535..f97594f4ab 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -60,7 +60,7 @@ typedef struct PTETranslate {
-     hwaddr gaddr;
- } PTETranslate;
- 
--static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
-+static bool ptw_translate(PTETranslate *inout, hwaddr addr)
- {
-     int flags;
- 
-@@ -165,7 +165,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-                  * Page table level 5
-                  */
-                 pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
--                if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+                if (!ptw_translate(&pte_trans, pte_addr)) {
-                     return false;
-                 }
-             restart_5:
-@@ -189,7 +189,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 4
-              */
-             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 39) & 0x1ff) << 3);
--            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-         restart_4:
-@@ -209,7 +209,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 3
-              */
-             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 30) & 0x1ff) << 3);
--            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-         restart_3_lma:
-@@ -236,7 +236,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 3
-              */
-             pte_addr = (in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18);
--            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+            if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-             rsvd_mask |= PG_HI_USER_MASK;
-@@ -258,7 +258,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 2
-          */
-         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
--        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+        if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-     restart_2_pae:
-@@ -284,7 +284,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 1
-          */
-         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 12) & 0x1ff) << 3);
--        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+        if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-         pte = ptw_ldq(&pte_trans, ra);
-@@ -302,7 +302,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 2
-          */
-         pte_addr = (in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc);
--        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+        if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-     restart_2_nopae:
-@@ -331,7 +331,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 1
-          */
-         pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
--        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-+        if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-         pte = ptw_ldl(&pte_trans, ra);
--- 
-2.43.0
+Maybe I should send a pull-request with this one..
 
+/mjt
 
