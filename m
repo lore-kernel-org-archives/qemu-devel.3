@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF19ECF2592
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD519CF258E
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t06pc-0007BC-Fb; Sun, 13 Oct 2024 18:12:56 -0400
+	id 1t06pS-00078N-RM; Sun, 13 Oct 2024 18:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pX-00079v-Ap
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:53 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1t06pQ-00077i-Tc
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:44 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pU-0000ux-Q4
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:50 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7ea8c4ce232so174252a12.0
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:47 -0700 (PDT)
+ id 1t06pP-0000u8-Dv
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:44 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2e2ed2230d8so1716381a91.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728857567; x=1729462367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728857562; x=1729462362; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VxQQDPF3XbwGQMMjEi8JT0LcRz4F5ymP0/tmO2RuJRo=;
- b=ONaBSjLgrd13zmFhvVFjMYqZjGYQTn4nKm1prv+AZq5H9lWeAJI+8Ptr/Cx/N4lKaa
- QKT6NNClF4vKZy57ptqjiEG0YsjH6pH1GMc3U8M7NaQ1apyxA6tXme9+xPXDVapqG3wi
- 22I15AmdkBqB1M4kmPTj0MQ3PFluCLVHsZt4ut5yWxZP1lcaC84XWRf467WRoFDclbPT
- d3mrEiW6Duw+jUSjSZvjaWAYl+R8Z9rM3WKCB2rpB8xU2z1B3sBPHVKwLRAdxqU3kD7w
- +Nx48QID0hltwSiIc5gyg+hUJ7sk8NO6mt9ApAjSx4FVhCXEDzt5/unJ5UCPVXvN1+g5
- LquA==
+ bh=3HOyhUsp26UJ2J8SI14m1Cw+uj1HUsjO2JpGhjMl70Y=;
+ b=w5qjoMbXLUujZY1mYVUgnAHv2RtTWQpsoZBMdsLIQhkVkNg7mGOII+798J9D/vX3Ji
+ wrtydsBjJeWxhmjnzcJ3xT5LQx0o68Zsy1Imr1b2oDYeE5HkWt9hxWUSSs4OvwXkeNa3
+ cu604Fr2eITPWydKeXbXonRCx+jDeyJOqEdEZfetpZgaMLpaUKsMj5AhIqhDT5BHam37
+ 3Y+zfmeDy+UrioqAGgQsNkOPVYmJvHI11pM2OJT+NiR+Jvo8ULB5yiz1hZ0fet+zCG6j
+ HRY6FrnLn+rtw3BPhjqQYXSdP9xynHAWo5UMQwsXWS45bygY2ZcCMGF01/mm0Eaig+Wm
+ xpQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728857567; x=1729462367;
+ d=1e100.net; s=20230601; t=1728857562; x=1729462362;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VxQQDPF3XbwGQMMjEi8JT0LcRz4F5ymP0/tmO2RuJRo=;
- b=PIdwKH8vOLiWA4xNVr8WWPhWYQ8ohtObsm6HErUNSkZfC+Ols0mxeMMkeuCMYw0Es3
- 71ghtRSWrpgYQ5DEcTaC8W1ziiUAaoA0027uYNcMMromMPQFEKRz3EXvWQka0RHp4tUL
- 69J3Am8k6EJh1ldeNAGyA/h0jv3QIsVDRwE3944W3KmnQRpsLEzRviLsUWpJ5FdIrUHF
- nq/MAF6shHSTee4Wzc+pfIhMcE4c32EFMo/5jhy+J4By86hwIChVomtrHYdRmr6MG0jR
- SpojIfaCJCdqGsUnSHn7r6FSAklf6WPYa84wM/bgwR9ri/5pzdo9KfGAh6UNvT1qI6p9
- LAow==
-X-Gm-Message-State: AOJu0Yz3lqJn2YOOc0xgfTghDePW2JJ/UWnTLecWEo99eMswwixlYD02
- lF0UUludpafNMLWpdSGpiAzteVlHXvHSkFsz7DZmECQWSzW1IPL+FqkUflgDiy2boSPjcEbLtcH
- e
-X-Google-Smtp-Source: AGHT+IGPowYwaoawTjLXnJZj2jmig5ndMdIDsq5xhuFS5wUQFAJxS1q3dz2/FIs3frfa+ikQsVamwQ==
-X-Received: by 2002:a17:90b:1005:b0:2e2:e0c1:4452 with SMTP id
- 98e67ed59e1d1-2e31539036fmr7425969a91.41.1728857566627; 
- Sun, 13 Oct 2024 15:12:46 -0700 (PDT)
+ bh=3HOyhUsp26UJ2J8SI14m1Cw+uj1HUsjO2JpGhjMl70Y=;
+ b=QyCQfjgS4izj7NNoNL94g2XHAHfXgqGQFsreFhJ4AYMJpgZdPKnoQHK2qXniW2vfXk
+ S1ydEvQngfivcaT0ep9+uVQeGhs15FtyQRmnt+D5a4uXvppF9hIb3tr+/ZBp8LpqZuHk
+ krOUNizb+ozzxCKbDy8/CHud7lN16tcYol4SP/PsX5+6hUnImBUkj4cxa3QPTIKom9bW
+ Eol9hi4Q0GySU4PhINhZOPNpWQfioeBOQraA8r/5utxMWEQNM/O5A4KdW9uiAOi0Ti3v
+ GSDyK8gjPTJiOGBB1Q8SUKnNgpckfTh+CETtvx3QmT2VQl9LeMI3MlW4wKksSpWB9j76
+ oEAg==
+X-Gm-Message-State: AOJu0YzAVuRVcyLNJ7M60yYB/MPGTFJpY6mPgvzINvYJuQbKWnoz0SXD
+ HeWFo2gRDNOS5V0phdS6XRHwO9zYzSuk/+edr1BPvPOWXpvVLnOYLrPx5GW5HKT6pWNReaBi9e/
+ 0
+X-Google-Smtp-Source: AGHT+IFlPncfg6JqrJUW8elanZXQlO0zL5/swqfalZAOpHj2x/fZlpjZ5kKYbQulAnTbLG6PyL6rsg==
+X-Received: by 2002:a17:90b:4c03:b0:2e2:ba35:356e with SMTP id
+ 98e67ed59e1d1-2e3152e1be8mr8183825a91.17.1728857562030; 
+ Sun, 13 Oct 2024 15:12:42 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.45
+ 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 15:12:46 -0700 (PDT)
+ Sun, 13 Oct 2024 15:12:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 10/27] include/exec/memop: Rename get_alignment_bits
-Date: Sun, 13 Oct 2024 15:12:18 -0700
-Message-ID: <20241013221235.1585193-11-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 06/27] tests/tcg: Run test-proc-mappings.py on i386
+Date: Sun, 13 Oct 2024 15:12:14 -0700
+Message-ID: <20241013221235.1585193-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241013221235.1585193-1-richard.henderson@linaro.org>
 References: <20241013221235.1585193-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,202 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename to use "memop_" prefix, like other functions
-that operate on MemOp.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Now that orig_ax is exposed and GDB is happy, don't skip
+test-proc-mappings.py on i386. In fact, it's broken only on
+m68k now, so skip only this architecture.
+
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20240912093012.402366-6-iii@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/memop.h           | 4 ++--
- accel/tcg/cputlb.c             | 4 ++--
- accel/tcg/user-exec.c          | 4 ++--
- target/arm/tcg/translate-a64.c | 4 ++--
- target/xtensa/translate.c      | 2 +-
- tcg/tcg-op-ldst.c              | 6 +++---
- tcg/tcg.c                      | 2 +-
- tcg/arm/tcg-target.c.inc       | 4 ++--
- tcg/sparc64/tcg-target.c.inc   | 2 +-
- 9 files changed, 16 insertions(+), 16 deletions(-)
+ .../tcg/multiarch/gdbstub/test-proc-mappings.py | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index 97720a8ee7..f53bf618c6 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -171,12 +171,12 @@ static inline bool memop_big_endian(MemOp op)
- }
+diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+index 564613fabf..0f687f3284 100644
+--- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
++++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+@@ -8,17 +8,12 @@
  
- /**
-- * get_alignment_bits
-+ * memop_alignment_bits:
-  * @memop: MemOp value
-  *
-  * Extract the alignment size from the memop.
-  */
--static inline unsigned get_alignment_bits(MemOp memop)
-+static inline unsigned memop_alignment_bits(MemOp memop)
- {
-     unsigned a = memop & MO_AMASK;
- 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index fd6459b695..a975fe5f89 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1709,7 +1709,7 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     tcg_debug_assert(l->mmu_idx < NB_MMU_MODES);
- 
-     /* Handle CPU specific unaligned behaviour */
--    a_bits = get_alignment_bits(l->memop);
-+    a_bits = memop_alignment_bits(l->memop);
-     if (addr & ((1 << a_bits) - 1)) {
-         cpu_unaligned_access(cpu, addr, type, l->mmu_idx, ra);
-     }
-@@ -1797,7 +1797,7 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
- {
-     uintptr_t mmu_idx = get_mmuidx(oi);
-     MemOp mop = get_memop(oi);
--    int a_bits = get_alignment_bits(mop);
-+    int a_bits = memop_alignment_bits(mop);
-     uintptr_t index;
-     CPUTLBEntry *tlbe;
-     vaddr tlb_addr;
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 11b6d45e90..51b2c16dbe 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -954,7 +954,7 @@ void page_reset_target_data(target_ulong start, target_ulong last) { }
- static void *cpu_mmu_lookup(CPUState *cpu, vaddr addr,
-                             MemOp mop, uintptr_t ra, MMUAccessType type)
- {
--    int a_bits = get_alignment_bits(mop);
-+    int a_bits = memop_alignment_bits(mop);
-     void *ret;
- 
-     /* Enforce guest required alignment.  */
-@@ -1236,7 +1236,7 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-                                int size, uintptr_t retaddr)
- {
-     MemOp mop = get_memop(oi);
--    int a_bits = get_alignment_bits(mop);
-+    int a_bits = memop_alignment_bits(mop);
-     void *ret;
- 
-     /* Enforce guest required alignment.  */
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 071b6349fc..ec0b1ee252 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -294,7 +294,7 @@ static TCGv_i64 gen_mte_check1_mmuidx(DisasContext *s, TCGv_i64 addr,
-         desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
-         desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
-         desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
--        desc = FIELD_DP32(desc, MTEDESC, ALIGN, get_alignment_bits(memop));
-+        desc = FIELD_DP32(desc, MTEDESC, ALIGN, memop_alignment_bits(memop));
-         desc = FIELD_DP32(desc, MTEDESC, SIZEM1, memop_size(memop) - 1);
- 
-         ret = tcg_temp_new_i64();
-@@ -326,7 +326,7 @@ TCGv_i64 gen_mte_checkN(DisasContext *s, TCGv_i64 addr, bool is_write,
-         desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
-         desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
-         desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
--        desc = FIELD_DP32(desc, MTEDESC, ALIGN, get_alignment_bits(single_mop));
-+        desc = FIELD_DP32(desc, MTEDESC, ALIGN, memop_alignment_bits(single_mop));
-         desc = FIELD_DP32(desc, MTEDESC, SIZEM1, total_size - 1);
- 
-         ret = tcg_temp_new_i64();
-diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
-index 75b7bfda4c..f4da4a40f9 100644
---- a/target/xtensa/translate.c
-+++ b/target/xtensa/translate.c
-@@ -521,7 +521,7 @@ static MemOp gen_load_store_alignment(DisasContext *dc, MemOp mop,
-         mop |= MO_ALIGN;
-     }
-     if (!option_enabled(dc, XTENSA_OPTION_UNALIGNED_EXCEPTION)) {
--        tcg_gen_andi_i32(addr, addr, ~0 << get_alignment_bits(mop));
-+        tcg_gen_andi_i32(addr, addr, ~0 << memop_alignment_bits(mop));
-     }
-     return mop;
- }
-diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
-index 23dc807f11..a318011229 100644
---- a/tcg/tcg-op-ldst.c
-+++ b/tcg/tcg-op-ldst.c
-@@ -45,7 +45,7 @@ static void check_max_alignment(unsigned a_bits)
- 
- static MemOp tcg_canonicalize_memop(MemOp op, bool is64, bool st)
- {
--    unsigned a_bits = get_alignment_bits(op);
-+    unsigned a_bits = memop_alignment_bits(op);
- 
-     check_max_alignment(a_bits);
- 
-@@ -559,7 +559,7 @@ static void tcg_gen_qemu_ld_i128_int(TCGv_i128 val, TCGTemp *addr,
-     TCGv_i64 ext_addr = NULL;
-     TCGOpcode opc;
- 
--    check_max_alignment(get_alignment_bits(memop));
-+    check_max_alignment(memop_alignment_bits(memop));
-     tcg_gen_req_mo(TCG_MO_LD_LD | TCG_MO_ST_LD);
- 
-     /* In serial mode, reduce atomicity. */
-@@ -676,7 +676,7 @@ static void tcg_gen_qemu_st_i128_int(TCGv_i128 val, TCGTemp *addr,
-     TCGv_i64 ext_addr = NULL;
-     TCGOpcode opc;
- 
--    check_max_alignment(get_alignment_bits(memop));
-+    check_max_alignment(memop_alignment_bits(memop));
-     tcg_gen_req_mo(TCG_MO_ST_LD | TCG_MO_ST_ST);
- 
-     /* In serial mode, reduce atomicity. */
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 34e3056380..5decd83cf4 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -5506,7 +5506,7 @@ static void tcg_reg_alloc_call(TCGContext *s, TCGOp *op)
- static TCGAtomAlign atom_and_align_for_opc(TCGContext *s, MemOp opc,
-                                            MemOp host_atom, bool allow_two_ops)
- {
--    MemOp align = get_alignment_bits(opc);
-+    MemOp align = memop_alignment_bits(opc);
-     MemOp size = opc & MO_SIZE;
-     MemOp half = size ? size - 1 : 0;
-     MemOp atom = opc & MO_ATOM_MASK;
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 3de5f50b62..56072d89a2 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1587,7 +1587,7 @@ static void tcg_out_qemu_ld_direct(TCGContext *s, MemOp opc, TCGReg datalo,
-         tcg_debug_assert((datalo & 1) == 0);
-         tcg_debug_assert(datahi == datalo + 1);
-         /* LDRD requires alignment; double-check that. */
--        if (get_alignment_bits(opc) >= MO_64) {
-+        if (memop_alignment_bits(opc) >= MO_64) {
-             if (h.index < 0) {
-                 tcg_out_ldrd_8(s, h.cond, datalo, h.base, 0);
-                 break;
-@@ -1691,7 +1691,7 @@ static void tcg_out_qemu_st_direct(TCGContext *s, MemOp opc, TCGReg datalo,
-         tcg_debug_assert((datalo & 1) == 0);
-         tcg_debug_assert(datahi == datalo + 1);
-         /* STRD requires alignment; double-check that. */
--        if (get_alignment_bits(opc) >= MO_64) {
-+        if (memop_alignment_bits(opc) >= MO_64) {
-             if (h.index < 0) {
-                 tcg_out_strd_8(s, h.cond, datalo, h.base, 0);
-             } else {
-diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-index 176c98740b..32f9ec24b5 100644
---- a/tcg/sparc64/tcg-target.c.inc
-+++ b/tcg/sparc64/tcg-target.c.inc
-@@ -1133,7 +1133,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-      * Otherwise, test for at least natural alignment and defer
-      * everything else to the helper functions.
-      */
--    if (s_bits != get_alignment_bits(opc)) {
-+    if (s_bits != memop_alignment_bits(opc)) {
-         tcg_debug_assert(check_fit_tl(a_mask, 13));
-         tcg_out_arithi(s, TCG_REG_G0, addr_reg, a_mask, ARITH_ANDCC);
- 
+ def run_test():
+     """Run through the tests one by one"""
+-    try:
+-        mappings = gdb.execute("info proc mappings", False, True)
+-    except gdb.error as exc:
+-        exc_str = str(exc)
+-        if "Not supported on this target." in exc_str:
+-            # Detect failures due to an outstanding issue with how GDB handles
+-            # the x86_64 QEMU's target.xml, which does not contain the
+-            # definition of orig_rax. Skip the test in this case.
+-            print("SKIP: {}".format(exc_str))
+-            return
+-        raise
++    if gdb.selected_inferior().architecture().name() == "m68k":
++        # m68k GDB supports only GDB_OSABI_SVR4, but GDB_OSABI_LINUX is
++        # required for the info proc support (see set_gdbarch_info_proc()).
++        print("SKIP: m68k GDB does not support GDB_OSABI_LINUX")
++        exit(0)
++    mappings = gdb.execute("info proc mappings", False, True)
+     report(isinstance(mappings, str), "Fetched the mappings from the inferior")
+     # Broken with host page size > guest page size
+     # report("/sha1" in mappings, "Found the test binary name in the mappings")
 -- 
 2.43.0
 
