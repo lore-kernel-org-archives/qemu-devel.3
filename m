@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC70CF2576
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 17:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F7ECF2579
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 17:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t02S0-0007uH-N4; Sun, 13 Oct 2024 13:32:16 -0400
+	id 1t02ZI-0001Og-2X; Sun, 13 Oct 2024 13:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t02Ry-0007tC-Bt
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:32:14 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t02Rw-0003Ul-Pq
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:32:14 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7e9fd82f1a5so2251277a12.1
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 10:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728840731; x=1729445531; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZP0WMWfQsWND2hXfrlLLDuWYr+jxyVrzNmuLdqQXwOo=;
- b=dDi3UkNNs7Ysu/MhGGB7N4jF4jCK+HVgnvjW9vjWxG0sNIcfi63tnGLWFihOBOV3BL
- +lhWXtMg0H58LFZa0X8rKtqMv2lva9/JqQBxfQLsHk4G/8X/N0uPQ07NWTSeFLsbiHHQ
- yxH9wEJ1QW3Xnn7gJ8D/ZeRL14ZI6Occ9DEMYUHSahcZg62U05xPXqAomYyKN1aGcpYA
- XLrbtcpJfH7hgZA/h1+kriye3zmGphgbcQuWEM5mE+e7M48KAxidmh9xJBrId+94ovi8
- aUCK3odWCENVgktmyEU/rBBUnuoqc4B0IxgNOB2wkvhgD0xaO3gLWWP5Wn+gLUjlO3Nh
- E9kw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t02ZE-0001OP-44
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:39:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t02Z5-0003yR-Mj
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 13:39:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728841170;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U9UH8lHFLdUluk5UqoRduYxJ28K1zsnUr27H4Z/taQg=;
+ b=iI/HaHLveOq/0OCoiAm7lQJpQ0pUSiqJWGRy2sm892TAU4+PUGBNWMamt4WO3z+sEcQizX
+ AFKCa2W/3YEAWzxPFjknf541YJz+XEwQzNpvArOTSP5FWdUTzHeIW+zKdTv2+SrfMINVPa
+ 6hWgOIxnghbTSlXRdodJbDGSrb6WUak=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-36-IbjpaBXoPtK1AkWUTE6Fkg-1; Sun, 13 Oct 2024 13:39:21 -0400
+X-MC-Unique: IbjpaBXoPtK1AkWUTE6Fkg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43123d8a33dso11743425e9.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 10:39:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728840731; x=1729445531;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZP0WMWfQsWND2hXfrlLLDuWYr+jxyVrzNmuLdqQXwOo=;
- b=tKxVQgD7hIR7lRArmSXeYoHJhAPvgGh38/wgMYaADzgWKJ54FTPwwbBQod6A2KChv+
- UJ/BNafLWlb8Haa2HmH7CZfAUY3aaz92Hi/zPRYawm3IL91rTWwgKgiOhmAulY6e/NIO
- 5/fHOaQzJPXm2UULmIQO51J5072xlwf7Os14SocKmiK4Lk6adOPANGc0kywCXcyRJDXj
- gQnWj01JnVcfZkz/p4OS1epX4hpfkZIry6bS0Om8djrj20y+TQ3MT/wQuPPlh79DraE/
- VLCDFBBcC5LPYhogQUCZw6EAp4NSpKIvy4lqjk/NoHtwlf0fOb2A0oPeWkRgt5ZzzF2w
- wFYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNQ4nY/a93N+oV2aovuQwBXfi1FC7kMXydTnCbJ1xr/rSfbSLvGQq0/ltIsZryuqXpw7oVKnYzg+n/@nongnu.org
-X-Gm-Message-State: AOJu0YwEU/LN61Q257pwwNXUuB0y1g/HpTIHvPWxpTcdsC9Mhszb1JtY
- WvXbmFgRBHYd92bPvb2ODZnOuY2IgOlR98xmsDNtVbSgZf2yG+OUlpmjk+RU3AxjN7WTnlW1jCK
- A
-X-Google-Smtp-Source: AGHT+IG/khCY2oUQiQzBUIi8BAD9cJHx2bRzxMq0kb6mBoLUjV+q0htrxkfrT34FRhDp1e15beXUsw==
-X-Received: by 2002:a05:6a20:c797:b0:1d3:5208:1ea6 with SMTP id
- adf61e73a8af0-1d8c96ba5femr8821399637.45.1728840731187; 
- Sun, 13 Oct 2024 10:32:11 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e6164e825sm1022356b3a.61.2024.10.13.10.32.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 13 Oct 2024 10:32:10 -0700 (PDT)
-Message-ID: <7ee485ed-dcab-48cf-8c1f-bd985e1609f4@linaro.org>
-Date: Sun, 13 Oct 2024 10:32:09 -0700
+ d=1e100.net; s=20230601; t=1728841160; x=1729445960;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U9UH8lHFLdUluk5UqoRduYxJ28K1zsnUr27H4Z/taQg=;
+ b=u7u1CMuf4sHI4us1/hqMvu5/m/gidfV+G5YOmjxD9BlWrsQW/p4vbl5xIRyniifja7
+ 2AvCszgTxdxrDvPRI/510Y+syKJ5yYxCCw2ZXrEJaN/xgNRYQjSZTZv5FjvNHFTUBfed
+ V7Rkm3FNyTnpSlMGeiKhW4eIIQT1RoF9n/eQN3KsjUzFYBOLlZqz6ixhYLJsII2T/alo
+ 5MscsOIk0+u/JIzfgQKogwKN9J9WGrmJS2wml9PPDzh1I16/QDKuKqE++29hYyT8ikw2
+ QQb5IjFywgD+AAP6E8mKSEC9CYEbSPYRqPO5zzNWBebfrWH7h1ls3TB5DUUs19YlDiix
+ 1S5A==
+X-Gm-Message-State: AOJu0Ywl+ISpHluXg7Oy4ZAuJLpM+jJZdbB86PQUhMbq15Xi9gKTYMKZ
+ 77JOuOA40XYB/NXjRqBXm6kAtdTAYhopKFX074r3B1YSjrnDUcZttz5IEvBo9KlNtBBxFH1rH9N
+ 3lSE0d+VTtd/FOgeiyhibJE6xcwDqn3cZUDXFV7yt2MTBP55i/OXo1V6EJ3oV/7JEAPckM6gHhe
+ 5JuiAUiZVLZWgrsP0c7JG6ynNM/X4=
+X-Received: by 2002:adf:a395:0:b0:37d:4fe9:b6a7 with SMTP id
+ ffacd0b85a97d-37d5529effamr6605951f8f.36.1728841160074; 
+ Sun, 13 Oct 2024 10:39:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdE67I80cTc4Zvi6oFXfOIjGG5MxjbzyT1RoN9UGS0T9m11GI/G2WOIdj3mmfyfhSgnjylk5OkkF3/S1YvuTk=
+X-Received: by 2002:adf:a395:0:b0:37d:4fe9:b6a7 with SMTP id
+ ffacd0b85a97d-37d5529effamr6605945f8f.36.1728841159777; Sun, 13 Oct 2024
+ 10:39:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/vm86: Fix compilation with Clang
-To: Thomas Huth <thuth@redhat.com>, dave@treblig.org, qemu-devel@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-trivial@nongnu.org
-References: <20241011161845.417342-1-thuth@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241011161845.417342-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+References: <20241011153227.81770-1-pbonzini@redhat.com>
+ <CAFEAcA88y9gV-YMNxvQPdGR2tA-sjsaFYr_TiG=GmQGr8+QkKA@mail.gmail.com>
+ <CAFEAcA9vXEexRC4kZWEXoyMHQm_M33NRuZnSi7hq2wdPyCVGNQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9vXEexRC4kZWEXoyMHQm_M33NRuZnSi7hq2wdPyCVGNQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 13 Oct 2024 19:39:08 +0200
+Message-ID: <CABgObfbdt+1VfdeFHx_06GLjcA7gPJ+ARpznfH7s2UaTnH1EBw@mail.gmail.com>
+Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000033c02a06245f33cf"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,23 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/11/24 09:18, Thomas Huth wrote:
-> Since commit 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
-> a bunch of other "static inline" function are now unused, too. Clang
-> warns about such unused "static inline" functions in .c files, so the
-> build currently breaks when compiling with "--enable-werror". Remove
-> the unused functions to get it going again.
-> 
-> Fixes: 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
-> Signed-off-by: Thomas Huth<thuth@redhat.com>
-> ---
->   linux-user/vm86.c | 65 -----------------------------------------------
->   1 file changed, 65 deletions(-)
+--00000000000033c02a06245f33cf
+Content-Type: text/plain; charset="UTF-8"
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Il sab 12 ott 2024, 16:02 Peter Maydell <peter.maydell@linaro.org> ha
+scritto:
 
-And queued.
+> Deleting the whole subprojects/unicode-ident-1-rs/ subdirectory
+> seems to have fixed this -- it then realised it needed to
+> do the download and put it in the right place. I guess that was a
+> leftover from trying to build the previous version of the pullreq.
+> But it suggests that something is missing in the dependencies,
+> since it thought it had already downloaded it even though
+> the directory it needed to put it in wasn't on disk...
+>
+
+That seems like it would be a meson bug (whether intentional or not); it's
+unlikely that it's an issue here since the wrap files are not particularly
+special. I can try to reproduce, but in the meanwhile I didn't understand
+if you're going to stage and apply this pull request or not.
+
+Thanks,
+
+Paolo
 
 
-r~
+> thanks
+> -- PMM
+>
+>
+
+--00000000000033c02a06245f33cf
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il sab 12 ott 2024, 16:02 Peter Maydell &lt;<a href=3D=
+"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; ha scrit=
+to:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Deleting the=
+ whole subprojects/unicode-ident-1-rs/ subdirectory<br>
+seems to have fixed this -- it then realised it needed to<br>
+do the download and put it in the right place. I guess that was a<br>
+leftover from trying to build the previous version of the pullreq.<br>
+But it suggests that something is missing in the dependencies,<br>
+since it thought it had already downloaded it even though<br>
+the directory it needed to put it in wasn&#39;t on disk...<br></blockquote>=
+</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That seems like i=
+t would be a meson bug (whether intentional or not); it&#39;s unlikely that=
+ it&#39;s an issue here since the wrap files are not particularly special. =
+I can try to reproduce, but in the meanwhile I didn&#39;t understand if you=
+&#39;re going to stage and apply this pull request or not.</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Thanks,</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+thanks<br>
+-- PMM<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000033c02a06245f33cf--
+
 
