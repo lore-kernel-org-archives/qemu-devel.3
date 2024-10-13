@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C54CF2591
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8F77CF258E
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t06pT-00078O-Dt; Sun, 13 Oct 2024 18:12:47 -0400
+	id 1t06pv-0007FK-Ll; Sun, 13 Oct 2024 18:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pR-00077w-NU
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:45 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1t06pa-0007A4-4V
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:54 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pQ-0000uH-2M
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:45 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2e3010478e6so1785551a91.1
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:43 -0700 (PDT)
+ id 1t06pY-0000vf-EN
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:12:53 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2e2dcf4b153so2229771a91.1
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728857563; x=1729462363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728857571; x=1729462371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VpiQ0uRviqHvIpHCmWWiDcmFLJXAKpr3mqpGqdFoplg=;
- b=G86hBLNpYpnqMRtqHvlKnQ//HyKlqxG/3z9vmFE5wy6nZMVeYqKlbUt6+ddasW+qiG
- 9V0uqDomRnPSRwILdaO5nEjQUufoapRkTJ4lYSjHg/11b+pW/U+WLDVQHTI5uYW1v8W3
- ORM3T+iQii4iY5D5aQd+i7jxPXvuPrlh1Iy5E5RLvnFrCkfAuvYOlny/C7CXUOMqPFNu
- NNBDKvqqmuOy91f+23nrzeA3zZCcuOq4U3opSuE4kC1jEN8USnEEEUI6urTSYzE+sFbR
- hPHcRJhW6fAzhY/xbmF33ZKgfyKDRa4rvH/+AuU3f1nw54/VLCW7dgHWNX7IUHfJYxbA
- 5ACQ==
+ bh=jvwlrMz3Fk2P5q43/JWG8Wh7xLnVWB9wP6XAmMUyGN8=;
+ b=JSCedkKGgDGHqgNK74jdohI0C8V8sya4nAevMefTFc50RjPnlRxakv3Eg30hqfrkKQ
+ iGZvwVjDdbmxLm5lpe3nkVaShs/th6XA9j72nnYBFnj3gmYW24HEMZ07isNXKiqPTx23
+ 7r5YYAU3lVGzFM9wmkAOnBSQGinuq2+LSWRAffmg2TOx7bxkgFTfuq58KijYSjxuAppT
+ KN4nmXWzMiSI5TPpiFCuDJ2Vf1t+pNaCPN9v8xHa7b82yWrwBrE8Fw/aoVqMrXuykAnl
+ /D6gr6Vfod7kQ72QB06A2FD0tMo0ZW11Wf8WB+lzqtQkvy2hcM26PaIp8JHLYYm5RZoh
+ hD7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728857563; x=1729462363;
+ d=1e100.net; s=20230601; t=1728857571; x=1729462371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VpiQ0uRviqHvIpHCmWWiDcmFLJXAKpr3mqpGqdFoplg=;
- b=C0Hgg+gTkURi1gB9cq4Kwe/oeA6Ru5S/qXuRqP6b9hU+YOm6hOQHpXTaIBFPSPBnHX
- ZdjMWowzrf1PKVJBhMFCFeEkuE8uYzBGUr8VdQKDFg3LzIquw5JYsOvfRbt0yviSaOR+
- iVlpLHUz9bzQNMroGezFn2NxbmE6bnR20zhvkN0orgP4kzNtULTte/ls/4uRS8u5kL8F
- 6o7tNYkW4yTt5QiQ2pXhHGcEkhuB/G3YK5zsKbcPuzdYVxI60BSQNBfasGuJaJ8KNGxT
- 1JtIsJW3xaXQriLvYNQYavL0chCNgl1/R2PGhmHJPSG488f43SQqIBokZrTJcLThFLgx
- VSHg==
-X-Gm-Message-State: AOJu0Yx42U+Silbk9EYq1gu8w5/z4eAzKF/noBwg4KcodQS+r/SVVX8u
- PG2KE1Z7FYfJ/LvW5cp2L6JCKAkl08xEXr+oYw7idm9MVKxylNg4omZ2cm7uPX8UHLB2IXb5jo3
- w
-X-Google-Smtp-Source: AGHT+IHvYIIJ1ucmCyt6EFJnUaMwH4fYafR4/sOHH3qTlUisimDefrvul389alAQeWksbl5X+tWZng==
-X-Received: by 2002:a17:90b:4a89:b0:2e2:d33b:cc with SMTP id
- 98e67ed59e1d1-2e3152e76admr8643704a91.21.1728857562747; 
- Sun, 13 Oct 2024 15:12:42 -0700 (PDT)
+ bh=jvwlrMz3Fk2P5q43/JWG8Wh7xLnVWB9wP6XAmMUyGN8=;
+ b=WcYsh71katJoaB35Xxgs6H6LfRS3Zr8k+1fugMYcnaJn1iSFogKIR/lnnL+bjDdFpc
+ GTYJFViZA0wdev7z1HhnJ+z6Y5B8CFp2aP675+ByTfYv0X/E8CH49BnBQIHGwhp6aWxc
+ PpsWTl61cVj2+34xutra/kGBLYedr4+VCMHjgnXBtGHtbttImHw6yTg+2HLkXIrvLdI5
+ X+TQdiNvC6bsRY+YQMU/boJRywwTXPJG3bdf20dnxM3e2mxXQgdIav9BgSOwZgcF0Ntt
+ 7n4I9fBx0Ll/SEgHXpVNwlfTzNpV98dlMb0kfcRJ5434IGRfMf0Mvtg+7dpo/nENkpui
+ g5lQ==
+X-Gm-Message-State: AOJu0YxAZP5zaI85wNgfk4vfaV0LQjTjbE13N3U0d86HQoeXGv5l7RV5
+ Y6YuYcwBQSurtT5VTsVmtj9KaIIGHyoBrKE2fym7xFhvSdwfzLCQ3tLbLw8nOP/vfCuSpSetKBz
+ u
+X-Google-Smtp-Source: AGHT+IECTx8ryhMseFkj2tvyby8ENbkgmNVnh6fxEfbgPFbgAKOiVb2YSgmFlVGe65WZ1thAQ1tS6w==
+X-Received: by 2002:a17:90a:ee8f:b0:2d8:dd14:79ed with SMTP id
+ 98e67ed59e1d1-2e2f0d7aa18mr11741015a91.31.1728857571226; 
+ Sun, 13 Oct 2024 15:12:51 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.42
+ 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 15:12:42 -0700 (PDT)
+ Sun, 13 Oct 2024 15:12:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 07/27] linux-user/vm86: Fix compilation with Clang
-Date: Sun, 13 Oct 2024 15:12:15 -0700
-Message-ID: <20241013221235.1585193-8-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PULL 15/27] target/hppa: Perform access rights before protection id
+ check
+Date: Sun, 13 Oct 2024 15:12:23 -0700
+Message-ID: <20241013221235.1585193-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241013221235.1585193-1-richard.henderson@linaro.org>
 References: <20241013221235.1585193-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,114 +95,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+In Chapter 5, Interruptions, the group 3 exceptions lists
+"Data memory access rights trap" in priority order ahead of
+"Data memory protection ID trap".
 
-Since commit 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
-a bunch of other "static inline" function are now unused, too. Clang
-warns about such unused "static inline" functions in .c files, so the
-build currently breaks when compiling with "--enable-werror". Remove
-the unused functions to get it going again.
+Swap these checks in hppa_get_physical_address.
 
-Fixes: 95b9c27c81 ("linux-user: Remove unused handle_vm86_fault")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Message-ID: <20241011161845.417342-1-thuth@redhat.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/vm86.c | 65 -----------------------------------------------
- 1 file changed, 65 deletions(-)
+ target/hppa/mem_helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/linux-user/vm86.c b/linux-user/vm86.c
-index 31a2d707cf..5091d53fb8 100644
---- a/linux-user/vm86.c
-+++ b/linux-user/vm86.c
-@@ -47,30 +47,6 @@ static inline void vm_putw(CPUX86State *env, uint32_t segptr,
-     cpu_stw_data(env, segptr + (reg16 & 0xffff), val);
- }
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index a386c80fa4..f027c494e2 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -267,6 +267,12 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         goto egress;
+     }
  
--static inline void vm_putl(CPUX86State *env, uint32_t segptr,
--                           unsigned int reg16, unsigned int val)
--{
--    cpu_stl_data(env, segptr + (reg16 & 0xffff), val);
--}
--
--static inline unsigned int vm_getb(CPUX86State *env,
--                                   uint32_t segptr, unsigned int reg16)
--{
--    return cpu_ldub_data(env, segptr + (reg16 & 0xffff));
--}
--
--static inline unsigned int vm_getw(CPUX86State *env,
--                                   uint32_t segptr, unsigned int reg16)
--{
--    return cpu_lduw_data(env, segptr + (reg16 & 0xffff));
--}
--
--static inline unsigned int vm_getl(CPUX86State *env,
--                                   uint32_t segptr, unsigned int reg16)
--{
--    return cpu_ldl_data(env, segptr + (reg16 & 0xffff));
--}
--
- void save_v86_state(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
-@@ -131,19 +107,6 @@ static inline void return_to_32bit(CPUX86State *env, int retval)
-     env->regs[R_EAX] = retval;
- }
++    if (unlikely(!(prot & type))) {
++        /* Not allowed -- Inst/Data Memory Access Rights Fault. */
++        ret = (type & PAGE_EXEC) ? EXCP_IMP : EXCP_DMAR;
++        goto egress;
++    }
++
+     /* access_id == 0 means public page and no check is performed */
+     if (ent->access_id && MMU_IDX_TO_P(mmu_idx)) {
+         int access_prot = (hppa_is_pa20(env)
+@@ -281,12 +287,6 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+         prot &= access_prot;
+     }
  
--static inline int set_IF(CPUX86State *env)
--{
--    CPUState *cs = env_cpu(env);
--    TaskState *ts = get_task_state(cs);
--
--    ts->v86flags |= VIF_MASK;
--    if (ts->v86flags & VIP_MASK) {
--        return_to_32bit(env, TARGET_VM86_STI);
--        return 1;
+-    if (unlikely(!(prot & type))) {
+-        /* Not allowed -- Inst/Data Memory Access Rights Fault. */
+-        ret = (type & PAGE_EXEC) ? EXCP_IMP : EXCP_DMAR;
+-        goto egress;
 -    }
--    return 0;
--}
 -
- static inline void clear_IF(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
-@@ -162,34 +125,6 @@ static inline void clear_AC(CPUX86State *env)
-     env->eflags &= ~AC_MASK;
- }
- 
--static inline int set_vflags_long(unsigned long eflags, CPUX86State *env)
--{
--    CPUState *cs = env_cpu(env);
--    TaskState *ts = get_task_state(cs);
--
--    set_flags(ts->v86flags, eflags, ts->v86mask);
--    set_flags(env->eflags, eflags, SAFE_MASK);
--    if (eflags & IF_MASK)
--        return set_IF(env);
--    else
--        clear_IF(env);
--    return 0;
--}
--
--static inline int set_vflags_short(unsigned short flags, CPUX86State *env)
--{
--    CPUState *cs = env_cpu(env);
--    TaskState *ts = get_task_state(cs);
--
--    set_flags(ts->v86flags, flags, ts->v86mask & 0xffff);
--    set_flags(env->eflags, flags, SAFE_MASK);
--    if (flags & IF_MASK)
--        return set_IF(env);
--    else
--        clear_IF(env);
--    return 0;
--}
--
- static inline unsigned int get_vflags(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
+     /*
+      * In priority order, check for conditions which raise faults.
+      * Remove PROT bits that cover the condition we want to check,
 -- 
 2.43.0
 
