@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E067CF2593
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 18:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAA6CF2579
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 18:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t03cz-0001IJ-Eq; Sun, 13 Oct 2024 14:47:41 -0400
+	id 1t03d0-0001J7-CX; Sun, 13 Oct 2024 14:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cx-0001Hi-9k
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:39 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1t03cz-0001II-3A
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:41 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t03cv-0002So-NL
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:39 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20c805a0753so29309765ad.0
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 11:47:37 -0700 (PDT)
+ id 1t03cx-0002T3-I9
+ for qemu-devel@nongnu.org; Sun, 13 Oct 2024 14:47:40 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-20c8b557f91so26393585ad.2
+ for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 11:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728845256; x=1729450056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728845258; x=1729450058; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=izfDyS+bmapVSfLYtSn4xLMYlKwDBm7aSJ/Y/fO7PVc=;
- b=xw+Aqhga1XmHQB4oBwwXzyZF+3mVHgEHq0KoZhlR5IcvF3ZJU5euEy1XmAUmLEjQ9J
- Yr6cvNyrtw/fczbLKyKUCdseJSkLbLERh6vu60Dh9XMSUvDog50XHo3U8NA9vpHTEexB
- To1aceN9agILl4ABYLU+P43CELDx7oHqWUiJZvQ17UnJXftVWhJ2lSkyFavsTs3/o9mE
- vKX1mGVP7Pd/UAIeoRcE3wB5KmpKe88mM/HMpv/ghXa+/5cjFXsgg9UnjFnP1D8eVX5+
- /4QKD6Ca9v/iKZQG2qdSEMDUTTJ+mjUYq/6aS+YHsTzOdaej1unZ4jjiJRAXPBD/T6lo
- Ss+A==
+ bh=A367cDE3XXnX+J9PB6YWwLbOv7CCrH8XOGA6B2dAonQ=;
+ b=CPdsdk/vadBarphoKLgzZcGC0QcDHf6YHRWApiwV7OORvsuQAMieRWu1Q2NgWGoyZ6
+ pIKZKKyo5ZGC6nfnbsPAUN+bgESCFZTylQ7XOTR9HA8HgnkYm/F7kMy4+jELz6TOKNAe
+ sEKsNMN/gM3S43NOpBKZxqC3c34s6Q9ONlZf+jQhoxr8HOte9MlphJAqq4OtHk13WVr/
+ dUvbzh13fiIjv76yGJBlYPUeMUrSkGba4TuhnvP7Vywocl7tOyLrECuZNaQFHHlKnSZ8
+ yPZjSBIXxwlYle2zVZTEdBuubIV7mn7az3LGce5K3dTPGiYrHRA3kMtQFcrg3SVpVLwl
+ /n3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728845256; x=1729450056;
+ d=1e100.net; s=20230601; t=1728845258; x=1729450058;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=izfDyS+bmapVSfLYtSn4xLMYlKwDBm7aSJ/Y/fO7PVc=;
- b=p4z18/bA+xvq+EHQtXmLyDJCh9ky4/jFRXAQZEYyaGCo8HRVSbTi4WRhHuRVpbDkjr
- LHj4I48DEX5mAjzR40j/OIycl57+nSIY9nIBMNKBQPHwUWDeqvyryFtRZzbD0nhSHAcQ
- MEaJiFllDyAFdaFVg4btYfgSRcJ4J1LdlPptCQxVRRhjDJvY3Kxx+Iu4oqA0WRGQB3hl
- Az8dEikY3jJkfLh+RJvuM0krrCP+Xn3/rMkcK8Zzjg3eknxIkPkX19dzyMEBvrcelx/3
- Q/u1mHuPVxSkkUepXoeijMqiCRZOEpTCrQGCwOVfyjlnBvUhOo5Ip7izQkkjnParV8Bj
- xbLQ==
-X-Gm-Message-State: AOJu0YyypFsLx3Sa11E9ZOGkGpm5YjZ4KByjRY69NvtE2/QdfFI4jpJ5
- lhk7WldXLv2lvl+tGGj9jHRlAomMKN4pzdKHLJCpHTckYdOvpwbwv0JsnJgU1OEmRMyaT5lvJyC
- +
-X-Google-Smtp-Source: AGHT+IGyUUNkT5YyYYHfSH0LiuRwYmDXbHX14viFmUjMqI3hlOf47FabMHo/AaQEn83bsci8kkjsmA==
-X-Received: by 2002:a17:903:1d0:b0:20c:e262:2580 with SMTP id
- d9443c01a7336-20ce2622835mr28409195ad.44.1728845256268; 
- Sun, 13 Oct 2024 11:47:36 -0700 (PDT)
+ bh=A367cDE3XXnX+J9PB6YWwLbOv7CCrH8XOGA6B2dAonQ=;
+ b=TDXk39DHLbK7LkH/ImwrdojC1QV/ZvU1r2GtT3Z27/LNlxY+koeQGO+h65T99qPzNv
+ /HKY6ukWVIXPJ+tGKMhzYJeiBZ2InBYqUShQ6G6OelYN90B6gdBptSXjwECWOb0wea51
+ 51Qr8MKI84JiC8pgEW9WEekVATOxevsdC4IZu4LV8/mG8Y+fFD7R3JgFXgCK2PgNX88u
+ YinLeqMESJGNgaX4L9J6FWDy2TBwhiQ1ZO08/LwOe/+p/jGhHZCW/BM8JXqzMd14uJCK
+ X4fvC51L6fppTWKiTvXXL/CvbHibAGaKxIlj7SbfAO2m687Amk79UGRydy6j78+V6vFD
+ A23Q==
+X-Gm-Message-State: AOJu0Yz55BYnXHOkg0Kv69D+E9UnZB/kTvXkZw4ks93XS+Y0LAOKqtfd
+ 1p7Fh75bMywRWAzoVDHKRf+cc/+zpKRP+bzC2sKKqNGu+HC2h0PmcQMfNoVAEq6Mouw1NUWwzW0
+ J
+X-Google-Smtp-Source: AGHT+IGvRfsXpMvrKqM+XTdNzkMe9S1y4G3+HE4CMWfWELYQl37UJe7I3yNOkN7wblaHIpYPU4gJ/Q==
+X-Received: by 2002:a17:903:11c6:b0:20c:7661:dce8 with SMTP id
+ d9443c01a7336-20ca167d499mr158830245ad.36.1728845258183; 
+ Sun, 13 Oct 2024 11:47:38 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8c35522fsm52811805ad.296.2024.10.13.11.47.35
+ d9443c01a7336-20c8c35522fsm52811805ad.296.2024.10.13.11.47.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 11:47:35 -0700 (PDT)
+ Sun, 13 Oct 2024 11:47:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 1/3] include/exec: Improve probe_access_full{,
- _mmu} documentation
-Date: Sun, 13 Oct 2024 11:47:31 -0700
-Message-ID: <20241013184733.1423747-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 3/3] target/i386: Remove ra parameter from ptw_translate
+Date: Sun, 13 Oct 2024 11:47:33 -0700
+Message-ID: <20241013184733.1423747-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241013184733.1423747-1-richard.henderson@linaro.org>
 References: <20241013184733.1423747-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,60 +95,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+This argument is no longer used.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/exec-all.h | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ target/i386/tcg/sysemu/excp_helper.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 72240ef426..2e4c4cc4b4 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -368,6 +368,13 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-  * The CPUTLBEntryFull structure returned via @pfull is transient
-  * and must be consumed or copied immediately, before any further
-  * access or changes to TLB @mmu_idx.
-+ *
-+ * This function will not fault if @nonfault is set, but will
-+ * return TLB_INVALID_MASK if the page is not mapped, or is not
-+ * accessible with @access_type.
-+ *
-+ * This function will return TLB_MMIO in order to force the access
-+ * to be handled out-of-line if plugins wish to instrument the access.
-  */
- int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       MMUAccessType access_type, int mmu_idx,
-@@ -375,22 +382,14 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
-                       CPUTLBEntryFull **pfull, uintptr_t retaddr);
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 8f4dc08535..f97594f4ab 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -60,7 +60,7 @@ typedef struct PTETranslate {
+     hwaddr gaddr;
+ } PTETranslate;
  
- /**
-- * probe_access_mmu() - Like probe_access_full except cannot fault and
-- * doesn't trigger instrumentation.
-+ * probe_access_full_mmu:
-+ * Like probe_access_full, except:
-  *
-- * @env: CPUArchState
-- * @vaddr: virtual address to probe
-- * @size: size of the probe
-- * @access_type: read, write or execute permission
-- * @mmu_idx: softmmu index
-- * @phost: ptr to return value host address or NULL
-- * @pfull: ptr to return value CPUTLBEntryFull structure or NULL
-- *
-- * The CPUTLBEntryFull structure returned via @pfull is transient
-- * and must be consumed or copied immediately, before any further
-- * access or changes to TLB @mmu_idx.
-- *
-- * Returns: TLB flags as per probe_access_flags()
-+ * This function is intended to be used for page table accesses by
-+ * the target mmu itself.  Since such page walking happens while
-+ * handling another potential mmu fault, this function never raises
-+ * exceptions (akin to @nonfault true for probe_access_full).
-+ * Likewise this function does not trigger plugin instrumentation.
-  */
- int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
-                           MMUAccessType access_type, int mmu_idx,
+-static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
++static bool ptw_translate(PTETranslate *inout, hwaddr addr)
+ {
+     int flags;
+ 
+@@ -165,7 +165,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+                  * Page table level 5
+                  */
+                 pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
+-                if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++                if (!ptw_translate(&pte_trans, pte_addr)) {
+                     return false;
+                 }
+             restart_5:
+@@ -189,7 +189,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              * Page table level 4
+              */
+             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 39) & 0x1ff) << 3);
+-            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++            if (!ptw_translate(&pte_trans, pte_addr)) {
+                 return false;
+             }
+         restart_4:
+@@ -209,7 +209,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              * Page table level 3
+              */
+             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 30) & 0x1ff) << 3);
+-            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++            if (!ptw_translate(&pte_trans, pte_addr)) {
+                 return false;
+             }
+         restart_3_lma:
+@@ -236,7 +236,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              * Page table level 3
+              */
+             pte_addr = (in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18);
+-            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++            if (!ptw_translate(&pte_trans, pte_addr)) {
+                 return false;
+             }
+             rsvd_mask |= PG_HI_USER_MASK;
+@@ -258,7 +258,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 2
+          */
+         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
+-        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++        if (!ptw_translate(&pte_trans, pte_addr)) {
+             return false;
+         }
+     restart_2_pae:
+@@ -284,7 +284,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 1
+          */
+         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 12) & 0x1ff) << 3);
+-        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++        if (!ptw_translate(&pte_trans, pte_addr)) {
+             return false;
+         }
+         pte = ptw_ldq(&pte_trans, ra);
+@@ -302,7 +302,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 2
+          */
+         pte_addr = (in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc);
+-        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++        if (!ptw_translate(&pte_trans, pte_addr)) {
+             return false;
+         }
+     restart_2_nopae:
+@@ -331,7 +331,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 1
+          */
+         pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
+-        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
++        if (!ptw_translate(&pte_trans, pte_addr)) {
+             return false;
+         }
+         pte = ptw_ldl(&pte_trans, ra);
 -- 
 2.43.0
 
