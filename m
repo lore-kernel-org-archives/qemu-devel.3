@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26A6CFC500
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 08:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D0ACFC50A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 09:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0Gpd-0003U7-S5; Mon, 14 Oct 2024 04:53:37 -0400
+	id 1t0H0v-00060E-S2; Mon, 14 Oct 2024 05:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t0GpZ-0003Td-V5
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 04:53:34 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t0GpV-0000x9-P0
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 04:53:33 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cx74v+2wxnoo0aAA--.38366S3;
- Mon, 14 Oct 2024 16:53:18 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxD9b52wxngQMpAA--.14727S3;
- Mon, 14 Oct 2024 16:53:15 +0800 (CST)
-Subject: Re: [PULL v2 40/61] hw/acpi: Update GED _EVT method AML with CPU scan
-To: qemu-devel@nongnu.org, salil.mehta@huawei.com
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Salil Mehta <salil.mehta@huawei.com>, Keqian Zhu <zhukeqian1@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Gavin Shan
- <gshan@redhat.com>, Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
- Xianglai Li <lixianglai@loongson.cn>, Miguel Luis <miguel.luis@oracle.com>,
- Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-References: <cover.1721731723.git.mst@redhat.com>
- <549c9a9dcbc1592ea79496f7b3ab234f366adeba.1721731723.git.mst@redhat.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <ac9244d8-660a-ade6-9987-352c3c646a76@loongson.cn>
-Date: Mon, 14 Oct 2024 16:52:55 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1t0H0j-0005vu-QO
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:05:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
+ id 1t0H0h-0002Rf-PJ
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:05:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728896699;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QTMfZRCJOIL2NoWmUxRWYQxPyttb9kDTXib0osKSwiM=;
+ b=RJ5gCHKuo0y+LPainMANgB6mlGQhSOOMN8Q5kbs+ePsj2DDMuXs4e7fiXy2oPVkXY503Ya
+ OcPRV+9pckTZ+LDZGoNvPEJUH2jinis/eORzlZrvzZ8atwgmiB9k9mWYsa7m2PdauVAIb4
+ CO4eianhTXidmS6NZOxV2X0YL0xqZoQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-652-Jevscm7_Pg6HW5X5YBHhJQ-1; Mon, 14 Oct 2024 05:04:56 -0400
+X-MC-Unique: Jevscm7_Pg6HW5X5YBHhJQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4311c681dfcso20612965e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 02:04:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728896695; x=1729501495;
+ h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QTMfZRCJOIL2NoWmUxRWYQxPyttb9kDTXib0osKSwiM=;
+ b=sP9t2AjA/JmB1ERrowAbpEyzWbTuVO4D/mRk/DnPpCMRQjDx8RC7BLIC/FtntgYLRF
+ p5vKNTrDjRgCWf4oeqN5a/dxtkk/n5LhcYc+usXQ7ThfycK9sZQRs9OHbs6bB3kiqTeu
+ GNDu81jcgHKg/EIjLxzL5o48krpvHyW3d7XHN7tH2+OVfMnjIAZM5ULnn8JziWkSp2ry
+ jce5xs91J6VvKj2+VJAYR75LiLzMXeOSzxRMooM7CPNglk1sRy8xtoFHNSWooZpPJmOc
+ VqyEH9jiaQjh4YQC43lqG2xFym/5SJDM/v0QYDMB7as3AyLLjKrvdfT86xJ1MS8xowYM
+ S+lQ==
+X-Gm-Message-State: AOJu0Ywv02M4dD2DZvV4SzeYbbzFSgr1eMysItLloAKUIXAKwr479qCv
+ v5Q7Qx3K7bBEm/UyY14jSQcl5bNK8ohqQetm1KAIvUypd2olWnS8AIVNYUbYzIbW5AYXDwdSQm7
+ Rcm9QY9OwgfEL4bQ6IbHPUjkpEyiZd9NFyBF2ld0vMhkLHDWltVE875NSSQ3rWtuFzNosQ7Gcod
+ 8mAIRAkCw9J+1hFoCAhSB56zwoKec3cVrtkMCv
+X-Received: by 2002:a05:600c:468b:b0:42c:ba1f:5482 with SMTP id
+ 5b1f17b1804b1-4311df56381mr81806015e9.35.1728896694852; 
+ Mon, 14 Oct 2024 02:04:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHy8VsCa7toXQBtbXpH7TGIQns4USVMOjXOSATBDYQ5qKDC5Lnq0cUzIpfm0DmmE49/ZBIw7w==
+X-Received: by 2002:a05:600c:468b:b0:42c:ba1f:5482 with SMTP id
+ 5b1f17b1804b1-4311df56381mr81805785e9.35.1728896694420; 
+ Mon, 14 Oct 2024 02:04:54 -0700 (PDT)
+Received: from fedora (g2.ign.cz. [91.219.240.8])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-430ccf51753sm146437325e9.23.2024.10.14.02.04.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Oct 2024 02:04:53 -0700 (PDT)
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH RESEND v4 0/4] target/i386: Various Hyper-V related fixes
+In-Reply-To: <87y139jlcz.fsf@redhat.com>
+References: <20240917160051.2637594-1-vkuznets@redhat.com>
+ <87y139jlcz.fsf@redhat.com>
+Date: Mon, 14 Oct 2024 11:04:53 +0200
+Message-ID: <87plo3f422.fsf@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <549c9a9dcbc1592ea79496f7b3ab234f366adeba.1721731723.git.mst@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxD9b52wxngQMpAA--.14727S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuF43XF1UtF1UZr1rWF45Jwc_yoWrJFWkp3
- yq9F4Y9rWDGF1j93yYv343A39rGan5GwsrWFWDAF1S9asIv34rGF10gw4YyFyYyan2qan5
- J3Wvvry8Kr1YyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jY
- SoJUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.599,
+Content-Type: text/plain
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=vkuznets@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,89 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Salil,
+Vitaly Kuznetsov <vkuznets@redhat.com> writes:
 
-When I debug cpu hotplug on LoongArch system, It reports error like this:
-     ACPI BIOS Error (bug): Could not resolve symbol [\_SB.GED.CSCN], 
-AE_NOT_FOUND
-     ACPI Error: Aborting method \_SB.GED._EVT due to previous error 
-(AE_NOT_FOUND)
-     acpi-ged ACPI0013:00: IRQ method execution failed
+> Vitaly Kuznetsov <vkuznets@redhat.com> writes:
+>
+>> Changes since '[PATCH RESEND v3 0/3] i386: Fix Hyper-V Gen1 guests stuck 
+>> on boot with 'hv-passthrough':
+>>
+>> - Added "target/i386: Make sure SynIC state is really updated before KVM_RUN" 
+>>   to the set.
+>>  
+>> This is a long pending collection of fixes for various Hyper-V related 
+>> issues, mostly detected by tests. On top of that, the patchset updates
+>> Hyper-V related documentation adding recommendations.
+>>
+>> Vitaly Kuznetsov (4):
+>>   target/i386: Fix conditional CONFIG_SYNDBG enablement
+>>   target/i386: Exclude 'hv-syndbg' from 'hv-passthrough'
+>>   target/i386: Make sure SynIC state is really updated before KVM_RUN
+>>   docs/system: Add recommendations to Hyper-V enlightenments doc
+>>
+>>  docs/system/i386/hyperv.rst | 43 +++++++++++++++++++++++++++++++++----
+>>  target/i386/cpu.c           |  2 ++
+>>  target/i386/kvm/hyperv.c    |  1 +
+>>  target/i386/kvm/kvm.c       | 18 ++++++++++------
+>>  4 files changed, 54 insertions(+), 10 deletions(-)
+>
+> Ping) Some of these patches are really getting old :-)
 
+Ping)
 
-With this patch, GED CPU call method is "\\_SB.GED.CSCN", however in 
-function build_cpus_aml(), its method name is "\\_SB.CPUS.CSCN".
-     method = aml_method(event_handler_method, 0, AML_NOTSERIALIZED);
-     aml_append(method, aml_call0("\\_SB.CPUS." CPU_SCAN_METHOD));
-     aml_append(table, method);
-
-It seems that CPU scanning method name is not consistent between 
-function build_cpus_aml() and build_ged_aml().
-
-Regards
-Bibo Mao
-
-On 2024/7/23 下午6:59, Michael S. Tsirkin wrote:
-> From: Salil Mehta <salil.mehta@huawei.com>
-> 
-> OSPM evaluates _EVT method to map the event. The CPU hotplug event eventually
-> results in start of the CPU scan. Scan figures out the CPU and the kind of
-> event(plug/unplug) and notifies it back to the guest. Update the GED AML _EVT
-> method with the call to method \\_SB.CPUS.CSCN (via \\_SB.GED.CSCN)
-> 
-> Architecture specific code [1] might initialize its CPUs AML code by calling
-> common function build_cpus_aml() like below for ARM:
-> 
-> build_cpus_aml(scope, ms, opts, xx_madt_cpu_entry, memmap[VIRT_CPUHP_ACPI].base,
->                 "\\_SB", "\\_SB.GED.CSCN", AML_SYSTEM_MEMORY);
-> 
-> [1] https://lore.kernel.org/qemu-devel/20240613233639.202896-13-salil.mehta@huawei.com/
-> 
-> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> Tested-by: Zhao Liu <zhao1.liu@intel.com>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> Message-Id: <20240716111502.202344-5-salil.mehta@huawei.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->   include/hw/acpi/generic_event_device.h | 1 +
->   hw/acpi/generic_event_device.c         | 3 +++
->   2 files changed, 4 insertions(+)
-> 
-> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-> index e091ac2108..40af3550b5 100644
-> --- a/include/hw/acpi/generic_event_device.h
-> +++ b/include/hw/acpi/generic_event_device.h
-> @@ -87,6 +87,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
->   #define GED_DEVICE      "GED"
->   #define AML_GED_EVT_REG "EREG"
->   #define AML_GED_EVT_SEL "ESEL"
-> +#define AML_GED_EVT_CPU_SCAN_METHOD "\\_SB.GED.CSCN"
->   
->   /*
->    * Platforms need to specify the GED event bitmap
-> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> index 4641933a0f..15b4c3ebbf 100644
-> --- a/hw/acpi/generic_event_device.c
-> +++ b/hw/acpi/generic_event_device.c
-> @@ -108,6 +108,9 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
->                   aml_append(if_ctx, aml_call0(MEMORY_DEVICES_CONTAINER "."
->                                                MEMORY_SLOT_SCAN_METHOD));
->                   break;
-> +            case ACPI_GED_CPU_HOTPLUG_EVT:
-> +                aml_append(if_ctx, aml_call0(AML_GED_EVT_CPU_SCAN_METHOD));
-> +                break;
->               case ACPI_GED_PWR_DOWN_EVT:
->                   aml_append(if_ctx,
->                              aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-> 
+-- 
+Vitaly
 
 
