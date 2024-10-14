@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6C9CFC52F
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 09:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B74CFC52C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 09:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0HoL-000878-AZ; Mon, 14 Oct 2024 05:56:21 -0400
+	id 1t0HpI-0000p1-8d; Mon, 14 Oct 2024 05:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0HoI-00086q-JB
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:56:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t0HpG-0000oS-5k
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:57:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0HoG-0000TI-2B
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:56:17 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t0HpE-0000Wt-Ho
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 05:57:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728899774;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1728899835;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s7iFQT2OAKGtYdIV1x9Qa8ogTSEQHYw9aI7vbwQyNlw=;
- b=YXA/mKSlVu7LZSB8EyTe8B2gG/43kqZR/Xi/Ue/f0Wd8WN0E0yLpvprivvhSqqhq/7BUYt
- GQzTw5t1DFx7zkHnKeIVbjt7FZGbiuYfQER3TdHPwwdK8N84AqylPtbi4yWwFyefj1U93q
- nGdS9S08IpDh6wtNd00Ikb2acknM0kk=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-74-d0G3p0A4OaGsjA1e2BvAZA-1; Mon, 14 Oct 2024 05:56:12 -0400
-X-MC-Unique: d0G3p0A4OaGsjA1e2BvAZA-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7afd01249f1so1277042185a.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 02:56:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728899772; x=1729504572;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s7iFQT2OAKGtYdIV1x9Qa8ogTSEQHYw9aI7vbwQyNlw=;
- b=vk3N5ioAm/UOvH7+zgxNVpnpqZXfOxPZgHCubrUUqPQzHmpiSKO5MQYBAhcb1s2QLb
- kWgNWC1dzuCOajXu6RPFAoOu0xHTDCd+vPfbqrG6LS9KQlErCRqNxvm61HrhS7YbJBNW
- yBcxpHjYtK+ZqrTiEzUWcugCg/TFv9r53+0OemmQzHU8KVcdZsIWWbRm4rRl9c906Ty+
- H80CGRvwCJTIGHuOEeBVKl4szVdRz6qufSQtoI9yDrBwu7NjjTGrMRjxowxpwSaU7Wr+
- XN4mRP554Z0LTmmCKZmTVwAcu5In9Orsn/uKcyWZMciLc3HuoGte6hSLa0drNAOpSFd0
- gTjg==
-X-Gm-Message-State: AOJu0Yx7ArfZ9dHreFPddN+6Rgji+++bc49ADgCTkIOknIilGcRj9yBa
- sdPFhyX0JVpnvZhJYjLlZGZby62mPbpRqBjzYwDi9cnn1tYmKiv2Nh96QxhrrQSFze5M5Ct+wbQ
- hEOqiPa8NGDH1BOAVglKeZ9cinvlR9kDNGRdw/ewaezbhBwru1wQjjrf+fAr2cJwyF/q8Zs1XzT
- GYRJzJSuKsAPt7ZHHaxtkl0mi2ILg=
-X-Received: by 2002:a05:620a:4408:b0:7a2:bb:2cc8 with SMTP id
- af79cd13be357-7b120fb791amr1391179385a.18.1728899772004; 
- Mon, 14 Oct 2024 02:56:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEv7VeTYS8WP9PHN7U5URRSQ/WW5/5lYbS4D4llTkUvkjzcFg0soK8aFziMBkANxM0MYNzguAsOxXfKydXi6gk=
-X-Received: by 2002:a05:620a:4408:b0:7a2:bb:2cc8 with SMTP id
- af79cd13be357-7b120fb791amr1391177685a.18.1728899771730; Mon, 14 Oct 2024
- 02:56:11 -0700 (PDT)
+ bh=UrxdOf+Z4SWkeoGftAhO9bc8qwfSCMydo1Lx2/tKUa8=;
+ b=PqlXvD7jkPuix+5K6zjoWsyhccybiff9YeXYGI1AZL5/dqtezZuWKhMm8+bwZyX414i6n/
+ dft8AEGvWWuyvcKdYuZR9A9+fbaKDa9ptQRwifagqHndRsqN9ANqO4ubkfsbtPXHJTqYGe
+ 90peWFETJlFjFS2bb2czdVGtSGZESE8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-A7EL2QrTMDGcek6ANLqHwQ-1; Mon,
+ 14 Oct 2024 05:57:13 -0400
+X-MC-Unique: A7EL2QrTMDGcek6ANLqHwQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97A6B1956048; Mon, 14 Oct 2024 09:57:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.155])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 656743000198; Mon, 14 Oct 2024 09:57:10 +0000 (UTC)
+Date: Mon, 14 Oct 2024 10:57:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dehan Meng <demeng@redhat.com>
+Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com,
+ peter.maydell@linaro.org
+Subject: Re: [PATCH v2 2/4] Proper initialization of n to 0 for getline to
+ function correctly.
+Message-ID: <Zwzq8X90VRi92t1S@redhat.com>
+References: <20241011031937.92216-1-demeng@redhat.com>
+ <20241011031937.92216-3-demeng@redhat.com>
 MIME-Version: 1.0
-References: <CAJ0YB0a-MdVWVoXqGjpRtToVcX-HXA=vRfVOO9VOvcutxvvmkg@mail.gmail.com>
-In-Reply-To: <CAJ0YB0a-MdVWVoXqGjpRtToVcX-HXA=vRfVOO9VOvcutxvvmkg@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 14 Oct 2024 13:56:00 +0400
-Message-ID: <CAMxuvax4hEWJP2homSfr0VyzB7P_QX6f8cHr=L=Vz1X+bfN0OQ@mail.gmail.com>
-Subject: Re: What is the status of the performance of D-Bus? Should it be used?
-To: Anston Sorensen <ansorensen1118@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241011031937.92216-3-demeng@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.028,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.028,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,28 +87,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Anston
+On Fri, Oct 11, 2024 at 11:19:35AM +0800, Dehan Meng wrote:
+> Signed-off-by: Dehan Meng <demeng@redhat.com>
+> ---
+>  qga/commands-linux.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Sun, Oct 13, 2024 at 5:23=E2=80=AFAM Anston Sorensen
-<ansorensen1118@gmail.com> wrote:
->
-> Normally, D-Bus should be used for direct input/output with QEMU (if only=
- local access is needed). The driver is not in a good state and needs to be=
- replaced though, correct? Should I still use D-Bus, or is there an alterna=
-tive that is better at the moment?
->
->
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
--display dbus can be used for local UI. (I am working on RDP server
-for remoting, fwiw)
+> 
+> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+> index 2c2b5f4ff2..b905f33a57 100644
+> --- a/qga/commands-linux.c
+> +++ b/qga/commands-linux.c
+> @@ -2126,7 +2126,7 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
+>      GuestNetworkRouteList *head = NULL, **tail = &head;
+>      const char *routeFiles[] = {"/proc/net/route", "/proc/net/ipv6_route"};
+>      FILE *fp;
+> -    size_t n;
+> +    size_t n = 0;
+>      char *line = NULL;
+>      int firstLine;
+>      int is_ipv6;
+> -- 
+> 2.40.1
+> 
+> 
 
-You can use -display dbus with libmks: https://gitlab.gnome.org/GNOME/libmk=
-s
-
-In the long term, imho the various UI and remoting solutions in QEMU
-can be all external processes (and code base eventually).
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
