@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6B3D1813A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A35D1813D
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 19:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0QfG-0001vZ-CM; Mon, 14 Oct 2024 15:23:34 -0400
+	id 1t0Qek-0001na-Pc; Mon, 14 Oct 2024 15:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0QfE-0001v0-M4; Mon, 14 Oct 2024 15:23:32 -0400
+ id 1t0Qei-0001n0-Sh; Mon, 14 Oct 2024 15:23:00 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0QfD-00051A-2z; Mon, 14 Oct 2024 15:23:32 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XS6YD2CLrz6K6lC;
- Tue, 15 Oct 2024 03:21:52 +0800 (CST)
+ id 1t0Qef-0004xx-UK; Mon, 14 Oct 2024 15:23:00 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XS6T85J7gz6L7DK;
+ Tue, 15 Oct 2024 03:18:20 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id A643D1400D9;
- Tue, 15 Oct 2024 03:23:27 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 471E71400D9;
+ Tue, 15 Oct 2024 03:22:48 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 14 Oct 2024 21:23:08 +0200
+ 15.1.2507.39; Mon, 14 Oct 2024 21:22:28 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,16 +45,14 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH V1 2/4] hw/acpi: Update ACPI CPU Status `is_{present,
- enabled}` during vCPU hot(un)plug
-Date: Mon, 14 Oct 2024 20:22:03 +0100
-Message-ID: <20241014192205.253479-3-salil.mehta@huawei.com>
+Subject: [PATCH V1 0/4] Arch agnostic ACPI changes to support vCPU Hotplug (on
+ Archs like ARM)
+Date: Mon, 14 Oct 2024 20:22:01 +0100
+Message-ID: <20241014192205.253479-1-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241014192205.253479-1-salil.mehta@huawei.com>
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.48.146.149]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -84,40 +82,86 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the `AcpiCpuStatus` for `is_enabled` and `is_present` accordingly when
-vCPUs are hot-plugged or hot-unplugged, taking into account the *persistence*
-of the vCPUs.
+Certain CPU architecture specifications [1][2][3] prohibit changes to the CPUs
+*presence* after the kernel has booted. This is because many system
+initializations depend on the exact CPU count at boot time and do not expect it
+to change afterward. For example, components like interrupt controllers that are
+closely coupled with CPUs, or various per-CPU features, may not support
+configuration changes once the kernel has been initialized.
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
----
- hw/acpi/cpu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+This requirement poses a challenge for virtualization features like vCPU
+hotplug. To address this, changes to the ACPI AML are necessary to update the
+`_STA.PRES` (presence) and `_STA.ENA` (enabled) bits accordingly during guest
+initialization, as well as when vCPUs are hot-plugged or hot-unplugged. The
+presence of unplugged vCPUs may need to be deliberately *simulated* at the ACPI
+level to maintain a *persistent* view of vCPUs for the guest kernel.
 
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 083c4010c2..700aa855e9 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -291,6 +291,8 @@ void acpi_cpu_plug_cb(HotplugHandler *hotplug_dev,
-     }
- 
-     cdev->cpu = CPU(dev);
-+    cdev->is_present = true;
-+    cdev->is_enabled = true;
-     if (dev->hotplugged) {
-         cdev->is_inserting = true;
-         acpi_send_event(DEVICE(hotplug_dev), ACPI_CPU_HOTPLUG_STATUS);
-@@ -322,6 +324,11 @@ void acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
-         return;
-     }
- 
-+    cdev->is_enabled = false;
-+    if (!acpi_persistent_cpu(CPU(dev))) {
-+        cdev->is_present = false;
-+    }
-+
-     cdev->cpu = NULL;
- }
- 
+This patch set introduces the following features:
+
+1. ACPI Interface with Explicit PRESENT and ENABLED CPU States: It allows the
+   guest kernel to evaluate these states using the `_STA` ACPI method.
+   
+2. Initialization of ACPI CPU States: These states are initialized during
+   `machvirt_init` and when vCPUs are hot-(un)plugged. This enables hotpluggable
+   vCPUs to be exposed to the guest kernel via ACPI.
+
+3. Support for Migrating ACPI CPU States: The patch set ensures the migration of
+   the newly introduced `is_{present,enabled}` ACPI CPU states to the
+   destination VM.
+
+The approach is flexible enough to accommodate ARM-like architectures that
+intend to implement vCPU hotplug functionality. It is suitable for architectures
+facing similar constraints to ARM or those that plan to implement vCPU
+hotplugging independently of hardware support (if available).
+
+This patch set is derived from the ARM-specific vCPU hotplug implementation [4]
+and includes migration components adaptable to other architectures, following
+suggestions [5] made by Igor Mammedov <imammedo@redhat.com>.
+
+It can be applied independently, ensuring compatibility with existing hotplug
+support in other architectures. I have tested this patch set in conjunction with
+the ARM-specific vCPU hotplug changes (included in the upcoming RFC V5 [6]), and
+everything worked as expected. I kindly request maintainers of other
+architectures to provide a "Tested-by" after running their respective regression
+tests.
+
+Many thanks!
+
+
+References:
+[1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
+    architectures that don’t Support CPU Hotplug (like ARM64)
+    a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
+    b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
+[2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
+    SoC Based Systems (like ARM64)
+    Link: https://kvmforum2020.sched.com/event/eE4m
+[3] Check comment 5 in the bugzilla entry
+    Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
+[4] [PATCH RFC V4 00/33] Support of Virtual CPU Hotplug for ARMv8 Arch
+    Link: https://lore.kernel.org/qemu-devel/20241009031815.250096-1-salil.mehta@huawei.com/T/#mf32be203baa568a871dc625b732f666a4c4f1e68
+[5] Architecture agnostic ACPI VMSD state migration (Discussion)
+    Link: https://lore.kernel.org/qemu-devel/20240715155436.577d34c5@imammedo.users.ipa.redhat.com/
+[6] Upcoming RFC V5, Support of Virtual CPU Hotplug for ARMv8 Arch
+    Link: https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v5
+
+Salil Mehta (4):
+  hw/acpi: Initialize ACPI Hotplug CPU Status with Support for vCPU
+    `Persistence`
+  hw/acpi: Update ACPI CPU Status `is_{present, enabled}` during vCPU
+    hot(un)plug
+  hw/acpi: Reflect ACPI vCPU {present,enabled} states in ACPI
+    _STA.{PRES,ENA} Bits
+  hw/acpi: Populate vCPU Hotplug VMSD to migrate `is_{present,enabled}`
+    states
+
+ cpu-target.c         patches.vcpuhp.rfc-v5.arch.agnostic.acpi          |  1 +
+ hw/acpi/cpu.c                  | 70 +++++++++++++++++++++++++++++++---
+ hw/acpi/generic_event_device.c | 11 ++++++
+ include/hw/acpi/cpu.h          | 21 ++++++++++
+ include/hw/core/cpu.h          | 21 ++++++++++
+ 5 files changed, 119 insertions(+), 5 deletions(-)
+
 -- 
 2.34.1
 
