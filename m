@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A11CF259D
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 10:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A3FCF259D
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 10:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0IjB-00089z-MO; Mon, 14 Oct 2024 06:55:05 -0400
+	id 1t0IjT-0008Il-8Q; Mon, 14 Oct 2024 06:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0IjA-00088h-EX
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:55:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0Ij8-0006tu-Oe
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:55:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728903301;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xeY11Wwqg0V/ezUajEATUKZkLz3dwUAERUQyPCGxFV4=;
- b=gsQISNS7t6ZBrac2kBDFfi/H6saeVIiaJXPOHhN6wnTUstEElE0+4kN0I7I1GY4wrqJ1wr
- LbX35aKmXaQDlR/PHeu7SFwKIyHgzoQcK2XgfRJa9lZw1Z1O01HZUbP2tgfnWNUECHUXOA
- U0jagT/GZDgAT/zLK6uNBRDfzbFEc0c=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-vkkUFcUoOf6xxsjfATILxw-1; Mon, 14 Oct 2024 06:55:00 -0400
-X-MC-Unique: vkkUFcUoOf6xxsjfATILxw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d5606250aso1041046f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 03:55:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t0IjR-0008IU-9z
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:55:21 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t0IjP-00076G-C6
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:55:20 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a99ebb390a5so312386566b.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 03:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728903316; x=1729508116; darn=nongnu.org;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=u9rGVTNoNbab8SZPsqzjrWU1GiF+nKdIQyvQOWuRifI=;
+ b=qVsBesfW1Fj9U7G0tGIkLeWVThPCcx2oaWvD25dvGFtAbVXOoQzE2ZagIFxH2+ZnXJ
+ CBcvXBWN1k6frs64vxuYqtNZfAJYBqpF72aqZHDZ9kSE9vfMf5g3KMQT9IBMCyBzAzKS
+ TMfJiV+pFHqwY2EkLy2TfFOo+4LLubk7DKYCUa/dYo6n2FHivsa4XySsa1uCrvBqkleD
+ pZ0F4MB1309NWUxFNQK5Rn1LmpAj6+Zah7s9LVHE9lasGtlrSzoIZ4E22aJ0PKMmP/zy
+ GBOh7a7tpugCtkIzxlu6lGatg7BYnMKHjCSbQDaxOPhDM2gxLp37slOH9ATw4jyUh9wY
+ THnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728903299; x=1729508099;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xeY11Wwqg0V/ezUajEATUKZkLz3dwUAERUQyPCGxFV4=;
- b=N1eqfrg5h1uMWeDvVislKrpVp9GmZIlQfTryIXGqi8S+1jBwf1fhSe5KiG5WLcFn8Q
- TIRSwcXSzJt3nIgyMdZS3MxFbQ/I+vegcjHpKJ9rjTPP6epvFO1gOMbS4HryDbn+dq33
- 6vgyxD/C8znsysnOksXQRsimvs6GU1664YI5Ssbp9oJMpcQfq3F6NVBLnebe9YguypIs
- eVO847Nt2SBgmRrURao6IpT2aKptbhacl44HBJ06dLuE+5iTtnljjNguQiKU7t3H9gk6
- RMs+ghjEM3b3OF4E3uUbXCnabZjOtVzyvykE5hYV9q5zMbu6CeOl2/x6GVKFsvSA9UtZ
- sFCg==
-X-Gm-Message-State: AOJu0YxX87osv7Eh0ihnz/KwA0fCxr5LGf91kJd/PqIigHBZLIqfRF9T
- N/QY1IZ99WBWc62EFEevrWvFGpZgeghyvlM0+MFqj5in//fN/ERFdQHE+QgJeuq8NLS2u1oZr4g
- KhO1EwyE0jU+lxXqqYnEIiX7v4PTuQD2nDibM/s6FW3L7dfwntwIJPRxYVib8KoFUfqXVGepgKb
- LVoj10HTY6AedSVH2ZCMoUy9qEnew=
-X-Received: by 2002:a5d:5708:0:b0:37d:4fe9:b6a6 with SMTP id
- ffacd0b85a97d-37d551f2dbfmr6852303f8f.29.1728903299027; 
- Mon, 14 Oct 2024 03:54:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKUq06Az1rjZxw9lp7oV1Eavu7jys7FE5efnoIipG7ODVMk9Q758fLmIhpbNMR1S+Z9mpkmfw8G+TOsHKyQ/8=
-X-Received: by 2002:a5d:5708:0:b0:37d:4fe9:b6a6 with SMTP id
- ffacd0b85a97d-37d551f2dbfmr6852290f8f.29.1728903298634; Mon, 14 Oct 2024
- 03:54:58 -0700 (PDT)
-MIME-Version: 1.0
+ d=1e100.net; s=20230601; t=1728903316; x=1729508116;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u9rGVTNoNbab8SZPsqzjrWU1GiF+nKdIQyvQOWuRifI=;
+ b=JeyycvKZNSXVbPs9item4gd/Exw7h+x7wri+8CA0bQiZChv6cv3k5IueN/cZEUWJK3
+ OH7Kj3XMLNXdRQez5wi+I8+zl6keB1gv6RIMYg7AI2vcULcL/Axc9ZKw0r1Coi29ywwL
+ EwhvSarxuUWgp2ecQK4jsHgPIE4hCC74grYxRmfAhDKLRSzs1cpRi3SEe3AKT8aN69Hs
+ X7HzCfA2MJOBKv5TZaunAmuN/XsApWqreKpPoKN3q1aYwakebkamWJpGBNhYP4vTHHNZ
+ 8huysZRKdb/NKvrCPVB3suKKzHHiHAAsCYl6NaLLBb+B5tdZ6mHv2TOQHixqCZFjQM51
+ FZdA==
+X-Gm-Message-State: AOJu0Yw4nvdWwV2Lr+3o6x7B9jKGqNdzcL2LH7V9rXmJthojtiV34UXl
+ LunPFkAwsIeeDHvCRawa3mAkgibuw2yPAVPa0bIR2ZOGZwhOZN2ALC4mULLl6AU=
+X-Google-Smtp-Source: AGHT+IFXN247jKTp2MQQL5Byd5VRnCYNXlg5k8XQHsx+ZDtoAYbmFc7zYelymZzG6QBth5XH7De8nw==
+X-Received: by 2002:a17:907:96a0:b0:a99:f298:c235 with SMTP id
+ a640c23a62f3a-a99f298f43amr477680066b.7.1728903316327; 
+ Mon, 14 Oct 2024 03:55:16 -0700 (PDT)
+Received: from meli-email.org (adsl-161.109.242.225.tellas.gr.
+ [109.242.225.161]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a1016c370sm124148866b.86.2024.10.14.03.55.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Oct 2024 03:55:16 -0700 (PDT)
+Date: Mon, 14 Oct 2024 13:54:04 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
+User-Agent: meli 0.8.7
 References: <20241011153227.81770-1-pbonzini@redhat.com>
  <CAFEAcA-2dR26AvpbV0dRob-Gc=wbN0Mh9rYYB19WH4Yr6ugXHQ@mail.gmail.com>
  <CAFEAcA-hhdXwfD6Bn5yR6by3h-SkYaNd6dsj8d7J-zc2zK7E8Q@mail.gmail.com>
 In-Reply-To: <CAFEAcA-hhdXwfD6Bn5yR6by3h-SkYaNd6dsj8d7J-zc2zK7E8Q@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 14 Oct 2024 12:54:46 +0200
-Message-ID: <CABgObfZXiYjRdJCeRewPho_Py0R+qSaXTGdK2_Sib3yTEzu_2A@mail.gmail.com>
-Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Message-ID: <lcec3.dfw38kpupgt@linaro.org>
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.076,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,97 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 14, 2024 at 12:40=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
+On Mon, 14 Oct 2024 13:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+>On Mon, 14 Oct 2024 at 11:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Fri, 11 Oct 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>> > v2->v3: new patches
+>> > - scripts/archive-source: find directory name for subprojects
+>> > - docs: fix invalid footnote syntax
+>> > - docs: avoid footnotes consisting of just URLs
+>> > - docs: use consistent markup for footnotes
+>> >
+>> > ----------------------------------------------------------------
+>> > * first commit for Rust support
+>> > * add CI job using Fedora + Rust nightly
+>> > * fix detection of ATOMIC128 on x86_64
+>> > * fix compilation with Sphinx 8.1.0
 >
-> On Mon, 14 Oct 2024 at 11:12, Peter Maydell <peter.maydell@linaro.org> wr=
-ote:
-> >
-> > On Fri, 11 Oct 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote=
-:
-> > > v2->v3: new patches
-> > > - scripts/archive-source: find directory name for subprojects
-> > > - docs: fix invalid footnote syntax
-> > > - docs: avoid footnotes consisting of just URLs
-> > > - docs: use consistent markup for footnotes
-> > >
-> > > ----------------------------------------------------------------
-> > > * first commit for Rust support
-> > > * add CI job using Fedora + Rust nightly
-> > > * fix detection of ATOMIC128 on x86_64
-> > > * fix compilation with Sphinx 8.1.0
+>> Applied, thanks.
 >
-> > Applied, thanks.
+>With this applied, I find that on one of my personal
+>local dev branches an incremental rebuild fails, because
+>meson complains about not finding a new enough bindgen,
+>even though I did not --enable-rust. Meson also complains
+>about a bogus coredata.dat and we end up running meson
+>three times before it eventually decides the error is fatal.
 >
-> With this applied, I find that on one of my personal
-> local dev branches an incremental rebuild fails, because
-> meson complains about not finding a new enough bindgen,
-> even though I did not --enable-rust. Meson also complains
-> about a bogus coredata.dat and we end up running meson
-> three times before it eventually decides the error is fatal.
+>It looks like meson is incorrectly defaulting to "rust
+>enabled" rather than "rust disabled" here ?
+>
+>[trimmed]
 
-The report of coredata.dat is just a warning that it's not able to use
-any cached data, which is expected when bumping the Meson version.
+In this pull request, meson_options.txt has:
 
-It's definitely going in the "if have_rust and have_system" path. If
-you have the meson-logs/meson-log.txt and meson-private/cmd_line.txt
-files, they can help debugging. I'd expect a "rust =3D disabled" line in
-the latter... but yes I see what's happening. The
+ +option('rust', type: 'feature', value: 'auto',
 
-  test "$rust" !=3D "auto" && meson_option_add "-Drust=3D$rust"
-
-line is only executed when configure runs meson. Here it doesn't, and
-Makefile just tells Meson to reconfigure itself. Meson then gets the
-command line options from either coredata.dat (which has everything
-cached in Python's pickle format) or cmd_line.txt (slow path when
-Meson version is upgraded), but neither knows about the rust option;
-and the meson_options.txt default is 'auto'.
-
-To sum up:
-
-1) this is specific to incremental builds
-
-2) this is *not* specific to the Meson version change, the
-coredata.dat warning is a red herring
-
-3) this (mangled) patch would fix it:
-
-diff --git a/configure b/configure
-index 3e38a91616a..8a9a4153310 100755
---- a/configure
-+++ b/configure
-@@ -1987,7 +1987,7 @@ if test "$skip_meson" =3D no; then
-   fi
-
-   # QEMU options
--  test "$rust" !=3D "auto" && meson_option_add "-Drust=3D$rust"
-+  test "$rust" !=3D "disabled" && meson_option_add "-Drust=3D$rust"
-   test "$cfi" !=3D false && meson_option_add "-Dcfi=3D$cfi" "-Db_lto=3D$cf=
-i"
-   test "$docs" !=3D auto && meson_option_add "-Ddocs=3D$docs"
-   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add
-"-Dfuzzing_engine=3D$LIB_FUZZING_ENGINE"
-diff --git a/meson_options.txt b/meson_options.txt
-index 2211f291b2d..fc6d5526d58 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -372,5 +372,5 @@ option('hexagon_idef_parser', type : 'boolean',
-value : true,
- option('x86_version', type : 'combo', choices : ['0', '1', '2', '3',
-'4'], value: '1',
-        description: 'tweak required x86_64 architecture version
-beyond compiler default')
-
--option('rust', type: 'feature', value: 'auto',
-+option('rust', type: 'feature', value: 'disabled',
-description: 'Rust support')
-
-and I can send it shortly; fortunately your tree never got a working
-coredata.dat, so it hasn't stored anywhere the rust=3Dauto value.
-
-Paolo
-
-
-Paolo
-
+So it's not disabled by default. It sounds like meson enables the Rust 
+feature because it found the rustc binary.
 
