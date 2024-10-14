@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A67D18123
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 15:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADF2D18123
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 15:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0Mlu-0008Gc-Me; Mon, 14 Oct 2024 11:14:10 -0400
+	id 1t0MnB-0000e5-Ki; Mon, 14 Oct 2024 11:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0Mlt-0008GE-5U
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 11:14:09 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ id 1t0MnA-0000du-2v
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 11:15:28 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0Mlr-0007qn-KO
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 11:14:08 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2fb561f273eso7181991fa.2
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 08:14:06 -0700 (PDT)
+ id 1t0Mn8-00088H-BR
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 11:15:27 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5c96b2a10e1so2699217a12.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 08:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728918845; x=1729523645; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728918925; x=1729523725; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=syXDj9Xd9V5V1bqgnpVKqcIM58BhW90ufXNk1ne2oOY=;
- b=eNzvxFVq1kuzitfvrqEVRsV3neTppraBRd7zb8qmYk33a8UmFLeZSWAqoAdNXfTPlM
- A+7I+5gzwYpcCbbyd6bVQ+IXaYJosAfASPjPKy4h8SSJzqdvjumGBO3QsKDEDO+rkG8a
- ft/d4R7+ywIlwO5xNHb41X+aKLd9l+XqEroUXtJivvHy5IlYIXieThl4nj+0vhhECFtg
- H6qnR6mEAcLdOuU+y93GoZmpwuDnWxvzOIelDNeNyJt7wvVpYQW0Wz3iPtwkm/09sSA8
- XJM6DdZUfm6NjLKo6/1sksQuOlBTeIlzqr5hDYQ8ARR6kklc0gg511BKffvsk1a2lgXm
- FsYA==
+ bh=J4ziFelFO4NeM+7LVql2YMTQ7ZNhToeLbYNoxLKbFb8=;
+ b=K1NG5o1VUrhgjljkGleY8j8GLBQtfyAwMgEiW8Fn/hbcZ3F2RtNv8cN/8mylkPqBIh
+ tQd+DG46mt8GZJabsluB7XkA76KfjV9adRoFr1wBIv4/vMVsqPDzs6qGU8I2XplE7xL+
+ +tYPLgzc92cd4xQeAgHyFY3LGuPpnQm0dCUHkzcrMBFZYoHYkJTelDYcgo4+yNZ3aAcm
+ Wt/4zFENSUBFlXSUKwj2EjbB1JgOEDHSQKZYZ6EKip9eVLYSO8z+/XPhsoV7hcfBA1o5
+ 3aToK7B+0OAIm4ZrpunRvfLs+VjGzdHcuh16q9YEGilPL+ksqv+3B02GmJUU7SM35Slf
+ TF9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728918845; x=1729523645;
+ d=1e100.net; s=20230601; t=1728918925; x=1729523725;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=syXDj9Xd9V5V1bqgnpVKqcIM58BhW90ufXNk1ne2oOY=;
- b=qjVNJb7bY7y5RIvnbEvfzB+Kn0jai+WwTuASbFspKLQ/P7jyXc0/TTRE5Z4eCC9Sqd
- agkCrrwZ84fQnMo0kg6Uy2RmC8ZNRCqzkeqmjG/eU9CWzcmtNIIKNH+fj8VVx6OdLDyJ
- p22e5Kt3oTjCm4siP9J8ETGpopXA0uQKOkES3ae7rH5sGeSlH+eM4srALFxaotRwMwCc
- QK8CZGwa5nL8weh/PeXfSGzGm0aCJetdxQjp5ZK4tZVmNMwR79Uhy27N8J3ePhOkMR6j
- wp0ilxdZddBhD9023pYfLv2amcO7aW7KJs4OK0Pku8j55LUBK+Jk0Ce/ZU+DdGBSN1Oq
- MFfg==
-X-Gm-Message-State: AOJu0YxwKG1RFk6YOO9sEWyx0cveQlCKkgP/Y379r9hNcCuvXO1Vaqy5
- xzKOKsR6x3E6TNKrJd8oV/iSs6ZVw4WYF8QSxlHhXxwi9b5uzwNq/58uIs0zlTZCCYDrsvJ3aQ3
- 6LvFh++zV7Chapdn0ZEPu1i/rKwX3CIOuuTbb0g==
-X-Google-Smtp-Source: AGHT+IHHRdri82JPGjuQBWyplv4rJt3P5C2rHAdACrqsCnaalv6ocfUJKXqyN7FlV/WI98XlHy6tSzeXIWFYKQw6c6s=
-X-Received: by 2002:a05:651c:19a3:b0:2f7:6e3a:7c1d with SMTP id
- 38308e7fff4ca-2fb327138f5mr51588561fa.15.1728918845398; Mon, 14 Oct 2024
- 08:14:05 -0700 (PDT)
+ bh=J4ziFelFO4NeM+7LVql2YMTQ7ZNhToeLbYNoxLKbFb8=;
+ b=mWR5QLh4CV8RC8lL2rInE4XSFVR59Ndn8L8i4lXUvGnwG9lmaaqewvo/wd+84q1tYk
+ Ur62gqMlvC9+k0vsqWVQq6e2E9NuI76g3Yy4ysur7wNUBx+TnkJ+P+O23qp+wuFlcpAR
+ i5vG5SL/qR82isXD0ZbCeHscZFTUI6s9ddMMDoE386/LbPX4/5R1ckWiZlKaoD7Qq3Rf
+ whvA+WQdt8AOqKUSUs/0q2zRCOA4fMWYAa9SB9/ETFKbm2OrEJ8R/fJj8f1SfEki2PRI
+ gFexm8zpTXsA8gqnsZR+DXgQIKH17IsCATCGyu7xG7l5zKmnZ65LMpT2WoO8SLgx6Ov3
+ UX3A==
+X-Gm-Message-State: AOJu0Yyr8Ymr4o+yjTITWkyw3N+c3DpkOGMJSvhrbV+r+KQ6bu6+798d
+ arnN7OYXQzr4pmgzJLh5M3C1qHirMhp/wbyPmcN5iA5Mi5PAH250ERfP/sOAnY/gAxIqGKfapVD
+ JZ2UQWM49h8GKbJRCjC+gO6kDE1TDLJCCpZFFmw==
+X-Google-Smtp-Source: AGHT+IEBkP8yfgyNj06bZI4pTCrGv7Y2hs5ENCVDUZmR4/Qm3FkgXjGBJbStn0eynpSTQlZqnx2IaZUbF8YFV1u1M60=
+X-Received: by 2002:a05:6402:520b:b0:5c9:6936:1ad with SMTP id
+ 4fb4d7f45d1cf-5c96936035bmr6351730a12.5.1728918924625; Mon, 14 Oct 2024
+ 08:15:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1728299530.git.chao.liu@yeah.net>
- <fbaff99d74262f52fe62696fe08d617296f6ea1a.1728299530.git.chao.liu@yeah.net>
-In-Reply-To: <fbaff99d74262f52fe62696fe08d617296f6ea1a.1728299530.git.chao.liu@yeah.net>
+ <bcdacdcbf7b26192aebe4723c57bd87ef986defa.1728299530.git.chao.liu@yeah.net>
+In-Reply-To: <bcdacdcbf7b26192aebe4723c57bd87ef986defa.1728299530.git.chao.liu@yeah.net>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Oct 2024 16:13:54 +0100
-Message-ID: <CAFEAcA9cuSHGGehAVUq15LzVL_gLAZbJKy0uxYA0VxgqtHH24w@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] xilink-zynq-devcfg: Fix up for memory address
- range size not set correctly
+Date: Mon, 14 Oct 2024 16:15:13 +0100
+Message-ID: <CAFEAcA-62u9ky6YJKgLD1pFLuO5ArpXas8a-EmvdStX0djxhVQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] xilink-zynq-devcfg: Avoid disabling devcfg memory
+ region during initialization
 To: Chao Liu <chao.liu@yeah.net>
 Cc: qemu-devel@nongnu.org, bin.meng@windriver.com, edgar.iglesias@gmail.com, 
  alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,47 +92,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 7 Oct 2024 at 12:25, Chao Liu <chao.liu@yeah.net> wrote:
 >
+> During the initialization phase, we've encountered an issue where the
+> UNLOCK register is inadvertently cleared. This results in devcfg MR being
+> disabled, which in turn leads to unexpected memory access exceptions when
+> attempting subsequent accesses to the devcfg register. This behavior is not
+> consistent with the hardware specifications.
+>
+> This bug was not found earlier because the ignore_memory_transaction_failures
+> flag was enabled, which ignored exceptions from devcfg devices
+> when access was disabled.
+>
 > Signed-off-by: Chao Liu <chao.liu@yeah.net>
 > ---
->  hw/dma/xlnx-zynq-devcfg.c         | 2 +-
->  include/hw/dma/xlnx-zynq-devcfg.h | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  hw/dma/xlnx-zynq-devcfg.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index b8544d0731..e5eff9abc0 100644
+> index e5eff9abc0..af8cc72471 100644
 > --- a/hw/dma/xlnx-zynq-devcfg.c
 > +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -365,7 +365,7 @@ static void xlnx_zynq_devcfg_init(Object *obj)
+> @@ -144,7 +144,12 @@ static void xlnx_zynq_devcfg_reset(DeviceState *dev)
+>      int i;
 >
->      sysbus_init_irq(sbd, &s->irq);
->
-> -    memory_region_init(&s->iomem, obj, "devcfg", XLNX_ZYNQ_DEVCFG_R_MAX * 4);
-> +    memory_region_init(&s->iomem, obj, "devcfg", XLNX_ZYNQ_DEVCFG_R_MAX);
->      reg_array =
->          register_init_block32(DEVICE(obj), xlnx_zynq_devcfg_regs_info,
->                                ARRAY_SIZE(xlnx_zynq_devcfg_regs_info),
-> diff --git a/include/hw/dma/xlnx-zynq-devcfg.h b/include/hw/dma/xlnx-zynq-devcfg.h
-> index e4cf085d70..fc26132069 100644
-> --- a/include/hw/dma/xlnx-zynq-devcfg.h
-> +++ b/include/hw/dma/xlnx-zynq-devcfg.h
-> @@ -35,7 +35,7 @@
->
->  OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqDevcfg, XLNX_ZYNQ_DEVCFG)
->
-> -#define XLNX_ZYNQ_DEVCFG_R_MAX (0x100 / 4)
-> +#define XLNX_ZYNQ_DEVCFG_R_MAX 0x100
+>      for (i = 0; i < XLNX_ZYNQ_DEVCFG_R_MAX; ++i) {
+> -        register_reset(&s->regs_info[i]);
+> +        if (s->regs_info[i].access) {
+> +            if (s->regs_info[i].access->addr == A_UNLOCK) {
+> +                continue;
+> +            }
+> +            register_reset(&s->regs_info[i]);
+> +        }
+>      }
 
-This doesn't look right. The device tree in Linux says this
-device is 0x100 bytes long. In QEMU the _R_MAX type constant
-generally is the number of (32-bit) registers, hence the
-division by 4 here to go from bytes to words, and the multiply
-by 4 to get the memory_region_init() argument which is bytes
-again.
-
-What is this patch trying to fix?
-
-("What is this change fixing" is the kind of thing you
-should explain in the commit message.)
+This looks strange. Reset should reset things. If the
+UNLOCK register's reset behaviour is wrong, then shouldn't
+we fix it, rather than explicitly skipping resetting it ?
 
 thanks
 -- PMM
