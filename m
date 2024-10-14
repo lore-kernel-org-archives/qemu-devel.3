@@ -4,79 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8F4D1624A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 11:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DC2D1624A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 11:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0JUa-0006du-Rt; Mon, 14 Oct 2024 07:44:04 -0400
+	id 1t0JXW-0002YG-JF; Mon, 14 Oct 2024 07:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t0JUU-0006cQ-V4
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:43:59 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1t0JX3-0002EL-D3
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:46:39 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t0JUJ-00056W-D6
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:43:49 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a99e3b3a411so323808166b.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 04:43:46 -0700 (PDT)
+ id 1t0JX0-0005WH-NK
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:46:36 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2fb501492ccso6765281fa.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 04:46:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728906225; x=1729511025; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1728906393; x=1729511193; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7qO/4HKWHrVuc6GQ36ulz/Nn1mmzauBCzpX9YAoGCMM=;
- b=CNcCF0wuKZT6U2pq+SqtODHZYRZRDDfz05cG2H8pd5vn/deshGxjsXYV+JqLHDuzpF
- +tw0Hbd8AcwaWSgDK7dN4Jie8TkpXHkrk86Mb5kaYKkU7KAmcwj8CAUbIBBkh6rvUm/V
- TJKPPOP8l/0x7W0919l/0vkdO2wXEz2/8/tkfuGOiVqMTpjpxZBluS/FQcBmWHLOp6JZ
- YINofNaGkAvecHgcbYWu/vkfFYGn8LsH6z5jCRiT0M7PdZM4fqmHg5V6PRyDidpNeh51
- dlAblyr/CKOhp71sqa5UeA3jTT7IJFj5QbgU9DB/wthzqbcVOm4pYsOoM/RuaUASeof+
- 1t5A==
+ bh=4c2mZtnGfIGb1RGiTOLtPKx0pewl5f1rapee38uwDf0=;
+ b=MG46x/pqURx7/xANuz0zCMU2Xb4MAf4slXx1zNbj+CTdSzzdO7g7ASFJRgghDHcw4R
+ Cti/TUA9ku0VcWeckD37qA4bmkriDDZ7tA/ckj8YzdNkinaasiz+VYdQv9tDhup0OJwh
+ 4IFJ1+fsq2vWP67/076DNU6LUs4l8yGEfVG6UK/mc/bstpmGe9G9qPs0oamSHCl13jNv
+ lNScNf/Xo7Gz8cO+Ts4kR2te/a3wyROC/uOwgSwx2036yisuyhp87v/JTWmHDpa4k5h0
+ 39RPzx/EV799ntmL/0WdRTb1Bs841T1O13fq3HVf9yrx3ACDmsRHkUcbZyK21YScvjM3
+ xlxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728906225; x=1729511025;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1728906393; x=1729511193;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7qO/4HKWHrVuc6GQ36ulz/Nn1mmzauBCzpX9YAoGCMM=;
- b=JqZhWJDZkA06788j5blfteraUoRCp2Ul1gurlsbdPMWnJxZ6K1mQzU+uCcdrRSUeot
- LIfcyYUXH2r4xqnhiIPVdjThokyKMxzNurMrS3Oh8M8Cf2vuaK9uZ+0zrWkWJf3O1Ypl
- lEZt0XFzg+hsU63JndoJO+nR2PEpMEtmq/s6VkZs7A0V3zEipIGGfEZ7mJ2d5qY2LQix
- IYY8U7q5Qk1+dgjXsYKCDObgjQk1BNDtDiWOntq2dsIu9g3ajTIVHtJLjsgrnyvS8xFo
- DwhySyOGbwZbzG/8b09Gz6Tmi7AKqie15AQccVWwMu3TEwmXesaLK/mpyPWN/XIDe34U
- xYlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4aKKcTLFs4ApYWMmnC+xu5u7PmM13G7MSiOjr+77C7WoWPeaR2faD1tF1BUxzi66thcDsPgjS+3aW@nongnu.org
-X-Gm-Message-State: AOJu0YyeePS9auYv5PyOgX8u4S7bFZQPf1bYRtM5FaY8mWH6Txj18/g0
- gMh3dMhB54MTGB85FQ3k/bA2Sj1Vaeb02zazs3gy2/EaMC3HxH0hSfaQcg==
-X-Google-Smtp-Source: AGHT+IGB+9MUTxbiaPxJAsuIqO34C+VnrlUDm3BdJyxrV/If0tvsfYdH8W8LLj4VfCmk0P9dkqJs7Q==
-X-Received: by 2002:a17:906:794b:b0:a90:9fb5:2c43 with SMTP id
- a640c23a62f3a-a99b8a67042mr1106077566b.34.1728906225362; 
- Mon, 14 Oct 2024 04:43:45 -0700 (PDT)
-Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99fcb2765asm247764666b.64.2024.10.14.04.43.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Oct 2024 04:43:44 -0700 (PDT)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 2/8] chardev/chardev-internal: remove unused `max_size` struct
- member
-Date: Mon, 14 Oct 2024 13:41:29 +0200
-Message-Id: <20241014114135.389766-3-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241014114135.389766-1-r.peniaev@gmail.com>
-References: <20241014114135.389766-1-r.peniaev@gmail.com>
+ bh=4c2mZtnGfIGb1RGiTOLtPKx0pewl5f1rapee38uwDf0=;
+ b=ctK8LqNRFGeRd/jYf3wVkzCQWB+MIV+azWToAbWnhy5VU5GCDWQJQ6UiWXHlOGq5Sy
+ tovunFbMeqxZlFJpOtvc1LPv6zxK6NXsI255bf37jtGWMLRK+BP61hy7wjeqUSmJOgxh
+ pZ8UoVFr8erACipNd8TfOh5e1v9XxRHb1WKvLiT6SG+gNlyqbP/KKGEGxI+AtaDAnV/D
+ bjtiUmcOz5myULGwW6fLFAF00h7LQhMUWZz0wcd5AzDi4CIUS3Vy0alJeX9kNnouyYNx
+ 0TCNItB/g4yDjVHMyrwLyIXiwGVldAk7NmlgE2HCCIRJ5NnXpvR9UNmNtyh91MUtlgnD
+ ATag==
+X-Gm-Message-State: AOJu0YwKV9VAV9deS43mfweJWP39ngSAwUdIIaxnX8ld7OdtVGTUqpQ3
+ MTV8XLDzAZMjgU94Bbfqg1jFRkA2BVckn/MtjuFar3GNcbNMAoOrYf4ssRlKRZdE402W+wHiHpF
+ 2kc61mnX2RX8gAOtQm+MicGPNLhc8WQ==
+X-Google-Smtp-Source: AGHT+IG9zdXrsonsSInaCRAQ6E0BR9WF7AQIQ9enm+QZ0gpS3o+4Qju4qlqhGG7K1nUaUiIrELvcLro62oj9fetjCNc=
+X-Received: by 2002:a2e:be27:0:b0:2fb:4b40:1e1c with SMTP id
+ 38308e7fff4ca-2fb4b4021e8mr15581631fa.36.1728906392528; Mon, 14 Oct 2024
+ 04:46:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x630.google.com
+References: <20241010092619.323489-1-r.peniaev@gmail.com>
+ <CAJ+F1CL8VPo64DVty94FY4KyKr1h8_dbmrqLfy06VuMzoNyYYA@mail.gmail.com>
+In-Reply-To: <CAJ+F1CL8VPo64DVty94FY4KyKr1h8_dbmrqLfy06VuMzoNyYYA@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Mon, 14 Oct 2024 13:44:26 +0200
+Message-ID: <CACZ9PQW8QUvg9oDMy9iMx05++Pn9e+XNthtG5HtaSURWXpwJHA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] chardev/char: fix qemu_chr_is_busy() check
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,28 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clean up forgotten leftovers.
+Hi Marc-Andr=C3=A9,
 
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
----
- chardev/chardev-internal.h | 1 -
- 1 file changed, 1 deletion(-)
+On Thu, Oct 10, 2024 at 12:20=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi Roman
+>
+> On Thu, Oct 10, 2024 at 1:28=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
+m> wrote:
+>>
+>> `mux_cnt` struct member never goes negative or decrements,
+>> so mux chardev can be !busy only when there are no
+>> frontends attached. This patch fixes the always-true
+>> check.
+>>
+>> Fixes: a4afa548fc6d ("char: move front end handlers in CharBackend")
+>> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+>> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+>> Cc: qemu-devel@nongnu.org
+>
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> That would be worth some new tests for chardev removal. It seems to be la=
+cking. And mux probably need extra fixing. I can take a look if you don't.
 
-diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
-index 4e03af31476c..c3024b51fdda 100644
---- a/chardev/chardev-internal.h
-+++ b/chardev/chardev-internal.h
-@@ -40,7 +40,6 @@ struct MuxChardev {
-     int focus;
-     int mux_cnt;
-     int term_got_escape;
--    int max_size;
-     /* Intermediate input buffer catches escape sequences even if the
-        currently active device is not accepting any input - but only until it
-        is full as well. */
--- 
-2.34.1
+I've just sent an attempt to fix the removal of frontends, plus some test c=
+ases.
+Please take a look.
 
+Thanks.
+
+--
+Roman
 
