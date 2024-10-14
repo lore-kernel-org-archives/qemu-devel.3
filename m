@@ -4,59 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CE8CFC52C
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 10:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7ABECFC52C
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 10:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0I10-0003vf-EW; Mon, 14 Oct 2024 06:09:27 -0400
+	id 1t0I41-0004wc-J2; Mon, 14 Oct 2024 06:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t0I0w-0003vQ-NU
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:09:22 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t0I0s-0001qz-2W
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:09:21 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XRtGy6mF2z6K5nY;
- Mon, 14 Oct 2024 18:08:42 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 5EDA11401F4;
- Mon, 14 Oct 2024 18:09:14 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 14 Oct
- 2024 12:09:13 +0200
-Date: Mon, 14 Oct 2024 11:09:12 +0100
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, 
- <fan.ni@samsung.com>, <linuxarm@huawei.com>, <prime.zeng@hisilicon.com>,
- <tanxiaofei@huawei.com>
-Subject: Re: [PATCH 1/1] hw/cxl/cxl-mailbox-utils: Fix for device DDR5 ECS
- control feature tables
-Message-ID: <20241014110912.000014ed@Huawei.com>
-In-Reply-To: <20240927091743.965-1-shiju.jose@huawei.com>
-References: <20240927091743.965-1-shiju.jose@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0I3t-0004uS-5w
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:12:25 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0I3p-0002Co-Fw
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 06:12:24 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c97cc837c3so1235549a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 03:12:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728900738; x=1729505538; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yJaFDhCJ8CniFR/QX4wpVIen0lcgsZNWDE3/cSAp79w=;
+ b=LLD/2jHq+mM4DHXxYsX/iJJnR/mUbL1OCCciztlU7ULbIFglzbDTHPkGLea4lDLkcD
+ 1ixGwhQ7J3canMh0xspvIwHREGp0T0gV3V28d5byDFivqpziVuks78d9XUETtC5brxbT
+ OkQC7zk0MAggsS4aqsPmCWXRzrSkarGhXZ/DrFoNi/j3QnrivggSnAmZoChEmV2CJiHr
+ TQymdtj8ETnCniphYSozQZ5oQMTmeEnfIeAdCtYC7x5v6GstD1Rxo/5OQsujjXGoKWXx
+ HhESL4HHbpWMGrBhCRAW4jzCdVs7NdlKMj/ijBs04fxiwkApD3oITqnUoHN6bEEIYzUU
+ zsOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728900738; x=1729505538;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yJaFDhCJ8CniFR/QX4wpVIen0lcgsZNWDE3/cSAp79w=;
+ b=iWJzgiZgYTJbfk02RkIDsSFm7AUTl7alEBpAm+FTmmvh6KWgQOYUfQLLYc8WWi2pI+
+ lYZo04MI0UDtRAgMgvV21024nKvEWRlEG0SF21a3S1Q6bvBnfOdE+VmmPzmdx/S8gQrA
+ WGWhKDaNoJK/Ghh6CT29Mx1UYepKywgeYFUjjNSYeRjCBXU434qz2bvLO092u61ThqVs
+ tliEN88XI0vNZNEUxHgC+h5pdVfsSGhAzHEfpfP4r+ZNvY8VXOXCvtUlu7M8G3c21Nf1
+ kJN4QT987MizXy90AtVhppRVYHtkNjRIbi1el2WlMntD4hexSDNyusVhkIfl20uWlrWF
+ uGPg==
+X-Gm-Message-State: AOJu0YyDq7gHN3VFNLZDrboQ642teW2vaS6i/NE9m/VXrRyBLXk/F+41
+ EOLnCdF5n716WgoE6SelAoN/TGjTYCKRXMwh7pEKJXSgTKLZHMfkOeJ4ET+wRy2TTfEE7YN0Kco
+ pd30ICy0chOXDS1zb+63hcRcO0qugC7RpTfm3Zw==
+X-Google-Smtp-Source: AGHT+IFHXzvYzXeqpO6ElOYNyoPmIe66Lu4fskKfjCnzc5BktTLJicf+no4k/XcZRb9bRpHFL0P+vCdGhiMJBJ1RF8o=
+X-Received: by 2002:a05:6402:5cd:b0:5c7:20fb:fce3 with SMTP id
+ 4fb4d7f45d1cf-5c948d246d4mr8076559a12.21.1728900737580; Mon, 14 Oct 2024
+ 03:12:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241011153227.81770-1-pbonzini@redhat.com>
+In-Reply-To: <20241011153227.81770-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Oct 2024 11:12:06 +0100
+Message-ID: <CAFEAcA-2dR26AvpbV0dRob-Gc=wbN0Mh9rYYB19WH4Yr6ugXHQ@mail.gmail.com>
+Subject: Re: [PULL v3 00/18] Rust initial PoC + meson changes for 2024-10-07
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,199 +84,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Sep 2024 10:17:43 +0100
-<shiju.jose@huawei.com> wrote:
+On Fri, 11 Oct 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The following changes since commit b5ab62b3c0050612c7f9b0b4baeb44ebab42775a:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-04 19:28:37 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 381d2c36e1242f849a55f4622e50b9a69cb92842:
+>
+>   docs: use consistent markup for footnotes (2024-10-11 13:08:32 +0200)
+>
+> v2->v3: new patches
+> - scripts/archive-source: find directory name for subprojects
+> - docs: fix invalid footnote syntax
+> - docs: avoid footnotes consisting of just URLs
+> - docs: use consistent markup for footnotes
+>
+> ----------------------------------------------------------------
+> * first commit for Rust support
+> * add CI job using Fedora + Rust nightly
+> * fix detection of ATOMIC128 on x86_64
+> * fix compilation with Sphinx 8.1.0
+>
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
-> control feature.
-> 
-> ECS log capabilities field in following ECS tables, which is common for all
-> memory media FRUs in a CXL device.
-> 
-> Fix struct CXLMemECSReadAttrs and struct CXLMemECSWriteAttrs to make
-> log entry type field common.
-> 
-> Fixes:2d41ce38fb9a (hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS control feature)
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Hi Shiju
 
-Sorry for taking so long to get to this! 
 
-Anyhow, one trivial comment inline that I'll fix up.
-I'm preparing a fixes series today so will include this patch in that.
+Applied, thanks.
 
-Thanks,
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes. (In particular, for the Rust stuff
+we should be clear in the changelog about its status, including
+security status, and what we recommend downstream distro
+packagers do at this stage.)
 
-Jonathan
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c  | 27 ++++++++++-----------------
->  hw/mem/cxl_type3.c          |  9 ++++-----
->  include/hw/cxl/cxl_device.h | 36 ++++++++++++++++++++++--------------
->  3 files changed, 36 insertions(+), 36 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index c2d776bc96..fa06cd7910 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -1152,10 +1152,8 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->                           (struct CXLSupportedFeatureEntry) {
->                  .uuid = ecs_uuid,
->                  .feat_index = index,
-> -                .get_feat_size = CXL_ECS_NUM_MEDIA_FRUS *
-> -                                    sizeof(CXLMemECSReadAttrs),
-> -                .set_feat_size = CXL_ECS_NUM_MEDIA_FRUS *
-> -                                    sizeof(CXLMemECSWriteAttrs),
-> +                .get_feat_size = sizeof(CXLMemECSReadAttrs),
-> +                .set_feat_size = sizeof(CXLMemECSWriteAttrs),
->                  .attr_flags = CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE,
->                  .get_feat_version = CXL_ECS_GET_FEATURE_VERSION,
->                  .set_feat_version = CXL_ECS_SET_FEATURE_VERSION,
-> @@ -1223,13 +1221,10 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
->                 (uint8_t *)&ct3d->patrol_scrub_attrs + get_feature->offset,
->                 bytes_to_copy);
->      } else if (qemu_uuid_is_equal(&get_feature->uuid, &ecs_uuid)) {
-> -        if (get_feature->offset >=  CXL_ECS_NUM_MEDIA_FRUS *
-> -                                sizeof(CXLMemECSReadAttrs)) {
-> +        if (get_feature->offset >= sizeof(CXLMemECSReadAttrs)) {
->              return CXL_MBOX_INVALID_INPUT;
->          }
-> -        bytes_to_copy = CXL_ECS_NUM_MEDIA_FRUS *
-> -                        sizeof(CXLMemECSReadAttrs) -
-> -                            get_feature->offset;
-> +        bytes_to_copy = sizeof(CXLMemECSReadAttrs) - get_feature->offset;
->          bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
->          memcpy(payload_out,
->                 (uint8_t *)&ct3d->ecs_attrs + get_feature->offset,
-> @@ -1318,19 +1313,17 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->  
->          ecs_set_feature = (void *)payload_in;
->          ecs_write_attrs = ecs_set_feature->feat_data;
-> -        memcpy((uint8_t *)ct3d->ecs_wr_attrs + hdr->offset,
-> +        memcpy((uint8_t *)&ct3d->ecs_wr_attrs + hdr->offset,
->                 ecs_write_attrs,
->                 bytes_to_copy);
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
->              data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
-> -            for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
-> -                ct3d->ecs_attrs[count].ecs_log_cap =
-> -                                  ct3d->ecs_wr_attrs[count].ecs_log_cap;
-> -                ct3d->ecs_attrs[count].ecs_config =
-> -                                  ct3d->ecs_wr_attrs[count].ecs_config & 0x1F;
-> -            }
-> +            ct3d->ecs_attrs.ecs_log_cap = ct3d->ecs_wr_attrs.ecs_log_cap;
-> +            for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++)
-Qemu style needs the brackets even for one line cases. I'll fix up whilst applying
-Also side effect will be reducing the diff which is nice to have :)
-
-> +                ct3d->ecs_attrs.fru_attrs[count].ecs_config =
-> +                        ct3d->ecs_wr_attrs.fru_attrs[count].ecs_config & 0x1F;
->          }
->      } else {
->          return CXL_MBOX_UNSUPPORTED;
-> @@ -1343,7 +1336,7 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->          if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
->              memset(&ct3d->patrol_scrub_wr_attrs, 0, set_feat_info->data_size);
->          } else if (qemu_uuid_is_equal(&hdr->uuid, &ecs_uuid)) {
-> -            memset(ct3d->ecs_wr_attrs, 0, set_feat_info->data_size);
-> +            memset(&ct3d->ecs_wr_attrs, 0, set_feat_info->data_size);
->          }
->          set_feat_info->data_transfer_flag = 0;
->          set_feat_info->data_saved_across_reset = false;
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 3006ca21ad..e10de42254 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1045,16 +1045,15 @@ void ct3_realize(PCIDevice *pci_dev, Error **errp)
->      ct3d->patrol_scrub_attrs.scrub_flags = CXL_MEMDEV_PS_ENABLE_DEFAULT;
->  
->      /* Set default value for DDR5 ECS read attributes */
-> +    ct3d->ecs_attrs.ecs_log_cap = CXL_ECS_LOG_ENTRY_TYPE_DEFAULT;
->      for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
-> -        ct3d->ecs_attrs[count].ecs_log_cap =
-> -                            CXL_ECS_LOG_ENTRY_TYPE_DEFAULT;
-> -        ct3d->ecs_attrs[count].ecs_cap =
-> +        ct3d->ecs_attrs.fru_attrs[count].ecs_cap =
->                              CXL_ECS_REALTIME_REPORT_CAP_DEFAULT;
-> -        ct3d->ecs_attrs[count].ecs_config =
-> +        ct3d->ecs_attrs.fru_attrs[count].ecs_config =
->                              CXL_ECS_THRESHOLD_COUNT_DEFAULT |
->                              (CXL_ECS_MODE_DEFAULT << 3);
->          /* Reserved */
-> -        ct3d->ecs_attrs[count].ecs_flags = 0;
-> +        ct3d->ecs_attrs.fru_attrs[count].ecs_flags = 0;
->      }
->  
->      return;
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 4b68c52cdc..076eb9814a 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -493,18 +493,6 @@ typedef struct CXLMemPatrolScrubWriteAttrs {
->  #define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
->  
->  /* CXL memory device DDR5 ECS control attributes */
-> -typedef struct CXLMemECSReadAttrs {
-> -        uint8_t ecs_log_cap;
-> -        uint8_t ecs_cap;
-> -        uint16_t ecs_config;
-> -        uint8_t ecs_flags;
-> -} QEMU_PACKED CXLMemECSReadAttrs;
-> -
-> -typedef struct CXLMemECSWriteAttrs {
-> -   uint8_t ecs_log_cap;
-> -    uint16_t ecs_config;
-> -} QEMU_PACKED CXLMemECSWriteAttrs;
-> -
->  #define CXL_ECS_GET_FEATURE_VERSION    0x01
->  #define CXL_ECS_SET_FEATURE_VERSION    0x01
->  #define CXL_ECS_LOG_ENTRY_TYPE_DEFAULT    0x01
-> @@ -513,6 +501,26 @@ typedef struct CXLMemECSWriteAttrs {
->  #define CXL_ECS_MODE_DEFAULT    0
->  #define CXL_ECS_NUM_MEDIA_FRUS   3 /* Default */
->  
-> +typedef struct CXLMemECSFRUReadAttrs {
-> +    uint8_t ecs_cap;
-> +    uint16_t ecs_config;
-> +    uint8_t ecs_flags;
-> +} QEMU_PACKED CXLMemECSFRUReadAttrs;
-> +
-> +typedef struct CXLMemECSReadAttrs {
-> +    uint8_t ecs_log_cap;
-> +    CXLMemECSFRUReadAttrs fru_attrs[CXL_ECS_NUM_MEDIA_FRUS];
-> +} QEMU_PACKED CXLMemECSReadAttrs;
-> +
-> +typedef struct CXLMemECSFRUWriteAttrs {
-> +    uint16_t ecs_config;
-> +} QEMU_PACKED CXLMemECSFRUWriteAttrs;
-> +
-> +typedef struct CXLMemECSWriteAttrs {
-> +    uint8_t ecs_log_cap;
-> +    CXLMemECSFRUWriteAttrs fru_attrs[CXL_ECS_NUM_MEDIA_FRUS];
-> +} QEMU_PACKED CXLMemECSWriteAttrs;
-> +
->  #define DCD_MAX_NUM_REGION 8
->  
->  typedef struct CXLDCExtentRaw {
-> @@ -609,8 +617,8 @@ struct CXLType3Dev {
->      CXLMemPatrolScrubReadAttrs patrol_scrub_attrs;
->      CXLMemPatrolScrubWriteAttrs patrol_scrub_wr_attrs;
->      /* ECS control attributes */
-> -    CXLMemECSReadAttrs ecs_attrs[CXL_ECS_NUM_MEDIA_FRUS];
-> -    CXLMemECSWriteAttrs ecs_wr_attrs[CXL_ECS_NUM_MEDIA_FRUS];
-> +    CXLMemECSReadAttrs ecs_attrs;
-> +    CXLMemECSWriteAttrs ecs_wr_attrs;
->  
->      struct dynamic_capacity {
->          HostMemoryBackend *host_dc;
-
+-- PMM
 
