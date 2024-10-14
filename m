@@ -4,78 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86197D1812E
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B82D1812F
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0O16-0003wy-6r; Mon, 14 Oct 2024 12:33:56 -0400
+	id 1t0O8l-0006jS-NX; Mon, 14 Oct 2024 12:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t0O10-0003v0-4E
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:33:50 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0O8j-0006ii-M5
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:41:49 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t0O0y-0000x5-HG
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:33:49 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20c9978a221so37922515ad.1
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 09:33:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0O8h-0001gy-Ex
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:41:49 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-539eb97f26aso1808917e87.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 09:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728923627; x=1729528427; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=POFVMJnrlK3O2mHGqkmmfGAkdXgO1fN5o5e098lVQ5I=;
- b=xdQSdDvoeyenAIEAsW1477Zq8++O/nL50XVx5XV1VnS6fPCDXPjTJvf3Rd0yJfdgrv
- GNZujWJvmV26o61LFPI2tkiKKG6yD9FAanqUEtA6aMT1DoToi+dJfs1/Mx80iKM3ZoTQ
- Ls1ValoC6mT7y64zdoXLZpRFtGXJKpfCR3MsQspzcNLH62Z/6YKhkVx4sP3VEwUy7nrU
- zG2FoD65lq7DLZ0EHWtsdU444oKQHCjZYz20MBkZFoaHKrZwisyB61jC4LmHLmT2sWKP
- ylGlNYQg4Ysd0QW66e8mwcES1lVo/jvVZutAhooD3yH9pVmiTl6v2epcJwSaDF3JXfAA
- 7MPQ==
+ d=linaro.org; s=google; t=1728924105; x=1729528905; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YLnPlc8Wk82BERYeTM5I4JDtZk08l5fkN3/0TnAiXD4=;
+ b=XC4MFCkrBDPAasjoLWDpGd2jXaPqTwAA3Crrl9/mWLR7COgUi+HaiTS4FTeOw/zUDS
+ qMis008yuGDDJy9P6W1PxIvmkyo3OY6bQqJIbM66r3t+iXgE39zJ/aeF8EHHeAdPp89+
+ EePiTUKnRD+6CIgyTyvjIxDRGJWECw98vsy6fCiMYOthAHbLOS1O6OXEJJ3cLPhSmhXd
+ 5dyoSUGTETslMcIlYvYLEBCzq6usSr8NJhqtklX7OKpUeSYz9WmvfFnn7IXFe4xflmwG
+ NL+zC5oplGQO4KFg3TBvnhHClqaPUcSb/jPYZVyloeQwDJVEfvuZlMVTZKTxiZKY6eby
+ NTuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728923627; x=1729528427;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=POFVMJnrlK3O2mHGqkmmfGAkdXgO1fN5o5e098lVQ5I=;
- b=FA9IcMBM83/Nhhqpjq3pRSjeM8wsGUhwM4r8IiXTbvjmofqVASCjp81cCDy28ElIZI
- et9fJ47z315WRMtUaKxJ+gtzOEpO2X8uZil8NxXwtjjvyOIaCMbSnLRrEuNpzk+n9ofP
- p1ArwNn2+1/PPdCGDeJRZseR2KhLlN/A0T+6lFrtCrOknJTgX0Ka3eIG99p/diZaCbW3
- Kws5w0TC5boelGtnqu2yIQa3nbszbHaeG/PGgLMHzdvNeatkdIYEMcd3uwHJWs88IFJr
- M68/w1r8mYCgoNMrUDgbn1So0Y/TMDMynb3UGwTkjVFAfpm15Attji9SebXwAvtvEwM0
- yYYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5EPTbZIpKgF7Tgvedpi1e1UVMvggJh1Bk8EVpHLDAgA5ELj0BlhEQkMen286kvhrKxaVJMBrva+bK@nongnu.org
-X-Gm-Message-State: AOJu0YzaxlL6BKsPyR0T1MN11Y0xoIkKdEWACLYOnMnb4xX5XXvwEHXP
- HudsHTq3TNDLXa6V1vCwEpGX5cpjEDqACmkEbzttlr/Q8F+gv/BPUJS5Y+MzF/c=
-X-Google-Smtp-Source: AGHT+IFOR0QaTwqT242Tju2BFGu3sy29Bd+qaZI546AuAxU+0h7jCKti1eiHFNohsxOwwi9APEmiVg==
-X-Received: by 2002:a17:902:e542:b0:20c:5b80:930f with SMTP id
- d9443c01a7336-20ca1429fb7mr155345835ad.12.1728923627023; 
- Mon, 14 Oct 2024 09:33:47 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20c8badc805sm67410355ad.40.2024.10.14.09.33.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Oct 2024 09:33:46 -0700 (PDT)
-Message-ID: <a322affd-e3e1-44a7-97bc-d9db2090b000@linaro.org>
-Date: Mon, 14 Oct 2024 09:33:44 -0700
+ d=1e100.net; s=20230601; t=1728924105; x=1729528905;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YLnPlc8Wk82BERYeTM5I4JDtZk08l5fkN3/0TnAiXD4=;
+ b=iChBplREHspGNfUgmMVHy8ThN53U8DIUj3vKP+jkH9YHaVzz59nlzTMpAkXD7ReLEY
+ pvC6Nsn1bAxdO2ZWK3HItqDFiYlCGgJCjYNJyYOjjQvd7ibekHE96Cwz5sIMNgjCos5X
+ QCaG2s/d3fc6DcECFzX/YERNAqbHVq+Rblq0PS3PzleO1q93/viM9vobDDp9n68ETUUd
+ 7ZAU4MOGmDujcc9/EJgKfAjQPeRBMIty1CxncshJOOKknEc5wwwUhnhIRmZ8rHot1rph
+ LCzQz7lhiSCFdOgaqyZG44UmXI9kVAvPS387sNg9xx+Jk0bfgOGz+5tgOMCkEzfjn5L8
+ gRuw==
+X-Gm-Message-State: AOJu0YzdFyLcafrLaHZrypdf2/UmBIKhPUEuJYwJkUadas1Q0/uyYJmh
+ z8tWFO+tqOYBWGDfeVNKRizhJERuRgXwi+8ryuzSwAZ47clD+B2obra/OC/ABL3vGSBP1UUnelY
+ EzdcNbb40KTW0fQM8Lk/M7t3pISI2XdVjtA5yzw==
+X-Google-Smtp-Source: AGHT+IGdfx6z94YVij4gPRIVNToH6x326iVhZ99UECBx7p4qCkpNyHE8iEfkn1hY6xiBzaVL2wVnJtcttDpxI1uI10s=
+X-Received: by 2002:a05:6512:3f02:b0:536:5625:511a with SMTP id
+ 2adb3069b0e04-539da59516cmr6020488e87.47.1728924105049; Mon, 14 Oct 2024
+ 09:41:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/4] tests/tcg/aarch64: add system test for FEAT_XS
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 References: <20241014-arm-feat-xs-v1-0-42bb714d6b11@linaro.org>
- <20241014-arm-feat-xs-v1-4-42bb714d6b11@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241014-arm-feat-xs-v1-4-42bb714d6b11@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+In-Reply-To: <20241014-arm-feat-xs-v1-0-42bb714d6b11@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Oct 2024 17:41:33 +0100
+Message-ID: <CAFEAcA_SYtVHjf2LmOkHZPHET=8r9BSCsir1R=PWLM55L3O4aQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/4] No-op support for Arm FEAT_XS, feedback needed
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,18 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/24 03:48, Manos Pitsidianakis wrote:
-> Add system test to make sure FEAT_XS is enabled for max cpu emulation
-> and that QEMU doesn't crash when encountering an NXS instruction
-> variant.
-> 
-> Signed-off-by: Manos Pitsidianakis<manos.pitsidianakis@linaro.org>
-> ---
->   tests/tcg/aarch64/system/feat-xs.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
+On Mon, 14 Oct 2024 at 11:50, Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> This series is an initial incomplete attempt at adding support for the
+> FEAT_XS feature in aarch64 TCG. This feature was introduced in ARMv8.7:
+> it adds a new memory attribute XS which indicates that a memory access
+> could take longer than usual to complete and also adds instruction
+> variants for TLBI maintenance and DSB.
+>
+> These variants are implemented as no-ops, since QEMU TCG doesn't
+> implement caching.
+>
+> This is my first foray into TCG and certain things weren't clear to me:
+>
+> 1. How to make sure the feature is implemented properly. Since we model
+>    cache maintenance as no-ops my understanding is the only
+>    functionality we need to provide is to expose the FEAT_XS feature bit
+>    and also make sure the nXS variants trap properly if configured with
+>    fine-grained traps.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+We also need to make HCRX_EL2 writes allow read and write of the
+new FGTnXS and FnXS bits. (hcrx_write() constructs a valid_mask
+and only allows those bits to be written, so the mask needs updating.)
 
+> 2. Is there a point in adding a TCG test? If I read the manual
+>    correctly, the nXS variants should trap to the undefined instruction
+>    vector if unimplemented.
+>
+> These patches lack support for FGT for now.
 
-r~
+We will need the FGT support, but I think it should be
+straightforward to add:
+ * add a new entry NXS to the FIELD() definitions of FGT in cpregs.h
+   with the meaning "honour HCR_EL2.FGTnXS to suppress FGT",
+   and in access_check_cp_reg skip the trap-check if NXS is
+   set and arm_hcrx_el2_eff() has the FGTnXS bit set
+ * when we add the new ARMCPRegInfo stanzas for the new NXS,
+   make the .fgt fields be
+     .fgt = FGT_TLBIwhatever | FGT_NXS
+   so we apply the NXS logic to those ones
+   (or if you like use macro magic in cpreg.h to define
+   FGT_TLBIVAE1OSNXS as being FGT_TLBIVAE1OS | FGT_NXS,
+   like what we do for including FGT_REV in the FGT_ constants)
+
+-- PMM
 
