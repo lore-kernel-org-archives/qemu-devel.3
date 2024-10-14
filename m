@@ -4,87 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EABD18157
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B8ED18157
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0TOM-0000hE-5k; Mon, 14 Oct 2024 18:18:18 -0400
+	id 1t0Te1-00030O-6h; Mon, 14 Oct 2024 18:34:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TOI-0000gq-49
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:18:14 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t0Tdv-000303-E1
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:34:25 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TOG-00007O-G5
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:18:13 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20cdb889222so15097615ad.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:18:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t0Tde-0001rv-B7
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:34:08 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20ca388d242so23040515ad.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728944291; x=1729549091; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1gf3VKf2RaikEAxZsjvv97C7GehbC/hon1xQVH2Zy0M=;
- b=tPy45iNSLI3s4Cg7BpdNOPHYaeuTVfHWAy+pFiMwSMkSN+5p+e1V8Pt27dD4MKYwiC
- Yvqc9p8UcHvKcmwvqvncl+OFiJNAQwSQTAMOQbz8TPHSpVQzPdnEcIO5LJjCg5I69UJ/
- kgdv71S0xM+1pYEklMAtfNFhuO5g/UUhGEpf5yuxfOBP86I7jnGRFSs+U8sAfFD2plVR
- McsngHzZbFgY9xcI7oaJDtVPb3Qn5RNbpMH6Vc321WtglERihnn8Piup3SN0afSuK2/t
- tEyzt1O2zLF2cRhToIoLccIBzxsjzDo6liPChTJNn3rCDhdcSVFeu9vX2tUCIvlMt1Uq
- h5Ug==
+ d=linaro.org; s=google; t=1728945243; x=1729550043; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xk75/hfGdWlL+1Mc1jz1GSd3w6HecYRikmmbqffemEs=;
+ b=J7e/Hp376KUyq7crvHVvfOWxST9wu5VLJV2l6gNDXsg6a28Nyo2ooLXNv5xtL6mIpI
+ TgIyIJeeh1iqfvAyo7IZe7Z2NyieDbliU2GujgBBzBlepKkPWhobnKmLj+WgwQ6FcOgb
+ RtN1Cyram/a3//6TsNX4y7js9rz6U/f6WH7feP7C47YbmWGpgcTv1j4C/83+ykB7OpU/
+ iktKlE19p9egphtm6tVkxWQ71IZIQXH0rEWMalCqNDTIOoJJ49dDugzjhIbEFInwoUun
+ 0NMAil4zVnX1eLOImrKlZxgptyfDScg4PIC5mOBpB2vsduvDDB5aZEIJQWiFPVNRdGwv
+ XyfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728944291; x=1729549091;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1gf3VKf2RaikEAxZsjvv97C7GehbC/hon1xQVH2Zy0M=;
- b=w5V4DgfZHJoW1eLmLo/L7BgEm9zdv+H+Na3avTpAig+YZ/cjnSG7oNEz3zHSR6HSZo
- fQaik8DF9KKyX7ZdydUq/FGBKTY64NlLt5wTKletps4PDZRQrft8cP2OAn4U59g0PszG
- mHzsNQweeBWD493es05ibS7SiwKenW3Jr/ETq+jn/RnYKYXmrnsL4zTZ6/8pOYSpDiyE
- 4+V/TGfVMkMBOFMVelg2treFgMZCsP1BWEj8Yd86sqeecxkZ9gEZ7RKPAEkQnc7FncrE
- RGokQXZHwIFHyAwbN7nueS55jqqJHPVvvTU68G08pSzIjymI5f6JVanARFLeQG0ec8Hc
- 57kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyQE8I438jAAvkEREzFZg5VhbLdR3F5WZcdmhbN/lty81WKtdqXELznG3Zdn04JqhsAsQwCXc+Lqhb@nongnu.org
-X-Gm-Message-State: AOJu0YytP2YNWuzx9CZUj290AlaKqp80anS8ubndmtNeck8ooFpUXoz2
- JobjZhIQDuG5to01b/RN5F7Es/kiBMbxB0HG/ic5iqGKLCAQkVFo5O3vIuINMik=
-X-Google-Smtp-Source: AGHT+IGE5bPZL6Uv4ZCDmViA9rtvXn4tfSGJ02NnAiHuhgk23B7aKXxSVMcv/TBZ48u02DDs46YgTA==
-X-Received: by 2002:a17:903:2b0c:b0:20b:9379:f1f7 with SMTP id
- d9443c01a7336-20ca169e6b5mr183399735ad.40.1728944290704; 
- Mon, 14 Oct 2024 15:18:10 -0700 (PDT)
-Received: from [192.168.100.35] ([45.176.88.167])
+ d=1e100.net; s=20230601; t=1728945243; x=1729550043;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Xk75/hfGdWlL+1Mc1jz1GSd3w6HecYRikmmbqffemEs=;
+ b=hjd+p4BYvCZaMXYAtrnBp/U8uv1+aaRreuxJLBAOJIfVNChDH2e0N/Dhq98nWM5Hwh
+ Lpcc2Kq957FImkwLPeNUY/Jzs6dOYQK0zQP98hJxXkaJ1k+LWyqPdjTiBgPyp2xRIRn7
+ Y2geu1R7w3l5F8bsT+ih3LNtnCKdvrp0nMIFzcn+ns+TGik0vUl8IBm1PgT2+6LWL2MK
+ rkFYIuLtwWLU5HFSNp+wrC8XWleBH+k9UO0Fo2oSD+skOBmfEfVmbczHFBxkTNWVkc7J
+ w8G81pMFgxn5y2/Qc/Zq1rlUR7r9VQuhAWLYTNYZh4Cd0cme9eoMRb4vI3EC/4nClSWP
+ hiRw==
+X-Gm-Message-State: AOJu0YwXfABH4TkEz5DBTnSAkbI6GILHL4l9bEfV4hop8w+1Yzj3QyB3
+ ypb7hFovWW0vpr3gVwH89RgCl5AzBJ+9U7wRACGB77TqTrGaFgM9DhUpMfRYC6bV81AFYtLT1Cu
+ EVkuC+VBi
+X-Google-Smtp-Source: AGHT+IFR5/0EpX7kYhLce5Mq/e6nRr+zw6W15Cr92pDvTYxcwANExSvu3LUNs5EUP+9Sw8unZqDB8w==
+X-Received: by 2002:a17:902:fc50:b0:20c:8c0f:f986 with SMTP id
+ d9443c01a7336-20cbb1a91camr131945475ad.24.1728945242349; 
+ Mon, 14 Oct 2024 15:34:02 -0700 (PDT)
+Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d1805b0basm152195ad.256.2024.10.14.15.18.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Oct 2024 15:18:10 -0700 (PDT)
-Message-ID: <7ffd1d50-197c-4c8a-8362-4f16237366a7@linaro.org>
-Date: Mon, 14 Oct 2024 19:18:06 -0300
+ d9443c01a7336-20d1806c1c0sm267985ad.301.2024.10.14.15.34.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Oct 2024 15:34:01 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, alex.bennee@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] plugins: fix qemu_plugin_reset
+Date: Mon, 14 Oct 2024 15:33:53 -0700
+Message-Id: <20241014223353.900481-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/16] target/mips: Replace MO_TE by mo_endian()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>
-References: <20241010215015.44326-1-philmd@linaro.org>
- <20241010215015.44326-11-philmd@linaro.org>
- <040de42c-619b-4f69-87e2-fafae27fd8cc@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <040de42c-619b-4f69-87e2-fafae27fd8cc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +93,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/24 13:05, Richard Henderson wrote:
-> On 10/10/24 14:50, Philippe Mathieu-Daudé wrote:
->> +++ b/target/mips/tcg/msa_helper.c
->> @@ -8213,7 +8213,7 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, 
->> uint32_t df, uint32_t wd,
->>   #if !defined(CONFIG_USER_ONLY)
->>   #define 
->> MEMOP_IDX(DF)                                                   \
->> -    MemOpIdx oi = make_memop_idx(MO_TE | DF | 
->> MO_UNALN,                 \
->> +    MemOpIdx oi = make_memop_idx(mo_endian(dc) | DF | 
->> MO_UNALN,                 \
->>                                    mips_env_mmu_index(env));
->>   #else
-> 
-> This one is not within a translation context.
-> Surely this should be mo_endian_env().
-> 
-> I would have expected this not to compile?
+34e5e1 refactored the plugin context initialization. After this change,
+tcg_ctx->plugin_insn is not reset inconditionnally anymore, but only if
+one plugin at least is active.
 
-Dead code since commit 948f88661c6 ("target/mips: Use cpu_*_data_ra
-for msa load/store"):
+When uninstalling the last plugin active, we stopped reinitializing
+tcg_ctx->plugin_insn, which leads to memory callbacks being emitted.
+This results in an error as they don't appear in a plugin op sequence as
+expected.
 
-$ git grep -w MEMOP_IDX
-target/mips/tcg/msa_helper.c:8215:#define MEMOP_IDX(DF) 
-                                  \
-target/mips/tcg/msa_helper.c:8219:#define MEMOP_IDX(DF)
+The correct fix is to make sure we reset plugin translation variables
+after current block translation ends. This way, we can catch any
+potential misuse of those after a given block, in more than fixing the
+current bug.
 
-I'll send a cleanup patch removing the #define lines.
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2570
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ accel/tcg/plugin-gen.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> 
-> The rest of the changes appear correct, based on filenames.
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index 2ee4c22befd..2a8c8b2ad14 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -467,4 +467,9 @@ void plugin_gen_tb_end(CPUState *cpu, size_t num_insns)
+ 
+     /* inject the instrumentation at the appropriate places */
+     plugin_gen_inject(ptb);
++
++    /* reset plugin translation state */
++    tcg_ctx->plugin_db = NULL;
++    tcg_ctx->plugin_insn = NULL;
++    tcg_ctx->plugin_tb = NULL;
+ }
+-- 
+2.39.5
 
-Might I use your R-b tag on this patch, removing the tcg/msa_helper.c 
-change?
-
-Regards,
-
-Phil.
 
