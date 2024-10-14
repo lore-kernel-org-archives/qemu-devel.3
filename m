@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7222CD1624B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 11:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11334D1624B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 11:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0JWX-0000aE-78; Mon, 14 Oct 2024 07:46:05 -0400
+	id 1t0JUa-0006dH-3O; Mon, 14 Oct 2024 07:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0JWT-0000P3-V7
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:46:02 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t0JUU-0006cP-Uy
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:43:59 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0JWS-0005UI-8m
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:46:01 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c40aea5c40so7927165a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 04:45:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t0JUI-00056J-Ru
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:43:49 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5c96936065dso2029741a12.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 04:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728906358; x=1729511158; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bkls/Pvpwf1pArR/5f94UUM/aOuCRxQSiBRxDXvhQoI=;
- b=vlItAcXL0ufY3/c1zHIzKTmjXYbitNDEn9dFpvrXW38ApfjWU3atVetKrJJcUgaFY9
- bDJR+iaJ2NtBA/6diHCU594N3DXMrOjHZt3WnIkCOw4cQv3G/0iPXOj141Xk9EYD0pde
- lm5ocoYuk3qSLZLRNHYsRKcl2UiQkg76Kby0z1ToQxAs9oiFKpJnTp4KbDTB05bS/hrp
- qNl0GY272Do7aI3rxLO9E0G0l6sgZgD5wt+2Ldu0l7kOnq5lze21/oGXzxbAz00R8b7o
- rNQbe8hXcLw6wJ4HQ7PjJ9O0WY4YQ1QQwkT4pm9UwtwJ+oeyR/WwZsMq3T/MWVrhE/9w
- NvUQ==
+ d=gmail.com; s=20230601; t=1728906224; x=1729511024; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=T8GPnrIClqHUeqhHxscAgWLKxqQlmLCT983D47kZpU4=;
+ b=T8z5+tmFVJ1EfjOzUlA3rqQxIC4gdCPRs8BYERGBqyAZuPz9SIseBPKnpsgALFpsjS
+ mFavk76MBTFEIgdo9N1VV8fFcw59FzMBiPvvTrjs39QzzYpWWk024uo0mjpaWsNHjkBg
+ tibnb4ygHcKz3KNA1KruOdh01XsSlQbksjNg3d2XEwApJ9VmL+GyoaifN3jeeIlbqdu0
+ sngDd5s9GYr/FDtKCXMr75BbAwTQFKiatIi2+0huAGk1UBotPv/8pHg/nCirpo7hcb/s
+ 2uo5R497Hsa13SzBR7yf0vrx4npKWnhoEPTT6IvNy8m+kOCn7FHKp/I1FUdkHSoIX0NE
+ p/1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728906358; x=1729511158;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bkls/Pvpwf1pArR/5f94UUM/aOuCRxQSiBRxDXvhQoI=;
- b=UUdOV5tU+Ch3KF786Cq+hLYCjuTVOdkM/5HT8abo0JNTAkurhGi25Wk7OfFY8Sl2f2
- FlcBRJ0FL72siUMsJncx5zVR/BskeWtEaqpJgwJcE0vQosqpu3wQdhSwHDXlacYEcey6
- kH8mou/WuYXE4Z4s+ok7TkTfvzspaM4bzbW/tUxkCTVeHQdu7W7qOaYtdBlT1JOdz0fZ
- AKlR2XmdeNNBiUgBdpQENgDuC7Dn8kqAgonWqHdcfFHYpTWn8VbTE0LbS89v8M1c+OPp
- uZKSqrB35gyK/DAs9eDtAGtRuhmcZmZS+R16JkkIwJMPKBr+k793WeUEG35H7ZbzFhLN
- o0/w==
-X-Gm-Message-State: AOJu0YxltvkdjnsUPWNmb8e0Eq5EELlarL1AZO7G4ki63AOtfWQ9MrM8
- Vy19Opz5+ZefXd3jQ4zhuj4ynv7i/678uYbehJdY1zUjvGcrPQNOtrBK0IzuRaywLakRmMoW4ve
- QZ6MWOxmDahsZJ70Dpq04J8SG3jeIZw/Gfx7MWw==
-X-Google-Smtp-Source: AGHT+IFQxhWcOaYM7P147PaWYUgTU3n85V/MN5mpDbt+Q9IbteGbFF/UiEzJ5fCZU6n1945BzZybOgZjSl9mRcmp+ZI=
-X-Received: by 2002:a05:6402:3493:b0:5c5:c444:4e3a with SMTP id
- 4fb4d7f45d1cf-5c94719da8fmr9819364a12.0.1728906358387; Mon, 14 Oct 2024
- 04:45:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728906224; x=1729511024;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T8GPnrIClqHUeqhHxscAgWLKxqQlmLCT983D47kZpU4=;
+ b=CtJ2wuXB/uolSUNJ9dTIirLUsczjibC8Wez6VzvzhLPJq9vKtWLJFJCnl2pjfFPlaP
+ TxroGThBCNns3/rdeFW669Vd1H2/N+NCOARVYxcZDnQ2Ek4vhXEPFS7WwhmPWCnHYElE
+ 7VWhN6ey4Us97LuP/iuVeKBmxOIj2RRLmPcHnxWMA1Rv/harGnCOH8MjQr1o1591Ck6j
+ wbVF+wxM5GZiZkSyoIEY/4+WdF3Hx+cHIwrudWECu/OVQeOW+5HxCEtmZlkOLQYctlk/
+ Vst190q/jGAbbc/91gjvIcLkc/EW5wvdy7jVPeQeN59Za9FjH1/2LXuAe+LnBrBR/On7
+ UyXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUX0dOp8ycFhyzpOr4o1euicNCbKmOVlXX/NE4BudPb9YRGBRwGoIfuaM/uhemO4awtEELiIf8pfIwe@nongnu.org
+X-Gm-Message-State: AOJu0Yz1m3VPqyBl3AqxGYyVzYMZxKqbJinU3eDvHsG1t4LMKKAyRIuQ
+ DLTOukR6hQRTak7RgQRZz6RpjZkcWLaRL/3Ld8AW0vbVSY8K1YpA
+X-Google-Smtp-Source: AGHT+IHJU3eAdWanpMrVMHH365JiGRfDgii+XOzT8gEC0kmwo229/4g84lyZ9k9qtQbsNqThikFNkg==
+X-Received: by 2002:a17:907:60cd:b0:a99:fff3:2eb0 with SMTP id
+ a640c23a62f3a-a99fff332aemr500573466b.40.1728906224183; 
+ Mon, 14 Oct 2024 04:43:44 -0700 (PDT)
+Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a99fcb2765asm247764666b.64.2024.10.14.04.43.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Oct 2024 04:43:43 -0700 (PDT)
+From: Roman Penyaev <r.peniaev@gmail.com>
+To: 
+Cc: Roman Penyaev <r.peniaev@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH 0/8] chardev/mux: implement frontend detach
+Date: Mon, 14 Oct 2024 13:41:27 +0200
+Message-Id: <20241014114135.389766-1-r.peniaev@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20241014110113.173946-1-pbonzini@redhat.com>
-In-Reply-To: <20241014110113.173946-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Oct 2024 12:45:46 +0100
-Message-ID: <CAFEAcA-8wdDV4fziAj5FqfR2isjdAvLxXZHvqN0=GewDNS9iLA@mail.gmail.com>
-Subject: Re: [PATCH] configure, meson: synchronize defaults for configure and
- Meson Rust options
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,35 +95,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Oct 2024 at 12:01, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> If the defaults for --enable-rust ($rust in configure) and Meson's rust
-> option are out of sync, incremental builds will pick Meson's default.
->
-> This happens because, on an incremental build, configure does not run
-> Meson, Make does instead.  Meson then gets the command line options
-> from either coredata.dat (which has everything cached in Python's pickle
-> format) or cmd_line.txt (slow path when Meson version is upgraded), but
-> neither knows about the rust option, and the meson_options.txt default
-> is used.
->
-> This will cause have_rust to be true if rustc is available; and the build
-> to fail because configure did not put a RUST_TARGET_TRIPLE in config-host=
-.mak.
->
-> When in the Rust pull request I changed the $rust default from auto
-> to disabled, I should have made the same change to meson_options.txt;
-> do it now.
->
-> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Reported-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Frontend device can be detached in run-time, which can lead to a
+"Chardev 'MUX' is busy" error (see the last patch with the test case
+implementation). This series implements frontend detach for the
+multiplexer based on bitset, which provides the ability to attach or
+detach frontend devices in any order.
 
-This fixes the issue I was seeing with my local
-incremental rebuild.
+Also first patches do some refactoring the purpose of which is to make
+integer unsigned where possible (such as sizes or lengths).
 
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
+Roman Penyaev (8):
+  chardev/char: fix qemu_chr_is_busy() check
+  chardev/chardev-internal: remove unused `max_size` struct member
+  chardev/mux: use bool type for `linestart` and `term_got_escape`
+  chardev/mux: convert size members to unsigned int
+  chardev/mux: introduce `mux_chr_attach_frontend() call
+  chardev/mux: switch mux frontends management to bitset
+  chardev/mux: implement detach of frontends from mux
+  tests/unit/test-char: implement a few mux remove test cases
 
--- PMM
+ chardev/char-fe.c          | 13 ++----
+ chardev/char-mux.c         | 88 ++++++++++++++++++++++++++++----------
+ chardev/char.c             |  2 +-
+ chardev/chardev-internal.h | 16 ++++---
+ include/chardev/char-fe.h  |  2 +-
+ tests/unit/test-char.c     | 24 ++++++++++-
+ 6 files changed, 103 insertions(+), 42 deletions(-)
+
+Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+
+-- 
+2.34.1
+
 
