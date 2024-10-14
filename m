@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439F3D18156
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D93D18156
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0TFp-0006Ez-OY; Mon, 14 Oct 2024 18:09:29 -0400
+	id 1t0TGk-0006bm-Jz; Mon, 14 Oct 2024 18:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TFn-0006Eb-QW
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:09:27 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TGj-0006bT-8G
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:10:25 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TFm-0007Q5-E9
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:09:27 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20c803787abso31605005ad.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:09:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TGg-0007iu-Ah
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:10:24 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7ea7e2ff5ceso1124186a12.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728943763; x=1729548563; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728943821; x=1729548621; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zb7cyEiKcqQ5X5/PCi+xvEfgTJqXZGZBRJmR3ylgvJY=;
- b=FiutCx6C8UJYbalUEHwNNIFHodbY+Pcwp+egSFEN2veaF6ynoJhX1pxPEs8D/aH27X
- f9jE0yKkn+y33JBqeZef2CPFx+BE1DIwwQvBB7R+SQ0ECyG8a99gUJS4ZUtIhOWWZkG/
- f4fR4f0t/AIyQC4gtUVmM4HlLtt0l7V5B6EPELiNMPqSQbXWRP/nbN4PeobuSHp4YHgt
- N6MHnVassUxXB3KBfTipoxj1HoDo2wQaOLzZry8gxT4iizYb8sZ5lZl5fUQIPWSj+t5G
- DZ2AGqhIz7XPX9waP8WnnTPA1Op6anziPevGFvcv+32pa/5gxdt717gFX2kpg3Cr3ZOI
- uHWQ==
+ bh=6foHWMQ5t7ne0oD832tUelyfBPGQRbcmp0VAxOlB/5Y=;
+ b=AjV2QwEpAMDK9ozZlmFfWgY6w0jchzkS4eJCfCErnxecDBBnuGyUTFoNORZ/aC2JJn
+ q3LmukhdhhKvXQji1fcPRveNxhAsQhWy4ItJT+rbz+Ba0W6UKDUbOCRmRoxyWDBfWq8m
+ 7BAFZAlUE3SspzorI+K7+1ZuZqMg8QpSlGwb2V94ttIIO/cGW8lvdB++MEz6mTmFF5/X
+ 8aGIsgonbagFDqwZolspaNSAoJgS1/g85NPGFNJHRe/oYEXdjMDGyd9VMgGfRbm4GcYh
+ 8dSZjX72d9Uy9nmyxq7YpFb6UsXoHG3o0x0261dzhaSwshrVLtIKX5SmaaW3D4J015/t
+ yEOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728943763; x=1729548563;
+ d=1e100.net; s=20230601; t=1728943821; x=1729548621;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zb7cyEiKcqQ5X5/PCi+xvEfgTJqXZGZBRJmR3ylgvJY=;
- b=NuY/u8dzLWzUiVK1MsWcISNBQLoffoEitoAFXniagKxbJX5qIw8z4mybToXN+FlSHu
- vEuVSdjlnGBjtH3BeU+9dCEpgVCiNcz/Qn2ydnJH1E8IRkyobtnXUqvucdYhptUDQL3Y
- IcxmZ8LNHXzAa/fJEWKPg13gZUdTXkjrg4z+zmr3/jBz4erV/EmczjuODi+9e8x0S52/
- iZLpUjq2C4vZ2ighsYsXMCzMzNcPojLNFgnHmZwRX9HXUhpfh+igK17qMYQBKRvYNMK5
- aytJjYHoajvYASgL++Gu1JQVsXGQSJBaEB37wXrZ7fN64IULO5jZ9jjtKQLpwuohb6o3
- TZkQ==
+ bh=6foHWMQ5t7ne0oD832tUelyfBPGQRbcmp0VAxOlB/5Y=;
+ b=L4UZ4PJDIQyMz9vVZEEiiCB8R7ffb22XkT8zGRyYiw10KjtOmyThf18+WteqszC3/J
+ SsQeQHJwOHfUW/8MVavbf1JR72oiBv1kPG6V/huc68Ux/MXNfvCdYEbvBOoMHeR7SCQK
+ W6x1xwLfDfPf/nyo2JKfTHmzxjOCPPx92tHFzYIBxYmzqsFbqb7M5lOmhkYrQ0yPt6+w
+ PRrrRGkiEmGZkejSMfcCWhB6ZHogdGJv5OJ1uPgmYAxDaXO73eCOEMNMpxINF9P1uHVq
+ zpqGnEnamBSDZaRRxj4S9wl2CTpEy67+78Il6Ufha+/6CjKAvlqwCseRnggqGwe14wIm
+ FnOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQqyqM7vuriR3+0CjpkRAgr/g+m2eSjVsjcuvU3HCdGpCth3hn/Fi8DFJAErUQmq5YlNkfcaBX283h@nongnu.org
-X-Gm-Message-State: AOJu0YxHTsmNNs1qb3RII+bnipkUvgIKNiKPI8DYlXXvEUjeZhRXCC/J
- XTAU7M8YbUnskp+xYoAqdmQepW5pvxN/tOi2wnrE6Dhcq/Jqfb8M3l2ibgvl144=
-X-Google-Smtp-Source: AGHT+IFRlNBn6hEnVT+VBZ73Cg9rvzNTCZAk+d07rGDa+nfZVGRS/XUA0BC7gLZ5ukNUKV/EUg1nMQ==
-X-Received: by 2002:a17:902:dac8:b0:20c:e898:c88a with SMTP id
- d9443c01a7336-20ce898cb53mr68937075ad.0.1728943763367; 
- Mon, 14 Oct 2024 15:09:23 -0700 (PDT)
+ AJvYcCVKPiAxy0M6uRfGiUgcIJ7BFAmOmdBX6mwI7z3LRad68OXDZuqetluan2OXoIDm5fDrPwaj/6VVsB5C@nongnu.org
+X-Gm-Message-State: AOJu0Yxrsb0Z4ThV0d0UQs+vuBFTReCnrsqEqjqv5dG4Y0vxYqJjDLMf
+ D3xYa5COCXbrGErP8YeHvUR9qnJhf30RHWYcNyB9icL9Xxg8qIZJeEbZLwDfhto=
+X-Google-Smtp-Source: AGHT+IFU2+0SOcsjZyB4csJArN6teNpYKRyRmhpfNWARNjhsX+viQJGweQXliItH/68WdjSjs5CtrQ==
+X-Received: by 2002:a05:6a20:c89c:b0:1d7:7ea:2f35 with SMTP id
+ adf61e73a8af0-1d8bcefde00mr17121191637.5.1728943821018; 
+ Mon, 14 Oct 2024 15:10:21 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d1805ba92sm82675ad.255.2024.10.14.15.09.22
+ 41be03b00d2f7-7ea9c6d3eb7sm15388a12.45.2024.10.14.15.10.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Oct 2024 15:09:22 -0700 (PDT)
-Message-ID: <f0493b9d-f2b1-4330-9cc6-b1f7cfc77c67@linaro.org>
-Date: Mon, 14 Oct 2024 19:09:20 -0300
+ Mon, 14 Oct 2024 15:10:20 -0700 (PDT)
+Message-ID: <76c0c76e-3506-4c0d-8633-6f130a9dbd2d@linaro.org>
+Date: Mon, 14 Oct 2024 19:10:18 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg: remove singlestep_enabled from DisasContextBase
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241010083641.1785069-1-pbonzini@redhat.com>
+Subject: Re: [PATCH v2 3/3] target/i386: Remove ra parameter from ptw_translate
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241013184733.1423747-1-richard.henderson@linaro.org>
+ <20241013184733.1423747-4-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241010083641.1785069-1-pbonzini@redhat.com>
+In-Reply-To: <20241013184733.1423747-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -94,16 +95,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/24 05:36, Paolo Bonzini wrote:
-> It is used in a couple of places only, both within the same target.  Those can
-> use the cflags just as well, so remove the separate field.
+On 13/10/24 15:47, Richard Henderson wrote:
+> This argument is no longer used.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/translator.h   | 2 --
->   accel/tcg/translator.c      | 1 -
->   target/mips/tcg/translate.c | 5 +++--
->   3 files changed, 3 insertions(+), 5 deletions(-)
+>   target/i386/tcg/sysemu/excp_helper.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
