@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA53ED1627C
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 14:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790B9D1627D
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 14:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0MBr-0007pK-R9; Mon, 14 Oct 2024 10:36:58 -0400
+	id 1t0MDi-0000IZ-Q4; Mon, 14 Oct 2024 10:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0MBp-0007o5-1I
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 10:36:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0MBm-000374-NU
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 10:36:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728916609;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=UQed6wZr/5uUYxXbfe6GI/W0N+zNRwKCRN0TJ1osWQA=;
- b=Hi2kCVHYUdXxyeIdq+PK24ppCsvjBjXFfdX5JtniTkCrGdKUFbceSN4yWuPuuR4IAMmzCX
- FKhDv55Led9q5nUBNGVZXVK30N5zWzebpZgBSIpFPj0Ayr7rIdNL5qXxjVTxb25cexvT4c
- WRS/3k4pcufO/5Wnh/HyVJZV0uPRD7g=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-Pqvt5bwNOWWekGmBOi0x8w-1; Mon, 14 Oct 2024 10:36:45 -0400
-X-MC-Unique: Pqvt5bwNOWWekGmBOi0x8w-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a99345b8a29so305112966b.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 07:36:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0MDf-0000AM-RW
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 10:38:48 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0MDd-0003CS-Tk
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 10:38:47 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5c94c4ad9d8so4089114a12.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 07:38:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728916724; x=1729521524; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IVSJW0KTv1P2GvafknXAVPQOGKmIQUuPLzZbFR5Miko=;
+ b=r6MLiFc5zhU6kt6J0Y3vDKENJpntxJcgVG9bqSZ2OsL3MoIrwVUSjm2PWOeAsGkFj2
+ JVfS9osTxpQWGCNnE6trLQbm9e/aj2Dnae5Wb1kaV1+hsxbeiXYkc+S3q5VbuYHYSHoq
+ nzreZ90gQiCWFzjWlpL0fODb09u5AMnvpYiB0KS+9WFhI7Bv5ge/7KFaRYILZRMnACwE
+ SpMFhC8DaoGZo9tiy+T8Vp03HQHZzLTBaKz5XrXhFBgfiwjjIsSvJ5fMeaMKYQv31PGH
+ pOfZ1A9dJhV+PQqKajLkEf1Dtwj4c13DnCPq/0fVohIjiT3/jHPtWHgAg5Sq/28Q4q52
+ xZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728916604; x=1729521404;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1728916724; x=1729521524;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UQed6wZr/5uUYxXbfe6GI/W0N+zNRwKCRN0TJ1osWQA=;
- b=svTf7DmGRmmc8Wq3U6AXGthBtSV3LyBJjfYKnQ6oOKbzn6bCQQbxc41Kvg+DSqNB9l
- wEZuP1EVmBfKYhrjXQgQwi5NLfr5kwUWUEGCf9ReHWSxZ1glaik0PZmtKhyaZ36hnI5Z
- zzg6sfUuQUdAXs+w3otumllaCt6Kbg2IYEMDTjUSzJ97JwA8Tn8IqoA3gZpfdZwiY6rr
- RzCGznk8O1RUhGQANSfK2DlIlPyRauAZsrWIPRt9vu28D5K/yilzmwu0U+gf7FrEN4TE
- WX/GrZaJzcPFvhPm7TtBteFh5np5jjnVWFb8KNa2l7knMez45EVLBnV4p7A0HSeeGlbD
- umqg==
-X-Gm-Message-State: AOJu0Yxrk+4FOHDX+3GNgUA0w4HrfCZcNsytNAm3wDz7CA0JCUvLU5Uh
- x1P2r3nm8YVsLHzbtDPUFGfdG8OYZ4xNo+S/O7rOIyhPS0/iNX2xhum22sBnooO2G6WdI5dDlsh
- gSzsHK7mVpFwRhxxVfpI18E/PFY84xEVpqF2LmCUIh6+SzZGm40STnNroh8juCdVzLOZnrBMcRV
- RGN++Y5fZ0BgM3LmICea9YKdiDsA83Tk09SShmBJY=
-X-Received: by 2002:a17:906:dc91:b0:a9a:1253:4d81 with SMTP id
- a640c23a62f3a-a9a125350e2mr292501866b.47.1728916603963; 
- Mon, 14 Oct 2024 07:36:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtnFkAp7XXmeRzi5CB5/O8BVDAkW9C6mxrnNIfPCtR3V9zki1QwfPBDOgVc1XoWdHu0bvw5w==
-X-Received: by 2002:a17:906:dc91:b0:a9a:1253:4d81 with SMTP id
- a640c23a62f3a-a9a125350e2mr292498966b.47.1728916603473; 
- Mon, 14 Oct 2024 07:36:43 -0700 (PDT)
-Received: from avogadro.local ([151.81.124.37])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a0d9de967sm176176366b.139.2024.10.14.07.36.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Oct 2024 07:36:42 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] meson: check in main meson.build for native Rust compiler
-Date: Mon, 14 Oct 2024 16:36:40 +0200
-Message-ID: <20241014143640.196735-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
+ bh=IVSJW0KTv1P2GvafknXAVPQOGKmIQUuPLzZbFR5Miko=;
+ b=CmKCVgA2ticsvOygqoZ3D4yYtkPZTYpE/P25Fy5gyhiYKo3mOgYuZ3enOekRb4hwtk
+ wkaVdkB/zqIk8CYIZV7GT9AVw7ir1H5APFvtL9JqW9kz/S1vw3vF0zTtHBTvp9D48Wpo
+ A025Z7Ju47WqTFfkINnkswmBcoPzrBehoHWpt6S8ta7Dtk9I22XXM9huj36OpurL88hP
+ CO4G7c52U/CtR6q6GhC24q09tSvJ7htsYTkQU52qHBegu0wxgSbps71vur4s8aXRanWz
+ OhbwAGyCIVQUAfa0JTvYAGk7TAVcLb2D5Dl+Quww9ao/9rzuhJTZnOSGNiVAClEMMbl+
+ zCOg==
+X-Gm-Message-State: AOJu0YxZtJvL+luZsHmaiTsFNJXK1uIH145ylU0deZDiI2G0jFSWLge0
+ oyH9AnKA2MHVE7I7gK8f51YVG/mfFlSNI/Qr+hZo6lMl1M59p2uvTQv/x6m2bm3DKIkXRwLT7nG
+ uTevqOB+PeP+uwVHUJPftu3tiFUCctRrpV65wdQ==
+X-Google-Smtp-Source: AGHT+IGwHuQZGbvD/79e7IDnGxJEmaIAeil4d0kHI5AwZgvwa0qB0dKgngIXmiPFmDZCi3k9zewUchZMRsmnG5YmxEg=
+X-Received: by 2002:a05:6402:3547:b0:5c9:76f3:7d61 with SMTP id
+ 4fb4d7f45d1cf-5c976f3816amr3189625a12.21.1728916723710; Mon, 14 Oct 2024
+ 07:38:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241014143640.196735-1-pbonzini@redhat.com>
+In-Reply-To: <20241014143640.196735-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Oct 2024 15:38:31 +0100
+Message-ID: <CAFEAcA_GgntHgo9tP70L1tHVhxXcsgJ0hne-sqHHH2-B+E4oCQ@mail.gmail.com>
+Subject: Re: [PATCH] meson: check in main meson.build for native Rust compiler
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.076,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,55 +87,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A working native Rust compiler is always needed in order to compile Rust
-code, even when cross compiling, in order to build the procedural macros
-that QEMU uses.
+On Mon, 14 Oct 2024 at 15:36, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> A working native Rust compiler is always needed in order to compile Rust
+> code, even when cross compiling, in order to build the procedural macros
+> that QEMU uses.
+>
+> Right now, the check is done in rust/qemu-api-macros/meson.build, but this
+> has two disadvantages.  First, it makes the build fail when the Meson "rust"
+> option is set to "auto" (instead, Rust support should be disabled).  Second,
+> add_languages() is one of the few functions that are executed even by
+> "meson introspect", except that "meson introspect" executes both branches
+> of "if" statements!  Therefore, "meson introspect" tries to look for a
+> Rust compiler even if the option is disabled---and then fails because
+> the compiler is required by rust/qemu-api-macros/meson.build.  This is
+> visible for example if the compilation host has a stale
+> scripts/meson-buildoptions.sh and no rustc installed.
+>
+> Both issues can be fixed by moving the check to the main meson.build,
+> together with the check for the cross compiler.
+>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  meson.build                      | 3 ++-
+>  rust/qemu-api-macros/meson.build | 2 --
+>  2 files changed, 2 insertions(+), 3 deletions(-)
 
-Right now, the check is done in rust/qemu-api-macros/meson.build, but this
-has two disadvantages.  First, it makes the build fail when the Meson "rust"
-option is set to "auto" (instead, Rust support should be disabled).  Second,
-add_languages() is one of the few functions that are executed even by
-"meson introspect", except that "meson introspect" executes both branches
-of "if" statements!  Therefore, "meson introspect" tries to look for a
-Rust compiler even if the option is disabled---and then fails because
-the compiler is required by rust/qemu-api-macros/meson.build.  This is
-visible for example if the compilation host has a stale
-scripts/meson-buildoptions.sh and no rustc installed.
+Missing Signed-off-by: line ?
 
-Both issues can be fixed by moving the check to the main meson.build,
-together with the check for the cross compiler.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
----
- meson.build                      | 3 ++-
- rust/qemu-api-macros/meson.build | 2 --
- 2 files changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index aecc381932d..c85f964bed4 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -71,7 +71,8 @@ if host_os == 'darwin' and \
+>    objc = meson.get_compiler('objc')
+>  endif
+>  have_rust = false
+> -if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
+> +if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false) \
+> +    and add_languages('rust', required: get_option('rust'), native: true)
+>    rustc = meson.get_compiler('rust')
+>    have_rust = true
+>    if rustc.version().version_compare('<1.80.0')
+> diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
+> index 48af91ed389..517b9a4d2d5 100644
+> --- a/rust/qemu-api-macros/meson.build
+> +++ b/rust/qemu-api-macros/meson.build
+> @@ -1,5 +1,3 @@
+> -add_languages('rust', required: true, native: true)
+> -
+>  quote_dep = dependency('quote-1-rs', native: true)
+>  syn_dep = dependency('syn-2-rs', native: true)
+>  proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
+> --
+> 2.46.
 
-diff --git a/meson.build b/meson.build
-index aecc381932d..c85f964bed4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -71,7 +71,8 @@ if host_os == 'darwin' and \
-   objc = meson.get_compiler('objc')
- endif
- have_rust = false
--if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false)
-+if not get_option('rust').disabled() and add_languages('rust', required: get_option('rust'), native: false) \
-+    and add_languages('rust', required: get_option('rust'), native: true)
-   rustc = meson.get_compiler('rust')
-   have_rust = true
-   if rustc.version().version_compare('<1.80.0')
-diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
-index 48af91ed389..517b9a4d2d5 100644
---- a/rust/qemu-api-macros/meson.build
-+++ b/rust/qemu-api-macros/meson.build
-@@ -1,5 +1,3 @@
--add_languages('rust', required: true, native: true)
--
- quote_dep = dependency('quote-1-rs', native: true)
- syn_dep = dependency('syn-2-rs', native: true)
- proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--- 
-2.46.2
 
+thanks
+-- PMM
 
