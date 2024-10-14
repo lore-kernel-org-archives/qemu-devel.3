@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E189D16261
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AFCCD16262
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0KzM-0001ZT-Ji; Mon, 14 Oct 2024 09:19:56 -0400
+	id 1t0KzL-0001Yz-RF; Mon, 14 Oct 2024 09:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ryan.ljlu@qq.com>) id 1t0Irs-0002yE-Rg
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:04:07 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.53])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ryan.ljlu@qq.com>) id 1t0Irl-00085R-Ll
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:04:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1728903829; bh=YkM9p83JHF1NVQ9NcXb8wL/fwC0sToRRtbQLby/X+go=;
- h=From:To:CC:Subject:Date;
- b=UNkBV8rpApIwHsxfsHEvK9NqYO16I/ZSGeVP+/wxoF/nsZPaRqNrfFAMzeixtBJfp
- yAyWiqjXlkCr1dlK3UxTw3iRnAK44TH9PoLKAx1CEb225TS0ly4rwSso15aaa5bhy/
- 8PnItnS54a9clTDH7Rg7DZpPLrzk7sQhjfdw07XE=
-Received: from TYSPR03MB7387.apcprd03.prod.outlook.com ([2603:1046:c09:46a::5])
- by newxmesmtplogicsvrszb16-1.qq.com (NewEsmtp) with SMTP
- id CE108C36; Mon, 14 Oct 2024 18:51:33 +0800
-X-QQ-mid: xmsmtpt1728903093tvdvkarsl
-Message-ID: <tencent_F1E38C3E48473DDD458C9BD6C69FEE09EE06@qq.com>
-X-QQ-XMAILINFO: MpO6L0LObisW5MAs//wOZ8hYxWz+suwGm8tn2UpR8rmB3JB68t1E0r8q+s9BTN
- lbZljxBie7ts90iu0++Pze4ac/kgs+RTr+1gtYmAbZXfR068Vwm42bY/WBjDkyQqwkRMxesU5HHg
- wJkMtwgCc/srudG8oEvz6E7+mq/6wyZwQchx7Nr3sjTYfR6lst26F2iz9bF5x2n6BRg1+wz53Gf1
- HzkZwjyP0Y/48ladwOXMa4x27XmU446dLPrb1lwWWckW5a8Su6S9NfI/GiXBu7wkwOkZe5PIDf6U
- XqI91j4Wadi+K6xk+tiuf8vaDJM6zI6fHHrRw6gPGDDwyu/MrAkmmpKCPS9FQ3DWTzBZ+AGcNfhL
- zkM+jfwgV+EQTqg7BrlT9iBUT19n9Ex/9fMG3LCFVkpW9npXmlenXGj3W71GbAZ0WdmeEKPb+UI5
- 9ref/EX0rfNbCE27L5oBoszCGVuBVcnnBBMjumoAO5cqBWWRQUJoWvOWhXC9fUilhnrrudPqgU3Z
- seo30rgVanWBeIJfYLhmGlwEZ51oPVgAYcYfuigWopzzYA5BCWY9VJLl8nG7aTH1bRNmrTQ3phBv
- uMxVXHMCXieETBSIXA3Qo5P9jvV2zgrw11nxETvv88sSTWx+rPeu47jfPQ84sKuaTlemyFBNjnOj
- kc/SQQZ0sVHGRELDmi75cI/Y19VlEKG8tusvnt2Cz3t0EtcOT7VrK+tExB8ApiyVEThe5zZjAs40
- +Tm4a3ra8VRvXF9TXrFHcewCa1qDTMjqEISg7d6KJNjxhJXkISGmkT8BX+Y1UcyNVgbkjw+wr2vr
- 37lFCjYyEBhhqDGRi6iDllX6wtzz1qoyDfCHkni8CFXd1UIUjRnK3iFS95sGqs8oEBwmaZwtrrLm
- oRkkqf+Prtps+5gq3jwCrSi9o2WQJz45AYPkcmj2tOjnzJt8JPptSZhd/rCsQ+jUExnpuyD7cSAV
- etpRuUieg=
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
-From: "ryan.ljlu@qq.com" <ryan.ljlu@qq.com>
-To: "jintack@cs.columbia.edu" <jintack@cs.columbia.edu>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [Qemu-devel] Assigning network devices to nested VMs results in
- driver errors in nested VMs
-Thread-Topic: [Qemu-devel] Assigning network devices to nested VMs results in
- driver errors in nested VMs
-Thread-Index: AQHbHiWGSEjvTeOluU237sDnMjx6sg==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Mon, 14 Oct 2024 10:51:28 +0000
-X-OQ-MSGID: <TYSPR03MB73873BCC482C8A70FA284178A3442@TYSPR03MB7387.apcprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator: 
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels: 
-Content-Type: multipart/alternative;
- boundary="_000_TYSPR03MB73873BCC482C8A70FA284178A3442TYSPR03MB7387apcp_"
+ (Exim 4.90_1) (envelope-from <yanmingzhu@iscas.ac.cn>)
+ id 1t0I0a-0003sS-EN; Mon, 14 Oct 2024 06:09:00 -0400
+Received: from smtp83.cstnet.cn ([159.226.251.83] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <yanmingzhu@iscas.ac.cn>)
+ id 1t0I0X-0001pG-Be; Mon, 14 Oct 2024 06:09:00 -0400
+Received: from yanmingzhu$iscas.ac.cn ( [124.16.141.247] ) by
+ ajax-webmail-APP-09 (Coremail) ; Mon, 14 Oct 2024 18:08:40 +0800
+ (GMT+08:00)
+X-Originating-IP: [124.16.141.247]
+Date: Mon, 14 Oct 2024 18:08:40 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6ZiO5piO6ZO4?= <yanmingzhu@iscas.ac.cn>
+To: "Alistair Francis" <alistair23@gmail.com>
+Cc: "MingZhu Yan" <trdthg47@gmail.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Subject: Re: Re: [PATCH] hw/char/riscv_htif: Fix htif_mm_write that causes
+ infinite loop in ACT.
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT5 build
+ 20240627(e6c6db66) Copyright (c) 2002-2024 www.mailtech.cn cnic.cn
+In-Reply-To: <CAKmqyKMobSzu-q8jdPhAU9PMG2GsGG1eOsemSS-Ny2vrX+wSbQ@mail.gmail.com>
+References: <20240927083508.59483-1-yanmingzhu@iscas.ac.cn>
+ <CAKmqyKMobSzu-q8jdPhAU9PMG2GsGG1eOsemSS-Ny2vrX+wSbQ@mail.gmail.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Received-SPF: pass client-ip=43.163.128.53; envelope-from=ryan.ljlu@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <52abee8d.225ee.1928a805a21.Coremail.yanmingzhu@iscas.ac.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: swCowAAHXASo7Qxn0KEEAA--.51619W
+X-CM-SenderInfo: 51dqzxxqj2x346lvutnvoduhdfq/1tbiBwsKBGcMbrpMcwACsA
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+ CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+ daVFxhVjvjDU=
+Received-SPF: pass client-ip=159.226.251.83;
+ envelope-from=yanmingzhu@iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 14 Oct 2024 09:19:53 -0400
+X-Mailman-Approved-At: Mon, 14 Oct 2024 09:19:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,216 +70,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_TYSPR03MB73873BCC482C8A70FA284178A3442TYSPR03MB7387apcp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Jintack,
-
-I run into the same issue as you described in https://lists.nongnu.org/arch=
-ive/html/qemu-devel/2018-02/msg03876.html
-I try to pass through MLNX VF and NVME to level2-vm, but both these two pci=
- device can display with lspci correctly, but have issue with driver.
-My env are:
-    Host Linux version : 5.15.131
-    Qemu: 8.2.0
-
-Since you reported this issue in 2018, does this have any update from there=
-?
-
-Level2 VM dmesg error logs while passing through MLNX VF are below:
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: [15b3:101e] type 00 class 0x02=
-0000
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: reg 0x10: [mem 0x00000000-0x00=
-0fffff 64bit pref]
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: enabling Extended Tags
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: 0.000 Gb/s available PCIe band=
-width, limited by Unknown x0 link at 0000:00:06.0 (capable of 126.024 Gb/s =
-with 16.0 GT/s PCIe x8 link)
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: BAR 0: assigned [mem 0x1400000=
-00-0x1400fffff 64bit pref]
-[Mon Oct 14 04:12:48 2024] mlx5_core 0000:00:06.0: enabling device (0000 ->=
- 0002)
-[Mon Oct 14 04:12:48 2024] mlx5_core 0000:00:06.0: firmware version: 22.35.=
-2000
-
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: wait_func:1151:(pid 1193=
-): ENABLE_HCA(0x104) timeout. Will cause a leak of a command resource
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: mlx5_function_setup:1164=
-:(pid 1193): enable hca failed
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: probe_one:1770:(pid 1193=
-): mlx5_init_one failed with error code -110
-[Mon Oct 14 04:13:50 2024] mlx5_core: probe of 0000:00:06.0 failed with err=
-or -110
-
-Host dmesg error logs while passing through MLNX VF are below:
-[Mon Oct 14 08:07:08 2024] DMAR: DRHD: handling fault status reg 2
-[Mon Oct 14 08:07:08 2024] DMAR: [DMA Read NO_PASID] Request device [ca:08.=
-2] fault addr 0x104ead000 [fault reason 0x06] PTE Read access is not set
-
-Thanks,
-Ryan
-
---_000_TYSPR03MB73873BCC482C8A70FA284178A3442TYSPR03MB7387apcp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Hi Jintack,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-I run into the same issue as you described in <a href=3D"https://lists.nong=
-nu.org/archive/html/qemu-devel/2018-02/msg03876.html" id=3D"LPlnk932188" cl=
-ass=3D"OWAAutoLink">
-https://lists.nongnu.org/archive/html/qemu-devel/2018-02/msg03876.html</a><=
-/div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-I try to pass through MLNX VF and NVME to level2-vm, but both these two pci=
- device can display with lspci correctly, but have issue with driver.</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-My env are:</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-&nbsp; &nbsp; Host Linux version : 5.15.131</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-&nbsp; &nbsp; Qemu: 8.2.0</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Since you reported this issue in 2018, does&nbsp;this have any update from =
-there?</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Level2 VM dmesg error logs while passing through MLNX VF are below:</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: [15b3:101e] type 00 class 0x02=
-0000</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: reg 0x10: [mem 0x00000000-0x00=
-0fffff 64bit pref]</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: enabling Extended Tags</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: 0.000 Gb/s available PCIe band=
-width, limited by Unknown x0 link at 0000:00:06.0 (capable of 126.024 Gb/s =
-with 16.0 GT/s PCIe x8 link)</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:47 2024] pci 0000:00:06.0: BAR 0: assigned [mem 0x1400000=
-00-0x1400fffff 64bit pref]</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:48 2024] mlx5_core 0000:00:06.0: enabling device (0000 -&=
-gt; 0002)</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:12:48 2024] mlx5_core 0000:00:06.0: firmware version: 22.35.=
-2000</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: wait_func:1151:(pid 1193=
-): ENABLE_HCA(0x104) timeout. Will cause a leak of a command resource</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: mlx5_function_setup:1164=
-:(pid 1193): enable hca failed</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:13:50 2024] mlx5_core 0000:00:06.0: probe_one:1770:(pid 1193=
-): mlx5_init_one failed with error code -110</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 04:13:50 2024] mlx5_core: probe of 0000:00:06.0 failed with err=
-or -110</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Host dmesg error logs while passing through MLNX VF&nbsp;are below:</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 08:07:08 2024] DMAR: DRHD: handling fault status reg 2</div>
-<div style=3D"line-height: 19px; white-space: pre; font-family: Aptos, Apto=
-s_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-s=
-ize: 12pt; color: rgb(0, 0, 0);">
-[Mon Oct 14 08:07:08 2024] DMAR: [DMA Read NO_PASID] Request device [ca:08.=
-2] fault addr 0x104ead000 [fault reason 0x06] PTE Read access is not set</d=
-iv>
-<div class=3D"elementToProof" style=3D"line-height: 19px; white-space: pre;=
- font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helv=
-etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Thanks,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Ryan</div>
-</body>
-</html>
-
---_000_TYSPR03MB73873BCC482C8A70FA284178A3442TYSPR03MB7387apcp_--
-
+VGhhbmsgeW91IGZvciB5b3VyIHJlcGx5IGFuZCBJJ20gc29ycnkgdGhhdCBJIGRpZG4ndCBleHBs
+YWluIGl0IGNsZWFybHkuCgotIEFDVCBpcyBhbiBvZmZpY2lhbCByaXNjdiB0ZXN0IHN1aXRlIHRv
+IGNoZWNrIHRoZSByaXNjdiBzdXBwb3J0IG9mIHRoZSBEVVQoZGV2aWNlIHVuZGVyIHRlc3QpLgot
+IEN1cnJlbnRseSBBQ1Qgc3VwcG9ydCB1c2luZyBbc2FpbC1yaXNjdl0oaHR0cHM6Ly9naXRodWIu
+Y29tL3Jpc2N2L3NhaWwtcmlzY3YpKGRlZmF1bHQpIG9yIFtzcGlrZV0oaHR0cHM6Ly9naXRodWIu
+Y29tL3Jpc2N2LXNvZnR3YXJlLXNyYy9yaXNjdi1pc2Etc2ltKSAKLSBRRU1VIGlzIG5vdCBzdXBw
+b3J0ZWQgeWV077yMYnV0IHNvbWVvbmUgbWFkZSBhIGNvbW1pdDogW2NvbW1pdF0oaHR0cHM6Ly9n
+aXRodWIuY29tL3FlbXUvcWVtdS9jb21taXQvNjYyNDdlZGM4YjZmYjM2ZDZiOTA1YmFiY2Q3OTUw
+NjhlYTk4OWFkNSkKCkJ1dCB0aGVyZSBhcmUgc3RpbGwgcHJvYmxlbXMsIHNvIEknbSB0cnlpbmcg
+dG8gZml4IGl0LiBBZnRlciBkZWJ1Z2dpbmcsIEkgZm91bmQgdGhhdCBpdCdzIGEgaHRpZiBwcm9i
+bGVtLCBhbmQgdGhlIGlkZWEgb2YgZml4aW5nIGl0IGlzIHJlZmVyZW5jZWQgZnJvbSB0aGUgc2Fp
+bC1yaXNjdiBpbXBsZW1lbnRhdGlvbgoKIkFsaXN0YWlyIEZyYW5jaXMiICZsdDthbGlzdGFpcjIz
+QGdtYWlsLmNvbSZndDvlhpnpgZPvvJoKJmd0OyBPbiBGcmksIFNlcCAyNywgMjAyNCBhdCAxMToy
+NuKAr1BNIE1pbmdaaHUgWWFuIDx0cmR0aGc0N0BnbWFpbC5jb20+IHdyb3RlOgomZ3Q7ICZndDsK
+Jmd0OyAmZ3Q7IEFwcGxpY2F0aW9ucyBzb21ldGltZXMgb25seSB3cml0ZSB0aGUgbG93ZXIgMzIt
+Yml0IHBheWxvYWQgYnl0ZXMsIHRoaXMgaXMgdXNlZAomZ3Q7ICZndDsgaW4gQUNUIHRlc3RzLiBB
+cyBhIHdvcmthcm91bmQsIHRoaXMgcmVmZXJzIHRvIHRoZSBzb2x1dGlvbiBvZiBzYWlsLXJpc2N2
+LgomZ3Q7IAomZ3Q7IEknbSBub3Qgc3VyZSB3aGF0IEFDVCBpcywgYnV0IHRoaXMgZmVlbHMgbGlr
+ZSBhIGd1ZXN0IGJ1Zywgbm90IGEgUUVNVSBpc3N1ZS4KJmd0OyAKJmd0OyBBbGlzdGFpcgomZ3Q7
+IAomZ3Q7ICZndDsgaWYgdGhlIHBheWxvYWQgaXMgd3JpdHRlbiBhIGZldyB0aW1lcyB3aXRoIHRo
+ZSBzYW1lIHZhbHVlLCB3ZSBwcm9jZXNzIHRoZSB3aG9sZQomZ3Q7ICZndDsgaHRpZiBjb21tYW5k
+IGFueXdheS4KJmd0OyAmZ3Q7CiZndDsgJmd0OyBTaWduZWQtb2ZmLWJ5OiBNaW5nWmh1IFlhbiA8
+eWFubWluZ3podUBpc2Nhcy5hYy5jbj4KJmd0OyAmZ3Q7IC0tLQomZ3Q7ICZndDsgIGh3L2NoYXIv
+cmlzY3ZfaHRpZi5jIHwgMzUgKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0KJmd0
+OyAmZ3Q7ICAxIGZpbGUgY2hhbmdlZCwgMTkgaW5zZXJ0aW9ucygrKSwgMTYgZGVsZXRpb25zKC0p
+CiZndDsgJmd0OwomZ3Q7ICZndDsgZGlmZiAtLWdpdCBhL2h3L2NoYXIvcmlzY3ZfaHRpZi5jIGIv
+aHcvY2hhci9yaXNjdl9odGlmLmMKJmd0OyAmZ3Q7IGluZGV4IDliZWY2MGRlZjEuLmQ3NGNjZTNi
+ZWYgMTAwNjQ0CiZndDsgJmd0OyAtLS0gYS9ody9jaGFyL3Jpc2N2X2h0aWYuYwomZ3Q7ICZndDsg
+KysrIGIvaHcvY2hhci9yaXNjdl9odGlmLmMKJmd0OyAmZ3Q7IEBAIC02NSwxNiArNjUsOCBAQCB2
+b2lkIGh0aWZfc3ltYm9sX2NhbGxiYWNrKGNvbnN0IGNoYXIgKnN0X25hbWUsIGludCBzdF9pbmZv
+LCB1aW50NjRfdCBzdF92YWx1ZSwKJmd0OyAmZ3Q7ICB7CiZndDsgJmd0OyAgICAgIGlmIChzdHJj
+bXAoImZyb21ob3N0Iiwgc3RfbmFtZSkgPT0gMCkgewomZ3Q7ICZndDsgICAgICAgICAgZnJvbWhv
+c3RfYWRkciA9IHN0X3ZhbHVlOwomZ3Q7ICZndDsgLSAgICAgICAgaWYgKHN0X3NpemUgIT0gOCkg
+ewomZ3Q7ICZndDsgLSAgICAgICAgICAgIGVycm9yX3JlcG9ydCgiSFRJRiBmcm9taG9zdCBtdXN0
+IGJlIDggYnl0ZXMiKTsKJmd0OyAmZ3Q7IC0gICAgICAgICAgICBleGl0KDEpOwomZ3Q7ICZndDsg
+LSAgICAgICAgfQomZ3Q7ICZndDsgICAgICB9IGVsc2UgaWYgKHN0cmNtcCgidG9ob3N0Iiwgc3Rf
+bmFtZSkgPT0gMCkgewomZ3Q7ICZndDsgICAgICAgICAgdG9ob3N0X2FkZHIgPSBzdF92YWx1ZTsK
+Jmd0OyAmZ3Q7IC0gICAgICAgIGlmIChzdF9zaXplICE9IDgpIHsKJmd0OyAmZ3Q7IC0gICAgICAg
+ICAgICBlcnJvcl9yZXBvcnQoIkhUSUYgdG9ob3N0IG11c3QgYmUgOCBieXRlcyIpOwomZ3Q7ICZn
+dDsgLSAgICAgICAgICAgIGV4aXQoMSk7CiZndDsgJmd0OyAtICAgICAgICB9CiZndDsgJmd0OyAg
+ICAgIH0gZWxzZSBpZiAoc3RyY21wKCJiZWdpbl9zaWduYXR1cmUiLCBzdF9uYW1lKSA9PSAwKSB7
+CiZndDsgJmd0OyAgICAgICAgICBiZWdpbl9zaWdfYWRkciA9IHN0X3ZhbHVlOwomZ3Q7ICZndDsg
+ICAgICB9IGVsc2UgaWYgKHN0cmNtcCgiZW5kX3NpZ25hdHVyZSIsIHN0X25hbWUpID09IDApIHsK
+Jmd0OyAmZ3Q7IEBAIC0yOTAsMTggKzI4MiwyNiBAQCBzdGF0aWMgdm9pZCBodGlmX21tX3dyaXRl
+KHZvaWQgKm9wYXF1ZSwgaHdhZGRyIGFkZHIsCiZndDsgJmd0OyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICB1aW50NjRfdCB2YWx1ZSwgdW5zaWduZWQgc2l6ZSkKJmd0OyAmZ3Q7ICB7CiZndDsg
+Jmd0OyAgICAgIEhUSUZTdGF0ZSAqcyA9IG9wYXF1ZTsKJmd0OyAmZ3Q7IC0gICAgaWYgKGFkZHIg
+PT0gVE9IT1NUX09GRlNFVDEpIHsKJmd0OyAmZ3Q7IC0gICAgICAgIGlmIChzLSZndDt0b2hvc3Qg
+PT0gMHgwKSB7CiZndDsgJmd0OyAtICAgICAgICAgICAgcy0mZ3Q7YWxsb3dfdG9ob3N0ID0gMTsK
+Jmd0OyAmZ3Q7IC0gICAgICAgICAgICBzLSZndDt0b2hvc3QgPSB2YWx1ZSAmYW1wOyAweEZGRkZG
+RkZGOwomZ3Q7ICZndDsgKyAgICBpbnQgaHRpZl9jbWRfd3JpdGUgPSAwOwomZ3Q7ICZndDsgKyAg
+ICBpZiAoc2l6ZSA9PSA4ICZhbXA7JmFtcDsgYWRkciA9PSBUT0hPU1RfT0ZGU0VUMSkgewomZ3Q7
+ICZndDsgKyAgICAgICAgaHRpZl9jbWRfd3JpdGUgPSAxOwomZ3Q7ICZndDsgKyAgICAgICAgcy0m
+Z3Q7dG9ob3N0ID0gdmFsdWU7CiZndDsgJmd0OyArICAgICAgICBodGlmX2hhbmRsZV90b2hvc3Rf
+d3JpdGUocywgcy0mZ3Q7dG9ob3N0KTsKJmd0OyAmZ3Q7ICsgICAgfSBlbHNlIGlmIChzaXplID09
+IDQgJmFtcDsmYW1wOyBhZGRyID09IFRPSE9TVF9PRkZTRVQxKSB7CiZndDsgJmd0OyArICAgICAg
+ICBpZiAoKHZhbHVlKSA9PSAocy0mZ3Q7dG9ob3N0ICZhbXA7IDB4RkZGRikpIHsKJmd0OyAmZ3Q7
+ICsgICAgICAgICAgICBzLSZndDthbGxvd190b2hvc3QgPSBzLSZndDthbGxvd190b2hvc3QgKyAx
+OwomZ3Q7ICZndDsgICAgICAgICAgfSBlbHNlIHsKJmd0OyAmZ3Q7ICAgICAgICAgICAgICBzLSZn
+dDthbGxvd190b2hvc3QgPSAwOwomZ3Q7ICZndDsgICAgICAgICAgfQomZ3Q7ICZndDsgLSAgICB9
+IGVsc2UgaWYgKGFkZHIgPT0gVE9IT1NUX09GRlNFVDIpIHsKJmd0OyAmZ3Q7IC0gICAgICAgIGlm
+IChzLSZndDthbGxvd190b2hvc3QpIHsKJmd0OyAmZ3Q7IC0gICAgICAgICAgICBzLSZndDt0b2hv
+c3QgfD0gdmFsdWUgJmx0OyZsdDsgMzI7CiZndDsgJmd0OyAtICAgICAgICAgICAgaHRpZl9oYW5k
+bGVfdG9ob3N0X3dyaXRlKHMsIHMtJmd0O3RvaG9zdCk7CiZndDsgJmd0OyArICAgICAgICBzLSZn
+dDt0b2hvc3QgPSBkZXBvc2l0NjQocy0mZ3Q7dG9ob3N0LCAwLCAzMiwgdmFsdWUpOwomZ3Q7ICZn
+dDsgKyAgICB9IGVsc2UgaWYgKHNpemUgPT0gNCAmYW1wOyZhbXA7IGFkZHIgPT0gVE9IT1NUX09G
+RlNFVDIpIHsKJmd0OyAmZ3Q7ICsgICAgICAgIGlmICgodmFsdWUgJmFtcDsgMHhGRikgPT0gKHMt
+Jmd0O3RvaG9zdCAmYW1wOyAweEZGMDApKSB7CiZndDsgJmd0OyArICAgICAgICAgICAgcy0mZ3Q7
+YWxsb3dfdG9ob3N0ID0gcy0mZ3Q7YWxsb3dfdG9ob3N0ICsgMTsKJmd0OyAmZ3Q7ICsgICAgICAg
+IH0gZWxzZSB7CiZndDsgJmd0OyArICAgICAgICAgICAgcy0mZ3Q7YWxsb3dfdG9ob3N0ID0gMTsK
+Jmd0OyAmZ3Q7ICAgICAgICAgIH0KJmd0OyAmZ3Q7ICsgICAgICAgIGh0aWZfY21kX3dyaXRlID0g
+MTsKJmd0OyAmZ3Q7ICsgICAgICAgIHMtJmd0O3RvaG9zdCA9IGRlcG9zaXQ2NChzLSZndDt0b2hv
+c3QsIDMyLCAzMiwgdmFsdWUpOwomZ3Q7ICZndDsgICAgICB9IGVsc2UgaWYgKGFkZHIgPT0gRlJP
+TUhPU1RfT0ZGU0VUMSkgewomZ3Q7ICZndDsgICAgICAgICAgcy0mZ3Q7ZnJvbWhvc3RfaW5wcm9n
+cmVzcyA9IDE7CiZndDsgJmd0OyAgICAgICAgICBzLSZndDtmcm9taG9zdCA9IHZhbHVlICZhbXA7
+IDB4RkZGRkZGRkY7CiZndDsgJmd0OyBAQCAtMzEyLDYgKzMxMiw5IEBAIHN0YXRpYyB2b2lkIGh0
+aWZfbW1fd3JpdGUodm9pZCAqb3BhcXVlLCBod2FkZHIgYWRkciwKJmd0OyAmZ3Q7ICAgICAgICAg
+IHFlbXVfbG9nKCJJbnZhbGlkIGh0aWYgd3JpdGU6IGFkZHJlc3MgJTAxNiIgUFJJeDY0ICJcbiIs
+CiZndDsgJmd0OyAgICAgICAgICAgICAgKHVpbnQ2NF90KWFkZHIpOwomZ3Q7ICZndDsgICAgICB9
+CiZndDsgJmd0OyArICAgIGlmICgocy0mZ3Q7dG9ob3N0ID09IDEgJmFtcDsmYW1wOyBodGlmX2Nt
+ZF93cml0ZSkgfHwgcy0mZ3Q7YWxsb3dfdG9ob3N0ICZndDsgMikgewomZ3Q7ICZndDsgKyAgICAg
+ICAgaHRpZl9oYW5kbGVfdG9ob3N0X3dyaXRlKHMsIHMtJmd0O3RvaG9zdCk7CiZndDsgJmd0OyAr
+ICAgIH0KJmd0OyAmZ3Q7ICB9CiZndDsgJmd0OwomZ3Q7ICZndDsgIHN0YXRpYyBjb25zdCBNZW1v
+cnlSZWdpb25PcHMgaHRpZl9tbV9vcHMgPSB7CiZndDsgJmd0OyAtLQomZ3Q7ICZndDsgMi4zNC4x
+CiZndDsgJmd0OwomZ3Q7ICZndDsKPC95YW5taW5nemh1QGlzY2FzLmFjLmNuPjwvdHJkdGhnNDdA
+Z21haWwuY29tPg==
 
