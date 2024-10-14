@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119F3D16261
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC1D16261
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0LIx-0000hl-EF; Mon, 14 Oct 2024 09:40:11 -0400
+	id 1t0LLB-0004Os-CS; Mon, 14 Oct 2024 09:42:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LIw-0000h2-Ma
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:40:10 -0400
+ id 1t0LKE-0003AQ-8d
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LIv-0003qH-4K
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:40:10 -0400
+ id 1t0LK9-00046Q-10
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728913208;
+ s=mimecast20190719; t=1728913279;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4Sbeeh6Nt5K4NX0Ls8O7TyT/aeG41lol8tOrg2NOQdw=;
- b=Me2r2s8dB0uKNyn5PYCAMVGmu91w7A2YH3mLx5fgTWsEWF7aNxdSlB+xvWpbQSQT5Ekwp9
- Oi9hc3j8Wg/F1Va4wConltTS5HiLpLwbLaT1uwJxyuaUndmegKGn/rHq1W0YNr4C8Ieo1r
- vPiIW/VymePyqiIWX78H8dtCuGbCdFo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AyUPW+hgxyLeiY+qz06cEXiEyTlF8qX9Tc5iczeYORk=;
+ b=fT0wCvDaBjl8PfvFgJx5jJSt6xabf5gu2iMpIKRixBwc2jiVPf/MWMcv436569t2vbIrA3
+ qbEUIvYLyfuAJLDJvXJ8Fz5hNjWdr7oMQH3dzwsqQ5pgnJA1PjohKAZqrpR4bg3GYlKTtT
+ g5A0YviuccyDp99TYulfHJpfUEs9VDw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-dqC3AR8lO-2S0DsJZXlPCQ-1; Mon,
- 14 Oct 2024 09:40:06 -0400
-X-MC-Unique: dqC3AR8lO-2S0DsJZXlPCQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-lM-bJmG2OcWLJROQfvXV7w-1; Mon,
+ 14 Oct 2024 09:41:15 -0400
+X-MC-Unique: lM-bJmG2OcWLJROQfvXV7w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 552081955D95; Mon, 14 Oct 2024 13:40:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF1761955E84; Mon, 14 Oct 2024 13:41:13 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.12])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3F2A119560AA; Mon, 14 Oct 2024 13:40:03 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C469A3000198; Mon, 14 Oct 2024 13:41:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 05/20] ui/dbus: fix filtering all update messages
-Date: Mon, 14 Oct 2024 17:39:20 +0400
-Message-ID: <20241014133935.470709-6-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 19/20] tests: add basic -display dbus Map.Unix test
+Date: Mon, 14 Oct 2024 17:39:34 +0400
+Message-ID: <20241014133935.470709-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,133 +90,156 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Filtering pending messages when a new scanout is given shouldn't discard
-pending cursor changes, for example.
-
-Since filtering happens in a different thread, use atomic set/get.
-
-Fixes: fa88b85dea ("ui/dbus: filter out pending messages when scanout")
+Only check we eventually get a shared memory scanout.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20241008125028.1177932-6-marcandre.lureau@redhat.com>
+Message-ID: <20241008125028.1177932-20-marcandre.lureau@redhat.com>
 ---
- ui/dbus-listener.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
+ tests/qtest/dbus-display-test.c | 72 ++++++++++++++++++++++++++++++---
+ 1 file changed, 67 insertions(+), 5 deletions(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 434bd608f2..c69afc05a8 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -26,6 +26,7 @@
- #include "qapi/error.h"
- #include "sysemu/sysemu.h"
- #include "dbus.h"
+diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-test.c
+index 0390bdcb41..f7fc873bfb 100644
+--- a/tests/qtest/dbus-display-test.c
++++ b/tests/qtest/dbus-display-test.c
+@@ -2,9 +2,14 @@
+ #include "qemu/sockets.h"
+ #include "qemu/dbus.h"
+ #include "qemu/sockets.h"
 +#include "glib.h"
- #ifdef G_OS_UNIX
++#include "glibconfig.h"
+ #include <gio/gio.h>
  #include <gio/gunixfdlist.h>
- #endif
-@@ -85,7 +86,7 @@ struct _DBusDisplayListener {
- #endif
+ #include "libqtest.h"
++#ifndef WIN32
++#include <sys/mman.h>
++#endif
+ #include "ui/dbus-display1.h"
  
-     guint dbus_filter;
--    guint32 out_serial_to_discard;
-+    guint32 display_serial_to_discard;
- };
+ static GDBusConnection*
+@@ -82,6 +87,7 @@ typedef struct TestDBusConsoleRegister {
+     GThread *thread;
+     GDBusConnection *listener_conn;
+     GDBusObjectManagerServer *server;
++    bool with_map;
+ } TestDBusConsoleRegister;
  
- G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
-@@ -93,10 +94,12 @@ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
- static void dbus_gfx_update(DisplayChangeListener *dcl,
-                             int x, int y, int w, int h);
- 
--static void ddl_discard_pending_messages(DBusDisplayListener *ddl)
-+static void ddl_discard_display_messages(DBusDisplayListener *ddl)
+ static gboolean listener_handle_scanout(
+@@ -94,13 +100,49 @@ static gboolean listener_handle_scanout(
+     GVariant *arg_data,
+     TestDBusConsoleRegister *test)
  {
--    ddl->out_serial_to_discard = g_dbus_connection_get_last_serial(
-+    guint32 serial = g_dbus_connection_get_last_serial(
-         g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
++    if (!test->with_map) {
++        g_main_loop_quit(test->loop);
++    }
 +
-+    g_atomic_int_set(&ddl->display_serial_to_discard, serial);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++#ifndef WIN32
++static gboolean listener_handle_scanout_map(
++    QemuDBusDisplay1ListenerUnixMap *object,
++    GDBusMethodInvocation *invocation,
++    GUnixFDList *fd_list,
++    GVariant *arg_handle,
++    guint arg_offset,
++    guint arg_width,
++    guint arg_height,
++    guint arg_stride,
++    guint arg_pixman_format,
++    TestDBusConsoleRegister *test)
++{
++    int fd = -1;
++    gint32 handle = g_variant_get_handle(arg_handle);
++    g_autoptr(GError) error = NULL;
++    void *addr = NULL;
++    size_t len = arg_height * arg_stride;
++
++    g_assert_cmpuint(g_unix_fd_list_get_length(fd_list), ==, 1);
++    fd = g_unix_fd_list_get(fd_list, handle, &error);
++    g_assert_no_error(error);
++
++    addr = mmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, arg_offset);
++    g_assert_no_errno(addr == MAP_FAILED ? -1 : 0);
++    g_assert_no_errno(munmap(addr, len));
++
+     g_main_loop_quit(test->loop);
+ 
++    close(fd);
+     return DBUS_METHOD_INVOCATION_HANDLED;
+ }
++#endif
+ 
+ static void
+-test_dbus_console_setup_listener(TestDBusConsoleRegister *test)
++test_dbus_console_setup_listener(TestDBusConsoleRegister *test, bool with_map)
+ {
+     g_autoptr(GDBusObjectSkeleton) listener = NULL;
+     g_autoptr(QemuDBusDisplay1ListenerSkeleton) iface = NULL;
+@@ -114,6 +156,25 @@ test_dbus_console_setup_listener(TestDBusConsoleRegister *test)
+                      NULL);
+     g_dbus_object_skeleton_add_interface(listener,
+                                          G_DBUS_INTERFACE_SKELETON(iface));
++    if (with_map) {
++#ifdef WIN32
++        g_test_skip("map test lacking on win32");
++        return;
++#else
++        g_autoptr(QemuDBusDisplay1ListenerUnixMapSkeleton) iface_map =
++            QEMU_DBUS_DISPLAY1_LISTENER_UNIX_MAP_SKELETON(
++                qemu_dbus_display1_listener_unix_map_skeleton_new());
++
++        g_object_connect(iface_map,
++                         "signal::handle-scanout-map", listener_handle_scanout_map, test,
++                         NULL);
++        g_dbus_object_skeleton_add_interface(listener,
++                                             G_DBUS_INTERFACE_SKELETON(iface_map));
++        g_object_set(iface, "interfaces",
++            (const gchar *[]) { "org.qemu.Display1.Listener.Unix.Map", NULL },
++            NULL);
++#endif
++    }
+     g_dbus_object_manager_server_export(test->server, listener);
+     g_dbus_object_manager_server_set_connection(test->server,
+                                                 test->listener_conn);
+@@ -145,7 +206,7 @@ test_dbus_console_registered(GObject *source_object,
+     g_assert_no_error(err);
+ 
+     test->listener_conn = g_thread_join(test->thread);
+-    test_dbus_console_setup_listener(test);
++    test_dbus_console_setup_listener(test, test->with_map);
  }
  
- #ifdef CONFIG_OPENGL
-@@ -290,7 +293,7 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-         return;
-     }
+ static gpointer
+@@ -155,7 +216,7 @@ test_dbus_p2p_server_setup_thread(gpointer data)
+ }
  
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     width = qemu_dmabuf_get_width(dmabuf);
-     height = qemu_dmabuf_get_height(dmabuf);
-@@ -338,7 +341,7 @@ static bool dbus_scanout_map(DBusDisplayListener *ddl)
-         return false;
-     }
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     if (!qemu_dbus_display1_listener_win32_map_call_scanout_map_sync(
-             ddl->map_proxy,
-@@ -401,7 +404,7 @@ dbus_scanout_share_d3d_texture(
-         return false;
-     }
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     qemu_dbus_display1_listener_win32_d3d11_call_scanout_texture2d(
-         ddl->d3d11_proxy,
-@@ -659,7 +662,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
-         surface_stride(ddl->ds) * surface_height(ddl->ds), TRUE,
-         (GDestroyNotify)pixman_image_unref, pixman_image_ref(ddl->ds->image));
- 
--    ddl_discard_pending_messages(ddl);
-+    ddl_discard_display_messages(ddl);
- 
-     qemu_dbus_display1_listener_call_scanout(
-         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
-@@ -992,17 +995,35 @@ dbus_filter(GDBusConnection *connection,
-             gpointer         user_data)
+ static void
+-test_dbus_display_console(void)
++test_dbus_display_console(const void* data)
  {
-     DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(user_data);
--    guint32 serial;
-+    guint32 serial, discard_serial;
+     g_autoptr(GError) err = NULL;
+     g_autoptr(GDBusConnection) conn = NULL;
+@@ -163,7 +224,7 @@ test_dbus_display_console(void)
+     g_autoptr(GMainLoop) loop = NULL;
+     QTestState *qts = NULL;
+     int pair[2];
+-    TestDBusConsoleRegister test = { 0, };
++    TestDBusConsoleRegister test = { 0, .with_map = GPOINTER_TO_INT(data) };
+ #ifdef WIN32
+     WSAPROTOCOL_INFOW info;
+     g_autoptr(GVariant) listener = NULL;
+@@ -299,7 +360,8 @@ main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
  
-     if (incoming) {
-         return message;
-     }
+     qtest_add_func("/dbus-display/vm", test_dbus_display_vm);
+-    qtest_add_func("/dbus-display/console", test_dbus_display_console);
++    qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false), test_dbus_display_console);
++    qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(true), test_dbus_display_console);
+     qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
  
-     serial = g_dbus_message_get_serial(message);
--    if (serial <= ddl->out_serial_to_discard) {
--        trace_dbus_filter(serial, ddl->out_serial_to_discard);
--        g_object_unref(message);
--        return NULL;
-+
-+    discard_serial = g_atomic_int_get(&ddl->display_serial_to_discard);
-+    if (serial <= discard_serial) {
-+        const char *member = g_dbus_message_get_member(message);
-+        static const char *const display_messages[] = {
-+            "Scanout",
-+            "Update",
-+#ifdef CONFIG_GBM
-+            "ScanoutDMABUF",
-+            "UpdateDMABUF",
-+#endif
-+            "ScanoutMap",
-+            "UpdateMap",
-+            "Disable",
-+            NULL,
-+        };
-+
-+        if (g_strv_contains(display_messages, member)) {
-+            trace_dbus_filter(serial, discard_serial);
-+            g_object_unref(message);
-+            return NULL;
-+        }
-     }
- 
-     return message;
+     return g_test_run();
 -- 
 2.47.0
 
