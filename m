@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F26D18130
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233C9D18130
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0OD0-00006E-EF; Mon, 14 Oct 2024 12:46:14 -0400
+	id 1t0OEr-0000ov-LV; Mon, 14 Oct 2024 12:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t0OCx-0008Vr-SA
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:46:11 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1t0OEq-0000ok-TA
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:48:08 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t0OCw-000295-3Q
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:46:11 -0400
+ id 1t0OEp-0002Ed-ER
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:48:08 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7733D4E6013;
- Mon, 14 Oct 2024 18:46:04 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5BAF24E6004;
+ Mon, 14 Oct 2024 18:48:04 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Rp2QQhOk1b2r; Mon, 14 Oct 2024 18:46:02 +0200 (CEST)
+ with ESMTP id NdRxcMNSsGUR; Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 83F514E6004; Mon, 14 Oct 2024 18:46:02 +0200 (CEST)
+ id 698304E600F; Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 82860746F60;
- Mon, 14 Oct 2024 18:46:02 +0200 (CEST)
-Date: Mon, 14 Oct 2024 18:46:02 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 684C8746F60;
+ Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
+Date: Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Peter Maydell <peter.maydell@linaro.org>
 cc: qemu-devel@nongnu.org, philmd@linaro.org
-Subject: Re: [PATCH 2/2] log: Suggest using -d guest_error,memaccess instead
- of guest_errors
-In-Reply-To: <CAFEAcA_1ejDprH6H=EPoP59jweUkuaZR_mcuNhhGFmDiQBNKMg@mail.gmail.com>
-Message-ID: <33dcb2dc-8dfd-422e-ffc8-3858d7da2d92@eik.bme.hu>
+Subject: Re: [PATCH 1/2] log: Add separate debug option for logging invalid
+ memory accesses
+In-Reply-To: <CAFEAcA9sbAdDufXC1kVfHHcEg=DAHgB2dTSi2u4snppGG=KajA@mail.gmail.com>
+Message-ID: <df3261a7-6ab9-7e45-e711-b074756abbaa@eik.bme.hu>
 References: <cover.1728232526.git.balaton@eik.bme.hu>
- <0f5949d8ece522e30f990d25981f79965bf05bbf.1728232526.git.balaton@eik.bme.hu>
- <CAFEAcA_1ejDprH6H=EPoP59jweUkuaZR_mcuNhhGFmDiQBNKMg@mail.gmail.com>
+ <59dd3361ca8ede93122e87752c7d66a304b05c0f.1728232526.git.balaton@eik.bme.hu>
+ <CAFEAcA9sbAdDufXC1kVfHHcEg=DAHgB2dTSi2u4snppGG=KajA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,47 +68,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 14 Oct 2024, Peter Maydell wrote:
-> On Sun, 6 Oct 2024 at 17:49, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+> On Sun, 6 Oct 2024 at 17:50, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >>
->> Rename guest_errors to guest_error to match the log constant
+>> Currently -d guest_errors enables logging of different invalid actions
+>> by the guest such as misusing hardware, accessing missing features or
+>> invalid memory areas. The memory access logging can be quite verbose
+>> which obscures the other messages enabled by this debug switch so
+>> separate it by adding a new -d memaccess option to make it possible to
+>> control it independently of other guest error logs.
+>>
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>  include/qemu/log.h | 1 +
+>>  system/memory.c    | 6 +++---
+>>  system/physmem.c   | 2 +-
+>>  util/log.c         | 2 ++
+>>  4 files changed, 7 insertions(+), 4 deletions(-)
 >
-> I don't think this is a good reason to change the user-facing
-> behaviour. Also, I don't think the existing names are so bad:
+> It seems reasonable to me to separate out "log invalid
+> memory accesses", yes.
 >
-> -d guest_errors
->   this is plural because we are asking to log all guest errors
-> qemu_log_mask(LOG_GUEST_ERROR, ...)
->   this is singular because we are logging a single error here.
+>> diff --git a/util/log.c b/util/log.c
+>> index 6219819855..1aa7396277 100644
+>> --- a/util/log.c
+>> +++ b/util/log.c
+>> @@ -503,6 +503,8 @@ const QEMULogItem qemu_log_items[] = {
+>>        "open a separate log file per thread; filename must contain '%d'" },
+>>      { CPU_LOG_TB_VPU, "vpu",
+>>        "include VPU registers in the 'cpu' logging" },
+>> +    { LOG_MEM_ACCESS, "memaccess",
+>> +      "log invalid memory accesses" },
+>>      { 0, NULL, NULL },
 >
-> If we do want to change things for consistency, we should decide
-> on what the user-facing option name ought to be (and I think
-> plural is fine), and then change the internal define to match
-> that, not vice versa.
+> As a naming thing, these are logging specifically invalid
+> memory accesses, not all accesses, so we should have
+> both the user-facing name and the LOG_ constant be
+> named appropriately. Perhaps
+>  LOG_INV_MEM_ACCESS, "invalid_mem_accesses" ?
 
-The point of this patch is not to match the define with the option. 
-Originally I had a patch that just separated memory access logs and left 
-guest_errors as it is but without the memory access logs. But I think 
-Philippe said that he likes this option to log both. So to satisfy all 
-needs I'v added this patch to preserve what guest_errors is doing now but 
-let it be changed later after some time for people to get used to it (or 
-leave it if that's what people like). Leaving guest_errors to log both is 
-not an option as I want to have separate options for memory access and 
-guest errors so they can be turned on or off independently. So if we have 
-to keep guest_errors to log both then we need a new option for just guest 
-errors for which one that matches the definen seemed like an easy way that 
-is consistent with the other debug options. I'd be OK to leave 
-guest_errors but without the memory access logs, then this patch is not 
-needed but some people did not like that before.
+That's way too long to type and remember. Maybe invalid_mem could do?
 
 Regards,
 BALATON Zoltan
 
->> and print
->> a warning for -d guest_errors to remind using guest_error,memaccess
->> instead but preserve previous behaviour for convenience.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->
 > thanks
 > -- PMM
 >
