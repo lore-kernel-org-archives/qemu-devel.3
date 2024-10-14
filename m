@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AA2D16271
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B004D16273
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0La7-0001Ni-6h; Mon, 14 Oct 2024 09:57:55 -0400
+	id 1t0Lag-0001il-7t; Mon, 14 Oct 2024 09:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t0La5-0001NR-18
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:57:53 -0400
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t0LaY-0001af-Ar
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:58:26 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t0La3-0006O4-8l
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:57:52 -0400
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-4604bd47e35so14663431cf.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 06:57:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
+ id 1t0LaU-0006Pd-Vr
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:58:20 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2fb3ce15172so20093341fa.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 06:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1728914270; x=1729519070; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kFQjaMmebX/GNfns5YbzfhnYeTTu2UtxY531guWUTY8=;
- b=HiWK0a0FmB6bkAsufESQXBSX5uibVQcmfTdutvtwRoddjIZ/ZqPaUQs5s3Ey3TH19e
- hsIKvfkKLn2lPOO1QB/+1mSDRzB9bLGmop/P5bvr6AgGUSxBOsHgzpdo6EdJSwu7/eFS
- 8wuuprNdnLv5LugEJgi44coQJ6SSQsprsMC12GA4U+16kE2/SuXLQr35bZgHHR+czcV6
- udpdI0g8vT8gpzqKPupwu6a0SpQmFZ6GU0G2k6n5aC0sUBeRaTFplCh7kyFJN2b6nbHr
- jwPFBvG6q5OZOUQi+p1E+aD3mgHT+fRtVcOTPgPKkOSpCQ65NR3xlEI807/DuVTpLkIR
- DWWw==
+ d=gmail.com; s=20230601; t=1728914297; x=1729519097; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qS0ietNQqfeiIChhKIrK0X2O7VvPdhcYbfFtiPLNbFE=;
+ b=BMxZEdgTSeFMSILNOyufsPcqC9Yvg/wDq97WsjtvXAEEtthWD4ZN4MZQk2X0Cym26W
+ WTL7QGELRKAnoAfCBMcxyZrPbynAFKwaiLX+bZyKw9qrDHwDr0u0Prwimj/GiFeu+q0g
+ 1Hzp3tTYUlyzhXMSm+avxkZfu92CROt5vaMgrlniwQJP+1gmuGWMonSRNIg33bfAiJVc
+ HxU58VZ3z52NWH4s6EdvpdNj1LKyvW76/EP1E6MXDFudkMTV0V20O2UybhdQmLP0qy6w
+ jqvqx1/mjzS6+chvYF8k7UVNzyWrNQv/kDhfXBFrBZPPqCFkdEYJPqBw4r/wZyZ7JWiE
+ mAPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728914270; x=1729519070;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kFQjaMmebX/GNfns5YbzfhnYeTTu2UtxY531guWUTY8=;
- b=I8Vv7MJAX7rQFgiKGMYk1g7/sEZHbS4d1/fXraXxnGhVFPoUj9wRARj6OjO7QAMkBb
- kWRvHSLyBen6ExPa7yYFyl2mnQx/VAZUVSqaK5jzywoPLqSUUyFjAqdiVU8ycfDPUIdX
- 82Y8SfuKJtYAOfdIEFtoYgZ1E13Qk77MtUhH/RLYLNXDEi7PnN27wDn4g0LJ+VhwRw4r
- rDnUb2dntXwYL+W2JMJVjilUnyG0bKQui5DK6Yv1ohAJsPUOot4uA5zJVLLtVvabKpG1
- 8py+3x2TzqylMGYxX8/hO5u3wxO4L08umrDCttQozgK+egQceoDhW2Pvtxn7P2PO/BS3
- RVUA==
-X-Gm-Message-State: AOJu0YxxOKf446CrP9KxJ/u+P+09/yFnv0Ad8rbtxt/hSRaXciMYeBgj
- tgiLruT9l4YvtbKWes4LFbxhPCkFhQVeY3QEv8bQu6RaYAENZabXOUO8rLHyV9xRvGGFvhsXaUs
- YxtVaL4I17k8J8yXqvkh3UFzxQwk=
-X-Google-Smtp-Source: AGHT+IE51s+DshBrhie/b26WeJiqNIKaccK5DvoN82vU3BV7S7S+cpgyEXhu6vu0Ar1zwsDPJ8FiFAxbFq0/H6aYWT4=
-X-Received: by 2002:a05:622a:2c5:b0:458:4d55:fdf7 with SMTP id
- d75a77b69052e-4604bc38e77mr201595021cf.40.1728914269935; Mon, 14 Oct 2024
- 06:57:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728914297; x=1729519097;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qS0ietNQqfeiIChhKIrK0X2O7VvPdhcYbfFtiPLNbFE=;
+ b=DR23EoV49MCujcSheI5VR3Mc3ieHbptVos8qezM27P+RkTMZNvOQ34GEKxQ0kF1bYP
+ uKCd0S20gXeW3FZAtyi4i4mCA2G6EniYZ5BvRWBvW/7QjxlFzWIjSw7/JWfT96bDICpX
+ ZHL35V+YdKXhZAKz2pkO3fWxodfxGKKSMYbXt4t2KCCK4CRXNrtuKxVmZPnZHC4TTNBx
+ S+mnTiMlz7vfdypEpxDvuh7hA9h38EXW+w0yK2GuTGrrqq56F/H+smLK+Gt//wZRQoXa
+ BHIIyPGi+MI13fmndjbHeZ1shWy/cZL3Jv1YEUoFR6t9+uGrSvbcnzsD1xxtSeyza4VZ
+ pa5g==
+X-Gm-Message-State: AOJu0YyzE3C2xdG1ZE9c7nD/I8ZMCxbMXRspUb59HQpLLzWEWmdHvj/D
+ hkoWp6nIGQXFM+zqJEVksjrHsouEIB5eAM0zpfrWXkNrNN+EaE7aMNknSt8fXM8XQ4DM10r7uhN
+ vMnZmoqJOYyA+Zc0Xw+FyPw2n5aU=
+X-Google-Smtp-Source: AGHT+IES7c3e/oHPC80synhDYscz/HEXCIki5ycMv3b6NuWOsfRP7d6u6Xjlw0sXBgfMASj1iHKFdwJsR9w0FlOnIpw=
+X-Received: by 2002:a05:6512:689:b0:539:fc9a:12e1 with SMTP id
+ 2adb3069b0e04-539fc9a1473mr351282e87.27.1728914296726; Mon, 14 Oct 2024
+ 06:58:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241010101838.331032-1-r.peniaev@gmail.com>
- <20241010101838.331032-2-r.peniaev@gmail.com>
-In-Reply-To: <20241010101838.331032-2-r.peniaev@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 14 Oct 2024 17:57:37 +0400
-Message-ID: <CAJ+F1CJ1ymDa3+R88RL8BF+fi=MwwrEd6_0s6-eG1S=LxZn9yw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] chardev/char: rename `char-mux.c` to
- `char-mux-fe.c`
-To: Roman Penyaev <r.peniaev@gmail.com>
+References: <20241014114135.389766-1-r.peniaev@gmail.com>
+ <20241014114135.389766-7-r.peniaev@gmail.com>
+ <CAJ+F1CLwNjxT=OogC=4ujzrSHVZRA8mGqK21khUUKe-OxMoTGA@mail.gmail.com>
+In-Reply-To: <CAJ+F1CLwNjxT=OogC=4ujzrSHVZRA8mGqK21khUUKe-OxMoTGA@mail.gmail.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
+Date: Mon, 14 Oct 2024 15:56:12 +0200
+Message-ID: <CACZ9PQV+-ZjKZUxJOb2g80zTMKXMizWMwzW3bsi16BPs1YnMBQ@mail.gmail.com>
+Subject: Re: [PATCH 6/8] chardev/mux: switch mux frontends management to bitset
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e82205062470383b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,124 +91,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e82205062470383b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Roman,
-
-On Thu, Oct 10, 2024 at 2:21=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
- wrote:
-
-> In the following patches backend multiplexer will be
-> introduced and the implementation will be named as
-> follows: `char-mux-be.c`. This patch renames the
-> frontend multiplexer from `char-mux.c` to
-> `char-mux-fe.c`.
->
-> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> Cc: qemu-devel@nongnu.org
-
-
-thanks, it looks like the series is missing a cover letter (and thus not
-handled by patchew)
-
-Also it seems to fail to apply on master, and I wonder if it will conflict
-with your other mux cleanup series.
-
-thanks
-
->
-> ---
->  chardev/{char-mux.c =3D> char-mux-fe.c} | 0
->  chardev/meson.build                   | 2 +-
->  2 files changed, 1 insertion(+), 1 deletion(-)
->  rename chardev/{char-mux.c =3D> char-mux-fe.c} (100%)
->
-> diff --git a/chardev/char-mux.c b/chardev/char-mux-fe.c
-> similarity index 100%
-> rename from chardev/char-mux.c
-> rename to chardev/char-mux-fe.c
-> diff --git a/chardev/meson.build b/chardev/meson.build
-> index 70070a8279a9..778444a00ca6 100644
-> --- a/chardev/meson.build
-> +++ b/chardev/meson.build
-> @@ -2,7 +2,7 @@ chardev_ss.add(files(
->    'char-fe.c',
->    'char-file.c',
->    'char-io.c',
-> -  'char-mux.c',
-> +  'char-mux-fe.c',
->    'char-null.c',
->    'char-pipe.c',
->    'char-ringbuf.c',
-> --
-> 2.34.1
+On Mon, Oct 14, 2024 at 3:20=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
 >
 >
 >
+> On Mon, Oct 14, 2024 at 3:45=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
+m> wrote:
+>>
+>> Frontends can be attached and detached during run-time (although detach
+>> is not implemented, but will follow). Counter variable of muxes is not
+>> enough for proper attach/detach management, so this patch implements
+>> bitset: if bit is set for the `mux_bitset` variable, then frontend
+>> device can be found in the `backend` array (yes, huge confusion with
+>> backend and frontends names).
+>>
+>> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+>> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+>> Cc: qemu-devel@nongnu.org
+>> ---
+>>  chardev/char-mux.c         | 41 +++++++++++++++++++++++++-------------
+>>  chardev/char.c             |  2 +-
+>>  chardev/chardev-internal.h |  2 +-
+>>  3 files changed, 29 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/chardev/char-mux.c b/chardev/char-mux.c
+>> index 9294f955462e..9c3cacb2fecd 100644
+>> --- a/chardev/char-mux.c
+>> +++ b/chardev/char-mux.c
+>> @@ -26,6 +26,7 @@
+>>  #include "qapi/error.h"
+>>  #include "qemu/module.h"
+>>  #include "qemu/option.h"
+>> +#include "qemu/bitops.h"
+>>  #include "chardev/char.h"
+>>  #include "sysemu/block-backend.h"
+>>  #include "qapi/qapi-commands-control.h"
+>> @@ -168,12 +169,19 @@ static int mux_proc_byte(Chardev *chr, MuxChardev =
+*d, int ch)
+>>          case 'b':
+>>              qemu_chr_be_event(chr, CHR_EVENT_BREAK);
+>>              break;
+>> -        case 'c':
+>> -            assert(d->mux_cnt > 0); /* handler registered with first fe=
+ */
+>> +        case 'c': {
+>> +            unsigned int bit;
+>> +
+>> +            /* Handler registered with first fe */
+>> +            assert(d->mux_bitset !=3D 0);
+>>              /* Switch to the next registered device */
+>> -            mux_set_focus(chr, (d->focus + 1) % d->mux_cnt);
+>> +            bit =3D find_next_bit(&d->mux_bitset, MAX_MUX, d->focus + 1=
+);
+>> +            if (bit >=3D MAX_MUX) {
+>> +                bit =3D find_next_bit(&d->mux_bitset, MAX_MUX, 0);
+>> +            }
+>> +            mux_set_focus(chr, bit);
+>>              break;
+>> -        case 't':
+>> +        } case 't':
+>>              d->timestamps =3D !d->timestamps;
+>>              d->timestamps_start =3D -1;
+>>              d->linestart =3D false;
+>> @@ -243,15 +250,16 @@ static void mux_chr_read(void *opaque, const uint8=
+_t *buf, int size)
+>>  void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event)
+>>  {
+>>      MuxChardev *d =3D MUX_CHARDEV(chr);
+>> -    unsigned int i;
+>> +    int bit;
+>>
+>>      if (!muxes_opened) {
+>>          return;
+>>      }
+>>
+>>      /* Send the event to all registered listeners */
+>> -    for (i =3D 0; i < d->mux_cnt; i++) {
+>> -        mux_chr_send_event(d, i, event);
+>> +    bit =3D -1;
+>> +    while ((bit =3D find_next_bit(&d->mux_bitset, MAX_MUX, bit + 1)) < =
+MAX_MUX) {
+>> +        mux_chr_send_event(d, bit, event);
+>>      }
+>>  }
+>>
+>> @@ -276,10 +284,11 @@ static GSource *mux_chr_add_watch(Chardev *s, GIOC=
+ondition cond)
+>>  static void char_mux_finalize(Object *obj)
+>>  {
+>>      MuxChardev *d =3D MUX_CHARDEV(obj);
+>> -    unsigned int i;
+>> +    int bit;
+>>
+>> -    for (i =3D 0; i < d->mux_cnt; i++) {
+>> -        CharBackend *be =3D d->backends[i];
+>> +    bit =3D -1;
+>> +    while ((bit =3D find_next_bit(&d->mux_bitset, MAX_MUX, bit + 1)) < =
+MAX_MUX) {
+>> +        CharBackend *be =3D d->backends[bit];
+>>          if (be) {
+>>              be->chr =3D NULL;
+>>          }
+>> @@ -304,7 +313,10 @@ static void mux_chr_update_read_handlers(Chardev *c=
+hr)
+>>  bool mux_chr_attach_frontend(MuxChardev *d, CharBackend *b,
+>>                               unsigned int *tag, Error **errp)
+>>  {
+>> -    if (d->mux_cnt >=3D MAX_MUX) {
+>> +    unsigned int bit;
+>> +
+>> +    bit =3D find_next_zero_bit(&d->mux_bitset, MAX_MUX, 0);
+>> +    if (bit >=3D MAX_MUX) {
+>>          error_setg(errp,
+>>                     "too many uses of multiplexed chardev '%s'"
+>>                     " (maximum is " stringify(MAX_MUX) ")",
+>> @@ -312,8 +324,9 @@ bool mux_chr_attach_frontend(MuxChardev *d, CharBack=
+end *b,
+>>          return false;
+>>      }
+>>
+>> -    d->backends[d->mux_cnt] =3D b;
+>> -    *tag =3D d->mux_cnt++;
+>> +    d->mux_bitset |=3D (1 << bit);
+>> +    d->backends[bit] =3D b;
+>> +    *tag =3D bit;
+>>
+>>      return true;
+>>  }
+>> @@ -322,7 +335,7 @@ void mux_set_focus(Chardev *chr, unsigned int focus)
+>>  {
+>>      MuxChardev *d =3D MUX_CHARDEV(chr);
+>>
+>> -    assert(focus < d->mux_cnt);
+>> +    assert(find_next_bit(&d->mux_bitset, MAX_MUX, focus) < MAX_MUX);
+>
+>
+> Wouldn't this be more correct?
+>
+> +    assert(find_next_bit(&d->mux_bitset, MAX_MUX, focus) =3D=3D focus);
+>
 
---=20
-Marc-Andr=C3=A9 Lureau
+Yes, makes sense. Thanks.
 
---000000000000e82205062470383b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Do you want the whole patchset to be resend,
+or only changed patches with "v2" prefix in subject?
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Roman,<br></div><br><div class=3D"gmai=
-l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 10, 2024 at 2:21=
-=E2=80=AFPM Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com">r.peni=
-aev@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">In the following patches backend multiplexer will be<br>
-introduced and the implementation will be named as<br>
-follows: `char-mux-be.c`. This patch renames the<br>
-frontend multiplexer from `char-mux.c` to<br>
-`char-mux-fe.c`.<br>
-<br>
-Signed-off-by: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com" tar=
-get=3D"_blank">r.peniaev@gmail.com</a>&gt;<br>
-Cc: &quot;Marc-Andr=C3=A9 Lureau&quot; &lt;<a href=3D"mailto:marcandre.lure=
-au@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-Cc: <a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank">qemu-devel@n=
-ongnu.org</a></blockquote><div><br></div><div>thanks, it looks like the ser=
-ies is missing a cover letter (and thus not handled by patchew)</div><div><=
-br></div><div>Also it seems to fail to apply on master, and I wonder if it =
-will conflict with your other mux cleanup series.</div><div><br></div><div>=
-thanks <br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
----<br>
-=C2=A0chardev/{char-mux.c =3D&gt; char-mux-fe.c} | 0<br>
-=C2=A0chardev/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0| 2 +-<br>
-=C2=A02 files changed, 1 insertion(+), 1 deletion(-)<br>
-=C2=A0rename chardev/{char-mux.c =3D&gt; char-mux-fe.c} (100%)<br>
-<br>
-diff --git a/chardev/char-mux.c b/chardev/char-mux-fe.c<br>
-similarity index 100%<br>
-rename from chardev/char-mux.c<br>
-rename to chardev/char-mux-fe.c<br>
-diff --git a/chardev/meson.build b/chardev/meson.build<br>
-index 70070a8279a9..778444a00ca6 100644<br>
---- a/chardev/meson.build<br>
-+++ b/chardev/meson.build<br>
-@@ -2,7 +2,7 @@ chardev_ss.add(files(<br>
-=C2=A0 =C2=A0&#39;char-fe.c&#39;,<br>
-=C2=A0 =C2=A0&#39;char-file.c&#39;,<br>
-=C2=A0 =C2=A0&#39;char-io.c&#39;,<br>
--=C2=A0 &#39;char-mux.c&#39;,<br>
-+=C2=A0 &#39;char-mux-fe.c&#39;,<br>
-=C2=A0 =C2=A0&#39;char-null.c&#39;,<br>
-=C2=A0 =C2=A0&#39;char-pipe.c&#39;,<br>
-=C2=A0 =C2=A0&#39;char-ringbuf.c&#39;,<br>
--- <br>
-2.34.1<br>
-<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
-
---000000000000e82205062470383b--
+--
+Roman
 
