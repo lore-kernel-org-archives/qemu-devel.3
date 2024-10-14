@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47367D1624A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A2FD1624B
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 11:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0JUa-0006dj-GL; Mon, 14 Oct 2024 07:44:04 -0400
+	id 1t0JUo-0006hH-DJ; Mon, 14 Oct 2024 07:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t0JUW-0006cq-OK
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:44:00 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1t0JUZ-0006dK-GL
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:44:03 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t0JUU-00056k-MG
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:44:00 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a994cd82a3bso623078066b.2
+ id 1t0JUU-00056u-RH
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 07:44:03 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a9a0084f703so217660366b.3
  for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 04:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20230601; t=1728906227; x=1729511027; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QKeU6Sst3mOvcdt2OZL+D4LtHqpR806Hah+uBtunjhM=;
- b=IDkvsGCMFGzbIRRW3Obqdkw+svsn4s1yquSnc9hqpGuiOogFpqI/sA0cYdNpQehShX
- Sa/vRpzIImkALgLV+IChBRKcaOvKq3ms8+3XwdsNuanCyWGhuz8Z0c4JYCtyC9Iqg8gx
- YxIgTqF9q9SckAiuvt6+UZ/NXf63Qf2wWinE/UnYQmQ5ftP1pLKS8uKScmz2eTcBdDtG
- 9jn4JpY0vb557YiDLEOPtueos4n3EEKBBvol4/fvixfHUsWy0BY9bcFIu+xUAt+yLtCk
- az0gA2KDRCO5x2MSPVBDwf6vZ0Pi/FESOzsN9feiJfD6tZvEFjoQ4yQDr21/2PCmfO1G
- qYvg==
+ bh=p4v/fGpWXC16nH9NFmBVigHbrDSRKiF2Owvw6nK5eQE=;
+ b=jrr0kZD/lyYBcrFIkJiNqWKfItihGvxUU6bKrJb43b2Z5b9paV2g9ksr5jPPBnkJ8N
+ bTigD5S+8OsEqpgDER0BDojcbv1bFV4Fyc4xmpjjAhmeWGcVq5ZEpCjXwVtRvXT4QVM+
+ zzsMlsk4tYlYGlrDr1oOX3wvlWhPCLBwHWEHbVetDQdIlx3HtlOZrE6Y/O5mMmocBBru
+ xpNK2XUL1TykDrQo7o1X+5cex2YSivy/aBg6w/p4zsyq8izsJ0JG+HQ2/payo8IE8hlh
+ xHFRsh0Y8gWP5nxws/A1jwozBNT2iVzfYdc5K1xYMM1ANmmI5UzQoO+uNZ7lTRq9BXfr
+ Vs4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1728906227; x=1729511027;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QKeU6Sst3mOvcdt2OZL+D4LtHqpR806Hah+uBtunjhM=;
- b=mJonC7sLMT7Dk9HQaMETMXoG0lRnvpEJ50fa4AaF6Dy+PaqUQ4lkk59kJsqHbXDpZI
- yd4Ny7bqDvCYQb+xpMNBk22TprWjhMN/++l9lYMxbcZ2Xv3CI6zdK4YiHVMxprM+01OI
- uC1c7BBlGOwhKOWjh38EbfGBJWfwXiXauG59UA3nPjf2ELUVJyb5WRxKUR5y2SPDo7EL
- hqGntyscEj232RHR2OKRY6cn4VNtZmXNngW5yQAsiiUtnKgabmSMz5+ZCd8ccMCsk6VY
- 5C9dHeHuV1TYsVcnrWPc3nEOAzdQrEx6qMbKkLn7rGIGi+X21hDuRNBQlasEzPtsujKG
- YelQ==
+ bh=p4v/fGpWXC16nH9NFmBVigHbrDSRKiF2Owvw6nK5eQE=;
+ b=t/l8TVYwrYGrhlK+0cajSp+ox81DHEYR9dDT8fQELyC6djd8uLJ7UsX5sP2K/DTAzu
+ ylYgK83ODYucxcO205zptjicyvewUDxOYT7RvS5vM0UVHPjsIgS5E71L+vBGulvJ2L15
+ 3S+OD65d6jIVIapiPv7+XB/b40Cl0He5eZIPJk64bbhY43hH/vx8x/kesphHFUwe3b5p
+ lXIablfVGJyG5qHOZA8otITpJ7uQdk0Y+N16qG53bUEkhGPRfEw1/Srut0fG4Kv1M/BE
+ rwXkqaZQTJco4+LuILXWhGcQ+MjguhBCQY4Z0beiy9y48E25NTDZS7IkCyhsm7bVRmSO
+ ussA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgx10l2c+ljnfvIseZ7KpVQQTDmjwdZKWolQD8m1NvlUW1s4yrBb49vXUfZXbagNJfuMGMI2W3t5jr@nongnu.org
-X-Gm-Message-State: AOJu0Yxb04SmnIADktGHzyKCT52OPcBakhV5UkiiZP+fqXQXXwkFbT9f
- dPaFdZpgeIrss7Mo+nY37B4LMIPHHt+mqOIzLwWSiV7swCUYUsvklQIcAQ==
-X-Google-Smtp-Source: AGHT+IF20XS3rMdTFBDoqNVmpTk8olWOkaedW8omauTVzVXigYa9CsUsFbkXovYHWkRjVGQcwz9TUA==
-X-Received: by 2002:a17:906:99c4:b0:a99:5f16:3539 with SMTP id
- a640c23a62f3a-a99b8e9f11bmr1087525766b.0.1728906226629; 
- Mon, 14 Oct 2024 04:43:46 -0700 (PDT)
+ AJvYcCWD23DPxUq4tILGoyg0A/Qx9kndew3sk3w/qwSHTN3T7MY9eFqb1pKdxgTNXgg43uQk794uVSs+PtKx@nongnu.org
+X-Gm-Message-State: AOJu0Yz+i2Td8PRWS13lo8ak4571knK7NPmVsZQnDHkjpdb5u+TwSfqr
+ /XYe4yfIiUOmbtaIGWS9irAD7gFlnuTkO+r8aSD/VlyxL/3njUGuToqx9Q==
+X-Google-Smtp-Source: AGHT+IGuKrv9zQvSY/gd7IWgsxMe6RRlKlqo74WCfd8oZIc4XmEiYbuLPcnnyGlUsj2Ztc8RLhJqhQ==
+X-Received: by 2002:a17:907:6e94:b0:a99:fe71:bd76 with SMTP id
+ a640c23a62f3a-a99fe71bebamr536086866b.34.1728906227096; 
+ Mon, 14 Oct 2024 04:43:47 -0700 (PDT)
 Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a99fcb2765asm247764666b.64.2024.10.14.04.43.45
+ a640c23a62f3a-a99fcb2765asm247764666b.64.2024.10.14.04.43.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Oct 2024 04:43:45 -0700 (PDT)
+ Mon, 14 Oct 2024 04:43:46 -0700 (PDT)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 3/8] chardev/mux: use bool type for `linestart` and
- `term_got_escape`
-Date: Mon, 14 Oct 2024 13:41:30 +0200
-Message-Id: <20241014114135.389766-4-r.peniaev@gmail.com>
+Subject: [PATCH 4/8] chardev/mux: convert size members to unsigned int
+Date: Mon, 14 Oct 2024 13:41:31 +0200
+Message-Id: <20241014114135.389766-5-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241014114135.389766-1-r.peniaev@gmail.com>
 References: <20241014114135.389766-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,79 +98,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those are boolean variables, not signed integers.
+There is no sense to keep `focus`, `mux_cnt`, `prod`, `cons`
+and `tag` variables as signed, those represent either size,
+either position in array, which both are unsigned.
+
+`focus` member of `MuxChardev` is kept signed, because initially
+set to -1.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
 ---
+ chardev/char-fe.c          |  2 +-
  chardev/char-mux.c         | 10 +++++-----
- chardev/chardev-internal.h |  4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ chardev/chardev-internal.h |  8 ++++----
+ include/chardev/char-fe.h  |  2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index b214ba3802b1..69b47d16bdfa 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -191,7 +191,7 @@ bool qemu_chr_fe_backend_open(CharBackend *be)
+ 
+ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
+ {
+-    int tag = 0;
++    unsigned int tag = 0;
+ 
+     if (s) {
+         if (CHARDEV_IS_MUX(s)) {
 diff --git a/chardev/char-mux.c b/chardev/char-mux.c
-index ee2d47b20d9b..728596c6f346 100644
+index 728596c6f346..b2d7abf2fc01 100644
 --- a/chardev/char-mux.c
 +++ b/chardev/char-mux.c
-@@ -73,11 +73,11 @@ static int mux_chr_write(Chardev *chr, const uint8_t *buf, int len)
-                  * qemu_chr_fe_write and background I/O callbacks */
-                 qemu_chr_fe_write_all(&d->chr,
-                                       (uint8_t *)buf1, strlen(buf1));
--                d->linestart = 0;
-+                d->linestart = false;
-             }
-             ret += qemu_chr_fe_write(&d->chr, buf + i, 1);
-             if (buf[i] == '\n') {
--                d->linestart = 1;
-+                d->linestart = true;
-             }
-         }
+@@ -124,7 +124,8 @@ static void mux_print_help(Chardev *chr)
      }
-@@ -145,7 +145,7 @@ static void mux_chr_be_event(Chardev *chr, QEMUChrEvent event)
- static int mux_proc_byte(Chardev *chr, MuxChardev *d, int ch)
+ }
+ 
+-static void mux_chr_send_event(MuxChardev *d, int mux_nr, QEMUChrEvent event)
++static void mux_chr_send_event(MuxChardev *d, unsigned int mux_nr,
++                               QEMUChrEvent event)
  {
-     if (d->term_got_escape) {
--        d->term_got_escape = 0;
-+        d->term_got_escape = false;
-         if (ch == term_escape_char) {
-             goto send_char;
-         }
-@@ -175,11 +175,11 @@ static int mux_proc_byte(Chardev *chr, MuxChardev *d, int ch)
-         case 't':
-             d->timestamps = !d->timestamps;
-             d->timestamps_start = -1;
--            d->linestart = 0;
-+            d->linestart = false;
-             break;
-         }
-     } else if (ch == term_escape_char) {
--        d->term_got_escape = 1;
-+        d->term_got_escape = true;
-     } else {
-     send_char:
-         return 1;
+     CharBackend *be = d->backends[mux_nr];
+ 
+@@ -242,7 +243,7 @@ static void mux_chr_read(void *opaque, const uint8_t *buf, int size)
+ void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event)
+ {
+     MuxChardev *d = MUX_CHARDEV(chr);
+-    int i;
++    unsigned int i;
+ 
+     if (!muxes_opened) {
+         return;
+@@ -275,7 +276,7 @@ static GSource *mux_chr_add_watch(Chardev *s, GIOCondition cond)
+ static void char_mux_finalize(Object *obj)
+ {
+     MuxChardev *d = MUX_CHARDEV(obj);
+-    int i;
++    unsigned int i;
+ 
+     for (i = 0; i < d->mux_cnt; i++) {
+         CharBackend *be = d->backends[i];
+@@ -300,11 +301,10 @@ static void mux_chr_update_read_handlers(Chardev *chr)
+                                   chr->gcontext, true, false);
+ }
+ 
+-void mux_set_focus(Chardev *chr, int focus)
++void mux_set_focus(Chardev *chr, unsigned int focus)
+ {
+     MuxChardev *d = MUX_CHARDEV(chr);
+ 
+-    assert(focus >= 0);
+     assert(focus < d->mux_cnt);
+ 
+     if (d->focus != -1) {
 diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
-index c3024b51fdda..975c16de803e 100644
+index 975c16de803e..ab93f6ea1720 100644
 --- a/chardev/chardev-internal.h
 +++ b/chardev/chardev-internal.h
-@@ -39,7 +39,7 @@ struct MuxChardev {
+@@ -38,14 +38,14 @@ struct MuxChardev {
+     CharBackend *backends[MAX_MUX];
      CharBackend chr;
      int focus;
-     int mux_cnt;
--    int term_got_escape;
-+    bool term_got_escape;
+-    int mux_cnt;
++    unsigned int mux_cnt;
+     bool term_got_escape;
      /* Intermediate input buffer catches escape sequences even if the
         currently active device is not accepting any input - but only until it
         is full as well. */
-@@ -49,7 +49,7 @@ struct MuxChardev {
+     unsigned char buffer[MAX_MUX][MUX_BUFFER_SIZE];
+-    int prod[MAX_MUX];
+-    int cons[MAX_MUX];
++    unsigned int prod[MAX_MUX];
++    unsigned int cons[MAX_MUX];
      int timestamps;
  
      /* Protected by the Chardev chr_write_lock.  */
--    int linestart;
-+    bool linestart;
-     int64_t timestamps_start;
+@@ -59,7 +59,7 @@ DECLARE_INSTANCE_CHECKER(MuxChardev, MUX_CHARDEV,
+ #define CHARDEV_IS_MUX(chr)                             \
+     object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_MUX)
+ 
+-void mux_set_focus(Chardev *chr, int focus);
++void mux_set_focus(Chardev *chr, unsigned int focus);
+ void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event);
+ 
+ Object *get_chardevs_root(void);
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index 3310449eaf03..8ef05b3dd095 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -20,7 +20,7 @@ struct CharBackend {
+     IOReadHandler *chr_read;
+     BackendChangeHandler *chr_be_change;
+     void *opaque;
+-    int tag;
++    unsigned int tag;
+     bool fe_is_open;
  };
- typedef struct MuxChardev MuxChardev;
+ 
 -- 
 2.34.1
 
