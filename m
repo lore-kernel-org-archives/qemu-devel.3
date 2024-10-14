@@ -4,67 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4714D1812A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B05D1812B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0NZ4-0002Dl-IT; Mon, 14 Oct 2024 12:04:59 -0400
+	id 1t0NZd-0002S3-Ct; Mon, 14 Oct 2024 12:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0NYs-0002Ct-0s
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:04:47 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1t0NZT-0002Mg-VG
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:05:26 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0NYn-0005gZ-8t
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:04:42 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c9625cfe4dso3158051a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 09:04:39 -0700 (PDT)
+ id 1t0NZS-00062W-HD
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:05:23 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c94dd7e1c0so4293311a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 09:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728921878; x=1729526678; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WXXoG0ooP8NCZGwSsVydSt1QCz7l6JRtzYFrC+yHzD0=;
- b=V88uYV0bssPSjl3ILQF5YhTLWpD9T4jlEQumvhG+ruJFWU3nl632jUhh+o9jQu6FlZ
- dX9yOMKpizFKcgCLnKb6pEEk8ChPtt3bxS2dbwbJOFwD9jGDOb40rjminMR408VrHtbQ
- F/y1a8EAcpTrgNBbfJmfq3OoxlJ21E4OAoooGMJsgyX6z19cH6CRQg/DAHTfEAhY72Pl
- W9ddj98ImL32cau43X2Ett6dUeN9xPYcHWur+7+H0V2xR8VKIUa3cSnbL8FbBRw+i9UP
- qmQBHKzSkPvz11ONnvtMCh1Az01T2QLq8xuhy05XYMUJ+WgyUagZojdm4+zVNDPZnvKA
- oVNw==
+ d=linaro.org; s=google; t=1728921920; x=1729526720; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z4xrmNJdLU4j9twvy8409RlqJVZ28DrTnbGJt/4aQ5s=;
+ b=jEad3WPVKaCtWWyrsbj1yEl2MIBtaXsOnsAOQcHY3jwZlFIZmxBzIBisBtcD1itkZ+
+ KQ2G1ov8heuLz6H5tM6MfucxNSuDnju8aV35u0qR3U8VIDmgSIeIt1WxnPUkFQxXMDAQ
+ T1wArrlR9RJM/AKgpiZdnt10nNXgORL5LIRBk+dd4/GPv1xnlrNyzDD357sPEcZZT5Mz
+ npYK+yom7Ju2qSfxB/qP2AjwuwF56jy0fhjgTjjDlRIVZjUWqn2ZqddSAhCQkq4PkeDb
+ 7RiT0SDYtpnavAhAHSopvWaQeYG8owDRPUqJtwadCTiZV13ePqhAl5rJYY/S6aJ2rdQ7
+ 4LGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728921878; x=1729526678;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WXXoG0ooP8NCZGwSsVydSt1QCz7l6JRtzYFrC+yHzD0=;
- b=tdNEgpvBnybYGFNNW+TKykJl7DfIzaMYXSdVvnnKBVoVaKbiRvh1owNGe3eERH1EIu
- i8QjthqX6uEglQMqEXvtYZUBRKANsEL+tjytTF5UODTE9MPXacEbF0jS6rOM5ip+z8+/
- FfT6WilTPEZSUGubxzGJm+406L40lQwm7yBuARYu9M2jPjzkpLw4bfyOLurPb/XTZ02r
- vXala5v49kUfc42D2NE2vQNcB7elF4ir26EzfTXpNWBaeiuczpsfv5zQYRpg3DZzfE3E
- 5VngXsnQL24tFub2gafOEKZeY4Dzvu24BxJNsS9FTIpxTRhYXLmJutW+vE2bAD0yaQhL
- lduQ==
-X-Gm-Message-State: AOJu0YwK9sMYYBCs1fJgpCB/arVgGEFHcBGIYUWxEfzmQIPMmMTzlOHC
- KDq+Yue3A+Rp2j20vAI9fg4CLleMuil06GFWkhGUDtp3Th9I4+F48Ae89+FgnCp27BgCguDtGKk
- RvEKVfC2q4EF0XyvIeYtkdG59SfAgyExFGWnLYQ==
-X-Google-Smtp-Source: AGHT+IGJJ85rpEmct88Zi9+AscL+YkSb4PhArnZiLCBx0xjbpw5ilC85+WTgfHQV4NQ0a8yaMp/TsVVKGMZreRBom2c=
-X-Received: by 2002:a50:cbcd:0:b0:5bf:1bd:adb3 with SMTP id
- 4fb4d7f45d1cf-5c95ac0dbb9mr5803965a12.14.1728921878223; Mon, 14 Oct 2024
- 09:04:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728921920; x=1729526720;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z4xrmNJdLU4j9twvy8409RlqJVZ28DrTnbGJt/4aQ5s=;
+ b=YU4KOacaY1mKFbRmWSfm4wOF7PwOZZiHAdj2SIWzcCVH7Z+z7fab6dOK67vHv9p/lv
+ au140xdqgBtQXR4FcUmkTCJvm1fEVoxjQEOZrAV+5QOPt7N9IwuBPZdHaLHCqrTe9SFn
+ qF4DdWGragMEWNzO7sfa+LN/v63FO61SoFjP4SuIBvhCgCj96EYZJYr84qLY8GhzYc3Q
+ 9+/OmtZdHHNDsKpxwGQtXIW0o8YeL0RyeLbGla/D/X916uOXxDFUflb7ruKTdyoRTdRe
+ 0KCFM7wcbQa40fSKFEUE/PG9egLsG6AQj0luUMuX3x9N6+/ka3VAjtqpE0fywu9iw27q
+ 85bQ==
+X-Gm-Message-State: AOJu0YzeCp++lPT1RlrxaidZs8CBPNXl4JTLoRTusLpsk6aOrLNarfem
+ KoesXw4xV5V/KC5gP13PQ2FvevvIO9iKfmVGkFTkWmSq4w9mQrwMWfEhYcC930Es27Vj4gr2fEQ
+ 8RC/xVoiyWqExgWj0LGt/HkmaCNTWdQ/mYKvYKQ==
+X-Google-Smtp-Source: AGHT+IGzSNT0hYfN+pfoSU3lxkvXHMOdv3oCzveHpYuaQivbGKEs3AilEODrDa3L++VY2Au6yZzMSaxGO631f08Fzj0=
+X-Received: by 2002:a50:c907:0:b0:5c9:f49:fbc6 with SMTP id
+ 4fb4d7f45d1cf-5c95ac610b8mr4697608a12.34.1728921920300; Mon, 14 Oct 2024
+ 09:05:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241014143640.196735-1-pbonzini@redhat.com>
-In-Reply-To: <20241014143640.196735-1-pbonzini@redhat.com>
+References: <20241014130255.10119-1-berrange@redhat.com>
+In-Reply-To: <20241014130255.10119-1-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Oct 2024 17:04:26 +0100
-Message-ID: <CAFEAcA8n81hFE0ZpuXEBUnWFmH1L0WPde9t17D6vqtwup3Aqkg@mail.gmail.com>
-Subject: Re: [PATCH] meson: check in main meson.build for native Rust compiler
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 14 Oct 2024 17:05:09 +0100
+Message-ID: <CAFEAcA9KdbcijsPDcHH0j+Ow85HbGzDRySm4dbNevhEV=psCSw@mail.gmail.com>
+Subject: Re: [PATCH] tests: update lcitool to fix freebsd py311-yaml rename
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Ed Maste <emaste@freebsd.org>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,31 +93,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Oct 2024 at 15:36, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Mon, 14 Oct 2024 at 14:03, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> A working native Rust compiler is always needed in order to compile Rust
-> code, even when cross compiling, in order to build the procedural macros
-> that QEMU uses.
+> This addresses the py311-yaml -> py311-pyyaml rename in FreeBSD.
 >
-> Right now, the check is done in rust/qemu-api-macros/meson.build, but this
-> has two disadvantages.  First, it makes the build fail when the Meson "rust"
-> option is set to "auto" (instead, Rust support should be disabled).  Second,
-> add_languages() is one of the few functions that are executed even by
-> "meson introspect", except that "meson introspect" executes both branches
-> of "if" statements!  Therefore, "meson introspect" tries to look for a
-> Rust compiler even if the option is disabled---and then fails because
-> the compiler is required by rust/qemu-api-macros/meson.build.  This is
-> visible for example if the compilation host has a stale
-> scripts/meson-buildoptions.sh and no rustc installed.
+> The change to the OpenSUSE dockerfile is something that will allow
+> QEMU to access rust bindgen in future.
 >
-> Both issues can be fixed by moving the check to the main meson.build,
-> together with the check for the cross compiler.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
 
-
-Applied directly to git, thanks.
+Applied directly to git to fix the ci job; thanks.
 
 -- PMM
 
