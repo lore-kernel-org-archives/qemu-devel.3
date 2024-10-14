@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A6FD16261
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888CFD16265
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0LJM-0000vg-Gu; Mon, 14 Oct 2024 09:40:36 -0400
+	id 1t0LLA-0004J9-83; Mon, 14 Oct 2024 09:42:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LJC-0000sS-Dl
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:40:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t0LKE-0003AR-9C
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LJ9-0003vQ-Ko
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:40:25 -0400
+ id 1t0LK9-00046b-Vy
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728913218;
+ s=mimecast20190719; t=1728913281;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4UkssCHtZn6euZrutNV08M+zkXLuzb949FB1rSug110=;
- b=GAYoIPZxvCqrxgVBfYhJFEQUZrCiK/ecPoBVLUKS8zJnHV+ZdvRwH1yxa5ZykNAWoKoVbq
- U2yCGEcv3K84SW3Yszbt5+xeV3Y1DrfeG/e3Qk+XE+TWhiWWOk1Pr5fq9LExaOL4byoKws
- KS4VPF9UIpd3UUraeCMm1eACpCPSX7c=
+ bh=0qvAI4sJh/+NR47op4BEESLNhwLye3AuT0uj5rvnP3E=;
+ b=JWHDPpXDViEJhZW+pTZ39q5luB5lcle0xAgg7d6f8GDi4JZVlY9yemAabKj3wRtF8oPgV9
+ 5Fu4mRW68mwoW2yQym5Gze9uHxqbtLJwKg/YM6w3XP2zRHkuTPam7L5GP65p9X4C4CR0S2
+ w6oHfS9QDE7ENlL0aEqhe8bT8a7EZ1w=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-bzmvVnVlMm2e96Yffiwk6A-1; Mon,
- 14 Oct 2024 09:40:15 -0400
-X-MC-Unique: bzmvVnVlMm2e96Yffiwk6A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580--czsQN4-OAmnNCT3LQSnkA-1; Mon,
+ 14 Oct 2024 09:41:19 -0400
+X-MC-Unique: -czsQN4-OAmnNCT3LQSnkA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 580421955F3E; Mon, 14 Oct 2024 13:40:14 +0000 (UTC)
+ id 7873A195608C; Mon, 14 Oct 2024 13:41:18 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.12])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 289E03000198; Mon, 14 Oct 2024 13:40:12 +0000 (UTC)
+ id 3C67030001A7; Mon, 14 Oct 2024 13:41:16 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
+Cc: peter.maydell@linaro.org, Michal Privoznik <mprivozn@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 07/20] ui/dbus: discard pending CursorDefine on new one
-Date: Mon, 14 Oct 2024 17:39:22 +0400
-Message-ID: <20241014133935.470709-8-marcandre.lureau@redhat.com>
+Subject: [PULL 20/20] audio/pw: Report more accurate error when connecting to
+ PipeWire fails
+Date: Mon, 14 Oct 2024 17:39:35 +0400
+Message-ID: <20241014133935.470709-21-marcandre.lureau@redhat.com>
 In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -86,84 +88,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Michal Privoznik <mprivozn@redhat.com>
 
-Similar to scanout updates, let's discard pending cursor changes.
+According to its man page [1], pw_context_connect() sets errno on
+failure:
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20241008125028.1177932-8-marcandre.lureau@redhat.com>
+  Returns a Core on success or NULL with errno set on error.
+
+It may be handy to see errno when figuring out why PipeWire
+failed to connect. That leaves us with just one possible path to
+reach 'fail_error' label which is then moved to that path and
+also its error message is adjusted slightly.
+
+1: https://docs.pipewire.org/group__pw__core.html#ga5994e3a54e4ec718094ca02a1234815b
+
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <3a78811ad5b0e87816b7616ab21d2eeef00b9c52.1726647033.git.mprivozn@redhat.com>
 ---
- ui/dbus-listener.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ audio/pwaudio.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 19cb74e92b..eca6890ce6 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -87,6 +87,7 @@ struct _DBusDisplayListener {
- 
-     guint dbus_filter;
-     guint32 display_serial_to_discard;
-+    guint32 cursor_serial_to_discard;
- };
- 
- G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
-@@ -102,6 +103,14 @@ static void ddl_discard_display_messages(DBusDisplayListener *ddl)
-     g_atomic_int_set(&ddl->display_serial_to_discard, serial);
- }
- 
-+static void ddl_discard_cursor_messages(DBusDisplayListener *ddl)
-+{
-+    guint32 serial = g_dbus_connection_get_last_serial(
-+        g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
-+
-+    g_atomic_int_set(&ddl->cursor_serial_to_discard, serial);
-+}
-+
- #ifdef CONFIG_OPENGL
- static void dbus_scanout_disable(DisplayChangeListener *dcl)
- {
-@@ -502,6 +511,8 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-         return;
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 3b14e04fbb..8e13b58286 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -769,13 +769,15 @@ qpw_audio_init(Audiodev *dev, Error **errp)
+     pw->core = pw_context_connect(pw->context, NULL, 0);
+     if (pw->core == NULL) {
+         pw_thread_loop_unlock(pw->thread_loop);
+-        goto fail_error;
++        error_setg_errno(errp, errno, "Failed to connect to PipeWire instance");
++        goto fail;
      }
  
-+    ddl_discard_cursor_messages(ddl);
-+
-     egl_dmabuf_import_texture(dmabuf);
-     texture = qemu_dmabuf_get_texture(dmabuf);
-     if (!texture) {
-@@ -745,6 +756,8 @@ static void dbus_cursor_define(DisplayChangeListener *dcl,
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
-     GVariant *v_data = NULL;
- 
-+    ddl_discard_cursor_messages(ddl);
-+
-     v_data = g_variant_new_from_data(
-         G_VARIANT_TYPE("ay"),
-         c->data,
-@@ -1028,6 +1041,21 @@ dbus_filter(GDBusConnection *connection,
-         }
+     if (pw_core_add_listener(pw->core, &pw->core_listener,
+                              &core_events, pw) < 0) {
+         pw_thread_loop_unlock(pw->thread_loop);
+-        goto fail_error;
++        error_setg(errp, "Failed to add PipeWire listener");
++        goto fail;
      }
+     if (wait_resync(pw) < 0) {
+         pw_thread_loop_unlock(pw->thread_loop);
+@@ -785,8 +787,6 @@ qpw_audio_init(Audiodev *dev, Error **errp)
  
-+    discard_serial = g_atomic_int_get(&ddl->cursor_serial_to_discard);
-+    if (serial <= discard_serial) {
-+        const gchar *member = g_dbus_message_get_member(message);
-+        static const char *const cursor_messages[] = {
-+            "CursorDefine",
-+            NULL
-+        };
-+
-+        if (g_strv_contains(cursor_messages, member)) {
-+            trace_dbus_filter(serial, discard_serial);
-+            g_object_unref(message);
-+            return NULL;
-+        }
-+    }
-+
-     return message;
- }
+     return g_steal_pointer(&pw);
  
+-fail_error:
+-    error_setg(errp, "Failed to initialize PW context");
+ fail:
+     if (pw->thread_loop) {
+         pw_thread_loop_stop(pw->thread_loop);
 -- 
 2.47.0
 
