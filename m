@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5438D18158
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2E3D18158
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 23:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0Toj-0004du-8U; Mon, 14 Oct 2024 18:45:33 -0400
+	id 1t0UDo-0006y9-Qw; Mon, 14 Oct 2024 19:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t0Toc-0004dH-N6
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:45:28 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t0UDm-0006xY-Ms
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 19:11:26 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1t0ToZ-0003Ak-ME
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:45:26 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7e6d04f74faso2977977a12.1
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:45:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t0UDk-0005nm-Ta
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 19:11:26 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20cbca51687so21843115ad.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 16:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1728945921; x=1729550721;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=o0G+fHGmlxGZknduHykTBG/2v1aDLLDLXHsEXf5hswU=;
- b=eB3Hh6kPuM60uOKm0uTa9J+OjtpW7ZcDG7YLWpUdtrkjnfKig3YHUahtBzHZTPxjgF
- e7Eu3eBh26XwIzxzQf5T6ZMTfqTcYoTRuibqwholpCt+7KVy7lBjyQKirj9KGv2cjoJB
- cqcBYpakOff1T+ElygrfYONJWIAryjgksa4WPFMxCH/MQkVjpKSRsUuB4ojCxHhChZl2
- +FkX5rHNq0E5Jt3yp8292EJLK4Jr0JYMcDrkKUiFAaqNsCsHsle4nRoE5G2ctW6F5WZB
- EJZTeS8kcTqb0PWBXVvUVxDnG3lJy3evKQTPBeQNUxWelzHHyE+jhRO2ntI8aVK1cA/8
- rv3Q==
+ d=linaro.org; s=google; t=1728947483; x=1729552283; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mpJaj8JXFf2yyCC+kT0rbOA7ZhHiFWUkzEPBVxpGLes=;
+ b=KkXApkB9XcQpJ/KmcPQnBb4BfAF7yOr4lcwkqzurHmSejxgOW0OVA6bpAq/Bnln+/j
+ OWhI0VShyKh/8JZ1s3gEKw8FDrTgN2RgKGuVnhUieO6xcUeEbjk30RZy8jxYFdesuX4I
+ shBEpqq+88LHNdbs/abuVqs6EbGZz08IkcAHrQYFWbSQoCw6fr7I7iNAQW5T1GSj7KlI
+ WOwiKZeo1zgli+3otsFxBsEhbbEyNeKRrCt4O2dXjGMwejU3RIlTitNOYsBs03SlqdcK
+ jCN9H0P+4xgzWRN/Oy+/aqk7hc1SJiaKMVp3ocxTZmIXdzzjUfZzwfAHNw/Zl8ZWyKD7
+ CFXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728945921; x=1729550721;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o0G+fHGmlxGZknduHykTBG/2v1aDLLDLXHsEXf5hswU=;
- b=aH/j++YMCPYwpq97N3VBWhNvAK6whMs744b5QRk4mu4He4erNQWfQHIFxReEMTTTuD
- 0IefM6RvB/SnFqDt+j/2DqljpSOmFZdACdA0K0GWQWbrzoFyIp6IvFITFcG+M+B70Zwq
- HYVf7Yknbc7cL4iwRkDpvzIQauN4p+5zDtaIlBv3RXkJdi0jV9ixFMvJITQI3LX0aTMx
- c0TnrgSO+oPGQx53jjYcUpVOm2w7JpdNEG75GoQYm6y0YCTcB0clEFGERUAaq/C9BoKG
- I3lQ6FF9u2s7JFBMpaRY9JoXT+l1nmxcCzJU+TPc2C2OTIBfnv3wUPBMEQgP53ESLE0u
- ckIg==
-X-Gm-Message-State: AOJu0Yx8SPJMnuXBVK7WQXFUNFG5M6Ed02KH+QAoM3+qrJsS7T5bG8Tw
- zogss6K5z2yqHypNT4VMR8EvlS5g3kZWVIHMuyzsDgxTXy/COiofk23XwGm+EchpTWYlP1g8jNH
- rX+Q208yTpdnhrlROTAQHN2FkCuUlvom6n+QBCA==
-X-Google-Smtp-Source: AGHT+IFGHi+CZbvmEWhSEjs85Wvh2/3NbNXm0txiiRskSSZrwJRfvw7WLUlLKRk1PIluvkmvI5b26SvC3cNjDDCA39s=
-X-Received: by 2002:a05:6a21:2d09:b0:1d5:377c:2244 with SMTP id
- adf61e73a8af0-1d8bc993b0cmr22033999637.20.1728945921153; Mon, 14 Oct 2024
- 15:45:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728947483; x=1729552283;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mpJaj8JXFf2yyCC+kT0rbOA7ZhHiFWUkzEPBVxpGLes=;
+ b=ZfCwbYS4Vc7g4M+aP1rO9k6zc8nBTg9+Xy1ge3NglyxDAAPUBivLRhhTNaLRxfzp+O
+ h4jgOKeQ2CRug3N1vRhMG7VMTctKpsHIX70lMyRjxTZYpXcuTD8rhb8WD32MfPk1Decy
+ +thxkX1NgfEvfrgztMA7NEIRb4PtNv2iS1RtsaOWJo757VC+XqHOGo7OGfTW8a5bW+Ak
+ QjXx4ZW9E0TGG9+Ida9cZpg7QuXkywzWBh9GbcaQkixnH2zaJX7qudyPn+sVJOcscOvG
+ vPiakKnKG1/RSacAC1bAYJ6h7voSnD1/q13GDAViok4s/h/Z9r23K/E2xYPe6ejjYGSI
+ 4ifQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVa8kDbwc9tuTo3QQo6AKxV51ZLBpI0yRx3ipc43M0lhymPKAz4QRlyoJrYXX6ZdysCvhQOi0EsxD1h@nongnu.org
+X-Gm-Message-State: AOJu0YxqZbMa7NG8LydgpuIjg4hiHgIpXUzB2yTBzqblRQwSa3kJJ5ij
+ 4c34/e3v3dn5gV9QK/stCUT60SmInxGxrk1C3xDH1FXXhNOc/bqUm38pcFb5Gio=
+X-Google-Smtp-Source: AGHT+IG5+8kY+GOrXcRQ68ArVWyWT00ZOlYyLms8R1Yy0G4EBrH0fGOaS2ZozSVD6iocvDhMI64FnQ==
+X-Received: by 2002:a17:903:1c4:b0:20c:7c09:b2a4 with SMTP id
+ d9443c01a7336-20cbb2a0b7cmr157867865ad.50.1728947483088; 
+ Mon, 14 Oct 2024 16:11:23 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20d1805ce61sm574775ad.265.2024.10.14.16.11.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Oct 2024 16:11:22 -0700 (PDT)
+Message-ID: <8470b0d4-66fc-44f3-ae7e-8f3919a7105e@linaro.org>
+Date: Mon, 14 Oct 2024 16:11:20 -0700
 MIME-Version: 1.0
-References: <871q16fq9c.fsf@draig.linaro.org>
- <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
- <CANCZdfpWN+nYGLBtMb5xdpFW+=iGZ473UhknLN0vW6PyHSQScQ@mail.gmail.com>
- <87v7y9ldbu.fsf@draig.linaro.org>
-In-Reply-To: <87v7y9ldbu.fsf@draig.linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 14 Oct 2024 16:45:10 -0600
-Message-ID: <CANCZdfq85yJTkTR3TZQ=XmaeLmfxrQCQj6g-0viFaCidsOKwWQ@mail.gmail.com>
-Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- pkg-qemu-devel@lists.alioth.debian.org, 
- Michael Tokarev <mjt@tls.msk.ru>, ncopa@alpinelinux.org, bofh@freebsd.org, 
- emulation@freebsd.org, virtualization@gentoo.org, dilfridge@gentoo.org, 
- hi@alyssa.is, edolstra+nixpkgs@gmail.com, brad@comstyle.com, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Thomas Huth <thuth@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, dvzrv@archlinux.org,
- anatol.pomozov@gmail.com, Miroslav Rezanina <mrezanin@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000777a2806247797b3"
-Received-SPF: none client-ip=2607:f8b0:4864:20::531;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v3 2/2] target/riscv: rvv: improve performance of RISC-V
+ vector loads and stores on large amounts of data.
+To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>
+References: <20241014220153.196183-1-paolo.savini@embecosm.com>
+ <20241014220153.196183-3-paolo.savini@embecosm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241014220153.196183-3-paolo.savini@embecosm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,205 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000777a2806247797b3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/14/24 15:01, Paolo Savini wrote:
+> This patch optimizes the emulation of unit-stride load/store RVV instructions
+> when the data being loaded/stored per iteration amounts to 64 bytes or more.
+> The optimization consists of calling __builtin_memcpy on chunks of data of 128
+> bytes between the memory address of the simulated vector register and the
+> destination memory address and vice versa.
+> This is done only if we have direct access to the RAM of the host machine,
+> if the host is little endiand and if it supports atomic 128 bit memory
+> operations.
+> 
+> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+> ---
+>   target/riscv/vector_helper.c | 14 +++++++++++++-
+>   1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 75c24653f0..b3d0be8e39 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -488,7 +488,19 @@ vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
+>       }
+>   
+>       fn = fns[is_load][group_size];
+> -    fn(vd, byte_offset, host + byte_offset);
+> +
+> +    /* x86 and AMD processors provide strong guarantees of atomicity for
+> +     * 16-byte memory operations if the memory operands are 16-byte aligned */
+> +    if (!HOST_BIG_ENDIAN && (byte_offset + 16 < byte_end) && ((byte_offset % 16) == 0) &&
+> +        ((cpuinfo & (CPUINFO_ATOMIC_VMOVDQA | CPUINFO_ATOMIC_VMOVDQU)) != 0)) {
+> +      group_size = MO_128;
+> +      if (is_load)
+> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 16);
+> +      else
+> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 16);
+> +    } else {
 
-[[ sorry for the lag $LIFE has been over-full lately ]]
-
-On Thu, Oct 3, 2024 at 3:56=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-
-> Warner Losh <imp@bsdimp.com> writes:
->
-> > On Thu, Oct 3, 2024 at 2:53=E2=80=AFAM Warner Losh <imp@bsdimp.com> wro=
-te:
-> >
-> >  On Thu, Sep 26, 2024 at 8:24=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@=
-linaro.org>
-> wrote:
-> >
-> >  One output from this discussion should be a clear statement that we ar=
-e
-> >  going forward with this work and the road map. A rough roadmap might
-> >  look like:
-> >
-> >    - 9.2   --enable-rust is available and developers can build with it.
-> >            rust devices have -x-device or -rust-device CLI flags for
-> >            runtime selection.
-> >
-> >    - 10.x  rust devices feature complete and migration compatible,
-> enabled
-> >            by default when rust compiler detected. No CLI selection
-> >            required as legacy portions won't be built. Any partial
-> >            conversions should be behind --enable-prototype-rust configu=
-re
-> >            flag.
-> >
-> >    - 11.x  distros have enough infrastructure to build on supported
-> >            platforms. Rust becomes a mandatory dependency, old C versio=
-ns
-> >            of converted code removed from build.
-> >
-> >    - xx.y  QEMU becomes a pure native rust program and all C is expunge=
-d.
-> >            We may never get to this point.
-> >
-> >  We should publish the intention and the road map prominently although =
-it
-> >  was unclear if a blog post would be the best place vs expanding a
-> >  section in the developers manual. Perhaps both make sense with a blog
-> >  post for the statement of intent and rough timeline and the developer
-> >  manual being expanded with any new rules and standards to follow?
-> >
-> >  FreeBSD is Tier 1 in rust only for amd64 (x86_64). It's Tier 2 for i38=
-6
-> (which
-> >  admittedly is going away) and Tier 3 for everything else.
-> >
-> > oops, I should have said it's Tier 2 with hosts for amd64, Tier 2 w/o
-> hosts and
-> > tier 3 for aarch64 (and everything else). In FreeBSD, amd64 and aarch64
-> are
-> > tier 1 supported platforms and I got those confused. It is an important
-> difference
-> > and later in my email I refer to it, so I thought a correction was in
-> > order.
->
-> Are there any other big projects coming down the line that have
-> indicated a need for rust support?
+This will not compile on anything other than x86.
+Moreover, your comment about vmovdqa bears no relation to __builtin_memcpy.
 
 
-There's a few things that may happen to help drive rust. People
-have written a few things in rust that they hope to make default
-once FreeBSD finishes its transition to pkgbase (though that's some
-time in the future). There's also a desire to experiment with rust drivers
-in the kernel for more fringe features to see if that helps us get done
-faster.
-
-
-> Obviously you don't have to worry
-> about the Linux kernel but I wonder how much rust userspace you
-> currently have packaged? Do you have the rust-vmm vhost-device binaries
-> for example?
->
-
-Yes. I believe we build those today.
-
-I expect it to mostly work, most of the time, to be honest on FreeBSD. I
-also
-expect there to be more breakage than we see with llvm/clang...
-
-So the bottom line should be that we'll be able to make it work, but there
-is likely going to be more work since rust is less mature than C. However,
-it's not clear if this is an occasional minor thing, or if it becomes major
-and
-frequent. And the only way to know that is to take the plunge, so don't
-let this stop your plans.
-
-Warner
-
---000000000000777a2806247797b3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">[[ sorry=C2=A0for the lag $LIFE has been =
-over-full lately ]]</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
-ass=3D"gmail_attr">On Thu, Oct 3, 2024 at 3:56=E2=80=AFAM Alex Benn=C3=A9e =
-&lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@linaro.org</a>&gt=
-; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Warner =
-Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com=
-</a>&gt; writes:<br>
-<br>
-&gt; On Thu, Oct 3, 2024 at 2:53=E2=80=AFAM Warner Losh &lt;<a href=3D"mail=
-to:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt;=C2=A0 On Thu, Sep 26, 2024 at 8:24=E2=80=AFAM Alex Benn=C3=A9e &lt;<a =
-href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro=
-.org</a>&gt; wrote:<br>
-&gt;<br>
-&gt;=C2=A0 One output from this discussion should be a clear statement that=
- we are<br>
-&gt;=C2=A0 going forward with this work and the road map. A rough roadmap m=
-ight<br>
-&gt;=C2=A0 look like:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 - 9.2=C2=A0 =C2=A0--enable-rust is available and develope=
-rs can build with it.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rust devices have -x-device o=
-r -rust-device CLI flags for<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 runtime selection.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 - 10.x=C2=A0 rust devices feature complete and migration =
-compatible, enabled<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 by default when rust compiler=
- detected. No CLI selection<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 required as legacy portions w=
-on&#39;t be built. Any partial<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 conversions should be behind =
---enable-prototype-rust configure<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flag.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 - 11.x=C2=A0 distros have enough infrastructure to build =
-on supported<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 platforms. Rust becomes a man=
-datory dependency, old C versions<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 of converted code removed fro=
-m build.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 - xx.y=C2=A0 QEMU becomes a pure native rust program and =
-all C is expunged.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 We may never get to this poin=
-t.<br>
-&gt;<br>
-&gt;=C2=A0 We should publish the intention and the road map prominently alt=
-hough it<br>
-&gt;=C2=A0 was unclear if a blog post would be the best place vs expanding =
-a<br>
-&gt;=C2=A0 section in the developers manual. Perhaps both make sense with a=
- blog<br>
-&gt;=C2=A0 post for the statement of intent and rough timeline and the deve=
-loper<br>
-&gt;=C2=A0 manual being expanded with any new rules and standards to follow=
-?<br>
-&gt;<br>
-&gt;=C2=A0 FreeBSD is Tier 1 in rust only for amd64 (x86_64). It&#39;s Tier=
- 2 for i386 (which<br>
-&gt;=C2=A0 admittedly is going away) and Tier 3 for everything else.<br>
-&gt;<br>
-&gt; oops, I should have said it&#39;s Tier 2 with hosts for amd64, Tier 2 =
-w/o hosts and<br>
-&gt; tier 3 for aarch64 (and everything else). In FreeBSD, amd64 and aarch6=
-4 are<br>
-&gt; tier 1 supported platforms and I got those confused. It is an importan=
-t difference<br>
-&gt; and later in my email I refer to it, so I thought a correction was in<=
-br>
-&gt; order.<br>
-<br>
-Are there any other big projects coming down the line that have<br>
-indicated a need for rust support?</blockquote><div><br></div><div>There&#3=
-9;s a few things that may happen to help drive rust. People</div><div>have =
-written a few things in rust that they hope to make default</div><div>once =
-FreeBSD finishes its transition to pkgbase (though that&#39;s some</div><di=
-v>time in the future). There&#39;s also a desire to experiment with rust dr=
-ivers</div><div>in the kernel for more fringe features to see if that helps=
- us get done</div><div>faster.</div><div>=C2=A0</div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">Obviously you don&#39;t have to worry<br>
-about the Linux kernel but I wonder how much rust userspace you<br>
-currently have packaged? Do you have the rust-vmm vhost-device binaries<br>
-for example?<br></blockquote><div><br></div><div>Yes. I believe we build th=
-ose today.</div><div><br></div><div>I expect it to mostly work, most of the=
- time, to be honest on FreeBSD. I also</div><div>expect there to be more br=
-eakage than we see with llvm/clang...</div><div><br></div><div>So the botto=
-m line should be that we&#39;ll be able to make it work, but there</div><di=
-v>is likely going to be more work since rust is less mature than C. However=
-,</div><div>it&#39;s not clear if this is an occasional minor thing, or if =
-it becomes major and</div><div>frequent. And the only way to know that is t=
-o take the plunge, so don&#39;t</div><div>let this stop your plans.</div><d=
-iv><br></div><div>Warner</div></div></div>
-
---000000000000777a2806247797b3--
+r~
 
