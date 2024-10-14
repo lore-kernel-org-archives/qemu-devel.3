@@ -4,55 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 399CED16252
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01FCD16257
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0K6E-0007ML-GH; Mon, 14 Oct 2024 08:22:59 -0400
+	id 1t0KAr-0008Ss-4Z; Mon, 14 Oct 2024 08:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t0K60-0007KB-Ev
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:22:44 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1t0KAp-0008SS-Bp; Mon, 14 Oct 2024 08:27:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t0K5y-0001rv-Un
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:22:44 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XRxDx3XwGz6K9L5;
- Mon, 14 Oct 2024 20:22:09 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 304ED140445;
- Mon, 14 Oct 2024 20:22:41 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 14 Oct 2024 14:22:40 +0200
-To: <mst@redhat.com>, <qemu-devel@nongnu.org>
-CC: Dmitry Frolov <frolov@swemel.ru>, Ajay Joshi <ajay.opensrc@micron.com>,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>, Fan Ni <fan.ni@samsung.com>, Shiju Jose
- <shiju.jose@huawei.com>, <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 7/7] hw/pci-bridge: Make pxb_dev_realize_common() return
- if it succeeded
-Date: Mon, 14 Oct 2024 13:19:02 +0100
-Message-ID: <20241014121902.2146424-8-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241014121902.2146424-1-Jonathan.Cameron@huawei.com>
-References: <20241014121902.2146424-1-Jonathan.Cameron@huawei.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1t0KAn-0002N4-79; Mon, 14 Oct 2024 08:27:43 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49EAKrVw018878;
+ Mon, 14 Oct 2024 12:27:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:content-type
+ :content-transfer-encoding:mime-version; s=pp1; bh=wFYO1ZzNxKFap
+ a/BkLrj/a2ikVZ2KkasRTklykwM8do=; b=NVisiFl9+UxHPeSX6uQSp0Nh/xOuF
+ tk7F7f2r7lwu/zG7NitXKgF1uD0YxIbHgWx2D+cX3YOgOEecYaTuM6Ov0BMafhno
+ A6LJC+6Waq5CDVZCxno7n9bxKArRB6st3B6OAOKyWwrDESPQGCLSMUgQZA3LlHh8
+ bY5XvmnWDarh8S5t48k+WR7XCh6swINM0VMcuUHY3BPsJ+T6sCv1vrZMcx3LKjZf
+ H89/OkEoBITVM1+ZlMDbLytwQSLBYVcxJ7+EAiF8bfozIx7mCimqxXglB8Mv8zu0
+ C/XsB7FI943P8tkXFbM6zzSaBA21AZy1aqDASTNQIziJ5o3vmaSmwauOg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4291f88k80-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Oct 2024 12:27:36 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49ECRZ0H011577;
+ Mon, 14 Oct 2024 12:27:35 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4291f88k7x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Oct 2024 12:27:35 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49EAYSF5027452;
+ Mon, 14 Oct 2024 12:27:35 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4283txejx1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Oct 2024 12:27:34 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49ECRXCr56557840
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Oct 2024 12:27:33 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0D81020043;
+ Mon, 14 Oct 2024 12:27:33 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2501320040;
+ Mon, 14 Oct 2024 12:27:32 +0000 (GMT)
+Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Oct 2024 12:27:31 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
+Subject: [PATCH v4 00/13] ppc/spapr: remove deprecated machines specific code
+Date: Mon, 14 Oct 2024 17:57:16 +0530
+Message-ID: <20241014122729.1136809-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+Content-Type: text/plain; charset=UTF-8
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6hfgfD5RKPW4Lc3LHfLr8Jv3NRYBXcK1
+X-Proofpoint-ORIG-GUID: 0JutnH2bqPY7CvH58-i5xuatqT7yGMKb
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-14_10,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ adultscore=0 phishscore=0 mlxlogscore=711 malwarescore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410140089
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -68,79 +109,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the CXL PXB there is additional code after pxb_dev_realize_common()
-is called.  If that realize failed (e.g. due to an out of range numa_node)
-we will get a segfault.  Return a bool so the caller can check if the
-pxb_dev_realize_common() succeeded or not without having to poke around
-in the errp.
+As per Qemu's deprecation policy [1], and the legacy pseries machines
+being marked as deprecated in earlier commits, this patchset aims at
+removing the respective code for machines which are now deprecated.
 
-Fixes: 4f8db8711cbd ("hw/pxb: Allow creation of a CXL PXB (host bridge)")
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- hw/pci-bridge/pci_expander_bridge.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+[1] https://www.qemu.org/docs/master/about/deprecated.html
 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 4578e03024..07d411cff5 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -330,7 +330,7 @@ static gint pxb_compare(gconstpointer a, gconstpointer b)
-            0;
- }
- 
--static void pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
-+static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
-                                    Error **errp)
- {
-     PXBDev *pxb = PXB_DEV(dev);
-@@ -342,13 +342,13 @@ static void pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
- 
-     if (ms->numa_state == NULL) {
-         error_setg(errp, "NUMA is not supported by this machine-type");
--        return;
-+        return false;
-     }
- 
-     if (pxb->numa_node != NUMA_NODE_UNASSIGNED &&
-         pxb->numa_node >= ms->numa_state->num_nodes) {
-         error_setg(errp, "Illegal numa node %d", pxb->numa_node);
--        return;
-+        return false;
-     }
- 
-     if (dev->qdev.id && *dev->qdev.id) {
-@@ -394,12 +394,13 @@ static void pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
-     pci_config_set_class(dev->config, PCI_CLASS_BRIDGE_HOST);
- 
-     pxb_dev_list = g_list_insert_sorted(pxb_dev_list, pxb, pxb_compare);
--    return;
-+    return true;
- 
- err_register_bus:
-     object_unref(OBJECT(bds));
-     object_unparent(OBJECT(bus));
-     object_unref(OBJECT(ds));
-+    return false;
- }
- 
- static void pxb_dev_realize(PCIDevice *dev, Error **errp)
-@@ -500,7 +501,9 @@ static void pxb_cxl_dev_realize(PCIDevice *dev, Error **errp)
-         return;
-     }
- 
--    pxb_dev_realize_common(dev, CXL, errp);
-+    if (!pxb_dev_realize_common(dev, CXL, errp)) {
-+        return;
-+    }
-     pxb_cxl_dev_reset(DEVICE(dev));
- }
- 
+v4: Removed hw_compat_2_{1,2,3}[_len] in patches 1,2,3 (Philippe)
+    Removed DEFINE_SPAPR_MACHINE_TAGGED in patch 12 (Cedric)
+    Updated version_id to 2 for vmstate_slb in patch 13 (Cedric)
+    Dropped removal of pseries-3.0 patch 14 (Cedric)
+    Added R-bys from Cedric in patch 3, 4 and 5
+    Patches awaiting R-bys: 12, 13.
+v3: Addressed review comments from Cedric on v2 patchset
+    Removed some more pre-2.10 migration hacks in patch 9/14
+    Removed pseries-2.12 and pseries-3.10 also as due for removal.
+
+v2: <20241001092910.1030913-1-harshpb@linux.ibm.com>
+v1: <20240917060300.943496-1-harshpb@linux.ibm.com>
+
+Harsh Prateek Bora (13):
+  ppc/spapr: remove deprecated machine pseries-2.1
+  ppc/spapr: remove deprecated machine pseries-2.2
+  ppc/spapr: remove deprecated machine pseries-2.3
+  ppc/spapr: remove deprecated machine pseries-2.4
+  ppc/spapr: remove deprecated machine pseries-2.5
+  ppc/spapr: remove deprecated machine pseries-2.6
+  ppc/spapr: remove deprecated machine pseries-2.7
+  ppc/spapr: remove deprecated machine pseries-2.8
+  ppc/spapr: remove deprecated machine pseries-2.9
+  ppc/spapr: remove deprecated machine pseries-2.10
+  ppc/spapr: remove deprecated machine pseries-2.11
+  ppc/spapr: remove deprecated machine pseries-2.12-sxxm
+  ppc/spapr: remove deprecated machine pseries-2.12
+
+ docs/about/deprecated.rst       |   8 -
+ include/hw/boards.h             |   9 -
+ include/hw/pci-host/spapr.h     |   5 -
+ include/hw/ppc/spapr.h          |   3 -
+ include/hw/ppc/spapr_cpu_core.h |   1 -
+ target/ppc/cpu.h                |  10 -
+ hw/core/machine.c               |  27 ---
+ hw/intc/xics.c                  |  16 --
+ hw/ppc/spapr.c                  | 387 +-------------------------------
+ hw/ppc/spapr_cpu_core.c         |  12 +-
+ hw/ppc/spapr_pci.c              |  92 +-------
+ migration/savevm.c              |  19 --
+ target/ppc/cpu_init.c           |   6 +-
+ target/ppc/machine.c            |  72 +-----
+ 14 files changed, 18 insertions(+), 649 deletions(-)
+
 -- 
-2.43.0
+2.45.2
 
 
