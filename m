@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64360CF258E
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Oct 2024 22:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 762C9CF258E
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 00:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t06py-0007Fi-Je; Sun, 13 Oct 2024 18:13:18 -0400
+	id 1t094a-0002ve-3q; Sun, 13 Oct 2024 20:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06pj-0007DC-2S
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:13:04 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t06ph-0000xd-9H
- for qemu-devel@nongnu.org; Sun, 13 Oct 2024 18:13:02 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2e2a97c2681so2633649a91.2
- for <qemu-devel@nongnu.org>; Sun, 13 Oct 2024 15:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728857580; x=1729462380; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oOELs1GBJLtlq8nQGFT7BbF8Y02om3aScvqBsVkX7+Q=;
- b=t1H7PVN6m8eHoMXNAjpjy/tQ8bk4o7HLTHpxddvugB3HQPMP2Mq8g6jHVv3/BJHc7+
- eWeXZM8KocZS538p/VDxpuMnbRG+bonTLKSDVizWsz1g1OAaU96W1Hzx6veysmLOoZzI
- rNWzzYG26m5AypyZszrmA+rfHoyZneOD5rrD0q0MNzD1Sb4Q6iNHJl9m+dz7UszaDPbV
- xWFZFxIVZGgBA9bbdtZAlFg1pudAtZM1aUnyul/QYw4MCw5h9RwFZXmk2H3aI5Urv9Aw
- nF0MpyGk+USkYm3zD9vV94VXNGQeovyJqCHwFwot0lyr4OrZdukt37qJeD3CbTmIhyfI
- 3Z9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728857580; x=1729462380;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oOELs1GBJLtlq8nQGFT7BbF8Y02om3aScvqBsVkX7+Q=;
- b=PbRshuBM9p1rFctqMK+uu1wN7ZH8psHfwhQqeRd0QPpNciTzJSmBBgNCiZ4Ze6+taR
- yW6W6RM0NP4v1MY0OP9IurYVy5MjAfNp/Qr4KFP+76XPL6OA6kUti9j3r8HS0249PX17
- xhomq9uArInV0TI5W05RjwQfbAWPbhrBbBdx+IBScTolGi6rL2PwlGPRiwtRS4VU+Kaq
- RygeULf7845YsmuOTR3BKdtaB5XbvYzg8WKudplfysZYME4gaMGy84hLL4DTmqq6sVsa
- C0efJPtM/ezYEeyV1tk36cGg8iEQ50aiWI8UKuIEASxZS3Hmg8x9TrZlIkl1akNCJo18
- 2VPg==
-X-Gm-Message-State: AOJu0YwyEMepyGH/olrI4XIbDX8Hjwz8FaVRQCz5OwjrdsoyF73PWxfs
- 5Tq0ZutblXfoOebEQHl4TN+AoJ2iMB6jFzoQNG5MgLsLYuEwwfipL7Ek0AjIgGdGDguwQr/EMGD
- /
-X-Google-Smtp-Source: AGHT+IGvF2YTqWLWFscInM+uhdd/nr1DtHKoPW8/pCJ3G3EGGnqFEvq0YbYJn8nIsX1MzrsqXiPPyA==
-X-Received: by 2002:a17:90b:2242:b0:2e2:a667:1a10 with SMTP id
- 98e67ed59e1d1-2e2f0f08c2emr11229279a91.38.1728857579842; 
- Sun, 13 Oct 2024 15:12:59 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e2d5df1eebsm7271958a91.17.2024.10.13.15.12.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Oct 2024 15:12:59 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 25/27] target/arm: Move device detection earlier in
- get_phys_addr_lpae
-Date: Sun, 13 Oct 2024 15:12:33 -0700
-Message-ID: <20241013221235.1585193-26-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241013221235.1585193-1-richard.henderson@linaro.org>
-References: <20241013221235.1585193-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t094V-0002vS-5x; Sun, 13 Oct 2024 20:36:27 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t094S-0005Ut-8F; Sun, 13 Oct 2024 20:36:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1728866184; x=1760402184;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=DJrV15441yItVfFMS+GR8ovq8PdMMPCcONnm9fvbUFI=;
+ b=LfgbEDRBnnHM9/lpyACNMiOdJRal7ke+GTLh5jmNjO/Q2ABtv8NoNnnp
+ mhmQY0mYrIsDekS2muCIYqOf4QVO7jjwMAYCzQ6ch08cmNmcEyqgSy2YL
+ YuVdUVOS4EcZ97yRiWOtjeUR9QMuvOWyALulR3FHwHr9VDpjk6xpKWWNg
+ ztfXWzl8EYOBdoPlPKqOFHjea8Vl+yQ8eWICoU6MbEFzHTkKv4VNvP1ZA
+ AVvu6v0nMuwwzRxbXURW6x7CAG+u45wbVvQi4VY05i0aesHDfvUrPCiND
+ DM5W/wuSh3zGioIDG9IWoTK7KeSlDLiRdvuINpU8UVj30Cpr/qxxJcFIi w==;
+X-CSE-ConnectionGUID: uJBCSNGKSy2azSg5cYCakQ==
+X-CSE-MsgGUID: /4Xa/Q0rSCif+SgmEHO8MQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11224"; a="28329017"
+X-IronPort-AV: E=Sophos;i="6.11,201,1725346800"; d="scan'208";a="28329017"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Oct 2024 17:36:18 -0700
+X-CSE-ConnectionGUID: 1zG0qCFBQh2uqmtp6MbKJA==
+X-CSE-MsgGUID: i3OrTwIjSq+p93oIaIYkfg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,201,1725346800"; d="scan'208";a="108170004"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.38])
+ ([10.124.224.38])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Oct 2024 17:36:16 -0700
+Message-ID: <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com>
+Date: Mon, 14 Oct 2024 08:36:13 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+To: Chuang Xu <xuchuangxclwt@bytedance.com>
+Cc: pbonzini@redhat.com, imammedo@redhat.com, xieyongji@bytedance.com,
+ chaiwen.cc@bytedance.com, zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
+References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+ <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
+ <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,93 +89,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Determine cache attributes, and thence Device vs Normal memory,
-earlier in the function.  We have an existing regime_is_stage2
-if block into which this can be slotted.
+On 10/12/2024 5:35 PM, Chuang Xu wrote:
+> 
+> On 10/12/24 下午4:21, Xiaoyao Li wrote:
+>> On 10/9/2024 11:56 AM, Chuang Xu wrote:
+>>> When QEMU is started with:
+>>> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+>>> -smp 180,sockets=2,dies=1,cores=45,threads=2
+>>>
+>>> On Intel platform:
+>>> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+>>> logical processors in the physical package".
+>>>
+>>> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 
+>>> 90 for
+>>> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+>>> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+>>> CPUID.04H.EAX[31:26], which matches the expected result.
+>>>
+>>> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+>>> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+>>> integer too. Otherwise we may encounter unexpected results in guest.
+>>>
+>>> For example, when QEMU is started with CLI above and xtopology is 
+>>> disabled,
+>>> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/ 
+>>> (1+CPUID.04H.EAX[31:26]) to
+>>> calculate threads-per-core in detect_ht(). Then guest will get "90/ 
+>>> (1+63)=1"
+>>> as the result, even though threads-per-core should actually be 2.
+>>
+>> It's kernel's bug instead.
+>>
+>> In 1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of "Intel 
+>> 64 Architecture Processor Topology Enumeration" [1], it is
+>>
+>>   - SMT_Mask_Width = Log2(RoundToNearestPof2(CPUID.1:EBX[23:16])/ 
+>> (CPUID.(EAX=4,ECX=0):EAX[31:26]) + 1))
+>>
+>> The value of CPUID.1:EBX[23:16] needs to be *rounded* to the neartest 
+>> power-of-two integer instead of itself being the power-of-two.
+>>
+>> This also is consistency with the SDM, where the comment for bit 23-16 
+>> of CPUID.1:EBX is:
+>>
+>>   The nearest power-of-2 integer that is not smaller than EBX[23:16] is
+>>   the number of unique initial APIC IDs reserved for addressing
+>>   different logical processors in a physical package.
+>>
+>> What I read from this is, the nearest power-of-2 integer that is not 
+>> smaller than EBX[23:16] is a different thing than EBX[23:16]. i.e.,
+> 
+> Yes, when I read sdm, I also thought it was a kernel bug. But on my 
+> 192ht spr host, the value of CPUID.1:EBX[23:16] was indeed rounded up
+> 
+> to the nearest power of 2 by the hardware. After communicating with 
+> Intel technical support staff, we thought that perhaps the description 
+> in sdm
+> 
+> is not so accurate, and rounding up CPUID.1:EBX[23:16] to the power of 2 
+> in qemu may be more in line with the hardware behavior.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/ptw.c | 49 ++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 24 deletions(-)
+I think above justification is important. We need to justify our changes 
+with the fact and correct reason.
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 238b2c92a9..0a1a820362 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2029,8 +2029,20 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-             xn = extract64(attrs, 53, 2);
-             result->f.prot = get_S2prot(env, ap, xn, ptw->in_s1_is_el0);
-         }
-+
-+        result->cacheattrs.is_s2_format = true;
-+        result->cacheattrs.attrs = extract32(attrs, 2, 4);
-+        /*
-+         * Security state does not really affect HCR_EL2.FWB;
-+         * we only need to filter FWB for aa32 or other FEAT.
-+         */
-+        device = S2_attrs_are_device(arm_hcr_el2_eff(env),
-+                                     result->cacheattrs.attrs);
-     } else {
-         int nse, ns = extract32(attrs, 5, 1);
-+        uint8_t attrindx;
-+        uint64_t mair;
-+
-         switch (out_space) {
-         case ARMSS_Root:
-             /*
-@@ -2102,6 +2114,19 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-          */
-         result->f.prot = get_S1prot(env, mmu_idx, aarch64, ap, xn, pxn,
-                                     result->f.attrs.space, out_space);
-+
-+        /* Index into MAIR registers for cache attributes */
-+        attrindx = extract32(attrs, 2, 3);
-+        mair = env->cp15.mair_el[regime_el(env, mmu_idx)];
-+        assert(attrindx <= 7);
-+        result->cacheattrs.is_s2_format = false;
-+        result->cacheattrs.attrs = extract64(mair, attrindx * 8, 8);
-+
-+        /* When in aarch64 mode, and BTI is enabled, remember GP in the TLB. */
-+        if (aarch64 && cpu_isar_feature(aa64_bti, cpu)) {
-+            result->f.extra.arm.guarded = extract64(attrs, 50, 1); /* GP */
-+        }
-+        device = S1_attrs_are_device(result->cacheattrs.attrs);
-     }
- 
-     if (!(result->f.prot & (1 << access_type))) {
-@@ -2131,30 +2156,6 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     result->f.attrs.space = out_space;
-     result->f.attrs.secure = arm_space_is_secure(out_space);
- 
--    if (regime_is_stage2(mmu_idx)) {
--        result->cacheattrs.is_s2_format = true;
--        result->cacheattrs.attrs = extract32(attrs, 2, 4);
--        /*
--         * Security state does not really affect HCR_EL2.FWB;
--         * we only need to filter FWB for aa32 or other FEAT.
--         */
--        device = S2_attrs_are_device(arm_hcr_el2_eff(env),
--                                     result->cacheattrs.attrs);
--    } else {
--        /* Index into MAIR registers for cache attributes */
--        uint8_t attrindx = extract32(attrs, 2, 3);
--        uint64_t mair = env->cp15.mair_el[regime_el(env, mmu_idx)];
--        assert(attrindx <= 7);
--        result->cacheattrs.is_s2_format = false;
--        result->cacheattrs.attrs = extract64(mair, attrindx * 8, 8);
--
--        /* When in aarch64 mode, and BTI is enabled, remember GP in the TLB. */
--        if (aarch64 && cpu_isar_feature(aa64_bti, cpu)) {
--            result->f.extra.arm.guarded = extract64(attrs, 50, 1); /* GP */
--        }
--        device = S1_attrs_are_device(result->cacheattrs.attrs);
--    }
--
-     /*
-      * Enable alignment checks on Device memory.
-      *
--- 
-2.43.0
+I somehow agree to set EBX[23:16] to a value of power-of-2, because the 
+1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of "Intel 64 
+Architecture Processor Topology Enumeration" spec says
+
+     CPUID.1:EBX[23:16] represents the maximum number of addressable IDs
+     (initial APIC ID) that can be assigned to logical processors in a
+     physical package. The value may not be the same as the number of
+     logical processors that are present in the hardware of a physical
+     package.
+
+It uses the word "may not".
+
+However, the justification of the change cannot be "it leads to 
+unexpected results in guest" because the guest implementation is not 
+correct.
+
+>>
+>> - EBX[23:16]: Maximum number of addressable IDs for logical processors
+>>   in this physical package
+>>
+>> - pow2ceil(EBX[23:16]): the number of unique initial APIC IDs reserved
+>>   for addressing different logical processors in a physical package.
+>>
+>> [1] https://cdrdv2-public.intel.com/759067/intel-64-architecture- 
+>> processor-topology-enumeration.pdf
+>>
+>>> And on AMD platform:
+>>> CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
+>>> result meets our expectation.
+>>>
+>>> So let us round up CPUID.01H.EBX[23:16] to the nearest power-of-2 
+>>> integer
+>>> only for Intel platform to solve the unexpected result.
+>>>
+>>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>>> Acked-by: Igor Mammedov <imammedo@redhat.com>
+>>> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+>>> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+>>> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+>>> ---
+>>>   target/i386/cpu.c | 10 +++++++++-
+>>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index ff227a8c5c..641d4577b0 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -6462,7 +6462,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
+>>> index, uint32_t count,
+>>>           }
+>>>           *edx = env->features[FEAT_1_EDX];
+>>>           if (threads_per_pkg > 1) {
+>>> -            *ebx |= threads_per_pkg << 16;
+>>> +            /*
+>>> +             * AMD requires logical processor count, but Intel needs 
+>>> maximum
+>>> +             * number of addressable IDs for logical processors per 
+>>> package.
+>>> +             */
+>>> +            if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
+>>> +                *ebx |= threads_per_pkg << 16;
+>>> +            } else {
+>>> +                *ebx |= 1 << apicid_pkg_offset(&topo_info) << 16;
+>>> +            }
+>>>               *edx |= CPUID_HT;
+>>>           }
+>>>           if (!cpu->enable_pmu) {
+>>
 
 
