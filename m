@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF10D16271
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AA2D16271
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0LXU-0000aX-TD; Mon, 14 Oct 2024 09:55:12 -0400
+	id 1t0La7-0001Ni-6h; Mon, 14 Oct 2024 09:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0LXS-0000Yo-Uw
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:55:10 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t0La5-0001NR-18
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:57:53 -0400
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0LXR-0005xG-4g
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:55:10 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5c903f5bd0eso6467387a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 06:55:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t0La3-0006O4-8l
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:57:52 -0400
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-4604bd47e35so14663431cf.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 06:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728914107; x=1729518907; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mIh1tvXJS8eOG3Xl0S3ukK+nnDMSKc+no7JJrKlUCGQ=;
- b=CB19mX0ddDB/R+ZPJAaidAry+j0DPIOlDTqIYebaUsn6hXPq7CmKA2cQHWLFaQwAF2
- gl4gHg+RFoS/nJjs2G+MUWZbDns3ipZFXQmY3RQyIKPJpBlCClKJXWcFVrUTm1F76kh2
- UkMGFBVOFStxKfvIvTAQUDvuExTxGrr5dwhWa8OJ8GM9T7N/4RQncNapyda2980OBe+2
- LRlYx4dXpSfpXj771QmDzky/BcItQ+9xTqq8b65Xum9sTWZyVO1xWqW03S+Y48XYE7lH
- jROInDUXl4ltfNzkDFr6MtenrRdn0nJ0FtPligFZ1riQOtzG3Hu9OyPBMce3wuO9QbOW
- kvNQ==
+ d=gmail.com; s=20230601; t=1728914270; x=1729519070; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=kFQjaMmebX/GNfns5YbzfhnYeTTu2UtxY531guWUTY8=;
+ b=HiWK0a0FmB6bkAsufESQXBSX5uibVQcmfTdutvtwRoddjIZ/ZqPaUQs5s3Ey3TH19e
+ hsIKvfkKLn2lPOO1QB/+1mSDRzB9bLGmop/P5bvr6AgGUSxBOsHgzpdo6EdJSwu7/eFS
+ 8wuuprNdnLv5LugEJgi44coQJ6SSQsprsMC12GA4U+16kE2/SuXLQr35bZgHHR+czcV6
+ udpdI0g8vT8gpzqKPupwu6a0SpQmFZ6GU0G2k6n5aC0sUBeRaTFplCh7kyFJN2b6nbHr
+ jwPFBvG6q5OZOUQi+p1E+aD3mgHT+fRtVcOTPgPKkOSpCQ65NR3xlEI807/DuVTpLkIR
+ DWWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728914107; x=1729518907;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mIh1tvXJS8eOG3Xl0S3ukK+nnDMSKc+no7JJrKlUCGQ=;
- b=tIZI5mW/3dh3B/eqlx54jros4H/AWWE3Hr7nsUnKZFh8Owf4E9hlBHUEUQulwVckRC
- iIGnOpZ4l5eEuRw25iosfV1HctWtjI2iIKHNP6NU6MkljrLPLBLVHWfuECbpHsrj2PTT
- SWGPCffsno/4boHA/dewqssOBe+HZCoyzdAe2NFLJzZqbA/+88JtJ1OzR7IIBwctQQEM
- iYxNaIg+Y1arIaVej6jvhUiaVnw79qwqukAinf4KFt1nLs180e41a8/VZUwpWZhOf3si
- uEHjusn7/r9kZWhxVmfYWsm1lYLjEKHPNODN/BlGVyPO4+3RQRNMw+BkvzyVRTM2nJo/
- u3PQ==
-X-Gm-Message-State: AOJu0YzHD6tuD4JM3h7HE50K+fd9MzSiefeq0DW3HRcXlP7n37s6yKAP
- vbYYG++UdWRVa00PbgtGs095d95ek7Cq1KEXPMSfreXaV52+fTImPo/DyhkjcEMlS66S7PMQJkx
- sgjI0j2Pj/D6gKGykxeNJ9OMIDcc7BOKerIY0pub4RBOFG6M5
-X-Google-Smtp-Source: AGHT+IEar5XS48qlERsTQgD21+98rhTv8j5E3NooTZuctZf16kKzgXPfQ3eWLSK96tb4DDYIMPB2gpA+eH/sojRSzB4=
-X-Received: by 2002:a05:6402:5188:b0:5c9:59e6:e908 with SMTP id
- 4fb4d7f45d1cf-5c959e6f56amr7109237a12.6.1728914107522; Mon, 14 Oct 2024
- 06:55:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728914270; x=1729519070;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kFQjaMmebX/GNfns5YbzfhnYeTTu2UtxY531guWUTY8=;
+ b=I8Vv7MJAX7rQFgiKGMYk1g7/sEZHbS4d1/fXraXxnGhVFPoUj9wRARj6OjO7QAMkBb
+ kWRvHSLyBen6ExPa7yYFyl2mnQx/VAZUVSqaK5jzywoPLqSUUyFjAqdiVU8ycfDPUIdX
+ 82Y8SfuKJtYAOfdIEFtoYgZ1E13Qk77MtUhH/RLYLNXDEi7PnN27wDn4g0LJ+VhwRw4r
+ rDnUb2dntXwYL+W2JMJVjilUnyG0bKQui5DK6Yv1ohAJsPUOot4uA5zJVLLtVvabKpG1
+ 8py+3x2TzqylMGYxX8/hO5u3wxO4L08umrDCttQozgK+egQceoDhW2Pvtxn7P2PO/BS3
+ RVUA==
+X-Gm-Message-State: AOJu0YxxOKf446CrP9KxJ/u+P+09/yFnv0Ad8rbtxt/hSRaXciMYeBgj
+ tgiLruT9l4YvtbKWes4LFbxhPCkFhQVeY3QEv8bQu6RaYAENZabXOUO8rLHyV9xRvGGFvhsXaUs
+ YxtVaL4I17k8J8yXqvkh3UFzxQwk=
+X-Google-Smtp-Source: AGHT+IE51s+DshBrhie/b26WeJiqNIKaccK5DvoN82vU3BV7S7S+cpgyEXhu6vu0Ar1zwsDPJ8FiFAxbFq0/H6aYWT4=
+X-Received: by 2002:a05:622a:2c5:b0:458:4d55:fdf7 with SMTP id
+ d75a77b69052e-4604bc38e77mr201595021cf.40.1728914269935; Mon, 14 Oct 2024
+ 06:57:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241014110113.173946-1-pbonzini@redhat.com>
- <CAFEAcA-8wdDV4fziAj5FqfR2isjdAvLxXZHvqN0=GewDNS9iLA@mail.gmail.com>
- <CAFEAcA_vUxNXRNnWtDd1DeWmC8dDT64VwvB8yswnjp5QzyOt0w@mail.gmail.com>
-In-Reply-To: <CAFEAcA_vUxNXRNnWtDd1DeWmC8dDT64VwvB8yswnjp5QzyOt0w@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Oct 2024 14:54:55 +0100
-Message-ID: <CAFEAcA8h-ahm2_dO3b+KV+MdqtN4N6E0-C9jKS7B0n8L+3jS+A@mail.gmail.com>
-Subject: Re: [PATCH] configure, meson: synchronize defaults for configure and
- Meson Rust options
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+References: <20241010101838.331032-1-r.peniaev@gmail.com>
+ <20241010101838.331032-2-r.peniaev@gmail.com>
+In-Reply-To: <20241010101838.331032-2-r.peniaev@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 14 Oct 2024 17:57:37 +0400
+Message-ID: <CAJ+F1CJ1ymDa3+R88RL8BF+fi=MwwrEd6_0s6-eG1S=LxZn9yw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] chardev/char: rename `char-mux.c` to
+ `char-mux-fe.c`
+To: Roman Penyaev <r.peniaev@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e82205062470383b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,94 +89,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Oct 2024 at 13:09, Peter Maydell <peter.maydell@linaro.org> wrot=
-e:
+--000000000000e82205062470383b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Roman,
+
+On Thu, Oct 10, 2024 at 2:21=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
+ wrote:
+
+> In the following patches backend multiplexer will be
+> introduced and the implementation will be named as
+> follows: `char-mux-be.c`. This patch renames the
+> frontend multiplexer from `char-mux.c` to
+> `char-mux-fe.c`.
 >
-> On Mon, 14 Oct 2024 at 12:45, Peter Maydell <peter.maydell@linaro.org> wr=
-ote:
-> >
-> > On Mon, 14 Oct 2024 at 12:01, Paolo Bonzini <pbonzini@redhat.com> wrote=
-:
-> > >
-> > > If the defaults for --enable-rust ($rust in configure) and Meson's ru=
-st
-> > > option are out of sync, incremental builds will pick Meson's default.
-> > >
-> > > This happens because, on an incremental build, configure does not run
-> > > Meson, Make does instead.  Meson then gets the command line options
-> > > from either coredata.dat (which has everything cached in Python's pic=
-kle
-> > > format) or cmd_line.txt (slow path when Meson version is upgraded), b=
-ut
-> > > neither knows about the rust option, and the meson_options.txt defaul=
-t
-> > > is used.
-> > >
-> > > This will cause have_rust to be true if rustc is available; and the b=
-uild
-> > > to fail because configure did not put a RUST_TARGET_TRIPLE in config-=
-host.mak.
-> > >
-> > > When in the Rust pull request I changed the $rust default from auto
-> > > to disabled, I should have made the same change to meson_options.txt;
-> > > do it now.
-> > >
-> > > Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > > Reported-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >
-> > This fixes the issue I was seeing with my local
-> > incremental rebuild.
-> >
-> > Tested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+> Cc: qemu-devel@nongnu.org
+
+
+thanks, it looks like the series is missing a cover letter (and thus not
+handled by patchew)
+
+Also it seems to fail to apply on master, and I wonder if it will conflict
+with your other mux cleanup series.
+
+thanks
+
 >
-> ...but this change broke 'make vm-build-openbsd', because
-> meson-buildoptions.py fell over with an error from the JSON
-> decoder:
+> ---
+>  chardev/{char-mux.c =3D> char-mux-fe.c} | 0
+>  chardev/meson.build                   | 2 +-
+>  2 files changed, 1 insertion(+), 1 deletion(-)
+>  rename chardev/{char-mux.c =3D> char-mux-fe.c} (100%)
 >
-> make: Entering directory '/home/peter.maydell/qemu-openbsd/build'
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/meson introspect
-> --buildoptions /home/peter.maydell/qemu-openbsd/meson.build |
-> /home/peter.maydell/qemu-openbsd/build/pyvenv/bin/python3 -B \
->   scripts/meson-buildoptions.py >
-> /home/peter.maydell/qemu-openbsd/scripts/meson-buildoptions.sh.tmp &&
-> mv /home/peter.maydell/qemu-openbsd/scripts/meson-buildoptions.sh.tmp
-> /home/peter.maydell/qemu-openbsd/scripts/meson-buildoptions.sh
-> Trying to enter hw/core which has already been visited --> Skipping
-> Unable to evaluate subdir([]) in AstInterpreter --> Skipping
-> Traceback (most recent call last):
->   File "/home/peter.maydell/qemu-openbsd/build/scripts/meson-buildoptions=
-.py",
-> line 245, in <module>
->     options =3D load_options(json.load(sys.stdin))
->   File "/usr/lib/python3.10/json/__init__.py", line 293, in load
->     return loads(fp.read(),
->   File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
->     return _default_decoder.decode(s)
->   File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
->     obj, end =3D self.raw_decode(s, idx=3D_w(s, 0).end())
->   File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
->     raise JSONDecodeError("Expecting value", s, err.value) from None
-> json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
-> make: *** No rule to make target
-> '/home/peter.maydell/qemu-openbsd/scripts/meson-buildoptions.sh',
-> needed by 'config-host.mak'.  Stop.
-> make: Leaving directory '/home/peter.maydell/qemu-openbsd/build'
+> diff --git a/chardev/char-mux.c b/chardev/char-mux-fe.c
+> similarity index 100%
+> rename from chardev/char-mux.c
+> rename to chardev/char-mux-fe.c
+> diff --git a/chardev/meson.build b/chardev/meson.build
+> index 70070a8279a9..778444a00ca6 100644
+> --- a/chardev/meson.build
+> +++ b/chardev/meson.build
+> @@ -2,7 +2,7 @@ chardev_ss.add(files(
+>    'char-fe.c',
+>    'char-file.c',
+>    'char-io.c',
+> -  'char-mux.c',
+> +  'char-mux-fe.c',
+>    'char-null.c',
+>    'char-pipe.c',
+>    'char-ringbuf.c',
+> --
+> 2.34.1
+>
+>
+>
 
-Trying to debug this I tried running 'meson introspect --buildoptions'
-by hand on that machine, which falls over like this:
+--=20
+Marc-Andr=C3=A9 Lureau
 
-~/qemu-openbsd/build$ ./pyvenv/bin/meson introspect --buildoptions
-../meson.build
-Trying to enter hw/core which has already been visited --> Skipping
-Unable to evaluate subdir([]) in AstInterpreter --> Skipping
+--000000000000e82205062470383b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-../rust/qemu-api-macros/meson.build:1:0: ERROR: Unknown compiler(s): [['rus=
-tc']]
-The following exception(s) were encountered:
-Running `rustc --version` gave "[Errno 2] No such file or directory: 'rustc=
-'"
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Roman,<br></div><br><div class=3D"gmai=
+l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 10, 2024 at 2:21=
+=E2=80=AFPM Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com">r.peni=
+aev@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">In the following patches backend multiplexer will be<br>
+introduced and the implementation will be named as<br>
+follows: `char-mux-be.c`. This patch renames the<br>
+frontend multiplexer from `char-mux.c` to<br>
+`char-mux-fe.c`.<br>
+<br>
+Signed-off-by: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com" tar=
+get=3D"_blank">r.peniaev@gmail.com</a>&gt;<br>
+Cc: &quot;Marc-Andr=C3=A9 Lureau&quot; &lt;<a href=3D"mailto:marcandre.lure=
+au@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+Cc: <a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank">qemu-devel@n=
+ongnu.org</a></blockquote><div><br></div><div>thanks, it looks like the ser=
+ies is missing a cover letter (and thus not handled by patchew)</div><div><=
+br></div><div>Also it seems to fail to apply on master, and I wonder if it =
+will conflict with your other mux cleanup series.</div><div><br></div><div>=
+thanks <br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+---<br>
+=C2=A0chardev/{char-mux.c =3D&gt; char-mux-fe.c} | 0<br>
+=C2=A0chardev/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0| 2 +-<br>
+=C2=A02 files changed, 1 insertion(+), 1 deletion(-)<br>
+=C2=A0rename chardev/{char-mux.c =3D&gt; char-mux-fe.c} (100%)<br>
+<br>
+diff --git a/chardev/char-mux.c b/chardev/char-mux-fe.c<br>
+similarity index 100%<br>
+rename from chardev/char-mux.c<br>
+rename to chardev/char-mux-fe.c<br>
+diff --git a/chardev/meson.build b/chardev/meson.build<br>
+index 70070a8279a9..778444a00ca6 100644<br>
+--- a/chardev/meson.build<br>
++++ b/chardev/meson.build<br>
+@@ -2,7 +2,7 @@ chardev_ss.add(files(<br>
+=C2=A0 =C2=A0&#39;char-fe.c&#39;,<br>
+=C2=A0 =C2=A0&#39;char-file.c&#39;,<br>
+=C2=A0 =C2=A0&#39;char-io.c&#39;,<br>
+-=C2=A0 &#39;char-mux.c&#39;,<br>
++=C2=A0 &#39;char-mux-fe.c&#39;,<br>
+=C2=A0 =C2=A0&#39;char-null.c&#39;,<br>
+=C2=A0 =C2=A0&#39;char-pipe.c&#39;,<br>
+=C2=A0 =C2=A0&#39;char-ringbuf.c&#39;,<br>
+-- <br>
+2.34.1<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
 
--- PMM
+--000000000000e82205062470383b--
 
