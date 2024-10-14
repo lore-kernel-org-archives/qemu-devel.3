@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC1D16261
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38087D16265
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 13:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0LLB-0004Os-CS; Mon, 14 Oct 2024 09:42:29 -0400
+	id 1t0LOG-0004yc-48; Mon, 14 Oct 2024 09:45:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LKE-0003AQ-8d
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0LK9-00046Q-10
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:41:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728913279;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AyUPW+hgxyLeiY+qz06cEXiEyTlF8qX9Tc5iczeYORk=;
- b=fT0wCvDaBjl8PfvFgJx5jJSt6xabf5gu2iMpIKRixBwc2jiVPf/MWMcv436569t2vbIrA3
- qbEUIvYLyfuAJLDJvXJ8Fz5hNjWdr7oMQH3dzwsqQ5pgnJA1PjohKAZqrpR4bg3GYlKTtT
- g5A0YviuccyDp99TYulfHJpfUEs9VDw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-lM-bJmG2OcWLJROQfvXV7w-1; Mon,
- 14 Oct 2024 09:41:15 -0400
-X-MC-Unique: lM-bJmG2OcWLJROQfvXV7w-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF1761955E84; Mon, 14 Oct 2024 13:41:13 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C469A3000198; Mon, 14 Oct 2024 13:41:12 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 19/20] tests: add basic -display dbus Map.Unix test
-Date: Mon, 14 Oct 2024 17:39:34 +0400
-Message-ID: <20241014133935.470709-20-marcandre.lureau@redhat.com>
-In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
-References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0LOD-0004pm-23
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:45:37 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0LOA-0004e8-LR
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 09:45:36 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9634c9160so2016782a12.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 06:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728913533; x=1729518333; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/x3jduf9qofInp9xJhR8JL0oMBSpjfQzzIuTQVRDTp0=;
+ b=fcbfi80qr07jqGYGaAYqB/Zr9+es8n1aRjiOlg2QbDBnRbhClVlT8R7an9NAFnM47U
+ Jrh8D4LfL/78FjzDlJDfSn/9Xzbl9GjHjC0OdWDF1H1OTLKOQ9pIcDZ+KdOOHIE4rgzx
+ 2LPt53jBRbdtXTYtV3CzUtflG+af9/11xd6/uu6oq5cf2ugfVfLMncnz/vPWEZXI7cso
+ kVReIyFXUOx1UMgLpJ185mAip/cOtZxFYlmKgEptpqAwZnZi9UxVGisCcK4fgBTTyc1S
+ 2BcaWEoTWYdj6C+5ARnI5TrJys35BnqOu/+ym97pfRUoqDCU4TcPS6KJJyPMiIGvBbm2
+ MOnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728913533; x=1729518333;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/x3jduf9qofInp9xJhR8JL0oMBSpjfQzzIuTQVRDTp0=;
+ b=PfyfoDZ0qbYsZ1MwtrVVjncoauTsRgRJB8YLX4zWou3ddvylW68YGOFyJB+S8ehPyp
+ cBUWTlp7jP8mfIsP/hlCsYFq9wr02E/Eal9DnnhuVaHZv25FVAmHVNgdsH/lHh5EO1fH
+ kFgMcLy5jeE1lA0Y7Bw06oIk5XKMo92eoCauh6GbnQvZBB5oD/pD866LSCcJzqkl6JPm
+ 1tZ6TI0v7+24XhePvfXLbFoXhEsZY8PVu/9CimxBLRBecaovUy8YrqvfzzZwIDxqQeL2
+ dT5LkXVLTtLj1l55PNOcMlh5PFKikaYMbsyvYxi1+OyXXG4HC64C27CtUQWNID8PsfxR
+ oTvQ==
+X-Gm-Message-State: AOJu0YzohRgOOPYPI0YV47ms04tEi9rFe32O+C059vChqFRVOjXSqwKb
+ LbHKnigP68ApU+qWfZplWWAaLFjG+dbpzGfRt91nR/CQBwAICY6CaU6VAADAfT7QMrwAUDjkHVP
+ ugSwrB4M+Zf+ht1+SKqyuVteBevoORlUyA+/VYA==
+X-Google-Smtp-Source: AGHT+IETA7qFEvTpdBaB1orEvPun42G2vPrYiyE40r8yKKj3tksVUIqhcBKAoOR6V7lc5KTaGMSqKcBJgPcy2RY7uEE=
+X-Received: by 2002:a05:6402:4410:b0:5c8:8668:e564 with SMTP id
+ 4fb4d7f45d1cf-5c948d79b88mr7929170a12.30.1728913532620; Mon, 14 Oct 2024
+ 06:45:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.076,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20241014110113.173946-1-pbonzini@redhat.com>
+ <CAFEAcA-8wdDV4fziAj5FqfR2isjdAvLxXZHvqN0=GewDNS9iLA@mail.gmail.com>
+ <CAFEAcA_vUxNXRNnWtDd1DeWmC8dDT64VwvB8yswnjp5QzyOt0w@mail.gmail.com>
+In-Reply-To: <CAFEAcA_vUxNXRNnWtDd1DeWmC8dDT64VwvB8yswnjp5QzyOt0w@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Oct 2024 14:45:21 +0100
+Message-ID: <CAFEAcA9Kjz7BT1erMfaX+Yd7Hb+Cj=s5dPD6RFxxQvR-bGVkeA@mail.gmail.com>
+Subject: Re: [PATCH] configure, meson: synchronize defaults for configure and
+ Meson Rust options
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,159 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Mon, 14 Oct 2024 at 13:09, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Mon, 14 Oct 2024 at 12:45, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+> >
+> > On Mon, 14 Oct 2024 at 12:01, Paolo Bonzini <pbonzini@redhat.com> wrote=
+:
+> > >
+> > > If the defaults for --enable-rust ($rust in configure) and Meson's ru=
+st
+> > > option are out of sync, incremental builds will pick Meson's default.
+> > >
+> > > This happens because, on an incremental build, configure does not run
+> > > Meson, Make does instead.  Meson then gets the command line options
+> > > from either coredata.dat (which has everything cached in Python's pic=
+kle
+> > > format) or cmd_line.txt (slow path when Meson version is upgraded), b=
+ut
+> > > neither knows about the rust option, and the meson_options.txt defaul=
+t
+> > > is used.
+> > >
+> > > This will cause have_rust to be true if rustc is available; and the b=
+uild
+> > > to fail because configure did not put a RUST_TARGET_TRIPLE in config-=
+host.mak.
+> > >
+> > > When in the Rust pull request I changed the $rust default from auto
+> > > to disabled, I should have made the same change to meson_options.txt;
+> > > do it now.
+> > >
+> > > Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> > > Reported-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >
+> > This fixes the issue I was seeing with my local
+> > incremental rebuild.
+> >
+> > Tested-by: Peter Maydell <peter.maydell@linaro.org>
+>
+> ...but this change broke 'make vm-build-openbsd', because
+> meson-buildoptions.py fell over with an error from the JSON
+> decoder:
 
-Only check we eventually get a shared memory scanout.
+This happens also on the macos-14 CI job:
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20241008125028.1177932-20-marcandre.lureau@redhat.com>
----
- tests/qtest/dbus-display-test.c | 72 ++++++++++++++++++++++++++++++---
- 1 file changed, 67 insertions(+), 5 deletions(-)
+https://gitlab.com/qemu-project/qemu/-/jobs/8078308341
 
-diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-test.c
-index 0390bdcb41..f7fc873bfb 100644
---- a/tests/qtest/dbus-display-test.c
-+++ b/tests/qtest/dbus-display-test.c
-@@ -2,9 +2,14 @@
- #include "qemu/sockets.h"
- #include "qemu/dbus.h"
- #include "qemu/sockets.h"
-+#include "glib.h"
-+#include "glibconfig.h"
- #include <gio/gio.h>
- #include <gio/gunixfdlist.h>
- #include "libqtest.h"
-+#ifndef WIN32
-+#include <sys/mman.h>
-+#endif
- #include "ui/dbus-display1.h"
- 
- static GDBusConnection*
-@@ -82,6 +87,7 @@ typedef struct TestDBusConsoleRegister {
-     GThread *thread;
-     GDBusConnection *listener_conn;
-     GDBusObjectManagerServer *server;
-+    bool with_map;
- } TestDBusConsoleRegister;
- 
- static gboolean listener_handle_scanout(
-@@ -94,13 +100,49 @@ static gboolean listener_handle_scanout(
-     GVariant *arg_data,
-     TestDBusConsoleRegister *test)
- {
-+    if (!test->with_map) {
-+        g_main_loop_quit(test->loop);
-+    }
-+
-+    return DBUS_METHOD_INVOCATION_HANDLED;
-+}
-+
-+#ifndef WIN32
-+static gboolean listener_handle_scanout_map(
-+    QemuDBusDisplay1ListenerUnixMap *object,
-+    GDBusMethodInvocation *invocation,
-+    GUnixFDList *fd_list,
-+    GVariant *arg_handle,
-+    guint arg_offset,
-+    guint arg_width,
-+    guint arg_height,
-+    guint arg_stride,
-+    guint arg_pixman_format,
-+    TestDBusConsoleRegister *test)
-+{
-+    int fd = -1;
-+    gint32 handle = g_variant_get_handle(arg_handle);
-+    g_autoptr(GError) error = NULL;
-+    void *addr = NULL;
-+    size_t len = arg_height * arg_stride;
-+
-+    g_assert_cmpuint(g_unix_fd_list_get_length(fd_list), ==, 1);
-+    fd = g_unix_fd_list_get(fd_list, handle, &error);
-+    g_assert_no_error(error);
-+
-+    addr = mmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, arg_offset);
-+    g_assert_no_errno(addr == MAP_FAILED ? -1 : 0);
-+    g_assert_no_errno(munmap(addr, len));
-+
-     g_main_loop_quit(test->loop);
- 
-+    close(fd);
-     return DBUS_METHOD_INVOCATION_HANDLED;
- }
-+#endif
- 
- static void
--test_dbus_console_setup_listener(TestDBusConsoleRegister *test)
-+test_dbus_console_setup_listener(TestDBusConsoleRegister *test, bool with_map)
- {
-     g_autoptr(GDBusObjectSkeleton) listener = NULL;
-     g_autoptr(QemuDBusDisplay1ListenerSkeleton) iface = NULL;
-@@ -114,6 +156,25 @@ test_dbus_console_setup_listener(TestDBusConsoleRegister *test)
-                      NULL);
-     g_dbus_object_skeleton_add_interface(listener,
-                                          G_DBUS_INTERFACE_SKELETON(iface));
-+    if (with_map) {
-+#ifdef WIN32
-+        g_test_skip("map test lacking on win32");
-+        return;
-+#else
-+        g_autoptr(QemuDBusDisplay1ListenerUnixMapSkeleton) iface_map =
-+            QEMU_DBUS_DISPLAY1_LISTENER_UNIX_MAP_SKELETON(
-+                qemu_dbus_display1_listener_unix_map_skeleton_new());
-+
-+        g_object_connect(iface_map,
-+                         "signal::handle-scanout-map", listener_handle_scanout_map, test,
-+                         NULL);
-+        g_dbus_object_skeleton_add_interface(listener,
-+                                             G_DBUS_INTERFACE_SKELETON(iface_map));
-+        g_object_set(iface, "interfaces",
-+            (const gchar *[]) { "org.qemu.Display1.Listener.Unix.Map", NULL },
-+            NULL);
-+#endif
-+    }
-     g_dbus_object_manager_server_export(test->server, listener);
-     g_dbus_object_manager_server_set_connection(test->server,
-                                                 test->listener_conn);
-@@ -145,7 +206,7 @@ test_dbus_console_registered(GObject *source_object,
-     g_assert_no_error(err);
- 
-     test->listener_conn = g_thread_join(test->thread);
--    test_dbus_console_setup_listener(test);
-+    test_dbus_console_setup_listener(test, test->with_map);
- }
- 
- static gpointer
-@@ -155,7 +216,7 @@ test_dbus_p2p_server_setup_thread(gpointer data)
- }
- 
- static void
--test_dbus_display_console(void)
-+test_dbus_display_console(const void* data)
- {
-     g_autoptr(GError) err = NULL;
-     g_autoptr(GDBusConnection) conn = NULL;
-@@ -163,7 +224,7 @@ test_dbus_display_console(void)
-     g_autoptr(GMainLoop) loop = NULL;
-     QTestState *qts = NULL;
-     int pair[2];
--    TestDBusConsoleRegister test = { 0, };
-+    TestDBusConsoleRegister test = { 0, .with_map = GPOINTER_TO_INT(data) };
- #ifdef WIN32
-     WSAPROTOCOL_INFOW info;
-     g_autoptr(GVariant) listener = NULL;
-@@ -299,7 +360,8 @@ main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_func("/dbus-display/vm", test_dbus_display_vm);
--    qtest_add_func("/dbus-display/console", test_dbus_display_console);
-+    qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false), test_dbus_display_console);
-+    qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(true), test_dbus_display_console);
-     qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
- 
-     return g_test_run();
--- 
-2.47.0
+Same
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
 
+error and backtrace.
+
+-- PMM
 
