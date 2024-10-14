@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F4DD16258
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCEDD16256
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0KBZ-0000sG-UX; Mon, 14 Oct 2024 08:28:30 -0400
+	id 1t0KBc-0000yq-P0; Mon, 14 Oct 2024 08:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t0KBG-0000G7-Hk; Mon, 14 Oct 2024 08:28:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1t0KBG-0000GE-JL; Mon, 14 Oct 2024 08:28:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t0KBC-0002Pn-Nc; Mon, 14 Oct 2024 08:28:09 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ECO5rL004764;
- Mon, 14 Oct 2024 12:28:01 GMT
+ id 1t0KBC-0002Pb-NS; Mon, 14 Oct 2024 08:28:10 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49EBscJ2005708;
+ Mon, 14 Oct 2024 12:27:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- EJoQ3+5PwCE3vgOz3vHPadE019SdEjR1njmJyKaks5Q=; b=UDvPTrxt9G11UfaS
- V7hBsN9Wj73F6tEvvDuIb6iuKYo+O9JrjCRALstl5kQo5c0CDwdG1/kKFMPlUkR1
- SFjy4+Slabr0tD8185NJgoA7FAUEJe3974MxE7EwstKbIMzJoZ4ExujvxiJml03k
- JB4XZvsMNoyKFvupl7FfkXuwkUewrDFkt4Hp1SeRzs3ERCb4DOhQBwX1f5TlIHDa
- VLHoppz7D9OeVyDF+HfnlyAb6SYfJFSUdBBUOAAKp3z1BE3m2gi8/H/zQ2i3QJjV
- qzCECYjniaFS3peXMHnMnLLlJLPB1HTVkwMMOTl8P5QD+V5OJ20yb8XDNhgKuzNt
- qzmkOQ==
+ b49RX0PSDpZXRkOFjZ3TMCwTxXD0qleRTv8FDtXiezs=; b=dyvQ9iXmqCc1ytj8
+ H+CahJBp0ZFW8JZlQ5KAb/G6BE+HjIjjPp2l9p0knnJp2NTAJZCYdxXERPwKjmTR
+ JphyvwSt0F8GPNy+fGfU90G9nBO1xa1+rTHHOi6znM8gWMTTDX4yQy5eoqtePzme
+ FNi8XNjJNLJCEqun/QYM73H3NZNPVpHa938P9hBTQCwBOmj6FbSHGEDUj9usrNyr
+ vp6HieGv/pbnQurvCH3g/KVr+hQFqasuD6+Cs8ic1rQoWssAi4TrLecowqgNf03c
+ 99HDrTfpPR610PLXrMVLRZXHqryUn14ur50bH77J8QwZO8Qyiw2wqcynvBPt20D+
+ 8k/x3A==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429391r0gd-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4292txr61h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:28:01 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49ECS02L012316;
- Mon, 14 Oct 2024 12:28:00 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429391r0gb-1
+ Mon, 14 Oct 2024 12:27:54 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49ECOuMk014969;
+ Mon, 14 Oct 2024 12:27:53 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4292txr61e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:28:00 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49ECPr1X005936;
- Mon, 14 Oct 2024 12:28:00 GMT
+ Mon, 14 Oct 2024 12:27:53 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49EC6wrK005381;
+ Mon, 14 Oct 2024 12:27:52 GMT
 Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 428650p4wy-1
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285nhx6mm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:28:00 +0000
+ Mon, 14 Oct 2024 12:27:52 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
  by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49ECRwN339649706
+ 49ECRpgL38011210
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Oct 2024 12:27:58 GMT
+ Mon, 14 Oct 2024 12:27:51 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AE4C20043;
- Mon, 14 Oct 2024 12:27:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 145A720043;
+ Mon, 14 Oct 2024 12:27:51 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65F8020040;
- Mon, 14 Oct 2024 12:27:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 28EA620040;
+ Mon, 14 Oct 2024 12:27:50 +0000 (GMT)
 Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 14 Oct 2024 12:27:57 +0000 (GMT)
+ Mon, 14 Oct 2024 12:27:50 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
-Subject: [PATCH v4 13/13] ppc/spapr: remove deprecated machine pseries-2.12
-Date: Mon, 14 Oct 2024 17:57:29 +0530
-Message-ID: <20241014122729.1136809-14-harshpb@linux.ibm.com>
+Subject: [PATCH v4 07/13] ppc/spapr: remove deprecated machine pseries-2.7
+Date: Mon, 14 Oct 2024 17:57:23 +0530
+Message-ID: <20241014122729.1136809-8-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241014122729.1136809-1-harshpb@linux.ibm.com>
 References: <20241014122729.1136809-1-harshpb@linux.ibm.com>
@@ -78,19 +78,19 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -1bQ70w7E9efx6jL9cpzmLuFyAcwDzo2
-X-Proofpoint-GUID: jN5UJ9aoShGv5lD_yftcQAEvJaSMldx6
+X-Proofpoint-GUID: 0Hb8oWLNndMb002ZLM4s2QPun82yKyFd
+X-Proofpoint-ORIG-GUID: laj-OL6CdlZ5wXlOPIlYtgM-JdCEA3F0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-14_10,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
- mlxlogscore=940 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410140089
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ malwarescore=0 mlxscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 adultscore=0 mlxlogscore=999 impostorscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410140089
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -114,205 +114,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 0cac0f1b964 marked pseries-2.12 machines as deprecated
-with reasons mentioned in its commit log.
-Removing pseries-2.12 specific code with this patch.
+Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
+deprecated with reasons mentioned in its commit log.
+Removing pseries-2.7 specific code with this patch for now.
 
-While at it, also remove pre-3.0-migration hacks introduced for backward
-compatibility which are now turned useless.
+While at it, also remove pre-2.8-migration and pci/mmio hacks introduced
+for backward compatibility.
 
 Suggested-by: Cédric Le Goater <clg@kaod.org>
+Acked-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- docs/about/deprecated.rst       |  8 --------
- include/hw/ppc/spapr_cpu_core.h |  1 -
- target/ppc/cpu.h                |  4 ----
- hw/ppc/spapr.c                  | 25 -------------------------
- hw/ppc/spapr_cpu_core.c         | 12 +++---------
- target/ppc/cpu_init.c           |  3 +--
- target/ppc/machine.c            | 18 +-----------------
- 7 files changed, 5 insertions(+), 66 deletions(-)
+ include/hw/pci-host/spapr.h |  4 --
+ target/ppc/cpu.h            |  5 ---
+ hw/ppc/spapr.c              | 75 -------------------------------------
+ hw/ppc/spapr_pci.c          | 57 ++++------------------------
+ target/ppc/cpu_init.c       |  1 -
+ target/ppc/machine.c        | 52 -------------------------
+ 6 files changed, 7 insertions(+), 187 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 48b230b0a0..3b312a5de2 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -243,14 +243,6 @@ These old machine types are quite neglected nowadays and thus might have
- various pitfalls with regards to live migration. Use a newer machine type
- instead.
+diff --git a/include/hw/pci-host/spapr.h b/include/hw/pci-host/spapr.h
+index 79187e80fd..0db87f1281 100644
+--- a/include/hw/pci-host/spapr.h
++++ b/include/hw/pci-host/spapr.h
+@@ -83,10 +83,6 @@ struct SpaprPhbState {
+     bool pcie_ecs; /* Allow access to PCIe extended config space? */
  
--``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
--''''''''''''''''''''''''''''''''''''''''''''''''''
--
--Older pseries machines before version 3.0 have undergone many changes
--to correct issues, mostly regarding migration compatibility. These are
--no longer maintained and removing them will make the code easier to
--read and maintain. Use versions 3.0 and above as a replacement.
--
- PPC 405 ``ref405ep`` machine (since 9.1)
- ''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/include/hw/ppc/spapr_cpu_core.h b/include/hw/ppc/spapr_cpu_core.h
-index 69a52e39b8..68f7083483 100644
---- a/include/hw/ppc/spapr_cpu_core.h
-+++ b/include/hw/ppc/spapr_cpu_core.h
-@@ -28,7 +28,6 @@ struct SpaprCpuCore {
-     /*< public >*/
-     PowerPCCPU **threads;
-     int node_id;
--    bool pre_3_0_migration; /* older machine don't know about SpaprCpuState */
+     /* Fields for migration compatibility hacks */
+-    bool pre_2_8_migration;
+-    uint32_t mig_liobn;
+-    hwaddr mig_mem_win_addr, mig_mem_win_size;
+-    hwaddr mig_io_win_addr, mig_io_win_size;
+     bool pre_5_1_assoc;
  };
  
- struct SpaprCpuCoreClass {
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 74a0ab768d..506c8c825c 100644
+index 321ed2da75..cab4a46fc1 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -1454,10 +1454,6 @@ struct ArchCPU {
-     /* Those resources are used only during code translation */
-     /* opcode handlers */
+@@ -1456,11 +1456,6 @@ struct ArchCPU {
      opc_handler_t *opcodes[PPC_CPU_OPCODES_LEN];
--
--    /* Fields related to migration compatibility hacks */
--    bool pre_3_0_migration;
--    int32_t mig_slb_nr;
- };
  
- /**
+     /* Fields related to migration compatibility hacks */
+-    bool pre_2_8_migration;
+-    target_ulong mig_msr_mask;
+-    uint64_t mig_insns_flags;
+-    uint64_t mig_insns_flags2;
+-    uint32_t mig_nb_BATs;
+     bool pre_2_10_migration;
+     bool pre_3_0_migration;
+     int32_t mig_slb_nr;
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index aba0ad26f1..5c02037c56 100644
+index a9c988b8f6..c89ab89b97 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -5015,31 +5015,6 @@ static void spapr_machine_3_0_class_options(MachineClass *mc)
+@@ -5203,81 +5203,6 @@ static void spapr_machine_2_8_class_options(MachineClass *mc)
  
- DEFINE_SPAPR_MACHINE(3, 0);
+ DEFINE_SPAPR_MACHINE(2, 8);
  
 -/*
-- * pseries-2.12
+- * pseries-2.7
 - */
--static void spapr_machine_2_12_class_options(MachineClass *mc)
+-
+-static bool phb_placement_2_7(SpaprMachineState *spapr, uint32_t index,
+-                              uint64_t *buid, hwaddr *pio,
+-                              hwaddr *mmio32, hwaddr *mmio64,
+-                              unsigned n_dma, uint32_t *liobns, Error **errp)
+-{
+-    /* Legacy PHB placement for pseries-2.7 and earlier machine types */
+-    const uint64_t base_buid = 0x800000020000000ULL;
+-    const hwaddr phb_spacing = 0x1000000000ULL; /* 64 GiB */
+-    const hwaddr mmio_offset = 0xa0000000; /* 2 GiB + 512 MiB */
+-    const hwaddr pio_offset = 0x80000000; /* 2 GiB */
+-    const uint32_t max_index = 255;
+-    const hwaddr phb0_alignment = 0x10000000000ULL; /* 1 TiB */
+-
+-    uint64_t ram_top = MACHINE(spapr)->ram_size;
+-    hwaddr phb0_base, phb_base;
+-    int i;
+-
+-    /* Do we have device memory? */
+-    if (MACHINE(spapr)->device_memory) {
+-        /* Can't just use maxram_size, because there may be an
+-         * alignment gap between normal and device memory regions
+-         */
+-        ram_top = MACHINE(spapr)->device_memory->base +
+-            memory_region_size(&MACHINE(spapr)->device_memory->mr);
+-    }
+-
+-    phb0_base = QEMU_ALIGN_UP(ram_top, phb0_alignment);
+-
+-    if (index > max_index) {
+-        error_setg(errp, "\"index\" for PAPR PHB is too large (max %u)",
+-                   max_index);
+-        return false;
+-    }
+-
+-    *buid = base_buid + index;
+-    for (i = 0; i < n_dma; ++i) {
+-        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+-    }
+-
+-    phb_base = phb0_base + index * phb_spacing;
+-    *pio = phb_base + pio_offset;
+-    *mmio32 = phb_base + mmio_offset;
+-    /*
+-     * We don't set the 64-bit MMIO window, relying on the PHB's
+-     * fallback behaviour of automatically splitting a large "32-bit"
+-     * window into contiguous 32-bit and 64-bit windows
+-     */
+-
+-    return true;
+-}
+-
+-static void spapr_machine_2_7_class_options(MachineClass *mc)
 -{
 -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
 -    static GlobalProperty compat[] = {
--        { TYPE_POWERPC_CPU, "pre-3.0-migration", "on" },
--        { TYPE_SPAPR_CPU_CORE, "pre-3.0-migration", "on" },
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem_win_size", "0xf80000000", },
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "mem64_win_size", "0", },
+-        { TYPE_POWERPC_CPU, "pre-2.8-migration", "on", },
+-        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pre-2.8-migration", "on", },
 -    };
 -
--    spapr_machine_3_0_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_2_12, hw_compat_2_12_len);
+-    spapr_machine_2_8_class_options(mc);
+-    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power7_v2.3");
+-    mc->default_machine_opts = "modern-hotplug-events=off";
+-    compat_props_add(mc->compat_props, hw_compat_2_7, hw_compat_2_7_len);
 -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--
--    /* We depend on kvm_enabled() to choose a default value for the
--     * hpt-max-page-size capability. Of course we can't do it here
--     * because this is too early and the HW accelerator isn't initialized
--     * yet. Postpone this to machine init (see default_caps_with_cpu()).
--     */
--    smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] = 0;
+-    smc->phb_placement = phb_placement_2_7;
 -}
 -
--DEFINE_SPAPR_MACHINE(2, 12);
+-DEFINE_SPAPR_MACHINE(2, 7);
 -
  static void spapr_machine_register_types(void)
  {
      type_register_static(&spapr_machine_info);
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 4642245168..1a84345f36 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -197,9 +197,7 @@ static void spapr_unrealize_vcpu(PowerPCCPU *cpu, SpaprCpuCore *sc)
- {
-     CPUPPCState *env = &cpu->env;
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 8f1964ce52..7e24084673 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1814,30 +1814,15 @@ static void spapr_phb_realize(DeviceState *dev, Error **errp)
  
--    if (!sc->pre_3_0_migration) {
--        vmstate_unregister(NULL, &vmstate_spapr_cpu_state, cpu->machine_data);
--    }
-+    vmstate_unregister(NULL, &vmstate_spapr_cpu_state, cpu->machine_data);
-     spapr_irq_cpu_intc_destroy(SPAPR_MACHINE(qdev_get_machine()), cpu);
-     cpu_ppc_tb_free(env);
-     qdev_unrealize(DEVICE(cpu));
-@@ -285,10 +283,8 @@ static bool spapr_realize_vcpu(PowerPCCPU *cpu, SpaprMachineState *spapr,
-         return false;
+     assert(sphb->index != (uint32_t)-1); /* checked in spapr_phb_pre_plug() */
+ 
+-    if (sphb->mem64_win_size != 0) {
+-        if (sphb->mem_win_size > SPAPR_PCI_MEM32_WIN_SIZE) {
+-            error_setg(errp, "32-bit memory window of size 0x%"HWADDR_PRIx
+-                       " (max 2 GiB)", sphb->mem_win_size);
+-            return;
+-        }
+-
+-        /* 64-bit window defaults to identity mapping */
+-        sphb->mem64_win_pciaddr = sphb->mem64_win_addr;
+-    } else if (sphb->mem_win_size > SPAPR_PCI_MEM32_WIN_SIZE) {
+-        /*
+-         * For compatibility with old configuration, if no 64-bit MMIO
+-         * window is specified, but the ordinary (32-bit) memory
+-         * window is specified as > 2GiB, we treat it as a 2GiB 32-bit
+-         * window, with a 64-bit MMIO window following on immediately
+-         * afterwards
+-         */
+-        sphb->mem64_win_size = sphb->mem_win_size - SPAPR_PCI_MEM32_WIN_SIZE;
+-        sphb->mem64_win_addr = sphb->mem_win_addr + SPAPR_PCI_MEM32_WIN_SIZE;
+-        sphb->mem64_win_pciaddr =
+-            SPAPR_PCI_MEM_WIN_BUS_OFFSET + SPAPR_PCI_MEM32_WIN_SIZE;
+-        sphb->mem_win_size = SPAPR_PCI_MEM32_WIN_SIZE;
++    if (sphb->mem_win_size > SPAPR_PCI_MEM32_WIN_SIZE) {
++        error_setg(errp, "32-bit memory window of size 0x%"HWADDR_PRIx
++                   " (max 2 GiB)", sphb->mem_win_size);
++        return;
      }
  
--    if (!sc->pre_3_0_migration) {
--        vmstate_register(NULL, cs->cpu_index, &vmstate_spapr_cpu_state,
--                         cpu->machine_data);
--    }
-+    vmstate_register(NULL, cs->cpu_index, &vmstate_spapr_cpu_state,
-+                     cpu->machine_data);
-     return true;
- }
++    /* 64-bit window defaults to identity mapping */
++    sphb->mem64_win_pciaddr = sphb->mem64_win_addr;
++
+     if (spapr_pci_find_phb(spapr, sphb->buid)) {
+         SpaprPhbState *s;
  
-@@ -366,8 +362,6 @@ static void spapr_cpu_core_realize(DeviceState *dev, Error **errp)
+@@ -2066,8 +2051,6 @@ static Property spapr_phb_properties[] = {
+                        (1ULL << 12) | (1ULL << 16)
+                        | (1ULL << 21) | (1ULL << 24)),
+     DEFINE_PROP_UINT32("numa_node", SpaprPhbState, numa_node, -1),
+-    DEFINE_PROP_BOOL("pre-2.8-migration", SpaprPhbState,
+-                     pre_2_8_migration, false),
+     DEFINE_PROP_BOOL("pcie-extended-configuration-space", SpaprPhbState,
+                      pcie_ecs, true),
+     DEFINE_PROP_BOOL("pre-5.1-associativity", SpaprPhbState,
+@@ -2105,20 +2088,6 @@ static int spapr_pci_pre_save(void *opaque)
+     gpointer key, value;
+     int i;
  
- static Property spapr_cpu_core_properties[] = {
-     DEFINE_PROP_INT32("node-id", SpaprCpuCore, node_id, CPU_UNSET_NUMA_NODE_ID),
--    DEFINE_PROP_BOOL("pre-3.0-migration", SpaprCpuCore, pre_3_0_migration,
--                     false),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 39c19e6674..011e53d961 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7452,8 +7452,7 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
- }
- 
- static Property ppc_cpu_properties[] = {
--    DEFINE_PROP_BOOL("pre-3.0-migration", PowerPCCPU, pre_3_0_migration,
--                     false),
-+    /* add default property here */
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index 47495b68b1..717bf93e88 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -118,15 +118,6 @@ static const VMStateInfo vmstate_info_vsr = {
- #define VMSTATE_VSR_ARRAY(_f, _s, _n)                             \
-     VMSTATE_VSR_ARRAY_V(_f, _s, _n, 0)
- 
--#if defined(TARGET_PPC64)
--static bool cpu_pre_3_0_migration(void *opaque, int version_id)
--{
--    PowerPCCPU *cpu = opaque;
+-    if (sphb->pre_2_8_migration) {
+-        sphb->mig_liobn = sphb->dma_liobn[0];
+-        sphb->mig_mem_win_addr = sphb->mem_win_addr;
+-        sphb->mig_mem_win_size = sphb->mem_win_size;
+-        sphb->mig_io_win_addr = sphb->io_win_addr;
+-        sphb->mig_io_win_size = sphb->io_win_size;
 -
--    return cpu->pre_3_0_migration;
--}
--#endif
--
- static int cpu_pre_save(void *opaque)
- {
-     PowerPCCPU *cpu = opaque;
-@@ -154,12 +145,6 @@ static int cpu_pre_save(void *opaque)
-         env->spr[SPR_IBAT4U + 2 * i + 1] = env->IBAT[1][i + 4];
-     }
- 
--    if (cpu->pre_3_0_migration) {
--        if (cpu->hash64_opts) {
--            cpu->mig_slb_nr = cpu->hash64_opts->slb_size;
+-        if ((sphb->mem64_win_size != 0)
+-            && (sphb->mem64_win_addr
+-                == (sphb->mem_win_addr + sphb->mem_win_size))) {
+-            sphb->mig_mem_win_size += sphb->mem64_win_size;
 -        }
 -    }
 -
-     /* Used to retain migration compatibility for pre 6.0 for 601 machines. */
-     env->hflags_compat_nmsr = 0;
+     g_free(sphb->msi_devs);
+     sphb->msi_devs = NULL;
+     sphb->msi_devs_num = g_hash_table_size(sphb->msi);
+@@ -2165,13 +2134,6 @@ static int spapr_pci_post_load(void *opaque, int version_id)
+     return 0;
+ }
  
-@@ -503,12 +488,11 @@ static int slb_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_slb = {
-     .name = "cpu/slb",
--    .version_id = 1,
-+    .version_id = 2,
-     .minimum_version_id = 1,
-     .needed = slb_needed,
-     .post_load = slb_post_load,
+-static bool pre_2_8_migration(void *opaque, int version_id)
+-{
+-    SpaprPhbState *sphb = opaque;
+-
+-    return sphb->pre_2_8_migration;
+-}
+-
+ static const VMStateDescription vmstate_spapr_pci = {
+     .name = "spapr_pci",
+     .version_id = 2,
+@@ -2181,11 +2143,6 @@ static const VMStateDescription vmstate_spapr_pci = {
+     .post_load = spapr_pci_post_load,
      .fields = (const VMStateField[]) {
--        VMSTATE_INT32_TEST(mig_slb_nr, PowerPCCPU, cpu_pre_3_0_migration),
-         VMSTATE_SLB_ARRAY(env.slb, PowerPCCPU, MAX_SLB_ENTRIES),
-         VMSTATE_END_OF_LIST()
+         VMSTATE_UINT64_EQUAL(buid, SpaprPhbState, NULL),
+-        VMSTATE_UINT32_TEST(mig_liobn, SpaprPhbState, pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_mem_win_addr, SpaprPhbState, pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_mem_win_size, SpaprPhbState, pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_io_win_addr, SpaprPhbState, pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_io_win_size, SpaprPhbState, pre_2_8_migration),
+         VMSTATE_STRUCT_ARRAY(lsi_table, SpaprPhbState, PCI_NUM_PINS, 0,
+                              vmstate_spapr_pci_lsi, SpaprPciLsi),
+         VMSTATE_INT32(msi_devs_num, SpaprPhbState),
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 23881d09e9..7768392986 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7452,7 +7452,6 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+ }
+ 
+ static Property ppc_cpu_properties[] = {
+-    DEFINE_PROP_BOOL("pre-2.8-migration", PowerPCCPU, pre_2_8_migration, false),
+     DEFINE_PROP_BOOL("pre-2.10-migration", PowerPCCPU, pre_2_10_migration,
+                      false),
+     DEFINE_PROP_BOOL("pre-3.0-migration", PowerPCCPU, pre_3_0_migration,
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index d433fd45fc..21bed7c7c8 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -118,13 +118,6 @@ static const VMStateInfo vmstate_info_vsr = {
+ #define VMSTATE_VSR_ARRAY(_f, _s, _n)                             \
+     VMSTATE_VSR_ARRAY_V(_f, _s, _n, 0)
+ 
+-static bool cpu_pre_2_8_migration(void *opaque, int version_id)
+-{
+-    PowerPCCPU *cpu = opaque;
+-
+-    return cpu->pre_2_8_migration;
+-}
+-
+ #if defined(TARGET_PPC64)
+ static bool cpu_pre_3_0_migration(void *opaque, int version_id)
+ {
+@@ -139,22 +132,6 @@ static int cpu_pre_save(void *opaque)
+     PowerPCCPU *cpu = opaque;
+     CPUPPCState *env = &cpu->env;
+     int i;
+-    uint64_t insns_compat_mask =
+-        PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB
+-        | PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES
+-        | PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE | PPC_FLOAT_FRSQRTES
+-        | PPC_FLOAT_STFIWX | PPC_FLOAT_EXT
+-        | PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ
+-        | PPC_MEM_SYNC | PPC_MEM_EIEIO | PPC_MEM_TLBIE | PPC_MEM_TLBSYNC
+-        | PPC_64B | PPC_64BX | PPC_ALTIVEC
+-        | PPC_SEGMENT_64B | PPC_SLBI | PPC_POPCNTB | PPC_POPCNTWD;
+-    uint64_t insns_compat_mask2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX
+-        | PPC2_PERM_ISA206 | PPC2_DIVE_ISA206
+-        | PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206
+-        | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207
+-        | PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207
+-        | PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_TM
+-        | PPC2_MEM_LWSYNC;
+ 
+     env->spr[SPR_LR] = env->lr;
+     env->spr[SPR_CTR] = env->ctr;
+@@ -177,29 +154,6 @@ static int cpu_pre_save(void *opaque)
+         env->spr[SPR_IBAT4U + 2 * i + 1] = env->IBAT[1][i + 4];
      }
+ 
+-    /* Hacks for migration compatibility between 2.6, 2.7 & 2.8 */
+-    if (cpu->pre_2_8_migration) {
+-        /*
+-         * Mask out bits that got added to msr_mask since the versions
+-         * which stupidly included it in the migration stream.
+-         */
+-        target_ulong metamask = 0
+-#if defined(TARGET_PPC64)
+-            | (1ULL << MSR_TS0)
+-            | (1ULL << MSR_TS1)
+-#endif
+-            ;
+-        cpu->mig_msr_mask = env->msr_mask & ~metamask;
+-        cpu->mig_insns_flags = env->insns_flags & insns_compat_mask;
+-        /*
+-         * CPU models supported by old machines all have
+-         * PPC_MEM_TLBIE, so we set it unconditionally to allow
+-         * backward migration from a POWER9 host to a POWER8 host.
+-         */
+-        cpu->mig_insns_flags |= PPC_MEM_TLBIE;
+-        cpu->mig_insns_flags2 = env->insns_flags2 & insns_compat_mask2;
+-        cpu->mig_nb_BATs = env->nb_BATs;
+-    }
+     if (cpu->pre_3_0_migration) {
+         if (cpu->hash64_opts) {
+             cpu->mig_slb_nr = cpu->hash64_opts->slb_size;
+@@ -760,12 +714,6 @@ const VMStateDescription vmstate_ppc_cpu = {
+         /* Backward compatible internal state */
+         VMSTATE_UINTTL(env.hflags_compat_nmsr, PowerPCCPU),
+ 
+-        /* Sanity checking */
+-        VMSTATE_UINTTL_TEST(mig_msr_mask, PowerPCCPU, cpu_pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_insns_flags, PowerPCCPU, cpu_pre_2_8_migration),
+-        VMSTATE_UINT64_TEST(mig_insns_flags2, PowerPCCPU,
+-                            cpu_pre_2_8_migration),
+-        VMSTATE_UINT32_TEST(mig_nb_BATs, PowerPCCPU, cpu_pre_2_8_migration),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
 -- 
 2.45.2
 
