@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F70FD18156
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439F3D18156
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0T8k-0003jt-Mp; Mon, 14 Oct 2024 18:02:10 -0400
+	id 1t0TFp-0006Ez-OY; Mon, 14 Oct 2024 18:09:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1t0T8g-0003iQ-It
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:02:07 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TFn-0006Eb-QW
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:09:27 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1t0T8c-0006Tw-7C
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:02:06 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-37d49ffaba6so3021061f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:01:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TFm-0007Q5-E9
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:09:27 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-20c803787abso31605005ad.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1728943317; x=1729548117; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KX+TeoqTj4F6vMuRUJ01fObu2ASRAunxY4faVD0HXGE=;
- b=FWhuySjf1KyrXiHnmKHiSgKm9pil1IACunbmP7BrsRQU79Fl1rmeWbCDiu3T57mXZ9
- R9mbjyIoSTKWl3m4Xfqdn803jhpeCHGHbAOdSt5loYm5jv1sk/rXjdfMmtS7vawV+nxm
- XlG6dhc33ZpDTOkp8o8EH9dmRTAzK7qpQ/6x4imuF3eviWBzBnam8ncFdPHofW7+NEi/
- OHLfgeDLHZLcNTCLxuwN+rzJdqo5icF7N/gQdODzNDtDfMRdr1ENI1ojqN74VFg5GB9R
- LUwMCEaiT0+IuXE+11v5MSYwHkdknV/cMjwZQXpVmUMtjWkruNI+l4Edk7iARETHRvwi
- BWgA==
+ d=linaro.org; s=google; t=1728943763; x=1729548563; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zb7cyEiKcqQ5X5/PCi+xvEfgTJqXZGZBRJmR3ylgvJY=;
+ b=FiutCx6C8UJYbalUEHwNNIFHodbY+Pcwp+egSFEN2veaF6ynoJhX1pxPEs8D/aH27X
+ f9jE0yKkn+y33JBqeZef2CPFx+BE1DIwwQvBB7R+SQ0ECyG8a99gUJS4ZUtIhOWWZkG/
+ f4fR4f0t/AIyQC4gtUVmM4HlLtt0l7V5B6EPELiNMPqSQbXWRP/nbN4PeobuSHp4YHgt
+ N6MHnVassUxXB3KBfTipoxj1HoDo2wQaOLzZry8gxT4iizYb8sZ5lZl5fUQIPWSj+t5G
+ DZ2AGqhIz7XPX9waP8WnnTPA1Op6anziPevGFvcv+32pa/5gxdt717gFX2kpg3Cr3ZOI
+ uHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728943317; x=1729548117;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KX+TeoqTj4F6vMuRUJ01fObu2ASRAunxY4faVD0HXGE=;
- b=BM1a9saQBFvqSJfH+6v1xc/xBX7YDvFhlCE1QWqF+CEJVbcSfmRX5ff5grAl1qIziF
- nNQpWzxZAzNsukDsnnedorEav70fZ+PJhTWJC5uEFUf3grAfh3thmwkH9Jb+kKxIqUDF
- Qg7nDmZOMfDXQyyUL0MOOiGYLr6y6l/iVJ92tQ2yUIuXxC1UYD+UmisDjZ4OXqDDl6Ty
- 4P1y7c9vEcE4WPtF+u4g/4cdquaic/7oKjKEycCsU8PgGwIKBv1cqlRGsaJUGLL7KM8q
- Ls5ph5ye/hgadFQZ14nFFwWbuRhWluDJAgN4SZ0qFP90RhijhrTRfTMI/S+AYejqc9K1
- GO0Q==
-X-Gm-Message-State: AOJu0Yxbz3TMVknxY28j67hPvhR1DZy+pnG7DOgKFqKJ3YoDmxgYiUVR
- 4BsMWiinhXj1EUbEMW2cp5s3eyZdfcLzSDqanPHJPcEWhOo+BuFvrGgXXryVhm13sjakzc82zos
- F3Ng=
-X-Google-Smtp-Source: AGHT+IHHZV2QbkNq/QkxO3XXo5PgdlgpYtNOTqcP7Ua7C5fuji3kloWUhah7lBlNFYA2WKwy2JTU3Q==
-X-Received: by 2002:a5d:530a:0:b0:37d:377d:c7b0 with SMTP id
- ffacd0b85a97d-37d5519d618mr9325291f8f.18.1728943316554; 
- Mon, 14 Oct 2024 15:01:56 -0700 (PDT)
-Received: from paolo-laptop-amd.. ([2a0e:cb01:d3:f100:8971:afed:16dc:a06f])
+ d=1e100.net; s=20230601; t=1728943763; x=1729548563;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zb7cyEiKcqQ5X5/PCi+xvEfgTJqXZGZBRJmR3ylgvJY=;
+ b=NuY/u8dzLWzUiVK1MsWcISNBQLoffoEitoAFXniagKxbJX5qIw8z4mybToXN+FlSHu
+ vEuVSdjlnGBjtH3BeU+9dCEpgVCiNcz/Qn2ydnJH1E8IRkyobtnXUqvucdYhptUDQL3Y
+ IcxmZ8LNHXzAa/fJEWKPg13gZUdTXkjrg4z+zmr3/jBz4erV/EmczjuODi+9e8x0S52/
+ iZLpUjq2C4vZ2ighsYsXMCzMzNcPojLNFgnHmZwRX9HXUhpfh+igK17qMYQBKRvYNMK5
+ aytJjYHoajvYASgL++Gu1JQVsXGQSJBaEB37wXrZ7fN64IULO5jZ9jjtKQLpwuohb6o3
+ TZkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQqyqM7vuriR3+0CjpkRAgr/g+m2eSjVsjcuvU3HCdGpCth3hn/Fi8DFJAErUQmq5YlNkfcaBX283h@nongnu.org
+X-Gm-Message-State: AOJu0YxHTsmNNs1qb3RII+bnipkUvgIKNiKPI8DYlXXvEUjeZhRXCC/J
+ XTAU7M8YbUnskp+xYoAqdmQepW5pvxN/tOi2wnrE6Dhcq/Jqfb8M3l2ibgvl144=
+X-Google-Smtp-Source: AGHT+IFRlNBn6hEnVT+VBZ73Cg9rvzNTCZAk+d07rGDa+nfZVGRS/XUA0BC7gLZ5ukNUKV/EUg1nMQ==
+X-Received: by 2002:a17:902:dac8:b0:20c:e898:c88a with SMTP id
+ d9443c01a7336-20ce898cb53mr68937075ad.0.1728943763367; 
+ Mon, 14 Oct 2024 15:09:23 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a09dsm22769f8f.23.2024.10.14.15.01.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Oct 2024 15:01:55 -0700 (PDT)
-From: Paolo Savini <paolo.savini@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Savini <paolo.savini@embecosm.com>,
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [RFC v3 0/2] target/riscv: add endianness checks and atomicity
- guarantees.
-Date: Mon, 14 Oct 2024 23:01:51 +0100
-Message-ID: <20241014220153.196183-1-paolo.savini@embecosm.com>
-X-Mailer: git-send-email 2.43.0
+ d9443c01a7336-20d1805ba92sm82675ad.255.2024.10.14.15.09.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Oct 2024 15:09:22 -0700 (PDT)
+Message-ID: <f0493b9d-f2b1-4330-9cc6-b1f7cfc77c67@linaro.org>
+Date: Mon, 14 Oct 2024 19:09:20 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg: remove singlestep_enabled from DisasContextBase
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20241010083641.1785069-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241010083641.1785069-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=paolo.savini@embecosm.com; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,42 +94,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This version 3 of the patch adds endianness safety to both the optimizations
-brought by the patch set.
-It also adds some conditions that allow the __builtin_memcpy to be executed
-on chunks of 16 bytes with guarantee of atomicity.
+On 10/10/24 05:36, Paolo Bonzini wrote:
+> It is used in a couple of places only, both within the same target.  Those can
+> use the cflags just as well, so remove the separate field.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   include/exec/translator.h   | 2 --
+>   accel/tcg/translator.c      | 1 -
+>   target/mips/tcg/translate.c | 5 +++--
+>   3 files changed, 3 insertions(+), 5 deletions(-)
 
-Changes from V2:
-- patch 1:
-  - add condition for the host not to be big endian.
-- patch 2:
-  - add condition for the host not to be big endian.
-  - add condition for the host to support 16-byte atomic memory operations.
-  - limit the large loads and stores to 16 byte chunks in order to guarantee
-    atomicity on a larger range of processors.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Cc: Richard Handerson <richard.henderson@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bmeng.cn@gmail.com>
-Cc: Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Helene Chelin <helene.chelin@embecosm.com>
-Cc: Nathan Egge <negge@google.com>
-Cc: Max Chou <max.chou@sifive.com>
-
-Helene CHELIN (1):
-  target/riscv: rvv: reduce the overhead for simple RISC-V vector
-    unit-stride loads and stores
-
-Paolo Savini (1):
-  target/riscv: rvv: improve performance of RISC-V vector loads and
-    stores on large amounts of data.
-
- target/riscv/vector_helper.c | 61 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
-
--- 
-2.34.1
 
