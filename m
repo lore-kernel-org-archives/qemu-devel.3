@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235D2D1625B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA01D1625B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0KUd-0002sY-Uf; Mon, 14 Oct 2024 08:48:11 -0400
+	id 1t0KZV-00046g-9o; Mon, 14 Oct 2024 08:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0KUa-0002s7-6t
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:48:08 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ id 1t0KZQ-000460-Bb
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:53:08 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0KUY-0004rD-IS
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:48:07 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2f7657f9f62so39590511fa.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 05:48:05 -0700 (PDT)
+ id 1t0KZO-0005Vz-Kg
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 08:53:08 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c948c41edeso3795444a12.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 05:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728910084; x=1729514884; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728910384; x=1729515184; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kM79TXHsfWWOp3PAaFsigm/WkHWpSm/qj9ntAPFzurg=;
- b=v775J4tSb4kZ8xSxq//YE/A+ATsbgWGmb4S5UAdb4aniZ51N1BnO5qIyHDWZUzDnJ2
- GnFwNdyGcN8jZ46sZk7l3ch7PVS6DX89QRsSYuvTBpAeWkLVIGYoVWATIWWuXaTmdMez
- L7+hjpCKjqvm5Y8ChGIyKY+B9QEPuVR6MJFkrxX+UUvMzhzSPpp3FOff4d6tvoo0aVqw
- haxmqyGZfoB3JVyT+jhpwvzsHp+6s3qcAtIgyHqnyMlyK9mTDprL3z1ePCUsQIfka6+c
- Wcyx3FnjG/Gk8X6236+Q0XneTc1jY5DGRe+vhaz8qfNAEFKELPEWAtW3jtOzzvaIknWV
- q4Eg==
+ bh=WVXDycQUZRrNMXnJ7zKhQ1aD88B9Ro1MR8lFeX8DosE=;
+ b=j33zmXhHb8xyKdFUVTEMaBg+GJ7RbDgshEVdCaQYmGqvlO1Qvk+zm+L4JvdNVxHZxZ
+ cwZXFsfiKQuOoXV/pi2AKOXg6vMUle9IqHPwA/D32Eq5DAklLjf4mYIpGAcS/9Ri7GdZ
+ /96JK9ZHmXTVDSC6YcO5jZ+X3cG/2Nwqc8YE6YgHFqPEoVKYDs+AvyfRSk8ux1RVuVP3
+ qealj3IqVOZ9CSbqVpYlGP11FKHHSufMK2r1PUSHNip6uLyyMOSEmAC37OsOu9pXST8J
+ uhSHO3rvN8l/lvihK7BeW40EQZv0gkNCrWFHffE4woX3jWBxQELwY+T5/DKjiDbZ0+YP
+ eAWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728910084; x=1729514884;
+ d=1e100.net; s=20230601; t=1728910384; x=1729515184;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kM79TXHsfWWOp3PAaFsigm/WkHWpSm/qj9ntAPFzurg=;
- b=v+I/37vbiKePWwHZ6BH8F2XHbd3/9AfWnpm/Gzz5k1Yu7K9RCc+bwczKZKFFRI2+Vg
- cxbg34DPAulaMAcx3K2/grr7siZVDOq3KfGNxxuJjLBjlDhCen5PMfRaCqs5aiMUXhhQ
- vmWrF+8Rc+IoM5wVXWj09BzaTyD+TmJ/ZoOPXf5siBU9YZULBr/cfznI5wm0WnfvAHCA
- MN1jOyRQ87rsq7OVdTbiudX0Cge+SHnL1vetbD6lL6WTB8BtGAyrRmNdeQa6tfLSF+Ju
- mLt4tBzkP7DCuzBJY3w9wDuDxKXwhheAiPlU66z+wRDPUzotVtBDWTb9hJRGCKCD/Rt3
- BouQ==
-X-Gm-Message-State: AOJu0YzhY85oklvy/GWcDP5cHvflCl/5U9UKtnVGksl0FsPEnVxL3Ha+
- cVOz3sXtAaaCKJCz62kT2seHkUoEYgprR8sDC+RyTzN69A5ukCERGog2QbuZrejVNpDjpdyFWcP
- HareiJuY9jbgmEjSFOO+Bmd9bIhVZ/m6o9nxRvA==
-X-Google-Smtp-Source: AGHT+IEZbkD6XyJC0hZgfTW8diZRCTA9oNbOp2+T47wWEH1w2QEDXEo3OfuJ2tVVywE24pE6uTsbl9mpeD1I2ndSiDM=
-X-Received: by 2002:a2e:4e11:0:b0:2fb:5060:7037 with SMTP id
- 38308e7fff4ca-2fb506070e0mr12484231fa.41.1728910083959; Mon, 14 Oct 2024
- 05:48:03 -0700 (PDT)
+ bh=WVXDycQUZRrNMXnJ7zKhQ1aD88B9Ro1MR8lFeX8DosE=;
+ b=SMHzFoBEHQSgOmDk+hRxLQwd/Ak0GM6bCw9Mc7Gm7OyQFAV8MK4RixDcJd8MxKiE27
+ NqO3JxsrWs4pdSYAIzfh/rsCRP2vXTpCJkCkRqjO/TUMbMV4H36sx1TvWeMAstv+PT5U
+ REa+OB8Tb2k3CA2ODtGXtv59nlNEJpLMnAfgKU/+H4ze96G8jcQd26whUYxRnsYIMWhX
+ ruZmNwEhdvhAaX/gQ3+Yewsu97GwY905J4fa5AMX3LZ1jDtXup6jnr8TxdbeBvYK/9Nz
+ PEYbM+lAJSM/7IqUSvON8bzCzDWmQZyZAjv8anvzNh9Nvedf+uOAJugol8U0O1r9c7Rf
+ dCdQ==
+X-Gm-Message-State: AOJu0YyegwB3RW6AivmvCr49GHfvwEDOJzniCPuyvSL3hP/v8KXJxXEY
+ 6UNzGxxqmfMxxL85hoeD3uShPP0x10dfBru8KE/SR7FTiKhh8eDMQPPmYAFZno9aZjfNMs3Zjox
+ W3Wcs6Oe9uPXc5zadWI5Hq2kMILf4V5rnuCiB1A==
+X-Google-Smtp-Source: AGHT+IEUMKqRtCQG8QCstmPeMmtE7+LMyU7PmyTI0+XJvy+lrbOy32k6+r2+cAFNkyMrByjz9hOa6xQAoBIJpG+R3jc=
+X-Received: by 2002:a05:6402:13c3:b0:5c9:2a8c:8961 with SMTP id
+ 4fb4d7f45d1cf-5c948d48286mr9182269a12.22.1728910384267; Mon, 14 Oct 2024
+ 05:53:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241005205748.29203-1-shentey@gmail.com>
- <20241005205748.29203-2-shentey@gmail.com>
-In-Reply-To: <20241005205748.29203-2-shentey@gmail.com>
+ <20241005205748.29203-5-shentey@gmail.com>
+In-Reply-To: <20241005205748.29203-5-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Oct 2024 13:47:52 +0100
-Message-ID: <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/net/lan9118: Extract lan9118_phy
+Date: Mon, 14 Oct 2024 13:52:53 +0100
+Message-ID: <CAFEAcA-qhDAje+Jv3gR=B-vZ2cJ7FaB+nf9Jh_t00n_7OL3nVg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] hw/net/lan9118_phy: Add missing 100 mbps full duplex
+ advertisement
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,60 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 5 Oct 2024 at 21:57, Bernhard Beschow <shentey@gmail.com> wrote:
+On Sat, 5 Oct 2024 at 21:58, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> A very similar implementation of the same device exists in imx_fec. Prepare for
-> a common implementation by extracting the code into its own files.
+> The real device advertises this mode and the device model already advertises
+> 100 mbps half duplex and 10 mbps full+half duplex. So advertise this mode to
+> make the model more realistic.
 >
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  include/hw/net/lan9118_phy.h |  31 ++++++++
->  hw/net/lan9118.c             | 133 ++++++-----------------------------
->  hw/net/lan9118_phy.c         | 117 ++++++++++++++++++++++++++++++
->  hw/net/Kconfig               |   4 ++
->  hw/net/meson.build           |   1 +
->  5 files changed, 174 insertions(+), 112 deletions(-)
->  create mode 100644 include/hw/net/lan9118_phy.h
->  create mode 100644 hw/net/lan9118_phy.c
+>  hw/net/lan9118_phy.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/include/hw/net/lan9118_phy.h b/include/hw/net/lan9118_phy.h
-> new file mode 100644
-> index 0000000000..50e3559b12
-> --- /dev/null
-> +++ b/include/hw/net/lan9118_phy.h
-> @@ -0,0 +1,31 @@
-> +/*
-> + * SMSC LAN9118 PHY emulation
-> + *
-> + * Copyright (c) 2009 CodeSourcery, LLC.
-> + * Written by Paul Brook
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef HW_NET_LAN9118_PHY_H
-> +#define HW_NET_LAN9118_PHY_H
-> +
-> +#include "hw/irq.h"
-> +
-> +typedef struct Lan9118PhyState {
-> +    uint32_t status;
-> +    uint32_t control;
-> +    uint32_t advertise;
-> +    uint32_t ints;
-> +    uint32_t int_mask;
-> +    IRQState irq;
-> +    bool link_down;
-> +} Lan9118PhyState;
+> diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
+> index 1c2f30c81a..4815a4da35 100644
+> --- a/hw/net/lan9118_phy.c
+> +++ b/hw/net/lan9118_phy.c
+> @@ -145,8 +145,8 @@ void lan9118_phy_write(Lan9118PhyState *s, int reg, uint32_t val)
+>          break;
+>      case MII_ANAR:
+>          s->advertise = (val & (MII_ANAR_RFAULT | MII_ANAR_PAUSE_ASYM |
+> -                               MII_ANAR_PAUSE | MII_ANAR_10FD | MII_ANAR_10 |
+> -                               MII_ANAR_SELECT))
+> +                               MII_ANAR_PAUSE | MII_ANAR_TXFD | MII_ANAR_10FD |
+> +                               MII_ANAR_10 | MII_ANAR_SELECT))
+>                       | MII_ANAR_TX;
+>          break;
 
-This takes state that was in a QOM object, and moves it
-into something that's kind of a device but not a QOM
-object. I think we should avoid that, because at some
-point somebody's going to have to QOMify this.
-
-Making this a QOM device is a bit awkward for migration
-compatibility, unfortunately.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
