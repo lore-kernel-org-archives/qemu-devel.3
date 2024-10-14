@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769C2D16256
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5A3D16258
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 12:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0KBY-0000nE-N8; Mon, 14 Oct 2024 08:28:28 -0400
+	id 1t0KBm-0001mw-21; Mon, 14 Oct 2024 08:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t0KBE-0000As-El; Mon, 14 Oct 2024 08:28:10 -0400
+ id 1t0KBK-0000I5-EY; Mon, 14 Oct 2024 08:28:15 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t0KBA-0002PB-NW; Mon, 14 Oct 2024 08:28:07 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ECOJkZ003656;
- Mon, 14 Oct 2024 12:27:52 GMT
+ id 1t0KBF-0002Qb-Hw; Mon, 14 Oct 2024 08:28:11 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49EBrlfE003321;
+ Mon, 14 Oct 2024 12:28:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- G1w3PwkoWYcvIvBNv4yhnr02ZuS3bvMg/SDLgozGffc=; b=EX3h7iMl0yHxJG0L
- wOrN8G/8oFtAtP8EbD1epQxZJ47UkNBtuZsX0GzFdi4PvdEuFg5YsC5HEu9U9gL6
- 7DtWG0NsnPSyO0osekYmAUcGC46QmmcLvLCOTF3Vtz/WETNqf5NBgyqjwx4F0gjh
- 2O9gvVquo/cfYfRMeFlkOIKOmZa/w5CTOb8WwUEWEoGfnuPo/FJg25gDeWV2ofer
- bECDyF11KnQviJuCxiSdaD6iZzmLBQ5xFAGDDXZG4dB8QYdpqG0HfffaJGH39ycj
- I9mi5tJmQsD2AhOcJLwui6PYyEMzmolKxZWO0MAjB7yirRLo+oRveAZjDWG+KqSk
- LJTdtg==
+ boaW3OiQAHFxtI7ukUUouBDINMEB4B9mlrA6leBjpFc=; b=kVcNa16SGmNNK9S8
+ 49L1K06qqdL3WEho4mEHfhZhTVFO0LwRYAB2PR9g4hFk67Nhhxe/YULHOmMStc1o
+ TM8NjQG/jIJyLWQ6iy4T4vOJK4FvtPg5DUOW1oJ35i0WPH18njr1AsaH4KzTaLxz
+ 2l+0bjfJjQKVpQbLYkLeUPU5D5ZnSc27GkVaVUmfn3punsEkUhd064NRBDvCm7I9
+ 7yfXDRvlFlsPOsYWBU7AZkc/KI/zoZ/I1GIOjpuTQYo7lzJ2fmwndldnLarmWyuh
+ sPcmGJqE6bzvDSQr3eNnCcYuDGZgHJ/517niJ1ebKGKwSbejYqMGWx31yv9poJGT
+ TKVHeQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42939080j0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4292txr61y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:27:51 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49ECQdjM007462;
- Mon, 14 Oct 2024 12:27:51 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42939080hw-1
+ Mon, 14 Oct 2024 12:28:00 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49ECOuMm014969;
+ Mon, 14 Oct 2024 12:27:59 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4292txr61x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:27:51 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49EAKPSl006671;
- Mon, 14 Oct 2024 12:27:50 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4283erpp6t-1
+ Mon, 14 Oct 2024 12:27:59 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49ECHXXH005286;
+ Mon, 14 Oct 2024 12:27:58 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285nhx6n4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2024 12:27:50 +0000
+ Mon, 14 Oct 2024 12:27:58 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49ECRmeo32506390
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49ECRvD151446200
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Oct 2024 12:27:48 GMT
+ Mon, 14 Oct 2024 12:27:57 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B38192004E;
- Mon, 14 Oct 2024 12:27:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 298A320043;
+ Mon, 14 Oct 2024 12:27:57 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CB86520040;
- Mon, 14 Oct 2024 12:27:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 420E620040;
+ Mon, 14 Oct 2024 12:27:56 +0000 (GMT)
 Received: from ltcrain34-lp1.aus.stglabs.ibm.com (unknown [9.3.101.40])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 14 Oct 2024 12:27:47 +0000 (GMT)
+ Mon, 14 Oct 2024 12:27:56 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
-Subject: [PATCH v4 05/13] ppc/spapr: remove deprecated machine pseries-2.5
-Date: Mon, 14 Oct 2024 17:57:21 +0530
-Message-ID: <20241014122729.1136809-6-harshpb@linux.ibm.com>
+Subject: [PATCH v4 12/13] ppc/spapr: remove deprecated machine
+ pseries-2.12-sxxm
+Date: Mon, 14 Oct 2024 17:57:28 +0530
+Message-ID: <20241014122729.1136809-13-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241014122729.1136809-1-harshpb@linux.ibm.com>
 References: <20241014122729.1136809-1-harshpb@linux.ibm.com>
@@ -78,16 +79,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Sqa2Uz4Mp9e13NPsJtKtf16_VlbyFZfz
-X-Proofpoint-ORIG-GUID: QGmQPETzB0Hf4aANDu6Aqx96xYpcvHcP
+X-Proofpoint-GUID: k8DvDSEUYc3s_2zGtmhR4lBDmQw7Etuv
+X-Proofpoint-ORIG-GUID: P48UraCrnP-uh0w7lIgz4mNfSyKKKwg3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-14_10,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 suspectscore=0 adultscore=0 mlxlogscore=981 phishscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ malwarescore=0 mlxscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 adultscore=0 mlxlogscore=995 impostorscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410140089
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -114,71 +115,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 1392617d3576 intended to tag pseries-2.1 - 2.11 machines as
-deprecated with reasons mentioned in its commit log.
-Removing pseries-2.5 specific code with this patch for now.
-
-Also drop sPAPRMachineClass::use_ohci_by_default which is now useless.
+Commit 0cac0f1b964 marked pseries-2.12 machines as deprecated
+with reasons mentioned in its commit log.
+Removing pseries-2.12-sxxm specific code with this patch.
 
 Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/ppc/spapr.h |  1 -
- hw/ppc/spapr.c         | 25 +------------------------
- 2 files changed, 1 insertion(+), 25 deletions(-)
+ hw/ppc/spapr.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 1821ef96c7..6e9e62386c 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -143,7 +143,6 @@ struct SpaprMachineClass {
-     /*< public >*/
-     bool dr_phb_enabled;       /* enable dynamic-reconfig/hotplug of PHBs */
-     bool update_dt_enabled;    /* enable KVMPPC_H_UPDATE_DT */
--    bool use_ohci_by_default;  /* use USB-OHCI instead of XHCI */
-     bool pre_2_10_has_unused_icps;
-     bool legacy_irq_allocation;
-     uint32_t nr_xirqs;
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 4d7705c89f..f63843d107 100644
+index faf88a177b..aba0ad26f1 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -3070,11 +3070,7 @@ static void spapr_machine_init(MachineState *machine)
-     }
+@@ -4731,8 +4731,6 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     DEFINE_SPAPR_MACHINE_IMPL(true, major, minor)
+ #define DEFINE_SPAPR_MACHINE(major, minor) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+-#define DEFINE_SPAPR_MACHINE_TAGGED(major, minor, tag) \
+-    DEFINE_SPAPR_MACHINE_IMPL(false, major, minor, _, tag)
  
-     if (machine->usb) {
--        if (smc->use_ohci_by_default) {
--            pci_create_simple(phb->bus, -1, "pci-ohci");
--        } else {
--            pci_create_simple(phb->bus, -1, "nec-usb-xhci");
--        }
-+        pci_create_simple(phb->bus, -1, "nec-usb-xhci");
+ /*
+  * pseries-9.2
+@@ -5042,18 +5040,6 @@ static void spapr_machine_2_12_class_options(MachineClass *mc)
  
-         if (has_vga) {
-             USBBus *usb_bus;
-@@ -5300,25 +5296,6 @@ static void spapr_machine_2_6_class_options(MachineClass *mc)
+ DEFINE_SPAPR_MACHINE(2, 12);
  
- DEFINE_SPAPR_MACHINE(2, 6);
- 
--/*
-- * pseries-2.5
-- */
--
--static void spapr_machine_2_5_class_options(MachineClass *mc)
+-static void spapr_machine_2_12_sxxm_class_options(MachineClass *mc)
 -{
 -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        { "spapr-vlan", "use-rx-buffer-pools", "off" },
--    };
 -
--    spapr_machine_2_6_class_options(mc);
--    smc->use_ohci_by_default = true;
--    compat_props_add(mc->compat_props, hw_compat_2_5, hw_compat_2_5_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-    spapr_machine_2_12_class_options(mc);
+-    smc->default_caps.caps[SPAPR_CAP_CFPC] = SPAPR_CAP_WORKAROUND;
+-    smc->default_caps.caps[SPAPR_CAP_SBBC] = SPAPR_CAP_WORKAROUND;
+-    smc->default_caps.caps[SPAPR_CAP_IBS] = SPAPR_CAP_FIXED_CCD;
 -}
 -
--DEFINE_SPAPR_MACHINE(2, 5);
+-DEFINE_SPAPR_MACHINE_TAGGED(2, 12, sxxm);
 -
  static void spapr_machine_register_types(void)
  {
