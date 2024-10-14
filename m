@@ -4,53 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233C9D18130
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 16:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0385DD18133
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 17:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0OEr-0000ov-LV; Mon, 14 Oct 2024 12:48:09 -0400
+	id 1t0Ow0-0001ER-KE; Mon, 14 Oct 2024 13:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t0OEq-0000ok-TA
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:48:08 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t0OEp-0002Ed-ER
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 12:48:08 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5BAF24E6004;
- Mon, 14 Oct 2024 18:48:04 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id NdRxcMNSsGUR; Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 698304E600F; Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 684C8746F60;
- Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
-Date: Mon, 14 Oct 2024 18:48:02 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, philmd@linaro.org
-Subject: Re: [PATCH 1/2] log: Add separate debug option for logging invalid
- memory accesses
-In-Reply-To: <CAFEAcA9sbAdDufXC1kVfHHcEg=DAHgB2dTSi2u4snppGG=KajA@mail.gmail.com>
-Message-ID: <df3261a7-6ab9-7e45-e711-b074756abbaa@eik.bme.hu>
-References: <cover.1728232526.git.balaton@eik.bme.hu>
- <59dd3361ca8ede93122e87752c7d66a304b05c0f.1728232526.git.balaton@eik.bme.hu>
- <CAFEAcA9sbAdDufXC1kVfHHcEg=DAHgB2dTSi2u4snppGG=KajA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t0Ovy-0001ED-Cf
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 13:32:42 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t0Ovw-0008GJ-Ra
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 13:32:42 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7ea8c4ce232so927669a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 10:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728927158; x=1729531958; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QgrBfoFk9ABIZA9b9HdnQNe/JlpsAZDZCwePdARlm7g=;
+ b=NKe7fegyJ5Zypa0+wBxiJI07QOsUMTYtVueMwPPQLVVFijf2RfkOmuHc+wHTyF/1xt
+ NdEthBKhGQuYPS8QDLpEYaCgvY2j5l/EQxVIlMHvc42VDAUtxPKUtQtO+Tk70mGdiadf
+ +wOYw2hnpoW1nHGAopEwbOYcaaizz3NBW0+lYla3M/v3/Uyn3QtmvLMf2RtjJFQ5j6DH
+ BMUB16ypiFjlL/+80gO4TzJgsiAtr1dQ8bS8YVKywi+ojdT9lceQpmPoW/y7kB7h6pQZ
+ /jeIKUJYOOJWvWb++XKvp2PX3TFbZX664sZyROQNEnDPIY+U4UsoEjj0SrMnVC23+g/m
+ ddFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728927158; x=1729531958;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QgrBfoFk9ABIZA9b9HdnQNe/JlpsAZDZCwePdARlm7g=;
+ b=H9NuA7h1HouM4M6adFO6HZPAouxTLf0Vy2JOHwkHNb1cyuM3m3z4rPLNb1EuD7V+Vc
+ ovTQvxVpQapYQP8YHY8UXUj39l2z7ImWHmZG5hCUki5IhbNkw0HBibnjlZLQnGV7lBCP
+ /UtIXosBFrkjTai4xfKWHlm3QoOUGPQT/siM42OHJr8yieXQjJOCNQxnwLI5Ug5yHLmf
+ WiqpMQUDYkCwn1r7vmLgLO+FeHCzCPC0QV4z3Gpd8PL221+Ro5sFPG3Ic2JaLAjJEVEY
+ gqY1qsl9IoE4TNA9qDIjtdmUJEsTYKuPIXSEdKA5N9w7ElENqOWY3QfYGQwgcdksYW6l
+ y1lg==
+X-Gm-Message-State: AOJu0YzPrDox35S/9AzYKpd0bjYQe/FrVLxonYjcQ9PX0tW55rS2YOtX
+ CFOat5pFMr6ps6gxe6lJlPZCMt0EgAByLexzyJRpfP2Bq8Xf0j5FzTqoIECli8wIZ6ua5B7n6vM
+ r
+X-Google-Smtp-Source: AGHT+IGCVgc7Bxlo/wgaUm8KQkBUlAJJ2sjWIkGm8J5oQ/LWRFJFkGNqxE8aJMy2G+wGnByChtV0FQ==
+X-Received: by 2002:a05:6a21:4603:b0:1d8:b11e:19bc with SMTP id
+ adf61e73a8af0-1d8c96c4addmr17775319637.49.1728927157840; 
+ Mon, 14 Oct 2024 10:32:37 -0700 (PDT)
+Received: from [192.168.0.102] ([191.205.39.21])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71e59d6fc8bsm3715218b3a.141.2024.10.14.10.32.36
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Oct 2024 10:32:37 -0700 (PDT)
+Message-ID: <b274d731-36ed-454b-9ad6-c58c6443d520@linaro.org>
+Date: Mon, 14 Oct 2024 14:32:35 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/4] No-op support for Arm FEAT_XS, feedback needed
+To: qemu-devel@nongnu.org
+References: <20241014-arm-feat-xs-v1-0-42bb714d6b11@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20241014-arm-feat-xs-v1-0-42bb714d6b11@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,52 +96,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Oct 2024, Peter Maydell wrote:
-> On Sun, 6 Oct 2024 at 17:50, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> Currently -d guest_errors enables logging of different invalid actions
->> by the guest such as misusing hardware, accessing missing features or
->> invalid memory areas. The memory access logging can be quite verbose
->> which obscures the other messages enabled by this debug switch so
->> separate it by adding a new -d memaccess option to make it possible to
->> control it independently of other guest error logs.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  include/qemu/log.h | 1 +
->>  system/memory.c    | 6 +++---
->>  system/physmem.c   | 2 +-
->>  util/log.c         | 2 ++
->>  4 files changed, 7 insertions(+), 4 deletions(-)
->
-> It seems reasonable to me to separate out "log invalid
-> memory accesses", yes.
->
->> diff --git a/util/log.c b/util/log.c
->> index 6219819855..1aa7396277 100644
->> --- a/util/log.c
->> +++ b/util/log.c
->> @@ -503,6 +503,8 @@ const QEMULogItem qemu_log_items[] = {
->>        "open a separate log file per thread; filename must contain '%d'" },
->>      { CPU_LOG_TB_VPU, "vpu",
->>        "include VPU registers in the 'cpu' logging" },
->> +    { LOG_MEM_ACCESS, "memaccess",
->> +      "log invalid memory accesses" },
->>      { 0, NULL, NULL },
->
-> As a naming thing, these are logging specifically invalid
-> memory accesses, not all accesses, so we should have
-> both the user-facing name and the LOG_ constant be
-> named appropriately. Perhaps
->  LOG_INV_MEM_ACCESS, "invalid_mem_accesses" ?
+Hi Manos,
 
-That's way too long to type and remember. Maybe invalid_mem could do?
+On 10/14/24 07:48, Manos Pitsidianakis wrote:
+> This series is an initial incomplete attempt at adding support for the
+> FEAT_XS feature in aarch64 TCG. This feature was introduced in ARMv8.7:
+> it adds a new memory attribute XS which indicates that a memory access
+> could take longer than usual to complete and also adds instruction
+> variants for TLBI maintenance and DSB.
+> 
+> These variants are implemented as no-ops, since QEMU TCG doesn't
+> implement caching.
+> 
+> This is my first foray into TCG and certain things weren't clear to me:
+> 
+> 1. How to make sure the feature is implemented properly. Since we model
+>     cache maintenance as no-ops my understanding is the only
+>     functionality we need to provide is to expose the FEAT_XS feature bit
+>     and also make sure the nXS variants trap properly if configured with
+>     fine-grained traps.
+> 2. Is there a point in adding a TCG test? If I read the manual
+>     correctly, the nXS variants should trap to the undefined instruction
+>     vector if unimplemented.
 
-Regards,
-BALATON Zoltan
+Yes, I think a test as the one you provided is worth to at least, as you
+mentioned, check if QEMU doesn't crash when encountering NXS instruction
+variants.
 
-> thanks
-> -- PMM
->
->
+
+Cheers,
+Gustavo
+
+
+> These patches lack support for FGT for now.
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+> Manos Pitsidianakis (4):
+>        arm: Add FEAT_XS's TLBI NXS variants
+>        arm/tcg: add decodetree entry for DSB nXS variant
+>        arm/tcg/cpu64: add FEAT_XS feat in max cpu
+>        tests/tcg/aarch64: add system test for FEAT_XS
+> 
+>   target/arm/cpu-features.h          |   5 +
+>   target/arm/helper.c                | 366 +++++++++++++++++++++----------------
+>   target/arm/tcg/a64.decode          |   3 +
+>   target/arm/tcg/cpu64.c             |   1 +
+>   target/arm/tcg/translate-a64.c     |   6 +
+>   tests/tcg/aarch64/system/feat-xs.c |  27 +++
+>   6 files changed, 255 insertions(+), 153 deletions(-)
+> ---
+> base-commit: 7e3b6d8063f245d27eecce5aabe624b5785f2a77
+> change-id: 20240919-arm-feat-xs-73eedb23d937
+> 
+> --
+> γαῖα πυρί μιχθήτω
+> 
+> 
+
 
