@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8414D1813A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 18:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45FBD1813D
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 18:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0Q8b-00049y-6B; Mon, 14 Oct 2024 14:49:49 -0400
+	id 1t0Q9X-0004lZ-S0; Mon, 14 Oct 2024 14:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3wmcNZwYKCgcyvx1lonvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--roqueh.bounces.google.com>)
- id 1t0Q8W-00049a-MW
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 14:49:45 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1t0Q9V-0004l1-Tl; Mon, 14 Oct 2024 14:50:45 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3wmcNZwYKCgcyvx1lonvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--roqueh.bounces.google.com>)
- id 1t0Q8V-00018u-1R
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 14:49:44 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6e3705b2883so25355907b3.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 11:49:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1t0Q9U-0001O7-Ab; Mon, 14 Oct 2024 14:50:45 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a99ebb390a5so401757266b.1; 
+ Mon, 14 Oct 2024 11:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1728931779; x=1729536579; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=7pv8SMLoX58p+TYu8hQfpm8uqfTPRLQQB77L4yBbjds=;
- b=2AaDhlG2aZ1QQ0H+c5GAvSLby7jCF5z9cOWVWCEBimIeLcnmqXd28QzSRfL+2EIDnY
- c6W2E1qvcdnEAWYR3TEn3HRC9V2rOqFJlUD6t4e719xaFAL6co0DE8dsaiqqBIkDGPlv
- DtsGqNZtureu43XibhKV4oIc7Lyx3817Fa6944u1dsxRqYOa8zoj2U2a1M1mUMJyg38G
- NcI/eJYrvk14Ub+FdygotZqqUEH5ehFeGUVVPNAI49CrZAtzo9zKqh6WfoJwzbIh59S9
- IepSUzAbKGIamp5blG33xF1OFPfRhz7g8ZNedSJJ3vNrQO2DZmZlh7OaWfWSKVTLRwqo
- on5g==
+ d=gmail.com; s=20230601; t=1728931841; x=1729536641; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9Afn4YpkfgdO2F5nizDrDa38curFp/Rk7aAYjRgQ498=;
+ b=cCUnlN31Dn4E5ujfcbVaCAec8TuaxZnEobFf2PZvBu5ozWIBy2yEO8u1BCzARUPlt4
+ fu9g5gY8O+KETdGN87Rh8pNfzYSDy2fDeXgPJ+jeTxoGWaYjwYR9lQtFxtBqjUU3HY+m
+ x0pFBl6zS3QkIclMcl+gNC93v3eZE4WGk6kw6l1BRU7nmfxvPQnVcKjqBmtoRgdH8xoh
+ 3J7atJ4zqdzCrQKmGI173XlzYpBp1HLu6xyijME1P4OQJc0xLCxIkWfyJlTJjYatyhop
+ LEmOlcu2LZ3/yIMY7lcnRH1ptEbIuSCieu9BrnVLRppPpHo4nZHk/T3YKeHKXkWPQJOD
+ 0Xjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728931779; x=1729536579;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7pv8SMLoX58p+TYu8hQfpm8uqfTPRLQQB77L4yBbjds=;
- b=koVbbEf52+AlXxf2G2abyV2RT+b6IX/s4ScHCl7fzm3PSwnDA2KRC6fRk2YVf7yFwX
- mfZ6GZhYPuWaJC/1HGdrgrQrH4C5Zflbj+fyISPBOfi2hoX5dQXXADQ037Y8iYO8rZnd
- yFy5k3T07FLG6ICyEWl8LK9rWa7DizsN67V6LgOxQCWv1PDdYO49aHkHG92g1wx95A21
- qF4J1Mcp+lr3IccrUB0IZLN+iFcePSGt7RePOazamlUa0cQAIWjAXQt7wP4Z0kgw08uq
- AJ3bLxmKDVjqSNm9zyYdAKAHV7m9u394lDQ+XHJKiLHpZVFUWwldzCPFr2SLLGwIcbZU
- ee2w==
-X-Gm-Message-State: AOJu0YyRNuk8dvpH4XNKYA4HfDcEcC3v/8OSNEeH+ezIf8I0m5cyCM/0
- sW5OqjuoV1aNanOiME2EjFaO3FqZkaT84gx2tL8jmlvTqG0+Nt6K/CuU8B50RUaZ6gYGmJfMdvS
- OrA==
-X-Google-Smtp-Source: AGHT+IGPyN/FmByTmA6/vgVvdLhbqQ21fnTd521VFrsxMlEDfSP7Mh/OJycrM1QPaoXZanyghCWeT/uTJkk=
-X-Received: from roqueh.c.googlers.com ([fda3:e722:ac3:cc00:4e:3bc9:ac1c:1ab])
- (user=roqueh job=sendgmr) by 2002:a05:690c:61c8:b0:6e3:345e:5f89
- with SMTP id
- 00721157ae682-6e3471eebbbmr1900857b3.0.1728931778975; Mon, 14 Oct 2024
- 11:49:38 -0700 (PDT)
-Date: Mon, 14 Oct 2024 18:48:46 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
-Message-ID: <20241014184847.1594056-1-roqueh@google.com>
-Subject: [PATCH] hw/net: Changing log error to trace message
-From: Roque Arcudia Hernandez <roqueh@google.com>
-To: kfting@nuvoton.com, wuhaotsh@google.com, jasowang@redhat.com, 
- qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, Nabih Estefan <nabihestefan@google.com>, 
- Roque Arcudia Hernandez <roqueh@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3wmcNZwYKCgcyvx1lonvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--roqueh.bounces.google.com;
- helo=mail-yw1-x114a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ d=1e100.net; s=20230601; t=1728931841; x=1729536641;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9Afn4YpkfgdO2F5nizDrDa38curFp/Rk7aAYjRgQ498=;
+ b=XFkzwV9zppIZPTUijslr8izDSlfuJqevC8IGFmc6tSHMpwB5mWV6oVSAkXPogV6gf0
+ ywx1wtQszbTKt9Lm13zYDicZR9RDn9Ppet3rrJlV0GPl5QP4lycSYUDdWYSWhBAVQhaB
+ iN75L/4JlQGH3z1XTZFAS5/IF3KiAYOGRfuukfCzfX1HzTBdf+gbute9vGTc1zy4qkep
+ ZtM1uGjcqTrBq2rzaPgrWQyNJrgCu5CObEyCWr9uiYEHWeGK8lev2KTGW0Ts2FBy+pvb
+ nXs3agyubPZBrqbFsptGLGoNQTkynDbhdt9lTAr0CLLlcFNz8PIRTq4n1BT0EB+fbrMb
+ Ah5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUz1f5FUbIIgiyDC2l1Cj1B9nDfkgi9hIesF6wOeeMKPQOv/UiPTijqkQQzMdBxZhQsnBOxcFBOuQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yye7Cu1ZRGy6fyoRSh3XrO2OEVBw6sdLnSLMefN94Gnd8HAZVVg
+ 1p5hGqFof+h162ShK9dWoh6NtYBubzXaIm4vExmNsoGX6AI0hNWpeRNBWw==
+X-Google-Smtp-Source: AGHT+IFIx3+0Z3gdpNm7+01uc+vKkq2UjZvDvTifRLjotdTAENoU/QJ46E0F8H7ATDKh5j7xubjqNw==
+X-Received: by 2002:a17:906:478e:b0:a91:1699:f8eb with SMTP id
+ a640c23a62f3a-a99b89f0ef7mr1288347266b.28.1728931840983; 
+ Mon, 14 Oct 2024 11:50:40 -0700 (PDT)
+Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a99f2ea1dd1sm348302466b.68.2024.10.14.11.50.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Oct 2024 11:50:40 -0700 (PDT)
+Date: Mon, 14 Oct 2024 18:38:48 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/4] hw/net/lan9118: Extract lan9118_phy
+In-Reply-To: <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
+References: <20241005205748.29203-1-shentey@gmail.com>
+ <20241005205748.29203-2-shentey@gmail.com>
+ <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
+Message-ID: <E3D8FB20-605D-4E29-A430-DD3C4B01102D@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,47 +96,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
 
-Converting error to trace message to avoid spamming of message when
-there is nothing to transmit.
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
----
- hw/net/npcm_gmac.c  | 5 ++---
- hw/net/trace-events | 1 +
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Am 14=2E Oktober 2024 12:47:52 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Sat, 5 Oct 2024 at 21:57, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> A very similar implementation of the same device exists in imx_fec=2E P=
+repare for
+>> a common implementation by extracting the code into its own files=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>  include/hw/net/lan9118_phy=2Eh |  31 ++++++++
+>>  hw/net/lan9118=2Ec             | 133 ++++++---------------------------=
+--
+>>  hw/net/lan9118_phy=2Ec         | 117 ++++++++++++++++++++++++++++++
+>>  hw/net/Kconfig               |   4 ++
+>>  hw/net/meson=2Ebuild           |   1 +
+>>  5 files changed, 174 insertions(+), 112 deletions(-)
+>>  create mode 100644 include/hw/net/lan9118_phy=2Eh
+>>  create mode 100644 hw/net/lan9118_phy=2Ec
+>>
+>> diff --git a/include/hw/net/lan9118_phy=2Eh b/include/hw/net/lan9118_ph=
+y=2Eh
+>> new file mode 100644
+>> index 0000000000=2E=2E50e3559b12
+>> --- /dev/null
+>> +++ b/include/hw/net/lan9118_phy=2Eh
+>> @@ -0,0 +1,31 @@
+>> +/*
+>> + * SMSC LAN9118 PHY emulation
+>> + *
+>> + * Copyright (c) 2009 CodeSourcery, LLC=2E
+>> + * Written by Paul Brook
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or =
+later=2E
+>> + * See the COPYING file in the top-level directory=2E
+>> + */
+>> +
+>> +#ifndef HW_NET_LAN9118_PHY_H
+>> +#define HW_NET_LAN9118_PHY_H
+>> +
+>> +#include "hw/irq=2Eh"
+>> +
+>> +typedef struct Lan9118PhyState {
+>> +    uint32_t status;
+>> +    uint32_t control;
+>> +    uint32_t advertise;
+>> +    uint32_t ints;
+>> +    uint32_t int_mask;
+>> +    IRQState irq;
+>> +    bool link_down;
+>> +} Lan9118PhyState;
+>
+>This takes state that was in a QOM object, and moves it
+>into something that's kind of a device but not a QOM
+>object=2E I think we should avoid that, because at some
+>point somebody's going to have to QOMify this=2E
+>
+>Making this a QOM device is a bit awkward for migration
+>compatibility, unfortunately=2E
 
-diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
-index 6fa6bece61..685905f9e2 100644
---- a/hw/net/npcm_gmac.c
-+++ b/hw/net/npcm_gmac.c
-@@ -546,9 +546,8 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
- 
-         /* 1 = DMA Owned, 0 = Software Owned */
-         if (!(tx_desc.tdes0 & TX_DESC_TDES0_OWN)) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "TX Descriptor @ 0x%x is owned by software\n",
--                          desc_addr);
-+            trace_npcm_gmac_tx_desc_owner(DEVICE(gmac)->canonical_path,
-+                                          desc_addr);
-             gmac->regs[R_NPCM_DMA_STATUS] |= NPCM_DMA_STATUS_TU;
-             gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
-                 NPCM_DMA_STATUS_TX_SUSPENDED_STATE);
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 4c6687923e..bb8f59cf23 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -476,6 +476,7 @@ npcm_gmac_packet_received(const char* name, uint32_t len) "%s: Reception finishe
- npcm_gmac_packet_sent(const char* name, uint16_t len) "%s: TX packet sent!, length: 0x%04" PRIX16
- npcm_gmac_debug_desc_data(const char* name, void* addr, uint32_t des0, uint32_t des1, uint32_t des2, uint32_t des3)"%s: Address: %p Descriptor 0: 0x%04" PRIX32 " Descriptor 1: 0x%04" PRIX32 "Descriptor 2: 0x%04" PRIX32 " Descriptor 3: 0x%04" PRIX32
- npcm_gmac_packet_tx_desc_data(const char* name, uint32_t tdes0, uint32_t tdes1) "%s: Tdes0: 0x%04" PRIX32 " Tdes1: 0x%04" PRIX32
-+npcm_gmac_tx_desc_owner(const char* name, uint32_t desc_addr) "%s: TX Descriptor @0x%04" PRIX32 " is owned by software"
- 
- # npcm_pcs.c
- npcm_pcs_reg_read(const char *name, uint16_t indirect_access_baes, uint64_t offset, uint16_t value) "%s: IND: 0x%02" PRIx16 " offset: 0x%04" PRIx64 " value: 0x%04" PRIx16
--- 
-2.47.0.rc1.288.g06298d1525-goog
+Do we care about migration compatibility here? Or is it sufficient to chec=
+k the version? In the latter case I could QOMify it=2E
 
+Best regards,
+Bernhard
+
+>
+>thanks
+>-- PMM
 
