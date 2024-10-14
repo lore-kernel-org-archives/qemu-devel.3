@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D93D18156
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EABD18157
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Oct 2024 22:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0TGk-0006bm-Jz; Mon, 14 Oct 2024 18:10:26 -0400
+	id 1t0TOM-0000hE-5k; Mon, 14 Oct 2024 18:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TGj-0006bT-8G
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:10:25 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TOI-0000gq-49
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:18:14 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TGg-0007iu-Ah
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:10:24 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-7ea7e2ff5ceso1124186a12.2
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:10:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0TOG-00007O-G5
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 18:18:13 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20cdb889222so15097615ad.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 15:18:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728943821; x=1729548621; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728944291; x=1729549091; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6foHWMQ5t7ne0oD832tUelyfBPGQRbcmp0VAxOlB/5Y=;
- b=AjV2QwEpAMDK9ozZlmFfWgY6w0jchzkS4eJCfCErnxecDBBnuGyUTFoNORZ/aC2JJn
- q3LmukhdhhKvXQji1fcPRveNxhAsQhWy4ItJT+rbz+Ba0W6UKDUbOCRmRoxyWDBfWq8m
- 7BAFZAlUE3SspzorI+K7+1ZuZqMg8QpSlGwb2V94ttIIO/cGW8lvdB++MEz6mTmFF5/X
- 8aGIsgonbagFDqwZolspaNSAoJgS1/g85NPGFNJHRe/oYEXdjMDGyd9VMgGfRbm4GcYh
- 8dSZjX72d9Uy9nmyxq7YpFb6UsXoHG3o0x0261dzhaSwshrVLtIKX5SmaaW3D4J015/t
- yEOw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1gf3VKf2RaikEAxZsjvv97C7GehbC/hon1xQVH2Zy0M=;
+ b=tPy45iNSLI3s4Cg7BpdNOPHYaeuTVfHWAy+pFiMwSMkSN+5p+e1V8Pt27dD4MKYwiC
+ Yvqc9p8UcHvKcmwvqvncl+OFiJNAQwSQTAMOQbz8TPHSpVQzPdnEcIO5LJjCg5I69UJ/
+ kgdv71S0xM+1pYEklMAtfNFhuO5g/UUhGEpf5yuxfOBP86I7jnGRFSs+U8sAfFD2plVR
+ McsngHzZbFgY9xcI7oaJDtVPb3Qn5RNbpMH6Vc321WtglERihnn8Piup3SN0afSuK2/t
+ tEyzt1O2zLF2cRhToIoLccIBzxsjzDo6liPChTJNn3rCDhdcSVFeu9vX2tUCIvlMt1Uq
+ h5Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728943821; x=1729548621;
+ d=1e100.net; s=20230601; t=1728944291; x=1729549091;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6foHWMQ5t7ne0oD832tUelyfBPGQRbcmp0VAxOlB/5Y=;
- b=L4UZ4PJDIQyMz9vVZEEiiCB8R7ffb22XkT8zGRyYiw10KjtOmyThf18+WteqszC3/J
- SsQeQHJwOHfUW/8MVavbf1JR72oiBv1kPG6V/huc68Ux/MXNfvCdYEbvBOoMHeR7SCQK
- W6x1xwLfDfPf/nyo2JKfTHmzxjOCPPx92tHFzYIBxYmzqsFbqb7M5lOmhkYrQ0yPt6+w
- PRrrRGkiEmGZkejSMfcCWhB6ZHogdGJv5OJ1uPgmYAxDaXO73eCOEMNMpxINF9P1uHVq
- zpqGnEnamBSDZaRRxj4S9wl2CTpEy67+78Il6Ufha+/6CjKAvlqwCseRnggqGwe14wIm
- FnOw==
+ bh=1gf3VKf2RaikEAxZsjvv97C7GehbC/hon1xQVH2Zy0M=;
+ b=w5V4DgfZHJoW1eLmLo/L7BgEm9zdv+H+Na3avTpAig+YZ/cjnSG7oNEz3zHSR6HSZo
+ fQaik8DF9KKyX7ZdydUq/FGBKTY64NlLt5wTKletps4PDZRQrft8cP2OAn4U59g0PszG
+ mHzsNQweeBWD493es05ibS7SiwKenW3Jr/ETq+jn/RnYKYXmrnsL4zTZ6/8pOYSpDiyE
+ 4+V/TGfVMkMBOFMVelg2treFgMZCsP1BWEj8Yd86sqeecxkZ9gEZ7RKPAEkQnc7FncrE
+ RGokQXZHwIFHyAwbN7nueS55jqqJHPVvvTU68G08pSzIjymI5f6JVanARFLeQG0ec8Hc
+ 57kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKPiAxy0M6uRfGiUgcIJ7BFAmOmdBX6mwI7z3LRad68OXDZuqetluan2OXoIDm5fDrPwaj/6VVsB5C@nongnu.org
-X-Gm-Message-State: AOJu0Yxrsb0Z4ThV0d0UQs+vuBFTReCnrsqEqjqv5dG4Y0vxYqJjDLMf
- D3xYa5COCXbrGErP8YeHvUR9qnJhf30RHWYcNyB9icL9Xxg8qIZJeEbZLwDfhto=
-X-Google-Smtp-Source: AGHT+IFU2+0SOcsjZyB4csJArN6teNpYKRyRmhpfNWARNjhsX+viQJGweQXliItH/68WdjSjs5CtrQ==
-X-Received: by 2002:a05:6a20:c89c:b0:1d7:7ea:2f35 with SMTP id
- adf61e73a8af0-1d8bcefde00mr17121191637.5.1728943821018; 
- Mon, 14 Oct 2024 15:10:21 -0700 (PDT)
+ AJvYcCUyQE8I438jAAvkEREzFZg5VhbLdR3F5WZcdmhbN/lty81WKtdqXELznG3Zdn04JqhsAsQwCXc+Lqhb@nongnu.org
+X-Gm-Message-State: AOJu0YytP2YNWuzx9CZUj290AlaKqp80anS8ubndmtNeck8ooFpUXoz2
+ JobjZhIQDuG5to01b/RN5F7Es/kiBMbxB0HG/ic5iqGKLCAQkVFo5O3vIuINMik=
+X-Google-Smtp-Source: AGHT+IGE5bPZL6Uv4ZCDmViA9rtvXn4tfSGJ02NnAiHuhgk23B7aKXxSVMcv/TBZ48u02DDs46YgTA==
+X-Received: by 2002:a17:903:2b0c:b0:20b:9379:f1f7 with SMTP id
+ d9443c01a7336-20ca169e6b5mr183399735ad.40.1728944290704; 
+ Mon, 14 Oct 2024 15:18:10 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ea9c6d3eb7sm15388a12.45.2024.10.14.15.10.19
+ d9443c01a7336-20d1805b0basm152195ad.256.2024.10.14.15.18.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Oct 2024 15:10:20 -0700 (PDT)
-Message-ID: <76c0c76e-3506-4c0d-8633-6f130a9dbd2d@linaro.org>
-Date: Mon, 14 Oct 2024 19:10:18 -0300
+ Mon, 14 Oct 2024 15:18:10 -0700 (PDT)
+Message-ID: <7ffd1d50-197c-4c8a-8362-4f16237366a7@linaro.org>
+Date: Mon, 14 Oct 2024 19:18:06 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] target/i386: Remove ra parameter from ptw_translate
+Subject: Re: [PATCH v2 10/16] target/mips: Replace MO_TE by mo_endian()
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241013184733.1423747-1-richard.henderson@linaro.org>
- <20241013184733.1423747-4-richard.henderson@linaro.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <20241010215015.44326-1-philmd@linaro.org>
+ <20241010215015.44326-11-philmd@linaro.org>
+ <040de42c-619b-4f69-87e2-fafae27fd8cc@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241013184733.1423747-4-richard.henderson@linaro.org>
+In-Reply-To: <040de42c-619b-4f69-87e2-fafae27fd8cc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,15 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/10/24 15:47, Richard Henderson wrote:
-> This argument is no longer used.
+On 13/10/24 13:05, Richard Henderson wrote:
+> On 10/10/24 14:50, Philippe Mathieu-Daudé wrote:
+>> +++ b/target/mips/tcg/msa_helper.c
+>> @@ -8213,7 +8213,7 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, 
+>> uint32_t df, uint32_t wd,
+>>   #if !defined(CONFIG_USER_ONLY)
+>>   #define 
+>> MEMOP_IDX(DF)                                                   \
+>> -    MemOpIdx oi = make_memop_idx(MO_TE | DF | 
+>> MO_UNALN,                 \
+>> +    MemOpIdx oi = make_memop_idx(mo_endian(dc) | DF | 
+>> MO_UNALN,                 \
+>>                                    mips_env_mmu_index(env));
+>>   #else
 > 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/i386/tcg/sysemu/excp_helper.c | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
+> This one is not within a translation context.
+> Surely this should be mo_endian_env().
+> 
+> I would have expected this not to compile?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Dead code since commit 948f88661c6 ("target/mips: Use cpu_*_data_ra
+for msa load/store"):
 
+$ git grep -w MEMOP_IDX
+target/mips/tcg/msa_helper.c:8215:#define MEMOP_IDX(DF) 
+                                  \
+target/mips/tcg/msa_helper.c:8219:#define MEMOP_IDX(DF)
+
+I'll send a cleanup patch removing the #define lines.
+
+> 
+> The rest of the changes appear correct, based on filenames.
+
+Might I use your R-b tag on this patch, removing the tcg/msa_helper.c 
+change?
+
+Regards,
+
+Phil.
 
