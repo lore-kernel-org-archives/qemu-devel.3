@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E89FCFC286
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D44CFC287
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ews-0006k0-RO; Tue, 15 Oct 2024 06:38:42 -0400
+	id 1t0ewt-0006kg-KE; Tue, 15 Oct 2024 06:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewY-0006ga-So
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1t0ewZ-0006h3-L5
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:28 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewV-0005xf-TL
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:22 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-430ee5c9570so61298275e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
+ id 1t0ewW-0005y7-N8
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:23 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-430576ff251so45449135e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988698; x=1729593498; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988699; x=1729593499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=anUFiHIIxkK6jEVABFlu7ZvbMKsdoU5OVxOjwIhza9o=;
- b=NnE12yOKEHc+GcGvgohwpRl+gJVuVJKAn6Lu6BAWl2EUb5B5vX2/GRQ/XaOC2nOM+l
- K8pOwaU2MVSG5kNQSu8k+MZ5asBa/+2Zc/c6egCmN1AHyapbfX9Xc+vnMXF5g58JvF2N
- hseC7fHuH4wM/wlKm3HHAiaggA1pJxHhHTJJpgBRPvScZtBC/cLbxq32WoeHE/JowYCx
- BlnU+uRpeekCsIk4n/4w4BPyurNWuwZ3VbN501Y7Cqlo//HJGxS4EGPGA3mPLoKISobZ
- +5g5ZiTbAxtDeD5z0StFG2Gn2G5N4Dj4GkU02wNi0rOd8pQrXB8ph34UHyFkWsFC08fb
- LqZA==
+ :reply-to; bh=devRcNf+YX8r0XWQ+Zu7dsyQQ6J3EUR+apyJkkxMsho=;
+ b=I4ZWz+UN75AVgVC4HE/Z6Uur8KNfoseiTG0P7cBxycDlLwAug+fp+AglXdn+FlifNB
+ PYAsKESig25iRVSUi/AvtRTH+D90EeOJQJu1arI23aespYQ0o9mSGUHcQUMQfhCcAKg3
+ FOMGKwqFVfIf99IHGyqQ3YSSCS3fsT3aqGEUWgIDUrB0aTNZvb8Vpa5ICjmNBJl5YLAk
+ seOBeFDeVkwmvw9Ub06hoMUQ6Vd8mqb2mF/RvufQRHJvEBsRTPrRzG0EQyC6B7Hdr9E+
+ 4b20IqCe0P3fSe9aKkzHL8BpHhL1x7Y54Tg8fuBPCPQZeGozcUMrsFYRd+46yfOpNM+L
+ lwlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988698; x=1729593498;
+ d=1e100.net; s=20230601; t=1728988699; x=1729593499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=anUFiHIIxkK6jEVABFlu7ZvbMKsdoU5OVxOjwIhza9o=;
- b=g5nHVAvMTz6XZWGeOcceAb2nYq36XIlkQaFPO0ZQheOsvXMGTInip5AM1k6nMCm0Fz
- KaNNmyoxNYVMCwOvb+V0LwJoal3/lEfcKRdJIPaLiuH2iBOI2ul1hTZn382rJJmPCKPS
- xZHmFwMlX20XB1UVM5ZRz46y8a3DJ0/UsyN05YN9j7vBcAbSXy9kArMvjrUxWDduBdFo
- rKMQp0i0kypHuvbfjFOsuD3DSj29k6j/qNBFZfCtTkDaj2rEKnA61VHKQEVvo4mZxj8V
- FSdCTv/MfGs4zPDLWeBoUo+QQ286UMdVT5JT6aMACTyb9UAXNuXmosIVShZ3LhsYPRa6
- 7mwA==
-X-Gm-Message-State: AOJu0Ywyvi8DOLitorgCO1vEJbPVuJRmG0pxNAFfqQXEZyHggTQibrno
- P1s+3OKd8NMJ2NpDcmCY1DQPvU9TmwJHuKgrpoU+CvtvcBSxVM1DoLrN/a5fVAbtU6C3U6XDBKr
- x
-X-Google-Smtp-Source: AGHT+IHBij0lCIe2w2zbf4cLXJ///ECpTQyT8l6a+mGtdotzI1khFS+0XXSY7e76NHN0jF4tyacp8A==
-X-Received: by 2002:a05:600c:1e24:b0:42e:94ff:7ac with SMTP id
- 5b1f17b1804b1-431255e6991mr131528025e9.21.1728988697902; 
- Tue, 15 Oct 2024 03:38:17 -0700 (PDT)
+ bh=devRcNf+YX8r0XWQ+Zu7dsyQQ6J3EUR+apyJkkxMsho=;
+ b=bopy/Ti4Pr8Fh8sWgPpRrszGBBqnhlcsQQPKWKpoDfQ/ST6FfXHd61/0ggADnLPp0A
+ yNmiDrMkuAfBpDoTd3OEVwrV/qXnTqSMVCGdQZdGqHUq++jxX+aSJMt7rr5cMsFlIlDh
+ qNCqUmMX3I8Nw2VnmBckbkomxz+DoL/rOR0a8O0UljB36QUfSokbBig2OfON/9UsBJFI
+ mByl6xlODiQ0lKW8TToHUJC5chlI0MLw1LjtOxUlB9+9MAhcx2oSZeKFBNxG/2WWjTGX
+ gPk+nvA1fblnujjU26uN7ERv5bSxdikfufkPWhAtXM3UYHYte4WGFNgzOR6TGuG+s7Xn
+ 12JA==
+X-Gm-Message-State: AOJu0YxPeuyVWx1nexhbBFfem7QtAh5KmQkghtfRoC/GfKfNaftP7t8E
+ M8oiAshAJdZHozxuSdfbYuRV2qt2vNv8pS/wyPe7XrfPySehKgd2YKYl7vSTMPYxfdI/ZM9Kwsw
+ 6
+X-Google-Smtp-Source: AGHT+IEoWNbg5ucb19vx3T6kW5H780N1jAKe03SWL+TXNIXgTTOH6i8UlKkVvqjGVEn4vb9J+S8kdA==
+X-Received: by 2002:a05:600c:4e8a:b0:42c:af06:718 with SMTP id
+ 5b1f17b1804b1-4311df435e7mr136131315e9.28.1728988698839; 
+ Tue, 15 Oct 2024 03:38:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.17
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:17 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/28] docs/devel/multiple-iothreads: Convert to rST format
-Date: Tue, 15 Oct 2024 11:37:57 +0100
-Message-Id: <20241015103808.133024-18-peter.maydell@linaro.org>
+Subject: [PULL 19/28] include: Move QemuLockCnt APIs to their own header
+Date: Tue, 15 Oct 2024 11:37:59 +0100
+Message-Id: <20241015103808.133024-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,308 +94,434 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert docs/devel/multiple-iothreads.txt to rST format.
+Currently the QemuLockCnt data structure and associated functions are
+in the include/qemu/thread.h header.  Move them to their own
+qemu/lockcnt.h.  The main reason for doing this is that it means we
+can autogenerate the documentation comments into the docs/devel
+documentation.
+
+The copyright/author in the new header is drawn from lockcnt.c,
+since the header changes were added in the same commit as
+lockcnt.c; since neither thread.h nor lockcnt.c state an explicit
+license, the standard default of GPL-2-or-later applies.
+
+We include the new header (and the .c file, which was accidentally
+omitted previously) in the "RCU" part of MAINTAINERS, since that
+is where the lockcnt.rst documentation is categorized.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240816132212.3602106-5-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-id: 20240816132212.3602106-7-peter.maydell@linaro.org
 ---
- docs/devel/index-internals.rst    |   1 +
- docs/devel/multiple-iothreads.rst | 139 ++++++++++++++++++++++++++++++
- docs/devel/multiple-iothreads.txt | 130 ----------------------------
- 3 files changed, 140 insertions(+), 130 deletions(-)
- create mode 100644 docs/devel/multiple-iothreads.rst
- delete mode 100644 docs/devel/multiple-iothreads.txt
+ MAINTAINERS            |   2 +
+ docs/devel/lockcnt.rst |   2 +-
+ include/block/aio.h    |   1 +
+ include/hw/core/cpu.h  |   1 +
+ include/qemu/lockcnt.h | 130 +++++++++++++++++++++++++++++++++++++++++
+ include/qemu/thread.h  | 111 -----------------------------------
+ accel/accel-blocker.c  |   1 +
+ hw/core/cpu-common.c   |   1 +
+ util/aio-posix.c       |   1 +
+ util/aio-win32.c       |   1 +
+ util/async.c           |   1 +
+ util/fdmon-epoll.c     |   1 +
+ util/lockcnt.c         |   1 +
+ 13 files changed, 142 insertions(+), 112 deletions(-)
+ create mode 100644 include/qemu/lockcnt.h
 
-diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-index 4ac7725d728..88fa0e9450d 100644
---- a/docs/devel/index-internals.rst
-+++ b/docs/devel/index-internals.rst
-@@ -21,3 +21,4 @@ Details about QEMU's various subsystems including how to add features to them.
-    writing-monitor-commands
-    virtio-backends
-    crypto
-+   multiple-iothreads
-diff --git a/docs/devel/multiple-iothreads.rst b/docs/devel/multiple-iothreads.rst
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bf62247872a..c21d6a2f9e1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3061,8 +3061,10 @@ S: Maintained
+ F: docs/devel/lockcnt.rst
+ F: docs/devel/rcu.rst
+ F: include/qemu/rcu*.h
++F: include/qemu/lockcnt.h
+ F: tests/unit/rcutorture.c
+ F: tests/unit/test-rcu-*.c
++F: util/lockcnt.c
+ F: util/rcu.c
+ 
+ Human Monitor (HMP)
+diff --git a/docs/devel/lockcnt.rst b/docs/devel/lockcnt.rst
+index 994aeb57151..728594bcea3 100644
+--- a/docs/devel/lockcnt.rst
++++ b/docs/devel/lockcnt.rst
+@@ -175,7 +175,7 @@ three instructions in the critical path, two assignments and a ``smp_wmb()``.
+ ``QemuLockCnt`` API
+ -------------------
+ 
+-The ``QemuLockCnt`` API is described in ``include/qemu/thread.h``.
++The ``QemuLockCnt`` API is described in ``include/qemu/lockcnt.h``.
+ 
+ 
+ ``QemuLockCnt`` usage
+diff --git a/include/block/aio.h b/include/block/aio.h
+index 4ee81936ed5..43883a8a33a 100644
+--- a/include/block/aio.h
++++ b/include/block/aio.h
+@@ -20,6 +20,7 @@
+ #include "qemu/coroutine-core.h"
+ #include "qemu/queue.h"
+ #include "qemu/event_notifier.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/timer.h"
+ #include "block/graph-lock.h"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index d21a24c82fc..c3ca0babcb3 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -33,6 +33,7 @@
+ #include "qemu/bitmap.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/queue.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qom/object.h"
+ 
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
 new file mode 100644
-index 00000000000..d1f3fc4510a
+index 00000000000..2c92ae17c9e
 --- /dev/null
-+++ b/docs/devel/multiple-iothreads.rst
-@@ -0,0 +1,139 @@
-+Using Multiple ``IOThread``\ s
-+==============================
++++ b/include/qemu/lockcnt.h
+@@ -0,0 +1,130 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QemuLockCnt implementation
++ *
++ * Copyright Red Hat, Inc. 2017
++ *
++ * Author:
++ *   Paolo Bonzini <pbonzini@redhat.com>
++ *
++ */
 +
-+..
-+   Copyright (c) 2014-2017 Red Hat Inc.
++#ifndef QEMU_LOCKCNT_H
++#define QEMU_LOCKCNT_H
 +
-+   This work is licensed under the terms of the GNU GPL, version 2 or later.  See
-+   the COPYING file in the top-level directory.
++#include "qemu/thread.h"
 +
++typedef struct QemuLockCnt QemuLockCnt;
 +
-+This document explains the ``IOThread`` feature and how to write code that runs
-+outside the BQL.
++struct QemuLockCnt {
++#ifndef CONFIG_LINUX
++    QemuMutex mutex;
++#endif
++    unsigned count;
++};
 +
-+The main loop and ``IOThread``\ s
-+---------------------------------
-+QEMU is an event-driven program that can do several things at once using an
-+event loop.  The VNC server and the QMP monitor are both processed from the
-+same event loop, which monitors their file descriptors until they become
-+readable and then invokes a callback.
++/**
++ * qemu_lockcnt_init: initialize a QemuLockcnt
++ * @lockcnt: the lockcnt to initialize
++ *
++ * Initialize lockcnt's counter to zero and prepare its mutex
++ * for usage.
++ */
++void qemu_lockcnt_init(QemuLockCnt *lockcnt);
 +
-+The default event loop is called the main loop (see ``main-loop.c``).  It is
-+possible to create additional event loop threads using
-+``-object iothread,id=my-iothread``.
++/**
++ * qemu_lockcnt_destroy: destroy a QemuLockcnt
++ * @lockcnt: the lockcnt to destruct
++ *
++ * Destroy lockcnt's mutex.
++ */
++void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
 +
-+Side note: The main loop and ``IOThread`` are both event loops but their code is
-+not shared completely.  Sometimes it is useful to remember that although they
-+are conceptually similar they are currently not interchangeable.
++/**
++ * qemu_lockcnt_inc: increment a QemuLockCnt's counter
++ * @lockcnt: the lockcnt to operate on
++ *
++ * If the lockcnt's count is zero, wait for critical sections
++ * to finish and increment lockcnt's count to 1.  If the count
++ * is not zero, just increment it.
++ *
++ * Because this function can wait on the mutex, it must not be
++ * called while the lockcnt's mutex is held by the current thread.
++ * For the same reason, qemu_lockcnt_inc can also contribute to
++ * AB-BA deadlocks.  This is a sample deadlock scenario:
++ *
++ *            thread 1                      thread 2
++ *            -------------------------------------------------------
++ *            qemu_lockcnt_lock(&lc1);
++ *                                          qemu_lockcnt_lock(&lc2);
++ *            qemu_lockcnt_inc(&lc2);
++ *                                          qemu_lockcnt_inc(&lc1);
++ */
++void qemu_lockcnt_inc(QemuLockCnt *lockcnt);
 +
-+Why ``IOThread``\ s are useful
-+------------------------------
-+``IOThread``\ s allow the user to control the placement of work.  The main loop is a
-+scalability bottleneck on hosts with many CPUs.  Work can be spread across
-+several ``IOThread``\ s instead of just one main loop.  When set up correctly this
-+can improve I/O latency and reduce jitter seen by the guest.
++/**
++ * qemu_lockcnt_dec: decrement a QemuLockCnt's counter
++ * @lockcnt: the lockcnt to operate on
++ */
++void qemu_lockcnt_dec(QemuLockCnt *lockcnt);
 +
-+The main loop is also deeply associated with the BQL, which is a
-+scalability bottleneck in itself.  vCPU threads and the main loop use the BQL
-+to serialize execution of QEMU code.  This mutex is necessary because a lot of
-+QEMU's code historically was not thread-safe.
++/**
++ * qemu_lockcnt_dec_and_lock: decrement a QemuLockCnt's counter and
++ * possibly lock it.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * Decrement lockcnt's count.  If the new count is zero, lock
++ * the mutex and return true.  Otherwise, return false.
++ */
++bool qemu_lockcnt_dec_and_lock(QemuLockCnt *lockcnt);
 +
-+The fact that all I/O processing is done in a single main loop and that the
-+BQL is contended by all vCPU threads and the main loop explain
-+why it is desirable to place work into ``IOThread``\ s.
++/**
++ * qemu_lockcnt_dec_if_lock: possibly decrement a QemuLockCnt's counter and
++ * lock it.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * If the count is 1, decrement the count to zero, lock
++ * the mutex and return true.  Otherwise, return false.
++ */
++bool qemu_lockcnt_dec_if_lock(QemuLockCnt *lockcnt);
 +
-+The experimental ``virtio-blk`` data-plane implementation has been benchmarked and
-+shows these effects:
-+ftp://public.dhe.ibm.com/linux/pdfs/KVM_Virtualized_IO_Performance_Paper.pdf
++/**
++ * qemu_lockcnt_lock: lock a QemuLockCnt's mutex.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * Remember that concurrent visits are not blocked unless the count is
++ * also zero.  You can use qemu_lockcnt_count to check for this inside a
++ * critical section.
++ */
++void qemu_lockcnt_lock(QemuLockCnt *lockcnt);
 +
-+.. _how-to-program:
++/**
++ * qemu_lockcnt_unlock: release a QemuLockCnt's mutex.
++ * @lockcnt: the lockcnt to operate on.
++ */
++void qemu_lockcnt_unlock(QemuLockCnt *lockcnt);
 +
-+How to program for ``IOThread``\ s
-+----------------------------------
-+The main difference between legacy code and new code that can run in an
-+``IOThread`` is dealing explicitly with the event loop object, ``AioContext``
-+(see ``include/block/aio.h``).  Code that only works in the main loop
-+implicitly uses the main loop's ``AioContext``.  Code that supports running
-+in ``IOThread``\ s must be aware of its ``AioContext``.
++/**
++ * qemu_lockcnt_inc_and_unlock: combined unlock/increment on a QemuLockCnt.
++ * @lockcnt: the lockcnt to operate on.
++ *
++ * This is the same as
++ *
++ *     qemu_lockcnt_unlock(lockcnt);
++ *     qemu_lockcnt_inc(lockcnt);
++ *
++ * but more efficient.
++ */
++void qemu_lockcnt_inc_and_unlock(QemuLockCnt *lockcnt);
 +
-+AioContext supports the following services:
-+ * File descriptor monitoring (read/write/error on POSIX hosts)
-+ * Event notifiers (inter-thread signalling)
-+ * Timers
-+ * Bottom Halves (BH) deferred callbacks
++/**
++ * qemu_lockcnt_count: query a LockCnt's count.
++ * @lockcnt: the lockcnt to query.
++ *
++ * Note that the count can change at any time.  Still, while the
++ * lockcnt is locked, one can usefully check whether the count
++ * is non-zero.
++ */
++unsigned qemu_lockcnt_count(QemuLockCnt *lockcnt);
 +
-+There are several old APIs that use the main loop AioContext:
-+ * LEGACY ``qemu_aio_set_fd_handler()`` - monitor a file descriptor
-+ * LEGACY ``qemu_aio_set_event_notifier()`` - monitor an event notifier
-+ * LEGACY ``timer_new_ms()`` - create a timer
-+ * LEGACY ``qemu_bh_new()`` - create a BH
-+ * LEGACY ``qemu_bh_new_guarded()`` - create a BH with a device re-entrancy guard
-+ * LEGACY ``qemu_aio_wait()`` - run an event loop iteration
-+
-+Since they implicitly work on the main loop they cannot be used in code that
-+runs in an ``IOThread``.  They might cause a crash or deadlock if called from an
-+``IOThread`` since the BQL is not held.
-+
-+Instead, use the ``AioContext`` functions directly (see ``include/block/aio.h``):
-+ * ``aio_set_fd_handler()`` - monitor a file descriptor
-+ * ``aio_set_event_notifier()`` - monitor an event notifier
-+ * ``aio_timer_new()`` - create a timer
-+ * ``aio_bh_new()`` - create a BH
-+ * ``aio_bh_new_guarded()`` - create a BH with a device re-entrancy guard
-+ * ``aio_poll()`` - run an event loop iteration
-+
-+The ``qemu_bh_new_guarded``/``aio_bh_new_guarded`` APIs accept a
-+``MemReentrancyGuard``
-+argument, which is used to check for and prevent re-entrancy problems. For
-+BHs associated with devices, the reentrancy-guard is contained in the
-+corresponding ``DeviceState`` and named ``mem_reentrancy_guard``.
-+
-+The ``AioContext`` can be obtained from the ``IOThread`` using
-+``iothread_get_aio_context()`` or for the main loop using
-+``qemu_get_aio_context()``. Code that takes an ``AioContext`` argument
-+works both in ``IOThread``\ s or the main loop, depending on which ``AioContext``
-+instance the caller passes in.
-+
-+How to synchronize with an ``IOThread``
-+---------------------------------------
-+Variables that can be accessed by multiple threads require some form of
-+synchronization such as ``qemu_mutex_lock()``, ``rcu_read_lock()``, etc.
-+
-+``AioContext`` functions like ``aio_set_fd_handler()``,
-+``aio_set_event_notifier()``, ``aio_bh_new()``, and ``aio_timer_new()``
-+are thread-safe. They can be used to trigger activity in an ``IOThread``.
-+
-+Side note: the best way to schedule a function call across threads is to call
-+``aio_bh_schedule_oneshot()``.
-+
-+The main loop thread can wait synchronously for a condition using
-+``AIO_WAIT_WHILE()``.
-+
-+``AioContext`` and the block layer
-+----------------------------------
-+The ``AioContext`` originates from the QEMU block layer, even though nowadays
-+``AioContext`` is a generic event loop that can be used by any QEMU subsystem.
-+
-+The block layer has support for ``AioContext`` integrated.  Each
-+``BlockDriverState`` is associated with an ``AioContext`` using
-+``bdrv_try_change_aio_context()`` and ``bdrv_get_aio_context()``.
-+This allows block layer code to process I/O inside the
-+right ``AioContext``.  Other subsystems may wish to follow a similar approach.
-+
-+Block layer code must therefore expect to run in an ``IOThread`` and avoid using
-+old APIs that implicitly use the main loop.  See
-+`How to program for IOThreads`_ for information on how to do that.
-+
-+Code running in the monitor typically needs to ensure that past
-+requests from the guest are completed.  When a block device is running
-+in an ``IOThread``, the ``IOThread`` can also process requests from the guest
-+(via ioeventfd).  To achieve both objects, wrap the code between
-+``bdrv_drained_begin()`` and ``bdrv_drained_end()``, thus creating a "drained
-+section".
-+
-+Long-running jobs (usually in the form of coroutines) are often scheduled in
-+the ``BlockDriverState``'s ``AioContext``.  The functions
-+``bdrv_add``/``remove_aio_context_notifier``, or alternatively
-+``blk_add``/``remove_aio_context_notifier`` if you use ``BlockBackends``,
-+can be used to get a notification whenever ``bdrv_try_change_aio_context()``
-+moves a ``BlockDriverState`` to a different ``AioContext``.
-diff --git a/docs/devel/multiple-iothreads.txt b/docs/devel/multiple-iothreads.txt
-deleted file mode 100644
-index de85767b124..00000000000
---- a/docs/devel/multiple-iothreads.txt
-+++ /dev/null
-@@ -1,130 +0,0 @@
--Copyright (c) 2014-2017 Red Hat Inc.
++#endif
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index fb74e21c08a..7eba27a7049 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -293,115 +293,4 @@ static inline void qemu_spin_unlock(QemuSpin *spin)
+ #endif
+ }
+ 
+-struct QemuLockCnt {
+-#ifndef CONFIG_LINUX
+-    QemuMutex mutex;
+-#endif
+-    unsigned count;
+-};
 -
--This work is licensed under the terms of the GNU GPL, version 2 or later.  See
--the COPYING file in the top-level directory.
+-/**
+- * qemu_lockcnt_init: initialize a QemuLockcnt
+- * @lockcnt: the lockcnt to initialize
+- *
+- * Initialize lockcnt's counter to zero and prepare its mutex
+- * for usage.
+- */
+-void qemu_lockcnt_init(QemuLockCnt *lockcnt);
 -
+-/**
+- * qemu_lockcnt_destroy: destroy a QemuLockcnt
+- * @lockcnt: the lockcnt to destruct
+- *
+- * Destroy lockcnt's mutex.
+- */
+-void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
 -
--This document explains the IOThread feature and how to write code that runs
--outside the BQL.
+-/**
+- * qemu_lockcnt_inc: increment a QemuLockCnt's counter
+- * @lockcnt: the lockcnt to operate on
+- *
+- * If the lockcnt's count is zero, wait for critical sections
+- * to finish and increment lockcnt's count to 1.  If the count
+- * is not zero, just increment it.
+- *
+- * Because this function can wait on the mutex, it must not be
+- * called while the lockcnt's mutex is held by the current thread.
+- * For the same reason, qemu_lockcnt_inc can also contribute to
+- * AB-BA deadlocks.  This is a sample deadlock scenario:
+- *
+- *            thread 1                      thread 2
+- *            -------------------------------------------------------
+- *            qemu_lockcnt_lock(&lc1);
+- *                                          qemu_lockcnt_lock(&lc2);
+- *            qemu_lockcnt_inc(&lc2);
+- *                                          qemu_lockcnt_inc(&lc1);
+- */
+-void qemu_lockcnt_inc(QemuLockCnt *lockcnt);
 -
--The main loop and IOThreads
-----------------------------
--QEMU is an event-driven program that can do several things at once using an
--event loop.  The VNC server and the QMP monitor are both processed from the
--same event loop, which monitors their file descriptors until they become
--readable and then invokes a callback.
+-/**
+- * qemu_lockcnt_dec: decrement a QemuLockCnt's counter
+- * @lockcnt: the lockcnt to operate on
+- */
+-void qemu_lockcnt_dec(QemuLockCnt *lockcnt);
 -
--The default event loop is called the main loop (see main-loop.c).  It is
--possible to create additional event loop threads using -object
--iothread,id=my-iothread.
+-/**
+- * qemu_lockcnt_dec_and_lock: decrement a QemuLockCnt's counter and
+- * possibly lock it.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * Decrement lockcnt's count.  If the new count is zero, lock
+- * the mutex and return true.  Otherwise, return false.
+- */
+-bool qemu_lockcnt_dec_and_lock(QemuLockCnt *lockcnt);
 -
--Side note: The main loop and IOThread are both event loops but their code is
--not shared completely.  Sometimes it is useful to remember that although they
--are conceptually similar they are currently not interchangeable.
+-/**
+- * qemu_lockcnt_dec_if_lock: possibly decrement a QemuLockCnt's counter and
+- * lock it.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * If the count is 1, decrement the count to zero, lock
+- * the mutex and return true.  Otherwise, return false.
+- */
+-bool qemu_lockcnt_dec_if_lock(QemuLockCnt *lockcnt);
 -
--Why IOThreads are useful
--------------------------
--IOThreads allow the user to control the placement of work.  The main loop is a
--scalability bottleneck on hosts with many CPUs.  Work can be spread across
--several IOThreads instead of just one main loop.  When set up correctly this
--can improve I/O latency and reduce jitter seen by the guest.
+-/**
+- * qemu_lockcnt_lock: lock a QemuLockCnt's mutex.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * Remember that concurrent visits are not blocked unless the count is
+- * also zero.  You can use qemu_lockcnt_count to check for this inside a
+- * critical section.
+- */
+-void qemu_lockcnt_lock(QemuLockCnt *lockcnt);
 -
--The main loop is also deeply associated with the BQL, which is a
--scalability bottleneck in itself.  vCPU threads and the main loop use the BQL
--to serialize execution of QEMU code.  This mutex is necessary because a lot of
--QEMU's code historically was not thread-safe.
+-/**
+- * qemu_lockcnt_unlock: release a QemuLockCnt's mutex.
+- * @lockcnt: the lockcnt to operate on.
+- */
+-void qemu_lockcnt_unlock(QemuLockCnt *lockcnt);
 -
--The fact that all I/O processing is done in a single main loop and that the
--BQL is contended by all vCPU threads and the main loop explain
--why it is desirable to place work into IOThreads.
+-/**
+- * qemu_lockcnt_inc_and_unlock: combined unlock/increment on a QemuLockCnt.
+- * @lockcnt: the lockcnt to operate on.
+- *
+- * This is the same as
+- *
+- *     qemu_lockcnt_unlock(lockcnt);
+- *     qemu_lockcnt_inc(lockcnt);
+- *
+- * but more efficient.
+- */
+-void qemu_lockcnt_inc_and_unlock(QemuLockCnt *lockcnt);
 -
--The experimental virtio-blk data-plane implementation has been benchmarked and
--shows these effects:
--ftp://public.dhe.ibm.com/linux/pdfs/KVM_Virtualized_IO_Performance_Paper.pdf
+-/**
+- * qemu_lockcnt_count: query a LockCnt's count.
+- * @lockcnt: the lockcnt to query.
+- *
+- * Note that the count can change at any time.  Still, while the
+- * lockcnt is locked, one can usefully check whether the count
+- * is non-zero.
+- */
+-unsigned qemu_lockcnt_count(QemuLockCnt *lockcnt);
 -
--How to program for IOThreads
------------------------------
--The main difference between legacy code and new code that can run in an
--IOThread is dealing explicitly with the event loop object, AioContext
--(see include/block/aio.h).  Code that only works in the main loop
--implicitly uses the main loop's AioContext.  Code that supports running
--in IOThreads must be aware of its AioContext.
--
--AioContext supports the following services:
-- * File descriptor monitoring (read/write/error on POSIX hosts)
-- * Event notifiers (inter-thread signalling)
-- * Timers
-- * Bottom Halves (BH) deferred callbacks
--
--There are several old APIs that use the main loop AioContext:
-- * LEGACY qemu_aio_set_fd_handler() - monitor a file descriptor
-- * LEGACY qemu_aio_set_event_notifier() - monitor an event notifier
-- * LEGACY timer_new_ms() - create a timer
-- * LEGACY qemu_bh_new() - create a BH
-- * LEGACY qemu_bh_new_guarded() - create a BH with a device re-entrancy guard
-- * LEGACY qemu_aio_wait() - run an event loop iteration
--
--Since they implicitly work on the main loop they cannot be used in code that
--runs in an IOThread.  They might cause a crash or deadlock if called from an
--IOThread since the BQL is not held.
--
--Instead, use the AioContext functions directly (see include/block/aio.h):
-- * aio_set_fd_handler() - monitor a file descriptor
-- * aio_set_event_notifier() - monitor an event notifier
-- * aio_timer_new() - create a timer
-- * aio_bh_new() - create a BH
-- * aio_bh_new_guarded() - create a BH with a device re-entrancy guard
-- * aio_poll() - run an event loop iteration
--
--The qemu_bh_new_guarded/aio_bh_new_guarded APIs accept a "MemReentrancyGuard"
--argument, which is used to check for and prevent re-entrancy problems. For
--BHs associated with devices, the reentrancy-guard is contained in the
--corresponding DeviceState and named "mem_reentrancy_guard".
--
--The AioContext can be obtained from the IOThread using
--iothread_get_aio_context() or for the main loop using qemu_get_aio_context().
--Code that takes an AioContext argument works both in IOThreads or the main
--loop, depending on which AioContext instance the caller passes in.
--
--How to synchronize with an IOThread
-------------------------------------
--Variables that can be accessed by multiple threads require some form of
--synchronization such as qemu_mutex_lock(), rcu_read_lock(), etc.
--
--AioContext functions like aio_set_fd_handler(), aio_set_event_notifier(),
--aio_bh_new(), and aio_timer_new() are thread-safe. They can be used to trigger
--activity in an IOThread.
--
--Side note: the best way to schedule a function call across threads is to call
--aio_bh_schedule_oneshot().
--
--The main loop thread can wait synchronously for a condition using
--AIO_WAIT_WHILE().
--
--AioContext and the block layer
--------------------------------
--The AioContext originates from the QEMU block layer, even though nowadays
--AioContext is a generic event loop that can be used by any QEMU subsystem.
--
--The block layer has support for AioContext integrated.  Each BlockDriverState
--is associated with an AioContext using bdrv_try_change_aio_context() and
--bdrv_get_aio_context().  This allows block layer code to process I/O inside the
--right AioContext.  Other subsystems may wish to follow a similar approach.
--
--Block layer code must therefore expect to run in an IOThread and avoid using
--old APIs that implicitly use the main loop.  See the "How to program for
--IOThreads" above for information on how to do that.
--
--Code running in the monitor typically needs to ensure that past
--requests from the guest are completed.  When a block device is running
--in an IOThread, the IOThread can also process requests from the guest
--(via ioeventfd).  To achieve both objects, wrap the code between
--bdrv_drained_begin() and bdrv_drained_end(), thus creating a "drained
--section".
--
--Long-running jobs (usually in the form of coroutines) are often scheduled in
--the BlockDriverState's AioContext.  The functions
--bdrv_add/remove_aio_context_notifier, or alternatively
--blk_add/remove_aio_context_notifier if you use BlockBackends, can be used to
--get a notification whenever bdrv_try_change_aio_context() moves a
--BlockDriverState to a different AioContext.
+ #endif
+diff --git a/accel/accel-blocker.c b/accel/accel-blocker.c
+index e083f24aa80..75daaa29113 100644
+--- a/accel/accel-blocker.c
++++ b/accel/accel-blocker.c
+@@ -25,6 +25,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/main-loop.h"
+ #include "hw/core/cpu.h"
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 7982ecd39a5..09c79035949 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -24,6 +24,7 @@
+ #include "sysemu/hw_accel.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "exec/log.h"
+ #include "exec/gdbstub.h"
+ #include "sysemu/tcg.h"
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 266c9dd35fa..06bf9f456cf 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -17,6 +17,7 @@
+ #include "block/block.h"
+ #include "block/thread-pool.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/sockets.h"
+diff --git a/util/aio-win32.c b/util/aio-win32.c
+index d144f9391fb..6583d5c5f31 100644
+--- a/util/aio-win32.c
++++ b/util/aio-win32.c
+@@ -18,6 +18,7 @@
+ #include "qemu/osdep.h"
+ #include "block/block.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/queue.h"
+ #include "qemu/sockets.h"
+ #include "qapi/error.h"
+diff --git a/util/async.c b/util/async.c
+index 3e3e4fc7126..99db28389f6 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -30,6 +30,7 @@
+ #include "block/graph-lock.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/atomic.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu_queue.h"
+ #include "block/raw-aio.h"
+ #include "qemu/coroutine_int.h"
+diff --git a/util/fdmon-epoll.c b/util/fdmon-epoll.c
+index c6413cb18fe..9fb8800dde8 100644
+--- a/util/fdmon-epoll.c
++++ b/util/fdmon-epoll.c
+@@ -5,6 +5,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include <sys/epoll.h>
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu_queue.h"
+ #include "aio-posix.h"
+ 
+diff --git a/util/lockcnt.c b/util/lockcnt.c
+index 5da36946b1b..d07c6cc5cee 100644
+--- a/util/lockcnt.c
++++ b/util/lockcnt.c
+@@ -7,6 +7,7 @@
+  *   Paolo Bonzini <pbonzini@redhat.com>
+  */
+ #include "qemu/osdep.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/atomic.h"
+ #include "trace.h"
 -- 
 2.34.1
 
