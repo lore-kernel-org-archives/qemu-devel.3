@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CC6CFC283
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DD8CFC280
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ePR-0005w2-Tl; Tue, 15 Oct 2024 06:04:09 -0400
+	id 1t0ePr-0006dc-Fb; Tue, 15 Oct 2024 06:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0ePQ-0005tB-2D; Tue, 15 Oct 2024 06:04:08 -0400
+ id 1t0ePn-0006Mu-CZ; Tue, 15 Oct 2024 06:04:33 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0ePO-0001Do-ER; Tue, 15 Oct 2024 06:04:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV6V1JRsz6K98V;
- Tue, 15 Oct 2024 18:03:30 +0800 (CST)
+ id 1t0ePl-0001Gq-IS; Tue, 15 Oct 2024 06:04:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV5g0mr5z6FGpc;
+ Tue, 15 Oct 2024 18:02:47 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 509E4140A34;
- Tue, 15 Oct 2024 18:04:04 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4FE03140AA7;
+ Tue, 15 Oct 2024 18:04:24 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 15 Oct 2024 12:03:44 +0200
+ 15.1.2507.39; Tue, 15 Oct 2024 12:04:04 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,9 +45,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V5 09/30] arm/acpi: Enable ACPI support for vCPU hotplug
-Date: Tue, 15 Oct 2024 10:59:51 +0100
-Message-ID: <20241015100012.254223-10-salil.mehta@huawei.com>
+Subject: [PATCH RFC V5 10/30] arm/virt: Enhance GED framework to handle vCPU
+ hotplug events
+Date: Tue, 15 Oct 2024 10:59:52 +0100
+Message-ID: <20241015100012.254223-11-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015100012.254223-1-salil.mehta@huawei.com>
 References: <20241015100012.254223-1-salil.mehta@huawei.com>
@@ -83,47 +84,68 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACPI is required to interface QEMU with the guest. Roughly falls into below
-cases,
+During GED device creation at Virt Machine initialization, add a new vCPU
+hotplug event to the existing set of supported GED device events. Additionally,
+initialize the memory map for the vCPU hotplug *control device*, which will
+provide an interface to exchange ACPI events between QEMU/VMM and the Guest
+Kernel.
 
-1. Convey the possible vCPUs config at the machine init time to the guest
-   using various DSDT tables like MADT etc.
-2. Convey vCPU hotplug events to guest(using GED)
-3. Assist in evaluation of various ACPI methods(like _EVT, _STA, _OST, _EJ0,
-   _MAT etc.)
-4. Provides ACPI CPU hotplug state and 12 Byte memory mapped vCPU hotplug
-   control register interface to the OSPM/guest corresponding to each possible
-   vcpu. The register interface consists of various R/W fields and their
-   handling operations. These are called when ever register fields or memory
-   regions are accessed (i.e. read or written) by OSPM when ever it evaluates
-   various ACPI methods.
-
-Note: lot of this framework code is inherited from the changes already done for
-      x86 but still some minor changes are required to make it compatible with
-      ARM64.)
-
-Enable the ACPI support switch for vCPU hotplug feature. Actual ACPI changes
-required will follow in subsequent patches.
-
-Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
 ---
- hw/arm/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/virt.c         | 5 ++++-
+ include/hw/arm/virt.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index eac5070514..77cdbc5c27 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -33,6 +33,7 @@ config ARM_VIRT
-     select ACPI_HW_REDUCED
-     select ACPI_APEI
-     select ACPI_VIOT
-+    select ACPI_CPU_HOTPLUG
-     select VIRTIO_MEM_SUPPORTED
-     select ACPI_CXL
-     select ACPI_HMAT
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 00fd65b4e1..b9df428049 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -81,6 +81,7 @@
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/mem/nvdimm.h"
+ #include "hw/acpi/generic_event_device.h"
++#include "hw/acpi/cpu_hotplug.h"
+ #include "hw/virtio/virtio-md-pci.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/char/pl011.h"
+@@ -181,6 +182,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+     [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
+     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
++    [VIRT_CPUHP_ACPI] =         { 0x090c0000, ACPI_CPU_HOTPLUG_REG_LEN},
+     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
+     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
+     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
+@@ -678,7 +680,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+     DeviceState *dev;
+     MachineState *ms = MACHINE(vms);
+     int irq = vms->irqmap[VIRT_ACPI_GED];
+-    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++    uint32_t event = ACPI_GED_PWR_DOWN_EVT | ACPI_GED_CPU_HOTPLUG_EVT;
+ 
+     if (ms->ram_slots) {
+         event |= ACPI_GED_MEM_HOTPLUG_EVT;
+@@ -694,6 +696,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+ 
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, vms->memmap[VIRT_CPUHP_ACPI].base);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(vms->gic, irq));
+ 
+     return dev;
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 362422413c..b5bfb75f71 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -78,6 +78,7 @@ enum {
+     VIRT_PCDIMM_ACPI,
+     VIRT_ACPI_GED,
+     VIRT_NVDIMM_ACPI,
++    VIRT_CPUHP_ACPI,
+     VIRT_PVTIME,
+     VIRT_LOWMEMMAP_LAST,
+ };
 -- 
 2.34.1
 
