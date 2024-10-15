@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CDDCFC28D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 11:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2228BCFC293
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 11:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0fkx-0005Yy-CM; Tue, 15 Oct 2024 07:30:27 -0400
+	id 1t0fre-0007g9-54; Tue, 15 Oct 2024 07:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0fkq-0005Y5-Lw
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:30:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0fkl-0004EG-Lc
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:30:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728991814;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MaRKN1kHntchFFmkQZ38W2nYmASUOefauZ+iX7KC2Xc=;
- b=KptAsSm0Cn2ssiwFGDuE75jLkteLPzFTo8AQiV5qhEfOkH1JPl1x0r+v0CGWxKbQPTeYTD
- BDzHm4yQW3a/i2aEdt/SNkKhthYeoLoC4uNGh+BsHOtq97STlOuD4n/zNvJjf2PNaXLdBq
- vc82/e//rAsBDbIYfsNXYQjzinzBLTQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-tVJKbx4_ObWC1INBVcfkMg-1; Tue, 15 Oct 2024 07:30:12 -0400
-X-MC-Unique: tVJKbx4_ObWC1INBVcfkMg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b11c9a9249so443964185a.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 04:30:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0frV-0007fh-2B
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:14 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0frR-0005EY-05
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:12 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-37d4ac91d97so4544598f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 04:37:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728992226; x=1729597026; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gdwXexYvM2Az81H0FuzwQ/GzEWh5Z5lRMjEDR0oLERk=;
+ b=q7zlWPK0LnoBmcRZiK8Pi1F1sQtsrfOvXyfPiv55wXRpaiTdbxi+oYLoC4G7iMagYr
+ EE67JMoFJXn9kUJc1ZobdvWHA/xG/lxraS6rtuZsWMXQEFb0jhAI9+jA7UJtBiAxPawC
+ IhxHp9QW/70iChD2FHE5BmAa3t+lWwGn5ux5Ar5u/JJD/kPFLjCmjXyd11SqKjhBnEj+
+ WE8lYJX1QXBsFK6uuNM7k0CdFI8KierXYV5RvTRYEAp+fjXBp1ct+3TJfWmN4DwAnTyA
+ U6X5Fnnh77MAtiyiGbqRLwN/8TRlAOxdwcTZ9dqryQHsypYmAptfk5POMFURYCcNmCZE
+ GaHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728991812; x=1729596612;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MaRKN1kHntchFFmkQZ38W2nYmASUOefauZ+iX7KC2Xc=;
- b=CFmbk8bwDWtykwovuqAdrrmWGswRihGu7Vhqc/ZxNAOPBZs7daUgbYvsxq7GwmPoUq
- xglZyVfhBRj1YNa03qhPT6MeuiXbV88K2YWJfR1bsDRxbwVzn2paNp3abFqlPRVY29ec
- Y7T23vEvauK2Z8NoC8RZZuAFZCd+vYpYqpJXpGD6bDX19fybSj27b4kubn+SNz3vB647
- aIAKAz1iY5ehTWNGANEPXYzaeCbzdkFwIJZPm9IYWf5ibdE+mfw1TnsxAVTJlFH9POeZ
- o/5rW7QSzIHSjdh1nq3AejB0I4namMAJy3eZa2KsBRDwDC93uBRrNy+SDUpzUA9Neo89
- nLeQ==
-X-Gm-Message-State: AOJu0YymxKBupICYg7W+T1I/1wArtYMudYwUbPOQ6DYF0LDMLwWfrOH1
- kLb1G7XSciKb0+9rWGcGAjXsY31dfWq2ZURXA1ZNVmG5JvDJB7gEisB2Epqwj5kebcgQ60buRVf
- ZiAsmcZo+y08EbmJfbprC34OaHdZPEx+fn+0wcoKg77YBHK5hddicmmQ8lVQDt/iIBFzq1MleHm
- 0r/8na84Bvr6DExHMfKRUzLZRPpp8=
-X-Received: by 2002:a05:620a:1a19:b0:7b1:1013:c27e with SMTP id
- af79cd13be357-7b1418a04fbmr2979685a.60.1728991811844; 
- Tue, 15 Oct 2024 04:30:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHA+h/FM3ua5qo5ZVbTaH3HmSx/KufISb/DTV0KFjurPcXGVJSY6QwBRLa1/fKo3O/vAhFi6MPiKMOmLK86Glo=
-X-Received: by 2002:a05:620a:1a19:b0:7b1:1013:c27e with SMTP id
- af79cd13be357-7b1418a04fbmr2976985a.60.1728991811522; Tue, 15 Oct 2024
- 04:30:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728992226; x=1729597026;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gdwXexYvM2Az81H0FuzwQ/GzEWh5Z5lRMjEDR0oLERk=;
+ b=g1u6LbyUwwqxwVZ+p0qup5zOfFl8heDvcBHBfIHSmWt9WnmhXeU1im74eemLL0aus/
+ XRNTnLqtTcrIJIpBoqGx1PZ16sKexbPgeQ/SV7ExTLJw74aPqTQ8juw1xGRhijrJJpJU
+ 6Td2dyX9R0CdFDTTZC2Zr10KLZMouJRIrPgQ2W4N7/Vj3OZ+5JWrQ8V7+MtEpduM3kDs
+ /T2DuSwUyzwtXsixby7c2SqcwtWBEsTHuWLx2XfzSdZxcWZHtk+1XNc8hX2v0xwUZ44f
+ k+y7ZuJrFp7wdJaMToE/7fh1aSyoWZGSXwmf6SJpOWATTz8SWR8aHxtQGrIkv2OdBi9l
+ Ec3Q==
+X-Gm-Message-State: AOJu0YzxnThdUcqkQfUFKwKsRHGxjdI9As6sJepozXRcMZ70X64+emA1
+ uS1YQaCT62cnzArrpINiZd9Yve6juqhg/5+ahyH7wkKfV5IypmqdTNtzg8LGeiSIN8BmyyrD5+A
+ 2
+X-Google-Smtp-Source: AGHT+IHcCdy3QVPz3eDkdB8PTE5+nS3xFc1FddcpxblXR/G3LfRmLSUmEinqHyoOP6msvsG3jsJGPQ==
+X-Received: by 2002:a5d:4809:0:b0:37d:5318:bf0a with SMTP id
+ ffacd0b85a97d-37d5ff27c25mr8922872f8f.1.1728992226231; 
+ Tue, 15 Oct 2024 04:37:06 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d7fc40f94sm1339329f8f.106.2024.10.15.04.37.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2024 04:37:05 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] tests/qtest: Raise the ide-test timeout
+Date: Tue, 15 Oct 2024 12:37:05 +0100
+Message-Id: <20241015113705.239067-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20241015112510.412471-1-thuth@redhat.com>
-In-Reply-To: <20241015112510.412471-1-thuth@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 15 Oct 2024 15:30:00 +0400
-Message-ID: <CAMxuvazGYBHJuNkYHMxcGZNMOzcVjehdXu9t8rbhb3xSGR1iGw@mail.gmail.com>
-Subject: Re: [PATCH v2] ui/console-vc: Silence warning about sprintf() on
- OpenBSD
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
- qemu-trivial@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +91,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 15, 2024 at 3:25=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> The linker on OpenBSD complains:
->
->  ld: warning: console-vc.c:824 (../src/ui/console-vc.c:824)([...]):
->  warning: sprintf() is often misused, please use snprintf()
->
-> Using g_strdup_printf() is certainly better here, so let's switch
-> to that function instead.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+The ide-test occasionally times out: on the system I run
+vm-build-openbsd on, it usually takes about 18 seconds, but
+occasionally hits the 60s timeout, likely when the host machine is
+under heavy load.  I have also seen this test hit its time limit on
+the s390x CI runner.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Double the timeout for this test so that it won't hit its timeout
+even when the host is running more slowly than usual.
 
-> ---
->  v2: Use g_strdup_printf() instead of snprintf()
->
->  ui/console-vc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/ui/console-vc.c b/ui/console-vc.c
-> index 8393d532e7..53fcee88f4 100644
-> --- a/ui/console-vc.c
-> +++ b/ui/console-vc.c
-> @@ -648,7 +648,7 @@ static void vc_putchar(VCChardev *vc, int ch)
->      QemuTextConsole *s =3D vc->console;
->      int i;
->      int x, y;
-> -    char response[40];
-> +    g_autofree char *response =3D NULL;
->
->      switch(vc->state) {
->      case TTY_STATE_NORM:
-> @@ -821,7 +821,7 @@ static void vc_putchar(VCChardev *vc, int ch)
->                      break;
->                  case 6:
->                      /* report cursor position */
-> -                    sprintf(response, "\033[%d;%dR",
-> +                    response =3D g_strdup_printf("\033[%d;%dR",
->                             (s->y_base + s->y) % s->total_height + 1,
->                              s->x + 1);
->                      vc_respond_str(vc, response);
-> --
-> 2.47.0
->
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b207e386965..e8be8b3942d 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -4,6 +4,7 @@ slow_qtests = {
+   'bios-tables-test' : 910,
+   'cdrom-test' : 610,
+   'device-introspect-test' : 720,
++  'ide-test' : 120,
+   'migration-test' : 480,
+   'npcm7xx_pwm-test': 300,
+   'npcm7xx_watchdog_timer-test': 120,
+-- 
+2.34.1
 
 
