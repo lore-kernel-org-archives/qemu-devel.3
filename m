@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03218CFC288
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35F6CFC287
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ewW-0006ee-AR; Tue, 15 Oct 2024 06:38:20 -0400
+	id 1t0ewp-0006ho-Ki; Tue, 15 Oct 2024 06:38:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewU-0006d5-6N
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1t0ewX-0006gC-RX
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:21 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewS-0005w9-AG
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:17 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43140a2f7f7so4048685e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:15 -0700 (PDT)
+ id 1t0ewV-0005xl-To
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:21 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-37d49a7207cso3355998f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988695; x=1729593495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988698; x=1729593498; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2oogUcyfz+E85mumq1xXQjOwEjwwahsOY55NASPbeB4=;
- b=a1hHL5TqM8PacI/37G3FwaUufNruEojCg8yeb2l9+GXvx4k4z2m2dXrlrJz0+yE2K0
- Bl10O1xTOo6maiLOh097TAbMewj1/r4yYhJKGJmCEFJP2ZKbGw8ZzoALFOGnoc7Be8Oi
- DVH9GeA/K4TZOORSzRI2R8I6kYpPJfHNvCM1waiJL9Q0I8DfYVtq1GhZ472OOzefizms
- eMXRgPw5UuHPgpcAcT5k+k+ThpslFgjGc89LjxTtTplAATwahB387+AymOuxbAGayPBe
- q53Fp0foXF79IHBsRPoA+X7dKutuVqoZEMiVkTRcsGIfn3S6xQ7lZSHKMsOnK344aJfO
- DQSg==
+ :reply-to; bh=t1cGmO53mZ9iNqSL2eF/CAirgGUIZeKIwH4XCXTjDe0=;
+ b=W09w4z7bvy+2eYH51dIry1c99h+6D+cCZrv4wT87iDT7FiL2XJVOjjxRAgWGX3DDmX
+ RmBY3OGRxr4+YBiyQOEcR0nGs88WHmIcq4mvSI0JQcWT05ARCpdnTXMCZy+Mx/ruMp1w
+ s3rHQff3cVNfgctkJITVI7K/8WeNELvLtHO2UiFfAouoJP+raar55vVotSTRcqcd3LHw
+ CWa7Qbf1kXTE9/+oBk9we8nQqdmE2fnyn3ewL0lN+FaXtBtl7pJuzNauMccLqW/tD2+F
+ XPn5IPB9Zyo4e5Yl8SpoIcWOphRvpn/KLE58LSpvI9Z8NIKM3rTS24yGM1LFsxKp4lcr
+ mh5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988695; x=1729593495;
+ d=1e100.net; s=20230601; t=1728988698; x=1729593498;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2oogUcyfz+E85mumq1xXQjOwEjwwahsOY55NASPbeB4=;
- b=VarsGzSa27OckbDwLEkd0W9zUpWVCmN0ZOksocJvqLggdjLpsHQsx7kNic+v10Crea
- T1G9RsSS+W5XnXEzF0iHViCqpxfvsje6J7rNptxHpwfzlaM+Cn3VCZsN+0UX0IgBlL13
- NDmIWGpk7oX99kPkMcqtDAFqovTdutZgovVuSCANugu4KMARNIaW1BsTy34JJ7O17SX3
- hR9LgHEcpPfGsbH/r6m1kddG32pS2uE/IJXWXQBNEomkZJVPzKbweCeo3HFhIAKF/Zw9
- i1oontXAz4LxJcCUcKY1oy8YbSqIK1NHBACKX+nR6y11XuJ0BbAHTPqEgtOC5Xuj5oa6
- OXtw==
-X-Gm-Message-State: AOJu0Yy1orSHK+aU91kXXi+KGXHY17HXZyWsBlrwMdVr7i1J5ZtLRmQv
- s/b+kezWk+ZINSMvsISYHOfJv3N1wCkq80ay7BNXx+x/Hx8pfiPqCiCs55flosNdQb0FizMPfUT
- U
-X-Google-Smtp-Source: AGHT+IHCmRjr0UCrdolkaLluQWZz7RsNELY+g+DbI8uGVBRjYAXvt61EF/4mpPKFv15KhLuOXO2nig==
-X-Received: by 2002:a5d:570b:0:b0:37d:51f8:46fd with SMTP id
- ffacd0b85a97d-37d5520571dmr9529677f8f.22.1728988693087; 
- Tue, 15 Oct 2024 03:38:13 -0700 (PDT)
+ bh=t1cGmO53mZ9iNqSL2eF/CAirgGUIZeKIwH4XCXTjDe0=;
+ b=MyCnYMWtLppqMGvbMj7B5EDzF4dqIge+exCLwer3P0QVt/TXgA31zyYQdoF4pKjjbF
+ 0fgcdZI08NLIwAMMZqYNBonOVqo4kLDQKj2Hz38KXcCGA8qhLUtuvGGfdJkUWUQflQfF
+ hJeydwqXmXTg2+XCjtT+jNcfeGWZPi5NmJnTQHVuPkEugwG13eks3c56yBFYwB+BhHA1
+ ah9iygatpUiS95sPsdgKIWiuDTQnjtkbZTQ+OhNGLhEAwT7v1pH8CTC0I9BomcgWEZQX
+ rQ7uJpwthd9ttag3FC7yL34rRpzLh5YwIPIkiG5yGyHKRxdCjvlwDKAC+d6uChFdOekf
+ jB6A==
+X-Gm-Message-State: AOJu0YyL9RlEXKfTSA8zvTkeA219O+3I4v8HBAySWar5XWLVgdVB4kQ0
+ 9/dnQCyOyKztCcdt2oB/tN0Zf5R+4aHojs90t+T3nVT9mRQpPQG8mSCMkirawrLFxE+nFCKW2Dr
+ 3
+X-Google-Smtp-Source: AGHT+IEJXYv1+CyvajGjIW1NZrBgRTvcVYH9YghKW9Se8TMt9uNTmKbbJW4uyaP3eN/83iLYWaQbuw==
+X-Received: by 2002:a5d:4742:0:b0:374:fa0a:773c with SMTP id
+ ffacd0b85a97d-37d5ffc1a53mr8284397f8f.47.1728988696962; 
+ Tue, 15 Oct 2024 03:38:16 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.12
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:12 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/28] hw/misc: Create STM32L4x5 SYSCFG clock
-Date: Tue, 15 Oct 2024 11:37:47 +0100
-Message-Id: <20241015103808.133024-8-peter.maydell@linaro.org>
+Subject: [PULL 15/28] docs/devel/blkverify: Convert to rST format
+Date: Tue, 15 Oct 2024 11:37:55 +0100
+Message-Id: <20241015103808.133024-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,103 +93,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inès Varhol <ines.varhol@telecom-paris.fr>
+Convert blkverify.txt to rST format.
 
-This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
-corresponding clock from STM32L4x5 RCC.
-
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Luc Michel <luc@lmichel.fr>
-Message-id: 20241003081105.40836-2-ines.varhol@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20240816132212.3602106-3-peter.maydell@linaro.org
 ---
- include/hw/misc/stm32l4x5_syscfg.h |  1 +
- hw/arm/stm32l4x5_soc.c             |  2 ++
- hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ MAINTAINERS                                   |  1 +
+ .../{blkverify.txt => testing/blkverify.rst}  | 30 +++++++++++--------
+ docs/devel/testing/index.rst                  |  1 +
+ 3 files changed, 19 insertions(+), 13 deletions(-)
+ rename docs/devel/{blkverify.txt => testing/blkverify.rst} (77%)
 
-diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4x5_syscfg.h
-index 23bb5641507..c450df2b9ea 100644
---- a/include/hw/misc/stm32l4x5_syscfg.h
-+++ b/include/hw/misc/stm32l4x5_syscfg.h
-@@ -48,6 +48,7 @@ struct Stm32l4x5SyscfgState {
-     uint32_t swpr2;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d4eb221b88c..22cc98bbfee 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3890,6 +3890,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/blkverify.c
++F: docs/devel/blkverify.rst
  
-     qemu_irq gpio_out[GPIO_NUM_PINS];
-+    Clock *clk;
- };
+ bochs
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+diff --git a/docs/devel/blkverify.txt b/docs/devel/testing/blkverify.rst
+similarity index 77%
+rename from docs/devel/blkverify.txt
+rename to docs/devel/testing/blkverify.rst
+index aca826c51cc..2a71778b5e3 100644
+--- a/docs/devel/blkverify.txt
++++ b/docs/devel/testing/blkverify.rst
+@@ -1,8 +1,10 @@
+-= Block driver correctness testing with blkverify =
++Block driver correctness testing with ``blkverify``
++===================================================
  
- #endif
-diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-index fac83d349c8..16e3505dcb8 100644
---- a/hw/arm/stm32l4x5_soc.c
-+++ b/hw/arm/stm32l4x5_soc.c
-@@ -236,6 +236,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+-== Introduction ==
++Introduction
++------------
  
-     /* System configuration controller */
-     busdev = SYS_BUS_DEVICE(&s->syscfg);
-+    qdev_connect_clock_in(DEVICE(&s->syscfg), "clk",
-+        qdev_get_clock_out(DEVICE(&(s->rcc)), "syscfg-out"));
-     if (!sysbus_realize(busdev, errp)) {
-         return;
-     }
-diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
-index a5a1ce26804..a947a9e036b 100644
---- a/hw/misc/stm32l4x5_syscfg.c
-+++ b/hw/misc/stm32l4x5_syscfg.c
-@@ -26,6 +26,9 @@
- #include "trace.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
-+#include "hw/clock.h"
-+#include "hw/qdev-clock.h"
-+#include "qapi/error.h"
- #include "hw/misc/stm32l4x5_syscfg.h"
- #include "hw/gpio/stm32l4x5_gpio.h"
+-This document describes how to use the blkverify protocol to test that a block
++This document describes how to use the ``blkverify`` protocol to test that a block
+ driver is operating correctly.
  
-@@ -225,12 +228,22 @@ static void stm32l4x5_syscfg_init(Object *obj)
-     qdev_init_gpio_in(DEVICE(obj), stm32l4x5_syscfg_set_irq,
-                       GPIO_NUM_PINS * NUM_GPIOS);
-     qdev_init_gpio_out(DEVICE(obj), s->gpio_out, GPIO_NUM_PINS);
-+    s->clk = qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
-+}
-+
-+static void stm32l4x5_syscfg_realize(DeviceState *dev, Error **errp)
-+{
-+    Stm32l4x5SyscfgState *s = STM32L4X5_SYSCFG(dev);
-+    if (!clock_has_source(s->clk)) {
-+        error_setg(errp, "SYSCFG: clk input must be connected");
-+        return;
-+    }
- }
+ It is difficult to test and debug block drivers against real guests.  Often
+@@ -11,12 +13,13 @@ of the executable.  Other times obscure errors are raised by a program inside
+ the guest.  These issues are extremely hard to trace back to bugs in the block
+ driver.
  
- static const VMStateDescription vmstate_stm32l4x5_syscfg = {
-     .name = TYPE_STM32L4X5_SYSCFG,
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (VMStateField[]) {
-         VMSTATE_UINT32(memrmp, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(cfgr1, Stm32l4x5SyscfgState),
-@@ -241,6 +254,7 @@ static const VMStateDescription vmstate_stm32l4x5_syscfg = {
-         VMSTATE_UINT32(swpr, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(skr, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(swpr2, Stm32l4x5SyscfgState),
-+        VMSTATE_CLOCK(clk, Stm32l4x5SyscfgState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -251,6 +265,7 @@ static void stm32l4x5_syscfg_class_init(ObjectClass *klass, void *data)
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
+-Blkverify solves this problem by catching data corruption inside QEMU the first
++``blkverify`` solves this problem by catching data corruption inside QEMU the first
+ time bad data is read and reporting the disk sector that is corrupted.
  
-     dc->vmsd = &vmstate_stm32l4x5_syscfg;
-+    dc->realize = stm32l4x5_syscfg_realize;
-     rc->phases.hold = stm32l4x5_syscfg_hold_reset;
- }
+-== How it works ==
++How it works
++------------
  
+-The blkverify protocol has two child block devices, the "test" device and the
++The ``blkverify`` protocol has two child block devices, the "test" device and the
+ "raw" device.  Read/write operations are mirrored to both devices so their
+ state should always be in sync.
+ 
+@@ -25,13 +28,14 @@ contents to the "test" image.  The idea is that the "raw" device will handle
+ read/write operations correctly and not corrupt data.  It can be used as a
+ reference for comparison against the "test" device.
+ 
+-After a mirrored read operation completes, blkverify will compare the data and
++After a mirrored read operation completes, ``blkverify`` will compare the data and
+ raise an error if it is not identical.  This makes it possible to catch the
+ first instance where corrupt data is read.
+ 
+-== Example ==
++Example
++-------
+ 
+-Imagine raw.img has 0xcd repeated throughout its first sector:
++Imagine raw.img has 0xcd repeated throughout its first sector::
+ 
+     $ ./qemu-io -c 'read -v 0 512' raw.img
+     00000000:  cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd  ................
+@@ -42,7 +46,7 @@ Imagine raw.img has 0xcd repeated throughout its first sector:
+     read 512/512 bytes at offset 0
+     512.000000 bytes, 1 ops; 0.0000 sec (97.656 MiB/sec and 200000.0000 ops/sec)
+ 
+-And test.img is corrupt, its first sector is zeroed when it shouldn't be:
++And test.img is corrupt, its first sector is zeroed when it shouldn't be::
+ 
+     $ ./qemu-io -c 'read -v 0 512' test.img
+     00000000:  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+@@ -53,17 +57,17 @@ And test.img is corrupt, its first sector is zeroed when it shouldn't be:
+     read 512/512 bytes at offset 0
+     512.000000 bytes, 1 ops; 0.0000 sec (81.380 MiB/sec and 166666.6667 ops/sec)
+ 
+-This error is caught by blkverify:
++This error is caught by ``blkverify``::
+ 
+     $ ./qemu-io -c 'read 0 512' blkverify:a.img:b.img
+     blkverify: read sector_num=0 nb_sectors=4 contents mismatch in sector 0
+ 
+-A more realistic scenario is verifying the installation of a guest OS:
++A more realistic scenario is verifying the installation of a guest OS::
+ 
+     $ ./qemu-img create raw.img 16G
+     $ ./qemu-img create -f qcow2 test.qcow2 16G
+     $ ./qemu-system-x86_64 -cdrom debian.iso \
+           -drive file=blkverify:raw.img:test.qcow2
+ 
+-If the installation is aborted when blkverify detects corruption, use qemu-io
++If the installation is aborted when ``blkverify`` detects corruption, use ``qemu-io``
+ to explore the contents of the disk image at the sector in question.
+diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
+index 9e772c7fd1d..1171f7db8f0 100644
+--- a/docs/devel/testing/index.rst
++++ b/docs/devel/testing/index.rst
+@@ -15,3 +15,4 @@ testing infrastructure.
+    ci
+    fuzzing
+    blkdebug
++   blkverify
 -- 
 2.34.1
 
