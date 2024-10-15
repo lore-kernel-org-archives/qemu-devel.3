@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBDA3D216AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0819D216AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iNu-0008Lx-2X; Tue, 15 Oct 2024 10:18:50 -0400
+	id 1t0iPy-0000rd-21; Tue, 15 Oct 2024 10:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNh-0007gU-VI
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNa-0003Nu-B0
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OYQ70JFBQ0ncTVmPjLYfygopz5A4fwPgOHvHyL+yuPc=;
- b=GwZXgPj5oIAvjyBA+qX0ZPmJxMsuvGjSs/ZIINgpaqUQ/INm0IjckKMlwA/aP9vRbGwE5V
- j0h6VHbD1BoBEZK4HCT4hn7xofh9k97tZEjRU27GUCT3m5WJNPxiA4ncE4GYfTjS8CaKeJ
- tEbWj5hDR7PQMnsM3TZN4JU4lSKwTYU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-RTKSN3R_Oe6aRPkrxTMaUA-1; Tue, 15 Oct 2024 10:18:27 -0400
-X-MC-Unique: RTKSN3R_Oe6aRPkrxTMaUA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d589138a9so1876006f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:18:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0iPv-0000TJ-Iy
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:20:55 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0iPt-0003k8-Rl
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:20:55 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9850ae22eso2281865a12.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:20:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729002052; x=1729606852; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YdpUI49LyWqdj8Rnto7CJrV3mF8S6CujfvlBzRZHUyw=;
+ b=N1SRcCOEvy4T7zT6/5clFFG4w3Vn/DbRV4Quw4ut4ECKKEOxSd1TSL8k4RRbfLJUUq
+ 1BM4BRiqdaEnKipqYfGBLQ5YdFlljFg+e7LcepSEytcDKz1qo3rt4AEeOan7OxNTkPOM
+ dqAPkK9GD+kWfQXqbKwaSL05bBHCzpUJk3YVuIaCnB1fGX9/LHeHuDBtvE8CoSZCMKq2
+ IhmjMrxxFJHwQ2FM4AxVBCu79J20Za4iUHlTIv72vFHSrDLNU+Qiz4HeJxWU+RbzflGP
+ xifpHGmD4MoVBfptGm5aG4h/QLOSraAgkmCPWnpnA36j+YJS+WQ7bty/clWcigJJ10xr
+ 08/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001905; x=1729606705;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729002052; x=1729606852;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OYQ70JFBQ0ncTVmPjLYfygopz5A4fwPgOHvHyL+yuPc=;
- b=LQ19ZCu8VBqGZEDyorxxfbgxoLwP2Yf8PrNiLZMSJoyMVutUIP7aSddEBur+b9c36L
- 03JDFDMkSp45zyrWnW8pdhmxLsj//3Ubk7WFNTn/PSQAhV5qBKf1LXAx3JyqXaYNSdhi
- x6Q+JSZb6b3De1WNlw+lnhrcAGIN3KAmuhcjOW+EysRp40THBmRtpcNSOtkUJhwF/zyV
- 1arg3vi/vy3E0SBd4KAZq1ivOhWuTzau+pi131ezIDw4ShndZprWUSdKqONuwUR/ds1I
- 0doOn7ff6rQ0Yvjj6sTKGX2+p+1WXV24lCiT5cv6th6fxJaEoAZ7gFl/AFX8zXlP3Oi2
- bBdQ==
-X-Gm-Message-State: AOJu0YzL2pKxKMPCRSwf3Cm1ZOp7/UQGQp+2b3I/YrCOZ/Ucidzq9oZR
- qYDKDF6QQAsyyIE9l28sXquN5Dbel2P6bjYuIq1kBiCJDRz7PnUvTc6nNIlCxMW0yfDE+AppA68
- JYbq6zCnKLRW9zddtnRaj3ncb9W9Xa31GX88sR5eDFKK9i9fedqe5hqPIIVwsgXY36Yi9/baQve
- 97crpyWR4KHlx3DaGK+zIZUbsxOwiQz+WO0Sv4KC4=
-X-Received: by 2002:adf:f547:0:b0:37d:4894:6895 with SMTP id
- ffacd0b85a97d-37d86bd4276mr451238f8f.15.1729001905065; 
- Tue, 15 Oct 2024 07:18:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOnxPVAgTrj6gK6rDXZkJUb2hXbZ4XI6kaRC5CS0ncJvwgSxdNEzF1Qwi8/1L85Zz7GbmHKQ==
-X-Received: by 2002:adf:f547:0:b0:37d:4894:6895 with SMTP id
- ffacd0b85a97d-37d86bd4276mr451214f8f.15.1729001904574; 
- Tue, 15 Oct 2024 07:18:24 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4313f569933sm19467235e9.13.2024.10.15.07.18.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:18:24 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Robert R. Henry" <rrh.henry@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 21/25] target/i386/tcg: Use DPL-level accesses for interrupts
- and call gates
-Date: Tue, 15 Oct 2024 16:17:07 +0200
-Message-ID: <20241015141711.528342-22-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
-References: <20241015141711.528342-1-pbonzini@redhat.com>
+ bh=YdpUI49LyWqdj8Rnto7CJrV3mF8S6CujfvlBzRZHUyw=;
+ b=KSD2oHl3HrF76Mo4GRk6julOaOooRSH0H4jFkayeyMQpf9TNJhREcmf1s9n2J0bNqd
+ 38OPfmri+8TUDYG3JMkGcKfjL993l6m0lbTkqBPIm33ddsH1gfA1RCD4PqqQ+1DeCMZj
+ r1zkhbpgP9/U0DBdGGrhr0yKrzPW1/tYs4jPqH3XW4vxC4ETAmkxdlvh9LtitlyEjZ6S
+ ugs2o3Tkr8x4oC8D8L73C6oOy5rnuw6Cy4fZPvCYwQL3AB94fri25rzo9RIABcaHsbIV
+ pS+nPFs6SZOii89yvpKIHZJIE5DIo7NZ/n0tfHrVFJNtoINiP2E7okesyCL2mtj6fYFR
+ jnIQ==
+X-Gm-Message-State: AOJu0YwEjo2Kw3QAY1AQ6NmVKBNVx9X9c8qOIMHZXYG80y0uPk1Nzpns
+ Kn++YHPfAbWZLM06pVQ7RKb7p5TFzxYnx2HU5MPMio8VuYzMHJKNqxwW9WbzShjUETVanv+qz/G
+ u5sxvgzwkFPQcotTbTXsmnWv0oPqaXt9HjPO8Ug==
+X-Google-Smtp-Source: AGHT+IF56niG6ZLowC0TcE8HvuT9ltROqMrixIhKFcHFy9/IGCwErgTBt1Ng92EQEnq4wneN1N3hAbxw1aP4kgGgWy0=
+X-Received: by 2002:a05:6402:908:b0:5c7:2131:5d3 with SMTP id
+ 4fb4d7f45d1cf-5c9950e1343mr339583a12.12.1729002051747; Tue, 15 Oct 2024
+ 07:20:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20241003081105.40836-1-ines.varhol@telecom-paris.fr>
+ <20241003081105.40836-4-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20241003081105.40836-4-ines.varhol@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Oct 2024 15:20:39 +0100
+Message-ID: <CAFEAcA_0eyAa=XjDnobYqkinEnW1wOetKDBqus7k1BTWTyLLpQ@mail.gmail.com>
+Subject: Re: [PING PATCH v5 3/3] tests/qtest: Check STM32L4x5 clock connections
+To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Luc Michel <luc@lmichel.fr>,
+ qemu-arm@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, Samuel Tardieu <sam@rfc1149.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Damien Hedde <damien.hedde@dahe.fr>, Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,117 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stack accesses should be explicit and use the privilege level of the
-target stack.  This ensures that SMAP is not applied when the target
-stack is in ring 3.
+On Thu, 3 Oct 2024 at 09:11, In=C3=A8s Varhol <ines.varhol@telecom-paris.fr=
+> wrote:
+>
+> For USART, GPIO and SYSCFG devices, check that clock frequency before
+> and after enabling the peripheral clock in RCC is correct.
+>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Luc Michel <luc@lmichel.fr>
 
-This fixes a bug wherein i386/tcg assumed that an interrupt return, or a
-far call using the CALL or JMP instruction, was always going from kernel
-or user mode to kernel mode when using a call gate. This assumption is
-violated if the call gate has a DPL that is greater than 0.
 
-Analyzed-by: Robert R. Henry <rrh.henry@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/249
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/seg_helper.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+> +static void test_clock_enable(void)
+> +{
+> +    /*
+> +     * For each USART device, enable its clock in RCC
+> +     * and check that its clock frequency is SYSCLK_PERIOD
+> +     */
+> +    QTestState *qts =3D qtest_init("-M b-l475e-iot01a");
+> +
+> +    check_clock(qts, "machine/soc/usart[0]/clk", RCC_APB2ENR, 14);
+> +    check_clock(qts, "machine/soc/usart[1]/clk", RCC_APB1ENR1, 17);
+> +    check_clock(qts, "machine/soc/usart[2]/clk", RCC_APB1ENR1, 18);
+> +    check_clock(qts, "machine/soc/uart[0]/clk", RCC_APB1ENR1, 19);
+> +    check_clock(qts, "machine/soc/uart[1]/clk", RCC_APB1ENR1, 20);
+> +    check_clock(qts, "machine/soc/lpuart1/clk", RCC_APB1ENR2, 0);
+> +}
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 3b8fd827e1f..02ae6a0d1fc 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -695,7 +695,6 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
- 
-     sa.env = env;
-     sa.ra = 0;
--    sa.mmu_index = cpu_mmu_index_kernel(env);
- 
-     if (type == 5) {
-         /* task gate */
-@@ -705,7 +704,9 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-         }
-         shift = switch_tss(env, intno * 8, e1, e2, SWITCH_TSS_CALL, old_eip);
-         if (has_error_code) {
--            /* push the error code */
-+            /* push the error code on the destination stack */
-+            cpl = env->hflags & HF_CPL_MASK;
-+            sa.mmu_index = x86_mmu_index_pl(env, cpl);
-             if (env->segs[R_SS].flags & DESC_B_MASK) {
-                 sa.sp_mask = 0xffffffff;
-             } else {
-@@ -750,6 +751,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     if (e2 & DESC_C_MASK) {
-         dpl = cpl;
-     }
-+    sa.mmu_index = x86_mmu_index_pl(env, dpl);
-     if (dpl < cpl) {
-         /* to inner privilege */
-         uint32_t esp;
-@@ -1001,7 +1003,7 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
- 
-     sa.env = env;
-     sa.ra = 0;
--    sa.mmu_index = cpu_mmu_index_kernel(env);
-+    sa.mmu_index = x86_mmu_index_pl(env, dpl);
-     sa.sp_mask = -1;
-     sa.ss_base = 0;
-     if (dpl < cpl || ist != 0) {
-@@ -1135,7 +1137,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-     sa.sp = env->regs[R_ESP];
-     sa.sp_mask = 0xffff;
-     sa.ss_base = env->segs[R_SS].base;
--    sa.mmu_index = cpu_mmu_index_kernel(env);
-+    sa.mmu_index = x86_mmu_index_pl(env, 0);
- 
-     if (is_int) {
-         old_eip = next_eip;
-@@ -1599,7 +1601,7 @@ void helper_lcall_real(CPUX86State *env, uint32_t new_cs, uint32_t new_eip,
-     sa.sp = env->regs[R_ESP];
-     sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     sa.ss_base = env->segs[R_SS].base;
--    sa.mmu_index = cpu_mmu_index_kernel(env);
-+    sa.mmu_index = x86_mmu_index_pl(env, 0);
- 
-     if (shift) {
-         pushl(&sa, env->segs[R_CS].selector);
-@@ -1639,9 +1641,9 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- 
-     sa.env = env;
-     sa.ra = GETPC();
--    sa.mmu_index = cpu_mmu_index_kernel(env);
- 
-     if (e2 & DESC_S_MASK) {
-+        /* "normal" far call, no stack switch possible */
-         if (!(e2 & DESC_CS_MASK)) {
-             raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
-         }
-@@ -1665,6 +1667,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-             raise_exception_err_ra(env, EXCP0B_NOSEG, new_cs & 0xfffc, GETPC());
-         }
- 
-+        sa.mmu_index = x86_mmu_index_pl(env, cpl);
- #ifdef TARGET_X86_64
-         /* XXX: check 16/32 bit cases in long mode */
-         if (shift == 2) {
-@@ -1792,6 +1795,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- 
-         if (!(e2 & DESC_C_MASK) && dpl < cpl) {
-             /* to inner privilege */
-+            sa.mmu_index = x86_mmu_index_pl(env, dpl);
- #ifdef TARGET_X86_64
-             if (shift == 2) {
-                 ss = dpl;  /* SS = NULL selector with RPL = new CPL */
-@@ -1870,6 +1874,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-             new_stack = 1;
-         } else {
-             /* to same privilege */
-+            sa.mmu_index = x86_mmu_index_pl(env, cpl);
-             sa.sp = env->regs[R_ESP];
-             sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-             sa.ss_base = env->segs[R_SS].base;
--- 
-2.46.2
+This new test is missing the qtest_quit(qts) call at the
+end, which makes it hang when run on OpenBSD. (I fixed
+this up in the pullrequest.)
 
+thanks
+-- PMM
 
