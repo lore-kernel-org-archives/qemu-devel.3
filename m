@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAB3D216BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21604CFC277
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0j0o-0001NF-1l; Tue, 15 Oct 2024 10:59:02 -0400
+	id 1t0j2c-00039M-Rb; Tue, 15 Oct 2024 11:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1t0j0m-0001Md-SS
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:59:00 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0j2Y-00038G-CA
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:00:52 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1t0j0l-00008r-7q
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:59:00 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20cb89a4e4cso24265975ad.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:58:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0j2V-0000TN-SE
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:00:49 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-71e74900866so767914b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729004337; x=1729609137; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xr9VcP67btkW9fdHquP6IjRtytSNpngBeXikWdUm1Z4=;
- b=q00wRtYuDHqZ0lluR0hZuFI/3LHXSmz8vASJdxwfym0s08MkLJLGACOLe6Mr83BMz8
- S3y353GiWJywbUkCV0p/fBWp0wmpdGAC9zv+eb62ZvKuIvMWWugPCC17joPgyisGHajR
- qvwIvaHV4TuyVOtYg2a6JyEqyx/MBHyO3T5nAAwf3/0qxnUEUHYsxPr2173bI3ATSgsX
- QCGEOC45zwOE9pJq9KKwlBX9vGmQYKcKhPvFCeB72IifSlnTGmMfUeCzd3oWZ4R7zK5M
- AKaBTs3z3ejohY/AgiVKzi5eu8KJ9quhe+8Up3hOiucTcFP7nZ1N6MzJdKpQCcRH/78B
- E2EA==
+ d=linaro.org; s=google; t=1729004446; x=1729609246; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UkJtOvglhcxIIQG4scx7ZIRUK9Rm0J13x9EzawJArco=;
+ b=hPHUZFHLg4t8BWnzVB2Uh51AFU4cuGvOCckH/o0FNr+AMw9HX/RvZBB+zAw7ukEswE
+ ECfVbu3BsnU56rYx4fLHz7WR8KtzO4ht1DZGnWmQz8We7hPrdWg+pyIh4gJKWOSEvJn8
+ LoKa2Ul0MH8Fi27Ve1XJ2T8q+NnBA+MhKAOWfZ2XbOlBSRlgLa8AZNXKlpi7h41wmsB/
+ 2lRrnGmNxh1Jx/GHyn0X3iocH5I0Vy7jCmUzg43piMEHqUtcHGkIYX4IAdSBY2kQHU4F
+ rCnxU6sagyrX2UXwrq+a6yjRppZVtPCKrSn4TTBRiFG35d/GNFVbZvtfrl/zchZ7HCdH
+ Dxdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729004337; x=1729609137;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xr9VcP67btkW9fdHquP6IjRtytSNpngBeXikWdUm1Z4=;
- b=khU3NHdUGxbsQBCwQZpi9WU3vc1MsBo6LylYHoan7ZXThPl090eXmayFtMPaVs94GI
- jNJmy7hutOjauhjGvXxc8P6T7yPJCtK9FFjUBCbZ7zwR2B/tfv12AFfl1TSVxnu+dLJe
- q4uwNyUShvi/nap3tBfKkwi5HBf+iiIu0t80qJ3sce3MybNgHoqDE6pO1H9eBVNc8JJp
- 15NTciqyfnwaqme+kC/4Zz1FHQH5/kB5X8wovPhpfP57jz6GY4ac5zEs8f+JGGW/SEpF
- BdPTXknai+Ti5n+TDNHMOue1gsyDHl8b08NGJvMBnKQwsfR8L43JWCXGePQVrwZvAtSd
- g23Q==
-X-Gm-Message-State: AOJu0Yzrw8z/M1/Cwv013fuwhS4Zf3TwI3CeikNcCnJ+HefUYd6eautD
- x3zUE0Yd162WETGde9n/yXXgVPSntCY6j5R3idxVtR83KaKb3OzwkeaZG22TbiknJUc337oWAs5
- ic78=
-X-Google-Smtp-Source: AGHT+IH8+DQNhmp2bul/TYQwPvUocMWXOBjyORwLlD5IFCY7gMSV2OBZDTmujeTJnPBvY8Y3c6YXPw==
-X-Received: by 2002:a17:902:d2cc:b0:20c:dbff:b9d8 with SMTP id
- d9443c01a7336-20d27f0db37mr5201085ad.37.1729004337358; 
- Tue, 15 Oct 2024 07:58:57 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b401:3301:3e7c:3fff:fe7a:e83b])
+ d=1e100.net; s=20230601; t=1729004446; x=1729609246;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UkJtOvglhcxIIQG4scx7ZIRUK9Rm0J13x9EzawJArco=;
+ b=b61FvAlEoSVbFWa3drHisyRswY1tuLmlZZtr9l/0iH9Im1K8jiuevAh+Iqn33Q0MAt
+ Kb+1Mr+zvRA5dtv1HtRul3Hg6n00UVdekQULemwj9RQ+bVmxfrQaaD9RegMVyTuoPo64
+ oriMWevO3/K96cO7RP+Pe6sYMx2q8evJ2A1CfInCnbHxDXTGwJNnCpWfziLxdbqd3+c1
+ M4ytKdKWjleVPmucn0yzVib4YtzyCrqBCnspf3f78cMFSTMvDHo5vu+KfGmLjiGeB64F
+ jMc+/RhjFe26Xy34s8flD23XLI3ozQQRi6LruJMBYgP58QC0Sjy+75g31vB+5I5y+zK8
+ xdrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXZVc2qTTxJiaEKj/OTenc7q88VITIcaSl3/NCGlhubhtr/a2ifxfNwxa53jlIf7AEYH1ioXFuEhGL@nongnu.org
+X-Gm-Message-State: AOJu0YxmKFWcCajfy+F5gFiOjfjKg2CTYJCF7MuuVJQEqxzDYXkmAmzU
+ dCQqvVE2r2YaRjlNTiEyWImeJNQbP85Vw3diPSbMAM2fBVnnqyNxINwRT8ZZy6M=
+X-Google-Smtp-Source: AGHT+IFHx8S1BUxbuufzSLQKGt9EV4N8OueH1Tz1pb8A2SwARO8W32vB2ivEkPuIIbPBVbHuthpAsQ==
+X-Received: by 2002:a05:6a00:3392:b0:710:5848:8ae1 with SMTP id
+ d2e1a72fcca58-71e7da10f78mr936220b3a.4.1729004445991; 
+ Tue, 15 Oct 2024 08:00:45 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d17f84dbdsm13021505ad.55.2024.10.15.07.58.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:58:57 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: gustavo.romero@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH] testing: Enhance gdb probe script
-Date: Tue, 15 Oct 2024 14:58:48 +0000
-Message-Id: <20241015145848.387281-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d2e1a72fcca58-71e77371193sm1372999b3a.21.2024.10.15.08.00.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Oct 2024 08:00:45 -0700 (PDT)
+Message-ID: <5fb5f318-6fd0-4390-9314-528acc5d8901@linaro.org>
+Date: Tue, 15 Oct 2024 12:00:42 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/sd/sdcard: Allow user creation of eMMCs
+To: Jan Luebbe <jlu@pengutronix.de>, qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20241015135649.4189256-1-jlu@pengutronix.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241015135649.4189256-1-jlu@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,117 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use list and set comprehension to simplify code. Also, gently handle
-invalid gdb filenames.
+On 15/10/24 10:56, Jan Luebbe wrote:
+> For testing eMMC-specific functionality (such as handling boot
+> partitions), it would be very useful to attach them to generic VMs such
+> as x86_64 via the sdhci-pci device:
+>   ...
+>   -drive if=none,id=emmc-drive,file=emmc.img,format=raw \
+>   -device sdhci-pci \
+>   -device emmc,id=emmc0,drive=emmc-drive,boot-partition-size=1048576 \
+>   ...
+> 
+> While most eMMCs are soldered to boards, they can also be connected to
+> SD controllers with just a passive adapter, such as:
+>   https://docs.radxa.com/en/accessories/emmc-to-usd
+>   https://github.com/voltlog/emmc-wfbga153-microsd
+> 
+> The only change necessary to make the options above work is to avoid
+> disabling user_creatable, so do that. The SDHCI-PCI driver in the Linux
+> kernel already supports this just fine.
+> 
+> Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
+> ---
+>   hw/sd/sd.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index a5d2d929a8af..2d3467c3d956 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2865,8 +2865,6 @@ static void emmc_class_init(ObjectClass *klass, void *data)
+>       dc->desc = "eMMC";
+>       dc->realize = emmc_realize;
+>       device_class_set_props(dc, emmc_properties);
+> -    /* Reason: Soldered on board */
+> -    dc->user_creatable = false;
+>   
+>       sc->proto = &sd_proto_emmc;
+>   
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- scripts/probe-gdb-support.py | 75 +++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 36 deletions(-)
-
-diff --git a/scripts/probe-gdb-support.py b/scripts/probe-gdb-support.py
-index 6dc58d06c7..6bcadce150 100644
---- a/scripts/probe-gdb-support.py
-+++ b/scripts/probe-gdb-support.py
-@@ -19,58 +19,61 @@
- 
- import argparse
- import re
--from subprocess import check_output, STDOUT
-+from subprocess import check_output, STDOUT, CalledProcessError
-+import sys
- 
--# mappings from gdb arch to QEMU target
--mappings = {
--    "alpha" : "alpha",
-+# Mappings from gdb arch to QEMU target
-+MAP = {
-+    "alpha" : ["alpha"],
-     "aarch64" : ["aarch64", "aarch64_be"],
--    "armv7": "arm",
-+    "armv7": ["arm"],
-     "armv8-a" : ["aarch64", "aarch64_be"],
--    "avr" : "avr",
-+    "avr" : ["avr"],
-     # no hexagon in upstream gdb
--    "hppa1.0" : "hppa",
--    "i386" : "i386",
--    "i386:x86-64" : "x86_64",
--    "Loongarch64" : "loongarch64",
--    "m68k" : "m68k",
--    "MicroBlaze" : "microblaze",
-+    "hppa1.0" : ["hppa"],
-+    "i386" : ["i386"],
-+    "i386:x86-64" : ["x86_64"],
-+    "Loongarch64" : ["loongarch64"],
-+    "m68k" : ["m68k"],
-+    "MicroBlaze" : ["microblaze"],
-     "mips:isa64" : ["mips64", "mips64el"],
--    "or1k" : "or1k",
--    "powerpc:common" : "ppc",
-+    "or1k" : ["or1k"],
-+    "powerpc:common" : ["ppc"],
-     "powerpc:common64" : ["ppc64", "ppc64le"],
--    "riscv:rv32" : "riscv32",
--    "riscv:rv64" : "riscv64",
--    "s390:64-bit" : "s390x",
-+    "riscv:rv32" : ["riscv32"],
-+    "riscv:rv64" : ["riscv64"],
-+    "s390:64-bit" : ["s390x"],
-     "sh4" : ["sh4", "sh4eb"],
--    "sparc": "sparc",
--    "sparc:v8plus": "sparc32plus",
--    "sparc:v9a" : "sparc64",
-+    "sparc": ["sparc"],
-+    "sparc:v8plus": ["sparc32plus"],
-+    "sparc:v9a" : ["sparc64"],
-     # no tricore in upstream gdb
-     "xtensa" : ["xtensa", "xtensaeb"]
- }
- 
-+
- def do_probe(gdb):
--    gdb_out = check_output([gdb,
--                            "-ex", "set architecture",
--                            "-ex", "quit"], stderr=STDOUT)
-+    try:
-+        gdb_out = check_output([gdb,
-+                               "-ex", "set architecture",
-+                               "-ex", "quit"], stderr=STDOUT, encoding="utf-8")
-+    except (OSError) as e:
-+        sys.exit(e)
-+    except CalledProcessError as e:
-+        sys.exit(f'{e}. Output:\n\n{e.output}')
-+
-+    found_gdb_archs = re.search(r'Valid arguments are (.*)', gdb_out)
- 
--    m = re.search(r"Valid arguments are (.*)",
--                  gdb_out.decode("utf-8"))
-+    targets = set()
-+    if found_gdb_archs:
-+        gdb_archs = found_gdb_archs.group(1).split(", ")
-+        mapped_gdb_archs = [arch for arch in gdb_archs if arch in MAP]
- 
--    valid_arches = set()
-+        targets = {target for arch in mapped_gdb_archs for target in MAP[arch]}
- 
--    if m.group(1):
--        for arch in m.group(1).split(", "):
--            if arch in mappings:
--                mapping = mappings[arch]
--                if isinstance(mapping, str):
--                    valid_arches.add(mapping)
--                else:
--                    for entry in mapping:
--                        valid_arches.add(entry)
-+    # QEMU targets
-+    return targets
- 
--    return valid_arches
- 
- def main() -> None:
-     parser = argparse.ArgumentParser(description='Probe GDB Architectures')
--- 
-2.34.1
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
