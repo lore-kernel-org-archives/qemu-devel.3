@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45963CFC26E
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 06:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCB1CFC271
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 07:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0b8V-0002yb-JL; Tue, 15 Oct 2024 02:34:27 -0400
+	id 1t0btf-0003I5-8L; Tue, 15 Oct 2024 03:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0b8T-0002xr-Qj
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 02:34:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t0b8S-0004MT-EU
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 02:34:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728974062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZWoLAexgKt+KtGIu1vYGD9SIRBif7/L5/x+cHtkKMiM=;
- b=GkPcZYgpKmjcOlKv2BFUDnbv7HM/4yHxOdWj2LnLv4x2PktydPlTZiJ5LT/4P0bRkeHLiS
- GPbCx6MvnRgPrb5L4G1EoGpNGiok/UKXotpsfDGmi2pnhdL/xls4qT1FtVyCjVVxKH8Oj1
- TJ+BjYrQDrObPwreXqcDSGOusrjelkM=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-IZ28FZDYP3u4eSUZs5jYjQ-1; Tue, 15 Oct 2024 02:34:21 -0400
-X-MC-Unique: IZ28FZDYP3u4eSUZs5jYjQ-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4606fdde841so31164631cf.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 23:34:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t0btd-0003HG-5a
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 03:23:09 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t0btb-0002Pe-3z
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 03:23:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-430576ff251so43872745e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 00:23:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728976985; x=1729581785; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N/2K0ewoYyCHZ5DwjqrySt79/viBqdA6IcoUH48TXYY=;
+ b=vwe1RWw4c74oYTzWmL2OfCCl81cxDGK8OJsGuGLnD8iBn1DzsUaXotf9uNTCdUaCZC
+ SsAvvMPFoBHVwjwnuQvWsd3VLRzQQV3jRkaAVFEzmp0qP34LtrizSgivIJsyzfaAzwL/
+ fNLzChUrreAizu8uQVf9G1CVuPxPn4hR6rjDqhdQHuIhXjJLuSmQjnuTNJVUI+kgw9ul
+ 6shwtk3kJBa2nLklt/lsW4uysS/6jcOiF2gQZU62fXis6nxU8llFws/OB237er8DVMXH
+ C3oebjJ2rykLNt4iu/r5p5TH+m/RHNqhYYiFj/WPcRi409+yrZbieeg+qha6pckSL1ma
+ TKdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728974060; x=1729578860;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZWoLAexgKt+KtGIu1vYGD9SIRBif7/L5/x+cHtkKMiM=;
- b=dtC4u3wb5JSyGc55V/nB3W74wX4mdb+oEZtPRK9ijWy3/CqD+ovdBDPMEMaEQFp33r
- OOcZ+H4uPwDKeGmuwNIKRwZLn90ROdJZIPktfuJEyNnVujAWmECCTKAG1l29Ax5/Pnet
- wC8dAf8qUuTcpXaWUc30zqQBui0HbG2IH8P0R9PnoMR+MWU7IS6zDSkAaEbNtsNXSyVm
- V9C1zl/UnbAXwVRSH+5HGeJO5nAe8AImFs+aQU3CuM+dHoPTPYnWxTBOw+4tqJOeUGJ6
- C71Icwy1qzuit+OTASFT60yYfcs9lt+i6oddzLfQwJQO3AR3wBxA+UY40hcR94Z0blVC
- /vqQ==
-X-Gm-Message-State: AOJu0YycVyxY3WI0Asm4IQLW1uV7iew574vRnc8LdxgBsL+tHu+71WdF
- k9Pholg7HQExDqf/fv5DPagt26V0ODGGM0XL4ETZqmfy9retGgKM5qJcPMO7Wxjg5MkJ0GyDbjt
- uOmsENPp1SQjO+sjib1vbAahChucBTBDNgEdYfpRQJD9wAkHh3imzDCBrLLutPLzYRUjBxzdVjV
- 4w1xHvv8672LZ0ZCjXyfDBDZNGDeA=
-X-Received: by 2002:a05:622a:228d:b0:45e:ffaa:35b2 with SMTP id
- d75a77b69052e-4604bbccbacmr228749311cf.30.1728974060559; 
- Mon, 14 Oct 2024 23:34:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF47Jb0lJzjAeGZgBA7VP9TjzhyCl0lMkO3bDvaPR2n9X7FOdn/ekKyVBk2pzUaYIY1nQk+QC/DMVe+ve27bD4=
-X-Received: by 2002:a05:622a:228d:b0:45e:ffaa:35b2 with SMTP id
- d75a77b69052e-4604bbccbacmr228749181cf.30.1728974060301; Mon, 14 Oct 2024
- 23:34:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728976985; x=1729581785;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=N/2K0ewoYyCHZ5DwjqrySt79/viBqdA6IcoUH48TXYY=;
+ b=H5YP5AspyVO2ZcpLR6vj1g03jD7WP0q6loZos3irii5J6FyteTyB96wM/bI81GRgye
+ QafTYFu9Umq0QkK9dxPuMF2uUoHIZzFGKOz8dc7YU/27mwS2lmAdzOlb/U6X2Hsjzwmx
+ hAIuPH266tnOGqiP/cBmbONdKgaFcbCF+GWuhA7OaFfPhpZKxlFtUeuXFnR+mVNTddgX
+ 4NTAFcWox9jv3jvcHffmrYs6sKJHSslyx9U9E6LILSJ06QghDCtZNmBu7MKmIlTRzPg6
+ 3lp2h4h1iy/qgLtleTBfc6qStu1ttvtkDRIlEtbcBTh24Gv2m2blCo99R7QhdvGhAbWA
+ ynXg==
+X-Gm-Message-State: AOJu0YwE4XBBBjn9LsbR827e09/esWwoxr/W2Rvqnmt0qVH++VfTz74N
+ 0g+QA2EwWHzcAddHk1X33ZfxLt4Hq8d219iSjG3EnRo7RRGJAscDPv4RifyQPSY=
+X-Google-Smtp-Source: AGHT+IEXZfyrkfqm9Mdg7bMWqYQnzKq9Dd9irQTDfWYvI/flOOt+JIWlqiZy1nE6zMwp8W4L9Nho/g==
+X-Received: by 2002:a05:600c:1551:b0:42f:8515:e48c with SMTP id
+ 5b1f17b1804b1-4311deb6142mr123586585e9.3.1728976984660; 
+ Tue, 15 Oct 2024 00:23:04 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4313f56eaa7sm9049875e9.26.2024.10.15.00.23.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2024 00:23:03 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2E4C45F753;
+ Tue, 15 Oct 2024 08:23:02 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Hanna Reitz <hreitz@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,
+ pkg-qemu-devel@lists.alioth.debian.org,  Michael Tokarev
+ <mjt@tls.msk.ru>,  ncopa@alpinelinux.org,  bofh@freebsd.org,
+ virtualization@gentoo.org,  dilfridge@gentoo.org,  hi@alyssa.is,
+ edolstra+nixpkgs@gmail.com,  brad@comstyle.com,  Daniel P . =?utf-8?Q?Be?=
+ =?utf-8?Q?rrang=C3=A9?=
+ <berrange@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Markus
+ Armbruster <armbru@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  dvzrv@archlinux.org,
+ anatol.pomozov@gmail.com,  Miroslav Rezanina <mrezanin@redhat.com>
+Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
+In-Reply-To: <CANCZdfq85yJTkTR3TZQ=XmaeLmfxrQCQj6g-0viFaCidsOKwWQ@mail.gmail.com>
+ (Warner Losh's message of "Mon, 14 Oct 2024 16:45:10 -0600")
+References: <871q16fq9c.fsf@draig.linaro.org>
+ <CANCZdfoU4stiEDJKOUEpU-ek_tOBHe0rBH3G9S2Wymc8jHKzCQ@mail.gmail.com>
+ <CANCZdfpWN+nYGLBtMb5xdpFW+=iGZ473UhknLN0vW6PyHSQScQ@mail.gmail.com>
+ <87v7y9ldbu.fsf@draig.linaro.org>
+ <CANCZdfq85yJTkTR3TZQ=XmaeLmfxrQCQj6g-0viFaCidsOKwWQ@mail.gmail.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Tue, 15 Oct 2024 08:23:02 +0100
+Message-ID: <87zfn5akyx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20241014151023.85698-1-thuth@redhat.com>
-In-Reply-To: <20241014151023.85698-1-thuth@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 15 Oct 2024 10:34:09 +0400
-Message-ID: <CAMxuvazGdkhM_BBnzSZnzf=fniQ6J6Vb4-9tR8VbHW_kWasP8A@mail.gmail.com>
-Subject: Re: [PATCH] ui/console-vc: Silence warning about sprintf() on OpenBSD
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.076,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,44 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 14, 2024 at 7:10=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> The linker on OpenBSD complains:
->
->  ld: warning: console-vc.c:824 (../src/ui/console-vc.c:824)([...]):
->  warning: sprintf() is often misused, please use snprintf()
->
-> Using snprintf() is certainly better here, so let's switch to that
-> function instead.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Warner Losh <imp@bsdimp.com> writes:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> [[ sorry for the lag $LIFE has been over-full lately ]]
 
-> ---
->  ui/console-vc.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+No worries.
+>=20=20
+>  Obviously you don't have to worry
+>  about the Linux kernel but I wonder how much rust userspace you
+>  currently have packaged? Do you have the rust-vmm vhost-device binaries
+>  for example?
 >
-> diff --git a/ui/console-vc.c b/ui/console-vc.c
-> index 8393d532e7..336a1520eb 100644
-> --- a/ui/console-vc.c
-> +++ b/ui/console-vc.c
-> @@ -821,9 +821,9 @@ static void vc_putchar(VCChardev *vc, int ch)
->                      break;
->                  case 6:
->                      /* report cursor position */
-> -                    sprintf(response, "\033[%d;%dR",
-> -                           (s->y_base + s->y) % s->total_height + 1,
-> -                            s->x + 1);
-> +                    snprintf(response, sizeof(response), "\033[%d;%dR",
-> +                             (s->y_base + s->y) % s->total_height + 1,
-> +                             s->x + 1);
->                      vc_respond_str(vc, response);
->                      break;
->                  }
-> --
-> 2.46.1
+> Yes. I believe we build those today.
 >
+> I expect it to mostly work, most of the time, to be honest on FreeBSD. I =
+also
+> expect there to be more breakage than we see with llvm/clang...
 
+I would hope if llvm/clang is working you shouldn't see any additional
+breakage due to rust (I don't believe they overly hack llvm for their
+use).
+
+> So the bottom line should be that we'll be able to make it work, but there
+> is likely going to be more work since rust is less mature than C. However,
+> it's not clear if this is an occasional minor thing, or if it becomes maj=
+or and
+> frequent. And the only way to know that is to take the plunge, so don't
+> let this stop your plans.
+
+Absolutely. The aim of this exercise was to make sure downstreams are
+aware this is coming so it doesn't come as a surprise. I did CC
+emulation at freebsd but I got bounced as I was not subscribed. Could
+you make the wider FreeBSD community aware of the thread?
+
+>
+> Warner
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
