@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91888CFC287
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D2FCFC286
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ewu-0006l6-2G; Tue, 15 Oct 2024 06:38:44 -0400
+	id 1t0ewX-0006g9-Vm; Tue, 15 Oct 2024 06:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewa-0006hQ-SK
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:28 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1t0ewU-0006d4-6c
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:18 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewX-0005yR-UN
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:24 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5366fd6fdf1so6044232e87.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:21 -0700 (PDT)
+ id 1t0ewR-0005w2-Pp
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:17 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43111cff9d3so39035565e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988700; x=1729593500; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988694; x=1729593494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HTH3ZTP2q9EAGImxjAoBB6MX0ZZqVuGqcSPtMYukrbs=;
- b=jFDIf0rElD/ZuT8ChUEh7Hhr/3Qzd6mYpqJUMzI5r4GLlkoUX0nT9q74LbA2Y6XVPe
- csNF8JfhQZpmGXzjHZEdTME4xTif9LZ+5Mlv8I7SLZjWc1lSAd0DEZlhpKE+PhtWFOop
- +X1mV5U7aJX31EmWIgj1p+iTQtfi3+se1eCMNtI4ulc0wmXjRTshYn9tIhVVIhpyClpN
- pd8Hw89//XUxbQvDH41UGjglDOlVFyQrKH1jSA/Tms2XfGRIvCqtI+0r2ukc+AlscD1L
- JhMh2vITcR/lBsn0tpvG831eZjijFNTmB0VTGB2v2Q4/gB6d/EDZynhQpBqASY8MQERX
- jqrg==
+ :reply-to; bh=T/8MhemOTljPnrKxsD/elwfdUS+UpSgEuo6SU7bdXqc=;
+ b=StWJIp6wYoDR3pn4xnxzp+F5RnqJwLE8GK/GOvRnScBklH9XJmmol/T6/kicn/MqsE
+ zgLURScrDwCSe44vldvnf8di84rRTrib9lmv1swigFwLRxCMFIJKWv3jXo4JsSpz3nJ6
+ k8KsctBj/hxZxzq3/Jkwe0domh2/AAuVr/QT6retjDEN/qEtsqh5blcJGRvd47PsdjSu
+ urJ9fDPTqCpMTgbcKtifAXx30GUcGJmC/WEgqwkQNXBVu5z6iP/3iR1lQqz4sP0+sbl5
+ VZG4Uf7At8R9cy3awqAaHFFN3etdIvr+PjYoPzgq+dtLllKr71Oz6CtazBwzpTyQwx0m
+ YTSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988700; x=1729593500;
+ d=1e100.net; s=20230601; t=1728988694; x=1729593494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HTH3ZTP2q9EAGImxjAoBB6MX0ZZqVuGqcSPtMYukrbs=;
- b=bWtjONirFV0ksGX6wiRNI1wdpnhttnIW8RqOnuaX/1+nL5lVybhzVXBE4vtKTS36fw
- vB0iaQu2paxCKk3hlJj9/kUXJavjq7lMsnb9bY589Y40Hhv2tNrRWfCTcN0brCz6/RGT
- kQqXowe4I0mQ3BYmeMac7HgFzZMHqS3NKyeQjh4GFOjWF87+d4pvhbIN4gDohconvjDn
- PGUO588yjyyqTj6ju6yTP4nIq5OtYCJkcvGJolxfG2H5NI6Dlblq4QbSrNgNEFannoQn
- Bb2h9gvgI9cSqB5X2zezM6GgqPv3dcmSHEEqi1xHn4JGibx4V+zoyRU7Ks4AN91kEVrX
- YjNQ==
-X-Gm-Message-State: AOJu0YxjFUs+lXmSi8DIr9Vh+8MtcnOq8NNzjiN3G1I0SZeVYhoJqVMb
- XczFTdCKhq+RmBAVeHYIz2o2/GRLMcZKzhlY94QEWgdrwJmF6AzCyLFe5CU/MsBNR3i0NmJdVrR
- d
-X-Google-Smtp-Source: AGHT+IHorqVI1fDqaOSWliOYt+FgY7BLs7RLfY7S1lI0M5kgOfytLK7gyE/D1E2a68eC037wRz3MAg==
-X-Received: by 2002:a05:6512:3d0a:b0:539:ea12:d629 with SMTP id
- 2adb3069b0e04-539ea136a8emr4366423e87.8.1728988699791; 
- Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
+ bh=T/8MhemOTljPnrKxsD/elwfdUS+UpSgEuo6SU7bdXqc=;
+ b=NM2uFJik46F0S5KXj3R2p9CQByXhaMV5V90hAr4CLrYL06OAGIf/o55WvByK2B3GVQ
+ BVaxKBDAnBGWURbwek6X+GIwlFn0g/Mn3g7ciZGDZXho30fQdpk2QNxFvgU88X+W7aHc
+ nCgiI+5q50Tizv2e9udSC9TxQ4mvJolyG/KqWUDwKnnNEMuGEHrytLtip54AfqJW3AXZ
+ 4dhdKs+fCjezM0vilz/7AO0EGPU7Dxli2BSSQ7/TV1a/DN9NaYTPpJYVihHItbWBxpTN
+ fSkvuy3uqlFBhUbt8Qwu178SMGjho0fg4D/wEwcrethEaywpMI/Wao7G9Xgv9ROqYtn0
+ eijQ==
+X-Gm-Message-State: AOJu0YwCFF7y8SwVvWDbKGndFI2j0W+bTa4+dWj7vOxWgP0ityk1XymS
+ fao8feeZzkn9SFbkbwSYpJGVppORF3vrQpSZSVHIctEkttpbbkIVO4jXOCxG94YF2GYe8AZ/jhz
+ 1
+X-Google-Smtp-Source: AGHT+IFdcKp5HJzddTCUjS9tfz7zBA+EgrOh7T2My2DTFNrWmO31CBW896Gr8x4pLRIBNqWVDLjTbw==
+X-Received: by 2002:a5d:5708:0:b0:37d:4fe9:b6a6 with SMTP id
+ ffacd0b85a97d-37d551f2dbfmr8918582f8f.29.1728988694070; 
+ Tue, 15 Oct 2024 03:38:14 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.19
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/28] hw/adc: Remove MAX111X device
-Date: Tue, 15 Oct 2024 11:38:01 +0100
-Message-Id: <20241015103808.133024-22-peter.maydell@linaro.org>
+Subject: [PULL 09/28] tests/qtest: Check STM32L4x5 clock connections
+Date: Tue, 15 Oct 2024 11:37:49 +0100
+Message-Id: <20241015103808.133024-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,358 +94,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MAX111X ADC device was used only by the XScale-based
-Zaurus machine types. Now they have all been removed, we can
-drop this device model too.
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-Because this device is an SSI device, in theory it could be created
-by users on the command line for boards with a different SSI
-controller, but we don't believe users are doing this -- it would be
-impossible on the command line to connect up the GPIO inputs which
-correspond to ADC inputs, or the GPIO output which is an interrupt
-line.  The only example a web search produces for "device max1111" or
-"device max1110" is our own bug report
-  https://gitlab.com/qemu-project/qemu/-/issues/2228
-where it's used as an example of a bogus command that causes an
-assertion in an aspeed machine type that wasn't expecting anything
-other than flash devices on its SMC bus.
+For USART, GPIO and SYSCFG devices, check that clock frequency before
+and after enabling the peripheral clock in RCC is correct.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Luc Michel <luc@lmichel.fr>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241003140010.1653808-2-peter.maydell@linaro.org
+Message-id: 20241003081105.40836-4-ines.varhol@telecom-paris.fr
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/adc/max111x.h |  56 ----------
- hw/adc/max111x.c         | 236 ---------------------------------------
- hw/adc/Kconfig           |   3 -
- hw/adc/meson.build       |   1 -
- 4 files changed, 296 deletions(-)
- delete mode 100644 include/hw/adc/max111x.h
- delete mode 100644 hw/adc/max111x.c
+ tests/qtest/stm32l4x5.h             | 42 +++++++++++++++++++++++++++++
+ tests/qtest/stm32l4x5_gpio-test.c   | 23 ++++++++++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 20 ++++++++++++--
+ tests/qtest/stm32l4x5_usart-test.c  | 26 ++++++++++++++++++
+ 4 files changed, 109 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/stm32l4x5.h
 
-diff --git a/include/hw/adc/max111x.h b/include/hw/adc/max111x.h
-deleted file mode 100644
-index beff59c815d..00000000000
---- a/include/hw/adc/max111x.h
-+++ /dev/null
-@@ -1,56 +0,0 @@
--/*
-- * Maxim MAX1110/1111 ADC chip emulation.
-- *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
-- *
-- * This code is licensed under the GNU GPLv2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
--
--#ifndef HW_MISC_MAX111X_H
--#define HW_MISC_MAX111X_H
--
--#include "hw/ssi/ssi.h"
--#include "qom/object.h"
--
--/*
-- * This is a model of the Maxim MAX1110/1111 ADC chip, which for QEMU
-- * is an SSI slave device. It has either 4 (max1110) or 8 (max1111)
-- * 8-bit ADC channels.
-- *
-- * QEMU interface:
-- *  + GPIO inputs 0..3 (for max1110) or 0..7 (for max1111): set the value
-- *    of each ADC input, as an unsigned 8-bit value
-- *  + GPIO output 0: interrupt line
-- *  + Properties "input0" to "input3" (max1110) or "input0" to "input7"
-- *    (max1111): initial reset values for ADC inputs.
-- *
-- * Known bugs:
-- *  + the interrupt line is not correctly implemented, and will never
-- *    be lowered once it has been asserted.
-- */
--struct MAX111xState {
--    SSIPeripheral parent_obj;
--
--    qemu_irq interrupt;
--    /* Values of inputs at system reset (settable by QOM property) */
--    uint8_t reset_input[8];
--
--    uint8_t tb1, rb2, rb3;
--    int cycle;
--
--    uint8_t input[8];
--    int inputs, com;
--};
--
--#define TYPE_MAX_111X "max111x"
--
--OBJECT_DECLARE_SIMPLE_TYPE(MAX111xState, MAX_111X)
--
--#define TYPE_MAX_1110 "max1110"
--#define TYPE_MAX_1111 "max1111"
--
--#endif
-diff --git a/hw/adc/max111x.c b/hw/adc/max111x.c
-deleted file mode 100644
-index aa51e47245d..00000000000
---- a/hw/adc/max111x.c
-+++ /dev/null
-@@ -1,236 +0,0 @@
--/*
-- * Maxim MAX1110/1111 ADC chip emulation.
-- *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
-- *
-- * This code is licensed under the GNU GPLv2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
--
--#include "qemu/osdep.h"
--#include "hw/adc/max111x.h"
--#include "hw/irq.h"
--#include "migration/vmstate.h"
--#include "qemu/module.h"
--#include "hw/qdev-properties.h"
--
--/* Control-byte bitfields */
--#define CB_PD0		(1 << 0)
--#define CB_PD1		(1 << 1)
--#define CB_SGL		(1 << 2)
--#define CB_UNI		(1 << 3)
--#define CB_SEL0		(1 << 4)
--#define CB_SEL1		(1 << 5)
--#define CB_SEL2		(1 << 6)
--#define CB_START	(1 << 7)
--
--#define CHANNEL_NUM(v, b0, b1, b2)	\
--                        ((((v) >> (2 + (b0))) & 4) |	\
--                         (((v) >> (3 + (b1))) & 2) |	\
--                         (((v) >> (4 + (b2))) & 1))
--
--static uint32_t max111x_read(MAX111xState *s)
--{
--    if (!s->tb1)
--        return 0;
--
--    switch (s->cycle ++) {
--    case 1:
--        return s->rb2;
--    case 2:
--        return s->rb3;
--    }
--
--    return 0;
--}
--
--/* Interpret a control-byte */
--static void max111x_write(MAX111xState *s, uint32_t value)
--{
--    int measure, chan;
--
--    /* Ignore the value if START bit is zero */
--    if (!(value & CB_START))
--        return;
--
--    s->cycle = 0;
--
--    if (!(value & CB_PD1)) {
--        s->tb1 = 0;
--        return;
--    }
--
--    s->tb1 = value;
--
--    if (s->inputs == 8)
--        chan = CHANNEL_NUM(value, 1, 0, 2);
--    else
--        chan = CHANNEL_NUM(value & ~CB_SEL0, 0, 1, 2);
--
--    if (value & CB_SGL)
--        measure = s->input[chan] - s->com;
--    else
--        measure = s->input[chan] - s->input[chan ^ 1];
--
--    if (!(value & CB_UNI))
--        measure ^= 0x80;
--
--    s->rb2 = (measure >> 2) & 0x3f;
--    s->rb3 = (measure << 6) & 0xc0;
--
--    /* FIXME: When should the IRQ be lowered?  */
--    qemu_irq_raise(s->interrupt);
--}
--
--static uint32_t max111x_transfer(SSIPeripheral *dev, uint32_t value)
--{
--    MAX111xState *s = MAX_111X(dev);
--    max111x_write(s, value);
--    return max111x_read(s);
--}
--
--static const VMStateDescription vmstate_max111x = {
--    .name = "max111x",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_SSI_PERIPHERAL(parent_obj, MAX111xState),
--        VMSTATE_UINT8(tb1, MAX111xState),
--        VMSTATE_UINT8(rb2, MAX111xState),
--        VMSTATE_UINT8(rb3, MAX111xState),
--        VMSTATE_INT32_EQUAL(inputs, MAX111xState, NULL),
--        VMSTATE_INT32(com, MAX111xState),
--        VMSTATE_ARRAY_INT32_UNSAFE(input, MAX111xState, inputs,
--                                   vmstate_info_uint8, uint8_t),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static void max111x_input_set(void *opaque, int line, int value)
--{
--    MAX111xState *s = MAX_111X(opaque);
--
--    assert(line >= 0 && line < s->inputs);
--    s->input[line] = value;
--}
--
--static int max111x_init(SSIPeripheral *d, int inputs)
--{
--    DeviceState *dev = DEVICE(d);
--    MAX111xState *s = MAX_111X(dev);
--
--    qdev_init_gpio_out(dev, &s->interrupt, 1);
--    qdev_init_gpio_in(dev, max111x_input_set, inputs);
--
--    s->inputs = inputs;
--
--    return 0;
--}
--
--static void max1110_realize(SSIPeripheral *dev, Error **errp)
--{
--    max111x_init(dev, 8);
--}
--
--static void max1111_realize(SSIPeripheral *dev, Error **errp)
--{
--    max111x_init(dev, 4);
--}
--
--static void max111x_reset(DeviceState *dev)
--{
--    MAX111xState *s = MAX_111X(dev);
--    int i;
--
--    for (i = 0; i < s->inputs; i++) {
--        s->input[i] = s->reset_input[i];
--    }
--    s->com = 0;
--    s->tb1 = 0;
--    s->rb2 = 0;
--    s->rb3 = 0;
--    s->cycle = 0;
--}
--
--static Property max1110_properties[] = {
--    /* Reset values for ADC inputs */
--    DEFINE_PROP_UINT8("input0", MAX111xState, reset_input[0], 0xf0),
--    DEFINE_PROP_UINT8("input1", MAX111xState, reset_input[1], 0xe0),
--    DEFINE_PROP_UINT8("input2", MAX111xState, reset_input[2], 0xd0),
--    DEFINE_PROP_UINT8("input3", MAX111xState, reset_input[3], 0xc0),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static Property max1111_properties[] = {
--    /* Reset values for ADC inputs */
--    DEFINE_PROP_UINT8("input0", MAX111xState, reset_input[0], 0xf0),
--    DEFINE_PROP_UINT8("input1", MAX111xState, reset_input[1], 0xe0),
--    DEFINE_PROP_UINT8("input2", MAX111xState, reset_input[2], 0xd0),
--    DEFINE_PROP_UINT8("input3", MAX111xState, reset_input[3], 0xc0),
--    DEFINE_PROP_UINT8("input4", MAX111xState, reset_input[4], 0xb0),
--    DEFINE_PROP_UINT8("input5", MAX111xState, reset_input[5], 0xa0),
--    DEFINE_PROP_UINT8("input6", MAX111xState, reset_input[6], 0x90),
--    DEFINE_PROP_UINT8("input7", MAX111xState, reset_input[7], 0x80),
--    DEFINE_PROP_END_OF_LIST(),
--};
--
--static void max111x_class_init(ObjectClass *klass, void *data)
--{
--    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    k->transfer = max111x_transfer;
--    device_class_set_legacy_reset(dc, max111x_reset);
--    dc->vmsd = &vmstate_max111x;
--    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
--}
--
--static const TypeInfo max111x_info = {
--    .name          = TYPE_MAX_111X,
--    .parent        = TYPE_SSI_PERIPHERAL,
--    .instance_size = sizeof(MAX111xState),
--    .class_init    = max111x_class_init,
--    .abstract      = true,
--};
--
--static void max1110_class_init(ObjectClass *klass, void *data)
--{
--    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    k->realize = max1110_realize;
--    device_class_set_props(dc, max1110_properties);
--}
--
--static const TypeInfo max1110_info = {
--    .name          = TYPE_MAX_1110,
--    .parent        = TYPE_MAX_111X,
--    .class_init    = max1110_class_init,
--};
--
--static void max1111_class_init(ObjectClass *klass, void *data)
--{
--    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    k->realize = max1111_realize;
--    device_class_set_props(dc, max1111_properties);
--}
--
--static const TypeInfo max1111_info = {
--    .name          = TYPE_MAX_1111,
--    .parent        = TYPE_MAX_111X,
--    .class_init    = max1111_class_init,
--};
--
--static void max111x_register_types(void)
--{
--    type_register_static(&max111x_info);
--    type_register_static(&max1110_info);
--    type_register_static(&max1111_info);
--}
--
--type_init(max111x_register_types)
-diff --git a/hw/adc/Kconfig b/hw/adc/Kconfig
-index a825bd3d343..25d2229fb83 100644
---- a/hw/adc/Kconfig
-+++ b/hw/adc/Kconfig
-@@ -1,5 +1,2 @@
- config STM32F2XX_ADC
-     bool
--
--config MAX111X
--    bool
-diff --git a/hw/adc/meson.build b/hw/adc/meson.build
-index a4f85b7d468..7f7acc16196 100644
---- a/hw/adc/meson.build
-+++ b/hw/adc/meson.build
-@@ -2,4 +2,3 @@ system_ss.add(when: 'CONFIG_STM32F2XX_ADC', if_true: files('stm32f2xx_adc.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_adc.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_adc.c'))
- system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq-xadc.c'))
--system_ss.add(when: 'CONFIG_MAX111X', if_true: files('max111x.c'))
+diff --git a/tests/qtest/stm32l4x5.h b/tests/qtest/stm32l4x5.h
+new file mode 100644
+index 00000000000..2d21cc666cc
+--- /dev/null
++++ b/tests/qtest/stm32l4x5.h
+@@ -0,0 +1,42 @@
++/*
++ * QTest testcase header for STM32L4X5 :
++ * used for consolidating common objects in stm32l4x5_*-test.c
++ *
++ * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (c) 2024 Inès Varhol <ines.varhol@telecom-paris.fr>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "libqtest.h"
++
++/* copied from clock.h */
++#define CLOCK_PERIOD_1SEC (1000000000llu << 32)
++#define CLOCK_PERIOD_FROM_HZ(hz) (((hz) != 0) ? CLOCK_PERIOD_1SEC / (hz) : 0u)
++/*
++ * MSI (4 MHz) is used as system clock source after startup
++ * from Reset.
++ * AHB, APB1 and APB2 prescalers are set to 1 at reset.
++ */
++#define SYSCLK_PERIOD CLOCK_PERIOD_FROM_HZ(4000000)
++#define RCC_AHB2ENR 0x4002104C
++#define RCC_APB1ENR1 0x40021058
++#define RCC_APB1ENR2 0x4002105C
++#define RCC_APB2ENR 0x40021060
++
++
++static inline uint64_t get_clock_period(QTestState *qts, const char *path)
++{
++    uint64_t clock_period = 0;
++    QDict *r;
++
++    r = qtest_qmp(qts, "{ 'execute': 'qom-get', 'arguments':"
++        " { 'path': %s, 'property': 'qtest-clock-period'} }", path);
++    g_assert_false(qdict_haskey(r, "error"));
++    clock_period = qdict_get_int(r, "return");
++    qobject_unref(r);
++    return clock_period;
++}
++
++
+diff --git a/tests/qtest/stm32l4x5_gpio-test.c b/tests/qtest/stm32l4x5_gpio-test.c
+index 72a78234066..c0686c7b306 100644
+--- a/tests/qtest/stm32l4x5_gpio-test.c
++++ b/tests/qtest/stm32l4x5_gpio-test.c
+@@ -10,6 +10,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
++#include "stm32l4x5.h"
+ 
+ #define GPIO_BASE_ADDR 0x48000000
+ #define GPIO_SIZE      0x400
+@@ -505,6 +506,26 @@ static void test_bsrr_brr(const void *data)
+     gpio_writel(gpio, ODR, reset(gpio, ODR));
+ }
+ 
++static void test_clock_enable(void)
++{
++    /*
++     * For each GPIO, enable its clock in RCC
++     * and check that its clock period changes to SYSCLK_PERIOD
++     */
++    unsigned int gpio_id;
++
++    for (uint32_t gpio = GPIO_A; gpio <= GPIO_H; gpio += GPIO_B - GPIO_A) {
++        gpio_id = get_gpio_id(gpio);
++        g_autofree char *path = g_strdup_printf("/machine/soc/gpio%c/clk",
++                                                gpio_id + 'a');
++        g_assert_cmpuint(get_clock_period(global_qtest, path), ==, 0);
++        /* Enable the gpio clock */
++        writel(RCC_AHB2ENR, readl(RCC_AHB2ENR) | (0x1 << gpio_id));
++        g_assert_cmpuint(get_clock_period(global_qtest, path), ==,
++                         SYSCLK_PERIOD);
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -556,6 +577,8 @@ int main(int argc, char **argv)
+     qtest_add_data_func("stm32l4x5/gpio/test_bsrr_brr2",
+                         test_data(GPIO_D, 0),
+                         test_bsrr_brr);
++    qtest_add_func("stm32l4x5/gpio/test_clock_enable",
++                   test_clock_enable);
+ 
+     qtest_start("-machine b-l475e-iot01a");
+     ret = g_test_run();
+diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_syscfg-test.c
+index 258417cd889..d5c71e2c0e7 100644
+--- a/tests/qtest/stm32l4x5_syscfg-test.c
++++ b/tests/qtest/stm32l4x5_syscfg-test.c
+@@ -10,6 +10,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
++#include "stm32l4x5.h"
+ 
+ #define SYSCFG_BASE_ADDR 0x40010000
+ #define SYSCFG_MEMRMP 0x00
+@@ -26,7 +27,9 @@
+ #define INVALID_ADDR 0x2C
+ 
+ /* SoC forwards GPIOs to SysCfg */
+-#define SYSCFG "/machine/soc"
++#define SOC "/machine/soc"
++#define SYSCFG "/machine/soc/syscfg"
++#define SYSCFG_CLK "/machine/soc/syscfg/clk"
+ #define EXTI "/machine/soc/exti"
+ 
+ static void syscfg_writel(unsigned int offset, uint32_t value)
+@@ -41,7 +44,7 @@ static uint32_t syscfg_readl(unsigned int offset)
+ 
+ static void syscfg_set_irq(int num, int level)
+ {
+-   qtest_set_irq_in(global_qtest, SYSCFG, NULL, num, level);
++   qtest_set_irq_in(global_qtest, SOC, NULL, num, level);
+ }
+ 
+ static void system_reset(void)
+@@ -301,6 +304,17 @@ static void test_irq_gpio_multiplexer(void)
+     syscfg_writel(SYSCFG_EXTICR1, 0x00000000);
+ }
+ 
++static void test_clock_enable(void)
++{
++    g_assert_cmpuint(get_clock_period(global_qtest, SYSCFG_CLK), ==, 0);
++
++    /* Enable SYSCFG clock */
++    writel(RCC_APB2ENR, readl(RCC_APB2ENR) | (0x1 << 0));
++
++    g_assert_cmpuint(get_clock_period(global_qtest, SYSCFG_CLK), ==,
++                                       SYSCLK_PERIOD);
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -325,6 +339,8 @@ int main(int argc, char **argv)
+                    test_irq_pin_multiplexer);
+     qtest_add_func("stm32l4x5/syscfg/test_irq_gpio_multiplexer",
+                    test_irq_gpio_multiplexer);
++    qtest_add_func("stm32l4x5/syscfg/test_clock_enable",
++                   test_clock_enable);
+ 
+     qtest_start("-machine b-l475e-iot01a");
+     ret = g_test_run();
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index 64cebda60f0..315bcee0042 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -12,6 +12,7 @@
+ #include "libqtest.h"
+ #include "hw/misc/stm32l4x5_rcc_internals.h"
+ #include "hw/registerfields.h"
++#include "stm32l4x5.h"
+ 
+ #define RCC_BASE_ADDR 0x40021000
+ /* Use USART 1 ADDR, assume the others work the same */
+@@ -331,6 +332,30 @@ static void test_ack(void)
+     qtest_quit(qts);
+ }
+ 
++static void check_clock(QTestState *qts, const char *path, uint32_t rcc_reg,
++                        uint32_t reg_offset)
++{
++    g_assert_cmpuint(get_clock_period(qts, path), ==, 0);
++    qtest_writel(qts, rcc_reg, qtest_readl(qts, rcc_reg) | (0x1 << reg_offset));
++    g_assert_cmpuint(get_clock_period(qts, path), ==, SYSCLK_PERIOD);
++}
++
++static void test_clock_enable(void)
++{
++    /*
++     * For each USART device, enable its clock in RCC
++     * and check that its clock frequency is SYSCLK_PERIOD
++     */
++    QTestState *qts = qtest_init("-M b-l475e-iot01a");
++
++    check_clock(qts, "machine/soc/usart[0]/clk", RCC_APB2ENR, 14);
++    check_clock(qts, "machine/soc/usart[1]/clk", RCC_APB1ENR1, 17);
++    check_clock(qts, "machine/soc/usart[2]/clk", RCC_APB1ENR1, 18);
++    check_clock(qts, "machine/soc/uart[0]/clk", RCC_APB1ENR1, 19);
++    check_clock(qts, "machine/soc/uart[1]/clk", RCC_APB1ENR1, 20);
++    check_clock(qts, "machine/soc/lpuart1/clk", RCC_APB1ENR2, 0);
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -344,6 +369,7 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
+     qtest_add_func("stm32l4x5/usart/ack", test_ack);
++    qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
+     ret = g_test_run();
+ 
+     return ret;
 -- 
 2.34.1
 
