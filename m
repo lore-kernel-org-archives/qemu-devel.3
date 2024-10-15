@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CFED1D87B
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9868CFC27C
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jnf-00041X-8i; Tue, 15 Oct 2024 11:49:31 -0400
+	id 1t0jmc-0001qC-5d; Tue, 15 Oct 2024 11:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0jnJ-0003fH-Ju
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:49:14 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jmN-0001R1-J8
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:48:12 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0jnF-00019T-TA
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:49:09 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a991fedbd04so527498666b.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:49:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jmM-00014w-1q
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:48:11 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-71e4e481692so3061738b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007344; x=1729612144; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=h8yxg9y4vv4qI/jrS4Ln3/iEtaNWndxMD91mSBaNHWg=;
- b=KYLd4d70jvnRPGrswRJPT5Ywcab3SfFvUFFI81czG7Mx2aIFo4V1ptLhaP0OsVfvDy
- Xj+iMXRMQb6ypneuLcg6YnadKvC4/lvkx1trpoQY9uEHEuBiE5P5Of0X7srYq6me9PXy
- TjGcdaEgUUD7N1hIJ/4OKVGP6GuG88B2Biv5qzBkuQZvaWWkInTonEucVewR7kRHS5cC
- EWMtExBp2LC1HD13EPFoeCU7P6LlToVgUZnT8orA+xsehXLkyw42wjNxfuaDi3lZi9BV
- o2ksd/Ine+5q9OSLmmsgvtJWg6dlnHUVO1Bc0qZE/lODbFaWN3IBZ8nB286MARL4Vmok
- Y0mg==
+ d=linaro.org; s=google; t=1729007287; x=1729612087; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NP/jQdl3vCj51cE4P9kHFWkOQjoBpIwLQmMBNAGca+s=;
+ b=P0xnVIykjJvmMwrw8e4CESzUI0BZYmTpBTxnF8SVOE05KQ4fHNUy+iilIyDz1M7z/S
+ zTLdtnIyw0nu9DW64YKqviCTTTG0WdK/t51DPLq46EKxbcnmqzWJloeLrymJRBkXuYj+
+ IAa/8MxLiFN8c6cYoLFsVlvW8ZsjmvFV0Qjug/5q/GmgkBaeawZg7kJ6lE3sqlASBe8o
+ SHIuGYh2sRWm7ZO03lKRnF1YWEwIsb27Gvf07lb3u5na5j/nNRLGHqHxYR+Kw/PhUTrD
+ r0oL7HkH9LXElHPSluxOnZq9hXPFTclJHLC+6XV7pLmMymT0Ee7jDBlTDfw4ROIPifGL
+ +C1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007344; x=1729612144;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=h8yxg9y4vv4qI/jrS4Ln3/iEtaNWndxMD91mSBaNHWg=;
- b=NPVIjcn32UlHNHSwM6NB1+CjvRAdATtYkYkp8dcNInAmNBU35XIKXWqDZnRPOCen/j
- u31rbpgQpvUu3Z+R0X+2tMRtZDdg3EDtQmLaADm9FNCbrdHGhjip2EXcMchnQWCDH8Ez
- 8IuxQ1+x71E9FvFZbqy13p7X5zgFomiwLcwmZXzRzY4n2d+zTKyo052VUg5iiC9/tEPb
- e5i0QkSNfQNWN8z2xhH2dJnCcTSWF0lARN60XtsUXxk+ANczb5WhzHXI4AW+mvM3MTar
- MA/NRs4uCySHCkSb0S8RfZFyYQP4Gvx1arRmMjYImR7BabFHGWIuR4Sc8K9P+JX2h3jO
- yJ5Q==
-X-Gm-Message-State: AOJu0Yyt6jyLSdrv9R1b+G0OCeLr/VgFHFHtxTkNiLGeCWgEHyUZ8KQw
- FMDGYj2jhuBu9YKJX00TcmHJSHcXdSRd37ZG6p6E0uRQmV3A2cWyjh7pkp3NNIwkt32eXecfV2O
- 148YHgAa7/mvsNLAOW8qF/1PxK2Vvz/wfkgAsFrAINHIuNumd
-X-Google-Smtp-Source: AGHT+IGM+9DkcJCDY0v8KzXQN1mjBRHsMhiLKQ67esltuWKeS9wUl99GIzv2WOXAoUW9XnHmNR9UXfB4tl8Tdo5bHOw=
-X-Received: by 2002:a05:6402:8c3:b0:5c9:55aa:4285 with SMTP id
- 4fb4d7f45d1cf-5c95ac63c95mr15472562a12.34.1729007343878; Tue, 15 Oct 2024
- 08:49:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729007287; x=1729612087;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NP/jQdl3vCj51cE4P9kHFWkOQjoBpIwLQmMBNAGca+s=;
+ b=lx+wiccTguFuUEO/glLSTbroiqcKRWWXceTIP4qd2qqwI10NaFp6gCcX7h2dJQMu5w
+ FJQW8P5oatIrNGn/ESBhRQIEvvKeVgyE8NsVtRLVQv8Bjf7L34CA7C+fVnef3AwG9fo5
+ QjyTZnLUXIGnjVDm+MoZHmneHp5XBF/9DCe4zuLudObx3wKCHKCOGDdBG3VNeaeOIBS+
+ 7poDlZrz1YTBr5k68e+YshXM2zC3kxPyDTCN6bntFJP1Stin+Z6Xq+XI+8Gb4FG7uETw
+ 1JHJTixpXUeIFzj6cggPnsqOXn+zR2yA+S0MjTb43bbQHWsRY9PE/BAsqnnIPX8Cwgak
+ iXyg==
+X-Gm-Message-State: AOJu0YwKaurMYS77hIwcmHtm5/6wrBCyb6DW2XNaEmU4ojtAnYb7lFJO
+ kG52erRD+yql5LFao6pglO3HfWUYkSHS+FtiO2wQItIoh4UqiFNlszqWTyoXBdFgfh3XmcSXwEZ
+ 7
+X-Google-Smtp-Source: AGHT+IEBflXUUGZlRXWI2uD3pydZPOG/qpmoJV/2xBKZ0+M4zImhndUoRc7zDY+Ad9LD9uqsvwBAyw==
+X-Received: by 2002:a05:6a00:10c3:b0:71d:f012:6de7 with SMTP id
+ d2e1a72fcca58-71e4c1cfd6fmr19522313b3a.27.1729007287043; 
+ Tue, 15 Oct 2024 08:48:07 -0700 (PDT)
+Received: from localhost.localdomain ([45.176.88.167])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71e773a3c39sm1418099b3a.73.2024.10.15.08.48.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 15 Oct 2024 08:48:06 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 28/33] target/mips: Have gen_addiupc() expand $pc during
+ translation
+Date: Tue, 15 Oct 2024 12:44:37 -0300
+Message-ID: <20241015154443.71763-29-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
+References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Oct 2024 16:48:53 +0100
-Message-ID: <CAFEAcA9CthdJz+QM=_q2NxPbdCyyf+YBGE+qDVYs7VbqWT+aqw@mail.gmail.com>
-Subject: patchew no longer pushing patches to git branches
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <famz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,16 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It looks like since a few months back patchew stopped pushing patches
-to git branches: eg
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241010215015.44326-12-philmd@linaro.org>
+---
+ target/mips/tcg/translate.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-https://patchew.org/QEMU/20240526204551.553282-1-richard.henderson@linaro.org/
-from four months ago had a git branch created for it, but more
-recent patches in patchew's UI don't seem to have that.
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index c0b97539a29..0ccf32d185e 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -11428,20 +11428,18 @@ static void gen_compute_compact_branch(DisasContext *ctx, uint32_t opc,
+ void gen_addiupc(DisasContext *ctx, int rx, int imm,
+                  int is_64_bit, int extended)
+ {
+-    TCGv t0;
++    target_ulong npc;
+ 
+     if (extended && (ctx->hflags & MIPS_HFLAG_BMASK)) {
+         gen_reserved_instruction(ctx);
+         return;
+     }
+ 
+-    t0 = tcg_temp_new();
+-
+-    tcg_gen_movi_tl(t0, pc_relative_pc(ctx));
+-    tcg_gen_addi_tl(cpu_gpr[rx], t0, imm);
++    npc = pc_relative_pc(ctx) + imm;
+     if (!is_64_bit) {
+-        tcg_gen_ext32s_tl(cpu_gpr[rx], cpu_gpr[rx]);
++        npc = (int32_t)npc;
+     }
++    tcg_gen_movi_tl(cpu_gpr[rx], npc);
+ }
+ 
+ static void gen_cache_operation(DisasContext *ctx, uint32_t op, int base,
+-- 
+2.45.2
 
-Did this get accidentally lost when patchew moved server, or
-was it deliberately disabled?
-
-thanks
--- PMM
 
