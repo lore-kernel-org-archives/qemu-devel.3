@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2423D1D882
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F653D1D87B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jlK-0003dJ-IO; Tue, 15 Oct 2024 11:47:06 -0400
+	id 1t0jlY-0004rs-SK; Tue, 15 Oct 2024 11:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkp-0001W6-7y
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:35 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jlI-0003MY-Ce
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:47:04 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkn-0000s7-Iw
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:34 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-288642376bcso2446575fac.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:46:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jlG-0000xi-Lx
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:47:04 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2e2e23f2931so4275453a91.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007192; x=1729611992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007221; x=1729612021; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h/M6ZeKd6OjvAtfWG6gTR4wPDGVzgIAmQPnpr57Wj6k=;
- b=OKCYJoBcDSK0ksovcO9hj+f8IGeLK5T3YIULW30rQ9qObfHkMVSnTSF+mPZK1U9oZm
- CRQHaa+OcZUBPw+KVsnfJuoLtmfsPxPd9gOOcA3LBjTS/tmpMqhGFxWHJFS0Z4k00vMP
- rrhEH9Tg63aEG508DAYrG2jA+Jg7/b4cB2aJX3Elpt0okWTGNYVDOFYHFMYtEJTWabT4
- cyTeOB3lrGyQBzwXCX1+GqPw0LTX3WMTR+v/FkjTE+AKjUS1OdjRkTaA3/shJSdFEIXt
- Isd60DMwjVMRLcJcf9N6Rs/lTAKKz+UfkhaTEcg6AU1MWVjmtgyGIqR5zlJhQKoiUUgz
- VpFw==
+ bh=DIdGHos2kceOOOIgzSCtXbavAnuw+Mxycbvbjx7Wmpw=;
+ b=WQeoiZ9CpjZvAGMq4L9OSsIpc0E2JWa/gmcKa+tR1XV9w3Z9xGK9fjKJNg0YN6fMnw
+ t/DSfo9w4QJGjMkuvaZjjf9J0LUj6bSkclpzUgao+02Jap/oOYPkE0m7SvuLMe8e+1Eq
+ ZzY9BYU/HXcz/cDGtck/tugf0tFM00pD3IH9dBQQpjekf9Fx5Zz6u+IUXsICY2D7QI/D
+ aWS/E3FgPxsg4rFy1dMxNQ1g5mUd7KrsH8G3ge7+nVg7RYE0zQvJYRa+Jw9I0TxebV+3
+ +ugQyGrZKSyWAptVDCd+gvrvx+02NqFAkFincnAknp4ndX9vfFX0ITwivaT8n28v9qaj
+ UdeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007192; x=1729611992;
+ d=1e100.net; s=20230601; t=1729007221; x=1729612021;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h/M6ZeKd6OjvAtfWG6gTR4wPDGVzgIAmQPnpr57Wj6k=;
- b=n7fZLtzIbM/zZByAAzvUoCpmCKsW6E+EEfHMofWa9Pn8pJvGMv4iuPo/HaMPlL+Zfj
- xAn4RxxFORB8jyIfogwFe/sETT6rWXHrL24art4hdNB/HjhVRhm60S5AFD/18AVTjXyW
- Dh+E24ooaLUiuv0W9RTTPc7bLo2hB1dxdERLVgvSvLWyvIXsM5B6YIyij/A+Aaxdfxv5
- +5eHZFgwF9XXXWJXtm+5hDa28bcheJkwzOiiqzm6IuWkuoFacVztIHaiPHFdRqG7krUJ
- JEGlP2kHuRLzzeX8TyZH9ZeHfVRDrG8F0J9FhDASsEuH45prJuNJx866p6+EBVD6rzj2
- dQqA==
-X-Gm-Message-State: AOJu0Yy8XC0pjzzvsCvIbdVbx5BjKLTmmssdsKQkFykLurPKBnzo0uFi
- xPoft3iir3O/xrOlrvLItXBe92Kb0Lbn01IslSHrxMtQ+EOvfv+6NNKICzS5V97SrHkZm5XsJlt
+ bh=DIdGHos2kceOOOIgzSCtXbavAnuw+Mxycbvbjx7Wmpw=;
+ b=WUCJ48lzGMuZvm+oyt76/vNQ0Rj9plfsi5Ys6KCsDU3FIeVYzEEZX3FkJ0e25L0dib
+ iN8aX9Rco2ynxckz00gYLeykPCTe4kqj60aoVAcBw1ctO36LwKDBVnhTExV3k9K9n5hK
+ pVflnIiHnR24zfxA0yupYL5uVjWJ5c6dBajm58OdhEc5ih0zrfzYakyM+pm2hhpfQzLH
+ t0JiFkmMaxbTCQpLOIenQ8ec2GLb7ECheHG5B2cmPC4+mlBdhaLhjwBUEs1YtfdQ9yHY
+ sHgL8dMf9gW2ojZkXDRILTTcRpqoTihmTXGf+E8NJQaoANqmfLbRZ0nLmmvnZSrNrGr2
+ DLRg==
+X-Gm-Message-State: AOJu0Yw7+GPtLcvfnxhEobyntaH4DsjLVW5L3pc7rWC8f92wrYiAOSUi
+ IN9hVO3fAwXdBrBrnESGEvDsD5ZEe2ftjJyzOzYGgOZop3Ke/1OVmyFJ15d8tkEupSJe5SHYVp6
  I
-X-Google-Smtp-Source: AGHT+IEz7m3HFPxuW9kgXku+KQ4th/nTbLtPWGSpqvoJJzPsNUesHc8oLcS4d6+UI2mN3KDXR3c4WQ==
-X-Received: by 2002:a05:6870:c111:b0:288:60d6:f183 with SMTP id
- 586e51a60fabf-28887478de5mr6900285fac.38.1729007191877; 
- Tue, 15 Oct 2024 08:46:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnQ9w3Vdc2tRELiZt2y5uf6zP6f/6pQjG9xa6Tu6Tr1CM9eRpSOfJMTVYqqJWM5JtXHqwK/Q==
+X-Received: by 2002:a17:90a:ae0b:b0:2e2:b514:ca1 with SMTP id
+ 98e67ed59e1d1-2e3151b78b6mr16398981a91.6.1729007220903; 
+ Tue, 15 Oct 2024 08:47:00 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ea9c71a8aesm1509253a12.81.2024.10.15.08.46.30
+ 98e67ed59e1d1-2e392e8cf1csm1957605a91.6.2024.10.15.08.46.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:46:31 -0700 (PDT)
+ Tue, 15 Oct 2024 08:47:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 15/33] target/ppc: Use tcg_constant_tl() instead of
- tcg_gen_movi_tl()
-Date: Tue, 15 Oct 2024 12:44:24 -0300
-Message-ID: <20241015154443.71763-16-philmd@linaro.org>
+Subject: [PULL 19/33] target/mips: Introduce mo_endian_env() helper
+Date: Tue, 15 Oct 2024 12:44:28 -0300
+Message-ID: <20241015154443.71763-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=philmd@linaro.org; helo=mail-oa1-x33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,52 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly use tcg_constant_tl() for constant integer,
-this save a call to tcg_gen_movi_tl() and a temp register.
+Introduce mo_endian_env() which returns the endian
+MemOp corresponding to the vCPU env.
 
-Inspired-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241004202621.4321-4-philmd@linaro.org>
+Message-Id: <20241010215015.44326-4-philmd@linaro.org>
 ---
- target/ppc/translate.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ target/mips/internal.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 71513ba9646..7689b2ac2e1 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -1588,16 +1588,13 @@ static opc_handler_t invalid_handler = {
- static inline void gen_op_cmp(TCGv arg0, TCGv arg1, int s, int crf)
- {
-     TCGv t0 = tcg_temp_new();
--    TCGv t1 = tcg_temp_new();
-     TCGv_i32 t = tcg_temp_new_i32();
- 
--    tcg_gen_movi_tl(t0, CRF_EQ);
--    tcg_gen_movi_tl(t1, CRF_LT);
-     tcg_gen_movcond_tl((s ? TCG_COND_LT : TCG_COND_LTU),
--                       t0, arg0, arg1, t1, t0);
--    tcg_gen_movi_tl(t1, CRF_GT);
-+                       t0, arg0, arg1,
-+                       tcg_constant_tl(CRF_LT), tcg_constant_tl(CRF_EQ));
-     tcg_gen_movcond_tl((s ? TCG_COND_GT : TCG_COND_GTU),
--                       t0, arg0, arg1, t1, t0);
-+                       t0, arg0, arg1, tcg_constant_tl(CRF_GT), t0);
- 
-     tcg_gen_trunc_tl_i32(t, t0);
-     tcg_gen_trunc_tl_i32(cpu_crf[crf], cpu_so);
-@@ -2974,8 +2971,8 @@ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
-     tcg_gen_qemu_st_tl(u, EA, ctx->mem_idx, memop);
- 
-     /* RT = (t != t2 ? t : u = 1<<(s*8-1)) */
--    tcg_gen_movi_tl(u, 1 << (memop_size(memop) * 8 - 1));
--    tcg_gen_movcond_tl(cond, cpu_gpr[rD(ctx->opcode)], t, t2, t, u);
-+    tcg_gen_movcond_tl(cond, cpu_gpr[rD(ctx->opcode)], t, t2, t,
-+                       tcg_constant_tl(1 << (memop_size(memop) * 8 - 1)));
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 84c8e5e1ae7..91c786cff8a 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -230,6 +230,11 @@ static inline bool mips_env_is_bigendian(CPUMIPSState *env)
+     return extract32(env->CP0_Config0, CP0C0_BE, 1);
  }
  
- static void gen_ld_atomic(DisasContext *ctx, MemOp memop)
++static inline MemOp mo_endian_env(CPUMIPSState *env)
++{
++    return mips_env_is_bigendian(env) ? MO_BE : MO_LE;
++}
++
+ static inline void restore_pamask(CPUMIPSState *env)
+ {
+     if (env->hflags & MIPS_HFLAG_ELPA) {
 -- 
 2.45.2
 
