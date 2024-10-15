@@ -4,133 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6718CFC278
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 08:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C560CFC278
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 08:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0dFl-0005lL-Ed; Tue, 15 Oct 2024 04:50:05 -0400
+	id 1t0dGO-00069Y-Q2; Tue, 15 Oct 2024 04:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t0dFj-0005l9-U7
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:50:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1t0dGN-00068m-0x
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:50:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t0dFi-0007fA-FK
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:50:03 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1t0dGL-0007uf-A8
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:50:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728982199;
+ s=mimecast20190719; t=1728982240;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tgzHeD1FZ2Vl9+3850o7AsJTLlsvtz+2UEHHMOLoSno=;
- b=dakmr4lXKUuSlFLzu6OVERGF31Xv068D7RD9n3DCVGfGbxizWCKhr/TmpxYibCvdQzVBQ1
- bsVQluCaNG5+9XovhxaGF988iC5nySpGi+iEPrjJIImd3gbNvw71wC+LO/mOgMvkOa8WdJ
- vUCDEvMRWkl1T+VHDNHP25QvNLLPkXw=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=HVLMMV0ZOS4bQWNgNykli4jhI57kMtV/Y2QFmeFqF+4=;
+ b=NPdmP4LoqOelnxhilULjipn6KiIVEJxyLW3j3rVs0oJasgVH3bxSdzEwih3FPGJY8c6pHU
+ gZj47h9L7tFo9mf+UUc1yI9Z7KQUItAxDGK8KugHfb1ATx6NsXHFVAKVd8JkgmJaCTcBih
+ F7hfFSQ7a5KqYny8CDX/IlIhFLYHeRw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-QzGWPZG3NGSDrnLb0e9RBg-1; Tue, 15 Oct 2024 04:49:17 -0400
-X-MC-Unique: QzGWPZG3NGSDrnLb0e9RBg-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cbe4a123fdso88496266d6.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 01:49:17 -0700 (PDT)
+ us-mta-458-qFw4n7_tMoa4OsdxMFxmFw-1; Tue, 15 Oct 2024 04:50:38 -0400
+X-MC-Unique: qFw4n7_tMoa4OsdxMFxmFw-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-46049917c2dso95993131cf.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 01:50:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728982157; x=1729586957;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tgzHeD1FZ2Vl9+3850o7AsJTLlsvtz+2UEHHMOLoSno=;
- b=mX2CeWfCxeIw4fj7xDT8zH9aoi0Tgv+iYxMWTmgFZqFzr9BPtjLMvGWumIxN38z75h
- pGRW4ubm4GhJDy5M9IfiaGRWR9MscBYJIHCO/uB4Dk2d4494DcxQeJ1cCWiWOa94vLDc
- O6Y9oF7PU7Cs8jvJwP6TUhmaCH1KtL2gZJ/KZ32kmS7/+ijSy9AUZ3YAyckUd26BT6Na
- 1PqogFyCNU8ieMM+u1jAEA9J2hfH9DSqjNiDHV1DFvxUEFoVm2U1Nsqo+Be8G42cqpzD
- FB4FQlhwUHA8NMcG5evUgno78gyP5UkywCt1AMRSUbkyy+u3+yf2d5jH3nxTQYHhwn5O
- XIfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEPu3znD9yidlSWSEnug04a/RTqs80sb39kuBC529wJrTPnFbzIkASJUH/jCsRSyrHcw0AGPE941YN@nongnu.org
-X-Gm-Message-State: AOJu0YwvfBor+aiLsyf8M1lENzqrtfg3OUjQ1PhQAe7h/Gbbzkhk/m80
- ZfPp3cYtCtFvRvPaR0lK6HulcuCFUQ0ESlrd1Uhht6yPtfUz1INlsZnrrS4ozfr0hMPg9nJ3CyB
- 1j30kimxVvSATAZBDSnBZt7IBo6yS33CHmVd8Ba49dnju+vUCdugg
-X-Received: by 2002:a05:6214:5d93:b0:6c3:6a68:499f with SMTP id
- 6a1803df08f44-6cbeffc009emr153898486d6.19.1728982157217; 
- Tue, 15 Oct 2024 01:49:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAtpUMZFbj3mUtqCMrNdVzsckUMEFNjGb9AXk1NfU58XWN9nUlpbB4EWVqXoLNkwAobT1f5Q==
-X-Received: by 2002:a05:6214:5d93:b0:6c3:6a68:499f with SMTP id
- 6a1803df08f44-6cbeffc009emr153898226d6.19.1728982156885; 
- Tue, 15 Oct 2024 01:49:16 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cc2290f978sm4114576d6.20.2024.10.15.01.49.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Oct 2024 01:49:16 -0700 (PDT)
-Message-ID: <910683b8-5871-4833-8ed3-b1387c0c4108@redhat.com>
-Date: Tue, 15 Oct 2024 10:49:13 +0200
+ d=1e100.net; s=20230601; t=1728982238; x=1729587038;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HVLMMV0ZOS4bQWNgNykli4jhI57kMtV/Y2QFmeFqF+4=;
+ b=LZW2YDoAnGRnXUfKJMqklQ/tv7a/0ou39PCaINRJSlJXM+q/eDEnxU0liBPp9gqFXd
+ iwg5fSnWkubygwfRKK/vNlr6iYorP+Wqo2Gqm8Mncu4CyTFODBVMbisdVq5sUcHOhivE
+ 1de0ppsOrDLlFkCgHUN6i/RjOgYcSCPG69DlQjLdEvtHmGo8Y9kSELfD+J1/HyKXxzSX
+ sHNGcsW24hM3Dqo6FLiuwY+m+hhZto4MSZZcgMVysmPG1WOhvk2QDolIva+Nm+8gVt/d
+ ehWa3mqLzMbivMl1fhHJRnpkvyjEOmnq+nMxJTLf7FPrbHEQadfkWkOQ1O3UiYg3prXA
+ uwBw==
+X-Gm-Message-State: AOJu0YwJ/2Uut/h76Kz2XUxmP5GAQdC9WOx8HJtwwqab74Sxkmtz1EoJ
+ nDXog0o8DQQ06qN1z4WB5mw7VxgrR6l+Dl/xbAVZDwCz+sRkdD5E+Ou57wv/d2RziSS0X6Sd4bq
+ YKxPzF7EYOgwu5/5gliLbON2MRIHO1MD9xqCU7NWzL5fcitcynY+dn99NgH+r8VpUeigFg+iq37
+ d/omSRvPLm3tMzchpcEjMspWg0qjU=
+X-Received: by 2002:ac8:7f16:0:b0:45c:a605:1dae with SMTP id
+ d75a77b69052e-460584d0a4emr204875991cf.46.1728982238023; 
+ Tue, 15 Oct 2024 01:50:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEB0UU5qyyRgut5UGwCpcGyB1oxvy+4fAWzuBD3oZm6XsdVgUKyPJrHJwwtNxfOwiaIK4x/V4ZRzq99t03Copo=
+X-Received: by 2002:ac8:7f16:0:b0:45c:a605:1dae with SMTP id
+ d75a77b69052e-460584d0a4emr204875871cf.46.1728982237682; Tue, 15 Oct 2024
+ 01:50:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] hw/misc/aspeed_hace: Fix SG Accumulative hashing
-To: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org,
- berrange@redhat.com
-Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
- evan.burgess@seagate.com, peter.maydell@linaro.org,
- Alejandro Zeise <alejandro.zeise@seagate.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>
-References: <20241011053825.361544-1-clg@redhat.com>
- <eff3385f-6d43-42e7-8b36-7225e2fee7df@redhat.com>
- <50e53816509f6c3d51e55349817adb3612b604d8.camel@codeconstruct.com.au>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <50e53816509f6c3d51e55349817adb3612b604d8.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+References: <20241014152408.427700-1-r.peniaev@gmail.com>
+ <20241014152408.427700-9-r.peniaev@gmail.com>
+In-Reply-To: <20241014152408.427700-9-r.peniaev@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 15 Oct 2024 12:50:26 +0400
+Message-ID: <CAMxuvazSjsWF1JQw28b4LnS+ysO-paCv5wq8dgugMiUbsU=bQg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] tests/unit/test-char: implement a few mux remove
+ test cases
+To: Roman Penyaev <r.peniaev@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -155,24 +99,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/24 02:52, Andrew Jeffery wrote:
-> On Sat, 2024-10-12 at 08:20 +0200, Cédric Le Goater wrote:
->> + Aspeed reviewers. Sorry about that.
-> 
-> All good. Seems sensible in concept and from a cursory glance, so if
-> you want to tack it on:
-> 
-> Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Hi
 
+On Mon, Oct 14, 2024 at 7:26=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.com>=
+ wrote:
+>
+> This patch tests:
+>
+> 1. feasibility of removing mux which does not have frontends attached
+>    or frontends were prior detached.
+> 2. inability to remove mux which has frontends attached (mux is "busy")
+>
+> Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+> Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
+> Cc: qemu-devel@nongnu.org
+> ---
+>  tests/unit/test-char.c | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
+>
+> diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+> index f273ce522612..2837dbb863a8 100644
+> --- a/tests/unit/test-char.c
+> +++ b/tests/unit/test-char.c
+> @@ -1,6 +1,7 @@
+>  #include "qemu/osdep.h"
+>  #include <glib/gstdio.h>
+>
+> +#include "qapi/error.h"
+>  #include "qemu/config-file.h"
+>  #include "qemu/module.h"
+>  #include "qemu/option.h"
+> @@ -184,6 +185,21 @@ static void char_mux_test(void)
+>      char *data;
+>      FeHandler h1 =3D { 0, false, 0, false, }, h2 =3D { 0, false, 0, fals=
+e, };
+>      CharBackend chr_be1, chr_be2;
+> +    Error *error =3D NULL;
+> +
+> +    /* Create mux and chardev to be immediately removed */
+> +    opts =3D qemu_opts_create(qemu_find_opts("chardev"), "mux-label",
+> +                            1, &error_abort);
+> +    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
+> +    qemu_opt_set(opts, "size", "128", &error_abort);
+> +    qemu_opt_set(opts, "mux", "on", &error_abort);
+> +    chr =3D qemu_chr_new_from_opts(opts, NULL, &error_abort);
+> +    g_assert_nonnull(chr);
+> +    qemu_opts_del(opts);
+> +
+> +    /* Remove just created mux and chardev */
+> +    qmp_chardev_remove("mux-label", &error_abort);
+> +    qmp_chardev_remove("mux-label-base", &error_abort);
+>
+>      opts =3D qemu_opts_create(qemu_find_opts("chardev"), "mux-label",
+>                              1, &error_abort);
+> @@ -334,7 +350,13 @@ static void char_mux_test(void)
+>      g_free(data);
+>
+>      qemu_chr_fe_deinit(&chr_be1, false);
+> -    qemu_chr_fe_deinit(&chr_be2, true);
+> +
+> +    error =3D NULL;
 
-Thanks Andrew,
+Unnecessary assignment,
 
-Now I wonder, if we can close these :
+> +    qmp_chardev_remove("mux-label", &error);
+> +    g_assert_cmpstr(error_get_pretty(error), =3D=3D, "Chardev 'mux-label=
+' is busy");
 
-Possibly related to: https://gitlab.com/qemu-project/qemu/-/issues/1121
-Buglink: https://github.com/openbmc/qemu/issues/36
+However, error_free() is missing.
+I'll touch on commit
 
+thanks
 
-C.
+> +
+> +    qemu_chr_fe_deinit(&chr_be2, false);
+> +    qmp_chardev_remove("mux-label", &error_abort);
+>  }
+>
+>
+> --
+> 2.34.1
+>
 
 
