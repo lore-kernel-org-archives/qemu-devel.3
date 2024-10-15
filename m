@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B916D216AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D474D216AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iNG-0006GL-U7; Tue, 15 Oct 2024 10:18:10 -0400
+	id 1t0iN8-0005vN-PH; Tue, 15 Oct 2024 10:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNE-0006Dx-8V
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t0iN3-0005qi-IN
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNC-0003Lq-Mc
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:08 -0400
+ id 1t0iMz-0003JD-Q2
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001886;
+ s=mimecast20190719; t=1729001862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I5+M/LXHMzLCA/Rz9fG4sCDfrEoeocpuKFsAteejmB0=;
- b=IC1lrVanhUgE1cl4UJGCnYu5UqVc/rTe9TdMdy07fcrSbBmnsI7na+oHFgtSXWsKWDrwP6
- Ds7/k9kadbzQ/P6BjfA4KdKtjrbISOiY5dSCwYjHFZUoWBaayZDnWvaMRENnkOiCO38iky
- 8znD11P/WJCGiJ3azcNIyn0+SVgQnv0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q5mOjeOG5zrNARLwUzGvIDFpbu+ekL1lDbrgqwzQgGQ=;
+ b=S7x6y9RzCcZFy8MaRqphLwtGQcv04e7nVAiaR3h+Qi69bAMNB2VHKlJKJ9VsML35sHJ2fN
+ MOQvIHGsKY9ti8A5fbPbQYmwsev1zQvfgBgaAQS9MwntdJ3/FF3gERnLLjdaDG+A0OmfpK
+ PjL/q/ETUgPY/DH5lxr98Pl0PxxrkYI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-aZzT6hqtM6ikloea9xszWQ-1; Tue, 15 Oct 2024 10:18:04 -0400
-X-MC-Unique: aZzT6hqtM6ikloea9xszWQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d45f1e935so1640797f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:18:04 -0700 (PDT)
+ us-mta-256---iP9cUFPiS-zJ3NRS6ZQg-1; Tue, 15 Oct 2024 10:17:40 -0400
+X-MC-Unique: --iP9cUFPiS-zJ3NRS6ZQg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d4854fa0eso2720720f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001883; x=1729606683;
+ d=1e100.net; s=20230601; t=1729001858; x=1729606658;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I5+M/LXHMzLCA/Rz9fG4sCDfrEoeocpuKFsAteejmB0=;
- b=iUK702sXLPw5unZ3RLUeNlnistaFuTbbj1sMSZe1+fTv2EESn67onMeprNgSpW9WVD
- fIZnzsVXT2xodoT3KkUM8/hoQT8BeKgXIVKUpYDmE3xwaBjZB4YI6a5/YZ1+ySfZ4maI
- tI7L+sjxaFWvNvhKwNLhcg9/AVkqo9mqg1F2eIjx8hkABMPYg2APJrFBmH+PmVLdYgzn
- TibMoal//5FFsHduyJXMwhJOfxELNYrNc2XvrlIvzG4SqlDQQW8VB3N9nzgP+JYLuan8
- XIX9eAgBhJIGfPuPkvfjc3FQtEXgK3JIaL8KzYj6BvcfMLBfOr9M9pM4QHINSWsXrYFY
- zTkw==
-X-Gm-Message-State: AOJu0Ywpa03ZyCVL7hfyp4DY8zesNr2s22VG85P2sbqnjCNnpWq3e9LE
- x6h6vN7L9RE5m6EgY8E8Pnt1BBKPZh2z/0xw997MjULxBEPNRQus7r06A7tRDyeMGEmY4/vgUto
- ew9h+6PRLfrnS8kkPHkZ/YbH+MytZNSKf9J/v/ubhs9awWjBtHoF713H5H46O7ug1cms5DoMtfH
- APGuoOrmVMTj/H0kxadTDH9OQB9ww9Bhp7rg8JGpE=
-X-Received: by 2002:adf:f9c8:0:b0:37d:415c:f27c with SMTP id
- ffacd0b85a97d-37d5ffb9969mr7650767f8f.38.1729001882779; 
- Tue, 15 Oct 2024 07:18:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH90VasnVgsCclkSA9KLRJBHRflatwX3GVoWtZZtXAe4DeYWi+4Sisxacn1Rku8AQJUY1Xg8w==
-X-Received: by 2002:adf:f9c8:0:b0:37d:415c:f27c with SMTP id
- ffacd0b85a97d-37d5ffb9969mr7650745f8f.38.1729001882188; 
- Tue, 15 Oct 2024 07:18:02 -0700 (PDT)
+ bh=Q5mOjeOG5zrNARLwUzGvIDFpbu+ekL1lDbrgqwzQgGQ=;
+ b=w46mXyETCTl84TpSI4LNo9QMkjCAi/z0GhbPbDCmxtLmyM7CCFUs5ZoefIswDYMV9N
+ 1nG0whL2uJd/n8DQDrUExAxUgCxgRtv5DQW0ECL75ezqKammvirf/41KHX0Jcjy18wgE
+ vEso8gsyesYzrCoEx0NrAQvuWjIHNoh+qZrRzyZ7pO/kAKqQNfWDiG2vysVmbero29rw
+ hKRNR2wwuDMBzZWYhw/FglOAG+5exoQV9tfHPEQsTbwCerqgi0G/RwZkq3tn1iW8Mtnl
+ tHwZNs7R2+TvM+jQSK2YqdhWrxGRt/09T9yPEFElgAAQ3IIJMzNwqNrTRdKJJJa2kXua
+ sSsg==
+X-Gm-Message-State: AOJu0YxiQ5z5q8CjclnUlxoIRnRvfBqVg1+JrUMz30LulBM/xdH6lTtx
+ Pnjyn7sfljl5rcQjvYU67A2mIck3DvzU0lgvMMgqKxjUum5mIsc2Ozfk+QsiC76V3nGHeuq1miI
+ HjapHUmnUTcJjR/P9iCEFmD1WwGX5E2VcliNackFF6GmCTpB1CgLNrC+DwRdBwYePLOY5Uhx9m2
+ Tgp4ZSy6EmHLFOWWysh4IIPHyaUupc0IxZ61gEyD8=
+X-Received: by 2002:a5d:634b:0:b0:37d:47ee:10d9 with SMTP id
+ ffacd0b85a97d-37d86c09fa8mr363632f8f.34.1729001856142; 
+ Tue, 15 Oct 2024 07:17:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrxktjN745zpsGPWC+LCx2mVtIXsTGLI5cISRVUtw6mnU5xAD/iYtdzrJJj1AUQWmCqzK6HA==
+X-Received: by 2002:a5d:634b:0:b0:37d:47ee:10d9 with SMTP id
+ ffacd0b85a97d-37d86c09fa8mr363546f8f.34.1729001854187; 
+ Tue, 15 Oct 2024 07:17:34 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fbf82b1sm1710908f8f.72.2024.10.15.07.18.00
+ ffacd0b85a97d-37d7fa90547sm1692733f8f.49.2024.10.15.07.17.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:18:00 -0700 (PDT)
+ Tue, 15 Oct 2024 07:17:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/25] target/i386: do not check PREFIX_LOCK in old-style
- decoder
-Date: Tue, 15 Oct 2024 16:17:00 +0200
-Message-ID: <20241015141711.528342-15-pbonzini@redhat.com>
+Cc: Gao Shiyuan <gaoshiyuan@baidu.com>,
+	Wang Liang <wangliang44@baidu.com>
+Subject: [PULL 06/25] target/i386: Add support save/load HWCR MSR
+Date: Tue, 15 Oct 2024 16:16:52 +0200
+Message-ID: <20241015141711.528342-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
 References: <20241015141711.528342-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,142 +103,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is already checked before getting there.
+From: Gao Shiyuan <gaoshiyuan@baidu.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+KVM commit 191c8137a939 ("x86/kvm: Implement HWCR support")
+introduced support for emulating HWCR MSR.
+
+Add support for QEMU to save/load this MSR for migration purposes.
+
+Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+Signed-off-by: Wang Liang <wangliang44@baidu.com>
+Link: https://lore.kernel.org/r/20241009095109.66843-1-gaoshiyuan@baidu.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+ target/i386/cpu.h     |  5 +++++
+ target/i386/kvm/kvm.c | 12 ++++++++++++
+ target/i386/machine.c | 20 ++++++++++++++++++++
+ 3 files changed, 37 insertions(+)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 1d3b5f35c39..f4bffef9e28 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2869,7 +2869,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-         switch ((modrm >> 3) & 7) {
-         case 7:
-             if (mod != 3 ||
--                (s->prefix & (PREFIX_LOCK | PREFIX_REPNZ))) {
-+                (s->prefix & PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             if (s->prefix & PREFIX_REPZ) {
-@@ -2889,7 +2889,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 4c84cd41fd5..74886d1580f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -533,6 +533,8 @@ typedef enum X86Seg {
  
-         case 6: /* RDRAND */
-             if (mod != 3 ||
--                (s->prefix & (PREFIX_LOCK | PREFIX_REPZ | PREFIX_REPNZ)) ||
-+                (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) ||
-                 !(s->cpuid_ext_features & CPUID_EXT_RDRAND)) {
-                 goto illegal_op;
-             }
-@@ -3049,8 +3049,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+ #define MSR_AMD64_TSC_RATIO_DEFAULT     0x100000000ULL
  
-         case 0xd0: /* xgetbv */
-             if ((s->cpuid_ext_features & CPUID_EXT_XSAVE) == 0
--                || (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                                 | PREFIX_REPZ | PREFIX_REPNZ))) {
-+                || (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-                 goto illegal_op;
-             }
-             tcg_gen_trunc_tl_i32(s->tmp2_i32, cpu_regs[R_ECX]);
-@@ -3060,8 +3059,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
++#define MSR_K7_HWCR                     0xc0010015
++
+ #define MSR_VM_HSAVE_PA                 0xc0010117
  
-         case 0xd1: /* xsetbv */
-             if ((s->cpuid_ext_features & CPUID_EXT_XSAVE) == 0
--                || (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                                 | PREFIX_REPZ | PREFIX_REPNZ))) {
-+                || (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-                 goto illegal_op;
+ #define MSR_IA32_XFD                    0x000001c4
+@@ -1858,6 +1860,9 @@ typedef struct CPUArchState {
+     uint64_t msr_lbr_depth;
+     LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
+ 
++    /* AMD MSRC001_0015 Hardware Configuration */
++    uint64_t msr_hwcr;
++
+     /* exception/interrupt handling */
+     int error_code;
+     int exception_is_int;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 77e88165707..7c3fcb8698f 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -165,6 +165,7 @@ static bool has_msr_ucode_rev;
+ static bool has_msr_vmx_procbased_ctls2;
+ static bool has_msr_perf_capabs;
+ static bool has_msr_pkrs;
++static bool has_msr_hwcr;
+ 
+ static uint32_t has_architectural_pmu_version;
+ static uint32_t num_architectural_pmu_gp_counters;
+@@ -2577,6 +2578,8 @@ static int kvm_get_supported_msrs(KVMState *s)
+             case MSR_IA32_PKRS:
+                 has_msr_pkrs = true;
+                 break;
++            case MSR_K7_HWCR:
++                has_msr_hwcr = true;
              }
-             gen_svm_check_intercept(s, SVM_EXIT_XSETBV);
-@@ -3228,8 +3226,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             gen_st_modrm(s, decode, ot);
+         }
+     }
+@@ -3919,6 +3922,9 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+     if (has_msr_virt_ssbd) {
+         kvm_msr_entry_add(cpu, MSR_VIRT_SSBD, env->virt_ssbd);
+     }
++    if (has_msr_hwcr) {
++        kvm_msr_entry_add(cpu, MSR_K7_HWCR, env->msr_hwcr);
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -4403,6 +4409,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_IA32_TSC, 0);
+         env->tsc_valid = !runstate_is_running();
+     }
++    if (has_msr_hwcr) {
++        kvm_msr_entry_add(cpu, MSR_K7_HWCR, 0);
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -4922,6 +4931,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_ARCH_LBR_INFO_0 ... MSR_ARCH_LBR_INFO_0 + 31:
+             env->lbr_records[index - MSR_ARCH_LBR_INFO_0].info = msrs[i].data;
              break;
-         case 0xee: /* rdpkru */
--            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-+            if (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_trunc_tl_i32(s->tmp2_i32, cpu_regs[R_ECX]);
-@@ -3237,8 +3234,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], s->tmp1_i64);
-             break;
-         case 0xef: /* wrpkru */
--            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-+            if (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_concat_tl_i64(s->tmp1_i64, cpu_regs[R_EAX],
-@@ -3314,7 +3310,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             if (prefixes & PREFIX_REPZ) {
-                 /* bndcl */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3322,7 +3317,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             } else if (prefixes & PREFIX_REPNZ) {
-                 /* bndcu */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3336,7 +3330,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 }
-                 if (mod == 3) {
-                     int reg2 = (modrm & 7) | REX_B(s);
--                    if (reg2 >= 4 || (prefixes & PREFIX_LOCK)) {
-+                    if (reg2 >= 4) {
-                         goto illegal_op;
-                     }
-                     if (s->flags & HF_MPX_IU_MASK) {
-@@ -3365,7 +3359,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 /* bndldx */
-                 AddressParts a = decode->mem;
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-                     || a.base < -1) {
-                     goto illegal_op;
-@@ -3401,7 +3394,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             if (mod != 3 && (prefixes & PREFIX_REPZ)) {
-                 /* bndmk */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3429,7 +3421,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             } else if (prefixes & PREFIX_REPNZ) {
-                 /* bndcn */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3441,7 +3432,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 }
-                 if (mod == 3) {
-                     int reg2 = (modrm & 7) | REX_B(s);
--                    if (reg2 >= 4 || (prefixes & PREFIX_LOCK)) {
-+                    if (reg2 >= 4) {
-                         goto illegal_op;
-                     }
-                     if (s->flags & HF_MPX_IU_MASK) {
-@@ -3468,7 +3459,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 /* bndstx */
-                 AddressParts a = decode->mem;
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-                     || a.base < -1) {
-                     goto illegal_op;
++        case MSR_K7_HWCR:
++            env->msr_hwcr = msrs[i].data;
++            break;
+         }
+     }
+ 
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 39f8294f279..b4610325aad 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1543,6 +1543,25 @@ static const VMStateDescription vmstate_msr_xfd = {
+     }
+ };
+ 
++static bool msr_hwcr_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
++
++    return env->msr_hwcr != 0;
++}
++
++static const VMStateDescription vmstate_msr_hwcr = {
++    .name = "cpu/msr_hwcr",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = msr_hwcr_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64(env.msr_hwcr, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ #ifdef TARGET_X86_64
+ static bool intel_fred_msrs_needed(void *opaque)
+ {
+@@ -1773,6 +1792,7 @@ const VMStateDescription vmstate_x86_cpu = {
+         &vmstate_msr_intel_sgx,
+         &vmstate_pdptrs,
+         &vmstate_msr_xfd,
++        &vmstate_msr_hwcr,
+ #ifdef TARGET_X86_64
+         &vmstate_msr_fred,
+         &vmstate_amx_xtile,
 -- 
 2.46.2
 
