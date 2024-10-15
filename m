@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 585B4D216AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074B4D216AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iND-0006D1-ND; Tue, 15 Oct 2024 10:18:07 -0400
+	id 1t0iNC-00068M-0T; Tue, 15 Oct 2024 10:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNB-00066Z-5y
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t0iN6-0005tu-Et
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iN8-0003L6-Hb
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:04 -0400
+ id 1t0iN4-0003Ka-RD
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001881;
+ s=mimecast20190719; t=1729001878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Njqow1COxQlZq2FlnaMErpxe9av0hiOrAD9QY9giCZ4=;
- b=CgyGvDn4gEJoq9s3UQKZ2E7FH34BP7/HbL3JIVe1qEnCqNHzxNzLTftHDLcgCTg8bn/cWJ
- ZmKLTMGzz6nHxQRsj6VPQXfsPSqz0t1qBFORxI7UNf5nOtBAjBoAOVg6W7KpalgprikD2Y
- HM139u1jb15QNm7v7D3nL99BCH7gFoQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RY5j2BgNkPWOvoXIyvVFOJpuemGVoag+XCdzDG+fnpA=;
+ b=G651Gp5fd/JrVup0F4M78O/UrkRtXQbP0eDg3Lo1UJVRa+klSpl5RTkGsjkw5hNpwrxuL0
+ ZyBZZQ6dEISZ7hLKNeOeGIMRVQNBjeGv7BBhhR1NxwCaAKq5LqYzmfoAXmeWxBSFPUeEmX
+ 1Na7aqbmHOhKQqLoe72VoRrk/GeUOjg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-fwqKczEOPNSS4Fn4XhCVag-1; Tue, 15 Oct 2024 10:18:00 -0400
-X-MC-Unique: fwqKczEOPNSS4Fn4XhCVag-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d56061a4cso2166727f8f.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:18:00 -0700 (PDT)
+ us-mta-692-uqlTzPX_NeWcKjP5y2Nsaw-1; Tue, 15 Oct 2024 10:17:50 -0400
+X-MC-Unique: uqlTzPX_NeWcKjP5y2Nsaw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-431248c4380so22478385e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001879; x=1729606679;
+ d=1e100.net; s=20230601; t=1729001869; x=1729606669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Njqow1COxQlZq2FlnaMErpxe9av0hiOrAD9QY9giCZ4=;
- b=bKo84tlL5gsIDYDZhXSMHGD+B0Py2XsYXAMQyXoWW+IfK+eIP7XaUdHJwezNUR3dfp
- oaM2cVDfFFzWF41d8sgNBwzQCpKij3BgaN+TDzgZADqJhV8auxVCwj031YxjUe+4Y0Cx
- w4rfMljiV7blg9bf+uTjyCb2E5K31obN1ydpq7yuNGHxw11UI//5U3kDsTUuOJkAxk1y
- UYD09KppeHuUk40fY3PyKp6u48LyqxQOFCnKxopFWgxKuMCYNNYlN1BLKB8yw5cc8yNP
- qtPZcfPSbUdpsMX8FkkcuZiRaucksosvE2nWcwQDh5dz/fiE/KsmHeJ2DFKYCFRFw7hg
- cqpQ==
-X-Gm-Message-State: AOJu0YwE6CvtHoDOOyWj2Bdc4AxctDrf+1XvHqawoWJgkCMwU4bLLltu
- ME0NmD5Tv8LNeaICYgkgid1iH7DlCLmEp34cRXix9Wg4rU3Tc2J/B0Vw6jiiVbYjGzA67v6LWgn
- usEFxq/e5+YyBuuVTZznf8Lp18UOSEsWk5eyOyeIr2FSB2HapbOpE5rPZZEDz2hUPVse/SO9tqN
- 4bN8rIOx/pd2+vZLU0RG/lryShjo4h2ytNn0A06Z0=
-X-Received: by 2002:a5d:53cd:0:b0:37c:c4bc:181c with SMTP id
- ffacd0b85a97d-37d55184de1mr10850308f8f.11.1729001878642; 
- Tue, 15 Oct 2024 07:17:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSJBANSQZKvzj5AteuYyZfZG3AhFjWJybVStLEmVcfLVkg7iV2yVLA8qPFLl8s4D3mrQAu4g==
-X-Received: by 2002:a5d:53cd:0:b0:37c:c4bc:181c with SMTP id
- ffacd0b85a97d-37d55184de1mr10850283f8f.11.1729001878107; 
- Tue, 15 Oct 2024 07:17:58 -0700 (PDT)
+ bh=RY5j2BgNkPWOvoXIyvVFOJpuemGVoag+XCdzDG+fnpA=;
+ b=szhgjNln2WTMLE07M+ris4I/SQQ2szPv35P3xWnLrq1WJf+8xvUonQcsYYL66LJ3IA
+ v0vdxkMSBm8UqXIHZ2hqMx67Ymcsfbsy0KOLnnp8nZ9Ur9bSmM/7UkwQM+sSkhOHAkLI
+ Q5Y7/z87/EOVQj+gqvIlN0/JRPFEx0MaHPZpzKYYwxtYpds2XbPKXtPJQWH7/P3gkvK1
+ vriKw68Zgw2u50zp1A5dfZp0QwHYhMJCQ/f+z/OLYUV4mB6GN3cHSGMMgs+jPbaFwqhl
+ AWhdoh5bnDkoO/DjfoEGVCEj7rmnM6mFZzVZnlaWvgBD3hq2xJ4Mqkdbx/MAOE+uMEBH
+ tN+w==
+X-Gm-Message-State: AOJu0YwTaPDlTtjxUgrAktWMbmBCMO5UM4Ql4np5BCh/p2Xg6ZPEleKK
+ 1WeT1Vn7vj2pn5wdAwh1Wgdb74yp4KgR6nkCQK7cfVezmFMwiZtO/HRIZjjzldC4/NviYLxhuF1
+ GuP3rXjL9Ftz88UIJqvk0p3mt7/g10rxwndWTh6VZfMwxW2p0tbyD5MYXCS+mVZIdr34w2KYxGB
+ ZSd4csMouAhcQmyb6XEBWRhBIe01G+p0cJDPgRxUk=
+X-Received: by 2002:a05:600c:1c04:b0:42c:aeaa:6aff with SMTP id
+ 5b1f17b1804b1-4311ded42e9mr131288245e9.10.1729001869093; 
+ Tue, 15 Oct 2024 07:17:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSLKnsD8MOzY41Lfj0L3+cOeMVc32gvO+OkiEQRaXPiDZi0bMmpAKE0Llezvq6/VVMOgzlnQ==
+X-Received: by 2002:a05:600c:1c04:b0:42c:aeaa:6aff with SMTP id
+ 5b1f17b1804b1-4311ded42e9mr131287885e9.10.1729001868582; 
+ Tue, 15 Oct 2024 07:17:48 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1716160f8f.5.2024.10.15.07.17.57
+ 5b1f17b1804b1-4313f569933sm19445605e9.13.2024.10.15.07.17.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:17:57 -0700 (PDT)
+ Tue, 15 Oct 2024 07:17:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/25] target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder
-Date: Tue, 15 Oct 2024 16:16:59 +0200
-Message-ID: <20241015141711.528342-14-pbonzini@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Subject: [PULL 10/25] docs/system: Add recommendations to Hyper-V
+ enlightenments doc
+Date: Tue, 15 Oct 2024 16:16:56 +0200
+Message-ID: <20241015141711.528342-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
 References: <20241015141711.528342-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,352 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The gen_cmpxchg8b and gen_cmpxchg16b functions even have the correct
-prototype already; the only thing that needs to be done is removing the
-gen_lea_modrm() call.
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-This moves the last LOCK-enabled instructions to the new decoder.  It is
-now possible to assume that gen_multi0F is called only after checking
-that PREFIX_LOCK was not specified.
+While hyperv.rst already has all currently implemented Hyper-V
+enlightenments documented, it may be unclear what is the recommended set to
+achieve the best result. Add the corresponding section to the doc.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20240917160051.2637594-5-vkuznets@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     |   2 +
- target/i386/tcg/translate.c      | 121 +------------------------------
- target/i386/tcg/decode-new.c.inc |  34 ++++++---
- target/i386/tcg/emit.c.inc       |  96 ++++++++++++++++++++++++
- 4 files changed, 124 insertions(+), 129 deletions(-)
+ docs/system/i386/hyperv.rst | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index bebc77bd54b..7f23d373ea7 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -114,6 +114,8 @@ typedef enum X86CPUIDFeature {
-     X86_FEAT_CLWB,
-     X86_FEAT_CMOV,
-     X86_FEAT_CMPCCXADD,
-+    X86_FEAT_CX8,
-+    X86_FEAT_CX16,
-     X86_FEAT_F16C,
-     X86_FEAT_FMA,
-     X86_FEAT_FSGSBASE,
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index be68cde1baa..1d3b5f35c39 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2289,104 +2289,6 @@ static void gen_sty_env_A0(DisasContext *s, int offset, bool align)
-     tcg_gen_qemu_st_i128(t, s->tmp0, mem_index, mop);
- }
+diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+index 009947e3914..1c1de77feb6 100644
+--- a/docs/system/i386/hyperv.rst
++++ b/docs/system/i386/hyperv.rst
+@@ -283,6 +283,36 @@ Supplementary features
+   feature alters this behavior and only allows the guest to use exposed Hyper-V
+   enlightenments.
  
--static void gen_cmpxchg8b(DisasContext *s, X86DecodedInsn *decode)
--{
--    TCGv_i64 cmp, val, old;
--    TCGv Z;
--
--    gen_lea_modrm(s, decode);
--
--    cmp = tcg_temp_new_i64();
--    val = tcg_temp_new_i64();
--    old = tcg_temp_new_i64();
--
--    /* Construct the comparison values from the register pair. */
--    tcg_gen_concat_tl_i64(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
--    tcg_gen_concat_tl_i64(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
--
--    /* Only require atomic with LOCK; non-parallel handled in generator. */
--    if (s->prefix & PREFIX_LOCK) {
--        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
--    } else {
--        tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
--                                      s->mem_index, MO_TEUQ);
--    }
--
--    /* Set tmp0 to match the required value of Z. */
--    tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
--    Z = tcg_temp_new();
--    tcg_gen_trunc_i64_tl(Z, cmp);
--
--    /*
--     * Extract the result values for the register pair.
--     * For 32-bit, we may do this unconditionally, because on success (Z=1),
--     * the old value matches the previous value in EDX:EAX.  For x86_64,
--     * the store must be conditional, because we must leave the source
--     * registers unchanged on success, and zero-extend the writeback
--     * on failure (Z=0).
--     */
--    if (TARGET_LONG_BITS == 32) {
--        tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], old);
--    } else {
--        TCGv zero = tcg_constant_tl(0);
--
--        tcg_gen_extr_i64_tl(s->T0, s->T1, old);
--        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EAX], Z, zero,
--                           s->T0, cpu_regs[R_EAX]);
--        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EDX], Z, zero,
--                           s->T1, cpu_regs[R_EDX]);
--    }
--
--    /* Update Z. */
--    gen_compute_eflags(s);
--    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, Z, ctz32(CC_Z), 1);
--}
--
--#ifdef TARGET_X86_64
--static void gen_cmpxchg16b(DisasContext *s, X86DecodedInsn *decode)
--{
--    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
--    TCGv_i64 t0, t1;
--    TCGv_i128 cmp, val;
--
--    gen_lea_modrm(s, decode);
--
--    cmp = tcg_temp_new_i128();
--    val = tcg_temp_new_i128();
--    tcg_gen_concat_i64_i128(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
--    tcg_gen_concat_i64_i128(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
--
--    /* Only require atomic with LOCK; non-parallel handled in generator. */
--    if (s->prefix & PREFIX_LOCK) {
--        tcg_gen_atomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
--    } else {
--        tcg_gen_nonatomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
--    }
--
--    tcg_gen_extr_i128_i64(s->T0, s->T1, val);
--
--    /* Determine success after the fact. */
--    t0 = tcg_temp_new_i64();
--    t1 = tcg_temp_new_i64();
--    tcg_gen_xor_i64(t0, s->T0, cpu_regs[R_EAX]);
--    tcg_gen_xor_i64(t1, s->T1, cpu_regs[R_EDX]);
--    tcg_gen_or_i64(t0, t0, t1);
--
--    /* Update Z. */
--    gen_compute_eflags(s);
--    tcg_gen_setcondi_i64(TCG_COND_EQ, t0, t0, 0);
--    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, t0, ctz32(CC_Z), 1);
--
--    /*
--     * Extract the result values for the register pair.  We may do this
--     * unconditionally, because on success (Z=1), the old value matches
--     * the previous value in RDX:RAX.
--     */
--    tcg_gen_mov_i64(cpu_regs[R_EAX], s->T0);
--    tcg_gen_mov_i64(cpu_regs[R_EDX], s->T1);
--}
--#endif
--
- #include "emit.c.inc"
++Recommendations
++---------------
++
++To achieve the best performance of Windows and Hyper-V guests and unless there
++are any specific requirements (e.g. migration to older QEMU/KVM versions,
++emulating specific Hyper-V version, ...), it is recommended to enable all
++currently implemented Hyper-V enlightenments with the following exceptions:
++
++- ``hv-syndbg``, ``hv-passthrough``, ``hv-enforce-cpuid`` should not be enabled
++  in production configurations as these are debugging/development features.
++- ``hv-reset`` can be avoided as modern Hyper-V versions don't expose it.
++- ``hv-evmcs`` can (and should) be enabled on Intel CPUs only. While the feature
++  is only used in nested configurations (Hyper-V, WSL2), enabling it for regular
++  Windows guests should not have any negative effects.
++- ``hv-no-nonarch-coresharing`` must only be enabled if vCPUs are properly pinned
++  so no non-architectural core sharing is possible.
++- ``hv-vendor-id``, ``hv-version-id-build``, ``hv-version-id-major``,
++  ``hv-version-id-minor``, ``hv-version-id-spack``, ``hv-version-id-sbranch``,
++  ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
++  behave differently when different Hyper-V version is presented to them.
++- ``hv-crash`` must only be enabled if the crash information is consumed via
++  QAPI by higher levels of the virtualization stack. Enabling this feature
++  effectively prevents Windows from creating dumps upon crashes.
++- ``hv-reenlightenment`` can only be used on hardware which supports TSC
++  scaling or when guest migration is not needed.
++- ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
++  (meaning there are other scheduled tasks or guests) and can be left unchanged
++  from the default value (0xffffffff) otherwise.
++- ``hv-avic``/``hv-apicv`` should not be enabled if the hardware does not
++  support APIC virtualization (Intel APICv, AMD AVIC).
  
- static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
-@@ -2962,29 +2864,10 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
- 
-     /* now check op code */
-     switch (b) {
--    case 0x1c7: /* cmpxchg8b */
-+    case 0x1c7: /* RDSEED, RDPID with f3 prefix */
-         mod = (modrm >> 6) & 3;
-         switch ((modrm >> 3) & 7) {
--        case 1: /* CMPXCHG8, CMPXCHG16 */
--            if (mod == 3) {
--                goto illegal_op;
--            }
--#ifdef TARGET_X86_64
--            if (dflag == MO_64) {
--                if (!(s->cpuid_ext_features & CPUID_EXT_CX16)) {
--                    goto illegal_op;
--                }
--                gen_cmpxchg16b(s, decode);
--                break;
--            }
--#endif
--            if (!(s->cpuid_features & CPUID_CX8)) {
--                goto illegal_op;
--            }
--            gen_cmpxchg8b(s, decode);
--            break;
--
--        case 7: /* RDSEED, RDPID with f3 prefix */
-+        case 7:
-             if (mod != 3 ||
-                 (s->prefix & (PREFIX_LOCK | PREFIX_REPNZ))) {
-                 goto illegal_op;
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index ee3ba16116e..fe3bfed147a 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -288,6 +288,25 @@ static void decode_group8(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     }
- }
- 
-+static void decode_group9(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
-+{
-+    static const X86OpEntry group9_reg =
-+        X86_OP_ENTRY0(multi0F);  /* unconverted */
-+    static const X86OpEntry cmpxchg8b =
-+        X86_OP_ENTRY1(CMPXCHG8B,  M,q,  lock p_00 cpuid(CX8));
-+    static const X86OpEntry cmpxchg16b =
-+        X86_OP_ENTRY1(CMPXCHG16B, M,dq, lock p_00 cpuid(CX16));
-+
-+    int modrm = get_modrm(s, env);
-+    int op = (modrm >> 3) & 7;
-+
-+    if ((modrm >> 6) == 3) {
-+        *entry = group9_reg;
-+    } else if (op == 1) {
-+        *entry = REX_W(s) ? cmpxchg16b : cmpxchg8b;
-+    }
-+}
-+
- static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     static const X86OpEntry group15_reg[8] = {
-@@ -1203,7 +1222,7 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
--    [0xc7] = X86_OP_ENTRY1(multi0F,    nop,v,               nolea), /* unconverted */
-+    [0xc7] = X86_OP_GROUP0(group9),
- 
-     [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
-     [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-@@ -2245,8 +2264,12 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
-         return (s->cpuid_features & CPUID_CMOV);
-     case X86_FEAT_CLFLUSH:
-         return (s->cpuid_features & CPUID_CLFLUSH);
-+    case X86_FEAT_CX8:
-+        return (s->cpuid_features & CPUID_CX8);
-     case X86_FEAT_FXSR:
-         return (s->cpuid_features & CPUID_FXSR);
-+    case X86_FEAT_CX16:
-+        return (s->cpuid_ext_features & CPUID_EXT_CX16);
-     case X86_FEAT_F16C:
-         return (s->cpuid_ext_features & CPUID_EXT_F16C);
-     case X86_FEAT_FMA:
-@@ -2726,15 +2749,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         break;
-     }
- 
--    /*
--     * hack for old decoder: 0F C7 has both instructions that accept LOCK
--     * and instructions that don't, but also needs X86_SPECIAL_NoLoadEA.
--     * Keep this here until CMPXCHG8B/CMPXCHG16B is separated from the
--     * other unconverted opcodes.
--     */
--    if (decode.e.gen == gen_multi0F) {
--        accept_lock = true;
--    }
-     if ((s->prefix & PREFIX_LOCK) && !accept_lock) {
-         goto illegal_op;
-     }
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 29de8bba6f7..fd17a9b1eca 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1788,6 +1788,102 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
-     decode->cc_op = CC_OP_SUBB + ot;
- }
- 
-+static void gen_CMPXCHG16B(DisasContext *s, X86DecodedInsn *decode)
-+{
-+#ifdef TARGET_X86_64
-+    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
-+    TCGv_i64 t0, t1;
-+    TCGv_i128 cmp, val;
-+
-+    cmp = tcg_temp_new_i128();
-+    val = tcg_temp_new_i128();
-+    tcg_gen_concat_i64_i128(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
-+    tcg_gen_concat_i64_i128(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
-+
-+    /* Only require atomic with LOCK; non-parallel handled in generator. */
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
-+    } else {
-+        tcg_gen_nonatomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
-+    }
-+
-+    tcg_gen_extr_i128_i64(s->T0, s->T1, val);
-+
-+    /* Determine success after the fact. */
-+    t0 = tcg_temp_new_i64();
-+    t1 = tcg_temp_new_i64();
-+    tcg_gen_xor_i64(t0, s->T0, cpu_regs[R_EAX]);
-+    tcg_gen_xor_i64(t1, s->T1, cpu_regs[R_EDX]);
-+    tcg_gen_or_i64(t0, t0, t1);
-+
-+    /* Update Z. */
-+    gen_compute_eflags(s);
-+    tcg_gen_setcondi_i64(TCG_COND_EQ, t0, t0, 0);
-+    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, t0, ctz32(CC_Z), 1);
-+
-+    /*
-+     * Extract the result values for the register pair.  We may do this
-+     * unconditionally, because on success (Z=1), the old value matches
-+     * the previous value in RDX:RAX.
-+     */
-+    tcg_gen_mov_i64(cpu_regs[R_EAX], s->T0);
-+    tcg_gen_mov_i64(cpu_regs[R_EDX], s->T1);
-+#else
-+    abort();
-+#endif
-+}
-+
-+static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    TCGv_i64 cmp, val, old;
-+    TCGv Z;
-+
-+    cmp = tcg_temp_new_i64();
-+    val = tcg_temp_new_i64();
-+    old = tcg_temp_new_i64();
-+
-+    /* Construct the comparison values from the register pair. */
-+    tcg_gen_concat_tl_i64(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
-+    tcg_gen_concat_tl_i64(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
-+
-+    /* Only require atomic with LOCK; non-parallel handled in generator. */
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
-+    } else {
-+        tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
-+                                      s->mem_index, MO_TEUQ);
-+    }
-+
-+    /* Set tmp0 to match the required value of Z. */
-+    tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
-+    Z = tcg_temp_new();
-+    tcg_gen_trunc_i64_tl(Z, cmp);
-+
-+    /*
-+     * Extract the result values for the register pair.
-+     * For 32-bit, we may do this unconditionally, because on success (Z=1),
-+     * the old value matches the previous value in EDX:EAX.  For x86_64,
-+     * the store must be conditional, because we must leave the source
-+     * registers unchanged on success, and zero-extend the writeback
-+     * on failure (Z=0).
-+     */
-+    if (TARGET_LONG_BITS == 32) {
-+        tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], old);
-+    } else {
-+        TCGv zero = tcg_constant_tl(0);
-+
-+        tcg_gen_extr_i64_tl(s->T0, s->T1, old);
-+        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EAX], Z, zero,
-+                           s->T0, cpu_regs[R_EAX]);
-+        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EDX], Z, zero,
-+                           s->T1, cpu_regs[R_EDX]);
-+    }
-+
-+    /* Update Z. */
-+    gen_compute_eflags(s);
-+    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, Z, ctz32(CC_Z), 1);
-+}
-+
- static void gen_CPUID(DisasContext *s, X86DecodedInsn *decode)
- {
-     gen_update_cc_op(s);
+ Useful links
+ ------------
 -- 
 2.46.2
 
