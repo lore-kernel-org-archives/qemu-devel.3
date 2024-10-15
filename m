@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8E4CFC281
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91955CFC280
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eOW-0001FW-95; Tue, 15 Oct 2024 06:03:12 -0400
+	id 1t0eOJ-0000nr-9P; Tue, 15 Oct 2024 06:03:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eO9-0000kW-66; Tue, 15 Oct 2024 06:02:50 -0400
+ id 1t0eNv-0000Xa-3h; Tue, 15 Oct 2024 06:02:38 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eO6-0000wm-WB; Tue, 15 Oct 2024 06:02:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV3k5NW4z6FGmc;
- Tue, 15 Oct 2024 18:01:06 +0800 (CST)
+ id 1t0eNs-0000vA-8l; Tue, 15 Oct 2024 06:02:34 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV4Y64mfz6K94H;
+ Tue, 15 Oct 2024 18:01:49 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id E3F2D1404F9;
- Tue, 15 Oct 2024 18:02:43 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id F3476140A34;
+ Tue, 15 Oct 2024 18:02:23 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 15 Oct 2024 12:02:24 +0200
+ 15.1.2507.39; Tue, 15 Oct 2024 12:02:04 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,10 +45,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V5 05/30] arm/virt,
- kvm: Pre-create KVM vCPUs for all unplugged QOM vCPUs @machine init
-Date: Tue, 15 Oct 2024 10:59:47 +0100
-Message-ID: <20241015100012.254223-6-salil.mehta@huawei.com>
+Subject: [PATCH RFC V5 04/30] arm/virt,
+ target/arm: Machine init time change common to vCPU {cold|hot}-plug
+Date: Tue, 15 Oct 2024 10:59:46 +0100
+Message-ID: <20241015100012.254223-5-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015100012.254223-1-salil.mehta@huawei.com>
 References: <20241015100012.254223-1-salil.mehta@huawei.com>
@@ -84,262 +84,234 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ARM CPU architecture does not allows CPU to be plugged after system has
-initialized. This is an constraint. Hence, Kernel must know all the CPUs being
-booted during its initialization. This applies to the Guest Kernel as well and
-therefore, number of KVM vCPUs need to be fixed at the VM initialization time.
+Introduce the common logic required during the initialization of both cold and
+hot-plugged vCPUs. Additionally, initialize the *disabled* state of the vCPUs,
+which will be used further during the initialization phases of various other
+components like GIC, PMU, ACPI, etc., as part of the virtual machine
+initialization.
 
-Also, The GIC must know all the CPUs it is connected to during its
-initialization, and this cannot change afterward. This must also be ensured
-during the initialization of the VGIC in KVM. This is necessary because:
-
-1. The association between GICR and MPIDR must be fixed at VM initialization
-   time. This is represented by the register `GICR_TYPER(mp_affinity, proc_num)`
-2. Memory regions associated with GICR, etc., cannot be changed (added, deleted,
-   or modified) after the VM has been initialized. This is not an ARM
-   architectural constraint but rather invites a difficult and messy change in
-   VGIC data structures.
-
-This patch adds support to pre-create all possible vCPUs within the KVM host
-as part of the virtual machine initialization. These vCPUs can later be unparked
-and attached to the hotplugged QOM vCPU.
-
+Reported-by: Gavin Shan <gshan@redhat.com>
+[GS: pointed the assertion due to wrong range check in cpu_pre_plug phase]
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-[VP: Identified CPU stall issue & suggested probable fix]
 ---
- hw/arm/virt.c         | 74 ++++++++++++++++++++++++++++++++++++++-----
- include/hw/core/cpu.h |  1 +
- target/arm/cpu64.c    |  9 ++++++
- target/arm/kvm.c      | 41 +++++++++++++++++++++++-
- target/arm/kvm_arm.h  | 10 ++++++
- 5 files changed, 126 insertions(+), 9 deletions(-)
+ hw/arm/virt.c         | 90 ++++++++++++++++++++++++++++++++++++++++++-
+ include/hw/arm/virt.h | 26 +++++++++++++
+ target/arm/cpu.c      |  7 ++++
+ target/arm/cpu64.c    |  2 +
+ 4 files changed, 124 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 48102d5a4c..858a19bc8b 100644
+index a64d028ec4..48102d5a4c 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -2366,17 +2366,12 @@ static void machvirt_init(MachineState *machine)
- 
-     assert(possible_cpus->len == max_cpus);
-     for (n = 0; n < possible_cpus->len; n++) {
-+        CPUArchId *cpu_slot;
-         Object *cpuobj;
-         CPUState *cs;
- 
--        if (n >= smp_cpus) {
--            break;
--        }
--
-         cpuobj = object_new(possible_cpus->cpus[n].type);
--
-         cs = CPU(cpuobj);
--        cs->cpu_index = n;
- 
-         aarch64 &= object_property_get_bool(cpuobj, "aarch64", NULL);
-         object_property_set_int(cpuobj, "socket-id",
-@@ -2388,8 +2383,61 @@ static void machvirt_init(MachineState *machine)
-         object_property_set_int(cpuobj, "thread-id",
-                                 virt_get_thread_id(machine, n), NULL);
- 
--        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
--        object_unref(cpuobj);
-+        if (n < smp_cpus) {
-+            qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-+            object_unref(cpuobj);
-+        } else {
-+            /*
-+             * Handling vCPUs that are yet to be hot-plugged requires the
-+             * unrealized `ARMCPU` object for the following purposes:
-+             *
-+             * 1. To create the corresponding host KVM vCPU.
-+             * 2. During the GICv3 realization phase, the `GICR_TYPER` value is
-+             *    derived using the fetched MPIDR/mp-affinity. It's worth
-+             *    considering modifying the GICv3 realization code to directly
-+             *    fetch the `arch-id`/mp-affinity from the possible vCPUs.
-+             * 3. Additionally, the `ARMCPU` object must be retained until
-+             *    `virt_cpu_post_init`, as there may be late per-vCPU
-+             *    initializations.
-+             *
-+             * Once these tasks are completed, the initialized `ARMCPU` object
-+             * can be safely released as those are not required and will be
-+             * recreated when they are {hot,cold}-plugged later.
-+             */
-+            cs->cpu_index = n;
-+            cpu_slot = virt_find_cpu_slot(cs);
-+
-+            /*
-+             * We will pre-create the KVM vCPUs corresponding to the currently
-+             * unplugged but possible QOM vCPUs and park them until they are
-+             * actually hot-plugged. The ARM architecture does not allow new
-+             * CPUs to be plugged after the system has been initialized, and
-+             * this constraint is also reflected in KVM.
-+             */
-+            if (kvm_enabled()) {
-+                kvm_arm_create_host_vcpu(ARM_CPU(cs));
-+                /*
-+                 * Override the default architecture ID with the one fetched
-+                 * from KVM. After initialization, we will destroy the CPUState
-+                 * for disabled vCPUs; however, the CPU slot and its association
-+                 * with the architecture ID (and consequently the vCPU ID) will
-+                 * remain fixed for the entire lifetime of QEMU.
-+                 */
-+                cpu_slot->arch_id = arm_cpu_mp_affinity(ARM_CPU(cs));
-+            }
-+
-+           /*
-+            * GICv3 realization will need `mp-affinity` to derive `gicr_typer`
-+            */
-+            object_property_set_int(cpuobj, "mp-affinity", cpu_slot->arch_id,
-+                                    NULL);
-+
-+            /*
-+             * Add the unplugged vCPU to the vCPU slot temporarily. It will be
-+             * released later in the virt_post_init_cpu() function
-+             */
-+            cpu_slot->cpu = cs;
-+        }
-     }
- 
-     /* Now we've created the CPUs we can see if they have the hypvirt timer */
-@@ -2992,6 +3040,16 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-     /* insert the cold/hot-plugged vcpu in the slot */
-     cpu_slot = virt_find_cpu_slot(cs);
-     cpu_slot->cpu = CPU(dev);
-+
-+    if (kvm_enabled()) {
-+        /*
-+         * Override the default architecture ID with the one fetched from KVM
-+         * Currently, KVM derives the architecture ID from the vCPU ID specified
-+         * by QEMU. In the future, we might implement a change where the entire
-+         * architecture ID can be configured directly by QEMU.
-+         */
-+        cpu_slot->arch_id = arm_cpu_mp_affinity(ARM_CPU(cs));
-+    }
+@@ -2830,6 +2830,26 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
+     return socket_id % ms->numa_state->num_nodes;
  }
  
- static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 299e96c45b..4e0cb325a0 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -534,6 +534,7 @@ struct CPUState {
-     uint64_t dirty_pages;
-     int kvm_vcpu_stats_fd;
-     bool vcpu_dirty;
-+    VMChangeStateEntry *vmcse;
++static int
++virt_get_cpu_id_from_cpu_topo(const MachineState *ms, DeviceState *dev)
++{
++    int cpu_id, sock_vcpu_num, clus_vcpu_num, core_vcpu_num;
++    ARMCPU *cpu = ARM_CPU(dev);
++
++    /* calculate total logical cpus across socket/cluster/core */
++    sock_vcpu_num = cpu->socket_id * (ms->smp.threads * ms->smp.cores *
++                    ms->smp.clusters);
++    clus_vcpu_num = cpu->cluster_id * (ms->smp.threads * ms->smp.cores);
++    core_vcpu_num = cpu->core_id * ms->smp.threads;
++
++    /* get vcpu-id(logical cpu index) for this vcpu from this topology */
++    cpu_id = (sock_vcpu_num + clus_vcpu_num + core_vcpu_num) + cpu->thread_id;
++
++    assert(cpu_id >= 0 && cpu_id < ms->possible_cpus->len);
++
++    return cpu_id;
++}
++
+ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
+ {
+     int n;
+@@ -2912,6 +2932,68 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
+                          dev, &error_abort);
+ }
  
-     /* Use by accel-block: CPU is executing an ioctl() */
-     QemuLockCnt in_ioctl_lock;
++static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                              Error **errp)
++{
++    MachineState *ms = MACHINE(hotplug_dev);
++    ARMCPU *cpu = ARM_CPU(dev);
++    CPUState *cs = CPU(dev);
++    CPUArchId *cpu_slot;
++
++    /* sanity check the cpu */
++    if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
++        error_setg(errp, "Invalid CPU type, expected cpu type: '%s'",
++                   ms->cpu_type);
++        return;
++    }
++
++    if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
++        error_setg(errp, "Invalid thread-id %u specified, correct range 0:%u",
++                   cpu->thread_id, ms->smp.threads - 1);
++        return;
++    }
++
++    if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
++        error_setg(errp, "Invalid core-id %d specified, correct range 0:%u",
++                   cpu->core_id, ms->smp.cores - 1);
++        return;
++    }
++
++    if ((cpu->cluster_id < 0) || (cpu->cluster_id >= ms->smp.clusters)) {
++        error_setg(errp, "Invalid cluster-id %u specified, correct range 0:%u",
++                   cpu->cluster_id, ms->smp.clusters - 1);
++        return;
++    }
++
++    if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
++        error_setg(errp, "Invalid socket-id %u specified, correct range 0:%u",
++                   cpu->socket_id, ms->smp.sockets - 1);
++        return;
++    }
++
++    cs->cpu_index = virt_get_cpu_id_from_cpu_topo(ms, dev);
++
++    cpu_slot = virt_find_cpu_slot(cs);
++    if (cpu_slot->cpu) {
++        error_setg(errp, "cpu(id%d=%d:%d:%d:%d) with arch-id %" PRIu64 " exist",
++                   cs->cpu_index, cpu->socket_id, cpu->cluster_id, cpu->core_id,
++                   cpu->thread_id, cpu_slot->arch_id);
++        return;
++    }
++    virt_cpu_set_properties(OBJECT(cs), cpu_slot, errp);
++}
++
++static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                          Error **errp)
++{
++    CPUState *cs = CPU(dev);
++    CPUArchId *cpu_slot;
++
++    /* insert the cold/hot-plugged vcpu in the slot */
++    cpu_slot = virt_find_cpu_slot(cs);
++    cpu_slot->cpu = CPU(dev);
++}
++
+ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+                                             DeviceState *dev, Error **errp)
+ {
+@@ -2919,6 +3001,8 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+ 
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         virt_memory_pre_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        virt_cpu_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+         virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+@@ -2975,6 +3059,8 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+         virt_memory_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+         virtio_md_pci_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        virt_cpu_plug(hotplug_dev, dev, errp);
+     }
+ 
+     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+@@ -3059,7 +3145,8 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+     if (device_is_dynamic_sysbus(mc, dev) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
+-        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
++        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
++        object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         return HOTPLUG_HANDLER(machine);
+     }
+     return NULL;
+@@ -3197,6 +3284,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
+     mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
++    mc->has_hotpluggable_cpus = true;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+     hc->pre_plug = virt_machine_device_pre_plug_cb;
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 5300e8d2bc..446c574c0d 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -246,4 +246,30 @@ static inline int virt_get_thread_id(const MachineState *ms, int cpu_index)
+     return ms->possible_cpus->cpus[cpu_index].props.thread_id;
+ }
+ 
++static inline CPUArchId *virt_find_cpu_slot(CPUState *cs)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    CPUArchId *cpu_slot;
++
++    assert(cs->cpu_index >= 0 && cs->cpu_index < ms->possible_cpus->len);
++
++    cpu_slot = &ms->possible_cpus->cpus[cs->cpu_index];
++
++    /*
++     * The slot ID refers to the index where a vCPU with a specific architecture
++     * ID (e.g., MPIDR or affinity) is plugged in. The slot ID is more closely
++     * related to the machine configuration, while the architecture ID is tied
++     * directly to the vCPU itself. Currently, the code assumes that the slot ID
++     * and architecture ID are the same, which can make the concept of a slot
++     * somewhat vague. However, it makes more sense to associate the
++     * hot-(un)plugging of vCPUs with a slot as a metaphor. This could represent
++     * the smallest granularity for vCPU hot-(un)plugging. That said, we cannot
++     * rule out the possibility of extending this concept to die or socket
++     * level hot-(un)plugging in the future, should the ARM specification allow
++     * for it.
++     */
++
++    return cpu_slot;
++}
++
+ #endif /* QEMU_ARM_VIRT_H */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index bda95366d1..3de0cb346b 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2680,6 +2680,12 @@ static const TCGCPUOps arm_tcg_ops = {
+ };
+ #endif /* CONFIG_TCG */
+ 
++static int64_t arm_cpu_get_arch_id(CPUState *cs)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    return cpu->mp_affinity;
++}
++
+ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     ARMCPUClass *acc = ARM_CPU_CLASS(oc);
+@@ -2699,6 +2705,7 @@ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+     cc->has_work = arm_cpu_has_work;
+     cc->mmu_index = arm_cpu_mmu_index;
+     cc->dump_state = arm_cpu_dump_state;
++    cc->get_arch_id = arm_cpu_get_arch_id;
+     cc->set_pc = arm_cpu_set_pc;
+     cc->get_pc = arm_cpu_get_pc;
+     cc->gdb_read_register = arm_cpu_gdb_read_register;
 diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 0e217f827e..d2f4624d61 100644
+index 458d1cee01..0e217f827e 100644
 --- a/target/arm/cpu64.c
 +++ b/target/arm/cpu64.c
-@@ -791,6 +791,14 @@ static void aarch64_cpu_set_aarch64(Object *obj, bool value, Error **errp)
-     }
- }
- 
-+static void aarch64_cpu_initfn(Object *obj)
-+{
-+    CPUState *cs = CPU(obj);
-+
-+    /* TODO: re-check if this is necessary still */
-+    cs->thread_id = 0;
-+}
-+
- static void aarch64_cpu_finalizefn(Object *obj)
+@@ -803,7 +803,9 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
  {
- }
-@@ -850,6 +858,7 @@ void aarch64_cpu_register(const ARMCPUInfo *info)
- static const TypeInfo aarch64_cpu_type_info = {
-     .name = TYPE_AARCH64_CPU,
-     .parent = TYPE_ARM_CPU,
-+    .instance_init = aarch64_cpu_initfn,
-     .instance_finalize = aarch64_cpu_finalizefn,
-     .abstract = true,
-     .class_init = aarch64_cpu_class_init,
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index f1f1b5b375..e82cb2aa8b 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1003,6 +1003,38 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
-     write_list_to_cpustate(cpu);
- }
+     CPUClass *cc = CPU_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
  
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu)
-+{
-+    CPUState *cs = CPU(cpu);
-+    unsigned long vcpu_id = cs->cpu_index;
-+    int ret;
-+
-+    ret = kvm_create_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to create host vcpu %ld", vcpu_id);
-+        abort();
-+    }
-+
-+    /*
-+     * Initialize the vCPU in the host. This will reset the sys regs
-+     * for this vCPU and related registers like MPIDR_EL1 etc. also
-+     * gets programmed during this call to host. These are referred
-+     * later while setting device attributes of the GICR during GICv3
-+     * reset
-+     */
-+    ret = kvm_arch_init_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to initialize host vcpu %ld", vcpu_id);
-+        abort();
-+    }
-+
-+    /*
-+     * park the created vCPU. shall be used during kvm_get_vcpu() when
-+     * threads are created during realization of ARM vCPUs.
-+     */
-+    kvm_park_vcpu(cs);
-+}
-+
- /*
-  * Update KVM's MP_STATE based on what QEMU thinks it is
-  */
-@@ -1874,7 +1906,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return -EINVAL;
-     }
- 
--    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
-+    /*
-+     * Install VM change handler only when vCPU thread has been spawned
-+     * i.e. vCPU is being realized
-+     */
-+    if (cs->thread_id) {
-+        cs->vmcse = qemu_add_vm_change_state_handler(kvm_arm_vm_state_change,
-+                                                     cpu);
-+    }
- 
-     /* Determine init features for this CPU */
-     memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index cfaa0d9bc7..93d12eeb74 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -96,6 +96,16 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu);
-  */
- void kvm_arm_reset_vcpu(ARMCPU *cpu);
- 
-+/**
-+ * kvm_arm_create_host_vcpu:
-+ * @cpu: ARMCPU
-+ *
-+ * Called to pre-create possible KVM vCPU within the host during the
-+ * `virt_machine` initialization phase. This pre-created vCPU will be parked and
-+ * will be reused when ARM QOM vCPU is actually hotplugged.
-+ */
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu);
-+
- #ifdef CONFIG_KVM
- /**
-  * kvm_arm_create_scratch_host_vcpu:
++    dc->user_creatable = true;
+     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+     cc->gdb_core_xml_file = "aarch64-core.xml";
 -- 
 2.34.1
 
