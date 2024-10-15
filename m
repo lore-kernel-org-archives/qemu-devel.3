@@ -4,102 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A3F0CFC29A
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 12:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B150CFC293
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 12:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0gLP-0000zs-SC; Tue, 15 Oct 2024 08:08:07 -0400
+	id 1t0gPb-00026P-4K; Tue, 15 Oct 2024 08:12:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t0gLO-0000z9-6f
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:08:06 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0gPZ-00026G-Jd
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:12:25 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t0gLM-00012z-CU
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:08:05 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a86e9db75b9so768386466b.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 05:08:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0gPX-0001RU-TO
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:12:25 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2fb5be4381dso7723951fa.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 05:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728994082; x=1729598882; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YMaAi26qcD0yRIS9JL2pxoifDAI0jDo3jYIVsqXWjJY=;
- b=BfyHdwYBRjKSrI/4FcbMSCgQEyhL7sHdHKCR3OMsjwrQjS1Oni+E9rXcbY9K9m52ZC
- 2XlSngJRQU/IDLKLCdrTi/WP0Z72ZU8AWe0c61OmU0Vn+oq3Z3ebHVgcUhRupcQsG6aT
- e3ks/OiTlYtH4hVHEuC2CDYukfBwrPxR6mUV5lCqc9Heftzq0FCwjUu97Vl4QNo1xMf6
- CUkheEvnmKIFLIrpJdXA/24Q4ehWBZ5oCRt8OKXDw9FD2A7JctO1xkP7YmNHBd/rDi/l
- fp+6R+lCz6bFuMPvCJYYbIjB0V5AIjL1ipwJ0stfYpjez30tIy4oxcTpzxxPI+y1UDwZ
- FcnA==
+ d=linaro.org; s=google; t=1728994342; x=1729599142; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uq9+EQHa5RzPJ63/qEJv714h/xC0C+d4H3hoRol/rlU=;
+ b=DOZQohvss48oOZqEBiHgo0+k+sswcvAjedWlJGvt+MS74SF3a0BNpp7MeYmuGLLqVz
+ nanOb5dWI74HWbU6q+AwIJPb3HQ4Pqa6YgfuL77hfjcNnFB699/laap+XVzYZ3W7J8V6
+ rIIP1/RF/DLQuatTQqQ/mIa6tryKAQ7Y6H7UbnEcVPWVvA8TMfU0I6Pi7I2Z672Zzkxc
+ bFl5IVR5K2+y/tTWuDvwe19/uNF9TnXi3aCWL0W5An9ZLYuFSwurJs0D2YFKYdQYbf6+
+ Fs7Cr3BEBxEdXJKCb6LG0J8TY4J3i4WCht8uelizxM4IcYhs2Htr4gmBb0c72Ih7QagA
+ 8oFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728994082; x=1729598882;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1728994342; x=1729599142;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YMaAi26qcD0yRIS9JL2pxoifDAI0jDo3jYIVsqXWjJY=;
- b=dP1GfD+A5EQf9ng99jcSF6Cum6a9ZG2ZeU8zBP51XVwkTdDLlPCq9PVpv+vMo7zRm6
- cy2oyxfq27hR4+tybysSa5r/s4pv350clQhWwhYVTr6hEP1+T3dcmdfDykXVDWJqbZyu
- vKj6z6q7sIkJmm3IooIZ069WhI+OJOmgK5FxmCQYJnjOpekRuRA9+2ttg9BjeAKgijBt
- i39gt67qc/h0QjY1rdcwf3mNK6nEu4fWEJg9bAYn48lOSC6153GDjiFc0CJUw0IbHuKl
- n8kTTzD6PeqhOQqQjEQpJCx2uhvG8O8nzDsReBw31Vu0Z1HIvJqX/3JpAoUsumEBmkyn
- Ai7g==
-X-Gm-Message-State: AOJu0YzRE7pPYNkTSXWNoIfdOfESPEthQXDUFHiHoYuhgnDj7ilOjRKi
- 91qMaidB4K34BlWi5q896z26D3Tm2MiI4Wk0Dnqm8Q58Gpngv9BZFfoVbWOqHJw=
-X-Google-Smtp-Source: AGHT+IG9qa4ngQcpZkHZhoYB3m34IuiXOmHvop8iLoTQW+urBEDiUnH5hku1dyTZvM3IxDpaMBOa7A==
-X-Received: by 2002:a17:907:d30d:b0:a9a:1437:3175 with SMTP id
- a640c23a62f3a-a9a1437347bmr425438866b.51.1728994081481; 
- Tue, 15 Oct 2024 05:08:01 -0700 (PDT)
-Received: from [127.0.1.1] (adsl-113.37.6.2.tellas.gr. [37.6.2.113])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a29817fb3sm64112466b.119.2024.10.15.05.08.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 05:08:00 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 15 Oct 2024 15:07:36 +0300
-Subject: [PATCH] rust/wrapper.h: define memory_order enum
+ bh=Uq9+EQHa5RzPJ63/qEJv714h/xC0C+d4H3hoRol/rlU=;
+ b=eOnalZYpiJ0L+jY0TFTIwq1jWLskkf8Q/gyuyQYSRGbMcvxFq+aPWubUh9lNzkZ1kI
+ sjT9stlLEAf8pUSIj5ZQEcvgML5R8iQEC6ZetuWxA3axXe8m80hBh/ot8uYMCok9d388
+ dFalSjkKHZUH+jd3OkdfdSQ8Glqh8gbk5DKu/uVaQdxb0VTBi8qNvJyR9RT/fGOYzDfJ
+ r7w23mxRuexklmG7j9AjBACAz2ozsL3KUDa8NJYJCveq92SvOs7ssrKlcx8WLQQNxBa4
+ dHpX+PK2qjcb+UD05lw1XbHsGOCN+pfggEHrlva/gtSIux3uffYRgFpUQMNzyka0pZG5
+ tS2Q==
+X-Gm-Message-State: AOJu0YymHPitKLWKrO852hjmvaguP+M0qsEt+BnKByezDLm4/V8yFvql
+ WcbijrgN3gDa2GnYMVk6f+UgGC30hh+WKLk48RXtJOtjecQOp0CdnM5N9sTGF8PpXZHPKfElN7a
+ YYvmeEhlTEYyrxLNC/TY1FsPLdoKvH+SCR6jpew==
+X-Google-Smtp-Source: AGHT+IGN7On2VjzDcXGfxsTZzOI0ynfgPByxuziiCA8/RxSzUoI3ufhPFSazy8s6phwGoIB1zGfsl8te7Is0eYP0Jlc=
+X-Received: by 2002:a2e:a544:0:b0:2fa:bb65:801f with SMTP id
+ 38308e7fff4ca-2fb61b45f86mr2451081fa.10.1728994341944; Tue, 15 Oct 2024
+ 05:12:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241015-rust-wrapper-stdatomic-v1-1-f22c0bd31140@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAdbDmcC/x3MQQqEMAxA0atI1gZsVHDmKoOL0kYni9GSdFQQ7
- 25x+Rb/n2Cswgbv6gTlTUzWpcDVFYSvX2ZGicVADXWucT3q3zLu6lNiRcvR5/UnAd0Q+4FeFKh
- rocRJeZLjGX/G67oBRX2eKGgAAAA=
-X-Change-ID: 20241015-rust-wrapper-stdatomic-18d58292c243
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: b4 0.15-dev-12fc5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4710;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=FlpLRQ7vL7z8MnMcYb0Iw7EMyuukYv7xDzwj30y9JWk=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm5EbHNmdFEyV1l6UCtrU0RVaGtQVlh3K2dBMEpKCmFCakg4WjZac05MVE1Ycitz
- cG1KQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnc1Ykh3QUt
- DUkIzS2Nkd2YzNEowSVluRC85K0Fqb05uakxtKzk5T2JYYlZhYkpOSWR0OUcralp4OW9IWlMzSw
- p2c2JRaGYyVWZLY0kxWTBOY2NMWDFENzBGQldWOGpSSFBPN2c5WThQTmpRNTFRU0Z6enUxTVdGN
- XQyMnM3LzA2CldTS3ZSR2k0ejdYTXRpbnFNWUErY2hNVXViblpuUjNXUkNia2QwdGtWdEUvaVNl
- Nmo0V1dsR2dnd2ZldVEyM0EKOWJOZFNrUWpTWlhWOEZ3YnRPeDA4MGFySnF2VUlqVW51SzJia1h
- aQ2ZNb3gwaWM2d3grWjhVZTZRSkIxRy9pTwpSZ1NSNFN0UU92amRPODE4dkp2UEpvTUJMKzBYZG
- Z6emFqMTdJVzlxVHAwMVNKckxjOVY1ejRPYW9GMU9uZ3RCCklIQUo0cURWSzhpd2lvclU0WUNTW
- EVoeWJXdjcrZ1dOQnZKd2pIa2o5K2xBeHBTOTFLSUZjY005VGRodTArSTkKelo0TXZBY2NXK3BZ
- V21FeGpzbXdnM2hJNmFhQi84VGNlVFQyT3FMelU4U1ZDTVBQNExKdlVWbFpNRUxOTFBSRwprWGN
- Hd1pBRGMwb2swL3crbUxrZEhuS2wreW5sYTFHRGxMYVBVdkY0dmswcVh1SUhHRnZnWVVaZms0Zj
- ZQbmVaCnZtb3ViWG5BcGNpV1RrV0dSRStMdHZGd3VyN0UrMCtQQjhhbFc5Qy9kT2l4bXo3T1ljb
- E0zY0NVQ3pNcXFBMXcKNXRCK0h2dXlId2UyRTRhRlhLZFVrY1BNVkpCRjJvRC9ocU9QSFZFWlhW
- UFdFbEMrVTdTTUdreCtCaFJpbFNTLwpwOUpjTmt5SndBenlFQjJmYU1HdFZidlB3VHluTVJnMjJ
- mdkc2alp2SzJxYzBiSlA5L1RnRGJOdmY2S3p3NmVmClpWbVl3Zz09Cj1WRzhKCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
+References: <20241015113705.239067-1-peter.maydell@linaro.org>
+ <24e57088-ebbc-4a9e-919d-5d05cfca00a4@redhat.com>
+ <CAFEAcA_QWnxWfZn=rqbpVC8HrhZ5eBi6BcFc45UBKqVX9cLY=A@mail.gmail.com>
+In-Reply-To: <CAFEAcA_QWnxWfZn=rqbpVC8HrhZ5eBi6BcFc45UBKqVX9cLY=A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Oct 2024 13:12:11 +0100
+Message-ID: <CAFEAcA9h3WD4OZ-A=EyB9hjd_SUaRGDh3+4+Nvho6HidJPg7uA@mail.gmail.com>
+Subject: Re: [PATCH] tests/qtest: Raise the ide-test timeout
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,115 +89,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add stub definition of memory_order enum in wrapper.h.
+On Tue, 15 Oct 2024 at 13:01, Peter Maydell <peter.maydell@linaro.org> wrote:
+> If it is, it's one where it's intermittent whether it hits or not
+> (e.g. I grepped a bunch of my local logs for this test and there's
+> a lot of 18s and a 30s and a couple of 60s) and it tends to hit for
+> multiple tests in a single CI run when it does hit. e.g.
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/8065512834
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/8069311713
+>
+> are a failure and a pass of the same git hash for "clang-system".
+> The 'make check' stage on the failure took just under 40 minutes;
+> the same 'make check' on the passing job took less than 3 !
+> The 'make' stage also had a similar gap in timing between the
+> two, and I don't think that's entirely because of ccache caching
+> effects because the stats at the bottom of the passing job
+> say the hitrate was >90%.
 
-Creating Rust bindings from C code is done by passing the wrapper.h
-header to `bindgen`. This fails when library dependencies that use
-compiler headers are enabled, and the libclang that bindgen detects does
-not match the expected clang version. So far this has only been observed
-with the memory_order enum symbols from stdatomic.h. If we add the enum
-definition to wrapper.h ourselves, the error does not happen.
+I managed to both misread the ccache stats and then miswrite
+what I intended to say about them. Rereading them, what
+they say is that the hitrate is less than 1%...
 
-Before this commit, if the mismatch happened the following error could
-come up:
-
-  /usr/include/liburing/barrier.h:72:10: error: use of undeclared identifier 'memory_order_release'
-  /usr/include/liburing/barrier.h:75:9: error: use of undeclared identifier 'memory_order_acquire'
-  /usr/include/liburing/barrier.h:75:9: error: use of undeclared identifier 'memory_order_acquire'
-  /usr/include/liburing/barrier.h:68:9: error: use of undeclared identifier 'memory_order_relaxed'
-  /usr/include/liburing/barrier.h:65:17: error: use of undeclared identifier 'memory_order_relaxed'
-  /usr/include/liburing/barrier.h:75:9: error: use of undeclared identifier 'memory_order_acquire'
-  /usr/include/liburing/barrier.h:75:9: error: use of undeclared identifier 'memory_order_acquire'
-  /usr/include/liburing/barrier.h:72:10: error: use of undeclared identifier 'memory_order_release'
-  panicked at [..]/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bindgen-cli-0.70.1/main.rs:45:36:
-  Unable to generate bindings
-
-To fix this (on my system) I would have to export CLANG_PATH and
-LIBCLANG_PATH:
-
-  export CLANG_PATH=/bin/clang-17
-  export LIBCLANG_PATH=/usr/lib/llvm-17/lib
-
-With these changes applied, bindgen is successful with both the
-environment variables set and unset.
-
-Since we're not using those symbols in the bindings (they are only used
-by dependencies) this does not affect the generated bindings in any way.
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- configure      |  7 -------
- meson.build    |  7 -------
- rust/wrapper.h | 17 +++++++++++++++++
- 3 files changed, 17 insertions(+), 14 deletions(-)
-
-diff --git a/configure b/configure
-index 72d1a94225051ff6e9da9e9256fc8c30aa728f67..83c7636c9a9711e3a1c860e0aac52249a909eaaf 100755
---- a/configure
-+++ b/configure
-@@ -2060,10 +2060,3 @@ echo ' "$@"' >>config.status
- chmod +x config.status
- 
- rm -r "$TMPDIR1"
--
--if test "$rust" != disabled; then
--  echo '\nINFO: Rust bindings generation with `bindgen` might fail in some cases where'
--  echo 'the detected `libclang` does not match the expected `clang` version/target. In'
--  echo 'this case you must pass the path to `clang` and `libclang` to your build'
--  echo 'command invocation using the environment variables CLANG_PATH and LIBCLANG_PATH'
--fi
-diff --git a/meson.build b/meson.build
-index d26690ce204016d43848d8a73a2d4351a620c5c2..dd4908501037e23c4c6ab165c5809f623c93360b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3956,13 +3956,6 @@ if have_rust and have_system
-     bindgen_args += ['--bitfield-enum', enum]
-   endforeach
- 
--  # TODO: Remove this comment when the clang/libclang mismatch issue is solved.
--  #
--  # Rust bindings generation with `bindgen` might fail in some cases where the
--  # detected `libclang` does not match the expected `clang` version/target. In
--  # this case you must pass the path to `clang` and `libclang` to your build
--  # command invocation using the environment variables CLANG_PATH and
--  # LIBCLANG_PATH
-   bindings_rs = import('rust').bindgen(
-     input: 'rust/wrapper.h',
-     dependencies: common_ss.all_dependencies(),
-diff --git a/rust/wrapper.h b/rust/wrapper.h
-index 77e40213efb686d23f6b768b78602e4337623280..285d0eb6ad01e227a82f13e17c79390b4c34d37e 100644
---- a/rust/wrapper.h
-+++ b/rust/wrapper.h
-@@ -30,6 +30,23 @@
-  * in order to generate C FFI compatible Rust bindings.
-  */
- 
-+#ifndef __CLANG_STDATOMIC_H
-+#define __CLANG_STDATOMIC_H
-+/*
-+ * Fix potential missing stdatomic.h error in case bindgen does not insert the
-+ * correct libclang header paths on its own. We do not use stdatomic.h symbols
-+ * in QEMU code, so it's fine to declare dummy types instead.
-+ */
-+typedef enum memory_order {
-+  memory_order_relaxed,
-+  memory_order_consume,
-+  memory_order_acquire,
-+  memory_order_release,
-+  memory_order_acq_rel,
-+  memory_order_seq_cst,
-+} memory_order;
-+#endif /* __CLANG_STDATOMIC_H */
-+
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qemu-io.h"
-
----
-base-commit: c155d13167c6ace099e351e28125f9eb3694ae27
-change-id: 20241015-rust-wrapper-stdatomic-18d58292c243
-
---
-γαῖα πυρί μιχθήτω
-
+-- PMM
 
