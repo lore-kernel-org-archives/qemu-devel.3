@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFE4D216A2
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 13:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC768D216A2
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 13:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0hRT-000292-B5; Tue, 15 Oct 2024 09:18:27 -0400
+	id 1t0hR7-00024A-69; Tue, 15 Oct 2024 09:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0hRQ-00027u-7j
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t0hR2-00023l-NA
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0hRO-0001Nq-Rz
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:24 -0400
+ id 1t0hR0-0001Dm-Tk
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728998302;
+ s=mimecast20190719; t=1728998277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BdLWe8e10X1kwD0xpB96tiefr/UoeaIQizsR+wID6Y0=;
- b=PO9WjlBMJ/Dez8GfVIPgxLDiOyxy6MNYdVQO++4rq/PA2gGP5mkHvFqUd3sYUbGI0vozRy
- xtDzYAJ+KctDHv2dxoO2+zrv6zNXLmwwvxZbmbe216ZTm1qxamMHC+/RWNpbJuaOaUTFnJ
- UCdfHhlI1JViFPjUc7NsFxeonmkrJNk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=20vvSyFpZURhPY07pvl6EKKD9oQ8iAAak08m0L+pzSY=;
+ b=V3qBAUZBEfpt+IlYQwfOR2fEPKkLPaXy9OsAWPiDTobVl5cxJr75Iua3TojJCJh0i3RSZX
+ b+LIEHlepCmlCLtXN9xiOzvT8L5qleFVfkLbtFx/zn2WtkLToRlK1Fevq1f3UG0T8kqaD4
+ cZcEsjsim5GNOrCQv5hcrg04brRylQA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-4_y_-o8XPIGdoLv7khvKsA-1; Tue, 15 Oct 2024 09:18:20 -0400
-X-MC-Unique: 4_y_-o8XPIGdoLv7khvKsA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43057565db5so28938015e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 06:18:20 -0700 (PDT)
+ us-mta-605-wZbqc7OkOUSKCqq96gXbFg-1; Tue, 15 Oct 2024 09:17:55 -0400
+X-MC-Unique: wZbqc7OkOUSKCqq96gXbFg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d67f4bf98so1440819f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 06:17:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728998299; x=1729603099;
+ d=1e100.net; s=20230601; t=1728998272; x=1729603072;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BdLWe8e10X1kwD0xpB96tiefr/UoeaIQizsR+wID6Y0=;
- b=LYsmeM315ghUK1122ctjRClilBYb3Tz72A6MPDd0O5qifkzEUMz3Rj0LMM4VBBh51G
- UAiskAtOeKWMldq07ki3ss7OQdSqyc+yp8tgBgXLxTod7lqmGHIHTTI7bnQ0cBDCrwuA
- ak35qC410R5QTXYTdV+2G9V7wLYSG9WJ9hJjYiH2aH1bVKBxvahF9fGkuhn+L5Ya/ynm
- DtKXJxB6MzmwhvQc0wDwoNpnOSlANJCbTx80OEYrLIwf6w5Qj32akpfAKV4PHmIIbqHI
- s44d6jqClNVwJWU2/YReHR9ce8v89l5NbwNhlLou4P5AY4uG0++d28MnpRZ+I/HWumDn
- H8HQ==
-X-Gm-Message-State: AOJu0YyZ9Hac4YRyS5dViXnb9frDIF3stTPnl/+fTJl/DoJKiX0RuQd9
- wvx07uakO23mXhp2hS2+dReXRHF3oZ+0arELAQNeP8aHg1zLDcVqJwxwHOdjE96Mo6D75Ym0TKi
- r1gUdFyDDbLiVAEgXDaGjI8TPPpuMOBf65HCuZrXv4aCDovMwIkWwq6LaYW6wUpGenPQG5zwyKb
- Nw/XD3PNFjL7R5CTIXwIibrImaJDkZFF/lcQyvp/o=
-X-Received: by 2002:a05:600c:46c6:b0:431:44aa:ee2c with SMTP id
- 5b1f17b1804b1-43144aaeec0mr13429585e9.9.1728998299168; 
- Tue, 15 Oct 2024 06:18:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5Lb252grUWQH1PcJrO0kJpoywXi2ebXkYrfEEID1Imy11xOGW5HjR282unTgexG0ZdwvLjw==
-X-Received: by 2002:a05:600c:46c6:b0:431:44aa:ee2c with SMTP id
- 5b1f17b1804b1-43144aaeec0mr13429375e9.9.1728998298731; 
- Tue, 15 Oct 2024 06:18:18 -0700 (PDT)
+ bh=20vvSyFpZURhPY07pvl6EKKD9oQ8iAAak08m0L+pzSY=;
+ b=YDflC7Pq+QLooRKtKOHAs53nzHit7VP6eKjHcNarHM55oNr2hq4I4oB562uKJh/jQI
+ WINo3/v0bVFFHgrgKva/cpQ93l3R1cuXOOHgGXPvwY5ZP2oF5kZrhil/6/GBwvqX9veG
+ S+gdij6S9eYuo+iiEfOj6PdslXcr6pS852yOZQ+L8FMnocZqs+eNfmEZ1Nws5kboIMa8
+ wFh1OaWxRFSngJETIy8FrcI7SSIjzR1sSdmbjovXK7eK52zG2X24fb2DeDA7itPf4aBw
+ v9+ss+Px5Kgz0IitpekCI40U30TaZv/JlnJz5v6Hi3UCPA9jNIJbobNsyf0muyecP5Se
+ f8IQ==
+X-Gm-Message-State: AOJu0YxChvc0k+fP+PoBAk58nGnsdafhgg8TSbIgEOnBgvVdjfNNGlg0
+ Zc+Qon6HYbRnhoY8zfn2Ps6vLHN+jxZin0IcX5cuDZZ5RINT1yJaBR5fgM9Eo2CoiqfHFMy4V5t
+ 9xkN5eH5KEfBk73vLxr1Z4k0Rmb6m64tWkZeEJRYf/D6FyJDwABDv6C959afUQPzqPwAH3aDenR
+ jrrRibf1YZ3Q69VWqFbFvfrHq5RSjntfpURDXIUUA=
+X-Received: by 2002:a05:6000:1568:b0:37d:476d:2d58 with SMTP id
+ ffacd0b85a97d-37d86d50563mr246503f8f.45.1728998272140; 
+ Tue, 15 Oct 2024 06:17:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4mddPrdb45gV5NBoEKhlQc+PATGqGnWPTKEfPL9FP1OuhPMgYp/iDN/rmLsvcjcxMWlmaNw==
+X-Received: by 2002:a05:6000:1568:b0:37d:476d:2d58 with SMTP id
+ ffacd0b85a97d-37d86d50563mr246470f8f.45.1728998271556; 
+ Tue, 15 Oct 2024 06:17:51 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43096601152sm181034845e9.0.2024.10.15.06.18.18
+ ffacd0b85a97d-37d7fbf81b4sm1560697f8f.79.2024.10.15.06.17.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 06:18:18 -0700 (PDT)
+ Tue, 15 Oct 2024 06:17:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 13/16] rust: do not use TYPE_CHARDEV unnecessarily
-Date: Tue, 15 Oct 2024 15:17:31 +0200
-Message-ID: <20241015131735.518771-14-pbonzini@redhat.com>
+Subject: [PATCH 04/16] rust: patch bilge-impl to allow compilation with 1.63.0
+Date: Tue, 15 Oct 2024 15:17:22 +0200
+Message-ID: <20241015131735.518771-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015131735.518771-1-pbonzini@redhat.com>
 References: <20241015131735.518771-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,31 +102,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the invocation of qdev_prop_set_chr(), "chardev" is the name of a
-property rather than a type and has to match the name of the property
-in device_class.rs.  Do not use TYPE_CHARDEV here, just like in the C
-version of pl011_create.
+Apply a patch that removes "let ... else" constructs, replacing them with
+"if let ... else" or "let ... =3D match ...".  "let ... else" was stabilize=
+d in
+Rust 1.65.0.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitattributes                                |  2 +
+ subprojects/bilge-impl-0.2-rs.wrap            |  1 +
+ .../packagefiles/bilge-impl-1.63.0.patch      | 45 +++++++++++++++++++
+ 3 files changed, 48 insertions(+)
+ create mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
-ce.rs
-index f331a13b5f1..ca67d452e7e 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -582,7 +582,7 @@ pub fn update(&self) {
-         let dev: *mut DeviceState =3D qdev_new(PL011State::TYPE_INFO.name);
-         let sysbus: *mut SysBusDevice =3D dev.cast::<SysBusDevice>();
-=20
--        qdev_prop_set_chr(dev, bindings::TYPE_CHARDEV.as_ptr(), chr);
-+        qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
-         sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mu=
-t Error);
-         sysbus_mmio_map(sysbus, 0, addr);
-         sysbus_connect_irq(sysbus, 0, irq);
+diff --git a/.gitattributes b/.gitattributes
+index 6dc6383d3d1..9ce7a19581a 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -5,3 +5,5 @@
+ *.rs            diff=3Drust
+ *.rs.inc        diff=3Drust
+ Cargo.lock      diff=3Dtoml merge=3Dbinary
++
++*.patch         -text -whitespace
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.=
+2-rs.wrap
+index eefb10c36c2..b24c34a9043 100644
+--- a/subprojects/bilge-impl-0.2-rs.wrap
++++ b/subprojects/bilge-impl-0.2-rs.wrap
+@@ -5,3 +5,4 @@ source_filename =3D bilge-impl-0.2.0.tar.gz
+ source_hash =3D feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000=
+adb2d8
+ #method =3D cargo
+ patch_directory =3D bilge-impl-0.2-rs
++diff_files =3D bilge-impl-1.63.0.patch
+diff --git a/subprojects/packagefiles/bilge-impl-1.63.0.patch b/subprojects=
+/packagefiles/bilge-impl-1.63.0.patch
+new file mode 100644
+index 00000000000..987428a6d65
+--- /dev/null
++++ b/subprojects/packagefiles/bilge-impl-1.63.0.patch
+@@ -0,0 +1,45 @@
++--- a/src/shared/discriminant_assigner.rs
+++++ b/src/shared/discriminant_assigner.rs
++@@ -26,20 +26,20 @@
++         let discriminant_expr =3D &discriminant.1;
++         let variant_name =3D &variant.ident;
++=20
++-        let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) =3D discriminan=
+t_expr else {
+++        if let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) =3D discrimi=
+nant_expr {
+++            let discriminant_value: u128 =3D int.base10_parse().unwrap_or=
+_else(unreachable);
+++            if discriminant_value > self.max_value() {
+++                abort!(variant, "Value of variant exceeds the given numbe=
+r of bits")
+++            }
+++
+++            Some(discriminant_value)
+++        } else {
++             abort!(
++                 discriminant_expr,
++                 "variant `{}` is not a number", variant_name;
++                 help =3D "only literal integers currently supported"
++             )
++-        };
++-
++-        let discriminant_value: u128 =3D int.base10_parse().unwrap_or_els=
+e(unreachable);
++-        if discriminant_value > self.max_value() {
++-            abort!(variant, "Value of variant exceeds the given number of=
+ bits")
++         }
++-
++-        Some(discriminant_value)
++     }
++=20
++     fn assign(&mut self, variant: &Variant) -> u128 {
++--- a/src/shared/fallback.rs
+++++ b/src/shared/fallback.rs
++@@ -22,8 +22,9 @@
++             }
++             Unnamed(fields) =3D> {
++                 let variant_fields =3D fields.unnamed.iter();
++-                let Ok(fallback_value) =3D variant_fields.exactly_one() e=
+lse {
++-                    abort!(variant, "fallback variant must have exactly o=
+ne field"; help =3D "use only one field or change to a unit variant")
+++                let fallback_value =3D match variant_fields.exactly_one()=
+ {
+++                    Ok(ok) =3D> ok,
+++                    _ =3D> abort!(variant, "fallback variant must have ex=
+actly one field"; help =3D "use only one field or change to a unit variant")
++                 };
++=20
++                 if !is_last_variant {
 --=20
 2.46.2
 
