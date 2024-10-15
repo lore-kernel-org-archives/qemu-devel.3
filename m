@@ -4,54 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212DFCFC27C
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1734BD1D879
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:45:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jh0-0006Tx-UY; Tue, 15 Oct 2024 11:42:38 -0400
+	id 1t0jjH-0008Vz-QX; Tue, 15 Oct 2024 11:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org>)
- id 1t0jgy-0006T4-DT; Tue, 15 Oct 2024 11:42:36 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org>)
- id 1t0jgw-0000HD-Dc; Tue, 15 Oct 2024 11:42:36 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XSddZ5mJpz4wyk;
- Wed, 16 Oct 2024 02:42:26 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XSddL3rR0z4wcr;
- Wed, 16 Oct 2024 02:42:14 +1100 (AEDT)
-Message-ID: <069e909e-c39b-4fab-9392-d62ef43b9ab6@kaod.org>
-Date: Tue, 15 Oct 2024 17:42:13 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjF-0008VT-To
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:44:57 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjD-0000Tl-AQ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:44:57 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-20caccadbeeso41621205ad.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:44:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729007093; x=1729611893; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JaR1kDH2Bf+l69hgvZCXqIUYxGHmIwLgfUQ5KPkPEPs=;
+ b=wX2lUx/ss+LkpkiPbceI85npjakfpQo1R1XqIBGReXoIB2cznkF6grostbpUe+K1kH
+ iQeLdnffsbbSC4rCoHITAN6wCA8vV22Nx+xv+V0qBhdVvsTDgy+Pl9AXfjlluV4dHUn+
+ X5ZbNPDTkttKLl3UtCU2jutimSeMyvsouXwaLUlRwvGW2L2tnjvcwF9fJ1Ceth4xo5Gq
+ oVVmDXYjiQTz6CT/sDaXCl1x+B8dUvhPhpbi2bl9NGH5lGTUkUUBdMXD9RyW4sJATRxW
+ nXI3t9QJRdLCfhmLmigVkiOoZGeMm4vYJEQvUHy/dyPDULKWgFuctXQ/1c6GE6oohOV5
+ s3VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729007093; x=1729611893;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JaR1kDH2Bf+l69hgvZCXqIUYxGHmIwLgfUQ5KPkPEPs=;
+ b=Hn1HzAt8NXz4oY4G0C61cd7d/U0oH+xCOhS4xQ5PwXjrVsY09ffmcysJ1Vx4NRFdpH
+ TSdU0S0NNhU0bteLif4gSNhyLCWcqxTaT1aq47gXsuG9ntVuDLPK35IwyV70ns+hN8LD
+ 9yOMk48CXYRJV/0b+g9Pl6HkxjeWGhkUu3VU+8wneBbxxHPq1GLBciH//NTQOgAbyFWK
+ dQqrOqMdxqhyZi5JteZoUxeHTiNpednZTYFM5IH8Yes7FiPQgbjiJ+vOD6WKkfro8PUd
+ 0cO7KvYjuTVyyvzkJHmRzTi/jfK4K6DNn3Hg6GO66u02kVPqLLsTTrw9fuLkhoLaKaf9
+ 8PgA==
+X-Gm-Message-State: AOJu0YxNv9FWzPwEQX42ZRvdVNiXE4bFc8ACt/8/O3aSLgCyGCVzef2N
+ hfF6TOPBlta+42BCAcdVza3p0hDPxhsXoZN1DusOWPJGUUUhiwV8FbqXM+u334Cno2RAxlEE7Te
+ c
+X-Google-Smtp-Source: AGHT+IGKcLoA1fzV1i2vd0BYFIhCf5eW8oz28clBDDmuWcA5pYS+J+GtFWNAX2+LyzrmWAwMLgC0aw==
+X-Received: by 2002:a17:902:d552:b0:20b:7ed8:3978 with SMTP id
+ d9443c01a7336-20ca147e967mr224903405ad.26.1729007093610; 
+ Tue, 15 Oct 2024 08:44:53 -0700 (PDT)
+Received: from localhost.localdomain ([45.176.88.167])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20d17f828adsm13463945ad.41.2024.10.15.08.44.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 15 Oct 2024 08:44:53 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 01/33] qemu/bswap: Undefine CPU_CONVERT() once done
+Date: Tue, 15 Oct 2024 12:44:10 -0300
+Message-ID: <20241015154443.71763-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
+References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sd/sdcard: Allow user creation of eMMCs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Luebbe <jlu@pengutronix.de>, qemu-devel@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-References: <20241015135649.4189256-1-jlu@pengutronix.de>
- <5fb5f318-6fd0-4390-9314-528acc5d8901@linaro.org>
- <f34082e5-fb7e-47c8-b149-6557b02f81d4@kaod.org> <Zw6IMVkNbNPXmloN@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <Zw6IMVkNbNPXmloN@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,47 +94,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/24 17:20, Daniel P. Berrangé wrote:
-> On Tue, Oct 15, 2024 at 05:17:26PM +0200, Cédric Le Goater wrote:
->> On 10/15/24 17:00, Philippe Mathieu-Daudé wrote:
->>> On 15/10/24 10:56, Jan Luebbe wrote:
->>>> For testing eMMC-specific functionality (such as handling boot
->>>> partitions), it would be very useful to attach them to generic VMs such
->>>> as x86_64 via the sdhci-pci device:
->>>>    ...
->>>>    -drive if=none,id=emmc-drive,file=emmc.img,format=raw \
->>>>    -device sdhci-pci \
->>>>    -device emmc,id=emmc0,drive=emmc-drive,boot-partition-size=1048576 \
->>>>    ...
->>>>
->>>> While most eMMCs are soldered to boards, they can also be connected to
->>>> SD controllers with just a passive adapter, such as:
->>>>    https://docs.radxa.com/en/accessories/emmc-to-usd
->>>>    https://github.com/voltlog/emmc-wfbga153-microsd
->>>>
->>>> The only change necessary to make the options above work is to avoid
->>>> disabling user_creatable, so do that. The SDHCI-PCI driver in the Linux
->>>> kernel already supports this just fine.
->>>>
->>>> Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
->>
->> Nice !
->>
->> Would it be possible to add an avocado test ?
-> 
-> NB, no new avocado tests please. Only use the recently introduced
-> 'functional' tests framework for new tests.
+Better undefined macros once we are done with them,
+like we do few lines later with DO_STN_LDN_P().
 
-True. That reminds me that the aspeed test file needs a conversion.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241003234211.53644-2-philmd@linaro.org>
+---
+ include/qemu/bswap.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks,
-
-C.
-
-
-> 
-> 
-> With regards,
-> Daniel
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index ad22910a5d1..b915835bead 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -140,6 +140,8 @@ CPU_CONVERT(le, 16, uint16_t)
+ CPU_CONVERT(le, 32, uint32_t)
+ CPU_CONVERT(le, 64, uint64_t)
+ 
++#undef CPU_CONVERT
++
+ /*
+  * Same as cpu_to_le{16,32,64}, except that gcc will figure the result is
+  * a compile-time constant if you pass in a constant.  So this can be
+-- 
+2.45.2
 
 
