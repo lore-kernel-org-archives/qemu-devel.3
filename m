@@ -4,82 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AF1D1D88B
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CB5D1D88D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ktd-00029D-RZ; Tue, 15 Oct 2024 12:59:45 -0400
+	id 1t0kup-0002wQ-Ju; Tue, 15 Oct 2024 13:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0ktc-00028a-8z
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 12:59:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0kum-0002pY-47
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:00:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0kta-0001dR-AS
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 12:59:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0kui-0001rC-6l
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:00:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729011579;
+ s=mimecast20190719; t=1729011632;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mUftsG80rP1NCj+v/guWY+/O530Wtrf3qIVA931DCas=;
- b=eyfytx13WKSaifHpZQS1ymQWqZV12y7G+1CSjaDwhNwB7Nn/VKw0MjHym16+Fjk+tpQbPl
- reYW7+cCJ3xahMgq6thRZT6ItYYuEUgCZxGoD8I7dI6dUitbQqPPsYTNfUVljyAwASanuf
- BTdlREjcngX0ME88GyAHJ5iqeawhRek=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iJ6QKfZnFpbSnHEc59jfsWbHKBjMntrybmwo2roC0wU=;
+ b=ZHnx3vfPZveHziLHwvIQpTqQtqfQ1gyZmmNajb4/spJH/70v0okRkTPrNSHlGGbupBLd3M
+ +4WciT23wQxFAi0MmdBAzf7nH9M6rhiSyW18N+Jnk12f6h8UsWj96wGc5yKMqblf0/KItg
+ 1UKLgsftL2wO4ewtFbyP4ES3cCQdkNA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-cWT21jUsPDKZoiCIeF0UsQ-1; Tue, 15 Oct 2024 12:59:38 -0400
-X-MC-Unique: cWT21jUsPDKZoiCIeF0UsQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a99f43c4c7bso255043466b.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 09:59:38 -0700 (PDT)
+ us-mta-657-abkFGaM_Ntql_8blUsy8xA-1; Tue, 15 Oct 2024 13:00:30 -0400
+X-MC-Unique: abkFGaM_Ntql_8blUsy8xA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d59ad50f3so1511020f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 10:00:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729011577; x=1729616377;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mUftsG80rP1NCj+v/guWY+/O530Wtrf3qIVA931DCas=;
- b=qK7RRDrf/joIhUq4tncaQchAEYQWefK/R/29ktmdrVn9R1hSQdR0qa77rrCsdd4Bxi
- xJEb2REl8qiksxzD2WkcWgaVTcntSw2Zl4MRma2TzL8+wiMKTVnPJ7YyEKm9SO5kV2kO
- Wu5sOpiwESfQu0XBT3jrdVwcGYfA6Y3z7zko0thaPN7ZH95h5TWjzP3FfTSKqArmnwHI
- Z6FxQjbrqEFnJxVJKXn0rfm/Qg+dhrRcyl8vb+msxURuqXCWdzyO5LMDgM0Ns+frBFyg
- sJW7CAsGD0kezMPwIy60fHI8rq+ABO4HhjmEwTW6WS1dGeCivAkumAZV/pxDai9EadRJ
- nOtA==
-X-Gm-Message-State: AOJu0YxxJdhBL7EdFEQgrFunqhLWEyW+AgImW7NX5RiXem9RlT57bzub
- k+43aKkvACdODXjsN2XvbWw/lWs574FMLfucL4fYFiarlIcHBBlQP2B9txwo9T+7dALbiUeGdoz
- VZJ4SI2Zr1upsg0vMZRbKs5j4hQnG+9RB5z2yvEq7N+dhtJX5da5t
-X-Received: by 2002:a17:907:f148:b0:a99:f1aa:a71f with SMTP id
- a640c23a62f3a-a9a34d3cd85mr90603466b.11.1729011577251; 
- Tue, 15 Oct 2024 09:59:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtEsW8uf/17Ry0LIeBNRF6immJxKR6DcDW7Mso2vRljHIwdmCxq8zKXfdZAdnDQXvDbzAogw==
-X-Received: by 2002:a17:907:f148:b0:a99:f1aa:a71f with SMTP id
- a640c23a62f3a-a9a34d3cd85mr90601866b.11.1729011576823; 
- Tue, 15 Oct 2024 09:59:36 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d723:2e31:9b54:c0c7:20fe:e73c?
- (p200300cfd7232e319b54c0c720fee73c.dip0.t-ipconnect.de.
- [2003:cf:d723:2e31:9b54:c0c7:20fe:e73c])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a29843984sm91000766b.158.2024.10.15.09.59.35
+ d=1e100.net; s=20230601; t=1729011627; x=1729616427;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iJ6QKfZnFpbSnHEc59jfsWbHKBjMntrybmwo2roC0wU=;
+ b=mkYomGPMZt9qd3du1ke7OYFkabkBjHDg59hHGVnH2VKWQgtpW5peVA/h2yMpIdYydE
+ jo4Xpp2E7gVTetib3TdXVPb3BWQ9QJ+jjojRXbeNzfm7en5Fu4yLZqlC49gKTIQUjqyG
+ z7x/gNNsumq6y6A57e6NWtDuk5VJBqP/tjUzDyma5+xaiWu2znsvaovvTBdvc1ofNT3f
+ mmgdgrjirOxP0nKWs73uDSPgYMh58tv3PI31M1Ku3iEIv9RwzPt1NVOxOg/RaoNULgt9
+ kQotwj4IN3rv3GXqQRvutCyqPk8sPIRuXAMizB0eXeO+N7F92mhDpUX7kc4zBa48LEb9
+ PGjQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkfKJVL261tQgyQzl/xE1CpiFDRMEF6y1cUDa2CJdfZ7FP1o3dtS+irZYm7udLeN6yPOb3VFDjrm6q@nongnu.org
+X-Gm-Message-State: AOJu0YzQgab49m1GI/7uMB4cv4CVwftWEPjM3qH4gao1XFSg1gATz3gp
+ ichPfCaY7I21Wbj8vf8K1mPuCX9KQSFE/BYLm6iv2hbYNvJj83Dd9SXfGHOtoDriqAtlQEWfVtU
+ NSmNJCM9NOon8+AdqT7SlHXBqrav/P0y48VwcbZ4qBK/tMgpaGVC7oLDXCVUkL+s=
+X-Received: by 2002:a5d:644f:0:b0:37d:5141:ee91 with SMTP id
+ ffacd0b85a97d-37d86bba188mr800896f8f.18.1729011627511; 
+ Tue, 15 Oct 2024 10:00:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUD+TCAqzehrDCI/ipbZJjNVBFUoKWaGpnXMyA7wt8RnoYxxHzJz4N00tj2yVs9jmOy8i1lA==
+X-Received: by 2002:a5d:644f:0:b0:37d:5141:ee91 with SMTP id
+ ffacd0b85a97d-37d86bba188mr800856f8f.18.1729011627017; 
+ Tue, 15 Oct 2024 10:00:27 -0700 (PDT)
+Received: from [192.168.10.81] ([151.95.144.54])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-37d7fc11aefsm2017529f8f.93.2024.10.15.10.00.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Oct 2024 09:59:35 -0700 (PDT)
-Message-ID: <814f5932-1029-4aef-8b53-ab2fb50c0812@redhat.com>
-Date: Tue, 15 Oct 2024 18:59:34 +0200
+ Tue, 15 Oct 2024 10:00:26 -0700 (PDT)
+Message-ID: <78485b02-8f43-43ba-8220-67c34ee2d866@redhat.com>
+Date: Tue, 15 Oct 2024 19:00:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: Ensure vmstate_save() sets errp
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- qemu-stable@nongnu.org
-References: <20241015141515.150754-1-hreitz@redhat.com> <Zw6TBx0HPf1OhXD7@x1n>
+Subject: Re: patchew no longer pushing patches to git branches
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <famz@redhat.com>
+References: <CAFEAcA9CthdJz+QM=_q2NxPbdCyyf+YBGE+qDVYs7VbqWT+aqw@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <Zw6TBx0HPf1OhXD7@x1n>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA9CthdJz+QM=_q2NxPbdCyyf+YBGE+qDVYs7VbqWT+aqw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,99 +142,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.10.24 18:06, Peter Xu wrote:
-> On Tue, Oct 15, 2024 at 04:15:15PM +0200, Hanna Czenczek wrote:
->> migration/savevm.c contains some calls to vmstate_save() that are
->> followed by migrate_set_error() if the integer return value indicates an
->> error.  migrate_set_error() requires that the `Error *` object passed to
->> it is set.  Therefore, vmstate_save() is assumed to always set *errp on
->> error.
->>
->> Right now, that assumption is not met: vmstate_save_state_v() (called
->> internally by vmstate_save()) will not set *errp if
->> vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
->> an *errp parameter to vmstate_subsection_save(), and by generating a
->> generic error in case post_save() fails (as is already done for
->> pre_save()).
->>
->> Without this patch, qemu will crash after vmstate_subsection_save() or
->> post_save() have failed inside of a vmstate_save() call (unless
->> migrate_set_error() then happen to discard the new error because
->> s->error is already set).  This happens e.g. when receiving the state
->> from a virtio-fs back-end (virtiofsd) fails.
->>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->> ---
->>   migration/vmstate.c | 11 +++++++----
->>   1 file changed, 7 insertions(+), 4 deletions(-)
->>
->> diff --git a/migration/vmstate.c b/migration/vmstate.c
->> index ff5d589a6d..13532f2807 100644
->> --- a/migration/vmstate.c
->> +++ b/migration/vmstate.c
->> @@ -22,7 +22,8 @@
->>   #include "trace.h"
->>   
->>   static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
->> -                                   void *opaque, JSONWriter *vmdesc);
->> +                                   void *opaque, JSONWriter *vmdesc,
->> +                                   Error **errp);
->>   static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->>                                      void *opaque);
->>   
->> @@ -441,12 +442,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->>           json_writer_end_array(vmdesc);
->>       }
->>   
->> -    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
->> +    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
->>   
->>       if (vmsd->post_save) {
->>           int ps_ret = vmsd->post_save(opaque);
->>           if (!ret) {
-> Perhaps here it needs to be "if (!ret && ps_ret)" now, otherwise the error
-> will be attached even if no error for both retvals?
+On 10/15/24 17:48, Peter Maydell wrote:
+> It looks like since a few months back patchew stopped pushing patches
+> to git branches: eg
+> 
+> https://patchew.org/QEMU/20240526204551.553282-1-richard.henderson@linaro.org/
+> from four months ago had a git branch created for it, but more
+> recent patches in patchew's UI don't seem to have that.
+> 
+> Did this get accidentally lost when patchew moved server, or
+> was it deliberately disabled?
 
-Not just perhaps, that seems kind of vital indeed...
+It stopped working but not when the server was moved.  I haven't had 
+time to look at what's happening.
 
-(I blame my brain’s less-than-stellar pattern matching that might have 
-interpreted this as the error path *cough*)
-
-> Other than that it looks good.
-
-Thanks for the quick review!  Will respin.
-
-Hanna
-
->
-> Thanks,
->
->>               ret = ps_ret;
->> +            error_setg(errp, "post-save failed: %s", vmsd->name);
->>           }
->>       }
->>       return ret;
->> @@ -518,7 +520,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->>   }
->>   
->>   static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
->> -                                   void *opaque, JSONWriter *vmdesc)
->> +                                   void *opaque, JSONWriter *vmdesc,
->> +                                   Error **errp)
->>   {
->>       const VMStateDescription * const *sub = vmsd->subsections;
->>       bool vmdesc_has_subsections = false;
->> @@ -546,7 +549,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
->>               qemu_put_byte(f, len);
->>               qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
->>               qemu_put_be32(f, vmsdsub->version_id);
->> -            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
->> +            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
->>               if (ret) {
->>                   return ret;
->>               }
->> -- 
->> 2.45.2
->>
+Paolo
 
 
