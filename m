@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E320D216AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25941D216AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iND-0006D2-NC; Tue, 15 Oct 2024 10:18:07 -0400
+	id 1t0iOm-0003QV-Hf; Tue, 15 Oct 2024 10:19:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iN5-0005rx-1m
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0iOa-0003A8-Hn
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:19:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iN2-0003KC-Id
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0iOY-0003Se-MG
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:19:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001875;
+ s=mimecast20190719; t=1729001970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KWZ3pss2vbNuWf/y4anqLf3Tsmh7IyDlRYkogrVMkms=;
- b=LXLEzCdnqB8wu8Q+aTqiSE+B67dpblbEkPNp0nLykdXj5UodUurK66N9e8UqK4lelH2qpD
- o7et2vedBVy8rwxKCwpSYwo2y19Knbgr3/LbCGXRie5tFQmMlaXQ86qCQxHH47yhEdWF1O
- mYQmvwdLj58QUveRWUVU1EtC+jU7Z6A=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dCPZMCKdhv3l1yXUJeBWOYjSEV/7TCtTF9DVLMqfKLk=;
+ b=ESP39H61JyGmtqF9XK89klDYegDJ5tT48ioHt5ZrCBkEyeQXC5mTLS6eO1ZHGU06KAGRti
+ QesJpjqjv737Q0ykaxG1W6Wc0bGlPNh8GfZL8DrNmxmnL1GTR5bjzEVhJPYqrvI/b5IoAa
+ +gg7W5ytAXto5DOsQq06PATKJHsMVJM=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-Dv-PPzh8Pl-qUuFmiAoK_w-1; Tue, 15 Oct 2024 10:17:54 -0400
-X-MC-Unique: Dv-PPzh8Pl-qUuFmiAoK_w-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-539fbf73a2fso1747718e87.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:54 -0700 (PDT)
+ us-mta-504-GEPr2wevNzCqr85gvTRK4A-1; Tue, 15 Oct 2024 10:19:26 -0400
+X-MC-Unique: GEPr2wevNzCqr85gvTRK4A-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7a803adfe52so803239885a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:19:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001873; x=1729606673;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KWZ3pss2vbNuWf/y4anqLf3Tsmh7IyDlRYkogrVMkms=;
- b=DRVgHAWBgtGaD+lbFY45dzbZk5jeVh/Vz33xgfTA8Hky4ITVxJBMJvtOY5qRfajpvz
- jaICNloekb9OSsd+Rf5yItLmGdrk7MyZSsxcAeiEFTe58l6PyTkp6s7YVN8PcETtckjx
- IiCSc1qcSOaE0sRbFnva7cwmVnkYuqjAoJLNeRyN5Qrei5v07kdWQKxRkH3VN2g56PMP
- 5O88BcostCqAGyQ6jLBlNLEXO8hI+Cai3apYNLDzkJpbRVO1kyUzxYHjlUM73fZ4rwOi
- 48aTb8t/KImeUJ1+jDehwcxz01L7+1sdOH3FqePp6LNyKtrgIhwJMyb114PHZH1Hq/ci
- D87w==
-X-Gm-Message-State: AOJu0Yw1IEDo7fPzilSAc5BVNXQIJGURlBpoks+OhaSBuAVsih1hBYEH
- 0Zvrut63pxH7aumC9ceSPBA/xvf6UZl2HY9awzXkQfQb3e+G0OYJZgqlo+CFrDc0XZmqLbv9AYC
- Gk74f2KGUxl6d4/ERrKGz+Kqw4OAsSX/c78uc1xbkKf95qmUnULNkUO9CcH/q29d3SFuoGO1/vZ
- XGDsL4mCaiCJPlZqIccCRxWTq8Ds1x/plfpuywsNo=
-X-Received: by 2002:a05:6512:e9d:b0:539:e510:d83f with SMTP id
- 2adb3069b0e04-539e54d8180mr6366592e87.5.1729001872273; 
- Tue, 15 Oct 2024 07:17:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFzdegwrLsMxs5o33axTOegxscI3pB1b3N14NnK+eqblDRy5Ky5pZUW/rWd+XsGqN5PYxbBrg==
-X-Received: by 2002:a05:6512:e9d:b0:539:e510:d83f with SMTP id
- 2adb3069b0e04-539e54d8180mr6366552e87.5.1729001871622; 
- Tue, 15 Oct 2024 07:17:51 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fbf838dsm1696032f8f.78.2024.10.15.07.17.50
+ d=1e100.net; s=20230601; t=1729001965; x=1729606765;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dCPZMCKdhv3l1yXUJeBWOYjSEV/7TCtTF9DVLMqfKLk=;
+ b=GzcE5w/KuixGUdn9gNo11SwEPoXYXJxAEtonZ6UbgY1di8Q/klyBk+fijxL8yldixt
+ Wg8vNR5Wdv3v11dvNVYNC6h9PvseVQdEXio7+WZTZe1goBDyZqILZk8VsL7hV6aHrqi0
+ tKYybxD9XLFxjVy6UtR37SrdNXfD2G9bxVIJQkcg/24/mpOp5RkR/+OvNHS6mbJ/n9C8
+ LOfRlp/f4+cj0JwBwF/L1uZS4zZzXp3HL9cJSI7M6/XxuBqGGbR2m60/Qqh4uFi+bF6Y
+ 1AnKzCv3tfuXZxeKnBM4atIV+xn1g0MOMn4M9XwWGpDupDfUiunfr+jCU423m47qpt6c
+ 8HxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxIZ2HV6NYgUVjbHbER1lE/yHy/zLRvPy3e3J2bMVWt1py/MCUOIXksS0USmAnYWtE6IUBSrrYseXw@nongnu.org
+X-Gm-Message-State: AOJu0YzLrXM8znJ3fdWjWDv6Z4Y0fWj4JSwtfXmGoxQliYJy0pwbvYsu
+ VLT0EEqXl0GWCaM/gKzyQpsPv+E1AzUGCWiKy20TBFkELf0X4YV+p9utpmTXhGl9YS/u15FLiiC
+ i4f24x9YcQmep/EPNVfz9Ba48en4XVFrrSLW2yHwQGVrDRMH8rR53
+X-Received: by 2002:a05:620a:4153:b0:79f:1cf:551e with SMTP id
+ af79cd13be357-7b11a35f634mr2075467285a.5.1729001965319; 
+ Tue, 15 Oct 2024 07:19:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXeN+6RprUq+P7dTl7oHO5aMwMSn0UJjSNTt6OXI/FqhvPmfO3pu+0AkqMo7qBFWlXYUg1Rw==
+X-Received: by 2002:a05:620a:4153:b0:79f:1cf:551e with SMTP id
+ af79cd13be357-7b11a35f634mr2075463085a.5.1729001964887; 
+ Tue, 15 Oct 2024 07:19:24 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b1363b406esm74459585a.116.2024.10.15.07.19.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:17:50 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/25] target/i386: convert bit test instructions to new decoder
-Date: Tue, 15 Oct 2024 16:16:57 +0200
-Message-ID: <20241015141711.528342-12-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
-References: <20241015141711.528342-1-pbonzini@redhat.com>
+ Tue, 15 Oct 2024 07:19:24 -0700 (PDT)
+Date: Tue, 15 Oct 2024 10:19:22 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Julia Suvorova <jusual@redhat.com>,
+ Jiang Jiacheng <jiangjiacheng@huawei.com>
+Subject: Re: [PATCH] migration: Remove interface query-migrationthreads
+Message-ID: <Zw556tC3wfbtMdFd@x1n>
+References: <20241011153417.516715-1-peterx@redhat.com>
+ <Zwzv3gKV3UibdzTs@redhat.com> <87msj6rcgy.fsf@suse.de>
+ <Zw0uPSldQrSYg6e9@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <Zw0uPSldQrSYg6e9@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,508 +109,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Code generation was rewritten; it reuses the same trick to use the
-CC_OP_SAR values for cc_op, but it tries to use CC_OP_ADCX or CC_OP_ADCOX
-instead of CC_OP_EFLAGS.  This is a tiny bit more efficient in the
-common case where only CF is checked in the resulting flags.
+On Mon, Oct 14, 2024 at 03:44:13PM +0100, Daniel P. Berrangé wrote:
+> On Mon, Oct 14, 2024 at 11:22:21AM -0300, Fabiano Rosas wrote:
+> > Daniel P. Berrangé <berrange@redhat.com> writes:
+> > 
+> > > On Fri, Oct 11, 2024 at 11:34:17AM -0400, Peter Xu wrote:
+> > >> This reverts two commits:
+> > >> 
+> > >> 671326201dac8fe91222ba0045709f04a8ec3af4
+> > >> 1b1f4ab69c41279a45ccd0d3178e83471e6e4ec1
+> > >> 
+> > >> Meanwhile it adds an entry to removed-features.rst for the
+> > >> query-migrationthreads QMP command.
+> > >> 
+> > >> This patch originates from another patchset [1] that wanted to cleanup the
+> > >> interface and add corresponding HMP command, as lots of things are missing
+> > >> in the query report; so far it only reports the main thread and multifd
+> > >> sender threads; all the rest migration threads are not reported, including
+> > >> multifd recv threads.
+> > >> 
+> > >> As pointed out by Dan in the follow up discussions [1], the API is designed
+> > >> in an awkward way where CPU pinning may not cover the whole lifecycle of
+> > >> even the thread being reported.  When asked, we also didn't get chance to
+> > >> hear from the developer who introduced this feature to explain how this API
+> > >> can be properly used.
+> > >> 
+> > >> OTOH, this feature from debugging POV isn't very helpful either, as all
+> > >> these information can be easily obtained by GDB.  Esepcially, if with
+> > >> "-name $VM,debug-threads=on" we do already have names for each migration
+> > >> threads (which covers more than multifd sender threads).
+> > >> 
+> > >> So it looks like the API isn't helpful in any form as of now, besides it
+> > >> only adds maintenance burden to migration code, even if not much.
+> > >> 
+> > >> Considering that so far there's totally no justification on how to use this
+> > >> interface correctly, let's remove this interface instead of cleaning it up.
+> > >> 
+> > >> In this special case, we even go beyond normal deprecation procedure,
+> > >> because a deprecation process would only make sense when there are existing
+> > >> users. In this specific case, we expect zero serious users with this API.
+> > >
+> > > We have no way of knowing whether there are existing users of this, or
+> > > any other feature in QEMU. This is why we have a formal deprecation
+> > > period, rather than immediately deleting existing features.
+> > >
+> > > Yes, there are plenty of reasons why this feature is sub-optimal, but
+> > > it is not broken to the extent that it is *impossible* for people to
+> > > be using it.
+> > >
+> > > IOW, I don't see that there's anything special here to justify bypassing
+> > > our deprecation process here.
+> > 
+> > I have no dog in this race, but as a data point, I see that this was
+> > submitted to libvirt as a new migrationpin command:
+> > 
+> > https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/FVNAUEVIMLG6F2VCRKHZDUEOLBJCXQHO/#BVEGJVZMMLQMXE263GO5BSIWUDIYIFZU
+> 
+> And unforunately it seems we dropped the ball on reviewing the v2 of
+> their series and they never ping'd for a response, so this was not
+> merged. Possibly they're just running it as a local patch to libvirt...
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.h     |   3 +
- target/i386/tcg/translate.c      | 147 +-----------------------------
- target/i386/tcg/decode-new.c.inc |  41 ++++++---
- target/i386/tcg/emit.c.inc       | 150 ++++++++++++++++++++++++++++++-
- 4 files changed, 183 insertions(+), 158 deletions(-)
+If any of us wants to make this working properly, we don't need to rush
+removing or deprecating this. Instead we may want to discuss the proper
+interface, using the new qmp cmd name that Markus suggested, then (maybe)
+deprecate the old name only.
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index f9bf9a60411..e4cdf5e3c4f 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -190,6 +190,9 @@ typedef enum X86InsnSpecial {
-     /* Always locked if it has a memory operand (XCHG) */
-     X86_SPECIAL_Locked,
- 
-+    /* Like HasLock, but also operand 2 provides bit displacement into memory.  */
-+    X86_SPECIAL_BitTest,
-+
-     /* Do not load effective address in s->A0 */
-     X86_SPECIAL_NoLoadEA,
- 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 98f5fe61ed0..59b67042cd9 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -693,11 +693,6 @@ static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
-     return dst;
- }
- 
--static void gen_exts(MemOp ot, TCGv reg)
--{
--    gen_ext_tl(reg, reg, ot, true);
--}
--
- static void gen_op_j_ecx(DisasContext *s, TCGCond cond, TCGLabel *label1)
- {
-     TCGv tmp = gen_ext_tl(NULL, cpu_regs[R_ECX], s->aflag, false);
-@@ -2980,7 +2975,7 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-     int prefixes = s->prefix;
-     MemOp dflag = s->dflag;
-     MemOp ot;
--    int modrm, reg, rm, mod, op, val;
-+    int modrm, reg, rm, mod, op;
- 
-     /* now check op code */
-     switch (b) {
-@@ -3046,146 +3041,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         }
-         break;
- 
--        /************************/
--        /* bit operations */
--    case 0x1ba: /* bt/bts/btr/btc Gv, im */
--        ot = dflag;
--        modrm = x86_ldub_code(env, s);
--        op = (modrm >> 3) & 7;
--        mod = (modrm >> 6) & 3;
--        rm = (modrm & 7) | REX_B(s);
--        if (mod != 3) {
--            s->rip_offset = 1;
--            gen_lea_modrm(env, s, modrm);
--            if (!(s->prefix & PREFIX_LOCK)) {
--                gen_op_ld_v(s, ot, s->T0, s->A0);
--            }
--        } else {
--            gen_op_mov_v_reg(s, ot, s->T0, rm);
--        }
--        /* load shift */
--        val = x86_ldub_code(env, s);
--        tcg_gen_movi_tl(s->T1, val);
--        if (op < 4)
--            goto unknown_op;
--        op -= 4;
--        goto bt_op;
--    case 0x1a3: /* bt Gv, Ev */
--        op = 0;
--        goto do_btx;
--    case 0x1ab: /* bts */
--        op = 1;
--        goto do_btx;
--    case 0x1b3: /* btr */
--        op = 2;
--        goto do_btx;
--    case 0x1bb: /* btc */
--        op = 3;
--    do_btx:
--        ot = dflag;
--        modrm = x86_ldub_code(env, s);
--        reg = ((modrm >> 3) & 7) | REX_R(s);
--        mod = (modrm >> 6) & 3;
--        rm = (modrm & 7) | REX_B(s);
--        gen_op_mov_v_reg(s, MO_32, s->T1, reg);
--        if (mod != 3) {
--            AddressParts a = gen_lea_modrm_0(env, s, modrm, false);
--            /* specific case: we need to add a displacement */
--            gen_exts(ot, s->T1);
--            tcg_gen_sari_tl(s->tmp0, s->T1, 3 + ot);
--            tcg_gen_shli_tl(s->tmp0, s->tmp0, ot);
--            tcg_gen_add_tl(s->A0, gen_lea_modrm_1(s, a, false), s->tmp0);
--            gen_lea_v_seg(s, s->A0, a.def_seg, s->override);
--            if (!(s->prefix & PREFIX_LOCK)) {
--                gen_op_ld_v(s, ot, s->T0, s->A0);
--            }
--        } else {
--            gen_op_mov_v_reg(s, ot, s->T0, rm);
--        }
--    bt_op:
--        tcg_gen_andi_tl(s->T1, s->T1, (1 << (3 + ot)) - 1);
--        tcg_gen_movi_tl(s->tmp0, 1);
--        tcg_gen_shl_tl(s->tmp0, s->tmp0, s->T1);
--        if (s->prefix & PREFIX_LOCK) {
--            switch (op) {
--            case 0: /* bt */
--                /* Needs no atomic ops; we suppressed the normal
--                   memory load for LOCK above so do it now.  */
--                gen_op_ld_v(s, ot, s->T0, s->A0);
--                break;
--            case 1: /* bts */
--                tcg_gen_atomic_fetch_or_tl(s->T0, s->A0, s->tmp0,
--                                           s->mem_index, ot | MO_LE);
--                break;
--            case 2: /* btr */
--                tcg_gen_not_tl(s->tmp0, s->tmp0);
--                tcg_gen_atomic_fetch_and_tl(s->T0, s->A0, s->tmp0,
--                                            s->mem_index, ot | MO_LE);
--                break;
--            default:
--            case 3: /* btc */
--                tcg_gen_atomic_fetch_xor_tl(s->T0, s->A0, s->tmp0,
--                                            s->mem_index, ot | MO_LE);
--                break;
--            }
--            tcg_gen_shr_tl(s->tmp4, s->T0, s->T1);
--        } else {
--            tcg_gen_shr_tl(s->tmp4, s->T0, s->T1);
--            switch (op) {
--            case 0: /* bt */
--                /* Data already loaded; nothing to do.  */
--                break;
--            case 1: /* bts */
--                tcg_gen_or_tl(s->T0, s->T0, s->tmp0);
--                break;
--            case 2: /* btr */
--                tcg_gen_andc_tl(s->T0, s->T0, s->tmp0);
--                break;
--            default:
--            case 3: /* btc */
--                tcg_gen_xor_tl(s->T0, s->T0, s->tmp0);
--                break;
--            }
--            if (op != 0) {
--                if (mod != 3) {
--                    gen_op_st_v(s, ot, s->T0, s->A0);
--                } else {
--                    gen_op_mov_reg_v(s, ot, rm, s->T0);
--                }
--            }
--        }
--
--        /* Delay all CC updates until after the store above.  Note that
--           C is the result of the test, Z is unchanged, and the others
--           are all undefined.  */
--        switch (s->cc_op) {
--        case CC_OP_MULB ... CC_OP_MULQ:
--        case CC_OP_ADDB ... CC_OP_ADDQ:
--        case CC_OP_ADCB ... CC_OP_ADCQ:
--        case CC_OP_SUBB ... CC_OP_SUBQ:
--        case CC_OP_SBBB ... CC_OP_SBBQ:
--        case CC_OP_LOGICB ... CC_OP_LOGICQ:
--        case CC_OP_INCB ... CC_OP_INCQ:
--        case CC_OP_DECB ... CC_OP_DECQ:
--        case CC_OP_SHLB ... CC_OP_SHLQ:
--        case CC_OP_SARB ... CC_OP_SARQ:
--        case CC_OP_BMILGB ... CC_OP_BMILGQ:
--        case CC_OP_POPCNT:
--            /* Z was going to be computed from the non-zero status of CC_DST.
--               We can get that same Z value (and the new C value) by leaving
--               CC_DST alone, setting CC_SRC, and using a CC_OP_SAR of the
--               same width.  */
--            tcg_gen_mov_tl(cpu_cc_src, s->tmp4);
--            set_cc_op(s, ((s->cc_op - CC_OP_MULB) & 3) + CC_OP_SARB);
--            break;
--        default:
--            /* Otherwise, generate EFLAGS and replace the C bit.  */
--            gen_compute_eflags(s);
--            tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, s->tmp4,
--                               ctz32(CC_C), 1);
--            break;
--        }
--        break;
-     case 0x100:
-         modrm = x86_ldub_code(env, s);
-         mod = (modrm >> 6) & 3;
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 30be9237c31..55629f6825c 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -205,6 +205,7 @@
- #define sextT0 .special = X86_SPECIAL_SExtT0,
- #define zextT0 .special = X86_SPECIAL_ZExtT0,
- #define op0_Mw .special = X86_SPECIAL_Op0_Mw,
-+#define btEvGv .special = X86_SPECIAL_BitTest,
- 
- #define vex1 .vex_class = 1,
- #define vex1_rep3 .vex_class = 1, .vex_special = X86_VEX_REPScalar,
-@@ -269,6 +270,24 @@ static inline const X86OpEntry *decode_by_prefix(DisasContext *s, const X86OpEnt
-     }
- }
- 
-+static void decode_group8(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
-+{
-+    static const X86GenFunc group8_gen[8] = {
-+        NULL, NULL, NULL, NULL,
-+        gen_BT, gen_BTS, gen_BTR, gen_BTC,
-+    };
-+    int op = (get_modrm(s, env) >> 3) & 7;
-+    entry->gen = group8_gen[op];
-+    if (op == 4) {
-+        /* prevent writeback and LOCK for BT */
-+        entry->op1 = entry->op0;
-+        entry->op0 = X86_TYPE_None;
-+        entry->s0 = X86_SIZE_None;
-+    } else {
-+        entry->special = X86_SPECIAL_HasLock;
-+    }
-+}
-+
- static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     static const X86OpEntry group15_reg[8] = {
-@@ -1162,12 +1181,14 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
-     [0xa1] = X86_OP_ENTRYw(POP, FS, w),
-     [0xa2] = X86_OP_ENTRY0(CPUID),
-+    [0xa3] = X86_OP_ENTRYrr(BT,   E,v, G,v,          btEvGv),
-     [0xa4] = X86_OP_ENTRY4(SHLD,  E,v, 2op,v, G,v),
-     [0xa5] = X86_OP_ENTRY3(SHLD,  E,v, 2op,v, G,v),
- 
-     [0xb0] = X86_OP_ENTRY2(CMPXCHG,E,b, G,b, lock),
-     [0xb1] = X86_OP_ENTRY2(CMPXCHG,E,v, G,v, lock),
-     [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
-+    [0xb3] = X86_OP_ENTRY2(BTR,    E,v, G,v,             btEvGv),
-     [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
-     [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
-     [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
-@@ -1294,6 +1315,7 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa8] = X86_OP_ENTRYr(PUSH,   GS, w),
-     [0xa9] = X86_OP_ENTRYw(POP,    GS, w),
-     [0xaa] = X86_OP_ENTRY0(RSM,             chk(smm) svm(RSM)),
-+    [0xab] = X86_OP_ENTRY2(BTS,    E,v, G,v,             btEvGv),
-     [0xac] = X86_OP_ENTRY4(SHRD,   E,v, 2op,v, G,v),
-     [0xad] = X86_OP_ENTRY3(SHRD,   E,v, 2op,v, G,v),
-     [0xae] = X86_OP_GROUP0(group15),
-@@ -1306,6 +1328,8 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xb8] = X86_OP_GROUP0(0FB8),
-     /* decoded as modrm, which is visible as a difference between page fault and #UD */
-     [0xb9] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD1 */
-+    [0xba] = X86_OP_GROUP2(group8, E,v, I,b),
-+    [0xbb] = X86_OP_ENTRY2(BTC,    E,v, G,v,             btEvGv),
-     [0xbc] = X86_OP_GROUP0(0FBC),
-     [0xbd] = X86_OP_GROUP0(0FBD),
-     [0xbe] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, sextT0), /* MOVSX */
-@@ -2428,6 +2452,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     CPUX86State *env = cpu_env(cpu);
-     X86DecodedInsn decode;
-     X86DecodeFunc decode_func = decode_root;
-+    bool accept_lock = false;
-     uint8_t cc_live, b;
- 
-     s->pc = s->base.pc_next;
-@@ -2601,10 +2626,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-             switch (b) {
-             case 0x00 ... 0x01: /* mostly privileged instructions */
-             case 0x1a ... 0x1b: /* MPX */
--            case 0xa3:          /* bt */
--            case 0xab:          /* bts */
--            case 0xb3:          /* btr */
--            case 0xba ... 0xbb: /* grp8, btc */
-             case 0xc7:          /* grp9 */
-                 disas_insn_old(s, cpu, b + 0x100);
-                 return;
-@@ -2666,9 +2687,10 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         if (decode.op[0].has_ea) {
-             s->prefix |= PREFIX_LOCK;
-         }
--        decode.e.special = X86_SPECIAL_HasLock;
-         /* fallthrough */
-     case X86_SPECIAL_HasLock:
-+    case X86_SPECIAL_BitTest:
-+        accept_lock = decode.op[0].has_ea;
-         break;
- 
-     case X86_SPECIAL_Op0_Rd:
-@@ -2710,10 +2732,8 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         break;
-     }
- 
--    if (s->prefix & PREFIX_LOCK) {
--        if (decode.e.special != X86_SPECIAL_HasLock || !decode.op[0].has_ea) {
--            goto illegal_op;
--        }
-+    if ((s->prefix & PREFIX_LOCK) && !accept_lock) {
-+        goto illegal_op;
-     }
- 
-     if (!validate_vex(s, &decode)) {
-@@ -2759,9 +2779,10 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
- 
-     if (decode.e.special != X86_SPECIAL_NoLoadEA &&
-         (decode.op[0].has_ea || decode.op[1].has_ea || decode.op[2].has_ea)) {
--        gen_load_ea(s, &decode.mem, decode.e.vex_class == 12);
-+        gen_load_ea(s, &decode);
-     }
-     if (s->prefix & PREFIX_LOCK) {
-+        assert(decode.op[0].has_ea && !decode.op[2].has_ea);
-         gen_load(s, &decode, 2, s->T1);
-         decode.e.gen(s, &decode);
-     } else {
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 9b504199180..bb498464ea0 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -78,9 +78,26 @@ static void gen_NM_exception(DisasContext *s)
-     gen_exception(s, EXCP07_PREX);
- }
- 
--static void gen_load_ea(DisasContext *s, AddressParts *mem, bool is_vsib)
-+static void gen_load_ea(DisasContext *s, X86DecodedInsn *decode)
- {
--    TCGv ea = gen_lea_modrm_1(s, *mem, is_vsib);
-+    AddressParts *mem = &decode->mem;
-+    TCGv ea;
-+
-+    ea = gen_lea_modrm_1(s, *mem, decode->e.vex_class == 12);
-+    if (decode->e.special == X86_SPECIAL_BitTest) {
-+        MemOp ot = decode->op[1].ot;
-+        int poslen = 8 << ot;
-+        int opn = decode->op[2].n;
-+        TCGv ofs = tcg_temp_new();
-+
-+        /* Extract memory displacement from the second operand.  */
-+        assert(decode->op[2].unit == X86_OP_INT && decode->op[2].ot != MO_8);
-+        tcg_gen_sextract_tl(ofs, cpu_regs[opn], 3, poslen - 3);
-+        tcg_gen_andi_tl(ofs, ofs, -1 << ot);
-+        tcg_gen_add_tl(s->A0, ea, ofs);
-+        ea = s->A0;
-+    }
-+
-     gen_lea_v_seg(s, ea, mem->def_seg, s->override);
- }
- 
-@@ -412,6 +429,32 @@ static void prepare_update3_cc(X86DecodedInsn *decode, DisasContext *s, CCOp op,
-     decode->cc_op = op;
- }
- 
-+/* Set up decode->cc_* to modify CF while keeping other flags unchanged.  */
-+static void prepare_update_cf(X86DecodedInsn *decode, DisasContext *s, TCGv cf)
-+{
-+    switch (s->cc_op) {
-+    case CC_OP_ADOX:
-+    case CC_OP_ADCOX:
-+        decode->cc_src2 = cpu_cc_src2;
-+        decode->cc_src = cpu_cc_src;
-+        decode->cc_op = CC_OP_ADCOX;
-+        break;
-+
-+    case CC_OP_EFLAGS:
-+    case CC_OP_ADCX:
-+        decode->cc_src = cpu_cc_src;
-+        decode->cc_op = CC_OP_ADCX;
-+        break;
-+
-+    default:
-+        decode->cc_src = tcg_temp_new();
-+        gen_mov_eflags(s, decode->cc_src);
-+        decode->cc_op = CC_OP_ADCX;
-+        break;
-+    }
-+    decode->cc_dst = cf;
-+}
-+
- static void gen_store_sse(DisasContext *s, X86DecodedInsn *decode, int src_ofs)
- {
-     MemOp ot = decode->op[0].ot;
-@@ -1390,6 +1433,109 @@ static void gen_BSWAP(DisasContext *s, X86DecodedInsn *decode)
-     tcg_gen_bswap32_tl(s->T0, s->T0, TCG_BSWAP_OZ);
- }
- 
-+static TCGv gen_bt_mask(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[1].ot;
-+    TCGv mask = tcg_temp_new();
-+
-+    tcg_gen_andi_tl(s->T1, s->T1, (8 << ot) - 1);
-+    tcg_gen_shl_tl(mask, tcg_constant_tl(1), s->T1);
-+    return mask;
-+}
-+
-+/* Expects truncated bit index in s->T1, 1 << s->T1 in MASK.  */
-+static void gen_bt_flags(DisasContext *s, X86DecodedInsn *decode, TCGv src, TCGv mask)
-+{
-+    TCGv cf;
-+
-+    /*
-+     * C is the result of the test, Z is unchanged, and the others
-+     * are all undefined.
-+     */
-+    switch (s->cc_op) {
-+    case CC_OP_DYNAMIC:
-+    case CC_OP_CLR:
-+    case CC_OP_EFLAGS:
-+    case CC_OP_ADCX:
-+    case CC_OP_ADOX:
-+    case CC_OP_ADCOX:
-+        /* Generate EFLAGS and replace the C bit.  */
-+        cf = tcg_temp_new();
-+        tcg_gen_setcond_tl(TCG_COND_TSTNE, cf, src, mask);
-+        prepare_update_cf(decode, s, cf);
-+        break;
-+    default:
-+        /*
-+         * Z was going to be computed from the non-zero status of CC_DST.
-+         * We can get that same Z value (and the new C value) by leaving
-+         * CC_DST alone, setting CC_SRC, and using a CC_OP_SAR of the
-+         * same width.
-+         */
-+        decode->cc_src = tcg_temp_new();
-+        decode->cc_dst = cpu_cc_dst;
-+        decode->cc_op = ((s->cc_op - CC_OP_MULB) & 3) + CC_OP_SARB;
-+        tcg_gen_shr_tl(decode->cc_src, src, s->T1);
-+        break;
-+    }
-+}
-+
-+static void gen_BT(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    TCGv mask = gen_bt_mask(s, decode);
-+
-+    gen_bt_flags(s, decode, s->T0, mask);
-+}
-+
-+static void gen_BTC(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[0].ot;
-+    TCGv old = tcg_temp_new();
-+    TCGv mask = gen_bt_mask(s, decode);
-+
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_fetch_xor_tl(old, s->A0, mask, s->mem_index, ot | MO_LE);
-+    } else {
-+        tcg_gen_mov_tl(old, s->T0);
-+        tcg_gen_xor_tl(s->T0, s->T0, mask);
-+    }
-+
-+    gen_bt_flags(s, decode, old, mask);
-+}
-+
-+static void gen_BTR(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[0].ot;
-+    TCGv old = tcg_temp_new();
-+    TCGv mask = gen_bt_mask(s, decode);
-+
-+    if (s->prefix & PREFIX_LOCK) {
-+        TCGv maskc = tcg_temp_new();
-+        tcg_gen_not_tl(maskc, mask);
-+        tcg_gen_atomic_fetch_and_tl(old, s->A0, maskc, s->mem_index, ot | MO_LE);
-+    } else {
-+        tcg_gen_mov_tl(old, s->T0);
-+        tcg_gen_andc_tl(s->T0, s->T0, mask);
-+    }
-+
-+    gen_bt_flags(s, decode, old, mask);
-+}
-+
-+static void gen_BTS(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[0].ot;
-+    TCGv old = tcg_temp_new();
-+    TCGv mask = gen_bt_mask(s, decode);
-+
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_fetch_or_tl(old, s->A0, mask, s->mem_index, ot | MO_LE);
-+    } else {
-+        tcg_gen_mov_tl(old, s->T0);
-+        tcg_gen_or_tl(s->T0, s->T0, mask);
-+    }
-+
-+    gen_bt_flags(s, decode, old, mask);
-+}
-+
- static void gen_BZHI(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[0].ot;
+I proposed direct removal majorly because of the two things I mentioned in
+the commit message as major design issues:
+
+  (1) Migration threads are dynamic so created with short windows that
+  they're not be able to be pinned by the mgmt.
+
+  (2) Only sender threads are reported, while at least recv threads are
+  equally important in this case.
+
+I proposed direct removal not only because I want to avoid further fuss on
+this API from any migration developer - I think we already spent more time
+than we needed.. on this 100+ LOCs.  While, this can be reintroduced in the
+proper way again when necessary easily.  Meanwhile I also wanted to avoid
+new users see this API at all and use it ignoring dest threads even during
+deprecation process.
+
+Jiacheng is in the loop.  Jiacheng, do you want to chime in here?
+
+Thanks,
+
 -- 
-2.46.2
+Peter Xu
 
 
