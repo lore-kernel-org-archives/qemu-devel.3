@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C25D1F9C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5FFD1F9C5
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0mox-0001Wg-73; Tue, 15 Oct 2024 15:03:03 -0400
+	id 1t0mrw-0002Jz-Qj; Tue, 15 Oct 2024 15:06:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t0mov-0001WV-1o
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:03:01 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1t0moq-00089r-Ik
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:03:00 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-71e52582cf8so2219118b3a.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 12:02:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729018974; x=1729623774; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tRhqJ20pk83iDSj5hmw7CzhffO/7S9pA+eX7u2uLFo4=;
- b=BKwbZJv3syeMcKPOZGetukVYChWU/wB/W2thdBWTVVcafyGftJSbRMxZTPe1YzRLzS
- vmimw4oWVDngBxosV/Qa2hB0SRVW5FGFvlBb+OSdKXw8oHmIAmcyClAkf9MYFq2wWaMv
- TIVY1b5i3OORosCaGMs+7U1WCOUUEXwh5k60vNCsrGblMcZSe/qEVWg9yq+BkSOBLHCB
- ODFYHlXBal/iGH21aI7+iv4J2kBt+Cel5P+SCbz5qsp/YQQqAWyZ5F0LEDtK/9J3DR4l
- wCi45TJZihZ7iOh1KirkZc/9ibeEBDYQe5dWC7FTRt+K1M1c7q79mapuDyqz27M+DBHp
- MXkQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0mru-0002JD-GJ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:06:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0mrr-00005s-JJ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:06:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729019162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QTV5trzBUQpukdF+cuE9QPTllqiIeU4/b6EtuxirOZk=;
+ b=dFDD2z8hteB4kwBJQ2NgxrbHxVYj1xbxibSORjsKwByTI6KBVm39QpQ4YbB6xd/HKgSWDe
+ wKNR9Mj6PRY/MuKU4Ov1KbnA8mhb7c/M6W9/iLXniEMAdMKems9lT5FaQc0yv8pET2KEF8
+ JIk9u8hyM1s+y2SDCIJUfDKokpemBzQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-538-BzAHuz8jOo-ktlkSekan1A-1; Tue, 15 Oct 2024 15:05:59 -0400
+X-MC-Unique: BzAHuz8jOo-ktlkSekan1A-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cbebfc1725so122682716d6.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 12:05:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729018974; x=1729623774;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tRhqJ20pk83iDSj5hmw7CzhffO/7S9pA+eX7u2uLFo4=;
- b=r2rQYImfWup6Evhrs2YlcKH5I4Ccir5TZoMy16gZ0gjzMEgektZ3hrIO0mm0W+DuBZ
- CWNLBM3LtnbGT7aycDW23RxnpdjkT04OcWzQqQwe/JmmnFtDbbWIxZfu/lvZuUM1nLTy
- ewTFXbgZEhSq+3pgudskbDNzwr2QpFTaJ0ElY9EvD1APTJ+j+zGKb/PsifO+Hs5l+hk2
- Zx0lnRGC6FsGyeIMsUUtYNgp8uG5BBShjhHPP/bqvfKMj58I8YiydJUw3frKKsQkxzR2
- APl/bYcb48dvpGRCZVMgLlMzbVPUw0pi3YMcI2xlj5hp6AvLtb5xNewbabwEC+KsFDTv
- 2g5Q==
-X-Gm-Message-State: AOJu0Yzjkuo0SGJmNCcgVS4ymfHQ3DsBm7fBDwz7kDgi4W4O0TDlJqF4
- liA+/k/9JM8tfnZ1QTtORRM1teWJqf+z86rM+H214FaMTY6K8jYVZCCxKg==
-X-Google-Smtp-Source: AGHT+IGc5YPaHVYzT8+gN6wEAfeb43XjrNCWb44uNxhvH+Z50BWjZbe0gjt5jCjBlP8uQMLOcGpfLw==
-X-Received: by 2002:a05:6a00:2e97:b0:71e:cc7:c507 with SMTP id
- d2e1a72fcca58-71e4c1cf183mr22748548b3a.23.1729018974328; 
- Tue, 15 Oct 2024 12:02:54 -0700 (PDT)
-Received: from fan.. ([2601:646:8f03:9fee:b98e:93ee:91b1:1c18])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7ea9c6d3fe9sm1707165a12.51.2024.10.15.12.02.53
+ d=1e100.net; s=20230601; t=1729019159; x=1729623959;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QTV5trzBUQpukdF+cuE9QPTllqiIeU4/b6EtuxirOZk=;
+ b=i4ksrQKwtowHNqewp8cr/Su76l8qEENw+k2uNBo1eFGuYm4yvAHBXc/QTCenxUZ2RN
+ 7a9Q7GRVvTpVL2nGRD/S0S4xGP8pmn8ZjttyfFyLlcYUhJmW7Xlw/A+wqDfmcElnNJ7H
+ ThBOz0xIpJH87J38FwaUb5H7pdbWd1QMQCul78abAlFyChJF8b/IwWaNhJn8gR2s8z93
+ GAYARatqCX87s5ZylV30rZjHZ0eTJihjsjtJIDMvxyTVuDyjnqApmhDpXhn6gVBjjgC9
+ koHQZxtyTEaP8wW+1Gq5eLfa9s/9F5g4YB27D/dRGAtLkZz9Q2S1aDPHhFN9PAo9Ggti
+ 3rmA==
+X-Gm-Message-State: AOJu0YxPk+7i8FT3jlaJZN+617PLVa7/nUv6M1OZzlv+GWWwcQKmHJW7
+ hdF5ACtM+uLmSgUg+CuFrldF1iSQIHBa71W9IK6veWTXbYJ1VBE1HJmHOXKu9woHM2NYoLH/I92
+ 3UqjXjI55DRsFVaLpjDuUqVleQUyPSBrIcqHmZnhRKRpHAoFavnIU
+X-Received: by 2002:a05:6214:3990:b0:6cb:f6ff:f5dc with SMTP id
+ 6a1803df08f44-6cbf9cb2efdmr243944646d6.6.1729019158848; 
+ Tue, 15 Oct 2024 12:05:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHse5loyAG7M1dqaz0+N5ZVkHf5nOsIOqvXVIbybe0Z67W9aL3+n/hZJkGcesVZW2t5jX8hvw==
+X-Received: by 2002:a05:6214:3990:b0:6cb:f6ff:f5dc with SMTP id
+ 6a1803df08f44-6cbf9cb2efdmr243944376d6.6.1729019158416; 
+ Tue, 15 Oct 2024 12:05:58 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cc2295af43sm9859916d6.98.2024.10.15.12.05.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 12:02:54 -0700 (PDT)
-From: nifan.cxl@gmail.com
-To: qemu-devel@nongnu.org
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- ira.weiny@intel.com, dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com, nifan.cxl@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: [QEMU PATCH] hw/cxl/cxl-mailbox-util: Fix output buffer index update
- when retrieving DC extents
-Date: Tue, 15 Oct 2024 11:51:26 -0700
-Message-ID: <20241015190224.251293-1-nifan.cxl@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ Tue, 15 Oct 2024 12:05:57 -0700 (PDT)
+Date: Tue, 15 Oct 2024 15:05:55 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] migration: Ensure vmstate_save() sets errp
+Message-ID: <Zw69E9nvy8wQjrGZ@x1n>
+References: <20241015170437.310358-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241015170437.310358-1-hreitz@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,32 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+On Tue, Oct 15, 2024 at 07:04:37PM +0200, Hanna Czenczek wrote:
+> migration/savevm.c contains some calls to vmstate_save() that are
+> followed by migrate_set_error() if the integer return value indicates an
+> error.  migrate_set_error() requires that the `Error *` object passed to
+> it is set.  Therefore, vmstate_save() is assumed to always set *errp on
+> error.
+> 
+> Right now, that assumption is not met: vmstate_save_state_v() (called
+> internally by vmstate_save()) will not set *errp if
+> vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
+> an *errp parameter to vmstate_subsection_save(), and by generating a
+> generic error in case post_save() fails (as is already done for
+> pre_save()).
+> 
+> Without this patch, qemu will crash after vmstate_subsection_save() or
+> post_save() have failed inside of a vmstate_save() call (unless
+> migrate_set_error() then happen to discard the new error because
+> s->error is already set).  This happens e.g. when receiving the state
+> from a virtio-fs back-end (virtiofsd) fails.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+> v2: As suggested by Peter, after vmsd->post_save(), change the condition
+>     from `if (!ret)` to `if (!ret && ps_ret)` so we will not create an
+>     error object in case of success (that would then be leaked, most
+>     likely).
+> ---
+>  migration/vmstate.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 
-In the function of retrieving DC extents (cmd_dcd_get_dyn_cap_ext_list),
-the output buffer index was not correctly updated while iterating the
-extent list on the device, leaving the extents returned incorrect except for
-the first one.
+queued, thanks!
 
-Fixes: 1c9221f19e ("hw/mem/cxl_type3: Add DC extent list representative ...")
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index c82ad50ac8..58f8930272 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2233,6 +2233,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-             stw_le_p(&out_rec->shared_seq, ent->shared_seq);
- 
-             record_done++;
-+            out_rec++;
-             if (record_done == record_count) {
-                 break;
-             }
 -- 
-2.43.0
+Peter Xu
 
 
