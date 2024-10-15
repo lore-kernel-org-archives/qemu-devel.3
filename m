@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAD8CFC286
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD24CFC287
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eww-0006m2-Kd; Tue, 15 Oct 2024 06:38:46 -0400
+	id 1t0ewv-0006lx-5v; Tue, 15 Oct 2024 06:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewd-0006hY-6G
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:31 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1t0ewZ-0006gr-4Y
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:23 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewb-00060j-Gk
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:26 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-37d447de11dso3774093f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:24 -0700 (PDT)
+ id 1t0ewW-0005yB-Oi
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:22 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-37d49a7207cso3356010f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988704; x=1729593504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988699; x=1729593499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WcnOseKPBBkqKB9v4L2sxhPAaeMRLCa8ZCiDWul1LqE=;
- b=wc9Y43OQfe1TnNAw15DAykMaCEb9Zg1zNyjliqYSUQKKBSpjVqPcoKUe/tm1NqFyPn
- wtBwUJE61AdyeEBRVADG+RZ90AKq6sC30VVUt744IriIyRqLgbNxSlAQLJYLd3RIRxTF
- yOPDbaukYZitXe9lz2QQQbT03R+6ZivaphN2rVFH1Zfvn698SK8qSmaoLZxJ4Qi1clIg
- pKkoyxjRv37pyro8AjlGfdoubsPqnsi9wD9/kcgqcCLBiMQD99QwkODiQYHWz/A9bcn7
- qY8xSiSFuqyRHDN7so2A193mTJK7gpIqWlYw5iclDFANVs2fCHw1XX2lgj5DjvXMoQhC
- iK2A==
+ :reply-to; bh=V5xHU8VN3b7hwHGq1dhu6Bn19HDtikxnlAf8IYDTy+8=;
+ b=pDLyA8k8YltgYcZ0Lf0AbeTehaWlfyiI9PHkZ8YCy+Wx2U0YXtHYzzN3rFtUMupdni
+ JLVzKbKNr4L069qvwK7NPwcuz/sDCbFF+C3houuF+fgZDlBqoXLFZmkMKjbsIPAn1BCg
+ f7KHKM1Csa2T0ZZJnXkDjJ90RMQr04OZJfbZeEZNQ135jlpQN5pnaAdtKH/wsUbICwMh
+ N6Xw4f/CSjFpTSSt1D2GFOMg7xel6JQYYEJGUjVsW3CSyOcLQS5R6UP6+OAZupNwCOXe
+ ZpnaLRCqPkwtap7sCVlGh+BP8We4N3p+L7/6erALQ6cAASUbbut5DNeuPVT0RhqLKbJI
+ akLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988704; x=1729593504;
+ d=1e100.net; s=20230601; t=1728988699; x=1729593499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WcnOseKPBBkqKB9v4L2sxhPAaeMRLCa8ZCiDWul1LqE=;
- b=nvzifC20poQ/WSzCT0+cNNGHo8Z1aHEnxjGW3MeOlaLt8niAos9j8Vq5g+9Avg2mh2
- xM3KpDh2qzf26IQoxKunEBOmxGiAArKSuD0lCyXr+SnvFDdQac2qajSahMtY6YAwGbcQ
- BpH0q1YgxXfHAEXC4ljnx8PocZx0P4HoiPQ6oLMmbB2SuiSqgeIzQvk2WVEIRoX7Zsgw
- R7soC9iEhdpqRCYOvAU76H8O5gqBa7bkSQYzXoHXNDEd7lbMlr7xr4n7Iibp8bKBl22w
- sOz2gjUNiXaUKEwKRHGseRU+vyIpCN/CUA4MRhQj1jHeNSrrv3I43XBPRV4zgtqhfAjn
- /YJg==
-X-Gm-Message-State: AOJu0YyOcmtzb3Pr1XdQQG20jvN1JC785Lg8ytceN7yDNcP/PPp4ZFmS
- d1cYdO3Ux5QEzYQ6gFzd0hhM0YnjoeQqX2SR8IclpJU/n3Tjb0Hm9CDu/aUqpV6ILTkAsGijMGk
- t
-X-Google-Smtp-Source: AGHT+IFs2saMt4dUcZNcEIXeEbGSxRscNWypZWOv1b7agQ14m8wA5PZPzzpnu/6SZYa8GCQcT3jm4Q==
-X-Received: by 2002:a05:6000:181a:b0:37c:cd1d:b87e with SMTP id
- ffacd0b85a97d-37d551d50a7mr10101654f8f.18.1728988703630; 
- Tue, 15 Oct 2024 03:38:23 -0700 (PDT)
+ bh=V5xHU8VN3b7hwHGq1dhu6Bn19HDtikxnlAf8IYDTy+8=;
+ b=bTuQZesMHDEKVZMvmL3PCVXd7/cnLMNlkVezRaglgMHiDQTujwWWejjaDCljYdiR4Q
+ SbLldESB6b5712tQ+DNhKgcHvFVkd1o3tl7+2kxGEOtAgaV+oQDBMpvkw41XGJfYPHid
+ U7TEQDcK2AWrWlvUZcuxrrLvSN4gN80wiNMa/o50dAtWA8ugQ6NugZ8ZRYhq+X6+kN7w
+ WeVXV56mFLH4vEDEsKGdIM46w81kDRPekLTGzQsEumPQVFViv26TviqtWLIlSOWE+jAM
+ uPceae9Ui9IMen43mSOA4pxmUVfmgGhHhXKe/c9g8b5q5raww+iNlRA8I7qu8DkdYoF8
+ V53g==
+X-Gm-Message-State: AOJu0Yz2usYsKoXM/3339UHikqDxMvgSgMqaXmsMGW4zYOzlEqsoqnvx
+ xFNTNzDChAdvKS3D+fKJamv8CAQNHe6m69NcLAY5dRGYF52lO0hfpLT3fX5HAFq5ayYky76GEY4
+ x
+X-Google-Smtp-Source: AGHT+IEeGHACVdFsht+7jQA5DHqPeUlloPJFMMXOQkGwNN/KhpfJvQnwU4HrBpbdlz/xJq1hKu3YXg==
+X-Received: by 2002:a5d:4e12:0:b0:37d:373c:ed24 with SMTP id
+ ffacd0b85a97d-37d5fec8d41mr6550328f8f.4.1728988699291; 
+ Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.23
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:23 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/28] hw/arm/xilinx_zynq: Add various missing unimplemented
- devices
-Date: Tue, 15 Oct 2024 11:38:08 +0100
-Message-Id: <20241015103808.133024-29-peter.maydell@linaro.org>
+Subject: [PULL 20/28] docs/devel/lockcnt: Include kernel-doc API documentation
+Date: Tue, 15 Oct 2024 11:38:00 +0100
+Message-Id: <20241015103808.133024-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,111 +93,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu@yeah.net>
+Pull in the kernel-doc API documentation into the lockcnt docs.
+This requires us to fix one rST markup syntax error in the
+header file comments.
 
-Add unimplemented-device blocks to the xilinx_zynq board
-corresponding to various devices documented in the TRM
-and in the device tree.
-
-See: ug585-Zynq-7000-TRM manual B.3 (Module Summary)
-
-Signed-off-by: Chao Liu <chao.liu@yeah.net>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: tweaked commit message. Removed the clearing of
- the ignore_memory_transaction_failures flag]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240816132212.3602106-8-peter.maydell@linaro.org
 ---
- hw/arm/xilinx_zynq.c | 70 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
+ docs/devel/lockcnt.rst | 2 +-
+ include/qemu/lockcnt.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 37c234f5aba..fde4d946b7c 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -34,6 +34,7 @@
- #include "hw/net/cadence_gem.h"
- #include "hw/cpu/a9mpcore.h"
- #include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
- #include "sysemu/reset.h"
- #include "qom/object.h"
- #include "exec/tswap.h"
-@@ -373,6 +374,75 @@ static void zynq_init(MachineState *machine)
-     sysbus_connect_irq(busdev, 0, pic[40 - IRQ_OFFSET]);
-     sysbus_mmio_map(busdev, 0, 0xF8007000);
+diff --git a/docs/devel/lockcnt.rst b/docs/devel/lockcnt.rst
+index 728594bcea3..8b43578f6c7 100644
+--- a/docs/devel/lockcnt.rst
++++ b/docs/devel/lockcnt.rst
+@@ -175,7 +175,7 @@ three instructions in the critical path, two assignments and a ``smp_wmb()``.
+ ``QemuLockCnt`` API
+ -------------------
  
-+    /*
-+     * Refer to the ug585-Zynq-7000-TRM manual B.3 (Module Summary) and
-+     * the zynq-7000.dtsi. Add placeholders for unimplemented devices.
-+     */
-+    create_unimplemented_device("zynq.i2c0", 0xE0004000, 4 * KiB);
-+    create_unimplemented_device("zynq.i2c1", 0xE0005000, 4 * KiB);
-+    create_unimplemented_device("zynq.can0", 0xE0008000, 4 * KiB);
-+    create_unimplemented_device("zynq.can1", 0xE0009000, 4 * KiB);
-+    create_unimplemented_device("zynq.gpio", 0xE000A000, 4 * KiB);
-+    create_unimplemented_device("zynq.smcc", 0xE000E000, 4 * KiB);
-+
-+    /* Direct Memory Access Controller, PL330, Non-Secure Mode */
-+    create_unimplemented_device("zynq.dma_ns", 0xF8004000, 4 * KiB);
-+
-+    /* System Watchdog Timer Registers */
-+    create_unimplemented_device("zynq.swdt", 0xF8005000, 4 * KiB);
-+
-+    /* DDR memory controller */
-+    create_unimplemented_device("zynq.ddrc", 0xF8006000, 4 * KiB);
-+
-+    /* AXI_HP Interface (AFI) */
-+    create_unimplemented_device("zynq.axi_hp0", 0xF8008000, 0x28);
-+    create_unimplemented_device("zynq.axi_hp1", 0xF8009000, 0x28);
-+    create_unimplemented_device("zynq.axi_hp2", 0xF800A000, 0x28);
-+    create_unimplemented_device("zynq.axi_hp3", 0xF800B000, 0x28);
-+
-+    create_unimplemented_device("zynq.efuse", 0xF800d000, 0x20);
-+
-+    /* Embedded Trace Buffer */
-+    create_unimplemented_device("zynq.etb", 0xF8801000, 4 * KiB);
-+
-+    /* Cross Trigger Interface, ETB and TPIU */
-+    create_unimplemented_device("zynq.cti_etb_tpiu", 0xF8802000, 4 * KiB);
-+
-+    /* Trace Port Interface Unit */
-+    create_unimplemented_device("zynq.tpiu", 0xF8803000, 4 * KiB);
-+
-+    /* CoreSight Trace Funnel */
-+    create_unimplemented_device("zynq.funnel", 0xF8804000, 4 * KiB);
-+
-+    /* Instrumentation Trace Macrocell */
-+    create_unimplemented_device("zynq.itm", 0xF8805000, 4 * KiB);
-+
-+    /* Cross Trigger Interface, FTM */
-+    create_unimplemented_device("zynq.cti_ftm", 0xF8809000, 4 * KiB);
-+
-+    /* Fabric Trace Macrocell */
-+    create_unimplemented_device("zynq.ftm", 0xF880B000, 4 * KiB);
-+
-+    /* Cortex A9 Performance Monitoring Unit, CPU */
-+    create_unimplemented_device("cortex-a9.pmu0", 0xF8891000, 4 * KiB);
-+    create_unimplemented_device("cortex-a9.pmu1", 0xF8893000, 4 * KiB);
-+
-+    /* Cross Trigger Interface, CPU */
-+    create_unimplemented_device("zynq.cpu_cti0", 0xF8898000, 4 * KiB);
-+    create_unimplemented_device("zynq.cpu_cti1", 0xF8899000, 4 * KiB);
-+
-+    /* CoreSight PTM-A9, CPU */
-+    create_unimplemented_device("cortex-a9.ptm0", 0xF889c000, 4 * KiB);
-+    create_unimplemented_device("cortex-a9.ptm1", 0xF889d000, 4 * KiB);
-+
-+    /* AMBA NIC301 TrustZone */
-+    create_unimplemented_device("zynq.trustZone", 0xF8900000, 0x20);
-+
-+    /* AMBA Network Interconnect Advanced Quality of Service (QoS-301) */
-+    create_unimplemented_device("zynq.qos301_cpu", 0xF8946000, 0x130);
-+    create_unimplemented_device("zynq.qos301_dmac", 0xF8947000, 0x130);
-+    create_unimplemented_device("zynq.qos301_iou", 0xF8948000, 0x130);
-+
-     zynq_binfo.ram_size = machine->ram_size;
-     zynq_binfo.board_id = 0xd32;
-     zynq_binfo.loader_start = 0;
+-The ``QemuLockCnt`` API is described in ``include/qemu/lockcnt.h``.
++.. kernel-doc:: include/qemu/lockcnt.h
+ 
+ 
+ ``QemuLockCnt`` usage
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
+index 2c92ae17c9e..f4b62a3f701 100644
+--- a/include/qemu/lockcnt.h
++++ b/include/qemu/lockcnt.h
+@@ -51,7 +51,7 @@ void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
+  * Because this function can wait on the mutex, it must not be
+  * called while the lockcnt's mutex is held by the current thread.
+  * For the same reason, qemu_lockcnt_inc can also contribute to
+- * AB-BA deadlocks.  This is a sample deadlock scenario:
++ * AB-BA deadlocks.  This is a sample deadlock scenario::
+  *
+  *            thread 1                      thread 2
+  *            -------------------------------------------------------
 -- 
 2.34.1
 
