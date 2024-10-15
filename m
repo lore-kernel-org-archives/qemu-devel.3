@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF53D1D876
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 21:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D246D1F9D8
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 21:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0os2-0004f4-6H; Tue, 15 Oct 2024 17:14:22 -0400
+	id 1t0pRk-0001GE-Jm; Tue, 15 Oct 2024 17:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1t0ory-0004UQ-0a; Tue, 15 Oct 2024 17:14:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1t0orv-0000QW-2C; Tue, 15 Oct 2024 17:14:17 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FKJaSP022495;
- Tue, 15 Oct 2024 21:14:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=sQyX0uLyNbNulNrI3
- lQIe1EvVwwnkJ3bxq0p7BN2trQ=; b=Q3Jz/++FUDt1kYI4yC0/zQ9ZdDVhFOHb1
- HCtQZEezFas0t2KUQSeMO9UIYu3rIvcuDbN5aUv0t1x7JgFKL+tAC6JOSY9dqRfY
- QtOrEkO4bwJm+VX0A3ItQLTGdIVEQPuoGOUObW2jPoMISbTIOR4lOoH0cfvAuh8y
- RUw/yDzzVnwzpgoq5oLxIg5O8c20OoyAeygKaE66Me0CdCv4nlfdJMH3xY0oXb19
- FfWabDykYm4m6E0ZiNrtDXQM9RIEJX6csa+iHuO99229qMwU4g5z4jpc3qQYozgz
- JeRQvpwS0MXW/tLc407V9qRqtPrCRf/jjkC1Na+i5mr0//mvKtjTA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429yb505fy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:14:02 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49FLE2qa029706;
- Tue, 15 Oct 2024 21:14:02 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429yb505ft-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:14:01 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49FHfMbp002408;
- Tue, 15 Oct 2024 21:14:00 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284emnyu1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:14:00 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49FLDupq29491514
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 15 Oct 2024 21:13:56 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C4FA2004B;
- Tue, 15 Oct 2024 21:13:56 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8285F20043;
- Tue, 15 Oct 2024 21:13:54 +0000 (GMT)
-Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 15 Oct 2024 21:13:54 +0000 (GMT)
-From: Michael Kowal <kowal@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com, danielhb413@gmail.com,
- david@gibson.dropbear.id.au, harshpb@linux.ibm.com, thuth@redhat.com,
- lvivier@redhat.com, pbonzini@redhat.com
-Subject: [PATCH 08/14] Add support for MMIO operations on the  NVPG/NVC BAR
-Date: Tue, 15 Oct 2024 16:13:23 -0500
-Message-Id: <20241015211329.21113-9-kowal@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241015211329.21113-1-kowal@linux.ibm.com>
-References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <randrianasulu@gmail.com>)
+ id 1t0pRZ-0001FY-48
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 17:51:06 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <randrianasulu@gmail.com>)
+ id 1t0pRU-0004SZ-Km
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 17:51:02 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-20c803787abso2256255ad.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 14:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729029059; x=1729633859; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=n2TJAB8FLjzVHFC8Lbv0dT7vRytt5e8+yJxwFKzGhu8=;
+ b=HhAoegiXKGsk7MXIxt2cVop/6CdLxKlWznnzo2GetrW2ItQT29vVOx7r6d+d0Cberj
+ EELbsdVYXd91m95Vq/wYLYl9dFDVsLYTSAkxLUXVb5OQXl/o1Klg1aXn7LGxYStRUdl7
+ ZbE7TnNddZAAEI/lBN0fHV2fXEGvqyyXiUBN1qRFogtfZDd6bU4yxafKm2+2RyDOwNow
+ 2iPgcMZMjjTItdQjoxGiKIODCZ/YWsey1REZxtMeRxQg2W5He1Lnl8Pu+wTmARloz89Q
+ RNXuYn3kd+SEdTIPIWbXHLg1GvD6zjPxZTLUc9RwqpDypJcmX27V9gILOgj25vq54mLA
+ lofg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729029059; x=1729633859;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n2TJAB8FLjzVHFC8Lbv0dT7vRytt5e8+yJxwFKzGhu8=;
+ b=ZeshLIo2BfCLtOMolr/DYqIboccPf8IcKK6QudiWZOJwaQ8ygWPn+gzmFk1K7aQ6AM
+ H/zxfEr0q+krmOXVyT9uuL6ihf7oHo1ivfk/3obhekB2BqmJUVT5sX+K3evFAmaIWFpf
+ 4wB3D+glRRmlqlS05thhjlF1oXLUDYBKLt6LppIMqoDNd/oOic0AHEDJvAgrmCxqHKud
+ TNt1Z2BezfNIsZ+j+I4ngjD+CDf9fsqjxL1C21FZTFbo1vXNsSI/qkvmbRk0K4qCPyAx
+ QTIpkeb9UmmxLkpcgeMd/0GgJHTWIX+XfsnNiB3CUM5akoPdFiu+Efp3Mqjv5RYjoWKx
+ vA9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMTYUFuEev4EqX3tUNomg9bTmhRFij5jQUzz4dKCxzYfbjIdJrlS7tEtIhviUqwrDuXpYTNTAO50Po@nongnu.org
+X-Gm-Message-State: AOJu0YzPO5ckY9S7SwhOUyoJGwELrHne7C4z5AoBdazvJGmSyhd9SzXm
+ veblLJMvuR62WRMW0JWUywygxWgpxnO8C1zRyn/vPKwsXpAjFYFI5W1L0xe5cPSXNum+oNOsCEH
+ 6pKxddrZDYw5o8RuaE8Nl6qMRopU=
+X-Google-Smtp-Source: AGHT+IFXQ2I+Jtq0BOZbb0Ro03wDHX+p2Uj/t7j3Id/lJR/ObtwBh2ZYXSourwkny1Y2QfQjvzX2Tm6AtAtvtgapQts=
+X-Received: by 2002:a17:902:f686:b0:20c:68af:a4e3 with SMTP id
+ d9443c01a7336-20ca03d67dfmr270000975ad.22.1729029058916; Tue, 15 Oct 2024
+ 14:50:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zJrcRn0HYJejsZDgY1Gkc-GfdJgIitF4
-X-Proofpoint-GUID: SMPehxO8mkKU4arwCe_rOP2C5Dlts_xx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- impostorscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- mlxscore=0 spamscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410150140
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <CA+rFky6nRpHj8xKa7Wnw_coe_gbJoSXn61fc87-w0Z_7V-aBPw@mail.gmail.com>
+ <CAFEAcA_-ncUdRTO+CpFCf44OY6toTBWw8-5y5zbnr3PSfn2sGA@mail.gmail.com>
+ <c6c9ddd2-49bb-4c15-bc58-e72063be3a21@redhat.com>
+ <CA+rFky7AOmikj40fR8ivC5s2aFT+tnKoVJ5fPRkm7i490FOwzw@mail.gmail.com>
+ <CA+rFky61Xc1=J5XWbL2bNeSExErF=PHyzCn4XZ_O12uuA668RA@mail.gmail.com>
+In-Reply-To: <CA+rFky61Xc1=J5XWbL2bNeSExErF=PHyzCn4XZ_O12uuA668RA@mail.gmail.com>
+From: Andrew Randrianasulu <randrianasulu@gmail.com>
+Date: Wed, 16 Oct 2024 00:50:46 +0300
+Message-ID: <CA+rFky724Mce4OsN4=Q35xo=auN=mUJorouPGSwk25NJDuyvpg@mail.gmail.com>
+Subject: Re: ALSA support in qemu-user?
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, QEMU <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000dcfb7606248af2c0"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=randrianasulu@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,509 +93,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+--000000000000dcfb7606248af2c0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add support for the NVPG and NVC BARs.  Access to the BAR pages will
-cause backlog counter operations to either increment or decriment
-the counter.
+=D0=B2=D1=82, 15 =D0=BE=D0=BA=D1=82. 2024 =D0=B3., 17:06 Andrew Randrianasu=
+lu <randrianasulu@gmail.com>:
 
-Also added qtests for the same.
+>
+>
+> =D0=BF=D0=BD, 14 =D0=BE=D0=BA=D1=82. 2024 =D0=B3., 17:26 Andrew Randriana=
+sulu <randrianasulu@gmail.com>:
+>
+>>
+>>
+>> On Mon, Oct 14, 2024 at 12:21=E2=80=AFPM Thomas Huth <thuth@redhat.com> =
+wrote:
+>>
+>>> On 14/10/2024 11.06, Peter Maydell wrote:
+>>> > On Mon, 14 Oct 2024 at 02:13, Andrew Randrianasulu
+>>> > <randrianasulu@gmail.com> wrote:
+>>> >>
+>>> >> some 8 years ago this patch was sent  to qemu-devel:
+>>> >>
+>>> >> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg05333.html
+>>> >> "[Qemu-devel] [PATCH 7/7] Add ALSA ioctls"
+>>> >>
+>>> >> I wonder why it was rejected, may be as part of series?
+>>> >
+>>> > Hard to say from this distance, but looking at the patch
+>>> > I think it probably was just that it was on the end of
+>>> > a series that did a bunch of other things and the earlier
+>>> > patches in the series had issues.
+>>>
+>>> Yes, looks like there were review comments on the series that were not
+>>> addressed:
+>>>
+>>>   https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg05557.html
+>>>   https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg05364.html
+>>>
+>>> But mainly one of the problems were that the patches haven't been send
+>>> in a
+>>> proper threaded way, so it was hard to follow the series:
+>>>
+>>>   https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg05546.html
+>>>
+>>> Anyway, looking at the other patches, it seems most of them were not
+>>> related
+>>> to ALSA, so you might be fine in just picking that patch, get it to wor=
+k
+>>> with the latest version of QEMU again and send just that single updated
+>>> patch to this mailing list again. YMMV of course.
+>>>
+>>
+>> I tried  to apply patch but unfortunately mplayer still complain:
+>>
+>> [AO_ALSA] alsa-lib: pcm_hw.c:1578:(snd1_pcm_hw_open_fd) USER_PVERSION
+>> failed
+>>
+>> [AO_ALSA] alsa-lib: pcm_dmix.c:1092:(snd_pcm_dmix_open) unable to open
+>> slave
+>> [AO_ALSA] Playback open error: Inappropriate ioctl for device
+>>
+>> this is 32-bit mplayer/qemu-i386 on top of 64-bit kernel (x86_64)
+>>
+>> qemu git 3860a2a8de56fad71db42f4ad120eb7eff03b51f
+>>
+>> ./configure --prefix=3D/usr --target-list=3Di386-linux-user
+>>
+>>
+> so, may be qemu internal changed a bit, I tried to add MK_PTR around
+> int/long types in ioctl.h like it was done for alsa timer ctl before
+>
+> but what to do with unsingned long in syscall_defs.h ?
+>
+> there is abi_int so I changed simple  int to that.
+>
+> Anyway with attached patch it still fails to play, while arecord -L /apla=
+y
+> -L show their lists
+>
+> normal speaker-test run:
+>
+> strace -e ioctl /usr/bin/speaker-test 2>&1 | grep PVERSION
+>  ioctl(3, SNDRV_CTL_IOCTL_PVERSION, 0xff8bd008) =3D 0
+>
+>    ioctl(4, AGPIOC_INFO or SNDRV_PCM_IOCTL_PVERSION, 0xff8bcefc) =3D 0
+>
+>  ioctl(4, AGPIOC_RESERVE or SNDRV_PCM_IOCTL_USER_PVERSION, 0xff8bcf08) =
+=3D 0
+>
+> failed run with qemu-i386:
+>
+> strace -e ioctl qemu-i386 /usr/bin/speaker-test 2>&1 | grep PVERSION
+>  ioctl(3, SNDRV_CTL_IOCTL_PVERSION, 0xff8410ac) =3D 0
+>
+>  ioctl(4, AGPIOC_INFO or SNDRV_PCM_IOCTL_PVERSION, 0xff8410ac) =3D 0
+>
 
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
----
- include/hw/ppc/xive2.h           |   9 ++
- include/hw/ppc/xive2_regs.h      |   3 +
- tests/qtest/pnv-xive2-common.h   |   1 +
- hw/intc/pnv_xive2.c              |  80 +++++++++++++---
- hw/intc/xive2.c                  |  87 +++++++++++++++++
- tests/qtest/pnv-xive2-nvpg_bar.c | 154 +++++++++++++++++++++++++++++++
- tests/qtest/pnv-xive2-test.c     |   3 +
- hw/intc/trace-events             |   4 +
- tests/qtest/meson.build          |   3 +-
- 9 files changed, 329 insertions(+), 15 deletions(-)
- create mode 100644 tests/qtest/pnv-xive2-nvpg_bar.c
 
-diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-index e61b978f37..049028d2c2 100644
---- a/include/hw/ppc/xive2.h
-+++ b/include/hw/ppc/xive2.h
-@@ -92,6 +92,15 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-                                uint8_t nvt_blk, uint32_t nvt_idx,
-                                bool cam_ignore, uint32_t logic_serv);
- 
-+uint64_t xive2_presenter_nvp_backlog_op(XivePresenter *xptr,
-+                                        uint8_t blk, uint32_t idx,
-+                                        uint16_t offset);
-+
-+uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
-+                                         bool crowd,
-+                                         uint8_t blk, uint32_t idx,
-+                                         uint16_t offset, uint16_t val);
-+
- /*
-  * XIVE2 END ESBs  (POWER10)
-  */
-diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-index 30868e8e09..66a419441c 100644
---- a/include/hw/ppc/xive2_regs.h
-+++ b/include/hw/ppc/xive2_regs.h
-@@ -234,4 +234,7 @@ typedef struct Xive2Nvgc {
- void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx,
-                                GString *buf);
- 
-+#define NVx_BACKLOG_OP            PPC_BITMASK(52, 53)
-+#define NVx_BACKLOG_PRIO          PPC_BITMASK(57, 59)
-+
- #endif /* PPC_XIVE2_REGS_H */
-diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-index 2135b04d5b..910f0f512e 100644
---- a/tests/qtest/pnv-xive2-common.h
-+++ b/tests/qtest/pnv-xive2-common.h
-@@ -108,5 +108,6 @@ extern void set_end(QTestState *qts, uint32_t index, uint32_t nvp_index,
- 
- 
- void test_flush_sync_inject(QTestState *qts);
-+void test_nvpg_bar(QTestState *qts);
- 
- #endif /* TEST_PNV_XIVE2_COMMON_H */
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 0482193fd7..9736b623ba 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -2203,21 +2203,40 @@ static const MemoryRegionOps pnv_xive2_tm_ops = {
-     },
- };
- 
--static uint64_t pnv_xive2_nvc_read(void *opaque, hwaddr offset,
-+static uint64_t pnv_xive2_nvc_read(void *opaque, hwaddr addr,
-                                    unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-+    XivePresenter *xptr = XIVE_PRESENTER(xive);
-+    uint32_t page = addr >> xive->nvpg_shift;
-+    uint16_t op = addr & 0xFFF;
-+    uint8_t blk = pnv_xive2_block_id(xive);
- 
--    xive2_error(xive, "NVC: invalid read @%"HWADDR_PRIx, offset);
--    return -1;
-+    if (size != 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvc load size %d\n",
-+                      size);
-+        return -1;
-+    }
-+
-+    return xive2_presenter_nvgc_backlog_op(xptr, true, blk, page, op, 1);
- }
- 
--static void pnv_xive2_nvc_write(void *opaque, hwaddr offset,
-+static void pnv_xive2_nvc_write(void *opaque, hwaddr addr,
-                                 uint64_t val, unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-+    XivePresenter *xptr = XIVE_PRESENTER(xive);
-+    uint32_t page = addr >> xive->nvc_shift;
-+    uint16_t op = addr & 0xFFF;
-+    uint8_t blk = pnv_xive2_block_id(xive);
- 
--    xive2_error(xive, "NVC: invalid write @%"HWADDR_PRIx, offset);
-+    if (size != 1) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvc write size %d\n",
-+                      size);
-+        return;
-+    }
-+
-+    (void)xive2_presenter_nvgc_backlog_op(xptr, true, blk, page, op, val);
- }
- 
- static const MemoryRegionOps pnv_xive2_nvc_ops = {
-@@ -2225,30 +2244,63 @@ static const MemoryRegionOps pnv_xive2_nvc_ops = {
-     .write = pnv_xive2_nvc_write,
-     .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
--        .min_access_size = 8,
-+        .min_access_size = 1,
-         .max_access_size = 8,
-     },
-     .impl = {
--        .min_access_size = 8,
-+        .min_access_size = 1,
-         .max_access_size = 8,
-     },
- };
- 
--static uint64_t pnv_xive2_nvpg_read(void *opaque, hwaddr offset,
-+static uint64_t pnv_xive2_nvpg_read(void *opaque, hwaddr addr,
-                                     unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-+    XivePresenter *xptr = XIVE_PRESENTER(xive);
-+    uint32_t page = addr >> xive->nvpg_shift;
-+    uint16_t op = addr & 0xFFF;
-+    uint32_t index = page >> 1;
-+    uint8_t blk = pnv_xive2_block_id(xive);
- 
--    xive2_error(xive, "NVPG: invalid read @%"HWADDR_PRIx, offset);
--    return -1;
-+    if (size != 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvpg load size %d\n",
-+                      size);
-+        return -1;
-+    }
-+
-+    if (page % 2) {
-+        /* odd page - NVG */
-+        return xive2_presenter_nvgc_backlog_op(xptr, false, blk, index, op, 1);
-+    } else {
-+        /* even page - NVP */
-+        return xive2_presenter_nvp_backlog_op(xptr, blk, index, op);
-+    }
- }
- 
--static void pnv_xive2_nvpg_write(void *opaque, hwaddr offset,
-+static void pnv_xive2_nvpg_write(void *opaque, hwaddr addr,
-                                  uint64_t val, unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-+    XivePresenter *xptr = XIVE_PRESENTER(xive);
-+    uint32_t page = addr >> xive->nvpg_shift;
-+    uint16_t op = addr & 0xFFF;
-+    uint32_t index = page >> 1;
-+    uint8_t blk = pnv_xive2_block_id(xive);
- 
--    xive2_error(xive, "NVPG: invalid write @%"HWADDR_PRIx, offset);
-+    if (size != 1) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvpg write size %d\n",
-+                      size);
-+        return;
-+    }
-+
-+    if (page % 2) {
-+        /* odd page - NVG */
-+        (void)xive2_presenter_nvgc_backlog_op(xptr, false, blk, index, op, val);
-+    } else {
-+        /* even page - NVP */
-+        (void)xive2_presenter_nvp_backlog_op(xptr, blk, index, op);
-+    }
- }
- 
- static const MemoryRegionOps pnv_xive2_nvpg_ops = {
-@@ -2256,11 +2308,11 @@ static const MemoryRegionOps pnv_xive2_nvpg_ops = {
-     .write = pnv_xive2_nvpg_write,
-     .endianness = DEVICE_BIG_ENDIAN,
-     .valid = {
--        .min_access_size = 8,
-+        .min_access_size = 1,
-         .max_access_size = 8,
-     },
-     .impl = {
--        .min_access_size = 8,
-+        .min_access_size = 1,
-         .max_access_size = 8,
-     },
- };
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 0c53f71879..b6f279e6a3 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -88,6 +88,93 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
-     }
- }
- 
-+uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
-+                                         bool crowd,
-+                                         uint8_t blk, uint32_t idx,
-+                                         uint16_t offset, uint16_t val)
-+{
-+    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-+    uint8_t priority = GETFIELD(NVx_BACKLOG_PRIO, offset);
-+    uint8_t op = GETFIELD(NVx_BACKLOG_OP, offset);
-+    Xive2Nvgc nvgc;
-+    uint32_t count, old_count;
-+
-+    if (xive2_router_get_nvgc(xrtr, crowd, blk, idx, &nvgc)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No %s %x/%x\n",
-+                      crowd ? "NVC" : "NVG", blk, idx);
-+        return -1;
-+    }
-+    if (!xive2_nvgc_is_valid(&nvgc)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n", blk, idx);
-+        return -1;
-+    }
-+
-+    old_count = xive2_nvgc_get_backlog(&nvgc, priority);
-+    count = old_count;
-+    /*
-+     * op:
-+     * 0b00 => increment
-+     * 0b01 => decrement
-+     * 0b1- => read
-+     */
-+    if (op == 0b00 || op == 0b01) {
-+        if (op == 0b00) {
-+            count += val;
-+        } else {
-+            if (count > val) {
-+                count -= val;
-+            } else {
-+                count = 0;
-+            }
-+        }
-+        xive2_nvgc_set_backlog(&nvgc, priority, count);
-+        xive2_router_write_nvgc(xrtr, crowd, blk, idx, &nvgc);
-+    }
-+    trace_xive_nvgc_backlog_op(crowd, blk, idx, op, priority, old_count);
-+    return old_count;
-+}
-+
-+uint64_t xive2_presenter_nvp_backlog_op(XivePresenter *xptr,
-+                                        uint8_t blk, uint32_t idx,
-+                                        uint16_t offset)
-+{
-+    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-+    uint8_t priority = GETFIELD(NVx_BACKLOG_PRIO, offset);
-+    uint8_t op = GETFIELD(NVx_BACKLOG_OP, offset);
-+    Xive2Nvp nvp;
-+    uint8_t ipb, old_ipb, rc;
-+
-+    if (xive2_router_get_nvp(xrtr, blk, idx, &nvp)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n", blk, idx);
-+        return -1;
-+    }
-+    if (!xive2_nvp_is_valid(&nvp)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVP %x/%x\n", blk, idx);
-+        return -1;
-+    }
-+
-+    old_ipb = xive_get_field32(NVP2_W2_IPB, nvp.w2);
-+    ipb = old_ipb;
-+    /*
-+     * op:
-+     * 0b00 => set priority bit
-+     * 0b01 => reset priority bit
-+     * 0b1- => read
-+     */
-+    if (op == 0b00 || op == 0b01) {
-+        if (op == 0b00) {
-+            ipb |= xive_priority_to_ipb(priority);
-+        } else {
-+            ipb &= ~xive_priority_to_ipb(priority);
-+        }
-+        nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
-+        xive2_router_write_nvp(xrtr, blk, idx, &nvp, 2);
-+    }
-+    rc = !!(old_ipb & xive_priority_to_ipb(priority));
-+    trace_xive_nvp_backlog_op(blk, idx, op, priority, rc);
-+    return rc;
-+}
-+
- void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
- {
-     if (!xive2_eas_is_valid(eas)) {
-diff --git a/tests/qtest/pnv-xive2-nvpg_bar.c b/tests/qtest/pnv-xive2-nvpg_bar.c
-new file mode 100644
-index 0000000000..10d4962d1e
---- /dev/null
-+++ b/tests/qtest/pnv-xive2-nvpg_bar.c
-@@ -0,0 +1,154 @@
-+/*
-+ * QTest testcase for PowerNV 10 interrupt controller (xive2)
-+ *  - Test NVPG BAR MMIO operations
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * later. See the COPYING file in the top-level directory.
-+ */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#include "pnv-xive2-common.h"
-+
-+#define NVPG_BACKLOG_OP_SHIFT   10
-+#define NVPG_BACKLOG_PRIO_SHIFT 4
-+
-+#define XIVE_PRIORITY_MAX       7
-+
-+enum NVx {
-+    NVP,
-+    NVG,
-+    NVC
-+};
-+
-+typedef enum {
-+    INCR_STORE = 0b100,
-+    INCR_LOAD  = 0b000,
-+    DECR_STORE = 0b101,
-+    DECR_LOAD  = 0b001,
-+    READ_x     = 0b010,
-+    READ_y     = 0b011,
-+} backlog_op;
-+
-+static uint32_t nvpg_backlog_op(QTestState *qts, backlog_op op,
-+                                enum NVx type, uint64_t index,
-+                                uint8_t priority, uint8_t delta)
-+{
-+    uint64_t addr, offset;
-+    uint32_t count = 0;
-+
-+    switch (type) {
-+    case NVP:
-+        addr = XIVE_NVPG_ADDR + (index << (XIVE_PAGE_SHIFT + 1));
-+        break;
-+    case NVG:
-+        addr = XIVE_NVPG_ADDR + (index << (XIVE_PAGE_SHIFT + 1)) +
-+            (1 << XIVE_PAGE_SHIFT);
-+        break;
-+    case NVC:
-+        addr = XIVE_NVC_ADDR + (index << XIVE_PAGE_SHIFT);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    offset = (op & 0b11) << NVPG_BACKLOG_OP_SHIFT;
-+    offset |= priority << NVPG_BACKLOG_PRIO_SHIFT;
-+    if (op >> 2) {
-+        qtest_writeb(qts, addr + offset, delta);
-+    } else {
-+        count = qtest_readw(qts, addr + offset);
-+    }
-+    return count;
-+}
-+
-+void test_nvpg_bar(QTestState *qts)
-+{
-+    uint32_t nvp_target = 0x11;
-+    uint32_t group_target = 0x17; /* size 16 */
-+    uint32_t vp_irq = 33, group_irq = 47;
-+    uint32_t vp_end = 3, group_end = 97;
-+    uint32_t vp_irq_data = 0x33333333;
-+    uint32_t group_irq_data = 0x66666666;
-+    uint8_t vp_priority = 0, group_priority = 5;
-+    uint32_t vp_count[XIVE_PRIORITY_MAX + 1] = { 0 };
-+    uint32_t group_count[XIVE_PRIORITY_MAX + 1] = { 0 };
-+    uint32_t count, delta;
-+    uint8_t i;
-+
-+    printf("# ============================================================\n");
-+    printf("# Testing NVPG BAR operations\n");
-+
-+    set_nvg(qts, group_target, 0);
-+    set_nvp(qts, nvp_target, 0x04);
-+    set_nvp(qts, group_target, 0x04);
-+
-+    /*
-+     * Setup: trigger a VP-specific interrupt and a group interrupt
-+     * so that the backlog counters are initialized to something else
-+     * than 0 for at least one priority level
-+     */
-+    set_eas(qts, vp_irq, vp_end, vp_irq_data);
-+    set_end(qts, vp_end, nvp_target, vp_priority, false /* group */);
-+
-+    set_eas(qts, group_irq, group_end, group_irq_data);
-+    set_end(qts, group_end, group_target, group_priority, true /* group */);
-+
-+    get_esb(qts, vp_irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
-+    set_esb(qts, vp_irq, XIVE_TRIGGER_PAGE, 0, 0);
-+    vp_count[vp_priority]++;
-+
-+    get_esb(qts, group_irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
-+    set_esb(qts, group_irq, XIVE_TRIGGER_PAGE, 0, 0);
-+    group_count[group_priority]++;
-+
-+    /* check the initial counters */
-+    for (i = 0; i <= XIVE_PRIORITY_MAX; i++) {
-+        count = nvpg_backlog_op(qts, READ_x, NVP, nvp_target, i, 0);
-+        g_assert_cmpuint(count, ==, vp_count[i]);
-+
-+        count = nvpg_backlog_op(qts, READ_y, NVG, group_target, i, 0);
-+        g_assert_cmpuint(count, ==, group_count[i]);
-+    }
-+
-+    /* do a few ops on the VP. Counter can only be 0 and 1 */
-+    vp_priority = 2;
-+    delta = 7;
-+    nvpg_backlog_op(qts, INCR_STORE, NVP, nvp_target, vp_priority, delta);
-+    vp_count[vp_priority] = 1;
-+    count = nvpg_backlog_op(qts, INCR_LOAD, NVP, nvp_target, vp_priority, 0);
-+    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
-+    count = nvpg_backlog_op(qts, READ_y, NVP, nvp_target, vp_priority, 0);
-+    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
-+
-+    count = nvpg_backlog_op(qts, DECR_LOAD, NVP, nvp_target, vp_priority, 0);
-+    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
-+    vp_count[vp_priority] = 0;
-+    nvpg_backlog_op(qts, DECR_STORE, NVP, nvp_target, vp_priority, delta);
-+    count = nvpg_backlog_op(qts, READ_x, NVP, nvp_target, vp_priority, 0);
-+    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
-+
-+    /* do a few ops on the group */
-+    group_priority = 2;
-+    delta = 9;
-+    /* can't go negative */
-+    nvpg_backlog_op(qts, DECR_STORE, NVG, group_target, group_priority, delta);
-+    count = nvpg_backlog_op(qts, READ_y, NVG, group_target, group_priority, 0);
-+    g_assert_cmpuint(count, ==, 0);
-+    nvpg_backlog_op(qts, INCR_STORE, NVG, group_target, group_priority, delta);
-+    group_count[group_priority] += delta;
-+    count = nvpg_backlog_op(qts, INCR_LOAD, NVG, group_target,
-+                            group_priority, delta);
-+    g_assert_cmpuint(count, ==, group_count[group_priority]);
-+    group_count[group_priority]++;
-+
-+    count = nvpg_backlog_op(qts, DECR_LOAD, NVG, group_target,
-+                            group_priority, delta);
-+    g_assert_cmpuint(count, ==,  group_count[group_priority]);
-+    group_count[group_priority]--;
-+    count = nvpg_backlog_op(qts, READ_x, NVG, group_target, group_priority, 0);
-+    g_assert_cmpuint(count, ==, group_count[group_priority]);
-+}
-+
-diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-index 1705127da1..a6008bc053 100644
---- a/tests/qtest/pnv-xive2-test.c
-+++ b/tests/qtest/pnv-xive2-test.c
-@@ -494,6 +494,9 @@ static void test_xive(void)
-     reset_state(qts);
-     test_flush_sync_inject(qts);
- 
-+    reset_state(qts);
-+    test_nvpg_bar(qts);
-+
-     qtest_quit(qts);
- }
- 
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 7435728c51..7f362c38b0 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -285,6 +285,10 @@ xive_tctx_tm_read(uint32_t index, uint64_t offset, unsigned int size, uint64_t v
- xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring, uint8_t group_level) "found NVT 0x%x/0x%x ring=0x%x group_level=%d"
- xive_end_source_read(uint8_t end_blk, uint32_t end_idx, uint64_t addr) "END 0x%x/0x%x @0x%"PRIx64
- 
-+# xive2.c
-+xive_nvp_backlog_op(uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint8_t rc) "NVP 0x%x/0x%x operation=%d priority=%d rc=%d"
-+xive_nvgc_backlog_op(bool c, uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint32_t rc) "NVGC crowd=%d 0x%x/0x%x operation=%d priority=%d rc=%d"
-+
- # pnv_xive.c
- pnv_xive_ic_hw_trigger(uint64_t addr, uint64_t val) "@0x%"PRIx64" val=0x%"PRIx64
- 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index d2af58800d..9ef9819450 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -337,7 +337,8 @@ qtests = {
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
-   'migration-test': migration_files,
-   'pxe-test': files('boot-sector.c'),
--  'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c'),
-+  'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
-+                          'pnv-xive2-nvpg_bar.c'),
-   'qos-test': [chardev, io, qos_test_ss.apply({}).sources()],
-   'tpm-crb-swtpm-test': [io, tpmemu_files],
-   'tpm-crb-test': [io, tpmemu_files],
--- 
-2.43.0
+Now, this is strange.
 
+With additional patch aplay/arecord -l show truncated list of hardware
+devices.
+
+If I set
+
+IOCTL(SNDRV_CTL_IOCTL_PCM_NEXT_DEVICE, IOC_R, TYPE_INT)
+
+instead ot MK_PTR(TYPE_INT) in
+
+linux-user/iocts.h
+
+with my two patches
+
+then arecord/aplay under qemu-i386 enumerates all host devices again ...
+
+
+
+>
+>
+>>
+>>
+>>>
+>>>   Thomas
+>>>
+>>>
+
+--000000000000dcfb7606248af2c0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">=D0=B2=D1=82, 15 =D0=BE=D0=BA=D1=82. 2024 =D0=B3., 17:=
+06 Andrew Randrianasulu &lt;<a href=3D"mailto:randrianasulu@gmail.com" targ=
+et=3D"_blank" rel=3D"noreferrer">randrianasulu@gmail.com</a>&gt;:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"auto"><div><br><br><div class=3D=
+"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D0=BD, 14 =D0=BE=
+=D0=BA=D1=82. 2024 =D0=B3., 17:26 Andrew Randrianasulu &lt;<a href=3D"mailt=
+o:randrianasulu@gmail.com" rel=3D"noreferrer noreferrer noreferrer noreferr=
+er noreferrer" target=3D"_blank">randrianasulu@gmail.com</a>&gt;:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div>=
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon=
+, Oct 14, 2024 at 12:21=E2=80=AFPM Thomas Huth &lt;<a href=3D"mailto:thuth@=
+redhat.com" rel=3D"noreferrer noreferrer noreferrer noreferrer noreferrer n=
+oreferrer" target=3D"_blank">thuth@redhat.com</a>&gt; wrote:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">On 14/10/2024 11.06, Peter May=
+dell wrote:<br>
+&gt; On Mon, 14 Oct 2024 at 02:13, Andrew Randrianasulu<br>
+&gt; &lt;<a href=3D"mailto:randrianasulu@gmail.com" rel=3D"noreferrer noref=
+errer noreferrer noreferrer noreferrer noreferrer" target=3D"_blank">randri=
+anasulu@gmail.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; some 8 years ago this patch was sent=C2=A0 to qemu-devel:<br>
+&gt;&gt;<br>
+&gt;&gt; <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2016-06/m=
+sg05333.html" rel=3D"noreferrer noreferrer noreferrer noreferrer noreferrer=
+ noreferrer noreferrer" target=3D"_blank">https://lists.gnu.org/archive/htm=
+l/qemu-devel/2016-06/msg05333.html</a><br>
+&gt;&gt; &quot;[Qemu-devel] [PATCH 7/7] Add ALSA ioctls&quot;<br>
+&gt;&gt;<br>
+&gt;&gt; I wonder why it was rejected, may be as part of series?<br>
+&gt; <br>
+&gt; Hard to say from this distance, but looking at the patch<br>
+&gt; I think it probably was just that it was on the end of<br>
+&gt; a series that did a bunch of other things and the earlier<br>
+&gt; patches in the series had issues.<br>
+<br>
+Yes, looks like there were review comments on the series that were not <br>
+addressed:<br>
+<br>
+=C2=A0 <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg=
+05557.html" rel=3D"noreferrer noreferrer noreferrer noreferrer noreferrer n=
+oreferrer noreferrer" target=3D"_blank">https://lists.gnu.org/archive/html/=
+qemu-devel/2016-06/msg05557.html</a><br>
+=C2=A0 <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg=
+05364.html" rel=3D"noreferrer noreferrer noreferrer noreferrer noreferrer n=
+oreferrer noreferrer" target=3D"_blank">https://lists.gnu.org/archive/html/=
+qemu-devel/2016-06/msg05364.html</a><br>
+<br>
+But mainly one of the problems were that the patches haven&#39;t been send =
+in a <br>
+proper threaded way, so it was hard to follow the series:<br>
+<br>
+=C2=A0 <a href=3D"https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg=
+05546.html" rel=3D"noreferrer noreferrer noreferrer noreferrer noreferrer n=
+oreferrer noreferrer" target=3D"_blank">https://lists.gnu.org/archive/html/=
+qemu-devel/2016-06/msg05546.html</a><br>
+<br>
+Anyway, looking at the other patches, it seems most of them were not relate=
+d <br>
+to ALSA, so you might be fine in just picking that patch, get it to work <b=
+r>
+with the latest version of QEMU again and send just that single updated <br=
+>
+patch to this mailing list again. YMMV of course.<br></blockquote><div><br>=
+</div><div>I tried=C2=A0 to apply patch but unfortunately mplayer still com=
+plain:</div><div><br></div><div>[AO_ALSA] alsa-lib: pcm_hw.c:1578:(snd1_pcm=
+_hw_open_fd) USER_PVERSION failed<br><br>[AO_ALSA] alsa-lib: pcm_dmix.c:109=
+2:(snd_pcm_dmix_open) unable to open slave<br>[AO_ALSA] Playback open error=
+: Inappropriate ioctl for device</div><div><br></div><div>this is 32-bit mp=
+layer/qemu-i386 on top of 64-bit kernel (x86_64)</div><div><br></div><div>q=
+emu git 3860a2a8de56fad71db42f4ad120eb7eff03b51f</div><div><br></div><div>.=
+/configure --prefix=3D/usr --target-list=3Di386-linux-user=C2=A0 <br></div>=
+<div><br></div><div></div></div></div></blockquote></div></div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">so, may be qemu internal changed a bit, I=
+ tried to add MK_PTR around int/long types in ioctl.h like it was done for =
+alsa timer ctl before</div><div dir=3D"auto"><br></div><div dir=3D"auto">bu=
+t what to do with unsingned long in syscall_defs.h ?</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto">there is abi_int so I changed simple=C2=A0 int=
+ to that.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Anyway with at=
+tached patch it still fails to play, while arecord -L /aplay -L show their =
+lists</div><div dir=3D"auto"><br></div><div dir=3D"auto">normal speaker-tes=
+t run:</div><div dir=3D"auto"><br></div><div dir=3D"auto">strace -e ioctl /=
+usr/bin/speaker-test 2&gt;&amp;1 | grep PVERSION=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0=C2=A0</div><div dir=3D"auto">=C2=A0ioctl(3, SNDRV_CTL=
+_IOCTL_PVERSION, 0xff8bd008) =3D 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0</div><div dir=3D"auto">=
+=C2=A0 =C2=A0ioctl(4, AGPIOC_INFO or SNDRV_PCM_IOCTL_PVERSION, 0xff8bcefc) =
+=3D 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0</div><div dir=3D"auto">=C2=
+=A0ioctl(4, AGPIOC_RESERVE or SNDRV_PCM_IOCTL_USER_PVERSION, 0xff8bcf08) =
+=3D 0<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">failed run wit=
+h qemu-i386:</div><div dir=3D"auto"><br></div><div dir=3D"auto">strace -e i=
+octl qemu-i386 /usr/bin/speaker-test 2&gt;&amp;1 | grep PVERSION=C2=A0 =C2=
+=A0=C2=A0</div><div dir=3D"auto">=C2=A0ioctl(3, SNDRV_CTL_IOCTL_PVERSION, 0=
+xff8410ac) =3D 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0</div><div dir=3D"auto">=C2=A0ioctl=
+(4, AGPIOC_INFO or SNDRV_PCM_IOCTL_PVERSION, 0xff8410ac) =3D 0<br></div></d=
+iv></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">Now, this is strange.</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">With additional patch aplay/arecord -l show trunca=
+ted list of hardware devices.</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">If I set=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">IOC=
+TL(SNDRV_CTL_IOCTL_PCM_NEXT_DEVICE, IOC_R, TYPE_INT)<br></div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">instead ot MK_PTR(TYPE_INT) in</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">linux-user/iocts.h</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">with my two patches</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">then arecord/aplay under qemu-i386 enumerate=
+s all host devices again ...</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
+dding-left:1ex"><div dir=3D"auto"><div dir=3D"auto"></div><div dir=3D"auto"=
+><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmai=
+l_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
+r-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmai=
+l_quote"><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+<br>
+=C2=A0 Thomas<br>
+<br>
+</blockquote></div></div>
+</blockquote></div></div></div>
+</blockquote></div></div></div>
+
+--000000000000dcfb7606248af2c0--
 
