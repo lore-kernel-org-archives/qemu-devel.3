@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14024D1D885
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A303D1D87B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jlH-00039A-48; Tue, 15 Oct 2024 11:47:03 -0400
+	id 1t0jlx-0006nd-D7; Tue, 15 Oct 2024 11:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jki-0001Ij-Vw
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:29 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jlr-0006c5-B5
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:47:40 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkh-0000qq-AR
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:28 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-20cb89a4e4cso24755355ad.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:46:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jlp-00012P-OJ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:47:39 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-20caccadbeeso41651395ad.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007185; x=1729611985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007256; x=1729612056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WPZ3O54SfWAZW6QbB+o6pdTzqrBR+joOSB0w++8bQOE=;
- b=rC1Whf0i32nTidP7DBpmvre+0GG7GZSoOxE+BazDM0/seSH0iUTx3tVti4wB2/MWqT
- ZZOe/BHbNFK2OFSHIPHH7e0+NHY+fsKEnd1A6H/lNDR5HEMgt/+UcEgN8DMswKHNXZTY
- sfBCtHn6Gf9wQzh0/2n0Un3matLBCADSy3bZcGhJMbohfZufVGZiW4pShMk4HKdpVG7Q
- gmizJ59LD912ko97pukBVydgvRcu/2nQUvjts3NtzKzYiWprnxGajQoTh0hIuRmF9/ii
- 4YCYM+aOAFpxMdixKeWrwvdPmIvKz0c1iml+lyCC3xbrFD6u1EP6kX0+BdUdESWrJcKB
- rUHg==
+ bh=TLrx6EmGTvRMia9SJl0yo7FPDa0fQJjS3ptDOLc8dGQ=;
+ b=qP3P2GJ3F0nVU/+2ahcZtarhQ6JASmY4Ff4T5poJ+Km4+fkCyjJmZfbMuTpF0Mrltr
+ b/8vMfNzRM5w9wVnpm0k0rbR9SDWzsruz5JJ90rK/UO30MFNEfSWWp8nJC5zSkPgXDe3
+ HGMxBCv8SknXDoNG3X5L1sJaj13TGQpq/mdfJD9OKeQjuX3YKQH7ZrOGmSQHSqRU8tnN
+ rerxy9oXozUH9zqM7T5xx1EVkiw/bUqjDwS/S+qQxw57aiDilNZ6HiDymsZiLBlYnbz7
+ RsxDXA87MxNUj1qf9b4dAYrKnRjsnkrHRICk7uepLLwH23ZXvweCSKHRrDJyiwPxhrU5
+ J+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007185; x=1729611985;
+ d=1e100.net; s=20230601; t=1729007256; x=1729612056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WPZ3O54SfWAZW6QbB+o6pdTzqrBR+joOSB0w++8bQOE=;
- b=WT+1Ob/piHgG8FnOGyN/Kle4+/Y//cCAZAFvuWL5fMEC05bc0UJ2m04qPqcDFdQxdR
- YE3uvcyhHM/ibFZoI93/yJGA0C+W3Fhp000rj++WKj+VkXQUYNbc+gZmU1zYtvwjI9Mm
- r3N+ZdSixMYw2NN2oM5UmtsdLH7v7ajS5vvFKqhrpTvYRKrkH3VgtrtSmMWlfHv3jC2R
- I/jjbZaAIGsvH6veaxOUEakGqqKBhALnwYu92SVeHu4MKoRPre0iyjrJNYa7IQJUWZx+
- 9u5nIbQpFrHKkEjyNaNQlzGR1jtU/n5kMXzBsCnHdWfv/mDGZUfqZrcDAuXZ+0L/VxI3
- 4uDA==
-X-Gm-Message-State: AOJu0YzlIcbVw7F4bP7+c9ujx0LQe9QJWZEjlNjucXlKYYa8p67rjH7b
- HsD1WRUB/K/12BIK1k1s8r1dHFNTqpsblnG/I25rzzCk0hd0GriOOdu0O0U/LW1bXfgefNCHwEi
- A
-X-Google-Smtp-Source: AGHT+IHNrH5aeLxab4iEA0Gx5smKxNHh95eveecRpONFnpmScd38jOAlZOvb67Qwpkr06672VLvCtA==
-X-Received: by 2002:a17:902:d584:b0:20c:9d79:cf85 with SMTP id
- d9443c01a7336-20d27f2805fmr9244255ad.54.1729007185052; 
- Tue, 15 Oct 2024 08:46:25 -0700 (PDT)
+ bh=TLrx6EmGTvRMia9SJl0yo7FPDa0fQJjS3ptDOLc8dGQ=;
+ b=Kj6ZgalO1mxjUnSmNK/p1YsC956nuEvCaLQ90n8ypM4ZSdkYwGmDwXZ1V/qjrtg3zw
+ GiyNjp1YRBgV+gfBDIL6lsjlTOIy1QRYSwTVa6lURwc30fBO/gdLokB++KdRcaJItwXj
+ KYu44R7lnxL4AGv4eHFoSr2zQIu/7WpajjAEKPYjUuuBKobidndrUgdJYmXNzKs3PUY0
+ PihclYZkgDV7Fevg7AHtRZVM51oiP3ft585CJdpxVxl6+gvH9ev0UmwiTK0X4E+VkEfB
+ HSf/1MypPNNg+0XfCZX0wmzWyzsWOcgRQx6V0sNOCZ5NvhfNj9EKw/YnOfy5BgCEYsgy
+ XJOA==
+X-Gm-Message-State: AOJu0YyjOewy038aLpzaTWau950iuJsonksjaKd29GeQeAojKzy6rUl7
+ wa5axDAaggx/eN/JWqj2EJ6vE9g+SvVtFF9Vt1/dehcKsGV7USCyKBo1ff4sXKFn4aG9jK8P75d
+ f
+X-Google-Smtp-Source: AGHT+IEPYGVhaHR3UOQ0OYfQPJLREiwux6vCRx1U5/EnPsydQBhqCiPNjzM7XOamrxVLZAjlUwBlug==
+X-Received: by 2002:a17:902:ea0e:b0:20c:bcf1:c70e with SMTP id
+ d9443c01a7336-20cbcf1f8a1mr148488305ad.13.1729007256109; 
+ Tue, 15 Oct 2024 08:47:36 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d1806c6a9sm13489765ad.302.2024.10.15.08.46.23
+ d9443c01a7336-20d1804b5e5sm13561495ad.197.2024.10.15.08.47.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:46:24 -0700 (PDT)
+ Tue, 15 Oct 2024 08:47:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/33] target/tricore: Use tcg_constant_tl() instead of
- tcg_gen_movi_tl()
-Date: Tue, 15 Oct 2024 12:44:23 -0300
-Message-ID: <20241015154443.71763-15-philmd@linaro.org>
+Subject: [PULL 24/33] target/mips: Rename unused sysemu argument of
+ OP_LD_ATOMIC()
+Date: Tue, 15 Oct 2024 12:44:33 -0300
+Message-ID: <20241015154443.71763-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,31 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly use tcg_constant_tl() for constant integer,
-this save a call to tcg_gen_movi_tl().
+In commit 6d0cad12594 ("target/mips: Finish conversion to
+tcg_gen_qemu_{ld,st}_*") we renamed the argument of the user
+definition. Rename the system part for coherency. Since the
+argument is ignored, prefix with 'ignored_'.
 
-Inspired-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241004202621.4321-3-philmd@linaro.org>
+Message-Id: <20241010215015.44326-9-philmd@linaro.org>
 ---
- target/tricore/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/mips/tcg/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-index a46a03e1fd8..4a12d2ca191 100644
---- a/target/tricore/translate.c
-+++ b/target/tricore/translate.c
-@@ -2732,8 +2732,7 @@ static inline void gen_insert(TCGv ret, TCGv r1, TCGv r2, TCGv width, TCGv pos)
-     TCGv temp = tcg_temp_new();
-     TCGv temp2 = tcg_temp_new();
- 
--    tcg_gen_movi_tl(mask, 1);
--    tcg_gen_shl_tl(mask, mask, width);
-+    tcg_gen_shl_tl(mask, tcg_constant_tl(1), width);
-     tcg_gen_subi_tl(mask, mask, 1);
-     tcg_gen_shl_tl(mask, mask, pos);
- 
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 6f047d6069a..6ba8371658c 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1957,7 +1957,7 @@ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+     tcg_gen_st_tl(ret, tcg_env, offsetof(CPUMIPSState, llval));            \
+ }
+ #else
+-#define OP_LD_ATOMIC(insn, fname)                                          \
++#define OP_LD_ATOMIC(insn, ignored_memop)                                  \
+ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+                                 DisasContext *ctx)                         \
+ {                                                                          \
 -- 
 2.45.2
 
