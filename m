@@ -4,88 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1118D1D88D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9ADD1D88D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0lSe-0007N3-Cz; Tue, 15 Oct 2024 13:35:56 -0400
+	id 1t0lT9-0007QF-3E; Tue, 15 Oct 2024 13:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0lSc-0007Md-DV
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:35:54 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0lSa-0006dQ-Nl
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:35:54 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5c40aea5c40so181280a12.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 10:35:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729013751; x=1729618551; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jWY7XzWZH9AEdLY2aHr1NP7a4yQuvuQNlf2nfUtAu00=;
- b=qKYsJFmv8M6P/0g9djO6a5HXJiXsQJJXW5sJLuww8CSRjHusVCsEKGiFK61WvM40Ty
- 0+3EQcEkv1rb042G1utQnlYsUoST4nG1HbOmSsN/ECeT3JBnQR3XqjZV9GpWKP8e9Wht
- gPxtaAvYluzLLOfi2RPcEPhSlxLpvy0uDQcwDBDyPrv1j7RqJueV4vDr6WcnBTbfFfqO
- m+hcbW9FjDoODHAJWfYHMs6ajz5/GP4/axf1x4aDtmVIRABZYOXUeQi8rD8f49EEcfKA
- 2NI6IngRlg+JfU6HXb+KoBhWwBYpNE4JCQJChiGM/Bj27DoiUK6aBAXdAjOl+PdR0f8+
- yH/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729013751; x=1729618551;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jWY7XzWZH9AEdLY2aHr1NP7a4yQuvuQNlf2nfUtAu00=;
- b=v8lKMsNEn8ssIFrgPttUNjbR100hYOuVp9pfaasZo2k16ivA7JkAYrObQ6U5aQNgfk
- 855wHlMpNmM6NIuan2NM5eiPU+9qjGC+VzHO9fNS0qM40oK/AeREY+ksaNek4rVLppNq
- tMGf5+EHLHgd+EXkd2bvqYYvsfzoVVhms6mMi5uP7liey9Fd9c6M64DjTQz8VzALw1mN
- nj5qe+crdyJoaXG5qyRAfpIjgI9vXp6JoXvB8AmXlJRtUO90pA9CxrAf3VWUe8+gF9Fp
- uiz6tAjmsRCC6VPs5H737q3FS2oceVGm1kfZLIo3hdnlywTcUKoas/WLOK0jd2owV3kM
- +/xQ==
-X-Gm-Message-State: AOJu0YzyteakQvyCqWCT4PeAv0B0MbQgpu+ibW13r7AWoAYyopYwDxkx
- NAUoAKvirFGcRTdnXvMgxggpUpU8oIbyIRoJVDx6xVHOc32T1/sPI53NFn3QFMohyVT0QiP+5gG
- 5eHBi/ylgCjo4eFJ2idgFyr7TXTZgWDQcVgl4DA==
-X-Google-Smtp-Source: AGHT+IEwOscD4AxH6rXdp/SCilbhWkxkH8QjeLSkRYuXom/e1ACud+CjgcontHRzLvnUZ4SnfePVMISzzJwPKeQIf1g=
-X-Received: by 2002:a05:6402:13c9:b0:5c9:46a7:527 with SMTP id
- 4fb4d7f45d1cf-5c94759070dmr13772080a12.17.1729013750498; Tue, 15 Oct 2024
- 10:35:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lT5-0007P9-KS
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:36:23 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lT3-0006ej-UK
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:36:23 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E74B698A2F;
+ Tue, 15 Oct 2024 20:35:48 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E814B155110;
+ Tue, 15 Oct 2024 20:36:06 +0300 (MSK)
+Message-ID: <fd1ebcaa-8086-4d9a-b26a-c869d892fbe1@tls.msk.ru>
+Date: Tue, 15 Oct 2024 20:36:06 +0300
 MIME-Version: 1.0
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
- <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
- <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
- <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
- <CAFEAcA95QmpcsrgCj5uE-Ng8ahNir3MuVEHWBCvjb3UwBbOFRA@mail.gmail.com>
- <ec0e8a75-c59f-41b3-b559-43c057fca8fd@roeck-us.net>
-In-Reply-To: <ec0e8a75-c59f-41b3-b559-43c057fca8fd@roeck-us.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Oct 2024 18:35:38 +0100
-Message-ID: <CAFEAcA9AZS1dGaLG85zZE8U0d7AcrLgKXNbhxkCoP+PLmbFn2g@mail.gmail.com>
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Aaro Koskinen <aaro.koskinen@iki.fi>, 
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- linux-omap@vger.kernel.org, 
- Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>, 
- Robert Jarzmik <robert.jarzmik@free.fr>,
- Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/19] UI-related fixes & shareable 2d memory with
+ -display dbus
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, belmouss@redhat.com,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,52 +110,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Oct 2024 at 18:30, Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On 10/15/24 10:13, Peter Maydell wrote:
-> > On Fri, 8 Mar 2024 at 15:41, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >> Thanks to everybody for your input on this thread. My
-> >> proposal is to drop from QEMU:
-> >>   * all the PXA2xx machines
-> >>   * all the OMAP2 machines
-> >>   * the cheetah OMAP1 machine
-> >>
-> >> leaving (at least for now) sx1, sx1-v1, collie.
-> >
-> > This has now gone through. I'm now looking for test images
-> > for these remaining boards, so we can keep them from breaking
-> > when we do refactoring and code cleanup/modernization.
-> > Specifically, I'm looking for:
-> >   * QEMU command line
-> >   * all the binary blobs that go with it (hosted somewhere that
-> >     doesn't mind when our CI downloads all the images to run
-> >     its tests...)
-> >   * ideally, exercising the SD card interface if present
-> >
-> > Could the people who are still using/testing these boards
-> > help here ?
-> >
->
-> You'll find everything at https://github.com/groeck/linux-build-test.git,
-> but give me a couple of days and I'll create explicit information.
+On 08.10.2024 15:50, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> This series adds Listener.Unix.Map interface to -display dbus, to allow shared
+> memory for the display (similar to Listener.Win32.Map interface).
+> 
+> While working on it, I collected a few fixes. I can re-send them in a different
+> series or queue them once they are reviewed.
+> 
+> thanks
+> 
+> v2 (after Akhiko Odaki review):
+>   - rebased
+>   - introduce qemu_pixman_shareable, to reduce #ifdef usage
+>   - fixed bad mmap testing
+>   - fixed mingw cross-compilation
+> 
+> Marc-André Lureau (19):
+>    hw/audio/hda: free timer on exit
+>    hw/audio/hda: fix memory leak on audio setup
+>    ui/dbus: fix leak on message filtering
+>    ui/win32: fix potential use-after-free with dbus shared memory
+>    ui/dbus: fix filtering all update messages
+>    ui/dbus: discard display messages on disable
+>    ui/dbus: discard pending CursorDefine on new one
+>    util/memfd: report potential errors on free
+>    ui/pixman: generalize shared_image_destroy
+>    ui/dbus: do not limit to one listener per connection / bus name
+>    ui/dbus: add trace for can_share_map
+>    ui/surface: allocate shared memory on !win32
+>    meson: find_program('gdbus-codegen') directly
+>    ui/dbus: make Listener.Win32.Map win32-specific
+>    ui/dbus: add Listener.Unix.Map interface XML
+>    ui/dbus: implement Unix.Map
+>    virtio-gpu: allocate shareable 2d resources on !win32
+>    ui: refactor using a common qemu_pixman_shareable
+>    tests: add basic -display dbus Map.Unix test
 
-Yeah, I had a look at that but could only find the rootfs
-and got a bit lost trying to figure out what the QEMU
-commandline would end up being :-)
+Is there something for qemu-stable in there?
 
-> Is it ok if I create a github repository specifically for this purpose,
-> or does it have to be direct file downloads ?
+Thanks,
 
-A github repo should be OK -- I'm pretty sure we can download
-from there (e.g. we already download some rootfs images from
-your linux-build-test github repo).
-
-> Note that my tests only boot from sd card for sx1. I also don't have
-> tests for sx1-v1, only for sx1. I don't recall if I ever tried sx1-v1.
-
-Looking at the QEMU machine model code they don't differ
-much -- sx1-v1 has a bit less flash, and that's about it.
-
-thanks
--- PMM
+/mjt
 
