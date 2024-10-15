@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADADCFC27C
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1B8D1D879
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jjV-00008v-15; Tue, 15 Oct 2024 11:45:13 -0400
+	id 1t0jjk-0000Pf-2r; Tue, 15 Oct 2024 11:45:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjT-00006l-Db
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:11 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjh-0000Jl-MP
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:26 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjS-0000hp-1m
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:11 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2e06acff261so3678285a91.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjf-0000jQ-SR
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:25 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2e2e050b1c3so3457605a91.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007108; x=1729611908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007122; x=1729611922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OHZo240/MKAErrBWgP22VqVce6gGXpeJw8VH+45Ycx8=;
- b=bF5XwocGiiIMkaND/mOr78bBQnuvMgxcoT/khKVInmDBm+XhH/zJ9n/1DPaaNz1JFN
- XTarrBCL67lA0Z+nX743vN7onYTdsdxdqbpd0OjPLsXv75s8Bo6Zp2iizUIr7o4+2PlD
- 7PClDzBRsIQ/loXeqGjHScaIFBJQwzkFkagt4lsH2M6QiL47S6KYnPuc9eD3NzheM11M
- /cDMAO0MZba8qYs1W//fxaZ7AMVmVJrEw78yitFEucmctujLWUOIULGqWrUrgo9vybNP
- Gl/8DYztW/9oRB1TgglXN9q/pLBSZhuIV60vVOoNPZb8//PgYRjltmPV+ya0BSSR0XpO
- QAYQ==
+ bh=qKnzIyfB55jcDJiuOhbkwT1go1+QVX88i2HpqTUCIA8=;
+ b=xhVdIf+nz21MyhAwPReP3N7C+ruQfpA0aw0y/6tWfVTaULFQNuSyKq20b5PX2xJKDh
+ xBa6n8eQoy03NIIDOswLmT8gL8LST2lVDcHghrK/579a3cKLE+EKsOKQGL+k4UyhRpv8
+ 2EH2s07pgsYHpT9VksPBBsTgaIrFzwhd6SFjPO5IxFrOchU25Bd5hoIyP6oYDCM5Ypks
+ 3E2zwvEy62zihuCUmvBYnf/6bvV8BTkbvA0kXEW+rGtp6mIQPD6enhm5an3fawF3/Fq3
+ NJh4+vujelWYr0bZkXqLpevh5FjtwBTbRkOUEA74oXShJpXV7mSG0/52si3qsVoCnizh
+ AkLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007108; x=1729611908;
+ d=1e100.net; s=20230601; t=1729007122; x=1729611922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OHZo240/MKAErrBWgP22VqVce6gGXpeJw8VH+45Ycx8=;
- b=rn9cUZ5tWmiK+hmxDGTc1+vyyF856DW8JsCq8haXc7vswpDz85GIO9l2JCZnbWtVO6
- E9Y7Zw1nS3TeLYWCQHTvrls4Z3QzOsORNn2Mz015y+FzwUqGA9FPHg0bD2tUkROiv8Ds
- UrSzOUF3Gy1sgLNiPj4AOq0XU5QK8CIBH94rfIRYw+BoscCuemhKeqCw8uQLzcp2juAc
- h6gnbS13OpE2YxhyZ9wdQsD7LiRYLBCJrk6fryRcqecXXMEna90KsUHLL9KRlgXSezS9
- 9girt8w+Rz6Sw5y0h3VepXFF9nExt2QPyyGWJgNmDR9kcag7JpdTqdrhukBZlxmnN8f8
- UgZQ==
-X-Gm-Message-State: AOJu0Yy1D6Ueu1SddwRxab69CuoLPtm4MXlfKg+WrJj2NyZ4XZRC5OmB
- 7LxdX5eoGH4oQNXlEvI1ljZbwzKQPmAJioFOepcdtSSrYB2eSn9odUa0+HKPVe0FnDZnzUtaOzb
- T
-X-Google-Smtp-Source: AGHT+IGXlQoL40ZaflYaRzMdlDI5rCeFVNJtXlZbSR7n5Hkr4o1y9AewTgLOHp9SmfkesWAE9VDWEQ==
-X-Received: by 2002:a17:90a:2d8e:b0:2e2:b513:fdca with SMTP id
- 98e67ed59e1d1-2e3ab820d96mr747060a91.20.1729007108327; 
- Tue, 15 Oct 2024 08:45:08 -0700 (PDT)
+ bh=qKnzIyfB55jcDJiuOhbkwT1go1+QVX88i2HpqTUCIA8=;
+ b=fZkOZJXtUHIx3AIH5VSw6aX6E0yq00DJXlBBjL/2y3t7dvrA93VCIrH2/0w2jFTZ9a
+ ZMgmpp74MijUDJWPbOdn6MekBBGXXyJqK+YklI0phGZsmnTpkpbntnoGVxASIIBAkwvm
+ MNs2ewpa9TWL0pm2rGfXJG1lp20fieSK01AixcPh8GWYTiyU2PebBArxYLkgkod30s9K
+ kv88bEGxzl4Z2XG4zTYIZ7bO+PiJbB8T1LutbwuCs722BkyAZFBqGXaUo97YuDbPZ9jG
+ 5PjpOt0KVKsLfb0myD7z59upxSVm00I24gSjGP9k0W39ykEHlpOShw0/Naxs4T4/vPdg
+ N5Gg==
+X-Gm-Message-State: AOJu0Yz7ftu1mtU5oqsdinU2DZ4Sqra3sP65gxhu67j4dt6dqoWenasp
+ 1i4F3J3f663sGeWSly4kr6EAG6VYQJxI92egNIib+1BCfVvRV8QGyEVBtx3OxgpeGXykWWvCNdl
+ w
+X-Google-Smtp-Source: AGHT+IGXlXTobLjjFWgdi6VRhIDkgkA7Psdgd5HHHIfzpXR/cCIx/+Em5ScixYF3lJpVVNM0HPsNVw==
+X-Received: by 2002:a17:90a:3041:b0:2e0:8780:ecb with SMTP id
+ 98e67ed59e1d1-2e2f0af2eaamr22888742a91.12.1729007122017; 
+ Tue, 15 Oct 2024 08:45:22 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e392ed396asm1971278a91.21.2024.10.15.08.45.06
+ 98e67ed59e1d1-2e392f5f7f7sm1941754a91.37.2024.10.15.08.45.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:45:08 -0700 (PDT)
+ Tue, 15 Oct 2024 08:45:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 03/33] exec/memop: Remove unused memop_big_endian() helper
-Date: Tue, 15 Oct 2024 12:44:12 -0300
-Message-ID: <20241015154443.71763-4-philmd@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/33] target/alpha: Replace ldtul_p() -> ldq_p()
+Date: Tue, 15 Oct 2024 12:44:14 -0300
+Message-ID: <20241015154443.71763-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -94,33 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last use of memop_big_endian() was removed in commit 592134617c9
-("accel/tcg: Reorg system mode store helpers").
+The Alpha target is only built for 64-bit.
+Using ldtul_p() is pointless, replace by ldq_p().
+
+Mechanical change doing:
+
+  $ sed -i -e 's/ldtul_p/ldq_p/' $(git grep -wl ldtul_p target/alpha/)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241003234211.53644-3-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241004163042.85922-4-philmd@linaro.org>
 ---
- include/exec/memop.h | 6 ------
- 1 file changed, 6 deletions(-)
+ target/alpha/gdbstub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index b699bf76886..acdb40a9b3b 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -164,12 +164,6 @@ static inline MemOp size_memop(unsigned size)
-     return (MemOp)ctz32(size);
- }
+diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
+index 13694fd321e..bf5091c2a6e 100644
+--- a/target/alpha/gdbstub.c
++++ b/target/alpha/gdbstub.c
+@@ -59,7 +59,7 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUAlphaState *env = cpu_env(cs);
+-    target_ulong tmp = ldtul_p(mem_buf);
++    target_ulong tmp = ldq_p(mem_buf);
+     CPU_DoubleU d;
  
--/* Big endianness from MemOp.  */
--static inline bool memop_big_endian(MemOp op)
--{
--    return (op & MO_BSWAP) == MO_BE;
--}
--
- /**
-  * memop_alignment_bits:
-  * @memop: MemOp value
+     switch (n) {
 -- 
 2.45.2
 
