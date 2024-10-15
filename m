@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2228BCFC293
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 11:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A72ACFC293
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 11:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0fre-0007g9-54; Tue, 15 Oct 2024 07:37:22 -0400
+	id 1t0fsB-0007kY-OT; Tue, 15 Oct 2024 07:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0frV-0007fh-2B
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:14 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1t0fs9-0007iW-IO
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:53 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0frR-0005EY-05
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:12 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-37d4ac91d97so4544598f8f.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 04:37:07 -0700 (PDT)
+ id 1t0fs7-0005Gg-U2
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 07:37:53 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c935d99dc5so5949790a12.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 04:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728992226; x=1729597026; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gdwXexYvM2Az81H0FuzwQ/GzEWh5Z5lRMjEDR0oLERk=;
- b=q7zlWPK0LnoBmcRZiK8Pi1F1sQtsrfOvXyfPiv55wXRpaiTdbxi+oYLoC4G7iMagYr
- EE67JMoFJXn9kUJc1ZobdvWHA/xG/lxraS6rtuZsWMXQEFb0jhAI9+jA7UJtBiAxPawC
- IhxHp9QW/70iChD2FHE5BmAa3t+lWwGn5ux5Ar5u/JJD/kPFLjCmjXyd11SqKjhBnEj+
- WE8lYJX1QXBsFK6uuNM7k0CdFI8KierXYV5RvTRYEAp+fjXBp1ct+3TJfWmN4DwAnTyA
- U6X5Fnnh77MAtiyiGbqRLwN/8TRlAOxdwcTZ9dqryQHsypYmAptfk5POMFURYCcNmCZE
- GaHA==
+ d=linaro.org; s=google; t=1728992270; x=1729597070; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bnkT8lZ+Mj0DDbRbpmSyygpqDjaX+zYFFNK18gXl4Bw=;
+ b=NRH/xAnpmHRh9Gywei4PX2fj6VocAbvNnJ5M8YCafcvkrzAUzQK5XdnV4mRaQpI7Qs
+ bEl64e175LAA6kgB0xo4bdUef4g/6PcOUNRpznZX1kklvYJgAUf78CBUOvLHdZyZMI6G
+ fGdpRfU3ZM7CMP/IHsyg9UDtERrsLMmR4Q8MZmBAta3ICNLFQAR3f45VMSAx04QU0lbJ
+ J31IDx+jgNFf84Jal8rwGIq0qF0kwTsA4/SGfIDyaDDnHRRJMjAUC9jmOP15NamdUIWj
+ BN4IcSbHsowyuIoY9Ijrug1tlsWgcjw2G1xq0Fh/O1FUFClYEFv0LD6ey1WZA5iLMu/u
+ N7lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728992226; x=1729597026;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gdwXexYvM2Az81H0FuzwQ/GzEWh5Z5lRMjEDR0oLERk=;
- b=g1u6LbyUwwqxwVZ+p0qup5zOfFl8heDvcBHBfIHSmWt9WnmhXeU1im74eemLL0aus/
- XRNTnLqtTcrIJIpBoqGx1PZ16sKexbPgeQ/SV7ExTLJw74aPqTQ8juw1xGRhijrJJpJU
- 6Td2dyX9R0CdFDTTZC2Zr10KLZMouJRIrPgQ2W4N7/Vj3OZ+5JWrQ8V7+MtEpduM3kDs
- /T2DuSwUyzwtXsixby7c2SqcwtWBEsTHuWLx2XfzSdZxcWZHtk+1XNc8hX2v0xwUZ44f
- k+y7ZuJrFp7wdJaMToE/7fh1aSyoWZGSXwmf6SJpOWATTz8SWR8aHxtQGrIkv2OdBi9l
- Ec3Q==
-X-Gm-Message-State: AOJu0YzxnThdUcqkQfUFKwKsRHGxjdI9As6sJepozXRcMZ70X64+emA1
- uS1YQaCT62cnzArrpINiZd9Yve6juqhg/5+ahyH7wkKfV5IypmqdTNtzg8LGeiSIN8BmyyrD5+A
- 2
-X-Google-Smtp-Source: AGHT+IHcCdy3QVPz3eDkdB8PTE5+nS3xFc1FddcpxblXR/G3LfRmLSUmEinqHyoOP6msvsG3jsJGPQ==
-X-Received: by 2002:a5d:4809:0:b0:37d:5318:bf0a with SMTP id
- ffacd0b85a97d-37d5ff27c25mr8922872f8f.1.1728992226231; 
- Tue, 15 Oct 2024 04:37:06 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fc40f94sm1339329f8f.106.2024.10.15.04.37.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 04:37:05 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] tests/qtest: Raise the ide-test timeout
-Date: Tue, 15 Oct 2024 12:37:05 +0100
-Message-Id: <20241015113705.239067-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1728992270; x=1729597070;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bnkT8lZ+Mj0DDbRbpmSyygpqDjaX+zYFFNK18gXl4Bw=;
+ b=A1fGlsdgp60Yl5henLlw7M5nUNy5Aekc5b42Tl1e7pT0JXpBoNWnQ9MOz/nseOCf7t
+ FZRM5DS3vG4KM3qioe/wJGCqWtwGWZJ+nJpfh4XCw2MMHh4hYuNLIJZVt7hVoQ6JLNTP
+ EMnWz49hKHzaJvkIBYhCt3asZOGsuX2CvPfg4Eij8FyqNko3wd7P+WYuSyeE9ljrHxpk
+ RWBPqDsUG7XMYyJQVApP+9MKWHG6Lfyl9uPzxwawzSVUxQA7wD/ILRdH2YBR+0jAjprY
+ TkEwVVPVzdp4itKHDk5t5thAkL3lMGeVAERV53Q1l10MJf8DiCLfF1rTMhdZoEwF+EH1
+ 6anw==
+X-Gm-Message-State: AOJu0YxbStzN9o32MvVK9v5Gum8vDa4ZjMKP2xzMInYdb1H+0ZuVbfbh
+ yxVEQRTwE+AXRxQklqOtLWSoGAxSaDzhpr8y1nuQlchmcwHv1L8+FamU/UDapy6TAd09IgS2Oox
+ ijrLGKh8D7TtgZuw834YnP1OD0JNe1regfBPqpw==
+X-Google-Smtp-Source: AGHT+IGgpV5Ogp5/aMc9ZVzZQM1UIPGKp+l+MuV2aSkORJkJFyorRXFwf880NTURiPpjjgW8cCxDqNchXyDQwwxcB98=
+X-Received: by 2002:a05:6402:51c7:b0:5c5:cd34:48d6 with SMTP id
+ 4fb4d7f45d1cf-5c995094b79mr11526a12.1.1728992270240; Tue, 15 Oct 2024
+ 04:37:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+References: <20241015085150.219486-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20241015085150.219486-1-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Oct 2024 12:37:38 +0100
+Message-ID: <CAFEAcA98cfv89RJ0qMSGBpZLR_ZVQi2c3ob18mvb0Ng7wah5Bw@mail.gmail.com>
+Subject: Re: [PULL 0/8] Chr patches
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,33 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ide-test occasionally times out: on the system I run
-vm-build-openbsd on, it usually takes about 18 seconds, but
-occasionally hits the 60s timeout, likely when the host machine is
-under heavy load.  I have also seen this test hit its time limit on
-the s390x CI runner.
+On Tue, 15 Oct 2024 at 09:52, <marcandre.lureau@redhat.com> wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The following changes since commit aa54f5be44be786636a5d51cc1612ad208a248=
+49:
+>
+>   tests: update lcitool to fix freebsd py311-yaml rename (2024-10-14 15:5=
+4:24 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/chr-pull-request
+>
+> for you to fetch changes up to 95806c7bee232e995ffd963a6fea0a34fbabc937:
+>
+>   tests/unit/test-char: implement a few mux remove test cases (2024-10-15=
+ 12:48:53 +0400)
+>
+> ----------------------------------------------------------------
+> chardev patch queue
+>
+> ----------------------------------------------------------------
 
-Double the timeout for this test so that it won't hit its timeout
-even when the host is running more slowly than usual.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tests/qtest/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+Applied, thanks.
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b207e386965..e8be8b3942d 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -4,6 +4,7 @@ slow_qtests = {
-   'bios-tables-test' : 910,
-   'cdrom-test' : 610,
-   'device-introspect-test' : 720,
-+  'ide-test' : 120,
-   'migration-test' : 480,
-   'npcm7xx_pwm-test': 300,
-   'npcm7xx_watchdog_timer-test': 120,
--- 
-2.34.1
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
+-- PMM
 
