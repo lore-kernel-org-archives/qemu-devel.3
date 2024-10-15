@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D01CCFC276
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 09:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FE0CFC276
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 09:31:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0dqO-0000y8-Il; Tue, 15 Oct 2024 05:27:56 -0400
+	id 1t0dt4-0001oM-T3; Tue, 15 Oct 2024 05:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0dqM-0000xl-Us
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 05:27:54 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1t0dt3-0001o8-OJ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 05:30:41 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0dqL-0004qR-Fy
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 05:27:54 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5c97c7852e8so2844174a12.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 02:27:52 -0700 (PDT)
+ id 1t0dt2-0005Ji-4m
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 05:30:41 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9454f3bfaso5470742a12.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 02:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728984471; x=1729589271; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tgpPHOMHhB56moS4r7vrLRohooFORWaeNRHN7Bg0Hk0=;
- b=AFBObu/bpWLJkLiN3b7RH6DT07w8mXbNkU9Wk9VfZC6mkoG59r4kVv9+fN/tiQdEsB
- Rz/1ZaZq4hmlwJRM7GWjjvdp1EUYZrAmKFce/oKaU1/8W1C6++J+MYyOsTVzkSp6A7yk
- ywNu385t7VIz0Ix9nChOWOMM739zG4JZS63qx+uarA/9M8teJ/TyXlcb9sdfjwrylbnZ
- mCPMzzt0hXXc66B+4RY+goVuXqYkgeM+R1BN0uNJrWciL9BhG9we3+nnVkUH46t96or8
- Rsjr2w+x+0D7ZdCl6OpGrXnXZHYdieXwWIfx6X+5igIqsTBqnsqLP70kl1PQy+UAbJ6D
- k4Gw==
+ d=linaro.org; s=google; t=1728984638; x=1729589438; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LOVskkNiyvffesZLUQWmCggFUG+nC1de+OfZv6/KIac=;
+ b=gdFL6jIsqI8hrdlx6PZUBaKx5r/Sj7a3SbH2m/oGUkD9NDak7NUbRXGeUAw8qv8Es1
+ NoW60Jg6VnBpRkUg4I8sVH6vncmmKhLrsj9u8aIXTh+12IL87Tzru1PzeQMQj8qAmR+o
+ CnjjQUfmpM2OOnr/E8BgqKc6xq+YCgaDnSloqas3fx9LuJQYfJ2dswnyrCmhP3lPztrJ
+ ldlGMNi+6F4jTut5p3va9xjhFcZ4fj1OdqLF/gxl7Gp2rlx7CaPjvREFBOpGu1S5wMR8
+ xqlkem6KxSLiQ/lKSOy8Ad8M6TXoPXgAPuHQb4iJcDlpxFVe8zlm5ebv9XlTGWPKK8jC
+ aCIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728984471; x=1729589271;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tgpPHOMHhB56moS4r7vrLRohooFORWaeNRHN7Bg0Hk0=;
- b=J8sRvNGP6VtY9W7RqnY/Y3T6+ofbNMChOP5WrQYOHrf7Nikkh2LTuXr4Qv4+3KZCi0
- 4Vz47yyTZX5JUZzyL12Gt14fVsw6aclJ2LBnquznCI66QXrm84kGf61Xp2oZ3IvlGdPM
- 1vls6RipR5TV1bZmrR2jGqWoe8fBiZuJ27MOFFHbh1HtNT+mGzGnBzVgSjMPIjiPiDRz
- iXAwBe1EArI1++PuL9tuaXjqdXFA1kZZQjWBXhJ7mySQk//YbBQMe+tRWgCU9V4QDYLH
- mcv070ZPkC8bZeqotmLqEq6/HDo5XE/FWVG3z1Oa+hPX50jgLb2F1QvmcHdr0vcvTneo
- qG8Q==
-X-Gm-Message-State: AOJu0Yyy5wUdsQUQU3cE3rII+OYALANHNe0ORjQBSLMkyORrUogvHOMi
- qug3yQVvPYajTGwWVyVM1/Nv2LmhjTXp6Q2SOZaBMKLhhkBCK8NnRYwsKh+Ix4N/kAjdJW8P3jX
- hfqq44oaHcX1wVVNtwXTdGg9HnyX49d2emvkxs9Jb0JQOCjyr
-X-Google-Smtp-Source: AGHT+IE65V4pHqNZZieJFL9FWMscyKPq1oq4EQ3etlDwW+qPPm9AzLgtjATlVTX7ft366uLBM3noGCsndAFMcY/qbP0=
-X-Received: by 2002:a05:6402:2685:b0:5c3:cc7d:c29d with SMTP id
- 4fb4d7f45d1cf-5c95ac09825mr7747372a12.6.1728984470867; Tue, 15 Oct 2024
- 02:27:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1728984638; x=1729589438;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LOVskkNiyvffesZLUQWmCggFUG+nC1de+OfZv6/KIac=;
+ b=kCYjLXNf/oheZtrv9BB5XDgcdLDoIV7i84YYN9gJxz/rB8WsJzaqVP64z5Su8wxwed
+ cqstoCQ6yWwnYdqooAMZbil5tYFZJOlEScv7VutPDlXk5AfOfwxdyExov1pJtEert7RX
+ v6ccPRkpG63c3YOseimX24V94l3KoR+o4kuGNQE0geJWgKN4YposFbgsizXFesh/LEzw
+ insJzeYxarg3ivsPh2JdrpJw80ro/ECfDbk6JAP7dgpLziVI531psuEDCCBxGHmLZe6F
+ TB5yr2zySTtaxyGvIhw99UEzZIBmUNfxXGGzcddmqHJIbeiw95wV6dVX4gNxgIzFbBV3
+ hUwQ==
+X-Gm-Message-State: AOJu0YxbqKwgE8wGyUCPX6zvUDQQwNRK2C58py04hIko2VRRGVJ7VGhw
+ yVSOWWf7lhFMVmS+eCioU7Oalfi8CjhuiQUBOrDQJr5y2Di0uTtjpDxf4k3D7h2+FDiOqBCh4Pd
+ yPbyd2inqvxC2zMsSyMYsmiH6WtNzM4FOGz4ae+GujuiBRHmf
+X-Google-Smtp-Source: AGHT+IFkue5a+W9SuAWFJP3zbhy/R+pKr2ZcKYdtB0Prj5qKlprigaDZoS8bRS/L3JB6zdTWBLo0TawYkLK4tHglw+M=
+X-Received: by 2002:a05:6402:1e91:b0:5c9:85e8:e866 with SMTP id
+ 4fb4d7f45d1cf-5c985e8e9f1mr3580991a12.22.1728984638439; Tue, 15 Oct 2024
+ 02:30:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241005205748.29203-1-shentey@gmail.com>
- <20241005205748.29203-2-shentey@gmail.com>
- <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
- <E3D8FB20-605D-4E29-A430-DD3C4B01102D@gmail.com>
-In-Reply-To: <E3D8FB20-605D-4E29-A430-DD3C4B01102D@gmail.com>
+References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Oct 2024 10:27:40 +0100
-Message-ID: <CAFEAcA8cEFprRy-9AbPsGLU4p1DmVepmWCsgY1LkKh26tHo6qw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/net/lan9118: Extract lan9118_phy
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 15 Oct 2024 10:30:27 +0100
+Message-ID: <CAFEAcA-Cz3AXCvnUEZfNymD3rVbFec=hqrnR3RC-TVT+moFBFQ@mail.gmail.com>
+Subject: Re: [PULL 00/20] UI patches
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,39 +89,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Oct 2024 at 19:50, Bernhard Beschow <shentey@gmail.com> wrote:
+On Mon, 14 Oct 2024 at 14:39, <marcandre.lureau@redhat.com> wrote:
 >
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
+> The following changes since commit 3860a2a8de56fad71db42f4ad120eb7eff03b5=
+1f:
 >
-> Am 14. Oktober 2024 12:47:52 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
-> >> +typedef struct Lan9118PhyState {
-> >> +    uint32_t status;
-> >> +    uint32_t control;
-> >> +    uint32_t advertise;
-> >> +    uint32_t ints;
-> >> +    uint32_t int_mask;
-> >> +    IRQState irq;
-> >> +    bool link_down;
-> >> +} Lan9118PhyState;
-> >
-> >This takes state that was in a QOM object, and moves it
-> >into something that's kind of a device but not a QOM
-> >object. I think we should avoid that, because at some
-> >point somebody's going to have to QOMify this.
-> >
-> >Making this a QOM device is a bit awkward for migration
-> >compatibility, unfortunately.
+>   Merge tag 'pull-tcg-20241013' of https://gitlab.com/rth7680/qemu into s=
+taging (2024-10-14 11:12:34 +0100)
 >
-> Do we care about migration compatibility here? Or is it
-> sufficient to check the version? In the latter case I could
-> QOMify it.
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+>
+> for you to fetch changes up to 4cd78a3db2478d3c1527905a26c9d3fbee83ccac:
+>
+>   audio/pw: Report more accurate error when connecting to PipeWire fails =
+(2024-10-14 17:35:24 +0400)
+>
+> ----------------------------------------------------------------
+> UI-related fixes & shareable 2d memory with -display dbus
+>
 
 
-Doing a quick grep it looks like the lan9118 is only
-used in a set of Arm boards and none of them are ones where
-we care about migration across versions. So I think we're
-ok to break compat with a version-bump. We should mention
-the affected boards in the commit message.
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
 -- PMM
 
