@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97A2D216AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DA0D216AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iNS-0006zP-OX; Tue, 15 Oct 2024 10:18:22 -0400
+	id 1t0iMZ-0005Rv-Io; Tue, 15 Oct 2024 10:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNP-0006jB-M4
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:19 -0400
+ id 1t0iMV-0005Ko-UY
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iNI-0003MN-Jc
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:19 -0400
+ id 1t0iMU-0003Hi-Gk
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001891;
+ s=mimecast20190719; t=1729001841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cpJdA83nBEhswvkhtf7QXYXBo8SHoSaSMr1r6sVgYmo=;
- b=BBuyZrZcuXjEKKH+n+MkzabdytoSh0T9wRToks/+Pdt+n6Yuxi7Nl0PMGZB5264J9bNPQ8
- jOeC0+ItRrBo0DieLn+8ilrJ+BD8ebbvo8IQ/JfIrz7L3kLaIaGyAzbUE0ti5bRzHo6mzL
- VzVB2+UGaIqCG4lVZj6TWz7dGOUhYLY=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vJhntmVL+IIZJoQgkrQP49+0DkjO0yya6uVPlEEo4vc=;
+ b=eMRvlsNnSX5KoDgFDrjnsVurF1U7dctzMoTDkUvAXm3lKuw9leI4ONaepei241rpvR8eE2
+ wNKZCoy4GZdkT4DLqcHHda7FUu51s6q69EYi34OrXCS225Z5HYdafZz2wXG6KylWBHvrKS
+ 4dcUIu1qg+pw0hYFfKVytc8n1YjO9Ko=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-G4HuPkm9O3iFsWSU4zDfBg-1; Tue, 15 Oct 2024 10:18:10 -0400
-X-MC-Unique: G4HuPkm9O3iFsWSU4zDfBg-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-539fb5677c9so1812784e87.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:18:10 -0700 (PDT)
+ us-mta-206-WVDjH4uuPceg2zfaLSsG9A-1; Tue, 15 Oct 2024 10:17:20 -0400
+X-MC-Unique: WVDjH4uuPceg2zfaLSsG9A-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2fb5a195d63so8711551fa.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001889; x=1729606689;
+ d=1e100.net; s=20230601; t=1729001838; x=1729606638;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cpJdA83nBEhswvkhtf7QXYXBo8SHoSaSMr1r6sVgYmo=;
- b=MVwU3r/vUK7uIZjvdJiXG8r+2ocNqk45ssaRzQXNBpxRTqhqC+PTXJpypMm7YsGHPG
- lELjhTDupEUTDaoAmFMWXKh12ROvmQrdRo4icqQ1JMxcp9UQfHN/I20sjLVO4XSYtreo
- WgSwZVocr24ayglZYeaBShfefKGQ1TavEOosqXt1KdkaTe0c5Ltkf9E3Y02qmxYKNLhh
- mWWhsrIZatsCNMD+s3jh2+z/uLZgYbJLqcyM6O0H2ep9RXkwTgwyg9hQnP2YasFT2X2r
- vvRfjnQZlbBdXKiVBsIiN1yJVlLuN/9WweG9TWrRe11L2BUUQG324G/Ibu1zfWjFVg2B
- UfYQ==
-X-Gm-Message-State: AOJu0YxPYXSbCvwLXtuNiNMhwGvP3e2Gp9dNQP954OlHN4TS34/Frj2c
- LkOt/LLnVafH2mSeQTCQW+u7IP9fmwziTbl26wn6+bkXOAgnxWu5d4DV6QAwlgLSxHZYZopusWG
- FuS4FE9jS3CBEAQ5LjOP0V/tWN6s7uS47KPuhH6PXmLeA9TpltLtvYydN8oPRCTDJD8vabhDjj2
- J9bqmWIbunbQACi/eXJ5RtwUEELlg62r2p2BV4qCk=
-X-Received: by 2002:a05:6512:1091:b0:539:f13c:e5ce with SMTP id
- 2adb3069b0e04-53a03f77ea6mr386776e87.46.1729001887181; 
- Tue, 15 Oct 2024 07:18:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4z10lFHeI9bXOxGZUppvUsyPYkz54Qw4BgbmqCDzrlGGtNbfbLkXYk6eGVmJX8h1WBPd4Kw==
-X-Received: by 2002:a05:6512:1091:b0:539:f13c:e5ce with SMTP id
- 2adb3069b0e04-53a03f77ea6mr386689e87.46.1729001885131; 
- Tue, 15 Oct 2024 07:18:05 -0700 (PDT)
+ bh=vJhntmVL+IIZJoQgkrQP49+0DkjO0yya6uVPlEEo4vc=;
+ b=YDWDUoNmMeYFgvlUmXHz0avMn21S2WAnJi9ybx9zGIikAP8pKP0Cbs6shSE8BRrg/8
+ K3OuRqnO1B7q38gaMri/g5PMDS9+dc6R6/jkBbn0s1UtgvotzHBgTBiLDbOI33BNYBRS
+ 2b77WmkjCTfFQOBqu4Klo1MjNMK2TBz0jdxt4MHxU8d/TZn8I3bg74dGpJBXQfsYiWjA
+ Jl6e1T+LV3ZkKr1UaGO9K+EkS01+XPjEznDTfZZWDJQ/Zj1NrAxekn6nBf1kruOk6FTH
+ +75OgdJtLf/y98VkIGrPGv+FBlcjFH5OT3czbnYc/nPsevRurwGxDUrwM9HZCXDqaZZ9
+ JVZw==
+X-Gm-Message-State: AOJu0YyeEGvOUBbwNntFxXsyh6yJvpxfK1jlNglPcLE49CadfUXIEHuM
+ PPla00U7DmFaTA+bcHPVkDNEnSt/u2qJhRnbHD3ZhvoldEZNjCiUHO0JAlGqctPPT5jmQHrTAqp
+ ndH8Rzv9sVASbgwKGaIri9VSccP0WZtxoOp+p8TNF4aHlTlTxO+XTzuQaCRQjJ6MS4nLjeloOJr
+ nn1P3/6zofpGVM7tzQRONXs6Hi0QbMehJ+0OMMqP4=
+X-Received: by 2002:a05:6512:33cb:b0:539:f7a2:65ac with SMTP id
+ 2adb3069b0e04-53a03f4b3b7mr457756e87.35.1729001837754; 
+ Tue, 15 Oct 2024 07:17:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxcK0x6gkUD+kDozE05CQ29/tC4qjPaqEuQAyb+/qI5zgE6Wz/1MStErq93T3bE8luBzm7Mw==
+X-Received: by 2002:a05:6512:33cb:b0:539:f7a2:65ac with SMTP id
+ 2adb3069b0e04-53a03f4b3b7mr457724e87.35.1729001837201; 
+ Tue, 15 Oct 2024 07:17:17 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fc405a6sm1682317f8f.102.2024.10.15.07.18.04
+ ffacd0b85a97d-37d7fa87ed1sm1696797f8f.45.2024.10.15.07.17.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:18:04 -0700 (PDT)
+ Tue, 15 Oct 2024 07:17:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 15/25] target/i386: list instructions still in translate.c
-Date: Tue, 15 Oct 2024 16:17:01 +0200
-Message-ID: <20241015141711.528342-16-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 01/25] target/i386: Don't construct a all-zero entry for
+ CPUID[0xD 0x3f]
+Date: Tue, 15 Oct 2024 16:16:47 +0200
+Message-ID: <20241015141711.528342-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
 References: <20241015141711.528342-1-pbonzini@redhat.com>
@@ -102,57 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Group them so that it is easier to figure out which two-byte opcodes to
-tackle together.
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Currently, QEMU always constructs a all-zero CPUID entry for
+CPUID[0xD 0x3f].
+
+It's meaningless to construct such a leaf as the end of leaf 0xD. Rework
+the logic of how subleaves of 0xD are constructed to get rid of such
+all-zero value of subleaf 0x3f.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20240814075431.339209-2-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ target/i386/kvm/kvm.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index fe3bfed147a..487c376032f 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -129,6 +129,37 @@
-  *
-  *    (^)  these are the two cases in which Intel and AMD disagree on the
-  *         primary exception class
-+ *
-+ * Instructions still in translate.c
-+ * ---------------------------------
-+ * Generation of TCG opcodes for almost all instructions is in emit.c.inc;
-+ * this file interprets the prefixes and opcode bytes down to individual
-+ * instruction mnemonics.  There is only a handful of opcodes still using
-+ * a switch statement to decode modrm bits 3-5 and prefixes after decoding
-+ * is complete; these are relics of the older x86 decoder and their code
-+ * generation is performed in translate.c.
-+ *
-+ * These unconverted opcodes also perform their own effective address
-+ * generation using the gen_lea_modrm() function.
-+ *
-+ * There is nothing particularly complicated about them; simply, they don't
-+ * need any nasty hacks in the decoder, and they shouldn't get in the way
-+ * of the implementation of new x86 instructions, so they are left alone
-+ * for the time being.
-+ *
-+ * x87:
-+ * 0xD8 - 0xDF
-+ *
-+ * privileged/system:
-+ * 0x0F 0x00               group 6 (SLDT, STR, LLDT, LTR, VERR, VERW)
-+ * 0x0F 0x01               group 7 (SGDT, SIDT, LGDT, LIDT, SMSW, LMSW, INVLPG,
-+ *                                  MONITOR, MWAIT, CLAC, STAC, XGETBV, XSETBV,
-+ *                                  SWAPGS, RDTSCP)
-+ * 0x0F 0xC7 (reg operand) group 9 (RDRAND, RDSEED, RDPID)
-+ *
-+ * MPX:
-+ * 0x0F 0x1A               BNDLDX, BNDMOV, BNDCL, BNDCU
-+ * 0x0F 0x1B               BNDSTX, BNDMOV, BNDMK, BNDCN
-  */
- 
- #define X86_OP_NONE { 0 },
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index e6f94900f3c..6f6301460d4 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1864,10 +1864,6 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+         case 0xb:
+         case 0xd:
+             for (j = 0; ; j++) {
+-                if (i == 0xd && j == 64) {
+-                    break;
+-                }
+-
+                 c->function = i;
+                 c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+                 c->index = j;
+@@ -1883,7 +1879,12 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+                     break;
+                 }
+                 if (i == 0xd && c->eax == 0) {
+-                    continue;
++                    if (j < 63) {
++                        continue;
++                    } else {
++                        cpuid_i--;
++                        break;
++                    }
+                 }
+                 if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+                     goto full;
 -- 
 2.46.2
 
