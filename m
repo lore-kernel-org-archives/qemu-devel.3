@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDE2D1F9DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 22:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4C8D20680
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 22:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0pd5-0003Lm-Qe; Tue, 15 Oct 2024 18:02:59 -0400
+	id 1t0pfb-0004ms-4J; Tue, 15 Oct 2024 18:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1t0pd3-0003LA-M7
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 18:02:57 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1t0pfY-0004mX-Gu
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 18:05:32 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1t0pd1-0005lk-Kp
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 18:02:57 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-6dfff346a83so53945127b3.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 15:02:48 -0700 (PDT)
+ id 1t0pfW-0006NF-H0
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 18:05:32 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-6e3a97a6010so25415157b3.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 15:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1729029768; x=1729634568; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1729029929; x=1729634729; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3gg8LKTt/1xJtdcNkyRmFS29tbj+Y0qIhX6poY08tUA=;
- b=hJJuY2fFlefJIWxqZnRQRYRYsIBjWZm2Mskwqfb2eOl0oUPkpGGJ7/M1VGr4+YcU4c
- GRF9IU5SGPdh8a81vgiqY+B/yIz9bdsPPK7015VtgWIwcs9wJ/Ku1O1q4SldvlUVM/R4
- EsJLFfz2c3iaKVyHODHvSygd2k/M3SXiTfmKUDm8jirp9vw+wySg3iCLDo4M8cJuC2qV
- Hmb2AlulWhWiziZ03ZDyNL9IClJ7iS2NZKaKXlzjc5lZFd0+ZAf6D9HoSCaNc9eJUO0H
- vkigv4j3ehrdNY389gleMuRpUosurxY5q65yZoOqEuYco73eQnLNliqomvU0WBd25fy2
- DSNg==
+ bh=B6ao+1lr+NlCNFROx1SFZxEJrgWLdXXe4yefsv9G2BY=;
+ b=DWpUlhRX0MdeD7IYYZCwS4aSA+LihDGw9yzFPBJaxmO5xM62wSzE5IJE+eZdzr9srY
+ 8r3DHy+3fnkefqdF5rGPdIPpPuaFbJdUqlg4PBbe5mCNJdkOCkaK1dhUXWjE0pCLqABQ
+ jfaz8r1QBZO+mkjXN3MSdAR2GOt2Q8bb0VpfU7bev3OgC+d2ZICkdb0XXWBcVELiKgeo
+ rEIYZnYR2RYQL12sARI2nGtXT2FYmqXZWzrrvBdMLmzVaIvbkmBmJeI4AyZH5h8iOGED
+ w+ljxQjbxN6BXOxxVc6dOgzD73cDMSOdCVYX9n9U3vTUByfsn91Ax+2J95qZdtOquw4z
+ hljA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729029768; x=1729634568;
+ d=1e100.net; s=20230601; t=1729029929; x=1729634729;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3gg8LKTt/1xJtdcNkyRmFS29tbj+Y0qIhX6poY08tUA=;
- b=OeGziuWuz7F1lmLBnm6ZOUCQQ8Tjev67XLH2Fy8HJM4+u+dNYeeoRJzDOVr1yVoNzN
- ScnwEcIjhsd8A3vqRtBol79bfmOo4d9nio6YYaIbEOvaWyWLCK10FbSg4a6QLjrWQ9gT
- cIwoTnK7k3/ERsIN6B74W23FZUrA0EucI+2pviFzIO/1Ehvu7TjPE/OQRIjijvZ5rNrB
- hwv8BRoQtZzuQwbb7Hfg/9F+8akLu4zwl+ELkvbAyZMnuWihj243vsEe5ZNE/9UZPPWa
- /hQrJn85InZUk5HoEFh2hOO5HuX2h+3apzux4tA/q8mRPh7ZPeoyTG9+jGoeCF5jneZ2
- O2SQ==
+ bh=B6ao+1lr+NlCNFROx1SFZxEJrgWLdXXe4yefsv9G2BY=;
+ b=GBMjcheUJ5b+vQt4FIH816INh26/4uL5JcI7O6ONYgqAMj9vXrM+LcG9lTbzqBDpiI
+ U+U/c33VdhEfB0Ihv9kvb8D1Uj+rYMe+kTeY46/4RUJguFRDDgXrQP4kzuwj1MaII1/X
+ CE0wsoJZ/TZ2e+lh7Bt+cKH9b+9zn9zaizXksA9dbnry7uJ/2dHoz1qkzRU5GD58FybZ
+ Muk5wTByBG4GUO4L5Iu28g5/vgVq60VfBryKHMd0FltBlN+rKHtXelHwfvyTRqlVqaXX
+ 1BWEmTmmgwqfp/Q4vfOdnWqQJqbJuMNhoW02iykub8NZcahZw/ii5/m1H9is03xOeCea
+ DWkw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRTK+qe4dPrj8Chl2/9QualDFr/HHqZclIKQqER8rPxxMr6Tlzfg5Xuto70dJ54hAS8o3teGPxAGDL@nongnu.org
-X-Gm-Message-State: AOJu0Yzub8pLMi0uDEcIcoRWB3Op3GBESTHPIyLDeB63MewK3JpPXOxb
- 1vKQz9eipmkzM1wYwj4jGDHXhRyWsOChjrd20jUF8lxurhaTLPHtpd0MptvmWW+kEdvw28duRhJ
- 6U94orec26O/8Kc02VJ0Htai68It/TOgJ1onpyw==
-X-Google-Smtp-Source: AGHT+IFlQLYTMGta+gh5gDMI+GB10rhgWTJar7vVPGx14GplP7T+FSDB79yHThmy2aIrB1+b9TKWwwJpD9wZHi79ELY=
-X-Received: by 2002:a05:690c:6704:b0:6e3:167e:c70e with SMTP id
- 00721157ae682-6e347c6e807mr124734807b3.45.1729029768289; Tue, 15 Oct 2024
- 15:02:48 -0700 (PDT)
+ AJvYcCWFyy1dUuaGeRRhoeKySkT81jDQ+MdWLsU95bt/QGeIILNOAPonqLZxzMrrtb5ZzCGUJDwB0Xz4Devo@nongnu.org
+X-Gm-Message-State: AOJu0YwCUBanUrQJ/YWUDa/UdwEWsllUuiVGFtpHPWMS51YAc9jIluf5
+ 8HI29KqJ9HpbmJMfSIZkHmJBmzTGQx67xx9ut3K3ULWD5RNYCFpC4MH3fh1tg9iKVOPS23GFGaQ
+ LmhNwb3fvBzZYz8HQTYhYoGv05d7J/EkIX2Bx3g==
+X-Google-Smtp-Source: AGHT+IErOEqj+JfCCq7JY3pQdmaHnfLJZY8UoXjm0OVQOpDBgGyd1IJAlrUFH5omVAMgTYk3vV+yyWdd5O/jEW4Mwtc=
+X-Received: by 2002:a05:690c:4d03:b0:6db:db7b:891c with SMTP id
+ 00721157ae682-6e3d40a0294mr25512817b3.14.1729029929408; Tue, 15 Oct 2024
+ 15:05:29 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241009234610.27039-1-yichen.wang@bytedance.com>
- <ZwlTCgqjbFbJduyI@x1n>
-In-Reply-To: <ZwlTCgqjbFbJduyI@x1n>
+ <874j5isp5k.fsf@suse.de>
+In-Reply-To: <874j5isp5k.fsf@suse.de>
 From: Yichen Wang <yichen.wang@bytedance.com>
-Date: Tue, 15 Oct 2024 15:02:37 -0700
-Message-ID: <CAHObMVbmQt6U_16dYG4y_9kt76fk_W+OSSe34SRmFrC0bGNOVw@mail.gmail.com>
+Date: Tue, 15 Oct 2024 15:05:18 -0700
+Message-ID: <CAHObMVZx4Nz+pgcDE0dZ30t7_c0Rud92ND5gzrS6jchDKFsfNw@mail.gmail.com>
 Subject: Re: [External] Re: [PATCH v6 00/12] Use Intel DSA accelerator to
  offload zero page checking in multifd live migration.
-To: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, 
  qemu-devel@nongnu.org, Hao Xiang <hao.xiang@linux.dev>, 
@@ -79,8 +79,8 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=yichen.wang@bytedance.com; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,54 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 11, 2024 at 9:32=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+On Fri, Oct 11, 2024 at 7:14=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
+te:
 >
-> On Wed, Oct 09, 2024 at 04:45:58PM -0700, Yichen Wang wrote:
+> Yichen Wang <yichen.wang@bytedance.com> writes:
 >
-> The doc update is still missing under docs/, we may need that for a final
-> merge.
 >
+> Still doesn't build without DSA:
+>
+> qemu/include/qemu/dsa.h: In function
+> =E2=80=98buffer_is_zero_dsa_batch_sync=E2=80=99:
+> /home/fabiano/kvm/qemu/include/qemu/dsa.h:183:16: error: =E2=80=98errp=E2=
+=80=99
+> undeclared (first use in this function); did you mean =E2=80=98errno=E2=
+=80=99?
+>
+>      error_setg(errp, "DSA accelerator is not enabled.");
+>                 ^
+> qemu/include/qapi/error.h:318:26: note: in definition of macro =E2=80=98e=
+rror_setg=E2=80=99
+>      error_setg_internal((errp), __FILE__, __LINE__, __func__,   \
+>                           ^~~~
+> qemu/include/qemu/dsa.h:183:16: note: each undeclared identifier is repor=
+ted only once for each function it appears in
+>      error_setg(errp, "DSA accelerator is not enabled.");
+>                 ^
+> qemu/include/qapi/error.h:318:26: note: in definition of macro =E2=80=98e=
+rror_setg=E2=80=99
+>      error_setg_internal((errp), __FILE__, __LINE__, __func__,   \
+>                           ^~~~
 
-I will work with Intel to prepare a doc in my next patch.
-
-> Are you using this in production?  How it performs in real life?  What is
-> the major issue to solve for you?  Is it "zero detect eats cpu too much",
-> or "migration too slow", or "we're doing experiment with the new hardware=
-s,
-> and see how it goes if we apply it on top of migrations"?
->
-
-Yes, we do use it in production. Our codebase is based on an old QEMU
-release (5.X), so we backported the series there. The major use case
-is just to accelerate the live migration, and it is currently under QA
-scale testing. The main motivation is, we reserve 4 cores for all
-control plane services including QEMU. While doing 2nd-scheduling
-(i.e. live migration to reduce the fragmentations, and very commonly
-seen on cloud providers), we realize QEMU will eat a lot of CPUs which
-causes jitter and slowness on the control planes. Even though this is
-not happening too frequently, we still want it to be stable. With the
-help of DSA, it saves CPU while accelerates the process, so we want to
-use it in production.
-
-> There're a lot of new code added for dsa just for this optimization on ze=
-ro
-> page detection.  We'd better understand the major benefits, and also
-> whether that's applicable to other part of qemu or migration-only.  I
-> actually wonder if we're going to support enqcmd whether migration is the
-> best starting point (rather than other places where we emulate tons of
-> devices, and maybe some backends can speedup IOs with enqcmd in some
-> form?).. but it's more of a pure question.
->
-
-I tried to put most of the code in dsa.c and do minimum changes on all
-other files. Even in dsa.c, it has the abstraction for "submit task",
-and the implementation of "submit a buffer_zero task". I think this is
-the best I can think of. I am open to suggestions of how we can help
-to move this forward. :)
-
-> Thanks,
->
-> --
-> Peter Xu
->
+Sorry for that, I will make sure I test both for my last version
+before git send-mail...
 
