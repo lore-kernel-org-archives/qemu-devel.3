@@ -4,75 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B150CFC293
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 12:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A59D21690
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 12:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0gPb-00026P-4K; Tue, 15 Oct 2024 08:12:27 -0400
+	id 1t0gjE-0005wR-7g; Tue, 15 Oct 2024 08:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0gPZ-00026G-Jd
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:12:25 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0gPX-0001RU-TO
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:12:25 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2fb5be4381dso7723951fa.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 05:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728994342; x=1729599142; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Uq9+EQHa5RzPJ63/qEJv714h/xC0C+d4H3hoRol/rlU=;
- b=DOZQohvss48oOZqEBiHgo0+k+sswcvAjedWlJGvt+MS74SF3a0BNpp7MeYmuGLLqVz
- nanOb5dWI74HWbU6q+AwIJPb3HQ4Pqa6YgfuL77hfjcNnFB699/laap+XVzYZ3W7J8V6
- rIIP1/RF/DLQuatTQqQ/mIa6tryKAQ7Y6H7UbnEcVPWVvA8TMfU0I6Pi7I2Z672Zzkxc
- bFl5IVR5K2+y/tTWuDvwe19/uNF9TnXi3aCWL0W5An9ZLYuFSwurJs0D2YFKYdQYbf6+
- Fs7Cr3BEBxEdXJKCb6LG0J8TY4J3i4WCht8uelizxM4IcYhs2Htr4gmBb0c72Ih7QagA
- 8oFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728994342; x=1729599142;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Uq9+EQHa5RzPJ63/qEJv714h/xC0C+d4H3hoRol/rlU=;
- b=eOnalZYpiJ0L+jY0TFTIwq1jWLskkf8Q/gyuyQYSRGbMcvxFq+aPWubUh9lNzkZ1kI
- sjT9stlLEAf8pUSIj5ZQEcvgML5R8iQEC6ZetuWxA3axXe8m80hBh/ot8uYMCok9d388
- dFalSjkKHZUH+jd3OkdfdSQ8Glqh8gbk5DKu/uVaQdxb0VTBi8qNvJyR9RT/fGOYzDfJ
- r7w23mxRuexklmG7j9AjBACAz2ozsL3KUDa8NJYJCveq92SvOs7ssrKlcx8WLQQNxBa4
- dHpX+PK2qjcb+UD05lw1XbHsGOCN+pfggEHrlva/gtSIux3uffYRgFpUQMNzyka0pZG5
- tS2Q==
-X-Gm-Message-State: AOJu0YymHPitKLWKrO852hjmvaguP+M0qsEt+BnKByezDLm4/V8yFvql
- WcbijrgN3gDa2GnYMVk6f+UgGC30hh+WKLk48RXtJOtjecQOp0CdnM5N9sTGF8PpXZHPKfElN7a
- YYvmeEhlTEYyrxLNC/TY1FsPLdoKvH+SCR6jpew==
-X-Google-Smtp-Source: AGHT+IGN7On2VjzDcXGfxsTZzOI0ynfgPByxuziiCA8/RxSzUoI3ufhPFSazy8s6phwGoIB1zGfsl8te7Is0eYP0Jlc=
-X-Received: by 2002:a2e:a544:0:b0:2fa:bb65:801f with SMTP id
- 38308e7fff4ca-2fb61b45f86mr2451081fa.10.1728994341944; Tue, 15 Oct 2024
- 05:12:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1t0gjB-0005vb-Mx; Tue, 15 Oct 2024 08:32:41 -0400
+Received: from forward101a.mail.yandex.net ([2a02:6b8:c0e:500:1:45:d181:d101])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1t0gj9-0003kw-PH; Tue, 15 Oct 2024 08:32:41 -0400
+Received: from mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2a:1c1:0:640:adc:0])
+ by forward101a.mail.yandex.net (Yandex) with ESMTPS id 49D9260B23;
+ Tue, 15 Oct 2024 15:32:30 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net
+ (smtp/Yandex) with ESMTPSA id TWKivoTLgqM0-lvptCVPA; 
+ Tue, 15 Oct 2024 15:32:29 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
+ t=1728995549; bh=Pcu/U9hXaVEo7TpmW3Ouf8WsQ18wNvWQaSn26AsJ8as=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=FhloQWyODQPGm1OCl4Mqo2MHWBruLpYqKcUTZOmEyDVZSIvN4WYf99mJ7ERWXLKYD
+ lU69PqepWj6xVrc8nXjXD0FdaZLQP1QGPK/gHn1+ZaznyhaYiupzWZL8Fqc/8WvPNE
+ +Jd3zqm9d6dFgSVqt2uQSQwHXY35nxDvNIhFhWig=
+Authentication-Results: mail-nwsmtp-smtp-production-main-84.vla.yp-c.yandex.net;
+ dkim=pass header.i=@maquefel.me
+From: Nikita Shubin <nikita.shubin@maquefel.me>
+To: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: linux@yadro.com, Nikita Shubin <n.shubin@yadro.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/block: m25p80: support RDID_90 for Winbond
+Date: Tue, 15 Oct 2024 15:32:28 +0300
+Message-ID: <20241015123228.18692-1-nikita.shubin@maquefel.me>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-References: <20241015113705.239067-1-peter.maydell@linaro.org>
- <24e57088-ebbc-4a9e-919d-5d05cfca00a4@redhat.com>
- <CAFEAcA_QWnxWfZn=rqbpVC8HrhZ5eBi6BcFc45UBKqVX9cLY=A@mail.gmail.com>
-In-Reply-To: <CAFEAcA_QWnxWfZn=rqbpVC8HrhZ5eBi6BcFc45UBKqVX9cLY=A@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 15 Oct 2024 13:12:11 +0100
-Message-ID: <CAFEAcA9h3WD4OZ-A=EyB9hjd_SUaRGDh3+4+Nvho6HidJPg7uA@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: Raise the ide-test timeout
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Yandex-Filter: 1
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:d101;
+ envelope-from=nikita.shubin@maquefel.me; helo=forward101a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,27 +71,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Oct 2024 at 13:01, Peter Maydell <peter.maydell@linaro.org> wrote:
-> If it is, it's one where it's intermittent whether it hits or not
-> (e.g. I grepped a bunch of my local logs for this test and there's
-> a lot of 18s and a 30s and a couple of 60s) and it tends to hit for
-> multiple tests in a single CI run when it does hit. e.g.
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/8065512834
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/8069311713
->
-> are a failure and a pass of the same git hash for "clang-system".
-> The 'make check' stage on the failure took just under 40 minutes;
-> the same 'make check' on the passing job took less than 3 !
-> The 'make' stage also had a similar gap in timing between the
-> two, and I don't think that's entirely because of ccache caching
-> effects because the stats at the bottom of the passing job
-> say the hitrate was >90%.
+From: Nikita Shubin <n.shubin@yadro.com>
 
-I managed to both misread the ccache stats and then miswrite
-what I intended to say about them. Rereading them, what
-they say is that the hitrate is less than 1%...
+Make Winbond support RDID_90 as all winbond SPI NOR Flashes
+support Read Manufacturer/Device ID (90h) command.
 
--- PMM
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+---
+ hw/block/m25p80.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index f7123f9e68..27f0cd0487 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -829,6 +829,16 @@ static void complete_collecting_data(Flash *s)
+         s->enh_volatile_cfg = s->data[0];
+         break;
+     case RDID_90:
++        if (get_man(s) == MAN_WINBOND) {
++            s->data[0] = s->pi->id[0];
++            s->data[1] = s->pi->id[2];
++            s->pos = 0;
++            s->len = 2;
++            s->data_read_loop = true;
++            s->state = STATE_READING_DATA;
++            break;
++        }
++        /* fallthrough */
+     case RDID_AB:
+         if (get_man(s) == MAN_SST) {
+             if (s->cur_addr <= 1) {
+-- 
+2.43.2
+
 
