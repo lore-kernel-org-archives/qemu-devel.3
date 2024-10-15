@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3BBD1D88B
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 16:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A83D1D88B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 16:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0kWI-0005Ma-Dt; Tue, 15 Oct 2024 12:35:38 -0400
+	id 1t0kk3-0007fw-UD; Tue, 15 Oct 2024 12:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1t0kWH-0005M8-4O
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 12:35:37 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1t0kjx-0007fZ-2a; Tue, 15 Oct 2024 12:49:45 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1t0kWF-0007i4-HO
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 12:35:36 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43140a2f7f7so7649575e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 09:35:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1t0kjt-0000VW-J3; Tue, 15 Oct 2024 12:49:44 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-539fe76e802so1337752e87.1; 
+ Tue, 15 Oct 2024 09:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729010133; x=1729614933; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729010977; x=1729615777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=riqLFRDWkesQT/W0Iiem1Vzb+jwMJPKQExBYDSJSEQ4=;
- b=nWqpjkiinKr+qZL+WgyhpuvBG2sYqV14tmfitlcoT9VHOrCtgBdKqfN+S0CiFzI2ey
- 2zzsoCTv0Ub1GPyVkHSSQ849loWx5AvW7mYi4f15WEA0y712OTf831j8AuUG0SIELiKt
- zn6XnsZ0SwCal0Q9J+iew8drelwIQzd7s4UUm72khff3mglTeBTJFJhYKjpOdzGNMq+J
- WNOham0wj++NBWFqez3cMNk0EerDO0rcEWa3yOrLuljfQVtgnncb9YTq9AqoFXKOxZyI
- YWfl2yyEkUxYS9GUCB4yZvm3ekX/XQT6SAbxq+VSHQxQdv0R4nmGZMsE5S0f/upjMcVR
- fFew==
+ bh=szSNw4iCM6lsZci+VjOI55OeV1nZGXX+WEU6BV9WNdQ=;
+ b=NAOUE/4SxysDGxRaKa5rKItPGjKlq5iGUeM32blnw4jnBuG2vc1KRWYnpO8cEnhiDF
+ gGZ/O2ycu7FT72SfitWtMECKx6GM42K1JWqvUkGmUjFV9PqzhX+Epy9wfhwnvV9/7cX1
+ 8RabptNRXxpmcBDkhBeSeGe6OknRuX5b6Mhj7JNNP4jA6HHTL+IFKpuipgE26vVPGwYa
+ 1xGKd74UumQx977U5J2ybIHy+BXipLYHF4kktigauw0g4k0z85B7d4JBlfycNY0Y1oUk
+ pr2LPLF3BAKL4PYXFk9UDjlKLCGk2aghInDeVGi2eYx7c+TfWCGSpaUYoM2fSqFbpbcv
+ hMQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729010133; x=1729614933;
+ d=1e100.net; s=20230601; t=1729010977; x=1729615777;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=riqLFRDWkesQT/W0Iiem1Vzb+jwMJPKQExBYDSJSEQ4=;
- b=KvAxG2KxwiwQhMPPW070xLamdJsBId/5TZNCygL1BMixno75n8Rurf/td1I9dDyo5y
- sM5t/Tz/fdulgJSYmZjpheX/yxumjVwcxirGPRqwfTtjR/7qYFyGM7Ek0ANQyfPDZYaV
- 1G5qRXboYEAQdr88eedmJHQjF4WiOIxyel4y2kgOilxzk30DloQ0aXTwYNCqgyMnZ4T/
- 3Lx3vhUjjqZ0XjdrkpuXWdw0rLmi6SNaXViZQuq1mSiCp3VdFrZU9pHCB1t4XkqVA2t2
- hErfesBaTqySESHoero0ZfjWbEPYnixO/Q19ZMh07W/fTbDenWAJPDZk3dY89EqehUUa
- bKxQ==
-X-Gm-Message-State: AOJu0YwP2jXC7tEQL69dByWB7LlUO3p17y6RXUdNGkRFBPuAXAFFs+n4
- ISWyflx/Nh6skS3i90FO/UZJu2wy7nCLQVEhXrJTMDD5dovu9lguy+XJ5A==
-X-Google-Smtp-Source: AGHT+IE1UYa74d4h4g79bBTJ+crFTluoOKihDnma9fGBf0oxHv/4dIFOejzk8OotTn3/j2uTQPNzOA==
-X-Received: by 2002:a05:600c:6745:b0:431:40ca:ce6e with SMTP id
- 5b1f17b1804b1-4314a3acc32mr10074245e9.31.1729010133230; 
- Tue, 15 Oct 2024 09:35:33 -0700 (PDT)
+ bh=szSNw4iCM6lsZci+VjOI55OeV1nZGXX+WEU6BV9WNdQ=;
+ b=azHUWE7gpEDnNw2ky5TjPNxaeeMSnpD1+zb0UvhCSJeEWSHcVhhxH4PLdIkiYLwTaC
+ tnl4H1QEF5xgj38R6wV/S2jjPfFwu+t/0G6uXnJJKcBdyh8ufIHn7wNXfzLySIUJm9/w
+ VYNKxBH4klqXQtpjsvbSEO2zn/ePwJe2FtSSCcrMZPPtJ56YXZ9jDLcRsGqdltIMRccC
+ 6UwOOAdwSGIWBlENvxjckCJKNjR/GzbYmQH/YHQQM1doxesmjeUxyZRarNDhT5wz5LGj
+ RkBdw4NTb0N1Fwr3Uq627NZgvOYqj6nc4kVJWZ2b+6DkR38B1zBToKJz9hrPuLnKSd3M
+ Jh6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWj9SiEEuNFWamD9bfabe2M2ekNtc/j36W8ASDuM3z8dZMVibrWlnQTguAR4i6cyQki9nqkK3u2qQ==@nongnu.org
+X-Gm-Message-State: AOJu0YyW8aqcH8b+oLD/8zpwg9i1YDGabNjnct5E2bqd2F6Gfms7jXBC
+ QIQYW7vHMo8Hqiyh5piCgy8k2wXEcQpgtGaCGsvUTcqGriHAc5+vaBVtPw==
+X-Google-Smtp-Source: AGHT+IE2WnHW+uBWSApeBpk4uO9EmQE1oWb/CYfbjISgHp6Yw2fpEbOoYfaD8pImpC+djgNcOf0Beg==
+X-Received: by 2002:a05:6512:138c:b0:539:8d2c:c01c with SMTP id
+ 2adb3069b0e04-539e571dd25mr5972910e87.41.1729010977092; 
+ Tue, 15 Oct 2024 09:49:37 -0700 (PDT)
 Received: from [127.0.0.1] (dynamic-077-183-076-057.77.183.pool.telefonica.de.
  [77.183.76.57]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4313f56eb0bsm22371755e9.22.2024.10.15.09.35.32
+ 5b1f17b1804b1-4313f55e054sm23396715e9.4.2024.10.15.09.49.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Oct 2024 09:35:32 -0700 (PDT)
-Date: Tue, 15 Oct 2024 16:35:29 +0000
+ Tue, 15 Oct 2024 09:49:36 -0700 (PDT)
+Date: Tue, 15 Oct 2024 16:49:33 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>
-CC: gustavo.romero@linaro.org
-Subject: Re: [PATCH] hw/acpi/acpi_dev_interface: Clean up remains of madt_cpu
-In-Reply-To: <20241015140957.385491-1-gustavo.romero@linaro.org>
-References: <20241015140957.385491-1-gustavo.romero@linaro.org>
-Message-ID: <758C079D-C43E-495C-9689-5CE874EE3241@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/4] hw/net/lan9118: Extract lan9118_phy
+In-Reply-To: <CAFEAcA8cEFprRy-9AbPsGLU4p1DmVepmWCsgY1LkKh26tHo6qw@mail.gmail.com>
+References: <20241005205748.29203-1-shentey@gmail.com>
+ <20241005205748.29203-2-shentey@gmail.com>
+ <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
+ <E3D8FB20-605D-4E29-A430-DD3C4B01102D@gmail.com>
+ <CAFEAcA8cEFprRy-9AbPsGLU4p1DmVepmWCsgY1LkKh26tHo6qw@mail.gmail.com>
+Message-ID: <DC6BEBC3-FAA6-44C8-AE38-CDFBAADA5AE0@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,35 +101,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 15=2E Oktober 2024 14:09:57 UTC schrieb Gustavo Romero <gustavo=2Eromer=
-o@linaro=2Eorg>:
->Commit c461f3e382 ("Remove now unused madt_cpu virtual method") removed
->madt_cpu virtual method but didn't remove the text about it in the
->header file=2E Thus, remove it now=2E
+Am 15=2E Oktober 2024 09:27:40 UTC schrieb Peter Maydell <peter=2Emaydell@=
+linaro=2Eorg>:
+>On Mon, 14 Oct 2024 at 19:50, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
+e:
+>>
+>>
+>>
+>> Am 14=2E Oktober 2024 12:47:52 UTC schrieb Peter Maydell <peter=2Emayde=
+ll@linaro=2Eorg>:
+>> >> +typedef struct Lan9118PhyState {
+>> >> +    uint32_t status;
+>> >> +    uint32_t control;
+>> >> +    uint32_t advertise;
+>> >> +    uint32_t ints;
+>> >> +    uint32_t int_mask;
+>> >> +    IRQState irq;
+>> >> +    bool link_down;
+>> >> +} Lan9118PhyState;
+>> >
+>> >This takes state that was in a QOM object, and moves it
+>> >into something that's kind of a device but not a QOM
+>> >object=2E I think we should avoid that, because at some
+>> >point somebody's going to have to QOMify this=2E
+>> >
+>> >Making this a QOM device is a bit awkward for migration
+>> >compatibility, unfortunately=2E
+>>
+>> Do we care about migration compatibility here? Or is it
+>> sufficient to check the version? In the latter case I could
+>> QOMify it=2E
 >
->Signed-off-by: Gustavo Romero <gustavo=2Eromero@linaro=2Eorg>
->---
-> include/hw/acpi/acpi_dev_interface=2Eh | 4 ----
-> 1 file changed, 4 deletions(-)
 >
->diff --git a/include/hw/acpi/acpi_dev_interface=2Eh b/include/hw/acpi/acp=
-i_dev_interface=2Eh
->index 68d9d15f50=2E=2E2f5ab5c1b1 100644
->--- a/include/hw/acpi/acpi_dev_interface=2Eh
->+++ b/include/hw/acpi/acpi_dev_interface=2Eh
->@@ -34,10 +34,6 @@ void acpi_send_event(DeviceState *dev, AcpiEventStatus=
-Bits event);
->  * ospm_status: returns status of ACPI device objects, reported
->  *              via _OST method if device supports it=2E
->  * send_event: inject a specified event into guest
->- * madt_cpu: fills @entry with Interrupt Controller Structure
->- *           for CPU indexed by @uid in @apic_ids array,
->- *           returned structure types are:
->- *           0 - Local APIC, 9 - Local x2APIC, 0xB - GICC
->  *
->  * Interface is designed for providing unified interface
->  * to generic ACPI functionality that could be used without
+>Doing a quick grep it looks like the lan9118 is only
+>used in a set of Arm boards and none of them are ones where
+>we care about migration across versions=2E
 
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+Four i=2Emx boards using imx_fec will also be affected=2E None is versione=
+d afaics=2E
 
+>So I think we're
+>ok to break compat with a version-bump=2E We should mention
+>the affected boards in the commit message=2E
+
+Will do=2E
+
+Thanks,
+Bernhard
+
+>
+>-- PMM
 
