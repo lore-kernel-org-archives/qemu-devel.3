@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872F5D216AD
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E825DD216AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iN3-0005pI-80; Tue, 15 Oct 2024 10:17:57 -0400
+	id 1t0iMs-0005f1-8S; Tue, 15 Oct 2024 10:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iN1-0005nC-Tb
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:56 -0400
+ id 1t0iMj-0005Zj-4T
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iMx-0003JK-TA
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:55 -0400
+ id 1t0iMh-0003Id-Dc
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001864;
+ s=mimecast20190719; t=1729001854;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IeHR+bg+4MGJxeuC/Jh2T+RPWl430P80c67UPkpQeJM=;
- b=LDussISxS8BKgXyi0y/csjxqrvm5M2ueRvsbbTgAfuYkBs/PnH0YzLL7HS457BaD9549Qr
- 8YyRWbbNWiQOcAzOis1hfPu/6N2MRrLOqLDJvjwic8DiVVNXVLVp62eai1lFF44lKzEHwq
- YOiVZ+iPoxPW6cwALobIv173aaoJtzA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7mCbkqnavCwlsR7zpYlSM7glzfmtMNxLyPCch+Pjdqc=;
+ b=XxDYkrqJCfp8IH9OmfC8+o5EW38FQTwZg3WKORzNdYSnPmLfX8/ksZMhfVLN5r2OrKO38z
+ Q8k1NWxEc6xy7fuNPNIDxubMLYJ05GycJic+Jd7ID1/+y/hvt++O/+ZWyp5iD0weUZ3cSo
+ AFFyXUNGoVnRruRBc7qx3uTH4Q7E/pA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-luai4QirOZaTpIeQ1PeCNQ-1; Tue, 15 Oct 2024 10:17:43 -0400
-X-MC-Unique: luai4QirOZaTpIeQ1PeCNQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d662dd3c8so1341501f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:43 -0700 (PDT)
+ us-mta-646-dS89bwXvPZyhoKcwdjrsKA-1; Tue, 15 Oct 2024 10:17:33 -0400
+X-MC-Unique: dS89bwXvPZyhoKcwdjrsKA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43113dab986so47944305e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001862; x=1729606662;
+ d=1e100.net; s=20230601; t=1729001851; x=1729606651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IeHR+bg+4MGJxeuC/Jh2T+RPWl430P80c67UPkpQeJM=;
- b=tiRJ3w8TY/ly6v9cZRs9o4m7q/1Dm72SQSA728jBuHBreSq5EFu4BZoNPmivOim2Cp
- kGhltZYYxiy0VissPZN/JXXA24mWndMD3BNvaecEapN+EK1AqefJF02zhHocTg80FQLL
- sbFadUs7ETmFONgKJv2gC0z//DqkI/3vA/k3C5jgo9pnM4r3yGfx62p4PwpzTSTZWYba
- 5pk2M3PrxQNtU1/g/eh8mcI7CY3EUu7bUFGDRqQoA989Gv23ZWtyhBtutBOeaIWmMMSi
- IzvvQeZqKfTboZJ/lfleZ9/ot1G96TdqBRL/nNyTHArxnDwF8Qd0kxBLbggSQczM+KiO
- GDMA==
-X-Gm-Message-State: AOJu0Yxf+vjbNzVZNXrcVbo6wZHqZO7tAwPBW3DbnGnpYkwz75l4QLUB
- +0rDW9GDPSYE4Idi5tijwZHAmUM1zQgXGQZfamqRpRf/xAkfuZzkNdx4NJPTj2uabiiMfQbg38x
- ZN9w+RZOB4ph135j/f0FB203ABm8rytRInDnT+3cVxqSVI1uwR2fzXZgCU0FXhLmtua8YXCUqOZ
- Fw7sKebPflG+ab77sLpPrP1qsdmlvO+CucbRvSN8U=
-X-Received: by 2002:a5d:608e:0:b0:37d:3eec:6214 with SMTP id
- ffacd0b85a97d-37d5529d96fmr10826378f8f.50.1729001861969; 
- Tue, 15 Oct 2024 07:17:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXowqr775a7cxDXpjiAE0OixFS0x134GC7jhaqytrue1QqfEPhT16TmrQ2Mw0qAmUswdbKxg==
-X-Received: by 2002:a5d:608e:0:b0:37d:3eec:6214 with SMTP id
- ffacd0b85a97d-37d5529d96fmr10826355f8f.50.1729001861469; 
- Tue, 15 Oct 2024 07:17:41 -0700 (PDT)
+ bh=7mCbkqnavCwlsR7zpYlSM7glzfmtMNxLyPCch+Pjdqc=;
+ b=oInlvIHWMkLgLbsIIplJ0JaqxJK1GuagvJ4ohpDiJygKInutFV2c9BNxSB642uCGMY
+ 4hfFEPGxQSWb6/cPjHHZXhDU00FjtwUFx5GinJYy1KNf1WXf7RrFCxvgiwIw6mb/JkJU
+ og2eiZx8U/pTEhXqrVJ+E+UGtHkxcwygidYOEFtK2qxQrmqoD0/QGmyuZqSbJdA+Hw7V
+ HCBJUPZ5kPZWw8eWdvTcDVvrdvGJ7YabIs8jKYZJpUpdPQP/A1O4EwQvU57ydfcvWIdy
+ ckTSG7cZvNIbaOOD3I/YXTZIMtz1p0aqEqhd6QVTzn8Xk5HVhLHFs0oAf9QAM4liDgpU
+ Afrg==
+X-Gm-Message-State: AOJu0YwoNt4M8iAcpZ4Ld+scAOZVr2u99ZAvcZb3ovpfbC4dHqm1SNGl
+ hd1wMI2C3dUFDSRUNG4MILTJtroE2VUTGVKBEo68/kTjkVONyLIqT1jdkDvJdAUPUTJy1WNxP2y
+ A6i7bbHf8X5wIi6xqoohu9hYuH/yCJbQB/4v1hHmfDuOsit3LGyEyN6mtK/GeZa5v2Uv69xp042
+ qbK/aAfGEVCtzV3bcEK3QCgj/OpxUYLI2efOreLeU=
+X-Received: by 2002:a05:600c:c15:b0:42f:6878:a683 with SMTP id
+ 5b1f17b1804b1-43125607853mr128479105e9.22.1729001851534; 
+ Tue, 15 Oct 2024 07:17:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGUsIt7B3QWxyESwg2EYrsMLygHfkaByJ68+EB6jpYJNd4wR9w2zX8Qn24H/R97UGr2sktxA==
+X-Received: by 2002:a05:600c:c15:b0:42f:6878:a683 with SMTP id
+ 5b1f17b1804b1-43125607853mr128478795e9.22.1729001851071; 
+ Tue, 15 Oct 2024 07:17:31 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa90a33sm1701897f8f.54.2024.10.15.07.17.39
+ 5b1f17b1804b1-4313f55e002sm19499725e9.10.2024.10.15.07.17.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:17:39 -0700 (PDT)
+ Tue, 15 Oct 2024 07:17:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
-Subject: [PULL 08/25] target/i386: Exclude 'hv-syndbg' from 'hv-passthrough'
-Date: Tue, 15 Oct 2024 16:16:54 +0200
-Message-ID: <20241015141711.528342-9-pbonzini@redhat.com>
+Cc: Chao Gao <chao.gao@intel.com>
+Subject: [PULL 05/25] target/i386: Add more features enumerated by
+ CPUID.7.2.EDX
+Date: Tue, 15 Oct 2024 16:16:51 +0200
+Message-ID: <20241015141711.528342-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
 References: <20241015141711.528342-1-pbonzini@redhat.com>
@@ -102,92 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Chao Gao <chao.gao@intel.com>
 
-Windows with Hyper-V role enabled doesn't boot with 'hv-passthrough' when
-no debugger is configured, this significantly limits the usefulness of the
-feature as there's no support for subtracting Hyper-V features from CPU
-flags at this moment (e.g. "-cpu host,hv-passthrough,-hv-syndbg" does not
-work). While this is also theoretically fixable, 'hv-syndbg' is likely
-very special and unneeded in the default set. Genuine Hyper-V doesn't seem
-to enable it either.
+Following 5 bits in CPUID.7.2.EDX are supported by KVM. Add their
+supports in QEMU. Each of them indicates certain bits of IA32_SPEC_CTRL
+are supported. Those bits can control CPU speculation behavior which can
+be used to defend against side-channel attacks.
 
-Introduce 'skip_passthrough' flag to 'kvm_hyperv_properties' and use it as
-one-off to skip 'hv-syndbg' when enabling features in 'hv-passthrough'
-mode. Note, "-cpu host,hv-passthrough,hv-syndbg" can still be used if
-needed.
+bit0: intel-psfd
+  if 1, indicates bit 7 of the IA32_SPEC_CTRL MSR is supported. Bit 7 of
+  this MSR disables Fast Store Forwarding Predictor without disabling
+  Speculative Store Bypass
 
-As both 'hv-passthrough' and 'hv-syndbg' are debug features, the change
-should not have any effect on production environments.
+bit1: ipred-ctrl
+  If 1, indicates bits 3 and 4 of the IA32_SPEC_CTRL MSR are supported.
+  Bit 3 of this MSR enables IPRED_DIS control for CPL3. Bit 4 of this
+  MSR enables IPRED_DIS control for CPL0/1/2
 
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/20240917160051.2637594-3-vkuznets@redhat.com
+bit2: rrsba-ctrl
+  If 1, indicates bits 5 and 6 of the IA32_SPEC_CTRL MSR are supported.
+  Bit 5 of this MSR disables RRSBA behavior for CPL3. Bit 6 of this MSR
+  disables RRSBA behavior for CPL0/1/2
+
+bit3: ddpd-u
+  If 1, indicates bit 8 of the IA32_SPEC_CTRL MSR is supported. Bit 8 of
+  this MSR disables Data Dependent Prefetcher.
+
+bit4: bhi-ctrl
+  if 1, indicates bit 10 of the IA32_SPEC_CTRL MSR is supported. Bit 10
+  of this MSR enables BHI_DIS_S behavior.
+
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20240919051011.118309-1-chao.gao@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/system/i386/hyperv.rst | 13 +++++++++----
- target/i386/kvm/kvm.c       |  7 +++++--
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
-index 2505dc4c86e..009947e3914 100644
---- a/docs/system/i386/hyperv.rst
-+++ b/docs/system/i386/hyperv.rst
-@@ -262,14 +262,19 @@ Supplementary features
- ``hv-passthrough``
-   In some cases (e.g. during development) it may make sense to use QEMU in
-   'pass-through' mode and give Windows guests all enlightenments currently
--  supported by KVM. This pass-through mode is enabled by "hv-passthrough" CPU
--  flag.
-+  supported by KVM.
- 
-   Note: ``hv-passthrough`` flag only enables enlightenments which are known to QEMU
-   (have corresponding 'hv-' flag) and copies ``hv-spinlocks`` and ``hv-vendor-id``
-   values from KVM to QEMU. ``hv-passthrough`` overrides all other 'hv-' settings on
--  the command line. Also, enabling this flag effectively prevents migration as the
--  list of enabled enlightenments may differ between target and destination hosts.
-+  the command line.
-+
-+  Note: ``hv-passthrough`` does not enable ``hv-syndbg`` which can prevent certain
-+  Windows guests from booting when used without proper configuration. If needed,
-+  ``hv-syndbg`` can be enabled additionally.
-+
-+  Note: ``hv-passthrough`` effectively prevents migration as the list of enabled
-+  enlightenments may differ between target and destination hosts.
- 
- ``hv-enforce-cpuid``
-   By default, KVM allows the guest to use all currently supported Hyper-V
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 1ec4977a8e9..fd9f1988920 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -934,6 +934,7 @@ static struct {
-         uint32_t bits;
-     } flags[2];
-     uint64_t dependencies;
-+    bool skip_passthrough;
- } kvm_hyperv_properties[] = {
-     [HYPERV_FEAT_RELAXED] = {
-         .desc = "relaxed timing (hv-relaxed)",
-@@ -1062,7 +1063,8 @@ static struct {
-             {.func = HV_CPUID_FEATURES, .reg = R_EDX,
-              .bits = HV_FEATURE_DEBUG_MSRS_AVAILABLE}
-         },
--        .dependencies = BIT(HYPERV_FEAT_SYNIC) | BIT(HYPERV_FEAT_RELAXED)
-+        .dependencies = BIT(HYPERV_FEAT_SYNIC) | BIT(HYPERV_FEAT_RELAXED),
-+        .skip_passthrough = true,
-     },
-     [HYPERV_FEAT_MSR_BITMAP] = {
-         .desc = "enlightened MSR-Bitmap (hv-emsr-bitmap)",
-@@ -1471,7 +1473,8 @@ bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp)
-          * hv_build_cpuid_leaf() uses this info to build guest CPUIDs.
-          */
-         for (feat = 0; feat < ARRAY_SIZE(kvm_hyperv_properties); feat++) {
--            if (hyperv_feature_supported(cs, feat)) {
-+            if (hyperv_feature_supported(cs, feat) &&
-+                !kvm_hyperv_properties[feat].skip_passthrough) {
-                 cpu->hyperv_features |= BIT(feat);
-             }
-         }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5535f4e6ab4..9a6b9e9e51b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1148,8 +1148,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_7_2_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            NULL, NULL, NULL, NULL,
+-            NULL, "mcdt-no", NULL, NULL,
++            "intel-psfd", "ipred-ctrl", "rrsba-ctrl", "ddpd-u",
++            "bhi-ctrl", "mcdt-no", NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
 -- 
 2.46.2
 
