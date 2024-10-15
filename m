@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF204D1D87B
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64DDBCFC27C
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jko-0001QQ-L0; Tue, 15 Oct 2024 11:46:35 -0400
+	id 1t0jjP-00005i-M0; Tue, 15 Oct 2024 11:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjp-0000VM-J8
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:47 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjM-00005C-RW
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:05 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjm-0000kl-Qp
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:33 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-71e5827d6a7so2250022b3a.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjL-0000VD-9d
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:04 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20c70abba48so37332185ad.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007129; x=1729611929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007101; x=1729611901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fL2u07Qpq8qO+o5N1onMiU4q/NHO95fnaXoDim7+gRk=;
- b=fRgP2658NKvQqjuzZQDLtaEjqGp2YYDC51WJUdjAylu74evmIu4u92sCbbp1xZBKpG
- 3j4LR1uWiVjM9VGyQ1JFGCaHylhbYmMdEv2+kthEAlJW2wFWEcIgo7XhUZWsNpUcQh6F
- wzzW/azf85T1WYm6ZFOSXZhPyCbBHUjc4UFmd7vwfcLHkeLEvhkjmxX8T6ThWoo3tjHc
- /VgF5I/wL+kPWXLdKrx/Y/fJWD0UPIxigrj5HanjP7tcYVrrz9AI81ftT+aiu80YDBIq
- c71gjCNXEHc+VAcfRv6igZFzY//eIIGAFSdotdccHkCOcb/MLVwAHz4Pe/fuV8LFVHQJ
- IfUQ==
+ bh=rYfx3nszSCCIo154zwSkhn548PKsWfltylmZM2l6IU8=;
+ b=z43i/pXn60a2tXQIizLFQ6uKCtMvWhw3hWFTFKRC9V7hdVB+3IJw9TL0p5k7Hy8+Iz
+ QmzQxE+aDIKCXcS5tp1xwx8VQkmmfxXMULoSZ6vwHGm1Lq5erZUNt3k0JPq02+EGN/9U
+ rY12pT62rVRlrGY0uKehyQvA0vmhKRlCAMAyV4H9TyBMvUlSrZTAr2cX7ZVLCE2XEw/S
+ yc0gOzWxS80GpMP3SBZmoVfvh/KkTt8I2xu5FJ8dRR2TKVmVX5f+1dtfV/2Mn9Q5v/j+
+ w93uDu5Inf6oYRpnI4xePVHDLVYxk4zjYe44uAs5cpBMWUHEdhmqtBmJUO7RoogQoZbD
+ jeEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007129; x=1729611929;
+ d=1e100.net; s=20230601; t=1729007101; x=1729611901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fL2u07Qpq8qO+o5N1onMiU4q/NHO95fnaXoDim7+gRk=;
- b=t3NH7WJNSAUf43p7J9FIZxEPYBev+rqw6r+Pu2OttaCD34Y+2UwUMrOuOB3DDgFmiA
- GMGocVKWAFiSxD5CDouqZFswc1C1MXY3Ph/e6y82VCwKoF2QPBiwMH7NIwcrgMQy8qXO
- 002oFLE1ursRnWTDnpSHxIDFfMYaEm7TJH630Vql4/+TgvywHtIAC+/aylIk1Yj0uMcA
- iEIWw2RdvUEmgRqG4z8Ej0R1C8i6jEbkD0qKl4FS36yXnI9jD2CqgA2oJ2rbswWYRzKg
- 22Wni6VjtKBqU31RF5QJpmdN1ePmfXT+Xw3lsn/wp85Ucpot8j8XGJ+CMJKqWl0/zeoM
- gjYw==
-X-Gm-Message-State: AOJu0YyYurdL5aWiNFYr1vOivke00YyulOR01ORb8zP2BoftC9jHYRTo
- ubHWdVd6GJvD6DUF4NUeDBeW/H69F4pNKYn9UYubixNF0uhO0lv7f2bBEmcOcN+dU44aTwqBlrw
- w
-X-Google-Smtp-Source: AGHT+IFVB96zyIMaueeFm3yc+C5/3k/fnCEzDheT0JHm3UDRnymURMXvutSjmKpOd3ML3Ir2D1JE4Q==
-X-Received: by 2002:a05:6a21:1789:b0:1c4:9f31:ac9e with SMTP id
- adf61e73a8af0-1d8bcfc21f5mr22118453637.42.1729007129251; 
- Tue, 15 Oct 2024 08:45:29 -0700 (PDT)
+ bh=rYfx3nszSCCIo154zwSkhn548PKsWfltylmZM2l6IU8=;
+ b=LknlnCSkevgboPUAg3uTzgmNNBf9FqqyMA3uGRVYpvsbfiSM3bDS79e18BLpsmoXnu
+ nFyvlkak2taitf34ZEkj46jXjUlvf3JX6f6JQWM5I25fAIPQBprJA+Bg2EXywJYSmlNu
+ jNup9U4oKCPqQcORbXOJ6xzqY8yS+oCrwOT0XwHFvZ6/5vL/w6KQBVlHDojbjpfItjc4
+ oC5DEvPxMy3Bqee6yJ8VoR6Un9eBNwc+I/+SPUeEzg2pMhnTWTv4wzoL1ZHGAE1k6Ma7
+ jRYebGReSquzTJT3WSxgjBL1SE8yQGs2jNjrMI0cO98l1OmtMLPt1IhITc3qC2Zk2qVp
+ ZVEQ==
+X-Gm-Message-State: AOJu0Yx40zFIN1XTmSfdqPyhfjUB0sVx6QEkTYDI390ayK8BcSAjh+da
+ vrVcMF3LEhqSWYcK0JNDT3AebwM0wFKb7qX/mT0XK+dDIMaIatlbSCA4/WYaK02OyZxyGugCjnl
+ v
+X-Google-Smtp-Source: AGHT+IGQfO59wdUy1L+JsGGdLxqtB27G80TOZycY5g2moZMJ+Qools8B9SzvO7sF+CScPDOhFaYOfg==
+X-Received: by 2002:a17:90a:ff0e:b0:2e2:d3ab:2d77 with SMTP id
+ 98e67ed59e1d1-2e31538f3edmr14405032a91.39.1729007101493; 
+ Tue, 15 Oct 2024 08:45:01 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e392f72108sm1942941a91.47.2024.10.15.08.45.27
+ 98e67ed59e1d1-2e392f753b4sm1940460a91.49.2024.10.15.08.44.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:45:28 -0700 (PDT)
+ Tue, 15 Oct 2024 08:45:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/33] gdbstub/helpers: Introduce ldtul_$endian_p() helpers
-Date: Tue, 15 Oct 2024 12:44:15 -0300
-Message-ID: <20241015154443.71763-7-philmd@linaro.org>
+Subject: [PULL 02/33] exec/tswap: Massage target_needs_bswap() definition
+Date: Tue, 15 Oct 2024 12:44:11 -0300
+Message-ID: <20241015154443.71763-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -96,36 +95,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce ldtul_le_p() and ldtul_be_p() to use directly
-in place of ldtul_p() when a target endianness is fixed.
+Invert target_needs_bswap() comparison to match the
+COMPILING_PER_TARGET definition (2 lines upper).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241010175246.15779-3-philmd@linaro.org>
+Message-Id: <20241010175246.15779-2-philmd@linaro.org>
 ---
- include/gdbstub/helpers.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/exec/tswap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-index 26140ef1ac0..6f7cc48adcb 100644
---- a/include/gdbstub/helpers.h
-+++ b/include/gdbstub/helpers.h
-@@ -95,9 +95,13 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
- #if TARGET_LONG_BITS == 64
- #define gdb_get_regl(buf, val) gdb_get_reg64(buf, val)
- #define ldtul_p(addr) ldq_p(addr)
-+#define ldtul_le_p(addr) ldq_le_p(addr)
-+#define ldtul_be_p(addr) ldq_be_p(addr)
+diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+index b7a41913475..ecd4faef015 100644
+--- a/include/exec/tswap.h
++++ b/include/exec/tswap.h
+@@ -28,7 +28,7 @@ bool target_words_bigendian(void);
+ #ifdef COMPILING_PER_TARGET
+ #define target_needs_bswap()  (HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN)
  #else
- #define gdb_get_regl(buf, val) gdb_get_reg32(buf, val)
- #define ldtul_p(addr) ldl_p(addr)
-+#define ldtul_le_p(addr) ldl_le_p(addr)
-+#define ldtul_be_p(addr) ldl_be_p(addr)
- #endif
+-#define target_needs_bswap()  (target_words_bigendian() != HOST_BIG_ENDIAN)
++#define target_needs_bswap()  (HOST_BIG_ENDIAN != target_words_bigendian())
+ #endif /* COMPILING_PER_TARGET */
  
- #endif /* _GDBSTUB_HELPERS_H_ */
+ static inline uint16_t tswap16(uint16_t s)
 -- 
 2.45.2
 
