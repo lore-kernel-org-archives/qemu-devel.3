@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B307CFC285
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FFBCFC283
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eW4-00084j-C2; Tue, 15 Oct 2024 06:11:02 -0400
+	id 1t0eVz-00083a-LE; Tue, 15 Oct 2024 06:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eUu-00076Z-Iq; Tue, 15 Oct 2024 06:09:55 -0400
+ id 1t0eVG-0007KG-0n; Tue, 15 Oct 2024 06:10:11 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eUs-0002YL-Mr; Tue, 15 Oct 2024 06:09:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV8X2KtSz6DB4D;
- Tue, 15 Oct 2024 18:05:16 +0800 (CST)
+ id 1t0eVC-0002ld-Ta; Tue, 15 Oct 2024 06:10:09 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV8w1nFvz6DB51;
+ Tue, 15 Oct 2024 18:05:36 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id A3C5C1404F5;
- Tue, 15 Oct 2024 18:09:44 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 913991400D9;
+ Tue, 15 Oct 2024 18:10:04 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 15 Oct 2024 12:09:24 +0200
+ 15.1.2507.39; Tue, 15 Oct 2024 12:09:44 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,16 +45,16 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V5 26/30] hw/intc/arm_gicv3_common: Add GICv3CPUState
- 'accessible' flag migration handling
-Date: Tue, 15 Oct 2024 11:00:08 +0100
-Message-ID: <20241015100012.254223-27-salil.mehta@huawei.com>
+Subject: [PATCH RFC V5 27/30] target/arm/kvm,
+ tcg: Handle SMCCC hypercall exits in VMM during PSCI_CPU_{ON, OFF}
+Date: Tue, 15 Oct 2024 11:00:09 +0100
+Message-ID: <20241015100012.254223-28-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015100012.254223-1-salil.mehta@huawei.com>
 References: <20241015100012.254223-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.48.146.149]
 X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -84,74 +84,346 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QOM `GICv3CPUState` (and consequently the corresponding KVM VGIC `ICC_*_EL1`
-registers) can be either 'accessible' or 'inaccessible', depending on the state
-of the associated QOM vCPUs. This `gicc_accessible` state should be saved during
-migration at the source and restored at the destination.
+From: Author Salil Mehta <salil.mehta@huawei.com>
 
-Ideally, the number of possible and enabled QOM vCPUs should match between the
-source and destination. Ensuring this consistency is the responsibility of the
-administrator. However, if the destination QEMU has more enabled vCPUs than the
-source, we can either fail the migration or override the destination QEMU’s vCPU
-configuration to match the source. We have adopted the latter approach as a
-mitigation for the mismatch. Nonetheless, the administrator should still ensure
-that the number of possible QOM vCPUs is consistent at both ends.
+To support vCPU hotplug, we must trap any `HVC`/`SMC` `PSCI_CPU_{ON,OFF}`
+hypercalls from the host KVM to QEMU for policy checks. This ensures the
+following when a vCPU is brought online:
 
+1. The vCPU is actually plugged in (i.e., present).
+2. The vCPU is not disabled.
+
+Implement the registration and handling of `HVC`/`SMC` hypercall exits within
+the VMM, ensuring that proper policy checks and control flow are enforced during
+the vCPU onlining and offlining processes.
+
+Co-developed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/intc/arm_gicv3_common.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ target/arm/arm-powerctl.c   | 20 +++++---
+ target/arm/helper.c         |  2 +-
+ target/arm/internals.h      | 11 -----
+ target/arm/kvm.c            | 93 +++++++++++++++++++++++++++++++++++++
+ target/arm/kvm_arm.h        | 14 ++++++
+ target/arm/meson.build      |  1 +
+ target/arm/{tcg => }/psci.c |  8 ++++
+ target/arm/tcg/meson.build  |  4 --
+ 8 files changed, 131 insertions(+), 22 deletions(-)
+ rename target/arm/{tcg => }/psci.c (97%)
 
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index c21fff4903..53045ad6bc 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -126,6 +126,29 @@ static int vmstate_gicv3_cpu_pre_load(void *opaque)
-     return 0;
+diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+index 2b2055c6ac..51e7436d37 100644
+--- a/target/arm/arm-powerctl.c
++++ b/target/arm/arm-powerctl.c
+@@ -17,6 +17,7 @@
+ #include "qemu/main-loop.h"
+ #include "sysemu/tcg.h"
+ #include "target/arm/multiprocessing.h"
++#include "hw/boards.h"
+ 
+ #ifndef DEBUG_ARM_POWERCTL
+ #define DEBUG_ARM_POWERCTL 0
+@@ -31,14 +32,14 @@
+ 
+ CPUState *arm_get_cpu_by_id(uint64_t id)
+ {
++    MachineState *ms = MACHINE(qdev_get_machine());
+     CPUState *cpu;
+ 
+     DPRINTF("cpu %" PRId64 "\n", id);
+ 
+-    CPU_FOREACH(cpu) {
+-        ARMCPU *armcpu = ARM_CPU(cpu);
+-
+-        if (arm_cpu_mp_affinity(armcpu) == id) {
++    /* with vCPU hotplug support, we must now check for all possible vCPUs */
++    CPU_FOREACH_POSSIBLE(cpu, ms->possible_cpus) {
++        if (cpu && (arm_cpu_mp_affinity(ARM_CPU(cpu)) == id)) {
+             return cpu;
+         }
+     }
+@@ -119,9 +120,16 @@ int arm_set_cpu_on(uint64_t cpuid, uint64_t entry, uint64_t context_id,
+ 
+     /* Retrieve the cpu we are powering up */
+     target_cpu_state = arm_get_cpu_by_id(cpuid);
++
+     if (!target_cpu_state) {
+-        /* The cpu was not found */
+-        return QEMU_ARM_POWERCTL_INVALID_PARAM;
++        /*
++         * The cpu is not plugged in or disabled. We should return appropriate
++         * value as introduced in DEN0022E PSCI 1.2 issue E
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "[ARM]%s: Denying attempt to online removed/disabled "
++                      "CPU%" PRId64"\n", __func__, cpuid);
++        return QEMU_ARM_POWERCTL_IS_OFF;
+     }
+ 
+     target_cpu = ARM_CPU(target_cpu_state);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f5ea3ad4e6..2291fc8428 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -11840,7 +11840,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+                       env->exception.syndrome);
+     }
+ 
+-    if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
++    if (arm_is_psci_call(cpu, cs->exception_index)) {
+         arm_handle_psci_call(cpu);
+         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
+         return;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index be2f14c6b3..755c0a7b46 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -520,21 +520,10 @@ vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len);
+ /* Callback function for when a watchpoint or breakpoint triggers. */
+ void arm_debug_excp_handler(CPUState *cs);
+ 
+-#if defined(CONFIG_USER_ONLY) || !defined(CONFIG_TCG)
+-static inline bool arm_is_psci_call(ARMCPU *cpu, int excp_type)
+-{
+-    return false;
+-}
+-static inline void arm_handle_psci_call(ARMCPU *cpu)
+-{
+-    g_assert_not_reached();
+-}
+-#else
+ /* Return true if the r0/x0 value indicates that this SMC/HVC is a PSCI call. */
+ bool arm_is_psci_call(ARMCPU *cpu, int excp_type);
+ /* Actually handle a PSCI call */
+ void arm_handle_psci_call(ARMCPU *cpu);
+-#endif
+ 
+ /**
+  * arm_clear_exclusive: clear the exclusive monitor
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index f61fd70db0..61ac7f6093 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -544,9 +544,51 @@ int kvm_arch_get_default_type(MachineState *ms)
+     return fixed_ipa ? 0 : size;
  }
  
-+static int vmstate_gicv3_cpu_post_load(void *opaque, int version_id)
++static bool kvm_arm_set_vm_attr(struct kvm_device_attr *attr, const char *name)
 +{
-+    GICv3CPUState *cs = opaque;
++    int err;
 +
-+    /*
-+     * If the destination QEMU has more *enabled* vCPUs than the source, we can
-+     * either *fail* the migration or override the destination QEMU’s vCPU
-+     * configuration to match the source. Since it is safe to override the
-+     * `CPUState` of the extra *enabled* vCPUs at the destination, we have
-+     * adopted the latter approach as a mitigation for the mismatch.
-+     * RFC: Question: any suggestions on this are welcome?
-+     */
-+    if (cs->cpu && !gicv3_cpu_accessible((cs))) {
-+        warn_report("Found CPU %d enabled, for incoming *disabled* GICC State",
-+                    cs->cpu->cpu_index);
-+        warn_report("*Disabling* CPU %d, to match the incoming migrated state",
-+                    cs->cpu->cpu_index);
-+        qdev_unrealize(DEVICE(cs->cpu));
++    err = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, attr);
++    if (err != 0) {
++        error_report("%s: KVM_HAS_DEVICE_ATTR: %s", name, strerror(-err));
++        return false;
++    }
++
++    err = kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, attr);
++    if (err != 0) {
++        error_report("%s: KVM_SET_DEVICE_ATTR: %s", name, strerror(-err));
++        return false;
++    }
++
++    return true;
++}
++
++int kvm_arm_set_smccc_filter(uint64_t func, uint8_t faction)
++{
++    struct kvm_smccc_filter filter = {
++        .base = func,
++        .nr_functions = 1,
++        .action = faction,
++    };
++    struct kvm_device_attr attr = {
++        .group = KVM_ARM_VM_SMCCC_CTRL,
++        .attr = KVM_ARM_VM_SMCCC_FILTER,
++        .flags = 0,
++        .addr = (uintptr_t)&filter,
++    };
++
++    if (!kvm_arm_set_vm_attr(&attr, "SMCCC Filter")) {
++        error_report("failed to set SMCCC filter in KVM Host");
++        return -1;
 +    }
 +
 +    return 0;
 +}
 +
- static bool icc_sre_el1_reg_needed(void *opaque)
+ int kvm_arch_init(MachineState *ms, KVMState *s)
  {
-     GICv3CPUState *cs = opaque;
-@@ -186,6 +209,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .pre_load = vmstate_gicv3_cpu_pre_load,
-+    .post_load = vmstate_gicv3_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(level, GICv3CPUState),
-         VMSTATE_UINT32(gicr_ctlr, GICv3CPUState),
-@@ -207,6 +231,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
-         VMSTATE_UINT64_2DARRAY(icc_apr, GICv3CPUState, 3, 4),
-         VMSTATE_UINT64_ARRAY(icc_igrpen, GICv3CPUState, 3),
-         VMSTATE_UINT64(icc_ctlr_el3, GICv3CPUState),
-+        VMSTATE_BOOL(gicc_accessible, GICv3CPUState),
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
+     int ret = 0;
++
+     /* For ARM interrupt delivery is always asynchronous,
+      * whether we are using an in-kernel VGIC or not.
+      */
+@@ -609,6 +651,22 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
++    /*
++     * To be able to handle PSCI CPU ON calls in QEMU, we need to install SMCCC
++     * filter in the Host KVM. This is required to support features like
++     * virtual CPU Hotplug on ARM platforms.
++     */
++    if (kvm_arm_set_smccc_filter(PSCI_0_2_FN64_CPU_ON,
++                                 KVM_SMCCC_FILTER_FWD_TO_USER)) {
++        error_report("CPU On PSCI-to-user-space fwd filter install failed");
++        abort();
++    }
++    if (kvm_arm_set_smccc_filter(PSCI_0_2_FN_CPU_OFF,
++                                 KVM_SMCCC_FILTER_FWD_TO_USER)) {
++        error_report("CPU Off PSCI-to-user-space fwd filter install failed");
++        abort();
++    }
++
+     return ret;
+ }
+ 
+@@ -1452,6 +1510,38 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
+     return false;
+ }
+ 
++static int kvm_arm_handle_hypercall(CPUState *cs, struct kvm_run *run)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
++
++    kvm_cpu_synchronize_state(cs);
++
++    /*
++     * hard coding immediate to 0 as we dont expect non-zero value as of now
++     * This might change in future versions. Hence, KVM_GET_ONE_REG  could be
++     * used in such cases but it must be enhanced then only synchronize will
++     * also fetch ESR_EL2 value.
++     */
++    if (run->hypercall.flags == KVM_HYPERCALL_EXIT_SMC) {
++        cs->exception_index = EXCP_SMC;
++        env->exception.syndrome = syn_aa64_smc(0);
++    } else {
++        cs->exception_index = EXCP_HVC;
++        env->exception.syndrome = syn_aa64_hvc(0);
++    }
++    env->exception.target_el = 1;
++    bql_lock();
++    arm_cpu_do_interrupt(cs);
++    bql_unlock();
++
++    /*
++     * For PSCI, exit the kvm_run loop and process the work. Especially
++     * important if this was a CPU_OFF command and we can't return to the guest.
++     */
++    return EXCP_INTERRUPT;
++}
++
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1468,6 +1558,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         ret = kvm_arm_handle_dabt_nisv(cpu, run->arm_nisv.esr_iss,
+                                        run->arm_nisv.fault_ipa);
+         break;
++    case KVM_EXIT_HYPERCALL:
++          ret = kvm_arm_handle_hypercall(cs, run);
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
+                       __func__, run->exit_reason);
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 93d12eeb74..e59e1e2511 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -224,6 +224,15 @@ void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa);
+ 
+ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
+ 
++/**
++ * kvm_arm_set_smccc_filter
++ * @func: funcion
++ * @faction: SMCCC filter action(handle, deny, fwd-to-user) to be deployed
++ *
++ * Sets the ARMs SMC-CC filter in KVM Host for selective hypercall exits
++ */
++int kvm_arm_set_smccc_filter(uint64_t func, uint8_t faction);
++
+ #else
+ 
+ /*
+@@ -293,6 +302,11 @@ static inline uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
+     g_assert_not_reached();
+ }
+ 
++static inline int kvm_arm_set_smccc_filter(uint64_t func, uint8_t faction)
++{
++    g_assert_not_reached();
++}
++
+ #endif
+ 
+ #endif
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 2e10464dbb..3e9f704f35 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -23,6 +23,7 @@ arm_system_ss.add(files(
+   'arm-qmp-cmds.c',
+   'cortex-regs.c',
+   'machine.c',
++  'psci.c',
+   'ptw.c',
+ ))
+ 
+diff --git a/target/arm/tcg/psci.c b/target/arm/psci.c
+similarity index 97%
+rename from target/arm/tcg/psci.c
+rename to target/arm/psci.c
+index 51d2ca3d30..b3fcb85079 100644
+--- a/target/arm/tcg/psci.c
++++ b/target/arm/psci.c
+@@ -21,7 +21,9 @@
+ #include "exec/helper-proto.h"
+ #include "kvm-consts.h"
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "sysemu/runstate.h"
++#include "sysemu/tcg.h"
+ #include "internals.h"
+ #include "arm-powerctl.h"
+ #include "target/arm/multiprocessing.h"
+@@ -158,6 +160,11 @@ void arm_handle_psci_call(ARMCPU *cpu)
+     case QEMU_PSCI_0_1_FN_CPU_SUSPEND:
+     case QEMU_PSCI_0_2_FN_CPU_SUSPEND:
+     case QEMU_PSCI_0_2_FN64_CPU_SUSPEND:
++       if (!tcg_enabled()) {
++            warn_report("CPU suspend not supported in non-tcg mode");
++            break;
++       }
++#ifdef CONFIG_TCG
+         /* Affinity levels are not supported in QEMU */
+         if (param[1] & 0xfffe0000) {
+             ret = QEMU_PSCI_RET_INVALID_PARAMS;
+@@ -170,6 +177,7 @@ void arm_handle_psci_call(ARMCPU *cpu)
+             env->regs[0] = 0;
+         }
+         helper_wfi(env, 4);
++#endif
+         break;
+     case QEMU_PSCI_1_0_FN_PSCI_FEATURES:
+         switch (param[1]) {
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 508932a249..5b43c84c40 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -54,9 +54,5 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'sve_helper.c',
+ ))
+ 
+-arm_system_ss.add(files(
+-  'psci.c',
+-))
+-
+ arm_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
 -- 
 2.34.1
 
