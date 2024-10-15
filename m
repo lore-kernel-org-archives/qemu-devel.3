@@ -4,59 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F43CFC278
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35CBCFC279
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 08:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0dI0-00072R-Dw; Tue, 15 Oct 2024 04:52:24 -0400
+	id 1t0dI2-00073R-70; Tue, 15 Oct 2024 04:52:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0dHx-000728-Jj
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:52:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t0dHz-00072O-4V
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:52:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1t0dHn-00088n-IE
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:52:21 -0400
+ id 1t0dHw-000896-3Q
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:52:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1728982322;
+ s=mimecast20190719; t=1728982329;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=F7Jj2N8z8asY0nu6RFtsrgMBmQbeukLqYgfv1WnLY5w=;
- b=ema37rcCDRJk+TB0uAx5o7iV662aSg9Inx80qD26++UXhlJ4Yg/rKuXzPcpPkPES7c+h1l
- XnoEqG1i+xQUR9ymGuI8WN3GUd022CmiiETzuqzGoFJg19FKIfBD1uIR8fThOSV2PWz/pP
- pdEGEYJbXYMnsaPqMoMblFvyAqw4Fxw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JK65KTaD4HUeV1X6yzOdYWgDmvibWf6gxPVoA4kqbSE=;
+ b=gdaNopEWNlWL9+6+lCrp5a9HzZf++tWYk9o+xwa360JNzIrycUEeVd8Ox5jEUio9Km+J7f
+ IBb40uT1zHJsxaP6QAtw0a+b96FSMioCTUqQ5MdIL32MnWULDjc0KAu0joLaHiLh6lslAr
+ wIbW2CFij4ZFpwNvBFBjTZ6oMLn8HJs=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-xLdWdal9OImbP7IzKQ6EQw-1; Tue,
- 15 Oct 2024 04:52:01 -0400
-X-MC-Unique: xLdWdal9OImbP7IzKQ6EQw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-4_OJ-m9qMBmrGYH5SdixXA-1; Tue,
+ 15 Oct 2024 04:52:05 -0400
+X-MC-Unique: 4_OJ-m9qMBmrGYH5SdixXA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 073A81955D57; Tue, 15 Oct 2024 08:51:55 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFFF71955F4A; Tue, 15 Oct 2024 08:52:04 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.15])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 115FC1956056; Tue, 15 Oct 2024 08:51:53 +0000 (UTC)
+ id B799B1956056; Tue, 15 Oct 2024 08:52:03 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 0/8] Chr patches
-Date: Tue, 15 Oct 2024 12:51:42 +0400
-Message-ID: <20241015085150.219486-1-marcandre.lureau@redhat.com>
+Cc: peter.maydell@linaro.org, Roman Penyaev <r.peniaev@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 2/8] chardev/chardev-internal: remove unused `max_size` struct
+ member
+Date: Tue, 15 Oct 2024 12:51:44 +0400
+Message-ID: <20241015085150.219486-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20241015085150.219486-1-marcandre.lureau@redhat.com>
+References: <20241015085150.219486-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -83,43 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Roman Penyaev <r.peniaev@gmail.com>
 
-The following changes since commit aa54f5be44be786636a5d51cc1612ad208a24849:
+Clean up forgotten leftovers.
 
-  tests: update lcitool to fix freebsd py311-yaml rename (2024-10-14 15:54:24 +0100)
+Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20241014152408.427700-3-r.peniaev@gmail.com>
+---
+ chardev/chardev-internal.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/marcandre.lureau/qemu.git tags/chr-pull-request
-
-for you to fetch changes up to 95806c7bee232e995ffd963a6fea0a34fbabc937:
-
-  tests/unit/test-char: implement a few mux remove test cases (2024-10-15 12:48:53 +0400)
-
-----------------------------------------------------------------
-chardev patch queue
-
-----------------------------------------------------------------
-
-Roman Penyaev (8):
-  chardev/char: fix qemu_chr_is_busy() check
-  chardev/chardev-internal: remove unused `max_size` struct member
-  chardev/mux: use bool type for `linestart` and `term_got_escape`
-  chardev/mux: convert size members to unsigned int
-  chardev/mux: introduce `mux_chr_attach_frontend() call
-  chardev/mux: switch mux frontends management to bitset
-  chardev/mux: implement detach of frontends from mux
-  tests/unit/test-char: implement a few mux remove test cases
-
- chardev/chardev-internal.h | 16 ++++---
- include/chardev/char-fe.h  |  2 +-
- chardev/char-fe.c          | 13 ++----
- chardev/char-mux.c         | 90 ++++++++++++++++++++++++++++----------
- chardev/char.c             |  2 +-
- tests/unit/test-char.c     | 24 +++++++++-
- 6 files changed, 105 insertions(+), 42 deletions(-)
-
+diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
+index 4e03af3147..c3024b51fd 100644
+--- a/chardev/chardev-internal.h
++++ b/chardev/chardev-internal.h
+@@ -40,7 +40,6 @@ struct MuxChardev {
+     int focus;
+     int mux_cnt;
+     int term_got_escape;
+-    int max_size;
+     /* Intermediate input buffer catches escape sequences even if the
+        currently active device is not accepting any input - but only until it
+        is full as well. */
 -- 
 2.47.0
 
