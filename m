@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25034CFC287
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3180CFC287
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ewu-0006lk-Mn; Tue, 15 Oct 2024 06:38:44 -0400
+	id 1t0ewV-0006dj-8i; Tue, 15 Oct 2024 06:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewc-0006hT-8J
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:29 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1t0ewR-0006cA-T1
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewa-0005zN-CH
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:26 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-539e8607c2aso3084170e87.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:23 -0700 (PDT)
+ id 1t0ewO-0005vU-Mx
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-37d518f9abcso2868200f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988702; x=1729593502; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988691; x=1729593491; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=SuKeHu5aGsauClJdqFbtB6s+iWJAKGmWZvqIPvzOUdY=;
- b=n2lIHXZinWaHRPeebfeNX+Lzh2h8GCF9dEA2fvy/keYcXxc8rLb2LFI6TXOn6UtS83
- LpKPcz9eVNEA/mVnEp/xma+Pv7kKac0Y+6B4gITYDe1IN8uag4wX8nTNFC0CDYjlafnN
- B+E7WrBzRh7F2ba35Ca/+Z/8G0yP0/IQks7yhFpTmLfaAVHvj83+yl6klSsLJv8tX2VM
- S/u/Ytj47E1exlJh8x8FC6kvhFThoyHsP5EV14N3KHmbTdHCvtrBSO8vsJNLKIc0fQVI
- wZCZVJxa4HZMYwsYwRnNjz+R5pexwDFWuh8+Hxe0R+IVn0LCWFtqQJylpOTuJKA5rL5M
- 68pw==
+ :reply-to; bh=M8ybSySdBrTfoTyOvuNiOXF0pf6l+kJWpSoUB+F85eg=;
+ b=X4rGLBNsTbqic3h1iXLqpkQRvxwjEH/MW80EdH7FPzU7c+Lq9IBQPBhMbCMb3NXNbI
+ 0QJMPJiXpKimkZwfRc2xaKk8E4YytClb4fOIuxE0rldrwjjWIeZFuO/KdAjVb4zzFC3Y
+ XekotZ8cnzjj1opqHH78+IV1pIl0pbiW6dM4Ahe7YimUQ3m+GlCX0xOeEEyRda0vFBVe
+ 9vHUSIK0Mgnj2s7ykcE9698YJ8tVGVBLX/CZCYiyB6dtujggL/JeRvEuGT2Q9BxPpFuU
+ /DNy6gdaaCdXa0yDGnWgAZPiGwAPlAz18mk1j8TiZBnnrWT+/XGpplzKa5Zi3oobfFw7
+ P2JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988702; x=1729593502;
+ d=1e100.net; s=20230601; t=1728988691; x=1729593491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SuKeHu5aGsauClJdqFbtB6s+iWJAKGmWZvqIPvzOUdY=;
- b=KSoAqi3STTsHveGWT4GuKPdpYUMx+H+nWJkWevoCVsULi1PySskmEEAMqFr01O0iUX
- W1SRLPLRUz+Z9WnCEIMAgEKKoVPdWfGFxjjfHAcEIAeaNn7pMAM45d39Z4LLPtjOW9P1
- I1OiIXol1hQ0zMaxlfxRruvQpDxQ9BqaDHnHCTed7cJiNK1ZnGuc5aFfOIrJqecF1N+h
- Yat+gQQrJlodCPMmcU78fyVX+K8HHMYcra0hX8CQ0wl5UjBAKJ8Dt736yXwnFLoXCTEk
- XDCZiCyPDMgiIY43mFF/FOAL6r8WDW8WbUP1IMbVJUaoqWlTBZ/IN5ua1uY/wIMPugMm
- c8Kg==
-X-Gm-Message-State: AOJu0Yx843BBqFuUXKTgkEpjjoScNMSuo7rButrYNkqvEucnmEJYvP2f
- goEmVjxtA9OkagqnwhfqTGLqF5624It7LzhMjt6GVTlg4LKY/B+1/HeElBetNJ99sU66JpiH/uE
- Y
-X-Google-Smtp-Source: AGHT+IG1Bx6gUfJcdHn8vkO7aXqMJpPRLTeLJxs84FcvD0impPjnkuSVmntrDcPCYqRN7c+jwgKwjg==
-X-Received: by 2002:ac2:4c52:0:b0:52c:fd46:bf07 with SMTP id
- 2adb3069b0e04-539da56b5d1mr6512936e87.49.1728988701912; 
- Tue, 15 Oct 2024 03:38:21 -0700 (PDT)
+ bh=M8ybSySdBrTfoTyOvuNiOXF0pf6l+kJWpSoUB+F85eg=;
+ b=rLybIxeJ0gjxW+bAnZFSx0S0In3dZbESTUc8FFhcFl0iuqdR04h7NOHZDk+tsKY4i2
+ gFzRQ7NZ1eVKw+mniegUTGaz1ry5oqt7kpoiiXrAWu8FnSNQslIPFrYx5dUp1HIIPKgO
+ xIx2BBeRsxZgpRnZFXX7zwRut6uHgSNkRJoHleMfF/vqiNb7oiOcFxGtQZhLYqSNUteE
+ +oCozJ2IGAB05WvFCcOyqk61d5Ql4vcfzh7fLyPLd8ImBIdJXSfmjcw+g3BsJUwMvPd8
+ abzzKJoO3AT9z0YDZyM0y2MnFMG24WorAiEOt8e4jYZO8zupLm2KOVGFswZhv7voBJK8
+ OG/w==
+X-Gm-Message-State: AOJu0YwrsP34vCCz/M27UzyBMz6ucHNDBIACJrtK0hIX0IafNuIv3ZuY
+ 70yqvlpUuppXIBn2Rn4LKpphyq2qUtonjvKJW8sn/1khYXgnRuz+Wr9roO+wN/McSrtFCeYjNm7
+ L
+X-Google-Smtp-Source: AGHT+IGsrKFXwjv1eFj9i5LlS5b17Oxlv1IL1kjR35+bDDJdb7MDOES10JugcSXN+DRoPb9Gt5em2w==
+X-Received: by 2002:a05:6000:b10:b0:37d:4846:42c3 with SMTP id
+ ffacd0b85a97d-37d551b6ee1mr8241723f8f.22.1728988691167; 
+ Tue, 15 Oct 2024 03:38:11 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.21
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:21 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/28] hw/block: Remove ecc
-Date: Tue, 15 Oct 2024 11:38:05 +0100
-Message-Id: <20241015103808.133024-26-peter.maydell@linaro.org>
+Subject: [PULL 03/28] hw/arm/stm32f405: Add RCC device to stm32f405 SoC
+Date: Tue, 15 Oct 2024 11:37:43 +0100
+Message-Id: <20241015103808.133024-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,195 +94,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ecc.c code was used only by the PXA2xx and OMAP2 SoC devices,
-which we have removed, so it is now completely unused.
+From: Román Cárdenas Rodríguez <rcardenas.rod@gmail.com>
 
-Note that hw/misc/eccmemctl.c does not in fact use any of the
-code frome ecc.c, so that KConfig dependency was incorrect.
+Add the reset and clock controller device to the stm32f405 SoC.
 
+Signed-off-by: Roman Cardenas Rodriguez <rcardenas.rod@gmail.com>
+[PMM: tweak commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241003140010.1653808-6-peter.maydell@linaro.org
 ---
- include/hw/block/flash.h | 11 -----
- hw/block/ecc.c           | 91 ----------------------------------------
- hw/arm/Kconfig           |  1 -
- hw/block/Kconfig         |  3 --
- hw/block/meson.build     |  1 -
- hw/misc/Kconfig          |  1 -
- 6 files changed, 108 deletions(-)
- delete mode 100644 hw/block/ecc.c
+ docs/system/arm/stm32.rst      |  3 ++-
+ include/hw/arm/stm32f405_soc.h |  2 ++
+ hw/arm/stm32f405_soc.c         | 12 +++++++++++-
+ hw/arm/Kconfig                 |  1 +
+ 4 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/block/flash.h b/include/hw/block/flash.h
-index b985c825a01..5fd67f5bb79 100644
---- a/include/hw/block/flash.h
-+++ b/include/hw/block/flash.h
-@@ -62,17 +62,6 @@ uint32_t nand_getbuswidth(DeviceState *dev);
- #define NAND_MFR_HYNIX      0xad
- #define NAND_MFR_MICRON     0x2c
+diff --git a/docs/system/arm/stm32.rst b/docs/system/arm/stm32.rst
+index 3b640f3ee07..ca7a55841b4 100644
+--- a/docs/system/arm/stm32.rst
++++ b/docs/system/arm/stm32.rst
+@@ -36,6 +36,7 @@ Supported devices
+  * SPI controller
+  * System configuration (SYSCFG)
+  * Timer controller (TIMER)
++ * Reset and Clock Controller (RCC) (STM32F4 only, reset and enable only)
  
--/* ecc.c */
--typedef struct {
--    uint8_t cp;     /* Column parity */
--    uint16_t lp[2]; /* Line parity */
--    uint16_t count;
--} ECCState;
--
--uint8_t ecc_digest(ECCState *s, uint8_t sample);
--void ecc_reset(ECCState *s);
--extern const VMStateDescription vmstate_ecc_state;
--
- /* m25p80.c */
+ Missing devices
+ ---------------
+@@ -53,7 +54,7 @@ Missing devices
+  * Power supply configuration (PWR)
+  * Random Number Generator (RNG)
+  * Real-Time Clock (RTC) controller
+- * Reset and Clock Controller (RCC)
++ * Reset and Clock Controller (RCC) (other features than reset and enable)
+  * Secure Digital Input/Output (SDIO) interface
+  * USB OTG
+  * Watchdog controller (IWDG, WWDG)
+diff --git a/include/hw/arm/stm32f405_soc.h b/include/hw/arm/stm32f405_soc.h
+index d15c03c4b5d..2eeada64ded 100644
+--- a/include/hw/arm/stm32f405_soc.h
++++ b/include/hw/arm/stm32f405_soc.h
+@@ -25,6 +25,7 @@
+ #ifndef HW_ARM_STM32F405_SOC_H
+ #define HW_ARM_STM32F405_SOC_H
  
- #define TYPE_M25P80 "m25p80-generic"
-diff --git a/hw/block/ecc.c b/hw/block/ecc.c
-deleted file mode 100644
-index ed889a4184f..00000000000
---- a/hw/block/ecc.c
-+++ /dev/null
-@@ -1,91 +0,0 @@
--/*
-- * Calculate Error-correcting Codes. Used by NAND Flash controllers
-- * (not by NAND chips).
-- *
-- * Copyright (c) 2006 Openedhand Ltd.
-- * Written by Andrzej Zaborowski <balrog@zabor.org>
-- *
-- * This code is licensed under the GNU GPL v2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
--
--#include "qemu/osdep.h"
--#include "migration/vmstate.h"
--#include "hw/block/flash.h"
--
--/*
-- * Pre-calculated 256-way 1 byte column parity.  Table borrowed from Linux.
-- */
--static const uint8_t nand_ecc_precalc_table[] = {
--    0x00, 0x55, 0x56, 0x03, 0x59, 0x0c, 0x0f, 0x5a,
--    0x5a, 0x0f, 0x0c, 0x59, 0x03, 0x56, 0x55, 0x00,
--    0x65, 0x30, 0x33, 0x66, 0x3c, 0x69, 0x6a, 0x3f,
--    0x3f, 0x6a, 0x69, 0x3c, 0x66, 0x33, 0x30, 0x65,
--    0x66, 0x33, 0x30, 0x65, 0x3f, 0x6a, 0x69, 0x3c,
--    0x3c, 0x69, 0x6a, 0x3f, 0x65, 0x30, 0x33, 0x66,
--    0x03, 0x56, 0x55, 0x00, 0x5a, 0x0f, 0x0c, 0x59,
--    0x59, 0x0c, 0x0f, 0x5a, 0x00, 0x55, 0x56, 0x03,
--    0x69, 0x3c, 0x3f, 0x6a, 0x30, 0x65, 0x66, 0x33,
--    0x33, 0x66, 0x65, 0x30, 0x6a, 0x3f, 0x3c, 0x69,
--    0x0c, 0x59, 0x5a, 0x0f, 0x55, 0x00, 0x03, 0x56,
--    0x56, 0x03, 0x00, 0x55, 0x0f, 0x5a, 0x59, 0x0c,
--    0x0f, 0x5a, 0x59, 0x0c, 0x56, 0x03, 0x00, 0x55,
--    0x55, 0x00, 0x03, 0x56, 0x0c, 0x59, 0x5a, 0x0f,
--    0x6a, 0x3f, 0x3c, 0x69, 0x33, 0x66, 0x65, 0x30,
--    0x30, 0x65, 0x66, 0x33, 0x69, 0x3c, 0x3f, 0x6a,
--    0x6a, 0x3f, 0x3c, 0x69, 0x33, 0x66, 0x65, 0x30,
--    0x30, 0x65, 0x66, 0x33, 0x69, 0x3c, 0x3f, 0x6a,
--    0x0f, 0x5a, 0x59, 0x0c, 0x56, 0x03, 0x00, 0x55,
--    0x55, 0x00, 0x03, 0x56, 0x0c, 0x59, 0x5a, 0x0f,
--    0x0c, 0x59, 0x5a, 0x0f, 0x55, 0x00, 0x03, 0x56,
--    0x56, 0x03, 0x00, 0x55, 0x0f, 0x5a, 0x59, 0x0c,
--    0x69, 0x3c, 0x3f, 0x6a, 0x30, 0x65, 0x66, 0x33,
--    0x33, 0x66, 0x65, 0x30, 0x6a, 0x3f, 0x3c, 0x69,
--    0x03, 0x56, 0x55, 0x00, 0x5a, 0x0f, 0x0c, 0x59,
--    0x59, 0x0c, 0x0f, 0x5a, 0x00, 0x55, 0x56, 0x03,
--    0x66, 0x33, 0x30, 0x65, 0x3f, 0x6a, 0x69, 0x3c,
--    0x3c, 0x69, 0x6a, 0x3f, 0x65, 0x30, 0x33, 0x66,
--    0x65, 0x30, 0x33, 0x66, 0x3c, 0x69, 0x6a, 0x3f,
--    0x3f, 0x6a, 0x69, 0x3c, 0x66, 0x33, 0x30, 0x65,
--    0x00, 0x55, 0x56, 0x03, 0x59, 0x0c, 0x0f, 0x5a,
--    0x5a, 0x0f, 0x0c, 0x59, 0x03, 0x56, 0x55, 0x00,
--};
--
--/* Update ECC parity count.  */
--uint8_t ecc_digest(ECCState *s, uint8_t sample)
--{
--    uint8_t idx = nand_ecc_precalc_table[sample];
--
--    s->cp ^= idx & 0x3f;
--    if (idx & 0x40) {
--        s->lp[0] ^= ~s->count;
--        s->lp[1] ^= s->count;
--    }
--    s->count ++;
--
--    return sample;
--}
--
--/* Reinitialise the counters.  */
--void ecc_reset(ECCState *s)
--{
--    s->lp[0] = 0x0000;
--    s->lp[1] = 0x0000;
--    s->cp = 0x00;
--    s->count = 0;
--}
--
--/* Save/restore */
--const VMStateDescription vmstate_ecc_state = {
--    .name = "ecc-state",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT8(cp, ECCState),
--        VMSTATE_UINT16_ARRAY(lp, ECCState, 2),
--        VMSTATE_UINT16(count, ECCState),
--        VMSTATE_END_OF_LIST(),
--    },
--};
++#include "hw/misc/stm32_rcc.h"
+ #include "hw/misc/stm32f4xx_syscfg.h"
+ #include "hw/timer/stm32f2xx_timer.h"
+ #include "hw/char/stm32f2xx_usart.h"
+@@ -55,6 +56,7 @@ struct STM32F405State {
+ 
+     ARMv7MState armv7m;
+ 
++    STM32RccState rcc;
+     STM32F4xxSyscfgState syscfg;
+     STM32F4xxExtiState exti;
+     STM32F2XXUsartState usart[STM_NUM_USARTS];
+diff --git a/hw/arm/stm32f405_soc.c b/hw/arm/stm32f405_soc.c
+index 2ad5b79a069..72ae62156f3 100644
+--- a/hw/arm/stm32f405_soc.c
++++ b/hw/arm/stm32f405_soc.c
+@@ -30,6 +30,7 @@
+ #include "hw/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ 
++#define RCC_ADDR                       0x40023800
+ #define SYSCFG_ADD                     0x40013800
+ static const uint32_t usart_addr[] = { 0x40011000, 0x40004400, 0x40004800,
+                                        0x40004C00, 0x40005000, 0x40011400,
+@@ -59,6 +60,8 @@ static void stm32f405_soc_initfn(Object *obj)
+ 
+     object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
+ 
++    object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32_RCC);
++
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32F4XX_SYSCFG);
+ 
+     for (i = 0; i < STM_NUM_USARTS; i++) {
+@@ -160,6 +163,14 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+ 
++    /* Reset and clock controller */
++    dev = DEVICE(&s->rcc);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rcc), errp)) {
++        return;
++    }
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_mmio_map(busdev, 0, RCC_ADDR);
++
+     /* System configuration controller */
+     dev = DEVICE(&s->syscfg);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
+@@ -276,7 +287,6 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
+     create_unimplemented_device("GPIOH",       0x40021C00, 0x400);
+     create_unimplemented_device("GPIOI",       0x40022000, 0x400);
+     create_unimplemented_device("CRC",         0x40023000, 0x400);
+-    create_unimplemented_device("RCC",         0x40023800, 0x400);
+     create_unimplemented_device("Flash Int",   0x40023C00, 0x400);
+     create_unimplemented_device("BKPSRAM",     0x40024000, 0x400);
+     create_unimplemented_device("DMA1",        0x40026000, 0x400);
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 0d658ead093..e7fd9338d11 100644
+index e7b9cfb59c0..f1e981622a1 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -150,7 +150,6 @@ config OMAP
+@@ -397,6 +397,7 @@ config STM32F405_SOC
      bool
-     select FRAMEBUFFER
-     select I2C
--    select ECC
-     select NAND
-     select PFLASH_CFI01
-     select SD
-diff --git a/hw/block/Kconfig b/hw/block/Kconfig
-index e67a6fd8af7..a898e04f03b 100644
---- a/hw/block/Kconfig
-+++ b/hw/block/Kconfig
-@@ -22,9 +22,6 @@ config PFLASH_CFI01
- config PFLASH_CFI02
-     bool
+     select ARM_V7M
+     select OR_IRQ
++    select STM32_RCC
+     select STM32F4XX_SYSCFG
+     select STM32F4XX_EXTI
  
--config ECC
--    bool
--
- config VIRTIO_BLK
-     bool
-     default y
-diff --git a/hw/block/meson.build b/hw/block/meson.build
-index 999a93d900f..16a51bf8e21 100644
---- a/hw/block/meson.build
-+++ b/hw/block/meson.build
-@@ -3,7 +3,6 @@ system_ss.add(files(
-   'cdrom.c',
-   'hd-geometry.c'
- ))
--system_ss.add(when: 'CONFIG_ECC', if_true: files('ecc.c'))
- system_ss.add(when: 'CONFIG_FDC', if_true: files('fdc.c'))
- system_ss.add(when: 'CONFIG_FDC_ISA', if_true: files('fdc-isa.c'))
- system_ss.add(when: 'CONFIG_FDC_SYSBUS', if_true: files('fdc-sysbus.c'))
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 6bdc77cbe5d..1f1baa5dde9 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -74,7 +74,6 @@ config IVSHMEM_DEVICE
- 
- config ECCMEMCTL
-     bool
--    select ECC
- 
- config IMX
-     bool
 -- 
 2.34.1
 
