@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADC4D216AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE15CD216AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iMI-0005Go-A7; Tue, 15 Oct 2024 10:17:10 -0400
+	id 1t0iMc-0005V9-1x; Tue, 15 Oct 2024 10:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0iMH-0005GW-AQ
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:09 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0iMZ-0005SQ-QT
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0iMF-0003Gy-LE
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:09 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0iMY-0003Hz-97
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001826;
+ s=mimecast20190719; t=1729001845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=lVTn/CTTmMGzPRNZmr1gqbTCZpVpsZcI+grphSKu7/c=;
- b=C+wdYqRggfK+2VYpdcO4BsPZMynO6oJZJWnf9l75AB3sl9kiSWk9HyG6EwoJKW0484rWoH
- GFlvS5+i+g7Sp0iExk+qw9+noUGPiZnosX+ypjgmSD7uzOP7WwINsaj+vus56vc2UM+8LI
- IRNDnSVgQWktnuK7e9MPhGD7pgePsAs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cuLNoeZpyQHQpICX1qEOU2ycUwWgQEohJuDmKzB9Xtc=;
+ b=ZHUhs6ZJvWKM0Csu2aL99njeGzcNqXo8VYqP+b4ZTfK04xu3Z1ofZTv5Njlr14gkIfMxRc
+ IaL7yqIItNSMVI3G8A3zAaYyMDupdqDfL996cCM9uLawPvLAaDHWEd2n5McD6tNLVP1xb0
+ eBe0jvTFzIEKeTDN898xinK68u9iZWk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-dVW-YZMpPOm-RHYghjBvng-1; Tue, 15 Oct 2024 10:15:59 -0400
-X-MC-Unique: dVW-YZMpPOm-RHYghjBvng-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4312b53256cso17595685e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:15:59 -0700 (PDT)
+ us-mta-160-WY1PgjYBMnStCkLukqcupg-1; Tue, 15 Oct 2024 10:17:24 -0400
+X-MC-Unique: WY1PgjYBMnStCkLukqcupg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d533a484aso1959569f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001757; x=1729606557;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lVTn/CTTmMGzPRNZmr1gqbTCZpVpsZcI+grphSKu7/c=;
- b=YDaZcDDE7Ecu9WHGqvO74VZzwDu7T4HbHGwpZfToWT6PZ/wDLucVqs3JUwL4LUbB4y
- zxIayg7IeagiWuU4PBapNLaxlZ+8OzSBN7cto79wacY6l2mYbgI2PGp4Le8rBHPl3tRj
- uvRvC4kwrbOg4zNZ9fZ64uL4UeLqrZ8EdOSY3HsXm8zQCOg7xTGHMacF9hsqg6UUDqTV
- akiBejZquT8KB1qMVUMab5o93RLUn1O1lKniisMQrrpnU4k8BUl5asrwC9npPuM8XGzx
- rQl50rcBDw9MHdOcXSBP7+zcwTUifWZsOLEh8vBoUye5vUGwzQnRrVsJb/vjFu1HWrrA
- qmAg==
-X-Gm-Message-State: AOJu0YyLbSzT1HZxO/1zcBaYNF4YshdWEatIsTCR+htmg033hGxb3RAa
- AIgTKoivLKGLPq6R6I2xOZgliiYNNX9vQJUdeAgCLdXGnaKA8vD6IaX2aLdMfesFZj1323ASbEC
- KwVPHp4TzD6zmPz22MzGBVc38tiP61M3bXT5W1mJsFCp6UmQL+xYE9nfSpcSTRwSCS5NCdW8AB3
- 0XD09Gs79iD8fJLoe6VB09DQmQmzJAXLOLGg==
-X-Received: by 2002:a05:600c:384c:b0:42c:c1f6:6ded with SMTP id
- 5b1f17b1804b1-4311df55df7mr132158275e9.29.1729001757128; 
- Tue, 15 Oct 2024 07:15:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpkSsxegbMDhcBgNyC3l5hMY5bH8s19KnXe5RzFtVXScAI3uhopVNgYojShbSEFic6+yZIeA==
-X-Received: by 2002:a05:600c:384c:b0:42c:c1f6:6ded with SMTP id
- 5b1f17b1804b1-4311df55df7mr132157935e9.29.1729001756654; 
- Tue, 15 Oct 2024 07:15:56 -0700 (PDT)
-Received: from localhost
- (p200300cfd7232e319b54c0c720fee73c.dip0.t-ipconnect.de.
- [2003:cf:d723:2e31:9b54:c0c7:20fe:e73c])
+ d=1e100.net; s=20230601; t=1729001842; x=1729606642;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cuLNoeZpyQHQpICX1qEOU2ycUwWgQEohJuDmKzB9Xtc=;
+ b=TsbaxlSmRbHOlglG49xlLbEQbYFfepjFE2niJ5TRNEfJLjWfd0FrKiAyu1zYaG2BJe
+ fBdREk+cTSOAESYCxoM1ugpOAQ+hU5g85uUFUJw8Bu4MQXZ5nUbDp27jWcIaksLFi47n
+ KWA0Zsnf0LQloSGE/sYi/ZL9SewdZs6+hdGcKr8pn3hemuDjyJvYE5507wycu69r527G
+ MWsSuq7tsB43IB7yW84Kht2EV8FMywlcW/sH1nkEOTMPJoZYc3akXjyUvkEuXep494LI
+ A8KuG0yRc3PQWlG21/nwaDzdlaUFNVIiCPQyWLL2t8bXI2YcwwGlahClMxdOsuFE3IsU
+ iIYw==
+X-Gm-Message-State: AOJu0Yx0owjD0pkemQpzBJKaE0DA/uUKGCNtHyL51v75cEoYIOX7V2wd
+ mAMYqWqsqXzclBA3wzgLbBDxAcZe2VsnMcCibpAiwzrEGZ6O3BTG28abfDLX4jddqv67XnIGEO3
+ wkL9IBFiGBQxIlzDaPcLOVokXNIpjkc/JlYGcqqjh241VtX45sj9bQzpMaF9ASdozI/dYw6xLqC
+ eotDeSy3hX5q+1FCCOW4LxaWVFeCKYEmqOSHHKqfE=
+X-Received: by 2002:a5d:5108:0:b0:376:dbb5:10c2 with SMTP id
+ ffacd0b85a97d-37d552d4a14mr11857299f8f.29.1729001842253; 
+ Tue, 15 Oct 2024 07:17:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn6Ue+uQoj56Jr6tVkV1FQ2hIeCCIV+cUqZcQeyQQwdAYXipVdjZ+MHAOTyKAHA0e8DvfRJg==
+X-Received: by 2002:a5d:5108:0:b0:376:dbb5:10c2 with SMTP id
+ ffacd0b85a97d-37d552d4a14mr11857234f8f.29.1729001841205; 
+ Tue, 15 Oct 2024 07:17:21 -0700 (PDT)
+Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4313f55dfa8sm19636305e9.6.2024.10.15.07.15.55
+ ffacd0b85a97d-37d7fa87c70sm1701141f8f.30.2024.10.15.07.17.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:15:55 -0700 (PDT)
-From: Hanna Czenczek <hreitz@redhat.com>
+ Tue, 15 Oct 2024 07:17:19 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Hanna Czenczek <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-stable@nongnu.org
-Subject: [PATCH] migration: Ensure vmstate_save() sets errp
-Date: Tue, 15 Oct 2024 16:15:15 +0200
-Message-ID: <20241015141515.150754-1-hreitz@redhat.com>
-X-Mailer: git-send-email 2.45.2
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 02/25] target/i386: Enable fdp-excptn-only and zero-fcs-fds
+Date: Tue, 15 Oct 2024 16:16:48 +0200
+Message-ID: <20241015141711.528342-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
+References: <20241015141711.528342-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -101,79 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migration/savevm.c contains some calls to vmstate_save() that are
-followed by migrate_set_error() if the integer return value indicates an
-error.  migrate_set_error() requires that the `Error *` object passed to
-it is set.  Therefore, vmstate_save() is assumed to always set *errp on
-error.
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Right now, that assumption is not met: vmstate_save_state_v() (called
-internally by vmstate_save()) will not set *errp if
-vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
-an *errp parameter to vmstate_subsection_save(), and by generating a
-generic error in case post_save() fails (as is already done for
-pre_save()).
+- CPUID.(EAX=07H,ECX=0H):EBX[bit 6]: x87 FPU Data Pointer updated only
+  on x87 exceptions if 1.
 
-Without this patch, qemu will crash after vmstate_subsection_save() or
-post_save() have failed inside of a vmstate_save() call (unless
-migrate_set_error() then happen to discard the new error because
-s->error is already set).  This happens e.g. when receiving the state
-from a virtio-fs back-end (virtiofsd) fails.
+- CPUID.(EAX=07H,ECX=0H):EBX[bit 13]: Deprecates FPU CS and FPU DS
+  values if 1. i.e., X87 FCS and FDS are always zero.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Define names for them so that they can be exposed to guest with -cpu host.
+
+Also define the bit field MACROs so that named cpu models can add it as
+well in the future.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20240814075431.339209-3-xiaoyao.li@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- migration/vmstate.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ target/i386/cpu.h | 4 ++++
+ target/i386/cpu.c | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index ff5d589a6d..13532f2807 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -22,7 +22,8 @@
- #include "trace.h"
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc);
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp);
- static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-                                    void *opaque);
- 
-@@ -441,12 +442,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         json_writer_end_array(vmdesc);
-     }
- 
--    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
-+    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
- 
-     if (vmsd->post_save) {
-         int ps_ret = vmsd->post_save(opaque);
-         if (!ret) {
-             ret = ps_ret;
-+            error_setg(errp, "post-save failed: %s", vmsd->name);
-         }
-     }
-     return ret;
-@@ -518,7 +520,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
- }
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc)
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp)
- {
-     const VMStateDescription * const *sub = vmsd->subsections;
-     bool vmdesc_has_subsections = false;
-@@ -546,7 +549,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-             qemu_put_byte(f, len);
-             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
-             qemu_put_be32(f, vmsdsub->version_id);
--            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
-+            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
-             if (ret) {
-                 return ret;
-             }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 4c63e7b0459..4c84cd41fd5 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -820,6 +820,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_EBX_HLE               (1U << 4)
+ /* Intel Advanced Vector Extensions 2 */
+ #define CPUID_7_0_EBX_AVX2              (1U << 5)
++/* FPU data pointer updated only on x87 exceptions */
++#define CPUID_7_0_EBX_FDP_EXCPTN_ONLY (1u << 6)
+ /* Supervisor-mode Execution Prevention */
+ #define CPUID_7_0_EBX_SMEP              (1U << 7)
+ /* 2nd Group of Advanced Bit Manipulation Extensions */
+@@ -830,6 +832,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_EBX_INVPCID           (1U << 10)
+ /* Restricted Transactional Memory */
+ #define CPUID_7_0_EBX_RTM               (1U << 11)
++/* Zero out FPU CS and FPU DS */
++#define CPUID_7_0_EBX_ZERO_FCS_FDS      (1U << 13)
+ /* Memory Protection Extension */
+ #define CPUID_7_0_EBX_MPX               (1U << 14)
+ /* AVX-512 Foundation */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0d30191482e..089b651591b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1054,9 +1054,9 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+             "fsgsbase", "tsc-adjust", "sgx", "bmi1",
+-            "hle", "avx2", NULL, "smep",
++            "hle", "avx2", "fdp-excptn-only", "smep",
+             "bmi2", "erms", "invpcid", "rtm",
+-            NULL, NULL, "mpx", NULL,
++            NULL, "zero-fcs-fds", "mpx", NULL,
+             "avx512f", "avx512dq", "rdseed", "adx",
+             "smap", "avx512ifma", "pcommit", "clflushopt",
+             "clwb", "intel-pt", "avx512pf", "avx512er",
 -- 
-2.45.2
+2.46.2
 
 
