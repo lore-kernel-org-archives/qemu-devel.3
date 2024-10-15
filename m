@@ -4,86 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5FFD1F9C5
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED958D1F9C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0mrw-0002Jz-Qj; Tue, 15 Oct 2024 15:06:09 -0400
+	id 1t0n8R-0005qY-St; Tue, 15 Oct 2024 15:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0mru-0002JD-GJ
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:06:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t0mrr-00005s-JJ
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:06:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729019162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t0n8K-0005ol-9d
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:23:06 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t0n8I-0001xG-Mo
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:23:04 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 28DF91FBA0;
+ Tue, 15 Oct 2024 19:22:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729020178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QTV5trzBUQpukdF+cuE9QPTllqiIeU4/b6EtuxirOZk=;
- b=dFDD2z8hteB4kwBJQ2NgxrbHxVYj1xbxibSORjsKwByTI6KBVm39QpQ4YbB6xd/HKgSWDe
- wKNR9Mj6PRY/MuKU4Ov1KbnA8mhb7c/M6W9/iLXniEMAdMKems9lT5FaQc0yv8pET2KEF8
- JIk9u8hyM1s+y2SDCIJUfDKokpemBzQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-BzAHuz8jOo-ktlkSekan1A-1; Tue, 15 Oct 2024 15:05:59 -0400
-X-MC-Unique: BzAHuz8jOo-ktlkSekan1A-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cbebfc1725so122682716d6.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 12:05:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729019159; x=1729623959;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QTV5trzBUQpukdF+cuE9QPTllqiIeU4/b6EtuxirOZk=;
- b=i4ksrQKwtowHNqewp8cr/Su76l8qEENw+k2uNBo1eFGuYm4yvAHBXc/QTCenxUZ2RN
- 7a9Q7GRVvTpVL2nGRD/S0S4xGP8pmn8ZjttyfFyLlcYUhJmW7Xlw/A+wqDfmcElnNJ7H
- ThBOz0xIpJH87J38FwaUb5H7pdbWd1QMQCul78abAlFyChJF8b/IwWaNhJn8gR2s8z93
- GAYARatqCX87s5ZylV30rZjHZ0eTJihjsjtJIDMvxyTVuDyjnqApmhDpXhn6gVBjjgC9
- koHQZxtyTEaP8wW+1Gq5eLfa9s/9F5g4YB27D/dRGAtLkZz9Q2S1aDPHhFN9PAo9Ggti
- 3rmA==
-X-Gm-Message-State: AOJu0YxPk+7i8FT3jlaJZN+617PLVa7/nUv6M1OZzlv+GWWwcQKmHJW7
- hdF5ACtM+uLmSgUg+CuFrldF1iSQIHBa71W9IK6veWTXbYJ1VBE1HJmHOXKu9woHM2NYoLH/I92
- 3UqjXjI55DRsFVaLpjDuUqVleQUyPSBrIcqHmZnhRKRpHAoFavnIU
-X-Received: by 2002:a05:6214:3990:b0:6cb:f6ff:f5dc with SMTP id
- 6a1803df08f44-6cbf9cb2efdmr243944646d6.6.1729019158848; 
- Tue, 15 Oct 2024 12:05:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHse5loyAG7M1dqaz0+N5ZVkHf5nOsIOqvXVIbybe0Z67W9aL3+n/hZJkGcesVZW2t5jX8hvw==
-X-Received: by 2002:a05:6214:3990:b0:6cb:f6ff:f5dc with SMTP id
- 6a1803df08f44-6cbf9cb2efdmr243944376d6.6.1729019158416; 
- Tue, 15 Oct 2024 12:05:58 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cc2295af43sm9859916d6.98.2024.10.15.12.05.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 12:05:57 -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:05:55 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] migration: Ensure vmstate_save() sets errp
-Message-ID: <Zw69E9nvy8wQjrGZ@x1n>
-References: <20241015170437.310358-1-hreitz@redhat.com>
+ bh=gnTC2kt+1cMbD+JSZLKT5yxnm17ge96UFnNlyj4I2rU=;
+ b=HlJkkrgKF8CO6ybuVufF/C/29EMV5jE84T5WKcHMP02Na4Vy7+r4d2JfF2MYvCtnK2y8I5
+ NY+VwcV90jDnTyxwhxCWWAnJoQ+cwzh8ljumDuiLZD/B0avKnG8a8YtCJtxmqN+sm3oTkX
+ LROu4Hmh+ooX8KWHtRNDLHYbFKq+u3o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729020178;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gnTC2kt+1cMbD+JSZLKT5yxnm17ge96UFnNlyj4I2rU=;
+ b=T8R3vCCET9wDLSF746r6vtzqn2jUNLz0j1jyY++eW1JalqSuvmV+Jg+YeszUE5467F2X4S
+ JnNZvYmrGyW4J0Bg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729020178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gnTC2kt+1cMbD+JSZLKT5yxnm17ge96UFnNlyj4I2rU=;
+ b=HlJkkrgKF8CO6ybuVufF/C/29EMV5jE84T5WKcHMP02Na4Vy7+r4d2JfF2MYvCtnK2y8I5
+ NY+VwcV90jDnTyxwhxCWWAnJoQ+cwzh8ljumDuiLZD/B0avKnG8a8YtCJtxmqN+sm3oTkX
+ LROu4Hmh+ooX8KWHtRNDLHYbFKq+u3o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729020178;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gnTC2kt+1cMbD+JSZLKT5yxnm17ge96UFnNlyj4I2rU=;
+ b=T8R3vCCET9wDLSF746r6vtzqn2jUNLz0j1jyY++eW1JalqSuvmV+Jg+YeszUE5467F2X4S
+ JnNZvYmrGyW4J0Bg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A784A13A42;
+ Tue, 15 Oct 2024 19:22:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3XqAGxHBDmcoWgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 15 Oct 2024 19:22:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: Re: tpm-tis-device-swtpm-test timeout
+In-Reply-To: <077cee03-efd0-4716-865a-b9990afb91a3@linux.ibm.com>
+References: <87jze9qlrp.fsf@suse.de>
+ <077cee03-efd0-4716-865a-b9990afb91a3@linux.ibm.com>
+Date: Tue, 15 Oct 2024 16:22:55 -0300
+Message-ID: <87h69dqigg.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241015170437.310358-1-hreitz@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.11 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_SHORT(-0.01)[-0.049]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,39 +111,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 15, 2024 at 07:04:37PM +0200, Hanna Czenczek wrote:
-> migration/savevm.c contains some calls to vmstate_save() that are
-> followed by migrate_set_error() if the integer return value indicates an
-> error.  migrate_set_error() requires that the `Error *` object passed to
-> it is set.  Therefore, vmstate_save() is assumed to always set *errp on
-> error.
-> 
-> Right now, that assumption is not met: vmstate_save_state_v() (called
-> internally by vmstate_save()) will not set *errp if
-> vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
-> an *errp parameter to vmstate_subsection_save(), and by generating a
-> generic error in case post_save() fails (as is already done for
-> pre_save()).
-> 
-> Without this patch, qemu will crash after vmstate_subsection_save() or
-> post_save() have failed inside of a vmstate_save() call (unless
-> migrate_set_error() then happen to discard the new error because
-> s->error is already set).  This happens e.g. when receiving the state
-> from a virtio-fs back-end (virtiofsd) fails.
-> 
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
-> v2: As suggested by Peter, after vmsd->post_save(), change the condition
->     from `if (!ret)` to `if (!ret && ps_ret)` so we will not create an
->     error object in case of success (that would then be leaked, most
->     likely).
-> ---
->  migration/vmstate.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+Stefan Berger <stefanb@linux.ibm.com> writes:
 
-queued, thanks!
+> On 10/15/24 2:11 PM, Fabiano Rosas wrote:
+>> Hi Stefan,
+>> 
+>> I see the tpm-tis-device-swtpm test timing out, could you take a look?
+>> 
+>> qemu:qtest+qtest-aarch64 / qtest-aarch64/tpm-tis-device-swtpm-test time out (After 60.0 seconds)
+>> 135/138 qemu:qtest+qtest-aarch64 /
+>> qtest-aarch64/tpm-tis-device-swtpm-test TIMEOUT 60.01s killed by signal 11 SIGSEGV
+>
+> Is this something new or been happening for a while? Does it happen 
+> consistently? I just build the master branch and ran the tests on a very 
+> old machine, I mean 13 years old. The host runs Fedora 40 with 
+> libtpms-0.96-6 + swtpm-0.9.0 from the distro:
 
--- 
-Peter Xu
+It's the first time I see it. I can reproduce consistently by running
+that test in a loop while make -j16 check is running in another window.
 
+I'm on openSUSE Leap 15.5:
+
+$ rpm -qa | grep libtpms
+libtpms0-0.8.2-150300.3.9.1.x86_64
+
+$ rpm -qa | grep swtpm
+swtpm-0.7.3-150500.2.1.x86_64
 
