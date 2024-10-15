@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498DAD216A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADC4D216AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iIN-0003Wh-RN; Tue, 15 Oct 2024 10:13:07 -0400
+	id 1t0iMI-0005Go-A7; Tue, 15 Oct 2024 10:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t0iIL-0003W6-R7
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:13:05 -0400
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1t0iIK-0002nQ-6d
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:13:05 -0400
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-84ea1e5e964so3465736241.0
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:13:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729001582; x=1729606382; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Uv24sxOIWDaXySEDhSJgMbl6NmfFuI2E75I9MOxSq74=;
- b=fAHcAWVhVhtTzlqW0ix24+QG3RSmM4FZegSkdJ8jwASMqYhlb2UecO+2SlHTzwtQfL
- WFNs8tDsTwROUbsPvdoqAORRAClXaYNC54a+Xg9RNZxdPoMQ/rbpgFmLnYBG5gKoCrtG
- wRgUOph4lJOWKqoKzbYPWnc6FvPiYvAw0scGhyxrMjCOnbf+ztwSuPUuQABhP2Zx8NzJ
- GIA/l28/byv5N/TfQr2tbR9JiU3OA3lNndkVZrUE4kUmUYlh9W7KiRJaKmQUDwNvx6wx
- nuDrI3XMYPa9K8nFdyV33Y63oQAF2GeoWbnh7Yic9yQMf+9agGHB9jmfBIZIEwxYjs9Y
- D35g==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0iMH-0005GW-AQ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0iMF-0003Gy-LE
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729001826;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lVTn/CTTmMGzPRNZmr1gqbTCZpVpsZcI+grphSKu7/c=;
+ b=C+wdYqRggfK+2VYpdcO4BsPZMynO6oJZJWnf9l75AB3sl9kiSWk9HyG6EwoJKW0484rWoH
+ GFlvS5+i+g7Sp0iExk+qw9+noUGPiZnosX+ypjgmSD7uzOP7WwINsaj+vus56vc2UM+8LI
+ IRNDnSVgQWktnuK7e9MPhGD7pgePsAs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-dVW-YZMpPOm-RHYghjBvng-1; Tue, 15 Oct 2024 10:15:59 -0400
+X-MC-Unique: dVW-YZMpPOm-RHYghjBvng-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4312b53256cso17595685e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:15:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001583; x=1729606383;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1729001757; x=1729606557;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Uv24sxOIWDaXySEDhSJgMbl6NmfFuI2E75I9MOxSq74=;
- b=KTUTriOdHf0ZRZg9zUnw83Nt/zmx/GvvEM2DeQIIuEmAXnV2VbtYuT1TvQkYnc0eXf
- pj4jBtHBQjRWfeqJZRVZXr6jA8fDj8pljwAAXAVSAMmh/SaEUXtX5NAq6ZXYMcI1K0jq
- UIDiupBdvm1IoRPySy8JEjXFcJPVijrm/g5bnHNUH1t2NGTwsqpyD6YjjLk8jqlO3V31
- FEZFmXVh08m/2jJM77JrdcnEMQCLt5UZJVA581TIXo9oS7tNCWAPBv1XajdznEWqXu2j
- Mj/z4SJyiCo+GkT3GLiYSaNF8mRn9JJq4O6wtwdb9mJWB142XKrmuFzh48DktpBJz+MS
- xpEw==
-X-Gm-Message-State: AOJu0Yy1z4nDJWndeq6NkD+d2oq6LS2c4W/HvlbrxxelRZxxhdY9FMeO
- 2zgPnIDpAhNLZGJWLH9tcMa0Sfw544QS0DXpKykS/tB550dqc4+kGhVfWX36y6LdJkNbVDnvd8f
- YWbwn6Lp6Xi5dEdFDKZHaManp2Fs=
-X-Google-Smtp-Source: AGHT+IHycepXoT4shLSd6PpvQzLaZJyjryVYYqS9aUnvIj3VsbOttpC8v4K7pv5U6dBLEGUxHRYZauoDFNdnaFKPypI=
-X-Received: by 2002:a05:6122:2216:b0:50c:ef20:6bed with SMTP id
- 71dfb90a1353d-50d1bb18ba6mr9728991e0c.3.1729001582384; Tue, 15 Oct 2024
- 07:13:02 -0700 (PDT)
+ bh=lVTn/CTTmMGzPRNZmr1gqbTCZpVpsZcI+grphSKu7/c=;
+ b=YDaZcDDE7Ecu9WHGqvO74VZzwDu7T4HbHGwpZfToWT6PZ/wDLucVqs3JUwL4LUbB4y
+ zxIayg7IeagiWuU4PBapNLaxlZ+8OzSBN7cto79wacY6l2mYbgI2PGp4Le8rBHPl3tRj
+ uvRvC4kwrbOg4zNZ9fZ64uL4UeLqrZ8EdOSY3HsXm8zQCOg7xTGHMacF9hsqg6UUDqTV
+ akiBejZquT8KB1qMVUMab5o93RLUn1O1lKniisMQrrpnU4k8BUl5asrwC9npPuM8XGzx
+ rQl50rcBDw9MHdOcXSBP7+zcwTUifWZsOLEh8vBoUye5vUGwzQnRrVsJb/vjFu1HWrrA
+ qmAg==
+X-Gm-Message-State: AOJu0YyLbSzT1HZxO/1zcBaYNF4YshdWEatIsTCR+htmg033hGxb3RAa
+ AIgTKoivLKGLPq6R6I2xOZgliiYNNX9vQJUdeAgCLdXGnaKA8vD6IaX2aLdMfesFZj1323ASbEC
+ KwVPHp4TzD6zmPz22MzGBVc38tiP61M3bXT5W1mJsFCp6UmQL+xYE9nfSpcSTRwSCS5NCdW8AB3
+ 0XD09Gs79iD8fJLoe6VB09DQmQmzJAXLOLGg==
+X-Received: by 2002:a05:600c:384c:b0:42c:c1f6:6ded with SMTP id
+ 5b1f17b1804b1-4311df55df7mr132158275e9.29.1729001757128; 
+ Tue, 15 Oct 2024 07:15:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpkSsxegbMDhcBgNyC3l5hMY5bH8s19KnXe5RzFtVXScAI3uhopVNgYojShbSEFic6+yZIeA==
+X-Received: by 2002:a05:600c:384c:b0:42c:c1f6:6ded with SMTP id
+ 5b1f17b1804b1-4311df55df7mr132157935e9.29.1729001756654; 
+ Tue, 15 Oct 2024 07:15:56 -0700 (PDT)
+Received: from localhost
+ (p200300cfd7232e319b54c0c720fee73c.dip0.t-ipconnect.de.
+ [2003:cf:d723:2e31:9b54:c0c7:20fe:e73c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4313f55dfa8sm19636305e9.6.2024.10.15.07.15.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2024 07:15:55 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Czenczek <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-stable@nongnu.org
+Subject: [PATCH] migration: Ensure vmstate_save() sets errp
+Date: Tue, 15 Oct 2024 16:15:15 +0200
+Message-ID: <20241015141515.150754-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-References: <20241015125629.301367-1-berrange@redhat.com>
- <20241015125629.301367-2-berrange@redhat.com>
-In-Reply-To: <20241015125629.301367-2-berrange@redhat.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Tue, 15 Oct 2024 20:13:00 +0600
-Message-ID: <CAFfO_h4fTspFTHJVHeoCz5TSBtS9HV5v6dr6sZMsrHQ_uodZ2A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] crypto/hash: avoid overwriting user supplied result
- pointer
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002262200624848d84"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x935.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,67 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002262200624848d84
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+migration/savevm.c contains some calls to vmstate_save() that are
+followed by migrate_set_error() if the integer return value indicates an
+error.  migrate_set_error() requires that the `Error *` object passed to
+it is set.  Therefore, vmstate_save() is assumed to always set *errp on
+error.
 
-On Tue, Oct 15, 2024 at 6:56=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
+Right now, that assumption is not met: vmstate_save_state_v() (called
+internally by vmstate_save()) will not set *errp if
+vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
+an *errp parameter to vmstate_subsection_save(), and by generating a
+generic error in case post_save() fails (as is already done for
+pre_save()).
 
-> If the user provides a pre-allocated buffer for the hash result,
-> we must use that rather than re-allocating a new buffer.
->
-> Reported-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  crypto/hash-gcrypt.c | 15 ++++++++++++---
->  crypto/hash-glib.c   | 11 +++++++++--
->  crypto/hash-gnutls.c | 16 +++++++++++++---
->  crypto/hash-nettle.c | 14 +++++++++++---
->  4 files changed, 45 insertions(+), 11 deletions(-)
->
+Without this patch, qemu will crash after vmstate_subsection_save() or
+post_save() have failed inside of a vmstate_save() call (unless
+migrate_set_error() then happen to discard the new error because
+s->error is already set).  This happens e.g. when receiving the state
+from a virtio-fs back-end (virtiofsd) fails.
 
-Thanks for fixing. These changes look good to me but it might make sense to
-update the corresponding api documentation in include/crypto/hash.h to
-explicitly mention that *result can be a user supplied buffer with proper
-*result_len, if not, allocated inside the function itself. I see a few
-places in that file that may be worth updating as part of this commit. What
-do you think?
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ migration/vmstate.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Regards,
-Dorjoy
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index ff5d589a6d..13532f2807 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -22,7 +22,8 @@
+ #include "trace.h"
+ 
+ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc);
++                                   void *opaque, JSONWriter *vmdesc,
++                                   Error **errp);
+ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+                                    void *opaque);
+ 
+@@ -441,12 +442,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+         json_writer_end_array(vmdesc);
+     }
+ 
+-    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
++    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+ 
+     if (vmsd->post_save) {
+         int ps_ret = vmsd->post_save(opaque);
+         if (!ret) {
+             ret = ps_ret;
++            error_setg(errp, "post-save failed: %s", vmsd->name);
+         }
+     }
+     return ret;
+@@ -518,7 +520,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+ }
+ 
+ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+-                                   void *opaque, JSONWriter *vmdesc)
++                                   void *opaque, JSONWriter *vmdesc,
++                                   Error **errp)
+ {
+     const VMStateDescription * const *sub = vmsd->subsections;
+     bool vmdesc_has_subsections = false;
+@@ -546,7 +549,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+             qemu_put_byte(f, len);
+             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
+             qemu_put_be32(f, vmsdsub->version_id);
+-            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
++            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
+             if (ret) {
+                 return ret;
+             }
+-- 
+2.45.2
 
---0000000000002262200624848d84
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 15, 2024 at 6:56=E2=80=AF=
-PM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berra=
-nge@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">If the user provides a pre-allocated buffer for the hash resu=
-lt,<br>
-we must use that rather than re-allocating a new buffer.<br>
-<br>
-Reported-by: Dorjoy Chowdhury &lt;<a href=3D"mailto:dorjoychy111@gmail.com"=
- target=3D"_blank">dorjoychy111@gmail.com</a>&gt;<br>
-Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
-t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
----<br>
-=C2=A0crypto/hash-gcrypt.c | 15 ++++++++++++---<br>
-=C2=A0crypto/hash-glib.c=C2=A0 =C2=A0| 11 +++++++++--<br>
-=C2=A0crypto/hash-gnutls.c | 16 +++++++++++++---<br>
-=C2=A0crypto/hash-nettle.c | 14 +++++++++++---<br>
-=C2=A04 files changed, 45 insertions(+), 11 deletions(-)<br></blockquote><d=
-iv><br></div><div>Thanks for fixing. These changes look good to me but it m=
-ight make sense to update the corresponding api documentation in include/cr=
-ypto/hash.h to explicitly mention that *result can be a user supplied buffe=
-r with proper *result_len, if not, allocated inside the function itself. I =
-see a few places in that file that may be worth updating as part of this co=
-mmit. What do you think?<br></div><div><br></div><div>Regards,<br></div><di=
-v>Dorjoy<br></div></div></div>
-
---0000000000002262200624848d84--
 
