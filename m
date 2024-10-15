@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7E7D1D88D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DEB7D1D88B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0kyc-0005pB-D3; Tue, 15 Oct 2024 13:04:54 -0400
+	id 1t0l6m-0002uD-HF; Tue, 15 Oct 2024 13:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0kyZ-0005j9-M2
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:04:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1t0kyX-0002LV-RM
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:04:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729011887;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Jrb/0uMLqZHYTAHN4atajS/ryKUEyxy2luVY5BUsLJM=;
- b=H+pXJoSwKAE/EbQjrPDLIQ3HDZ6vmHKW2Zzl2GFa8xcBKUNKt8pkpNWoSzFoLFRonsCaP6
- mYrGZ8mzTFfhp4lgzVceXz4Vz2d9TbXjoX0ee5GwCs6W4FXEOg7swBQhuafbdiPxc2JbEa
- B6t31g96SqxPgMq8v6swqohN9T84+Wg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-VqodJGCIO52msR6t51_NEg-1; Tue, 15 Oct 2024 13:04:46 -0400
-X-MC-Unique: VqodJGCIO52msR6t51_NEg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4311db0f3f1so29141405e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 10:04:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0l6j-0002tl-AF
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:13:18 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0l6g-0003Yy-3d
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:13:17 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2fb518014b9so17640251fa.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 10:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729012392; x=1729617192; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DiPm4r96ebUEyaZxC+805tfF6sT6Y2BwaLiml4Z063s=;
+ b=cHP0bkqEOFy5G0y/A6GjMIYvBE1HimrGxmyVcWUFnY/+iK02Hxf2FtZtFIGCsOQWAA
+ XhgHAexsnqeIxah7g1D9iwOnDxxO2pY6JmhFvSJcq/1Z/GGz994djxmDsmyuL8E78cLG
+ w+TX3jDqyDS0vvr896EVb9pdOBfq4kypmLp9IrFNHru0w7JBaQXGJbOfjXtegP7UiJu+
+ SyNOoZhQtZVyhKC3soUboeBbEhFschPsUIY+vUKwtctbsrgWi+oeNkpMX91U0g/j3HT8
+ +1IK9FMHnAk+lN5HuS4ZcMKnCraoo+tAuLEB9Qth9BnkygBlqFxwm56WVoxeCaRmHSDe
+ 1NKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729011885; x=1729616685;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1729012392; x=1729617192;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Jrb/0uMLqZHYTAHN4atajS/ryKUEyxy2luVY5BUsLJM=;
- b=GYAfkFxTw7JNb1oi+MOMWQAgiIu6pgdqdaQUfD0juYfZYaUpNeljXRVHzeqliaRP/F
- MblQ8d4wlnX06j+WnADCofoR9arwLff9j8CLjU9KkETpMgpr5y+Vf8jDhYEM32DGhL3K
- P9uTcSa82qt5Ot1IbkNO4mthdN8Xw/vFJikSV57NSO9yTFHo0baulAyf2sDAdyXwWnCD
- lKeTHLeTOma1Gu4TCVipS17KE3lVE4pCTfnv17WDn38gupDeIWJKFuHTkgEfg6Xq3Uni
- tCIq+36p+/uFmZ1zTnW71Qmu11RShYpgMHto4T9XEgG0tTx+5u1OMCarDkSZpX+mBJyw
- SFTQ==
-X-Gm-Message-State: AOJu0Yw7NQaKoIb605n3KULIxon5ruMsUVchBb9Bb6YmqB0iQk/1WdLs
- 06B6SJpW1yaIwFyIBkuxVgaROvne5x0DpAfLyfQcaPi1OgKK0zc55Y4baf8NpcSr5dzaa2SC6Wy
- eHG8X57nlE96lG1Ex8rlU74OzrMz+d0evwDohlEA8xjE9CFuD00O8JeyMdjpjkg4P6kaIqDTNid
- ETg4V0Y1NtfCfKOLWePZAj76MkJcbIQtVDVQ==
-X-Received: by 2002:a05:600c:a0f:b0:42c:ac9f:b528 with SMTP id
- 5b1f17b1804b1-4311df5c600mr124540615e9.35.1729011884601; 
- Tue, 15 Oct 2024 10:04:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHkMDNycAq4NmFnEjeuBGP2H5vlIYRAjHYhpXoY55UpBwB7/exCRvhSWWvhi8NfARkag16nQ==
-X-Received: by 2002:a05:600c:a0f:b0:42c:ac9f:b528 with SMTP id
- 5b1f17b1804b1-4311df5c600mr124540215e9.35.1729011884116; 
- Tue, 15 Oct 2024 10:04:44 -0700 (PDT)
-Received: from localhost
- (p200300cfd7232e319b54c0c720fee73c.dip0.t-ipconnect.de.
- [2003:cf:d723:2e31:9b54:c0c7:20fe:e73c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4313f56eab2sm23250825e9.26.2024.10.15.10.04.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 10:04:42 -0700 (PDT)
-From: Hanna Czenczek <hreitz@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Czenczek <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-stable@nongnu.org
-Subject: [PATCH v2] migration: Ensure vmstate_save() sets errp
-Date: Tue, 15 Oct 2024 19:04:37 +0200
-Message-ID: <20241015170437.310358-1-hreitz@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ bh=DiPm4r96ebUEyaZxC+805tfF6sT6Y2BwaLiml4Z063s=;
+ b=KVw2xltxy5wgrrhCAYy6NrdmFwHyQLJigYc8nNtBtjLhSwosL1zcJozAdFhwINidsP
+ ud7z79Rjqxs5+Lx83XWNEoqp1TyUAB4tzw2Kj2FCsF1JqrlDlaxvuZve9vdTshFII5ev
+ 8yaZQzDUyG30amhHcCpcKW6PU8WcnpoZq7qfDeJUWssfeQVCFGrieDx5AOIap+rTuqAL
+ gjMBnRKN1g8d60ihtKgaCeD6ZyTs8ds8CKTBXGjYw5jr3LUZEOOvDCBfgIOxxkydfV6G
+ vJue9zYcQln7nRP7Fk8C6snwWIzvck9oYRuhhlCRFASIxXPfjdgzTBUVUgeXspguNBj6
+ ZItA==
+X-Gm-Message-State: AOJu0YwGeQfL5oQizpR1yrH85xkjkoPN/HyIlTdLTOx73YnYgPz/f5uU
+ 59UmiHV8/sV7vojobxHgUtaX49GQQK1CLVXFZaQOCHcPhp/CbE3qNcF/K+as6Whq7bQ843r29EJ
+ S24mV4AfroTKjsrdXEE1TChoIvrC/BtArMVl23Q==
+X-Google-Smtp-Source: AGHT+IHSFf6OgOjGOdU4U9kmnDcRd4b/LJVxuMW7RO8tVxyUI3rcOG2c/0CoFQJ0SPMybiwd1Euo1YTe6v1iUUtEOWk=
+X-Received: by 2002:a2e:2e0c:0:b0:2fb:5cff:fcd8 with SMTP id
+ 38308e7fff4ca-2fb61badb33mr7155341fa.34.1729012391812; Tue, 15 Oct 2024
+ 10:13:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Oct 2024 18:13:00 +0100
+Message-ID: <CAFEAcA95QmpcsrgCj5uE-Ng8ahNir3MuVEHWBCvjb3UwBbOFRA@mail.gmail.com>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>, 
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ linux-omap@vger.kernel.org, 
+ Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,85 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migration/savevm.c contains some calls to vmstate_save() that are
-followed by migrate_set_error() if the integer return value indicates an
-error.  migrate_set_error() requires that the `Error *` object passed to
-it is set.  Therefore, vmstate_save() is assumed to always set *errp on
-error.
+On Fri, 8 Mar 2024 at 15:41, Peter Maydell <peter.maydell@linaro.org> wrote:
+> Thanks to everybody for your input on this thread. My
+> proposal is to drop from QEMU:
+>  * all the PXA2xx machines
+>  * all the OMAP2 machines
+>  * the cheetah OMAP1 machine
+>
+> leaving (at least for now) sx1, sx1-v1, collie.
 
-Right now, that assumption is not met: vmstate_save_state_v() (called
-internally by vmstate_save()) will not set *errp if
-vmstate_subsection_save() or vmsd->post_save() fail.  Fix that by adding
-an *errp parameter to vmstate_subsection_save(), and by generating a
-generic error in case post_save() fails (as is already done for
-pre_save()).
+This has now gone through. I'm now looking for test images
+for these remaining boards, so we can keep them from breaking
+when we do refactoring and code cleanup/modernization.
+Specifically, I'm looking for:
+ * QEMU command line
+ * all the binary blobs that go with it (hosted somewhere that
+   doesn't mind when our CI downloads all the images to run
+   its tests...)
+ * ideally, exercising the SD card interface if present
 
-Without this patch, qemu will crash after vmstate_subsection_save() or
-post_save() have failed inside of a vmstate_save() call (unless
-migrate_set_error() then happen to discard the new error because
-s->error is already set).  This happens e.g. when receiving the state
-from a virtio-fs back-end (virtiofsd) fails.
+Could the people who are still using/testing these boards
+help here ?
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
----
-v2: As suggested by Peter, after vmsd->post_save(), change the condition
-    from `if (!ret)` to `if (!ret && ps_ret)` so we will not create an
-    error object in case of success (that would then be leaked, most
-    likely).
----
- migration/vmstate.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index ff5d589a6d..fa002b24e8 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -22,7 +22,8 @@
- #include "trace.h"
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc);
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp);
- static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-                                    void *opaque);
- 
-@@ -441,12 +442,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-         json_writer_end_array(vmdesc);
-     }
- 
--    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc);
-+    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
- 
-     if (vmsd->post_save) {
-         int ps_ret = vmsd->post_save(opaque);
--        if (!ret) {
-+        if (!ret && ps_ret) {
-             ret = ps_ret;
-+            error_setg(errp, "post-save failed: %s", vmsd->name);
-         }
-     }
-     return ret;
-@@ -518,7 +520,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
- }
- 
- static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
--                                   void *opaque, JSONWriter *vmdesc)
-+                                   void *opaque, JSONWriter *vmdesc,
-+                                   Error **errp)
- {
-     const VMStateDescription * const *sub = vmsd->subsections;
-     bool vmdesc_has_subsections = false;
-@@ -546,7 +549,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-             qemu_put_byte(f, len);
-             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
-             qemu_put_be32(f, vmsdsub->version_id);
--            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc);
-+            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
-             if (ret) {
-                 return ret;
-             }
--- 
-2.45.2
-
+thanks
+-- PMM
 
