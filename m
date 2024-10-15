@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC1CCFC264
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 04:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C562CFC268
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 05:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ZIL-0007nH-54; Tue, 15 Oct 2024 00:36:29 -0400
+	id 1t0aW5-0004MT-S6; Tue, 15 Oct 2024 01:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t0ZIK-0007n4-2V
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:36:28 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t0aW4-0004MB-Fj
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 01:54:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t0ZII-0007Lg-4p
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:36:27 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1728966974; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=K711dKjpNqRYL+bbGdcCIVe1oSqj7eyH0VHOiM6PDEDOGo3FwAkPbkwq5maXN8VDwGtgNNYJxd1QU4cqd3zpDdtm6YWf/cCM99TnpzHXmM0qezcY8aHVTzmfHx9vT33DNrdwRejQ9mSt/reIvQrJA/SadR5zLSxR9g9UJbmJzs8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1728966974;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=UI0UuD9+N+jquLiMT9CPx8AZkkEbD60sSO0UR0wwyZs=; 
- b=POj4ux/x2eQxxk+5sgofQZr10miltGM0jeF0M6X75m9lHKk5oYb4gutYJE21HiHbuBnH8w7hju05QDEqy6VCLKT7EwbgdXAPyM89QU0LmEuwDu+t4nkz6et/DP0CvNFAg8Q+Lfn+nH+zqmHccPFFszMX6k3D340qMaLC/zx+7sA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728966974; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=UI0UuD9+N+jquLiMT9CPx8AZkkEbD60sSO0UR0wwyZs=;
- b=iZbdjSR2q38aLxS8W+5OsVGVjeoAsScEPtNfzRYdoj6zBB6TiCCA//cxRzijBDfx
- oZw0yorCSvB56DCb1mabpDYH1nwIXcwhtznaI0dsdx3b2pfpSV1idBc59bFVJM3H6TX
- nPrxDyoYDXAPOoKwI8CooojRbV7MfbhUXw8/5a+0=
-Received: by mx.zohomail.com with SMTPS id 1728966973911994.2093419055454;
- Mon, 14 Oct 2024 21:36:13 -0700 (PDT)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v2 6/6] virtio-gpu: Support DRM native context
-Date: Tue, 15 Oct 2024 07:32:38 +0300
-Message-ID: <20241015043238.114034-7-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t0aW2-0007iQ-Kc
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 01:54:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1728971680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=qKoM5VE0nPxM3TMqsZZHR3RZneqgTrsMgRideuoyNB4=;
+ b=B7sZyo7mehj05Um3LnU5UjDuA6qhdwScseBSOZJJSATlblrkiUDf9fHkULo1jneDsAYrQt
+ bzk99BiJxJwXb2ZX3XweH1UELqynyVlc83bMIxL83AxIGOCshupz9xsQ0q/KXC+faF1R4t
+ iCxUaLsVxI12Siievo0gEEWq4x/zLEg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-pQXUDesKOUe5gb73cW1PoQ-1; Tue,
+ 15 Oct 2024 01:54:36 -0400
+X-MC-Unique: pQXUDesKOUe5gb73cW1PoQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E55F19560A1; Tue, 15 Oct 2024 05:54:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4870819560AE; Tue, 15 Oct 2024 05:54:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CCDE721E6A28; Tue, 15 Oct 2024 07:54:29 +0200 (CEST)
+Resent-To: michael.roth@amd.com, xieyongji@bytedance.com,
+ Coiby.Xu@gmail.com, eduardo@habkost.net, mark.cave-ayland@ilande.co.uk,
+ philmd@linaro.org, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Tue, 15 Oct 2024 07:54:29 +0200
+Resent-Message-ID: <87y12prjvu.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  xieyongji@bytedance.com,  kwolf@redhat.com,
+ hreitz@redhat.com,  Coiby.Xu@gmail.com,  pbonzini@redhat.com,
+ berrange@redhat.com,  eduardo@habkost.net,
+ mark.cave-ayland@ilande.co.uk,  michael.roth@amd.com,
+ kkostiuk@redhat.com,  qemu-block@nongnu.org
+Subject: Re: [PATCH v2 5/7] target/i386/cpu: Improve errors for out of
+ bounds property values
+In-Reply-To: <17b2cfbf-3434-4e30-9c46-47406dc1de4b@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 11 Oct 2024 12:11:50
+ -0300")
+References: <20241010150144.986655-1-armbru@redhat.com>
+ <20241010150144.986655-6-armbru@redhat.com>
+ <eed14342-3b79-450c-a617-533d3256a241@linaro.org>
+ <878quvg3p6.fsf@pond.sub.org>
+ <17b2cfbf-3434-4e30-9c46-47406dc1de4b@linaro.org>
+Date: Tue, 15 Oct 2024 06:45:12 +0200
+Message-ID: <878quqrn3b.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.076,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,144 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
-using a new virtio-gpu-gl device option "drm=on".
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Unlike Virgl and Venus contexts that operate on application API level,
-DRM native contexts work on a kernel UAPI level. This lower level results
-in a lightweight context implementations that yield better performance.
+> On 10/10/24 16:25, Markus Armbruster wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>=20
+>>> On 10/10/24 12:01, Markus Armbruster wrote:
+>>>> The error message for a "stepping" value that is out of bounds is a
+>>>> bit odd:
+>>>>       $ qemu-system-x86_64 -cpu qemu64,stepping=3D16
+>>>>       qemu-system-x86_64: can't apply global qemu64-x86_64-cpu.steppin=
+g=3D16: Property .stepping doesn't take value 16 (minimum: 0, maximum: 15)
+>>>> The "can't apply global" part is an unfortunate artifact of -cpu's
+>>>> implementation.  Left for another day.
+>>>> The remainder feels overly verbose.  Change it to
+>>>>       qemu64-x86_64-cpu: can't apply global qemu64-x86_64-cpu.stepping=
+=3D16: parameter 'stepping' can be at most 15
+>>>> Likewise for "family", "model", and "tsc-frequency".
+>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- docs/system/devices/virtio-gpu.rst | 11 +++++++++++
- hw/display/virtio-gpu-gl.c         |  2 ++
- hw/display/virtio-gpu-virgl.c      | 22 ++++++++++++++++++++++
- hw/display/virtio-gpu.c            | 15 +++++++++++++++
- include/hw/virtio/virtio-gpu.h     |  3 +++
- 5 files changed, 53 insertions(+)
+[...]
 
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio-gpu.rst
-index b7eb0fc0e727..49a75138f7ef 100644
---- a/docs/system/devices/virtio-gpu.rst
-+++ b/docs/system/devices/virtio-gpu.rst
-@@ -82,6 +82,17 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- 
- .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
- 
-+DRM native context is supported since release of `virglrenderer`_ v1.0.0
-+using `drm`_ protocol. ``DRM`` virtio-gpu capability set ("capset") requires
-+host blob support (``hostmem`` and ``blob`` fields) and should be enabled
-+using ``drm`` field. The ``hostmem`` field specifies the size of virtio-gpu
-+host memory window. This is typically between 256M and 8G.
-+
-+.. parsed-literal::
-+    -device virtio-gpu-gl,hostmem=8G,blob=on,drm=on
-+
-+.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
-+
- virtio-gpu rutabaga
- -------------------
- 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 53d938f23f20..bd0c0692a5c4 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -159,6 +159,8 @@ static Property virtio_gpu_gl_properties[] = {
-                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
-     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-+    DEFINE_PROP_BIT("drm", VirtIOGPU, parent_obj.conf.flags,
-+                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index ad6512987079..931805958ae8 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -1229,6 +1229,19 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-         flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-     }
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        flags |= VIRGL_RENDERER_DRM;
-+
-+        if (!gl->context_fence_enabled) {
-+            /*
-+             * Virglrenderer skips enabling DRM context support without
-+             * enabled async-fence feature. VirtIO-GPU will initialize
-+             * successfully, but DRM context won't be available in guest.
-+             */
-+            error_report("DRM native context requires EGL display");
-+            return -EINVAL;
-+        }
-+    }
- #endif
- 
-     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
-@@ -1294,5 +1307,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
-         }
-     }
- 
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
-+                                   &capset_max_ver,
-+                                   &capset_max_size);
-+        if (capset_max_size) {
-+            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
-+        }
-+    }
-+
-     return capset_ids;
- }
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 0d1de7dc398c..cfd4ed8a104f 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1521,6 +1521,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- #endif
-     }
- 
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+#ifdef VIRGL_VERSION_MAJOR
-+    #if VIRGL_VERSION_MAJOR >= 1
-+        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-+            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+            error_setg(errp, "drm requires enabled blob and hostmem options");
-+            return;
-+        }
-+    #else
-+        error_setg(errp, "old virglrenderer, drm unsupported");
-+        return;
-+    #endif
-+#endif
-+    }
-+
-     if (!virtio_gpu_base_device_realize(qdev,
-                                         virtio_gpu_handle_ctrl_cb,
-                                         virtio_gpu_handle_cursor_cb,
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 5673f0be85f4..fbb30d537af8 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
-     VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
-     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
-     VIRTIO_GPU_FLAG_VENUS_ENABLED,
-+    VIRTIO_GPU_FLAG_DRM_ENABLED,
- };
- 
- #define virtio_gpu_virgl_enabled(_cfg) \
-@@ -120,6 +121,8 @@ enum virtio_gpu_base_conf_flags {
-     (_cfg.hostmem > 0)
- #define virtio_gpu_venus_enabled(_cfg) \
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
-+#define virtio_gpu_drm_enabled(_cfg) \
-+    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
- 
- struct virtio_gpu_base_conf {
-     uint32_t max_outputs;
--- 
-2.47.0
+>>> Confusing:
+>>>
+>>>      qemu64-x86_64-cpu: can't apply global qemu64-x86_64-cpu.stepping=
+=3D-1: parameter 'stepping' can be at most 15
+>>
+>> For better or worse, visit_type_uint64() with the string input visitor
+>> parses -1 modulo 2^64, i.e. as 2^64-1, just like strtoul() & friends.
+
+I wish we had avoided that design mistake.  Likely too late to fix now.
+The JSON parser gets it right.
+
+> Would "parameter 'stepping' must be between 1 and 15" be clearer?
+
+It might be clearer and would be wronger: zero is a valid value.
+
+I could do "must be between 0 and 15".  But "stepping" is a *counter*.
+A negative stepping makes no sense to me.
+
+Same for model and family.
+
+More so for tsc-frequency.
+
+Thoughts?
 
 
