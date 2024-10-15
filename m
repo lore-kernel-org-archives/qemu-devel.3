@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868C3D216AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A8AD216AD
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 14:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0iN4-0005rU-Sz; Tue, 15 Oct 2024 10:17:59 -0400
+	id 1t0iNu-0008M9-2W; Tue, 15 Oct 2024 10:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iN1-0005me-Ny
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t0iNe-0007eH-2q
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0iMi-0003Iq-Eb
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:17:37 -0400
+ id 1t0iNb-0003Ny-Ei
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 10:18:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729001855;
+ s=mimecast20190719; t=1729001910;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y+sWyoWzl7OLbzMSWkeo43oPGLPNthU9tY/ZPrpiBTU=;
- b=i8Vxy/hbR4dJncsFVvaaYTgfmvxVpWb3gJTq0CIaxtu8EpjMrxjCzPRlinriq0Jw26aJeE
- zX4ZfI+0VnYgG1JxRngUIPdJ+/RUdci7i/1+Xq6TJ7ELZvU52DeHO2tbHDFBJ3hDER2v9d
- uFmcwM8KpvyYRKGuTP1Wx04zyxmiOS0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pffMq5HlyyQSLR32u36d0WlErfpMZsApxMOlecv7nh0=;
+ b=TOm/wJtSlR4rS82ruG3BfXtTMl8N9Fa4/TDVME6nQOOkul+vNEPmRfyNSR95a6BHDV+uRB
+ wAi8P+gnKeV3H/I0dr7WHrvVSYRxahH+q46OsYuVvZSnv5gXoMO9aIhXOY3jxNaBYC7ykK
+ rI8P1PWoKA/npLVOqlRmaPOHtjz20YY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-1qIxDB9iOOanH-HLxoJ2pA-1; Tue, 15 Oct 2024 10:17:30 -0400
-X-MC-Unique: 1qIxDB9iOOanH-HLxoJ2pA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d3e8dccc9so2724190f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:17:30 -0700 (PDT)
+ us-mta-124-00TvkT8DMaOkx_Xb3GmFvg-1; Tue, 15 Oct 2024 10:18:29 -0400
+X-MC-Unique: 00TvkT8DMaOkx_Xb3GmFvg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d4a211177so2743337f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 07:18:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729001848; x=1729606648;
+ d=1e100.net; s=20230601; t=1729001908; x=1729606708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y+sWyoWzl7OLbzMSWkeo43oPGLPNthU9tY/ZPrpiBTU=;
- b=PdLSMvpXM/5j2R49DysqjLXZ4s83CI0cuJb6/V7o51RKN/yZFX3XJNJKKWMK71FJp3
- dqwD7Ehvb5IhzTkinHUWAirwWOhyAFQtZWRqNmn56xGlB4bn9ltqL9H96CFiWMxlCiWH
- wu4s1xO1Fwn8Dd4xyfZzZxKqJ0sGX5hZ/ZUwCBE06Li3iqJ4dXkLXfF3LjqYYViQyy3j
- /3IhDTmDA/AMYlmKkh1lBflIFAfT5xNP1wVnA6soDtDo9Jei9vYl44j+8it3pdXFth+E
- AVJcLzILSyrxRNG1p9ozA6lsfqtu+dsjfThyyGsnqi6HMFAXAq5hMM0OzUVpIRxzzcrN
- XIIQ==
-X-Gm-Message-State: AOJu0YzInqEWHyu4NhH1RrR4zd8WMYJ1CB7h0E6nFFvnqsruCgUp1q7N
- Pb1KqqShpiSVKJCqZ8v8aWCMiSFQiynXLGTQJIP+b52vMKRP6aknopRyy5fBsNXrxHQ7J557Zjp
- FDGqolsSMo3woRQL4Yq16S3ePbEmvnyPzbZHo1tumV5EW5QXD2+Z5t4lWnL2Ydyx349y/EeaC2S
- 9vZqTyrrqcqFqwQy/Af7bEQIoNVPLLNBGqsiqAQMs=
-X-Received: by 2002:a05:6000:e52:b0:37d:50e1:a2c1 with SMTP id
- ffacd0b85a97d-37d5529d2d2mr10586691f8f.46.1729001848608; 
- Tue, 15 Oct 2024 07:17:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHn98+33rhfygEHkkLOjgan1wXMqLK5zIkFNwnGiub6p1TsXgecO5xnXaS4Ld0kpgIk0mO2g==
-X-Received: by 2002:a05:6000:e52:b0:37d:50e1:a2c1 with SMTP id
- ffacd0b85a97d-37d5529d2d2mr10586670f8f.46.1729001848118; 
- Tue, 15 Oct 2024 07:17:28 -0700 (PDT)
+ bh=pffMq5HlyyQSLR32u36d0WlErfpMZsApxMOlecv7nh0=;
+ b=vdo2Ip7HntmfuG9r4x+N7mSYJKvhJ9QDf8Dc0RXt5WA/sor8tuxyGrSCq17gTJQ9VO
+ nrk0M1zoOE0c45mp+g94OhNpLiEqRIrWOzo5mUPT99bUTsVoksZ3i8Wv491Ue7nPuYQ5
+ 93kf80PwIwAUJuW+zE0NDHF1nk5FAaVHn0B5Nf6+U3DmLgEms02bOJIHh0J0UJkhnto/
+ VkXwfpVVY8k+dw5n5HriUQNNIeE51wiY4tEX2cSt6y2fWXE7UGqCamEMAq4OltyafLHW
+ 76U2fijuwxX+sbcQBzkyQ0oz6nsIq9T7srCj8t4GuU/SHbGEmiumPM2l+C5o00lPctXt
+ AiAg==
+X-Gm-Message-State: AOJu0YxJFRcaMmiO6f6YpeMvwzR5xLKpY0bLvkLhdE5CAygxWxAw5biK
+ IjFkV+liPftnTuchlz55mwgcHpXpmtY9pS9xnVZsttn6B7p935xcdUrAsSpCxfbi5lNxWmgsJgB
+ 63He4gPJWVV+Zja5/GSSuLuNl1oM6//cR8EWTl8sn5vyLo5sO3RKSnC2KxGWZAzmSrDZZZKG8ws
+ /skOjQU1P0QpppTLgmjuzf4z+cUAEzn9pmmva3h88=
+X-Received: by 2002:adf:f810:0:b0:37d:5026:f787 with SMTP id
+ ffacd0b85a97d-37d86d55306mr310481f8f.38.1729001908081; 
+ Tue, 15 Oct 2024 07:18:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTBsI8Ng4EX8YHdcxhIWcEYt4Z36CfPGgFTUIAV9qOPSKVTATLt6XzP26/IrbIfC2H41xjVQ==
+X-Received: by 2002:adf:f810:0:b0:37d:5026:f787 with SMTP id
+ ffacd0b85a97d-37d86d55306mr310462f8f.38.1729001907569; 
+ Tue, 15 Oct 2024 07:18:27 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a23csm1705482f8f.18.2024.10.15.07.17.27
+ 5b1f17b1804b1-4313f56eaa7sm19056745e9.26.2024.10.15.07.18.26
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 07:17:27 -0700 (PDT)
+ Tue, 15 Oct 2024 07:18:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 04/25] target/i386: Make invtsc migratable when user sets
- tsc-khz explicitly
-Date: Tue, 15 Oct 2024 16:16:50 +0200
-Message-ID: <20241015141711.528342-5-pbonzini@redhat.com>
+Subject: [PULL 22/25] accel/kvm: check for KVM_CAP_MULTI_ADDRESS_SPACE on vm
+Date: Tue, 15 Oct 2024 16:17:08 +0200
+Message-ID: <20241015141711.528342-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015141711.528342-1-pbonzini@redhat.com>
 References: <20241015141711.528342-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,60 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+KVM_CAP_MULTI_ADDRESS_SPACE used to be a global capability, but with the
+introduction of AMD SEV-SNP confidential VMs, the number of address spaces
+can vary by VM type.
 
-When user sets tsc-frequency explicitly, the invtsc feature is actually
-migratable because the tsc-frequency is supposed to be fixed during the
-migration.
+Query the extension on the VM level instead of on the KVM level.
 
-See commit d99569d9d856 ("kvm: Allow invtsc migration if tsc-khz
-is set explicitly") for referrence.
+Inspired by an analogous patch by Tom Dohrmann.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20240814075431.339209-10-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ accel/kvm/kvm-all.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 089b651591b..5535f4e6ab4 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1865,9 +1865,10 @@ static inline uint64_t x86_cpu_xsave_xss_components(X86CPU *cpu)
-  * Returns the set of feature flags that are supported and migratable by
-  * QEMU, for a given FeatureWord.
-  */
--static uint64_t x86_cpu_get_migratable_flags(FeatureWord w)
-+static uint64_t x86_cpu_get_migratable_flags(X86CPU *cpu, FeatureWord w)
- {
-     FeatureWordInfo *wi = &feature_word_info[w];
-+    CPUX86State *env = &cpu->env;
-     uint64_t r = 0;
-     int i;
- 
-@@ -1881,6 +1882,12 @@ static uint64_t x86_cpu_get_migratable_flags(FeatureWord w)
-             r |= f;
-         }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 8be731cfeed..4287e254df8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2618,12 +2618,6 @@ static int kvm_init(MachineState *ms)
+         s->nr_slots_max = KVM_MEMSLOTS_NR_MAX_DEFAULT;
      }
-+
-+    /* when tsc-khz is set explicitly, invtsc is migratable */
-+    if ((w == FEAT_8000_0007_EDX) && env->user_tsc_khz) {
-+        r |= CPUID_APM_INVTSC;
+ 
+-    s->nr_as = kvm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
+-    if (s->nr_as <= 1) {
+-        s->nr_as = 1;
+-    }
+-    s->as = g_new0(struct KVMAs, s->nr_as);
+-
+     type = find_kvm_machine_type(ms);
+     if (type < 0) {
+         ret = -EINVAL;
+@@ -2637,6 +2631,12 @@ static int kvm_init(MachineState *ms)
+ 
+     s->vmfd = ret;
+ 
++    s->nr_as = kvm_vm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
++    if (s->nr_as <= 1) {
++        s->nr_as = 1;
 +    }
++    s->as = g_new0(struct KVMAs, s->nr_as);
 +
-     return r;
- }
- 
-@@ -6124,7 +6131,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- 
-     r &= ~unavail;
-     if (cpu && cpu->migratable) {
--        r &= x86_cpu_get_migratable_flags(w);
-+        r &= x86_cpu_get_migratable_flags(cpu, w);
-     }
-     return r;
- }
+     /* check the vcpu limits */
+     soft_vcpus_limit = kvm_recommended_vcpus(s);
+     hard_vcpus_limit = kvm_max_vcpus(s);
 -- 
 2.46.2
 
