@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038DDCFC266
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FEDCFC265
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 04:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ZHu-0007jB-Ex; Tue, 15 Oct 2024 00:36:04 -0400
+	id 1t0ZHk-0007iP-Rp; Tue, 15 Oct 2024 00:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t0ZHl-0007iU-QV
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:35:54 -0400
+ id 1t0ZHj-0007hw-HE
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:35:51 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t0ZHk-0007Jd-Ab
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:35:53 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1728966940; cv=none; 
+ id 1t0ZHh-0007JX-7W
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 00:35:51 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1728966934; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Ax4HPrvYJJM2wp+rAYyJL928ktTCUx65Dv6F1GK1k/Uaj52sUzMeeBKaZXvHoB/ICeCf2oiEnGWjP86CQczZeGwSSsSYVc7VU554BliC+ATI6aOaqn/sfZf/gRbGvtPtjsmZWiqyItJDXBxIgy1l2U4o0alv5tpWlO9FRn23eA0=
+ b=MHJpp+GEvvlN74DaDE944ror+87m+oWm6fhC5KdYqcuREg90Ue0O2DMybSfUqe636ybMfEOAfCrRC5IzG/6Kpsdd+DkUton05fGGRH6fwVS8gogN9n6dFm3mDyTDGrnd2eCpQs41OzLtAVJZtQrYhn0hZjRkdtQ+dfi0okc1acc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1728966940;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=YX8Cx3IAbZCZCZ5QLBTfQHwoqaPoB7M3PM5VoA7yqzk=; 
- b=M33q8x/d50WKC13Q9acuUPlEjgDnrC+y69C8uTDBmVYn0uFINp0IYeIOZuGcqZS6xEBgnIsr91AWK3tPhFxt8R+8FzUaXuaAzKibQ8oQxMHOwv7bLoIHw2zKdgIZ3obkj9Y7gG2zIm4UrwJMthD3TP7deynVQaKgX7bPN4c/aiM=
+ s=zohoarc; t=1728966934;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=J51UsyGc/Wo+7M6aKk8MtuECWqegj1aHN3U0dVqu4wQ=; 
+ b=m2hjiuQ0pi1A4zlw5RDB4EPyj3r74NePeoG8nxAgbMa60jeYdYrBAw1D58RzRNxU2JcQCssehW9+nbx6GpBAeQirqSYkrOVfBE0hW6FFtNHqStZO4cEdkGXjOGlvQd15/jQDaCfp49E3/7//s2KdVYds+ps54AbqLAy/i3S/xSQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728966940; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728966934; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=YX8Cx3IAbZCZCZ5QLBTfQHwoqaPoB7M3PM5VoA7yqzk=;
- b=NFhbp41x/bhHOo+/lCQjnoEAapYTIGcBVBJUIPNMndpvGHCFKEtccIGB7NTY7ln5
- wjfQTvJ55FhaWrU4IDqTgRuZdkJlMMkzqguWglYmHEiYRlcn0CljXDCGJI0/+/Lbl/a
- 6SlZa9f7OGYEIVyonZDDLPj5NodXAYTom4sQnXl8=
-Received: by mx.zohomail.com with SMTPS id 1728966939120150.72410293747566;
- Mon, 14 Oct 2024 21:35:39 -0700 (PDT)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=J51UsyGc/Wo+7M6aKk8MtuECWqegj1aHN3U0dVqu4wQ=;
+ b=MFsTttRZb2d2anRrPdiRJFwy9XPlsWVtuWiCd6AmgL3G9ixPdowmGeSGcisEakEe
+ rQDtPW+QfOknomMz4ujva87q7zlZ/9WAv33tMjLMs3byQsGTKDlUPlHuybc/107Y4kF
+ 9B7CBO+QOIJhu9FHfJxu0Dew+Yz5enk5cAKr1p94=
+Received: by mx.zohomail.com with SMTPS id 1728966932446365.4135544660204;
+ Mon, 14 Oct 2024 21:35:32 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,13 +59,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v2 1/6] ui/sdl2: Restore original context after new context
- creation
-Date: Tue, 15 Oct 2024 07:32:33 +0300
-Message-ID: <20241015043238.114034-2-dmitry.osipenko@collabora.com>
+Subject: [PATCH v2 0/6] Support virtio-gpu DRM native context
+Date: Tue, 15 Oct 2024 07:32:32 +0300
+Message-ID: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
@@ -94,34 +91,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDL API changes GL context to a newly created GL context, which differs
-from other GL providers that don't switch context. Change SDL backend to
-restore the original GL context. This allows Qemu's virtio-gpu to support
-new virglrenderer async-fencing feature for Virgl contexts, otherwise
-virglrenderer's vrend creates a fence-sync context on the Qemu's
-main-loop thread that erroneously stays in-use by the main-loop after
-creation, not allowing vrend's fence-sync thread switch to this new
-context that belongs to it.
+This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+It's based on the pending Venus v17 patches [1] that bring host blobs
+support to virtio-gpu-gl device.
 
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- ui/sdl2-gl.c | 3 +++
- 1 file changed, 3 insertions(+)
+Based-on: 20240822185110.1757429-1-dmitry.osipenko@collabora.com
 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index e01d9ab0c7bf..b1fe96d6af22 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -168,6 +168,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
-                             SDL_GL_CONTEXT_PROFILE_ES);
-         ctx = SDL_GL_CreateContext(scon->real_window);
-     }
-+
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-     return (QEMUGLContext)ctx;
- }
- 
+[1] https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osipenko@collabora.com/
+
+Contarary to Virgl and Venus contexts which mediate high level GFX APIs,
+DRM native context [2] mediates lower level kernel driver UAPI, which
+reflects in a less CPU overhead and less/simpler code needed to support it.
+DRM context consists of a host and guest parts that have to be implemented
+for each GPU driver. On a guest side, DRM context presents a virtual GPU as
+a real/native host GPU device for GL/VK applications.
+
+[2] https://www.youtube.com/watch?v=9sFP_yddLLQ
+
+Today there are four known DRM native context drivers existing in a wild:
+
+  - Freedreno (Qualcomm SoC GPUs), completely upstreamed
+  - AMDGPU, mostly merged into upstreams
+  - Intel (i915), merge requests are opened
+  - Asahi (Apple SoC GPUs), WIP status
+
+
+# How to try out DRM context:
+
+1. Like Venus and Virgl context, DRM context requires applying WIP
+KVM patches [3] to host kernel, otherwise mapping of GPU memory blobs
+will likely fail.
+
+[3] https://lore.kernel.org/all/20240726235234.228822-1-seanjc@google.com/
+
+2. Use latest libvirglrenderer from upstream git/main for Freedreno
+and AMDGPU native contexts. For Intel use patches [4].
+
+[4] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1384
+
+3. On guest, use latest Mesa version for Freedreno. For AMDGPU use
+Mesa patches [5], for Intel [6].
+
+[5] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/21658
+[6] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29870
+
+4. On guest, use latest Linux kernel v6.6+.
+
+Example Qemu cmdline that enables DRM context:
+
+  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm=on \
+      -machine q35,accel=kvm,memory-backend=mem1 \
+      -object memory-backend-memfd,id=mem1,size=8G -m 8G
+
+
+# Note about known performance problem in Qemu:
+
+DRM contexts are mapping host blobs extensively and these mapping
+operations work slowly in Qemu. Exact reason is unknown. Mappings work
+fast on Crosvm For DRM contexts this problem is more visible than for
+Venus/Virgl.
+
+Changelog:
+
+v2: - Updated SDL2-dmabuf patch by making use of error_report() and
+      checking presense of X11+EGL in the system before making SDL2
+      to prefer EGL backend over GLX, suggested by Akihiko Odaki.
+
+    - Improved SDL2's dmabuf-presence check that wasn't done properly
+      in v1, where EGL was set up only after first console was fully
+      inited, and thus, SDL's display .has_dmabuf callback didn't work
+      for the first console. Now dmabuf support status is pre-checked
+      before console is registered.
+
+    - Updated commit description of the patch that fixes SDL2's context
+      switching logic with a more detailed explanation of the problem.
+      Suggested by Akihiko Odaki.
+
+    - Corrected rebase typo in the async-fencing patch and switched
+      async-fencing to use a sigle-linked list instead of the double,
+      as was suggested by Akihiko Odaki.
+
+    - Replaced "=true" with "=on" in the DRM native context documentation
+      example and made virtio_gpu_virgl_init() to fail with a error message
+      if DRM context can't be initialized instead of giving a warning
+      message, as was suggested by Akihiko Odaki.
+
+    - Added patchew's dependecy tag to the cover letter as was suggested by
+      Akihiko Odaki.
+
+Dmitry Osipenko (5):
+  ui/sdl2: Restore original context after new context creation
+  linux-headers: Update to Linux v6.12-rc1
+  virtio-gpu: Handle virgl fence creation errors
+  virtio-gpu: Support asynchronous fencing
+  virtio-gpu: Support DRM native context
+
+Pierre-Eric Pelloux-Prayer (1):
+  ui/sdl2: Implement dpy dmabuf functions
+
+ docs/system/devices/virtio-gpu.rst            |  11 +
+ hw/display/virtio-gpu-gl.c                    |   5 +
+ hw/display/virtio-gpu-virgl.c                 | 154 ++++++++++--
+ hw/display/virtio-gpu.c                       |  15 ++
+ include/hw/virtio/virtio-gpu.h                |  17 ++
+ include/standard-headers/drm/drm_fourcc.h     |  43 ++++
+ include/standard-headers/linux/const.h        |  17 ++
+ include/standard-headers/linux/ethtool.h      | 226 ++++++++++++++++++
+ include/standard-headers/linux/fuse.h         |  22 +-
+ .../linux/input-event-codes.h                 |   2 +
+ include/standard-headers/linux/pci_regs.h     |  41 +++-
+ .../standard-headers/linux/virtio_balloon.h   |  16 +-
+ include/standard-headers/linux/virtio_gpu.h   |   1 +
+ include/ui/sdl2.h                             |   7 +
+ linux-headers/asm-arm64/mman.h                |   9 +
+ linux-headers/asm-arm64/unistd.h              |  25 +-
+ linux-headers/asm-generic/unistd.h            |   6 +-
+ linux-headers/asm-loongarch/kvm.h             |  24 ++
+ linux-headers/asm-loongarch/unistd.h          |   4 +-
+ linux-headers/asm-riscv/kvm.h                 |   7 +
+ linux-headers/asm-riscv/unistd.h              |  41 +---
+ linux-headers/asm-x86/kvm.h                   |   2 +
+ linux-headers/asm-x86/unistd_64.h             |   1 +
+ linux-headers/asm-x86/unistd_x32.h            |   1 +
+ linux-headers/linux/bits.h                    |   3 +
+ linux-headers/linux/const.h                   |  17 ++
+ linux-headers/linux/iommufd.h                 | 143 +++++++++--
+ linux-headers/linux/kvm.h                     |  23 +-
+ linux-headers/linux/mman.h                    |   1 +
+ linux-headers/linux/psp-sev.h                 |  28 +++
+ ui/sdl2-gl.c                                  |  66 +++++
+ ui/sdl2.c                                     |  31 +++
+ 32 files changed, 902 insertions(+), 107 deletions(-)
+
 -- 
 2.47.0
 
