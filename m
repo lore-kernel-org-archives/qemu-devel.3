@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0ED1CFC286
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B79CFC287
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ewU-0006d7-7n; Tue, 15 Oct 2024 06:38:18 -0400
+	id 1t0ewU-0006d1-6L; Tue, 15 Oct 2024 06:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewR-0006c9-RJ
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1t0ewS-0006cP-EU
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:16 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewP-0005vd-Mi
+ id 1t0ewQ-0005vc-CC
  for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-37d5aedd177so2585620f8f.1
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-539f1292a9bso2638128e87.2
  for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1728988692; x=1729593492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UyEnUeAM+pUK11zjhSfvBnjHBcNllMJBTEH4fBRhhwM=;
- b=EUv34Mnfyb7yogpcULZDy+KPMVVfV/ITsoQDYzPqZKLHfym0HdqnW5Fsw1GwVw+GoC
- 5FZD22djo+nvVR8gm6yLY9B/GotvX70PNQx+dRSf7yhsuwGvvmXci9rqJ7uixFljRdHb
- 9ZwTSthN1siXaZc7p8Alg9f7xRej6ZuHbD7jHmWeHW98DmV4Xr6pZlHmCe8C857FO58Q
- zqiw1i/fdZHcXHp+IqM8ynFs6EuApJr4TfbW5AJ3w8dJiRPkmPOz9D2yIlP4JqP8BAjX
- a2W5bGuVR2HLFHqErxXjL3CwhBHuTZ0asncUpJRFcN/snouOrjtAdLngFT1O8Np0VWZt
- IVKw==
+ :reply-to; bh=DpVjyeCW+BZmlGUD07St+L+sXb8OqynaasaoJirP3bE=;
+ b=cF93caeBQ2lBocu8mzRFgwOGpmfhB66AOpdpLvMmLBQDNczs5tHsnFU4l/QU55L6pD
+ dMXxjiQGIGaKqjlXlZlrb4JmFuFcKc6/cLgLkwnUuIrS8UJoBjDFRtB90khs0mecu+w8
+ nowWgRs2uj8oeJOO8axDtBQCtO9lVwJt/bschALjt4ZWCxf7Z6QrEHtt9gshD+LXaK/1
+ tfLmhPlePyGH7Ru3LLYH+7hAIqItChwoAT2EmEYDuu1qPdutPizO05pO+ZcBKCs0kQyd
+ k2FtzbsBpyL3KV4yyq6LJvD/lTvvHv5OMIv+8jACrXVvzvFJ/zzTUSo9n4PlGrxb9XIJ
+ iWVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1728988692; x=1729593492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UyEnUeAM+pUK11zjhSfvBnjHBcNllMJBTEH4fBRhhwM=;
- b=a1QHjfjGLILMlCyGSDdbVP6N7J79uwZj+Pyr//wK1WtHhP6tZNLUxyDbZKNOI3IPaO
- 2u3ccnrnVCFBwnk53iGOSRxSo3gIFuU2JxJK9INcrH6o2LKidMcpv9oyJss0TCYfT0Fa
- pseEYkc3h9H8IIQHwM7Xrbfl8H5yRgiV/ZMyTmjCl37FW0ru10oA+Fprr+jZ9VocSS0e
- 7tngKUQvd1OvOKanpptvVjj5le0rZNaEjuEpG6XAKW5FoxP8Rvk8DBQJ6roeTFx+gY2m
- uSXg839P/5yaeL0wsUAoQxnnCVZHHK0G4xwsSKkDlbxzSxTct8tNhxGcotN3+b2DNBrS
- JcHA==
-X-Gm-Message-State: AOJu0YxLFONDQg6sDLkVaG/SicE1msSwfhHvFcdPXee1J9Od1DA8lDU0
- TeAF1OlBwzGdkjd1c+777ksk+0TL151ebLq79lJno3IVVG8SjBlkTWu8THt0HM/bR83eie5/w4G
- U
-X-Google-Smtp-Source: AGHT+IH/554agvvG3mPPjVfMgordC5v9h1O8onvTnOKMHpj3lbJYmNLNUin5U+RkgeuPzzS/624/aQ==
-X-Received: by 2002:adf:f805:0:b0:374:c911:7756 with SMTP id
- ffacd0b85a97d-37d5529ad42mr9550368f8f.38.1728988692128; 
- Tue, 15 Oct 2024 03:38:12 -0700 (PDT)
+ bh=DpVjyeCW+BZmlGUD07St+L+sXb8OqynaasaoJirP3bE=;
+ b=vpEgPnooIOSI0Zq8fBltBZEsoR/7SE42CgLDrE1dQNXjZdOoe6XnnBTCgg5JFuKfXk
+ qs9CsmWE8VyTVyMjimpCoC/1MD//N23qJdYe5CftRZVw67e8ogx7X5w+jJg9VS1uRlNA
+ osmJmJbL4cAhcFHxUmMeU1n9Kgfuamj9WtWRDVGR9CM5QMoeEmtdekqaaHpGcavhh2Oj
+ NMbGvVaPahqmNe5vMPQpTjAAGAEwgMPtSLOVKdQwefUFzJtrP/mABPxAESXnYtZo5rOf
+ 8Wgl/u7xGGy7RGgXdncmGQYkE8IJKzSXgSUcfcUFd2I3oGS8lDywfeLXkbwzJ9aBLBbh
+ 43kQ==
+X-Gm-Message-State: AOJu0Yz0rtK/gbnSFiaTv96Z4DO3c5B3Efq+FTCi3WBoL2a1nMKM2PeQ
+ lcauzJeE/DQUKn9ZVGCNZ2xRt+xpcmyoNO7lbgJSsIHUMKSLW7SStXZo/qauf9xTyGGxCEA64jA
+ X
+X-Google-Smtp-Source: AGHT+IGCD3KvRE+ICy35hmJjCj5eEyr7MsNfCliEGxCcEMjvF1n4cY2ZwBeVOfdKRd8XaaSGQ7U1cA==
+X-Received: by 2002:a05:6512:b96:b0:539:edf4:68b4 with SMTP id
+ 2adb3069b0e04-539edf46b73mr4539090e87.57.1728988691618; 
+ Tue, 15 Oct 2024 03:38:11 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.11
@@ -61,16 +61,16 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Tue, 15 Oct 2024 03:38:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/28] hw/intc/arm_gicv3: Add cast to match the documentation
-Date: Tue, 15 Oct 2024 11:37:45 +0100
-Message-Id: <20241015103808.133024-6-peter.maydell@linaro.org>
+Subject: [PULL 04/28] hw/intc/arm_gicv3: Add cast to match the documentation
+Date: Tue, 15 Oct 2024 11:37:44 +0100
+Message-Id: <20241015103808.133024-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,14 +98,14 @@ From: Alexandra Diupina <adiupina@astralinux.ru>
 The result of 1 << regbit with regbit==31 has a 1 in the 32nd bit.
 When cast to uint64_t (for further bitwise OR), the 32 most
 significant bits will be filled with 1s. However, the documentation
-states that the upper 32 bits of ICC_AP[0/1]R<n>_EL2 are reserved.
+states that the upper 32 bits of ICH_AP[0/1]R<n>_EL2 are reserved.
 
 Add an explicit cast to match the documentation.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 28cca59c46 ("hw/intc/arm_gicv3: Add NMI handling CPU interface registers")
+Fixes: d2c0c6aab6 ("hw/intc/arm_gicv3: Handle icv_nmiar1_read() for icc_nmiar1_read()")
 Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
@@ -114,18 +114,18 @@ Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index ebad7aaea18..89359db7004 100644
+index bdb13b00e98..ebad7aaea18 100644
 --- a/hw/intc/arm_gicv3_cpuif.c
 +++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1170,7 +1170,7 @@ static void icc_activate_irq(GICv3CPUState *cs, int irq)
+@@ -781,7 +781,7 @@ static void icv_activate_irq(GICv3CPUState *cs, int idx, int grp)
      if (nmi) {
-         cs->icc_apr[cs->hppi.grp][regno] |= ICC_AP1R_EL1_NMI;
+         cs->ich_apr[grp][regno] |= ICV_AP1R_EL1_NMI;
      } else {
--        cs->icc_apr[cs->hppi.grp][regno] |= (1 << regbit);
-+        cs->icc_apr[cs->hppi.grp][regno] |= (1U << regbit);
+-        cs->ich_apr[grp][regno] |= (1 << regbit);
++        cs->ich_apr[grp][regno] |= (1U << regbit);
      }
+ }
  
-     if (irq < GIC_INTERNAL) {
 -- 
 2.34.1
 
