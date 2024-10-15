@@ -4,41 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9ADD1D88D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B05D1D88B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0lT9-0007QF-3E; Tue, 15 Oct 2024 13:36:27 -0400
+	id 1t0lWj-0000Sy-C0; Tue, 15 Oct 2024 13:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lT5-0007P9-KS
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:36:23 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lWd-0000R3-5V
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:40:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lT3-0006ej-UK
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:36:23 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lWa-0006uF-U7
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:40:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E74B698A2F;
- Tue, 15 Oct 2024 20:35:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D668398A35;
+ Tue, 15 Oct 2024 20:39:39 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E814B155110;
- Tue, 15 Oct 2024 20:36:06 +0300 (MSK)
-Message-ID: <fd1ebcaa-8086-4d9a-b26a-c869d892fbe1@tls.msk.ru>
-Date: Tue, 15 Oct 2024 20:36:06 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36F85155115;
+ Tue, 15 Oct 2024 20:39:58 +0300 (MSK)
+Message-ID: <d14c6eab-eebe-4844-a02b-9b3d1d9d43bd@tls.msk.ru>
+Date: Tue, 15 Oct 2024 20:39:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/19] UI-related fixes & shareable 2d memory with
- -display dbus
+Subject: Re: [PULL 00/20] UI patches
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, belmouss@redhat.com,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-References: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+Cc: peter.maydell@linaro.org
+References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241008125028.1177932-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -110,24 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.10.2024 15:50, marcandre.lureau@redhat.com wrote:
+On 14.10.2024 16:39, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Hi,
+> The following changes since commit 3860a2a8de56fad71db42f4ad120eb7eff03b51f:
 > 
-> This series adds Listener.Unix.Map interface to -display dbus, to allow shared
-> memory for the display (similar to Listener.Win32.Map interface).
+>    Merge tag 'pull-tcg-20241013' of https://gitlab.com/rth7680/qemu into staging (2024-10-14 11:12:34 +0100)
 > 
-> While working on it, I collected a few fixes. I can re-send them in a different
-> series or queue them once they are reviewed.
+> are available in the Git repository at:
 > 
-> thanks
+>    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
 > 
-> v2 (after Akhiko Odaki review):
->   - rebased
->   - introduce qemu_pixman_shareable, to reduce #ifdef usage
->   - fixed bad mmap testing
->   - fixed mingw cross-compilation
+> for you to fetch changes up to 4cd78a3db2478d3c1527905a26c9d3fbee83ccac:
+> 
+>    audio/pw: Report more accurate error when connecting to PipeWire fails (2024-10-14 17:35:24 +0400)
+> 
+> ----------------------------------------------------------------
+> UI-related fixes & shareable 2d memory with -display dbus
+> 
+> ----------------------------------------------------------------
 > 
 > Marc-André Lureau (19):
 >    hw/audio/hda: free timer on exit
@@ -149,10 +143,15 @@ On 08.10.2024 15:50, marcandre.lureau@redhat.com wrote:
 >    virtio-gpu: allocate shareable 2d resources on !win32
 >    ui: refactor using a common qemu_pixman_shareable
 >    tests: add basic -display dbus Map.Unix test
+> 
+> Michal Privoznik (1):
+>    audio/pw: Report more accurate error when connecting to PipeWire fails
 
-Is there something for qemu-stable in there?
+Or, actually, here (I replied to a wrong thread) -- is there something
+for qemu-stable in there?  First 7 changes seems to be good fit there.
 
 Thanks,
 
 /mjt
+
 
