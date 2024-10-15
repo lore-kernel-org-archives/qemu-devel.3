@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F35ED1F9C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15290D1F9C6
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 19:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0nI2-0007MV-1W; Tue, 15 Oct 2024 15:33:06 -0400
+	id 1t0nfK-0003NU-5M; Tue, 15 Oct 2024 15:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t0nI0-0007MC-K7
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:33:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t0nHw-0003NB-LD
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:33:03 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FIJHxv001188;
- Tue, 15 Oct 2024 19:32:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=P6xdwV
- xsM9/HVLbZuPbu1+BImNMwp80BylWPr9BikkQ=; b=BSOrbi5hmeaNVDe9Q78Mop
- i3wbkD1/lVlYu3jUk+VDAFvBBf9ImH5+JT51lu8gicUgsLyoI7hKvL18o/gQ2poz
- ZCHrOG1/k+CcN2yrOWOpKAcgZwvZDn/4hpLrwIZuih3fXqpG0sIv0P4ZyY5uJLIH
- fetqcq0NuOrj73h+m3nSBirofZikuAw31eENfD0+/avjO1RteFRmpP1Lv2atHUPG
- eNSBS732lzQ1mcxZNP+7sooKL3NoabkQasNOFM5kZmTA4x+g9s1TPP81yfVnDFmS
- lzcgEcJS/VfRtRBJksT93NOae8XQOmm2Y4xxNgnhKCiOIURtdYLJ5J6i6a67R9AA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429vrw8jj1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 19:32:56 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49FIF5QV002452;
- Tue, 15 Oct 2024 19:32:55 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284emnmkq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 19:32:55 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49FJWtR946662062
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 15 Oct 2024 19:32:55 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0872558056;
- Tue, 15 Oct 2024 19:32:55 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC7E35803F;
- Tue, 15 Oct 2024 19:32:54 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 15 Oct 2024 19:32:54 +0000 (GMT)
-Message-ID: <865424c1-f79c-44ad-b70f-8bf3e455e025@linux.ibm.com>
-Date: Tue, 15 Oct 2024 15:32:54 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t0nfI-0003NC-Lu
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:57:08 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t0nfG-0005vS-Uv
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 15:57:08 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 430D821CE9;
+ Tue, 15 Oct 2024 19:57:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729022225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1g8WTK7D8qNPau56BfEXcHsLHqvMalmJUzAVVpu8B5U=;
+ b=1QHhTx6zPWylpWcSex42WwuItR+uwbivxktavGYdt9akjFPHu2UH2SZgU8wBFh5CY5mCaR
+ 4g9SA3mNoraNTvX3bJ2Y1pTB4ANNHpFMnOvE4bYOA9E2chuv1YeW01gaoRSn9Q8W94abed
+ LRmhVEzDoZD1aVksJslf8J7moyadVcc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729022225;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1g8WTK7D8qNPau56BfEXcHsLHqvMalmJUzAVVpu8B5U=;
+ b=/RHJ2aIPSFn4aRCU6QRnx5e1gPJ+00rvCZ/UqrFZmQ1P+eEmSoqnxQKESAFXp50hJI5m8d
+ hGT1bs137vCuhpCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729022225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1g8WTK7D8qNPau56BfEXcHsLHqvMalmJUzAVVpu8B5U=;
+ b=1QHhTx6zPWylpWcSex42WwuItR+uwbivxktavGYdt9akjFPHu2UH2SZgU8wBFh5CY5mCaR
+ 4g9SA3mNoraNTvX3bJ2Y1pTB4ANNHpFMnOvE4bYOA9E2chuv1YeW01gaoRSn9Q8W94abed
+ LRmhVEzDoZD1aVksJslf8J7moyadVcc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729022225;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1g8WTK7D8qNPau56BfEXcHsLHqvMalmJUzAVVpu8B5U=;
+ b=/RHJ2aIPSFn4aRCU6QRnx5e1gPJ+00rvCZ/UqrFZmQ1P+eEmSoqnxQKESAFXp50hJI5m8d
+ hGT1bs137vCuhpCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BDE4913A53;
+ Tue, 15 Oct 2024 19:57:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 7TBUIRDJDmfeYgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 15 Oct 2024 19:57:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
 Subject: Re: tpm-tis-device-swtpm-test timeout
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+In-Reply-To: <865424c1-f79c-44ad-b70f-8bf3e455e025@linux.ibm.com>
 References: <87jze9qlrp.fsf@suse.de>
- <077cee03-efd0-4716-865a-b9990afb91a3@linux.ibm.com> <87h69dqigg.fsf@suse.de>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <87h69dqigg.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: s1rDkvqOzEdliA-EBmP3vjhxKLKAUGAH
-X-Proofpoint-GUID: s1rDkvqOzEdliA-EBmP3vjhxKLKAUGAH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 spamscore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410150131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <077cee03-efd0-4716-865a-b9990afb91a3@linux.ibm.com>
+ <87h69dqigg.fsf@suse.de>
+ <865424c1-f79c-44ad-b70f-8bf3e455e025@linux.ibm.com>
+Date: Tue, 15 Oct 2024 16:57:02 -0300
+Message-ID: <87ed4hqgvl.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.992]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +116,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Stefan Berger <stefanb@linux.ibm.com> writes:
 
-
-On 10/15/24 3:22 PM, Fabiano Rosas wrote:
-> Stefan Berger <stefanb@linux.ibm.com> writes:
-> 
->> On 10/15/24 2:11 PM, Fabiano Rosas wrote:
->>> Hi Stefan,
+> On 10/15/24 3:22 PM, Fabiano Rosas wrote:
+>> Stefan Berger <stefanb@linux.ibm.com> writes:
+>> 
+>>> On 10/15/24 2:11 PM, Fabiano Rosas wrote:
+>>>> Hi Stefan,
+>>>>
+>>>> I see the tpm-tis-device-swtpm test timing out, could you take a look?
+>>>>
+>>>> qemu:qtest+qtest-aarch64 / qtest-aarch64/tpm-tis-device-swtpm-test time out (After 60.0 seconds)
+>>>> 135/138 qemu:qtest+qtest-aarch64 /
+>>>> qtest-aarch64/tpm-tis-device-swtpm-test TIMEOUT 60.01s killed by signal 11 SIGSEGV
 >>>
->>> I see the tpm-tis-device-swtpm test timing out, could you take a look?
->>>
->>> qemu:qtest+qtest-aarch64 / qtest-aarch64/tpm-tis-device-swtpm-test time out (After 60.0 seconds)
->>> 135/138 qemu:qtest+qtest-aarch64 /
->>> qtest-aarch64/tpm-tis-device-swtpm-test TIMEOUT 60.01s killed by signal 11 SIGSEGV
->>
->> Is this something new or been happening for a while? Does it happen
->> consistently? I just build the master branch and ran the tests on a very
->> old machine, I mean 13 years old. The host runs Fedora 40 with
->> libtpms-0.96-6 + swtpm-0.9.0 from the distro:
-> 
-> It's the first time I see it. I can reproduce consistently by running
-> that test in a loop while make -j16 check is running in another window.
+>>> Is this something new or been happening for a while? Does it happen
+>>> consistently? I just build the master branch and ran the tests on a very
+>>> old machine, I mean 13 years old. The host runs Fedora 40 with
+>>> libtpms-0.96-6 + swtpm-0.9.0 from the distro:
+>> 
+>> It's the first time I see it. I can reproduce consistently by running
+>> that test in a loop while make -j16 check is running in another window.
+>
+> So this here is failing for you every time?
+>
+> QTEST_QEMU_BINARY=build/qemu-system-aarch64 
+> ./build/tests/qtest/tpm-tis-device-swtpm-test
 
-So this here is failing for you every time?
+Sorry, I was unclear. No, that runs for about 30 iterations before it
+fails. I just ran each of these in a terminal window:
 
-QTEST_QEMU_BINARY=build/qemu-system-aarch64 
-./build/tests/qtest/tpm-tis-device-swtpm-test
+$ for i in $(seq 1 999); do echo "$i =============";  QTEST_QEMU_BINARY=./qemu-system-aarch64 ./tests/qtest/tpm-tis-device-swtpm-test || break ; done
+$ make -j$(nproc) check
+$ while :; do ps aux | grep -v grep | grep swtpm; done
 
-This test would start swtpm. Do you see it running while this test is 
-running? It should show process like this running for a very short time 
-obviously  [ while :; do ps aux | grep -v grep | grep swtpm; done ]:
+The result is:
 
-stefanb  4087462  0.0  0.0  11040  3732 pts/6    S+   15:30   0:00 swtpm 
-socket --tpmstate dir=/tmp/qemu-tpm-tis-device-swtpm-test.D3SLV2 --ctrl 
-type=unixio,path=/tmp/qemu-tpm-tis-device-swtpm-test.D3SLV2/sock --tpm2
-stefanb  4087467  0.0  0.0  11040  3660 pts/6    S+   15:30   0:00 swtpm 
-socket --tpmstate dir=/tmp/qemu-tpm-tis-device-swtpm-test.H1SLV2 --ctrl 
-type=unixio,path=/tmp/qemu-tpm-tis-device-swtpm-test.H1SLV2/sock --tpm2
+$ for i in $(seq 1 999); do echo "$i =============";
+QTEST_QEMU_BINARY=./qemu-system-aarch64
+./tests/qtest/tpm-tis-device-swtpm-test || break ; done
+...
+...
+22 =============                               
+# random seed: R02Se1d542a529b7d9bfdfdcaf9d5359cbb9                                            
+1..2                                           
+# Start of aarch64 tests                       
+# Start of tpm tests                           
+# Start of tis-swtpm tests                     
+# starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-14870.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-14870.qmp,id=char0 -mon chardev=char0,mode=control -display 
+none -audio none -machine virt,gic-version=max -accel tcg -chardev socket,id=chr,path=/tmp/qemu-tpm-tis-device-swtpm-test.VWOBV2/sock -tpmdev emulator,id=dev,chardev=chr -device tpm-tis-devic
+e,tpmdev=dev -accel qtest
+ok 1 /aarch64/tpm/tis-swtpm/test               
+# End of tis-swtpm tests                       
+# Start of tis-swtpm-migration tests                                                           
+# starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-14870.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-14870.qmp,id=char0 -mon chardev=char0,mode=control -display 
+none -audio none -machine virt,gic-version=max -accel tcg -chardev socket,id=chr,path=/tmp/qemu-tpm-tis-device-swtpm-test.VWOBV2/sock -tpmdev emulator,id=dev,chardev=chr -device tpm-tis-devic
+e,tpmdev=dev  -accel qtest
+# starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-14870.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-14870.qmp,id=char0 -mon chardev=char0,mode=control -display 
+none -audio none -machine virt,gic-version=max -accel tcg -chardev socket,id=chr,path=/tmp/qemu-tpm-tis-device-swtpm-test.QXOBV2/sock -tpmdev emulator,id=dev,chardev=chr -device tpm-tis-devic
+e,tpmdev=dev -incoming unix:/tmp/qemu-tpm-tis-device-swtpm-test.VWOBV2/migsocket -accel qtest
+Segmentation fault (core dumped)               
+$ swtpm: Data client disconnected
+swtpm: Data client disconnected
 
+>
+> This test would start swtpm. Do you see it running while this test is 
+> running? It should show process like this running for a very short time 
+> obviously  [ while :; do ps aux | grep -v grep | grep swtpm; done ]:
 
-> 
-> I'm on openSUSE Leap 15.5:
-> 
-> $ rpm -qa | grep libtpms
-> libtpms0-0.8.2-150300.3.9.1.x86_64
-> 
-> $ rpm -qa | grep swtpm
-> swtpm-0.7.3-150500.2.1.x86_64
-> 
+I see several of:
 
+fabiano 30146 0.0 0.0 18056 5564 pts/9 S 15:11 0:00 swtpm socket
+--tpmstate dir=/tmp/qemu-tpm-tis-device-swtpm-test.DQFLV2 --ctrl
+type=unixio,path=/tmp/qemu-tpm-tis-device-swtpm-test.DQFLV2/sock --tpm2
+
+> stefanb  4087462  0.0  0.0  11040  3732 pts/6    S+   15:30   0:00 swtpm 
+> socket --tpmstate dir=/tmp/qemu-tpm-tis-device-swtpm-test.D3SLV2 --ctrl 
+> type=unixio,path=/tmp/qemu-tpm-tis-device-swtpm-test.D3SLV2/sock --tpm2
+> stefanb  4087467  0.0  0.0  11040  3660 pts/6    S+   15:30   0:00 swtpm 
+> socket --tpmstate dir=/tmp/qemu-tpm-tis-device-swtpm-test.H1SLV2 --ctrl 
+> type=unixio,path=/tmp/qemu-tpm-tis-device-swtpm-test.H1SLV2/sock --tpm2
+>
+>
+>> 
+>> I'm on openSUSE Leap 15.5:
+>> 
+>> $ rpm -qa | grep libtpms
+>> libtpms0-0.8.2-150300.3.9.1.x86_64
+>> 
+>> $ rpm -qa | grep swtpm
+>> swtpm-0.7.3-150500.2.1.x86_64
+>> 
 
