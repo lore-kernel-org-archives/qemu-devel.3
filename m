@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B05D1D88B
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE79ED1D88B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 17:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0lWj-0000Sy-C0; Tue, 15 Oct 2024 13:40:09 -0400
+	id 1t0loX-0005CF-82; Tue, 15 Oct 2024 13:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lWd-0000R3-5V
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:40:04 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t0loV-0005By-R7; Tue, 15 Oct 2024 13:58:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1t0lWa-0006uF-U7
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 13:40:02 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t0loU-0000WT-2Y; Tue, 15 Oct 2024 13:58:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D668398A35;
- Tue, 15 Oct 2024 20:39:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 11B8798A41;
+ Tue, 15 Oct 2024 20:58:07 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36F85155115;
- Tue, 15 Oct 2024 20:39:58 +0300 (MSK)
-Message-ID: <d14c6eab-eebe-4844-a02b-9b3d1d9d43bd@tls.msk.ru>
-Date: Tue, 15 Oct 2024 20:39:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 662F715512E;
+ Tue, 15 Oct 2024 20:58:25 +0300 (MSK)
+Message-ID: <939526a0-0412-4984-a952-9415ce8b13c8@tls.msk.ru>
+Date: Tue, 15 Oct 2024 20:58:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/20] UI patches
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/7] virtio-net fixes
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang
+ <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -77,9 +78,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -103,52 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.10.2024 16:39, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 15.09.2024 04:06, Akihiko Odaki wrote:
+> Most of this series are fixes for software RSS and hash reporting, which
+> should have no production user.
 > 
-> The following changes since commit 3860a2a8de56fad71db42f4ad120eb7eff03b51f:
+> However there is one exception; patch "virtio-net: Fix size check in
+> dhclient workaround" fixes an out-of-bound access that can be triggered
+> for anyone who don't use vhost. It has Cc: qemu-stable@nongnu.org and
+> can be applied independently.
 > 
->    Merge tag 'pull-tcg-20241013' of https://gitlab.com/rth7680/qemu into staging (2024-10-14 11:12:34 +0100)
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Akihiko Odaki (7):
+>        net: checksum: Convert data to void *
+>        virtio-net: Fix size check in dhclient workaround
+>        virtio-net: Do not check for the queue before RSS
+>        virtio-net: Fix hash reporting when the queue changes
+>        virtio-net: Initialize hash reporting values
+>        virtio-net: Copy received header to buffer
+>        virtio-net: Fix num_buffers for version 1
 > 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
-> 
-> for you to fetch changes up to 4cd78a3db2478d3c1527905a26c9d3fbee83ccac:
-> 
->    audio/pw: Report more accurate error when connecting to PipeWire fails (2024-10-14 17:35:24 +0400)
-> 
-> ----------------------------------------------------------------
-> UI-related fixes & shareable 2d memory with -display dbus
-> 
-> ----------------------------------------------------------------
-> 
-> Marc-André Lureau (19):
->    hw/audio/hda: free timer on exit
->    hw/audio/hda: fix memory leak on audio setup
->    ui/dbus: fix leak on message filtering
->    ui/win32: fix potential use-after-free with dbus shared memory
->    ui/dbus: fix filtering all update messages
->    ui/dbus: discard display messages on disable
->    ui/dbus: discard pending CursorDefine on new one
->    util/memfd: report potential errors on free
->    ui/pixman: generalize shared_image_destroy
->    ui/dbus: do not limit to one listener per connection / bus name
->    ui/dbus: add trace for can_share_map
->    ui/surface: allocate shared memory on !win32
->    meson: find_program('gdbus-codegen') directly
->    ui/dbus: make Listener.Win32.Map win32-specific
->    ui/dbus: add Listener.Unix.Map interface XML
->    ui/dbus: implement Unix.Map
->    virtio-gpu: allocate shareable 2d resources on !win32
->    ui: refactor using a common qemu_pixman_shareable
->    tests: add basic -display dbus Map.Unix test
-> 
-> Michal Privoznik (1):
->    audio/pw: Report more accurate error when connecting to PipeWire fails
+>   include/net/checksum.h |   2 +-
+>   hw/net/virtio-net.c    | 109 ++++++++++++++++++++++++++++---------------------
+>   net/checksum.c         |   4 +-
+>   3 files changed, 65 insertions(+), 50 deletions(-)
 
-Or, actually, here (I replied to a wrong thread) -- is there something
-for qemu-stable in there?  First 7 changes seems to be good fit there.
+Hi!
+
+Has this patchset been forgotten, or does it wait for some
+R-b's ?
 
 Thanks,
 
