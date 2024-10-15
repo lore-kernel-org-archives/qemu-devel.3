@@ -4,82 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF689CFC27C
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CFED1D87B
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jlG-0002zn-DF; Tue, 15 Oct 2024 11:47:02 -0400
+	id 1t0jnf-00041X-8i; Tue, 15 Oct 2024 11:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jlB-0002SV-91
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:57 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0jnJ-0003fH-Ju
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:49:14 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jl9-0000wI-Fi
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:56 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-20cdb889222so23524965ad.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:46:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t0jnF-00019T-TA
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:49:09 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a991fedbd04so527498666b.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007214; x=1729612014; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Oh4eoC7A4RtAScWxiuA7lur7cdy4r2Qar3xooL6q0Pc=;
- b=LWLTip+aaJ3Ya7d8LqFjd0C5SRLVH9fi59shFjwu6hM4vivPLjFF2y25Bysk9LVkOM
- E3eYYStVqq+u4igdFV9sHUQZIunC84L4o7Gc9IuIzF3ZjLCPD9XIbV4PklGNaOnEnMVl
- OJXVjTeX2udCqFKGIpFy/CpVjBYvA5X5BNetfCVi2O+4N7WlKZs3kwPOSUg98l1v7FbT
- ul4H27H8dhzJ+wzLECHM8EExgL2jPJGsraIODKeZDQgsE2VhztQvTCaPC3nUG1Eh03Ne
- v6HWwUdINISyXGEinks9c+5zax19nn84W54G+6CvRdPnkJg7EnmwXf+pRusLWqGoMWit
- FdyQ==
+ d=linaro.org; s=google; t=1729007344; x=1729612144; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=h8yxg9y4vv4qI/jrS4Ln3/iEtaNWndxMD91mSBaNHWg=;
+ b=KYLd4d70jvnRPGrswRJPT5Ywcab3SfFvUFFI81czG7Mx2aIFo4V1ptLhaP0OsVfvDy
+ Xj+iMXRMQb6ypneuLcg6YnadKvC4/lvkx1trpoQY9uEHEuBiE5P5Of0X7srYq6me9PXy
+ TjGcdaEgUUD7N1hIJ/4OKVGP6GuG88B2Biv5qzBkuQZvaWWkInTonEucVewR7kRHS5cC
+ EWMtExBp2LC1HD13EPFoeCU7P6LlToVgUZnT8orA+xsehXLkyw42wjNxfuaDi3lZi9BV
+ o2ksd/Ine+5q9OSLmmsgvtJWg6dlnHUVO1Bc0qZE/lODbFaWN3IBZ8nB286MARL4Vmok
+ Y0mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007214; x=1729612014;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Oh4eoC7A4RtAScWxiuA7lur7cdy4r2Qar3xooL6q0Pc=;
- b=ebmi6HUsfGgexWUwRDTvP37IAu9QEnLTumGxTLU2/qkTK+EPXg+xHe8UWkOfMuFwqO
- RhnCi6njcGfBxhMU0i6XJtg9VWL9t972xVLVC066chzAZ4qgE7BLftZFtQ3qng86xzF3
- +MdXX+Tz1u6UZJfnCr+3b+4sjF2Pb/xkl3aowqhzdEFm6DAz73LHW5FwDc/dWva05fkL
- RE3EmsR6e3odl/AOvljaWZoSv91L9yvQneZLoYrKazyanf7UcgmOsxXuLjJX2cfx4qRt
- fqVG/5nTfYqQkQYKHIZsMEdBP/jnfAQHivJCBGOiOOLJOPwBAJtIh8XBG1eeYazZoipb
- Jb+Q==
-X-Gm-Message-State: AOJu0YznDmuASlyio0g/PcGLvvUdpfPJQfOYrQkl/GvpkMui7punW3Wb
- 3Jy3Q5eY0zbZA/TimcWW3vdXqm8T1tH/0Jlpw665/1saP6w1jT2LYe9ETp2hq1WBgYMKQdxhrCg
- y
-X-Google-Smtp-Source: AGHT+IEcCDEO14LWzBLs+GMWQirR1q8cmIq9rlQs4gQyMGBCPaSU0/p+LTCkND4/YD8+5qIKQhe0Ig==
-X-Received: by 2002:a17:902:fc4c:b0:20c:8cf9:6147 with SMTP id
- d9443c01a7336-20ca13f6106mr185357835ad.1.1729007213720; 
- Tue, 15 Oct 2024 08:46:53 -0700 (PDT)
-Received: from localhost.localdomain ([45.176.88.167])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d180382a5sm13428565ad.129.2024.10.15.08.46.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:46:53 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/33] target/mips: Rename cpu_is_bigendian() ->
- disas_is_bigendian()
-Date: Tue, 15 Oct 2024 12:44:27 -0300
-Message-ID: <20241015154443.71763-19-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
-References: <20241015154443.71763-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1729007344; x=1729612144;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=h8yxg9y4vv4qI/jrS4Ln3/iEtaNWndxMD91mSBaNHWg=;
+ b=NPVIjcn32UlHNHSwM6NB1+CjvRAdATtYkYkp8dcNInAmNBU35XIKXWqDZnRPOCen/j
+ u31rbpgQpvUu3Z+R0X+2tMRtZDdg3EDtQmLaADm9FNCbrdHGhjip2EXcMchnQWCDH8Ez
+ 8IuxQ1+x71E9FvFZbqy13p7X5zgFomiwLcwmZXzRzY4n2d+zTKyo052VUg5iiC9/tEPb
+ e5i0QkSNfQNWN8z2xhH2dJnCcTSWF0lARN60XtsUXxk+ANczb5WhzHXI4AW+mvM3MTar
+ MA/NRs4uCySHCkSb0S8RfZFyYQP4Gvx1arRmMjYImR7BabFHGWIuR4Sc8K9P+JX2h3jO
+ yJ5Q==
+X-Gm-Message-State: AOJu0Yyt6jyLSdrv9R1b+G0OCeLr/VgFHFHtxTkNiLGeCWgEHyUZ8KQw
+ FMDGYj2jhuBu9YKJX00TcmHJSHcXdSRd37ZG6p6E0uRQmV3A2cWyjh7pkp3NNIwkt32eXecfV2O
+ 148YHgAa7/mvsNLAOW8qF/1PxK2Vvz/wfkgAsFrAINHIuNumd
+X-Google-Smtp-Source: AGHT+IGM+9DkcJCDY0v8KzXQN1mjBRHsMhiLKQ67esltuWKeS9wUl99GIzv2WOXAoUW9XnHmNR9UXfB4tl8Tdo5bHOw=
+X-Received: by 2002:a05:6402:8c3:b0:5c9:55aa:4285 with SMTP id
+ 4fb4d7f45d1cf-5c95ac63c95mr15472562a12.34.1729007343878; Tue, 15 Oct 2024
+ 08:49:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 15 Oct 2024 16:48:53 +0100
+Message-ID: <CAFEAcA9CthdJz+QM=_q2NxPbdCyyf+YBGE+qDVYs7VbqWT+aqw@mail.gmail.com>
+Subject: patchew no longer pushing patches to git branches
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <famz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,87 +84,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Methods using the 'cpu_' prefix usually take a (Arch)CPUState
-argument. Since this method takes a DisasContext argument,
-rename it as disas_is_bigendian().
+It looks like since a few months back patchew stopped pushing patches
+to git branches: eg
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241010215015.44326-3-philmd@linaro.org>
----
- target/mips/tcg/translate.h              | 2 +-
- target/mips/tcg/translate.c              | 6 +++---
- target/mips/tcg/nanomips_translate.c.inc | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+https://patchew.org/QEMU/20240526204551.553282-1-richard.henderson@linaro.org/
+from four months ago had a git branch created for it, but more
+recent patches in patchew's UI don't seem to have that.
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index 2b6646b339b..e81a8d5eb9b 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -235,7 +235,7 @@ bool decode_ext_vr54xx(DisasContext *ctx, uint32_t insn);
-     static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
-     { return FUNC(ctx, a, __VA_ARGS__); }
- 
--static inline bool cpu_is_bigendian(DisasContext *ctx)
-+static inline bool disas_is_bigendian(DisasContext *ctx)
- {
-     return extract32(ctx->CP0_Config0, CP0C0_BE, 1);
- }
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 50d8537a3b3..3deb48ace9d 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -2010,7 +2010,7 @@ static void gen_lxl(DisasContext *ctx, TCGv reg, TCGv addr,
-      */
-     tcg_gen_qemu_ld_tl(t1, addr, mem_idx, MO_UB);
-     tcg_gen_andi_tl(t1, addr, sizem1);
--    if (!cpu_is_bigendian(ctx)) {
-+    if (!disas_is_bigendian(ctx)) {
-         tcg_gen_xori_tl(t1, t1, sizem1);
-     }
-     tcg_gen_shli_tl(t1, t1, 3);
-@@ -2037,7 +2037,7 @@ static void gen_lxr(DisasContext *ctx, TCGv reg, TCGv addr,
-      */
-     tcg_gen_qemu_ld_tl(t1, addr, mem_idx, MO_UB);
-     tcg_gen_andi_tl(t1, addr, sizem1);
--    if (cpu_is_bigendian(ctx)) {
-+    if (disas_is_bigendian(ctx)) {
-         tcg_gen_xori_tl(t1, t1, sizem1);
-     }
-     tcg_gen_shli_tl(t1, t1, 3);
-@@ -10856,7 +10856,7 @@ static void gen_flt3_arith(DisasContext *ctx, uint32_t opc,
-             tcg_gen_br(l2);
-             gen_set_label(l1);
-             tcg_gen_brcondi_tl(TCG_COND_NE, t0, 4, l2);
--            if (cpu_is_bigendian(ctx)) {
-+            if (disas_is_bigendian(ctx)) {
-                 gen_load_fpr32(ctx, fp, fs);
-                 gen_load_fpr32h(ctx, fph, ft);
-                 gen_store_fpr32h(ctx, fp, fd);
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index b4b746d4187..6e0df1a8c36 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -999,7 +999,7 @@ static void gen_llwp(DisasContext *ctx, uint32_t base, int16_t offset,
- 
-     gen_base_offset_addr(ctx, taddr, base, offset);
-     tcg_gen_qemu_ld_i64(tval, taddr, ctx->mem_idx, MO_TEUQ | MO_ALIGN);
--    if (cpu_is_bigendian(ctx)) {
-+    if (disas_is_bigendian(ctx)) {
-         tcg_gen_extr_i64_tl(tmp2, tmp1, tval);
-     } else {
-         tcg_gen_extr_i64_tl(tmp1, tmp2, tval);
-@@ -1031,7 +1031,7 @@ static void gen_scwp(DisasContext *ctx, uint32_t base, int16_t offset,
-     gen_load_gpr(tmp1, reg1);
-     gen_load_gpr(tmp2, reg2);
- 
--    if (cpu_is_bigendian(ctx)) {
-+    if (disas_is_bigendian(ctx)) {
-         tcg_gen_concat_tl_i64(tval, tmp2, tmp1);
-     } else {
-         tcg_gen_concat_tl_i64(tval, tmp1, tmp2);
--- 
-2.45.2
+Did this get accidentally lost when patchew moved server, or
+was it deliberately disabled?
 
+thanks
+-- PMM
 
