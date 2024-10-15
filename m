@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1734BD1D879
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADADCFC27C
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jjH-0008Vz-QX; Tue, 15 Oct 2024 11:44:59 -0400
+	id 1t0jjV-00008v-15; Tue, 15 Oct 2024 11:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjF-0008VT-To
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:44:57 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjT-00006l-Db
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:11 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjD-0000Tl-AQ
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:44:57 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-20caccadbeeso41621205ad.2
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:44:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jjS-0000hp-1m
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:45:11 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2e06acff261so3678285a91.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007093; x=1729611893; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007108; x=1729611908; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JaR1kDH2Bf+l69hgvZCXqIUYxGHmIwLgfUQ5KPkPEPs=;
- b=wX2lUx/ss+LkpkiPbceI85npjakfpQo1R1XqIBGReXoIB2cznkF6grostbpUe+K1kH
- iQeLdnffsbbSC4rCoHITAN6wCA8vV22Nx+xv+V0qBhdVvsTDgy+Pl9AXfjlluV4dHUn+
- X5ZbNPDTkttKLl3UtCU2jutimSeMyvsouXwaLUlRwvGW2L2tnjvcwF9fJ1Ceth4xo5Gq
- oVVmDXYjiQTz6CT/sDaXCl1x+B8dUvhPhpbi2bl9NGH5lGTUkUUBdMXD9RyW4sJATRxW
- nXI3t9QJRdLCfhmLmigVkiOoZGeMm4vYJEQvUHy/dyPDULKWgFuctXQ/1c6GE6oohOV5
- s3VA==
+ bh=OHZo240/MKAErrBWgP22VqVce6gGXpeJw8VH+45Ycx8=;
+ b=bF5XwocGiiIMkaND/mOr78bBQnuvMgxcoT/khKVInmDBm+XhH/zJ9n/1DPaaNz1JFN
+ XTarrBCL67lA0Z+nX743vN7onYTdsdxdqbpd0OjPLsXv75s8Bo6Zp2iizUIr7o4+2PlD
+ 7PClDzBRsIQ/loXeqGjHScaIFBJQwzkFkagt4lsH2M6QiL47S6KYnPuc9eD3NzheM11M
+ /cDMAO0MZba8qYs1W//fxaZ7AMVmVJrEw78yitFEucmctujLWUOIULGqWrUrgo9vybNP
+ Gl/8DYztW/9oRB1TgglXN9q/pLBSZhuIV60vVOoNPZb8//PgYRjltmPV+ya0BSSR0XpO
+ QAYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007093; x=1729611893;
+ d=1e100.net; s=20230601; t=1729007108; x=1729611908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JaR1kDH2Bf+l69hgvZCXqIUYxGHmIwLgfUQ5KPkPEPs=;
- b=Hn1HzAt8NXz4oY4G0C61cd7d/U0oH+xCOhS4xQ5PwXjrVsY09ffmcysJ1Vx4NRFdpH
- TSdU0S0NNhU0bteLif4gSNhyLCWcqxTaT1aq47gXsuG9ntVuDLPK35IwyV70ns+hN8LD
- 9yOMk48CXYRJV/0b+g9Pl6HkxjeWGhkUu3VU+8wneBbxxHPq1GLBciH//NTQOgAbyFWK
- dQqrOqMdxqhyZi5JteZoUxeHTiNpednZTYFM5IH8Yes7FiPQgbjiJ+vOD6WKkfro8PUd
- 0cO7KvYjuTVyyvzkJHmRzTi/jfK4K6DNn3Hg6GO66u02kVPqLLsTTrw9fuLkhoLaKaf9
- 8PgA==
-X-Gm-Message-State: AOJu0YxNv9FWzPwEQX42ZRvdVNiXE4bFc8ACt/8/O3aSLgCyGCVzef2N
- hfF6TOPBlta+42BCAcdVza3p0hDPxhsXoZN1DusOWPJGUUUhiwV8FbqXM+u334Cno2RAxlEE7Te
- c
-X-Google-Smtp-Source: AGHT+IGKcLoA1fzV1i2vd0BYFIhCf5eW8oz28clBDDmuWcA5pYS+J+GtFWNAX2+LyzrmWAwMLgC0aw==
-X-Received: by 2002:a17:902:d552:b0:20b:7ed8:3978 with SMTP id
- d9443c01a7336-20ca147e967mr224903405ad.26.1729007093610; 
- Tue, 15 Oct 2024 08:44:53 -0700 (PDT)
+ bh=OHZo240/MKAErrBWgP22VqVce6gGXpeJw8VH+45Ycx8=;
+ b=rn9cUZ5tWmiK+hmxDGTc1+vyyF856DW8JsCq8haXc7vswpDz85GIO9l2JCZnbWtVO6
+ E9Y7Zw1nS3TeLYWCQHTvrls4Z3QzOsORNn2Mz015y+FzwUqGA9FPHg0bD2tUkROiv8Ds
+ UrSzOUF3Gy1sgLNiPj4AOq0XU5QK8CIBH94rfIRYw+BoscCuemhKeqCw8uQLzcp2juAc
+ h6gnbS13OpE2YxhyZ9wdQsD7LiRYLBCJrk6fryRcqecXXMEna90KsUHLL9KRlgXSezS9
+ 9girt8w+Rz6Sw5y0h3VepXFF9nExt2QPyyGWJgNmDR9kcag7JpdTqdrhukBZlxmnN8f8
+ UgZQ==
+X-Gm-Message-State: AOJu0Yy1D6Ueu1SddwRxab69CuoLPtm4MXlfKg+WrJj2NyZ4XZRC5OmB
+ 7LxdX5eoGH4oQNXlEvI1ljZbwzKQPmAJioFOepcdtSSrYB2eSn9odUa0+HKPVe0FnDZnzUtaOzb
+ T
+X-Google-Smtp-Source: AGHT+IGXlQoL40ZaflYaRzMdlDI5rCeFVNJtXlZbSR7n5Hkr4o1y9AewTgLOHp9SmfkesWAE9VDWEQ==
+X-Received: by 2002:a17:90a:2d8e:b0:2e2:b513:fdca with SMTP id
+ 98e67ed59e1d1-2e3ab820d96mr747060a91.20.1729007108327; 
+ Tue, 15 Oct 2024 08:45:08 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d17f828adsm13463945ad.41.2024.10.15.08.44.52
+ 98e67ed59e1d1-2e392ed396asm1971278a91.21.2024.10.15.08.45.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:44:53 -0700 (PDT)
+ Tue, 15 Oct 2024 08:45:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 01/33] qemu/bswap: Undefine CPU_CONVERT() once done
-Date: Tue, 15 Oct 2024 12:44:10 -0300
-Message-ID: <20241015154443.71763-2-philmd@linaro.org>
+Subject: [PULL 03/33] exec/memop: Remove unused memop_big_endian() helper
+Date: Tue, 15 Oct 2024 12:44:12 -0300
+Message-ID: <20241015154443.71763-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -94,29 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Better undefined macros once we are done with them,
-like we do few lines later with DO_STN_LDN_P().
+Last use of memop_big_endian() was removed in commit 592134617c9
+("accel/tcg: Reorg system mode store helpers").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241003234211.53644-2-philmd@linaro.org>
+Message-Id: <20241003234211.53644-3-philmd@linaro.org>
 ---
- include/qemu/bswap.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/exec/memop.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index ad22910a5d1..b915835bead 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -140,6 +140,8 @@ CPU_CONVERT(le, 16, uint16_t)
- CPU_CONVERT(le, 32, uint32_t)
- CPU_CONVERT(le, 64, uint64_t)
+diff --git a/include/exec/memop.h b/include/exec/memop.h
+index b699bf76886..acdb40a9b3b 100644
+--- a/include/exec/memop.h
++++ b/include/exec/memop.h
+@@ -164,12 +164,6 @@ static inline MemOp size_memop(unsigned size)
+     return (MemOp)ctz32(size);
+ }
  
-+#undef CPU_CONVERT
-+
- /*
-  * Same as cpu_to_le{16,32,64}, except that gcc will figure the result is
-  * a compile-time constant if you pass in a constant.  So this can be
+-/* Big endianness from MemOp.  */
+-static inline bool memop_big_endian(MemOp op)
+-{
+-    return (op & MO_BSWAP) == MO_BE;
+-}
+-
+ /**
+  * memop_alignment_bits:
+  * @memop: MemOp value
 -- 
 2.45.2
 
