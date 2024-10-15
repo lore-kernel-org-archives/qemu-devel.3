@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7072DCFC286
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5093CFC288
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eww-0006lz-0e; Tue, 15 Oct 2024 06:38:46 -0400
+	id 1t0ewu-0006lU-FF; Tue, 15 Oct 2024 06:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewd-0006hX-1O
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:31 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1t0ewa-0006hP-Mo
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:28 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewb-000609-Ge
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:26 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43057f4a16eso45357135e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:24 -0700 (PDT)
+ id 1t0ewX-0005ye-UR
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:24 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-37d4fd00574so3174398f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988703; x=1729593503; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988700; x=1729593500; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wkuQG2KTedUFhwN2ENhcCvd0nQ0K3RXT8cJBNOsNYGA=;
- b=Qag8AGa+L7wC82DDWzGQzvh8kqTS3huYVr7Nu2gzpqjmfu6jcyXrMtcrl+jSdYQLrs
- 2x+NhziPYB0ck8W4Gen086uw0SlroCiSc6DjIosUvVqO6GV30AmJCAR5fGHcwnrKLq/P
- M1iKx+RbWEAWaYQdseeg1F059Mh2wWnUu+SW6Kmf2iZUfvr8I/c0ATcvQKlKpNobN+y7
- Q3/S3zFal2zwfUB57HGn+6ZuErNyUzOth0KFutuGl+OJYWFnAWj6eEsSNWZeF+cTUyNM
- as5xfLcKrkv5hxZtqmLCmG9xmsrXo2hUUizYADgYnkMZNVB+u3kZ95EX+6DCzIA1bxYF
- RObg==
+ :reply-to; bh=/3GHUipPzvi4A2i69xuufVZyjr3Qe+7m285e1Wp6leM=;
+ b=Mmnc3OwECjMnOb7O5r56sCxw9L30+PvPcLE0zO8m2vu2Xeciu4nE69KeeLDGn47Z8t
+ AfzcoAFsm7d7B7EuqC934WR/CCxVVdnkpDVta8m/4htQsm4Ugib/XU2b/82LnY6a7zaz
+ 38mpDZoFSOgULVeRnD47N1pucVAWH09mUUpYt5jJRqRWbOyE2nRKvGs+/XbTYzcJuMmQ
+ u4GQXornq28TihsmRwg0qlGzV3teCVnyMuX3sCFlw/4NQZTzAHFH4wCVyOAsaw/Hq7Ku
+ ck6w+8Nlu5OtMCixYESbMs3oI2gGlSHoDN718sxZRJGbKvsTq8h5SQfQsSjsG9n/y3Cl
+ T72g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988703; x=1729593503;
+ d=1e100.net; s=20230601; t=1728988700; x=1729593500;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wkuQG2KTedUFhwN2ENhcCvd0nQ0K3RXT8cJBNOsNYGA=;
- b=W56IDk3iwkX0SdShxZ+bB7gY3pnH6OQli1p1EMATjKBAf826vF9vQfmjLMQEny1TZx
- 1bNOqdSKf6hUhmH2R5zgCOY3hD0IKJkDoOlH7+nKhpNmPIsxFNdJvAvpd4FnlFiM5sHS
- GnjxPqYY5Jpi4YttS/0zcalDl49l5HRwySc/uSs6SEfsriBmrHCgLfvYeCxJ7IAbGg4i
- uSHEzBWEvglZrPSjyRr0x5NYKhcRlUi59SEfE0g4L7jxbozhaPrXns7Ql12+RydwnQ1k
- F0mb9J3Uelh8iiky+Pgn5BLOwEOy5IvzyXy50ZyW/rN4tcbuwCRtYd+Eg2vTPFEA3UnJ
- LAJA==
-X-Gm-Message-State: AOJu0Yy2RDRUv658+nHvHh+m7cOvtHPYWauXu0IBFuYE8Lz/rkhcZRcU
- OaeHgtTDDgvSiZWhYIXYJc5LFtEIJJuuYv0Dc0ZUwplqT34v4YeRRxs5OpzFKrcpcfKMmf6tBRM
- 1
-X-Google-Smtp-Source: AGHT+IGekR1bIUaPIBIG4OUfKJWHvCOqkdqFwSXTpRKUj9VTUHODJzZQezUhNmPaqlSbL+Dn/QAwew==
-X-Received: by 2002:a05:600c:4f88:b0:431:416e:25f4 with SMTP id
- 5b1f17b1804b1-431416e28cemr12122215e9.34.1728988703044; 
- Tue, 15 Oct 2024 03:38:23 -0700 (PDT)
+ bh=/3GHUipPzvi4A2i69xuufVZyjr3Qe+7m285e1Wp6leM=;
+ b=gjbv4zjxt7tjkPf3X1xR9aPzrbPLD6S6oDsPPrwyGr4M+kyK13bZBHHdyVB7Rsr5rj
+ 7V4A5NMP6VRoD5DTPBdi83TUDlMQG4hQQUp2JnmrAmDLOIQYMl2i12V/kTr0EeiNZYy2
+ EhOFQ/GsxJ9zBa3nCIb7wzHVy5zPd7oAkIggf4Lx8+hXJaZW0xJTPt6cbgTbR2CK+LZH
+ FCcuXs1f5aIvrt8RQoru4s3plDFb+aGdV54dWl74fBMK0teaacrKXNKEV/Ein7ocDjBX
+ eTOf2wSY1l2Phmc4YdMoh6tL/ZnMrg7RQt3GCyEfdmbzSZysXCyrI9jzPtPfO66u6iRQ
+ o4uw==
+X-Gm-Message-State: AOJu0Yz6JfoZD4FCSwczFqiG/LSskTexF6Z1n98kRGnourcdqTSUhJ0x
+ Q6QUtaMZWqbHJExPUMh+IQ42hhPwYIWU7o4Bey1+zyPjENoDodnGIfZlsIW2MXmFqKTE/mt5R9m
+ P
+X-Google-Smtp-Source: AGHT+IHQyWflPOiB1gZBzJVyiTU0tPj5GjqcDpuOHQw26wZ3UCYvUE7/2jOfblM62mQbZI/LWN9XVg==
+X-Received: by 2002:a5d:5105:0:b0:37c:ffdd:6d5a with SMTP id
+ ffacd0b85a97d-37d5519df73mr12249238f8f.6.1728988700394; 
+ Tue, 15 Oct 2024 03:38:20 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.22
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:22 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/28] dma: Fix function names in documentation
-Date: Tue, 15 Oct 2024 11:38:07 +0100
-Message-Id: <20241015103808.133024-28-peter.maydell@linaro.org>
+Subject: [PULL 22/28] hw/gpio: Remove MAX7310 device
+Date: Tue, 15 Oct 2024 11:38:02 +0100
+Message-Id: <20241015103808.133024-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,60 +94,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+The MAX7310 GPIO controller was used only by the XScale-based Zaurus
+machine types.  Now they have been removed we can remove this device
+model as well.
 
-Ensure the function names match.
+Because this device is an I2C device, in theory it could be created
+by users on the command line for boards with a different I2c
+controller, but we don't believe users are doing this -- it would be
+impossible on the command line to connect up the GPIO inputs/outputs.
+The only example a web search produces for "device max7310" is a user
+trying to create this because they didn't realize that there was no
+way to manipulate the GPIO lines.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-id: 20241012-dma-v2-1-6afddf5f3c8d@daynix.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241003140010.1653808-3-peter.maydell@linaro.org
 ---
- include/sysemu/dma.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ hw/gpio/max7310.c   | 217 --------------------------------------------
+ hw/gpio/Kconfig     |   4 -
+ hw/gpio/meson.build |   1 -
+ 3 files changed, 222 deletions(-)
+ delete mode 100644 hw/gpio/max7310.c
 
-diff --git a/include/sysemu/dma.h b/include/sysemu/dma.h
-index a1ac5bc1b54..5a49a306284 100644
---- a/include/sysemu/dma.h
-+++ b/include/sysemu/dma.h
-@@ -152,7 +152,7 @@ static inline MemTxResult dma_memory_read(AddressSpace *as, dma_addr_t addr,
- }
+diff --git a/hw/gpio/max7310.c b/hw/gpio/max7310.c
+deleted file mode 100644
+index 43a92b8db97..00000000000
+--- a/hw/gpio/max7310.c
++++ /dev/null
+@@ -1,217 +0,0 @@
+-/*
+- * MAX7310 8-port GPIO expansion chip.
+- *
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- *
+- * This file is licensed under GNU GPL.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/i2c/i2c.h"
+-#include "hw/irq.h"
+-#include "migration/vmstate.h"
+-#include "qemu/log.h"
+-#include "qemu/module.h"
+-#include "qom/object.h"
+-
+-#define TYPE_MAX7310 "max7310"
+-OBJECT_DECLARE_SIMPLE_TYPE(MAX7310State, MAX7310)
+-
+-struct MAX7310State {
+-    I2CSlave parent_obj;
+-
+-    int i2c_command_byte;
+-    int len;
+-
+-    uint8_t level;
+-    uint8_t direction;
+-    uint8_t polarity;
+-    uint8_t status;
+-    uint8_t command;
+-    qemu_irq handler[8];
+-    qemu_irq *gpio_in;
+-};
+-
+-static void max7310_reset(DeviceState *dev)
+-{
+-    MAX7310State *s = MAX7310(dev);
+-
+-    s->level &= s->direction;
+-    s->direction = 0xff;
+-    s->polarity = 0xf0;
+-    s->status = 0x01;
+-    s->command = 0x00;
+-}
+-
+-static uint8_t max7310_rx(I2CSlave *i2c)
+-{
+-    MAX7310State *s = MAX7310(i2c);
+-
+-    switch (s->command) {
+-    case 0x00:  /* Input port */
+-        return s->level ^ s->polarity;
+-
+-    case 0x01:  /* Output port */
+-        return s->level & ~s->direction;
+-
+-    case 0x02:  /* Polarity inversion */
+-        return s->polarity;
+-
+-    case 0x03:  /* Configuration */
+-        return s->direction;
+-
+-    case 0x04:  /* Timeout */
+-        return s->status;
+-
+-    case 0xff:  /* Reserved */
+-        return 0xff;
+-
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "%s: Unsupported register 0x02%" PRIx8 "\n",
+-                      __func__, s->command);
+-        break;
+-    }
+-    return 0xff;
+-}
+-
+-static int max7310_tx(I2CSlave *i2c, uint8_t data)
+-{
+-    MAX7310State *s = MAX7310(i2c);
+-    uint8_t diff;
+-    int line;
+-
+-    if (s->len ++ > 1) {
+-#ifdef VERBOSE
+-        printf("%s: message too long (%i bytes)\n", __func__, s->len);
+-#endif
+-        return 1;
+-    }
+-
+-    if (s->i2c_command_byte) {
+-        s->command = data;
+-        s->i2c_command_byte = 0;
+-        return 0;
+-    }
+-
+-    switch (s->command) {
+-    case 0x01:  /* Output port */
+-        for (diff = (data ^ s->level) & ~s->direction; diff;
+-                        diff &= ~(1 << line)) {
+-            line = ctz32(diff);
+-            if (s->handler[line])
+-                qemu_set_irq(s->handler[line], (data >> line) & 1);
+-        }
+-        s->level = (s->level & s->direction) | (data & ~s->direction);
+-        break;
+-
+-    case 0x02:  /* Polarity inversion */
+-        s->polarity = data;
+-        break;
+-
+-    case 0x03:  /* Configuration */
+-        s->level &= ~(s->direction ^ data);
+-        s->direction = data;
+-        break;
+-
+-    case 0x04:  /* Timeout */
+-        s->status = data;
+-        break;
+-
+-    case 0x00:  /* Input port - ignore writes */
+-        break;
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "%s: Unsupported register 0x02%" PRIx8 "\n",
+-                      __func__, s->command);
+-        return 1;
+-    }
+-
+-    return 0;
+-}
+-
+-static int max7310_event(I2CSlave *i2c, enum i2c_event event)
+-{
+-    MAX7310State *s = MAX7310(i2c);
+-    s->len = 0;
+-
+-    switch (event) {
+-    case I2C_START_SEND:
+-        s->i2c_command_byte = 1;
+-        break;
+-    case I2C_FINISH:
+-#ifdef VERBOSE
+-        if (s->len == 1)
+-            printf("%s: message too short (%i bytes)\n", __func__, s->len);
+-#endif
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_max7310 = {
+-    .name = "max7310",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_INT32(i2c_command_byte, MAX7310State),
+-        VMSTATE_INT32(len, MAX7310State),
+-        VMSTATE_UINT8(level, MAX7310State),
+-        VMSTATE_UINT8(direction, MAX7310State),
+-        VMSTATE_UINT8(polarity, MAX7310State),
+-        VMSTATE_UINT8(status, MAX7310State),
+-        VMSTATE_UINT8(command, MAX7310State),
+-        VMSTATE_I2C_SLAVE(parent_obj, MAX7310State),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+-static void max7310_gpio_set(void *opaque, int line, int level)
+-{
+-    MAX7310State *s = (MAX7310State *) opaque;
+-    assert(line >= 0 && line < ARRAY_SIZE(s->handler));
+-
+-    if (level)
+-        s->level |= s->direction & (1 << line);
+-    else
+-        s->level &= ~(s->direction & (1 << line));
+-}
+-
+-/* MAX7310 is SMBus-compatible (can be used with only SMBus protocols),
+- * but also accepts sequences that are not SMBus so return an I2C device.  */
+-static void max7310_realize(DeviceState *dev, Error **errp)
+-{
+-    MAX7310State *s = MAX7310(dev);
+-
+-    qdev_init_gpio_in(dev, max7310_gpio_set, ARRAY_SIZE(s->handler));
+-    qdev_init_gpio_out(dev, s->handler, ARRAY_SIZE(s->handler));
+-}
+-
+-static void max7310_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+-
+-    dc->realize = max7310_realize;
+-    k->event = max7310_event;
+-    k->recv = max7310_rx;
+-    k->send = max7310_tx;
+-    device_class_set_legacy_reset(dc, max7310_reset);
+-    dc->vmsd = &vmstate_max7310;
+-}
+-
+-static const TypeInfo max7310_info = {
+-    .name          = TYPE_MAX7310,
+-    .parent        = TYPE_I2C_SLAVE,
+-    .instance_size = sizeof(MAX7310State),
+-    .class_init    = max7310_class_init,
+-};
+-
+-static void max7310_register_types(void)
+-{
+-    type_register_static(&max7310_info);
+-}
+-
+-type_init(max7310_register_types)
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index 843630d4f5f..c423e10f59f 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -1,7 +1,3 @@
+-config MAX7310
+-    bool
+-    depends on I2C
+-
+ config PL061
+     bool
  
- /**
-- * address_space_write: Write to address space from DMA controller.
-+ * dma_memory_write: Write to address space from DMA controller.
-  *
-  * Return a MemTxResult indicating whether the operation succeeded
-  * or failed (eg unassigned memory, device rejected the transaction,
-@@ -189,7 +189,7 @@ MemTxResult dma_memory_set(AddressSpace *as, dma_addr_t addr,
-                            uint8_t c, dma_addr_t len, MemTxAttrs attrs);
- 
- /**
-- * address_space_map: Map a physical memory region into a host virtual address.
-+ * dma_memory_map: Map a physical memory region into a host virtual address.
-  *
-  * May map a subset of the requested range, given by and returned in @plen.
-  * May return %NULL and set *@plen to zero(0), if resources needed to perform
-@@ -216,16 +216,15 @@ static inline void *dma_memory_map(AddressSpace *as,
- }
- 
- /**
-- * address_space_unmap: Unmaps a memory region previously mapped
-- *                      by dma_memory_map()
-+ * dma_memory_unmap: Unmaps a memory region previously mapped by dma_memory_map()
-  *
-  * Will also mark the memory as dirty if @dir == %DMA_DIRECTION_FROM_DEVICE.
-  * @access_len gives the amount of memory that was actually read or written
-  * by the caller.
-  *
-  * @as: #AddressSpace used
-- * @buffer: host pointer as returned by address_space_map()
-- * @len: buffer length as returned by address_space_map()
-+ * @buffer: host pointer as returned by dma_memory_map()
-+ * @len: buffer length as returned by dma_memory_map()
-  * @dir: indicates the transfer direction
-  * @access_len: amount of data actually transferred
-  */
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 089b24802ef..74840619c01 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -1,7 +1,6 @@
+ system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
+ system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
+ system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
+-system_ss.add(when: 'CONFIG_MAX7310', if_true: files('max7310.c'))
+ system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
+ system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
+ system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
 -- 
 2.34.1
 
