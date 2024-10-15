@@ -4,78 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC8FD1815E
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 00:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01337CFC501
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 00:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0VdH-00046V-SO; Mon, 14 Oct 2024 20:41:51 -0400
+	id 1t0Vng-0005wO-2I; Mon, 14 Oct 2024 20:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t0VdF-000460-EW
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 20:41:49 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t0VdD-0006bW-R4
- for qemu-devel@nongnu.org; Mon, 14 Oct 2024 20:41:49 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2e30fb8cb07so1930735a91.3
- for <qemu-devel@nongnu.org>; Mon, 14 Oct 2024 17:41:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t0Vnd-0005wE-Ud
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 20:52:34 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t0Vnb-0007yp-Ti
+ for qemu-devel@nongnu.org; Mon, 14 Oct 2024 20:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728952906; x=1729557706; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tY5hWmYQZvs/fXtZp/tPu7fkje8YdUCcSflZjBQIfo0=;
- b=aNF21eB8gvQpTf/sd+A6xh1DumUhCau6T+7joibKlC3a95ZfFrFMB3p6b+jLge3WgN
- 7uUzntbmR2Bf7PHAo99rThRzKg1HkWinBFq13TQZGH1bwr83qKrLa3GOax6vnTPMgqvr
- n99ARLoOPTS7nHYm/6Oyq/ePwaAhPCJ3iT0ylXBoBZ50XANQnpWS6EH99uGXuw2zB9pG
- DfC192Iq+4Dr0eEAm/nHBcjHtSVP9TIu2zPqYVUcd6A45DoWLffyim8BWJIkZjR24Fp6
- 3/lzlvCUKZSYb54jqu0Sm+tHn2WLuvihDG1727mVo2/z+g09SrICrCk/hLo2kWvZZCQi
- aKEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728952906; x=1729557706;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tY5hWmYQZvs/fXtZp/tPu7fkje8YdUCcSflZjBQIfo0=;
- b=IDLzBJdv530+MVIwyrtBTVQw7VT4+rrc5wBA3UbwV8DhtEWFEbG6azEfAmja7RM1uz
- Kp765Hdm0sbyoARU/x9d/ts7rAMx3oZMeiZwVbiglgqLFOJTlZ3jLF2P3iVPL239+J3H
- utUcOsSa/Vdf1QhfC5WBnZ11d5pQJDgK8RTPUQBnyhJ8M5QXpnklfApAHm5aahvqorXD
- gPbvccp4ENzfjza4aUQP9ZppoJ+LOoTnRRINvFsjB+vGL/11dCOZN4YM/7L7V+xBBU9V
- oxToZQzWSTT2ukr1uZ2l4+e8n1BlDoKyh3luLq+C8LKIYCbydzL1W57HHTz9gXkG478C
- twJA==
-X-Gm-Message-State: AOJu0YwN70HTzLBNetqC2cyV2zj5rnNdIjhSqJcxuGeWyV+fbqArYqE5
- eViHuOa+cDP318uA0fIm/tYnkUOl+Bhu4WGm1QrAluxIOJ5OxYIlpyQLFsyNN2vYkKwzcrT1Wqj
- E
-X-Google-Smtp-Source: AGHT+IGhAeANZ+iAwHeXhZmOfsWlXgqdPMdMX9A6j3R6IwpIpAOE/XreVtK+gXalODBZzcropEbelQ==
-X-Received: by 2002:a17:90b:88e:b0:2e2:92dc:6fd4 with SMTP id
- 98e67ed59e1d1-2e2f0aebf4bmr15793769a91.23.1728952905846; 
- Mon, 14 Oct 2024 17:41:45 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e392f62c21sm166614a91.46.2024.10.14.17.41.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Oct 2024 17:41:45 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-Subject: [PATCH] target/i386: Use only 16 and 32-bit operands for IN/OUT
-Date: Mon, 14 Oct 2024 17:41:44 -0700
-Message-ID: <20241015004144.2111817-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=codeconstruct.com.au; s=2022a; t=1728953542;
+ bh=a1agV5FVUnaR02ldSz0VFuAR88TFMvVHq3Qh7ZAPNXg=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=lvoYke4X+TJW6dUEe37uNgW00RZrZmzBUqlEbjEdQyzCBg0srLSO/aUwh6IPlAwKR
+ WG9fu20a/gJZ/EeEUb5iHogNAGEewLiUIz9b9saIRFJQhzQNQipswc3ladUvueoKlT
+ Avwo+gRLw7Ug1mlNb/vZ1rINstan96YjmMRWgL+pmoF1O/9/jM3+9cgCrwzfw1L1UX
+ yP7Bjt/ZgBMXvdcFNYdtehrfzMCmYjrhbcEuCxZ1aL7rZ/WU1dxdh1pGAR9CNfdcm4
+ FNCYvqNZeRhTekb5N7TLzRRt/WU+JHeLyEI8vCy69yr6pSU5CWwjYgu3p60qpK/0nv
+ BSkqvkbAFF0sA==
+Received: from [192.168.68.112] (203-173-0-39.dyn.iinet.net.au [203.173.0.39])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id B9673649A0;
+ Tue, 15 Oct 2024 08:52:20 +0800 (AWST)
+Message-ID: <50e53816509f6c3d51e55349817adb3612b604d8.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v6] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, 
+ qemu-devel@nongnu.org, berrange@redhat.com
+Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com, 
+ evan.burgess@seagate.com, peter.maydell@linaro.org, Alejandro Zeise
+ <alejandro.zeise@seagate.com>, Steven Lee <steven_lee@aspeedtech.com>, Troy
+ Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley
+ <joel@jms.id.au>
+Date: Tue, 15 Oct 2024 11:22:20 +1030
+In-Reply-To: <eff3385f-6d43-42e7-8b36-7225e2fee7df@redhat.com>
+References: <20241011053825.361544-1-clg@redhat.com>
+ <eff3385f-6d43-42e7-8b36-7225e2fee7df@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,44 +76,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The REX.W prefix is ignored for these instructions.
-Mirror the solution already used for INS/OUTS: X86_SIZE_z.
+On Sat, 2024-10-12 at 08:20 +0200, C=C3=A9dric Le Goater wrote:
+> + Aspeed reviewers. Sorry about that.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2581
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/i386/tcg/decode-new.c.inc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+All good. Seems sensible in concept and from a cursory glance, so if
+you want to tack it on:
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 30be9237c3..429ed87bb6 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1627,9 +1627,9 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xE2] = X86_OP_ENTRYr(LOOP,   J,b), /* implicit: CX with aflag size */
-     [0xE3] = X86_OP_ENTRYr(JCXZ,   J,b), /* implicit: CX with aflag size */
-     [0xE4] = X86_OP_ENTRYwr(IN,    0,b, I_unsigned,b), /* AL */
--    [0xE5] = X86_OP_ENTRYwr(IN,    0,v, I_unsigned,b), /* AX/EAX */
-+    [0xE5] = X86_OP_ENTRYwr(IN,    0,z, I_unsigned,b), /* AX/EAX */
-     [0xE6] = X86_OP_ENTRYrr(OUT,   0,b, I_unsigned,b), /* AL */
--    [0xE7] = X86_OP_ENTRYrr(OUT,   0,v, I_unsigned,b), /* AX/EAX */
-+    [0xE7] = X86_OP_ENTRYrr(OUT,   0,z, I_unsigned,b), /* AX/EAX */
- 
-     [0xF1] = X86_OP_ENTRY0(INT1,   svm(ICEBP)),
-     [0xF4] = X86_OP_ENTRY0(HLT,    chk(cpl0) svm(HLT)),
-@@ -1761,9 +1761,9 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xEA] = X86_OP_ENTRYrr(JMPF,  I_unsigned,p, I_unsigned,w, chk(i64)),
-     [0xEB] = X86_OP_ENTRYr(JMP,    J,b),
-     [0xEC] = X86_OP_ENTRYwr(IN,    0,b, 2,w), /* AL, DX */
--    [0xED] = X86_OP_ENTRYwr(IN,    0,v, 2,w), /* AX/EAX, DX */
-+    [0xED] = X86_OP_ENTRYwr(IN,    0,z, 2,w), /* AX/EAX, DX */
-     [0xEE] = X86_OP_ENTRYrr(OUT,   0,b, 2,w), /* DX, AL */
--    [0xEF] = X86_OP_ENTRYrr(OUT,   0,v, 2,w), /* DX, AX/EAX */
-+    [0xEF] = X86_OP_ENTRYrr(OUT,   0,z, 2,w), /* DX, AX/EAX */
- 
-     [0xF8] = X86_OP_ENTRY0(CLC),
-     [0xF9] = X86_OP_ENTRY0(STC),
--- 
-2.43.0
+Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
 
