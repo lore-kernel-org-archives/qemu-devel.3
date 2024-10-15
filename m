@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 077B6D1D879
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64607CFC27C
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 15:47:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0jl9-0002EP-08; Tue, 15 Oct 2024 11:46:55 -0400
+	id 1t0jkr-0001aO-65; Tue, 15 Oct 2024 11:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkO-0000tu-LP
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:13 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkI-0000nd-0v
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:04 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkM-0000oH-9b
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:08 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7ea80863f12so1040569a12.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:46:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t0jkF-0000ns-Db
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 11:46:01 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7ea7e250c54so1544699a12.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 08:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729007164; x=1729611964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729007157; x=1729611957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wE+j6sYSDQnj04FOXSrYmsK1n/6FhkfUBDKG2lPE568=;
- b=CzqHmWxM8wAqvx+avqXhpJQxTYV8lPbZNWc6+YLlYu4giE0JWOdfh+qyceECVFBYlr
- 1HGIGbDVbtY8KjS8jRsXpRjW9B8jEO3xNaRFvzWYLX2Nb/LM1HjuorXysHIFhd1CkZBJ
- 11STLNr5OSpjgF8S8mnvYDXuRZDO6QxQ5ZnaC6pomeZ/aXooAQ10EPTpwBEg0xG+3EIH
- 53JrbF0D2bL1r7mGfFDGi/KXgTVUaOraNnflcnyOpU0o5OqMjiENc30Pf7mU0o16aMVi
- KmbhyFiLwJ8fllQxXeijNzpzHC2FGgWYiF1Xl6/h8uWh3wX3wIYUO5Osd19/oiUvtZcX
- 05AA==
+ bh=IZLWKxN76C8sY7IOvNsANw/zHjCd07PTHy82cP8hbyw=;
+ b=YIVWbctz/euO2msYVM+jEVt3Ne+kvsNrR7ofuLlTomoOs4FeAAG+AZM6h6Wu6x229t
+ tEuD+8HhCRixK75sEyVr6KtIyZpKQVPQaGCOZKsv4fnyZdCd40R0ohK5z56xpOPIQ9rR
+ 34yfg10hqf+znlTOVwzpBgsI7DLMvLmzD+oqoiV9V6IQJsOEL83DOxnUV7dbNnj0ezIH
+ KnZHCPhJuANmDjP5ZW1EDihqMoPJx/dhNqeZSpxEGF0YucNHSEN7BEiXrEvX1BR5PvFe
+ yPXu8VPrUyiqhK5K4qvhUBeKidjoE7XubF3v1by91GkJMOSkQDw0393Z9HfF47+VNPko
+ iqjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729007164; x=1729611964;
+ d=1e100.net; s=20230601; t=1729007157; x=1729611957;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wE+j6sYSDQnj04FOXSrYmsK1n/6FhkfUBDKG2lPE568=;
- b=kHOtZhug5xCSBf42TUU5B/Phtw01HFLsSYhayWXSJurCv3GryH8bk4NrtJJzvSClEg
- ILauftPj7tisCOefDoaUZklbN7zNYyFo0TP36S64KsgDCthHCpIb5prZevokL2l542EE
- n9R3K7/82OuLtMTQnpU/wACWvVKHcBgqF19HK/OYylr5uchUHPYgq53GIHzhXt96N+eY
- K3MvK9d4PCx/amUL/KXce0uVDhXojASZPbQ7soHCi+EWtXdp4UJtY68NvuGD7jdhHJhi
- 41MDO22FwpkNVRB9jMspr2RPu8BhIZLf5cc+5lWl8qjjj9eQ4RU3SkUhudSrrq50u2To
- XrQg==
-X-Gm-Message-State: AOJu0YyFqYKm+alMB1GhRB5k8uJT44d8qOecf+AAjTvBhI5taseKbkD9
- QWZNRmAuXwMiV6BfRyWXAb5HovWrukuHT6FkC1Oop4JoRf4brGzoTiFcX62litBZfQ71f4alimK
- s
-X-Google-Smtp-Source: AGHT+IG1yj44MqeuJgA21QW4HzJTiL7IB/LAz5feLWuAOXG9Jr+e4Nntj4InOfBlfAJ67X75y2S86Q==
-X-Received: by 2002:a05:6a21:3943:b0:1d8:af46:2152 with SMTP id
- adf61e73a8af0-1d905ec45c0mr886004637.11.1729007164507; 
- Tue, 15 Oct 2024 08:46:04 -0700 (PDT)
+ bh=IZLWKxN76C8sY7IOvNsANw/zHjCd07PTHy82cP8hbyw=;
+ b=brj8+yq8Ogm+ktsNTnsSaaNqXC15jDtKqYcxvvfkuf3dq72q2cXb0diDDZy/jhsIqo
+ iaJpbIgVz5M3ZVCF/RtXsz4WrJ3X5kX1LnXB1ixtZ2nV0dQIPzAjP6TcFqi1SxR1S1rg
+ i5VvP5HV0P5B2k3H6o0lRe5JGleusgd2fT/RKv0ExkpQv9cQ0PhZj6RzQrORXGQzHBN+
+ 7LZ7HCa4f5IiDugSA/JAnijv9sjpuTJy4ZMuug760G++JqSWTRp4EFg2kfaGytdvl/4P
+ Oq6pjvUiT9HwY6bN8L778nccKnURXKHprWhCJ1K0A3oQqO9MZvT9y+WUx/W/CwTQmPBi
+ WA3w==
+X-Gm-Message-State: AOJu0Yx0l5ZlR3NUOIy5+hca/nNe8xqY4NYYvrESvZ5F0VVi624coBSg
+ nMbAijtNec51TPj76of90GhcCs66MWVyM+0eo8EGgTb1WFEmC7Ar3cpwLvS/T/722zqqYZUivUP
+ h
+X-Google-Smtp-Source: AGHT+IG06gqex6f9UGou6mQ13zmzsLysWsflt/rDmUAe3g7xPNTDKS3mnCwjLHCGRqfIdOumlSMZ3Q==
+X-Received: by 2002:a05:6a21:1743:b0:1d8:aca7:912 with SMTP id
+ adf61e73a8af0-1d8c95d5a38mr18109100637.28.1729007157463; 
+ Tue, 15 Oct 2024 08:45:57 -0700 (PDT)
 Received: from localhost.localdomain ([45.176.88.167])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e77518a5fsm1398077b3a.214.2024.10.15.08.46.02
+ d2e1a72fcca58-71e774cf306sm1409704b3a.153.2024.10.15.08.45.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Oct 2024 08:46:04 -0700 (PDT)
+ Tue, 15 Oct 2024 08:45:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/33] linux-user/i386: Use explicit little-endian LD/ST API
-Date: Tue, 15 Oct 2024 12:44:20 -0300
-Message-ID: <20241015154443.71763-12-philmd@linaro.org>
+Subject: [PULL 10/33] target/avr: Use explicit little-endian LD/ST API
+Date: Tue, 15 Oct 2024 12:44:19 -0300
+Message-ID: <20241015154443.71763-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241015154443.71763-1-philmd@linaro.org>
 References: <20241015154443.71763-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,32 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86 architecture uses little endianness. Directly use
+The AVR architecture uses little endianness. Directly use
 the little-endian LD/ST API.
 
+Mechanical change using:
+
+  $ end=le; \
+    for acc in uw w l q tul; do \
+      sed -i -e "s/ld${acc}_p(/ld${acc}_${end}_p(/" \
+             -e "s/st${acc}_p(/st${acc}_${end}_p(/" \
+        $(git grep -wlE '(ld|st)t?u?[wlq]_p' target/avr/); \
+    done
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241003234211.53644-4-philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241004163042.85922-11-philmd@linaro.org>
 ---
- linux-user/i386/signal.c | 4 ++--
+ target/avr/gdbstub.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index cb90711834f..0f11dba831f 100644
---- a/linux-user/i386/signal.c
-+++ b/linux-user/i386/signal.c
-@@ -754,8 +754,8 @@ static bool restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
-     env->eip = tswapl(sc->rip);
- #endif
+diff --git a/target/avr/gdbstub.c b/target/avr/gdbstub.c
+index d6d3c1479b3..aea71282a58 100644
+--- a/target/avr/gdbstub.c
++++ b/target/avr/gdbstub.c
+@@ -69,13 +69,13 @@ int avr_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  
--    cpu_x86_load_seg(env, R_CS, lduw_p(&sc->cs) | 3);
--    cpu_x86_load_seg(env, R_SS, lduw_p(&sc->ss) | 3);
-+    cpu_x86_load_seg(env, R_CS, lduw_le_p(&sc->cs) | 3);
-+    cpu_x86_load_seg(env, R_SS, lduw_le_p(&sc->ss) | 3);
+     /*  SP */
+     if (n == 33) {
+-        env->sp = lduw_p(mem_buf);
++        env->sp = lduw_le_p(mem_buf);
+         return 2;
+     }
  
-     tmpflags = tswapl(sc->eflags);
-     env->eflags = (env->eflags & ~0x40DD5) | (tmpflags & 0x40DD5);
+     /*  PC */
+     if (n == 34) {
+-        env->pc_w = ldl_p(mem_buf) / 2;
++        env->pc_w = ldl_le_p(mem_buf) / 2;
+         return 4;
+     }
+ 
 -- 
 2.45.2
 
