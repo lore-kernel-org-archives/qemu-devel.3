@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35577CFC283
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B307CFC285
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eVR-0007T6-LE; Tue, 15 Oct 2024 06:10:22 -0400
+	id 1t0eW4-00084j-C2; Tue, 15 Oct 2024 06:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eUb-0006zm-Ai; Tue, 15 Oct 2024 06:09:36 -0400
+ id 1t0eUu-00076Z-Iq; Tue, 15 Oct 2024 06:09:55 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eUZ-0002WC-It; Tue, 15 Oct 2024 06:09:29 -0400
+ id 1t0eUs-0002YL-Mr; Tue, 15 Oct 2024 06:09:48 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSVDf3Bchz6K98R;
- Tue, 15 Oct 2024 18:08:50 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV8X2KtSz6DB4D;
+ Tue, 15 Oct 2024 18:05:16 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 93A68140451;
- Tue, 15 Oct 2024 18:09:24 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A3C5C1404F5;
+ Tue, 15 Oct 2024 18:09:44 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 15 Oct 2024 12:09:04 +0200
+ 15.1.2507.39; Tue, 15 Oct 2024 12:09:24 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,16 +45,16 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V5 25/30] tcg/mttcg: Introduce MTTCG thread unregistration
- leg
-Date: Tue, 15 Oct 2024 11:00:07 +0100
-Message-ID: <20241015100012.254223-26-salil.mehta@huawei.com>
+Subject: [PATCH RFC V5 26/30] hw/intc/arm_gicv3_common: Add GICv3CPUState
+ 'accessible' flag migration handling
+Date: Tue, 15 Oct 2024 11:00:08 +0100
+Message-ID: <20241015100012.254223-27-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015100012.254223-1-salil.mehta@huawei.com>
 References: <20241015100012.254223-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.48.146.149]
 X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -84,94 +84,74 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miguel Luis <miguel.luis@oracle.com>
+The QOM `GICv3CPUState` (and consequently the corresponding KVM VGIC `ICC_*_EL1`
+registers) can be either 'accessible' or 'inaccessible', depending on the state
+of the associated QOM vCPUs. This `gicc_accessible` state should be saved during
+migration at the source and restored at the destination.
 
-Introduce the TCG thread unregistration leg which shall be called in context to
-TCG/vCPU unrealize.
+Ideally, the number of possible and enabled QOM vCPUs should match between the
+source and destination. Ensuring this consistency is the responsibility of the
+administrator. However, if the destination QEMU has more enabled vCPUs than the
+source, we can either fail the migration or override the destination QEMU’s vCPU
+configuration to match the source. We have adopted the latter approach as a
+mitigation for the mismatch. Nonetheless, the administrator should still ensure
+that the number of possible QOM vCPUs is consistent at both ends.
 
-Reported-by: Salil Mehta <salil.mehta@huawei.com>
-Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- accel/tcg/tcg-accel-ops-mttcg.c |  1 +
- include/tcg/startup.h           |  7 +++++++
- tcg/tcg.c                       | 33 +++++++++++++++++++++++++++++++++
- 3 files changed, 41 insertions(+)
+ hw/intc/arm_gicv3_common.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index ab2f79d2c7..4b26164ffd 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -122,6 +122,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
-     bql_unlock();
-     rcu_remove_force_rcu_notifier(&force_rcu.notifier);
-     rcu_unregister_thread();
-+    tcg_unregister_thread();
-     return NULL;
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index c21fff4903..53045ad6bc 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -126,6 +126,29 @@ static int vmstate_gicv3_cpu_pre_load(void *opaque)
+     return 0;
  }
  
-diff --git a/include/tcg/startup.h b/include/tcg/startup.h
-index a565071516..c035d03f7e 100644
---- a/include/tcg/startup.h
-+++ b/include/tcg/startup.h
-@@ -51,6 +51,13 @@ void tcg_register_thread(void);
- void tcg_register_thread(CPUState *cpu);
- #endif
- 
-+/**
-+ * tcg_unregister_thread: Unregister this thread with the TCG runtime
-+ *
-+ * This leg shall be called whenever TCG vCPU is hot-unplugged
-+ */
-+void tcg_unregister_thread(void);
-+
- /**
-  * tcg_prologue_init(): Generate the code for the TCG prologue
-  *
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 5e9c6b2b4b..3bdebdb332 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -811,6 +811,39 @@ void tcg_register_thread(CPUState *cpu)
- 
-     tcg_ctx = s;
- }
-+
-+static void tcg_free_plugin_context(TCGContext *s)
++static int vmstate_gicv3_cpu_post_load(void *opaque, int version_id)
 +{
-+#ifdef CONFIG_PLUGIN
-+    unsigned i;
++    GICv3CPUState *cs = opaque;
 +
-+    if (s->plugin_tb) {
-+        for (i = 0; i < s->plugin_tb->insns->len; i++) {
-+            g_free(g_ptr_array_index(s->plugin_tb->insns, i));
-+        }
-+        g_ptr_array_free(s->plugin_tb->insns, TRUE);
-+
-+        if (!s->plugin_tb->insns) {
-+            g_free(s->plugin_tb);
-+        }
++    /*
++     * If the destination QEMU has more *enabled* vCPUs than the source, we can
++     * either *fail* the migration or override the destination QEMU’s vCPU
++     * configuration to match the source. Since it is safe to override the
++     * `CPUState` of the extra *enabled* vCPUs at the destination, we have
++     * adopted the latter approach as a mitigation for the mismatch.
++     * RFC: Question: any suggestions on this are welcome?
++     */
++    if (cs->cpu && !gicv3_cpu_accessible((cs))) {
++        warn_report("Found CPU %d enabled, for incoming *disabled* GICC State",
++                    cs->cpu->cpu_index);
++        warn_report("*Disabling* CPU %d, to match the incoming migrated state",
++                    cs->cpu->cpu_index);
++        qdev_unrealize(DEVICE(cs->cpu));
 +    }
-+#endif
++
++    return 0;
 +}
 +
-+void tcg_unregister_thread(void)
-+{
-+    TCGContext *s = tcg_ctx;
-+    unsigned int n;
-+
-+    /* unclaim an entry in tcg_ctxs */
-+    n = qatomic_fetch_dec(&tcg_cur_ctxs);
-+    g_assert(n > 1);
-+    qatomic_store_release(&tcg_ctxs[n - 1], 0);
-+
-+    tcg_free_plugin_context(s);
-+
-+    g_free(s);
-+}
- #endif /* !CONFIG_USER_ONLY */
- 
- /* pool based memory allocation */
+ static bool icc_sre_el1_reg_needed(void *opaque)
+ {
+     GICv3CPUState *cs = opaque;
+@@ -186,6 +209,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .pre_load = vmstate_gicv3_cpu_pre_load,
++    .post_load = vmstate_gicv3_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(level, GICv3CPUState),
+         VMSTATE_UINT32(gicr_ctlr, GICv3CPUState),
+@@ -207,6 +231,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
+         VMSTATE_UINT64_2DARRAY(icc_apr, GICv3CPUState, 3, 4),
+         VMSTATE_UINT64_ARRAY(icc_igrpen, GICv3CPUState, 3),
+         VMSTATE_UINT64(icc_ctlr_el3, GICv3CPUState),
++        VMSTATE_BOOL(gicc_accessible, GICv3CPUState),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
 -- 
 2.34.1
 
