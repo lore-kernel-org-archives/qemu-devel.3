@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBDCD2169C
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 13:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1ACD216A2
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 13:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0hR8-00024o-1H; Tue, 15 Oct 2024 09:18:06 -0400
+	id 1t0hR9-00025S-Oc; Tue, 15 Oct 2024 09:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0hR6-00024E-Vn
+ id 1t0hR5-00024D-Ga
  for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0hR3-0001EQ-Sl
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:04 -0400
+ id 1t0hR4-0001EU-3g
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 09:18:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1728998281;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u45iLCwaL6UDPFZFrxkclA/Jz3UXse/PWIiVqr58mZQ=;
- b=Vbpjts/KDSpUg9e3zbqDwwH3PjkcXVTynvL4RMUSYhCiRX6DJvvDlD+IHdyPNMNVNNZYFB
- qP0KMhWD+YSd8MET8iZfGdF3+w+ZmQkwScCOefB6Oj6eO0zIthnMeeziyf26VD3BLsDZHT
- f6k/ZHkWGtz6MiQEwkCuAwd198RXmpI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=59Gpr3pRmXw/Bed6+2Hl7KYTM3heYGiGwIXaAgGlVZY=;
+ b=KftV6OFMSenHuX1HGkThk0KlsKuiBnJnfLc5TvQUcde7LK7P0uJG+IqLbwmLvMThIK8k1x
+ +KK2E+Ui2iVUVGWEjwBqrJgj2jl3W+kpLjyk21Xd1f/dLx5sRshKvHtN3upB9AetDlSejG
+ +KNTk091dT1Ru7spT6NQ8SgO4JQ10q0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-201-zbt9zO1fPlifDZX_27JrHg-1; Tue, 15 Oct 2024 09:17:56 -0400
-X-MC-Unique: zbt9zO1fPlifDZX_27JrHg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d609ef9f7so1322918f8f.3
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 06:17:56 -0700 (PDT)
+ us-mta-683-jQv9aF-oOumVOSp3n7n-gA-1; Tue, 15 Oct 2024 09:17:59 -0400
+X-MC-Unique: jQv9aF-oOumVOSp3n7n-gA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4311407ae76so28011395e9.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 06:17:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728998275; x=1729603075;
+ d=1e100.net; s=20230601; t=1728998277; x=1729603077;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u45iLCwaL6UDPFZFrxkclA/Jz3UXse/PWIiVqr58mZQ=;
- b=doCxPlKJLCmrMpvTck6WyThV2zf+4mo7P3CVQqoqzi2xyGnekepKIiK65KsLsH7jhi
- StvgUIrNcHNu4brpEX35hq3bpQ7GkuN+MT+GpRBsHM246T/7bXhLD0rLSOfHm10koW+c
- MgSpNbrWh0ZcMWPMw/D7K5PfHt06Q4tmbfSxwjhhu9BYuirWyNLOuPLDzoEC+Xwy6X8+
- qmUEvP4W9GO1FJumFXZMhBom6qVRndOPwU0c39Mw2hO2MiC5GDvCQnD2/NWiEgfF+fqt
- yrRpJ9ptyKkmat4jcfOksoyej/cfsZ5eCNudd2tvU6JD53nzvsD54ix03bv+huuf7fZT
- ksJw==
-X-Gm-Message-State: AOJu0YxKf6P6ZGdVcc4h6PLbSMuleHNjl9hbioe0xC/+Iu2ZfEDhD3zc
- xdLJhuF3Dk6CGnAYs9TsNj4QWyW+yP3gDocB4N5YxlpP/FvFDbhJbfbai9p6mINxNNZLanC3LP9
- PxH1FhWE3671O19a8N9Db8/1iHGCoMoA8tVun+EsHeTboelN21PuId7LmQIF9Si0ct1C60I2GMs
- ghOnscDi9ZpqpEB2cJYfW5PPnYVZKuHcMIFef3PnM=
-X-Received: by 2002:a5d:5351:0:b0:37d:4870:dedf with SMTP id
- ffacd0b85a97d-37d551d3fc5mr11031840f8f.19.1728998274797; 
- Tue, 15 Oct 2024 06:17:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVJzhrJlEsj0CCAZU0VlG8SQnJzHqtk7pSGA2WJiTolJ7kHzSRDCGLC3IkWU5eqlMVenSSHw==
-X-Received: by 2002:a5d:5351:0:b0:37d:4870:dedf with SMTP id
- ffacd0b85a97d-37d551d3fc5mr11031816f8f.19.1728998274288; 
- Tue, 15 Oct 2024 06:17:54 -0700 (PDT)
+ bh=59Gpr3pRmXw/Bed6+2Hl7KYTM3heYGiGwIXaAgGlVZY=;
+ b=mIJQMPb9yxR02rJ1Lmp9Ws2HlojedBE+oSWN6RsjdGfs7GQbwms7ceHSY9+pkXToYF
+ 9D+qpBvXPhzU3fyMzEIr4Fr0QTnedpuznNusghYPJlTc2EtPLyei65SYxYYLmymJoViV
+ POZz7Kn1c82zntLeSQ7xUz0vPUkBlGJsC5bVRxUrh1HsSNaaM6hvykc5/sNJJWsH3ZDS
+ BQgR7gOeZfqIoKsw5Pft95EwN2RNCV2ILdGwlgSQ2nVcK1bAt7AF0JgTfXWGatwGnXxv
+ 7qTXnle0tqj4K/jwQ6+J6AsECOELikVW5GP+5mse5MaBSZwV/Wv0YafN23lGOfcxohqI
+ 33Hw==
+X-Gm-Message-State: AOJu0Yx4rrsroXfLWYhCodPGyXwxASN50zf6K2J35A83L2bZFXx7qakp
+ JN0BeqiZ23T7phIfz/0CPDgLR/GUNl65xNNb8fvAqV0+614x5BdiSXW2fsiRkxvfhQ5uOsM6uoZ
+ bmnyzX1kJWrPIky/5sHIQiUYgNRl5Zy4cq6jyVkeFYoGx6lZVTviOV2/MRTxE2/QfK2686O9DcH
+ bHHXGbDHaO2rlucALo1f41yP/47oo82LLMTRx6iLU=
+X-Received: by 2002:a05:600c:4514:b0:426:60b8:d8ba with SMTP id
+ 5b1f17b1804b1-4314a362525mr4815335e9.28.1728998277615; 
+ Tue, 15 Oct 2024 06:17:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs5g1AvsA+4+WeKzUhVAypQfc5xYgEBTUPN48ZEbBfTAU/1Hk5Japv5k6VQRJ5kJ/q276/WQ==
+X-Received: by 2002:a05:600c:4514:b0:426:60b8:d8ba with SMTP id
+ 5b1f17b1804b1-4314a362525mr4814995e9.28.1728998277047; 
+ Tue, 15 Oct 2024 06:17:57 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa89c55sm1564662f8f.46.2024.10.15.06.17.53
+ 5b1f17b1804b1-4314209688dsm15198585e9.14.2024.10.15.06.17.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 06:17:53 -0700 (PDT)
+ Tue, 15 Oct 2024 06:17:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 05/16] rust: fix cfgs of proc-macro2 for 1.63.0
-Date: Tue, 15 Oct 2024 15:17:23 +0200
-Message-ID: <20241015131735.518771-6-pbonzini@redhat.com>
+Subject: [PATCH 06/16] rust: do not use OnceLock for properties
+Date: Tue, 15 Oct 2024 15:17:24 +0200
+Message-ID: <20241015131735.518771-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241015131735.518771-1-pbonzini@redhat.com>
 References: <20241015131735.518771-1-pbonzini@redhat.com>
@@ -102,30 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replay the configuration that would be computed by build.rs when compiling
-on a 1.63.0 compiler.
+Properties are initialized lazily but always accessed within the big QEMU l=
+ock.
+
+There is no need to have a OnceLock around them, and also OnceCell/OnceLock
+were only stabilized in 1.70.0; so remove it.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- subprojects/packagefiles/proc-macro2-1-rs/meson.build | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ rust/qemu-api/src/device_class.rs | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subpro=
-jects/packagefiles/proc-macro2-1-rs/meson.build
-index 818ec59336b..8e601b50ccc 100644
---- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-+++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-@@ -15,7 +15,9 @@ _proc_macro2_rs =3D static_library(
-   rust_abi: 'rust',
-   rust_args: [
-     '--cfg', 'feature=3D"proc-macro"',
--    '--cfg', 'span_locations',
-+    '--cfg', 'no_literal_byte_character',
-+    '--cfg', 'no_literal_c_string',
-+    '--cfg', 'no_source_text',
-     '--cfg', 'wrap_proc_macro',
-   ],
-   dependencies: [
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_c=
+lass.rs
+index b6b68cf9ce2..87892b50c63 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -2,8 +2,6 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
+-use std::sync::OnceLock;
+-
+ use crate::bindings::Property;
+=20
+ #[macro_export]
+@@ -73,12 +71,15 @@ macro_rules! define_property {
+ }
+=20
+ #[repr(C)]
+-pub struct Properties<const N: usize>(pub OnceLock<[Property; N]>, pub fn(=
+) -> [Property; N]);
++pub struct Properties<const N: usize>(pub Option<[Property; N]>, pub fn() =
+-> [Property; N]);
+=20
+ impl<const N: usize> Properties<N> {
+     pub fn as_mut_ptr(&mut self) -> *mut Property {
+-        _ =3D self.0.get_or_init(self.1);
+-        self.0.get_mut().unwrap().as_mut_ptr()
++        match self.0 {
++            None =3D> { self.0 =3D Some(self.1()); },
++            Some(_) =3D> {},
++        }
++        self.0.as_mut().unwrap().as_mut_ptr()
+     }
+ }
+=20
+@@ -104,7 +105,7 @@ const fn _calc_prop_len() -> usize {
+         }
+=20
+         #[no_mangle]
+-        pub static mut $ident: $crate::device_class::Properties<PROP_LEN> =
+=3D $crate::device_class::Properties(::std::sync::OnceLock::new(), _make_pr=
+operties);
++        pub static mut $ident: $crate::device_class::Properties<PROP_LEN> =
+=3D $crate::device_class::Properties(None, _make_properties);
+     };
+ }
+=20
 --=20
 2.46.2
 
