@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D651FD1D876
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 21:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BD1D1F9D4
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 21:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ore-0003k6-Sa; Tue, 15 Oct 2024 17:13:59 -0400
+	id 1t0oro-0003w5-RI; Tue, 15 Oct 2024 17:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1t0ord-0003iz-6F; Tue, 15 Oct 2024 17:13:57 -0400
+ id 1t0orm-0003qC-T9; Tue, 15 Oct 2024 17:14:07 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1t0ora-0000NS-Tc; Tue, 15 Oct 2024 17:13:56 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FJY63k030288;
- Tue, 15 Oct 2024 21:13:45 GMT
+ id 1t0orl-0000Oq-6N; Tue, 15 Oct 2024 17:14:06 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FKoA5Z009316;
+ Tue, 15 Oct 2024 21:13:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=C+YqxDfKR9zNebasP
- VESqbOAs8dN8sSMjb5oSEWfYVE=; b=db9zXcdQQDMBKS0vYLkuYo2zRU5MLnkY+
- Wu75WvwJIrQdnQSUfsawn1O9gJAxi8CwW3PXcVtX9hZuebdvA/bLD5uLNUOfggJb
- DeVu1qA1276iuHRX9+clDjK9bc+RjrIhGQ8bDlwbaDjOvf5wDAihbobIClW9HKal
- jqwT4HFj75vr5oOd9cwRbQ7Y+ZqIi2NX6r8iuU1W9JdzGgDUX0sqp/85OdSfk5gt
- aiBD8Oo/fVSwSImSZszumM8fqgcOx2uvxg2QSha3vWdnMq4mAYdsnqfZwwvSTR9g
- JUCf1WpiHpe7g4ApK0BeXxypG82RZzwH0HvjHZI8B0nyHN47gOs4w==
+ :mime-version:references:subject:to; s=pp1; bh=TFzKnbC2JSfiB0g4n
+ K3R8z9haD//HGbPomOqiUV9RnQ=; b=rtCtiR4pO0EqOEiqXn6pHAwyJfV1mOrOj
+ N4OWuwJvOoDolkCcyEa+Tlsjar4eHu9I1QRjfqWAro5H5drzI6LXqaeTwM8RiZgu
+ /MRvfJ27890bmH2BBNdeb2Q0yLf1GoGfpi4VutNK+n8vnrIxdHUfXvFZyLVl7SMM
+ JPSkhCHKBNfzJK5S0nSMG1PimJqmuVv2lThd7hM54hWDynIgsW2aje9S1vilBJon
+ PIkpIDJN+p9qm/KoU+OcittzwO6DQ1ixCTiwaFIHPVL4Lzfbb2+X+n4r8IugPegS
+ b6nAXU/oR0A/zkQtr7antbpRmgrbYSagqgIQKFRgzVNLaZSHMRqkA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429x17ggyj-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429ysbr28m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:13:45 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49FLDiiO009162;
- Tue, 15 Oct 2024 21:13:44 GMT
+ Tue, 15 Oct 2024 21:13:54 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49FLDshk021385;
+ Tue, 15 Oct 2024 21:13:54 GMT
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429x17ggyd-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 429ysbr28g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:13:44 +0000 (GMT)
+ Tue, 15 Oct 2024 21:13:54 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49FI6Wbv006757;
- Tue, 15 Oct 2024 21:13:43 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284xk5v8u-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49FIGGME007025;
+ Tue, 15 Oct 2024 21:13:53 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284xk5v97-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Oct 2024 21:13:43 +0000
+ Tue, 15 Oct 2024 21:13:53 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49FLDdbs51773736
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49FLDn0N47055276
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 15 Oct 2024 21:13:40 GMT
+ Tue, 15 Oct 2024 21:13:49 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8F962004B;
- Tue, 15 Oct 2024 21:13:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6C33F2004E;
+ Tue, 15 Oct 2024 21:13:49 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC47B20043;
- Tue, 15 Oct 2024 21:13:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4F40A20043;
+ Tue, 15 Oct 2024 21:13:47 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 15 Oct 2024 21:13:37 +0000 (GMT)
+ Tue, 15 Oct 2024 21:13:47 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
  npiggin@gmail.com, milesg@linux.ibm.com, danielhb413@gmail.com,
  david@gibson.dropbear.id.au, harshpb@linux.ibm.com, thuth@redhat.com,
  lvivier@redhat.com, pbonzini@redhat.com
-Subject: [PATCH 01/14] ppc/xive2: Update NVP save/restore for group attributes
-Date: Tue, 15 Oct 2024 16:13:16 -0500
-Message-Id: <20241015211329.21113-2-kowal@linux.ibm.com>
+Subject: [PATCH 05/14] ppc/xive2: Process group backlog when pushing an OS
+ context
+Date: Tue, 15 Oct 2024 16:13:20 -0500
+Message-Id: <20241015211329.21113-6-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241015211329.21113-1-kowal@linux.ibm.com>
 References: <20241015211329.21113-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: UyvKiZD6TVZ6QAMJ70aWyu3xYdfXafvz
-X-Proofpoint-GUID: PCTuyCA76AtwpafKwd8MELY4ZdWyym4A
+X-Proofpoint-GUID: tHgJkyr18nrX0BBy7wgtw1sjqLchUR1R
+X-Proofpoint-ORIG-GUID: sZCKeqafwrLpzcm_RdMGlRQmskKKFPDJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=714 phishscore=0 clxscore=1015
- adultscore=0 spamscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410150140
+ suspectscore=0
+ impostorscore=0 malwarescore=0 mlxlogscore=806 clxscore=1015 spamscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410150140
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -117,78 +118,144 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-If the 'H' attribute is set on the NVP structure, the hardware
-automatically saves and restores some attributes from the TIMA in the
-NVP structure.
-The group-specific attributes LSMFB, LGS and T have an extra flag to
-individually control what is saved/restored.
+When pushing an OS context, we were already checking if there was a
+pending interrupt in the IPB and sending a notification if needed.  We
+also need to check if there is a pending group interrupt stored in the
+NVG table. To avoid useless backlog scans, we only scan if the NVP
+belongs to a group.
 
 Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
 Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 ---
- include/hw/ppc/xive2_regs.h |  5 +++++
- hw/intc/xive2.c             | 18 ++++++++++++++++--
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ hw/intc/xive2.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 97 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-index 1d00c8df64..30868e8e09 100644
---- a/include/hw/ppc/xive2_regs.h
-+++ b/include/hw/ppc/xive2_regs.h
-@@ -152,6 +152,9 @@ typedef struct Xive2Nvp {
-         uint32_t       w0;
- #define NVP2_W0_VALID              PPC_BIT32(0)
- #define NVP2_W0_HW                 PPC_BIT32(7)
-+#define NVP2_W0_L                  PPC_BIT32(8)
-+#define NVP2_W0_G                  PPC_BIT32(9)
-+#define NVP2_W0_T                  PPC_BIT32(10)
- #define NVP2_W0_ESC_END            PPC_BIT32(25) /* 'N' bit 0:ESB  1:END */
- #define NVP2_W0_PGOFIRST           PPC_BITMASK32(26, 31)
-         uint32_t       w1;
-@@ -163,6 +166,8 @@ typedef struct Xive2Nvp {
- #define NVP2_W2_CPPR               PPC_BITMASK32(0, 7)
- #define NVP2_W2_IPB                PPC_BITMASK32(8, 15)
- #define NVP2_W2_LSMFB              PPC_BITMASK32(16, 23)
-+#define NVP2_W2_T                  PPC_BIT32(27)
-+#define NVP2_W2_LGS                PPC_BITMASK32(28, 31)
-         uint32_t       w3;
-         uint32_t       w4;
- #define NVP2_W4_ESC_ESB_BLOCK      PPC_BITMASK32(0, 3)  /* N:0 */
 diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index d1df35e9b3..4adc3b6950 100644
+index a6dc6d553f..7130892482 100644
 --- a/hw/intc/xive2.c
 +++ b/hw/intc/xive2.c
-@@ -313,7 +313,19 @@ static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+@@ -279,6 +279,85 @@ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+     end->w1 = xive_set_field32(END2_W1_PAGE_OFF, end->w1, qindex);
+ }
  
-     nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, regs[TM_IPB]);
-     nvp.w2 = xive_set_field32(NVP2_W2_CPPR, nvp.w2, regs[TM_CPPR]);
--    nvp.w2 = xive_set_field32(NVP2_W2_LSMFB, nvp.w2, regs[TM_LSMFB]);
-+    if (nvp.w0 & NVP2_W0_L) {
-+        /*
-+         * Typically not used. If LSMFB is restored with 0, it will
-+         * force a backlog rescan
-+         */
-+        nvp.w2 = xive_set_field32(NVP2_W2_LSMFB, nvp.w2, regs[TM_LSMFB]);
++/*
++ * Scan the group chain and return the highest priority and group
++ * level of pending group interrupts.
++ */
++static uint8_t xive2_presenter_backlog_check(XivePresenter *xptr,
++                                             uint8_t nvp_blk, uint32_t nvp_idx,
++                                             uint8_t first_group,
++                                             uint8_t *out_level)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint32_t nvgc_idx, mask;
++    uint32_t current_level, count;
++    uint8_t prio;
++    Xive2Nvgc nvgc;
++
++    for (prio = 0; prio <= XIVE_PRIORITY_MAX; prio++) {
++        current_level = first_group & 0xF;
++
++        while (current_level) {
++            mask = (1 << current_level) - 1;
++            nvgc_idx = nvp_idx & ~mask;
++            nvgc_idx |= mask >> 1;
++            qemu_log("fxb %s checking backlog for prio %d group idx %x\n",
++                     __func__, prio, nvgc_idx);
++
++            if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
++                              nvp_blk, nvgc_idx);
++                return 0xFF;
++            }
++            if (!xive2_nvgc_is_valid(&nvgc)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
++                              nvp_blk, nvgc_idx);
++                return 0xFF;
++            }
++
++            count = xive2_nvgc_get_backlog(&nvgc, prio);
++            if (count) {
++                *out_level = current_level;
++                return prio;
++            }
++            current_level = xive_get_field32(NVGC2_W0_PGONEXT, nvgc.w0) & 0xF;
++        }
 +    }
-+    if (nvp.w0 & NVP2_W0_G) {
-+        nvp.w2 = xive_set_field32(NVP2_W2_LGS, nvp.w2, regs[TM_LGS]);
++    return 0xFF;
++}
++
++static void xive2_presenter_backlog_decr(XivePresenter *xptr,
++                                         uint8_t nvp_blk, uint32_t nvp_idx,
++                                         uint8_t group_prio,
++                                         uint8_t group_level)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint32_t nvgc_idx, mask, count;
++    Xive2Nvgc nvgc;
++
++    group_level &= 0xF;
++    mask = (1 << group_level) - 1;
++    nvgc_idx = nvp_idx & ~mask;
++    nvgc_idx |= mask >> 1;
++
++    if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVG %x/%x\n",
++                      nvp_blk, nvgc_idx);
++        return;
 +    }
-+    if (nvp.w0 & NVP2_W0_T) {
-+        nvp.w2 = xive_set_field32(NVP2_W2_T, nvp.w2, regs[TM_T]);
++    if (!xive2_nvgc_is_valid(&nvgc)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n",
++                      nvp_blk, nvgc_idx);
++        return;
 +    }
-     xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
++    count = xive2_nvgc_get_backlog(&nvgc, group_prio);
++    if (!count) {
++        return;
++    }
++    xive2_nvgc_set_backlog(&nvgc, group_prio, count - 1);
++    xive2_router_write_nvgc(xrtr, false, nvp_blk, nvgc_idx, &nvgc);
++}
++
+ /*
+  * XIVE Thread Interrupt Management Area (TIMA) - Gen2 mode
+  *
+@@ -588,8 +667,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+                                    uint8_t nvp_blk, uint32_t nvp_idx,
+                                    bool do_restore)
+ {
+-    uint8_t ipb, backlog_level;
+-    uint8_t backlog_prio;
++    XivePresenter *xptr = XIVE_PRESENTER(xrtr);
++    uint8_t ipb, backlog_level, group_level, first_group;
++    uint8_t backlog_prio, group_prio;
+     uint8_t *regs = &tctx->regs[TM_QW1_OS];
+     Xive2Nvp nvp;
  
-     nvp.w1 = xive_set_field32(NVP2_W1_CO, nvp.w1, 0);
-@@ -527,7 +539,9 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-     xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 2);
+@@ -624,8 +704,22 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+     backlog_prio = xive_ipb_to_pipr(ipb);
+     backlog_level = 0;
  
-     tctx->regs[TM_QW1_OS + TM_CPPR] = cppr;
--    /* we don't model LSMFB */
-+    tctx->regs[TM_QW1_OS + TM_LSMFB] = xive_get_field32(NVP2_W2_LSMFB, nvp->w2);
-+    tctx->regs[TM_QW1_OS + TM_LGS] = xive_get_field32(NVP2_W2_LGS, nvp->w2);
-+    tctx->regs[TM_QW1_OS + TM_T] = xive_get_field32(NVP2_W2_T, nvp->w2);
- 
-     nvp->w1 = xive_set_field32(NVP2_W1_CO, nvp->w1, 1);
-     nvp->w1 = xive_set_field32(NVP2_W1_CO_THRID_VALID, nvp->w1, 1);
++    first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
++    if (first_group && regs[TM_LSMFB] < backlog_prio) {
++        group_prio = xive2_presenter_backlog_check(xptr, nvp_blk, nvp_idx,
++                                                   first_group, &group_level);
++        regs[TM_LSMFB] = group_prio;
++        if (regs[TM_LGS] && group_prio < backlog_prio) {
++            /* VP can take a group interrupt */
++            xive2_presenter_backlog_decr(xptr, nvp_blk, nvp_idx,
++                                         group_prio, group_level);
++            backlog_prio = group_prio;
++            backlog_level = group_level;
++        }
++    }
++
+     /*
+-     * Compute the PIPR based on the restored state.
++    * Compute the PIPR based on the restored state.
+      * It will raise the External interrupt signal if needed.
+      */
+     xive_tctx_pipr_update(tctx, TM_QW1_OS, backlog_prio, backlog_level);
 -- 
 2.43.0
 
