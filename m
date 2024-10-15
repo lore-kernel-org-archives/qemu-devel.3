@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42BFCFC287
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0ED1CFC286
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ews-0006jy-Jg; Tue, 15 Oct 2024 06:38:42 -0400
+	id 1t0ewU-0006d7-7n; Tue, 15 Oct 2024 06:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewV-0006dm-Ek
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:19 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1t0ewR-0006c9-RJ
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t0ewT-0005wd-4u
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:19 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-37d41894a32so3479928f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:16 -0700 (PDT)
+ id 1t0ewP-0005vd-Mi
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 06:38:15 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-37d5aedd177so2585620f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 03:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1728988695; x=1729593495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1728988692; x=1729593492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rL5/U4uh9bv7IicrualfqLWImO4ti0x7c8RykzNbskk=;
- b=bbhq79P+2Qe+a76FdrM1k4tbQ20J0wd9Vzk23INmLTEb5lVLgyjdLhwIbIMZOxs4YF
- w0brqTRtoTj6ifHqeoeKMMN/NQNEpQAvIiCEy3PtznuYnIWDC6eIJkW38AR1jQAb0Wt3
- elJ1rKhsBsykhzdxf1NWg1+o442IoYOauGmWHYt/ugLX8xOs/kGGs+rSii5COqiBOvNS
- pvSr6dNwtw1HUT4kHqY69TZvPse1E9G+vt7hr8Myfh82GzV5C70NtDytzCXpEDrFzGTi
- hDdPBHSqcVnua7nfsExb0KK1fAzdipAb5BFlvgk7NN9KuQ+1mBwg+09lpR3QEwrDxM2o
- rxDg==
+ :reply-to; bh=UyEnUeAM+pUK11zjhSfvBnjHBcNllMJBTEH4fBRhhwM=;
+ b=EUv34Mnfyb7yogpcULZDy+KPMVVfV/ITsoQDYzPqZKLHfym0HdqnW5Fsw1GwVw+GoC
+ 5FZD22djo+nvVR8gm6yLY9B/GotvX70PNQx+dRSf7yhsuwGvvmXci9rqJ7uixFljRdHb
+ 9ZwTSthN1siXaZc7p8Alg9f7xRej6ZuHbD7jHmWeHW98DmV4Xr6pZlHmCe8C857FO58Q
+ zqiw1i/fdZHcXHp+IqM8ynFs6EuApJr4TfbW5AJ3w8dJiRPkmPOz9D2yIlP4JqP8BAjX
+ a2W5bGuVR2HLFHqErxXjL3CwhBHuTZ0asncUpJRFcN/snouOrjtAdLngFT1O8Np0VWZt
+ IVKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728988695; x=1729593495;
+ d=1e100.net; s=20230601; t=1728988692; x=1729593492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rL5/U4uh9bv7IicrualfqLWImO4ti0x7c8RykzNbskk=;
- b=JryUUt8pL/6Qfznv27olgtfAORdnyzQFpAKeBEewS0tqMpPNnyxy5HtT/pNhVN+tCY
- pRBDDDLOh36jzT+ibQsaIIkyWU9pd/xoE2lcLZrLFdWYNxIM0CeS828xLgbN6usEgjCZ
- WRrZagv/PH6I2GUDC4kUr5Y6ps7IUGYkqCq1kCyHGhrBPY63631HsKGkQHXPH4/GYVrx
- dLZowqsH2J/ek9tFlmzmgl2kZHBquMpYdpV2LaAQ5zxAexxwfwEm/A5OarUpoqi/IgAA
- 4xVCAmlOq6Q7/BAKsuiSXZwq+od9lfg875X+Nuz1QTNPpRYaqiPfXXRMhZh8MyD4kYFv
- TOXw==
-X-Gm-Message-State: AOJu0YwZZNdsjtXcdSWVXo8vbZVuSiULGJzxXlF/QrrrnUtvoLLMQJj+
- v1apPscQg08f+v+l4n2AJDxPiRF/4hxbAN7Qs2W+78d094fMyWDIps1d/cqE41WVotx/LaDpKFb
- a
-X-Google-Smtp-Source: AGHT+IE+TebzO9ZVz4nPBXJ21FOwtzXNpMpB5+BsPkVM8g3R7mtaWRrCc3/Er8eF616vdJ6S45feFg==
-X-Received: by 2002:adf:ecc4:0:b0:374:adf1:9232 with SMTP id
- ffacd0b85a97d-37d551fe43emr11843270f8f.19.1728988695490; 
- Tue, 15 Oct 2024 03:38:15 -0700 (PDT)
+ bh=UyEnUeAM+pUK11zjhSfvBnjHBcNllMJBTEH4fBRhhwM=;
+ b=a1QHjfjGLILMlCyGSDdbVP6N7J79uwZj+Pyr//wK1WtHhP6tZNLUxyDbZKNOI3IPaO
+ 2u3ccnrnVCFBwnk53iGOSRxSo3gIFuU2JxJK9INcrH6o2LKidMcpv9oyJss0TCYfT0Fa
+ pseEYkc3h9H8IIQHwM7Xrbfl8H5yRgiV/ZMyTmjCl37FW0ru10oA+Fprr+jZ9VocSS0e
+ 7tngKUQvd1OvOKanpptvVjj5le0rZNaEjuEpG6XAKW5FoxP8Rvk8DBQJ6roeTFx+gY2m
+ uSXg839P/5yaeL0wsUAoQxnnCVZHHK0G4xwsSKkDlbxzSxTct8tNhxGcotN3+b2DNBrS
+ JcHA==
+X-Gm-Message-State: AOJu0YxLFONDQg6sDLkVaG/SicE1msSwfhHvFcdPXee1J9Od1DA8lDU0
+ TeAF1OlBwzGdkjd1c+777ksk+0TL151ebLq79lJno3IVVG8SjBlkTWu8THt0HM/bR83eie5/w4G
+ U
+X-Google-Smtp-Source: AGHT+IH/554agvvG3mPPjVfMgordC5v9h1O8onvTnOKMHpj3lbJYmNLNUin5U+RkgeuPzzS/624/aQ==
+X-Received: by 2002:adf:f805:0:b0:374:c911:7756 with SMTP id
+ ffacd0b85a97d-37d5529ad42mr9550368f8f.38.1728988692128; 
+ Tue, 15 Oct 2024 03:38:12 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.15
+ ffacd0b85a97d-37d7fa7a06dsm1241635f8f.5.2024.10.15.03.38.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2024 03:38:15 -0700 (PDT)
+ Tue, 15 Oct 2024 03:38:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/28] hw/intc/omap_intc: Remove now-unnecessary abstract base
- class
-Date: Tue, 15 Oct 2024 11:37:52 +0100
-Message-Id: <20241015103808.133024-13-peter.maydell@linaro.org>
+Subject: [PULL 05/28] hw/intc/arm_gicv3: Add cast to match the documentation
+Date: Tue, 15 Oct 2024 11:37:45 +0100
+Message-Id: <20241015103808.133024-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015103808.133024-1-peter.maydell@linaro.org>
 References: <20241015103808.133024-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,64 +93,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OMAP interrupt controller code used to have an omap-intc
-class and an omap2-intc class, which shared common code via
-the abstract class common-omap-intc. Now we have deleted
-omap2-intc, we don't need the separate abstract base class;
-fold int into omap-intc.
+From: Alexandra Diupina <adiupina@astralinux.ru>
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The result of 1 << regbit with regbit==31 has a 1 in the 32nd bit.
+When cast to uint64_t (for further bitwise OR), the 32 most
+significant bits will be filled with 1s. However, the documentation
+states that the upper 32 bits of ICC_AP[0/1]R<n>_EL2 are reserved.
+
+Add an explicit cast to match the documentation.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 28cca59c46 ("hw/intc/arm_gicv3: Add NMI handling CPU interface registers")
+Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241003135323.1653230-1-peter.maydell@linaro.org
 ---
- include/hw/arm/omap.h |  2 +-
- hw/intc/omap_intc.c   | 13 +++----------
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ hw/intc/arm_gicv3_cpuif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index e1b6a7cdd93..420ed1d5735 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -59,7 +59,7 @@ int64_t omap_clk_getrate(omap_clk clk);
- void omap_clk_reparent(omap_clk clk, omap_clk parent);
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index ebad7aaea18..89359db7004 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1170,7 +1170,7 @@ static void icc_activate_irq(GICv3CPUState *cs, int irq)
+     if (nmi) {
+         cs->icc_apr[cs->hppi.grp][regno] |= ICC_AP1R_EL1_NMI;
+     } else {
+-        cs->icc_apr[cs->hppi.grp][regno] |= (1 << regbit);
++        cs->icc_apr[cs->hppi.grp][regno] |= (1U << regbit);
+     }
  
- /* omap_intc.c */
--#define TYPE_OMAP_INTC "common-omap-intc"
-+#define TYPE_OMAP_INTC "omap-intc"
- typedef struct OMAPIntcState OMAPIntcState;
- DECLARE_INSTANCE_CHECKER(OMAPIntcState, OMAP_INTC, TYPE_OMAP_INTC)
- 
-diff --git a/hw/intc/omap_intc.c b/hw/intc/omap_intc.c
-index a48e6fcd6d3..a98358d92e2 100644
---- a/hw/intc/omap_intc.c
-+++ b/hw/intc/omap_intc.c
-@@ -392,22 +392,15 @@ static void omap_intc_class_init(ObjectClass *klass, void *data)
- }
- 
- static const TypeInfo omap_intc_info = {
--    .name          = "omap-intc",
--    .parent        = TYPE_OMAP_INTC,
-+    .name          = TYPE_OMAP_INTC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(OMAPIntcState),
-     .instance_init = omap_intc_init,
-     .class_init    = omap_intc_class_init,
- };
- 
--static const TypeInfo omap_intc_type_info = {
--    .name          = TYPE_OMAP_INTC,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(OMAPIntcState),
--    .abstract      = true,
--};
--
- static void omap_intc_register_types(void)
- {
--    type_register_static(&omap_intc_type_info);
-     type_register_static(&omap_intc_info);
- }
- 
+     if (irq < GIC_INTERNAL) {
 -- 
 2.34.1
 
