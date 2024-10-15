@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5818CD2169C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A498D21690
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 12:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0h6Q-0002s7-Oo; Tue, 15 Oct 2024 08:56:42 -0400
+	id 1t0h6S-0002sJ-63; Tue, 15 Oct 2024 08:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t0h6P-0002ru-Gw
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:56:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t0h6Q-0002s2-Hi
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t0h6O-0006pZ-1s
- for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:56:41 -0400
+ id 1t0h6O-0006pd-SA
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 08:56:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1728996999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=84N2rxqupBUcdaTpHle3WoL4A06cF9MmgU6vQgWoN4s=;
- b=d9DEi1vc+8tc7efV98UFsLsecJuCVMz3p+zUmqD+Yh88GmrXhv/p2azPou3ZdJ4StVF1dE
- pE3rc4onH+PC8kW6FR6k2Pqt4qWrG9cuOZch8YjxRWiWTvZC9Tl2qGi5PZ8qfErLEdtrIJ
- v2mZaNFVD1BxaNmg4khRZSEEsPN1WKg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ENNrYL48iopybgO3xqkXmLRGJM0WPuBI+yVnGuIHfCE=;
+ b=DsLMB8xvLdonHCOZafMl3drV4ITKXN26idYN97EXE2eiZl5TqNdwwUSPyO8Wg5Tsfq0U1v
+ BAXL4y3wriPka9gmVjw8LAZAE4uJL+y59Nq5EO0ZYr84P0fTWekMPWJz0J8w7McQQLQB3+
+ waxpRXg4fHm/pgsfQGS2HrQjfbEfmhk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-g51nGSlsM9e-jtpj2re87Q-1; Tue,
- 15 Oct 2024 08:56:36 -0400
-X-MC-Unique: g51nGSlsM9e-jtpj2re87Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-BXaVlxXpOD2TucmmeGl9SQ-1; Tue,
+ 15 Oct 2024 08:56:37 -0400
+X-MC-Unique: BXaVlxXpOD2TucmmeGl9SQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1567F1956077; Tue, 15 Oct 2024 12:56:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 809AF1955F79
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 12:56:36 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.118])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6913F3000198; Tue, 15 Oct 2024 12:56:33 +0000 (UTC)
+ id 70A243000198; Tue, 15 Oct 2024 12:56:35 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Subject: [PATCH 1/2] crypto/hash: avoid overwriting user supplied result
- pointer
-Date: Tue, 15 Oct 2024 13:56:28 +0100
-Message-ID: <20241015125629.301367-2-berrange@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 2/2] tests: correctly validate result buffer in hash/hmac tests
+Date: Tue, 15 Oct 2024 13:56:29 +0100
+Message-ID: <20241015125629.301367-3-berrange@redhat.com>
 In-Reply-To: <20241015125629.301367-1-berrange@redhat.com>
 References: <20241015125629.301367-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -86,130 +85,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the user provides a pre-allocated buffer for the hash result,
-we must use that rather than re-allocating a new buffer.
+Validate that the pre-allocated buffer pointer was not overwritten
+by the hash/hmac APIs.
 
-Reported-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/hash-gcrypt.c | 15 ++++++++++++---
- crypto/hash-glib.c   | 11 +++++++++--
- crypto/hash-gnutls.c | 16 +++++++++++++---
- crypto/hash-nettle.c | 14 +++++++++++---
- 4 files changed, 45 insertions(+), 11 deletions(-)
+ tests/unit/test-crypto-hash.c | 7 ++++---
+ tests/unit/test-crypto-hmac.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-index ccc3cce3f8..73533a4949 100644
---- a/crypto/hash-gcrypt.c
-+++ b/crypto/hash-gcrypt.c
-@@ -103,16 +103,25 @@ int qcrypto_gcrypt_hash_finalize(QCryptoHash *hash,
-                                  size_t *result_len,
-                                  Error **errp)
- {
-+    int ret;
-     unsigned char *digest;
-     gcry_md_hd_t *ctx = hash->opaque;
+diff --git a/tests/unit/test-crypto-hash.c b/tests/unit/test-crypto-hash.c
+index e5829ca766..76c4699c15 100644
+--- a/tests/unit/test-crypto-hash.c
++++ b/tests/unit/test-crypto-hash.c
+@@ -123,7 +123,7 @@ static void test_hash_prealloc(void)
+     size_t i;
  
--    *result_len = gcry_md_get_algo_dlen(qcrypto_hash_alg_map[hash->alg]);
--    if (*result_len == 0) {
-+    ret = gcry_md_get_algo_dlen(qcrypto_hash_alg_map[hash->alg]);
-+    if (ret == 0) {
-         error_setg(errp, "Unable to get hash length");
-         return -1;
-     }
+     for (i = 0; i < G_N_ELEMENTS(expected_outputs) ; i++) {
+-        uint8_t *result;
++        uint8_t *result, *origresult;
+         size_t resultlen;
+         int ret;
+         size_t j;
+@@ -133,7 +133,7 @@ static void test_hash_prealloc(void)
+         }
  
--    *result = g_new(uint8_t, *result_len);
-+    if (*result_len == 0) {
-+        *result_len = ret;
-+        *result = g_new(uint8_t, *result_len);
-+    } else if (*result_len != ret) {
-+        error_setg(errp,
-+                   "Result buffer size %zu is smaller than hash %d",
-+                   *result_len, ret);
-+        return -1;
-+    }
+         resultlen = expected_lens[i];
+-        result = g_new0(uint8_t, resultlen);
++        origresult = result = g_new0(uint8_t, resultlen);
  
-     /* Digest is freed by gcry_md_close(), copy it */
-     digest = gcry_md_read(*ctx, 0);
-diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
-index 02a6ec1edf..809cef98ae 100644
---- a/crypto/hash-glib.c
-+++ b/crypto/hash-glib.c
-@@ -99,8 +99,15 @@ int qcrypto_glib_hash_finalize(QCryptoHash *hash,
-         return -1;
-     }
- 
--    *result_len = ret;
--    *result = g_new(uint8_t, *result_len);
-+    if (*result_len == 0) {
-+        *result_len = ret;
-+        *result = g_new(uint8_t, *result_len);
-+    } else if (*result_len != ret) {
-+        error_setg(errp,
-+                   "Result buffer size %zu is smaller than hash %d",
-+                   *result_len, ret);
-+        return -1;
-+    }
- 
-     g_checksum_get_digest(ctx, *result, result_len);
-     return 0;
-diff --git a/crypto/hash-gnutls.c b/crypto/hash-gnutls.c
-index 34a63994c9..99fbe824ea 100644
---- a/crypto/hash-gnutls.c
-+++ b/crypto/hash-gnutls.c
-@@ -115,14 +115,24 @@ int qcrypto_gnutls_hash_finalize(QCryptoHash *hash,
-                                  Error **errp)
- {
-     gnutls_hash_hd_t *ctx = hash->opaque;
-+    int ret;
- 
--    *result_len = gnutls_hash_get_len(qcrypto_hash_alg_map[hash->alg]);
--    if (*result_len == 0) {
-+    ret = gnutls_hash_get_len(qcrypto_hash_alg_map[hash->alg]);
-+    if (ret == 0) {
-         error_setg(errp, "Unable to get hash length");
-         return -1;
-     }
- 
--    *result = g_new(uint8_t, *result_len);
-+    if (*result_len == 0) {
-+        *result_len = ret;
-+        *result = g_new(uint8_t, *result_len);
-+    } else if (*result_len != ret) {
-+        error_setg(errp,
-+                   "Result buffer size %zu is smaller than hash %d",
-+                   *result_len, ret);
-+        return -1;
-+    }
-+
-     gnutls_hash_output(*ctx, *result);
-     return 0;
- }
-diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
-index 3b847aa60e..c78624b347 100644
---- a/crypto/hash-nettle.c
-+++ b/crypto/hash-nettle.c
-@@ -150,9 +150,17 @@ int qcrypto_nettle_hash_finalize(QCryptoHash *hash,
-                                  Error **errp)
- {
-     union qcrypto_hash_ctx *ctx = hash->opaque;
+         ret = qcrypto_hash_bytes(i,
+                                  INPUT_TEXT,
+@@ -142,7 +142,8 @@ static void test_hash_prealloc(void)
+                                  &resultlen,
+                                  &error_fatal);
+         g_assert(ret == 0);
 -
--    *result_len = qcrypto_hash_alg_map[hash->alg].len;
--    *result = g_new(uint8_t, *result_len);
-+    int ret = qcrypto_hash_alg_map[hash->alg].len;
-+
-+    if (*result_len == 0) {
-+        *result_len = ret;
-+        *result = g_new(uint8_t, *result_len);
-+    } else if (*result_len != ret) {
-+        error_setg(errp,
-+                   "Result buffer size %zu is smaller than hash %d",
-+                   *result_len, ret);
-+        return -1;
-+    }
++        /* Validate that our pre-allocated pointer was not replaced */
++        g_assert(result == origresult);
+         g_assert(resultlen == expected_lens[i]);
+         for (j = 0; j < resultlen; j++) {
+             g_assert(expected_outputs[i][j * 2] == hex[(result[j] >> 4) & 0xf]);
+diff --git a/tests/unit/test-crypto-hmac.c b/tests/unit/test-crypto-hmac.c
+index 3fa50f24bb..cdb8774443 100644
+--- a/tests/unit/test-crypto-hmac.c
++++ b/tests/unit/test-crypto-hmac.c
+@@ -126,7 +126,7 @@ static void test_hmac_prealloc(void)
+     for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
+         QCryptoHmacTestData *data = &test_data[i];
+         QCryptoHmac *hmac = NULL;
+-        uint8_t *result = NULL;
++        uint8_t *result = NULL, *origresult = NULL;
+         size_t resultlen = 0;
+         const char *exp_output = NULL;
+         int ret;
+@@ -139,7 +139,7 @@ static void test_hmac_prealloc(void)
+         exp_output = data->hex_digest;
  
-     qcrypto_hash_alg_map[hash->alg].result(ctx, *result_len, *result);
+         resultlen = strlen(exp_output) / 2;
+-        result = g_new0(uint8_t, resultlen);
++        origresult = result = g_new0(uint8_t, resultlen);
  
+         hmac = qcrypto_hmac_new(data->alg, (const uint8_t *)KEY,
+                                 strlen(KEY), &error_fatal);
+@@ -149,6 +149,8 @@ static void test_hmac_prealloc(void)
+                                  strlen(INPUT_TEXT), &result,
+                                  &resultlen, &error_fatal);
+         g_assert(ret == 0);
++        /* Validate that our pre-allocated pointer was not replaced */
++        g_assert(result == origresult);
+ 
+         exp_output = data->hex_digest;
+         for (j = 0; j < resultlen; j++) {
 -- 
 2.46.0
 
