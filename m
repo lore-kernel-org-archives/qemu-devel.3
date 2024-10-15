@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738C4CFC280
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C043CFC283
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 10:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0eRR-0001TI-HB; Tue, 15 Oct 2024 06:06:13 -0400
+	id 1t0eRj-0002YB-79; Tue, 15 Oct 2024 06:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eRP-0001AP-1i; Tue, 15 Oct 2024 06:06:11 -0400
+ id 1t0eRg-0002HS-Gd; Tue, 15 Oct 2024 06:06:28 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t0eRL-0001bv-1Z; Tue, 15 Oct 2024 06:06:09 -0400
+ id 1t0eRe-0001fj-MD; Tue, 15 Oct 2024 06:06:28 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV7b2GYpz6FH29;
- Tue, 15 Oct 2024 18:04:27 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XSV9B3Nnqz6K977;
+ Tue, 15 Oct 2024 18:05:50 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 83382140451;
- Tue, 15 Oct 2024 18:06:04 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 994881404F5;
+ Tue, 15 Oct 2024 18:06:24 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.48.146.149) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 15 Oct 2024 12:05:44 +0200
+ 15.1.2507.39; Tue, 15 Oct 2024 12:06:04 +0200
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -45,16 +45,16 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>,
  <gustavo.romero@linaro.org>
-Subject: [PATCH RFC V5 15/30] hw/arm/acpi: MADT Tbl change to size the guest
- with possible vCPUs
-Date: Tue, 15 Oct 2024 10:59:57 +0100
-Message-ID: <20241015100012.254223-16-salil.mehta@huawei.com>
+Subject: [PATCH RFC V5 16/30] target/arm: Force ARM vCPU *present* status ACPI
+ *persistent*
+Date: Tue, 15 Oct 2024 10:59:58 +0100
+Message-ID: <20241015100012.254223-17-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241015100012.254223-1-salil.mehta@huawei.com>
 References: <20241015100012.254223-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.48.146.149]
 X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  frapeml500007.china.huawei.com (7.182.85.172)
@@ -84,124 +84,51 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU builds the MADT table, modifications are needed to include information
-about possible vCPUs that are exposed as ACPI-disabled (i.e., `_STA.Enabled=0`).
-This new information will help the guest kernel pre-size its resources during
-boot time. Pre-sizing based on possible vCPUs will facilitate the future
-hot-plugging of the currently disabled vCPUs.
+The ARM CPU architecture does not permit changes to CPU presence after the
+kernel has booted. This is an immutable requirement from ARM and represents a
+strict architectural constraint [1][2].
 
-Additionally, this change addresses updates to the ACPI MADT GIC CPU interface
-flags, as introduced in the UEFI ACPI 6.5 specification. These updates enable
-deferred virtual CPU onlining in the guest kernel.
+The ACPI update [3] reinforces this by specifying that the `_STA.Present` bit
+in the ACPI specification cannot be modified once the system has booted.
+Consequently, the firmware, ACPI, and QEMU must provide the guest kernel with a
+persistent view of the vCPUs, even when they are not present in the QOM
+(i.e., when they are unplugged or have yet to be plugged into the QOM after the
+kernel has booted).
 
-Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#gic-cpu-interface-gicc-structure
+References:
+[1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
+    architectures that don’t Support CPU Hotplug (like ARM64)
+    a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
+    b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
+[2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
+    SoC Based Systems (like ARM64)
+    Link: https://kvmforum2020.sched.com/event/eE4m
+[3] Check comment 5 in the bugzilla entry
+    Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
 
-Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/arm/virt-acpi-build.c | 36 ++++++++++++++++++++++++++++++------
- include/hw/acpi/cpu.h    | 19 +++++++++++++++++++
- 2 files changed, 49 insertions(+), 6 deletions(-)
+ target/arm/cpu64.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 32238170ab..ff104b3496 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -663,6 +663,29 @@ static void build_append_gicr(GArray *table_data, uint64_t base, uint32_t size)
-     build_append_int_noprefix(table_data, size, 4); /* Discovery Range Length */
- }
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index d2f4624d61..c2af6a28f5 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -797,6 +797,13 @@ static void aarch64_cpu_initfn(Object *obj)
  
-+static uint32_t virt_acpi_get_gicc_flags(CPUState *cpu)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-+
-+    /* can only exist in 'enabled' state */
-+    if (!mc->has_hotpluggable_cpus) {
-+        return 1;
-+    }
-+
+     /* TODO: re-check if this is necessary still */
+     cs->thread_id = 0;
 +    /*
-+     * ARM GIC CPU Interface can be 'online-capable' or 'enabled' at boot
-+     * We MUST set 'online-capable' bit for all hotpluggable CPUs except the
-+     * first/boot CPU. Cold-booted CPUs without 'Id' can also be unplugged.
-+     * Though as-of-now this is only used as a debugging feature.
-+     *
-+     *   UEFI ACPI Specification 6.5
-+     *   Section: 5.2.12.14. GIC CPU Interface (GICC) Structure
-+     *   Table:   5.37 GICC CPU Interface Flags
-+     *   Link: https://uefi.org/specs/ACPI/6.5
++     * To provide the guest with a persistent view of vCPU presence, ACPI may
++     * need to simulate the presence of vCPUs even when they are not present in
++     * the QOM or are in a disabled state. This flag is utilized during the
++     * initialization of ACPI hotplug state and during vCPU hot-unplug events.
 +     */
-+    return cpu && !cpu->cpu_index ? 1 : (1 << 3);
-+}
-+
- static void
- build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- {
-@@ -689,12 +712,13 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     build_append_int_noprefix(table_data, vms->gic_version, 1);
-     build_append_int_noprefix(table_data, 0, 3);   /* Reserved */
- 
--    for (i = 0; i < MACHINE(vms)->smp.cpus; i++) {
--        ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(i));
-+    for (i = 0; i < MACHINE(vms)->smp.max_cpus; i++) {
-+        CPUState *cpu = qemu_get_possible_cpu(i);
-         uint64_t physical_base_address = 0, gich = 0, gicv = 0;
-         uint32_t vgic_interrupt = vms->virt ? ARCH_GIC_MAINT_IRQ : 0;
--        uint32_t pmu_interrupt = arm_feature(&armcpu->env, ARM_FEATURE_PMU) ?
--                                             VIRTUAL_PMU_IRQ : 0;
-+        uint32_t pmu_interrupt = vms->pmu ? VIRTUAL_PMU_IRQ : 0;
-+        uint32_t flags = virt_acpi_get_gicc_flags(cpu);
-+        uint64_t mpidr = acpi_get_cpu_archid(i);
- 
-         if (vms->gic_version == VIRT_GIC_VERSION_2) {
-             physical_base_address = memmap[VIRT_GIC_CPU].base;
-@@ -709,7 +733,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         build_append_int_noprefix(table_data, i, 4);    /* GIC ID */
-         build_append_int_noprefix(table_data, i, 4);    /* ACPI Processor UID */
-         /* Flags */
--        build_append_int_noprefix(table_data, 1, 4);    /* Enabled */
-+        build_append_int_noprefix(table_data, flags, 4);
-         /* Parking Protocol Version */
-         build_append_int_noprefix(table_data, 0, 4);
-         /* Performance Interrupt GSIV */
-@@ -723,7 +747,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         build_append_int_noprefix(table_data, vgic_interrupt, 4);
-         build_append_int_noprefix(table_data, 0, 8);    /* GICR Base Address*/
-         /* MPIDR */
--        build_append_int_noprefix(table_data, arm_cpu_mp_affinity(armcpu), 8);
-+        build_append_int_noprefix(table_data, mpidr, 8);
-         /* Processor Power Efficiency Class */
-         build_append_int_noprefix(table_data, 0, 1);
-         /* Reserved */
-diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-index bd3f9973c9..c688bb2141 100644
---- a/include/hw/acpi/cpu.h
-+++ b/include/hw/acpi/cpu.h
-@@ -96,4 +96,23 @@ static inline bool acpi_persistent_cpu(CPUState *cpu)
-      */
-     return cpu && cpu->acpi_persistent;
++    cs->acpi_persistent = true;
  }
-+
-+/**
-+ * acpi_get_cpu_archid:
-+ * @cpu_index: possible vCPU for which arch-id needs to be retreived
-+ *
-+ * Fetches the vCPU arch-id of the possible vCPU. This should be same
-+ * same as the one configured at KVM Host.
-+ *
-+ * Returns: arch-id of the possible vCPU
-+ */
-+static inline uint64_t acpi_get_cpu_archid(int cpu_index)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    const CPUArchIdList *possible_cpus = ms->possible_cpus;
-+
-+    assert((cpu_index >= 0) && (cpu_index < possible_cpus->len));
-+
-+    return possible_cpus->cpus[cpu_index].arch_id;
-+}
- #endif
+ 
+ static void aarch64_cpu_finalizefn(Object *obj)
 -- 
 2.34.1
 
