@@ -4,53 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E23CFC273
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 07:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E36CFC273
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Oct 2024 08:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0c4P-0000QB-9K; Tue, 15 Oct 2024 03:34:20 -0400
+	id 1t0cc0-0002wR-MX; Tue, 15 Oct 2024 04:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org>)
- id 1t0c1d-0006WK-13; Tue, 15 Oct 2024 03:31:25 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org>)
- id 1t0c1a-0004Ib-NI; Tue, 15 Oct 2024 03:31:24 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XSQkv2sCVz4x8R;
- Tue, 15 Oct 2024 18:31:19 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XSQks3jXrz4x89;
- Tue, 15 Oct 2024 18:31:17 +1100 (AEDT)
-Message-ID: <4b773f41-c5c7-45fb-8a6d-e7c2a46dbccb@kaod.org>
-Date: Tue, 15 Oct 2024 09:31:16 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t0cbz-0002jk-Fa
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:08:59 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t0cbx-0002NV-0O
+ for qemu-devel@nongnu.org; Tue, 15 Oct 2024 04:08:59 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4311bb9d4beso33667355e9.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 01:08:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1728979735; x=1729584535; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oUtD7kU+ZtH/ohs2DQUCU9xQr55ytexnezZMYgRtEBI=;
+ b=kf9yR6glV0QyHP4tBmDMNy2o+vOyrU3a4MrXKuUyM26ixc77ZamxVbxYle0VPO4QQn
+ oQm31j43WAwh3JOP3apm70ZLtrHqnB2x+B8bs0KlzwrTEPn232pSqEwDDLXoAH5BjzMx
+ J6+sK9GymMhtBMSkHYRHQ9xkaQLR/AQZj9EANizznoPE5euznIZ3lxK6vmxjHbkFoaWu
+ kThxc19eVMztaibzd9J+/vAXRLUwixO9tVRXGmzKL2QizXViQXnGEGIBUnf9dMN9C0Yg
+ a+g9HBDbTPpX2SQ5fVgwvc0ksUNn0C/LTLw18PdRmk58SqsbW5I+THBmVvNtdsvLt/2c
+ 1ggw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1728979735; x=1729584535;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oUtD7kU+ZtH/ohs2DQUCU9xQr55ytexnezZMYgRtEBI=;
+ b=nbHACzVEu8otXNwzxeUx61GC7CxMoSco943AVEpxwYP1IZhKgSv/+KgMOzr7vhEImc
+ 4TbuomMr2OdBdbdVi9d4qFxLydN73jnnZjnIdiXFEBz2TF7qJMql4SY3SnSmgvpqlSR/
+ HSJp8WjoDJtNlcMGi3a6QPx292O90gF0kOUNYVacn+KwmG+gRs+OBBU8GPv9Dly1e5Vj
+ REht9xvGAbNngPIYnVdlIZACEi/vJ/xZSX4+4DNb1i+wNRNRtEclkYaip4iXutY0bTdN
+ S+ZBKz8696HvKwjClebb3TJuSqRiM9+yR9gqH776eYRm1SdS9uu+uzmyJ3QxeePdYKrg
+ n2lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbk0J+nU17R+VLmuuiYpVYJLSdes7jfgIuTDboafbibtszctr/GHO8hsm2EZ5hu3Ij4J77kIgN2rof@nongnu.org
+X-Gm-Message-State: AOJu0YzHYqn19/F9WNMVTO+kMAu19CPkOct81KtqcoByDFggFo65wC0W
+ 68yQHQ2cKljlsbMHaEloT+HWOjZEkk6PZ09TdmTbGb8Vp1Z6OMx0qvW8VEWI9f4=
+X-Google-Smtp-Source: AGHT+IGSEpD8hGVmUhNErQXIbYOe6OexxGi5P5ucTKbmtDALY0nmRF75s8cOc/ApMjIVHy55XFlcOQ==
+X-Received: by 2002:a05:600c:a10:b0:42c:af06:71b with SMTP id
+ 5b1f17b1804b1-4312560998bmr101178985e9.28.1728979734882; 
+ Tue, 15 Oct 2024 01:08:54 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4313f6c767csm10047285e9.48.2024.10.15.01.08.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2024 01:08:54 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 903AC5F753;
+ Tue, 15 Oct 2024 09:08:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
+ <thuth@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] ui/console-vc: Silence warning about sprintf() on OpenBSD
+In-Reply-To: <67e2cb19-8de6-4ebf-ab4f-ae13b3de134d@tls.msk.ru> (Michael
+ Tokarev's message of "Mon, 14 Oct 2024 22:50:44 +0300")
+References: <20241014151023.85698-1-thuth@redhat.com>
+ <Zw01n0A6xCG9mCm-@redhat.com>
+ <67e2cb19-8de6-4ebf-ab4f-ae13b3de134d@tls.msk.ru>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Tue, 15 Oct 2024 09:08:53 +0100
+Message-ID: <87ttddaiui.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/13] ppc/spapr: remove deprecated machine pseries-2.12
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com
-References: <20241014122729.1136809-1-harshpb@linux.ibm.com>
- <20241014122729.1136809-14-harshpb@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241014122729.1136809-14-harshpb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Jj9V=RL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,219 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/24 14:27, Harsh Prateek Bora wrote:
-> Commit 0cac0f1b964 marked pseries-2.12 machines as deprecated
-> with reasons mentioned in its commit log.
-> Removing pseries-2.12 specific code with this patch.
-> 
-> While at it, also remove pre-3.0-migration hacks introduced for backward
-> compatibility which are now turned useless.
-> 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
->   docs/about/deprecated.rst       |  8 --------
->   include/hw/ppc/spapr_cpu_core.h |  1 -
->   target/ppc/cpu.h                |  4 ----
->   hw/ppc/spapr.c                  | 25 -------------------------
->   hw/ppc/spapr_cpu_core.c         | 12 +++---------
->   target/ppc/cpu_init.c           |  3 +--
->   target/ppc/machine.c            | 18 +-----------------
->   7 files changed, 5 insertions(+), 66 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 48b230b0a0..3b312a5de2 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -243,14 +243,6 @@ These old machine types are quite neglected nowadays and thus might have
->   various pitfalls with regards to live migration. Use a newer machine type
->   instead.
->   
-> -``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
-> -''''''''''''''''''''''''''''''''''''''''''''''''''
-> -
-> -Older pseries machines before version 3.0 have undergone many changes
-> -to correct issues, mostly regarding migration compatibility. These are
-> -no longer maintained and removing them will make the code easier to
-> -read and maintain. Use versions 3.0 and above as a replacement.
-> -
->   PPC 405 ``ref405ep`` machine (since 9.1)
->   ''''''''''''''''''''''''''''''''''''''''
->   
-> diff --git a/include/hw/ppc/spapr_cpu_core.h b/include/hw/ppc/spapr_cpu_core.h
-> index 69a52e39b8..68f7083483 100644
-> --- a/include/hw/ppc/spapr_cpu_core.h
-> +++ b/include/hw/ppc/spapr_cpu_core.h
-> @@ -28,7 +28,6 @@ struct SpaprCpuCore {
->       /*< public >*/
->       PowerPCCPU **threads;
->       int node_id;
-> -    bool pre_3_0_migration; /* older machine don't know about SpaprCpuState */
->   };
->   
->   struct SpaprCpuCoreClass {
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 74a0ab768d..506c8c825c 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1454,10 +1454,6 @@ struct ArchCPU {
->       /* Those resources are used only during code translation */
->       /* opcode handlers */
->       opc_handler_t *opcodes[PPC_CPU_OPCODES_LEN];
-> -
-> -    /* Fields related to migration compatibility hacks */
-> -    bool pre_3_0_migration;
-> -    int32_t mig_slb_nr;
->   };
->   
->   /**
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index aba0ad26f1..5c02037c56 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -5015,31 +5015,6 @@ static void spapr_machine_3_0_class_options(MachineClass *mc)
->   
->   DEFINE_SPAPR_MACHINE(3, 0);
->   
-> -/*
-> - * pseries-2.12
-> - */
-> -static void spapr_machine_2_12_class_options(MachineClass *mc)
-> -{
-> -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
-> -    static GlobalProperty compat[] = {
-> -        { TYPE_POWERPC_CPU, "pre-3.0-migration", "on" },
-> -        { TYPE_SPAPR_CPU_CORE, "pre-3.0-migration", "on" },
-> -    };
-> -
-> -    spapr_machine_3_0_class_options(mc);
-> -    compat_props_add(mc->compat_props, hw_compat_2_12, hw_compat_2_12_len);
-> -    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
-> -
-> -    /* We depend on kvm_enabled() to choose a default value for the
-> -     * hpt-max-page-size capability. Of course we can't do it here
-> -     * because this is too early and the HW accelerator isn't initialized
-> -     * yet. Postpone this to machine init (see default_caps_with_cpu()).
-> -     */
-> -    smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] = 0;
-> -}
-> -
-> -DEFINE_SPAPR_MACHINE(2, 12);
-> -
->   static void spapr_machine_register_types(void)
->   {
->       type_register_static(&spapr_machine_info);
-> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> index 4642245168..1a84345f36 100644
-> --- a/hw/ppc/spapr_cpu_core.c
-> +++ b/hw/ppc/spapr_cpu_core.c
-> @@ -197,9 +197,7 @@ static void spapr_unrealize_vcpu(PowerPCCPU *cpu, SpaprCpuCore *sc)
->   {
->       CPUPPCState *env = &cpu->env;
->   
-> -    if (!sc->pre_3_0_migration) {
-> -        vmstate_unregister(NULL, &vmstate_spapr_cpu_state, cpu->machine_data);
-> -    }
-> +    vmstate_unregister(NULL, &vmstate_spapr_cpu_state, cpu->machine_data);
->       spapr_irq_cpu_intc_destroy(SPAPR_MACHINE(qdev_get_machine()), cpu);
->       cpu_ppc_tb_free(env);
->       qdev_unrealize(DEVICE(cpu));
-> @@ -285,10 +283,8 @@ static bool spapr_realize_vcpu(PowerPCCPU *cpu, SpaprMachineState *spapr,
->           return false;
->       }
->   
-> -    if (!sc->pre_3_0_migration) {
-> -        vmstate_register(NULL, cs->cpu_index, &vmstate_spapr_cpu_state,
-> -                         cpu->machine_data);
-> -    }
-> +    vmstate_register(NULL, cs->cpu_index, &vmstate_spapr_cpu_state,
-> +                     cpu->machine_data);
->       return true;
->   }
->   
-> @@ -366,8 +362,6 @@ static void spapr_cpu_core_realize(DeviceState *dev, Error **errp)
->   
->   static Property spapr_cpu_core_properties[] = {
->       DEFINE_PROP_INT32("node-id", SpaprCpuCore, node_id, CPU_UNSET_NUMA_NODE_ID),
-> -    DEFINE_PROP_BOOL("pre-3.0-migration", SpaprCpuCore, pre_3_0_migration,
-> -                     false),
->       DEFINE_PROP_END_OF_LIST()
->   };
->   
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 39c19e6674..011e53d961 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -7452,8 +7452,7 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
->   }
->   
->   static Property ppc_cpu_properties[] = {
-> -    DEFINE_PROP_BOOL("pre-3.0-migration", PowerPCCPU, pre_3_0_migration,
-> -                     false),
-> +    /* add default property here */
->       DEFINE_PROP_END_OF_LIST(),
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
-In case you resping, please remove ppc_cpu_properties[].
+> On 14.10.2024 18:15, Daniel P. Berrang=C3=A9 wrote:
+>
+>> These two lines are the only place in the code that uses the
+>>     char response[40];
+>> so even better than switching to snprintf, how about just taking
+>> buffer size out of the picture:
+>>    g_autofree *response =3D
+>>        g_strdup_printf("\033[%d;%dR",
+>>                        (s->y_base + s->y) % s->total_height + 1,
+>>                        s->x + 1);
+>>    vc_respond_str(vc, response);
+>
+> What's the reason to perform memory allocation in trivial places
+> like this?  If we're worrying about possible buffer size issue,
+> maybe asprintf() is a better alternative for such small things?
+> Fragmenting heap memory for no reason seems too much overkill.
+> But I'm old-scool, so.. :)
 
-Since this is minor,
+I doubt the allocate/free pair will cause much fragmentation but it
+doesn't look like we are in any hot path here. Anyway snprintf is
+certainly better than sprintf so:
 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>
+> /mjt
 
-Thanks,
-
-C.
-
-
-
->   };
->   
-> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> index 47495b68b1..717bf93e88 100644
-> --- a/target/ppc/machine.c
-> +++ b/target/ppc/machine.c
-> @@ -118,15 +118,6 @@ static const VMStateInfo vmstate_info_vsr = {
->   #define VMSTATE_VSR_ARRAY(_f, _s, _n)                             \
->       VMSTATE_VSR_ARRAY_V(_f, _s, _n, 0)
->   
-> -#if defined(TARGET_PPC64)
-> -static bool cpu_pre_3_0_migration(void *opaque, int version_id)
-> -{
-> -    PowerPCCPU *cpu = opaque;
-> -
-> -    return cpu->pre_3_0_migration;
-> -}
-> -#endif
-> -
->   static int cpu_pre_save(void *opaque)
->   {
->       PowerPCCPU *cpu = opaque;
-> @@ -154,12 +145,6 @@ static int cpu_pre_save(void *opaque)
->           env->spr[SPR_IBAT4U + 2 * i + 1] = env->IBAT[1][i + 4];
->       }
->   
-> -    if (cpu->pre_3_0_migration) {
-> -        if (cpu->hash64_opts) {
-> -            cpu->mig_slb_nr = cpu->hash64_opts->slb_size;
-> -        }
-> -    }
-> -
->       /* Used to retain migration compatibility for pre 6.0 for 601 machines. */
->       env->hflags_compat_nmsr = 0;
->   
-> @@ -503,12 +488,11 @@ static int slb_post_load(void *opaque, int version_id)
->   
->   static const VMStateDescription vmstate_slb = {
->       .name = "cpu/slb",
-> -    .version_id = 1,
-> +    .version_id = 2,
->       .minimum_version_id = 1,
->       .needed = slb_needed,
->       .post_load = slb_post_load,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_INT32_TEST(mig_slb_nr, PowerPCCPU, cpu_pre_3_0_migration),
->           VMSTATE_SLB_ARRAY(env.slb, PowerPCCPU, MAX_SLB_ENTRIES),
->           VMSTATE_END_OF_LIST()
->       }
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
