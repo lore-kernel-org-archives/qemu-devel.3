@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A609CD2A536
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 17:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42D7D2A536
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 17:10:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t17Ot-0002GH-9j; Wed, 16 Oct 2024 13:01:31 -0400
+	id 1t17Wa-0005UV-7k; Wed, 16 Oct 2024 13:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t17Or-0002G8-MY
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:29 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t17WV-0005RC-EF
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:09:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t17On-0002lu-LD
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:29 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GGskAx015412
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GzcGgE
- eWPvsufjSRiTrwSsFnbW81alfZwC8pOVz+Hy0=; b=FFWji+K1pbfjkotqmPAerN
- 5HE3OxK0muKUPmOW5ASm53nqmkQxXdxVZaGNxYoCwiWjuors7DMoHXGJKoGdmEF3
- I3scBpDesaLOfYkzdZI5/+VR5PAZhD96NgCPRF7JIK3s2NkUAmvHODt00ZeHd4s/
- U8nrdeCU+UwLMNEnGNwrRuPd9FDKXAYxEU8uxrCEdqtT3H1ccgsIHYYE5KxY4dZh
- goIO3XcmHCOOwbrYbe9DJMmJPPaP5jsCmfkEXKyEBjOdPde1rCxPownHW0yOP0Y9
- GE8lckOgwUt0dHlRseyZQdP0yzQpHEt5xbpnZ4/SeTfGxLVR6YQTbxxIEySteCrw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ahe100u7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:17 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GH1HFT028398
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:17 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ahe100u4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 17:01:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GF1qTK005930;
- Wed, 16 Oct 2024 17:01:16 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 428651262g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 17:01:16 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49GH1GsH48234914
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Oct 2024 17:01:16 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3C6435805A;
- Wed, 16 Oct 2024 17:01:16 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 07A9958056;
- Wed, 16 Oct 2024 17:01:16 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Oct 2024 17:01:15 +0000 (GMT)
-Message-ID: <5558e41c-5d22-481e-9bc7-b46cd65e5d34@linux.ibm.com>
-Date: Wed, 16 Oct 2024 13:01:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t17WT-0003k3-Mk
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:09:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729098560;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Un6q6R/I5PAlrllKOI5gcodxrLU1Fsx1Je/qZufgJvE=;
+ b=IDGYZQwAVXcB1B3AoP81m9ae6ThCwxqxxEJhx8lOI+LoqvZBm8fff65eogQqwQfwXjfLlK
+ oCMvMvIGriHqQ3+hTyhFgdXlB2mE+OKQDhAqdnD/VDAePZJirvjEKXRIVpIx/CvwfpANmv
+ LEgNG0qzP71A6toErazbpUxxXqK5obc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-84-HITaFzMlPVSvu1hNOPBklQ-1; Wed, 16 Oct 2024 13:09:15 -0400
+X-MC-Unique: HITaFzMlPVSvu1hNOPBklQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b144a054baso172280585a.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 10:09:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729098555; x=1729703355;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Un6q6R/I5PAlrllKOI5gcodxrLU1Fsx1Je/qZufgJvE=;
+ b=cW69WwKrgvkU54D7mFV85vmKRmo4gWc316PXu9xg/U2uLz+Lw1g6pOPmLf4n1d7ANg
+ kREEug8gpd+A8tpWerWxSL4eCmktyO4uj29tJIfSr2pjvi8n3j3Ho1VpMXODsYrzf+EJ
+ PkAl7BcbjSEtU+kJCJP2YbBjWd1CS4UPNMHxQ+HIy8e33btyp68YclLs06gC4FTE5G0B
+ rp460iM6diPuju6HEOCeLj8F481bOBkCWIXra1+wZDFswQIcEoVyOlZjvkZVj4w1qVJV
+ Dicj7Q6jb5J6ped8pyQ9deLb0KslYHMGhcQharqOYnmTOTI4BCNAPs7/cFOcDD0B5SHv
+ Im3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpdAh40M0wRZ4NNcp4+dYRzDcA6sed05bpBhe6DyL8vmqyZ0ISSTVNaiaVxl2yi3t3q3tBrNSnn36Q@nongnu.org
+X-Gm-Message-State: AOJu0YwY4urKddIkTBaQD8fBJ31B6leU13upgvm6MjPwP/NzqdXHzdSn
+ 7aRpO3L7/mcn4GfymQ1pZK/jdecD/Fo59bpHU1JVySWOLcu3avX6JYJK67EwP7CMqnqGNWbxRT5
+ 5n4DQaxvq2Z61A1sdK6TlnPIYVX22uanlt94SgB9ODBXSTddqLtaS
+X-Received: by 2002:a05:620a:45a1:b0:7a9:b2f4:42e0 with SMTP id
+ af79cd13be357-7b14d5095b2mr53321485a.15.1729098555139; 
+ Wed, 16 Oct 2024 10:09:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyQpsYsibbjQ0YztwV5gDCg1ICt0pmcu0Z0+mBRl2pNGWRu2H4/aSiqn7u0Cz8Pu9xgINVdg==
+X-Received: by 2002:a05:620a:45a1:b0:7a9:b2f4:42e0 with SMTP id
+ af79cd13be357-7b14d5095b2mr53316385a.15.1729098554688; 
+ Wed, 16 Oct 2024 10:09:14 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b141e52f25sm144166285a.35.2024.10.16.10.09.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Oct 2024 10:09:13 -0700 (PDT)
+Date: Wed, 16 Oct 2024 13:09:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration/dirtyrate: Silence warning about strcpy() on
+ OpenBSD
+Message-ID: <Zw_zNzJdRIS42L-3@x1n>
+References: <20241016160712.962407-1-thuth@redhat.com>
+ <Zw_oM-RStF4QhWik@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] tpm: Use new ptm_cap_n structure for
- PTM_GET_CAPABILITY
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com
-References: <20241016145708.1166471-1-stefanb@linux.ibm.com>
- <20241016145708.1166471-2-stefanb@linux.ibm.com>
- <Zw_VpwVc_qSpJS6y@redhat.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <Zw_VpwVc_qSpJS6y@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: tTKQg1pnYTSmOrUS3HtkaRG4Bf4gtn1L
-X-Proofpoint-ORIG-GUID: 4-Y-w8qdd--I8gsTxhxdBus2JTKRFe6I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- impostorscore=0 phishscore=0 priorityscore=1501 spamscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410160108
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <Zw_oM-RStF4QhWik@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,51 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/16/24 11:03 AM, Daniel P. Berrangé wrote:
-> On Wed, Oct 16, 2024 at 10:57:07AM -0400, Stefan Berger wrote:
->> Use the new ptm_cap_n structure for getting the PTM_GET_CAPABILITY response
->> from swtpm. Previously only 17 bits could possibly have been set in ptm_cap
->> (=uint64_t) in big endian order and those bits are now found in the 2nd
->> 32bit word in the response in the caps field.
->>
->> This data structure makes it now clear that the 1st 32bit word carries the
->> tpm_result like all the other response structures of all other commands
->> do.
->>
->> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
->> ---
->>   backends/tpm/tpm_emulator.c | 14 ++++++++------
->>   backends/tpm/tpm_ioctl.h    | 13 ++++++++++++-
->>   backends/tpm/trace-events   |  2 +-
->>   3 files changed, 21 insertions(+), 8 deletions(-)
->>
+On Wed, Oct 16, 2024 at 05:22:11PM +0100, Daniel P. Berrangé wrote:
+> On Wed, Oct 16, 2024 at 06:07:12PM +0200, Thomas Huth wrote:
+> > The linker on OpenBSD complains:
+> > 
+> >  ld: warning: dirtyrate.c:447 (../src/migration/dirtyrate.c:447)(...):
+> >  warning: strcpy() is almost always misused, please use strlcpy()
 > 
->> diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
->> index 1933ab6855..ee2dd15d35 100644
->> --- a/backends/tpm/tpm_ioctl.h
->> +++ b/backends/tpm/tpm_ioctl.h
->> @@ -29,6 +29,16 @@
->>   
->>   typedef uint32_t ptm_res;
->>   
->> +/* PTM_GET_CAPABILITY: Get supported capabilities (ioctl's) */
->> +struct ptm_cap_n {
->> +    union {
->> +        struct {
->> +            ptm_res tpm_result; /* will always be TPM_SUCCESS (0) */
->> +            uint32_t caps;
->> +        } resp; /* response */
->> +    } u;
->> +};
-> 
-> The union here is pointless surely, since it only has one entry and
-> the following patch doesn't add a 2nd either ?
+> Is that the only place it complains ?  We use 'strcpy' in almost
+> 100 places across the codebase....
 
-I did this because all commands have a union.
+I remember we switched some places to pstrcpy(), which seems superior,
+where I saw tha g_strlcpy() is mostly strlcpy() and the man page says:
+
+      strlcpy(3bsd) and strlcat(3bsd) are similar, but have important
+      performance problems; see BUGS.
+
+      ...
+
+      BUGS
+
+      ...
+
+      strlcpy(3) and strlcat(3) need to read the entire src string, even
+      if the destination buffer is small.  This makes them vulnerable to
+      Denial of Service (DoS) attacks if an attacker can control the
+      length of the src string.  And if not, they're still unnecessarily
+      slow.
+
+> 
+> > It's currently not a real problem in this case since both arrays
+> > have the same size (256 bytes). But just in case somebody changes
+> > the size of the source array in the future, let's better play safe
+> > and use g_strlcpy() here instead.
+> > 
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >  migration/dirtyrate.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+> > index 233acb0855..090c76e934 100644
+> > --- a/migration/dirtyrate.c
+> > +++ b/migration/dirtyrate.c
+> > @@ -444,7 +444,7 @@ static void get_ramblock_dirty_info(RAMBlock *block,
+> >      info->ramblock_pages = qemu_ram_get_used_length(block) >>
+> >                             qemu_target_page_bits();
+> >      info->ramblock_addr = qemu_ram_get_host_addr(block);
+> > -    strcpy(info->idstr, qemu_ram_get_idstr(block));
+> > +    g_strlcpy(info->idstr, qemu_ram_get_idstr(block), sizeof(info->idstr));
+> >  }
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> 
+> Is it worth also adding
+> 
+>   G_STATIC_ASSERT(sizeof((struct RamblockDirtyInfo){}.idstr) ==
+>                   sizeof((struct RAMBlock){}.idstr));
+> 
+> at the top of this file, since both of these fields are expected to
+> be the same size by this code, to avoid truncation.
+
+Or we could define a size macro for RAMBlock.idstr and use it everywhere
+where it's fundamentally the same thing.
+
 > 
 > 
 > With regards,
 > Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+
+-- 
+Peter Xu
+
 
