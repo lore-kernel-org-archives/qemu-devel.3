@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90506D1AD43
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED63D1AD43
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t11GV-0003ip-OV; Wed, 16 Oct 2024 06:28:27 -0400
+	id 1t11Gg-0003kx-21; Wed, 16 Oct 2024 06:28:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11GS-0003hm-U0
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:24 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ id 1t11GY-0003jl-QN
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:30 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11GQ-00048y-ME
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:24 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-539f0f9ee49so3968885e87.1
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 03:28:22 -0700 (PDT)
+ id 1t11GW-0004A8-4y
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:29 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c962c3e97dso4679393a12.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 03:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729074501; x=1729679301; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729074507; x=1729679307; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qBhjMyaS7m28UKrmGr2wsVJl2lrhr5g7YG4lTUQ0QeA=;
- b=ayM1WTO1dCly4YZ4RdSrp4V24x5+JUt+qZhOUwf02PfKKtNTWEC+I65WwdxVuW+PDJ
- VkRyMlQzzDbASf/paTAdh2NXcBbYGtoOJgCyk8IV8KTPOUbCrUfqm5KOziCxVwZFRcbp
- UNNur3elR0fj2oDFrJJdIRE5MFEGoNqDRfhHh04iFCrxYlYwSiV5chEjNuoAu6sE/pr7
- dqp9FiMv7dD4BSx5zYpTIrOlkRje2v8bKLsRACOUMiGmsxurbuhW+4+RTyvVOh+sZq9q
- 3VpI/74UkZAtCv8hvk8AMN98SJRWfpfo6WXitYKZ3dqKivsKxwijosGrYEgBDsuRt3WX
- DVkg==
+ bh=NtGdGZ/zn8WcWNHkcuhdBpfqRucUKp/hW6ytn0g9Z6I=;
+ b=Bl5LvzlXu7muOxE7wqSa0dLKiexjDAGoqcSI4c0vpvuitT6TANy2typkA04UZb/KdP
+ gZ1b5WinyWYjjY7PGO8U8+19l9J9A01lNBNmwtrhN2iOBb/MIWkJMmC/Xb6NWxYmjhcX
+ v9RrKinOeQEVgSEceWuR1BLZ63MVY2ne8JG6YOA5hV4trMx+//PNjvoZv2+pjaRa2yQ6
+ AbSwvCCnbyhKrfUr/a4Ec40flGJKfdZriVyaw/hvAh/fp5NMCIQUMxt0cP3OIaCtrTS8
+ 6sUVUQCVWjqxkeHob2pEqebgdvT+SapIwRy/LmoM8eiEqwe9HozwGcHtdZgHhsqXwbsC
+ veAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729074501; x=1729679301;
+ d=1e100.net; s=20230601; t=1729074507; x=1729679307;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qBhjMyaS7m28UKrmGr2wsVJl2lrhr5g7YG4lTUQ0QeA=;
- b=OKKRxOTuQY9eUvVd35wXPMkr2nLZQkinNeqtT2D04NdEA8rraJ9UPivZK2VF9coCS/
- InoVWm8b0ADSxKI9Zf7Jr68SvOsx5xZfykbecIGZAjfyYOHCSTeXUiMOWnh8/iRTbTAS
- RCUDHwMZyReP8vGpiTiq3k7Nq6apo1x11tqFhfAf9aWD3Y39kV5UBYNOizegtPoJv+21
- L++JG+yY06fubj0aQ+PuUvylGIjvmkhtVtKddTG12ulb3e6FQhOujCkpU/I2b223dMFF
- HZjB68Cna4xmGr8wDSVMThhGVHwTz40MjuNfSeFEjgDN+Ma8RApaUTWUNlpPNC/pCvT8
- AAFw==
+ bh=NtGdGZ/zn8WcWNHkcuhdBpfqRucUKp/hW6ytn0g9Z6I=;
+ b=AvMu+ajFs4MXrqN/Kw1hvwgc0aO+lh/lkIupTAWPTi1gwPBNnyUrQTSaBmJXOBB/su
+ uSySqQlibnOMg723ZzhTJwjijIAaWMuot79c6pvjJzxSfbojPKbdqq3dXxfNDCS0/8Us
+ 3aVmyffMndN9SU91IoQF8noTgWz36sGHphWVYzDkyx+HYCISagqYMhTMuvJm2cRBuarr
+ lnKiytpmnNH+ibVClKv6fssl8U9xpI6XIw2fmROSS533ad8PgYDHZhs5ri6RGoGZh8jh
+ SagzoXI7vk/pVaa9edeUpHXv4txqsx56K6DYWGCsnmYsO1+N4XUHg2ofeszqXDwAtwsH
+ aFNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwSJzmykssa6xQH3tdmIumHmqC2GoIoMCZl8NeMC11C4am87Sm1g9u2A+X19h7dYECi7MDJmyHL2O9@nongnu.org
-X-Gm-Message-State: AOJu0Yz3DtVGriYgZYPUCArNGDBfDRnewQ5E2p5TD4emRWTpLjwboZaa
- d7ezFWLwQ8JyilQOEKWdD+jdxoLypwQ8hqaFgHNhSNKxnxaaUhpL
-X-Google-Smtp-Source: AGHT+IGlJqsEODxYMPoj0SCj/kWFNA14FL0D/CDM93fwsXU6/6fuvTCbzwp9dbUMjDR96Qv7S+hqPg==
-X-Received: by 2002:a05:6512:b1c:b0:539:9524:92bc with SMTP id
- 2adb3069b0e04-53a03f826f9mr2195662e87.55.1729074500412; 
- Wed, 16 Oct 2024 03:28:20 -0700 (PDT)
+ AJvYcCWhQhFRqjattUhnomP8WKs2gUghE0/Ddgs9+iCzL2IjniTBMN42NThtwlZ0Mxu7llM6gvVy7nLHrUfa@nongnu.org
+X-Gm-Message-State: AOJu0YwZy0OMIxlDBefq9GUrXBBgTj7MrpIDvGGfHFy9mAnVp2GTtXSc
+ cHwifh6vPu2o85pI9IYSmknLST4BCciklmDiMa7AuEygOnq/SZPM
+X-Google-Smtp-Source: AGHT+IExrIANhl29jKyslrSdYdC8026kESn+4GOFQdmZKGtqlKE11ShnDqBmwlrcsOf45q9P95ONIw==
+X-Received: by 2002:a05:6402:2748:b0:5c9:4a9b:31f9 with SMTP id
+ 4fb4d7f45d1cf-5c94a9b5292mr14227939a12.35.1729074506532; 
+ Wed, 16 Oct 2024 03:28:26 -0700 (PDT)
 Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c98d4f85dcsm1566680a12.22.2024.10.16.03.28.20
+ 4fb4d7f45d1cf-5c98d4f85dcsm1566680a12.22.2024.10.16.03.28.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 03:28:20 -0700 (PDT)
+ Wed, 16 Oct 2024 03:28:26 -0700 (PDT)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 3/8] chardev/char: move away mux suspend/resume calls
-Date: Wed, 16 Oct 2024 12:26:00 +0200
-Message-Id: <20241016102605.459395-4-r.peniaev@gmail.com>
+Subject: [PATCH v4 7/8] tests/unit/test-char: add unit test for the `mux-be`
+ multiplexer
+Date: Wed, 16 Oct 2024 12:26:04 +0200
+Message-Id: <20241016102605.459395-8-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241016102605.459395-1-r.peniaev@gmail.com>
 References: <20241016102605.459395-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=r.peniaev@gmail.com; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,265 +99,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The suspend/resume open multiplexer calls are generic
-and will be used for frontend (current mux) and backend
-(will follow) implementations. Move them away from the
-`char-mux-fe.c` to more generic `char.c` file. Also
-for the sake of clarity these renames were made:
-
-  s/suspend_mux_open/mux_suspend_open/g
-  s/resume_mux_open/mux_resume_open/g
-
-No functional changes are made.
+The test is trivial: several backends, 1 `mux-be`, 1 frontend
+do the buffer write and read. Pipe is used for EAGAIN verification.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
 ---
- chardev/char-mux-fe.c      | 63 ++-------------------------------
- chardev/char.c             | 72 ++++++++++++++++++++++++++++++++++++++
- chardev/chardev-internal.h |  3 ++
- include/chardev/char.h     |  5 +--
- system/vl.c                |  4 +--
- 5 files changed, 82 insertions(+), 65 deletions(-)
+ tests/unit/test-char.c | 306 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 304 insertions(+), 2 deletions(-)
 
-diff --git a/chardev/char-mux-fe.c b/chardev/char-mux-fe.c
-index dfaea5aefac3..6a195390a3c9 100644
---- a/chardev/char-mux-fe.c
-+++ b/chardev/char-mux-fe.c
-@@ -34,13 +34,6 @@
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index a1c6bb874c8e..3eb0692b199f 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -178,7 +178,7 @@ static void char_ringbuf_test(void)
+     qemu_opts_del(opts);
+ }
  
- /* MUX driver for serial I/O splitting */
- 
--/*
-- * Set to false by suspend_mux_open.  Open events are delayed until
-- * resume_mux_open.  Usually suspend_mux_open is called before
-- * command line processing and resume_mux_open afterwards.
-- */
--static bool muxes_opened = true;
--
- /* Called with chr_write_lock held.  */
- static int mux_chr_write(Chardev *chr, const uint8_t *buf, int len)
+-static void char_mux_test(void)
++static void char_mux_fe_test(void)
  {
-@@ -248,15 +241,10 @@ static void mux_chr_read(void *opaque, const uint8_t *buf, int size)
-         }
+     QemuOpts *opts;
+     Chardev *chr, *base;
+@@ -359,6 +359,307 @@ static void char_mux_test(void)
+     qmp_chardev_remove("mux-label", &error_abort);
  }
  
--void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event)
-+void mux_fe_chr_send_all_event(MuxFeChardev *d, QEMUChrEvent event)
- {
--    MuxFeChardev *d = MUX_FE_CHARDEV(chr);
-     int bit;
- 
--    if (!muxes_opened) {
--        return;
--    }
--
-     /* Send the event to all registered listeners */
-     bit = -1;
-     while ((bit = find_next_bit(&d->mux_bitset, MAX_MUX, bit + 1)) < MAX_MUX) {
-@@ -381,7 +369,7 @@ static void qemu_chr_open_mux(Chardev *chr,
-     /* only default to opened state if we've realized the initial
-      * set of muxes
-      */
--    *be_opened = muxes_opened;
-+    *be_opened = mux_is_opened();
-     qemu_chr_fe_init(&d->chr, drv, errp);
- }
- 
-@@ -401,53 +389,6 @@ static void qemu_chr_parse_mux(QemuOpts *opts, ChardevBackend *backend,
-     mux->chardev = g_strdup(chardev);
- }
- 
--/**
-- * Called after processing of default and command-line-specified
-- * chardevs to deliver CHR_EVENT_OPENED events to any FEs attached
-- * to a mux chardev. This is done here to ensure that
-- * output/prompts/banners are only displayed for the FE that has
-- * focus when initial command-line processing/machine init is
-- * completed.
-- *
-- * After this point, any new FE attached to any new or existing
-- * mux will receive CHR_EVENT_OPENED notifications for the BE
-- * immediately.
-- */
--static void open_muxes(Chardev *chr)
--{
--    /* send OPENED to all already-attached FEs */
--    mux_chr_send_all_event(chr, CHR_EVENT_OPENED);
--
--    /*
--     * mark mux as OPENED so any new FEs will immediately receive
--     * OPENED event
--     */
--    chr->be_open = 1;
--}
--
--void suspend_mux_open(void)
--{
--    muxes_opened = false;
--}
--
--static int chardev_options_parsed_cb(Object *child, void *opaque)
--{
--    Chardev *chr = (Chardev *)child;
--
--    if (!chr->be_open && CHARDEV_IS_MUX_FE(chr)) {
--        open_muxes(chr);
--    }
--
--    return 0;
--}
--
--void resume_mux_open(void)
--{
--    muxes_opened = true;
--    object_child_foreach(get_chardevs_root(),
--                         chardev_options_parsed_cb, NULL);
--}
--
- static void char_mux_class_init(ObjectClass *oc, void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
-diff --git a/chardev/char.c b/chardev/char.c
-index e077773cdece..d8dbdb6f84f1 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -43,6 +43,13 @@
- 
- #include "chardev-internal.h"
- 
-+/*
-+ * Set to false by mux_suspend_open().  Open events are delayed until
-+ * mux_resume_open().  Usually mux_suspend_open() is called before
-+ * command line processing and mux_resume_open() afterwards.
-+ */
-+static bool muxes_opened = true;
-+
- /***********************************************************/
- /* character device */
- 
-@@ -1259,6 +1266,71 @@ void qemu_chr_cleanup(void)
-     object_unparent(get_chardevs_root());
- }
- 
-+/**
-+ * Called after processing of default and command-line-specified
-+ * chardevs to deliver CHR_EVENT_OPENED events to any FEs attached
-+ * to a mux chardev. This is done here to ensure that
-+ * output/prompts/banners are only displayed for the FE that has
-+ * focus when initial command-line processing/machine init is
-+ * completed.
-+ *
-+ * After this point, any new FE attached to any new or existing
-+ * mux will receive CHR_EVENT_OPENED notifications for the BE
-+ * immediately.
-+ */
-+static void open_muxes(Chardev *chr)
++static void char_mux_be_test(void)
 +{
-+    /* send OPENED to all already-attached FEs */
-+    mux_chr_send_all_event(chr, CHR_EVENT_OPENED);
++    QemuOpts *opts;
++    Chardev *mux_be, *chr1, *chr2, *base;
++    char *data;
++    FeHandler h = { 0, false, 0, false, };
++    Error *error = NULL;
++    CharBackend chr_be;
++    int ret, i;
 +
++#define RB_SIZE 128
++
++    /* Create mux-be */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "mux0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "mux-be", &error_abort);
++    mux_be = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(mux_be);
++    qemu_opts_del(opts);
++
++    /* Check maximum allowed backends */
++    for (i = 0; true; i++) {
++        char name[8];
++
++        snprintf(name, sizeof(name), "chr%d", i);
++        opts = qemu_opts_create(qemu_find_opts("chardev"), name,
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++        qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++        qemu_opt_set(opts, "mux-be-id", "mux0", &error_abort);
++        base = qemu_chr_new_from_opts(opts, NULL, &error);
++        if (error) {
++            const char *err_fmt =
++                "too many uses of multiplexed chardev 'mux0' (maximum is %u)";
++            unsigned n;
++
++            ret = sscanf(error_get_pretty(error), err_fmt, &n);
++            error_free(error);
++            error = NULL;
++            g_assert_cmpint(ret, ==, 1);
++            g_assert_cmpint(i, ==, n);
++            break;
++        }
++        g_assert_nonnull(base);
++        qemu_opts_del(opts);
++    }
++    /* Finalize mux0 */
++    qmp_chardev_remove("mux0", &error_abort);
++
++    /* Finalize all backends */
++    while (i--) {
++        char name[8];
++        snprintf(name, sizeof(name), "chr%d", i);
++        qmp_chardev_remove(name, &error_abort);
++    }
++
++    /* Create mux-be */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "mux0",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "mux-be", &error_abort);
++    mux_be = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(mux_be);
++    qemu_opts_del(opts);
++
++    /* Create chardev which fails */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr1",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    qemu_opt_set(opts, "mux-be-id", "mux0", &error_abort);
++    qemu_opt_set(opts, "mux", "on", &error_abort);
++    chr1 = qemu_chr_new_from_opts(opts, NULL, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "chardev: mux and mux-be "
++                    "can't be used for the same device");
++    error_free(error);
++    error = NULL;
++    qemu_opts_del(opts);
++
++    /* Create first chardev */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr1",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    qemu_opt_set(opts, "mux-be-id", "mux0", &error_abort);
++    chr1 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(chr1);
++    qemu_opts_del(opts);
++
++    /* Create second chardev */
++    opts = qemu_opts_create(qemu_find_opts("chardev"), "chr2",
++                            1, &error_abort);
++    qemu_opt_set(opts, "backend", "ringbuf", &error_abort);
++    qemu_opt_set(opts, "size", stringify(RB_SIZE), &error_abort);
++    qemu_opt_set(opts, "mux-be-id", "mux0", &error_abort);
++    chr2 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++    g_assert_nonnull(chr2);
++    qemu_opts_del(opts);
++
++    /* Attach mux-be to a frontend */
++    qemu_chr_fe_init(&chr_be, mux_be, &error_abort);
++    qemu_chr_fe_set_handlers(&chr_be,
++                             fe_can_read,
++                             fe_read,
++                             fe_event,
++                             NULL,
++                             &h,
++                             NULL, true);
++
++    /* Fails second time */
++    qemu_chr_fe_init(&chr_be, mux_be, &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "multiplexed chardev 'mux0' "
++                    "is already used for multiplexing");
++    error_free(error);
++    error = NULL;
++
++    /* Write to backend, chr1 */
++    base = qemu_chr_find("chr1");
++    g_assert_cmpint(qemu_chr_be_can_write(base), !=, 0);
++
++    qemu_chr_be_write(base, (void *)"hello", 6);
++    g_assert_cmpint(h.read_count, ==, 6);
++    g_assert_cmpstr(h.read_buf, ==, "hello");
++    h.read_count = 0;
++
++    /* Write to backend, chr2 */
++    base = qemu_chr_find("chr2");
++    g_assert_cmpint(qemu_chr_be_can_write(base), !=, 0);
++
++    qemu_chr_be_write(base, (void *)"olleh", 6);
++    g_assert_cmpint(h.read_count, ==, 6);
++    g_assert_cmpstr(h.read_buf, ==, "olleh");
++    h.read_count = 0;
++
++    /* Write to frontend, chr_be */
++    ret = qemu_chr_fe_write(&chr_be, (void *)"heyhey", 6);
++    g_assert_cmpint(ret, ==, 6);
++
++    data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++    g_assert_cmpint(strlen(data), ==, 6);
++    g_assert_cmpstr(data, ==, "heyhey");
++    g_free(data);
++
++    data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++    g_assert_cmpint(strlen(data), ==, 6);
++    g_assert_cmpstr(data, ==, "heyhey");
++    g_free(data);
++
++
++#ifndef _WIN32
 +    /*
-+     * mark mux as OPENED so any new FEs will immediately receive
-+     * OPENED event
++     * Create third chardev to simulate EAGAIN and watcher.
++     * Mainly copied from char_pipe_test().
 +     */
-+    chr->be_open = 1;
-+}
++    {
++        gchar *tmp_path = g_dir_make_tmp("qemu-test-char.XXXXXX", NULL);
++        gchar *in, *out, *pipe = g_build_filename(tmp_path, "pipe", NULL);
++        Chardev *chr3;
++        int fd, len;
++        char buf[128];
 +
-+void mux_suspend_open(void)
-+{
-+    muxes_opened = false;
-+}
++        in = g_strdup_printf("%s.in", pipe);
++        if (mkfifo(in, 0600) < 0) {
++            abort();
++        }
++        out = g_strdup_printf("%s.out", pipe);
++        if (mkfifo(out, 0600) < 0) {
++            abort();
++        }
 +
-+static int chardev_options_parsed_cb(Object *child, void *opaque)
-+{
-+    Chardev *chr = (Chardev *)child;
++        opts = qemu_opts_create(qemu_find_opts("chardev"), "chr3",
++                                1, &error_abort);
++        qemu_opt_set(opts, "backend", "pipe", &error_abort);
++        qemu_opt_set(opts, "path", pipe, &error_abort);
++        qemu_opt_set(opts, "mux-be-id", "mux0", &error_abort);
++        chr3 = qemu_chr_new_from_opts(opts, NULL, &error_abort);
++        g_assert_nonnull(chr3);
 +
-+    if (!chr->be_open && CHARDEV_IS_MUX_FE(chr)) {
-+        open_muxes(chr);
++        /* Write to frontend, chr_be */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"thisis", 6);
++        g_assert_cmpint(ret, ==, 6);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 6);
++        g_assert_cmpstr(data, ==, "thisis");
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 6);
++        g_assert_cmpstr(data, ==, "thisis");
++        g_free(data);
++
++        fd = open(out, O_RDWR);
++        ret = read(fd, buf, sizeof(buf));
++        g_assert_cmpint(ret, ==, 6);
++        buf[ret] = 0;
++        g_assert_cmpstr(buf, ==, "thisis");
++        close(fd);
++
++        /* Add watch. 0 indicates no watches if nothing to wait for */
++        ret = qemu_chr_fe_add_watch(&chr_be, G_IO_OUT | G_IO_HUP,
++                                    NULL, NULL);
++        g_assert_cmpint(ret, ==, 0);
++
++        /*
++         * Write to frontend, chr_be, until EAGAIN. Make sure length is
++         * power of two to fit nicely the whole pipe buffer.
++         */
++        len = 0;
++        while ((ret = qemu_chr_fe_write(&chr_be, (void *)"thisisit", 8))
++               != -1) {
++            len += ret;
++        }
++        g_assert_cmpint(errno, ==, EAGAIN);
++
++        /* Further all writes should cause EAGAIN */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"b", 1);
++        g_assert_cmpint(ret, ==, -1);
++        g_assert_cmpint(errno, ==, EAGAIN);
++
++        /*
++         * Add watch. Non 0 indicates we have a blocked chardev, which
++         * can wakes us up when write is possible.
++         */
++        ret = qemu_chr_fe_add_watch(&chr_be, G_IO_OUT | G_IO_HUP,
++                                    NULL, NULL);
++        g_assert_cmpint(ret, !=, 0);
++        g_source_remove(ret);
++
++        /* Drain pipe and ring buffers */
++        fd = open(out, O_RDWR);
++        while ((ret = read(fd, buf, MIN(sizeof(buf), len))) != -1 && len > 0) {
++            len -= ret;
++        }
++        close(fd);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 128);
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 128);
++        g_free(data);
++
++        /*
++         * Now we are good to go, first repeat "lost" sequence, which
++         * was already consumed and drained by the ring buffers, but
++         * pipe have not recieved that yet.
++         */
++        ret = qemu_chr_fe_write(&chr_be, (void *)"thisisit", 8);
++        g_assert_cmpint(ret, ==, 8);
++
++        ret = qemu_chr_fe_write(&chr_be, (void *)"streamisrestored", 16);
++        g_assert_cmpint(ret, ==, 16);
++
++        data = qmp_ringbuf_read("chr1", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 16);
++        /* Only last 16 bytes, see big comment above */
++        g_assert_cmpstr(data, ==, "streamisrestored");
++        g_free(data);
++
++        data = qmp_ringbuf_read("chr2", RB_SIZE, false, 0, &error_abort);
++        g_assert_cmpint(strlen(data), ==, 16);
++        /* Only last 16 bytes, see big comment above */
++        g_assert_cmpstr(data, ==, "streamisrestored");
++        g_free(data);
++
++        fd = open(out, O_RDWR);
++        ret = read(fd, buf, sizeof(buf));
++        g_assert_cmpint(ret, ==, 24);
++        buf[ret] = 0;
++        /* Both 8 and 16 bytes */
++        g_assert_cmpstr(buf, ==, "thisisitstreamisrestored");
++        close(fd);
 +    }
++#endif
 +
-+    return 0;
++    /* Can't be removed, depends on mux0 */
++    qmp_chardev_remove("chr1", &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "Chardev 'chr1' is busy");
++    error_free(error);
++    error = NULL;
++
++    /* Can't be removed, depends on frontend chr_be */
++    qmp_chardev_remove("mux0", &error);
++    g_assert_cmpstr(error_get_pretty(error), ==, "Chardev 'mux0' is busy");
++    error_free(error);
++    error = NULL;
++
++    /* Finalize frontend */
++    qemu_chr_fe_deinit(&chr_be, false);
++
++    /* Finalize mux0 */
++    qmp_chardev_remove("mux0", &error_abort);
++
++    /* Finalize backend chardevs */
++    qmp_chardev_remove("chr1", &error_abort);
++    qmp_chardev_remove("chr2", &error_abort);
++#ifndef _WIN32
++    qmp_chardev_remove("chr3", &error_abort);
++#endif
 +}
-+
-+void mux_resume_open(void)
-+{
-+    muxes_opened = true;
-+    object_child_foreach(get_chardevs_root(),
-+                         chardev_options_parsed_cb, NULL);
-+}
-+
-+bool mux_is_opened(void)
-+{
-+    return muxes_opened;
-+}
-+
-+void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event)
-+{
-+    if (!mux_is_opened()) {
-+        return;
-+    }
-+
-+    if (CHARDEV_IS_MUX_FE(chr)) {
-+        MuxFeChardev *d = MUX_FE_CHARDEV(chr);
-+
-+        mux_fe_chr_send_all_event(d, event);
-+    }
-+}
-+
- static void register_types(void)
+ 
+ static void websock_server_read(void *opaque, const uint8_t *buf, int size)
  {
-     type_register_static(&char_type_info);
-diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
-index 321051bb9cc5..c874850a41ad 100644
---- a/chardev/chardev-internal.h
-+++ b/chardev/chardev-internal.h
-@@ -65,6 +65,9 @@ bool mux_chr_detach_frontend(MuxFeChardev *d, unsigned int tag);
- void mux_set_focus(Chardev *chr, unsigned int focus);
- void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event);
- 
-+/* Mux type dependent calls */
-+void mux_fe_chr_send_all_event(MuxFeChardev *d, QEMUChrEvent event);
-+
- Object *get_chardevs_root(void);
- 
- #endif /* CHARDEV_INTERNAL_H */
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index d9d23b6232db..0bec974f9d73 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -317,7 +317,8 @@ extern int term_escape_char;
- GSource *qemu_chr_timeout_add_ms(Chardev *chr, guint ms,
-                                  GSourceFunc func, void *private);
- 
--void suspend_mux_open(void);
--void resume_mux_open(void);
-+bool mux_is_opened(void);
-+void mux_suspend_open(void);
-+void mux_resume_open(void);
- 
- #endif
-diff --git a/system/vl.c b/system/vl.c
-index e83b3b2608bf..b3cbfe2c0f84 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3679,7 +3679,7 @@ void qemu_init(int argc, char **argv)
- 
-     qemu_create_machine(machine_opts_dict);
- 
--    suspend_mux_open();
-+    mux_suspend_open();
- 
-     qemu_disable_default_devices();
-     qemu_setup_display();
-@@ -3757,5 +3757,5 @@ void qemu_init(int argc, char **argv)
-     qemu_init_displays();
-     accel_setup_post(current_machine);
-     os_setup_post();
--    resume_mux_open();
-+    mux_resume_open();
- }
+@@ -1506,7 +1807,8 @@ int main(int argc, char **argv)
+     g_test_add_func("/char/null", char_null_test);
+     g_test_add_func("/char/invalid", char_invalid_test);
+     g_test_add_func("/char/ringbuf", char_ringbuf_test);
+-    g_test_add_func("/char/mux", char_mux_test);
++    g_test_add_func("/char/mux", char_mux_fe_test);
++    g_test_add_func("/char/mux-be", char_mux_be_test);
+ #ifdef _WIN32
+     g_test_add_func("/char/console/subprocess", char_console_test_subprocess);
+     g_test_add_func("/char/console", char_console_test);
 -- 
 2.34.1
 
