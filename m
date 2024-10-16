@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346F1D2A559
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D68D2A559
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1AMb-0004zY-BP; Wed, 16 Oct 2024 16:11:24 -0400
+	id 1t1AN2-0005cb-Q4; Wed, 16 Oct 2024 16:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AMY-0004yT-Gs; Wed, 16 Oct 2024 16:11:18 -0400
+ id 1t1AN0-0005bJ-V8; Wed, 16 Oct 2024 16:11:47 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AMW-0000il-Ro; Wed, 16 Oct 2024 16:11:18 -0400
+ id 1t1AMy-0000l0-I8; Wed, 16 Oct 2024 16:11:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C6B2198F9E;
- Wed, 16 Oct 2024 23:10:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D994498FA3;
+ Wed, 16 Oct 2024 23:10:11 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A002815637E;
- Wed, 16 Oct 2024 23:10:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BE9D2156383;
+ Wed, 16 Oct 2024 23:10:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gavin Shan <gshan@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 44/49] hw/char/pl011: Use correct masks for IBRD and
- FBRD
-Date: Wed, 16 Oct 2024 23:10:03 +0300
-Message-Id: <20241016201025.256294-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 49/49] ui/dbus: fix filtering all update messages
+Date: Wed, 16 Oct 2024 23:10:08 +0300
+Message-Id: <20241016201025.256294-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
@@ -63,52 +61,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-In commit b88cfee90268cad we defined masks for the IBRD and FBRD
-integer and fractional baud rate divider registers, to prevent the
-guest from writing invalid values which could cause division-by-zero.
-Unfortunately we got the mask values the wrong way around: the FBRD
-register is six bits and the IBRD register is 16 bits, not
-vice-versa.
+Filtering pending messages when a new scanout is given shouldn't discard
+pending cursor changes, for example.
 
-You would only run into this bug if you programmed the UART to a baud
-rate of less than 9600, because for 9600 baud and above the IBRD
-value will fit into 6 bits, as per the table in
- https://developer.arm.com/documentation/ddi0183/g/programmers-model/register-descriptions/fractional-baud-rate-register--uartfbrd
+Since filtering happens in a different thread, use atomic set/get.
 
-The only visible effects would be that the value read back from
-the register by the guest would be truncated, and we would
-print an incorrect baud rate in the debug logs.
+Fixes: fa88b85dea ("ui/dbus: filter out pending messages when scanout")
 
-Cc: qemu-stable@nongnu.org
-Fixes: b88cfee90268 ("hw/char/pl011: Avoid division-by-zero in pl011_get_baudrate()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2610
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Message-id: 20241007144732.2491331-1-peter.maydell@linaro.org
-(cherry picked from commit cd247eae16ab1b9ce97fd34c000c1b883feeda45)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20241008125028.1177932-6-marcandre.lureau@redhat.com>
+(cherry picked from commit cf59889781297a5618f1735a5f31402caa806b42)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index f8078aa216..949e9d0e0d 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -88,10 +88,10 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
- #define CR_LBE      (1 << 7)
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 434bd608f2..c69afc05a8 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -26,6 +26,7 @@
+ #include "qapi/error.h"
+ #include "sysemu/sysemu.h"
+ #include "dbus.h"
++#include "glib.h"
+ #ifdef G_OS_UNIX
+ #include <gio/gunixfdlist.h>
+ #endif
+@@ -85,7 +86,7 @@ struct _DBusDisplayListener {
+ #endif
  
- /* Integer Baud Rate Divider, UARTIBRD */
--#define IBRD_MASK 0x3f
-+#define IBRD_MASK 0xffff
+     guint dbus_filter;
+-    guint32 out_serial_to_discard;
++    guint32 display_serial_to_discard;
+ };
  
- /* Fractional Baud Rate Divider, UARTFBRD */
--#define FBRD_MASK 0xffff
-+#define FBRD_MASK 0x3f
+ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+@@ -93,10 +94,12 @@ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+ static void dbus_gfx_update(DisplayChangeListener *dcl,
+                             int x, int y, int w, int h);
  
- static const unsigned char pl011_id_arm[8] =
-   { 0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1 };
+-static void ddl_discard_pending_messages(DBusDisplayListener *ddl)
++static void ddl_discard_display_messages(DBusDisplayListener *ddl)
+ {
+-    ddl->out_serial_to_discard = g_dbus_connection_get_last_serial(
++    guint32 serial = g_dbus_connection_get_last_serial(
+         g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
++
++    g_atomic_int_set(&ddl->display_serial_to_discard, serial);
+ }
+ 
+ #ifdef CONFIG_OPENGL
+@@ -290,7 +293,7 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
+         return;
+     }
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     width = qemu_dmabuf_get_width(dmabuf);
+     height = qemu_dmabuf_get_height(dmabuf);
+@@ -338,7 +341,7 @@ static bool dbus_scanout_map(DBusDisplayListener *ddl)
+         return false;
+     }
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     if (!qemu_dbus_display1_listener_win32_map_call_scanout_map_sync(
+             ddl->map_proxy,
+@@ -401,7 +404,7 @@ dbus_scanout_share_d3d_texture(
+         return false;
+     }
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     qemu_dbus_display1_listener_win32_d3d11_call_scanout_texture2d(
+         ddl->d3d11_proxy,
+@@ -659,7 +662,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
+         surface_stride(ddl->ds) * surface_height(ddl->ds), TRUE,
+         (GDestroyNotify)pixman_image_unref, pixman_image_ref(ddl->ds->image));
+ 
+-    ddl_discard_pending_messages(ddl);
++    ddl_discard_display_messages(ddl);
+ 
+     qemu_dbus_display1_listener_call_scanout(
+         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
+@@ -992,17 +995,35 @@ dbus_filter(GDBusConnection *connection,
+             gpointer         user_data)
+ {
+     DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(user_data);
+-    guint32 serial;
++    guint32 serial, discard_serial;
+ 
+     if (incoming) {
+         return message;
+     }
+ 
+     serial = g_dbus_message_get_serial(message);
+-    if (serial <= ddl->out_serial_to_discard) {
+-        trace_dbus_filter(serial, ddl->out_serial_to_discard);
+-        g_object_unref(message);
+-        return NULL;
++
++    discard_serial = g_atomic_int_get(&ddl->display_serial_to_discard);
++    if (serial <= discard_serial) {
++        const char *member = g_dbus_message_get_member(message);
++        static const char *const display_messages[] = {
++            "Scanout",
++            "Update",
++#ifdef CONFIG_GBM
++            "ScanoutDMABUF",
++            "UpdateDMABUF",
++#endif
++            "ScanoutMap",
++            "UpdateMap",
++            "Disable",
++            NULL,
++        };
++
++        if (g_strv_contains(display_messages, member)) {
++            trace_dbus_filter(serial, discard_serial);
++            g_object_unref(message);
++            return NULL;
++        }
+     }
+ 
+     return message;
 -- 
 2.39.5
 
