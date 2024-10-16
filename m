@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5B5D2F7C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71261D2F7C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1BVN-000293-Eg; Wed, 16 Oct 2024 17:24:29 -0400
+	id 1t1BVI-00026i-Gw; Wed, 16 Oct 2024 17:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t1BVL-00028J-LI; Wed, 16 Oct 2024 17:24:27 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1t1BVH-00026D-34; Wed, 16 Oct 2024 17:24:23 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t1BVJ-00013U-WB; Wed, 16 Oct 2024 17:24:27 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a99cc265e0aso30576566b.3; 
- Wed, 16 Oct 2024 14:24:25 -0700 (PDT)
+ id 1t1BVF-00012l-Jz; Wed, 16 Oct 2024 17:24:22 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a9a3dc089d8so35288266b.3; 
+ Wed, 16 Oct 2024 14:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729113864; x=1729718664; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729113859; x=1729718659; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s3D1Ytcxm8HdYzUOAcr5hC/ohLTIwUIkdZ77sZiIviA=;
- b=DE48Xfwa+3rDm2Rcqy8ZJ9R036mZBf+V+ObGXG2XIzkMBeGIFXV4797nPOzofUAQwz
- gTIjzsMK4PF+1nqCum8D/hSmUMa3xLDKK1Ph1zCYFb9IFttb+Nt/KuqtkzpU3+1T5/An
- eGFbcBsWJOhVWaWj4fKlo0nCLMLZNbho0vre+E8wiPx5ygh91juNasxHvYi7Kan/WhcE
- 4PJFP5oUhO4UXsDgmQAvDtsTOkKHIvtnd2kV2gb7zyUc/ROyK7oJQGo+CBIh0uParW86
- iOE3dHtgwZpf8H/J/5S8HUOn+PSYJkVenm4bIaGtlMUpmEzzwSdVy+gPqBdEvbOmunA3
- bImA==
+ bh=IVwI7uw91/Pzkk9Jwk813s5wFhg5RsQ7pjAvW6ZM0yk=;
+ b=RWOAG7oYfTNfVRMiQMzHqb5HQibO/pAav7cYa8FlEJFBsf4rUBne8cD2OcO6zviTHr
+ BIRIZtBbhFAxA83rIpobOdIjvZaLuEwRwKLQlMJgfvITOi89KkFjS0ybMNahIL4UMSN1
+ iL/jv4WJKGo57GoUdeeloUztWU1uXyrdMDNhq+EzSidn3ateUzBBiXJJFAIHppsfUpO0
+ iObzxSbaxllZx2/Spm7ywmI3VNByVk/YRoAxMCubQsXUIsW+FnBI3GdZt65lLQjMBwrh
+ 17nASplr3lwfMszM1BvD3mw8WSUAZNdZNF3aqAk9/sDJ9SHjoDBk2Y2mBViBgFViozj+
+ wDHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729113864; x=1729718664;
+ d=1e100.net; s=20230601; t=1729113859; x=1729718659;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s3D1Ytcxm8HdYzUOAcr5hC/ohLTIwUIkdZ77sZiIviA=;
- b=PkePhFFsbQ87RsqkSxWsxSEGNzYfKS8URp03wgCp08lK0N3h5eyUk7cRc9LuSPdpCC
- uD0CoVQ0b736mJnyDHUmSsinakGlg3G/G72STawlYJ03MErcBkO/o5fYeYU0UMDUZzHd
- L+ZO865tQWR12M9yY9OLL4mVFB58DJNq3YG3R1K436fmy3liHR695O5lSsJgrFzubWk3
- DYm9aT3v+AjvIlfMyAJ4spMIJY/2FcM+3kGPhC7KCgk9Aa/6y8tVbpZZ18vN9RoNW9Pe
- u7bOeVI43LqYDjDnMFXRc5WosH2Oy2irqIqkxGsNWzXCxVM2HKt5He3dMehdTkitzfNR
- 8Qnw==
+ bh=IVwI7uw91/Pzkk9Jwk813s5wFhg5RsQ7pjAvW6ZM0yk=;
+ b=w3pq7gVxGb1GGvep8E1m6gaJG+6CROnvxsozml2zwqf7kEFQeh3PaMsGgkm/JirnhY
+ tDK1Enb+uqNyCdpOKi67+c303punnV9G2zC/tV6tWenobPke42X+jAWcTkKRIBODR7e9
+ I/I3nkh0eacdihncORtbbQfsKkhvteoEKVxOLaBAlGrhJGvTQqkwFpsvPIUSEVAA/2b9
+ GR+ty8iLKIm3XucfTGZr7WlB4wudNsVMsoEBic4NLomwnPgBr9uGTNIqoxWbdPXtXYsB
+ 2K0MkIGq4FgBv2BKqz2j7fi6Fe3INsuLPomgE3GWmyXpqQeoTtpwQkDTwRTQVUNULl+6
+ w1TQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAmCGOGtiXlYgVv1EoCkwTY6zpt1Nd2+fUW5S8eTbWgnaLUR+OQlDldrcRnDaN6CgQJsvlBwzMNA==@nongnu.org
-X-Gm-Message-State: AOJu0YyIS28VK8nB56LPW8zzN9vMD1SYJf+n6bAQ/8yxV8Jy8QL1cfDg
- ktdHyLX8s0aUgGtWiNe/B7/YBmnYSfdyXmIoeFB1JrB/+VjkqfmFtei3Fw==
-X-Google-Smtp-Source: AGHT+IGKd6OCOFOXu70RnPZ5BIRXoEUXsWNL/Z0Cu4hqm77oN25SshSthKtc+bRYb921VB0JzPTuBg==
-X-Received: by 2002:a17:907:e25f:b0:a99:529d:81ae with SMTP id
- a640c23a62f3a-a9a34e4c8e8mr398739366b.55.1729113863610; 
- Wed, 16 Oct 2024 14:24:23 -0700 (PDT)
+ AJvYcCW7VmfSIG/enfooUthViXOut56iDursRKTzeNSdF02ee5Wl3FazNw5J/WB3f+DaNSFq8OXQJQJZ7A==@nongnu.org
+X-Gm-Message-State: AOJu0Yxi5PV3bDI0FoUReJQE40PbvgBxdijEz7N4WG7p6IVtv+H6pNxX
+ o6CQT15Y/ELWtO9v+mRWOdDhUpL4lWOjWGjl6uLg9HLjbHcsy0S2PeG0ng==
+X-Google-Smtp-Source: AGHT+IErxbozJzZLEWdF0Ml4Mwe7FQHVIjkej4uQ+e6cllNdotEIZ7aupqpVDMk801ar+h6ZlrvmzQ==
+X-Received: by 2002:a17:907:788:b0:a99:46dd:f397 with SMTP id
+ a640c23a62f3a-a99e3e9c018mr1643215366b.64.1729113858896; 
+ Wed, 16 Oct 2024 14:24:18 -0700 (PDT)
 Received: from archlinux.. (dynamic-077-191-025-143.77.191.pool.telefonica.de.
  [77.191.25.143]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a29750a9asm218005766b.88.2024.10.16.14.24.22
+ a640c23a62f3a-a9a29750a9asm218005766b.88.2024.10.16.14.24.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 14:24:22 -0700 (PDT)
+ Wed, 16 Oct 2024 14:24:17 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 4/5] hw/net/lan9118_phy: Reuse MII constants
-Date: Wed, 16 Oct 2024 23:24:06 +0200
-Message-ID: <20241016212407.139390-5-shentey@gmail.com>
+Subject: [PATCH v2 1/5] hw/resettable: Add SOFT reset type
+Date: Wed, 16 Oct 2024 23:24:03 +0200
+Message-ID: <20241016212407.139390-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241016212407.139390-1-shentey@gmail.com>
 References: <20241016212407.139390-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,163 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer named constants over magic values for better readability.
+This is a preparation for the next patch.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/net/mii.h |  6 +++++
- hw/net/lan9118_phy.c | 59 +++++++++++++++++++++++++++-----------------
- 2 files changed, 43 insertions(+), 22 deletions(-)
+ include/hw/resettable.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/net/mii.h b/include/hw/net/mii.h
-index f7feddac9b..55bf7c92a1 100644
---- a/include/hw/net/mii.h
-+++ b/include/hw/net/mii.h
-@@ -71,6 +71,7 @@
- #define MII_BMSR_JABBER     (1 << 1)  /* Jabber detected */
- #define MII_BMSR_EXTCAP     (1 << 0)  /* Ext-reg capability */
+diff --git a/include/hw/resettable.h b/include/hw/resettable.h
+index fd862f1e9f..0f25beaf21 100644
+--- a/include/hw/resettable.h
++++ b/include/hw/resettable.h
+@@ -40,6 +40,7 @@ typedef enum ResetType {
+     RESET_TYPE_WAKEUP,
+     RESET_TYPE_S390_CPU_INITIAL,
+     RESET_TYPE_S390_CPU_NORMAL,
++    RESET_TYPE_SOFT,
+ } ResetType;
  
-+#define MII_ANAR_RFAULT     (1 << 13) /* Say we can detect faults */
- #define MII_ANAR_PAUSE_ASYM (1 << 11) /* Try for asymmetric pause */
- #define MII_ANAR_PAUSE      (1 << 10) /* Try for pause */
- #define MII_ANAR_TXFD       (1 << 8)
-@@ -78,6 +79,7 @@
- #define MII_ANAR_10FD       (1 << 6)
- #define MII_ANAR_10         (1 << 5)
- #define MII_ANAR_CSMACD     (1 << 0)
-+#define MII_ANAR_SELECT     (0x001f)  /* Selector bits */
- 
- #define MII_ANLPAR_ACK      (1 << 14)
- #define MII_ANLPAR_PAUSEASY (1 << 11) /* can pause asymmetrically */
-@@ -112,6 +114,10 @@
- #define RTL8201CP_PHYID1    0x0000
- #define RTL8201CP_PHYID2    0x8201
- 
-+/* SMSC LAN9118 */
-+#define SMSCLAN9118_PHYID1  0x0007
-+#define SMSCLAN9118_PHYID2  0xc0d1
-+
- /* RealTek 8211E */
- #define RTL8211E_PHYID1     0x001c
- #define RTL8211E_PHYID2     0xc915
-diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
-index 06e19c22c9..dafea5a875 100644
---- a/hw/net/lan9118_phy.c
-+++ b/hw/net/lan9118_phy.c
-@@ -14,6 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/net/lan9118_phy.h"
-+#include "hw/net/mii.h"
- #include "hw/irq.h"
- #include "hw/resettable.h"
- #include "migration/vmstate.h"
-@@ -40,11 +41,11 @@ void lan9118_phy_update_link(Lan9118PhyState *s, bool link_down)
-     /* Autonegotiation status mirrors link status. */
-     if (link_down) {
-         trace_lan9118_phy_update_link("down");
--        s->status &= ~0x0024;
-+        s->status &= ~(MII_BMSR_AN_COMP | MII_BMSR_LINK_ST);
-         s->ints |= PHY_INT_DOWN;
-     } else {
-         trace_lan9118_phy_update_link("up");
--        s->status |= 0x0024;
-+        s->status |= MII_BMSR_AN_COMP | MII_BMSR_LINK_ST;
-         s->ints |= PHY_INT_ENERGYON;
-         s->ints |= PHY_INT_AUTONEG_COMPLETE;
-     }
-@@ -57,9 +58,18 @@ static void lan9118_phy_reset(Object *obj, ResetType type)
- 
-     trace_lan9118_phy_reset();
- 
--    s->status = 0x7809;
--    s->control = 0x3000;
--    s->advertise = 0x01e1;
-+    s->status = MII_BMSR_100TX_FD
-+                | MII_BMSR_100TX_HD
-+                | MII_BMSR_10T_FD
-+                | MII_BMSR_10T_HD
-+                | MII_BMSR_AUTONEG
-+                | MII_BMSR_EXTCAP;
-+    s->control = MII_BMCR_AUTOEN | MII_BMCR_SPEED100;
-+    s->advertise = MII_ANAR_TXFD
-+                   | MII_ANAR_TX
-+                   | MII_ANAR_10FD
-+                   | MII_ANAR_10
-+                   | MII_ANAR_CSMACD;
-     s->int_mask = 0;
-     s->ints = 0;
-     lan9118_phy_update_link(s, s->link_down);
-@@ -70,26 +80,26 @@ uint32_t lan9118_phy_read(Lan9118PhyState *s, int reg)
-     uint32_t val;
- 
-     switch (reg) {
--    case 0: /* Basic Control */
-+    case MII_BMCR:
-         val = s->control;
-         break;
--    case 1: /* Basic Status */
-+    case MII_BMSR:
-         val = s->status;
-         break;
--    case 2: /* ID1 */
--        val = 0x0007;
-+    case MII_PHYID1:
-+        val = SMSCLAN9118_PHYID1;
-         break;
--    case 3: /* ID2 */
--        val = 0xc0d1;
-+    case MII_PHYID2:
-+        val = SMSCLAN9118_PHYID2;
-         break;
--    case 4: /* Auto-neg advertisement */
-+    case MII_ANAR:
-         val = s->advertise;
-         break;
--    case 5: /* Auto-neg Link Partner Ability */
-+    case MII_ANLPAR:
-         val = 0x0f71;
-         break;
--    case 6: /* Auto-neg Expansion */
--        val = 1;
-+    case MII_ANER:
-+        val = MII_ANER_NWAY;
-         break;
-     case 29: /* Interrupt source. */
-         val = s->ints;
-@@ -124,19 +134,24 @@ void lan9118_phy_write(Lan9118PhyState *s, int reg, uint32_t val)
-     trace_lan9118_phy_write(val, reg);
- 
-     switch (reg) {
--    case 0: /* Basic Control */
--        if (val & 0x8000) {
-+    case MII_BMCR:
-+        if (val & MII_BMCR_RESET) {
-             lan9118_phy_reset(OBJECT(s), RESET_TYPE_SOFT);
-         } else {
--            s->control = val & 0x7980;
-+            s->control = val & (MII_BMCR_LOOPBACK | MII_BMCR_SPEED100 |
-+                                MII_BMCR_AUTOEN | MII_BMCR_PDOWN | MII_BMCR_FD |
-+                                MII_BMCR_CTST);
-             /* Complete autonegotiation immediately. */
--            if (val & 0x1000) {
--                s->status |= 0x0020;
-+            if (val & MII_BMCR_AUTOEN) {
-+                s->status |= MII_BMSR_AN_COMP;
-             }
-         }
-         break;
--    case 4: /* Auto-neg advertisement */
--        s->advertise = (val & 0x2d7f) | 0x80;
-+    case MII_ANAR:
-+        s->advertise = (val & (MII_ANAR_RFAULT | MII_ANAR_PAUSE_ASYM |
-+                               MII_ANAR_PAUSE | MII_ANAR_10FD | MII_ANAR_10 |
-+                               MII_ANAR_SELECT))
-+                     | MII_ANAR_TX;
-         break;
-     case 30: /* Interrupt mask */
-         s->int_mask = val & 0xff;
+ /*
 -- 
 2.47.0
 
