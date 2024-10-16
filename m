@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3789D1AD46
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C50D1AD42
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t11Gh-0003la-Av; Wed, 16 Oct 2024 06:28:39 -0400
+	id 1t11Kd-0000lb-Vi; Wed, 16 Oct 2024 06:32:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11Gc-0003k9-4i
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:34 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <trdthg47@gmail.com>)
+ id 1t11Kb-0000kt-ES; Wed, 16 Oct 2024 06:32:41 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11GY-0004AP-Ib
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:33 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c94c4ad9d8so7269213a12.2
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 03:28:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <trdthg47@gmail.com>)
+ id 1t11KZ-0004tT-G4; Wed, 16 Oct 2024 06:32:41 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e290200a560so5666520276.1; 
+ Wed, 16 Oct 2024 03:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729074507; x=1729679307; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1729074758; x=1729679558; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1du4d0NmPYqLOtlMCdpgrqgdr5HPrFmwCgaSazfzxPk=;
- b=PnSS/DfaRLmK3P5eKCelT4EAR/SsOoK83qf8xKepdl1blAmXIGkuvPMmcDGFqfQ4nq
- miofiwgLKpSHMCFZoXnUKxQQsp5NzoXo5KMGBVC2SA+QOL2WXKuagZ8BtQd7NMqZ91yf
- fbStiMgZzPlnCXT2jTC7+Y7/llbQHUzQq2c2ZFUXXGIwRGNRBlaUzTrivoSsaeG0GmJv
- CMymK2V8u1EIOVJTS5Wmo/gXSYkxFo4FNR7RgXSBb6AOd7meUx6pIeX06bs3laQDIZ7+
- kXhSueQQOLeovHqzwGhV+kbOKpAFesr6fiJczmUQ7feQDiVLTrxYI95szIt7ovRIh3Ns
- HI+Q==
+ bh=6cF+emqqZwA8vU2jqnm2vx8kuQeFg0waOSmcB6zO3L8=;
+ b=l28/w4qMJyd7HF/iaweRVAbVhit0EfVVVxHkE4/e3C+91jgKxBMvy/rn1GtrqfxCGd
+ AvX8l4P7Jm37x/uJffPx1HZ2O2VhjCukWW4j4Y8hl8Fa2gd3iLs059aUNg+lBYgUKUdh
+ VqQPnSVDklDDAbIpBkQElogSK1AuLPAMj+xT1LtZnDpC3Wi8gTivAO4NJyi7yLcge0SQ
+ AyO8t+q6SNWn/qVJ2KeOvv6HaVi/+FbmrwBGm7QQ2DL5a+akDkhbU9cvdhs2OW3Ff5Dm
+ G1X24mnucmRME/wxPZ3i4xfNrY3taDUSNw82l0ukTnYg/jmH7WF03cM6Xy40nolm9aWK
+ Qydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729074507; x=1729679307;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729074758; x=1729679558;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1du4d0NmPYqLOtlMCdpgrqgdr5HPrFmwCgaSazfzxPk=;
- b=c2qcJRSlUXo2mNhXLnMiMzNJ4dLjYN/yYVFWd1ahgKlWeVFKIdfcx5KFNBC2fK9u0W
- Kp4ohRngeRr2VtM7nXBWs0sr5nBSfH8RnPLGFQ/QMTcGWqjeL9rXQRMB0e6ELA/NL2zw
- TiLh3oiHopBKJ2KHCwGiTS5vlr+eDjgm0VsjnwfE9+u39KuP8gwAS+wkGlc89nq+X28k
- MEL+4qaWw1WgNAN3yifGTl6VE+zh6B1IHHPQpx0BxzlGy6DFzIpwjiL8QonFLJWrFovu
- mRL23pGwuHhFVsYuodoJ5hHX2DLkGU+PaUmPFfDPaqS9a5bXRylNfOTdiATsFD48/y1i
- srrw==
+ bh=6cF+emqqZwA8vU2jqnm2vx8kuQeFg0waOSmcB6zO3L8=;
+ b=cN/qShiwLc4oxeTvypqhzeLtnZ+OthyQDGOiel/7w581ZkkRaRsse464OmMUA8yoLB
+ 8D0Gl8l3nP/TBq6iAsjwOsvGMfZTeVgf05fml4zQZ9KTqaZ5XfxrppJWvaEXhgFHLgdS
+ vuXHeWsPK51rguFek56ageGjtM4V0udQ5jRjaFCt+2BMy3ShjnmXlfix0LvvVJFAdHky
+ eoAE0P37rRv6oIW7BIOvTImPTOnATHqO1/Rhg7N2DzFl9EV2AUvl0Q8lxLjQAU0LZENX
+ yTB7c6NHcQkOMlKoHdZsJ5TbTLU42rpsBs1tHbEYt5BlRvkoOcH+4/fXZ0kSVL4SbjoQ
+ pEpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsQaDWX3UkDvInPdd/tvnR2hdePu3NERS75EIQ2yoyrQ02g0Nw0wH+P/TuxXAeE5kuPdMsd14cMhhX@nongnu.org
-X-Gm-Message-State: AOJu0YxPiu7IAAFuJDBI7RhhSTkuxSGjo28+UkqKYP5Cp9nnK0cijjQW
- BnFjjf1VoMv/dHbjAsVYwSX35da1v3g5pGUPWvTZ/44bT82RC52v
-X-Google-Smtp-Source: AGHT+IHGSF66ekJ56SaZBd0NJDAfGTMgHJl/bC8O8ht2s+Gn1S82RNxYq3Fx1z2Y0eY2xrH/0NqGRw==
-X-Received: by 2002:a05:6402:3491:b0:5c9:5c40:6d9a with SMTP id
- 4fb4d7f45d1cf-5c95c4070f8mr9287248a12.34.1729074507301; 
- Wed, 16 Oct 2024 03:28:27 -0700 (PDT)
-Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c98d4f85dcsm1566680a12.22.2024.10.16.03.28.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 03:28:26 -0700 (PDT)
-From: Roman Penyaev <r.peniaev@gmail.com>
-To: 
-Cc: Roman Penyaev <r.peniaev@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 8/8] qemu-options.hx: describe multiplexing of several
- backend devices
-Date: Wed, 16 Oct 2024 12:26:05 +0200
-Message-Id: <20241016102605.459395-9-r.peniaev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241016102605.459395-1-r.peniaev@gmail.com>
-References: <20241016102605.459395-1-r.peniaev@gmail.com>
+ AJvYcCX8tyl6jsopbdxoiwc2iqaBcu6w0gSXOs9RLs/XrvP1lB05clHatjnCOZBjlQ1P6WYebYoWtFYkWqik@nongnu.org
+X-Gm-Message-State: AOJu0YxTURwJxL65RdGOpR55R/2Cvcu6EutyhEjSzZe1bBFsbB+Xqict
+ N8SqgmPAhh2YYr302Pnkmrpj493gDJOvuw2/iBPqCpUnVwb94gM0bI2wB55x7EYdj0hnJxjpZCl
+ GJRSDSLOLNbx6iN/8I5flaEo7lkk=
+X-Google-Smtp-Source: AGHT+IERYO1ZRkxjCcNXy/GwxjeUikhzP7sOm7RS9fqpI8aJjRDZuPIagpIt/j1i+oOhErMUtfaqvxBd8RXh5Km1xPA=
+X-Received: by 2002:a05:6902:1105:b0:e28:f8e6:f74c with SMTP id
+ 3f1490d57ef6-e2931b53f8fmr9428350276.29.1729074757628; Wed, 16 Oct 2024
+ 03:32:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240927083508.59483-1-yanmingzhu@iscas.ac.cn>
+ <CAKmqyKMobSzu-q8jdPhAU9PMG2GsGG1eOsemSS-Ny2vrX+wSbQ@mail.gmail.com>
+ <52abee8d.225ee.1928a805a21.Coremail.yanmingzhu@iscas.ac.cn>
+ <CAKmqyKOvgXKg+WioV2P1+Pe_DfgY1uUYs3cmMFQ8UtefPdDYKw@mail.gmail.com>
+ <CAPVrrNLf449o57ZsC-T5qZeWJcQvvfOBVd+U+m60dwzvf3RBxg@mail.gmail.com>
+In-Reply-To: <CAPVrrNLf449o57ZsC-T5qZeWJcQvvfOBVd+U+m60dwzvf3RBxg@mail.gmail.com>
+From: Trd thg <trdthg47@gmail.com>
+Date: Wed, 16 Oct 2024 18:32:27 +0800
+Message-ID: <CAPVrrNJTasrpMxbWFacFGQkvgf1LRyZoJpn1Z-9E-_iXmGfuyA@mail.gmail.com>
+Subject: Fwd: Re: [PATCH] hw/char/riscv_htif: Fix htif_mm_write that causes
+ infinite loop in ACT.
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ MingZhu Yan <yanmingzhu@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=trdthg47@gmail.com; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,144 +96,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds a few lines describing `mux-be` multiplexer configuration
-for multiplexing several backend devices with a single frontend
-device.
+Sorry about the email style, I'm not familiar with it yet
 
-Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
----
- qemu-options.hx | 78 ++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 58 insertions(+), 20 deletions(-)
+> It's probably worth including this in the commit message.
+Agree, I'll do it.
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index daae49414740..dd5dfe8596f0 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3677,37 +3677,37 @@ DEFHEADING(Character device options:)
- 
- DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
-     "-chardev help\n"
--    "-chardev null,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev null,id=id[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev socket,id=id[,host=host],port=port[,to=to][,ipv4=on|off][,ipv6=on|off][,nodelay=on|off]\n"
--    "         [,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds][,mux=on|off]\n"
-+    "         [,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds][,mux=on|off][,mux-be-id=id]\n"
-     "         [,logfile=PATH][,logappend=on|off][,tls-creds=ID][,tls-authz=ID] (tcp)\n"
-     "-chardev socket,id=id,path=path[,server=on|off][,wait=on|off][,telnet=on|off][,websocket=on|off][,reconnect=seconds]\n"
--    "         [,mux=on|off][,logfile=PATH][,logappend=on|off][,abstract=on|off][,tight=on|off] (unix)\n"
-+    "         [,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off][,abstract=on|off][,tight=on|off] (unix)\n"
-     "-chardev udp,id=id[,host=host],port=port[,localaddr=localaddr]\n"
--    "         [,localport=localport][,ipv4=on|off][,ipv6=on|off][,mux=on|off]\n"
-+    "         [,localport=localport][,ipv4=on|off][,ipv6=on|off][,mux=on|off][,mux-be-id=id]\n"
-     "         [,logfile=PATH][,logappend=on|off]\n"
--    "-chardev msmouse,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev msmouse,id=id[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]\n"
--    "         [,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "         [,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev ringbuf,id=id[,size=size][,logfile=PATH][,logappend=on|off]\n"
--    "-chardev file,id=id,path=path[,input-path=input-file][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
--    "-chardev pipe,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev file,id=id,path=path[,input-path=input-file][,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev pipe,id=id,path=path[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
- #ifdef _WIN32
--    "-chardev console,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
--    "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev console,id=id[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev serial,id=id,path=path[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
- #else
--    "-chardev pty,id=id[,path=path][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
--    "-chardev stdio,id=id[,mux=on|off][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev pty,id=id[,path=path][,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev stdio,id=id[,mux=on|off][,mux-be-id=id][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #ifdef CONFIG_BRLAPI
--    "-chardev braille,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev braille,id=id[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #if defined(__linux__) || defined(__sun__) || defined(__FreeBSD__) \
-         || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
--    "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev serial,id=id,path=path[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #if defined(__linux__) || defined(__FreeBSD__) || defined(__DragonFly__)
--    "-chardev parallel,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "-chardev parallel,id=id,path=path[,mux=on|off][,mux-be-id=id][,logfile=PATH][,logappend=on|off]\n"
- #endif
- #if defined(CONFIG_SPICE)
-     "-chardev spicevmc,id=id,name=name[,debug=debug][,logfile=PATH][,logappend=on|off]\n"
-@@ -3719,8 +3719,8 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
- SRST
- The general form of a character device option is:
- 
--``-chardev backend,id=id[,mux=on|off][,options]``
--    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``,
-+``-chardev backend,id=id[,mux=on|off][,mux-be-id=id][,options]``
-+    Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``mux-be``,
-     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
-     ``pty``, ``stdio``, ``braille``, ``parallel``,
-     ``spicevmc``, ``spiceport``. The specific backend will determine the
-@@ -3777,9 +3777,10 @@ The general form of a character device option is:
-     the QEMU monitor, and ``-nographic`` also multiplexes the console
-     and the monitor to stdio.
- 
--    There is currently no support for multiplexing in the other
--    direction (where a single QEMU front end takes input and output from
--    multiple chardevs).
-+    If you need to multiplex in the opposite direction (where one QEMU
-+    interface receives input and output from multiple chardev devices),
-+    each character device needs ``mux-be-id=id`` option. Please refer
-+    to the paragraph below regarding chardev ``mux-be`` configuration.
- 
-     Every backend supports the ``logfile`` option, which supplies the
-     path to a file to record all data transmitted via the backend. The
-@@ -3879,6 +3880,43 @@ The available backends are:
-     Forward QEMU's emulated msmouse events to the guest. ``msmouse``
-     does not take any options.
- 
-+``-chardev mux-be,id=id``
-+    Explicitly create chardev backend multiplexer with possibility to
-+    multiplex in the opposite direction, where one QEMU interface
-+    (frontend device) receives input and output from multiple chardev
-+    backend devices.
-+
-+    For example the following is a use case of 2 backend devices: text
-+    virtual console ``vc0`` and a socket ``sock0`` connected
-+    to a single virtio hvc console frontend device with multiplexer
-+    ``mux0`` help. Virtual console renders text to an image, which
-+    can be shared over the VNC protocol, in turn socket backend provides
-+    biderectional communication to the virtio hvc console over socket.
-+    The example configuration can be the following:
-+
-+    ::
-+
-+       -chardev mux-be,id=mux0 \
-+       -chardev socket,path=/tmp/sock,server=on,wait=off,id=sock0,mux-be-id=mux0 \
-+       -chardev vc,id=vc0,mux-be-id=mux0 \
-+       -device virtconsole,chardev=mux0 \
-+       -vnc 0.0.0.0:0
-+
-+    Once QEMU starts VNC client and any TTY emulator can be used to
-+    control a single hvc console:
-+
-+    ::
-+
-+       # VNC client
-+       vncviewer :0
-+
-+       # TTY emulator
-+       socat unix-connect:/tmp/sock pty,link=/tmp/pty & \
-+       tio /tmp/pty
-+
-+    Multiplexing of several backend devices with serveral frontend devices
-+    is not supported.
-+
- ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
-     Connect to a QEMU text console. ``vc`` may optionally be given a
-     specific size.
--- 
-2.34.1
+> It would be good to reference the sail implementation and the
+justification for the change there
 
+Sail implementation is probably here:
+https://github.com/riscv/sail-riscv/blob/master/model/riscv_platform.sail#L=
+340
+- related commit:
+https://github.com/riscv/sail-riscv/commit/848312ce7c59fa08c304cab4b4e8060c=
+67d5dfc9
+
+The following is the "infinite loop" part is exported by objdump from
+the test ELF of the add instruction generated from ACT
+```txt
+00000000800082a0 <write_tohost>:
+    800082a0:   00001f17                auipc   t5,0x1
+    800082a4:   d61f2023                sw      ra,-672(t5) # 80009000 <toh=
+ost>
+    800082a8:   ff9ff06f                j       800082a0 <write_tohost>
+```
+QEMU cannot respond to the above `sw` behavior, It makes no
+distinction regarding the size written,
+I guess that currently qemu will only respond to the writing to the
+high 32 bits and low 32 bits of tohost twice in succession.
+I think the behavior here is very strange, and you can find
+aswaterman's description of HTIF(include RV32) at:
+https://github.com/riscv-software-src/riscv-isa-sim/issues/364#issuecomment=
+-607657754
+So this patch try to distinguish these cases based on size and addr.
+
+About the sail impl, there are some related discussions at:
+https://github.com/riscv/sail-riscv/issues/218
+I made some summaries:
+- The implementation of sail as a workaround is not very ideal; we
+should follow the experience of spike
+  I checked the impl of spike. Although spike handles tohost in a
+syscall manner, I don't think this means that spike is better.
+  Compared to sail, it does not distinguish whether the write to
+tohost is 4 bytes or 8 bytes, but at least in act, it always works
+properly.
+  - spike code:
+https://github.com/riscv-software-src/riscv-isa-sim/blob/master/fesvr/htif.=
+cc#L265
+- HTIF has been deprecated
+  I don't know if this is true or not, because I haven't found any
+official comment.
+  However, since ACT is still using htif and is not expected to change
+for quite a long time, and no new solutions have emerged, we should go
+ahead and implement it
+- What are the advantages of QEMU supporting ACT
+  - do cross validation with sail/spike, and contributors can use ACT
+to verify the correctness when adding new instructions to QEMU. (we do
+have this need.)
+  > If you think that the benefits of supporting ACT are not obvious,
+then I think we can remove all the code related to supporting ACT
+(should be the commit mentioned above)
+
+What do you think about this? Thank you!
+
+Alistair Francis <alistair23@gmail.com> =E4=BA=8E2024=E5=B9=B410=E6=9C=8816=
+=E6=97=A5=E5=91=A8=E4=B8=89 13:27=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Mon, Oct 14, 2024 at 8:08=E2=80=AFPM =E9=98=8E=E6=98=8E=E9=93=B8 <yanm=
+ingzhu@iscas.ac.cn> wrote:
+> >
+> > Thank you for your reply and I'm sorry that I didn't explain it clearly=
+.
+> >
+> > - ACT is an official riscv test suite to check the riscv support of the=
+ DUT(device under test).
+>
+> It's probably worth including this in the commit message.
+>
+> > - Currently ACT support using [sail-riscv](https://github.com/riscv/sai=
+l-riscv)(default) or [spike](https://github.com/riscv-software-src/riscv-is=
+a-sim)
+> > - QEMU is not supported yet=EF=BC=8Cbut someone made a commit: [commit]=
+(https://github.com/qemu/qemu/commit/66247edc8b6fb36d6b905babcd795068ea989a=
+d5)
+> >
+> > But there are still problems, so I'm trying to fix it. After debugging,=
+ I found that it's a htif problem, and the idea of fixing it is referenced =
+from the sail-riscv implementation
+>
+> It would be good to reference the sail implementation and the
+> justification for the change there
+>
+> Alistair
+>
+> >
+> > "Alistair Francis" &lt;alistair23@gmail.com&gt;=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > &gt; On Fri, Sep 27, 2024 at 11:26=E2=80=AFPM MingZhu Yan <trdthg47@gma=
+il.com> wrote:
+> > &gt; &gt;
+> > &gt; &gt; Applications sometimes only write the lower 32-bit payload by=
+tes, this is used
+> > &gt; &gt; in ACT tests. As a workaround, this refers to the solution of=
+ sail-riscv.
+> > &gt;
+> > &gt; I'm not sure what ACT is, but this feels like a guest bug, not a Q=
+EMU issue.
+> > &gt;
+> > &gt; Alistair
+> > &gt;
+> > &gt; &gt; if the payload is written a few times with the same value, we=
+ process the whole
+> > &gt; &gt; htif command anyway.
+> > &gt; &gt;
+> > &gt; &gt; Signed-off-by: MingZhu Yan <yanmingzhu@iscas.ac.cn>
+> > &gt; &gt; ---
+> > &gt; &gt;  hw/char/riscv_htif.c | 35 +++++++++++++++++++---------------=
+-
+> > &gt; &gt;  1 file changed, 19 insertions(+), 16 deletions(-)
+> > &gt; &gt;
+> > &gt; &gt; diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+> > &gt; &gt; index 9bef60def1..d74cce3bef 100644
+> > &gt; &gt; --- a/hw/char/riscv_htif.c
+> > &gt; &gt; +++ b/hw/char/riscv_htif.c
+> > &gt; &gt; @@ -65,16 +65,8 @@ void htif_symbol_callback(const char *st_n=
+ame, int st_info, uint64_t st_value,
+> > &gt; &gt;  {
+> > &gt; &gt;      if (strcmp("fromhost", st_name) =3D=3D 0) {
+> > &gt; &gt;          fromhost_addr =3D st_value;
+> > &gt; &gt; -        if (st_size !=3D 8) {
+> > &gt; &gt; -            error_report("HTIF fromhost must be 8 bytes");
+> > &gt; &gt; -            exit(1);
+> > &gt; &gt; -        }
+> > &gt; &gt;      } else if (strcmp("tohost", st_name) =3D=3D 0) {
+> > &gt; &gt;          tohost_addr =3D st_value;
+> > &gt; &gt; -        if (st_size !=3D 8) {
+> > &gt; &gt; -            error_report("HTIF tohost must be 8 bytes");
+> > &gt; &gt; -            exit(1);
+> > &gt; &gt; -        }
+> > &gt; &gt;      } else if (strcmp("begin_signature", st_name) =3D=3D 0) =
+{
+> > &gt; &gt;          begin_sig_addr =3D st_value;
+> > &gt; &gt;      } else if (strcmp("end_signature", st_name) =3D=3D 0) {
+> > &gt; &gt; @@ -290,18 +282,26 @@ static void htif_mm_write(void *opaque,=
+ hwaddr addr,
+> > &gt; &gt;                            uint64_t value, unsigned size)
+> > &gt; &gt;  {
+> > &gt; &gt;      HTIFState *s =3D opaque;
+> > &gt; &gt; -    if (addr =3D=3D TOHOST_OFFSET1) {
+> > &gt; &gt; -        if (s-&gt;tohost =3D=3D 0x0) {
+> > &gt; &gt; -            s-&gt;allow_tohost =3D 1;
+> > &gt; &gt; -            s-&gt;tohost =3D value &amp; 0xFFFFFFFF;
+> > &gt; &gt; +    int htif_cmd_write =3D 0;
+> > &gt; &gt; +    if (size =3D=3D 8 &amp;&amp; addr =3D=3D TOHOST_OFFSET1)=
+ {
+> > &gt; &gt; +        htif_cmd_write =3D 1;
+> > &gt; &gt; +        s-&gt;tohost =3D value;
+> > &gt; &gt; +        htif_handle_tohost_write(s, s-&gt;tohost);
+> > &gt; &gt; +    } else if (size =3D=3D 4 &amp;&amp; addr =3D=3D TOHOST_O=
+FFSET1) {
+> > &gt; &gt; +        if ((value) =3D=3D (s-&gt;tohost &amp; 0xFFFF)) {
+> > &gt; &gt; +            s-&gt;allow_tohost =3D s-&gt;allow_tohost + 1;
+> > &gt; &gt;          } else {
+> > &gt; &gt;              s-&gt;allow_tohost =3D 0;
+> > &gt; &gt;          }
+> > &gt; &gt; -    } else if (addr =3D=3D TOHOST_OFFSET2) {
+> > &gt; &gt; -        if (s-&gt;allow_tohost) {
+> > &gt; &gt; -            s-&gt;tohost |=3D value &lt;&lt; 32;
+> > &gt; &gt; -            htif_handle_tohost_write(s, s-&gt;tohost);
+> > &gt; &gt; +        s-&gt;tohost =3D deposit64(s-&gt;tohost, 0, 32, valu=
+e);
+> > &gt; &gt; +    } else if (size =3D=3D 4 &amp;&amp; addr =3D=3D TOHOST_O=
+FFSET2) {
+> > &gt; &gt; +        if ((value &amp; 0xFF) =3D=3D (s-&gt;tohost &amp; 0x=
+FF00)) {
+> > &gt; &gt; +            s-&gt;allow_tohost =3D s-&gt;allow_tohost + 1;
+> > &gt; &gt; +        } else {
+> > &gt; &gt; +            s-&gt;allow_tohost =3D 1;
+> > &gt; &gt;          }
+> > &gt; &gt; +        htif_cmd_write =3D 1;
+> > &gt; &gt; +        s-&gt;tohost =3D deposit64(s-&gt;tohost, 32, 32, val=
+ue);
+> > &gt; &gt;      } else if (addr =3D=3D FROMHOST_OFFSET1) {
+> > &gt; &gt;          s-&gt;fromhost_inprogress =3D 1;
+> > &gt; &gt;          s-&gt;fromhost =3D value &amp; 0xFFFFFFFF;
+> > &gt; &gt; @@ -312,6 +312,9 @@ static void htif_mm_write(void *opaque, h=
+waddr addr,
+> > &gt; &gt;          qemu_log("Invalid htif write: address %016" PRIx64 "=
+\n",
+> > &gt; &gt;              (uint64_t)addr);
+> > &gt; &gt;      }
+> > &gt; &gt; +    if ((s-&gt;tohost =3D=3D 1 &amp;&amp; htif_cmd_write) ||=
+ s-&gt;allow_tohost &gt; 2) {
+> > &gt; &gt; +        htif_handle_tohost_write(s, s-&gt;tohost);
+> > &gt; &gt; +    }
+> > &gt; &gt;  }
+> > &gt; &gt;
+> > &gt; &gt;  static const MemoryRegionOps htif_mm_ops =3D {
+> > &gt; &gt; --
+> > &gt; &gt; 2.34.1
+> > &gt; &gt;
+> > &gt; &gt;
+> > </yanmingzhu@iscas.ac.cn></trdthg47@gmail.com>
 
