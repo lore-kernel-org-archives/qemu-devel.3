@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AB6D2A521
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 14:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E8BD2A525
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 14:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t153o-0003Cc-33; Wed, 16 Oct 2024 10:31:36 -0400
+	id 1t15Sn-0007fs-RJ; Wed, 16 Oct 2024 10:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t153l-0003CF-0L
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 10:31:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1t15Sf-0007ep-My
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 10:57:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t153i-0002xi-UF
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 10:31:32 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GBt8Wn026295
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 14:31:29 GMT
+ id 1t15Sc-0005ls-MV
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 10:57:17 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDo7VQ029354
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 14:57:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IVz4iA
- egbtPdmMrOsexJIon1JZfz9ZAPS+d6J1M8gJY=; b=GRdtxBmzk/GFdOuQkjl7rL
- pftgyIyfPPc2c7Ynzl0MB0fxum7QA6eQf6JE7GuyIapbAW4nectfK0HpCDzteuu5
- xQ6IlbT3yF133KIcZXCzbt627O6DS1+1Ey8hpGXOSWVXYDDimz3wNElB+YlkXyTF
- Od3HPK7Xlcc/70E4S0PIrqdgAJdZgqOLbtJHM/59KJV2GmGRnHEgVypZ7accz6UW
- si8LuwFHmqnpX+Th+XPN7xd2BpjBoaoOyV098BkOxNrSToXw3hpLfAe01AUlOLcE
- yf9oUHR+/vV5oQec9+81T19srTDOFtiCN50HsArPKllELdd93EyFu6jkaXnXwaBw
- ==
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=vqVp0vNPIl0U473cpgTXlXdat8ImDiKH94niA7L/j
+ RU=; b=mY5a1rtJOhZBHAA+UPzqdyXWIfPDTTfuhID7WjVHPWuIOC/rMCYGMOj49
+ nusHXFP3+PdabDVhlUFlv4pC2UNEce4nWo/hnRgBAl6M3Z2LFbfvCIJ2hqwPDczN
+ 7fbLDUnj3H3DXeU9lNvBh+Wsj2EskDBJxuv+66qqK+TQjR5OaLuakvl2jlFfzI61
+ e/PMAiXzMpzbXcYz4wm+neGfhDMXHe68c5wdjHmB1gro9XKNcxUQj2kMdfVNA7ur
+ +ysbZMIp7XiV4RN12UKEKyaHujltePFF8MU8EzmcF9B42/5LFQpqnlk7zzbrsgHp
+ LB2+phK3cifhVgnDndFh8XbqobPlQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ad1j0tgt-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aeqfgcd6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 14:31:29 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GEVS1d004717;
- Wed, 16 Oct 2024 14:31:28 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ad1j0tgq-1
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 14:57:13 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GEvC3t006742;
+ Wed, 16 Oct 2024 14:57:12 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aeqfgcd3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 14:31:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GCl49m006674;
- Wed, 16 Oct 2024 14:31:28 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4283es242c-1
+ Wed, 16 Oct 2024 14:57:12 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GESP3O005374;
+ Wed, 16 Oct 2024 14:57:11 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285nj9qsy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 14:31:28 +0000
+ Wed, 16 Oct 2024 14:57:11 +0000
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49GEVRAt39452992
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49GEvADF24511024
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Oct 2024 14:31:27 GMT
+ Wed, 16 Oct 2024 14:57:11 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1C195803F;
- Wed, 16 Oct 2024 14:31:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B2BCE58060;
+ Wed, 16 Oct 2024 14:57:10 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5605258060;
- Wed, 16 Oct 2024 14:31:27 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by IMSVA (Postfix) with ESMTP id 6E43058056;
+ Wed, 16 Oct 2024 14:57:10 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Oct 2024 14:31:27 +0000 (GMT)
-Message-ID: <2b6333e0-3088-43f7-8120-424477d2d429@linux.ibm.com>
-Date: Wed, 16 Oct 2024 10:31:26 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] tpm: Resolve potential blocking-forever issue
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, marcandre.lureau@gmail.com
-References: <20241016133450.1071197-1-stefanb@linux.ibm.com>
-Content-Language: en-US
+ Wed, 16 Oct 2024 14:57:10 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20241016133450.1071197-1-stefanb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, marcandre.lureau@gmail.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v3 0/2] tpm: Resolve potential blocking-forever issue
+Date: Wed, 16 Oct 2024 10:57:06 -0400
+Message-ID: <20241016145708.1166471-1-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MZy8dfKmJ24jTtGO64gs0DF8WkhOKg7J
-X-Proofpoint-ORIG-GUID: AjW70ow433OMaOR95N72xzvyMdM_jWVG
+X-Proofpoint-ORIG-GUID: SWAGyQz9OjgROG0f2VBcvsP3K3XhJYI0
+X-Proofpoint-GUID: d-h0uoTnjEJVGZVZBXPeZs42aybbD3k2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 spamscore=0 bulkscore=0
- mlxlogscore=476 phishscore=0 adultscore=0 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160089
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ lowpriorityscore=0
+ priorityscore=1501 mlxlogscore=725 phishscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 bulkscore=0 spamscore=0 mlxscore=0
+ impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410160089
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -117,32 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In case swtpm was to return a control channel message with an error code it
+would often return less bytes than the full response. In some cases the
+current reading of the returned bytes would get stuck since more bytes are
+expected. Therefore, pass a separate parameter indicating how many bytes to
+expect in case of an error and read that many bytes in a first pass. Check
+for an error code in the first 4 bytes. Read the rest in a 2nd pass.
+
+   Stefan
+
+v3:
+  - 2/2: Pass size of return response for error as parameter
+
+v2:
+  - 2/2: Added special handling of CMD_GET_STATEBLOB
 
 
-On 10/16/24 9:34 AM, Stefan Berger wrote:
-> In case swtpm was to return a control channel message with an error code it
-> would only return 4 bytes. However, some of the commands expect a response
-> with more bytes and QEMU would get stuck in qemu_chr_fe_read_all() waiting
-> for bytes following the error code. Therefore, read the response in 2
-> passes stopping if an error code is received in the first 4 bytes to avoid
-> getting stuck. Implement an exception for CMD_GET_STATEBLOB that has always
-> been sending the header in case of error.
-> 
->     Stefan
-> 
-> v2:
->    -
 
-Please disregard v2. v3 coming shortly.
-> 
-> 
-> Stefan Berger (2):
->    tpm: Use new ptm_cap_n structure for PTM_GET_CAPABILITY
->    tpm_emulator: Read control channel response in 2 passes
-> 
->   backends/tpm/tpm_emulator.c | 45 ++++++++++++++++++++++++++++++-------
->   backends/tpm/tpm_ioctl.h    | 13 ++++++++++-
->   backends/tpm/trace-events   |  2 +-
->   3 files changed, 50 insertions(+), 10 deletions(-)
-> 
+Stefan Berger (2):
+  tpm: Use new ptm_cap_n structure for PTM_GET_CAPABILITY
+  tpm_emulator: Read control channel response in 2 passes
+
+ backends/tpm/tpm_emulator.c | 77 +++++++++++++++++++++++++++----------
+ backends/tpm/tpm_ioctl.h    | 13 ++++++-
+ backends/tpm/trace-events   |  2 +-
+ 3 files changed, 69 insertions(+), 23 deletions(-)
+
+-- 
+2.47.0
+
 
