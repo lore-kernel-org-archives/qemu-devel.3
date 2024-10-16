@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D02D1AD5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 13:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A16D4D1AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 13:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t14BR-000147-M7; Wed, 16 Oct 2024 09:35:28 -0400
+	id 1t14BT-00015H-UT; Wed, 16 Oct 2024 09:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t14B5-0000rM-98
+ id 1t14B5-0000rg-Hh
  for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:35:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t14B3-00049b-9X
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:35:02 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDKF7s026703
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:34:59 GMT
+ id 1t14B3-00049i-MH
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:35:03 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDQCNl028115
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=tRgsc2Mtj/TSId4mpKfiwml2sOQjEOHtJ/ZYOAdaB
- CY=; b=jNodwCwtZ/dWpt9QC86Q/Vxo0qDJN+/1HDH2zyunNjUb9PWQ8IJ+RBkZT
- eGB2y/YPehxFXNTBa/RDNuuYUdpnCoW7MRTgzq6rBhy33bt1UXsJxzZ6WMnh08YU
- +CJn7SiZNrHkuLfT9qQMhcxmVBaIz81vt0Dlb3wXTlkDjo3QtRqBQQX+BFqCtrHP
- JKJLV53bi+DhaZvfrGKdpfMeOEP6fCjtI2tukvjxhViIf1ZD/pFrzBbncISVwqbT
- hmbLUAt5L8cVjkeSWjJUIGVAUztQE2ADO553dOOCYU87aNfmAU8nq0bKYYePtc5v
- 9FFTREb54Lm7NhGstq2tbwoexFpgA==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=GN1Hq6j9I3FWk+035
+ MqB8fKDHbeRygIDEpGYhCCG8Qk=; b=hxMl2x/zNMiUxufL6zIrq7ct0X+Dz2FII
+ hoqHw35SFlDQea9x3uyfZOKR2Y0SOjJy3QJQ4FobMNW/m3toL7i6zIyyDNgI29wF
+ W0D0Be2BCZX8Wc5Cfb8XgAcReAA/zj3odEi3K2vkjPnq5GooWcYqKnkisinGP1JY
+ AERQZpYkb6VYMDE/hx0dsH47cfCZLNl7P1MraFFJ9qLZC51eFrWsyI7k8b0q5FKO
+ r+dXrbXsVpCp1jpHdd4NFhopUn/t0mIVE5q6423sZmbXewTkgakZkELiRLUtWytK
+ hmdB3rnNxq/w2vOhCtkIdxYN2MjF9ttEjuZkC4XvR49ZQy747BPZQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ae9g820p-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aebxg196-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:34:59 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GDYwmX029189;
- Wed, 16 Oct 2024 13:34:58 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ae9g820n-1
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GDZ0Cp016756
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aebxg193-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GAtwja005215;
- Wed, 16 Oct 2024 13:34:58 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285nj9cc5-1
+ Wed, 16 Oct 2024 13:35:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GCg5eH006690;
+ Wed, 16 Oct 2024 13:34:59 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4283es1umy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 13:34:58 +0000
+ Wed, 16 Oct 2024 13:34:59 +0000
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49GDYv0J47972674
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49GDYwVS43123040
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Oct 2024 13:34:57 GMT
+ Wed, 16 Oct 2024 13:34:59 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 64F0F58045;
- Wed, 16 Oct 2024 13:34:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AF8EA58052;
+ Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D652D58050;
- Wed, 16 Oct 2024 13:34:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3685558050;
+ Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Oct 2024 13:34:56 +0000 (GMT)
+ Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, marcandre.lureau@gmail.com,
  Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v2 0/2] tpm: Resolve potential blocking-forever issue
-Date: Wed, 16 Oct 2024 09:34:48 -0400
-Message-ID: <20241016133450.1071197-1-stefanb@linux.ibm.com>
+Subject: [PATCH v2 2/2] tpm_emulator: Read control channel response in 2 passes
+Date: Wed, 16 Oct 2024 09:34:50 -0400
+Message-ID: <20241016133450.1071197-3-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.47.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241016133450.1071197-1-stefanb@linux.ibm.com>
+References: <20241016133450.1071197-1-stefanb@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ERbt5Pxi9EqrVx1bNQJkqQXL0cO_moTB
-X-Proofpoint-GUID: ZgO6nJc0IDxnA5WsXjuqXxNr2WQbHQaE
+X-Proofpoint-ORIG-GUID: p_X998_q_CjIygA8mHS2Q0yc9jHLk-2b
+X-Proofpoint-GUID: W-sZN8HUY6Ht_cT4it85qZOcjiYe1OyK
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0
- spamscore=0 bulkscore=0 malwarescore=0 mlxlogscore=514 adultscore=0
- mlxscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160084
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ phishscore=0 mlxlogscore=754
+ clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410160084
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -113,29 +116,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case swtpm was to return a control channel message with an error code it
-would only return 4 bytes. However, some of the commands expect a response
-with more bytes and QEMU would get stuck in qemu_chr_fe_read_all() waiting
-for bytes following the error code. Therefore, read the response in 2
-passes stopping if an error code is received in the first 4 bytes to avoid
-getting stuck. Implement an exception for CMD_GET_STATEBLOB that has always
-been sending the header in case of error.
+Error responses from swtpm are always only 4 bytes long with the exception
+of CMD_GET_STATEBLOB that returns more bytes. Therefore, read the entire
+response in 2 passes and stop if the first 4 bytes indicate an error
+response with no subsequent bytes readable. Read the rest in a 2nd pass, if
+needed. This avoids getting stuck while waiting for too many bytes if only
+4 bytes were sent due to an error message. The 'getting stuck' condition
+has not been observed in practice so far, though.
 
-   Stefan
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2615
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ backends/tpm/tpm_emulator.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-v2:
-  - 
-
-
-Stefan Berger (2):
-  tpm: Use new ptm_cap_n structure for PTM_GET_CAPABILITY
-  tpm_emulator: Read control channel response in 2 passes
-
- backends/tpm/tpm_emulator.c | 45 ++++++++++++++++++++++++++++++-------
- backends/tpm/tpm_ioctl.h    | 13 ++++++++++-
- backends/tpm/trace-events   |  2 +-
- 3 files changed, 50 insertions(+), 10 deletions(-)
-
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index b0e2fb3fc7..8f5d31be09 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -129,6 +129,9 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
+     uint32_t cmd_no = cpu_to_be32(cmd);
+     ssize_t n = sizeof(uint32_t) + msg_len_in;
+     uint8_t *buf = NULL;
++    ptm_res res;
++    off_t o = 0;
++    int to_read;
+ 
+     WITH_QEMU_LOCK_GUARD(&tpm->mutex) {
+         buf = g_alloca(n);
+@@ -140,11 +143,35 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
+             return -1;
+         }
+ 
+-        if (msg_len_out != 0) {
+-            n = qemu_chr_fe_read_all(dev, msg, msg_len_out);
++        /*
++         * Any response will be at least 4 bytes long. Error responses are only
++         * 4 bytes (=sizeof(ptm_res)), with exception by CMD_GET_STATEBLOB.
++         * Therefore, read response in 2 passes, returning when an error
++         * response is encountered.
++         */
++        if (cmd == CMD_GET_STATEBLOB) {
++            to_read = msg_len_out;
++        } else {
++            to_read = sizeof(res);
++        }
++
++        while (msg_len_out > 0) {
++            n = qemu_chr_fe_read_all(dev, (uint8_t *)msg + o, to_read);
+             if (n <= 0) {
+                 return -1;
+             }
++            msg_len_out -= to_read;
++            if (msg_len_out == 0) {
++                return 0;
++            }
++
++            memcpy(&res, msg, sizeof(res));
++            if (res) {
++                return 0;
++            }
++
++            o = to_read;
++            to_read = msg_len_out;
+         }
+     }
+ 
 -- 
 2.47.0
 
