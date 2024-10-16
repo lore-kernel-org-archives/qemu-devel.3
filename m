@@ -4,135 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 749C3D1AD2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 08:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 161CFD1AD2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 08:41:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0zTt-000291-Qb; Wed, 16 Oct 2024 04:34:09 -0400
+	id 1t0zak-0003eH-Is; Wed, 16 Oct 2024 04:41:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t0zTs-00028g-2r
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:34:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t0zTq-000516-JE
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:34:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729067645;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/zBOeVUzfK9vEvigywvBietv8ESWr8ZZzPuzJM4e00E=;
- b=Dvv9vmjDtAb9f50yFIBXhX5LR404O8RxF20LLBRPzcVATacqvAY1pgh3Phzzutv93hnKyS
- l8Si1nhG+/ZAwrZJp6rq6SspRiVwe8sdESYK9cSIGIOQj6wiCDGecqSh8w3EL7k2BFnIMN
- X8FmG5NdjB2nSS9o48D0XyNB1J0VAco=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-7uTGxOFGOzO814i-mWr36g-1; Wed, 16 Oct 2024 04:34:02 -0400
-X-MC-Unique: 7uTGxOFGOzO814i-mWr36g-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a9a0c259715so235521066b.0
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 01:34:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729067642; x=1729672442;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/zBOeVUzfK9vEvigywvBietv8ESWr8ZZzPuzJM4e00E=;
- b=CV7zzAyMFZnESptUr0JmQAYZ2KwzaavU427SH8qvG1C7aEB+dCGFtRfgjRRm57mRbL
- mvYT1gzW2fK0QgknYmAF94Y/8YlM+ezfeJz3y36u7tds1LRLHiLOOyNEqp0yUXWfzLf6
- LFaPd3QXO1FF6HhIknHr+PPCwfF3BovU+SEg3hvtIIySfFl6bmO/vcqQB+TLVfhc3OLn
- 9fVTRJkBKHSxYC+z+G9rq3LWArgO3AHD2Cr7+p/8+VS4e0DlMk2l5W4qyF0lNoAJ6vQy
- UVijy/fq44yYEibuTpw3MEXXQ3D/Mh6HsBF3Nwbjo9uBw9qVHkfCLgKGeDyWjrr63SC/
- SzUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCw5kjyTVE6F1qOuOUUbKTJF1rrpjt0naN0PvURo9o4lHC4bh5fltewbhaML3taKSeeS2m4NxHApZ/@nongnu.org
-X-Gm-Message-State: AOJu0YziKWVT85gG5C8CAJQZHcNdtyX4QPOVqySQeTsfKycIJkrrbX6H
- iEKiSWL9RZhcvCv2GovtPurFlCfmvS56SBcCn+lvlp3yETcNsMUHOk85dqLidufzpWF4DVk2Bdq
- y6Z4rtGZcUYGH4m2kJXECyCeJhBZD4/hhEazhyJ2wYRCXJ9Itgo6O
-X-Received: by 2002:a17:907:3e0d:b0:a9a:b34:94c7 with SMTP id
- a640c23a62f3a-a9a0b35651fmr894758366b.3.1729067641814; 
- Wed, 16 Oct 2024 01:34:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZnXxcV+6B0z3lGrSo++ApWHksvgtZWPvZAe2BclN7bipccelGxmgI/QKZdJiCzpAzgyC5EA==
-X-Received: by 2002:a17:907:3e0d:b0:a9a:b34:94c7 with SMTP id
- a640c23a62f3a-a9a0b35651fmr894755966b.3.1729067641470; 
- Wed, 16 Oct 2024 01:34:01 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-48-109.web.vodafone.de.
- [109.42.48.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a2974c2d0sm155242566b.85.2024.10.16.01.33.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Oct 2024 01:34:01 -0700 (PDT)
-Message-ID: <b2274edc-02fc-4c90-9cbb-80a89fd845b3@redhat.com>
-Date: Wed, 16 Oct 2024 10:33:59 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1t0zah-0003e7-Gk
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:41:11 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1t0zae-0005mM-04
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:41:11 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxnmsWfA9nOtEfAA--.46019S3;
+ Wed, 16 Oct 2024 16:40:55 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front2 (Coremail) with SMTP id qciowMDxl8UTfA9nkM8vAA--.60459S3;
+ Wed, 16 Oct 2024 16:40:53 +0800 (CST)
+Subject: Re: [PATCH] linux-headers: loongarch: add kvm_para.h and unistd_64.h
+To: maobibo <maobibo@loongson.cn>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20240929072240.251301-1-maobibo@loongson.cn>
+ <6d4d65ad-9b35-ea5b-ae3d-0e1234477b66@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <88855d52-6efa-3fff-cded-a58f6b6f8408@loongson.cn>
+Date: Wed, 16 Oct 2024 16:41:44 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/14] qtest/xive: Add test of pool interrupts
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com, danielhb413@gmail.com,
- david@gibson.dropbear.id.au, harshpb@linux.ibm.com, lvivier@redhat.com,
- pbonzini@redhat.com, Fabiano Rosas <farosas@suse.de>
-References: <20241015211329.21113-1-kowal@linux.ibm.com>
- <20241015211329.21113-15-kowal@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+In-Reply-To: <6d4d65ad-9b35-ea5b-ae3d-0e1234477b66@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241015211329.21113-15-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qciowMDxl8UTfA9nkM8vAA--.60459S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CF17KFyUGr4kXF15Ww1kCrX_yoW8XF48pr
+ ZayFy8Wr9xG3ZYyr42g3W7WrW5JF98G3Z2va40gF92yrWqqw1IqrZ7urn0grWDtayrJa40
+ qF4fJw1UuFn7ZrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8czVUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -150,51 +84,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/10/2024 23.13, Michael Kowal wrote:
-> From: Glenn Miles <milesg@linux.ibm.com>
-> 
-> Added new test for pool interrupts.
-> 
-> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
-> ---
->   tests/qtest/pnv-xive2-test.c | 77 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 77 insertions(+)
-> 
-> diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-> index a6008bc053..6e7e7f0d9b 100644
-> --- a/tests/qtest/pnv-xive2-test.c
-> +++ b/tests/qtest/pnv-xive2-test.c
-> @@ -4,6 +4,7 @@
->    *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
->    *  - Test irq to hardware group
->    *  - Test irq to hardware group going through backlog
-> + *  - Test irq to pool thread
->    *
->    * Copyright (c) 2024, IBM Corporation.
->    *
-> @@ -267,6 +268,79 @@ static void test_hw_irq(QTestState *qts)
->       g_assert_cmphex(cppr, ==, 0xFF);
->   }
->   
-> +static void test_pool_irq(QTestState *qts)
-> +{
-> +    uint32_t irq = 2;
-> +    uint32_t irq_data = 0x600d0d06;
-> +    uint32_t end_index = 5;
-> +    uint32_t target_pir = 1;
-> +    uint32_t target_nvp = 0x100 + target_pir;
-> +    uint8_t priority = 5;
-> +    uint32_t reg32;
-> +    uint16_t reg16;
-> +    uint8_t pq, nsr, cppr, ipb;
-> +
-> +    printf("# ============================================================\n");
-> +    printf("# Testing irq %d to pool thread %d\n", irq, target_pir);
+在 2024/10/16 下午4:13, maobibo 写道:
+> ping.
+>
+> @Song
+>
+> Could you give some comments since it is LoongArch specific?
+>
+> Regards
+> Bibo Mao
+>
+> On 2024/9/29 下午3:22, Bibo Mao wrote:
+>> KVM LBT supports on LoongArch requires the linux-header kvm_para.h,
+>> also unistd_64.h is required by unistd.h on LoongArch since 6.11
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   scripts/update-linux-headers.sh | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+Acked-by: Song Gao <gaosong@loongson.cn>
 
-Please don't use direct printfs in the qtest framework. If you really have 
-to log stuff, use g_test_message() instead.
+Could you update the linux-headers togather?
 
-  Thomas
+the series[1]  need update kvm.h.
+
+[1]: https://patchew.org/QEMU/20240929070405.235200-1-maobibo@loongson.cn/
+
+Thanks.
+Song Gao
+>> diff --git a/scripts/update-linux-headers.sh 
+>> b/scripts/update-linux-headers.sh
+>> index c34ac6454e..3c411f0318 100755
+>> --- a/scripts/update-linux-headers.sh
+>> +++ b/scripts/update-linux-headers.sh
+>> @@ -186,6 +186,10 @@ EOF
+>>       if [ $arch = riscv ]; then
+>>           cp "$hdrdir/include/asm/ptrace.h" 
+>> "$output/linux-headers/asm-riscv/"
+>>       fi
+>> +    if [ $arch = loongarch ]; then
+>> +        cp "$hdrdir/include/asm/kvm_para.h" 
+>> "$output/linux-headers/asm-loongarch/"
+>> +        cp "$hdrdir/include/asm/unistd_64.h" 
+>> "$output/linux-headers/asm-loongarch/"
+>> +    fi
+>>   done
+>>   arch=
+>>
+>> base-commit: 3b14a767eaca3df5534a162851f04787b363670e
+>>
 
 
