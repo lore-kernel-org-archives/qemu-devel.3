@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F680D2A559
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E74AD2A559
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1AM8-0004pS-D7; Wed, 16 Oct 2024 16:10:52 -0400
+	id 1t1AM0-0004lX-0y; Wed, 16 Oct 2024 16:10:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AM6-0004pD-K6; Wed, 16 Oct 2024 16:10:50 -0400
+ id 1t1ALy-0004kj-NH; Wed, 16 Oct 2024 16:10:42 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AM4-0000gl-Uk; Wed, 16 Oct 2024 16:10:50 -0400
+ id 1t1ALw-0000fL-TV; Wed, 16 Oct 2024 16:10:42 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF7FB98F99;
- Wed, 16 Oct 2024 23:10:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BEB8198F94;
+ Wed, 16 Oct 2024 23:10:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F170156379;
- Wed, 16 Oct 2024 23:10:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A4F52156374;
+ Wed, 16 Oct 2024 23:10:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [Stable-9.1.1 39/49] meson: define qemu_isa_flags
-Date: Wed, 16 Oct 2024 23:09:58 +0300
-Message-Id: <20241016201025.256294-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 34/49] linux-user: Fix parse_elf_properties GNU0_MAGIC
+ check
+Date: Wed, 16 Oct 2024 23:09:53 +0300
+Message-Id: <20241016201025.256294-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
@@ -62,89 +62,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Create a separate variable for compiler flags that enable
-specific instruction set extensions, so that they can be used with
-cc.compiles/cc.links.
+Comparing a string of 4 bytes only works in little-endian.
 
-Note that -mfpmath=sse is a code generation option but it does not
-enable new instructions, therefore I did not make it part of
-qemu_isa_flags.
+Adjust bulk bswap to only apply to the note payload.
+Perform swapping of the note header manually; the magic
+is defined so that it does not need a runtime swap.
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fixes: 83f990eb5adb ("linux-user/elfload: Parse NT_GNU_PROPERTY_TYPE_0 notes")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2596
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6ae8c5382b2396d394e135c2c6d3742d11c6d0c2)
+(cherry picked from commit 2884596f5f385b5712c356310dd4125a089888a8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 6e467cbe7d..3031f37f45 100644
---- a/meson.build
-+++ b/meson.build
-@@ -322,6 +322,10 @@ elif host_os == 'windows'
-   endif
- endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index b27dd01734..0b1c230b1c 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3136,11 +3136,11 @@ static bool parse_elf_properties(const ImageSource *src,
+     }
  
-+# Choose instruction set (currently x86-only)
-+
-+qemu_isa_flags = []
-+
- # __sync_fetch_and_and requires at least -march=i486. Many toolchains
- # use i686 as default anyway, but for those that don't, an explicit
- # specification is necessary
-@@ -338,7 +342,7 @@ if host_arch == 'i386' and not cc.links('''
-     sfaa(&val);
-     return val;
-   }''')
--  qemu_common_flags = ['-march=i486'] + qemu_common_flags
-+  qemu_isa_flags += ['-march=i486']
- endif
+     /*
+-     * The contents of a valid PT_GNU_PROPERTY is a sequence
+-     * of uint32_t -- swap them all now.
++     * The contents of a valid PT_GNU_PROPERTY is a sequence of uint32_t.
++     * Swap most of them now, beyond the header and namesz.
+      */
+ #ifdef BSWAP_NEEDED
+-    for (int i = 0; i < n / 4; i++) {
++    for (int i = 4; i < n / 4; i++) {
+         bswap32s(note.data + i);
+     }
+ #endif
+@@ -3150,15 +3150,15 @@ static bool parse_elf_properties(const ImageSource *src,
+      * immediately follows nhdr and is thus at the 4th word.  Further, all
+      * of the inputs to the kernel's round_up are multiples of 4.
+      */
+-    if (note.nhdr.n_type != NT_GNU_PROPERTY_TYPE_0 ||
+-        note.nhdr.n_namesz != NOTE_NAME_SZ ||
++    if (tswap32(note.nhdr.n_type) != NT_GNU_PROPERTY_TYPE_0 ||
++        tswap32(note.nhdr.n_namesz) != NOTE_NAME_SZ ||
+         note.data[3] != GNU0_MAGIC) {
+         error_setg(errp, "Invalid note in PT_GNU_PROPERTY");
+         return false;
+     }
+     off = sizeof(note.nhdr) + NOTE_NAME_SZ;
  
- # Pick x86-64 baseline version
-@@ -354,29 +358,31 @@ if host_arch in ['i386', 'x86_64']
-     else
-       # present on basically all processors but technically not part of
-       # x86-64-v1, so only include -mneeded for x86-64 version 2 and above
--      qemu_common_flags = ['-mcx16'] + qemu_common_flags
-+      qemu_isa_flags += ['-mcx16']
-     endif
-   endif
-   if get_option('x86_version') >= '2'
--    qemu_common_flags = ['-mpopcnt'] + qemu_common_flags
--    qemu_common_flags = cc.get_supported_arguments('-mneeded') + qemu_common_flags
-+    qemu_isa_flags += ['-mpopcnt']
-+    qemu_isa_flags += cc.get_supported_arguments('-mneeded')
-   endif
-   if get_option('x86_version') >= '3'
--    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
-+    qemu_isa_flags += ['-mmovbe', '-mabm', '-mbmi', '-mbmi2', '-mfma', '-mf16c']
-   endif
- 
-   # add required vector instruction set (each level implies those below)
-   if get_option('x86_version') == '1'
--    qemu_common_flags = ['-msse2'] + qemu_common_flags
-+    qemu_isa_flags += ['-msse2']
-   elif get_option('x86_version') == '2'
--    qemu_common_flags = ['-msse4.2'] + qemu_common_flags
-+    qemu_isa_flags += ['-msse4.2']
-   elif get_option('x86_version') == '3'
--    qemu_common_flags = ['-mavx2'] + qemu_common_flags
-+    qemu_isa_flags += ['-mavx2']
-   elif get_option('x86_version') == '4'
--    qemu_common_flags = ['-mavx512f', '-mavx512bw', '-mavx512cd', '-mavx512dq', '-mavx512vl'] + qemu_common_flags
-+    qemu_isa_flags += ['-mavx512f', '-mavx512bw', '-mavx512cd', '-mavx512dq', '-mavx512vl']
-   endif
- endif
- 
-+qemu_common_flags = qemu_isa_flags + qemu_common_flags
-+
- if get_option('prefer_static')
-   qemu_ldflags += get_option('b_pie') ? '-static-pie' : '-static'
- endif
+-    datasz = note.nhdr.n_descsz + off;
++    datasz = tswap32(note.nhdr.n_descsz) + off;
+     if (datasz > n) {
+         error_setg(errp, "Invalid note size in PT_GNU_PROPERTY");
+         return false;
 -- 
 2.39.5
 
