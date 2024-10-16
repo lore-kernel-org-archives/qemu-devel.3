@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BF5D1AD44
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261DCD1AD45
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Ani-0003LR-TA; Wed, 16 Oct 2024 16:39:24 -0400
+	id 1t1ApS-0004Ex-SN; Wed, 16 Oct 2024 16:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t1Anb-0003Kq-Vc
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:39:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t1AnI-0004Hq-Hn
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:39:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729111131;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=6IdiyLi9WY1GL1aWXIIldQRXoEed3a37pLd8gjk9rkM=;
- b=IEfQVvnGcJPs/lWJ9Crojva9bZetOrDF2r88y3ImngZ6kWOX5VyC+OV8uvpxIlZnHvcd4u
- MG7jpY0+zmWjAecx4Xssswjc9mkhnaSr+a0V8795nczYRo6HFV32rFSm16T4TfVL2dzQj7
- oCoUSksfIv8whSFVdJwcqCj3KJl8nYw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-7ZzyTjbIP6-Jij4U44e_WQ-1; Wed,
- 16 Oct 2024 16:38:48 -0400
-X-MC-Unique: 7ZzyTjbIP6-Jij4U44e_WQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A36619560AF; Wed, 16 Oct 2024 20:38:44 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.123])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7077519560A3; Wed, 16 Oct 2024 20:38:38 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- berrange@redhat.com, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2] tests/functional: Convert most Aspeed machine tests
-Date: Wed, 16 Oct 2024 22:38:35 +0200
-Message-ID: <20241016203835.2222792-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t1ApN-0004Dq-84
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:41:05 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t1ApG-0004d4-6f
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:41:03 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2e2b9480617so179428a91.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1729111256; x=1729716056; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QDwyEmvvfIr2chJ1vgpdt6hIWbdA0JEuQLSP8jt/IuU=;
+ b=OuEh+cJmNZGk6whIRROu7/EQX31FsyatnKlPrkOdZkmH/L7fu1ytzjAhC6QxSgUMtg
+ KKPu/4sxmHXpW6ncr2/leynMFfFS8IiESFFEIZicWPtXyTEOkamN19me8XI6jY2DrV4x
+ Ol+6U71b5+ViF/eqW78Kidzi5ctUvjq8u3NlNyXmcNs7DKjnbOUlRtmAx4KMQaOqHA70
+ g3ibnQq3rbR/08Tlro5qmaJDJc2iqYP+R4ZJD1y4w1TkE4APCY/TTzX2+Naryzm27WQL
+ WK91PoJyPE/BzncUchnfKPm+imVfl0VouWJ8jBY2gx07ul7UWK6fBuP1mHm/+VLYcEKD
+ KwKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729111256; x=1729716056;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QDwyEmvvfIr2chJ1vgpdt6hIWbdA0JEuQLSP8jt/IuU=;
+ b=pi5WwdnXMJQEuRD1kQEfHTNBdYnk3h+wZI71yYkKoXJ2tPOExlBOENlcjRrcVDRs3D
+ DL2WSNg5ckJlxjTIy1D4ome3p0BRS+mmFTImhfJDBpq1VYoL5q2twdfM0vWOZZSHN0Ap
+ u92Lv+Ts91luTGS9SRKBboVD2IBqJ42W1yKz65zDkdPJdfDEu/X8W3elJbTRlPZRpss0
+ RwOMeR3EQzeaeF5DZN8w3BLPHN4Zskz6qVF+zQw0ox3orYFiRP2HzW8HZBRHyDCnPStL
+ mSiEs4mybZqWy8kW/YS/OPE373lu0oRHoB/REs5BWYaToPzsSugYN+N2FuoIJ/UQswII
+ 9+1w==
+X-Gm-Message-State: AOJu0Yxib2QorYSvO7KI0jzJGqQaAGjqLUKJS3QoRPoq+8HTwSLPk5U1
+ KM6tkIiJoi0jBS7tnuj6fBpOXGw8eP+d5kpuzRcJHax7TPGDyK8wScPWj53dm8N63gOvkWUXHL4
+ k
+X-Google-Smtp-Source: AGHT+IFCrlEDBJ9RAeZyYoLvQHz37PDHo9bVtwRI2e0U3AnM41H9IpTgbdAc0l2X8AC4ilk72Jhl1g==
+X-Received: by 2002:a17:90b:4b8e:b0:2e2:eaa0:7103 with SMTP id
+ 98e67ed59e1d1-2e2f0dccf55mr20873892a91.39.1729111255923; 
+ Wed, 16 Oct 2024 13:40:55 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([177.188.133.9])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e3e09085cfsm242158a91.54.2024.10.16.13.40.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Oct 2024 13:40:55 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, Sebastien Boeuf <seb@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Jason Chien <jason.chien@sifive.com>
+Subject: [PATCH v10 03/12] hw/riscv: add RISC-V IOMMU base emulation
+Date: Wed, 16 Oct 2024 17:40:27 -0300
+Message-ID: <20241016204038.649340-4-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241016204038.649340-1-dbarboza@ventanamicro.com>
+References: <20241016204038.649340-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,593 +98,2375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a simple conversion of the tests with some cleanups and
-adjustments to match the new test framework. Replace the zephyr image
-MD5 hashes with SHA256 hashes while at it.
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-The SDK tests depend on a ssh class from avocado.utils which is
-difficult to replace. To be addressed separately.
+The RISC-V IOMMU specification is now ratified as-per the RISC-V
+international process. The latest frozen specifcation can be found at:
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
+
+Add the foundation of the device emulation for RISC-V IOMMU. It includes
+support for s-stage (sv32, sv39, sv48, sv57 caps) and g-stage (sv32x4,
+sv39x4, sv48x4, sv57x4 caps).
+
+Other capabilities like ATS and DBG support will be added incrementally
+in the next patches.
+
+Co-developed-by: Sebastien Boeuf <seb@rivosinc.com>
+Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
+Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Jason Chien <jason.chien@sifive.com>
 ---
+ hw/riscv/Kconfig            |    4 +
+ hw/riscv/meson.build        |    1 +
+ hw/riscv/riscv-iommu-bits.h |   18 +
+ hw/riscv/riscv-iommu.c      | 2021 +++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu.h      |  126 +++
+ hw/riscv/trace-events       |   14 +
+ hw/riscv/trace.h            |    1 +
+ include/hw/riscv/iommu.h    |   36 +
+ meson.build                 |    1 +
+ 9 files changed, 2222 insertions(+)
+ create mode 100644 hw/riscv/riscv-iommu.c
+ create mode 100644 hw/riscv/riscv-iommu.h
+ create mode 100644 hw/riscv/trace-events
+ create mode 100644 hw/riscv/trace.h
+ create mode 100644 include/hw/riscv/iommu.h
 
- Changes in v2:
-
- - define class level Asset variables 
-
- tests/avocado/machine_aspeed.py     | 252 -------------------------
- tests/functional/meson.build        |   2 +
- tests/functional/test_arm_aspeed.py | 277 ++++++++++++++++++++++++++++
- 3 files changed, 279 insertions(+), 252 deletions(-)
- create mode 100644 tests/functional/test_arm_aspeed.py
-
-diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
-index 4e144bde9131..cb163e3a1106 100644
---- a/tests/avocado/machine_aspeed.py
-+++ b/tests/avocado/machine_aspeed.py
-@@ -19,258 +19,6 @@
- from avocado_qemu import has_cmd
- from avocado.utils import archive
- from avocado import skipUnless
--from avocado import skipUnless
--
--
--class AST1030Machine(QemuSystemTest):
--    """Boots the zephyr os and checks that the console is operational"""
--
--    timeout = 10
--
--    def test_ast1030_zephyros_1_04(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:ast1030-evb
--        :avocado: tags=os:zephyr
--        """
--        tar_url = ('https://github.com/AspeedTech-BMC'
--                   '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip')
--        tar_hash = '4c6a8ce3a8ba76ef1a65dae419ae3409343c4b20'
--        tar_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(tar_path, self.workdir)
--        kernel_file = self.workdir + "/ast1030-evb-demo/zephyr.elf"
--        self.vm.set_console()
--        self.vm.add_args('-kernel', kernel_file,
--                         '-nographic')
--        self.vm.launch()
--        wait_for_console_pattern(self, "Booting Zephyr OS")
--        exec_command_and_wait_for_pattern(self, "help",
--                                          "Available commands")
--
--    def test_ast1030_zephyros_1_07(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:ast1030-evb
--        :avocado: tags=os:zephyr
--        """
--        tar_url = ('https://github.com/AspeedTech-BMC'
--                   '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip')
--        tar_hash = '40ac87eabdcd3b3454ce5aad11fedc72a33ecda2'
--        tar_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(tar_path, self.workdir)
--        kernel_file = self.workdir + "/ast1030-evb-demo/zephyr.bin"
--        self.vm.set_console()
--        self.vm.add_args('-kernel', kernel_file,
--                         '-nographic')
--        self.vm.launch()
--        wait_for_console_pattern(self, "Booting Zephyr OS")
--        for shell_cmd in [
--                'kernel stacks',
--                'otp info conf',
--                'otp info scu',
--                'hwinfo devid',
--                'crypto aes256_cbc_vault',
--                'random get',
--                'jtag JTAG1 sw_xfer high TMS',
--                'adc ADC0 resolution 12',
--                'adc ADC0 read 42',
--                'adc ADC1 read 69',
--                'i2c scan I2C_0',
--                'i3c attach I3C_0',
--                'hash test',
--                'kernel uptime',
--                'kernel reboot warm',
--                'kernel uptime',
--                'kernel reboot cold',
--                'kernel uptime',
--        ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
--
--class AST2x00Machine(QemuSystemTest):
--
--    timeout = 180
--
--    def wait_for_console_pattern(self, success_message, vm=None):
--        wait_for_console_pattern(self, success_message,
--                                 failure_message='Kernel panic - not syncing',
--                                 vm=vm)
--
--    def do_test_arm_aspeed(self, image):
--        self.vm.set_console()
--        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
--                         '-net', 'nic')
--        self.vm.launch()
--
--        self.wait_for_console_pattern("U-Boot 2016.07")
--        self.wait_for_console_pattern("## Loading kernel from FIT Image at 20080000")
--        self.wait_for_console_pattern("Starting kernel ...")
--        self.wait_for_console_pattern("Booting Linux on physical CPU 0x0")
--        wait_for_console_pattern(self,
--                "aspeed-smc 1e620000.spi: read control register: 203b0641")
--        self.wait_for_console_pattern("ftgmac100 1e660000.ethernet eth0: irq ")
--        self.wait_for_console_pattern("systemd[1]: Set hostname to")
--
--    def test_arm_ast2400_palmetto_openbmc_v2_9_0(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:palmetto-bmc
--        """
--
--        image_url = ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
--                     'obmc-phosphor-image-palmetto.static.mtd')
--        image_hash = ('3e13bbbc28e424865dc42f35ad672b10f2e82cdb11846bb28fa625b48beafd0d')
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
--                                      algorithm='sha256')
--
--        self.do_test_arm_aspeed(image_path)
--
--    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:romulus-bmc
--        """
--
--        image_url = ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
--                     'obmc-phosphor-image-romulus.static.mtd')
--        image_hash = ('820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
--                                      algorithm='sha256')
--
--        self.do_test_arm_aspeed(image_path)
--
--    def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
--        self.require_netdev('user')
--
--        self.vm.set_console()
--        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
--                         '-net', 'nic', '-net', 'user')
--        self.vm.launch()
--
--        self.wait_for_console_pattern('U-Boot 2019.04')
--        self.wait_for_console_pattern('## Loading kernel from FIT Image')
--        self.wait_for_console_pattern('Starting kernel ...')
--        self.wait_for_console_pattern('Booting Linux on physical CPU ' + cpu_id)
--        self.wait_for_console_pattern('lease of 10.0.2.15')
--        # the line before login:
--        self.wait_for_console_pattern(pattern)
--        time.sleep(0.1)
--        exec_command(self, 'root')
--        time.sleep(0.1)
--        exec_command(self, "passw0rd")
--
--    def do_test_arm_aspeed_buildroot_poweroff(self):
--        exec_command_and_wait_for_pattern(self, 'poweroff',
--                                          'reboot: System halted');
--
--    def test_arm_ast2500_evb_buildroot(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:ast2500-evb
--        """
--
--        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
--                     'images/ast2500-evb/buildroot-2023.11/flash.img')
--        image_hash = ('c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
--                                      algorithm='sha256')
--
--        self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
--        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0', 'Aspeed AST2500 EVB')
--
--        exec_command_and_wait_for_pattern(self,
--             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
--        exec_command_and_wait_for_pattern(self,
--                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
--        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
--        exec_command_and_wait_for_pattern(self,
--                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
--
--        self.do_test_arm_aspeed_buildroot_poweroff()
--
--    def test_arm_ast2600_evb_buildroot(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:ast2600-evb
--        """
--
--        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
--                     'images/ast2600-evb/buildroot-2023.11/flash.img')
--        image_hash = ('b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
--                                      algorithm='sha256')
--
--        self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
--        self.vm.add_args('-device',
--                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
--        self.vm.add_args('-device',
--                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
--        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
--
--        exec_command_and_wait_for_pattern(self,
--             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
--        exec_command_and_wait_for_pattern(self,
--                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
--        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
--        exec_command_and_wait_for_pattern(self,
--                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
--
--        exec_command_and_wait_for_pattern(self,
--             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
--        year = time.strftime("%Y")
--        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
--
--        exec_command_and_wait_for_pattern(self,
--             'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
--             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
--        exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
--        time.sleep(0.1)
--        exec_command_and_wait_for_pattern(self,
--             'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
--             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
--        self.do_test_arm_aspeed_buildroot_poweroff()
--
--    @skipUnless(*has_cmd('swtpm'))
--    def test_arm_ast2600_evb_buildroot_tpm(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:ast2600-evb
--        """
--
--        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
--                     'images/ast2600-evb/buildroot-2023.02-tpm/flash.img')
--        image_hash = ('a46009ae8a5403a0826d607215e731a8c68d27c14c41e55331706b8f9c7bd997')
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
--                                      algorithm='sha256')
--
--        # force creation of VM object, which also defines self._sd
--        vm = self.vm
--
--        socket = os.path.join(self._sd.name, 'swtpm-socket')
--
--        subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
--                        '--tpmstate', f'dir={self.vm.temp_dir}',
--                        '--ctrl', f'type=unixio,path={socket}'])
--
--        self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
--        self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
--        self.vm.add_args('-device',
--                         'tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e')
--        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
--
--        exec_command_and_wait_for_pattern(self,
--            'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
--            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
--        exec_command_and_wait_for_pattern(self,
--            'cat /sys/class/tpm/tpm0/pcr-sha256/0',
--            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
--
--        self.do_test_arm_aspeed_buildroot_poweroff()
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 44695ff9f2..2e88467c4a 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,3 +1,6 @@
++config RISCV_IOMMU
++    bool
++
+ config RISCV_NUMA
+     bool
  
- class AST2x00MachineSDK(QemuSystemTest, LinuxSSHMixIn):
+@@ -47,6 +50,7 @@ config RISCV_VIRT
+     select SERIAL_MM
+     select RISCV_ACLINT
+     select RISCV_APLIC
++    select RISCV_IOMMU
+     select RISCV_IMSIC
+     select SIFIVE_PLIC
+     select SIFIVE_TEST
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index f872674093..cbc99c6e8e 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -10,5 +10,6 @@ riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+ riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
+ riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
+ riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c'))
  
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c90c02517a07..d4b534d33ff3 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -16,6 +16,7 @@ test_timeouts = {
-   'aarch64_virt' : 360,
-   'acpi_bits' : 240,
-   'arm_raspi2' : 120,
-+  'arm_aspeed' : 600,
-   'mips_malta' : 120,
-   'netdev_ethtool' : 180,
-   'ppc_40p' : 240,
-@@ -54,6 +55,7 @@ tests_arm_system_thorough = [
-   'arm_integratorcp',
-   'arm_raspi2',
-   'arm_vexpress',
-+  'arm_aspeed',
- ]
+ hw_arch += {'riscv': riscv_ss}
+diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
+index c46d7d18ab..b1c477f5c3 100644
+--- a/hw/riscv/riscv-iommu-bits.h
++++ b/hw/riscv/riscv-iommu-bits.h
+@@ -69,6 +69,14 @@ struct riscv_iommu_pq_record {
+ /* 5.3 IOMMU Capabilities (64bits) */
+ #define RISCV_IOMMU_REG_CAP             0x0000
+ #define RISCV_IOMMU_CAP_VERSION         GENMASK_ULL(7, 0)
++#define RISCV_IOMMU_CAP_SV32            BIT_ULL(8)
++#define RISCV_IOMMU_CAP_SV39            BIT_ULL(9)
++#define RISCV_IOMMU_CAP_SV48            BIT_ULL(10)
++#define RISCV_IOMMU_CAP_SV57            BIT_ULL(11)
++#define RISCV_IOMMU_CAP_SV32X4          BIT_ULL(16)
++#define RISCV_IOMMU_CAP_SV39X4          BIT_ULL(17)
++#define RISCV_IOMMU_CAP_SV48X4          BIT_ULL(18)
++#define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
+ #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
+ #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
+ #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
+@@ -80,7 +88,9 @@ struct riscv_iommu_pq_record {
  
- tests_arm_linuxuser_thorough = [
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+ /* 5.4 Features control register (32bits) */
+ #define RISCV_IOMMU_REG_FCTL            0x0008
++#define RISCV_IOMMU_FCTL_BE             BIT(0)
+ #define RISCV_IOMMU_FCTL_WSI            BIT(1)
++#define RISCV_IOMMU_FCTL_GXL            BIT(2)
+ 
+ /* 5.5 Device-directory-table pointer (64bits) */
+ #define RISCV_IOMMU_REG_DDTP            0x0010
+@@ -175,6 +185,10 @@ enum {
+ 
+ /* 5.27 Interrupt cause to vector (64bits) */
+ #define RISCV_IOMMU_REG_ICVEC           0x02F8
++#define RISCV_IOMMU_ICVEC_CIV           GENMASK_ULL(3, 0)
++#define RISCV_IOMMU_ICVEC_FIV           GENMASK_ULL(7, 4)
++#define RISCV_IOMMU_ICVEC_PMIV          GENMASK_ULL(11, 8)
++#define RISCV_IOMMU_ICVEC_PIV           GENMASK_ULL(15, 12)
+ 
+ /* 5.28 MSI Configuration table (32 * 64bits) */
+ #define RISCV_IOMMU_REG_MSI_CONFIG      0x0300
+@@ -203,6 +217,8 @@ struct riscv_iommu_dc {
+ #define RISCV_IOMMU_DC_TC_DTF           BIT_ULL(4)
+ #define RISCV_IOMMU_DC_TC_PDTV          BIT_ULL(5)
+ #define RISCV_IOMMU_DC_TC_PRPR          BIT_ULL(6)
++#define RISCV_IOMMU_DC_TC_GADE          BIT_ULL(7)
++#define RISCV_IOMMU_DC_TC_SADE          BIT_ULL(8)
+ #define RISCV_IOMMU_DC_TC_DPE           BIT_ULL(9)
+ #define RISCV_IOMMU_DC_TC_SBE           BIT_ULL(10)
+ #define RISCV_IOMMU_DC_TC_SXL           BIT_ULL(11)
+@@ -309,9 +325,11 @@ enum riscv_iommu_fq_causes {
+ 
+ /* Translation attributes fields */
+ #define RISCV_IOMMU_PC_TA_V             BIT_ULL(0)
++#define RISCV_IOMMU_PC_TA_RESERVED      GENMASK_ULL(63, 32)
+ 
+ /* First stage context fields */
+ #define RISCV_IOMMU_PC_FSC_PPN          GENMASK_ULL(43, 0)
++#define RISCV_IOMMU_PC_FSC_RESERVED     GENMASK_ULL(59, 44)
+ 
+ enum riscv_iommu_fq_ttypes {
+     RISCV_IOMMU_FQ_TTYPE_NONE = 0,
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
 new file mode 100644
-index 000000000000..37e0c0734b25
+index 0000000000..a727cb40db
 --- /dev/null
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -0,0 +1,277 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots the ASPEED SoCs with firmware
-+#
-+# Copyright (C) 2022 ASPEED Technology Inc
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/hw/riscv/riscv-iommu.c
+@@ -0,0 +1,2021 @@
++/*
++ * QEMU emulation of an RISC-V IOMMU
++ *
++ * Copyright (C) 2021-2023, Rivos Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+import os
-+import time
-+import subprocess
-+import tempfile
++#include "qemu/osdep.h"
++#include "qom/object.h"
++#include "hw/pci/pci_bus.h"
++#include "hw/pci/pci_device.h"
++#include "hw/qdev-properties.h"
++#include "hw/riscv/riscv_hart.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++#include "qemu/timer.h"
 +
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import interrupt_interactive_console_until_pattern
-+from qemu_test import exec_command
-+from qemu_test import has_cmd
-+from qemu_test.utils import archive_extract
-+from zipfile import ZipFile
-+from unittest import skipUnless
++#include "cpu_bits.h"
++#include "riscv-iommu.h"
++#include "riscv-iommu-bits.h"
++#include "trace.h"
 +
-+class AST1030Machine(QemuSystemTest):
++#define LIMIT_CACHE_CTX               (1U << 7)
++#define LIMIT_CACHE_IOT               (1U << 20)
 +
-+    ASSET_ZEPHYR_1_04 = Asset(
-+        ('https://github.com/AspeedTech-BMC'
-+         '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip'),
-+        '4ac6210adcbc61294927918707c6762483fd844dde5e07f3ba834ad1f91434d3')
++/* Physical page number coversions */
++#define PPN_PHYS(ppn)                 ((ppn) << TARGET_PAGE_BITS)
++#define PPN_DOWN(phy)                 ((phy) >> TARGET_PAGE_BITS)
 +
-+    def test_ast1030_zephyros_1_04(self):
-+        kernel_name = "ast1030-evb-demo/zephyr.elf"
-+        zip_file = self.ASSET_ZEPHYR_1_04.fetch()
-+        with ZipFile(zip_file, 'r') as zf:
-+                     zf.extract(kernel_name, path=self.workdir)
-+        kernel_file = os.path.join(self.workdir, kernel_name)
++typedef struct RISCVIOMMUContext RISCVIOMMUContext;
++typedef struct RISCVIOMMUEntry RISCVIOMMUEntry;
 +
-+        self.set_machine('ast1030-evb')
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', kernel_file, '-nographic')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, "Booting Zephyr OS")
-+        exec_command_and_wait_for_pattern(self, "help",
-+                                          "Available commands")
++/* Device assigned I/O address space */
++struct RISCVIOMMUSpace {
++    IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
++    AddressSpace iova_as;       /* IOVA address space for attached device */
++    RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
++    uint32_t devid;             /* Requester identifier, AKA device_id */
++    bool notifier;              /* IOMMU unmap notifier enabled */
++    QLIST_ENTRY(RISCVIOMMUSpace) list;
++};
 +
-+    ASSET_ZEPHYR_1_07 = Asset(
-+        ('https://github.com/AspeedTech-BMC'
-+         '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip'),
-+        'ad52e27959746988afaed8429bf4e12ab988c05c4d07c9d90e13ec6f7be4574c')
++/* Device translation context state. */
++struct RISCVIOMMUContext {
++    uint64_t devid:24;          /* Requester Id, AKA device_id */
++    uint64_t process_id:20;     /* Process ID. PASID for PCIe */
++    uint64_t tc;                /* Translation Control */
++    uint64_t ta;                /* Translation Attributes */
++    uint64_t satp;              /* S-Stage address translation and protection */
++    uint64_t gatp;              /* G-Stage address translation and protection */
++    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
++    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
++    uint64_t msiptp;            /* MSI redirection page table pointer */
++};
 +
-+    def test_ast1030_zephyros_1_07(self):
-+        kernel_name = "ast1030-evb-demo/zephyr.bin"
-+        zip_file = self.ASSET_ZEPHYR_1_07.fetch()
-+        with ZipFile(zip_file, 'r') as zf:
-+                     zf.extract(kernel_name, path=self.workdir)
-+        kernel_file = os.path.join(self.workdir, kernel_name)
++/* IOMMU index for transactions without process_id specified. */
++#define RISCV_IOMMU_NOPROCID 0
 +
-+        self.set_machine('ast1030-evb')
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', kernel_file, '-nographic')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, "Booting Zephyr OS")
-+        for shell_cmd in [
-+                'kernel stacks',
-+                'otp info conf',
-+                'otp info scu',
-+                'hwinfo devid',
-+                'crypto aes256_cbc_vault',
-+                'random get',
-+                'jtag JTAG1 sw_xfer high TMS',
-+                'adc ADC0 resolution 12',
-+                'adc ADC0 read 42',
-+                'adc ADC1 read 69',
-+                'i2c scan I2C_0',
-+                'i3c attach I3C_0',
-+                'hash test',
-+                'kernel uptime',
-+                'kernel reboot warm',
-+                'kernel uptime',
-+                'kernel reboot cold',
-+                'kernel uptime',
-+        ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
++static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
++{
++    switch (vec_type) {
++    case RISCV_IOMMU_INTR_CQ:
++        return icvec & RISCV_IOMMU_ICVEC_CIV;
++    case RISCV_IOMMU_INTR_FQ:
++        return (icvec & RISCV_IOMMU_ICVEC_FIV) >> 4;
++    case RISCV_IOMMU_INTR_PM:
++        return (icvec & RISCV_IOMMU_ICVEC_PMIV) >> 8;
++    case RISCV_IOMMU_INTR_PQ:
++        return (icvec & RISCV_IOMMU_ICVEC_PIV) >> 12;
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+class AST2x00Machine(QemuSystemTest):
++static void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
++{
++    const uint32_t fctl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FCTL);
++    uint32_t ipsr, icvec, vector;
 +
-+    def do_test_arm_aspeed(self, machine, image):
-+        self.set_machine(machine)
-+        self.vm.set_console()
-+        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-+                         '-net', 'nic')
-+        self.vm.launch()
++    if (fctl & RISCV_IOMMU_FCTL_WSI || !s->notify) {
++        return;
++    }
 +
-+        wait_for_console_pattern(self, "U-Boot 2016.07")
-+        wait_for_console_pattern(self, "## Loading kernel from FIT Image at 20080000")
-+        wait_for_console_pattern(self, "Starting kernel ...")
-+        wait_for_console_pattern(self, "Booting Linux on physical CPU 0x0")
-+        wait_for_console_pattern(self,
-+                "aspeed-smc 1e620000.spi: read control register: 203b0641")
-+        wait_for_console_pattern(self, "ftgmac100 1e660000.ethernet eth0: irq ")
-+        wait_for_console_pattern(self, "systemd[1]: Set hostname to")
++    icvec = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_ICVEC);
++    ipsr = riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, (1 << vec_type), 0);
 +
-+    ASSET_PALMETTO_FLASH = Asset(
-+        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
-+         'obmc-phosphor-image-palmetto.static.mtd'),
-+        '3e13bbbc28e424865dc42f35ad672b10f2e82cdb11846bb28fa625b48beafd0d');
++    if (!(ipsr & (1 << vec_type))) {
++        vector = riscv_iommu_get_icvec_vector(icvec, vec_type);
++        s->notify(s, vector);
++        trace_riscv_iommu_notify_int_vector(vec_type, vector);
++    }
++}
 +
-+    def test_arm_ast2400_palmetto_openbmc_v2_9_0(self):
-+        image_path = self.ASSET_PALMETTO_FLASH.fetch()
++static void riscv_iommu_fault(RISCVIOMMUState *s,
++                              struct riscv_iommu_fq_record *ev)
++{
++    uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
++    uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s->fq_mask;
++    uint32_t tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQT) & s->fq_mask;
++    uint32_t next = (tail + 1) & s->fq_mask;
++    uint32_t devid = get_field(ev->hdr, RISCV_IOMMU_FQ_HDR_DID);
 +
-+        self.do_test_arm_aspeed('palmetto-bmc', image_path)
++    trace_riscv_iommu_flt(s->parent_obj.id, PCI_BUS_NUM(devid), PCI_SLOT(devid),
++                          PCI_FUNC(devid), ev->hdr, ev->iotval);
 +
-+    ASSET_ROMULUS_FLASH = Asset(
-+        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
-+         'obmc-phosphor-image-romulus.static.mtd'),
-+        '820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
++    if (!(ctrl & RISCV_IOMMU_FQCSR_FQON) ||
++        !!(ctrl & (RISCV_IOMMU_FQCSR_FQOF | RISCV_IOMMU_FQCSR_FQMF))) {
++        return;
++    }
 +
-+    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
-+        image_path = self.ASSET_ROMULUS_FLASH.fetch()
++    if (head == next) {
++        riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR,
++                              RISCV_IOMMU_FQCSR_FQOF, 0);
++    } else {
++        dma_addr_t addr = s->fq_addr + tail * sizeof(*ev);
++        if (dma_memory_write(s->target_as, addr, ev, sizeof(*ev),
++                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR,
++                                  RISCV_IOMMU_FQCSR_FQMF, 0);
++        } else {
++            riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_FQT, next);
++        }
++    }
 +
-+        self.do_test_arm_aspeed('romulus-bmc', image_path)
++    if (ctrl & RISCV_IOMMU_FQCSR_FIE) {
++        riscv_iommu_notify(s, RISCV_IOMMU_INTR_FQ);
++    }
++}
 +
-+    def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
-+        self.require_netdev('user')
-+        self.vm.set_console()
-+        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-+                         '-net', 'nic', '-net', 'user')
-+        self.vm.launch()
++static void riscv_iommu_pri(RISCVIOMMUState *s,
++    struct riscv_iommu_pq_record *pr)
++{
++    uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
++    uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQH) & s->pq_mask;
++    uint32_t tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQT) & s->pq_mask;
++    uint32_t next = (tail + 1) & s->pq_mask;
++    uint32_t devid = get_field(pr->hdr, RISCV_IOMMU_PREQ_HDR_DID);
 +
-+        wait_for_console_pattern(self, 'U-Boot 2019.04')
-+        wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-+        wait_for_console_pattern(self, 'Starting kernel ...')
-+        wait_for_console_pattern(self, 'Booting Linux on physical CPU ' + cpu_id)
-+        wait_for_console_pattern(self, 'lease of 10.0.2.15')
-+        # the line before login:
-+        wait_for_console_pattern(self, pattern)
-+        time.sleep(0.1)
-+        exec_command(self, 'root')
-+        time.sleep(0.1)
-+        exec_command(self, "passw0rd")
++    trace_riscv_iommu_pri(s->parent_obj.id, PCI_BUS_NUM(devid), PCI_SLOT(devid),
++                          PCI_FUNC(devid), pr->payload);
 +
-+    def do_test_arm_aspeed_buildroot_poweroff(self):
-+        exec_command_and_wait_for_pattern(self, 'poweroff',
-+                                          'reboot: System halted');
++    if (!(ctrl & RISCV_IOMMU_PQCSR_PQON) ||
++        !!(ctrl & (RISCV_IOMMU_PQCSR_PQOF | RISCV_IOMMU_PQCSR_PQMF))) {
++        return;
++    }
 +
-+    ASSET_BR2_202311_AST2500_FLASH = Asset(
-+        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
-+         'images/ast2500-evb/buildroot-2023.11/flash.img'),
-+        'c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
++    if (head == next) {
++        riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR,
++                              RISCV_IOMMU_PQCSR_PQOF, 0);
++    } else {
++        dma_addr_t addr = s->pq_addr + tail * sizeof(*pr);
++        if (dma_memory_write(s->target_as, addr, pr, sizeof(*pr),
++                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR,
++                                  RISCV_IOMMU_PQCSR_PQMF, 0);
++        } else {
++            riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_PQT, next);
++        }
++    }
 +
-+    def test_arm_ast2500_evb_buildroot(self):
-+        image_path = self.ASSET_BR2_202311_AST2500_FLASH.fetch()
++    if (ctrl & RISCV_IOMMU_PQCSR_PIE) {
++        riscv_iommu_notify(s, RISCV_IOMMU_INTR_PQ);
++    }
++}
 +
-+        self.set_machine('ast2500-evb')
-+        self.vm.add_args('-device',
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0',
-+                                                'Aspeed AST2500 EVB')
++/* Portable implementation of pext_u64, bit-mask extraction. */
++static uint64_t _pext_u64(uint64_t val, uint64_t ext)
++{
++    uint64_t ret = 0;
++    uint64_t rot = 1;
 +
-+        exec_command_and_wait_for_pattern(self,
-+             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+        exec_command_and_wait_for_pattern(self,
-+                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-+        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-+                    property='temperature', value=18000);
-+        exec_command_and_wait_for_pattern(self,
-+                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
++    while (ext) {
++        if (ext & 1) {
++            if (val & 1) {
++                ret |= rot;
++            }
++            rot <<= 1;
++        }
++        val >>= 1;
++        ext >>= 1;
++    }
 +
-+        self.do_test_arm_aspeed_buildroot_poweroff()
++    return ret;
++}
 +
-+    ASSET_BR2_202311_AST2600_FLASH = Asset(
-+        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
-+         'images/ast2600-evb/buildroot-2023.11/flash.img'),
-+        'b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
++/* Check if GPA matches MSI/MRIF pattern. */
++static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
++    dma_addr_t gpa)
++{
++    if (!s->enable_msi) {
++        return false;
++    }
 +
-+    def test_arm_ast2600_evb_buildroot(self):
-+        image_path = self.ASSET_BR2_202311_AST2600_FLASH.fetch()
++    if (get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_MODE) !=
++        RISCV_IOMMU_DC_MSIPTP_MODE_FLAT) {
++        return false; /* Invalid MSI/MRIF mode */
++    }
 +
-+        self.set_machine('ast2600-evb')
-+        self.vm.add_args('-device',
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+        self.vm.add_args('-device',
-+                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
-+        self.vm.add_args('-device',
-+                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
-+        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
++    if ((PPN_DOWN(gpa) ^ ctx->msi_addr_pattern) & ~ctx->msi_addr_mask) {
++        return false; /* GPA not in MSI range defined by AIA IMSIC rules. */
++    }
 +
-+        exec_command_and_wait_for_pattern(self,
-+             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+        exec_command_and_wait_for_pattern(self,
-+                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-+        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-+                    property='temperature', value=18000);
-+        exec_command_and_wait_for_pattern(self,
-+                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
++    return true;
++}
 +
-+        exec_command_and_wait_for_pattern(self,
-+             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
-+             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
-+        year = time.strftime("%Y")
-+        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
++/*
++ * RISCV IOMMU Address Translation Lookup - Page Table Walk
++ *
++ * Note: Code is based on get_physical_address() from target/riscv/cpu_helper.c
++ * Both implementation can be merged into single helper function in future.
++ * Keeping them separate for now, as error reporting and flow specifics are
++ * sufficiently different for separate implementation.
++ *
++ * @s        : IOMMU Device State
++ * @ctx      : Translation context for device id and process address space id.
++ * @iotlb    : translation data: physical address and access mode.
++ * @return   : success or fault cause code.
++ */
++static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
++    IOMMUTLBEntry *iotlb)
++{
++    dma_addr_t addr, base;
++    uint64_t satp, gatp, pte;
++    bool en_s, en_g;
++    struct {
++        unsigned char step;
++        unsigned char levels;
++        unsigned char ptidxbits;
++        unsigned char ptesize;
++    } sc[2];
++    /* Translation stage phase */
++    enum {
++        S_STAGE = 0,
++        G_STAGE = 1,
++    } pass;
++    MemTxResult ret;
 +
-+        exec_command_and_wait_for_pattern(self,
-+             'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
-+             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
-+        exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
-+        time.sleep(0.1)
-+        exec_command_and_wait_for_pattern(self,
-+             'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
-+             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
-+        self.do_test_arm_aspeed_buildroot_poweroff()
++    satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
++    gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
 +
-+    ASSET_BR2_202302_AST2600_TPM_FLASH = Asset(
-+        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
-+         'images/ast2600-evb/buildroot-2023.02-tpm/flash.img'),
-+        'a46009ae8a5403a0826d607215e731a8c68d27c14c41e55331706b8f9c7bd997')
++    en_s = satp != RISCV_IOMMU_DC_FSC_MODE_BARE;
++    en_g = gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE;
 +
-+    @skipUnless(*has_cmd('swtpm'))
-+    def test_arm_ast2600_evb_buildroot_tpm(self):
-+        image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
++    /*
++     * Early check for MSI address match when IOVA == GPA.
++     * Note that the (!en_s) condition means that the MSI
++     * page table may only be used when guest pages are
++     * mapped using the g-stage page table, whether single-
++     * or two-stage paging is enabled. It's unavoidable though,
++     * because the spec mandates that we do a first-stage
++     * translation before we check the MSI page table, which
++     * means we can't do an early MSI check unless we have
++     * strictly !en_s.
++     */
++    if (!en_s && (iotlb->perm & IOMMU_WO) &&
++        riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
++        iotlb->target_as = &s->trap_as;
++        iotlb->translated_addr = iotlb->iova;
++        iotlb->addr_mask = ~TARGET_PAGE_MASK;
++        return 0;
++    }
 +
-+        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-+        socket = os.path.join(socket_dir.name, 'swtpm-socket')
++    /* Exit early for pass-through mode. */
++    if (!(en_s || en_g)) {
++        iotlb->translated_addr = iotlb->iova;
++        iotlb->addr_mask = ~TARGET_PAGE_MASK;
++        /* Allow R/W in pass-through mode */
++        iotlb->perm = IOMMU_RW;
++        return 0;
++    }
 +
-+        self.set_machine('ast2600-evb')
++    /* S/G translation parameters. */
++    for (pass = 0; pass < 2; pass++) {
++        uint32_t sv_mode;
 +
-+        subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
-+                        '--tpmstate', f'dir={self.vm.temp_dir}',
-+                        '--ctrl', f'type=unixio,path={socket}'])
++        sc[pass].step = 0;
++        if (pass ? (s->fctl & RISCV_IOMMU_FCTL_GXL) :
++            (ctx->tc & RISCV_IOMMU_DC_TC_SXL)) {
++            /* 32bit mode for GXL/SXL == 1 */
++            switch (pass ? gatp : satp) {
++            case RISCV_IOMMU_DC_IOHGATP_MODE_BARE:
++                sc[pass].levels    = 0;
++                sc[pass].ptidxbits = 0;
++                sc[pass].ptesize   = 0;
++                break;
++            case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
++                sv_mode = pass ? RISCV_IOMMU_CAP_SV32X4 : RISCV_IOMMU_CAP_SV32;
++                if (!(s->cap & sv_mode)) {
++                    return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++                }
++                sc[pass].levels    = 2;
++                sc[pass].ptidxbits = 10;
++                sc[pass].ptesize   = 4;
++                break;
++            default:
++                return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++            }
++        } else {
++            /* 64bit mode for GXL/SXL == 0 */
++            switch (pass ? gatp : satp) {
++            case RISCV_IOMMU_DC_IOHGATP_MODE_BARE:
++                sc[pass].levels    = 0;
++                sc[pass].ptidxbits = 0;
++                sc[pass].ptesize   = 0;
++                break;
++            case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
++                sv_mode = pass ? RISCV_IOMMU_CAP_SV39X4 : RISCV_IOMMU_CAP_SV39;
++                if (!(s->cap & sv_mode)) {
++                    return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++                }
++                sc[pass].levels    = 3;
++                sc[pass].ptidxbits = 9;
++                sc[pass].ptesize   = 8;
++                break;
++            case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
++                sv_mode = pass ? RISCV_IOMMU_CAP_SV48X4 : RISCV_IOMMU_CAP_SV48;
++                if (!(s->cap & sv_mode)) {
++                    return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++                }
++                sc[pass].levels    = 4;
++                sc[pass].ptidxbits = 9;
++                sc[pass].ptesize   = 8;
++                break;
++            case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
++                sv_mode = pass ? RISCV_IOMMU_CAP_SV57X4 : RISCV_IOMMU_CAP_SV57;
++                if (!(s->cap & sv_mode)) {
++                    return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++                }
++                sc[pass].levels    = 5;
++                sc[pass].ptidxbits = 9;
++                sc[pass].ptesize   = 8;
++                break;
++            default:
++                return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++            }
++        }
++    };
 +
-+        self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
-+        self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
-+        self.vm.add_args('-device',
-+                         'tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e')
-+        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
++    /* S/G stages translation tables root pointers */
++    gatp = PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
++    satp = PPN_PHYS(get_field(ctx->satp, RISCV_IOMMU_ATP_PPN_FIELD));
++    addr = (en_s && en_g) ? satp : iotlb->iova;
++    base = en_g ? gatp : satp;
++    pass = en_g ? G_STAGE : S_STAGE;
 +
-+        exec_command_and_wait_for_pattern(self,
-+            'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
-+            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
-+        exec_command_and_wait_for_pattern(self,
-+            'cat /sys/class/tpm/tpm0/pcr-sha256/0',
-+            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
++    do {
++        const unsigned widened = (pass && !sc[pass].step) ? 2 : 0;
++        const unsigned va_bits = widened + sc[pass].ptidxbits;
++        const unsigned va_skip = TARGET_PAGE_BITS + sc[pass].ptidxbits *
++                                 (sc[pass].levels - 1 - sc[pass].step);
++        const unsigned idx = (addr >> va_skip) & ((1 << va_bits) - 1);
++        const dma_addr_t pte_addr = base + idx * sc[pass].ptesize;
++        const bool ade =
++            ctx->tc & (pass ? RISCV_IOMMU_DC_TC_GADE : RISCV_IOMMU_DC_TC_SADE);
 +
-+        self.do_test_arm_aspeed_buildroot_poweroff()
++        /* Address range check before first level lookup */
++        if (!sc[pass].step) {
++            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
++            if ((addr & va_mask) != addr) {
++                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
++            }
++        }
 +
-+class AST2x00MachineMMC(QemuSystemTest):
++        /* Read page table entry */
++        if (sc[pass].ptesize == 4) {
++            uint32_t pte32 = 0;
++            ret = ldl_le_dma(s->target_as, pte_addr, &pte32,
++                             MEMTXATTRS_UNSPECIFIED);
++            pte = pte32;
++        } else {
++            ret = ldq_le_dma(s->target_as, pte_addr, &pte,
++                             MEMTXATTRS_UNSPECIFIED);
++        }
++        if (ret != MEMTX_OK) {
++            return (iotlb->perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
++                                            : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
++        }
 +
-+    ASSET_RAINIER_EMMC = Asset(
-+        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
-+         'mmc-p10bmc-20240617.qcow2'),
-+        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++        sc[pass].step++;
++        hwaddr ppn = pte >> PTE_PPN_SHIFT;
 +
-+    def test_arm_aspeed_emmc_boot(self):
-+        image_path = self.ASSET_RAINIER_EMMC.fetch()
++        if (!(pte & PTE_V)) {
++            break;                /* Invalid PTE */
++        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
++            base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
++        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
++            break;                /* Reserved leaf PTE flags: PTE_W */
++        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == (PTE_W | PTE_X)) {
++            break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
++        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
++            break;                /* Misaligned PPN */
++        } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
++            break;                /* Read access check failed */
++        } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
++            break;                /* Write access check failed */
++        } else if ((iotlb->perm & IOMMU_RO) && !ade && !(pte & PTE_A)) {
++            break;                /* Access bit not set */
++        } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
++            break;                /* Dirty bit not set */
++        } else {
++            /* Leaf PTE, translation completed. */
++            sc[pass].step = sc[pass].levels;
++            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            /* Update address mask based on smallest translation granularity */
++            iotlb->addr_mask &= (1ULL << va_skip) - 1;
++            /* Continue with S-Stage translation? */
++            if (pass && sc[0].step != sc[0].levels) {
++                pass = S_STAGE;
++                addr = iotlb->iova;
++                continue;
++            }
++            /* Translation phase completed (GPA or SPA) */
++            iotlb->translated_addr = base;
++            iotlb->perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
++                                                         : IOMMU_RO;
 +
-+        self.require_netdev('user')
++            /* Check MSI GPA address match */
++            if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
++                riscv_iommu_msi_check(s, ctx, base)) {
++                /* Trap MSI writes and return GPA address. */
++                iotlb->target_as = &s->trap_as;
++                iotlb->addr_mask = ~TARGET_PAGE_MASK;
++                return 0;
++            }
 +
-+        self.set_machine('rainier-bmc')
-+        self.vm.set_console()
-+        self.vm.add_args('-drive',
-+                         'file=' + image_path + ',if=sd,id=sd2,index=2',
-+                         '-net', 'nic', '-net', 'user')
-+        self.vm.launch()
++            /* Continue with G-Stage translation? */
++            if (!pass && en_g) {
++                pass = G_STAGE;
++                addr = base;
++                base = gatp;
++                sc[pass].step = 0;
++                continue;
++            }
 +
-+        wait_for_console_pattern(self, 'U-Boot SPL 2019.04')
-+        wait_for_console_pattern(self, 'Trying to boot from MMC1')
-+        wait_for_console_pattern(self, 'U-Boot 2019.04')
-+        wait_for_console_pattern(self, 'eMMC 2nd Boot')
-+        wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-+        wait_for_console_pattern(self, 'Starting kernel ...')
-+        wait_for_console_pattern(self, 'Booting Linux on physical CPU 0xf00')
-+        wait_for_console_pattern(self, 'mmcblk0: p1 p2 p3 p4 p5 p6 p7')
-+        wait_for_console_pattern(self, 'IBM eBMC (OpenBMC for IBM Enterprise')
++            return 0;
++        }
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++        if (sc[pass].step == sc[pass].levels) {
++            break; /* Can't find leaf PTE */
++        }
++
++        /* Continue with G-Stage translation? */
++        if (!pass && en_g) {
++            pass = G_STAGE;
++            addr = base;
++            base = gatp;
++            sc[pass].step = 0;
++        }
++    } while (1);
++
++    return (iotlb->perm & IOMMU_WO) ?
++                (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
++                        RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
++                (pass ? RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS :
++                        RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S);
++}
++
++static void riscv_iommu_report_fault(RISCVIOMMUState *s,
++                                     RISCVIOMMUContext *ctx,
++                                     uint32_t fault_type, uint32_t cause,
++                                     bool pv,
++                                     uint64_t iotval, uint64_t iotval2)
++{
++    struct riscv_iommu_fq_record ev = { 0 };
++
++    if (ctx->tc & RISCV_IOMMU_DC_TC_DTF) {
++        switch (cause) {
++        case RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED:
++        case RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT:
++        case RISCV_IOMMU_FQ_CAUSE_DDT_INVALID:
++        case RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED:
++        case RISCV_IOMMU_FQ_CAUSE_DDT_CORRUPTED:
++        case RISCV_IOMMU_FQ_CAUSE_INTERNAL_DP_ERROR:
++        case RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT:
++            break;
++        default:
++            /* DTF prevents reporting a fault for this given cause */
++            return;
++        }
++    }
++
++    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE, cause);
++    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE, fault_type);
++    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_DID, ctx->devid);
++    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_PV, true);
++
++    if (pv) {
++        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_PID, ctx->process_id);
++    }
++
++    ev.iotval = iotval;
++    ev.iotval2 = iotval2;
++
++    riscv_iommu_fault(s, &ev);
++}
++
++/* Redirect MSI write for given GPA. */
++static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
++    RISCVIOMMUContext *ctx, uint64_t gpa, uint64_t data,
++    unsigned size, MemTxAttrs attrs)
++{
++    MemTxResult res;
++    dma_addr_t addr;
++    uint64_t intn;
++    uint32_t n190;
++    uint64_t pte[2];
++    int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
++    int cause;
++
++    /* Interrupt File Number */
++    intn = _pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
++    if (intn >= 256) {
++        /* Interrupt file number out of range */
++        res = MEMTX_ACCESS_ERROR;
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
++        goto err;
++    }
++
++    /* fetch MSI PTE */
++    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
++    addr = addr | (intn * sizeof(pte));
++    res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
++            MEMTXATTRS_UNSPECIFIED);
++    if (res != MEMTX_OK) {
++        if (res == MEMTX_DECODE_ERROR) {
++            cause = RISCV_IOMMU_FQ_CAUSE_MSI_PT_CORRUPTED;
++        } else {
++            cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
++        }
++        goto err;
++    }
++
++    le64_to_cpus(&pte[0]);
++    le64_to_cpus(&pte[1]);
++
++    if (!(pte[0] & RISCV_IOMMU_MSI_PTE_V) || (pte[0] & RISCV_IOMMU_MSI_PTE_C)) {
++        /*
++         * The spec mentions that: "If msipte.C == 1, then further
++         * processing to interpret the PTE is implementation
++         * defined.". We'll abort with cause = 262 for this
++         * case too.
++         */
++        res = MEMTX_ACCESS_ERROR;
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_INVALID;
++        goto err;
++    }
++
++    switch (get_field(pte[0], RISCV_IOMMU_MSI_PTE_M)) {
++    case RISCV_IOMMU_MSI_PTE_M_BASIC:
++        /* MSI Pass-through mode */
++        addr = PPN_PHYS(get_field(pte[0], RISCV_IOMMU_MSI_PTE_PPN));
++
++        trace_riscv_iommu_msi(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
++                              PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid),
++                              gpa, addr);
++
++        res = dma_memory_write(s->target_as, addr, &data, size, attrs);
++        if (res != MEMTX_OK) {
++            cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
++            goto err;
++        }
++
++        return MEMTX_OK;
++    case RISCV_IOMMU_MSI_PTE_M_MRIF:
++        /* MRIF mode, continue. */
++        break;
++    default:
++        res = MEMTX_ACCESS_ERROR;
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
++        goto err;
++    }
++
++    /*
++     * Report an error for interrupt identities exceeding the maximum allowed
++     * for an IMSIC interrupt file (2047) or destination address is not 32-bit
++     * aligned. See IOMMU Specification, Chapter 2.3. MSI page tables.
++     */
++    if ((data > 2047) || (gpa & 3)) {
++        res = MEMTX_ACCESS_ERROR;
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
++        goto err;
++    }
++
++    /* MSI MRIF mode, non atomic pending bit update */
++
++    /* MRIF pending bit address */
++    addr = get_field(pte[0], RISCV_IOMMU_MSI_PTE_MRIF_ADDR) << 9;
++    addr = addr | ((data & 0x7c0) >> 3);
++
++    trace_riscv_iommu_msi(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
++                          PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid),
++                          gpa, addr);
++
++    /* MRIF pending bit mask */
++    data = 1ULL << (data & 0x03f);
++    res = dma_memory_read(s->target_as, addr, &intn, sizeof(intn), attrs);
++    if (res != MEMTX_OK) {
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
++        goto err;
++    }
++
++    intn = intn | data;
++    res = dma_memory_write(s->target_as, addr, &intn, sizeof(intn), attrs);
++    if (res != MEMTX_OK) {
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
++        goto err;
++    }
++
++    /* Get MRIF enable bits */
++    addr = addr + sizeof(intn);
++    res = dma_memory_read(s->target_as, addr, &intn, sizeof(intn), attrs);
++    if (res != MEMTX_OK) {
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
++        goto err;
++    }
++
++    if (!(intn & data)) {
++        /* notification disabled, MRIF update completed. */
++        return MEMTX_OK;
++    }
++
++    /* Send notification message */
++    addr = PPN_PHYS(get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NPPN));
++    n190 = get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NID) |
++          (get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NID_MSB) << 10);
++
++    res = dma_memory_write(s->target_as, addr, &n190, sizeof(n190), attrs);
++    if (res != MEMTX_OK) {
++        cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
++        goto err;
++    }
++
++    trace_riscv_iommu_mrif_notification(s->parent_obj.id, n190, addr);
++
++    return MEMTX_OK;
++
++err:
++    riscv_iommu_report_fault(s, ctx, fault_type, cause,
++                             !!ctx->process_id, 0, 0);
++    return res;
++}
++
++/*
++ * Check device context configuration as described by the
++ * riscv-iommu spec section "Device-context configuration
++ * checks".
++ */
++static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
++                                            RISCVIOMMUContext *ctx)
++{
++    uint32_t fsc_mode, msi_mode;
++
++    if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI) &&
++        ctx->tc & RISCV_IOMMU_DC_TC_PRPR) {
++        return false;
++    }
++
++    if (!(s->cap & RISCV_IOMMU_CAP_T2GPA) &&
++        ctx->tc & RISCV_IOMMU_DC_TC_T2GPA) {
++        return false;
++    }
++
++    if (s->cap & RISCV_IOMMU_CAP_MSI_FLAT) {
++        msi_mode = get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_MODE);
++
++        if (msi_mode != RISCV_IOMMU_DC_MSIPTP_MODE_OFF &&
++            msi_mode != RISCV_IOMMU_DC_MSIPTP_MODE_FLAT) {
++            return false;
++        }
++    }
++
++    fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
++
++    if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
++        switch (fsc_mode) {
++        case RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8:
++            if (!(s->cap & RISCV_IOMMU_CAP_PD8)) {
++                return false;
++            }
++            break;
++        case RISCV_IOMMU_DC_FSC_PDTP_MODE_PD17:
++            if (!(s->cap & RISCV_IOMMU_CAP_PD17)) {
++                return false;
++            }
++            break;
++        case RISCV_IOMMU_DC_FSC_PDTP_MODE_PD20:
++            if (!(s->cap & RISCV_IOMMU_CAP_PD20)) {
++                return false;
++            }
++            break;
++        }
++    } else {
++        /* DC.tc.PDTV is 0 */
++        if (ctx->tc & RISCV_IOMMU_DC_TC_DPE) {
++            return false;
++        }
++
++        if (ctx->tc & RISCV_IOMMU_DC_TC_SXL) {
++            if (fsc_mode == RISCV_IOMMU_CAP_SV32 &&
++                !(s->cap & RISCV_IOMMU_CAP_SV32)) {
++                return false;
++            }
++        } else {
++            switch (fsc_mode) {
++            case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39:
++                if (!(s->cap & RISCV_IOMMU_CAP_SV39)) {
++                    return false;
++                }
++                break;
++            case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV48:
++                if (!(s->cap & RISCV_IOMMU_CAP_SV48)) {
++                    return false;
++                }
++            break;
++            case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57:
++                if (!(s->cap & RISCV_IOMMU_CAP_SV57)) {
++                    return false;
++                }
++                break;
++            }
++        }
++    }
++
++    /*
++     * CAP_END is always zero (only one endianess). FCTL_BE is
++     * always zero (little-endian accesses). Thus TC_SBE must
++     * always be LE, i.e. zero.
++     */
++    if (ctx->tc & RISCV_IOMMU_DC_TC_SBE) {
++        return false;
++    }
++
++    return true;
++}
++
++/*
++ * Validate process context (PC) according to section
++ * "Process-context configuration checks".
++ */
++static bool riscv_iommu_validate_process_ctx(RISCVIOMMUState *s,
++                                             RISCVIOMMUContext *ctx)
++{
++    uint32_t mode;
++
++    if (get_field(ctx->ta, RISCV_IOMMU_PC_TA_RESERVED)) {
++        return false;
++    }
++
++    if (get_field(ctx->satp, RISCV_IOMMU_PC_FSC_RESERVED)) {
++        return false;
++    }
++
++    mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
++    switch (mode) {
++    case RISCV_IOMMU_DC_FSC_MODE_BARE:
++    /* sv39 and sv32 modes have the same value (8) */
++    case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39:
++    case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV48:
++    case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57:
++        break;
++    default:
++        return false;
++    }
++
++    if (ctx->tc & RISCV_IOMMU_DC_TC_SXL) {
++        if (mode == RISCV_IOMMU_CAP_SV32 &&
++            !(s->cap & RISCV_IOMMU_CAP_SV32)) {
++                return false;
++        }
++    } else {
++        switch (mode) {
++        case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV39:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV39)) {
++                return false;
++            }
++            break;
++        case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV48:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV48)) {
++                return false;
++            }
++            break;
++        case RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV57)) {
++                return false;
++            }
++            break;
++        }
++    }
++
++    return true;
++}
++
++/*
++ * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
++ *
++ * @s         : IOMMU Device State
++ * @ctx       : Device Translation Context with devid and process_id set.
++ * @return    : success or fault code.
++ */
++static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
++{
++    const uint64_t ddtp = s->ddtp;
++    unsigned mode = get_field(ddtp, RISCV_IOMMU_DDTP_MODE);
++    dma_addr_t addr = PPN_PHYS(get_field(ddtp, RISCV_IOMMU_DDTP_PPN));
++    struct riscv_iommu_dc dc;
++    /* Device Context format: 0: extended (64 bytes) | 1: base (32 bytes) */
++    const int dc_fmt = !s->enable_msi;
++    const size_t dc_len = sizeof(dc) >> dc_fmt;
++    unsigned depth;
++    uint64_t de;
++
++    switch (mode) {
++    case RISCV_IOMMU_DDTP_MODE_OFF:
++        return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
++
++    case RISCV_IOMMU_DDTP_MODE_BARE:
++        /* mock up pass-through translation context */
++        ctx->gatp = set_field(0, RISCV_IOMMU_ATP_MODE_FIELD,
++            RISCV_IOMMU_DC_IOHGATP_MODE_BARE);
++        ctx->satp = set_field(0, RISCV_IOMMU_ATP_MODE_FIELD,
++            RISCV_IOMMU_DC_FSC_MODE_BARE);
++        ctx->tc = RISCV_IOMMU_DC_TC_V;
++        ctx->ta = 0;
++        ctx->msiptp = 0;
++        return 0;
++
++    case RISCV_IOMMU_DDTP_MODE_1LVL:
++        depth = 0;
++        break;
++
++    case RISCV_IOMMU_DDTP_MODE_2LVL:
++        depth = 1;
++        break;
++
++    case RISCV_IOMMU_DDTP_MODE_3LVL:
++        depth = 2;
++        break;
++
++    default:
++        return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++    }
++
++    /*
++     * Check supported device id width (in bits).
++     * See IOMMU Specification, Chapter 6. Software guidelines.
++     * - if extended device-context format is used:
++     *   1LVL: 6, 2LVL: 15, 3LVL: 24
++     * - if base device-context format is used:
++     *   1LVL: 7, 2LVL: 16, 3LVL: 24
++     */
++    if (ctx->devid >= (1 << (depth * 9 + 6 + (dc_fmt && depth != 2)))) {
++        return RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
++    }
++
++    /* Device directory tree walk */
++    for (; depth-- > 0; ) {
++        /*
++         * Select device id index bits based on device directory tree level
++         * and device context format.
++         * See IOMMU Specification, Chapter 2. Data Structures.
++         * - if extended device-context format is used:
++         *   device index: [23:15][14:6][5:0]
++         * - if base device-context format is used:
++         *   device index: [23:16][15:7][6:0]
++         */
++        const int split = depth * 9 + 6 + dc_fmt;
++        addr |= ((ctx->devid >> split) << 3) & ~TARGET_PAGE_MASK;
++        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
++                            MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++            return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
++        }
++        le64_to_cpus(&de);
++        if (!(de & RISCV_IOMMU_DDTE_VALID)) {
++            /* invalid directory entry */
++            return RISCV_IOMMU_FQ_CAUSE_DDT_INVALID;
++        }
++        if (de & ~(RISCV_IOMMU_DDTE_PPN | RISCV_IOMMU_DDTE_VALID)) {
++            /* reserved bits set */
++            return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++        }
++        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_DDTE_PPN));
++    }
++
++    /* index into device context entry page */
++    addr |= (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
++
++    memset(&dc, 0, sizeof(dc));
++    if (dma_memory_read(s->target_as, addr, &dc, dc_len,
++                        MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++        return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
++    }
++
++    /* Set translation context. */
++    ctx->tc = le64_to_cpu(dc.tc);
++    ctx->gatp = le64_to_cpu(dc.iohgatp);
++    ctx->satp = le64_to_cpu(dc.fsc);
++    ctx->ta = le64_to_cpu(dc.ta);
++    ctx->msiptp = le64_to_cpu(dc.msiptp);
++    ctx->msi_addr_mask = le64_to_cpu(dc.msi_addr_mask);
++    ctx->msi_addr_pattern = le64_to_cpu(dc.msi_addr_pattern);
++
++    if (!(ctx->tc & RISCV_IOMMU_DC_TC_V)) {
++        return RISCV_IOMMU_FQ_CAUSE_DDT_INVALID;
++    }
++
++    if (!riscv_iommu_validate_device_ctx(s, ctx)) {
++        return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
++    }
++
++    /* FSC field checks */
++    mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
++    addr = PPN_PHYS(get_field(ctx->satp, RISCV_IOMMU_DC_FSC_PPN));
++
++    if (!(ctx->tc & RISCV_IOMMU_DC_TC_PDTV)) {
++        if (ctx->process_id != RISCV_IOMMU_NOPROCID) {
++            /* PID is disabled */
++            return RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
++        }
++        if (mode > RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV57) {
++            /* Invalid translation mode */
++            return RISCV_IOMMU_FQ_CAUSE_DDT_INVALID;
++        }
++        return 0;
++    }
++
++    if (ctx->process_id == RISCV_IOMMU_NOPROCID) {
++        if (!(ctx->tc & RISCV_IOMMU_DC_TC_DPE)) {
++            /* No default process_id enabled, set BARE mode */
++            ctx->satp = 0ULL;
++            return 0;
++        } else {
++            /* Use default process_id #0 */
++            ctx->process_id = 0;
++        }
++    }
++
++    if (mode == RISCV_IOMMU_DC_FSC_MODE_BARE) {
++        /* No S-Stage translation, done. */
++        return 0;
++    }
++
++    /* FSC.TC.PDTV enabled */
++    if (mode > RISCV_IOMMU_DC_FSC_PDTP_MODE_PD20) {
++        /* Invalid PDTP.MODE */
++        return RISCV_IOMMU_FQ_CAUSE_PDT_MISCONFIGURED;
++    }
++
++    for (depth = mode - RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8; depth-- > 0; ) {
++        /*
++         * Select process id index bits based on process directory tree
++         * level. See IOMMU Specification, 2.2. Process-Directory-Table.
++         */
++        const int split = depth * 9 + 8;
++        addr |= ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
++        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
++                            MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++            return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
++        }
++        le64_to_cpus(&de);
++        if (!(de & RISCV_IOMMU_PC_TA_V)) {
++            return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
++        }
++        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
++    }
++
++    /* Leaf entry in PDT */
++    addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
++    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
++                        MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
++        return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
++    }
++
++    /* Use FSC and TA from process directory entry. */
++    ctx->ta = le64_to_cpu(dc.ta);
++    ctx->satp = le64_to_cpu(dc.fsc);
++
++    if (!(ctx->ta & RISCV_IOMMU_PC_TA_V)) {
++        return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
++    }
++
++    if (!riscv_iommu_validate_process_ctx(s, ctx)) {
++        return RISCV_IOMMU_FQ_CAUSE_PDT_MISCONFIGURED;
++    }
++
++    return 0;
++}
++
++/* Translation Context cache support */
++static gboolean riscv_iommu_ctx_equal(gconstpointer v1, gconstpointer v2)
++{
++    RISCVIOMMUContext *c1 = (RISCVIOMMUContext *) v1;
++    RISCVIOMMUContext *c2 = (RISCVIOMMUContext *) v2;
++    return c1->devid == c2->devid &&
++           c1->process_id == c2->process_id;
++}
++
++static guint riscv_iommu_ctx_hash(gconstpointer v)
++{
++    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) v;
++    /*
++     * Generate simple hash of (process_id, devid)
++     * assuming 24-bit wide devid.
++     */
++    return (guint)(ctx->devid) + ((guint)(ctx->process_id) << 24);
++}
++
++static void riscv_iommu_ctx_inval_devid_procid(gpointer key, gpointer value,
++                                               gpointer data)
++{
++    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
++    RISCVIOMMUContext *arg = (RISCVIOMMUContext *) data;
++    if (ctx->tc & RISCV_IOMMU_DC_TC_V &&
++        ctx->devid == arg->devid &&
++        ctx->process_id == arg->process_id) {
++        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
++    }
++}
++
++static void riscv_iommu_ctx_inval_devid(gpointer key, gpointer value,
++                                        gpointer data)
++{
++    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
++    RISCVIOMMUContext *arg = (RISCVIOMMUContext *) data;
++    if (ctx->tc & RISCV_IOMMU_DC_TC_V &&
++        ctx->devid == arg->devid) {
++        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
++    }
++}
++
++static void riscv_iommu_ctx_inval_all(gpointer key, gpointer value,
++                                      gpointer data)
++{
++    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
++    if (ctx->tc & RISCV_IOMMU_DC_TC_V) {
++        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
++    }
++}
++
++static void riscv_iommu_ctx_inval(RISCVIOMMUState *s, GHFunc func,
++                                  uint32_t devid, uint32_t process_id)
++{
++    GHashTable *ctx_cache;
++    RISCVIOMMUContext key = {
++        .devid = devid,
++        .process_id = process_id,
++    };
++    ctx_cache = g_hash_table_ref(s->ctx_cache);
++    g_hash_table_foreach(ctx_cache, func, &key);
++    g_hash_table_unref(ctx_cache);
++}
++
++/* Find or allocate translation context for a given {device_id, process_id} */
++static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
++                                          unsigned devid, unsigned process_id,
++                                          void **ref)
++{
++    GHashTable *ctx_cache;
++    RISCVIOMMUContext *ctx;
++    RISCVIOMMUContext key = {
++        .devid = devid,
++        .process_id = process_id,
++    };
++
++    ctx_cache = g_hash_table_ref(s->ctx_cache);
++    ctx = g_hash_table_lookup(ctx_cache, &key);
++
++    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
++        *ref = ctx_cache;
++        return ctx;
++    }
++
++    ctx = g_new0(RISCVIOMMUContext, 1);
++    ctx->devid = devid;
++    ctx->process_id = process_id;
++
++    int fault = riscv_iommu_ctx_fetch(s, ctx);
++    if (!fault) {
++        if (g_hash_table_size(ctx_cache) >= LIMIT_CACHE_CTX) {
++            g_hash_table_unref(ctx_cache);
++            ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
++                                              riscv_iommu_ctx_equal,
++                                              g_free, NULL);
++            g_hash_table_ref(ctx_cache);
++            g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
++        }
++        g_hash_table_add(ctx_cache, ctx);
++        *ref = ctx_cache;
++        return ctx;
++    }
++
++    g_hash_table_unref(ctx_cache);
++    *ref = NULL;
++
++    riscv_iommu_report_fault(s, ctx, RISCV_IOMMU_FQ_TTYPE_UADDR_RD,
++                             fault, !!process_id, 0, 0);
++
++    g_free(ctx);
++    return NULL;
++}
++
++static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
++{
++    if (ref) {
++        g_hash_table_unref((GHashTable *)ref);
++    }
++}
++
++/* Find or allocate address space for a given device */
++static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
++{
++    RISCVIOMMUSpace *as;
++
++    /* FIXME: PCIe bus remapping for attached endpoints. */
++    devid |= s->bus << 8;
++
++    QLIST_FOREACH(as, &s->spaces, list) {
++        if (as->devid == devid) {
++            break;
++        }
++    }
++
++    if (as == NULL) {
++        char name[64];
++        as = g_new0(RISCVIOMMUSpace, 1);
++
++        as->iommu = s;
++        as->devid = devid;
++
++        snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
++            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++
++        /* IOVA address space, untranslated addresses */
++        memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
++            TYPE_RISCV_IOMMU_MEMORY_REGION,
++            OBJECT(as), "riscv_iommu", UINT64_MAX);
++        address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
++
++        QLIST_INSERT_HEAD(&s->spaces, as, list);
++
++        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
++                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++    }
++    return &as->iova_as;
++}
++
++static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
++    IOMMUTLBEntry *iotlb)
++{
++    bool enable_pid;
++    bool enable_pri;
++    int fault;
++
++    /*
++     * TC[32] is reserved for custom extensions, used here to temporarily
++     * enable automatic page-request generation for ATS queries.
++     */
++    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
++    enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
++
++    /* Translate using device directory / page table information. */
++    fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
++
++    if (enable_pri && fault) {
++        struct riscv_iommu_pq_record pr = {0};
++        if (enable_pid) {
++            pr.hdr = set_field(RISCV_IOMMU_PREQ_HDR_PV,
++                               RISCV_IOMMU_PREQ_HDR_PID, ctx->process_id);
++        }
++        pr.hdr = set_field(pr.hdr, RISCV_IOMMU_PREQ_HDR_DID, ctx->devid);
++        pr.payload = (iotlb->iova & TARGET_PAGE_MASK) |
++                     RISCV_IOMMU_PREQ_PAYLOAD_M;
++        riscv_iommu_pri(s, &pr);
++        return fault;
++    }
++
++    if (fault) {
++        unsigned ttype;
++
++        if (iotlb->perm & IOMMU_RW) {
++            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
++        } else {
++            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
++        }
++
++        riscv_iommu_report_fault(s, ctx, ttype, fault, enable_pid,
++                                 iotlb->iova, iotlb->translated_addr);
++        return fault;
++    }
++
++    return 0;
++}
++
++/* IOMMU Command Interface */
++static MemTxResult riscv_iommu_iofence(RISCVIOMMUState *s, bool notify,
++    uint64_t addr, uint32_t data)
++{
++    /*
++     * ATS processing in this implementation of the IOMMU is synchronous,
++     * no need to wait for completions here.
++     */
++    if (!notify) {
++        return MEMTX_OK;
++    }
++
++    return dma_memory_write(s->target_as, addr, &data, sizeof(data),
++        MEMTXATTRS_UNSPECIFIED);
++}
++
++static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
++{
++    uint64_t old_ddtp = s->ddtp;
++    uint64_t new_ddtp = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_DDTP);
++    unsigned new_mode = get_field(new_ddtp, RISCV_IOMMU_DDTP_MODE);
++    unsigned old_mode = get_field(old_ddtp, RISCV_IOMMU_DDTP_MODE);
++    bool ok = false;
++
++    /*
++     * Check for allowed DDTP.MODE transitions:
++     * {OFF, BARE}        -> {OFF, BARE, 1LVL, 2LVL, 3LVL}
++     * {1LVL, 2LVL, 3LVL} -> {OFF, BARE}
++     */
++    if (new_mode == old_mode ||
++        new_mode == RISCV_IOMMU_DDTP_MODE_OFF ||
++        new_mode == RISCV_IOMMU_DDTP_MODE_BARE) {
++        ok = true;
++    } else if (new_mode == RISCV_IOMMU_DDTP_MODE_1LVL ||
++               new_mode == RISCV_IOMMU_DDTP_MODE_2LVL ||
++               new_mode == RISCV_IOMMU_DDTP_MODE_3LVL) {
++        ok = old_mode == RISCV_IOMMU_DDTP_MODE_OFF ||
++             old_mode == RISCV_IOMMU_DDTP_MODE_BARE;
++    }
++
++    if (ok) {
++        /* clear reserved and busy bits, report back sanitized version */
++        new_ddtp = set_field(new_ddtp & RISCV_IOMMU_DDTP_PPN,
++                             RISCV_IOMMU_DDTP_MODE, new_mode);
++    } else {
++        new_ddtp = old_ddtp;
++    }
++    s->ddtp = new_ddtp;
++
++    riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_DDTP, new_ddtp);
++}
++
++/* Command function and opcode field. */
++#define RISCV_IOMMU_CMD(func, op) (((func) << 7) | (op))
++
++static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
++{
++    struct riscv_iommu_command cmd;
++    MemTxResult res;
++    dma_addr_t addr;
++    uint32_t tail, head, ctrl;
++    uint64_t cmd_opcode;
++    GHFunc func;
++
++    ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
++    tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQT) & s->cq_mask;
++    head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQH) & s->cq_mask;
++
++    /* Check for pending error or queue processing disabled */
++    if (!(ctrl & RISCV_IOMMU_CQCSR_CQON) ||
++        !!(ctrl & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF))) {
++        return;
++    }
++
++    while (tail != head) {
++        addr = s->cq_addr  + head * sizeof(cmd);
++        res = dma_memory_read(s->target_as, addr, &cmd, sizeof(cmd),
++                              MEMTXATTRS_UNSPECIFIED);
++
++        if (res != MEMTX_OK) {
++            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
++                                  RISCV_IOMMU_CQCSR_CQMF, 0);
++            goto fault;
++        }
++
++        trace_riscv_iommu_cmd(s->parent_obj.id, cmd.dword0, cmd.dword1);
++
++        cmd_opcode = get_field(cmd.dword0,
++                               RISCV_IOMMU_CMD_OPCODE | RISCV_IOMMU_CMD_FUNC);
++
++        switch (cmd_opcode) {
++        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOFENCE_FUNC_C,
++                             RISCV_IOMMU_CMD_IOFENCE_OPCODE):
++            res = riscv_iommu_iofence(s,
++                cmd.dword0 & RISCV_IOMMU_CMD_IOFENCE_AV, cmd.dword1 << 2,
++                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOFENCE_DATA));
++
++            if (res != MEMTX_OK) {
++                riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
++                                      RISCV_IOMMU_CQCSR_CQMF, 0);
++                goto fault;
++            }
++            break;
++
++        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA,
++                             RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
++            if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
++                /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
++                goto cmd_ill;
++            }
++            /* translation cache not implemented yet */
++            break;
++
++        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
++                             RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
++            /* translation cache not implemented yet */
++            break;
++
++        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
++                             RISCV_IOMMU_CMD_IODIR_OPCODE):
++            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
++                /* invalidate all device context cache mappings */
++                func = riscv_iommu_ctx_inval_all;
++            } else {
++                /* invalidate all device context matching DID */
++                func = riscv_iommu_ctx_inval_devid;
++            }
++            riscv_iommu_ctx_inval(s, func,
++                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID), 0);
++            break;
++
++        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_PDT,
++                             RISCV_IOMMU_CMD_IODIR_OPCODE):
++            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
++                /* illegal command arguments IODIR_PDT & DV == 0 */
++                goto cmd_ill;
++            } else {
++                func = riscv_iommu_ctx_inval_devid_procid;
++            }
++            riscv_iommu_ctx_inval(s, func,
++                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID),
++                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
++            break;
++
++        default:
++        cmd_ill:
++            /* Invalid instruction, do not advance instruction index. */
++            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
++                RISCV_IOMMU_CQCSR_CMD_ILL, 0);
++            goto fault;
++        }
++
++        /* Advance and update head pointer after command completes. */
++        head = (head + 1) & s->cq_mask;
++        riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_CQH, head);
++    }
++    return;
++
++fault:
++    if (ctrl & RISCV_IOMMU_CQCSR_CIE) {
++        riscv_iommu_notify(s, RISCV_IOMMU_INTR_CQ);
++    }
++}
++
++static void riscv_iommu_process_cq_control(RISCVIOMMUState *s)
++{
++    uint64_t base;
++    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
++    uint32_t ctrl_clr;
++    bool enable = !!(ctrl_set & RISCV_IOMMU_CQCSR_CQEN);
++    bool active = !!(ctrl_set & RISCV_IOMMU_CQCSR_CQON);
++
++    if (enable && !active) {
++        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_CQB);
++        s->cq_mask = (2ULL << get_field(base, RISCV_IOMMU_CQB_LOG2SZ)) - 1;
++        s->cq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_CQB_PPN));
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQT], ~s->cq_mask);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_CQH], 0);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_CQT], 0);
++        ctrl_set = RISCV_IOMMU_CQCSR_CQON;
++        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY | RISCV_IOMMU_CQCSR_CQMF |
++                   RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CMD_TO |
++                   RISCV_IOMMU_CQCSR_FENCE_W_IP;
++    } else if (!enable && active) {
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQT], ~0);
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY | RISCV_IOMMU_CQCSR_CQON;
++    } else {
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY;
++    }
++
++    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
++}
++
++static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
++{
++    uint64_t base;
++    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
++    uint32_t ctrl_clr;
++    bool enable = !!(ctrl_set & RISCV_IOMMU_FQCSR_FQEN);
++    bool active = !!(ctrl_set & RISCV_IOMMU_FQCSR_FQON);
++
++    if (enable && !active) {
++        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_FQB);
++        s->fq_mask = (2ULL << get_field(base, RISCV_IOMMU_FQB_LOG2SZ)) - 1;
++        s->fq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_FQB_PPN));
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQH], ~s->fq_mask);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_FQH], 0);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_FQT], 0);
++        ctrl_set = RISCV_IOMMU_FQCSR_FQON;
++        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY | RISCV_IOMMU_FQCSR_FQMF |
++            RISCV_IOMMU_FQCSR_FQOF;
++    } else if (!enable && active) {
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQH], ~0);
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY | RISCV_IOMMU_FQCSR_FQON;
++    } else {
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY;
++    }
++
++    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR, ctrl_set, ctrl_clr);
++}
++
++static void riscv_iommu_process_pq_control(RISCVIOMMUState *s)
++{
++    uint64_t base;
++    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
++    uint32_t ctrl_clr;
++    bool enable = !!(ctrl_set & RISCV_IOMMU_PQCSR_PQEN);
++    bool active = !!(ctrl_set & RISCV_IOMMU_PQCSR_PQON);
++
++    if (enable && !active) {
++        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_PQB);
++        s->pq_mask = (2ULL << get_field(base, RISCV_IOMMU_PQB_LOG2SZ)) - 1;
++        s->pq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_PQB_PPN));
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQH], ~s->pq_mask);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_PQH], 0);
++        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_PQT], 0);
++        ctrl_set = RISCV_IOMMU_PQCSR_PQON;
++        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY | RISCV_IOMMU_PQCSR_PQMF |
++            RISCV_IOMMU_PQCSR_PQOF;
++    } else if (!enable && active) {
++        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQH], ~0);
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY | RISCV_IOMMU_PQCSR_PQON;
++    } else {
++        ctrl_set = 0;
++        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY;
++    }
++
++    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR, ctrl_set, ctrl_clr);
++}
++
++typedef void riscv_iommu_process_fn(RISCVIOMMUState *s);
++
++static void riscv_iommu_update_icvec(RISCVIOMMUState *s, uint64_t data)
++{
++    uint64_t icvec = 0;
++
++    icvec |= MIN(data & RISCV_IOMMU_ICVEC_CIV,
++                 s->icvec_avail_vectors & RISCV_IOMMU_ICVEC_CIV);
++
++    icvec |= MIN(data & RISCV_IOMMU_ICVEC_FIV,
++                 s->icvec_avail_vectors & RISCV_IOMMU_ICVEC_FIV);
++
++    icvec |= MIN(data & RISCV_IOMMU_ICVEC_PMIV,
++                 s->icvec_avail_vectors & RISCV_IOMMU_ICVEC_PMIV);
++
++    icvec |= MIN(data & RISCV_IOMMU_ICVEC_PIV,
++                 s->icvec_avail_vectors & RISCV_IOMMU_ICVEC_PIV);
++
++    trace_riscv_iommu_icvec_write(data, icvec);
++
++    riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_ICVEC, icvec);
++}
++
++static void riscv_iommu_update_ipsr(RISCVIOMMUState *s, uint64_t data)
++{
++    uint32_t cqcsr, fqcsr, pqcsr;
++    uint32_t ipsr_set = 0;
++    uint32_t ipsr_clr = 0;
++
++    if (data & RISCV_IOMMU_IPSR_CIP) {
++        cqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
++
++        if (cqcsr & RISCV_IOMMU_CQCSR_CIE &&
++            (cqcsr & RISCV_IOMMU_CQCSR_FENCE_W_IP ||
++             cqcsr & RISCV_IOMMU_CQCSR_CMD_ILL ||
++             cqcsr & RISCV_IOMMU_CQCSR_CMD_TO ||
++             cqcsr & RISCV_IOMMU_CQCSR_CQMF)) {
++            ipsr_set |= RISCV_IOMMU_IPSR_CIP;
++        } else {
++            ipsr_clr |= RISCV_IOMMU_IPSR_CIP;
++        }
++    } else {
++        ipsr_clr |= RISCV_IOMMU_IPSR_CIP;
++    }
++
++    if (data & RISCV_IOMMU_IPSR_FIP) {
++        fqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
++
++        if (fqcsr & RISCV_IOMMU_FQCSR_FIE &&
++            (fqcsr & RISCV_IOMMU_FQCSR_FQOF ||
++             fqcsr & RISCV_IOMMU_FQCSR_FQMF)) {
++            ipsr_set |= RISCV_IOMMU_IPSR_FIP;
++        } else {
++            ipsr_clr |= RISCV_IOMMU_IPSR_FIP;
++        }
++    } else {
++        ipsr_clr |= RISCV_IOMMU_IPSR_FIP;
++    }
++
++    if (data & RISCV_IOMMU_IPSR_PIP) {
++        pqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
++
++        if (pqcsr & RISCV_IOMMU_PQCSR_PIE &&
++            (pqcsr & RISCV_IOMMU_PQCSR_PQOF ||
++             pqcsr & RISCV_IOMMU_PQCSR_PQMF)) {
++            ipsr_set |= RISCV_IOMMU_IPSR_PIP;
++        } else {
++            ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
++        }
++    } else {
++        ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
++    }
++
++    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, ipsr_set, ipsr_clr);
++}
++
++/*
++ * Write the resulting value of 'data' for the reg specified
++ * by 'reg_addr', after considering read-only/read-write/write-clear
++ * bits, in the pointer 'dest'.
++ *
++ * The result is written in little-endian.
++ */
++static void riscv_iommu_write_reg_val(RISCVIOMMUState *s,
++                                      void *dest, hwaddr reg_addr,
++                                      int size, uint64_t data)
++{
++    uint64_t ro = ldn_le_p(&s->regs_ro[reg_addr], size);
++    uint64_t wc = ldn_le_p(&s->regs_wc[reg_addr], size);
++    uint64_t rw = ldn_le_p(&s->regs_rw[reg_addr], size);
++
++    stn_le_p(dest, size, ((rw & ro) | (data & ~ro)) & ~(data & wc));
++}
++
++static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
++                                          uint64_t data, unsigned size,
++                                          MemTxAttrs attrs)
++{
++    riscv_iommu_process_fn *process_fn = NULL;
++    RISCVIOMMUState *s = opaque;
++    uint32_t regb = addr & ~3;
++    uint32_t busy = 0;
++    uint64_t val = 0;
++
++    if ((addr & (size - 1)) != 0) {
++        /* Unsupported MMIO alignment or access size */
++        return MEMTX_ERROR;
++    }
++
++    if (addr + size > RISCV_IOMMU_REG_MSI_CONFIG) {
++        /* Unsupported MMIO access location. */
++        return MEMTX_ACCESS_ERROR;
++    }
++
++    /* Track actionable MMIO write. */
++    switch (regb) {
++    case RISCV_IOMMU_REG_DDTP:
++    case RISCV_IOMMU_REG_DDTP + 4:
++        process_fn = riscv_iommu_process_ddtp;
++        regb = RISCV_IOMMU_REG_DDTP;
++        busy = RISCV_IOMMU_DDTP_BUSY;
++        break;
++
++    case RISCV_IOMMU_REG_CQT:
++        process_fn = riscv_iommu_process_cq_tail;
++        break;
++
++    case RISCV_IOMMU_REG_CQCSR:
++        process_fn = riscv_iommu_process_cq_control;
++        busy = RISCV_IOMMU_CQCSR_BUSY;
++        break;
++
++    case RISCV_IOMMU_REG_FQCSR:
++        process_fn = riscv_iommu_process_fq_control;
++        busy = RISCV_IOMMU_FQCSR_BUSY;
++        break;
++
++    case RISCV_IOMMU_REG_PQCSR:
++        process_fn = riscv_iommu_process_pq_control;
++        busy = RISCV_IOMMU_PQCSR_BUSY;
++        break;
++
++    case RISCV_IOMMU_REG_ICVEC:
++    case RISCV_IOMMU_REG_IPSR:
++        /*
++         * ICVEC and IPSR have special read/write procedures. We'll
++         * call their respective helpers and exit.
++         */
++        riscv_iommu_write_reg_val(s, &val, addr, size, data);
++
++        /*
++         * 'val' is stored as LE. Switch to host endianess
++         * before using it.
++         */
++        val = le64_to_cpu(val);
++
++        if (regb == RISCV_IOMMU_REG_ICVEC) {
++            riscv_iommu_update_icvec(s, val);
++        } else {
++            riscv_iommu_update_ipsr(s, val);
++        }
++
++        return MEMTX_OK;
++
++    default:
++        break;
++    }
++
++    /*
++     * Registers update might be not synchronized with core logic.
++     * If system software updates register when relevant BUSY bit
++     * is set IOMMU behavior of additional writes to the register
++     * is UNSPECIFIED.
++     */
++    riscv_iommu_write_reg_val(s, &s->regs_rw[addr], addr, size, data);
++
++    /* Busy flag update, MSB 4-byte register. */
++    if (busy) {
++        uint32_t rw = ldl_le_p(&s->regs_rw[regb]);
++        stl_le_p(&s->regs_rw[regb], rw | busy);
++    }
++
++    if (process_fn) {
++        process_fn(s);
++    }
++
++    return MEMTX_OK;
++}
++
++static MemTxResult riscv_iommu_mmio_read(void *opaque, hwaddr addr,
++    uint64_t *data, unsigned size, MemTxAttrs attrs)
++{
++    RISCVIOMMUState *s = opaque;
++    uint64_t val = -1;
++    uint8_t *ptr;
++
++    if ((addr & (size - 1)) != 0) {
++        /* Unsupported MMIO alignment. */
++        return MEMTX_ERROR;
++    }
++
++    if (addr + size > RISCV_IOMMU_REG_MSI_CONFIG) {
++        return MEMTX_ACCESS_ERROR;
++    }
++
++    ptr = &s->regs_rw[addr];
++    val = ldn_le_p(ptr, size);
++
++    *data = val;
++
++    return MEMTX_OK;
++}
++
++static const MemoryRegionOps riscv_iommu_mmio_ops = {
++    .read_with_attrs = riscv_iommu_mmio_read,
++    .write_with_attrs = riscv_iommu_mmio_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++        .unaligned = false,
++    },
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    }
++};
++
++/*
++ * Translations matching MSI pattern check are redirected to "riscv-iommu-trap"
++ * memory region as untranslated address, for additional MSI/MRIF interception
++ * by IOMMU interrupt remapping implementation.
++ * Note: Device emulation code generating an MSI is expected to provide a valid
++ * memory transaction attributes with requested_id set.
++ */
++static MemTxResult riscv_iommu_trap_write(void *opaque, hwaddr addr,
++    uint64_t data, unsigned size, MemTxAttrs attrs)
++{
++    RISCVIOMMUState* s = (RISCVIOMMUState *)opaque;
++    RISCVIOMMUContext *ctx;
++    MemTxResult res;
++    void *ref;
++    uint32_t devid = attrs.requester_id;
++
++    if (attrs.unspecified) {
++        return MEMTX_ACCESS_ERROR;
++    }
++
++    /* FIXME: PCIe bus remapping for attached endpoints. */
++    devid |= s->bus << 8;
++
++    ctx = riscv_iommu_ctx(s, devid, 0, &ref);
++    if (ctx == NULL) {
++        res = MEMTX_ACCESS_ERROR;
++    } else {
++        res = riscv_iommu_msi_write(s, ctx, addr, data, size, attrs);
++    }
++    riscv_iommu_ctx_put(s, ref);
++    return res;
++}
++
++static MemTxResult riscv_iommu_trap_read(void *opaque, hwaddr addr,
++    uint64_t *data, unsigned size, MemTxAttrs attrs)
++{
++    return MEMTX_ACCESS_ERROR;
++}
++
++static const MemoryRegionOps riscv_iommu_trap_ops = {
++    .read_with_attrs = riscv_iommu_trap_read,
++    .write_with_attrs = riscv_iommu_trap_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    }
++};
++
++static void riscv_iommu_realize(DeviceState *dev, Error **errp)
++{
++    RISCVIOMMUState *s = RISCV_IOMMU(dev);
++
++    s->cap = s->version & RISCV_IOMMU_CAP_VERSION;
++    if (s->enable_msi) {
++        s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
++    }
++    if (s->enable_s_stage) {
++        s->cap |= RISCV_IOMMU_CAP_SV32 | RISCV_IOMMU_CAP_SV39 |
++                  RISCV_IOMMU_CAP_SV48 | RISCV_IOMMU_CAP_SV57;
++    }
++    if (s->enable_g_stage) {
++        s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
++                  RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
++    }
++    /* Report QEMU target physical address space limits */
++    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
++                       TARGET_PHYS_ADDR_SPACE_BITS);
++
++    /* TODO: method to report supported PID bits */
++    s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
++    s->cap |= RISCV_IOMMU_CAP_PD8;
++
++    /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrough) */
++    s->ddtp = set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
++                        RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MODE_BARE);
++
++    /* register storage */
++    s->regs_rw = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
++    s->regs_ro = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
++    s->regs_wc = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
++
++     /* Mark all registers read-only */
++    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
++
++    /*
++     * Register complete MMIO space, including MSI/PBA registers.
++     * Note, PCIDevice implementation will add overlapping MR for MSI/PBA,
++     * managed directly by the PCIDevice implementation.
++     */
++    memory_region_init_io(&s->regs_mr, OBJECT(dev), &riscv_iommu_mmio_ops, s,
++        "riscv-iommu-regs", RISCV_IOMMU_REG_SIZE);
++
++    /* Set power-on register state */
++    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_CAP], s->cap);
++    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_FCTL], 0);
++    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_FCTL],
++             ~(RISCV_IOMMU_FCTL_BE | RISCV_IOMMU_FCTL_WSI));
++    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_DDTP],
++        ~(RISCV_IOMMU_DDTP_PPN | RISCV_IOMMU_DDTP_MODE));
++    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQB],
++        ~(RISCV_IOMMU_CQB_LOG2SZ | RISCV_IOMMU_CQB_PPN));
++    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQB],
++        ~(RISCV_IOMMU_FQB_LOG2SZ | RISCV_IOMMU_FQB_PPN));
++    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQB],
++        ~(RISCV_IOMMU_PQB_LOG2SZ | RISCV_IOMMU_PQB_PPN));
++    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_CQCSR], RISCV_IOMMU_CQCSR_CQMF |
++        RISCV_IOMMU_CQCSR_CMD_TO | RISCV_IOMMU_CQCSR_CMD_ILL);
++    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQCSR], RISCV_IOMMU_CQCSR_CQON |
++        RISCV_IOMMU_CQCSR_BUSY);
++    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_FQCSR], RISCV_IOMMU_FQCSR_FQMF |
++        RISCV_IOMMU_FQCSR_FQOF);
++    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQCSR], RISCV_IOMMU_FQCSR_FQON |
++        RISCV_IOMMU_FQCSR_BUSY);
++    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_PQCSR], RISCV_IOMMU_PQCSR_PQMF |
++        RISCV_IOMMU_PQCSR_PQOF);
++    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQCSR], RISCV_IOMMU_PQCSR_PQON |
++        RISCV_IOMMU_PQCSR_BUSY);
++    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_IPSR], ~0);
++    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_ICVEC], 0);
++    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_DDTP], s->ddtp);
++
++    /* Memory region for downstream access, if specified. */
++    if (s->target_mr) {
++        s->target_as = g_new0(AddressSpace, 1);
++        address_space_init(s->target_as, s->target_mr,
++            "riscv-iommu-downstream");
++    } else {
++        /* Fallback to global system memory. */
++        s->target_as = &address_space_memory;
++    }
++
++    /* Memory region for untranslated MRIF/MSI writes */
++    memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
++            "riscv-iommu-trap", ~0ULL);
++    address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
++
++    /* Device translation context cache */
++    s->ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
++                                         riscv_iommu_ctx_equal,
++                                         g_free, NULL);
++
++    s->iommus.le_next = NULL;
++    s->iommus.le_prev = NULL;
++    QLIST_INIT(&s->spaces);
++}
++
++static void riscv_iommu_unrealize(DeviceState *dev)
++{
++    RISCVIOMMUState *s = RISCV_IOMMU(dev);
++
++    g_hash_table_unref(s->ctx_cache);
++}
++
++static Property riscv_iommu_properties[] = {
++    DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
++        RISCV_IOMMU_SPEC_DOT_VER),
++    DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
++    DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
++    DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
++    DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
++    DEFINE_PROP_BOOL("g-stage", RISCVIOMMUState, enable_g_stage, TRUE),
++    DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
++        TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void riscv_iommu_class_init(ObjectClass *klass, void* data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    /* internal device for riscv-iommu-{pci/sys}, not user-creatable */
++    dc->user_creatable = false;
++    dc->realize = riscv_iommu_realize;
++    dc->unrealize = riscv_iommu_unrealize;
++    device_class_set_props(dc, riscv_iommu_properties);
++}
++
++static const TypeInfo riscv_iommu_info = {
++    .name = TYPE_RISCV_IOMMU,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(RISCVIOMMUState),
++    .class_init = riscv_iommu_class_init,
++};
++
++static const char *IOMMU_FLAG_STR[] = {
++    "NA",
++    "RO",
++    "WR",
++    "RW",
++};
++
++/* RISC-V IOMMU Memory Region - Address Translation Space */
++static IOMMUTLBEntry riscv_iommu_memory_region_translate(
++    IOMMUMemoryRegion *iommu_mr, hwaddr addr,
++    IOMMUAccessFlags flag, int iommu_idx)
++{
++    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
++    RISCVIOMMUContext *ctx;
++    void *ref;
++    IOMMUTLBEntry iotlb = {
++        .iova = addr,
++        .target_as = as->iommu->target_as,
++        .addr_mask = ~0ULL,
++        .perm = flag,
++    };
++
++    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
++    if (ctx == NULL) {
++        /* Translation disabled or invalid. */
++        iotlb.addr_mask = 0;
++        iotlb.perm = IOMMU_NONE;
++    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
++        /* Translation disabled or fault reported. */
++        iotlb.addr_mask = 0;
++        iotlb.perm = IOMMU_NONE;
++    }
++
++    /* Trace all dma translations with original access flags. */
++    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
++                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
++                          IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
++                          iotlb.translated_addr);
++
++    riscv_iommu_ctx_put(as->iommu, ref);
++
++    return iotlb;
++}
++
++static int riscv_iommu_memory_region_notify(
++    IOMMUMemoryRegion *iommu_mr, IOMMUNotifierFlag old,
++    IOMMUNotifierFlag new, Error **errp)
++{
++    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
++
++    if (old == IOMMU_NOTIFIER_NONE) {
++        as->notifier = true;
++        trace_riscv_iommu_notifier_add(iommu_mr->parent_obj.name);
++    } else if (new == IOMMU_NOTIFIER_NONE) {
++        as->notifier = false;
++        trace_riscv_iommu_notifier_del(iommu_mr->parent_obj.name);
++    }
++
++    return 0;
++}
++
++static inline bool pci_is_iommu(PCIDevice *pdev)
++{
++    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
++}
++
++static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
++{
++    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
++    AddressSpace *as = NULL;
++
++    if (pdev && pci_is_iommu(pdev)) {
++        return s->target_as;
++    }
++
++    /* Find first registered IOMMU device */
++    while (s->iommus.le_prev) {
++        s = *(s->iommus.le_prev);
++    }
++
++    /* Find first matching IOMMU */
++    while (s != NULL && as == NULL) {
++        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
++        s = s->iommus.le_next;
++    }
++
++    return as ? as : &address_space_memory;
++}
++
++static const PCIIOMMUOps riscv_iommu_ops = {
++    .get_address_space = riscv_iommu_find_as,
++};
++
++void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
++        Error **errp)
++{
++    if (bus->iommu_ops &&
++        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
++        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
++        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
++        QLIST_INSERT_AFTER(last, iommu, iommus);
++    } else if (!bus->iommu_ops && !bus->iommu_opaque) {
++        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
++    } else {
++        error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
++            pci_bus_num(bus));
++    }
++}
++
++static int riscv_iommu_memory_region_index(IOMMUMemoryRegion *iommu_mr,
++    MemTxAttrs attrs)
++{
++    return attrs.unspecified ? RISCV_IOMMU_NOPROCID : (int)attrs.pid;
++}
++
++static int riscv_iommu_memory_region_index_len(IOMMUMemoryRegion *iommu_mr)
++{
++    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
++    return 1 << as->iommu->pid_bits;
++}
++
++static void riscv_iommu_memory_region_init(ObjectClass *klass, void *data)
++{
++    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
++
++    imrc->translate = riscv_iommu_memory_region_translate;
++    imrc->notify_flag_changed = riscv_iommu_memory_region_notify;
++    imrc->attrs_to_index = riscv_iommu_memory_region_index;
++    imrc->num_indexes = riscv_iommu_memory_region_index_len;
++}
++
++static const TypeInfo riscv_iommu_memory_region_info = {
++    .parent = TYPE_IOMMU_MEMORY_REGION,
++    .name = TYPE_RISCV_IOMMU_MEMORY_REGION,
++    .class_init = riscv_iommu_memory_region_init,
++};
++
++static void riscv_iommu_register_mr_types(void)
++{
++    type_register_static(&riscv_iommu_memory_region_info);
++    type_register_static(&riscv_iommu_info);
++}
++
++type_init(riscv_iommu_register_mr_types);
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+new file mode 100644
+index 0000000000..af3fcafc19
+--- /dev/null
++++ b/hw/riscv/riscv-iommu.h
+@@ -0,0 +1,126 @@
++/*
++ * QEMU emulation of an RISC-V IOMMU
++ *
++ * Copyright (C) 2022-2023 Rivos Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef HW_RISCV_IOMMU_STATE_H
++#define HW_RISCV_IOMMU_STATE_H
++
++#include "qom/object.h"
++#include "hw/riscv/iommu.h"
++
++struct RISCVIOMMUState {
++    /*< private >*/
++    DeviceState parent_obj;
++
++    /*< public >*/
++    uint32_t version;     /* Reported interface version number */
++    uint32_t pid_bits;    /* process identifier width */
++    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
++
++    uint64_t cap;         /* IOMMU supported capabilities */
++    uint64_t fctl;        /* IOMMU enabled features */
++    uint64_t icvec_avail_vectors;  /* Available interrupt vectors in ICVEC */
++
++    bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
++    bool enable_msi;      /* Enable MSI remapping */
++    bool enable_s_stage;  /* Enable S/VS-Stage translation */
++    bool enable_g_stage;  /* Enable G-Stage translation */
++
++    /* IOMMU Internal State */
++    uint64_t ddtp;        /* Validated Device Directory Tree Root Pointer */
++
++    dma_addr_t cq_addr;   /* Command queue base physical address */
++    dma_addr_t fq_addr;   /* Fault/event queue base physical address */
++    dma_addr_t pq_addr;   /* Page request queue base physical address */
++
++    uint32_t cq_mask;     /* Command queue index bit mask */
++    uint32_t fq_mask;     /* Fault/event queue index bit mask */
++    uint32_t pq_mask;     /* Page request queue index bit mask */
++
++    /* interrupt notifier */
++    void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
++
++    /* IOMMU State Machine */
++    QemuThread core_proc; /* Background processing thread */
++    QemuCond core_cond;   /* Background processing wake up signal */
++    unsigned core_exec;   /* Processing thread execution actions */
++
++    /* IOMMU target address space */
++    AddressSpace *target_as;
++    MemoryRegion *target_mr;
++
++    /* MSI / MRIF access trap */
++    AddressSpace trap_as;
++    MemoryRegion trap_mr;
++
++    GHashTable *ctx_cache;          /* Device translation Context Cache */
++
++    /* MMIO Hardware Interface */
++    MemoryRegion regs_mr;
++    uint8_t *regs_rw;  /* register state (user write) */
++    uint8_t *regs_wc;  /* write-1-to-clear mask */
++    uint8_t *regs_ro;  /* read-only mask */
++
++    QLIST_ENTRY(RISCVIOMMUState) iommus;
++    QLIST_HEAD(, RISCVIOMMUSpace) spaces;
++};
++
++void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
++         Error **errp);
++
++/* private helpers */
++
++/* Register helper functions */
++static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
++    unsigned idx, uint32_t set, uint32_t clr)
++{
++    uint32_t val = ldl_le_p(s->regs_rw + idx);
++    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
++    return val;
++}
++
++static inline void riscv_iommu_reg_set32(RISCVIOMMUState *s, unsigned idx,
++                                         uint32_t set)
++{
++    stl_le_p(s->regs_rw + idx, set);
++}
++
++static inline uint32_t riscv_iommu_reg_get32(RISCVIOMMUState *s, unsigned idx)
++{
++    return ldl_le_p(s->regs_rw + idx);
++}
++
++static inline uint64_t riscv_iommu_reg_mod64(RISCVIOMMUState *s, unsigned idx,
++                                             uint64_t set, uint64_t clr)
++{
++    uint64_t val = ldq_le_p(s->regs_rw + idx);
++    stq_le_p(s->regs_rw + idx, (val & ~clr) | set);
++    return val;
++}
++
++static inline void riscv_iommu_reg_set64(RISCVIOMMUState *s, unsigned idx,
++                                         uint64_t set)
++{
++    stq_le_p(s->regs_rw + idx, set);
++}
++
++static inline uint64_t riscv_iommu_reg_get64(RISCVIOMMUState *s,
++    unsigned idx)
++{
++    return ldq_le_p(s->regs_rw + idx);
++}
++#endif
+diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+new file mode 100644
+index 0000000000..3d5c33102d
+--- /dev/null
++++ b/hw/riscv/trace-events
+@@ -0,0 +1,14 @@
++# See documentation at docs/devel/tracing.rst
++
++# riscv-iommu.c
++riscv_iommu_new(const char *id, unsigned b, unsigned d, unsigned f) "%s: device attached %04x:%02x.%d"
++riscv_iommu_flt(const char *id, unsigned b, unsigned d, unsigned f, uint64_t reason, uint64_t iova) "%s: fault %04x:%02x.%u reason: 0x%"PRIx64" iova: 0x%"PRIx64
++riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
++riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsigned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
++riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x%"PRIx64
++riscv_iommu_mrif_notification(const char *id, uint32_t nid, uint64_t phys) "%s: sent MRIF notification 0x%x to 0x%"PRIx64
++riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%"PRIx64" 0x%"PRIx64
++riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
++riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
++riscv_iommu_notify_int_vector(uint32_t cause, uint32_t vector) "Interrupt cause 0x%x sent via vector 0x%x"
++riscv_iommu_icvec_write(uint32_t orig, uint32_t actual) "ICVEC write: incoming 0x%x actual 0x%x"
+diff --git a/hw/riscv/trace.h b/hw/riscv/trace.h
+new file mode 100644
+index 0000000000..8c0e3ca1f3
+--- /dev/null
++++ b/hw/riscv/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-hw_riscv.h"
+diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
+new file mode 100644
+index 0000000000..80769a1400
+--- /dev/null
++++ b/include/hw/riscv/iommu.h
+@@ -0,0 +1,36 @@
++/*
++ * QEMU emulation of an RISC-V IOMMU
++ *
++ * Copyright (C) 2022-2023 Rivos Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef HW_RISCV_IOMMU_H
++#define HW_RISCV_IOMMU_H
++
++#include "qemu/osdep.h"
++#include "qom/object.h"
++
++#define TYPE_RISCV_IOMMU "riscv-iommu"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUState, RISCV_IOMMU)
++typedef struct RISCVIOMMUState RISCVIOMMUState;
++
++#define TYPE_RISCV_IOMMU_MEMORY_REGION "riscv-iommu-mr"
++typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
++
++#define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
++typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
++
++#endif
+diff --git a/meson.build b/meson.build
+index 33954b3eba..fdb2372cf7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3431,6 +3431,7 @@ if have_system
+     'hw/pci-host',
+     'hw/ppc',
+     'hw/rtc',
++    'hw/riscv',
+     'hw/s390x',
+     'hw/scsi',
+     'hw/sd',
 -- 
-2.47.0
+2.45.2
 
 
