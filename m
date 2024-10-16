@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD4BD1AD43
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3544D1AD42
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 10:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t11GY-0003jc-9w; Wed, 16 Oct 2024 06:28:30 -0400
+	id 1t11GW-0003j7-IE; Wed, 16 Oct 2024 06:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11GV-0003iZ-7k
+ id 1t11GV-0003iX-19
  for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:27 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t11GT-00049f-QG
+ id 1t11GT-00049X-3M
  for qemu-devel@nongnu.org; Wed, 16 Oct 2024 06:28:26 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c94c4ad9d8so7269124a12.2
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 03:28:25 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c94c4ad9d8so7269112a12.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 03:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20230601; t=1729074504; x=1729679304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TcLknQffuaT4ojoTGdmSGCeAGfXDZnwetn6Ee4o+pCY=;
- b=gT/Nsc17ih6Evz5nQrcI7fZhg/YjhSjBSgLRc0P2u3Fu/tpXnaplahuUH7FVTq8vHw
- wl9yi+SgxketjT84drDdS8EYAcWP7zNX3ymwoLdwApclggpXOjIzJAB2DjzJ3FPj2TI8
- ZMj52AoI01itp3/uGnvhJ0CabZCiSDEwTOjr+4y9py/JwfLlSPMwSmA/2nplGtLl5Xdc
- u2bOCDWBAV1+Xk86DYLgT8ZVhO/fLnTpUn41begiMc6QABwy3NwBhTFQWbibfQ+IwXkJ
- VhiKwUzT76k2Q3Ky+/lIJkCInd1GOXeGn6nvPvYSmpeSYIkMybEYLKFwRelw3aNMnURN
- TJAQ==
+ bh=GanDoQPe72SVPSkPSldUjnclOENoEQhhoRjErfVjJmU=;
+ b=YaIl0Ecd3kSlpw0FVWHLsaClbz02lJ9Fw6LV1Pg4AmutgitmZgOQR2aqBOZgXFT9tw
+ ubNmCWHiR0dce9qzPIXeAZRjudZpd58xSmHWtYFp/+oKA32toUGXHoxh5p2BLqpbz9WL
+ N8L0DLaU7j/dZkHljOIvN7kf7rfNfSPSTXyDgX06FAz3LPWN0bUbtxLAeqw7zwflpqnm
+ 5yc7dzs+75PITFVgkAGtqCEJwoKr5AVyDISysoEsETe0ttByIag2NTaSIfWC0pXiBT2q
+ et+WTsqQmNEkc9yhuekU8qPy7AB985tRzHqPtUXGy3rh671aTyHfL4ffZPbp1Vj/24SI
+ ZFTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1729074504; x=1729679304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TcLknQffuaT4ojoTGdmSGCeAGfXDZnwetn6Ee4o+pCY=;
- b=jcdRH37Y6gxB2UDe+pTooVblsbO/vsK5bHyLOLfWXswna3XdOZClx0Mi0RU4JB7DsU
- Cw3mSIyLVH4U0uZQ3k+dUbAzBxpNTkqzzZDShQjMvELsvS+HXxUGPhpCT+sgFsoEHV5j
- Qu6Tx/q2bIhOXXBt42+DkBgD4Zcts1DV5U7ZJfU33epg/e82slXVCajreq0lCWJ7L/qu
- U8/lu9T+r0R5YZfO0WUiifRn8iIDdeDkiVogVH+2kNwaL3CH1b1G56zSAvI4fl5b1t5m
- QJGjhzKg3XeMNoM2My0kLsvakIo+k1tIczh3EdhpjG5lXJomd5netGvZ8u8JKoWeXiwf
- 8LTw==
+ bh=GanDoQPe72SVPSkPSldUjnclOENoEQhhoRjErfVjJmU=;
+ b=fub4TDO9jnqD957BUMhN+GOUd6WDcKgQu0h1H1YmuQ6TaVFWJhsPNmAlcQ12wSPZKU
+ hix0HPARtHqdz9xd6LMZ4lzNR4ckIV6xHaYreevV1aifs358qskcciMAZiGr1yAlH4qv
+ weTuvhrmAEusvZxVTJPqPA6KfDJ7RhsikZNnvcVzzb9ZQ/U/Vj7ktyw5a+ltIWKu0TJe
+ v+4mZiBRGRKYlIFfxZ3FBwcO1/XtUE4WhVN4thfkM05CWXZclJtoYq6e9yM9+dQFWeKl
+ 5Lvjs3/CgjFqZHLZqvMmUoh8kc4M6189/GocngWiXtsqOktcetCX3QO0NhEpRtE+KnKT
+ Ijgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBY6J+XMaZ/Xy4lciLpdlPxogRR1nAyW4SxkmLQoQNUlFDxbaQCQDOTml3TfVB4hh2RH5T5QbUVC7L@nongnu.org
-X-Gm-Message-State: AOJu0YzSqZvRdmMLXWaZliLBE7UgilNThoehTbn/MaYZwatnU57xB2Dc
- HSuWdAqrEs/oFchxSg6l7FGrz7Sa/SsW5PLZ9Cosfj+1idisoQbrpfeE0Q==
-X-Google-Smtp-Source: AGHT+IGeqNkFEzAJmjUgv9SBOdaNXbwaZ1PYb6q2FNk2/RygJ8/fE4wmbyxIlSWBWqioudYEUIiyLQ==
-X-Received: by 2002:a05:6402:1e8e:b0:5c9:7024:234f with SMTP id
- 4fb4d7f45d1cf-5c970242a14mr8582767a12.6.1729074504076; 
- Wed, 16 Oct 2024 03:28:24 -0700 (PDT)
+ AJvYcCXAPvA8kZiw/VJs3IckOY8IdSyKcxSwPAOpV/jMfWZbUe3XTozbOdCderAOZq12+ew++81jva8wPuKW@nongnu.org
+X-Gm-Message-State: AOJu0YyeLWWlt026yYoH+1VihMp5QrhNV0crTxKk+dFG0MqHwLKGpn0I
+ e4L/cZIyzVALGGY71BB4kBF7V2yJNHV5MZqN2tH/vc4s2UYH67xo
+X-Google-Smtp-Source: AGHT+IEH8HLAGAgOv4F0RXAd+jPdmK9knmIvKeNC8AG/hVK2E7zd9R+5C/CuLnjkscEcAhSmN6dxtw==
+X-Received: by 2002:a05:6402:2804:b0:5c9:29f3:fba3 with SMTP id
+ 4fb4d7f45d1cf-5c948cca98bmr15536176a12.20.1729074503333; 
+ Wed, 16 Oct 2024 03:28:23 -0700 (PDT)
 Received: from finn.fritz.box ([2a02:8109:8384:1400:eb7f:8fd0:f96c:766b])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5c98d4f85dcsm1566680a12.22.2024.10.16.03.28.23
+ 4fb4d7f45d1cf-5c98d4f85dcsm1566680a12.22.2024.10.16.03.28.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 03:28:23 -0700 (PDT)
+ Wed, 16 Oct 2024 03:28:20 -0700 (PDT)
 From: Roman Penyaev <r.peniaev@gmail.com>
 To: 
 Cc: Roman Penyaev <r.peniaev@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 5/8] chardev/char: introduce `mux-be-id=ID` option
-Date: Wed, 16 Oct 2024 12:26:02 +0200
-Message-Id: <20241016102605.459395-6-r.peniaev@gmail.com>
+Subject: [PATCH v4 4/8] chardev/char: rename frontend mux calls
+Date: Wed, 16 Oct 2024 12:26:01 +0200
+Message-Id: <20241016102605.459395-5-r.peniaev@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241016102605.459395-1-r.peniaev@gmail.com>
 References: <20241016102605.459395-1-r.peniaev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=r.peniaev@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,53 +98,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patch introduces `mux-be-id=ID` option for all chardev devices.
-This is necessary to attach chardev to `mux-be` for backend
-multiplexing. Actual implementation wimplementation will follow.
+This patch renames calls in the frontend mux implementation
+to reflect its frontend nature. Patch does the following:
+
+  s/mux_chr/mux_fe_chr/g
+
+No functional changes are made.
 
 Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
 Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
 ---
- chardev/char.c | 3 +++
- qapi/char.json | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ chardev/char-fe.c          |  6 ++--
+ chardev/char-mux-fe.c      | 68 +++++++++++++++++++-------------------
+ chardev/chardev-internal.h |  8 ++---
+ 3 files changed, 41 insertions(+), 41 deletions(-)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index d8dbdb6f84f1..cffe60860589 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -933,6 +933,9 @@ QemuOptsList qemu_chardev_opts = {
-         },{
-             .name = "mux",
-             .type = QEMU_OPT_BOOL,
-+        },{
-+            .name = "mux-be-id",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "signal",
-             .type = QEMU_OPT_BOOL,
-diff --git a/qapi/char.json b/qapi/char.json
-index e04535435034..fb0dedb24383 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -199,11 +199,15 @@
- # @logappend: true to append instead of truncate (default to false to
- #     truncate)
- #
-+# @mux-be-id: id of the mux-be device for backend multiplexing
-+#     (since: 9.2)
-+#
- # Since: 2.6
- ##
- { 'struct': 'ChardevCommon',
-   'data': { '*logfile': 'str',
--            '*logappend': 'bool' } }
-+            '*logappend': 'bool',
-+            '*mux-be-id': 'str' } }
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index 7b1ae16c62a4..a2b5bff39fd9 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -197,7 +197,7 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
+         if (CHARDEV_IS_MUX_FE(s)) {
+             MuxFeChardev *d = MUX_FE_CHARDEV(s);
  
- ##
- # @ChardevFile:
+-            if (!mux_chr_attach_frontend(d, b, &tag, errp)) {
++            if (!mux_fe_chr_attach_frontend(d, b, &tag, errp)) {
+                 return false;
+             }
+         } else if (s->be) {
+@@ -225,7 +225,7 @@ void qemu_chr_fe_deinit(CharBackend *b, bool del)
+         }
+         if (CHARDEV_IS_MUX_FE(b->chr)) {
+             MuxFeChardev *d = MUX_FE_CHARDEV(b->chr);
+-            mux_chr_detach_frontend(d, b->tag);
++            mux_fe_chr_detach_frontend(d, b->tag);
+         }
+         if (del) {
+             Object *obj = OBJECT(b->chr);
+@@ -306,7 +306,7 @@ void qemu_chr_fe_take_focus(CharBackend *b)
+     }
+ 
+     if (CHARDEV_IS_MUX_FE(b->chr)) {
+-        mux_set_focus(b->chr, b->tag);
++        mux_fe_chr_set_focus(b->chr, b->tag);
+     }
+ }
+ 
+diff --git a/chardev/char-mux-fe.c b/chardev/char-mux-fe.c
+index 6a195390a3c9..dcfce099ea9a 100644
+--- a/chardev/char-mux-fe.c
++++ b/chardev/char-mux-fe.c
+@@ -35,7 +35,7 @@
+ /* MUX driver for serial I/O splitting */
+ 
+ /* Called with chr_write_lock held.  */
+-static int mux_chr_write(Chardev *chr, const uint8_t *buf, int len)
++static int mux_fe_chr_write(Chardev *chr, const uint8_t *buf, int len)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(chr);
+     int ret;
+@@ -118,8 +118,8 @@ static void mux_print_help(Chardev *chr)
+     }
+ }
+ 
+-static void mux_chr_send_event(MuxFeChardev *d, unsigned int mux_nr,
+-                               QEMUChrEvent event)
++static void mux_fe_chr_send_event(MuxFeChardev *d, unsigned int mux_nr,
++                                  QEMUChrEvent event)
+ {
+     CharBackend *be = d->backends[mux_nr];
+ 
+@@ -128,12 +128,12 @@ static void mux_chr_send_event(MuxFeChardev *d, unsigned int mux_nr,
+     }
+ }
+ 
+-static void mux_chr_be_event(Chardev *chr, QEMUChrEvent event)
++static void mux_fe_chr_be_event(Chardev *chr, QEMUChrEvent event)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(chr);
+ 
+     if (d->focus != -1) {
+-        mux_chr_send_event(d, d->focus, event);
++        mux_fe_chr_send_event(d, d->focus, event);
+     }
+ }
+ 
+@@ -172,7 +172,7 @@ static int mux_proc_byte(Chardev *chr, MuxFeChardev *d, int ch)
+             if (bit >= MAX_MUX) {
+                 bit = find_next_bit(&d->mux_bitset, MAX_MUX, 0);
+             }
+-            mux_set_focus(chr, bit);
++            mux_fe_chr_set_focus(chr, bit);
+             break;
+         } case 't':
+             d->timestamps = !d->timestamps;
+@@ -189,7 +189,7 @@ static int mux_proc_byte(Chardev *chr, MuxFeChardev *d, int ch)
+     return 0;
+ }
+ 
+-static void mux_chr_accept_input(Chardev *chr)
++static void mux_fe_chr_accept_input(Chardev *chr)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(chr);
+     int m = d->focus;
+@@ -202,7 +202,7 @@ static void mux_chr_accept_input(Chardev *chr)
+     }
+ }
+ 
+-static int mux_chr_can_read(void *opaque)
++static int mux_fe_chr_can_read(void *opaque)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(opaque);
+     int m = d->focus;
+@@ -219,7 +219,7 @@ static int mux_chr_can_read(void *opaque)
+     return 0;
+ }
+ 
+-static void mux_chr_read(void *opaque, const uint8_t *buf, int size)
++static void mux_fe_chr_read(void *opaque, const uint8_t *buf, int size)
+ {
+     Chardev *chr = CHARDEV(opaque);
+     MuxFeChardev *d = MUX_FE_CHARDEV(opaque);
+@@ -227,7 +227,7 @@ static void mux_chr_read(void *opaque, const uint8_t *buf, int size)
+     CharBackend *be = d->backends[m];
+     int i;
+ 
+-    mux_chr_accept_input(opaque);
++    mux_fe_chr_accept_input(opaque);
+ 
+     for (i = 0; i < size; i++)
+         if (mux_proc_byte(chr, d, buf[i])) {
+@@ -248,16 +248,16 @@ void mux_fe_chr_send_all_event(MuxFeChardev *d, QEMUChrEvent event)
+     /* Send the event to all registered listeners */
+     bit = -1;
+     while ((bit = find_next_bit(&d->mux_bitset, MAX_MUX, bit + 1)) < MAX_MUX) {
+-        mux_chr_send_event(d, bit, event);
++        mux_fe_chr_send_event(d, bit, event);
+     }
+ }
+ 
+-static void mux_chr_event(void *opaque, QEMUChrEvent event)
++static void mux_fe_chr_event(void *opaque, QEMUChrEvent event)
+ {
+     mux_chr_send_all_event(CHARDEV(opaque), event);
+ }
+ 
+-static GSource *mux_chr_add_watch(Chardev *s, GIOCondition cond)
++static GSource *mux_fe_chr_add_watch(Chardev *s, GIOCondition cond)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(s);
+     Chardev *chr = qemu_chr_fe_get_driver(&d->chr);
+@@ -270,7 +270,7 @@ static GSource *mux_chr_add_watch(Chardev *s, GIOCondition cond)
+     return cc->chr_add_watch(chr, cond);
+ }
+ 
+-static void char_mux_finalize(Object *obj)
++static void char_mux_fe_finalize(Object *obj)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(obj);
+     int bit;
+@@ -285,22 +285,22 @@ static void char_mux_finalize(Object *obj)
+     qemu_chr_fe_deinit(&d->chr, false);
+ }
+ 
+-static void mux_chr_update_read_handlers(Chardev *chr)
++static void mux_fe_chr_update_read_handlers(Chardev *chr)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(chr);
+ 
+     /* Fix up the real driver with mux routines */
+     qemu_chr_fe_set_handlers_full(&d->chr,
+-                                  mux_chr_can_read,
+-                                  mux_chr_read,
+-                                  mux_chr_event,
++                                  mux_fe_chr_can_read,
++                                  mux_fe_chr_read,
++                                  mux_fe_chr_event,
+                                   NULL,
+                                   chr,
+                                   chr->gcontext, true, false);
+ }
+ 
+-bool mux_chr_attach_frontend(MuxFeChardev *d, CharBackend *b,
+-                             unsigned int *tag, Error **errp)
++bool mux_fe_chr_attach_frontend(MuxFeChardev *d, CharBackend *b,
++                                unsigned int *tag, Error **errp)
+ {
+     unsigned int bit;
+ 
+@@ -320,7 +320,7 @@ bool mux_chr_attach_frontend(MuxFeChardev *d, CharBackend *b,
+     return true;
+ }
+ 
+-bool mux_chr_detach_frontend(MuxFeChardev *d, unsigned int tag)
++bool mux_fe_chr_detach_frontend(MuxFeChardev *d, unsigned int tag)
+ {
+     unsigned int bit;
+ 
+@@ -335,19 +335,19 @@ bool mux_chr_detach_frontend(MuxFeChardev *d, unsigned int tag)
+     return true;
+ }
+ 
+-void mux_set_focus(Chardev *chr, unsigned int focus)
++void mux_fe_chr_set_focus(Chardev *chr, unsigned int focus)
+ {
+     MuxFeChardev *d = MUX_FE_CHARDEV(chr);
+ 
+     assert(find_next_bit(&d->mux_bitset, MAX_MUX, focus) == focus);
+ 
+     if (d->focus != -1) {
+-        mux_chr_send_event(d, d->focus, CHR_EVENT_MUX_OUT);
++        mux_fe_chr_send_event(d, d->focus, CHR_EVENT_MUX_OUT);
+     }
+ 
+     d->focus = focus;
+     chr->be = d->backends[focus];
+-    mux_chr_send_event(d, d->focus, CHR_EVENT_MUX_IN);
++    mux_fe_chr_send_event(d, d->focus, CHR_EVENT_MUX_IN);
+ }
+ 
+ static void qemu_chr_open_mux(Chardev *chr,
+@@ -389,30 +389,30 @@ static void qemu_chr_parse_mux(QemuOpts *opts, ChardevBackend *backend,
+     mux->chardev = g_strdup(chardev);
+ }
+ 
+-static void char_mux_class_init(ObjectClass *oc, void *data)
++static void char_mux_fe_class_init(ObjectClass *oc, void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+     cc->parse = qemu_chr_parse_mux;
+     cc->open = qemu_chr_open_mux;
+-    cc->chr_write = mux_chr_write;
+-    cc->chr_accept_input = mux_chr_accept_input;
+-    cc->chr_add_watch = mux_chr_add_watch;
+-    cc->chr_be_event = mux_chr_be_event;
+-    cc->chr_update_read_handler = mux_chr_update_read_handlers;
++    cc->chr_write = mux_fe_chr_write;
++    cc->chr_accept_input = mux_fe_chr_accept_input;
++    cc->chr_add_watch = mux_fe_chr_add_watch;
++    cc->chr_be_event = mux_fe_chr_be_event;
++    cc->chr_update_read_handler = mux_fe_chr_update_read_handlers;
+ }
+ 
+-static const TypeInfo char_mux_type_info = {
++static const TypeInfo char_mux_fe_type_info = {
+     .name = TYPE_CHARDEV_MUX_FE,
+     .parent = TYPE_CHARDEV,
+-    .class_init = char_mux_class_init,
++    .class_init = char_mux_fe_class_init,
+     .instance_size = sizeof(MuxFeChardev),
+-    .instance_finalize = char_mux_finalize,
++    .instance_finalize = char_mux_fe_finalize,
+ };
+ 
+ static void register_types(void)
+ {
+-    type_register_static(&char_mux_type_info);
++    type_register_static(&char_mux_fe_type_info);
+ }
+ 
+ type_init(register_types);
+diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
+index c874850a41ad..94c8d07ac235 100644
+--- a/chardev/chardev-internal.h
++++ b/chardev/chardev-internal.h
+@@ -59,14 +59,14 @@ DECLARE_INSTANCE_CHECKER(MuxFeChardev, MUX_FE_CHARDEV,
+ #define CHARDEV_IS_MUX_FE(chr)                             \
+     object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_MUX_FE)
+ 
+-bool mux_chr_attach_frontend(MuxFeChardev *d, CharBackend *b,
+-                             unsigned int *tag, Error **errp);
+-bool mux_chr_detach_frontend(MuxFeChardev *d, unsigned int tag);
+-void mux_set_focus(Chardev *chr, unsigned int focus);
+ void mux_chr_send_all_event(Chardev *chr, QEMUChrEvent event);
+ 
+ /* Mux type dependent calls */
++void mux_fe_chr_set_focus(Chardev *d, unsigned int focus);
+ void mux_fe_chr_send_all_event(MuxFeChardev *d, QEMUChrEvent event);
++bool mux_fe_chr_attach_frontend(MuxFeChardev *d, CharBackend *b,
++                                unsigned int *tag, Error **errp);
++bool mux_fe_chr_detach_frontend(MuxFeChardev *d, unsigned int tag);
+ 
+ Object *get_chardevs_root(void);
+ 
 -- 
 2.34.1
 
