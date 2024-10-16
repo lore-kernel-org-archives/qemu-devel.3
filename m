@@ -4,106 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC34D2069E
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBD7D2069A
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0x5g-0002s5-6B; Wed, 16 Oct 2024 02:01:00 -0400
+	id 1t0xF7-00058x-AR; Wed, 16 Oct 2024 02:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t0x5c-0002rl-TF; Wed, 16 Oct 2024 02:00:56 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1t0x5Y-0004c7-J8; Wed, 16 Oct 2024 02:00:56 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxHLOGVg9ndIIfAA--.46995S3;
- Wed, 16 Oct 2024 14:00:38 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAx_9V7Vg9njjwsAA--.28300S3;
- Wed, 16 Oct 2024 14:00:27 +0800 (CST)
-Subject: Re: [PATCH V1 0/4] Arch agnostic ACPI changes to support vCPU Hotplug
- (on Archs like ARM)
-To: Salil Mehta <salil.mehta@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
- "david@redhat.com" <david@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "will@kernel.org" <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
- <rafael@kernel.org>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
- "miguel.luis@oracle.com" <miguel.luis@oracle.com>,
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>,
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>,
- "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>,
- "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
- <3b0b1033-36eb-6180-1363-f76083a32ce0@loongson.cn>
- <a00e18f4324b40a0b54de4bfbc6d67c2@huawei.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <78882f54-8efe-024f-f328-43a2b3ba4d91@loongson.cn>
-Date: Wed, 16 Oct 2024 14:00:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t0xF5-00058n-0i
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:10:44 -0400
+Received: from mail-me3aus01olkn20817.outbound.protection.outlook.com
+ ([2a01:111:f403:2818::817]
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t0xF1-0005hj-GP
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:10:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ftez1iR9Y9AIFqDGzW8DfRvuFg4qzz3zBrsfn5AxRidfQKyJkyF9m+zKaggM63s5fBIVDDBkm3Rej5WLTogcIL6ZpHh9slog/k2B/NTjeyXulC1CQTmCEhLl2HteBfeAv47Zhd4tvGI9vTUxL3Ao52pAJ5gven4jVmNs4HqbGSLcv4cU8e4ULYN1L3aO2Ni1FoXcgCB5sxdh6m2rDH7vGDYaIM4pcTB4f8XM1hsixUQq8BEnI/1clRLEwkchvP55RkKNuaKD59iIWqxYdwlqa4Y3upi8tv93IVdnuyRNfruis7xruBOiQ2hEXozq8ktimqxHxrPCSAhmdL6ZS/z+YA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N6yqjE1xKySdy5/8VsV3IH+7CODVQSkgHR4MzfbiR/0=;
+ b=APkAv7/wRMDZaJCCQXTVC7WUblhokWruDpsV9vQplTKdkEg4FpvHMZdpIRR3WkA2mlrdHmEJIYIcHqmbZW3t+esgEiGt5W8z7IMmmBF20vGrHqgrxJeARTqZqUswGzd7oJxC6vqbptYIVr4uX52f0VgPQPKDb2Y5UjZSU1M1yE7Exre7miO+dhsFVnJ5VsQIXwDamwx79wLsbHxNbbnEQ16MWU1e16qTfUU9Et46eX1grwHN6dMP49qNZj/dmhGrBC9mxRPSNAwfZZIkp5mrLDSWsCtFUvJiXXeFaOyD7SoN/dtXDzrJLsyY/IGtt9RKET7Sem7YQ1NiF3yFHtBvPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N6yqjE1xKySdy5/8VsV3IH+7CODVQSkgHR4MzfbiR/0=;
+ b=udWtkeVd08DJbs78hFW4hbkbV/p5JihkE4Zy8o1yqHoomphGa62NK3zNGBfnY2g+auGur5hOSaK6wmzJWKkHPJiybEPJ115FqCBGqSPdrLY8L+9eFOZaeCH6EnbuWOaJLnzKy4r+IYfdv+KCJVx5V2bZ5JMbW7OACSwHG4eUM2/ZiOmgQexKE/BlVo7s6VDSKQqas0bO2YncRInap1a7rLN8gfFyey3xAVpdkTza2whGuhEgPLtl4Yo55zSSoUZeaVYaHjePFnrpsD2h3aINvOU5U7z/i0AwnSOu1kHJINWFFg1cUKNqOVty2h0+bGKRTr+ZopPhhLUPrQSXLGLYhg==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY3PPF906539F5C.AUSP300.PROD.OUTLOOK.COM (2603:10c6:18::49c) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.26; Wed, 16 Oct
+ 2024 06:10:32 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.016; Wed, 16 Oct 2024
+ 06:10:32 +0000
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-13-pbonzini@redhat.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 12/16] rust: allow version 1.63.0 of rustc
+Date: Wed, 16 Oct 2024 14:01:07 +0800
+In-reply-to: <20241015131735.518771-13-pbonzini@redhat.com>
+Message-ID: <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: KL1PR01CA0147.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:149::16) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <87ed4gr31v.fsf@hotmail.com>
 MIME-Version: 1.0
-In-Reply-To: <a00e18f4324b40a0b54de4bfbc6d67c2@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx_9V7Vg9njjwsAA--.28300S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Jw48Cr45GFW5ZF1rAry3WrX_yoW7uF18pF
- WIka1YgrWDJr1fAa1Sqr13ur1Y93yrGrWUXrnxCr1xu3Z0yF1vyF18Kr45uFy3Zr97KF17
- ZF1Yv347u34rAFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUf529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Pc02F40EFcxC0VAKzVAqx4xG6I80ewCIccxYrVCIc48FwI0_Gr0_XrUv
- 73VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUOa7kC6x804xWl14x267AKxVWUJVW8Jw
- AFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kI
- II0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7
- xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28E
- F7xvwVC2z280aVCY1x0267AKxVW8Jr0_Cr1UM2kKe7AKxVWUAVWUtwAS0I0E0xvYzxvE52
- x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80
- ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4
- AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_
- GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI
- 0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
- 1VAY17CE14v26rWY6r4UJwCIccxYrVCIc48FwI0_Gr0_Xr1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jqzuXUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY3PPF906539F5C:EE_
+X-MS-Office365-Filtering-Correlation-Id: d939a48a-64e8-477e-e233-08dceda93d9c
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|461199028|19110799003|5072599009|7092599003|15080799006|8060799006|1602099012|440099028|10035399004|3412199025|4302099013;
+X-Microsoft-Antispam-Message-Info: fURfcftO/Fntx2ctDaMTL/sq9a3RrRtQ04N37NLRuLrZAMTcLwyFsj1dRx/GO8yigpw+nvGYm8NOxGHQGuVONWZnlDQZ55P3GgvP0oC6FHkrlrWvibxS5WxQ4Hm23loYkj6FnWleQS7Y5DqJszk4s2Pb+mXAiLcisubw4X4aBfYOjC/mC10/YTASIqkjVZQ66ZUO4X1xxKA8n2ac/Qt0p4monopulnAyX/vbhz7M2M6Hu8vjSd8+iXn1sJoq+z2bYoFy62Wdwh30F/6rW0cCIg+ZacNcjRyxlgkOD6OWHExSZ3DPze0SlZz1MoX16VsX77zWKRtuCdnI/tdRsKykRtRCvLjYmN4qCGd9vu8MngO2JTBUjSVGOQdAwWw5mm70hvqk+CWPyTVvlz4mHYZnbQPd6V4oenXA4on5E2Ts71uZpNBTzDrmDhZAx/KXbn+b1pEOzd2LvONxz1mDnoOHzXy125CNoHupVuIGbluT3N/2nXJMJQzfxzvutdOJEfbcuvJbx2phWP982SVCdfZ4AoHdaXuj0phUR5+xEurPqKQMB1ah5JZDH5W70bblep++/qXRdAfCbEqNeb7yTn2Hb81WPXnp/dSCTrztUyMz2Qs+KiOwxVhwfv9/dWw33/reavQrJADi8UPyN40A2PhU1D8ybYFk88DoiVD8+7YNlgJYfU5qNKbQG7P/nLbKR84kZ61YDNhLMdrvx4hKRq4QKHh68S6TmKU5NxbBmROJbWKcKsWAmfupNbHYyLQpqDjv9Be5dq9Qqky9OOZDvdO/vJPR3nrxBjiGmgWRuJSKPGBp9DKPTQIguxHecad/fKcPq21yapmk9FLs3Qht/JYvRJkzJpSkAW43fn4DqrVHCGhi+E7SCKeEp7+odM+rlKee
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Zy+GTb3qQxfPrO0Izeh/m0AQNjzm7woaJzcxyLm+m2eRs6HFNABvn17SaTsE?=
+ =?us-ascii?Q?cbq991sxxSFCo6ix4JfE0PiE2rzEtzRuZugJmKAT2mHVbUZj5COEKtN0TDaZ?=
+ =?us-ascii?Q?Fu6QQvlxBVQTA34N084zVk126kSEbZK3/5NvZUxT8zy3rHiGV0Oy7wOK99J/?=
+ =?us-ascii?Q?Vfp80QZ17hooMXEUIoppK5YsbBSeYRE18NrZdw/xBu4OdbZPwB4WSWrlPj7J?=
+ =?us-ascii?Q?QqQJEEvqpZQFHm+8/Ny5D3a8FO9Wn/FXzeeWfuRtszYo5my/iE4//T623FnS?=
+ =?us-ascii?Q?qmL6VW6JykIvUUcaYVCvecFi4+zhb99kz9VPEFxekv2OpvzLL9Rb5vUeW1yD?=
+ =?us-ascii?Q?DimTWfPlCiUgI2ni/ekGtjn1OX3XtMGmGmuwTHlNZ3M+VUn+tXcVtbHXp4nv?=
+ =?us-ascii?Q?pearCaZluCR0TSsoTer2zvlNc8NjzHBfuG3CQRKAYfZksGHVqqh7djYHWamk?=
+ =?us-ascii?Q?eocFQVPHbWak01ZubdFhwfAQEmEdd3MK16eg2S68Kf/otmhfc1MktCoBp7Y4?=
+ =?us-ascii?Q?/jbcZMQqt92NaaAyBq22HlLhzxH/tvhbSaQVoH57+X3Vg6RYOwJWb4trzPwV?=
+ =?us-ascii?Q?/+QVxXVnxG6hK5qulEoQvvJbYPVeUcJ7xTuhPvpmkzH7Z6Gozv+O5eZorttu?=
+ =?us-ascii?Q?d9IGgBgO+jCrWPrCWevlCqTKH1tRdX49yig2V0uC6IM28vsShB4+ktkSzprU?=
+ =?us-ascii?Q?DeVJZ8l8R5WfLJGKJcA+XXk/duwXpnCIBET2mFpuu8xyVi0//6KFmCadmUcY?=
+ =?us-ascii?Q?qhHYl4CNaflM/d1t4jaaWz2HqrSbQbu+b+T1K/hcGc23lERfQRsDDg83y/qi?=
+ =?us-ascii?Q?CTvAahaqFeDhmumZCT84n+TlVSYAm1OJso/vopIKiaxvAoA6FBn3Fmjhfu15?=
+ =?us-ascii?Q?SvKj652VVltY+L/B6iwUQofrEINQ+1HDF0xFSwvCQcgM63F2mn1bYtkIrMxu?=
+ =?us-ascii?Q?pjZTGxj5jo1QB/9UQ847RODFp0xTuOjpcPwvcc5VYVuKgpJ+wAXajuWuL2go?=
+ =?us-ascii?Q?vE/Zj5eh5y05Fi4MR8a4wR+Yd/mDQRN8ZM05W7P5IfOllKpmnt88G3Wre8rL?=
+ =?us-ascii?Q?M+lSmBByPBubRQFpOt/rkwo4pg9cGjkwh9S35YoW9GGI0CA47r3IBtXruO0b?=
+ =?us-ascii?Q?n/wGxyDhchA/05JgptQmLI7vT+oco9CLFv4rYM0v77ZsEvTwGbDsdp3JnqGy?=
+ =?us-ascii?Q?UAh9PrVzZ8heMIG0xPjBvcGrnClqE1SMRtiiNU3Ko1qPWCZipY3QtBIhiAY?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: d939a48a-64e8-477e-e233-08dceda93d9c
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 06:10:32.1730 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY3PPF906539F5C
+Received-SPF: pass client-ip=2a01:111:f403:2818::817;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-ME3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,145 +125,79 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-On 2024/10/15 下午10:31, Salil Mehta wrote:
-> HI Bibo,
-> 
->>   From: maobibo <maobibo@loongson.cn>
->>   Sent: Tuesday, October 15, 2024 4:31 AM
->>   To: Salil Mehta <salil.mehta@huawei.com>; qemu-devel@nongnu.org;
->>   qemu-arm@nongnu.org; mst@redhat.com
->>   
->>   With cpu-add/cpu-del command tested on LoongArch system, no migration
->>   tested. There is no negative influence with LoongArch cpu hotplug.
-> 
-> Thanks for the confirmation.
-> 
-> Just curious are guys still using cpu-{add,del} interface for vCPU hotplug?
-> I thought it was deprecated for device_{add,del}?
-I use the device_add/del hmp command, such as
-   # device_add 
-la464-loongarch-cpu,socket-id=0,core-id=1,thread-id=0,id=cpu-1
-   # device_del cpu-1
+> All constructs introduced by newer versions of Rust have been removed.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  meson.build | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 175b8d82228..0e279d245b4 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -76,11 +76,11 @@ if not get_option('rust').disabled() and add_languages('rust', required: get_opt
+>      and add_languages('rust', required: get_option('rust'), native: true)
+>    rustc = meson.get_compiler('rust')
+>    have_rust = true
+> -  if rustc.version().version_compare('<1.80.0')
+> +  if rustc.version().version_compare('<1.63.0')
 
-Tested-by: Bibo Mao <maobibo@loongson.cn>
+In my Ubuntu 22.04 environment (rustc 1.76.0 and bindgen 0.59.1 from
+apt) the feature `proc_macro_byte_character` is not yet stablized but
+used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to
+2.0.58 fixes that issue for me.
 
-Regards
-Bibo Mao
-> 
-> https://wiki.qemu.org/Features/CPUHotplug
-> https://www.qemu.org/docs/master/system/cpu-hotplug.html
-> 
-> 
-> Thanks
-> Salil.
-> 
->>   
->>   Regards
->>   Bibo Mao
->>   
->>   On 2024/10/15 上午3:22, Salil Mehta via wrote:
->>   > Certain CPU architecture specifications [1][2][3] prohibit changes to
->>   > the CPUs
->>   > *presence* after the kernel has booted. This is because many system
->>   > initializations depend on the exact CPU count at boot time and do not
->>   > expect it to change afterward. For example, components like interrupt
->>   > controllers that are closely coupled with CPUs, or various per-CPU
->>   > features, may not support configuration changes once the kernel has
->>   been initialized.
->>   >
->>   > This requirement poses a challenge for virtualization features like
->>   > vCPU hotplug. To address this, changes to the ACPI AML are necessary
->>   > to update the `_STA.PRES` (presence) and `_STA.ENA` (enabled) bits
->>   > accordingly during guest initialization, as well as when vCPUs are
->>   > hot-plugged or hot-unplugged. The presence of unplugged vCPUs may
->>   need
->>   > to be deliberately *simulated* at the ACPI level to maintain a *persistent*
->>   view of vCPUs for the guest kernel.
->>   >
->>   > This patch set introduces the following features:
->>   >
->>   > 1. ACPI Interface with Explicit PRESENT and ENABLED CPU States: It allows
->>   the
->>   >     guest kernel to evaluate these states using the `_STA` ACPI method.
->>   >
->>   > 2. Initialization of ACPI CPU States: These states are initialized during
->>   >     `machvirt_init` and when vCPUs are hot-(un)plugged. This enables
->>   hotpluggable
->>   >     vCPUs to be exposed to the guest kernel via ACPI.
->>   >
->>   > 3. Support for Migrating ACPI CPU States: The patch set ensures the
->>   migration of
->>   >     the newly introduced `is_{present,enabled}` ACPI CPU states to the
->>   >     destination VM.
->>   >
->>   > The approach is flexible enough to accommodate ARM-like architectures
->>   > that intend to implement vCPU hotplug functionality. It is suitable
->>   > for architectures facing similar constraints to ARM or those that plan
->>   > to implement vCPU hotplugging independently of hardware support (if
->>   available).
->>   >
->>   > This patch set is derived from the ARM-specific vCPU hotplug
->>   > implementation [4] and includes migration components adaptable to
->>   > other architectures, following suggestions [5] made by Igor Mammedov
->>   <imammedo@redhat.com>.
->>   >
->>   > It can be applied independently, ensuring compatibility with existing
->>   > hotplug support in other architectures. I have tested this patch set
->>   > in conjunction with the ARM-specific vCPU hotplug changes (included in
->>   > the upcoming RFC V5 [6]), and everything worked as expected. I kindly
->>   > request maintainers of other architectures to provide a "Tested-by"
->>   > after running their respective regression tests.
->>   >
->>   > Many thanks!
->>   >
->>   >
->>   > References:
->>   > [1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt
->>   CPU Hotplug on
->>   >      architectures that don’t Support CPU Hotplug (like ARM64)
->>   >      a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-
->>   hotplug_7OJ1YyJ.pdf
->>   >      b. Qemu Link:
->>   > https://kvm-
->>   forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Vir
->>   > t_CPU_Hotplug_-__ii0iNb3.pdf [2] KVMForum 2020 Presentation:
->>   > Challenges in Supporting Virtual CPU Hotplug on
->>   >      SoC Based Systems (like ARM64)
->>   >      Link: https://kvmforum2020.sched.com/event/eE4m
->>   > [3] Check comment 5 in the bugzilla entry
->>   >      Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
->>   > [4] [PATCH RFC V4 00/33] Support of Virtual CPU Hotplug for ARMv8 Arch
->>   >      Link:
->>   > https://lore.kernel.org/qemu-devel/20241009031815.250096-1-salil.mehta
->>   > @huawei.com/T/#mf32be203baa568a871dc625b732f666a4c4f1e68
->>   > [5] Architecture agnostic ACPI VMSD state migration (Discussion)
->>   >      Link:
->>   > https://lore.kernel.org/qemu-
->>   devel/20240715155436.577d34c5@imammedo.us
->>   > ers.ipa.redhat.com/ [6] Upcoming RFC V5, Support of Virtual CPU
->>   > Hotplug for ARMv8 Arch
->>   >      Link:
->>   > https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v5
->>   >
->>   > Salil Mehta (4):
->>   >    hw/acpi: Initialize ACPI Hotplug CPU Status with Support for vCPU
->>   >      `Persistence`
->>   >    hw/acpi: Update ACPI CPU Status `is_{present, enabled}` during vCPU
->>   >      hot(un)plug
->>   >    hw/acpi: Reflect ACPI vCPU {present,enabled} states in ACPI
->>   >      _STA.{PRES,ENA} Bits
->>   >    hw/acpi: Populate vCPU Hotplug VMSD to migrate
->>   `is_{present,enabled}`
->>   >      states
->>   >
->>   >   cpu-target.c         patches.vcpuhp.rfc-v5.arch.agnostic.acpi          |  1 +
->>   >   hw/acpi/cpu.c                  | 70 +++++++++++++++++++++++++++++++---
->>   >   hw/acpi/generic_event_device.c | 11 ++++++
->>   >   include/hw/acpi/cpu.h          | 21 ++++++++++
->>   >   include/hw/core/cpu.h          | 21 ++++++++++
->>   >   5 files changed, 119 insertions(+), 5 deletions(-)
->>   >
-> 
+[1] https://github.com/drmingdrmer/openraft/commit/d496b6db4c6128d33f0f211165c08a7925cf20f7
 
+Here're my changes:
+
+diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
+index 7053e2c013..d5713b45d7 100644
+--- a/subprojects/proc-macro2-1-rs.wrap
++++ b/subprojects/proc-macro2-1-rs.wrap
+@@ -1,7 +1,7 @@
+ [wrap-file]
+-directory = proc-macro2-1.0.84
+-source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.84/download
+-source_filename = proc-macro2-1.0.84.0.tar.gz
+-source_hash = ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6
++directory = proc-macro2-1.0.79
++source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.79/download
++source_filename = proc-macro2-1.0.79.0.tar.gz
++source_hash = e835ff2298f5721608eb1a980ecaee1aef2c132bf95ecc026a11b7bf3c01c02e
+ #method = cargo
+ patch_directory = proc-macro2-1-rs
+diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
+index 13ffdac3c3..9d413a0c57 100644
+--- a/subprojects/syn-2-rs.wrap
++++ b/subprojects/syn-2-rs.wrap
+@@ -1,7 +1,7 @@
+ [wrap-file]
+-directory = syn-2.0.66
+-source_url = https://crates.io/api/v1/crates/syn/2.0.66/download
+-source_filename = syn-2.0.66.0.tar.gz
+-source_hash = c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5
++directory = syn-2.0.58
++source_url = https://crates.io/api/v1/crates/syn/2.0.58/download
++source_filename = syn-2.0.58.0.tar.gz
++source_hash = 44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0d30687
+ #method = cargo
+ patch_directory = syn-2-rs
+
+--
+Best Regards
+Junjie Mao
+
+>      if get_option('rust').enabled()
+> -      error('rustc version ' + rustc.version() + ' is unsupported: Please upgrade to at least 1.80.0')
+> +      error('rustc version ' + rustc.version() + ' is unsupported: Please upgrade to at least 1.63.0')
+>      else
+> -      warning('rustc version ' + rustc.version() + ' is unsupported: Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
+> +      warning('rustc version ' + rustc.version() + ' is unsupported: Disabling Rust compilation. Please upgrade to at least 1.63.0 to use Rust.')
+>        have_rust = false
+>      endif
+>    endif
 
