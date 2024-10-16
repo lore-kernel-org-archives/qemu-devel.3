@@ -4,76 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478F4D2A52B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 15:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AD3D2A52C
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 15:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t15wQ-0006Qg-Gg; Wed, 16 Oct 2024 11:28:02 -0400
+	id 1t16AE-0000zL-LV; Wed, 16 Oct 2024 11:42:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t15wJ-0006Pb-0w
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 11:27:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1t16AD-0000z8-EX; Wed, 16 Oct 2024 11:42:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t15wF-0000Ty-I4
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 11:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729092470;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bJagOfY7XeY7xVYGDImrD0m6sTBfUOdm/qPDi88+B1g=;
- b=P8XSZrcpZZTb4CH8UsZv2AVdODtuqj5TLT30JgALln3gmG/8p1KCdu24faDB5/xfWnb7iF
- 324zAxtrbM9aciIL0Ww3IwvtBrq7SMkgiua5cvRUJPqM3OlM/TVPYYQRZt0ZPf4PB8WBl8
- GmUShgEuaZZrJk2rMrPreUDet2Ldp+o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-P5DikXT1OzCu-HnEozQSVA-1; Wed,
- 16 Oct 2024 11:27:46 -0400
-X-MC-Unique: P5DikXT1OzCu-HnEozQSVA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C2B11955F42; Wed, 16 Oct 2024 15:27:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.95])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF6C019560AE; Wed, 16 Oct 2024 15:27:42 +0000 (UTC)
-Date: Wed, 16 Oct 2024 16:27:34 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: qemu-stable@nongnu.org, qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] tests: Wait for migration completion on destination QEMU
- to avoid failures
-Message-ID: <Zw_bZn2QlRIxYIVo@redhat.com>
-References: <20241016152159.1168722-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1t16AB-00022d-CO; Wed, 16 Oct 2024 11:42:17 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GFceTU014710;
+ Wed, 16 Oct 2024 15:42:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pyCCmL
+ ITDrddd0p8JusdeDyC+SoID39Stnc9mTALo4U=; b=R5GQCZaA+MXdfNWToQTyqs
+ OoEJeQ06p49qI4XsQ2X0OxiqRfp2nu59OElXFnN5dMBDdy733U/VT9yv2EvdbOGV
+ iC7ck53G1rPN+5LQlfTGAmTHTjo3Pl/Py8ihsqxsQST7xhikXlXq7MFeJQ6ZxY2J
+ F/beA51d00uf5pQyKRu4rL8MUqMCKuJcjWlOVX/mpKtrAxPyGTTH1nYSCKDs6v/S
+ 4YNUdWvrNd/PLmAw1YaETkzeo6FKsPSdhhjAXmFEFdVL0HsCSRFgJCIa9ACExaLL
+ rBnF/kg8ErmXIYiwaF9cRsOTVzrmosFbDZNveGIcWltyfnjV+Yvrg1rgu+YkRKJw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42afyx840t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2024 15:42:01 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GFdvuY018578;
+ Wed, 16 Oct 2024 15:42:01 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42afyx840p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2024 15:42:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GCntJ8006714;
+ Wed, 16 Oct 2024 15:42:00 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4283es2dpc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2024 15:42:00 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49GFfwCT31785378
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Oct 2024 15:41:59 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B93E25805A;
+ Wed, 16 Oct 2024 15:41:58 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C7A5158054;
+ Wed, 16 Oct 2024 15:41:57 +0000 (GMT)
+Received: from [9.10.80.165] (unknown [9.10.80.165])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 16 Oct 2024 15:41:57 +0000 (GMT)
+Message-ID: <ac9a334b-4872-4884-810c-4da71672283c@linux.ibm.com>
+Date: Wed, 16 Oct 2024 10:41:57 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/14] qtest/xive: Add test of pool interrupts
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ npiggin@gmail.com, milesg@linux.ibm.com, danielhb413@gmail.com,
+ david@gibson.dropbear.id.au, harshpb@linux.ibm.com, lvivier@redhat.com,
+ pbonzini@redhat.com, Fabiano Rosas <farosas@suse.de>
+References: <20241015211329.21113-1-kowal@linux.ibm.com>
+ <20241015211329.21113-15-kowal@linux.ibm.com>
+ <b2274edc-02fc-4c90-9cbb-80a89fd845b3@redhat.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <b2274edc-02fc-4c90-9cbb-80a89fd845b3@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241016152159.1168722-1-stefanb@linux.ibm.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: VAl6DoguC8E1LspM6cgCMH7AzL594gx7
+X-Proofpoint-ORIG-GUID: nu4Tv2XbQfcs7FUq5bCffU3Petl-L-2y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1011
+ suspectscore=0 spamscore=0 impostorscore=0 mlxscore=0 phishscore=0
+ bulkscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410160097
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,36 +117,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 16, 2024 at 11:21:59AM -0400, Stefan Berger wrote:
-> Rather than waiting for the completion of migration on the source side,
-> wait for it on the destination QEMU side to avoid accessing the TPM TIS
-> memory mapped registers before QEMU could restore their state. This
-> error condition could be triggered on busy systems where the destination
-> QEMU did not have enough time to restore the TIS state while the test case
-> was already reading its registers. The test case was for example reading
-> the STS register and received an unexpected value (0xffffffff), which
-> lead to a segmentation fault later on due to trying to read 0xffff bytes
-> from the TIS into a buffer.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-> ---
->  tests/qtest/tpm-tests.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 10/16/2024 3:33 AM, Thomas Huth wrote:
+> On 15/10/2024 23.13, Michael Kowal wrote:
+>> From: Glenn Miles <milesg@linux.ibm.com>
+>>
+>> Added new test for pool interrupts.
+>>
+>> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+>> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+>> ---
+>>   tests/qtest/pnv-xive2-test.c | 77 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 77 insertions(+)
+>>
+>> diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+>> index a6008bc053..6e7e7f0d9b 100644
+>> --- a/tests/qtest/pnv-xive2-test.c
+>> +++ b/tests/qtest/pnv-xive2-test.c
+>> @@ -4,6 +4,7 @@
+>>    *  - Test 'Pull Thread Context to Odd Thread Reporting Line'
+>>    *  - Test irq to hardware group
+>>    *  - Test irq to hardware group going through backlog
+>> + *  - Test irq to pool thread
+>>    *
+>>    * Copyright (c) 2024, IBM Corporation.
+>>    *
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+Just an FYI that I forgot to rebase the the Group 3 XIVE qtest changes 
+into these patch sets...  and will be done for version 2.
+
+MAK
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+>> @@ -267,6 +268,79 @@ static void test_hw_irq(QTestState *qts)
+>>       g_assert_cmphex(cppr, ==, 0xFF);
+>>   }
+>>   +static void test_pool_irq(QTestState *qts)
+>> +{
+>> +    uint32_t irq = 2;
+>> +    uint32_t irq_data = 0x600d0d06;
+>> +    uint32_t end_index = 5;
+>> +    uint32_t target_pir = 1;
+>> +    uint32_t target_nvp = 0x100 + target_pir;
+>> +    uint8_t priority = 5;
+>> +    uint32_t reg32;
+>> +    uint16_t reg16;
+>> +    uint8_t pq, nsr, cppr, ipb;
+>> +
+>> +    printf("# 
+>> ============================================================\n");
+>> +    printf("# Testing irq %d to pool thread %d\n", irq, target_pir);
+>
+> Please don't use direct printfs in the qtest framework. If you really 
+> have to log stuff, use g_test_message() instead.
+>
+>  Thomas
+>
 
