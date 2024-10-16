@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77ACD2A544
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 19:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3846D2A554
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 19:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t19mb-0007mT-LX; Wed, 16 Oct 2024 15:34:09 -0400
+	id 1t19kL-0002di-67; Wed, 16 Oct 2024 15:31:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t19mY-0007Rd-MI; Wed, 16 Oct 2024 15:34:06 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t19kI-0002cZ-N5
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:46 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t19mU-00042c-Rq; Wed, 16 Oct 2024 15:34:06 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-42f6bec84b5so1996015e9.1; 
- Wed, 16 Oct 2024 12:33:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t19kF-0003nJ-JK
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:46 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-208cf673b8dso1747495ad.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 12:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729107230; x=1729712030; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1729107102; x=1729711902; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LbmICVGtbM1/BADU4IKUlFjLhiURvx6edLLRS7oUaKc=;
- b=BRO/wUgullIhj+q6N+fHhL6t2Ib6EHqgg/1Ry4ZwQk13mnJtWmyTR8sOwl7cM1cM5G
- R/9eYVgbtSR8s72DHBGiQcjBxvhbPt/yCVLUaRzchf0Re6QQuAy9BbjahKA4YQM+e+OF
- IQwbuKOFukHcl02KlbJVDwQBW+TvGq1vzEXeU+hlEUz6XluAPDXoPfS5T0u6jBqAq677
- GpXBh0ONwvYLAVweSG63NfLMSh1MQXWYjOE9a56cS6gEmbZC/fqJ5oc6ZZm9aMJoagOG
- 0L4IHuiSHegI9q+G7kdAiyKRWPQ9hPKd3C/QidUbVHnVcurPSqnPbBRnqPr47LJCcJ6u
- lIhg==
+ bh=pAS56LpJLEvFceTFCBsO+yMHFwJ+VtaFv7L9YjE7ffs=;
+ b=OSvF6fMopQgsmWmUSA1xiO/3gUZlMxSse5XxAPZAbgtx4sOFZHk5H97BEPKWyKShSS
+ 71tTJIzSEn8cIuDvk+gKqdOCrYDCXGDzvfhc7siB8EaeoJ0naaAAcDRxEAwYPwPUeGpe
+ B34FAsMFA+QyXXNHlx3Tyhj6xTRX99/YisLQT5wo836Q8QfpjP1eIIwarr3sOHz8VWNz
+ Vv1/zcWifzEw3ROTqUFX1Moi23qAGtyZqauSZBN48hODn+NEuZfYPktrpX+tqL881fPt
+ SLQKezYzN7vxMjV8hltQPh438vsPyuOi9EiXaADJgCRQvIAbVzPP++ce+c/gaqqOps0v
+ vWtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729107230; x=1729712030;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729107102; x=1729711902;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LbmICVGtbM1/BADU4IKUlFjLhiURvx6edLLRS7oUaKc=;
- b=Yn0dk5itJwBon1hYRutMW9QWpePIhzPfV77t9YoNvbM4RqmSffDd7CyqaC8X+Z40Nu
- 9awIfXe6+qTfQqD5tl5Jbpu1PwSZIPX6AeGV6fjMOyvgLQAt55o9vc1ta31B3oaLkRVI
- tcvkK2m/yc7ineIxUWJXBGBSqf3AoQ8YkcdMbzTKmjXkfVx2wYFmJiXlsgyfO3tf5rL8
- MaX8f+IiWcz/rlqR5Hc8qpjG3VG6SiBU/DLB61Cn5YXwGfB/fU9shltPqZRmZGTHiWeB
- YTwc3chjMaDbRK+3sFLUlZMnuNWDT7DFAb+RZXwq6BisOu3S3QCEqmu92hOkDYqr2bdx
- SuSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWf4qyoU46BBerIKV529JGv0iDQetmtYRDWW1HyhMJXX/6ylEPsyUZVebI4Hmc4A1/g9Yw0zXj1SEAfdw==@nongnu.org
-X-Gm-Message-State: AOJu0Yz8sX8QYjmQ+coAFOayrwMhja6rGO4q9ZONW9Ry5zm2d/V/WnkD
- VO+ckOLlvHUplII+Rl/L3ZiOCZHeoecyemttHfgT8iSSp83vh5cyoHWtxQ==
-X-Google-Smtp-Source: AGHT+IFGm0Wkf+rVT3+0vpUh3FPdLhg4cw+TqX6QexmtHwXC0y2vaaflQdNmQApmEg2IW2ydA4gEeg==
-X-Received: by 2002:a05:600c:5110:b0:431:59ab:15cf with SMTP id
- 5b1f17b1804b1-43159ab1711mr508545e9.19.1729107229305; 
- Wed, 16 Oct 2024 12:33:49 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-191-025-143.77.191.pool.telefonica.de.
- [77.191.25.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa7a1c8sm5025246f8f.21.2024.10.16.12.33.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Oct 2024 12:33:48 -0700 (PDT)
-Date: Wed, 16 Oct 2024 18:49:18 +0000
-From: Bernhard Beschow <shentey@gmail.com>
+ bh=pAS56LpJLEvFceTFCBsO+yMHFwJ+VtaFv7L9YjE7ffs=;
+ b=V0k35BOwbB2Rnm/QEIDsXK2EIyzFWnrMmW/qKsxfXz/6VxGGpgpvxtUnbnrwGtAxMu
+ eBEprxnBRPJO+eQNOvE8wy9CZvpH7l+3Wp6gqMfYK786q4gXIFvprVIjhuHzdwdjTx4w
+ a4jaMOUFI3T8e6rtRZzJGaWevgZQeZkC7LQSq5kyAxhtwt4Qx2T8My+mz+kJ0Z+J2Jyw
+ 0mDttyFdoYEUW8PqIDlI3n3h50secODq67EzsFVt+YbGZntDxJ+gTYBmw+8vxPSpxj1K
+ Aah8f4NGB22IiT0bslxNYOvXxfLoCLbgF/8cuOeXUB9DTBv6DE4GAkqKguXYvDlU4MtG
+ eLlA==
+X-Gm-Message-State: AOJu0Yye0chYvJUrsXMxye/78OKRDXRuc1ZZdYtkiE59jOBX59vaMf9Q
+ mc98gpTIfy7CZpRg6IBiUraxfKGI5XMwC5ErFbQsaSzrnDeFiOlBzHIvlKNij49CAO2aqpjhGWv
+ W
+X-Google-Smtp-Source: AGHT+IFkOIpE7mOZzAuqHtZeBcp/PoRhA6Hzul0zrj2kcEBUIYN6D8Et+bkkoALvnwUMfW3KVQbzyA==
+X-Received: by 2002:a17:903:1c9:b0:20c:9d8d:1f65 with SMTP id
+ d9443c01a7336-20d27ef315dmr71489035ad.30.1729107102081; 
+ Wed, 16 Oct 2024 12:31:42 -0700 (PDT)
+Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20d1804b6b1sm32323945ad.189.2024.10.16.12.31.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Oct 2024 12:31:41 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-CC: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] net/tap-win32: Fix gcc 14 format truncation errors
-In-Reply-To: <20241008202842.4478-1-shentey@gmail.com>
-References: <20241008202842.4478-1-shentey@gmail.com>
-Message-ID: <ED3A009C-15F4-47D0-8E67-65BAE0510A95@gmail.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ zhiwei_liu@linux.alibaba.com, qemu-stable@nongnu.org
+Subject: [PATCH v6 01/14] tcg: Reset data_gen_ptr correctly
+Date: Wed, 16 Oct 2024 12:31:27 -0700
+Message-ID: <20241016193140.2206352-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241016193140.2206352-1-richard.henderson@linaro.org>
+References: <20241016193140.2206352-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,153 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This pointer needs to be reset after overflow just like
+code_buf and code_ptr.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/tcg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Am 8=2E Oktober 2024 20:28:42 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
->The patch fixes the following errors generated by GCC 14=2E2:
->
->=2E=2E/src/net/tap-win32=2Ec:343:19: error: '%s' directive output may be =
-truncated writing up to 255 bytes into a region of size 176 [-Werror=3Dform=
-at-truncation=3D]
->  343 |              "%s\\%s\\Connection",
->      |                   ^~
->  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->      |                                       ~~~~~~~~~
->
->=2E=2E/src/net/tap-win32=2Ec:341:9: note: 'snprintf' output between 92 an=
-d 347 bytes into a destination of size 256
->  341 |         snprintf(connection_string,
->      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->  342 |              sizeof(connection_string),
->      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
->  343 |              "%s\\%s\\Connection",
->      |              ~~~~~~~~~~~~~~~~~~~~~
->  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
->=2E=2E/src/net/tap-win32=2Ec:242:58: error: '%s' directive output may be =
-truncated writing up to 255 bytes into a region of size 178 [-Werror=3Dform=
-at-truncation=3D]
->  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->      |                                                          ^~
->  243 |                   ADAPTER_KEY, enum_name);
->      |                                ~~~~~~~~~
->
->=2E=2E/src/net/tap-win32=2Ec:242:9: note: 'snprintf' output between 79 an=
-d 334 bytes into a destination of size 256
->  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->  243 |                   ADAPTER_KEY, enum_name);
->      |                   ~~~~~~~~~~~~~~~~~~~~~~~
->
->=2E=2E/src/net/tap-win32=2Ec:620:52: error: '%s' directive output may be =
-truncated writing up to 255 bytes into a region of size 245 [-Werror=3Dform=
-at-truncation=3D]
->  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->      |                                                    ^~
->  621 |               USERMODEDEVICEDIR,
->  622 |               device_guid,
->      |               ~~~~~~~~~~~
->=2E=2E/src/net/tap-win32=2Ec:620:5: note: 'snprintf' output between 16 an=
-d 271 bytes into a destination of size 256
->  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->  621 |               USERMODEDEVICEDIR,
->      |               ~~~~~~~~~~~~~~~~~~
->  622 |               device_guid,
->      |               ~~~~~~~~~~~~
->  623 |               TAPSUFFIX);
->      |               ~~~~~~~~~~
->
->Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2607
->Cc: qemu-stable@nongnu=2Eorg
->
->--
->
->This patch was just compile-tested (which fixes my issue)=2E Testing TAP
->networking under Windows apparently requires extra drivers which I don't =
-want to
->install (not my computer)=2E So it would be nice if someone could give th=
-is patch
->a test ride=2E Thanks!
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 5decd83cf4..0babae1b88 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1399,7 +1399,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+         goto retry;
+     }
+     qatomic_set(&s->code_gen_ptr, next);
+-    s->data_gen_ptr = NULL;
+     return tb;
+ }
+ 
+@@ -6172,6 +6171,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+      */
+     s->code_buf = tcg_splitwx_to_rw(tb->tc.ptr);
+     s->code_ptr = s->code_buf;
++    s->data_gen_ptr = NULL;
+ 
+ #ifdef TCG_TARGET_NEED_LDST_LABELS
+     QSIMPLEQ_INIT(&s->ldst_labels);
+-- 
+2.43.0
 
-Ping=2E Patch is reviewed=2E Any testers or shall we just merge?
-
-Best regards,
-Bernhard
-
->
->Changes since v1:
->* Use g_autofree and g_strdup_printf() rather than fixed size arrays (Pet=
-er)
->---
-> net/tap-win32=2Ec | 15 ++++++---------
-> 1 file changed, 6 insertions(+), 9 deletions(-)
->
->diff --git a/net/tap-win32=2Ec b/net/tap-win32=2Ec
->index 7edbd71633=2E=2E671dee970f 100644
->--- a/net/tap-win32=2Ec
->+++ b/net/tap-win32=2Ec
->@@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
->=20
->     for (;;) {
->         char enum_name[256];
->-        char unit_string[256];
->+        g_autofree char *unit_string =3D NULL;
->         HKEY unit_key;
->         char component_id_string[] =3D "ComponentId";
->         char component_id[256];
->@@ -239,8 +239,7 @@ static int is_tap_win32_dev(const char *guid)
->             return FALSE;
->         }
->=20
->-        snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->-                  ADAPTER_KEY, enum_name);
->+        unit_string =3D g_strdup_printf("%s\\%s", ADAPTER_KEY, enum_name=
-);
->=20
->         status =3D RegOpenKeyEx(
->             HKEY_LOCAL_MACHINE,
->@@ -315,7 +314,7 @@ static int get_device_guid(
->     while (!stop)
->     {
->         char enum_name[256];
->-        char connection_string[256];
->+        g_autofree char *connection_string =3D NULL;
->         HKEY connection_key;
->         char name_data[256];
->         DWORD name_type;
->@@ -338,9 +337,7 @@ static int get_device_guid(
->             return -1;
->         }
->=20
->-        snprintf(connection_string,
->-             sizeof(connection_string),
->-             "%s\\%s\\Connection",
->+        connection_string =3D g_strdup_printf("%s\\%s\\Connection",
->              NETWORK_CONNECTIONS_KEY, enum_name);
->=20
->         status =3D RegOpenKeyEx(
->@@ -595,7 +592,7 @@ static void tap_win32_free_buffer(tap_win32_overlappe=
-d_t *overlapped,
-> static int tap_win32_open(tap_win32_overlapped_t **phandle,
->                           const char *preferred_name)
-> {
->-    char device_path[256];
->+    g_autofree char *device_path =3D NULL;
->     char device_guid[0x100];
->     int rc;
->     HANDLE handle;
->@@ -617,7 +614,7 @@ static int tap_win32_open(tap_win32_overlapped_t **ph=
-andle,
->     if (rc)
->         return -1;
->=20
->-    snprintf (device_path, sizeof(device_path), "%s%s%s",
->+    device_path =3D g_strdup_printf("%s%s%s",
->               USERMODEDEVICEDIR,
->               device_guid,
->               TAPSUFFIX);
 
