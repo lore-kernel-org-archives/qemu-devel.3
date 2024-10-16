@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C4A4D1AD21
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB834D1AD23
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 08:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0yu4-0003Zz-RS; Wed, 16 Oct 2024 03:57:08 -0400
+	id 1t0zAW-00008l-4W; Wed, 16 Oct 2024 04:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t0yu2-0003Yj-3D
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:57:06 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t0ytz-0000h1-LK
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:57:05 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20cb7088cbcso35256205ad.0
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:57:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729065422; x=1729670222;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nPCILjRi6VdBAXe5YCsoUa6w4039+pCXbLXnN2JBo9s=;
- b=DO6G4h9HcTOgg+vP6JXLy2OeJnh0gUAV0crQLaLKH4i/AJsGyTFv9M95ahkOv4bIA/
- bZ2KM7BEv8UMfc/1VjJwqEqKvBnmM5IOHXcundf4/uGs+eamSn/vCGyNK5w0Es0yz5BM
- OHltCM3i5s7nXc2iMTy6iMVDSlPcQsl7SiQh7a3gcD4VKL+RbPGbapptzpuChkM165u1
- Y6XoGQfFeDAx3yAje4Fxc3WK9gtp4YkS4QZVUHyL9ufX0DhkJTZTN829N2SokuYfu3x5
- OUNqIBP5AUpABGjR1oGLIaXJEnfFHb8iHAW7SIBVV+gn5z6allK3grvO9w/O6OTa9mGh
- Ii3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729065422; x=1729670222;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nPCILjRi6VdBAXe5YCsoUa6w4039+pCXbLXnN2JBo9s=;
- b=HVjLL2Dc4XEBXnDwur2mktGoLeAekj2sBYKI7AGP9NyVA6c4B9DQUkkPeTB1WTACXG
- nNVQfRPiuYNbpvBkJOwlgO5H2qSGydx1I5I8uTcJK6fNHaPfbFN7KRyuYLWtdKyl1xm8
- eWzKq1HmCKlmMBNvhZZrk+B5uFapkVEGxEB+H+UkAEwn1pPxXAm5MRkJbmVpWfN5Z70L
- bjBnoO5wfIDUBF7slbHjFCogYyzFn/aovHFA58yHdxlkDq/ssqeOZV4UAd8gRXian359
- 7QkYyxWhtf4unksfFRfDBzPgJzOCYkBrte5SLDUIeHhyMPjwtsdAWvFDHZf8F9FrNkgG
- LjCQ==
-X-Gm-Message-State: AOJu0Yw1Dx1qjOwr/xgS3KgdVYNAnnXt/KaikF00APgeegih3+ph088l
- ObHyV6jYqQieFfrBAHTljYdFcL0+mwMVExih4bR6rQ3ummVOCz31RstFtrywdimHhiLeJtzwKwS
- 1QutQnw==
-X-Google-Smtp-Source: AGHT+IHxC9QA4Iqd3SqdUdzurOWdLLrjStHMmA4Ci6b9FoCmcFj/a6d5Os89fRePtlGUcCMr6nrf9Q==
-X-Received: by 2002:a17:902:db12:b0:20c:5ba1:e8e5 with SMTP id
- d9443c01a7336-20ca145d515mr261043765ad.19.1729065421626; 
- Wed, 16 Oct 2024 00:57:01 -0700 (PDT)
-Received: from Hyman-Dev-Euler.zelin.local ([85.208.104.155])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d17f84dd1sm23608365ad.43.2024.10.16.00.56.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 00:57:01 -0700 (PDT)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH v3 2/4] migration: Remove "rs" parameter in
- migration_bitmap_sync_precopy
-Date: Wed, 16 Oct 2024 15:56:43 +0800
-Message-Id: <63b04591ecd6fcd1ffe570e1005fc3040168ad42.1729064919.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1729064919.git.yong.huang@smartx.com>
-References: <cover.1729064919.git.yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1t0zAU-00008d-8U
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:14:06 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1t0zAR-0002hz-KZ
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 04:14:05 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxqrHEdQ9n8MMfAA--.45622S3;
+ Wed, 16 Oct 2024 16:13:57 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxXuTBdQ9n2GssAA--.17105S3;
+ Wed, 16 Oct 2024 16:13:55 +0800 (CST)
+Subject: Re: [PATCH] linux-headers: loongarch: add kvm_para.h and unistd_64.h
+From: maobibo <maobibo@loongson.cn>
+To: "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>
+References: <20240929072240.251301-1-maobibo@loongson.cn>
+Message-ID: <6d4d65ad-9b35-ea5b-ae3d-0e1234477b66@loongson.cn>
+Date: Wed, 16 Oct 2024 16:13:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240929072240.251301-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=yong.huang@smartx.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxXuTBdQ9n2GssAA--.17105S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7GF1xCw48ury3XF48Gw4xKrX_yoWDKrgE9a
+ nrAr4rX340v39rt3Z2yFn3K3yUC3yxAanayr18ZwnFq3s8tF4jga1xJ34kGw1q9ryj9rs5
+ uFWUtr1xZa13XosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbIxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU1MK
+ ZJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,73 +82,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+ping.
 
-The global static variable ram_state in fact is referred to by the
-"rs" parameter in migration_bitmap_sync_precopy. For ease of calling
-by the callees, use the global variable directly in
-migration_bitmap_sync_precopy and remove "rs" parameter.
+@Song
 
-The migration_bitmap_sync_precopy will be exported in the next commit.
+Could you give some comments since it is LoongArch specific?
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- migration/ram.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+Regards
+Bibo Mao
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 54d352b152..9b5b350405 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1088,9 +1088,10 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-     }
- }
- 
--static void migration_bitmap_sync_precopy(RAMState *rs, bool last_stage)
-+static void migration_bitmap_sync_precopy(bool last_stage)
- {
-     Error *local_err = NULL;
-+    assert(ram_state);
- 
-     /*
-      * The current notifier usage is just an optimization to migration, so we
-@@ -1101,7 +1102,7 @@ static void migration_bitmap_sync_precopy(RAMState *rs, bool last_stage)
-         local_err = NULL;
-     }
- 
--    migration_bitmap_sync(rs, last_stage);
-+    migration_bitmap_sync(ram_state, last_stage);
- 
-     if (precopy_notify(PRECOPY_NOTIFY_AFTER_BITMAP_SYNC, &local_err)) {
-         error_report_err(local_err);
-@@ -2782,7 +2783,7 @@ static bool ram_init_bitmaps(RAMState *rs, Error **errp)
-             if (!ret) {
-                 goto out_unlock;
-             }
--            migration_bitmap_sync_precopy(rs, false);
-+            migration_bitmap_sync_precopy(false);
-         }
-     }
- out_unlock:
-@@ -3248,7 +3249,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
- 
-     WITH_RCU_READ_LOCK_GUARD() {
-         if (!migration_in_postcopy()) {
--            migration_bitmap_sync_precopy(rs, true);
-+            migration_bitmap_sync_precopy(true);
-         }
- 
-         ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
-@@ -3330,7 +3331,7 @@ static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
-     if (!migration_in_postcopy()) {
-         bql_lock();
-         WITH_RCU_READ_LOCK_GUARD() {
--            migration_bitmap_sync_precopy(rs, false);
-+            migration_bitmap_sync_precopy(false);
-         }
-         bql_unlock();
-     }
--- 
-2.27.0
+On 2024/9/29 下午3:22, Bibo Mao wrote:
+> KVM LBT supports on LoongArch requires the linux-header kvm_para.h,
+> also unistd_64.h is required by unistd.h on LoongArch since 6.11
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   scripts/update-linux-headers.sh | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+> index c34ac6454e..3c411f0318 100755
+> --- a/scripts/update-linux-headers.sh
+> +++ b/scripts/update-linux-headers.sh
+> @@ -186,6 +186,10 @@ EOF
+>       if [ $arch = riscv ]; then
+>           cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
+>       fi
+> +    if [ $arch = loongarch ]; then
+> +        cp "$hdrdir/include/asm/kvm_para.h" "$output/linux-headers/asm-loongarch/"
+> +        cp "$hdrdir/include/asm/unistd_64.h" "$output/linux-headers/asm-loongarch/"
+> +    fi
+>   done
+>   arch=
+>   
+> 
+> base-commit: 3b14a767eaca3df5534a162851f04787b363670e
+> 
 
 
