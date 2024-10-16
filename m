@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73025D2A549
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 19:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC6ED2A549
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 19:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t19kN-0002ft-22; Wed, 16 Oct 2024 15:31:51 -0400
+	id 1t19kX-0002qR-Ut; Wed, 16 Oct 2024 15:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t19kK-0002dZ-BF
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:48 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1t19kQ-0002jN-HL
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:55 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t19kG-0003nf-NE
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:47 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20bb39d97d1so1543885ad.2
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 12:31:44 -0700 (PDT)
+ id 1t19kO-0003rS-NO
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 15:31:54 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-20c77459558so1574775ad.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 12:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729107103; x=1729711903; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729107111; x=1729711911; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=k9pm4mmiOJ3ePRNfWoDr3osUdbmj8mTSaBfTsfRhvEA=;
- b=H2mYNCwIjh2gWxzIwji23kcmFroPqhHUIbXVhEcdmYjmKHeEZKpXEPcXt3qSM50dUl
- VyPd5OefxqqwzesB0vOZOOrnqM4r37bqgu2rfqgwVXWNG3OT5vmy63bQ1KtkPoMFiTMJ
- zPODQEKln1nfN2OeLyUw+MZAF17ryT+KlD8R3QFH5JwheSeQepUuXwPU4w8q6gHkfKyR
- lb+d0tvy2LG6GnbmVl5GlMtYapRrnkD0y01NGsmqHALicH2Rw4Bb3Wlv+PHpIbw5y5pI
- sbZ+G6OTIGYeERAKqMfnKVGc0w9Z5vT7WDaFvwdr+TzJlQIwhdBg1M9qvqQMYFaWRZh5
- Trtw==
+ bh=9wtdGS6j59IEw6lp5Sp3jQrC+uEbTCdVdwYMkROoHlk=;
+ b=xvGMgC2kl9BwTc+YSZeLMjiJZszcwUdB51kC0VQBzX8Rq6tpXf1gdNMLlu+Jw2Y60E
+ xvjTvYkZtd/vQnRCKh6FsFjmW5XD5k/FKeyhy6Kz/cZlgGZZ41JueNI9J3nTlFhWplAB
+ v+/fm7Lz1b2c7Njl6Qm1+576WwpES2IuspNyVGV77m32ZBBuNs6tXwU8JHzVNKDb18RC
+ +n2g3YaRZ3b0BIfZb5Retwz75dBd7c/PVc1yVRUoIXwLOrQPE5IZb6vVmX7mgP7uPw6U
+ RL3aBs7K+eiL9rLM+tQZLWls0/wKNSd2fe6wac9WGRporqQhULzMMmOKIhYmVTBF66RN
+ UU0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729107103; x=1729711903;
+ d=1e100.net; s=20230601; t=1729107111; x=1729711911;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k9pm4mmiOJ3ePRNfWoDr3osUdbmj8mTSaBfTsfRhvEA=;
- b=gs2UhkyX8glUAddOCYx9ddN7JvLwfOdWzVbLaTvalNPFQ2UMZEraMpu3OVXp5st1wi
- iEjJ9GozbbjwPwbI3hEZdsnuKykGvv60hwwPbXF3EZJS6s1FZ77RvRMxVr8bX2gf+UTy
- 9CL0CtTW22FYq+7Af+/4PZ7Hqe2LH6LxdUXyiG4fUArIhwhEqDGFG0n8bpWgImhojTow
- ldwDADKFmum4fqSctFTwPaGhjsgWSD9uX/Rul3ilLI6QOHk7TkmzXLi1zdyGBDNl9CT4
- fVPf5qFhpbA/dWV9fGYGNUq0H8fw7CIm2tgAQIJvU7ChPA9OkNra0hEWDpvKcEb4+vcm
- A73g==
-X-Gm-Message-State: AOJu0Yy1k5hUPXxCyQ9+juwBPRQ1md4Z+Ih3LXh2uIrotbmuAH3PGjVb
- Qqa9l3VN2+33ytLC2nHULjZJe2Zp5cTfy55ewE5Rtw7gCz1Y6X5J1STPgiMv7ckoB53rAmWWEIE
- S
-X-Google-Smtp-Source: AGHT+IEbxcJArg42k++Rr7k+42e+j+oxbTriW9eALQDzvP4g5pI/++j0U7VbgwUs5VFYQIIE3bYwWg==
-X-Received: by 2002:a17:903:2309:b0:20b:8907:b597 with SMTP id
- d9443c01a7336-20ca1682ab9mr258903615ad.28.1729107103360; 
- Wed, 16 Oct 2024 12:31:43 -0700 (PDT)
+ bh=9wtdGS6j59IEw6lp5Sp3jQrC+uEbTCdVdwYMkROoHlk=;
+ b=iHmGdJBRlQbTyjbyK9rt+rEth0B/VTSTSbCUiy0/DHSdC1b3kUfRpRfsEA3z9KSzAL
+ wVuoJES12tB+oWCn/ek9KtLdWe1Xyvz22bZ50V75PLcji2pFcZJ/AlBXBBlBJweg7Cp1
+ aawdvCE31VZ2wIUKIaiPkVbi/ioQDMh1SabXzqBaLWD8yqqXXU6WtySlN477isJ9JPW/
+ ErK1GAuuaIYwK9rFB8+eenntTOxMHn/Wvo0S9F/tHUtz82PPus+X5P3HN8CFgv98obIN
+ LzpDyMENlONsDbFdqeYbxHXassWVQRvtXq1UTtvNc8YqD7DTIlwe6bbshRDU3Qg5kDTr
+ 5nrw==
+X-Gm-Message-State: AOJu0Yy9/9B9gEM47bm4Z2Scsj9FNEwGLqA1X2mDMKL48+a6EHcgTvrs
+ /rt/ex9cOrTB81iIIqHi7Kb0+WVXAT7Qjv/RDwKe+F0Q/b9efi02jqrP+om557TCmDN/YgUHVb+
+ 7
+X-Google-Smtp-Source: AGHT+IFa0TJpBbf39nRTVqKfI9sM5GqAtkpVWHaqE7pt7EthqmAptiyTMQSo6ZnlZqMuxWS3qlBdpg==
+X-Received: by 2002:a17:903:2311:b0:20c:950f:f45d with SMTP id
+ d9443c01a7336-20ca17261e2mr185693895ad.61.1729107111110; 
+ Wed, 16 Oct 2024 12:31:51 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20d1804b6b1sm32323945ad.189.2024.10.16.12.31.42
+ d9443c01a7336-20d1804b6b1sm32323945ad.189.2024.10.16.12.31.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 12:31:43 -0700 (PDT)
+ Wed, 16 Oct 2024 12:31:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  zhiwei_liu@linux.alibaba.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v6 03/14] util: Add RISC-V vector extension probe in cpuinfo
-Date: Wed, 16 Oct 2024 12:31:29 -0700
-Message-ID: <20241016193140.2206352-4-richard.henderson@linaro.org>
+Subject: [PATCH v6 14/14] tcg/riscv: Enable native vector support for TCG host
+Date: Wed, 16 Oct 2024 12:31:40 -0700
+Message-ID: <20241016193140.2206352-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241016193140.2206352-1-richard.henderson@linaro.org>
 References: <20241016193140.2206352-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,114 +98,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-Add support for probing RISC-V vector extension availability in
-the backend. This information will be used when deciding whether
-to use vector instructions in code generation.
-
-Cache lg2(vlenb) for the backend. The storing of lg2(vlenb) means
-we can convert all of the division into subtraction.
-
-While the compiler doesn't support RISCV_HWPROBE_EXT_ZVE64X,
-we use RISCV_HWPROBE_IMA_V instead. RISCV_HWPROBE_IMA_V is more
-strictly constrainted than RISCV_HWPROBE_EXT_ZVE64X. At least in
-current QEMU implemenation, the V vector extension depends on the
-zve64d extension.
-
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Message-ID: <20241007025700.47259-2-zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241007025700.47259-13-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/riscv/host/cpuinfo.h |  2 ++
- util/cpuinfo-riscv.c              | 24 ++++++++++++++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ tcg/riscv/tcg-target.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv/host/cpuinfo.h
-index 2b00660e36..cdc784e7b6 100644
---- a/host/include/riscv/host/cpuinfo.h
-+++ b/host/include/riscv/host/cpuinfo.h
-@@ -10,9 +10,11 @@
- #define CPUINFO_ZBA             (1u << 1)
- #define CPUINFO_ZBB             (1u << 2)
- #define CPUINFO_ZICOND          (1u << 3)
-+#define CPUINFO_ZVE64X          (1u << 4)
+diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv/tcg-target.h
+index e6d66cd1b9..334c37cbe6 100644
+--- a/tcg/riscv/tcg-target.h
++++ b/tcg/riscv/tcg-target.h
+@@ -143,9 +143,9 @@ typedef enum {
+ #define TCG_TARGET_HAS_tst              0
  
- /* Initialized with a constructor. */
- extern unsigned cpuinfo;
-+extern unsigned riscv_lg2_vlenb;
- 
- /*
-  * We cannot rely on constructor ordering, so other constructors must
-diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-index 8cacc67645..16114ffd32 100644
---- a/util/cpuinfo-riscv.c
-+++ b/util/cpuinfo-riscv.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/host-utils.h"
- #include "host/cpuinfo.h"
- 
- #ifdef CONFIG_ASM_HWPROBE_H
-@@ -13,6 +14,7 @@
- #endif
- 
- unsigned cpuinfo;
-+unsigned riscv_lg2_vlenb;
- static volatile sig_atomic_t got_sigill;
- 
- static void sigill_handler(int signo, siginfo_t *si, void *data)
-@@ -34,7 +36,7 @@ static void sigill_handler(int signo, siginfo_t *si, void *data)
- /* Called both as constructor and (possibly) via other constructors. */
- unsigned __attribute__((constructor)) cpuinfo_init(void)
- {
--    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND;
-+    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND | CPUINFO_ZVE64X;
-     unsigned info = cpuinfo;
- 
-     if (info) {
-@@ -50,6 +52,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
- #endif
- #if defined(__riscv_arch_test) && defined(__riscv_zicond)
-     info |= CPUINFO_ZICOND;
-+#endif
-+#if defined(__riscv_arch_test) && defined(__riscv_zve64x)
-+    info |= CPUINFO_ZVE64X;
- #endif
-     left &= ~info;
- 
-@@ -65,7 +70,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-             && pair.key >= 0) {
-             info |= pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA : 0;
-             info |= pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB : 0;
--            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB);
-+            info |= pair.value & RISCV_HWPROBE_IMA_V ? CPUINFO_ZVE64X : 0;
-+            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZVE64X);
- #ifdef RISCV_HWPROBE_EXT_ZICOND
-             info |= pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZICOND : 0;
-             left &= ~CPUINFO_ZICOND;
-@@ -113,6 +119,20 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-         assert(left == 0);
-     }
- 
-+    if (info & CPUINFO_ZVE64X) {
-+        /*
-+         * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
-+         * We are guaranteed by Zve64x that VLEN >= 64, and that
-+         * EEW of {8,16,32,64} are supported.
-+         *
-+         * Cache VLEN in a convenient form.
-+         */
-+        unsigned long vlenb;
-+        /* Read csr "vlenb" with "csrr %0, vlenb" : "=r"(vlenb) */
-+        asm volatile(".insn i 0x73, 0x2, %0, zero, -990" : "=r"(vlenb));
-+        riscv_lg2_vlenb = ctz32(vlenb);
-+    }
-+
-     info |= CPUINFO_ALWAYS;
-     cpuinfo = info;
-     return info;
+ /* vector instructions */
+-#define TCG_TARGET_HAS_v64              0
+-#define TCG_TARGET_HAS_v128             0
+-#define TCG_TARGET_HAS_v256             0
++#define TCG_TARGET_HAS_v64              (cpuinfo & CPUINFO_ZVE64X)
++#define TCG_TARGET_HAS_v128             (cpuinfo & CPUINFO_ZVE64X)
++#define TCG_TARGET_HAS_v256             (cpuinfo & CPUINFO_ZVE64X)
+ #define TCG_TARGET_HAS_andc_vec         0
+ #define TCG_TARGET_HAS_orc_vec          0
+ #define TCG_TARGET_HAS_nand_vec         0
 -- 
 2.43.0
 
