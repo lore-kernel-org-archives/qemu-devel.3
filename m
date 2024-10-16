@@ -4,103 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A16D4D1AD5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 13:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2E2D1AD5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 13:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t14BT-00015H-UT; Wed, 16 Oct 2024 09:35:28 -0400
+	id 1t14Xu-0005Pg-1s; Wed, 16 Oct 2024 09:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t14B5-0000rg-Hh
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:35:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t14B3-00049i-MH
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:35:03 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDQCNl028115
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=GN1Hq6j9I3FWk+035
- MqB8fKDHbeRygIDEpGYhCCG8Qk=; b=hxMl2x/zNMiUxufL6zIrq7ct0X+Dz2FII
- hoqHw35SFlDQea9x3uyfZOKR2Y0SOjJy3QJQ4FobMNW/m3toL7i6zIyyDNgI29wF
- W0D0Be2BCZX8Wc5Cfb8XgAcReAA/zj3odEi3K2vkjPnq5GooWcYqKnkisinGP1JY
- AERQZpYkb6VYMDE/hx0dsH47cfCZLNl7P1MraFFJ9qLZC51eFrWsyI7k8b0q5FKO
- r+dXrbXsVpCp1jpHdd4NFhopUn/t0mIVE5q6423sZmbXewTkgakZkELiRLUtWytK
- hmdB3rnNxq/w2vOhCtkIdxYN2MjF9ttEjuZkC4XvR49ZQy747BPZQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aebxg196-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GDZ0Cp016756
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:35:00 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aebxg193-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 13:35:00 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GCg5eH006690;
- Wed, 16 Oct 2024 13:34:59 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4283es1umy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Oct 2024 13:34:59 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49GDYwVS43123040
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Oct 2024 13:34:59 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF8EA58052;
- Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3685558050;
- Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Oct 2024 13:34:58 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, marcandre.lureau@gmail.com,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v2 2/2] tpm_emulator: Read control channel response in 2 passes
-Date: Wed, 16 Oct 2024 09:34:50 -0400
-Message-ID: <20241016133450.1071197-3-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241016133450.1071197-1-stefanb@linux.ibm.com>
-References: <20241016133450.1071197-1-stefanb@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: p_X998_q_CjIygA8mHS2Q0yc9jHLk-2b
-X-Proofpoint-GUID: W-sZN8HUY6Ht_cT4it85qZOcjiYe1OyK
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t14Xs-0005PK-D8
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:58:36 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1t14Xq-0007YS-BI
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 09:58:36 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-50c9f4efd09so1920827e0c.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 06:58:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729087113; x=1729691913; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=j47TvtHb61X7alWntQmLYbp6A+uTBHYw7hPs9TqivvI=;
+ b=We2WjTx4zixlFHgMz+icRC7UdFXgALKpjUqxSZY5SyaQH7IoCza+OSrQHr+cEQa/kE
+ VGPtcquKyCvLoco8WO2D2oAwaFxA+Q5FREH0l/a1dmtSTYhe5XBheWzg2tL3dIfUFWs/
+ /kZ7qGbQ4Ex4RN13vO9BtZA8yLYvMJxMRxCcXaLw5p/oBR8IFwiZEkC1gNKygSKDRCBJ
+ JGmiYyjee8ClLPzvWj4HRdzLYkpD6qGjeWq8zKSwF/3IkF50PFl75boENlWIdo+0NWO4
+ W/DLiwoHNzzPznZPXph2f216ct7efRtlWSQ5JEAK97QHVXOzcQS/Ej3DHvRbCbgrojWv
+ 7sBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729087113; x=1729691913;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j47TvtHb61X7alWntQmLYbp6A+uTBHYw7hPs9TqivvI=;
+ b=OCtI03Aru0ma8ZWt4fG70EzytcpTfKEXSXFpLH2AGZ/OqSpCMV4jNfaE5gh3aMvInc
+ deJLIw6PhMV+Zyma8BAeD0NmSGPKJ16U7/7iIlmGvr4nhtbpPC7ouiyMuVz5K7AK93AY
+ zat/DsIpyuxapc3UNm2kG/94B1dbidzd42k2azJbueCj1pJaXGQxNno6h2RA+MQRd31S
+ 1jQwxVLcHI2vOcBLZ+GuXyDXNdhHFVO+qtj8XX51tVsmqSxaXkRS/rnpT54VWgcapQsw
+ cYImiFB8yUDoQR0pyy60jBtZ8xJGX39u63H/nuGkoZ+rLGCwuDkzEjKxB3BwH/OF4U6H
+ sQyA==
+X-Gm-Message-State: AOJu0YxQtNUYxD1oJ30BwwjiYoENsDhFG9IMjsOcCZ6Sau/pQgIncPMm
+ 5N2YVhpTdtjPfo5ZWhsXiQP6mGzEdG5GhBvOqj98mKueVrQ+SfoO56I8U5mIoJUTxUxmY8y2jlo
+ X6ZOzA1hf4MXn6Eql4SO9kZ2YeDemjA==
+X-Google-Smtp-Source: AGHT+IFSLtbAIykmyEQQBx5G8SdpDOCEPeK7MiXjPnQS82f6/qUU3Z8htKNOEMvQh4A0SvmwAGRrZwT1tJHpLTyrVUU=
+X-Received: by 2002:a05:6122:3c51:b0:50d:2df1:4c46 with SMTP id
+ 71dfb90a1353d-50d37763861mr9107116e0c.13.1729087112862; Wed, 16 Oct 2024
+ 06:58:32 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=754
- clxscore=1015 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410160084
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241008211727.49088-1-dorjoychy111@gmail.com>
+ <5839222b-4d61-419b-80a2-cc7afb36abc9@amazon.com>
+In-Reply-To: <5839222b-4d61-419b-80a2-cc7afb36abc9@amazon.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Wed, 16 Oct 2024 19:58:32 +0600
+Message-ID: <CAFfO_h5HquFuWQSo0n009dgi48Qoi_5MdRFuHOuHMGWNB2Q8+A@mail.gmail.com>
+Subject: Re: [PATCH v8 0/6] AWS Nitro Enclave emulation support
+To: qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, Alexander Graf <graf@amazon.com>, stefanha@redhat.com, 
+ pbonzini@redhat.com, slp@redhat.com, richard.henderson@linaro.org, 
+ eduardo@habkost.net, mst@redhat.com, marcel.apfelbaum@gmail.com, 
+ berrange@redhat.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,73 +92,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Error responses from swtpm are always only 4 bytes long with the exception
-of CMD_GET_STATEBLOB that returns more bytes. Therefore, read the entire
-response in 2 passes and stop if the first 4 bytes indicate an error
-response with no subsequent bytes readable. Read the rest in a 2nd pass, if
-needed. This avoids getting stuck while waiting for too many bytes if only
-4 bytes were sent due to an error message. The 'getting stuck' condition
-has not been observed in practice so far, though.
+Ping
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2615
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- backends/tpm/tpm_emulator.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+This patch series has been reviewed by Alex. I am not sure if it needs
+more review. If not, maybe this can be picked up for merging. Thanks!
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index b0e2fb3fc7..8f5d31be09 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -129,6 +129,9 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
-     uint32_t cmd_no = cpu_to_be32(cmd);
-     ssize_t n = sizeof(uint32_t) + msg_len_in;
-     uint8_t *buf = NULL;
-+    ptm_res res;
-+    off_t o = 0;
-+    int to_read;
- 
-     WITH_QEMU_LOCK_GUARD(&tpm->mutex) {
-         buf = g_alloca(n);
-@@ -140,11 +143,35 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
-             return -1;
-         }
- 
--        if (msg_len_out != 0) {
--            n = qemu_chr_fe_read_all(dev, msg, msg_len_out);
-+        /*
-+         * Any response will be at least 4 bytes long. Error responses are only
-+         * 4 bytes (=sizeof(ptm_res)), with exception by CMD_GET_STATEBLOB.
-+         * Therefore, read response in 2 passes, returning when an error
-+         * response is encountered.
-+         */
-+        if (cmd == CMD_GET_STATEBLOB) {
-+            to_read = msg_len_out;
-+        } else {
-+            to_read = sizeof(res);
-+        }
-+
-+        while (msg_len_out > 0) {
-+            n = qemu_chr_fe_read_all(dev, (uint8_t *)msg + o, to_read);
-             if (n <= 0) {
-                 return -1;
-             }
-+            msg_len_out -= to_read;
-+            if (msg_len_out == 0) {
-+                return 0;
-+            }
-+
-+            memcpy(&res, msg, sizeof(res));
-+            if (res) {
-+                return 0;
-+            }
-+
-+            o = to_read;
-+            to_read = msg_len_out;
-         }
-     }
- 
--- 
-2.47.0
-
+Regards,
+Dorjoy
 
