@@ -4,75 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E0ED2069F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DF1D206A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0xc2-0001kw-RP; Wed, 16 Oct 2024 02:34:26 -0400
+	id 1t0xrt-0004bx-UR; Wed, 16 Oct 2024 02:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t0xc0-0001ki-3v
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:34:24 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1t0xby-00087c-9Z
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:34:23 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-4607d5932aaso4834221cf.1
- for <qemu-devel@nongnu.org>; Tue, 15 Oct 2024 23:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729060461; x=1729665261; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mgqNHEH8LdohH3/InvR5oxJ11HFOwQRfQbFktsOGF1g=;
- b=VWe5IumU55dSn3EEg14PPYbBixWEVWGF0jvAricsFFdid5Db/WnsqI0siUlYf3GNtJ
- 0EWYCzWQN2zOUHRuKgleIBFOYkalna5QhF/olxBrFP/OQUDY9JTowj7v0B/+tGuiihJn
- R8j72xeX1QPPkL3bX7GyL3QuFedBHGrW+oq6mTh3/CVz88McvByXfD4tMkWYwuiitVQE
- WMmK7Rg9ZX6L9IuSCBBnzLaOgLudOT7/1oPlhTfEL6zV78gk6FCmxAh/qu64QYh9UoHb
- sJJV0T+mvf8xpkpup1/wKaXzl8J9Mjb2cQLUwMoJUSULZCwoaWrSzz+wdgU7trOg12PD
- IuEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729060461; x=1729665261;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mgqNHEH8LdohH3/InvR5oxJ11HFOwQRfQbFktsOGF1g=;
- b=WjiF2HxzKEEHZaZgtzq4+nCuyWgUu1Vg0ixOnviYixQ5on9yDREoYxqMNsVX106fqm
- X5tulWEd/V4gJnoqTF1bmwvRS2yokAhYmlOG+wH3+NYZYHp7vRkDXF/HT1X3JKpGxhaO
- faIMXEBmIGhqHL+y2/qQhBj0RtetQJ8/zEhzj+ScoUtLL9Cp9lzPvBaM8125hmqnnUlW
- osObiprh1DgCprVERwOX7KsgN4scrBSnjgqXz66gd9iBeqRQ5yWSB2LrTix4kDI0TqRo
- ElG4kJ/rULn6g17Fxm1RYdAe9TDcm9Zxyh/BhoZThNrGvX9f4pkrgxsvYQhFyT6OEntK
- 2xUg==
-X-Gm-Message-State: AOJu0Yy4IW2D9VhasIS6sRvsZJedpsCJgYYp7rC7hgFz/I8oNGTS5ajc
- 37FRoxvhXCgi+m8mjV2c+4Hwi5sreFz+5sTGXrziOhXB6pHEXtowSoIo1sqZdd+Dc2zOhV3kCFH
- mjXH/SS1/7IfM83ysWpqXab8UiN8=
-X-Google-Smtp-Source: AGHT+IEXIJ8tpDwRMKeSTwJ3PbOI9KY4fzEXZo42L6/9b9jpAv0k4hyXF0ujMpD76ClGadGXr+AfUXnzv2opOZszhBU=
-X-Received: by 2002:a05:622a:5299:b0:460:8f76:cb81 with SMTP id
- d75a77b69052e-4608f76d6f0mr17430701cf.0.1729060460724; Tue, 15 Oct 2024
- 23:34:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t0xrs-0004bp-Nk
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:50:48 -0400
+Received: from mail-sy4aus01olkn20814.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::814]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t0xrr-0001ca-8T
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:50:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j+Wb+jh3OWcPlsSjbO9KKujT3zSzX+I4wgEvNz/8yHiyA2ZLzImu2M4A7rnZ2ejLg1G5RxXN7Je/fHLxvyu19YoTPBCQpab0dL86Rz+lFNqTSplcYfvfhlHOunD9HaLoWOxzJBJBHyQOzeQtxRq0CAkcSNGK4uo1RWL0CpUODyY7sIMrh/qAHRIY9nQFYd3ex1BoP00Pi18Xcvz8ls62vhqJfz8A7jk/MXUEhzJeAd1nepe0pOuRps4v7HPQrNQJ7phKty8veKOmsTYiFY/vxQfTpgWgNX8Tem4A1KFxwIEHWG5MB3Lehox374tCRKKwb9NeFSfhbnPlYWi4ZWkrqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cYJbb3ErlLMTZeiN6tRiy6/ewCosD3+NRC17TFUgLWo=;
+ b=KSTOVUqHQD7iSIFuGaL2QYjBbG+IxF7uQxCcmzxxgEETlrFDZdkGiGKiVLemUFzN5Sl0RzT9cVL3p4XNAjz0RYJP7EZJTwITi2A37bmG2zxCxQoV+v3QaXFDUTKY/DJwMVXeykBbRzkFGxL0KznM4nGCBQjMMew7vYPfdxd/QH6jEXKQ1yXbD6T0NprLYGGh5ZbWbfoUslqvuidP6AXN/M954D1+Jiz0/P78T1AlU5burqmbsJxMcKnMC0bgKT7AydesMfVVGdku7U/rqvSTQAfxp8bJ1FBJtjVkENutPbaXiYLS7niPGNO/aA6PjDOvg1CGTI2RtIGjngmR8cAC2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cYJbb3ErlLMTZeiN6tRiy6/ewCosD3+NRC17TFUgLWo=;
+ b=f4QWf+q6m4RMjfmxHSiu74JyrEVnZjHi+IsWXyfSvKMIHoS24xKOojvscXn+sZ911GjE5EUy30IWVjZy+brO4CJ7VnNtgPQcc+7pDrTYUILQl9X2fdyk+sCJJSHREheUtpeGnszwPXwBpWxi7PO23Oi2x7RTeZMUT/+kAnE7fPd6/QszzTA8PDndfMNf8jCrjvEx40IDkqLd8D4BC9KbZgqlQK06AwYOsE9qnnPbVFl/ICoVTMTRrEe+XHfgzoIeyebdnli5a8Gri9jPQ32PazdQjHwuhG+E5CE7+XzaK+R0/5Hx2Tmm2nE8+XK6eYkdAwB9MHOL9BU0NK1S8mGlBA==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by ME0P300MB0740.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:230::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.27; Wed, 16 Oct
+ 2024 06:50:41 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.016; Wed, 16 Oct 2024
+ 06:50:41 +0000
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-3-pbonzini@redhat.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 02/16] meson: remove repeated search for rust_root_crate.sh
+Date: Wed, 16 Oct 2024 14:50:09 +0800
+In-reply-to: <20241015131735.518771-3-pbonzini@redhat.com>
+Message-ID: <SY0P300MB102634560EAA27EB7973406695462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: KL1P15301CA0036.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:820:6::24) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <875xpsr16w.fsf@hotmail.com>
 MIME-Version: 1.0
-References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
- <d14c6eab-eebe-4844-a02b-9b3d1d9d43bd@tls.msk.ru>
-In-Reply-To: <d14c6eab-eebe-4844-a02b-9b3d1d9d43bd@tls.msk.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 16 Oct 2024 10:34:09 +0400
-Message-ID: <CAJ+F1CJbWVwbEN_xnqMX9Vuz2eefcGehvk3KTcYvbtuNO+HhjA@mail.gmail.com>
-Subject: Re: [PULL 00/20] UI patches
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="0000000000008e8cd00624924287"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|ME0P300MB0740:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44f3af68-0184-443d-d4bc-08dcedaed9c7
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|461199028|19110799003|7092599003|5072599009|15080799006|8060799006|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: rcrjcQaWY40GdzvhqbrgBaqeBl6LLgrYsUwKoLgk4yruQ5ettC1jTbrnPXl5GekoXlmlZ/nDajiIYKD721QrlOEigzGE+wXNAOpUfNhyhKHrdT6RIrJolnuYAUCH3zmr3zW/CpCB45SWZRWHHWehLx/63ecwyO339WOxGStvQPcKPu0qa7ZFyH25J1ix0i1InBe5pljcy/8AZROiNm794+RreyT4g4vnB9tXN09MITXHEXMoJOhzGYNihwYVS8tBFrWEZOrnZ9S0gVTP65Xkn+FIq9zYsF699kVVlAkN4Q+RRTqapaoOQ21ZxXojBhdsB5ZzP+U6f6l4Db28pGBLjUKmuibnvOKkaihoqxkaduysbNrSkoLbFOX72XgWAHioWkph3StNe/NGHH9Vhn9i1HV3VTuYmEbEf49gXhHpQQ2BvG4EJTDA8pt3c+s+1I/Zp5kCJnOhJZKU96Yu85sgVbj/dNDsNIMYHuCd63TqaInvK0fr4xN9HvomBrkBaEIs4UGAg+QqBalarsnhI14aoi5DDTMO+P+TX/8Vv5wPivEbTp8J5rwt/T0A8IqZ14VgoK85trngfi5c/3sLpHw5JpqaxwDycGcXnPTQjkvJKVX94FKctd8FzEDsn3QJxXNd439zcefDBGNpbbw7UpcDiG+AaoFh0Z8W8W/4GKkH6lxTTBUiekUueoqYuMtQR0azfQ40FmhB/FQ4UZO+dCFamV2zDKd0cpFp4kYcPAlSZv4=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?h8Zuug2VrN6Bd4g4LiCmsukLu6A+Pn70eFvPWsuQl7jvgAUlmQPBriG1molx?=
+ =?us-ascii?Q?0GjXESpSosLV4F1V68PMcMo+DgRwdEhBPdWcT5eItgXf0TGEjMaGwuuntvDA?=
+ =?us-ascii?Q?NzK7HrNy1FSHvtzjoTFjnsNyUXkNAsW82atCeX3Iw7VXU3kEI9sXN1cQ4Euo?=
+ =?us-ascii?Q?OwBnYd4yyZvkyK/N2KOZeJ469r9UjLhui8+0rEQyahlFjlxuozBEXFn4IbFV?=
+ =?us-ascii?Q?VZw3zsdVusfU3i3LYPZvGRImW+Lr/AZfFC/FfWNIZZ+l5aLofpZImpCbsSSx?=
+ =?us-ascii?Q?DCEbEaH9rCtjLwP1Lr1VXuEsbE8Ddyjpa5hy2X0yylyoGQCvV+DvnJ9cDO1g?=
+ =?us-ascii?Q?4S0Jzo5ditcLVYW9l/Ct1MT2fH4HjlRs5L+wsMx2/if5Q103yIXnIwQZFdwx?=
+ =?us-ascii?Q?jbB8aPsb5mOitGeeetUslb/bGmu89EeQHlHo4602uFRntCJ97vafhktZOkcU?=
+ =?us-ascii?Q?K46cCWyGL3S4jBDahHSpDBtO2r28GAO23bXQ7V41qBrpgvc5+TQWzMmksqhZ?=
+ =?us-ascii?Q?sT8c5CpgpWoMlIW75Rs9VmCWbteuzijN0tTKOjWz/n42VHo8OR74hgHQI018?=
+ =?us-ascii?Q?z9dViDxtyh+q91YKSY9ECuS/BSelp0j6hmYNT1pc54mGGlEHhpCS1t8duiv2?=
+ =?us-ascii?Q?O3VoncXdA9lypnhfdwzMfNJo0Fh2g+bNLNvuzBokDNRWLj8nW/YQnVh8Y3AE?=
+ =?us-ascii?Q?WTvtB5JCai9p0RuyyGZxP10ugui/sodCu/QOgBhyK+sFk+Vd8OZLcF1EeYQb?=
+ =?us-ascii?Q?cWvsf5d9M5U8DNSAZcR+qr2DQiaUdlHHweJT0qkQjXtxxTZWRXdow1SBk/mu?=
+ =?us-ascii?Q?Ez4ni03AIPXLjjGwIYSR3eA+KZDWs/k3xi8fofOFkW/01pgwnNYWxVVNUxo3?=
+ =?us-ascii?Q?seEXA3cP/2ptIgl9VnKBBuURJygb6zrAysAPfYn9JWhn+EK7QFRk94a8AGmV?=
+ =?us-ascii?Q?Isrr+C8kmx41QU4D/6TOmGmjc85hzEoib9BXadiTLAKBHiLd+d3Ue0HOXaEz?=
+ =?us-ascii?Q?T7ETYX8XXcfuH2U/6Cbys+W6ZpNDIEvR7mIM063TXXDb9/Tqdo02QSk1ZOFY?=
+ =?us-ascii?Q?83VUH93/SMWIpLGXnm+BARamZ+URZW3T/m4J0HB5PJ4rcErHajFM6lwhbGeh?=
+ =?us-ascii?Q?l66Ug7M8+/vKARtaDao4xBWSSHCYuEdCbNLS/qFYEqj0V51DeCsUkXMGWlmK?=
+ =?us-ascii?Q?LfPUuPjabUzfXSgpKNHEXaxLpVgjTmfHRYCf7oY0wrn4JTZ4+yYjkuPFEj4?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44f3af68-0184-443d-d4bc-08dcedaed9c7
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 06:50:41.5637 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB0740
+Received-SPF: pass client-ip=2a01:111:f403:2819::814;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,147 +124,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008e8cd00624924287
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Michael
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-On Tue, Oct 15, 2024 at 9:40=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
-
-> On 14.10.2024 16:39, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > The following changes since commit
-> 3860a2a8de56fad71db42f4ad120eb7eff03b51f:
-> >
-> >    Merge tag 'pull-tcg-20241013' of https://gitlab.com/rth7680/qemu
-> into staging (2024-10-14 11:12:34 +0100)
-> >
-> > are available in the Git repository at:
-> >
-> >    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
-> >
-> > for you to fetch changes up to 4cd78a3db2478d3c1527905a26c9d3fbee83ccac=
-:
-> >
-> >    audio/pw: Report more accurate error when connecting to PipeWire
-> fails (2024-10-14 17:35:24 +0400)
-> >
-> > ----------------------------------------------------------------
-> > UI-related fixes & shareable 2d memory with -display dbus
-> >
-> > ----------------------------------------------------------------
-> >
-> > Marc-Andr=C3=A9 Lureau (19):
-> >    hw/audio/hda: free timer on exit
-> >    hw/audio/hda: fix memory leak on audio setup
-> >    ui/dbus: fix leak on message filtering
-> >    ui/win32: fix potential use-after-free with dbus shared memory
-> >    ui/dbus: fix filtering all update messages
-> >    ui/dbus: discard display messages on disable
-> >    ui/dbus: discard pending CursorDefine on new one
-> >    util/memfd: report potential errors on free
-> >    ui/pixman: generalize shared_image_destroy
-> >    ui/dbus: do not limit to one listener per connection / bus name
-> >    ui/dbus: add trace for can_share_map
-> >    ui/surface: allocate shared memory on !win32
-> >    meson: find_program('gdbus-codegen') directly
-> >    ui/dbus: make Listener.Win32.Map win32-specific
-> >    ui/dbus: add Listener.Unix.Map interface XML
-> >    ui/dbus: implement Unix.Map
-> >    virtio-gpu: allocate shareable 2d resources on !win32
-> >    ui: refactor using a common qemu_pixman_shareable
-> >    tests: add basic -display dbus Map.Unix test
-> >
-> > Michal Privoznik (1):
-> >    audio/pw: Report more accurate error when connecting to PipeWire fai=
-ls
+> Avoid repeated lines of the form
 >
-> Or, actually, here (I replied to a wrong thread) -- is there something
-> for qemu-stable in there?  First 7 changes seems to be good fit there.
+> Program scripts/rust/rust_root_crate.sh found: YES (/home/pbonzini/work/upstream/qemu/scripts/rust/rust_root_crate.sh)
 >
+> in the meson logs.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Or only the first 5. It would be nice to have a second look before!
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 
-thanks
+Thanks for cleaning this up!
 
---=20
-Marc-Andr=C3=A9 Lureau
-
---0000000000008e8cd00624924287
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Michael<br></div><br><div class=3D"gma=
-il_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 15, 2024 at 9:4=
-0=E2=80=AFPM Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt@tls.=
-msk.ru</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">On 14.10.2024 16:39, <a href=3D"mailto:marcandre.lureau@redhat.com" t=
-arget=3D"_blank">marcandre.lureau@redhat.com</a> wrote:<br>
-&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt; <br>
-&gt; The following changes since commit 3860a2a8de56fad71db42f4ad120eb7eff0=
-3b51f:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 Merge tag &#39;pull-tcg-20241013&#39; of <a href=3D"https=
-://gitlab.com/rth7680/qemu" rel=3D"noreferrer" target=3D"_blank">https://gi=
-tlab.com/rth7680/qemu</a> into staging (2024-10-14 11:12:34 +0100)<br>
-&gt; <br>
-&gt; are available in the Git repository at:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://gitlab.com/marcandre.lureau/qemu.git" =
-rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/marcandre.lureau/qe=
-mu.git</a> tags/ui-pull-request<br>
-&gt; <br>
-&gt; for you to fetch changes up to 4cd78a3db2478d3c1527905a26c9d3fbee83cca=
-c:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 audio/pw: Report more accurate error when connecting to P=
-ipeWire fails (2024-10-14 17:35:24 +0400)<br>
-&gt; <br>
-&gt; ----------------------------------------------------------------<br>
-&gt; UI-related fixes &amp; shareable 2d memory with -display dbus<br>
-&gt; <br>
-&gt; ----------------------------------------------------------------<br>
-&gt; <br>
-&gt; Marc-Andr=C3=A9 Lureau (19):<br>
-&gt;=C2=A0 =C2=A0 hw/audio/hda: free timer on exit<br>
-&gt;=C2=A0 =C2=A0 hw/audio/hda: fix memory leak on audio setup<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: fix leak on message filtering<br>
-&gt;=C2=A0 =C2=A0 ui/win32: fix potential use-after-free with dbus shared m=
-emory<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: fix filtering all update messages<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: discard display messages on disable<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: discard pending CursorDefine on new one<br>
-&gt;=C2=A0 =C2=A0 util/memfd: report potential errors on free<br>
-&gt;=C2=A0 =C2=A0 ui/pixman: generalize shared_image_destroy<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: do not limit to one listener per connection / bu=
-s name<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: add trace for can_share_map<br>
-&gt;=C2=A0 =C2=A0 ui/surface: allocate shared memory on !win32<br>
-&gt;=C2=A0 =C2=A0 meson: find_program(&#39;gdbus-codegen&#39;) directly<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: make Listener.Win32.Map win32-specific<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: add Listener.Unix.Map interface XML<br>
-&gt;=C2=A0 =C2=A0 ui/dbus: implement Unix.Map<br>
-&gt;=C2=A0 =C2=A0 virtio-gpu: allocate shareable 2d resources on !win32<br>
-&gt;=C2=A0 =C2=A0 ui: refactor using a common qemu_pixman_shareable<br>
-&gt;=C2=A0 =C2=A0 tests: add basic -display dbus Map.Unix test<br>
-&gt; <br>
-&gt; Michal Privoznik (1):<br>
-&gt;=C2=A0 =C2=A0 audio/pw: Report more accurate error when connecting to P=
-ipeWire fails<br>
-<br>
-Or, actually, here (I replied to a wrong thread) -- is there something<br>
-for qemu-stable in there?=C2=A0 First 7 changes seems to be good fit there.=
-<br clear=3D"all"></blockquote><div><br></div><div>Or only the first 5. It =
-would be nice to have a second look before!</div><div><br></div><div>thanks=
-<br></div></div><br><span class=3D"gmail_signature_prefix">-- </span><br><d=
-iv dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=A9 Lureau<br></div></=
-div>
-
---0000000000008e8cd00624924287--
+--
+Best Regards
+Junjie Mao
 
