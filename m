@@ -4,111 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05FD8D2069F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B85AD2069E
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0xX4-0000mN-C1; Wed, 16 Oct 2024 02:29:18 -0400
+	id 1t0xbe-0001iv-MI; Wed, 16 Oct 2024 02:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t0xX3-0000mE-6V
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:29:17 -0400
-Received: from mail-sy4aus01olkn20806.outbound.protection.outlook.com
- ([2a01:111:f403:2819::806]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1t0xbZ-0001ib-AE
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:33:57 -0400
+Received: from mail-bn8nam11on2046.outbound.protection.outlook.com
+ ([40.107.236.46] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t0xX1-0007Yu-Og
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:29:16 -0400
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1t0xbX-00086e-By
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:33:57 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SKcfWQjGMwcYRw280SagEEYff/vIhn9ashoqdMiJehxsuWL4i0i7YWWw32u1AjeE7qVYksHkgA3pjEmFgBg1uvAGjSSCpaVCUbT81TR/6bm1UjesvPeuIib/rNSWhS3RjvYr5SJZIgDSmwaCYcrDZShIQUwekuGTGlpX/IoIaekKS7MVBuQM4Yu+zSDSkzaRZgI72ft8afu6gY7nI8edoM8u1DwmREbo/C2OLNs5509s67BahuYrdTE1CAMY7wSjfk1NE9nlcU3ZLcCRWixgMvNg2coOnYHXeNlmdPAjzprxPl+W212UMZFhdpcDUTEQPdx1jYRISkrau3ZDBZ1Odg==
+ b=qO7E1qqV6uQ0YAsF7C5wMyvq7qyhuN7qBOL0mYExYZPSV4ZdCOT05yXiI0MgmhHwVcITACChkUeYA/kJKuM0bPHS8uOT4GFqh9q55oqM0kk/x6bKGy58ldsSyZp/yWzp2cJKz51C7vLh/gFnvUu67s1plDOsW4R7+2LftafJCqOu4A90xb5Yk9C/xeM4OWRAG8eAPwRDKTm+6TDv7QS/HHBzKA7JQCTdYhZaz28pA+N8HeoUc8SLuosZCi0gMXerrDheBu2FvYUMSDoYw31+K/B7VAFVRSxPiBW0L5csHyh69Ygw7XwlrFTlULaOwXsa9pI2NnI23xv5qyxevAktYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SJhb6dj4QLGGSTnxRxqe5tXVnlF+R2wKU2FrusyEy2o=;
- b=DWEwfut0nTVQS2wIoteXm32o+cCTSFZN3jeukYbZRukGKMxLcGaOjc51Lgq0kj5NqXJW9Q+xXdfpxtXhZhnT0OTVpn1d6vFpEWVtCPfXiehVbjd1b4s7U2/GdXSUe8Het3OKxmjyrimQv3tXFCYiye+dmJ/7mS1c/P/yuORfLSYdGV9T9jxFhj9BY2kZmZsUMdqI79WopnVyLqJaKzvidtSX8H5Ceok+VGxLdZps/NX/1NhCCdqKYT8ttOHoCCSYCpF5hVNwRMXNv0bl3P2fpwyVkpvSwxIxYg/edp4knHi+ldJX6OstiPEuuVjKt0bSYRXFh+/mayiYRfXTJBE99w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
+ bh=+Qa+/Vrr5vYV8N9Hqm6E9aPfl5zi0iD1R8OkMk0hb40=;
+ b=ofaIzaWoXsprLXAqBAIFrVie0Evko9XiuASyuxwzsHB9wH51A7rGXrs7dqAiXvgeABo/QjXqrYZ3pYinW56UE0CVv2k5ktUtlcgDdvBlIxzTB4j1LwXfea7QkrDSfewpUr3SLaO7eI1pvW1Y4paEUi2YzNyN2LHHpaAMjTSe5HPleEynUkRy8ycqN6Z/d196+Pns1cnngfAk0ytfnewA8I0Im9U8ig9RJ2Dbcadt6YcMI+9mrOpTOzS7jb8Gudz5fMVOmwJRFUpsZl7v9FC//9ZTHHCZvw4Wg3aYLY4c+Ywd2q4UIDfXtZjQC+xqLUR4BapbHH7sITPB2qnHyq+zYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SJhb6dj4QLGGSTnxRxqe5tXVnlF+R2wKU2FrusyEy2o=;
- b=Ez2QynmvwLf4DNIofBKmSEVTx8KQbsuAc0cOdrjqKUj7rIkqGporINbmV8oaMr/PI0riHmOF2cGuS9SN91e6lHy20aL4syXIeBR9YvR9EpZAPRR1x45Wup70prxOHHrfxMvAJLwDszS7t/vfl3VvXORUdKdzch7X7zXdswAWLa+r0GeUZfHp5rEYr5JJ+zNAv+D9iJwtqeXnW35ZekFhcoDWoJEeUE8qI9mN7UXJCAKrEmWOQaLMLHoWUnkNttUmMfKlBzqs3/18mfNeOJwj/G9+U63JssR/+SYnuEW3DeXKn2tUvsh54YDjXc2oOjgX/pmxV/1oeNef/aTXJzGcnA==
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by MEUP300MB0318.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:21b::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.26; Wed, 16 Oct
- 2024 06:29:10 +0000
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.016; Wed, 16 Oct 2024
- 06:29:10 +0000
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-17-pbonzini@redhat.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From: Junjie Mao <junjie.mao@hotmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 16/16] rust: allow older version of bindgen
-Date: Wed, 16 Oct 2024 14:15:05 +0800
-In-reply-to: <20241015131735.518771-17-pbonzini@redhat.com>
-Message-ID: <SY0P300MB10263F19AD3FEB043D3D47A195462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR06CA0193.apcprd06.prod.outlook.com (2603:1096:4:1::25)
- To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87a5f4r26r.fsf@hotmail.com>
+ bh=+Qa+/Vrr5vYV8N9Hqm6E9aPfl5zi0iD1R8OkMk0hb40=;
+ b=XG1Ly6/2nCr09Ej5oKJcsJG3d6P2J3vq/udR0dCJL7+zYK2jl60NQ1KY89Gxq3j1dTSn77ootzmTBcLPZhYwsDfCDL23f5pt8P+lzFbYRnM+fM4Ay7ZO5Ipkc+anfjPqBB0A0g8QP45RkHKp/MnF5w6gVHeOCrOpaHRG57g7QJI=
+Received: from SJ0PR03CA0090.namprd03.prod.outlook.com (2603:10b6:a03:331::35)
+ by PH0PR12MB8797.namprd12.prod.outlook.com (2603:10b6:510:28d::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.19; Wed, 16 Oct
+ 2024 06:28:43 +0000
+Received: from SJ5PEPF00000207.namprd05.prod.outlook.com
+ (2603:10b6:a03:331:cafe::68) by SJ0PR03CA0090.outlook.office365.com
+ (2603:10b6:a03:331::35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.18 via Frontend
+ Transport; Wed, 16 Oct 2024 06:28:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SJ5PEPF00000207.mail.protection.outlook.com (10.167.244.40) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8069.17 via Frontend Transport; Wed, 16 Oct 2024 06:28:43 +0000
+Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Oct
+ 2024 01:28:40 -0500
+From: Jiqian Chen <Jiqian.Chen@amd.com>
+To: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
+ <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>
+CC: <qemu-devel@nongnu.org>, <xen-devel@lists.xenproject.org>, Huang Rui
+ <Ray.Huang@amd.com>, Jiqian Chen <Jiqian.Chen@amd.com>, Huang Rui
+ <ray.huang@amd.com>
+Subject: [QEMU PATCH v8] xen/passthrough: use gsi to map pirq when dom0 is PVH
+Date: Wed, 16 Oct 2024 14:28:27 +0800
+Message-ID: <20241016062827.2301004-1-Jiqian.Chen@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|MEUP300MB0318:EE_
-X-MS-Office365-Filtering-Correlation-Id: a611b7bc-8c55-4477-60d1-08dcedabd831
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000207:EE_|PH0PR12MB8797:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9348a513-3acd-4696-da8e-08dcedabc815
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|7092599003|5072599009|461199028|15080799006|8060799006|19110799003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: xA8efb0yVhD3sFjmNrqKgnaAiYX26BYnoWC09paStw9wwl/7adua2bWb9+NCFDcPee8Ad5UXa9S0PGd3CWOlQ9WWw7B6LNol/7dZ2/dMWegSC4BfiuZZJXaL4D5M9pZCAh2hll3ZiEhGanMhffIgGqsDQfciE1RU6ldbV4j23n3ykJTVr9tZZpjaaWId7qk0U0gEJZ9fqdy8v9zAo0zINIZh8CKK9b2OQPGcOwnQ0jjtrelEpMA1VQo7PIyczv0ql+oOE0sGCNzNUVNVgMfZTcRWxmLtxk3e2Cx+cEYx/DSjMrWUaB6YGaqiTpE5n/UbGdXw3j5EXGG0hAmuccRGQmuZDrNYSpcSW13HrWaXQU+orhDtasbMoXncQGUSZZMc0Wy1mYywUnlwfYARN/Ns1hyPjYb9pbGJIZMEdaxyk+KLtNCQkhyqpG9olXHGrURbkM3qxL5gCFhIPttrm1+6r0X6crEJU0g21Cb3SzEXpn2iwEwXOQSvMjvAc6DZbLHasJkG1ydMHuKw8TobSJSo9TxYUAcJ6m+ulJwJ821hQQoCbpLOrRs4fJngO07DKfAtr66+R088egpHmz2SvJsNEMd9nzutHuAtrI6wmy15Ej+lBD+4QgLfTT4M8r6drb5QoQWGjeVUGAOizrK/N7fGGKgTSmmkbB1q2M6QZrNyJ7BMtukgRcGSia+/eZk3XMWmqYwaCJM/ewBWcgf9jUq/UPVsC+YOjgpw/eDM6z03NNE=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?g1zZNiCcOsg5CcfKvQ55lHFF1VqKMq5Eg9EiX6jc30/ClDVkL1gKJQkvZBBP?=
- =?us-ascii?Q?0qYsKBfYd9/z9FYryx0tFv5TyflqEVKHJj7Gr8IwPtURg9uYZ+rQqIj4cW0W?=
- =?us-ascii?Q?j2jPuEJEkvSqegH5OtOzeoPY9Xj8uDM/3GyQx2RYL2ireaR9k+98I9tM05GJ?=
- =?us-ascii?Q?bAt+74AYYx3mJJb+AIGSHQshSudIMmUFtz3AHGiP/pMS1sRog5QlTAIT+18z?=
- =?us-ascii?Q?cuFqE1pHDJOJK0AfcniR3aouOFKNCRkEI95NfDJFpQOaRa0p0LVZWQHhGZOD?=
- =?us-ascii?Q?CVD7gLgx9/I+vlzSQBCSZxleOYgpC+dMx/7rHSLWefPOywJyYa9YYMm4BaTm?=
- =?us-ascii?Q?YwAar5V3WexE/Q60kvE1DNpKP0jvRN5KVKfJ3NY8dIsAxw7KqWUBbq/P92cA?=
- =?us-ascii?Q?mP6P9doN59lwafo2LNa/9l6cSiMubz4qxXwQ2QkhxADD/n63baEyoHSbSuz2?=
- =?us-ascii?Q?fxLRClKzIj59OA5rDCWmSXjfHMnx9zQLohu4P3lrj1t25Guut5903lW87DTK?=
- =?us-ascii?Q?J9CJcIHHbTjSyOtZ587Vb6MRpSKvh4/UyWMRRr9JF7EUEr0ARot1f9FoVNO5?=
- =?us-ascii?Q?ov7eQe0Ad8FVULo5nRi9czSAGh2idoBYg13BGw+YTkKHHGOy+wf4rEvyf03Y?=
- =?us-ascii?Q?OO9e+VVvBbCuIEla77U4ew5BOQQBeDXxJSPfeTi5DDPxULk/2CVSPAGBUX2l?=
- =?us-ascii?Q?rCtbERHpHoDix6vbt++RA5eAtYpopbB2ql5871pc4HyGQV42EN7eNKFmvear?=
- =?us-ascii?Q?00p0wzKr8nCzbfrzSPRyg7vQPPiPB/jWh75AOdruIBB5bkgQr8I/Odq8q1Lc?=
- =?us-ascii?Q?czIC3OpS3ZUIpi+N0jL2hLEiYJFD6/24sFErBUN80t4adQafEXPTgUHTDX0x?=
- =?us-ascii?Q?ON6/OekTyV3cUVUBETQyoE5rxb+qNnW8ctnIlg5uuLSOxUwYc0HFqEYngt0t?=
- =?us-ascii?Q?IzUxj605DVJtfgWzEcDDlcEerTpSLcJ7ExFT/VnccZ4KE5ZaFSkGdTlW3we0?=
- =?us-ascii?Q?B9xWT77Zjh/0XAVbIBWHxm4dLe8cmqdDVoq8cy87O4zxOGrepOlLR36jLblh?=
- =?us-ascii?Q?JA4aIGxkxc/IyO2YhQ14MA//jVlSMD569eN6i8cnpaWNMcfG7Jcm4jml5bCC?=
- =?us-ascii?Q?B8Qc5vqezI9UuQ3EfzraX06gfQLLjbb3yNaI2Kdrk+8GxBibpeMd+ftZspqV?=
- =?us-ascii?Q?eIh5ADbw8YT+reGFUZcYLb9Y5ZJd1CNU0gAotyaA4Vqc2pKT7+24oHhJZ68?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: a611b7bc-8c55-4477-60d1-08dcedabd831
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 06:29:10.3709 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEUP300MB0318
-Received-SPF: pass client-ip=2a01:111:f403:2819::806;
- envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ARA:13230040|1800799024|36860700013|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?PE3p22gpaIpl7KxYAt6w7HoXWIp/AsCVFvkKFmHG4bXdjeQ6OMSi4ze2G0wJ?=
+ =?us-ascii?Q?zCg/BNz9KrG2CIXLFWunrCo9EQza9dI/am5ctwk88WbJ/Y5kyzQpPJUNhhUB?=
+ =?us-ascii?Q?eiPkoP31zW02CosRHdApmri3aS1vd/dBhH3EuEuq5SC1P8njaQiKl9rSFfXC?=
+ =?us-ascii?Q?grWIo1bAzo1nYxx9ZtIPY0+uzc07jZhGzbaEQoazkUWSFY3oE1FxLc4RxLay?=
+ =?us-ascii?Q?d488+JFfG4hEO098a6ccmCrGI0HacnRW7tUtLX2AI87gf0ciRM5UA+EeY+Kq?=
+ =?us-ascii?Q?O6ggfG9xW+4pz61pnBHZ/08zzOVu3LEJq7qHc030e0qXaiRsieSOnHRXCOiO?=
+ =?us-ascii?Q?4OztvwaaSXH7nk1E/rR/MrhKaxOtHanmNBZomAg+a4LWVVKWtxjxSZ6ONpaE?=
+ =?us-ascii?Q?t5EgKhCYp2pIkUeXlYRXAUNBidBPa4DEAQPuX7FGooJz5OqfvO464ttbD6c4?=
+ =?us-ascii?Q?Y23Kl9TGhuMLqAEHG7djb9YJc/USeADslyb9zK+OlPKnQh+yQIlObM/F4DPy?=
+ =?us-ascii?Q?Pbw698+zzwToeyjaXHYnm0GqmBtrwxtiWLlPiaHnfSv3vl7rucz1R2cZ/5Ed?=
+ =?us-ascii?Q?d+OAKovRhnFncvg0li5y/5ivkz0XT2zN5k4VUdjofo4MIEoU/Ly77JCfwQgD?=
+ =?us-ascii?Q?0YKDXEz5HW5izgIYkD0rWJ3JNU8c3BNOp8xpqqKnubJQOx+YfuQoL/LBlNei?=
+ =?us-ascii?Q?5roahadnt5Cdt7VyB3Ywd9U2gQZzFDNlv9p21mAn+D3F1xoxfE2e5KTpGWJE?=
+ =?us-ascii?Q?uYjMKX4qv2pKubqX8jwtu0Pzd7BcCfSCLa9Ds3bZkefUnobmSkpoXocRSk0c?=
+ =?us-ascii?Q?pYRQ0A5mVbLLaNNTU3lL+WK8MEGYoWOdtkqtgqswHmCuALWNBpC9tn6hpM6m?=
+ =?us-ascii?Q?9oJDOflE9yMLpsKgk/les6FY67wnH8OC4HHTCSJ/gy4doruAhYTg3XXhtaFY?=
+ =?us-ascii?Q?0A/SFVLNWBXyTp8YNrWZhgt4NrzNZgwNcB0m4TeSEABp4EnGFnf8LTngauix?=
+ =?us-ascii?Q?0iC+dRbsYAz2Nsj1syL9ZbiHUSNjlxazuTCiaVL3z+E9QcEehQlJi/Ctjq/G?=
+ =?us-ascii?Q?xFt0EH5DxbCV3YZ9587bEf0+G1X3fq8ehYmHzS6SSmGBNekVvpSdH0bGmkbx?=
+ =?us-ascii?Q?AFivVhdZJdhajFYAFGu3JCuRNnfoJdoHBGKsymoej5jrTUjFaM+7wuXmtQFN?=
+ =?us-ascii?Q?xm1WwK/ZHKWib+OiTJUXjm7whx+PKsKHV5Ugg28MDNMHJcx+jEj3FKTRxvgK?=
+ =?us-ascii?Q?rzdhla4iMLaBXYrxqLTzcVjYijYcemT/aA7onBZwDChiiBp9ZGd/R2igp9Ex?=
+ =?us-ascii?Q?7ym7FZi/p7u63iRmTEaT7YEjYhbU4eZamgro81FRSF3VSMsZnCtA3QuOE2GX?=
+ =?us-ascii?Q?4LQxXRd8jJASkqs1ONk1dHJ5pnKJ?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 06:28:43.0427 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9348a513-3acd-4696-da8e-08dcedabc815
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000207.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8797
+Received-SPF: permerror client-ip=40.107.236.46;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-1.249, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,33 +149,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In PVH dom0, when passthrough a device to domU, QEMU code
+xen_pt_realize->xc_physdev_map_pirq wants to use gsi, but in current codes
+the gsi number is got from file /sys/bus/pci/devices/<sbdf>/irq, that is
+wrong, because irq is not equal with gsi, they are in different spaces, so
+pirq mapping fails.
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+To solve above problem, use new interface of Xen, xc_pcidev_get_gsi to get
+gsi and use xc_physdev_map_pirq_gsi to map pirq when dom0 is PVH.
 
-> Cope with the old version that is provided in Debian 12 and Ubuntu 22.04.
-> --size_t-is-usize is needed on bindgen <0.61.0 (Debian 12, Ubuntu 22.04),
-> and it was removed in bindgen 0.65.0, so check for it in meson.build.
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+---
+Hi All,
+This is v8 to support passthrough on Xen when dom0 is PVH.
+v7->v8 change:
+* Since xc_physdev_gsi_from_dev was renamed to xc_pcidev_get_gsi, changed it.
+* Added xen_run_qemu_on_hvm to check if Qemu run on PV dom0, if not use xc_physdev_map_pirq_gsi to map pirq.
+* Used CONFIG_XEN_CTRL_INTERFACE_VERSION to wrap the new part for compatibility.
+* Added "#define DOMID_RUN_QEMU 0" to represent the id of domain that Qemu run on.
 
-The bindgen 0.59.1 installed from Ubuntu 22.04 apt source does not
-support the following args:
 
-    '--formatter', 'rustfmt',
-    '--merge-extern-blocks',
-    '--allowlist-file', meson.project_source_root() + '/include/.*',
-    '--allowlist-file', meson.project_source_root() + '/.*',
-    '--allowlist-file', meson.project_build_root() + '/.*'
+Best regards,
+Jiqian Chen
 
-The first two args are cosmetic and should not hurt if removed (but I
-need to double check).
 
-Removing the allowlist-file, however, causes IPPORT_RESERVED to be
-generated twice using different types and thus break the
-build. Allowlists for bindgen 0.59.1 can only be specified as regex on
-function, type or var. I don't find (yet) an equivalent way of
---allowlist-file. A dirty trick is `--blocklist-item IPPORT_RESERVED`,
-which works but is so ad-hoc.
 
---
-Best Regards
-Junjie Mao
+v6->v7 changes:
+* Because the function of obtaining gsi was changed on the kernel and Xen side. Changed to use
+  xc_physdev_gsi_from_dev, that requires passing in sbdf instead of irq.
+
+v5->v6 changes:
+* Because the function of obtaining gsi was changed on the kernel and Xen side. Changed to use
+  xc_physdev_gsi_from_irq, instead of gsi sysfs.
+* Since function changed, removed the Review-by of Stefano.
+
+v4->v5 changes:
+* Added Review-by Stefano.
+
+v3->v4 changes:
+* Added gsi into struct XenHostPCIDevice and used gsi number that read from gsi sysfs
+  if it exists, if there is no gsi sysfs, still use irq.
+
+v2->v3 changes:
+* Due to changes in the implementation of the second patch on kernel side(that adds
+  a new sysfs for gsi instead of a new syscall), so read gsi number from the sysfs of gsi.
+
+v1 and v2:
+We can record the relation between gsi and irq, then when userspace(qemu) want
+to use gsi, we can do a translation. The third patch of kernel(xen/privcmd: Add new syscall
+to get gsi from irq) records all the relations in acpi_register_gsi_xen_pvh() when dom0
+initialize pci devices, and provide a syscall for userspace to get the gsi from irq. The
+third patch of xen(tools: Add new function to get gsi from irq) add a new function
+xc_physdev_gsi_from_irq() to call the new syscall added on kernel side.
+And then userspace can use that function to get gsi. Then xc_physdev_map_pirq() will success.
+
+Issues we encountered:
+1. failed to map pirq for gsi
+Problem: qemu will call xc_physdev_map_pirq() to map a passthrough device's gsi to pirq in
+function xen_pt_realize(). But failed.
+
+Reason: According to the implement of xc_physdev_map_pirq(), it needs gsi instead of irq,
+but qemu pass irq to it and treat irq as gsi, it is got from file
+/sys/bus/pci/devices/xxxx:xx:xx.x/irq in function xen_host_pci_device_get(). But actually
+the gsi number is not equal with irq. They are in different space.
+---
+ hw/xen/xen_pt.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/xen/xen_pt.h |  1 +
+ 2 files changed, 45 insertions(+)
+
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index 3635d1b39f79..7f8139d20915 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -766,6 +766,41 @@ static void xen_pt_destroy(PCIDevice *d) {
+ }
+ /* init */
+ 
++#define PCI_SBDF(seg, bus, dev, func) \
++            ((((uint32_t)(seg)) << 16) | \
++            (PCI_BUILD_BDF(bus, PCI_DEVFN(dev, func))))
++
++#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
++static bool xen_run_qemu_on_hvm(void)
++{
++    xc_domaininfo_t info;
++
++    if (!xc_domain_getinfo_single(xen_xc, DOMID_RUN_QEMU, &info) &&
++        (info.flags & XEN_DOMINF_hvm_guest)) {
++        return true;
++    }
++
++    return false;
++}
++
++static int xen_map_pirq_for_gsi(PCIDevice *d, int *pirq)
++{
++    int gsi;
++    XenPCIPassthroughState *s = XEN_PT_DEVICE(d);
++
++    gsi = xc_pcidev_get_gsi(xen_xc,
++                            PCI_SBDF(s->real_device.domain,
++                                     s->real_device.bus,
++                                     s->real_device.dev,
++                                     s->real_device.func));
++    if (gsi >= 0) {
++        return xc_physdev_map_pirq_gsi(xen_xc, xen_domid, gsi, pirq);
++    }
++
++    return gsi;
++}
++#endif
++
+ static void xen_pt_realize(PCIDevice *d, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -847,7 +882,16 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
+         goto out;
+     }
+ 
++#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
++    if (xen_run_qemu_on_hvm()) {
++        rc = xen_map_pirq_for_gsi(d, &pirq);
++    } else {
++        rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
++    }
++#else
+     rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
++#endif
++
+     if (rc < 0) {
+         XEN_PT_ERR(d, "Mapping machine irq %u to pirq %i failed, (err: %d)\n",
+                    machine_irq, pirq, errno);
+diff --git a/hw/xen/xen_pt.h b/hw/xen/xen_pt.h
+index 095a0f0365d4..a08b45b7fbae 100644
+--- a/hw/xen/xen_pt.h
++++ b/hw/xen/xen_pt.h
+@@ -36,6 +36,7 @@ void xen_pt_log(const PCIDevice *d, const char *f, ...) G_GNUC_PRINTF(2, 3);
+ #  define XEN_PT_LOG_CONFIG(d, addr, val, len)
+ #endif
+ 
++#define DOMID_RUN_QEMU 0
+ 
+ /* Helper */
+ #define XEN_PFN(x) ((x) >> XC_PAGE_SHIFT)
+-- 
+2.34.1
+
 
