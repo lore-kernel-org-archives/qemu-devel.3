@@ -4,60 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2087D1AD38
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 09:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31855D1AD39
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 09:55:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t10WI-0008HU-28; Wed, 16 Oct 2024 05:40:42 -0400
+	id 1t10ji-0004cP-21; Wed, 16 Oct 2024 05:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1t10WE-0008GW-Uq; Wed, 16 Oct 2024 05:40:39 -0400
-Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t10jg-0004cG-17
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 05:54:32 -0400
+Received: from mail-sy4aus01olkn20828.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::828]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1t10WB-0003qF-Gy; Wed, 16 Oct 2024 05:40:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1729071622; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=L/9BepXgg8FK+oaCHRxAAyovIr3rd5a4/hNairMCdZI=;
- b=lvNwHSQqMjoO6Y2Ax5fhC1CmmeJQqbtiOut00LUScuWRvJTSc+WBoeRQwQ07ifheXwXEUp0ryl7mNkc7lp/MFH382pncyM/161oBRusqROn9NSULU332L5M3g2C763Aps7QsiJjzQhZwlBhPo2u8c6fgGZtaB7OyDE+a1I5R4yA=
-Received: from 30.166.64.81(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WHGyT-N_1729071618 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 16 Oct 2024 17:40:19 +0800
-Message-ID: <f4ae3ad2-bd3e-4b9e-9013-b890e561df0a@linux.alibaba.com>
-Date: Wed, 16 Oct 2024 17:40:17 +0800
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t10je-0007DX-K7
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 05:54:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RF0W9qMuw8DuExPvO8hBCbCGxngzmkNhFN6Hpd4NQB95dRQT+iIBSpFJCxpxn0Z4vncQSt8d0wgRh1LM8hItvhZbn2NlRR5sDZW0/K4vJIA/wfeTkifFFZlJQ7lipy6K/TBcUo9ms34MoV4hEYB4wlvJFoy0G2QtoY9Hf7TFIUeIz6so8f+1y0/H53m5TOFiA0zZELZotbPuna0SknZbweEWbjFqyuh7IdwKfjWOiwqYoGAV+8OFyv0lL0bjfGh9ZEWnQucKpEpWwp3VYqUqHK8d8ShPsblHubvDA0ULjPu9nZ/4n/UcAHm31dJEkRjHkADnLTWjapnV34pa8F3nyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cnAmyS3p5FwgIjta6+gnR7y3tt+nKPnukuH30W1LBIA=;
+ b=BvW7GH2gGiJwW3GnqYChlfdNzyEH+VOsKPysvzuCW3FJ2+4spJik0xivQX0zyLutold4xr/7I4FlYvHWGgWxUfXt4Q9+hukM6mWXymVhvg9ajyrRLdXsmiYK/DkNYrL2Res45l7DWblDJnO4+T/3agWSIaA4RIaqQMqjq/3ndsokVeIwHkSHDgIJkIr4Uk015Ip2vleYAJU5srySQXV7Xe7kOAbt8ow0wZ1MShqUtXzqc1mFG1RQIWIGQVs/5Qj4DqPLi/n8a5x0YC/C4IgbT9PW2TxSI840jGx1XU/DibGCUJSKaUsA3NTk/TNTyK+JncNpsIpOsfhqV2xp/7z+hg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cnAmyS3p5FwgIjta6+gnR7y3tt+nKPnukuH30W1LBIA=;
+ b=HLKkz1gORRhDTciMF6I7spM95w+BtpIR6Fmj3Pu/LDRhVu04dcvCQtCwd0pMk5HNZVzfEJVvMqS6z/53QnA4J4w4pYv44csUeDlWNHgtTcmCoBWe7LyvUF/9mXtfSLuCOJfjtr2JcCauS00X9EAAoMd772HUQ+iUf+1E+vAoJm37TTVoneWA2DYYio23EIqt9EHkrpBrOiWbnx6R6O3gyw98qbZstyHBNl5gVeYNHl4PdmPH0WXhyCJXfYrIip7mraB+2+FaGKMwoDy5eLRnO2EDXB9ay4KRzvllkuxv49hDu6IT4Igz47saV8l9V21SBsyZHzrkA2LIBpfqpV2w5g==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by SY0P300MB0338.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:284::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.27; Wed, 16 Oct
+ 2024 09:54:25 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.016; Wed, 16 Oct 2024
+ 09:54:25 +0000
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-13-pbonzini@redhat.com>
+ <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <CABgObfbqhmr=45c9ZiYoDAanM7Gsinz4RnwGMrivYDQgzP8kTw@mail.gmail.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 12/16] rust: allow version 1.63.0 of rustc
+Date: Wed, 16 Oct 2024 17:53:46 +0800
+In-reply-to: <CABgObfbqhmr=45c9ZiYoDAanM7Gsinz4RnwGMrivYDQgzP8kTw@mail.gmail.com>
+Message-ID: <SY0P300MB10269110D64F40C0F5AF0E7595462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: KL1PR01CA0156.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:149::13) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <871q0gqsop.fsf@hotmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] target/riscv: Add Ssdbltrp CSRs handling
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
- qemu-devel@nongnu.org
-References: <20241014112225.90297-1-cleger@rivosinc.com>
- <20241014112225.90297-2-cleger@rivosinc.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20241014112225.90297-2-cleger@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY0P300MB0338:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4244449e-c28b-44de-897f-08dcedc88437
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|461199028|15080799006|7092599003|5072599009|19110799003|8060799006|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: mxLyaJVZ3rLj94Vea6w7Jz/b7Vuv9/4jro6WgYh63LycqebiG579yf5OmkMDFqVMUvLD/P5ZqWWh/E+CSq+bZzvvD4lkt2TiO6YMiZRnGO9isu+50WxftM11DrITS6+AKBxqN9SHUNXmgLa6U/l+WBqiD9B+tO3Ct0dUrkEGXw+UItzjdIeHI+Y6OoWLWUhLYx3lRHf4Hf811o+ITgx0O4A11RforRsGoAPH9kpVld4E/+aepVTzuLwYuvVmkWjjIipCAFYKr1sgdU0nSOy84fXYIiRJctiOl9iqsbBwKeIkJRijWQwHTQYxwqukz8xhqosCjyJkrL7CVSv+xaaFZMtWpsYrzZUclWjvDLU4qEgxfdtEtJnyaWzpLE2PQlo6Dnd0BNbCNSV5YQLwt2elLq5tKXErzwx3L3D3swAFXdEt4vTsBc7mDHAZsi4pVUcQ1mTMledDyO51+56SOEoGybrmZn1sJsnYODSOhbHCHtWnNSOlFd+IYIMQHVyiq2oiz07gNacvtNl4Q53Var+M+mr0Mpuyi0N+sRAOIds7Mj0Vatd/np44tEliVzKyhkzhtxOZI+kaSTY+HX2MjBfX6HyUNpCkBdsKv1lV/+WH1Krk0jpAY26pMSTrfHdlCHfmDOjDNNx6azpZOTHPSLD2mseRDavc4Dr3L2HB6sL7Xr6fOEDVDAnUILIFQJ/j+BhinMj04BlwSQLsiJrH65xIv72JPB4z9Kiht63lXEqswmY=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VAXtHHfXKZKhNrALPz4Hu2KMT5v5aLi47wRxOIt6g4HEhvruQaVSyM2JeYyH?=
+ =?us-ascii?Q?+DSYd6dm2XC4SNJutlnS9DxpZAttQNKS0qzESuLTPyj+ZzKWW5OhxapvBikI?=
+ =?us-ascii?Q?1oKBeZ7eM8aQm9k+oBTOiIycAQP0HWA8pNxz+6KKneStMDtIMgIh0ywUeKWy?=
+ =?us-ascii?Q?2njWOQK7EfI+mPzeFHbgyhkWMWLY+JpkgQxGfOCgMEalZq21JwMs1Db270jW?=
+ =?us-ascii?Q?viFV3+xPzmIHau+4AwW0s+3m6WDQmF3uzIs2Fa+DkzH6fOG4i5tFrnxy0Tni?=
+ =?us-ascii?Q?vsDV5WQupuSGPF5x/5nevnP3FvPZPnLIxL9PRTemtCFzsSOrH4eLvpxaZDYw?=
+ =?us-ascii?Q?E4COG2rO0Ri9DJkLqhy4mt2IvrxwVX+7hypfmnm2v2gS/PuArm8W5gH2mCAD?=
+ =?us-ascii?Q?uw/OS00AT0lCavKtnPdIuamlOFCO2zAk+MtVt9K8XlluhC4MyUd5iyrpcpwG?=
+ =?us-ascii?Q?8PzGlqy5Av8+1qYWfZCTTSmYtqgkf42fgNM+apjnCRIZUCtgGUxVaXFwJnEP?=
+ =?us-ascii?Q?VV2qq0vilbOaJXYCp+rIFl5+ueR20QeqyYu1vFF9wiW4/CPVWdpTr7Tbzn3Y?=
+ =?us-ascii?Q?VsjBKCRaDvt9pXQnBuE1AL/fwbOQZIfMskniikO6h9DdrI0Z7Djg/S2+2tDp?=
+ =?us-ascii?Q?XHtuipJ2LA+gDwXdr4VenEnJil7xCJo4DBa3kyIrJDQfDWnIiCZxjFherLym?=
+ =?us-ascii?Q?bHvJae5GwAdmSZ9R0U9JNhBiXJixWRCPba2rVksJDD2VaC/6mPa33Sj2ya69?=
+ =?us-ascii?Q?EisTXlHUxaI0f9I9N8/25nmU5pgescFWqxh3tIAOw0omndHfNPUsUqT5HeRj?=
+ =?us-ascii?Q?sPemrvthFN+3nI7Hvadm3/2RJXyvEKLJmL6bufqYC/uOMTeZT+U3X+vqMxG0?=
+ =?us-ascii?Q?qRyaJhmr4jjryVl6JdEB3BZ+juLTj34Sq28MJjdWQPufUl5WL+IK+IyOcgIq?=
+ =?us-ascii?Q?ngDQcMLncPSx4/4RYqWqLKkbGpswivCnw7hGKP0Yvttq0XtOvuMonn6P/ceb?=
+ =?us-ascii?Q?KaezmxeXqSkan5ggXeX5qiPPpGYKjmPaTyhuperE/vcGp4zpE7xITfmQBVdW?=
+ =?us-ascii?Q?wMSNHLgTeb/CogsWKMnzoThlU3JWqarU7EudcU83mSLrARsT3xVld1JmZoGI?=
+ =?us-ascii?Q?yyi8dBmggOskaptuAPc3kxBiYJ0NNePuvQdFS3pZJCftVqQki+C09WCvQ7qL?=
+ =?us-ascii?Q?tDOz2VPNmTN6p+l0hbgT0/pzODsXp2+ubgCCUJv8qapjfvrosZDuZmIxMFs?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4244449e-c28b-44de-897f-08dcedc88437
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 09:54:24.9100 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0338
+Received-SPF: pass client-ip=2a01:111:f403:2819::828;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,273 +127,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 2024/10/14 19:22, Clément Léger wrote:
-> Add ext_ssdbltrp in RISCVCPUConfig and implement MSTATUS.SDT,
-> {H|M}ENVCFG.DTE and modify the availability of MTVAL2 based on the
-> presence of the Ssdbltrp ISA extension.
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> Il mer 16 ott 2024, 08:10 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 >
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   target/riscv/cpu.h        |  1 +
->   target/riscv/cpu_bits.h   |  6 ++++++
->   target/riscv/cpu_cfg.h    |  1 +
->   target/riscv/cpu_helper.c | 20 +++++++++++++++++
->   target/riscv/csr.c        | 45 ++++++++++++++++++++++++++++++---------
->   5 files changed, 63 insertions(+), 10 deletions(-)
+>  In my Ubuntu 22.04 environment (rustc 1.76.0 and bindgen 0.59.1 from
+>  apt) the feature `proc_macro_byte_character` is not yet stablized but
+>  used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to
+>  2.0.58 fixes that issue for me.
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index a84e719d3f..ee984bf270 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -553,6 +553,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
->   bool riscv_cpu_vector_enabled(CPURISCVState *env);
->   void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
->   int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
-> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt);
->   G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
->                                                  MMUAccessType access_type,
->                                                  int mmu_idx, uintptr_t retaddr);
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index da1723496c..3a5588d4df 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -558,6 +558,7 @@
->   #define MSTATUS_TVM         0x00100000 /* since: priv-1.10 */
->   #define MSTATUS_TW          0x00200000 /* since: priv-1.10 */
->   #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
-> +#define MSTATUS_SDT         0x01000000
->   #define MSTATUS_GVA         0x4000000000ULL
->   #define MSTATUS_MPV         0x8000000000ULL
->   
-> @@ -588,6 +589,7 @@ typedef enum {
->   #define SSTATUS_XS          0x00018000
->   #define SSTATUS_SUM         0x00040000 /* since: priv-1.10 */
->   #define SSTATUS_MXR         0x00080000
-> +#define SSTATUS_SDT         0x01000000
->   
->   #define SSTATUS64_UXL       0x0000000300000000ULL
->   
-> @@ -777,11 +779,13 @@ typedef enum RISCVException {
->   #define MENVCFG_CBIE                       (3UL << 4)
->   #define MENVCFG_CBCFE                      BIT(6)
->   #define MENVCFG_CBZE                       BIT(7)
-> +#define MENVCFG_DTE                        (1ULL << 59)
->   #define MENVCFG_ADUE                       (1ULL << 61)
->   #define MENVCFG_PBMTE                      (1ULL << 62)
->   #define MENVCFG_STCE                       (1ULL << 63)
->   
->   /* For RV32 */
-> +#define MENVCFGH_DTE                       BIT(27)
->   #define MENVCFGH_ADUE                      BIT(29)
->   #define MENVCFGH_PBMTE                     BIT(30)
->   #define MENVCFGH_STCE                      BIT(31)
-> @@ -795,11 +799,13 @@ typedef enum RISCVException {
->   #define HENVCFG_CBIE                       MENVCFG_CBIE
->   #define HENVCFG_CBCFE                      MENVCFG_CBCFE
->   #define HENVCFG_CBZE                       MENVCFG_CBZE
-> +#define HENVCFG_DTE                        MENVCFG_DTE
->   #define HENVCFG_ADUE                       MENVCFG_ADUE
->   #define HENVCFG_PBMTE                      MENVCFG_PBMTE
->   #define HENVCFG_STCE                       MENVCFG_STCE
->   
->   /* For RV32 */
-> +#define HENVCFGH_DTE                        MENVCFGH_DTE
->   #define HENVCFGH_ADUE                       MENVCFGH_ADUE
->   #define HENVCFGH_PBMTE                      MENVCFGH_PBMTE
->   #define HENVCFGH_STCE                       MENVCFGH_STCE
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index ae2a945b5f..dd804f95d4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -77,6 +77,7 @@ struct RISCVCPUConfig {
->       bool ext_smstateen;
->       bool ext_sstc;
->       bool ext_smcntrpmf;
-> +    bool ext_ssdbltrp;
->       bool ext_svadu;
->       bool ext_svinval;
->       bool ext_svnapot;
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 9d0400035f..77e7736d8a 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -63,6 +63,22 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
->   #endif
->   }
->   
-> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
-> +{
-> +#ifdef CONFIG_USER_ONLY
-> +    return false;
-> +#else
-> +    if (!riscv_cpu_cfg(env)->ext_ssdbltrp) {
-> +        return false;
-> +    }
+> This is handled by patch 5. Try "meson subprojects update --reset".
+>
 
-As we have guard the write to henvcfg and menvcfg by ext_ssdbltrp, I 
-think it is enough only check henvcfg or menvcfg.
+Yes, that works. Thanks for the info!
 
-The only miss is we don't guard the writhe to henvcfgh. I think we can 
-add the guard there.
-
-> +    if (virt) {
-> +        return (env->henvcfg & HENVCFG_DTE) != 0;
-> +    } else {
-> +        return (env->menvcfg & MENVCFG_DTE) != 0;
-> +    }
-> +#endif
-> +}
-> +
->   void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
->                             uint64_t *cs_base, uint32_t *pflags)
->   {
-> @@ -562,6 +578,10 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
->   
->       g_assert(riscv_has_ext(env, RVH));
->   
-> +    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
-> +        mstatus_mask |= MSTATUS_SDT;
-> +    }
-> +
->       if (current_virt) {
->           /* Current V=1 and we are about to change to V=0 */
->           env->vsstatus = env->mstatus & mstatus_mask;
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index e5de72453c..d8280ec956 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -540,6 +540,15 @@ static RISCVException aia_hmode32(CPURISCVState *env, int csrno)
->       return hmode32(env, csrno);
->   }
->   
-> +static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
-> +{
-> +    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-> +        return RISCV_EXCP_NONE;
-> +    }
-> +
-> +    return hmode(env, csrno);
-> +}
-> +
->   static RISCVException pmp(CPURISCVState *env, int csrno)
->   {
->       if (riscv_cpu_cfg(env)->pmp) {
-> @@ -1402,7 +1411,7 @@ static const target_ulong vs_delegable_excps = DELEGABLE_EXCPS &
->         (1ULL << (RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT)));
->   static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE | SSTATUS_SPIE |
->       SSTATUS_UIE | SSTATUS_UPIE | SSTATUS_SPP | SSTATUS_FS | SSTATUS_XS |
-> -    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS;
-> +    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS | SSTATUS_SDT;
-This breaks  the v_1_10 constraint, as it is not part of 1.10 specification.
->   
->   /*
->    * Spec allows for bits 13:63 to be either read-only or writable.
-> @@ -1600,6 +1609,14 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
->           mask |= MSTATUS_VS;
->       }
->   
-> +    if (riscv_env_smode_dbltrp_enabled(env, env->virt_enabled)) {
-> +        mask |= MSTATUS_SDT;
-> +        if ((val & MSTATUS_SDT) != 0) {
-> +            mstatus &= ~MSTATUS_SIE;
-No need to clean it, if MSTATUS_SIE will be cleaned in val.
-> +            val &= ~MSTATUS_SIE;
-> +        }
-> +    }
-> +
-I think we should also consider vsstatus for SIE field, as 
-write_vsstatus doesn't fall through to write_mstatus.
->       if (xl != MXL_RV32 || env->debugger) {
->           if (riscv_has_ext(env, RVH)) {
->               mask |= MSTATUS_MPV | MSTATUS_GVA;
-> @@ -2354,7 +2371,8 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
->       if (riscv_cpu_mxl(env) == MXL_RV64) {
->           mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
->                   (cfg->ext_sstc ? MENVCFG_STCE : 0) |
-> -                (cfg->ext_svadu ? MENVCFG_ADUE : 0);
-> +                (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
-> +                (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
->       }
->       env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
->   
-> @@ -2374,7 +2392,8 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
->       const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
->       uint64_t mask = (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
->                       (cfg->ext_sstc ? MENVCFG_STCE : 0) |
-> -                    (cfg->ext_svadu ? MENVCFG_ADUE : 0);
-> +                    (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
-> +                    (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
->       uint64_t valh = (uint64_t)val << 32;
->   
->       env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
-> @@ -2425,9 +2444,10 @@ static RISCVException read_henvcfg(CPURISCVState *env, int csrno,
->        * henvcfg.pbmte is read_only 0 when menvcfg.pbmte = 0
->        * henvcfg.stce is read_only 0 when menvcfg.stce = 0
->        * henvcfg.adue is read_only 0 when menvcfg.adue = 0
-> +     * henvcfg.dte is read_only 0 when menvcfg.dte = 0
->        */
-> -    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE) |
-> -                           env->menvcfg);
-> +    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
-> +                             HENVCFG_DTE) | env->menvcfg);
->       return RISCV_EXCP_NONE;
->   }
->   
-> @@ -2435,6 +2455,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->                                       target_ulong val)
->   {
->       uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
-> +    uint64_t menvcfg_mask;
->       RISCVException ret;
->   
->       ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
-> @@ -2443,7 +2464,11 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
->       }
->   
->       if (riscv_cpu_mxl(env) == MXL_RV64) {
-> -        mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
-> +        menvcfg_mask = HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
-> +        if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-> +            menvcfg_mask |= HENVCFG_DTE;
-> +        }
-> +        mask |= env->menvcfg & menvcfg_mask;
->       }
->   
->       env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
-> @@ -2461,8 +2486,8 @@ static RISCVException read_henvcfgh(CPURISCVState *env, int csrno,
->           return ret;
->       }
->   
-> -    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE) |
-> -                            env->menvcfg)) >> 32;
-> +    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
-> +                              HENVCFG_DTE) | env->menvcfg)) >> 32;
->       return RISCV_EXCP_NONE;
->   }
->   
-> @@ -2470,7 +2495,7 @@ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
->                                        target_ulong val)
->   {
->       uint64_t mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
-> -                                    HENVCFG_ADUE);
-> +                                    HENVCFG_ADUE | HENVCFG_DTE);
-
-Add the ssdbltrp guard here.
-
-Thanks,
-Zhiwei
-
->       uint64_t valh = (uint64_t)val << 32;
->       RISCVException ret;
->   
-> @@ -5246,7 +5271,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->       [CSR_VSATP]       = { "vsatp",       hmode,   read_vsatp,    write_vsatp,
->                             .min_priv_ver = PRIV_VERSION_1_12_0                },
->   
-> -    [CSR_MTVAL2]      = { "mtval2",      hmode,   read_mtval2,   write_mtval2,
-> +    [CSR_MTVAL2]      = { "mtval2", dbltrp_hmode, read_mtval2, write_mtval2,
->                             .min_priv_ver = PRIV_VERSION_1_12_0                },
->       [CSR_MTINST]      = { "mtinst",      hmode,   read_mtinst,   write_mtinst,
->                             .min_priv_ver = PRIV_VERSION_1_12_0                },
+--
+Best Regards
+Junjie Mao
 
