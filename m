@@ -4,83 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6301DD206B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FC2D2F7C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Ape-0004SB-Ln; Wed, 16 Oct 2024 16:41:22 -0400
+	id 1t1B8S-0006kF-3W; Wed, 16 Oct 2024 17:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t1ApX-0004Jn-4g
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:41:15 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1B8Q-0006jy-Fw
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:00:46 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t1ApU-0004fJ-0T
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 16:41:14 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2e2ad9825a7so180245a91.0
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 13:41:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1729111269; x=1729716069; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3K22YieZye0zoCJU5QbmuzJQhi9LrVonGCtc1Hao+3k=;
- b=SmDreAksUXOAzbufvVOqweIgMiQyMuLuynwabgT5yLnSXvZ50z2gIqUNVBjPxLGvbK
- lBi/oYcyhFMjtrLQAGVr/tyuzEENRuXJtTF7WfWPijgVSGpJvNo9mFPUYdNS9EX5QOTa
- DlKT0dZjNC4tSCYMjvVh/11Pg1jNdUy0iKQXJuA/1/U39SqvN3sKiMvagS7gDGDklTyi
- 8JftgxiDUFwZqDvfVQm+xb590ZJACAIfIgmLeixt3ZLXspGVGBuBZF9NOB/HNGDdTyYF
- 2ciu6cxC9xf5ZTP0wJmJ9keSXtthj5etRr9wtxVKddbpQ8qnu4l3xrgsos0BLgtcwpXf
- Gicw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729111269; x=1729716069;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3K22YieZye0zoCJU5QbmuzJQhi9LrVonGCtc1Hao+3k=;
- b=PPhQrSVAMEmfZMZmjQg+mSGn+hpf9bKqQ1Mzq2z1nGohwRPzpF8VxtlQtmCZ06/Ypb
- TBT2jaUgr2AriQPrSiEASeT1EtO9ktItpPeN6TDS4JiBDp/LaMyoeSmpL+w2EB/EWiGM
- ymlJjqsU+ZwrKMsC3XUcC8pZimRG7RNpgYm9TsQf7420RNHnXHIkmAR9fPirvBtaWMJn
- c5Dh/EqjzuSPlxOIMntSXMnec/HcmJOVtV0HMfdaBwbLDn3O9FPycyAiEJjl0nCWveTY
- DZX7V0IVNTAi3V/G0X1vk/tWS/hFLS9nAOGFbVFekgkWIpIulr0szbYyACWrJ0BqsTQ3
- WZKA==
-X-Gm-Message-State: AOJu0YwgCeMV66KUYKvFL/VBaIHvszHSqYfH8ZQ5nhJ/Vxo2km+oVPkF
- cyrlEg30jPHgOpCgbjkNLhaJogOy0vF/OCeIeGqAxFf+MBSyK9tONZST4b0ox0j0riSsQY1zFTL
- x
-X-Google-Smtp-Source: AGHT+IHPr2E5AL8OYf4lpj7iwufxBSDMIqCe0weY3/eF41hwMlZQ85jf4PAadX5bcC2y4KKF9CC3rQ==
-X-Received: by 2002:a17:90b:3504:b0:2e2:cd62:549c with SMTP id
- 98e67ed59e1d1-2e3ab8292e7mr5742906a91.22.1729111268738; 
- Wed, 16 Oct 2024 13:41:08 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com ([177.188.133.9])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e3e09085cfsm242158a91.54.2024.10.16.13.41.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Oct 2024 13:41:08 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v10 07/12] test/qtest: add riscv-iommu-pci tests
-Date: Wed, 16 Oct 2024 17:40:31 -0300
-Message-ID: <20241016204038.649340-8-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241016204038.649340-1-dbarboza@ventanamicro.com>
-References: <20241016204038.649340-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1B8M-0006z3-KI
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:00:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3AE411FD0B;
+ Wed, 16 Oct 2024 21:00:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729112438; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
+ b=QaXX1y7Jucpxnb/tZDUg1un7//MSDOV+uOlyD/tbQMOvTiOncA6NOGCp07MZafAUZyrkbe
+ aklHxVbz5FiwYCzDwk8F8CktnJoKe+NcOMgo2DdJxKXgMTXEkYhWu6Xqvs5MFBy4T/hGBs
+ UyEzMcPO+shuDeoprXeOGaKr7nYbZ+I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729112438;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
+ b=NUhkM2HLdDzwOqMWbhqUhDsz296erF6adxXIHOK5zoGM8hNTM3Vi3hJonrEy7r1HdV4ezg
+ dvrAnCEcro+fgeAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729112437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
+ b=EXy477gjVrrfSkN3BLe1dWZndkOpHNba8EjyFRKm3R7Q95ZizLlP+pD4/WMoOHFnycJNbq
+ JRbrqvAiWzxcgi1xK9Nn0pifZtcH8cDdN3nAyvkYl0bC6qXx3BHuIgfoVLrv2COMdTYM/g
+ /naajwTOjyksSm1Ru48i9Ad7tTsxHAw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729112437;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
+ b=y6lzi76s9Ga7j7kU0kGwpZH0dccnWR4WekYQ8z3M+NLMndfkeMfDSqAlHf0vDQA+LF9Lc+
+ W531gdL1nsZPAwCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AE9DB13433;
+ Wed, 16 Oct 2024 21:00:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id G5EBHXQpEGdxCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 16 Oct 2024 21:00:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, "Dr. David Alan Gilbert"
+ <dave@treblig.org>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Marc-A?=
+ =?utf-8?Q?ndr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v6 03/12] util/dsa: Implement DSA device start and stop
+ logic.
+In-Reply-To: <20241009234610.27039-4-yichen.wang@bytedance.com>
+References: <20241009234610.27039-1-yichen.wang@bytedance.com>
+ <20241009234610.27039-4-yichen.wang@bytedance.com>
+Date: Wed, 16 Oct 2024 18:00:34 -0300
+Message-ID: <87ttdb3gr1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[18]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email, bytedance.com:email,
+ suse.de:mid, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,309 +127,443 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To test the RISC-V IOMMU emulation we'll use its PCI representation.
-Create a new 'riscv-iommu-pci' libqos device that will be present with
-CONFIG_RISCV_IOMMU.  This config is only available for RISC-V, so this
-device will only be consumed by the RISC-V libqos machine.
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
-Start with basic tests: a PCI sanity check and a reset state register
-test. The reset test was taken from the RISC-V IOMMU spec chapter 5.2,
-"Reset behavior".
+> From: Hao Xiang <hao.xiang@linux.dev>
+>
+> * DSA device open and close.
+> * DSA group contains multiple DSA devices.
+> * DSA group configure/start/stop/clean.
+>
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+> ---
+>  include/qemu/dsa.h | 103 +++++++++++++++++
+>  util/dsa.c         | 282 +++++++++++++++++++++++++++++++++++++++++++++
+>  util/meson.build   |   3 +
+>  3 files changed, 388 insertions(+)
+>  create mode 100644 include/qemu/dsa.h
+>  create mode 100644 util/dsa.c
+>
+> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+> new file mode 100644
+> index 0000000000..501bb8c70d
+> --- /dev/null
+> +++ b/include/qemu/dsa.h
+> @@ -0,0 +1,103 @@
+> +/*
+> + * Interface for using Intel Data Streaming Accelerator to offload certain
+> + * background operations.
+> + *
+> + * Copyright (C) Bytedance Ltd.
+> + *
+> + * Authors:
+> + *  Hao Xiang <hao.xiang@bytedance.com>
+> + *  Yichen Wang <yichen.wang@bytedance.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef QEMU_DSA_H
+> +#define QEMU_DSA_H
+> +
+> +#include "qemu/error-report.h"
+> +#include "qemu/thread.h"
+> +#include "qemu/queue.h"
+> +
+> +#ifdef CONFIG_DSA_OPT
+> +
+> +#pragma GCC push_options
+> +#pragma GCC target("enqcmd")
+> +
+> +#include <linux/idxd.h>
+> +#include "x86intrin.h"
+> +
+> +typedef struct {
+> +    void *work_queue;
+> +} QemuDsaDevice;
+> +
+> +typedef QSIMPLEQ_HEAD(QemuDsaTaskQueue, QemuDsaBatchTask) QemuDsaTaskQueue;
+> +
+> +typedef struct {
+> +    QemuDsaDevice *dsa_devices;
+> +    int num_dsa_devices;
+> +    /* The index of the next DSA device to be used. */
+> +    uint32_t device_allocator_index;
+> +    bool running;
+> +    QemuMutex task_queue_lock;
+> +    QemuCond task_queue_cond;
+> +    QemuDsaTaskQueue task_queue;
+> +} QemuDsaDeviceGroup;
+> +
+> +/**
+> + * @brief Initializes DSA devices.
+> + *
+> + * @param dsa_parameter A list of DSA device path from migration parameter.
+> + *
+> + * @return int Zero if successful, otherwise non zero.
+> + */
+> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp);
+> +
+> +/**
+> + * @brief Start logic to enable using DSA.
+> + */
+> +void qemu_dsa_start(void);
+> +
+> +/**
+> + * @brief Stop the device group and the completion thread.
+> + */
+> +void qemu_dsa_stop(void);
+> +
+> +/**
+> + * @brief Clean up system resources created for DSA offloading.
+> + */
+> +void qemu_dsa_cleanup(void);
+> +
+> +/**
+> + * @brief Check if DSA is running.
+> + *
+> + * @return True if DSA is running, otherwise false.
+> + */
+> +bool qemu_dsa_is_running(void);
+> +
+> +#else
+> +
+> +static inline bool qemu_dsa_is_running(void)
+> +{
+> +    return false;
+> +}
+> +
+> +static inline int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
+> +{
+> +    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
+> +        error_setg(errp, "DSA is not supported.");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static inline void qemu_dsa_start(void) {}
+> +
+> +static inline void qemu_dsa_stop(void) {}
+> +
+> +static inline void qemu_dsa_cleanup(void) {}
+> +
+> +#endif
+> +
+> +#endif
+> diff --git a/util/dsa.c b/util/dsa.c
+> new file mode 100644
+> index 0000000000..54d0e20c29
+> --- /dev/null
+> +++ b/util/dsa.c
+> @@ -0,0 +1,282 @@
+> +/*
+> + * Use Intel Data Streaming Accelerator to offload certain background
+> + * operations.
+> + *
+> + * Copyright (C) Bytedance Ltd.
+> + *
+> + * Authors:
+> + *  Hao Xiang <hao.xiang@bytedance.com>
+> + *  Bryan Zhang <bryan.zhang@bytedance.com>
+> + *  Yichen Wang <yichen.wang@bytedance.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/queue.h"
+> +#include "qemu/memalign.h"
+> +#include "qemu/lockable.h"
+> +#include "qemu/cutils.h"
+> +#include "qemu/dsa.h"
+> +#include "qemu/bswap.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/rcu.h"
+> +
+> +#pragma GCC push_options
+> +#pragma GCC target("enqcmd")
+> +
+> +#include <linux/idxd.h>
+> +#include "x86intrin.h"
+> +
+> +#define DSA_WQ_PORTAL_SIZE 4096
+> +#define MAX_DSA_DEVICES 16
+> +
+> +uint32_t max_retry_count;
+> +static QemuDsaDeviceGroup dsa_group;
+> +
+> +
+> +/**
+> + * @brief This function opens a DSA device's work queue and
+> + *        maps the DSA device memory into the current process.
+> + *
+> + * @param dsa_wq_path A pointer to the DSA device work queue's file path.
+> + * @return A pointer to the mapped memory, or MAP_FAILED on failure.
+> + */
+> +static void *
+> +map_dsa_device(const char *dsa_wq_path)
+> +{
+> +    void *dsa_device;
+> +    int fd;
+> +
+> +    fd = open(dsa_wq_path, O_RDWR);
+> +    if (fd < 0) {
+> +        error_report("Open %s failed with errno = %d.",
+> +                dsa_wq_path, errno);
+> +        return MAP_FAILED;
+> +    }
+> +    dsa_device = mmap(NULL, DSA_WQ_PORTAL_SIZE, PROT_WRITE,
+> +                      MAP_SHARED | MAP_POPULATE, fd, 0);
+> +    close(fd);
+> +    if (dsa_device == MAP_FAILED) {
+> +        error_report("mmap failed with errno = %d.", errno);
+> +        return MAP_FAILED;
+> +    }
+> +    return dsa_device;
+> +}
+> +
+> +/**
+> + * @brief Initializes a DSA device structure.
+> + *
+> + * @param instance A pointer to the DSA device.
+> + * @param work_queue A pointer to the DSA work queue.
+> + */
+> +static void
+> +dsa_device_init(QemuDsaDevice *instance,
+> +                void *dsa_work_queue)
+> +{
+> +    instance->work_queue = dsa_work_queue;
+> +}
+> +
+> +/**
+> + * @brief Cleans up a DSA device structure.
+> + *
+> + * @param instance A pointer to the DSA device to cleanup.
+> + */
+> +static void
+> +dsa_device_cleanup(QemuDsaDevice *instance)
+> +{
+> +    if (instance->work_queue != MAP_FAILED) {
+> +        munmap(instance->work_queue, DSA_WQ_PORTAL_SIZE);
+> +    }
+> +}
+> +
+> +/**
+> + * @brief Initializes a DSA device group.
+> + *
+> + * @param group A pointer to the DSA device group.
+> + * @param dsa_parameter A list of DSA device path from are separated by space
+> + * character migration parameter. Multiple DSA device path.
+> + *
+> + * @return Zero if successful, non-zero otherwise.
+> + */
+> +static int
+> +dsa_device_group_init(QemuDsaDeviceGroup *group,
+> +                      const strList *dsa_parameter,
+> +                      Error **errp)
+> +{
+> +    if (dsa_parameter == NULL) {
+> +        error_setg(errp, "dsa device path is not supplied.");
+> +        return -1;
+> +    }
+> +
+> +    int ret = 0;
+> +    const char *dsa_path[MAX_DSA_DEVICES];
+> +    int num_dsa_devices = 0;
+> +
+> +    while (dsa_parameter) {
+> +        dsa_path[num_dsa_devices++] = dsa_parameter->value;
+> +        if (num_dsa_devices == MAX_DSA_DEVICES) {
+> +            break;
+> +        }
+> +        dsa_parameter = dsa_parameter->next;
+> +    }
+> +
+> +    group->dsa_devices =
+> +        g_new0(QemuDsaDevice, num_dsa_devices);
+> +    group->num_dsa_devices = num_dsa_devices;
+> +    group->device_allocator_index = 0;
+> +
+> +    group->running = false;
+> +    qemu_mutex_init(&group->task_queue_lock);
+> +    qemu_cond_init(&group->task_queue_cond);
+> +    QSIMPLEQ_INIT(&group->task_queue);
+> +
+> +    void *dsa_wq = MAP_FAILED;
+> +    for (int i = 0; i < num_dsa_devices; i++) {
+> +        dsa_wq = map_dsa_device(dsa_path[i]);
+> +        if (dsa_wq == MAP_FAILED) {
+> +            error_setg(errp, "map_dsa_device failed MAP_FAILED.");
+> +            ret = -1;
+> +            goto exit;
 
-More tests will be added later.
+This will leave subsequent dsa_devices uninitialized after
+map_dsa_device fails for the i-th device, but the loop at
+dsa_device_group_cleanup() still passes all of them into
+dsa_device_cleanup(), so the check != MAP_FAILED there will be true.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
----
- tests/qtest/libqos/meson.build   |  4 ++
- tests/qtest/libqos/riscv-iommu.c | 76 ++++++++++++++++++++++++++++
- tests/qtest/libqos/riscv-iommu.h | 71 ++++++++++++++++++++++++++
- tests/qtest/meson.build          |  1 +
- tests/qtest/riscv-iommu-test.c   | 85 ++++++++++++++++++++++++++++++++
- 5 files changed, 237 insertions(+)
- create mode 100644 tests/qtest/libqos/riscv-iommu.c
- create mode 100644 tests/qtest/libqos/riscv-iommu.h
- create mode 100644 tests/qtest/riscv-iommu-test.c
+> +        }
+> +        dsa_device_init(&dsa_group.dsa_devices[i], dsa_wq);
 
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 270439c2df..46f130ccfd 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -67,6 +67,10 @@ if have_virtfs
-   libqos_srcs += files('virtio-9p.c', 'virtio-9p-client.c')
- endif
- 
-+if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
-+  libqos_srcs += files('riscv-iommu.c')
-+endif
-+
- libqos = static_library('qos', libqos_srcs + genh,
-                         build_by_default: false)
- 
-diff --git a/tests/qtest/libqos/riscv-iommu.c b/tests/qtest/libqos/riscv-iommu.c
-new file mode 100644
-index 0000000000..01e3b31c0b
---- /dev/null
-+++ b/tests/qtest/libqos/riscv-iommu.c
-@@ -0,0 +1,76 @@
-+/*
-+ * libqos driver riscv-iommu-pci framework
-+ *
-+ * Copyright (c) 2024 Ventana Micro Systems Inc.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at your
-+ * option) any later version.  See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "qemu/module.h"
-+#include "qgraph.h"
-+#include "pci.h"
-+#include "riscv-iommu.h"
-+
-+static void *riscv_iommu_pci_get_driver(void *obj, const char *interface)
-+{
-+    QRISCVIOMMU *r_iommu_pci = obj;
-+
-+    if (!g_strcmp0(interface, "pci-device")) {
-+        return &r_iommu_pci->dev;
-+    }
-+
-+    fprintf(stderr, "%s not present in riscv_iommu_pci\n", interface);
-+    g_assert_not_reached();
-+}
-+
-+static void riscv_iommu_pci_start_hw(QOSGraphObject *obj)
-+{
-+    QRISCVIOMMU *pci = (QRISCVIOMMU *)obj;
-+    qpci_device_enable(&pci->dev);
-+}
-+
-+static void riscv_iommu_pci_destructor(QOSGraphObject *obj)
-+{
-+    QRISCVIOMMU *pci = (QRISCVIOMMU *)obj;
-+    qpci_iounmap(&pci->dev, pci->reg_bar);
-+}
-+
-+static void *riscv_iommu_pci_create(void *pci_bus, QGuestAllocator *alloc,
-+                                    void *addr)
-+{
-+    QRISCVIOMMU *r_iommu_pci = g_new0(QRISCVIOMMU, 1);
-+    QPCIBus *bus = pci_bus;
-+
-+    qpci_device_init(&r_iommu_pci->dev, bus, addr);
-+    r_iommu_pci->reg_bar = qpci_iomap(&r_iommu_pci->dev, 0, NULL);
-+
-+    r_iommu_pci->obj.get_driver = riscv_iommu_pci_get_driver;
-+    r_iommu_pci->obj.start_hw = riscv_iommu_pci_start_hw;
-+    r_iommu_pci->obj.destructor = riscv_iommu_pci_destructor;
-+    return &r_iommu_pci->obj;
-+}
-+
-+static void riscv_iommu_pci_register_nodes(void)
-+{
-+    QPCIAddress addr = {
-+        .vendor_id = RISCV_IOMMU_PCI_VENDOR_ID,
-+        .device_id = RISCV_IOMMU_PCI_DEVICE_ID,
-+        .devfn = QPCI_DEVFN(1, 0),
-+    };
-+
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "addr=01.0",
-+    };
-+
-+    add_qpci_address(&opts, &addr);
-+
-+    qos_node_create_driver("riscv-iommu-pci", riscv_iommu_pci_create);
-+    qos_node_produces("riscv-iommu-pci", "pci-device");
-+    qos_node_consumes("riscv-iommu-pci", "pci-bus", &opts);
-+}
-+
-+libqos_init(riscv_iommu_pci_register_nodes);
-diff --git a/tests/qtest/libqos/riscv-iommu.h b/tests/qtest/libqos/riscv-iommu.h
-new file mode 100644
-index 0000000000..d123efb41f
---- /dev/null
-+++ b/tests/qtest/libqos/riscv-iommu.h
-@@ -0,0 +1,71 @@
-+/*
-+ * libqos driver riscv-iommu-pci framework
-+ *
-+ * Copyright (c) 2024 Ventana Micro Systems Inc.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at your
-+ * option) any later version.  See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#ifndef TESTS_LIBQOS_RISCV_IOMMU_H
-+#define TESTS_LIBQOS_RISCV_IOMMU_H
-+
-+#include "qgraph.h"
-+#include "pci.h"
-+#include "qemu/bitops.h"
-+
-+#ifndef GENMASK_ULL
-+#define GENMASK_ULL(h, l) (((~0ULL) >> (63 - (h) + (l))) << (l))
-+#endif
-+
-+/*
-+ * RISC-V IOMMU uses PCI_VENDOR_ID_REDHAT 0x1b36 and
-+ * PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014.
-+ */
-+#define RISCV_IOMMU_PCI_VENDOR_ID       0x1b36
-+#define RISCV_IOMMU_PCI_DEVICE_ID       0x0014
-+#define RISCV_IOMMU_PCI_DEVICE_CLASS    0x0806
-+
-+/* Common field positions */
-+#define RISCV_IOMMU_QUEUE_ENABLE        BIT(0)
-+#define RISCV_IOMMU_QUEUE_INTR_ENABLE   BIT(1)
-+#define RISCV_IOMMU_QUEUE_MEM_FAULT     BIT(8)
-+#define RISCV_IOMMU_QUEUE_ACTIVE        BIT(16)
-+#define RISCV_IOMMU_QUEUE_BUSY          BIT(17)
-+
-+#define RISCV_IOMMU_REG_CAP             0x0000
-+#define RISCV_IOMMU_CAP_VERSION         GENMASK_ULL(7, 0)
-+
-+#define RISCV_IOMMU_REG_DDTP            0x0010
-+#define RISCV_IOMMU_DDTP_BUSY           BIT_ULL(4)
-+#define RISCV_IOMMU_DDTP_MODE           GENMASK_ULL(3, 0)
-+#define RISCV_IOMMU_DDTP_MODE_OFF       0
-+
-+#define RISCV_IOMMU_REG_CQCSR           0x0048
-+#define RISCV_IOMMU_CQCSR_CQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_CQCSR_CIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_CQCSR_CQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_CQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+#define RISCV_IOMMU_REG_FQCSR           0x004C
-+#define RISCV_IOMMU_FQCSR_FQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_FQCSR_FIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_FQCSR_FQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_FQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+#define RISCV_IOMMU_REG_PQCSR           0x0050
-+#define RISCV_IOMMU_PQCSR_PQEN          RISCV_IOMMU_QUEUE_ENABLE
-+#define RISCV_IOMMU_PQCSR_PIE           RISCV_IOMMU_QUEUE_INTR_ENABLE
-+#define RISCV_IOMMU_PQCSR_PQON          RISCV_IOMMU_QUEUE_ACTIVE
-+#define RISCV_IOMMU_PQCSR_BUSY          RISCV_IOMMU_QUEUE_BUSY
-+
-+#define RISCV_IOMMU_REG_IPSR            0x0054
-+
-+typedef struct QRISCVIOMMU {
-+    QOSGraphObject obj;
-+    QPCIDevice dev;
-+    QPCIBar reg_bar;
-+} QRISCVIOMMU;
-+
-+#endif
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 2b90abf000..75b382ec00 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -300,6 +300,7 @@ qos_test_ss.add(
-   'vmxnet3-test.c',
-   'igb-test.c',
-   'ufs-test.c',
-+  'riscv-iommu-test.c',
- )
- 
- if config_all_devices.has_key('CONFIG_VIRTIO_SERIAL')
-diff --git a/tests/qtest/riscv-iommu-test.c b/tests/qtest/riscv-iommu-test.c
-new file mode 100644
-index 0000000000..be72cf3d74
---- /dev/null
-+++ b/tests/qtest/riscv-iommu-test.c
-@@ -0,0 +1,85 @@
-+/*
-+ * QTest testcase for RISC-V IOMMU
-+ *
-+ * Copyright (c) 2024 Ventana Micro Systems Inc.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at your
-+ * option) any later version.  See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+#include "qemu/module.h"
-+#include "libqos/qgraph.h"
-+#include "libqos/riscv-iommu.h"
-+#include "hw/pci/pci_regs.h"
-+
-+static uint32_t riscv_iommu_read_reg32(QRISCVIOMMU *r_iommu, int reg_offset)
-+{
-+    return qpci_io_readl(&r_iommu->dev, r_iommu->reg_bar, reg_offset);
-+}
-+
-+static uint64_t riscv_iommu_read_reg64(QRISCVIOMMU *r_iommu, int reg_offset)
-+{
-+    return qpci_io_readq(&r_iommu->dev, r_iommu->reg_bar, reg_offset);
-+}
-+
-+static void test_pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
-+{
-+    QRISCVIOMMU *r_iommu = obj;
-+    QPCIDevice *dev = &r_iommu->dev;
-+    uint16_t vendorid, deviceid, classid;
-+
-+    vendorid = qpci_config_readw(dev, PCI_VENDOR_ID);
-+    deviceid = qpci_config_readw(dev, PCI_DEVICE_ID);
-+    classid = qpci_config_readw(dev, PCI_CLASS_DEVICE);
-+
-+    g_assert_cmpuint(vendorid, ==, RISCV_IOMMU_PCI_VENDOR_ID);
-+    g_assert_cmpuint(deviceid, ==, RISCV_IOMMU_PCI_DEVICE_ID);
-+    g_assert_cmpuint(classid, ==, RISCV_IOMMU_PCI_DEVICE_CLASS);
-+}
-+
-+static void test_reg_reset(void *obj, void *data, QGuestAllocator *t_alloc)
-+{
-+    QRISCVIOMMU *r_iommu = obj;
-+    uint64_t cap;
-+    uint32_t reg;
-+
-+    cap = riscv_iommu_read_reg64(r_iommu, RISCV_IOMMU_REG_CAP);
-+    g_assert_cmpuint(cap & RISCV_IOMMU_CAP_VERSION, ==, 0x10);
-+
-+    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_CQCSR);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_CQCSR_CQEN, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_CQCSR_CIE, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_CQCSR_CQON, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_CQCSR_BUSY, ==, 0);
-+
-+    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_FQCSR);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_FQCSR_FQEN, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_FQCSR_FIE, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_FQCSR_FQON, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_FQCSR_BUSY, ==, 0);
-+
-+    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_PQCSR);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_PQCSR_PQEN, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_PQCSR_PIE, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_PQCSR_PQON, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_PQCSR_BUSY, ==, 0);
-+
-+    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_DDTP);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_DDTP_BUSY, ==, 0);
-+    g_assert_cmpuint(reg & RISCV_IOMMU_DDTP_MODE, ==,
-+                     RISCV_IOMMU_DDTP_MODE_OFF);
-+
-+    reg = riscv_iommu_read_reg32(r_iommu, RISCV_IOMMU_REG_IPSR);
-+    g_assert_cmpuint(reg, ==, 0);
-+}
-+
-+static void register_riscv_iommu_test(void)
-+{
-+    qos_add_test("pci_config", "riscv-iommu-pci", test_pci_config, NULL);
-+    qos_add_test("reg_reset", "riscv-iommu-pci", test_reg_reset, NULL);
-+}
-+
-+libqos_init(register_riscv_iommu_test);
--- 
-2.45.2
+I think you mean &group->dsa_devices[i] here.
 
+> +    }
+> +
+> +exit:
+> +    return ret;
+> +}
+> +
+> +/**
+> + * @brief Starts a DSA device group.
+> + *
+> + * @param group A pointer to the DSA device group.
+> + */
+> +static void
+> +dsa_device_group_start(QemuDsaDeviceGroup *group)
+> +{
+> +    group->running = true;
+> +}
+> +
+> +/**
+> + * @brief Stops a DSA device group.
+> + *
+> + * @param group A pointer to the DSA device group.
+> + */
+> +__attribute__((unused))
+> +static void
+> +dsa_device_group_stop(QemuDsaDeviceGroup *group)
+> +{
+> +    group->running = false;
+> +}
+> +
+> +/**
+> + * @brief Cleans up a DSA device group.
+> + *
+> + * @param group A pointer to the DSA device group.
+> + */
+> +static void
+> +dsa_device_group_cleanup(QemuDsaDeviceGroup *group)
+> +{
+> +    if (!group->dsa_devices) {
+> +        return;
+> +    }
+> +    for (int i = 0; i < group->num_dsa_devices; i++) {
+> +        dsa_device_cleanup(&group->dsa_devices[i]);
+> +    }
+> +    g_free(group->dsa_devices);
+> +    group->dsa_devices = NULL;
+> +
+> +    qemu_mutex_destroy(&group->task_queue_lock);
+> +    qemu_cond_destroy(&group->task_queue_cond);
+> +}
+> +
+> +/**
+> + * @brief Returns the next available DSA device in the group.
+> + *
+> + * @param group A pointer to the DSA device group.
+> + *
+> + * @return struct QemuDsaDevice* A pointer to the next available DSA device
+> + *         in the group.
+> + */
+> +__attribute__((unused))
+> +static QemuDsaDevice *
+> +dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
+> +{
+> +    if (group->num_dsa_devices == 0) {
+> +        return NULL;
+> +    }
+> +    uint32_t current = qatomic_fetch_inc(&group->device_allocator_index);
+> +    current %= group->num_dsa_devices;
+> +    return &group->dsa_devices[current];
+> +}
+> +
+> +/**
+> + * @brief Check if DSA is running.
+> + *
+> + * @return True if DSA is running, otherwise false.
+> + */
+> +bool qemu_dsa_is_running(void)
+> +{
+> +    return false;
+> +}
+> +
+> +static void
+> +dsa_globals_init(void)
+> +{
+> +    max_retry_count = UINT32_MAX;
+> +}
+> +
+> +/**
+> + * @brief Initializes DSA devices.
+> + *
+> + * @param dsa_parameter A list of DSA device path from migration parameter.
+> + *
+> + * @return int Zero if successful, otherwise non zero.
+> + */
+> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
+> +{
+> +    dsa_globals_init();
+> +
+> +    return dsa_device_group_init(&dsa_group, dsa_parameter, errp);
+> +}
+> +
+> +/**
+> + * @brief Start logic to enable using DSA.
+> + *
+> + */
+> +void qemu_dsa_start(void)
+> +{
+> +    if (dsa_group.num_dsa_devices == 0) {
+> +        return;
+> +    }
+> +    if (dsa_group.running) {
+> +        return;
+> +    }
+> +    dsa_device_group_start(&dsa_group);
+> +}
+> +
+> +/**
+> + * @brief Stop the device group and the completion thread.
+> + *
+> + */
+> +void qemu_dsa_stop(void)
+> +{
+> +    QemuDsaDeviceGroup *group = &dsa_group;
+> +
+> +    if (!group->running) {
+> +        return;
+> +    }
+> +}
+> +
+> +/**
+> + * @brief Clean up system resources created for DSA offloading.
+> + *
+> + */
+> +void qemu_dsa_cleanup(void)
+> +{
+> +    qemu_dsa_stop();
+> +    dsa_device_group_cleanup(&dsa_group);
+> +}
+> +
+> diff --git a/util/meson.build b/util/meson.build
+> index 5d8bef9891..3360f62923 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -88,6 +88,9 @@ if have_block or have_ga
+>  endif
+>  if have_block
+>    util_ss.add(files('aio-wait.c'))
+> +  if config_host_data.get('CONFIG_DSA_OPT')
+> +    util_ss.add(files('dsa.c'))
+> +  endif
+>    util_ss.add(files('buffer.c'))
+>    util_ss.add(files('bufferiszero.c'))
+>    util_ss.add(files('hbitmap.c'))
 
