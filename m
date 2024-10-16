@@ -4,114 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FC2D2F7C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AC7D2F7C0
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1B8S-0006kF-3W; Wed, 16 Oct 2024 17:00:48 -0400
+	id 1t1B9F-0006xN-Qv; Wed, 16 Oct 2024 17:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1B8Q-0006jy-Fw
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:00:46 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t1B9C-0006wM-LE
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:01:34 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1B8M-0006z3-KI
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:00:46 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3AE411FD0B;
- Wed, 16 Oct 2024 21:00:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729112438; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
- b=QaXX1y7Jucpxnb/tZDUg1un7//MSDOV+uOlyD/tbQMOvTiOncA6NOGCp07MZafAUZyrkbe
- aklHxVbz5FiwYCzDwk8F8CktnJoKe+NcOMgo2DdJxKXgMTXEkYhWu6Xqvs5MFBy4T/hGBs
- UyEzMcPO+shuDeoprXeOGaKr7nYbZ+I=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729112438;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
- b=NUhkM2HLdDzwOqMWbhqUhDsz296erF6adxXIHOK5zoGM8hNTM3Vi3hJonrEy7r1HdV4ezg
- dvrAnCEcro+fgeAA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729112437; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
- b=EXy477gjVrrfSkN3BLe1dWZndkOpHNba8EjyFRKm3R7Q95ZizLlP+pD4/WMoOHFnycJNbq
- JRbrqvAiWzxcgi1xK9Nn0pifZtcH8cDdN3nAyvkYl0bC6qXx3BHuIgfoVLrv2COMdTYM/g
- /naajwTOjyksSm1Ru48i9Ad7tTsxHAw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729112437;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M0saLAt62sotpchHFuArnJMILAtW+DmUbux1LuP9cMU=;
- b=y6lzi76s9Ga7j7kU0kGwpZH0dccnWR4WekYQ8z3M+NLMndfkeMfDSqAlHf0vDQA+LF9Lc+
- W531gdL1nsZPAwCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AE9DB13433;
- Wed, 16 Oct 2024 21:00:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id G5EBHXQpEGdxCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 16 Oct 2024 21:00:36 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yichen Wang <yichen.wang@bytedance.com>, "Dr. David Alan Gilbert"
- <dave@treblig.org>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Marc-A?=
- =?utf-8?Q?ndr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
- <peterx@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: Re: [PATCH v6 03/12] util/dsa: Implement DSA device start and stop
- logic.
-In-Reply-To: <20241009234610.27039-4-yichen.wang@bytedance.com>
-References: <20241009234610.27039-1-yichen.wang@bytedance.com>
- <20241009234610.27039-4-yichen.wang@bytedance.com>
-Date: Wed, 16 Oct 2024 18:00:34 -0300
-Message-ID: <87ttdb3gr1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t1B97-00072F-QN
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 17:01:32 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7ea0ff74b15so170977a12.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 14:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729112487; x=1729717287; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nHlGF3uwwQsKfeXKdvjHdRtK0r/TpN1816UdNGavwgY=;
+ b=H9KZQc5+ZZqcOLCOgz9ItKQiqMdfeg4Bt9OREgYZ4C9VoQ/s8DXebrMG1FgKkKnfG4
+ 9ftk+Oji9AxpNpadWGZSPymMjpJTf3KaGfltBP/TbH0YAKQ6Qlg7SB/Ie7PknUABbLxV
+ kd6fgsVHMQLT9eXBwRB9mte9ibQFJY/upnYM0i/uHwcATshWe+ROrN8NiEHL+I8x5pu5
+ ykcdh849iM9xattg8zXRHuPAjF0Jswl+QFICtblUxqVbgWblPQJqANO7fPDNJgDxUiiW
+ 5rBAguxzNhfAOXHfxo3qf7i1EGJAHqa4pe8rGmKhD04bMjHRs50g3nXpjJXae3MjOIsd
+ cfjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729112487; x=1729717287;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nHlGF3uwwQsKfeXKdvjHdRtK0r/TpN1816UdNGavwgY=;
+ b=ezC5adHQnD1LsSs0R6z8qLPyIBVoyQARWVg77XLzValp3hDKWdsLzM4svjp/k1cib7
+ bUze+MPHDY3TIY5w1fW2PloJ/enQfJpYB+QcDoGlbFaAnmJqV8OLECPHHMFLzvZfBEIZ
+ j2LAZajHxLLUlrwgwym/JBqUZOpafViaKOCuqN90T05S5oVI2hGGy1Z7tK8YSvObPXxJ
+ x0kD/Dp48wj7K7702b9eMQEjn851r2/VARzaBql0Ybz6rXZHiwhiIW7lKokK2JmCts8a
+ Xq7pTzWc+EkQMyO4E3MSGb7ms6TRHw40ufxVcGICaS1cuRg9/JbfvIX4k5Hs/u3/OoZI
+ 6HZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/QpEarLOHiAi5lDhoXHh3XHfBauLf7SZ8ejMMEIGSMpuJr7tEJO2ZlTJKVRjm75tTRrPEruG4g4bL@nongnu.org
+X-Gm-Message-State: AOJu0YwRxWBiedGhr2gkbapehN5/Ho3g2+P9gkA8h5ok7IwZ6yUTFSRe
+ H+jSjuocXD1m3Z2ilp2/MntaVd5HA7hjbDdJRABRVFZn+wuEok4zU6TG8/KARsU=
+X-Google-Smtp-Source: AGHT+IHyCpYZ0ayZYlWfmKixvWOYqKSZ3M4HRtMYnPcqlVoUXfkOr+XIDiNVv7cWnpb+fZ4g+hAgSg==
+X-Received: by 2002:a05:6a20:e18a:b0:1cf:3f2a:d1dd with SMTP id
+ adf61e73a8af0-1d905ec0a73mr7650410637.12.1729112486667; 
+ Wed, 16 Oct 2024 14:01:26 -0700 (PDT)
+Received: from [192.168.0.102] ([187.121.94.4])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7ea9c6c403csm3743942a12.35.2024.10.16.14.01.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Oct 2024 14:01:26 -0700 (PDT)
+Message-ID: <2d4a0d78-f3cc-4644-a9ea-d02114c242b8@linaro.org>
+Date: Wed, 16 Oct 2024 18:01:14 -0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[18]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email, bytedance.com:email,
- suse.de:mid, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 1/4] hw/acpi: Initialize ACPI Hotplug CPU Status with
+ Support for vCPU `Persistence`
+To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com
+Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev,
+ david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org,
+ ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com,
+ alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, linuxarm@huawei.com
+References: <20241014192205.253479-1-salil.mehta@huawei.com>
+ <20241014192205.253479-2-salil.mehta@huawei.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20241014192205.253479-2-salil.mehta@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,443 +112,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yichen Wang <yichen.wang@bytedance.com> writes:
+Hi Salil,
 
-> From: Hao Xiang <hao.xiang@linux.dev>
->
-> * DSA device open and close.
-> * DSA group contains multiple DSA devices.
-> * DSA group configure/start/stop/clean.
->
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+On 10/14/24 16:22, Salil Mehta wrote:
+> Certain CPU architecture specifications [1][2][3] prohibit changes to CPU
+> presence after the kernel has booted. This limitation exists because many system
+> initializations rely on the exact CPU count at boot time and do not expect it to
+> change later. For example, components like interrupt controllers, which are
+> closely tied to CPUs, or various per-CPU features, may not support configuration
+> changes once the kernel has been initialized. This presents a challenge for
+> virtualization features such as vCPU hotplug.
+> 
+> To address this issue, introduce an `is_enabled` state in the `AcpiCpuStatus`,
+> which reflects whether a vCPU has been hot-plugged or hot-unplugged in QEMU,
+> marking it as (un)available in the Guest Kernel. The `is_present` state should
+> be set based on the `acpi_persistent` flag. In cases where unplugged vCPUs need
+> to be deliberately simulated in the ACPI to maintain a persistent view of vCPUs,
+> this flag ensures the guest kernel continues to see those vCPUs.
+> 
+> Additionally, introduce an `acpi_persistent` property that can be used to
+> initialize the ACPI vCPU presence state accordingly. Architectures requiring
+> ACPI to expose a persistent view of vCPUs can override its default value. Refer
+> to the patch-set implelenting vCPU hotplug support for ARM for more details on
+
+nit: implementation
+
+
+Cheers,
+Gustavo
+
+> its usage.
+> 
+> References:
+> [1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
+>      architectures that don’t Support CPU Hotplug (like ARM64)
+>      a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
+>      b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
+> [2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
+>      SoC Based Systems (like ARM64)
+>      Link: https://kvmforum2020.sched.com/event/eE4m
+> [3] Check comment 5 in the bugzilla entry
+>      Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
+> 
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 > ---
->  include/qemu/dsa.h | 103 +++++++++++++++++
->  util/dsa.c         | 282 +++++++++++++++++++++++++++++++++++++++++++++
->  util/meson.build   |   3 +
->  3 files changed, 388 insertions(+)
->  create mode 100644 include/qemu/dsa.h
->  create mode 100644 util/dsa.c
->
-> diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
-> new file mode 100644
-> index 0000000000..501bb8c70d
-> --- /dev/null
-> +++ b/include/qemu/dsa.h
-> @@ -0,0 +1,103 @@
-> +/*
-> + * Interface for using Intel Data Streaming Accelerator to offload certain
-> + * background operations.
-> + *
-> + * Copyright (C) Bytedance Ltd.
-> + *
-> + * Authors:
-> + *  Hao Xiang <hao.xiang@bytedance.com>
-> + *  Yichen Wang <yichen.wang@bytedance.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef QEMU_DSA_H
-> +#define QEMU_DSA_H
-> +
-> +#include "qemu/error-report.h"
-> +#include "qemu/thread.h"
-> +#include "qemu/queue.h"
-> +
-> +#ifdef CONFIG_DSA_OPT
-> +
-> +#pragma GCC push_options
-> +#pragma GCC target("enqcmd")
-> +
-> +#include <linux/idxd.h>
-> +#include "x86intrin.h"
-> +
-> +typedef struct {
-> +    void *work_queue;
-> +} QemuDsaDevice;
-> +
-> +typedef QSIMPLEQ_HEAD(QemuDsaTaskQueue, QemuDsaBatchTask) QemuDsaTaskQueue;
-> +
-> +typedef struct {
-> +    QemuDsaDevice *dsa_devices;
-> +    int num_dsa_devices;
-> +    /* The index of the next DSA device to be used. */
-> +    uint32_t device_allocator_index;
-> +    bool running;
-> +    QemuMutex task_queue_lock;
-> +    QemuCond task_queue_cond;
-> +    QemuDsaTaskQueue task_queue;
-> +} QemuDsaDeviceGroup;
-> +
-> +/**
-> + * @brief Initializes DSA devices.
-> + *
-> + * @param dsa_parameter A list of DSA device path from migration parameter.
-> + *
-> + * @return int Zero if successful, otherwise non zero.
-> + */
-> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp);
-> +
-> +/**
-> + * @brief Start logic to enable using DSA.
-> + */
-> +void qemu_dsa_start(void);
-> +
-> +/**
-> + * @brief Stop the device group and the completion thread.
-> + */
-> +void qemu_dsa_stop(void);
-> +
-> +/**
-> + * @brief Clean up system resources created for DSA offloading.
-> + */
-> +void qemu_dsa_cleanup(void);
-> +
-> +/**
-> + * @brief Check if DSA is running.
-> + *
-> + * @return True if DSA is running, otherwise false.
-> + */
-> +bool qemu_dsa_is_running(void);
-> +
-> +#else
-> +
-> +static inline bool qemu_dsa_is_running(void)
-> +{
-> +    return false;
-> +}
-> +
-> +static inline int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
-> +{
-> +    if (dsa_parameter != NULL && strlen(dsa_parameter) != 0) {
-> +        error_setg(errp, "DSA is not supported.");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static inline void qemu_dsa_start(void) {}
-> +
-> +static inline void qemu_dsa_stop(void) {}
-> +
-> +static inline void qemu_dsa_cleanup(void) {}
-> +
-> +#endif
-> +
-> +#endif
-> diff --git a/util/dsa.c b/util/dsa.c
-> new file mode 100644
-> index 0000000000..54d0e20c29
-> --- /dev/null
-> +++ b/util/dsa.c
-> @@ -0,0 +1,282 @@
-> +/*
-> + * Use Intel Data Streaming Accelerator to offload certain background
-> + * operations.
-> + *
-> + * Copyright (C) Bytedance Ltd.
-> + *
-> + * Authors:
-> + *  Hao Xiang <hao.xiang@bytedance.com>
-> + *  Bryan Zhang <bryan.zhang@bytedance.com>
-> + *  Yichen Wang <yichen.wang@bytedance.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/queue.h"
-> +#include "qemu/memalign.h"
-> +#include "qemu/lockable.h"
-> +#include "qemu/cutils.h"
-> +#include "qemu/dsa.h"
-> +#include "qemu/bswap.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/rcu.h"
-> +
-> +#pragma GCC push_options
-> +#pragma GCC target("enqcmd")
-> +
-> +#include <linux/idxd.h>
-> +#include "x86intrin.h"
-> +
-> +#define DSA_WQ_PORTAL_SIZE 4096
-> +#define MAX_DSA_DEVICES 16
-> +
-> +uint32_t max_retry_count;
-> +static QemuDsaDeviceGroup dsa_group;
-> +
-> +
-> +/**
-> + * @brief This function opens a DSA device's work queue and
-> + *        maps the DSA device memory into the current process.
-> + *
-> + * @param dsa_wq_path A pointer to the DSA device work queue's file path.
-> + * @return A pointer to the mapped memory, or MAP_FAILED on failure.
-> + */
-> +static void *
-> +map_dsa_device(const char *dsa_wq_path)
-> +{
-> +    void *dsa_device;
-> +    int fd;
-> +
-> +    fd = open(dsa_wq_path, O_RDWR);
-> +    if (fd < 0) {
-> +        error_report("Open %s failed with errno = %d.",
-> +                dsa_wq_path, errno);
-> +        return MAP_FAILED;
-> +    }
-> +    dsa_device = mmap(NULL, DSA_WQ_PORTAL_SIZE, PROT_WRITE,
-> +                      MAP_SHARED | MAP_POPULATE, fd, 0);
-> +    close(fd);
-> +    if (dsa_device == MAP_FAILED) {
-> +        error_report("mmap failed with errno = %d.", errno);
-> +        return MAP_FAILED;
-> +    }
-> +    return dsa_device;
-> +}
-> +
-> +/**
-> + * @brief Initializes a DSA device structure.
-> + *
-> + * @param instance A pointer to the DSA device.
-> + * @param work_queue A pointer to the DSA work queue.
-> + */
-> +static void
-> +dsa_device_init(QemuDsaDevice *instance,
-> +                void *dsa_work_queue)
-> +{
-> +    instance->work_queue = dsa_work_queue;
-> +}
-> +
-> +/**
-> + * @brief Cleans up a DSA device structure.
-> + *
-> + * @param instance A pointer to the DSA device to cleanup.
-> + */
-> +static void
-> +dsa_device_cleanup(QemuDsaDevice *instance)
-> +{
-> +    if (instance->work_queue != MAP_FAILED) {
-> +        munmap(instance->work_queue, DSA_WQ_PORTAL_SIZE);
-> +    }
-> +}
-> +
-> +/**
-> + * @brief Initializes a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + * @param dsa_parameter A list of DSA device path from are separated by space
-> + * character migration parameter. Multiple DSA device path.
-> + *
-> + * @return Zero if successful, non-zero otherwise.
-> + */
-> +static int
-> +dsa_device_group_init(QemuDsaDeviceGroup *group,
-> +                      const strList *dsa_parameter,
-> +                      Error **errp)
-> +{
-> +    if (dsa_parameter == NULL) {
-> +        error_setg(errp, "dsa device path is not supplied.");
-> +        return -1;
-> +    }
-> +
-> +    int ret = 0;
-> +    const char *dsa_path[MAX_DSA_DEVICES];
-> +    int num_dsa_devices = 0;
-> +
-> +    while (dsa_parameter) {
-> +        dsa_path[num_dsa_devices++] = dsa_parameter->value;
-> +        if (num_dsa_devices == MAX_DSA_DEVICES) {
-> +            break;
+>   cpu-target.c          |  1 +
+>   hw/acpi/cpu.c         | 35 ++++++++++++++++++++++++++++++++++-
+>   include/hw/acpi/cpu.h | 21 +++++++++++++++++++++
+>   include/hw/core/cpu.h | 21 +++++++++++++++++++++
+>   4 files changed, 77 insertions(+), 1 deletion(-)
+> 
+> diff --git a/cpu-target.c b/cpu-target.c
+> index 499facf774..c8a29ab495 100644
+> --- a/cpu-target.c
+> +++ b/cpu-target.c
+> @@ -200,6 +200,7 @@ static Property cpu_common_props[] = {
+>        */
+>       DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
+>                        MemoryRegion *),
+> +    DEFINE_PROP_BOOL("acpi-persistent", CPUState, acpi_persistent, false),
+>   #endif
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+> index 5cb60ca8bc..083c4010c2 100644
+> --- a/hw/acpi/cpu.c
+> +++ b/hw/acpi/cpu.c
+> @@ -225,7 +225,40 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+>       state->dev_count = id_list->len;
+>       state->devs = g_new0(typeof(*state->devs), state->dev_count);
+>       for (i = 0; i < id_list->len; i++) {
+> -        state->devs[i].cpu =  CPU(id_list->cpus[i].cpu);
+> +        struct CPUState *cpu = CPU(id_list->cpus[i].cpu);
+> +        /*
+> +         * In most architectures, CPUs that are marked as ACPI 'present' are
+> +         * also ACPI 'enabled' by default. These states remain consistent at
+> +         * both the QOM and ACPI levels.
+> +         */
+> +        if (cpu) {
+> +            state->devs[i].is_enabled = true;
+> +            state->devs[i].is_present = true;
+> +            state->devs[i].cpu = cpu;
+> +        } else {
+> +            state->devs[i].is_enabled = false;
+> +            /*
+> +             * In some architectures, even 'unplugged' or 'disabled' QOM CPUs
+> +             * may be exposed as ACPI 'present.' This approach provides a
+> +             * persistent view of the vCPUs to the guest kernel. This could be
+> +             * due to an architectural constraint that requires every per-CPU
+> +             * component to be present at boot time, meaning the exact count of
+> +             * vCPUs must be known and cannot be altered after the kernel has
+> +             * booted. As a result, the vCPU states at the QOM and ACPI levels
+> +             * might become inconsistent. However, in such cases, the presence
+> +             * of vCPUs has been deliberately simulated at the ACPI level.
+> +             */
+> +            if (acpi_persistent_cpu(first_cpu)) {
+> +                state->devs[i].is_present = true;
+> +                /*
+> +                 * `CPUHotplugState::AcpiCpuStatus::cpu` becomes insignificant
+> +                 * in this case
+> +                 */
+> +            } else {
+> +                state->devs[i].is_present = false;
+> +                state->devs[i].cpu = cpu;
+> +            }
 > +        }
-> +        dsa_parameter = dsa_parameter->next;
-> +    }
+>           state->devs[i].arch_id = id_list->cpus[i].arch_id;
+>       }
+>       memory_region_init_io(&state->ctrl_reg, owner, &cpu_hotplug_ops, state,
+> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+> index 32654dc274..bd3f9973c9 100644
+> --- a/include/hw/acpi/cpu.h
+> +++ b/include/hw/acpi/cpu.h
+> @@ -26,6 +26,8 @@ typedef struct AcpiCpuStatus {
+>       uint64_t arch_id;
+>       bool is_inserting;
+>       bool is_removing;
+> +    bool is_present;
+> +    bool is_enabled;
+>       bool fw_remove;
+>       uint32_t ost_event;
+>       uint32_t ost_status;
+> @@ -75,4 +77,23 @@ extern const VMStateDescription vmstate_cpu_hotplug;
+>       VMSTATE_STRUCT(cpuhp, state, 1, \
+>                      vmstate_cpu_hotplug, CPUHotplugState)
+>   
+> +/**
+> + * acpi_persistent_cpu:
+> + * @cpu: The vCPU to check
+> + *
+> + * Checks if the vCPU state should always be reflected as *present* via ACPI
+> + * to the Guest. By default, this is False on all architectures and has to be
+> + * explicity set during initialization.
+> + *
+> + * Returns: True if it is ACPI 'persistent' CPU
+> + *
+> + */
+> +static inline bool acpi_persistent_cpu(CPUState *cpu)
+> +{
+> +    /*
+> +     * returns if 'Presence' of the vCPU is persistent and should be simulated
+> +     * via ACPI even after vCPUs have been unplugged in QOM
+> +     */
+> +    return cpu && cpu->acpi_persistent;
+> +}
+>   #endif
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 04e9ad4996..299e96c45b 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -542,6 +542,27 @@ struct CPUState {
+>       CPUPluginState *plugin_state;
+>   #endif
+>   
+> +    /*
+> +     * To implement the vCPU hotplug feature (which simulates CPU hotplug
+> +     * behavior), we need to dynamically create and destroy QOM vCPU objects,
+> +     * and (de)associate them with pre-existing KVM vCPUs while (un)parking the
+> +     * KVM vCPU context. One challenge is ensuring that these dynamically
+> +     * appearing or disappearing QOM vCPU objects are accurately reflected
+> +     * through ACPI to the Guest Kernel. Due to architectural constraints,
+> +     * changing the number of vCPUs after the guest kernel has booted may not
+> +     * always be possible.
+> +     *
+> +     * In certain architectures, to provide the guest kernel with a *persistent*
+> +     * view of vCPU presence, even when the QOM does not have a corresponding
+> +     * vCPU object, ACPI may simulate the presence of vCPUs by marking them as
+> +     * ACPI-disabled. This is achieved by setting `_STA.PRES=True` and
+> +     * `_STA.Ena=False` for unplugged vCPUs in QEMU's QOM.
+> +     *
+> +     * By default, this flag is set to `FALSE`, and it must be explicitly set
+> +     * to `TRUE` for architectures like ARM.
+> +     */
+> +    bool acpi_persistent;
 > +
-> +    group->dsa_devices =
-> +        g_new0(QemuDsaDevice, num_dsa_devices);
-> +    group->num_dsa_devices = num_dsa_devices;
-> +    group->device_allocator_index = 0;
-> +
-> +    group->running = false;
-> +    qemu_mutex_init(&group->task_queue_lock);
-> +    qemu_cond_init(&group->task_queue_cond);
-> +    QSIMPLEQ_INIT(&group->task_queue);
-> +
-> +    void *dsa_wq = MAP_FAILED;
-> +    for (int i = 0; i < num_dsa_devices; i++) {
-> +        dsa_wq = map_dsa_device(dsa_path[i]);
-> +        if (dsa_wq == MAP_FAILED) {
-> +            error_setg(errp, "map_dsa_device failed MAP_FAILED.");
-> +            ret = -1;
-> +            goto exit;
+>       /* TODO Move common fields from CPUArchState here. */
+>       int cpu_index;
+>       int cluster_index;
 
-This will leave subsequent dsa_devices uninitialized after
-map_dsa_device fails for the i-th device, but the loop at
-dsa_device_group_cleanup() still passes all of them into
-dsa_device_cleanup(), so the check != MAP_FAILED there will be true.
-
-> +        }
-> +        dsa_device_init(&dsa_group.dsa_devices[i], dsa_wq);
-
-I think you mean &group->dsa_devices[i] here.
-
-> +    }
-> +
-> +exit:
-> +    return ret;
-> +}
-> +
-> +/**
-> + * @brief Starts a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +static void
-> +dsa_device_group_start(QemuDsaDeviceGroup *group)
-> +{
-> +    group->running = true;
-> +}
-> +
-> +/**
-> + * @brief Stops a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +__attribute__((unused))
-> +static void
-> +dsa_device_group_stop(QemuDsaDeviceGroup *group)
-> +{
-> +    group->running = false;
-> +}
-> +
-> +/**
-> + * @brief Cleans up a DSA device group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + */
-> +static void
-> +dsa_device_group_cleanup(QemuDsaDeviceGroup *group)
-> +{
-> +    if (!group->dsa_devices) {
-> +        return;
-> +    }
-> +    for (int i = 0; i < group->num_dsa_devices; i++) {
-> +        dsa_device_cleanup(&group->dsa_devices[i]);
-> +    }
-> +    g_free(group->dsa_devices);
-> +    group->dsa_devices = NULL;
-> +
-> +    qemu_mutex_destroy(&group->task_queue_lock);
-> +    qemu_cond_destroy(&group->task_queue_cond);
-> +}
-> +
-> +/**
-> + * @brief Returns the next available DSA device in the group.
-> + *
-> + * @param group A pointer to the DSA device group.
-> + *
-> + * @return struct QemuDsaDevice* A pointer to the next available DSA device
-> + *         in the group.
-> + */
-> +__attribute__((unused))
-> +static QemuDsaDevice *
-> +dsa_device_group_get_next_device(QemuDsaDeviceGroup *group)
-> +{
-> +    if (group->num_dsa_devices == 0) {
-> +        return NULL;
-> +    }
-> +    uint32_t current = qatomic_fetch_inc(&group->device_allocator_index);
-> +    current %= group->num_dsa_devices;
-> +    return &group->dsa_devices[current];
-> +}
-> +
-> +/**
-> + * @brief Check if DSA is running.
-> + *
-> + * @return True if DSA is running, otherwise false.
-> + */
-> +bool qemu_dsa_is_running(void)
-> +{
-> +    return false;
-> +}
-> +
-> +static void
-> +dsa_globals_init(void)
-> +{
-> +    max_retry_count = UINT32_MAX;
-> +}
-> +
-> +/**
-> + * @brief Initializes DSA devices.
-> + *
-> + * @param dsa_parameter A list of DSA device path from migration parameter.
-> + *
-> + * @return int Zero if successful, otherwise non zero.
-> + */
-> +int qemu_dsa_init(const strList *dsa_parameter, Error **errp)
-> +{
-> +    dsa_globals_init();
-> +
-> +    return dsa_device_group_init(&dsa_group, dsa_parameter, errp);
-> +}
-> +
-> +/**
-> + * @brief Start logic to enable using DSA.
-> + *
-> + */
-> +void qemu_dsa_start(void)
-> +{
-> +    if (dsa_group.num_dsa_devices == 0) {
-> +        return;
-> +    }
-> +    if (dsa_group.running) {
-> +        return;
-> +    }
-> +    dsa_device_group_start(&dsa_group);
-> +}
-> +
-> +/**
-> + * @brief Stop the device group and the completion thread.
-> + *
-> + */
-> +void qemu_dsa_stop(void)
-> +{
-> +    QemuDsaDeviceGroup *group = &dsa_group;
-> +
-> +    if (!group->running) {
-> +        return;
-> +    }
-> +}
-> +
-> +/**
-> + * @brief Clean up system resources created for DSA offloading.
-> + *
-> + */
-> +void qemu_dsa_cleanup(void)
-> +{
-> +    qemu_dsa_stop();
-> +    dsa_device_group_cleanup(&dsa_group);
-> +}
-> +
-> diff --git a/util/meson.build b/util/meson.build
-> index 5d8bef9891..3360f62923 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -88,6 +88,9 @@ if have_block or have_ga
->  endif
->  if have_block
->    util_ss.add(files('aio-wait.c'))
-> +  if config_host_data.get('CONFIG_DSA_OPT')
-> +    util_ss.add(files('dsa.c'))
-> +  endif
->    util_ss.add(files('buffer.c'))
->    util_ss.add(files('bufferiszero.c'))
->    util_ss.add(files('hbitmap.c'))
 
