@@ -4,80 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECACD1AD35
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 09:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2087D1AD38
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 09:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t10Mv-0006VD-5j; Wed, 16 Oct 2024 05:31:01 -0400
+	id 1t10WI-0008HU-28; Wed, 16 Oct 2024 05:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t10Mu-0006V5-Ci
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 05:31:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t10WE-0008GW-Uq; Wed, 16 Oct 2024 05:40:39 -0400
+Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t10Ms-0002cz-G5
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 05:31:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729071057;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DHSIvXqPAfmaUCm9uydRM3LXJx5OOQFCrvQmnAkDaR8=;
- b=Ff8pcXt6SDv8IyiQfsQ49gU6x0Zuz2kmPYmFcutosilWK8fXedvqjLb9goaT8/Oo/l/HCD
- /eVxz2b3+Rqge4+G27Mf7iBzzZ0jHalnksICEYj6a4nnF5PFkMKNV0OopT9GA6wUXaES5M
- r9nM21dvISvzWH74n0fzl7zYMkYdZ1w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-XRGil9cnMwSjfpKZPos3GQ-1; Wed,
- 16 Oct 2024 05:30:53 -0400
-X-MC-Unique: XRGil9cnMwSjfpKZPos3GQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C988F19560B1; Wed, 16 Oct 2024 09:30:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.95])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B927F30001A6; Wed, 16 Oct 2024 09:30:44 +0000 (UTC)
-Date: Wed, 16 Oct 2024 10:30:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] tests/functional: Convert most Aspeed machine tests
-Message-ID: <Zw-HwHsGaO0W2fbc@redhat.com>
-References: <20241016090741.2026630-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t10WB-0003qF-Gy; Wed, 16 Oct 2024 05:40:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1729071622; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=L/9BepXgg8FK+oaCHRxAAyovIr3rd5a4/hNairMCdZI=;
+ b=lvNwHSQqMjoO6Y2Ax5fhC1CmmeJQqbtiOut00LUScuWRvJTSc+WBoeRQwQ07ifheXwXEUp0ryl7mNkc7lp/MFH382pncyM/161oBRusqROn9NSULU332L5M3g2C763Aps7QsiJjzQhZwlBhPo2u8c6fgGZtaB7OyDE+a1I5R4yA=
+Received: from 30.166.64.81(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WHGyT-N_1729071618 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 16 Oct 2024 17:40:19 +0800
+Message-ID: <f4ae3ad2-bd3e-4b9e-9013-b890e561df0a@linux.alibaba.com>
+Date: Wed, 16 Oct 2024 17:40:17 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/8] target/riscv: Add Ssdbltrp CSRs handling
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
+ qemu-devel@nongnu.org
+References: <20241014112225.90297-1-cleger@rivosinc.com>
+ <20241014112225.90297-2-cleger@rivosinc.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20241014112225.90297-2-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241016090741.2026630-1-clg@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,95 +70,277 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 16, 2024 at 11:07:41AM +0200, Cédric Le Goater wrote:
-> This is a simple conversion of the tests with some cleanups and
-> adjustments to match the new test framework. Replace the zephyr image
-> MD5 hashes with SHA256 hashes while at it.
-> 
-> The SDK tests depend on a ssh class from avocado.utils which is
-> difficult to replace. To be addressed separately.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+
+On 2024/10/14 19:22, Clément Léger wrote:
+> Add ext_ssdbltrp in RISCVCPUConfig and implement MSTATUS.SDT,
+> {H|M}ENVCFG.DTE and modify the availability of MTVAL2 based on the
+> presence of the Ssdbltrp ISA extension.
+>
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->  tests/avocado/machine_aspeed.py     | 252 --------------------------
->  tests/functional/meson.build        |   2 +
->  tests/functional/test_arm_aspeed.py | 269 ++++++++++++++++++++++++++++
->  3 files changed, 271 insertions(+), 252 deletions(-)
->  create mode 100644 tests/functional/test_arm_aspeed.py
-> 
-> diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-> new file mode 100644
-> index 000000000000..2f9a90f64d8f
-> --- /dev/null
-> +++ b/tests/functional/test_arm_aspeed.py
-> @@ -0,0 +1,269 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED SoCs with firmware
-> +#
-> +# Copyright (C) 2022 ASPEED Technology Inc
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+>   target/riscv/cpu.h        |  1 +
+>   target/riscv/cpu_bits.h   |  6 ++++++
+>   target/riscv/cpu_cfg.h    |  1 +
+>   target/riscv/cpu_helper.c | 20 +++++++++++++++++
+>   target/riscv/csr.c        | 45 ++++++++++++++++++++++++++++++---------
+>   5 files changed, 63 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index a84e719d3f..ee984bf270 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -553,6 +553,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
+>   bool riscv_cpu_vector_enabled(CPURISCVState *env);
+>   void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+>   int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt);
+>   G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+>                                                  MMUAccessType access_type,
+>                                                  int mmu_idx, uintptr_t retaddr);
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index da1723496c..3a5588d4df 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -558,6 +558,7 @@
+>   #define MSTATUS_TVM         0x00100000 /* since: priv-1.10 */
+>   #define MSTATUS_TW          0x00200000 /* since: priv-1.10 */
+>   #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
+> +#define MSTATUS_SDT         0x01000000
+>   #define MSTATUS_GVA         0x4000000000ULL
+>   #define MSTATUS_MPV         0x8000000000ULL
+>   
+> @@ -588,6 +589,7 @@ typedef enum {
+>   #define SSTATUS_XS          0x00018000
+>   #define SSTATUS_SUM         0x00040000 /* since: priv-1.10 */
+>   #define SSTATUS_MXR         0x00080000
+> +#define SSTATUS_SDT         0x01000000
+>   
+>   #define SSTATUS64_UXL       0x0000000300000000ULL
+>   
+> @@ -777,11 +779,13 @@ typedef enum RISCVException {
+>   #define MENVCFG_CBIE                       (3UL << 4)
+>   #define MENVCFG_CBCFE                      BIT(6)
+>   #define MENVCFG_CBZE                       BIT(7)
+> +#define MENVCFG_DTE                        (1ULL << 59)
+>   #define MENVCFG_ADUE                       (1ULL << 61)
+>   #define MENVCFG_PBMTE                      (1ULL << 62)
+>   #define MENVCFG_STCE                       (1ULL << 63)
+>   
+>   /* For RV32 */
+> +#define MENVCFGH_DTE                       BIT(27)
+>   #define MENVCFGH_ADUE                      BIT(29)
+>   #define MENVCFGH_PBMTE                     BIT(30)
+>   #define MENVCFGH_STCE                      BIT(31)
+> @@ -795,11 +799,13 @@ typedef enum RISCVException {
+>   #define HENVCFG_CBIE                       MENVCFG_CBIE
+>   #define HENVCFG_CBCFE                      MENVCFG_CBCFE
+>   #define HENVCFG_CBZE                       MENVCFG_CBZE
+> +#define HENVCFG_DTE                        MENVCFG_DTE
+>   #define HENVCFG_ADUE                       MENVCFG_ADUE
+>   #define HENVCFG_PBMTE                      MENVCFG_PBMTE
+>   #define HENVCFG_STCE                       MENVCFG_STCE
+>   
+>   /* For RV32 */
+> +#define HENVCFGH_DTE                        MENVCFGH_DTE
+>   #define HENVCFGH_ADUE                       MENVCFGH_ADUE
+>   #define HENVCFGH_PBMTE                      MENVCFGH_PBMTE
+>   #define HENVCFGH_STCE                       MENVCFGH_STCE
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index ae2a945b5f..dd804f95d4 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -77,6 +77,7 @@ struct RISCVCPUConfig {
+>       bool ext_smstateen;
+>       bool ext_sstc;
+>       bool ext_smcntrpmf;
+> +    bool ext_ssdbltrp;
+>       bool ext_svadu;
+>       bool ext_svinval;
+>       bool ext_svnapot;
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 9d0400035f..77e7736d8a 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -63,6 +63,22 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+>   #endif
+>   }
+>   
+> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+> +{
+> +#ifdef CONFIG_USER_ONLY
+> +    return false;
+> +#else
+> +    if (!riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +        return false;
+> +    }
+
+As we have guard the write to henvcfg and menvcfg by ext_ssdbltrp, I 
+think it is enough only check henvcfg or menvcfg.
+
+The only miss is we don't guard the writhe to henvcfgh. I think we can 
+add the guard there.
+
+> +    if (virt) {
+> +        return (env->henvcfg & HENVCFG_DTE) != 0;
+> +    } else {
+> +        return (env->menvcfg & MENVCFG_DTE) != 0;
+> +    }
+> +#endif
+> +}
 > +
-> +import os
-> +import time
-> +import subprocess
-> +import tempfile
+>   void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>                             uint64_t *cs_base, uint32_t *pflags)
+>   {
+> @@ -562,6 +578,10 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+>   
+>       g_assert(riscv_has_ext(env, RVH));
+>   
+> +    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
+> +        mstatus_mask |= MSTATUS_SDT;
+> +    }
 > +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test import exec_command_and_wait_for_pattern
-> +from qemu_test import interrupt_interactive_console_until_pattern
-> +from qemu_test import exec_command
-> +from qemu_test import has_cmd
-> +from qemu_test.utils import archive_extract
-> +from zipfile import ZipFile
-> +from unittest import skipUnless
+>       if (current_virt) {
+>           /* Current V=1 and we are about to change to V=0 */
+>           env->vsstatus = env->mstatus & mstatus_mask;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index e5de72453c..d8280ec956 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -540,6 +540,15 @@ static RISCVException aia_hmode32(CPURISCVState *env, int csrno)
+>       return hmode32(env, csrno);
+>   }
+>   
+> +static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
+> +{
+> +    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +        return RISCV_EXCP_NONE;
+> +    }
 > +
-> +class AST1030Machine(QemuSystemTest):
+> +    return hmode(env, csrno);
+> +}
 > +
-> +    def test_ast1030_zephyros_1_04(self):
-> +        asset_url = Asset(
-> +            ('https://github.com/AspeedTech-BMC'
-> +             '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip'),
-> +            '4ac6210adcbc61294927918707c6762483fd844dde5e07f3ba834ad1f91434d3')
-
-Don't instantiate assets inline to test code, as this makes them
-invisible to the logic that pre-downloads assets prior to running
-tests. As a result you're liable to have test timeouts if the
-on-the-fly asset download takes too long.
-
-Instead You should use a class level varible with an "ASSET_" name
-prefix eg
-
-   ASSET_<BLAH> = Asset(....)
-
-See other converted tests for examples of the pattern.
-
-> +        kernel_name = "ast1030-evb-demo/zephyr.elf"
-> +        zip_file = asset_url.fetch()
-> +        with ZipFile(zip_file, 'r') as zf:
-> +                     zf.extract(kernel_name, path=self.workdir)
-> +        kernel_file = os.path.join(self.workdir, kernel_name)
+>   static RISCVException pmp(CPURISCVState *env, int csrno)
+>   {
+>       if (riscv_cpu_cfg(env)->pmp) {
+> @@ -1402,7 +1411,7 @@ static const target_ulong vs_delegable_excps = DELEGABLE_EXCPS &
+>         (1ULL << (RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT)));
+>   static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE | SSTATUS_SPIE |
+>       SSTATUS_UIE | SSTATUS_UPIE | SSTATUS_SPP | SSTATUS_FS | SSTATUS_XS |
+> -    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS;
+> +    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS | SSTATUS_SDT;
+This breaks  the v_1_10 constraint, as it is not part of 1.10 specification.
+>   
+>   /*
+>    * Spec allows for bits 13:63 to be either read-only or writable.
+> @@ -1600,6 +1609,14 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+>           mask |= MSTATUS_VS;
+>       }
+>   
+> +    if (riscv_env_smode_dbltrp_enabled(env, env->virt_enabled)) {
+> +        mask |= MSTATUS_SDT;
+> +        if ((val & MSTATUS_SDT) != 0) {
+> +            mstatus &= ~MSTATUS_SIE;
+No need to clean it, if MSTATUS_SIE will be cleaned in val.
+> +            val &= ~MSTATUS_SIE;
+> +        }
+> +    }
 > +
-> +        self.set_machine('ast1030-evb')
-> +        self.vm.set_console()
-> +        self.vm.add_args('-kernel', kernel_file, '-nographic')
-> +        self.vm.launch()
-> +        wait_for_console_pattern(self, "Booting Zephyr OS")
-> +        exec_command_and_wait_for_pattern(self, "help",
-> +                                          "Available commands")
-> +
+I think we should also consider vsstatus for SIE field, as 
+write_vsstatus doesn't fall through to write_mstatus.
+>       if (xl != MXL_RV32 || env->debugger) {
+>           if (riscv_has_ext(env, RVH)) {
+>               mask |= MSTATUS_MPV | MSTATUS_GVA;
+> @@ -2354,7 +2371,8 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+>       if (riscv_cpu_mxl(env) == MXL_RV64) {
+>           mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>                   (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+> -                (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+> +                (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+> +                (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>       }
+>       env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
+>   
+> @@ -2374,7 +2392,8 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+>       const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+>       uint64_t mask = (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>                       (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+> -                    (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+> +                    (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+> +                    (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>       uint64_t valh = (uint64_t)val << 32;
+>   
+>       env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
+> @@ -2425,9 +2444,10 @@ static RISCVException read_henvcfg(CPURISCVState *env, int csrno,
+>        * henvcfg.pbmte is read_only 0 when menvcfg.pbmte = 0
+>        * henvcfg.stce is read_only 0 when menvcfg.stce = 0
+>        * henvcfg.adue is read_only 0 when menvcfg.adue = 0
+> +     * henvcfg.dte is read_only 0 when menvcfg.dte = 0
+>        */
+> -    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE) |
+> -                           env->menvcfg);
+> +    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
+> +                             HENVCFG_DTE) | env->menvcfg);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> @@ -2435,6 +2455,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+>                                       target_ulong val)
+>   {
+>       uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
+> +    uint64_t menvcfg_mask;
+>       RISCVException ret;
+>   
+>       ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> @@ -2443,7 +2464,11 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+>       }
+>   
+>       if (riscv_cpu_mxl(env) == MXL_RV64) {
+> -        mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
+> +        menvcfg_mask = HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
+> +        if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+> +            menvcfg_mask |= HENVCFG_DTE;
+> +        }
+> +        mask |= env->menvcfg & menvcfg_mask;
+>       }
+>   
+>       env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
+> @@ -2461,8 +2486,8 @@ static RISCVException read_henvcfgh(CPURISCVState *env, int csrno,
+>           return ret;
+>       }
+>   
+> -    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE) |
+> -                            env->menvcfg)) >> 32;
+> +    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
+> +                              HENVCFG_DTE) | env->menvcfg)) >> 32;
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> @@ -2470,7 +2495,7 @@ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+>                                        target_ulong val)
+>   {
+>       uint64_t mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+> -                                    HENVCFG_ADUE);
+> +                                    HENVCFG_ADUE | HENVCFG_DTE);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Add the ssdbltrp guard here.
 
+Thanks,
+Zhiwei
+
+>       uint64_t valh = (uint64_t)val << 32;
+>       RISCVException ret;
+>   
+> @@ -5246,7 +5271,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+>       [CSR_VSATP]       = { "vsatp",       hmode,   read_vsatp,    write_vsatp,
+>                             .min_priv_ver = PRIV_VERSION_1_12_0                },
+>   
+> -    [CSR_MTVAL2]      = { "mtval2",      hmode,   read_mtval2,   write_mtval2,
+> +    [CSR_MTVAL2]      = { "mtval2", dbltrp_hmode, read_mtval2, write_mtval2,
+>                             .min_priv_ver = PRIV_VERSION_1_12_0                },
+>       [CSR_MTINST]      = { "mtinst",      hmode,   read_mtinst,   write_mtinst,
+>                             .min_priv_ver = PRIV_VERSION_1_12_0                },
 
