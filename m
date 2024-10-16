@@ -4,111 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DF1D206A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 06:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4373D206AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0xrt-0004bx-UR; Wed, 16 Oct 2024 02:50:49 -0400
+	id 1t0yna-0001tn-IP; Wed, 16 Oct 2024 03:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t0xrs-0004bp-Nk
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:50:48 -0400
-Received: from mail-sy4aus01olkn20814.outbound.protection.outlook.com
- ([2a01:111:f403:2819::814]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0ynZ-0001tQ-C8
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:50:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t0xrr-0001ca-8T
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 02:50:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=j+Wb+jh3OWcPlsSjbO9KKujT3zSzX+I4wgEvNz/8yHiyA2ZLzImu2M4A7rnZ2ejLg1G5RxXN7Je/fHLxvyu19YoTPBCQpab0dL86Rz+lFNqTSplcYfvfhlHOunD9HaLoWOxzJBJBHyQOzeQtxRq0CAkcSNGK4uo1RWL0CpUODyY7sIMrh/qAHRIY9nQFYd3ex1BoP00Pi18Xcvz8ls62vhqJfz8A7jk/MXUEhzJeAd1nepe0pOuRps4v7HPQrNQJ7phKty8veKOmsTYiFY/vxQfTpgWgNX8Tem4A1KFxwIEHWG5MB3Lehox374tCRKKwb9NeFSfhbnPlYWi4ZWkrqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cYJbb3ErlLMTZeiN6tRiy6/ewCosD3+NRC17TFUgLWo=;
- b=KSTOVUqHQD7iSIFuGaL2QYjBbG+IxF7uQxCcmzxxgEETlrFDZdkGiGKiVLemUFzN5Sl0RzT9cVL3p4XNAjz0RYJP7EZJTwITi2A37bmG2zxCxQoV+v3QaXFDUTKY/DJwMVXeykBbRzkFGxL0KznM4nGCBQjMMew7vYPfdxd/QH6jEXKQ1yXbD6T0NprLYGGh5ZbWbfoUslqvuidP6AXN/M954D1+Jiz0/P78T1AlU5burqmbsJxMcKnMC0bgKT7AydesMfVVGdku7U/rqvSTQAfxp8bJ1FBJtjVkENutPbaXiYLS7niPGNO/aA6PjDOvg1CGTI2RtIGjngmR8cAC2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cYJbb3ErlLMTZeiN6tRiy6/ewCosD3+NRC17TFUgLWo=;
- b=f4QWf+q6m4RMjfmxHSiu74JyrEVnZjHi+IsWXyfSvKMIHoS24xKOojvscXn+sZ911GjE5EUy30IWVjZy+brO4CJ7VnNtgPQcc+7pDrTYUILQl9X2fdyk+sCJJSHREheUtpeGnszwPXwBpWxi7PO23Oi2x7RTeZMUT/+kAnE7fPd6/QszzTA8PDndfMNf8jCrjvEx40IDkqLd8D4BC9KbZgqlQK06AwYOsE9qnnPbVFl/ICoVTMTRrEe+XHfgzoIeyebdnli5a8Gri9jPQ32PazdQjHwuhG+E5CE7+XzaK+R0/5Hx2Tmm2nE8+XK6eYkdAwB9MHOL9BU0NK1S8mGlBA==
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by ME0P300MB0740.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:230::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.27; Wed, 16 Oct
- 2024 06:50:41 +0000
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.016; Wed, 16 Oct 2024
- 06:50:41 +0000
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-3-pbonzini@redhat.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From: Junjie Mao <junjie.mao@hotmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 02/16] meson: remove repeated search for rust_root_crate.sh
-Date: Wed, 16 Oct 2024 14:50:09 +0800
-In-reply-to: <20241015131735.518771-3-pbonzini@redhat.com>
-Message-ID: <SY0P300MB102634560EAA27EB7973406695462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain
-X-ClientProxiedBy: KL1P15301CA0036.APCP153.PROD.OUTLOOK.COM
- (2603:1096:820:6::24) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <875xpsr16w.fsf@hotmail.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t0ynX-0008Ng-Pv
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:50:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729065021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UtPV3ZIdrjJh+SDwITMQp5GwPAVCo/fSnK41lNQurtU=;
+ b=FtI5p0fACU6dAc5xdDY2smfN9O/Fg3NPJCky58d73Vjd2Bx3t3hkuSQyDyJ2POB6DRrvSK
+ VOgt8BQFOAw1XiX+JumfMg7RGpRzQv48Pzg8eT3ae/WfUpB6qhAooanTCddBeecEM4ieaH
+ yBt5dIHY2rn1RLEdhUIidAQZFA3I1zg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-b4GFMWaKPQy3TW3FPNejqw-1; Wed, 16 Oct 2024 03:50:17 -0400
+X-MC-Unique: b4GFMWaKPQy3TW3FPNejqw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d5116f0a6so2280817f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:50:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729065015; x=1729669815;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UtPV3ZIdrjJh+SDwITMQp5GwPAVCo/fSnK41lNQurtU=;
+ b=o5yeXvpypwp3ruX5L7lYzFQB6PLH61MAIu6ku0X1GwCXtFmM5gIGWk2GBSA/VIbbR6
+ /JX6znowsAtNJ/yM6GwrrqNxmPdw3rDxxoV3Z+CiPhnUW642BXvhIjF915etmK8TYGYk
+ lZnSm7c0hYO1WswV0+/+Ht7WvbsZ4l84tEHa+ZbtpL49VSJWPXimJM8L4AYJWHvta30m
+ t2OWJSDKgAMOQiLboouSFILx22nOCidkic7Fo2nVTSmJ3cyjrLTZQJysSJrpaB+8kMZz
+ 7ZhG61mQXH/2N3VHynXcuIgTTemKswEzdAGj+mepSOZBXY4eRIMiqb3ccAVw275fZRcu
+ EK/w==
+X-Gm-Message-State: AOJu0YzYPLW9LXGPBTs0GQ+nKGtU7CGiCHF67E40SB44uWXEAyv0Ygpz
+ 8zU7s61fEerk+jpZS48ZsWU31E75d5Co+AhQnG/GXvlMB+uG1K2Zs3Krh6MutFIlvHM0zs15BPS
+ xvTjY7XOtBMwKeUyrRcn2CLqYVSVvFYqflN4D7xVWz80W1afw3LV5cu+h6TOKTsRdrTKdExg7te
+ u4OB+mKJmKLbUGC9siVAV+dnFOl1PI1bkMNnZxDw==
+X-Received: by 2002:a5d:4561:0:b0:37d:2edd:b731 with SMTP id
+ ffacd0b85a97d-37d5fee7b29mr9666437f8f.30.1729065014996; 
+ Wed, 16 Oct 2024 00:50:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXdYSLuUipak2aQvz9GBErvcEqO9OoXOYzASWUmAb5ZImilHrw9uU6jmv4Ze6+5BuIJ+nxK6foFGcymwRsYSs=
+X-Received: by 2002:a5d:4561:0:b0:37d:2edd:b731 with SMTP id
+ ffacd0b85a97d-37d5fee7b29mr9666423f8f.30.1729065014635; Wed, 16 Oct 2024
+ 00:50:14 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|ME0P300MB0740:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44f3af68-0184-443d-d4bc-08dcedaed9c7
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|461199028|19110799003|7092599003|5072599009|15080799006|8060799006|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: rcrjcQaWY40GdzvhqbrgBaqeBl6LLgrYsUwKoLgk4yruQ5ettC1jTbrnPXl5GekoXlmlZ/nDajiIYKD721QrlOEigzGE+wXNAOpUfNhyhKHrdT6RIrJolnuYAUCH3zmr3zW/CpCB45SWZRWHHWehLx/63ecwyO339WOxGStvQPcKPu0qa7ZFyH25J1ix0i1InBe5pljcy/8AZROiNm794+RreyT4g4vnB9tXN09MITXHEXMoJOhzGYNihwYVS8tBFrWEZOrnZ9S0gVTP65Xkn+FIq9zYsF699kVVlAkN4Q+RRTqapaoOQ21ZxXojBhdsB5ZzP+U6f6l4Db28pGBLjUKmuibnvOKkaihoqxkaduysbNrSkoLbFOX72XgWAHioWkph3StNe/NGHH9Vhn9i1HV3VTuYmEbEf49gXhHpQQ2BvG4EJTDA8pt3c+s+1I/Zp5kCJnOhJZKU96Yu85sgVbj/dNDsNIMYHuCd63TqaInvK0fr4xN9HvomBrkBaEIs4UGAg+QqBalarsnhI14aoi5DDTMO+P+TX/8Vv5wPivEbTp8J5rwt/T0A8IqZ14VgoK85trngfi5c/3sLpHw5JpqaxwDycGcXnPTQjkvJKVX94FKctd8FzEDsn3QJxXNd439zcefDBGNpbbw7UpcDiG+AaoFh0Z8W8W/4GKkH6lxTTBUiekUueoqYuMtQR0azfQ40FmhB/FQ4UZO+dCFamV2zDKd0cpFp4kYcPAlSZv4=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?h8Zuug2VrN6Bd4g4LiCmsukLu6A+Pn70eFvPWsuQl7jvgAUlmQPBriG1molx?=
- =?us-ascii?Q?0GjXESpSosLV4F1V68PMcMo+DgRwdEhBPdWcT5eItgXf0TGEjMaGwuuntvDA?=
- =?us-ascii?Q?NzK7HrNy1FSHvtzjoTFjnsNyUXkNAsW82atCeX3Iw7VXU3kEI9sXN1cQ4Euo?=
- =?us-ascii?Q?OwBnYd4yyZvkyK/N2KOZeJ469r9UjLhui8+0rEQyahlFjlxuozBEXFn4IbFV?=
- =?us-ascii?Q?VZw3zsdVusfU3i3LYPZvGRImW+Lr/AZfFC/FfWNIZZ+l5aLofpZImpCbsSSx?=
- =?us-ascii?Q?DCEbEaH9rCtjLwP1Lr1VXuEsbE8Ddyjpa5hy2X0yylyoGQCvV+DvnJ9cDO1g?=
- =?us-ascii?Q?4S0Jzo5ditcLVYW9l/Ct1MT2fH4HjlRs5L+wsMx2/if5Q103yIXnIwQZFdwx?=
- =?us-ascii?Q?jbB8aPsb5mOitGeeetUslb/bGmu89EeQHlHo4602uFRntCJ97vafhktZOkcU?=
- =?us-ascii?Q?K46cCWyGL3S4jBDahHSpDBtO2r28GAO23bXQ7V41qBrpgvc5+TQWzMmksqhZ?=
- =?us-ascii?Q?sT8c5CpgpWoMlIW75Rs9VmCWbteuzijN0tTKOjWz/n42VHo8OR74hgHQI018?=
- =?us-ascii?Q?z9dViDxtyh+q91YKSY9ECuS/BSelp0j6hmYNT1pc54mGGlEHhpCS1t8duiv2?=
- =?us-ascii?Q?O3VoncXdA9lypnhfdwzMfNJo0Fh2g+bNLNvuzBokDNRWLj8nW/YQnVh8Y3AE?=
- =?us-ascii?Q?WTvtB5JCai9p0RuyyGZxP10ugui/sodCu/QOgBhyK+sFk+Vd8OZLcF1EeYQb?=
- =?us-ascii?Q?cWvsf5d9M5U8DNSAZcR+qr2DQiaUdlHHweJT0qkQjXtxxTZWRXdow1SBk/mu?=
- =?us-ascii?Q?Ez4ni03AIPXLjjGwIYSR3eA+KZDWs/k3xi8fofOFkW/01pgwnNYWxVVNUxo3?=
- =?us-ascii?Q?seEXA3cP/2ptIgl9VnKBBuURJygb6zrAysAPfYn9JWhn+EK7QFRk94a8AGmV?=
- =?us-ascii?Q?Isrr+C8kmx41QU4D/6TOmGmjc85hzEoib9BXadiTLAKBHiLd+d3Ue0HOXaEz?=
- =?us-ascii?Q?T7ETYX8XXcfuH2U/6Cbys+W6ZpNDIEvR7mIM063TXXDb9/Tqdo02QSk1ZOFY?=
- =?us-ascii?Q?83VUH93/SMWIpLGXnm+BARamZ+URZW3T/m4J0HB5PJ4rcErHajFM6lwhbGeh?=
- =?us-ascii?Q?l66Ug7M8+/vKARtaDao4xBWSSHCYuEdCbNLS/qFYEqj0V51DeCsUkXMGWlmK?=
- =?us-ascii?Q?LfPUuPjabUzfXSgpKNHEXaxLpVgjTmfHRYCf7oY0wrn4JTZ4+yYjkuPFEj4?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44f3af68-0184-443d-d4bc-08dcedaed9c7
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2024 06:50:41.5637 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB0740
-Received-SPF: pass client-ip=2a01:111:f403:2819::814;
- envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-17-pbonzini@redhat.com>
+ <SY0P300MB10263F19AD3FEB043D3D47A195462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB10263F19AD3FEB043D3D47A195462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 16 Oct 2024 09:50:02 +0200
+Message-ID: <CABgObfbkgXM5jG9-JP_BsJQk3Pw_gHMVeQfLOzVuui5TZiojtA@mail.gmail.com>
+Subject: Re: [PATCH 16/16] rust: allow older version of bindgen
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000fdc17006249351ad"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,22 +98,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000fdc17006249351ad
+Content-Type: text/plain; charset="UTF-8"
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Il mer 16 ott 2024, 08:29 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
-> Avoid repeated lines of the form
 >
-> Program scripts/rust/rust_root_crate.sh found: YES (/home/pbonzini/work/upstream/qemu/scripts/rust/rust_root_crate.sh)
+> The bindgen 0.59.1 installed from Ubuntu 22.04 apt source does not
+> support the following args:
 >
-> in the meson logs.
+>     '--formatter', 'rustfmt',
+>     '--merge-extern-blocks',
+>     '--allowlist-file', meson.project_source_root() + '/include/.*',
+>     '--allowlist-file', meson.project_source_root() + '/.*',
+>     '--allowlist-file', meson.project_build_root() + '/.*'
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>
+Ouch. --allowlist-file was added in 0.60, so Debian has it. I think we
+should ask Canonical if they can update bindgen in addition to rustc.
 
-Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+Paolo
 
-Thanks for cleaning this up!
+The first two args are cosmetic and should not hurt if removed (but I
+> need to double check).
+>
+> Removing the allowlist-file, however, causes IPPORT_RESERVED to be
+> generated twice using different types and thus break the
+> build. Allowlists for bindgen 0.59.1 can only be specified as regex on
+> function, type or var. I don't find (yet) an equivalent way of
+> --allowlist-file. A dirty trick is `--blocklist-item IPPORT_RESERVED`,
+> which works but is so ad-hoc.
+>
+> --
+> Best Regards
+> Junjie Mao
+>
+>
 
---
-Best Regards
-Junjie Mao
+--000000000000fdc17006249351ad
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mer 16 ott 2024, 08:29 Junjie Mao &lt;<a href=3D"ma=
+ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>The bindgen 0.5=
+9.1 installed from Ubuntu 22.04 apt source does not<br>
+support the following args:<br>
+<br>
+=C2=A0 =C2=A0 &#39;--formatter&#39;, &#39;rustfmt&#39;,<br>
+=C2=A0 =C2=A0 &#39;--merge-extern-blocks&#39;,<br>
+=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_source_root() + &#3=
+9;/include/.*&#39;,<br>
+=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_source_root() + &#3=
+9;/.*&#39;,<br>
+=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_build_root() + &#39=
+;/.*&#39;<br><br></blockquote></div></div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Ouch. --allowlist-file was added in 0.60, so Debian has it. I =
+think we should ask Canonical if they can update bindgen in addition to rus=
+tc.<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div =
+dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">
+The first two args are cosmetic and should not hurt if removed (but I<br>
+need to double check).<br>
+<br>
+Removing the allowlist-file, however, causes IPPORT_RESERVED to be<br>
+generated twice using different types and thus break the<br>
+build. Allowlists for bindgen 0.59.1 can only be specified as regex on<br>
+function, type or var. I don&#39;t find (yet) an equivalent way of<br>
+--allowlist-file. A dirty trick is `--blocklist-item IPPORT_RESERVED`,<br>
+which works but is so ad-hoc.<br>
+<br>
+--<br>
+Best Regards<br>
+Junjie Mao<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000fdc17006249351ad--
+
 
