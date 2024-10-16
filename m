@@ -4,81 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E209D2A52F
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 17:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A609CD2A536
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 17:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t17Oc-0002Et-5e; Wed, 16 Oct 2024 13:01:14 -0400
+	id 1t17Ot-0002GH-9j; Wed, 16 Oct 2024 13:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t17OZ-0002Ea-Mz
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:11 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t17OX-0002km-FQ
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:11 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6e38fc62b9fso1097027b3.2
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 10:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1729098067; x=1729702867; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jbVyShngESJuQxgCdfZv/jT1lPRNeKyviz+B8g8wqWM=;
- b=ikdQb1pQ279nJBcRZCdk07xZ9G+iZbBD1aaKB3NPrT1qPPuq1R6BKB5ztV4h4IbhsZ
- Dd9zjEf8WLjiljzO6/IcDPR34NIYDuosAFanksKHH2W/7u7DPfvK8JJ4cbn6N18sW5yw
- 6L9r1EbMWO77EgWfsFnhCW2GXaYKmW2JYBav71g+PCQqUU8CrDlaJ1DWYWsJOBSkqbeN
- ZFDyDp2Yg8tbzCc+GKXcO9AGiGKlLdqJD1p+hk0hkCYG1jBjjR6KgQkoxUPzf3bVRbUz
- Mw6wrb2C5jqJuccFqKeL5ew6Leel8eMItz+kl+jQNSnrlIoCgUJxPZ9mU2BJ5F86maIH
- JhHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729098067; x=1729702867;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jbVyShngESJuQxgCdfZv/jT1lPRNeKyviz+B8g8wqWM=;
- b=eGpSl8BjXPPxWBdjuLcsD4njfEdGqExhdIeiZrkGuV539n3oRcG/U+SFmj6NLnn3eZ
- ivMxWERNwAtNmk4K9T2i92gFTShD02zIPicDt67VRnvVG3tAyRC1U0kfrCDYClIQ29aR
- n+1NEO2IuyY+M4yBw24iNrrmkWyq6uw0ArCcSSRw9ICz/Jt88qvH1Xcc/vv9uOiGRQp6
- L3KlB8R9m0Y+h7BeHKsfWN0aV8vJnicu9w3BbFZQJQS3sxe69r3j1gh7O86RZdzcm9V3
- un77zU6RXuxYI0k6CIoqwlteMF94s6IZKoGtGA4ZCM0BQJ7y8EVqTxMTmRArMLc7vRro
- ed3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUU7egRPtcVsMWigHpcXdqm2D0NV8JdABHHgwYfcXK2DWpcVrh5C1SAPr/D0/7+3gegiDQKrU2KQgeC@nongnu.org
-X-Gm-Message-State: AOJu0YyTg3m77leccjYvSQLyNK4I6QEfKU34OBVxjvjUjKTy5ZTZ50ip
- VdgEu+pm0B07gcnSsyJcKih/yIe2RG7kexVMjqMHBWCrJy7jepYGUPu9KYQmPdVqtRdXQgzNKXG
- RhdX70sbeqRmDPx5VfpTTFyxTMtuIFsbUsVdJaM0N9R9JyYiK9Tm3
-X-Google-Smtp-Source: AGHT+IGdru74k08SB1kq28aROQeh/d5FaNjlAHAopACy1cPKkhOta2/YvsSmW27jCBrOuZM2k6trz/6bIrwJJnSx/zs=
-X-Received: by 2002:a05:6102:3913:b0:4a3:ba8c:879 with SMTP id
- ada2fe7eead31-4a475f12a6dmr10897097137.2.1729098055194; Wed, 16 Oct 2024
- 10:00:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t17Or-0002G8-MY
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1t17On-0002lu-LD
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 13:01:29 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GGskAx015412
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GzcGgE
+ eWPvsufjSRiTrwSsFnbW81alfZwC8pOVz+Hy0=; b=FFWji+K1pbfjkotqmPAerN
+ 5HE3OxK0muKUPmOW5ASm53nqmkQxXdxVZaGNxYoCwiWjuors7DMoHXGJKoGdmEF3
+ I3scBpDesaLOfYkzdZI5/+VR5PAZhD96NgCPRF7JIK3s2NkUAmvHODt00ZeHd4s/
+ U8nrdeCU+UwLMNEnGNwrRuPd9FDKXAYxEU8uxrCEdqtT3H1ccgsIHYYE5KxY4dZh
+ goIO3XcmHCOOwbrYbe9DJMmJPPaP5jsCmfkEXKyEBjOdPde1rCxPownHW0yOP0Y9
+ GE8lckOgwUt0dHlRseyZQdP0yzQpHEt5xbpnZ4/SeTfGxLVR6YQTbxxIEySteCrw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ahe100u7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:17 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49GH1HFT028398
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 17:01:17 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ahe100u4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2024 17:01:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GF1qTK005930;
+ Wed, 16 Oct 2024 17:01:16 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 428651262g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2024 17:01:16 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49GH1GsH48234914
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Oct 2024 17:01:16 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C6435805A;
+ Wed, 16 Oct 2024 17:01:16 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 07A9958056;
+ Wed, 16 Oct 2024 17:01:16 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 16 Oct 2024 17:01:15 +0000 (GMT)
+Message-ID: <5558e41c-5d22-481e-9bc7-b46cd65e5d34@linux.ibm.com>
+Date: Wed, 16 Oct 2024 13:01:15 -0400
 MIME-Version: 1.0
-References: <20240906225451.1039718-1-roqueh@google.com>
- <20240906225451.1039718-2-roqueh@google.com>
- <2e4a7aad-02cc-40e6-a647-9e6bdba911a8@linaro.org>
-In-Reply-To: <2e4a7aad-02cc-40e6-a647-9e6bdba911a8@linaro.org>
-From: Roque Arcudia Hernandez <roqueh@google.com>
-Date: Wed, 16 Oct 2024 10:00:43 -0700
-Message-ID: <CAKbPEtZmf7mxYnGE-rjbUSTc25CSJ1PxSefKLx3UDBLA74=e=A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] gdbstub: Fix wrong CPUState pointer in breakpoint
- functions
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
- slongfield@google.com, komlodi@google.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=roqueh@google.com; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] tpm: Use new ptm_cap_n structure for
+ PTM_GET_CAPABILITY
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com
+References: <20241016145708.1166471-1-stefanb@linux.ibm.com>
+ <20241016145708.1166471-2-stefanb@linux.ibm.com>
+ <Zw_VpwVc_qSpJS6y@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <Zw_VpwVc_qSpJS6y@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: tTKQg1pnYTSmOrUS3HtkaRG4Bf4gtn1L
+X-Proofpoint-ORIG-GUID: 4-Y-w8qdd--I8gsTxhxdBus2JTKRFe6I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410160108
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,59 +120,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Philippe,
 
-The Google-Bug-Id is an internal ID and should have been removed. The
-information in the bug was mostly transcribed in the cover letter of
-this patch series.
 
-Thanks
+On 10/16/24 11:03 AM, Daniel P. Berrangé wrote:
+> On Wed, Oct 16, 2024 at 10:57:07AM -0400, Stefan Berger wrote:
+>> Use the new ptm_cap_n structure for getting the PTM_GET_CAPABILITY response
+>> from swtpm. Previously only 17 bits could possibly have been set in ptm_cap
+>> (=uint64_t) in big endian order and those bits are now found in the 2nd
+>> 32bit word in the response in the caps field.
+>>
+>> This data structure makes it now clear that the 1st 32bit word carries the
+>> tpm_result like all the other response structures of all other commands
+>> do.
+>>
+>> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+>> ---
+>>   backends/tpm/tpm_emulator.c | 14 ++++++++------
+>>   backends/tpm/tpm_ioctl.h    | 13 ++++++++++++-
+>>   backends/tpm/trace-events   |  2 +-
+>>   3 files changed, 21 insertions(+), 8 deletions(-)
+>>
+> 
+>> diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
+>> index 1933ab6855..ee2dd15d35 100644
+>> --- a/backends/tpm/tpm_ioctl.h
+>> +++ b/backends/tpm/tpm_ioctl.h
+>> @@ -29,6 +29,16 @@
+>>   
+>>   typedef uint32_t ptm_res;
+>>   
+>> +/* PTM_GET_CAPABILITY: Get supported capabilities (ioctl's) */
+>> +struct ptm_cap_n {
+>> +    union {
+>> +        struct {
+>> +            ptm_res tpm_result; /* will always be TPM_SUCCESS (0) */
+>> +            uint32_t caps;
+>> +        } resp; /* response */
+>> +    } u;
+>> +};
+> 
+> The union here is pointless surely, since it only has one entry and
+> the following patch doesn't add a 2nd either ?
 
-Roque
-
-On Mon, Oct 7, 2024 at 1:06=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> Hi Roque,
->
-> On 6/9/24 19:54, Roque Arcudia Hernandez wrote:
-> > In the context of using the remote gdb with multiple
-> > processes/inferiors (multiple cluster machine) a given breakpoint
-> > will target an specific inferior. If needed the remote protocol will
-> > use the packet 'H op thread-id' with op =3D 'g' to change focus to the
-> > inferior we want to insert/remove the breakpoint to, for instance
-> > 'Hgp3.3' and not 'Hcp3.3'.
-> >
-> > This is supported by the documentation of the H packets:
-> >
-> >   > 'H op thread-id'
-> >   > Set thread for subsequent operations ('m', 'M', 'g', 'G',
-> >   > et.al.). Depending on the operation to be performed, op should be
-> >   > 'c' for step and continue operations (note that this is
-> >   > deprecated, supporting the 'vCont' command is a better option),
-> >   > and 'g' for other operations.
-> >
-> > This can also be verified in the GDB source code file gdb/remote.c.
-> > Functions remote_target::insert_breakpoint and
-> > remote_target::remove_breakpoint will eventually call
-> > remote_target::set_general_thread if it needs to change the process
-> > focus and not remote_target::set_continue_thread.
-> >
-> > This can be seen around a comment that says:
-> >
-> >        /* Make sure the remote is pointing at the right process, if
-> >           necessary.  */
-> >
-> > Google-Bug-Id: 355027002
->
-> Where can we find more information on this bug ID?
-> I tried various query in the Google public tracker but
-> couldn't find anything.
-> (i.e. https://issuetracker.google.com/issues?q=3Dcanonicalid:355027002)
->
-> > Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-> > ---
-> >   gdbstub/gdbstub.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
->
+I did this because all commands have a union.
+> 
+> 
+> With regards,
+> Daniel
 
