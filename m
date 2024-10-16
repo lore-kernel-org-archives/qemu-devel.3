@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5085CD206AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D13D20684
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0ypM-0002XC-Vt; Wed, 16 Oct 2024 03:52:17 -0400
+	id 1t0yu9-0003aJ-2v; Wed, 16 Oct 2024 03:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0ypI-0002Wf-SW
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:52:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0ypF-00007V-5i
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:52:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729065127;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4pjJL3TzOmqSg8OzsBffwHo8tSAJmrGgrN5gd4FR9/c=;
- b=ArUiUNK2dpr/yHJ9DevSfPmXSTXXhzh8R4w0UGk7deSMUsV9PNkuxyGOdNlE1i2aVR+ru8
- j8SluOnSWWS9HjL5DYv5J5VPQN8/iO+d3jvMXPTGn93B93dBitvUkrlnr8m3C19jVx6kEc
- qdP5eN9mC4SI4nDaNS4Yj2KmzFpXGIM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-tmIbimiVPUCi23e1cg7ifA-1; Wed, 16 Oct 2024 03:52:05 -0400
-X-MC-Unique: tmIbimiVPUCi23e1cg7ifA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d531a19a9so2482589f8f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:52:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1t0yu3-0003ZQ-JV
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:57:07 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1t0yu1-0000hJ-Sk
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:57:07 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-20c8c50fdd9so4334225ad.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729065424; x=1729670224;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H9gc6WR+7vJ9WeCpYan0Utue6qlnIehIAkut2ksaHrI=;
+ b=MqFy4XAya8KRZGGi1s+aIulfDNqM/aZmhmvf6Jm760CjJsnKzp106lNsySJwi6vHVl
+ RyxJ/d3AH0XTWJmlKHIsBcePp6prsFxZYhZZESS6SIUJahJxGVyaE5SXigFsRWdDgJik
+ 1xfGzw9x6LQSvjYRItH5qoZG+hzRjo2349YZ6+76YVJjpAk4Dznq49tGN1UswP6nxJxC
+ HjaNOZ4tRh3C/IWPBN4nJON9OHLL1O7LNxfVYsjsWpyD21L9l50ND1XgEyF4/svRTOG/
+ PW5LIws9Ye8z/yKcdQP7b/wRlP9aRJi11Ql8YynLwgB339vnjt8J9gu0BhE52xcLhGg7
+ CPkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729065123; x=1729669923;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4pjJL3TzOmqSg8OzsBffwHo8tSAJmrGgrN5gd4FR9/c=;
- b=C3I5iWsGaWmrxh+7LzjInFAez+HzBgdakzyZBIa1Wwu5dBBhWaNdPDHuDCVWtVSUXn
- 0Bh9OEYT1/WYFlICSk6bE83EC0vWoXtY/a5hJhvzHffmFlePTtw1NgOZZ1rbcejiAqeP
- yVkHfU+X+EkF1Ey6Y+4QJtlGuRl1nGh1vzZeKLuevLIU5ZEqWQY4KP/nCmvcSgAEFvIw
- 01Pk2L4ciPfk63XqfmA6ZSoSCulLMeV7DeC+C1v+7V4oE9Eln7TDbc6fT3XmC/eVbSQj
- hiBwxGt1V0kek5iLNTcrc4FeRzKPLEDYpb/jiQaU6yYhHDf4qSBQZUZe3MIQdKZN7eb3
- nBQA==
-X-Gm-Message-State: AOJu0YxWG4XVw2bBBjVjcPn7M/Me3h1fy209epMyw5wcdBhLQdaLLLyW
- jmhlZNCDYuAevneW64RaId1PEoEQzf6lMa0Zl+v+Z/MsMDGkvraokZaEnYIIeEaj5lBw9dcnPUn
- zhPMkg5CHR7yPnR1SxlfDCstJJdv3G/vkaSYQZglPPY1orF3HK6TV0YQ6hzYzxNVpNzIW2qRhOO
- MaoHa83ynvEqmphPbRa0C8zNK6zdQLMGG41asGpw==
-X-Received: by 2002:a05:6000:194f:b0:37d:4e03:ff8e with SMTP id
- ffacd0b85a97d-37d551fc0bbmr12087404f8f.28.1729065123313; 
- Wed, 16 Oct 2024 00:52:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRINVcCWmCf6hRLQF9QZcJ/vX0kN8PSxzLvWNDi035m1fL8DvC7rW9pK4oS1j/DpsrDGX6VlQOYhmiGY35EWY=
-X-Received: by 2002:a05:6000:194f:b0:37d:4e03:ff8e with SMTP id
- ffacd0b85a97d-37d551fc0bbmr12087386f8f.28.1729065122719; Wed, 16 Oct 2024
- 00:52:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729065424; x=1729670224;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H9gc6WR+7vJ9WeCpYan0Utue6qlnIehIAkut2ksaHrI=;
+ b=FfW3PVgFSmzjZ8OaA3lqyabAq8n73ocJefVXJtokbLNq94GWPT9bSpKRd1H1LE1OA7
+ Gd9iBtn0CbWMF0CHnTc5KvqwRetu4laC+fADrFJKOd3tdlROAgH6hu32JD0oCxjB45Kf
+ ZrEF2Rk8+UejSoaf0OE7ZF3tqEFOsax+L8wHz19JgC1pR216nu1FAC/ZpfL6m3X80veU
+ ZnLRPwiymj7uDG0osiamW0aa8ckUbUveAeCahlwIMhAAnZc7/m4ngWF4w4X9Kv+B6Gis
+ tk9v3njp+vcofQS1AQcVeT87p7zOldKwF9jaoX0bxhNvNZRTvB1kCbP+Kv5TzO3hf0AQ
+ RdPA==
+X-Gm-Message-State: AOJu0Ywzzgvj28v4GJqt+kgyYj9yF8mXnmMWIWmxGFt/cbN0m4hGutPh
+ 5OkzyEtgfXYPovVpNdxAvIPixi6X6Ohg7a2vnYzfX7KLLlr5iZHHg8NDMBbcLd/p3L7mReYIALa
+ 1Gcq6Dw==
+X-Google-Smtp-Source: AGHT+IFqq97Pzjox/ocrz8Jc/hVSVo7D5Fp55Houf3yxYVSoG16MoBaxXDO4IwAavTzUHTRU4UL5Lg==
+X-Received: by 2002:a17:903:2582:b0:20c:5990:897c with SMTP id
+ d9443c01a7336-20d2708c932mr44244295ad.27.1729065423675; 
+ Wed, 16 Oct 2024 00:57:03 -0700 (PDT)
+Received: from Hyman-Dev-Euler.zelin.local ([85.208.104.155])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20d17f84dd1sm23608365ad.43.2024.10.16.00.57.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Oct 2024 00:57:03 -0700 (PDT)
+From: yong.huang@smartx.com
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
+Subject: [PATCH v3 3/4] migration: Support periodic ramblock dirty sync
+Date: Wed, 16 Oct 2024 15:56:44 +0800
+Message-Id: <f1067c9ddca005629e64d7e77c98686612bb1f82.1729064919.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1729064919.git.yong.huang@smartx.com>
+References: <cover.1729064919.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-13-pbonzini@redhat.com>
- <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 16 Oct 2024 09:51:51 +0200
-Message-ID: <CABgObfbqhmr=45c9ZiYoDAanM7Gsinz4RnwGMrivYDQgzP8kTw@mail.gmail.com>
-Subject: Re: [PATCH 12/16] rust: allow version 1.63.0 of rustc
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000006efefd0624935881"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.063,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,181 +96,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006efefd0624935881
-Content-Type: text/plain; charset="UTF-8"
+From: Hyman Huang <yong.huang@smartx.com>
 
-Il mer 16 ott 2024, 08:10 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
+When VM is configured with huge memory, the current throttle logic
+doesn't look like to scale, because migration_trigger_throttle()
+is only called for each iteration, so it won't be invoked for a long
+time if one iteration can take a long time.
 
-> In my Ubuntu 22.04 environment (rustc 1.76.0 and bindgen 0.59.1 from
-> apt) the feature `proc_macro_byte_character` is not yet stablized but
-> used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to
-> 2.0.58 fixes that issue for me.
->
+The periodic dirty sync aims to fix the above issue by synchronizing
+the ramblock from remote dirty bitmap and, when necessary, triggering
+the CPU throttle multiple times during a long iteration.
 
-This is handled by patch 5. Try "meson subprojects update --reset".
+This is a trade-off between synchronization overhead and CPU throttle
+impact.
 
-Paolo
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ migration/cpu-throttle.c | 70 +++++++++++++++++++++++++++++++++++++++-
+ migration/cpu-throttle.h | 14 ++++++++
+ migration/migration.h    |  1 +
+ migration/ram.c          |  9 ++++--
+ migration/trace-events   |  1 +
+ 5 files changed, 92 insertions(+), 3 deletions(-)
 
-[1]
-> https://github.com/drmingdrmer/openraft/commit/d496b6db4c6128d33f0f211165c08a7925cf20f7
->
-> Here're my changes:
->
-> diff --git a/subprojects/proc-macro2-1-rs.wrap
-> b/subprojects/proc-macro2-1-rs.wrap
-> index 7053e2c013..d5713b45d7 100644
-> --- a/subprojects/proc-macro2-1-rs.wrap
-> +++ b/subprojects/proc-macro2-1-rs.wrap
-> @@ -1,7 +1,7 @@
->  [wrap-file]
-> -directory = proc-macro2-1.0.84
-> -source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.84/download
-> -source_filename
-> <https://crates.io/api/v1/crates/proc-macro2/1.0.84/download-source_filename>
-> = proc-macro2-1.0.84.0.tar.gz
-> -source_hash =
-> ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6
-> +directory = proc-macro2-1.0.79
-> +source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.79/download
-> +source_filename = proc-macro2-1.0.79.0.tar.gz
-> +source_hash =
-> e835ff2298f5721608eb1a980ecaee1aef2c132bf95ecc026a11b7bf3c01c02e
->  #method = cargo
->  patch_directory = proc-macro2-1-rs
-> diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
-> index 13ffdac3c3..9d413a0c57 100644
-> --- a/subprojects/syn-2-rs.wrap
-> +++ b/subprojects/syn-2-rs.wrap
-> @@ -1,7 +1,7 @@
->  [wrap-file]
-> -directory = syn-2.0.66
-> -source_url = https://crates.io/api/v1/crates/syn/2.0.66/download
-> -source_filename
-> <https://crates.io/api/v1/crates/syn/2.0.66/download-source_filename> =
-> syn-2.0.66.0.tar.gz
-> -source_hash =
-> c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5
-> +directory = syn-2.0.58
-> +source_url = https://crates.io/api/v1/crates/syn/2.0.58/download
-> +source_filename = syn-2.0.58.0.tar.gz
-> +source_hash =
-> 44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0d30687
->  #method = cargo
->  patch_directory = syn-2-rs
->
-> --
-> Best Regards
-> Junjie Mao
->
-> >      if get_option('rust').enabled()
-> > -      error('rustc version ' + rustc.version() + ' is unsupported:
-> Please upgrade to at least 1.80.0')
-> > +      error('rustc version ' + rustc.version() + ' is unsupported:
-> Please upgrade to at least 1.63.0')
-> >      else
-> > -      warning('rustc version ' + rustc.version() + ' is unsupported:
-> Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
-> > +      warning('rustc version ' + rustc.version() + ' is unsupported:
-> Disabling Rust compilation. Please upgrade to at least 1.63.0 to use Rust.')
-> >        have_rust = false
-> >      endif
-> >    endif
->
->
-
---0000000000006efefd0624935881
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mer 16 ott 2024, 08:10 Junjie Mao &lt;<a href=3D"ma=
-ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">In my Ubuntu 22.04 =
-environment (rustc 1.76.0 and bindgen 0.59.1 from<br>
-apt) the feature `proc_macro_byte_character` is not yet stablized but<br>
-used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to<br>
-2.0.58 fixes that issue for me.<br></blockquote></div></div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">This is handled by patch 5. Try &quot;meson =
-subprojects update --reset&quot;.</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
-ss=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-[1] <a href=3D"https://github.com/drmingdrmer/openraft/commit/d496b6db4c612=
-8d33f0f211165c08a7925cf20f7" rel=3D"noreferrer noreferrer" target=3D"_blank=
-">https://github.com/drmingdrmer/openraft/commit/d496b6db4c6128d33f0f211165=
-c08a7925cf20f7</a><br>
-<br>
-Here&#39;re my changes:<br>
-<br>
-diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-=
-rs.wrap<br>
-index 7053e2c013..d5713b45d7 100644<br>
---- a/subprojects/proc-macro2-1-rs.wrap<br>
-+++ b/subprojects/proc-macro2-1-rs.wrap<br>
-@@ -1,7 +1,7 @@<br>
-=C2=A0[wrap-file]<br>
--directory =3D proc-macro2-1.0.84<br>
--source_url =3D <a href=3D"https://crates.io/api/v1/crates/proc-macro2/1.0.=
-84/download-source_filename" rel=3D"noreferrer noreferrer" target=3D"_blank=
-">https://crates.io/api/v1/crates/proc-macro2/1.0.84/download<br>
--source_filename</a> =3D proc-macro2-1.0.84.0.tar.gz<br>
--source_hash =3D ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc1202=
-4a49d6<br>
-+directory =3D proc-macro2-1.0.79<br>
-+source_url =3D <a href=3D"https://crates.io/api/v1/crates/proc-macro2/1.0.=
-79/download" rel=3D"noreferrer noreferrer" target=3D"_blank">https://crates=
-.io/api/v1/crates/proc-macro2/1.0.79/download</a><br>
-+source_filename =3D proc-macro2-1.0.79.0.tar.gz<br>
-+source_hash =3D e835ff2298f5721608eb1a980ecaee1aef2c132bf95ecc026a11b7bf3c=
-01c02e<br>
-=C2=A0#method =3D cargo<br>
-=C2=A0patch_directory =3D proc-macro2-1-rs<br>
-diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap<br>
-index 13ffdac3c3..9d413a0c57 100644<br>
---- a/subprojects/syn-2-rs.wrap<br>
-+++ b/subprojects/syn-2-rs.wrap<br>
-@@ -1,7 +1,7 @@<br>
-=C2=A0[wrap-file]<br>
--directory =3D syn-2.0.66<br>
--source_url =3D <a href=3D"https://crates.io/api/v1/crates/syn/2.0.66/downl=
-oad-source_filename" rel=3D"noreferrer noreferrer" target=3D"_blank">https:=
-//crates.io/api/v1/crates/syn/2.0.66/download<br>
--source_filename</a> =3D syn-2.0.66.0.tar.gz<br>
--source_hash =3D c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3=
-cdcff5<br>
-+directory =3D syn-2.0.58<br>
-+source_url =3D <a href=3D"https://crates.io/api/v1/crates/syn/2.0.58/downl=
-oad" rel=3D"noreferrer noreferrer" target=3D"_blank">https://crates.io/api/=
-v1/crates/syn/2.0.58/download</a><br>
-+source_filename =3D syn-2.0.58.0.tar.gz<br>
-+source_hash =3D 44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0=
-d30687<br>
-=C2=A0#method =3D cargo<br>
-=C2=A0patch_directory =3D syn-2-rs<br>
-<br>
---<br>
-Best Regards<br>
-Junjie Mao<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if get_option(&#39;rust&#39;).enabled()<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 error(&#39;rustc version &#39; + rustc.version()=
- + &#39; is unsupported: Please upgrade to at least 1.80.0&#39;)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 error(&#39;rustc version &#39; + rustc.version()=
- + &#39; is unsupported: Please upgrade to at least 1.63.0&#39;)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 else<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 warning(&#39;rustc version &#39; + rustc.version=
-() + &#39; is unsupported: Disabling Rust compilation. Please upgrade to at=
- least 1.80.0 to use Rust.&#39;)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 warning(&#39;rustc version &#39; + rustc.version=
-() + &#39; is unsupported: Disabling Rust compilation. Please upgrade to at=
- least 1.63.0 to use Rust.&#39;)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 have_rust =3D false<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 endif<br>
-&gt;=C2=A0 =C2=A0 endif<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000006efefd0624935881--
+diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+index fa47ee2e21..784b51ab35 100644
+--- a/migration/cpu-throttle.c
++++ b/migration/cpu-throttle.c
+@@ -28,16 +28,23 @@
+ #include "qemu/main-loop.h"
+ #include "sysemu/cpus.h"
+ #include "cpu-throttle.h"
++#include "migration.h"
++#include "migration-stats.h"
++#include "options.h"
+ #include "trace.h"
+ 
+ /* vcpu throttling controls */
+-static QEMUTimer *throttle_timer;
++static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;
+ static unsigned int throttle_percentage;
++static bool throttle_dirty_sync_timer_active;
+ 
+ #define CPU_THROTTLE_PCT_MIN 1
+ #define CPU_THROTTLE_PCT_MAX 99
+ #define CPU_THROTTLE_TIMESLICE_NS 10000000
+ 
++/* RAMBlock dirty sync trigger every five seconds */
++#define CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS 5000
++
+ static void cpu_throttle_thread(CPUState *cpu, run_on_cpu_data opaque)
+ {
+     double pct;
+@@ -112,6 +119,7 @@ void cpu_throttle_set(int new_throttle_pct)
+ void cpu_throttle_stop(void)
+ {
+     qatomic_set(&throttle_percentage, 0);
++    cpu_throttle_dirty_sync_timer(false);
+ }
+ 
+ bool cpu_throttle_active(void)
+@@ -124,8 +132,68 @@ int cpu_throttle_get_percentage(void)
+     return qatomic_read(&throttle_percentage);
+ }
+ 
++void cpu_throttle_dirty_sync_timer_tick(void *opaque)
++{
++    static uint64_t prev_sync_cnt = 2;
++    uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
++
++    if (!migrate_auto_converge()) {
++        /* Stop the timer when auto converge is disabled */
++        return;
++    }
++
++    /*
++     * The first iteration copies all memory anyhow and has no
++     * effect on guest performance, therefore omit it to avoid
++     * paying extra for the sync penalty.
++     */
++    if (sync_cnt <= 1) {
++        goto end;
++    }
++
++    if (sync_cnt == prev_sync_cnt) {
++        trace_cpu_throttle_dirty_sync();
++        WITH_RCU_READ_LOCK_GUARD() {
++            migration_bitmap_sync_precopy(false);
++        }
++    }
++
++end:
++    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
++
++    timer_mod(throttle_dirty_sync_timer,
++        qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
++            CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
++}
++
++static bool cpu_throttle_dirty_sync_active(void)
++{
++    return qatomic_read(&throttle_dirty_sync_timer_active);
++}
++
++void cpu_throttle_dirty_sync_timer(bool enable)
++{
++    if (enable) {
++        assert(throttle_dirty_sync_timer);
++        if (!cpu_throttle_dirty_sync_active()) {
++            timer_mod(throttle_dirty_sync_timer,
++                qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
++                    CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
++            qatomic_set(&throttle_dirty_sync_timer_active, 1);
++        }
++    } else {
++        if (throttle_dirty_sync_timer != NULL) {
++            timer_del(throttle_dirty_sync_timer);
++            qatomic_set(&throttle_dirty_sync_timer_active, 0);
++        }
++    }
++}
++
+ void cpu_throttle_init(void)
+ {
+     throttle_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
+                                   cpu_throttle_timer_tick, NULL);
++    throttle_dirty_sync_timer =
++        timer_new_ms(QEMU_CLOCK_VIRTUAL_RT,
++                     cpu_throttle_dirty_sync_timer_tick, NULL);
+ }
+diff --git a/migration/cpu-throttle.h b/migration/cpu-throttle.h
+index d65bdef6d0..420702b8d3 100644
+--- a/migration/cpu-throttle.h
++++ b/migration/cpu-throttle.h
+@@ -65,4 +65,18 @@ bool cpu_throttle_active(void);
+  */
+ int cpu_throttle_get_percentage(void);
+ 
++/**
++ * cpu_throttle_dirty_sync_timer_tick:
++ *
++ * Dirty sync timer hook.
++ */
++void cpu_throttle_dirty_sync_timer_tick(void *opaque);
++
++/**
++ * cpu_throttle_dirty_sync_timer:
++ *
++ * Start or stop the dirty sync timer.
++ */
++void cpu_throttle_dirty_sync_timer(bool enable);
++
+ #endif /* SYSEMU_CPU_THROTTLE_H */
+diff --git a/migration/migration.h b/migration/migration.h
+index 38aa1402d5..fbd0d19092 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -537,4 +537,5 @@ int migration_rp_wait(MigrationState *s);
+  */
+ void migration_rp_kick(MigrationState *s);
+ 
++void migration_bitmap_sync_precopy(bool last_stage);
+ #endif
+diff --git a/migration/ram.c b/migration/ram.c
+index 9b5b350405..ac34e731e2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1020,6 +1020,11 @@ static void migration_trigger_throttle(RAMState *rs)
+         migration_transferred_bytes() - rs->bytes_xfer_prev;
+     uint64_t bytes_dirty_period = rs->num_dirty_pages_period * TARGET_PAGE_SIZE;
+     uint64_t bytes_dirty_threshold = bytes_xfer_period * threshold / 100;
++    bool auto_converge = migrate_auto_converge();
++
++    if (auto_converge) {
++        cpu_throttle_dirty_sync_timer(true);
++    }
+ 
+     /*
+      * The following detection logic can be refined later. For now:
+@@ -1031,7 +1036,7 @@ static void migration_trigger_throttle(RAMState *rs)
+     if ((bytes_dirty_period > bytes_dirty_threshold) &&
+         (++rs->dirty_rate_high_cnt >= 2)) {
+         rs->dirty_rate_high_cnt = 0;
+-        if (migrate_auto_converge()) {
++        if (auto_converge) {
+             trace_migration_throttle();
+             mig_throttle_guest_down(bytes_dirty_period,
+                                     bytes_dirty_threshold);
+@@ -1088,7 +1093,7 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+     }
+ }
+ 
+-static void migration_bitmap_sync_precopy(bool last_stage)
++void migration_bitmap_sync_precopy(bool last_stage)
+ {
+     Error *local_err = NULL;
+     assert(ram_state);
+diff --git a/migration/trace-events b/migration/trace-events
+index 9a19599804..0638183056 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -381,3 +381,4 @@ migration_pagecache_insert(void) "Error allocating page"
+ 
+ # cpu-throttle.c
+ cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by %d%%"
++cpu_throttle_dirty_sync(void) ""
+-- 
+2.27.0
 
 
