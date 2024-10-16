@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4373D206AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5085CD206AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 07:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t0yna-0001tn-IP; Wed, 16 Oct 2024 03:50:26 -0400
+	id 1t0ypM-0002XC-Vt; Wed, 16 Oct 2024 03:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0ynZ-0001tQ-C8
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:50:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t0ypI-0002Wf-SW
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:52:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t0ynX-0008Ng-Pv
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:50:25 -0400
+ id 1t0ypF-00007V-5i
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 03:52:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729065021;
+ s=mimecast20190719; t=1729065127;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=UtPV3ZIdrjJh+SDwITMQp5GwPAVCo/fSnK41lNQurtU=;
- b=FtI5p0fACU6dAc5xdDY2smfN9O/Fg3NPJCky58d73Vjd2Bx3t3hkuSQyDyJ2POB6DRrvSK
- VOgt8BQFOAw1XiX+JumfMg7RGpRzQv48Pzg8eT3ae/WfUpB6qhAooanTCddBeecEM4ieaH
- yBt5dIHY2rn1RLEdhUIidAQZFA3I1zg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4pjJL3TzOmqSg8OzsBffwHo8tSAJmrGgrN5gd4FR9/c=;
+ b=ArUiUNK2dpr/yHJ9DevSfPmXSTXXhzh8R4w0UGk7deSMUsV9PNkuxyGOdNlE1i2aVR+ru8
+ j8SluOnSWWS9HjL5DYv5J5VPQN8/iO+d3jvMXPTGn93B93dBitvUkrlnr8m3C19jVx6kEc
+ qdP5eN9mC4SI4nDaNS4Yj2KmzFpXGIM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-b4GFMWaKPQy3TW3FPNejqw-1; Wed, 16 Oct 2024 03:50:17 -0400
-X-MC-Unique: b4GFMWaKPQy3TW3FPNejqw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d5116f0a6so2280817f8f.0
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:50:16 -0700 (PDT)
+ us-mta-672-tmIbimiVPUCi23e1cg7ifA-1; Wed, 16 Oct 2024 03:52:05 -0400
+X-MC-Unique: tmIbimiVPUCi23e1cg7ifA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d531a19a9so2482589f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 00:52:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729065015; x=1729669815;
+ d=1e100.net; s=20230601; t=1729065123; x=1729669923;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UtPV3ZIdrjJh+SDwITMQp5GwPAVCo/fSnK41lNQurtU=;
- b=o5yeXvpypwp3ruX5L7lYzFQB6PLH61MAIu6ku0X1GwCXtFmM5gIGWk2GBSA/VIbbR6
- /JX6znowsAtNJ/yM6GwrrqNxmPdw3rDxxoV3Z+CiPhnUW642BXvhIjF915etmK8TYGYk
- lZnSm7c0hYO1WswV0+/+Ht7WvbsZ4l84tEHa+ZbtpL49VSJWPXimJM8L4AYJWHvta30m
- t2OWJSDKgAMOQiLboouSFILx22nOCidkic7Fo2nVTSmJ3cyjrLTZQJysSJrpaB+8kMZz
- 7ZhG61mQXH/2N3VHynXcuIgTTemKswEzdAGj+mepSOZBXY4eRIMiqb3ccAVw275fZRcu
- EK/w==
-X-Gm-Message-State: AOJu0YzYPLW9LXGPBTs0GQ+nKGtU7CGiCHF67E40SB44uWXEAyv0Ygpz
- 8zU7s61fEerk+jpZS48ZsWU31E75d5Co+AhQnG/GXvlMB+uG1K2Zs3Krh6MutFIlvHM0zs15BPS
- xvTjY7XOtBMwKeUyrRcn2CLqYVSVvFYqflN4D7xVWz80W1afw3LV5cu+h6TOKTsRdrTKdExg7te
- u4OB+mKJmKLbUGC9siVAV+dnFOl1PI1bkMNnZxDw==
-X-Received: by 2002:a5d:4561:0:b0:37d:2edd:b731 with SMTP id
- ffacd0b85a97d-37d5fee7b29mr9666437f8f.30.1729065014996; 
- Wed, 16 Oct 2024 00:50:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXdYSLuUipak2aQvz9GBErvcEqO9OoXOYzASWUmAb5ZImilHrw9uU6jmv4Ze6+5BuIJ+nxK6foFGcymwRsYSs=
-X-Received: by 2002:a5d:4561:0:b0:37d:2edd:b731 with SMTP id
- ffacd0b85a97d-37d5fee7b29mr9666423f8f.30.1729065014635; Wed, 16 Oct 2024
- 00:50:14 -0700 (PDT)
+ bh=4pjJL3TzOmqSg8OzsBffwHo8tSAJmrGgrN5gd4FR9/c=;
+ b=C3I5iWsGaWmrxh+7LzjInFAez+HzBgdakzyZBIa1Wwu5dBBhWaNdPDHuDCVWtVSUXn
+ 0Bh9OEYT1/WYFlICSk6bE83EC0vWoXtY/a5hJhvzHffmFlePTtw1NgOZZ1rbcejiAqeP
+ yVkHfU+X+EkF1Ey6Y+4QJtlGuRl1nGh1vzZeKLuevLIU5ZEqWQY4KP/nCmvcSgAEFvIw
+ 01Pk2L4ciPfk63XqfmA6ZSoSCulLMeV7DeC+C1v+7V4oE9Eln7TDbc6fT3XmC/eVbSQj
+ hiBwxGt1V0kek5iLNTcrc4FeRzKPLEDYpb/jiQaU6yYhHDf4qSBQZUZe3MIQdKZN7eb3
+ nBQA==
+X-Gm-Message-State: AOJu0YxWG4XVw2bBBjVjcPn7M/Me3h1fy209epMyw5wcdBhLQdaLLLyW
+ jmhlZNCDYuAevneW64RaId1PEoEQzf6lMa0Zl+v+Z/MsMDGkvraokZaEnYIIeEaj5lBw9dcnPUn
+ zhPMkg5CHR7yPnR1SxlfDCstJJdv3G/vkaSYQZglPPY1orF3HK6TV0YQ6hzYzxNVpNzIW2qRhOO
+ MaoHa83ynvEqmphPbRa0C8zNK6zdQLMGG41asGpw==
+X-Received: by 2002:a05:6000:194f:b0:37d:4e03:ff8e with SMTP id
+ ffacd0b85a97d-37d551fc0bbmr12087404f8f.28.1729065123313; 
+ Wed, 16 Oct 2024 00:52:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRINVcCWmCf6hRLQF9QZcJ/vX0kN8PSxzLvWNDi035m1fL8DvC7rW9pK4oS1j/DpsrDGX6VlQOYhmiGY35EWY=
+X-Received: by 2002:a05:6000:194f:b0:37d:4e03:ff8e with SMTP id
+ ffacd0b85a97d-37d551fc0bbmr12087386f8f.28.1729065122719; Wed, 16 Oct 2024
+ 00:52:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-17-pbonzini@redhat.com>
- <SY0P300MB10263F19AD3FEB043D3D47A195462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB10263F19AD3FEB043D3D47A195462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <20241015131735.518771-13-pbonzini@redhat.com>
+ <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 16 Oct 2024 09:50:02 +0200
-Message-ID: <CABgObfbkgXM5jG9-JP_BsJQk3Pw_gHMVeQfLOzVuui5TZiojtA@mail.gmail.com>
-Subject: Re: [PATCH 16/16] rust: allow older version of bindgen
+Date: Wed, 16 Oct 2024 09:51:51 +0200
+Message-ID: <CABgObfbqhmr=45c9ZiYoDAanM7Gsinz4RnwGMrivYDQgzP8kTw@mail.gmail.com>
+Subject: Re: [PATCH 12/16] rust: allow version 1.63.0 of rustc
 To: Junjie Mao <junjie.mao@hotmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000fdc17006249351ad"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000006efefd0624935881"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -98,85 +98,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fdc17006249351ad
+--0000000000006efefd0624935881
 Content-Type: text/plain; charset="UTF-8"
 
-Il mer 16 ott 2024, 08:29 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
+Il mer 16 ott 2024, 08:10 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
+> In my Ubuntu 22.04 environment (rustc 1.76.0 and bindgen 0.59.1 from
+> apt) the feature `proc_macro_byte_character` is not yet stablized but
+> used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to
+> 2.0.58 fixes that issue for me.
 >
-> The bindgen 0.59.1 installed from Ubuntu 22.04 apt source does not
-> support the following args:
->
->     '--formatter', 'rustfmt',
->     '--merge-extern-blocks',
->     '--allowlist-file', meson.project_source_root() + '/include/.*',
->     '--allowlist-file', meson.project_source_root() + '/.*',
->     '--allowlist-file', meson.project_build_root() + '/.*'
->
->
-Ouch. --allowlist-file was added in 0.60, so Debian has it. I think we
-should ask Canonical if they can update bindgen in addition to rustc.
+
+This is handled by patch 5. Try "meson subprojects update --reset".
 
 Paolo
 
-The first two args are cosmetic and should not hurt if removed (but I
-> need to double check).
+[1]
+> https://github.com/drmingdrmer/openraft/commit/d496b6db4c6128d33f0f211165c08a7925cf20f7
 >
-> Removing the allowlist-file, however, causes IPPORT_RESERVED to be
-> generated twice using different types and thus break the
-> build. Allowlists for bindgen 0.59.1 can only be specified as regex on
-> function, type or var. I don't find (yet) an equivalent way of
-> --allowlist-file. A dirty trick is `--blocklist-item IPPORT_RESERVED`,
-> which works but is so ad-hoc.
+> Here're my changes:
+>
+> diff --git a/subprojects/proc-macro2-1-rs.wrap
+> b/subprojects/proc-macro2-1-rs.wrap
+> index 7053e2c013..d5713b45d7 100644
+> --- a/subprojects/proc-macro2-1-rs.wrap
+> +++ b/subprojects/proc-macro2-1-rs.wrap
+> @@ -1,7 +1,7 @@
+>  [wrap-file]
+> -directory = proc-macro2-1.0.84
+> -source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.84/download
+> -source_filename
+> <https://crates.io/api/v1/crates/proc-macro2/1.0.84/download-source_filename>
+> = proc-macro2-1.0.84.0.tar.gz
+> -source_hash =
+> ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6
+> +directory = proc-macro2-1.0.79
+> +source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.79/download
+> +source_filename = proc-macro2-1.0.79.0.tar.gz
+> +source_hash =
+> e835ff2298f5721608eb1a980ecaee1aef2c132bf95ecc026a11b7bf3c01c02e
+>  #method = cargo
+>  patch_directory = proc-macro2-1-rs
+> diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
+> index 13ffdac3c3..9d413a0c57 100644
+> --- a/subprojects/syn-2-rs.wrap
+> +++ b/subprojects/syn-2-rs.wrap
+> @@ -1,7 +1,7 @@
+>  [wrap-file]
+> -directory = syn-2.0.66
+> -source_url = https://crates.io/api/v1/crates/syn/2.0.66/download
+> -source_filename
+> <https://crates.io/api/v1/crates/syn/2.0.66/download-source_filename> =
+> syn-2.0.66.0.tar.gz
+> -source_hash =
+> c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5
+> +directory = syn-2.0.58
+> +source_url = https://crates.io/api/v1/crates/syn/2.0.58/download
+> +source_filename = syn-2.0.58.0.tar.gz
+> +source_hash =
+> 44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0d30687
+>  #method = cargo
+>  patch_directory = syn-2-rs
 >
 > --
 > Best Regards
 > Junjie Mao
 >
+> >      if get_option('rust').enabled()
+> > -      error('rustc version ' + rustc.version() + ' is unsupported:
+> Please upgrade to at least 1.80.0')
+> > +      error('rustc version ' + rustc.version() + ' is unsupported:
+> Please upgrade to at least 1.63.0')
+> >      else
+> > -      warning('rustc version ' + rustc.version() + ' is unsupported:
+> Disabling Rust compilation. Please upgrade to at least 1.80.0 to use Rust.')
+> > +      warning('rustc version ' + rustc.version() + ' is unsupported:
+> Disabling Rust compilation. Please upgrade to at least 1.63.0 to use Rust.')
+> >        have_rust = false
+> >      endif
+> >    endif
+>
 >
 
---000000000000fdc17006249351ad
+--0000000000006efefd0624935881
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mer 16 ott 2024, 08:29 Junjie Mao &lt;<a href=3D"ma=
+class=3D"gmail_attr">Il mer 16 ott 2024, 08:10 Junjie Mao &lt;<a href=3D"ma=
 ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
 </div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>The bindgen 0.5=
-9.1 installed from Ubuntu 22.04 apt source does not<br>
-support the following args:<br>
+order-left:1px solid rgb(204,204,204);padding-left:1ex">In my Ubuntu 22.04 =
+environment (rustc 1.76.0 and bindgen 0.59.1 from<br>
+apt) the feature `proc_macro_byte_character` is not yet stablized but<br>
+used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to<br>
+2.0.58 fixes that issue for me.<br></blockquote></div></div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">This is handled by patch 5. Try &quot;meson =
+subprojects update --reset&quot;.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
+ss=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+[1] <a href=3D"https://github.com/drmingdrmer/openraft/commit/d496b6db4c612=
+8d33f0f211165c08a7925cf20f7" rel=3D"noreferrer noreferrer" target=3D"_blank=
+">https://github.com/drmingdrmer/openraft/commit/d496b6db4c6128d33f0f211165=
+c08a7925cf20f7</a><br>
 <br>
-=C2=A0 =C2=A0 &#39;--formatter&#39;, &#39;rustfmt&#39;,<br>
-=C2=A0 =C2=A0 &#39;--merge-extern-blocks&#39;,<br>
-=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_source_root() + &#3=
-9;/include/.*&#39;,<br>
-=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_source_root() + &#3=
-9;/.*&#39;,<br>
-=C2=A0 =C2=A0 &#39;--allowlist-file&#39;, meson.project_build_root() + &#39=
-;/.*&#39;<br><br></blockquote></div></div><div dir=3D"auto"><br></div><div =
-dir=3D"auto">Ouch. --allowlist-file was added in 0.60, so Debian has it. I =
-think we should ask Canonical if they can update bindgen in addition to rus=
-tc.<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div =
-dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">
-The first two args are cosmetic and should not hurt if removed (but I<br>
-need to double check).<br>
+Here&#39;re my changes:<br>
 <br>
-Removing the allowlist-file, however, causes IPPORT_RESERVED to be<br>
-generated twice using different types and thus break the<br>
-build. Allowlists for bindgen 0.59.1 can only be specified as regex on<br>
-function, type or var. I don&#39;t find (yet) an equivalent way of<br>
---allowlist-file. A dirty trick is `--blocklist-item IPPORT_RESERVED`,<br>
-which works but is so ad-hoc.<br>
+diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-=
+rs.wrap<br>
+index 7053e2c013..d5713b45d7 100644<br>
+--- a/subprojects/proc-macro2-1-rs.wrap<br>
++++ b/subprojects/proc-macro2-1-rs.wrap<br>
+@@ -1,7 +1,7 @@<br>
+=C2=A0[wrap-file]<br>
+-directory =3D proc-macro2-1.0.84<br>
+-source_url =3D <a href=3D"https://crates.io/api/v1/crates/proc-macro2/1.0.=
+84/download-source_filename" rel=3D"noreferrer noreferrer" target=3D"_blank=
+">https://crates.io/api/v1/crates/proc-macro2/1.0.84/download<br>
+-source_filename</a> =3D proc-macro2-1.0.84.0.tar.gz<br>
+-source_hash =3D ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc1202=
+4a49d6<br>
++directory =3D proc-macro2-1.0.79<br>
++source_url =3D <a href=3D"https://crates.io/api/v1/crates/proc-macro2/1.0.=
+79/download" rel=3D"noreferrer noreferrer" target=3D"_blank">https://crates=
+.io/api/v1/crates/proc-macro2/1.0.79/download</a><br>
++source_filename =3D proc-macro2-1.0.79.0.tar.gz<br>
++source_hash =3D e835ff2298f5721608eb1a980ecaee1aef2c132bf95ecc026a11b7bf3c=
+01c02e<br>
+=C2=A0#method =3D cargo<br>
+=C2=A0patch_directory =3D proc-macro2-1-rs<br>
+diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap<br>
+index 13ffdac3c3..9d413a0c57 100644<br>
+--- a/subprojects/syn-2-rs.wrap<br>
++++ b/subprojects/syn-2-rs.wrap<br>
+@@ -1,7 +1,7 @@<br>
+=C2=A0[wrap-file]<br>
+-directory =3D syn-2.0.66<br>
+-source_url =3D <a href=3D"https://crates.io/api/v1/crates/syn/2.0.66/downl=
+oad-source_filename" rel=3D"noreferrer noreferrer" target=3D"_blank">https:=
+//crates.io/api/v1/crates/syn/2.0.66/download<br>
+-source_filename</a> =3D syn-2.0.66.0.tar.gz<br>
+-source_hash =3D c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3=
+cdcff5<br>
++directory =3D syn-2.0.58<br>
++source_url =3D <a href=3D"https://crates.io/api/v1/crates/syn/2.0.58/downl=
+oad" rel=3D"noreferrer noreferrer" target=3D"_blank">https://crates.io/api/=
+v1/crates/syn/2.0.58/download</a><br>
++source_filename =3D syn-2.0.58.0.tar.gz<br>
++source_hash =3D 44cfb93f38070beee36b3fef7d4f5a16f27751d94b187b666a5cc5e9b0=
+d30687<br>
+=C2=A0#method =3D cargo<br>
+=C2=A0patch_directory =3D syn-2-rs<br>
 <br>
 --<br>
 Best Regards<br>
 Junjie Mao<br>
 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if get_option(&#39;rust&#39;).enabled()<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 error(&#39;rustc version &#39; + rustc.version()=
+ + &#39; is unsupported: Please upgrade to at least 1.80.0&#39;)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 error(&#39;rustc version &#39; + rustc.version()=
+ + &#39; is unsupported: Please upgrade to at least 1.63.0&#39;)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 else<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 warning(&#39;rustc version &#39; + rustc.version=
+() + &#39; is unsupported: Disabling Rust compilation. Please upgrade to at=
+ least 1.80.0 to use Rust.&#39;)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 warning(&#39;rustc version &#39; + rustc.version=
+() + &#39; is unsupported: Disabling Rust compilation. Please upgrade to at=
+ least 1.63.0 to use Rust.&#39;)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 have_rust =3D false<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 endif<br>
+&gt;=C2=A0 =C2=A0 endif<br>
+<br>
 </blockquote></div></div></div>
 
---000000000000fdc17006249351ad--
+--0000000000006efefd0624935881--
 
 
