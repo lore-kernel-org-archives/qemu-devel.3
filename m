@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F15D2A555
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5447D2A559
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 20:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1AMB-0004r0-DE; Wed, 16 Oct 2024 16:10:55 -0400
+	id 1t1AM3-0004nd-Np; Wed, 16 Oct 2024 16:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AM8-0004pU-8p; Wed, 16 Oct 2024 16:10:52 -0400
+ id 1t1AM2-0004mO-3E; Wed, 16 Oct 2024 16:10:46 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1AM6-0000h0-IZ; Wed, 16 Oct 2024 16:10:52 -0400
+ id 1t1AM0-0000fu-G7; Wed, 16 Oct 2024 16:10:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 17B9098F9A;
- Wed, 16 Oct 2024 23:10:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 785A398F96;
+ Wed, 16 Oct 2024 23:10:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0276515637A;
- Wed, 16 Oct 2024 23:10:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 63EF1156376;
+ Wed, 16 Oct 2024 23:10:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.1.1 40/49] meson: ensure -mcx16 is passed when detecting
- ATOMIC128
-Date: Wed, 16 Oct 2024 23:09:59 +0300
-Message-Id: <20241016201025.256294-8-mjt@tls.msk.ru>
+Subject: [Stable-9.1.1 36/49] tcg/ppc: Use TCG_REG_TMP2 for scratch index in
+ prepare_host_addr
+Date: Wed, 16 Oct 2024 23:09:55 +0300
+Message-Id: <20241016201025.256294-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
 References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,66 +60,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Moving -mcx16 out of CPU_CFLAGS caused the detection of ATOMIC128 to
-fail, because flags have to be specified by hand in cc.compiles and
-cc.links invocations (why oh why??).
+In tcg_out_qemu_ldst_i128, we need a non-zero index register,
+which we then use as a base register in several address modes.
+Since we always have TCG_REG_TMP2 available, use that.
 
-Ensure that these tests enable all the instruction set extensions that
-will be used to build the emulators.
-
-Fixes: c2bf2ccb266 ("configure: move -mcx16 flag out of CPU_CFLAGS", 2024-05-24)
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8db4e0f92e83fd80b6609439440b303ddded7ad8)
+Fixes: 526cd4ec01f ("tcg/ppc: Support 128-bit load/store")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2597
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-By: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 3213da7b9539581c6df95f8ced5b09d0b02d425f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 3031f37f45..a11018b3ad 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2795,7 +2795,7 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
-     __atomic_exchange_n(&x, y, __ATOMIC_RELAXED);
-     __atomic_fetch_add(&x, y, __ATOMIC_RELAXED);
-     return 0;
--  }'''))
-+  }''', args: qemu_isa_flags))
+diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+index 69abd30bbb..deb80521b3 100644
+--- a/tcg/ppc/tcg-target.c.inc
++++ b/tcg/ppc/tcg-target.c.inc
+@@ -2617,8 +2617,8 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
  
- has_int128_type = cc.compiles('''
-   __int128_t a;
-@@ -2829,7 +2829,7 @@ if has_int128_type
-       __atomic_compare_exchange_n(&p[4], &p[5], p[6], 0, __ATOMIC_RELAXED, __ATOMIC_RELAXED);
-       return 0;
-     }'''
--  has_atomic128 = cc.links(atomic_test_128)
-+  has_atomic128 = cc.links(atomic_test_128, args: qemu_isa_flags)
- 
-   config_host_data.set('CONFIG_ATOMIC128', has_atomic128)
- 
-@@ -2838,7 +2838,8 @@ if has_int128_type
-     # without optimization enabled.  Try again with optimizations locally
-     # enabled for the function.  See
-     #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=107389
--    has_atomic128_opt = cc.links('__attribute__((optimize("O1")))' + atomic_test_128)
-+    has_atomic128_opt = cc.links('__attribute__((optimize("O1")))' + atomic_test_128,
-+                                 args: qemu_isa_flags)
-     config_host_data.set('CONFIG_ATOMIC128_OPT', has_atomic128_opt)
- 
-     if not has_atomic128_opt
-@@ -2849,7 +2850,7 @@ if has_int128_type
-           __sync_val_compare_and_swap_16(&x, y, x);
-           return 0;
-         }
--      '''))
-+      ''', args: qemu_isa_flags))
-     endif
-   endif
- endif
+     if (TCG_TARGET_REG_BITS == 64 && addr_type == TCG_TYPE_I32) {
+         /* Zero-extend the guest address for use in the host address. */
+-        tcg_out_ext32u(s, TCG_REG_R0, addrlo);
+-        h->index = TCG_REG_R0;
++        tcg_out_ext32u(s, TCG_REG_TMP2, addrlo);
++        h->index = TCG_REG_TMP2;
+     } else {
+         h->index = addrlo;
+     }
 -- 
 2.39.5
 
