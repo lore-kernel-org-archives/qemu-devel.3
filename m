@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13543D2F7E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 03:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313ADD2F7E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 03:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1HYn-00087s-Nz; Wed, 16 Oct 2024 23:52:25 -0400
+	id 1t1Heb-00027f-RB; Wed, 16 Oct 2024 23:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t1HYl-00087k-OT
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 23:52:23 -0400
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ id 1t1HeZ-00027F-LW
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 23:58:23 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t1HYi-00008K-5R
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 23:52:23 -0400
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3e4d6abb743so279368b6e.0
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 20:52:19 -0700 (PDT)
+ id 1t1HeW-0000q2-1M
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 23:58:23 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3e41eabddffso292619b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 20:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729137138; x=1729741938;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729137497; x=1729742297;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ln/yJqS6iE8odymK4OOH/0BmsasGiCzOo2iFoQ/jbO8=;
- b=YNxuBU9zz+SdeqMPLPHqI8hf0zemGqA4L1K35nGvXBCNsg34jrXeaq7bT7DgJq+RvW
- hj2xj24di7i5XaJPaCaJcpevJ8lI49qtvkJ83Wtvhe5g72WYUrWAA99rrx3ON+3xZWki
- JsC05CUzwNGPOhp1SO8haADN0uGWozLcYR1yc01GyaLPxtiXbTGjrj8z+PmJRkrM/XQP
- q0FMyokAUOTp+3BnL8M9mO3g1e3RIeorI8YlZdne6+OAJEH8txfNOLkZ3oltpOq7Htwf
- 5LjTDDBWPwhZNlvvnCKaPYhqwqh9dYsXJqGf9HVbwFvEOZUNjuYRcxefIM0KXGaKa//0
- Ci+A==
+ bh=HuoQnD3mVNF7Y4usxQGhKW5EFBZrvFZaCd4tuxYE/wQ=;
+ b=Bmg53McjApUdrHtaN5uK7SFZtEkktsnAM+Jo3XarXkvKW2rVI/+uXk0DJ16WCejdBe
+ DlXPRV2oVBHLRKNg7BHmXoSjm4xD1oFa3pYM6Za4b0GmViWmIfMyBsNKWMdxvwDAd06Z
+ sjqZwXeklBNxoBJKnmtTl3Qu61kVMfbTdlZX0K7FI8gV30EX7bt/DmeswQk+CWAAQ18r
+ 9VijQYittv2CQM6BH9Z8iVi5Ax5OjbGQE/VflrvYCx2OWWTisGD6sdhe5Wtsl0z+XSzL
+ 0X3QX3JqrZdLZdfD+Qg4PfPijhOkHSFSV8W7pSTM4W8wfiGi4KNYQIYkd+E/o3asHgJY
+ ZT8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729137138; x=1729741938;
+ d=1e100.net; s=20230601; t=1729137497; x=1729742297;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ln/yJqS6iE8odymK4OOH/0BmsasGiCzOo2iFoQ/jbO8=;
- b=EkXD6bhCWe+QvS7px/nMuimV0KoI4gkMNVZvtW9nvt4KWU6K1NUgCXowyO5xLYZENd
- 1ZYNZe/uosceKjWtnYSRljFlVe85GxUKVvL/taN//TWzrfpabW3wbxX6xKhBzz5zKQDW
- PZ/vTg8aNY86f6asOGIB1nQawaYkZoNRLuO0GEGMLaMgHJQyQZ9PC/BndeJvGbG1K2YG
- tnEEavmgqjx7Yr4VVPw49DcKNUCXGi0XWpYW4hDBJG3aVX1839QpCufe+lCDOKE4YCZ4
- 6RbjRSLuXZ/SZgAAeSS0wTBbKQiL/xaA+ftw1qyLerqVNa4FCM2xmyJXpMPBLRBt/BVA
- OMsg==
-X-Gm-Message-State: AOJu0YxccvjpbQiEKJcbg/M4HeOybzZXN7voQGnc3qVEsFgqb8F2Mgtb
- zmTyREMtxX+5MbwAC06DGUe+xzaX232HL8xTbC7BbQ0ey+8QWjs9vEpkQv/7iBMxTA9zfd7mniP
- EdA6GYWu4yJylOUmpnsX2yV3uu3Rv8riFfW+Icw==
-X-Google-Smtp-Source: AGHT+IHUAPvGWTcFGp3Wd6OikWNjKBR+6W8ywtMJGSUByu5IiYtXFu8qpB9UIUPZoaogKw251TEarQD4ULKaos/V62o=
-X-Received: by 2002:a05:6870:3912:b0:277:f14c:844b with SMTP id
- 586e51a60fabf-2886e01cb99mr16393829fac.37.1729137137216; Wed, 16 Oct 2024
- 20:52:17 -0700 (PDT)
+ bh=HuoQnD3mVNF7Y4usxQGhKW5EFBZrvFZaCd4tuxYE/wQ=;
+ b=q9MdLTmcDWQRpzorjXZ6xP5FOaeDhTJar3uhcwtaSqWLepOLB2VCj/6zNkkH2CNDRV
+ KAxBxIZNZeCP45YRBLafWamJ9/xTanb13dOPk98gZAc0YFjSsfveqRrZFYqQ/TAM1bIM
+ fM5LzDpGFbcPuVF46NHOwwUaSKtpgWG9cQSekx7lw3/RyCLfIwrVIlSQDnvXOEufoNL6
+ 5whzaoyW7ktoEnCbSz5NHvCsfBaJ9ya/iYJHwK8CgkEf8Qg9t9RScZqJApP4iE7op1lP
+ CCwzkHMCHsFoUNPAkX9BEQyHp4IbPC0jDIgJW/LY9eHrpSOiPTNp/3W/eI9BTke2cPM6
+ 0J2g==
+X-Gm-Message-State: AOJu0YwwkG/2gJU5QRHFtaWLuHX/kpSN/XYzJ2BetguPAw73+LBXK7ZG
+ S4Wa/plyVMgkVfRzgl2piouIy7wdnopEXMu49ESybFE39AQfTxbf9m/a9kiI8kLNkWgIyA8Rl+M
+ 97cQXxGUZcbYuhTX+3uxq24bm87yQwL4NyqyJNrbvgJLCI0ZDC9HLFg==
+X-Google-Smtp-Source: AGHT+IHGXahr5SsLvStlPsFqX5PDw3x3rJbLWjVsTFBPwi+sCftzaoa/HLqk0MzipsiMGp41z7EgikVcRndlYObfLsQ=
+X-Received: by 2002:a05:6870:b294:b0:288:b902:1b6d with SMTP id
+ 586e51a60fabf-288b90223a3mr10297811fac.26.1729137496578; Wed, 16 Oct 2024
+ 20:58:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1729064919.git.yong.huang@smartx.com>
- <e41bdd8dde51403a25b817ec49e860f9b515b793.1729064919.git.yong.huang@smartx.com>
- <Zw_gyHy-F7_bZNfD@x1n>
-In-Reply-To: <Zw_gyHy-F7_bZNfD@x1n>
+ <f1067c9ddca005629e64d7e77c98686612bb1f82.1729064919.git.yong.huang@smartx.com>
+ <ZxAKp_qUU4ClLzs6@x1n>
+In-Reply-To: <ZxAKp_qUU4ClLzs6@x1n>
 From: Yong Huang <yong.huang@smartx.com>
-Date: Thu, 17 Oct 2024 11:52:01 +0800
-Message-ID: <CAK9dgmaTWgjrXzmAn1ZXSkQkSaXFnE1fBFFtoLuC=J1K-gRSqg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] migration: Move cpu-throttole.c from system to
- migration
+Date: Thu, 17 Oct 2024 11:58:00 +0800
+Message-ID: <CAK9dgmbxVrB_QdbHtrutAQDjA+Q1f3rwtHc-nCo_oR+S5wK16w@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] migration: Support periodic ramblock dirty sync
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000d502220624a41ce6"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
- envelope-from=yong.huang@smartx.com; helo=mail-oi1-x22d.google.com
+Content-Type: multipart/alternative; boundary="000000000000407b750624a432b9"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=yong.huang@smartx.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,223 +91,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d502220624a41ce6
+--000000000000407b750624a432b9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 16, 2024 at 11:50=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote=
-:
+On Thu, Oct 17, 2024 at 2:49=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
 
-> On Wed, Oct 16, 2024 at 03:56:42PM +0800, yong.huang@smartx.com wrote:
+> On Wed, Oct 16, 2024 at 03:56:44PM +0800, yong.huang@smartx.com wrote:
 > > From: Hyman Huang <yong.huang@smartx.com>
 > >
-> > Move cpu-throttle.c from system to migration since it's
-> > only used for migration; this makes us avoid exporting the
-> > util functions and variables in misc.h but export them in
-> > migration.h when implementing the background ramblock dirty
-> > sync feature in the upcoming commits.
+> > When VM is configured with huge memory, the current throttle logic
+> > doesn't look like to scale, because migration_trigger_throttle()
+> > is only called for each iteration, so it won't be invoked for a long
+> > time if one iteration can take a long time.
 > >
-> > Additionally, make the two modifications below:
+> > The periodic dirty sync aims to fix the above issue by synchronizing
+> > the ramblock from remote dirty bitmap and, when necessary, triggering
+> > the CPU throttle multiple times during a long iteration.
 > >
-> > 1. Delay the timer registering of CPU throttle until
-> >    migration starts since it is only used in migration.
-> >
-> > 2. Stop CPU throttle if auto converge capability is
-> >    enabled since it only happens with auto converge.
-> >
-> > 3. Remove the unused header file reference in
-> >    accel/tcg/icount-common.c.
->
-> Please consider split the things into smaller patches, especially when it
-> involves file movements.
->
-
-OK.
-
-
+> > This is a trade-off between synchronization overhead and CPU throttle
+> > impact.
 > >
 > > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > > ---
-> >  accel/tcg/icount-common.c                    |  1 -
-> >  {system =3D> migration}/cpu-throttle.c         |  2 +-
-> >  {include/sysemu =3D> migration}/cpu-throttle.h |  0
-> >  migration/meson.build                        |  1 +
-> >  migration/migration.c                        | 11 +++++++++--
-> >  migration/ram.c                              |  2 +-
-> >  migration/trace-events                       |  3 +++
-> >  system/cpu-timers.c                          |  3 ---
-> >  system/meson.build                           |  1 -
-> >  system/trace-events                          |  3 ---
-> >  10 files changed, 15 insertions(+), 12 deletions(-)
-> >  rename {system =3D> migration}/cpu-throttle.c (99%)
-> >  rename {include/sysemu =3D> migration}/cpu-throttle.h (100%)
+> >  migration/cpu-throttle.c | 70 +++++++++++++++++++++++++++++++++++++++-
+> >  migration/cpu-throttle.h | 14 ++++++++
+> >  migration/migration.h    |  1 +
+> >  migration/ram.c          |  9 ++++--
+> >  migration/trace-events   |  1 +
+> >  5 files changed, 92 insertions(+), 3 deletions(-)
 > >
-> > diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-> > index 8d3d3a7e9d..30bf8500dc 100644
-> > --- a/accel/tcg/icount-common.c
-> > +++ b/accel/tcg/icount-common.c
-> > @@ -36,7 +36,6 @@
-> >  #include "sysemu/runstate.h"
-> >  #include "hw/core/cpu.h"
-> >  #include "sysemu/cpu-timers.h"
-> > -#include "sysemu/cpu-throttle.h"
-> >  #include "sysemu/cpu-timers-internal.h"
-> >
-> >  /*
-> > diff --git a/system/cpu-throttle.c b/migration/cpu-throttle.c
-> > similarity index 99%
-> > rename from system/cpu-throttle.c
-> > rename to migration/cpu-throttle.c
-> > index 7632dc6143..fa47ee2e21 100644
-> > --- a/system/cpu-throttle.c
+> > diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+> > index fa47ee2e21..784b51ab35 100644
+> > --- a/migration/cpu-throttle.c
 > > +++ b/migration/cpu-throttle.c
-> > @@ -27,7 +27,7 @@
-> >  #include "hw/core/cpu.h"
+> > @@ -28,16 +28,23 @@
 > >  #include "qemu/main-loop.h"
 > >  #include "sysemu/cpus.h"
-> > -#include "sysemu/cpu-throttle.h"
-> > +#include "cpu-throttle.h"
+> >  #include "cpu-throttle.h"
+> > +#include "migration.h"
+> > +#include "migration-stats.h"
+> > +#include "options.h"
 > >  #include "trace.h"
 > >
 > >  /* vcpu throttling controls */
-> > diff --git a/include/sysemu/cpu-throttle.h b/migration/cpu-throttle.h
-> > similarity index 100%
-> > rename from include/sysemu/cpu-throttle.h
-> > rename to migration/cpu-throttle.h
-> > diff --git a/migration/meson.build b/migration/meson.build
-> > index 66d3de86f0..d53cf3417a 100644
-> > --- a/migration/meson.build
-> > +++ b/migration/meson.build
-> > @@ -13,6 +13,7 @@ system_ss.add(files(
-> >    'block-dirty-bitmap.c',
-> >    'channel.c',
-> >    'channel-block.c',
-> > +  'cpu-throttle.c',
-> >    'dirtyrate.c',
-> >    'exec.c',
-> >    'fd.c',
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 021faee2f3..7e71184257 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -24,7 +24,7 @@
-> >  #include "socket.h"
-> >  #include "sysemu/runstate.h"
-> >  #include "sysemu/sysemu.h"
-> > -#include "sysemu/cpu-throttle.h"
-> > +#include "cpu-throttle.h"
-> >  #include "rdma.h"
-> >  #include "ram.h"
-> >  #include "migration/global_state.h"
-> > @@ -3289,7 +3289,9 @@ static MigIterateState
-> migration_iteration_run(MigrationState *s)
-> >  static void migration_iteration_finish(MigrationState *s)
-> >  {
-> >      /* If we enabled cpu throttling for auto-converge, turn it off. */
-> > -    cpu_throttle_stop();
-> > +    if (migrate_auto_converge()) {
-> > +        cpu_throttle_stop();
-> > +    }
+> > -static QEMUTimer *throttle_timer;
+> > +static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;
+> >  static unsigned int throttle_percentage;
+> > +static bool throttle_dirty_sync_timer_active;
 > >
-> >      bql_lock();
-> >      switch (s->state) {
-> > @@ -3508,6 +3510,11 @@ static void *migration_thread(void *opaque)
-> >          qemu_savevm_send_colo_enable(s->to_dst_file);
-> >      }
+> >  #define CPU_THROTTLE_PCT_MIN 1
+> >  #define CPU_THROTTLE_PCT_MAX 99
+> >  #define CPU_THROTTLE_TIMESLICE_NS 10000000
 > >
-> > +    if (migrate_auto_converge()) {
-> > +        /* Start cpu throttle timers */
-> > +        cpu_throttle_init();
-> > +    }
+> > +/* RAMBlock dirty sync trigger every five seconds */
 >
-> Might this leak the timer object?
-
-
-> I think it perhaps needs to be moved to migration_object_init().
+> Maybe enrich it to say "making sure it is synchronized every five seconds=
+"?
+> Because it can synchronize faster if each iteration runs faster than 5sec=
+,
+> so just to emphasize it's a fallback sync, and only with auto converge.
 >
 
-Ok, I'll fix it in the next version.
+Agree, I'll refine the comment in the next version.
 
 
 >
+> > +#define CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS 5000
 > > +
-> >      bql_lock();
-> >      ret =3D qemu_savevm_state_setup(s->to_dst_file, &local_err);
-> >      bql_unlock();
+> >  static void cpu_throttle_thread(CPUState *cpu, run_on_cpu_data opaque)
+> >  {
+> >      double pct;
+> > @@ -112,6 +119,7 @@ void cpu_throttle_set(int new_throttle_pct)
+> >  void cpu_throttle_stop(void)
+> >  {
+> >      qatomic_set(&throttle_percentage, 0);
+> > +    cpu_throttle_dirty_sync_timer(false);
+> >  }
+> >
+> >  bool cpu_throttle_active(void)
+> > @@ -124,8 +132,68 @@ int cpu_throttle_get_percentage(void)
+> >      return qatomic_read(&throttle_percentage);
+> >  }
+> >
+> > +void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+> > +{
+> > +    static uint64_t prev_sync_cnt =3D 2;
+>
+> IIUC the hard coded "2" isn't needed, as long as it's guaranteed to be
+> updated for each timer call, and you special cased "1" anyway below.
+>
+
+Ok.
+
+
+>
+> > +    uint64_t sync_cnt =3D stat64_get(&mig_stats.dirty_sync_count);
+> > +
+> > +    if (!migrate_auto_converge()) {
+> > +        /* Stop the timer when auto converge is disabled */
+> > +        return;
+>
+> I think we can try to make sure this never starts if !auto-converge, so
+> assuming this path will never trigger in real life.
+>
+
+Indeed, this makes the code cleaner.
+
+
+> > +    }
+> > +
+> > +    /*
+> > +     * The first iteration copies all memory anyhow and has no
+> > +     * effect on guest performance, therefore omit it to avoid
+> > +     * paying extra for the sync penalty.
+> > +     */
+> > +    if (sync_cnt <=3D 1) {
+> > +        goto end;
+> > +    }
+> > +
+> > +    if (sync_cnt =3D=3D prev_sync_cnt) {
+> > +        trace_cpu_throttle_dirty_sync();
+> > +        WITH_RCU_READ_LOCK_GUARD() {
+> > +            migration_bitmap_sync_precopy(false);
+> > +        }
+> > +    }
+> > +
+> > +end:
+> > +    prev_sync_cnt =3D stat64_get(&mig_stats.dirty_sync_count);
+> > +
+> > +    timer_mod(throttle_dirty_sync_timer,
+> > +        qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+> > +            CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+> > +}
+> > +
+> > +static bool cpu_throttle_dirty_sync_active(void)
+> > +{
+> > +    return qatomic_read(&throttle_dirty_sync_timer_active);
+> > +}
+> > +
+> > +void cpu_throttle_dirty_sync_timer(bool enable)
+> > +{
+> > +    if (enable) {
+> > +        assert(throttle_dirty_sync_timer);
+> > +        if (!cpu_throttle_dirty_sync_active()) {
+>
+> I suppose this can be logically racy? As I think after this patch this pa=
+th
+> can be invoked both in main thread and migration thread.
+>
+
+Indeed, thanks for pointing this out.
+
+
+>
+> The simplest way to do is to move cpu_throttle_stop() call to be under
+> bql_lock(), so that this will be serialized by BQL.  Then we can add an
+> assertion at the entry of the function for bql_locked().
+
+
+> > +            timer_mod(throttle_dirty_sync_timer,
+> > +                qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+> > +                    CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+> > +            qatomic_set(&throttle_dirty_sync_timer_active, 1);
+> > +        }
+> > +    } else {
+> > +        if (throttle_dirty_sync_timer !=3D NULL) {
+>
+> IIUC throttle_dirty_sync_timer is never destroyed, aka, timer_del() only
+> disables it.  So you should probably use throttle_dirty_sync_timer_active=
+?
+>
+> > +            timer_del(throttle_dirty_sync_timer);
+> > +            qatomic_set(&throttle_dirty_sync_timer_active, 0);
+> > +        }
+> > +    }
+> > +}
+> > +
+> >  void cpu_throttle_init(void)
+> >  {
+> >      throttle_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
+> >                                    cpu_throttle_timer_tick, NULL);
+> > +    throttle_dirty_sync_timer =3D
+> > +        timer_new_ms(QEMU_CLOCK_VIRTUAL_RT,
+> > +                     cpu_throttle_dirty_sync_timer_tick, NULL);
+> >  }
+> > diff --git a/migration/cpu-throttle.h b/migration/cpu-throttle.h
+> > index d65bdef6d0..420702b8d3 100644
+> > --- a/migration/cpu-throttle.h
+> > +++ b/migration/cpu-throttle.h
+> > @@ -65,4 +65,18 @@ bool cpu_throttle_active(void);
+> >   */
+> >  int cpu_throttle_get_percentage(void);
+> >
+> > +/**
+> > + * cpu_throttle_dirty_sync_timer_tick:
+> > + *
+> > + * Dirty sync timer hook.
+> > + */
+> > +void cpu_throttle_dirty_sync_timer_tick(void *opaque);
+> > +
+> > +/**
+> > + * cpu_throttle_dirty_sync_timer:
+> > + *
+> > + * Start or stop the dirty sync timer.
+> > + */
+> > +void cpu_throttle_dirty_sync_timer(bool enable);
+> > +
+> >  #endif /* SYSEMU_CPU_THROTTLE_H */
+> > diff --git a/migration/migration.h b/migration/migration.h
+> > index 38aa1402d5..fbd0d19092 100644
+> > --- a/migration/migration.h
+> > +++ b/migration/migration.h
+> > @@ -537,4 +537,5 @@ int migration_rp_wait(MigrationState *s);
+> >   */
+> >  void migration_rp_kick(MigrationState *s);
+> >
+> > +void migration_bitmap_sync_precopy(bool last_stage);
+> >  #endif
 > > diff --git a/migration/ram.c b/migration/ram.c
-> > index 326ce7eb79..54d352b152 100644
+> > index 9b5b350405..ac34e731e2 100644
 > > --- a/migration/ram.c
 > > +++ b/migration/ram.c
-> > @@ -52,7 +52,7 @@
-> >  #include "exec/target_page.h"
-> >  #include "qemu/rcu_queue.h"
-> >  #include "migration/colo.h"
-> > -#include "sysemu/cpu-throttle.h"
-> > +#include "cpu-throttle.h"
-> >  #include "savevm.h"
-> >  #include "qemu/iov.h"
-> >  #include "multifd.h"
+> > @@ -1020,6 +1020,11 @@ static void migration_trigger_throttle(RAMState
+> *rs)
+> >          migration_transferred_bytes() - rs->bytes_xfer_prev;
+> >      uint64_t bytes_dirty_period =3D rs->num_dirty_pages_period *
+> TARGET_PAGE_SIZE;
+> >      uint64_t bytes_dirty_threshold =3D bytes_xfer_period * threshold /
+> 100;
+> > +    bool auto_converge =3D migrate_auto_converge();
+> > +
+> > +    if (auto_converge) {
+> > +        cpu_throttle_dirty_sync_timer(true);
+> > +    }
+>
+> If you have the guard to skip the 1st sync in the timer fn(), IIUC you ca=
+n
+> move this earlier to e.g. migration_thread() before iteration starts.
+> Otherwise it'll be not as clear on when this timer will start if it hides
+> in the sync path itself.
+>
+> >
+> >      /*
+> >       * The following detection logic can be refined later. For now:
+> > @@ -1031,7 +1036,7 @@ static void migration_trigger_throttle(RAMState
+> *rs)
+> >      if ((bytes_dirty_period > bytes_dirty_threshold) &&
+> >          (++rs->dirty_rate_high_cnt >=3D 2)) {
+> >          rs->dirty_rate_high_cnt =3D 0;
+> > -        if (migrate_auto_converge()) {
+> > +        if (auto_converge) {
+> >              trace_migration_throttle();
+> >              mig_throttle_guest_down(bytes_dirty_period,
+> >                                      bytes_dirty_threshold);
+> > @@ -1088,7 +1093,7 @@ static void migration_bitmap_sync(RAMState *rs,
+> bool last_stage)
+> >      }
+> >  }
+> >
+> > -static void migration_bitmap_sync_precopy(bool last_stage)
+> > +void migration_bitmap_sync_precopy(bool last_stage)
+> >  {
+> >      Error *local_err =3D NULL;
+> >      assert(ram_state);
 > > diff --git a/migration/trace-events b/migration/trace-events
-> > index c65902f042..9a19599804 100644
+> > index 9a19599804..0638183056 100644
 > > --- a/migration/trace-events
 > > +++ b/migration/trace-events
-> > @@ -378,3 +378,6 @@ migration_block_progression(unsigned percent)
-> "Completed %u%%"
-> >  # page_cache.c
-> >  migration_pagecache_init(int64_t max_num_items) "Setting cache buckets
-> to %" PRId64
-> >  migration_pagecache_insert(void) "Error allocating page"
-> > +
-> > +# cpu-throttle.c
-> > +cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by
-> %d%%"
-> > diff --git a/system/cpu-timers.c b/system/cpu-timers.c
-> > index 0b31c9a1b6..856e502e34 100644
-> > --- a/system/cpu-timers.c
-> > +++ b/system/cpu-timers.c
-> > @@ -35,7 +35,6 @@
-> >  #include "sysemu/runstate.h"
-> >  #include "hw/core/cpu.h"
-> >  #include "sysemu/cpu-timers.h"
-> > -#include "sysemu/cpu-throttle.h"
-> >  #include "sysemu/cpu-timers-internal.h"
+> > @@ -381,3 +381,4 @@ migration_pagecache_insert(void) "Error allocating
+> page"
 > >
-> >  /* clock and ticks */
-> > @@ -272,6 +271,4 @@ void cpu_timers_init(void)
-> >      seqlock_init(&timers_state.vm_clock_seqlock);
-> >      qemu_spin_init(&timers_state.vm_clock_lock);
-> >      vmstate_register(NULL, 0, &vmstate_timers, &timers_state);
-> > -
-> > -    cpu_throttle_init();
-> >  }
-> > diff --git a/system/meson.build b/system/meson.build
-> > index a296270cb0..4952f4b2c7 100644
-> > --- a/system/meson.build
-> > +++ b/system/meson.build
-> > @@ -10,7 +10,6 @@ system_ss.add(files(
-> >    'balloon.c',
-> >    'bootdevice.c',
-> >    'cpus.c',
-> > -  'cpu-throttle.c',
-> >    'cpu-timers.c',
-> >    'datadir.c',
-> >    'dirtylimit.c',
-> > diff --git a/system/trace-events b/system/trace-events
-> > index 074d001e90..2ed1d59b1f 100644
-> > --- a/system/trace-events
-> > +++ b/system/trace-events
-> > @@ -44,6 +44,3 @@ dirtylimit_state_finalize(void)
-> >  dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t time_us)
-> "CPU[%d] throttle percent: %" PRIu64 ", throttle adjust time %"PRIi64 " u=
-s"
-> >  dirtylimit_set_vcpu(int cpu_index, uint64_t quota) "CPU[%d] set dirty
-> page rate limit %"PRIu64
-> >  dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) "CPU[%d]
-> sleep %"PRIi64 " us"
-> > -
-> > -# cpu-throttle.c
-> > -cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by
+> >  # cpu-throttle.c
+> >  cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by
 > %d%%"
+> > +cpu_throttle_dirty_sync(void) ""
 > > --
 > > 2.27.0
 > >
@@ -317,256 +374,343 @@ s"
 > Peter Xu
 >
 >
+All the comments above are advisable, thanks Peter, I'll try it in the next
+version.
+
+Yong
 
 --=20
 Best regards
 
---000000000000d502220624a41ce6
+--000000000000407b750624a432b9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
 t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 16, 20=
-24 at 11:50=E2=80=AFPM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pe=
-terx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
-lid;border-left-color:rgb(204,204,204);padding-left:1ex">On Wed, Oct 16, 20=
-24 at 03:56:42PM +0800, <a href=3D"mailto:yong.huang@smartx.com" target=3D"=
-_blank">yong.huang@smartx.com</a> wrote:<br>
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 17, 20=
+24 at 2:49=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">pet=
+erx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:sol=
+id;border-left-color:rgb(204,204,204);padding-left:1ex">On Wed, Oct 16, 202=
+4 at 03:56:44PM +0800, <a href=3D"mailto:yong.huang@smartx.com" target=3D"_=
+blank">yong.huang@smartx.com</a> wrote:<br>
 &gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
 =3D"_blank">yong.huang@smartx.com</a>&gt;<br>
 &gt; <br>
-&gt; Move cpu-throttle.c from system to migration since it&#39;s<br>
-&gt; only used for migration; this makes us avoid exporting the<br>
-&gt; util functions and variables in misc.h but export them in<br>
-&gt; migration.h when implementing the background ramblock dirty<br>
-&gt; sync feature in the upcoming commits.<br>
-&gt; <br>
-&gt; Additionally, make the two modifications below:<br>
-&gt; <br>
-&gt; 1. Delay the timer registering of CPU throttle until<br>
-&gt;=C2=A0 =C2=A0 migration starts since it is only used in migration.<br>
-&gt; <br>
-&gt; 2. Stop CPU throttle if auto converge capability is<br>
-&gt;=C2=A0 =C2=A0 enabled since it only happens with auto converge.<br>
-&gt; <br>
-&gt; 3. Remove the unused header file reference in<br>
-&gt;=C2=A0 =C2=A0 accel/tcg/icount-common.c.<br>
-<br>
-Please consider split the things into smaller patches, especially when it<b=
+&gt; When VM is configured with huge memory, the current throttle logic<br>
+&gt; doesn&#39;t look like to scale, because migration_trigger_throttle()<b=
 r>
-involves file movements.<br></blockquote><div><br></div><div style=3D"font-=
-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">OK.</d=
-iv><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D=
-"gmail_default"><br></div><blockquote class=3D"gmail_quote" style=3D"margin=
-:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-lef=
-t-color:rgb(204,204,204);padding-left:1ex">
-<br>
+&gt; is only called for each iteration, so it won&#39;t be invoked for a lo=
+ng<br>
+&gt; time if one iteration can take a long time.<br>
+&gt; <br>
+&gt; The periodic dirty sync aims to fix the above issue by synchronizing<b=
+r>
+&gt; the ramblock from remote dirty bitmap and, when necessary, triggering<=
+br>
+&gt; the CPU throttle multiple times during a long iteration.<br>
+&gt; <br>
+&gt; This is a trade-off between synchronization overhead and CPU throttle<=
+br>
+&gt; impact.<br>
 &gt; <br>
 &gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
 " target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
 &gt; ---<br>
-&gt;=C2=A0 accel/tcg/icount-common.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 -<br>
-&gt;=C2=A0 {system =3D&gt; migration}/cpu-throttle.c=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 2 +-<br>
-&gt;=C2=A0 {include/sysemu =3D&gt; migration}/cpu-throttle.h |=C2=A0 0<br>
-&gt;=C2=A0 migration/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 +<br>
-&gt;=C2=A0 migration/migration.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 11 +++++++++--<br>
-&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-&gt;=C2=A0 migration/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 3 +++<br>
-&gt;=C2=A0 system/cpu-timers.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ---<br>
-&gt;=C2=A0 system/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 -<br>
-&gt;=C2=A0 system/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ---<br>
-&gt;=C2=A0 10 files changed, 15 insertions(+), 12 deletions(-)<br>
-&gt;=C2=A0 rename {system =3D&gt; migration}/cpu-throttle.c (99%)<br>
-&gt;=C2=A0 rename {include/sysemu =3D&gt; migration}/cpu-throttle.h (100%)<=
-br>
+&gt;=C2=A0 migration/cpu-throttle.c | 70 ++++++++++++++++++++++++++++++++++=
++++++-<br>
+&gt;=C2=A0 migration/cpu-throttle.h | 14 ++++++++<br>
+&gt;=C2=A0 migration/migration.h=C2=A0 =C2=A0 |=C2=A0 1 +<br>
+&gt;=C2=A0 migration/ram.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 9 ++++=
+--<br>
+&gt;=C2=A0 migration/trace-events=C2=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;=C2=A0 5 files changed, 92 insertions(+), 3 deletions(-)<br>
 &gt; <br>
-&gt; diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c<br>
-&gt; index 8d3d3a7e9d..30bf8500dc 100644<br>
-&gt; --- a/accel/tcg/icount-common.c<br>
-&gt; +++ b/accel/tcg/icount-common.c<br>
-&gt; @@ -36,7 +36,6 @@<br>
-&gt;=C2=A0 #include &quot;sysemu/runstate.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/core/cpu.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/cpu-timers.h&quot;<br>
-&gt; -#include &quot;sysemu/cpu-throttle.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/cpu-timers-internal.h&quot;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 /*<br>
-&gt; diff --git a/system/cpu-throttle.c b/migration/cpu-throttle.c<br>
-&gt; similarity index 99%<br>
-&gt; rename from system/cpu-throttle.c<br>
-&gt; rename to migration/cpu-throttle.c<br>
-&gt; index 7632dc6143..fa47ee2e21 100644<br>
-&gt; --- a/system/cpu-throttle.c<br>
+&gt; diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c<br>
+&gt; index fa47ee2e21..784b51ab35 100644<br>
+&gt; --- a/migration/cpu-throttle.c<br>
 &gt; +++ b/migration/cpu-throttle.c<br>
-&gt; @@ -27,7 +27,7 @@<br>
-&gt;=C2=A0 #include &quot;hw/core/cpu.h&quot;<br>
+&gt; @@ -28,16 +28,23 @@<br>
 &gt;=C2=A0 #include &quot;qemu/main-loop.h&quot;<br>
 &gt;=C2=A0 #include &quot;sysemu/cpus.h&quot;<br>
-&gt; -#include &quot;sysemu/cpu-throttle.h&quot;<br>
-&gt; +#include &quot;cpu-throttle.h&quot;<br>
+&gt;=C2=A0 #include &quot;cpu-throttle.h&quot;<br>
+&gt; +#include &quot;migration.h&quot;<br>
+&gt; +#include &quot;migration-stats.h&quot;<br>
+&gt; +#include &quot;options.h&quot;<br>
 &gt;=C2=A0 #include &quot;trace.h&quot;<br>
 &gt;=C2=A0 <br>
 &gt;=C2=A0 /* vcpu throttling controls */<br>
-&gt; diff --git a/include/sysemu/cpu-throttle.h b/migration/cpu-throttle.h<=
+&gt; -static QEMUTimer *throttle_timer;<br>
+&gt; +static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;<br>
+&gt;=C2=A0 static unsigned int throttle_percentage;<br>
+&gt; +static bool throttle_dirty_sync_timer_active;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 #define CPU_THROTTLE_PCT_MIN 1<br>
+&gt;=C2=A0 #define CPU_THROTTLE_PCT_MAX 99<br>
+&gt;=C2=A0 #define CPU_THROTTLE_TIMESLICE_NS 10000000<br>
+&gt;=C2=A0 <br>
+&gt; +/* RAMBlock dirty sync trigger every five seconds */<br>
+<br>
+Maybe enrich it to say &quot;making sure it is synchronized every five seco=
+nds&quot;?<br>
+Because it can synchronize faster if each iteration runs faster than 5sec,<=
 br>
-&gt; similarity index 100%<br>
-&gt; rename from include/sysemu/cpu-throttle.h<br>
-&gt; rename to migration/cpu-throttle.h<br>
-&gt; diff --git a/migration/meson.build b/migration/meson.build<br>
-&gt; index 66d3de86f0..d53cf3417a 100644<br>
-&gt; --- a/migration/meson.build<br>
-&gt; +++ b/migration/meson.build<br>
-&gt; @@ -13,6 +13,7 @@ system_ss.add(files(<br>
-&gt;=C2=A0 =C2=A0 &#39;block-dirty-bitmap.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;channel.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;channel-block.c&#39;,<br>
-&gt; +=C2=A0 &#39;cpu-throttle.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;dirtyrate.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;exec.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;fd.c&#39;,<br>
-&gt; diff --git a/migration/migration.c b/migration/migration.c<br>
-&gt; index 021faee2f3..7e71184257 100644<br>
-&gt; --- a/migration/migration.c<br>
-&gt; +++ b/migration/migration.c<br>
-&gt; @@ -24,7 +24,7 @@<br>
-&gt;=C2=A0 #include &quot;socket.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/runstate.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/sysemu.h&quot;<br>
-&gt; -#include &quot;sysemu/cpu-throttle.h&quot;<br>
-&gt; +#include &quot;cpu-throttle.h&quot;<br>
-&gt;=C2=A0 #include &quot;rdma.h&quot;<br>
-&gt;=C2=A0 #include &quot;ram.h&quot;<br>
-&gt;=C2=A0 #include &quot;migration/global_state.h&quot;<br>
-&gt; @@ -3289,7 +3289,9 @@ static MigIterateState migration_iteration_run(M=
-igrationState *s)<br>
-&gt;=C2=A0 static void migration_iteration_finish(MigrationState *s)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /* If we enabled cpu throttling for auto-converge,=
- turn it off. */<br>
-&gt; -=C2=A0 =C2=A0 cpu_throttle_stop();<br>
-&gt; +=C2=A0 =C2=A0 if (migrate_auto_converge()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_throttle_stop();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bql_lock();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 switch (s-&gt;state) {<br>
-&gt; @@ -3508,6 +3510,11 @@ static void *migration_thread(void *opaque)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_savevm_send_colo_enable(s-&gt;t=
-o_dst_file);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 if (migrate_auto_converge()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Start cpu throttle timers */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_throttle_init();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
+so just to emphasize it&#39;s a fallback sync, and only with auto converge.=
+<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;comic =
+sans ms&quot;,sans-serif" class=3D"gmail_default">Agree, I&#39;ll refine th=
+e comment in the next version.</div></div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
+order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
+>
 <br>
-Might this leak the timer object? =C2=A0</blockquote><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-=
-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-I think it perhaps needs to be moved to migration_object_init().<br></block=
-quote><div><br></div><div><span style=3D"font-family:&quot;comic sans ms&qu=
-ot;,sans-serif"><span class=3D"gmail_default" style=3D"font-family:&quot;co=
-mic sans ms&quot;,sans-serif">Ok, I&#39;ll fix it in the next version.</spa=
-n></span><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
-border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
+&gt; +#define CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS 5000<br>
 &gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bql_lock();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ret =3D qemu_savevm_state_setup(s-&gt;to_dst_file,=
- &amp;local_err);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 bql_unlock();<br>
+&gt;=C2=A0 static void cpu_throttle_thread(CPUState *cpu, run_on_cpu_data o=
+paque)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 double pct;<br>
+&gt; @@ -112,6 +119,7 @@ void cpu_throttle_set(int new_throttle_pct)<br>
+&gt;=C2=A0 void cpu_throttle_stop(void)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 qatomic_set(&amp;throttle_percentage, 0);<br>
+&gt; +=C2=A0 =C2=A0 cpu_throttle_dirty_sync_timer(false);<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 bool cpu_throttle_active(void)<br>
+&gt; @@ -124,8 +132,68 @@ int cpu_throttle_get_percentage(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return qatomic_read(&amp;throttle_percentage);<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; +void cpu_throttle_dirty_sync_timer_tick(void *opaque)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 static uint64_t prev_sync_cnt =3D 2;<br>
+<br>
+IIUC the hard coded &quot;2&quot; isn&#39;t needed, as long as it&#39;s gua=
+ranteed to be<br>
+updated for each timer call, and you special cased &quot;1&quot; anyway bel=
+ow.<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;com=
+ic sans ms&quot;,sans-serif" class=3D"gmail_default">Ok.</div></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(20=
+4,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 uint64_t sync_cnt =3D stat64_get(&amp;mig_stats.dirty_s=
+ync_count);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!migrate_auto_converge()) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Stop the timer when auto converge is d=
+isabled */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+<br>
+I think we can try to make sure this never starts if !auto-converge, so<br>
+assuming this path will never trigger in real life.<br></blockquote><div><b=
+r></div><div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif=
+" class=3D"gmail_default">Indeed, this makes the code cleaner.</div></div><=
+div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(=
+204,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* The first iteration copies all memory anyhow an=
+d has no<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* effect on guest performance, therefore omit it =
+to avoid<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* paying extra for the sync penalty.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 if (sync_cnt &lt;=3D 1) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto end;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (sync_cnt =3D=3D prev_sync_cnt) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_cpu_throttle_dirty_sync();<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 WITH_RCU_READ_LOCK_GUARD() {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_bitmap_sync_preco=
+py(false);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +end:<br>
+&gt; +=C2=A0 =C2=A0 prev_sync_cnt =3D stat64_get(&amp;mig_stats.dirty_sync_=
+count);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 timer_mod(throttle_dirty_sync_timer,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) =
++<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPU_THROTTLE_DIRTY_SYNC_TIM=
+ESLICE_MS);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static bool cpu_throttle_dirty_sync_active(void)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 return qatomic_read(&amp;throttle_dirty_sync_timer_acti=
+ve);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +void cpu_throttle_dirty_sync_timer(bool enable)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 if (enable) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 assert(throttle_dirty_sync_timer);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!cpu_throttle_dirty_sync_active()) {<=
+br>
+<br>
+I suppose this can be logically racy? As I think after this patch this path=
+<br>
+can be invoked both in main thread and migration thread.<br></blockquote><d=
+iv><br></div><div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-=
+serif" class=3D"gmail_default">Indeed, thanks for pointing this out.</div><=
+/div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-co=
+lor:rgb(204,204,204);padding-left:1ex">
+<br>
+The simplest way to do is to move cpu_throttle_stop() call to be under<br>
+bql_lock(), so that this will be serialized by BQL.=C2=A0 Then we can add a=
+n<br>
+assertion at the entry of the function for bql_locked().=C2=A0</blockquote>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);p=
+adding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 timer_mod(throttle_dirty_sy=
+nc_timer,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_clock_ge=
+t_ms(QEMU_CLOCK_VIRTUAL_RT) +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_set(&amp;throttle_d=
+irty_sync_timer_active, 1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (throttle_dirty_sync_timer !=3D NULL) =
+{<br>
+<br>
+IIUC throttle_dirty_sync_timer is never destroyed, aka, timer_del() only<br=
+>
+disables it.=C2=A0 So you should probably use throttle_dirty_sync_timer_act=
+ive?<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 timer_del(throttle_dirty_sy=
+nc_timer);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_set(&amp;throttle_d=
+irty_sync_timer_active, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 void cpu_throttle_init(void)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 throttle_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL=
+_RT,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_throttle_timer_=
+tick, NULL);<br>
+&gt; +=C2=A0 =C2=A0 throttle_dirty_sync_timer =3D<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 timer_new_ms(QEMU_CLOCK_VIRTUAL_RT,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0cpu_throttle_dirty_sync_timer_tick, NULL);<br>
+&gt;=C2=A0 }<br>
+&gt; diff --git a/migration/cpu-throttle.h b/migration/cpu-throttle.h<br>
+&gt; index d65bdef6d0..420702b8d3 100644<br>
+&gt; --- a/migration/cpu-throttle.h<br>
+&gt; +++ b/migration/cpu-throttle.h<br>
+&gt; @@ -65,4 +65,18 @@ bool cpu_throttle_active(void);<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 int cpu_throttle_get_percentage(void);<br>
+&gt;=C2=A0 <br>
+&gt; +/**<br>
+&gt; + * cpu_throttle_dirty_sync_timer_tick:<br>
+&gt; + *<br>
+&gt; + * Dirty sync timer hook.<br>
+&gt; + */<br>
+&gt; +void cpu_throttle_dirty_sync_timer_tick(void *opaque);<br>
+&gt; +<br>
+&gt; +/**<br>
+&gt; + * cpu_throttle_dirty_sync_timer:<br>
+&gt; + *<br>
+&gt; + * Start or stop the dirty sync timer.<br>
+&gt; + */<br>
+&gt; +void cpu_throttle_dirty_sync_timer(bool enable);<br>
+&gt; +<br>
+&gt;=C2=A0 #endif /* SYSEMU_CPU_THROTTLE_H */<br>
+&gt; diff --git a/migration/migration.h b/migration/migration.h<br>
+&gt; index 38aa1402d5..fbd0d19092 100644<br>
+&gt; --- a/migration/migration.h<br>
+&gt; +++ b/migration/migration.h<br>
+&gt; @@ -537,4 +537,5 @@ int migration_rp_wait(MigrationState *s);<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 void migration_rp_kick(MigrationState *s);<br>
+&gt;=C2=A0 <br>
+&gt; +void migration_bitmap_sync_precopy(bool last_stage);<br>
+&gt;=C2=A0 #endif<br>
 &gt; diff --git a/migration/ram.c b/migration/ram.c<br>
-&gt; index 326ce7eb79..54d352b152 100644<br>
+&gt; index 9b5b350405..ac34e731e2 100644<br>
 &gt; --- a/migration/ram.c<br>
 &gt; +++ b/migration/ram.c<br>
-&gt; @@ -52,7 +52,7 @@<br>
-&gt;=C2=A0 #include &quot;exec/target_page.h&quot;<br>
-&gt;=C2=A0 #include &quot;qemu/rcu_queue.h&quot;<br>
-&gt;=C2=A0 #include &quot;migration/colo.h&quot;<br>
-&gt; -#include &quot;sysemu/cpu-throttle.h&quot;<br>
-&gt; +#include &quot;cpu-throttle.h&quot;<br>
-&gt;=C2=A0 #include &quot;savevm.h&quot;<br>
-&gt;=C2=A0 #include &quot;qemu/iov.h&quot;<br>
-&gt;=C2=A0 #include &quot;multifd.h&quot;<br>
+&gt; @@ -1020,6 +1020,11 @@ static void migration_trigger_throttle(RAMState=
+ *rs)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_transferred_bytes() - rs-&=
+gt;bytes_xfer_prev;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t bytes_dirty_period =3D rs-&gt;num_dirty_p=
+ages_period * TARGET_PAGE_SIZE;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t bytes_dirty_threshold =3D bytes_xfer_peri=
+od * threshold / 100;<br>
+&gt; +=C2=A0 =C2=A0 bool auto_converge =3D migrate_auto_converge();<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (auto_converge) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_throttle_dirty_sync_timer(true);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+<br>
+If you have the guard to skip the 1st sync in the timer fn(), IIUC you can<=
+br>
+move this earlier to e.g. migration_thread() before iteration starts.<br>
+Otherwise it&#39;ll be not as clear on when this timer will start if it hid=
+es<br>
+in the sync path itself.<br>
+<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* The following detection logic can be refin=
+ed later. For now:<br>
+&gt; @@ -1031,7 +1036,7 @@ static void migration_trigger_throttle(RAMState =
+*rs)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if ((bytes_dirty_period &gt; bytes_dirty_threshold=
+) &amp;&amp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (++rs-&gt;dirty_rate_high_cnt &gt;=
+=3D 2)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rs-&gt;dirty_rate_high_cnt =3D 0;<br=
+>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (migrate_auto_converge()) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (auto_converge) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_migration_thrott=
+le();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mig_throttle_guest_dow=
+n(bytes_dirty_period,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bytes_dirty_=
+threshold);<br>
+&gt; @@ -1088,7 +1093,7 @@ static void migration_bitmap_sync(RAMState *rs, =
+bool last_stage)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -static void migration_bitmap_sync_precopy(bool last_stage)<br>
+&gt; +void migration_bitmap_sync_precopy(bool last_stage)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 assert(ram_state);<br>
 &gt; diff --git a/migration/trace-events b/migration/trace-events<br>
-&gt; index c65902f042..9a19599804 100644<br>
+&gt; index 9a19599804..0638183056 100644<br>
 &gt; --- a/migration/trace-events<br>
 &gt; +++ b/migration/trace-events<br>
-&gt; @@ -378,3 +378,6 @@ migration_block_progression(unsigned percent) &quo=
-t;Completed %u%%&quot;<br>
-&gt;=C2=A0 # page_cache.c<br>
-&gt;=C2=A0 migration_pagecache_init(int64_t max_num_items) &quot;Setting ca=
-che buckets to %&quot; PRId64<br>
-&gt;=C2=A0 migration_pagecache_insert(void) &quot;Error allocating page&quo=
-t;<br>
-&gt; +<br>
-&gt; +# cpu-throttle.c<br>
-&gt; +cpu_throttle_set(int new_throttle_pct)=C2=A0 &quot;set guest CPU thro=
-ttled by %d%%&quot;<br>
-&gt; diff --git a/system/cpu-timers.c b/system/cpu-timers.c<br>
-&gt; index 0b31c9a1b6..856e502e34 100644<br>
-&gt; --- a/system/cpu-timers.c<br>
-&gt; +++ b/system/cpu-timers.c<br>
-&gt; @@ -35,7 +35,6 @@<br>
-&gt;=C2=A0 #include &quot;sysemu/runstate.h&quot;<br>
-&gt;=C2=A0 #include &quot;hw/core/cpu.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/cpu-timers.h&quot;<br>
-&gt; -#include &quot;sysemu/cpu-throttle.h&quot;<br>
-&gt;=C2=A0 #include &quot;sysemu/cpu-timers-internal.h&quot;<br>
+&gt; @@ -381,3 +381,4 @@ migration_pagecache_insert(void) &quot;Error alloc=
+ating page&quot;<br>
 &gt;=C2=A0 <br>
-&gt;=C2=A0 /* clock and ticks */<br>
-&gt; @@ -272,6 +271,4 @@ void cpu_timers_init(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 seqlock_init(&amp;timers_state.vm_clock_seqlock);<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qemu_spin_init(&amp;timers_state.vm_clock_lock);<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 vmstate_register(NULL, 0, &amp;vmstate_timers, &am=
-p;timers_state);<br>
-&gt; -<br>
-&gt; -=C2=A0 =C2=A0 cpu_throttle_init();<br>
-&gt;=C2=A0 }<br>
-&gt; diff --git a/system/meson.build b/system/meson.build<br>
-&gt; index a296270cb0..4952f4b2c7 100644<br>
-&gt; --- a/system/meson.build<br>
-&gt; +++ b/system/meson.build<br>
-&gt; @@ -10,7 +10,6 @@ system_ss.add(files(<br>
-&gt;=C2=A0 =C2=A0 &#39;balloon.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;bootdevice.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;cpus.c&#39;,<br>
-&gt; -=C2=A0 &#39;cpu-throttle.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;cpu-timers.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;datadir.c&#39;,<br>
-&gt;=C2=A0 =C2=A0 &#39;dirtylimit.c&#39;,<br>
-&gt; diff --git a/system/trace-events b/system/trace-events<br>
-&gt; index 074d001e90..2ed1d59b1f 100644<br>
-&gt; --- a/system/trace-events<br>
-&gt; +++ b/system/trace-events<br>
-&gt; @@ -44,6 +44,3 @@ dirtylimit_state_finalize(void)<br>
-&gt;=C2=A0 dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t tim=
-e_us) &quot;CPU[%d] throttle percent: %&quot; PRIu64 &quot;, throttle adjus=
-t time %&quot;PRIi64 &quot; us&quot;<br>
-&gt;=C2=A0 dirtylimit_set_vcpu(int cpu_index, uint64_t quota) &quot;CPU[%d]=
- set dirty page rate limit %&quot;PRIu64<br>
-&gt;=C2=A0 dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) &q=
-uot;CPU[%d] sleep %&quot;PRIi64 &quot; us&quot;<br>
-&gt; -<br>
-&gt; -# cpu-throttle.c<br>
-&gt; -cpu_throttle_set(int new_throttle_pct)=C2=A0 &quot;set guest CPU thro=
-ttled by %d%%&quot;<br>
+&gt;=C2=A0 # cpu-throttle.c<br>
+&gt;=C2=A0 cpu_throttle_set(int new_throttle_pct)=C2=A0 &quot;set guest CPU=
+ throttled by %d%%&quot;<br>
+&gt; +cpu_throttle_dirty_sync(void) &quot;&quot;<br>
 &gt; -- <br>
 &gt; 2.27.0<br>
 &gt; <br>
@@ -574,10 +718,14 @@ ttled by %d%%&quot;<br>
 -- <br>
 Peter Xu<br>
 <br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div></div>
+</blockquote></div><div><br></div><div style=3D"font-family:&quot;comic san=
+s ms&quot;,sans-serif" class=3D"gmail_default">All the comments above are a=
+dvisable, thanks Peter, I&#39;ll try it in the next version.</div><br clear=
+=3D"all"><div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-seri=
+f" class=3D"gmail_default">Yong</div><br></div><span class=3D"gmail_signatu=
+re_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div di=
+r=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font></div=
+></div></div>
 
---000000000000d502220624a41ce6--
+--000000000000407b750624a432b9--
 
