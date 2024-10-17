@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36559D21262
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB22ED21262
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1MTl-0003D5-5e; Thu, 17 Oct 2024 05:07:33 -0400
+	id 1t1MYU-00049O-AC; Thu, 17 Oct 2024 05:12:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1MTj-0003Cj-GB
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:07:31 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1MYS-00048n-8h
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:12:24 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1MTh-0000Mo-G4
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:07:31 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7ea7ad1e01fso513208a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:07:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1MYM-0001xJ-Dg
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:12:22 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-53a097aa3daso672988e87.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729156047; x=1729760847;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729156335; x=1729761135;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=52dJXAzaYvj2RMltd4bzcws2XHsP/jm0BdB3BbYB/V0=;
- b=yqJPQmbuS3kutlvgibdcmawWQUZ+aD6lYw3n9yNuaJb6a3GcI4jKku1dDTd4DIw+d3
- I5V3qQYvsxKShijbtoAAh20nBGfFNd3xeCmFTsBgaNyXZ8aKoKaHpNKls00RYkWs8BA6
- C6M8jY+jKnPqo1MS+CqPnZoC5q8xk7OQ6W4H1x1fpXpPYSRCmbvUrUmxFyK5+cY3FrBU
- 3pga8+z4Ql6ejkPwXiMTl3gmtw0wWIKs3watPLTigCINs420tykXYEe3Nu8WuNRkxsK7
- BO5IG6WNEQ98bFy6y5wGGIcXxLfgRsldO+AY0vhAfEwgQE6/4v6ip3p/4gtHNdoRlf2h
- +dMA==
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=QPoPMc2AzqCTgXw3td0QO7OZsLhCLGM5ODPUvakR95Y=;
+ b=IBuGTl80mrJWBoLP42YObJg0KOm7knEr6eWGPuMGIX9VrInzX/E0RMaZHyHXXHgNvp
+ i66/g5326DCzzM94MmcJ4ngSBCuXwH8g6baPS8unqYMXDeb6B9x0JsMRJ8EFfMoBITo7
+ cvmd9BZDsE7T/bcQdSaHm0eSkb240CryNQd9oi2euhvpkW3zry+OofuttBOjj+UBfwdp
+ Mq/8K8OktwDpNAwBjQ7GuunJzz/QxucXXskFaY5Gb1wCNAf++985pmWG0hOevW8HcOvy
+ /hHLz5VHKwlDFUYuNjJ/dqhhuz1RgvXVgdob9O/E/GkNHLDwS25tE1L+o74LnyYSCygl
+ cJIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729156047; x=1729760847;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729156335; x=1729761135;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=52dJXAzaYvj2RMltd4bzcws2XHsP/jm0BdB3BbYB/V0=;
- b=lq+jMCaqMIa8oLsk5z+xAZIwG2GF+4Ruh3/+shltmhz7fh1rVUugjMsq5JiSQvaMov
- 5P0j8yXxEEQZY1Zz865bqeaG0e9cWjcjYK0kEBlFqPGBm5Kk2b6KtlLBg837MxtR9GV5
- wgfSQjDpMqV9RNvlEYuL/N41vorMCKX5ABFvaMLGvxyl67JsxstpBBpm3h6/Vyx/HiJd
- wl5QI1v1juRltsMV87SV668xZ6k9HlIaf0fDRSUG/0NMxFGWizji/3cCjz9ietjfYDJj
- bvDwxCnYNblY9zWrqG2l24HFSz0Weelbz1meRuxeovadaPwvCQwYDqDV7qCT47vV/Y0Q
- zKKg==
-X-Gm-Message-State: AOJu0YxNmIfnDldHAESAZkDdNyZvo7XelSawSExdonua/HWSAcKO3JiU
- MwpZAcQqh3Sgl/XwTBZgTOpTzPzgMK3nHTa9Fn8Ji6c3vFA1xR1gsLIoiq75vDE=
-X-Google-Smtp-Source: AGHT+IHeWFtWEoU54NgkH9dxBjU9iYUCDRGE+DzjoUvWNXh8M18RvlcQop6aZy1IFiu0xe9qBlGcLg==
-X-Received: by 2002:a05:6a21:1813:b0:1cf:2d22:3ec4 with SMTP id
- adf61e73a8af0-1d91c6e1353mr2904782637.25.1729156047462; 
- Thu, 17 Oct 2024 02:07:27 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
- ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
+ bh=QPoPMc2AzqCTgXw3td0QO7OZsLhCLGM5ODPUvakR95Y=;
+ b=wpIMdHs+WIFFc3F/+/nJUQ29nyBZuw13q8HAPTmvOhB/kSa/xMmZIzEZlymBgZKVuf
+ zaiE8U9W17PZICVEO5fqkzuIeSxDEKX3PEl/boWI1vwW7m4Q26SQrqM6CXi9BWmEbPvK
+ jtWy4lQ2g0zStHcxyA0LwxsledytfnPM/MxHxPCTw7S7auwIUkkbECm9uHz4T3m29AU/
+ 19PuW6abd4+SkUEgKew5kcEGiDwM5mpcriY3eDz2m+UhdYmMsqVsH6o4tHJ/FXNU4iQm
+ NZ46NAiCx21fI4BYYzEJxZzzJlKvl2RSjkfXjAr3ZpdOFx+hRWC9R0dx2by5VosBYXS9
+ 42Jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2zugSQLZOfbhVBEtitCwcWawZg7O+797h8NMbOp/Ge+9PO+4tXKgcXA7UzB2Sb3l3kkrfJ39jy9/D@nongnu.org
+X-Gm-Message-State: AOJu0YxSCaSFKRSa9tYlQjpLaEOcvjiK29FPKuH+dm6M+9wpL1cv89lr
+ L9peaoc6NnUufwrsl43RZDmRyB+rUmapXeykFo1AMwrvluZHyIhvlo/6I5Nk4iU=
+X-Google-Smtp-Source: AGHT+IHymxf+HKQN57Z4zYUoPmqn4DzUJOD5igz2QBg/d9YzfFEM0yWZx3C3rmMJaKd2YZ36z0q3/w==
+X-Received: by 2002:a05:6512:280c:b0:539:89a8:5fe8 with SMTP id
+ 2adb3069b0e04-539e552a69fmr9528349e87.29.1729156334828; 
+ Thu, 17 Oct 2024 02:12:14 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
+ ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e773a2f7fsm4322832b3a.55.2024.10.17.02.07.25
+ 5b1f17b1804b1-43158c3bcc4sm19439465e9.14.2024.10.17.02.12.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 02:07:27 -0700 (PDT)
-Message-ID: <60169858-3930-4490-b42d-d04117ab9abd@daynix.com>
-Date: Thu, 17 Oct 2024 18:07:24 +0900
+ Thu, 17 Oct 2024 02:12:14 -0700 (PDT)
+Message-ID: <bc6ed346-38fd-4f42-ae97-2669729e2054@rivosinc.com>
+Date: Thu, 17 Oct 2024 11:12:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
- <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
- <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
+Subject: Re: [PATCH v3 1/8] target/riscv: Add Ssdbltrp CSRs handling
+From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
+ qemu-devel@nongnu.org
+References: <20241014112225.90297-1-cleger@rivosinc.com>
+ <20241014112225.90297-2-cleger@rivosinc.com>
+ <f4ae3ad2-bd3e-4b9e-9013-b890e561df0a@linux.alibaba.com>
+ <399d5621-cdbe-47f5-b014-6ee3e9f2b5f7@rivosinc.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <399d5621-cdbe-47f5-b014-6ee3e9f2b5f7@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::533;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=cleger@rivosinc.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,122 +107,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/17 16:32, Laurent Vivier wrote:
-> On 17/10/2024 08:59, Jason Wang wrote:
->> On Mon, Oct 14, 2024 at 11:16 PM Laurent Vivier <lvivier@redhat.com> 
->> wrote:
->>>
->>> On 14/10/2024 10:30, Laurent Vivier wrote:
->>>> Hi Akihiko,
->>>>
->>>> On 04/06/2024 09:37, Jason Wang wrote:
->>>>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>
->>>>> Multiqueue usage is not negotiated yet when realizing. If more than
->>>>> one queue is added and the guest never requests to enable multiqueue,
->>>>> the extra queues will not be deleted when unrealizing and leak.
->>>>>
->>>>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest 
->>>>> doesn't support
->>>>> multiqueue")
->>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>> Signed-off-by: Jason Wang <jasowang@redhat.com>
->>>>> ---
->>>>>    hw/net/virtio-net.c | 4 +---
->>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>>>> index 3cee2ef3ac..a8db8bfd9c 100644
->>>>> --- a/hw/net/virtio-net.c
->>>>> +++ b/hw/net/virtio-net.c
->>>>> @@ -3743,9 +3743,7 @@ static void 
->>>>> virtio_net_device_realize(DeviceState *dev, Error **errp)
->>>>>        n->net_conf.tx_queue_size = 
->>>>> MIN(virtio_net_max_tx_queue_size(n),
->>>>>                                        n->net_conf.tx_queue_size);
->>>>> -    for (i = 0; i < n->max_queue_pairs; i++) {
->>>>> -        virtio_net_add_queue(n, i);
->>>>> -    }
->>>>> +    virtio_net_add_queue(n, 0);
->>>>>        n->ctrl_vq = virtio_add_queue(vdev, 64, 
->>>>> virtio_net_handle_ctrl);
->>>>>        qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->>>>
->>>> This change breaks virtio net migration when multiqueue is enabled.
->>>>
->>>> I think this is because virtqueues are half initialized after 
->>>> migration : they are
->>>> initialized on guest side (kernel is using them) but not on QEMU 
->>>> side (realized has only
->>>> initialized one). After migration, they are not initialized by the 
->>>> call to
->>>> virtio_net_set_multiqueue() from virtio_net_set_features() because 
->>>> virtio_get_num_queues()
->>>> reports already n->max_queue_pairs as this value is coming from the 
->>>> source guest memory.
->>>>
->>>> I don't think we have a way to half-initialize a virtqueue (to 
->>>> initialize them only on
->>>> QEMU side as they are already initialized on kernel side).
->>>>
->>>> I think this change should be reverted to fix the migration issue.
->>>>
->>>
->>> Moreover, if I look in the code of virtio_load() and 
->>> virtio_add_queue() we can guess it's
->>> not correct to migrate a virtqueue that is not initialized on the 
->>> destination side because
->>> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems' 
->>> cannot be initialized
->>> by virtio_load() and neither by virtio_add_queue() after 
->>> virtio_load() as fields like
->>> 'vring.num' are already initialized by virtio_load().
->>>
->>> For instance, in virtio_load() we set:
->>>
->>>       for (i = 0; i < num; i++) {
->>>           vdev->vq[i].vring.num = qemu_get_be32(f);
->>>
->>> and in virtio_add_queue() we search for the firt available queue to 
->>> add with:
->>>
->>>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->>>           if (vdev->vq[i].vring.num == 0)
->>>               break;
->>>       }
->>>
->>> So virtio_add_queue() cannot be used to set:
->>>
->>>       vdev->vq[i].handle_output = handle_output;
->>>       vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
->>>
->>> Moreover it would overwrite fields already set by virtio_load():
->>>
->>>       vdev->vq[i].vring.num = queue_size;
->>>       vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
->>>
->>> It also explains why virtio_net_change_num_queue_pairs() (indirectly 
->>> called by
->>> virtio_net_set_features()) doesn't update the queue pair numbers: 
->>> vring.num is already set
->>> so it thinks there is no more queues to add.
->>>
->>> Thanks,
->>> LAurent
->>>
->>
->> I agree.
->>
->> Laurent, would you like to send a patch to revert this?
->>
+
+
+On 17/10/2024 10:35, Clément Léger wrote:
 > 
-> Yes. I will also try to fix the leak in unrealize that the patch wanted 
-> to fix initially.
+> 
+> On 16/10/2024 11:40, LIU Zhiwei wrote:
+>>
+>> On 2024/10/14 19:22, Clément Léger wrote:
+>>> Add ext_ssdbltrp in RISCVCPUConfig and implement MSTATUS.SDT,
+>>> {H|M}ENVCFG.DTE and modify the availability of MTVAL2 based on the
+>>> presence of the Ssdbltrp ISA extension.
+>>>
+>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>> ---
+>>>   target/riscv/cpu.h        |  1 +
+>>>   target/riscv/cpu_bits.h   |  6 ++++++
+>>>   target/riscv/cpu_cfg.h    |  1 +
+>>>   target/riscv/cpu_helper.c | 20 +++++++++++++++++
+>>>   target/riscv/csr.c        | 45 ++++++++++++++++++++++++++++++---------
+>>>   5 files changed, 63 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>>> index a84e719d3f..ee984bf270 100644
+>>> --- a/target/riscv/cpu.h
+>>> +++ b/target/riscv/cpu.h
+>>> @@ -553,6 +553,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env,
+>>> target_ulong geilen);
+>>>   bool riscv_cpu_vector_enabled(CPURISCVState *env);
+>>>   void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+>>>   int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+>>> +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt);
+>>>   G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr
+>>> addr,
+>>>                                                  MMUAccessType
+>>> access_type,
+>>>                                                  int mmu_idx,
+>>> uintptr_t retaddr);
+>>> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+>>> index da1723496c..3a5588d4df 100644
+>>> --- a/target/riscv/cpu_bits.h
+>>> +++ b/target/riscv/cpu_bits.h
+>>> @@ -558,6 +558,7 @@
+>>>   #define MSTATUS_TVM         0x00100000 /* since: priv-1.10 */
+>>>   #define MSTATUS_TW          0x00200000 /* since: priv-1.10 */
+>>>   #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
+>>> +#define MSTATUS_SDT         0x01000000
+>>>   #define MSTATUS_GVA         0x4000000000ULL
+>>>   #define MSTATUS_MPV         0x8000000000ULL
+>>>   @@ -588,6 +589,7 @@ typedef enum {
+>>>   #define SSTATUS_XS          0x00018000
+>>>   #define SSTATUS_SUM         0x00040000 /* since: priv-1.10 */
+>>>   #define SSTATUS_MXR         0x00080000
+>>> +#define SSTATUS_SDT         0x01000000
+>>>     #define SSTATUS64_UXL       0x0000000300000000ULL
+>>>   @@ -777,11 +779,13 @@ typedef enum RISCVException {
+>>>   #define MENVCFG_CBIE                       (3UL << 4)
+>>>   #define MENVCFG_CBCFE                      BIT(6)
+>>>   #define MENVCFG_CBZE                       BIT(7)
+>>> +#define MENVCFG_DTE                        (1ULL << 59)
+>>>   #define MENVCFG_ADUE                       (1ULL << 61)
+>>>   #define MENVCFG_PBMTE                      (1ULL << 62)
+>>>   #define MENVCFG_STCE                       (1ULL << 63)
+>>>     /* For RV32 */
+>>> +#define MENVCFGH_DTE                       BIT(27)
+>>>   #define MENVCFGH_ADUE                      BIT(29)
+>>>   #define MENVCFGH_PBMTE                     BIT(30)
+>>>   #define MENVCFGH_STCE                      BIT(31)
+>>> @@ -795,11 +799,13 @@ typedef enum RISCVException {
+>>>   #define HENVCFG_CBIE                       MENVCFG_CBIE
+>>>   #define HENVCFG_CBCFE                      MENVCFG_CBCFE
+>>>   #define HENVCFG_CBZE                       MENVCFG_CBZE
+>>> +#define HENVCFG_DTE                        MENVCFG_DTE
+>>>   #define HENVCFG_ADUE                       MENVCFG_ADUE
+>>>   #define HENVCFG_PBMTE                      MENVCFG_PBMTE
+>>>   #define HENVCFG_STCE                       MENVCFG_STCE
+>>>     /* For RV32 */
+>>> +#define HENVCFGH_DTE                        MENVCFGH_DTE
+>>>   #define HENVCFGH_ADUE                       MENVCFGH_ADUE
+>>>   #define HENVCFGH_PBMTE                      MENVCFGH_PBMTE
+>>>   #define HENVCFGH_STCE                       MENVCFGH_STCE
+>>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>>> index ae2a945b5f..dd804f95d4 100644
+>>> --- a/target/riscv/cpu_cfg.h
+>>> +++ b/target/riscv/cpu_cfg.h
+>>> @@ -77,6 +77,7 @@ struct RISCVCPUConfig {
+>>>       bool ext_smstateen;
+>>>       bool ext_sstc;
+>>>       bool ext_smcntrpmf;
+>>> +    bool ext_ssdbltrp;
+>>>       bool ext_svadu;
+>>>       bool ext_svinval;
+>>>       bool ext_svnapot;
+>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>> index 9d0400035f..77e7736d8a 100644
+>>> --- a/target/riscv/cpu_helper.c
+>>> +++ b/target/riscv/cpu_helper.c
+>>> @@ -63,6 +63,22 @@ int riscv_env_mmu_index(CPURISCVState *env, bool
+>>> ifetch)
+>>>   #endif
+>>>   }
+>>>   +bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
+>>> +{
+>>> +#ifdef CONFIG_USER_ONLY
+>>> +    return false;
+>>> +#else
+>>> +    if (!riscv_cpu_cfg(env)->ext_ssdbltrp) {
+>>> +        return false;
+>>> +    }
+>>
+>> As we have guard the write to henvcfg and menvcfg by ext_ssdbltrp, I
+>> think it is enough only check henvcfg or menvcfg.
+>>
+>> The only miss is we don't guard the writhe to henvcfgh. I think we can
+>> add the guard there.
+> 
+> Hi Liu,
+> 
+> Actually, since write_henvcfgh() uses mencvfg & (... | HENVCFG_DTE) as a
+> mask to write the value, if the MENVCFG_DTE bit is not set in menvcfg,
+> then it won't be set in henvcfgh as well. So I guess you are right about
+> removing the ext_ssdbltrp check.
+> 
+>>
+>>> +    if (virt) {
+>>> +        return (env->henvcfg & HENVCFG_DTE) != 0;
+>>> +    } else {
+>>> +        return (env->menvcfg & MENVCFG_DTE) != 0;
+>>> +    }
+>>> +#endif
+>>> +}
+>>> +
+>>>   void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>>>                             uint64_t *cs_base, uint32_t *pflags)
+>>>   {
+>>> @@ -562,6 +578,10 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState
+>>> *env)
+>>>         g_assert(riscv_has_ext(env, RVH));
+>>>   +    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
+>>> +        mstatus_mask |= MSTATUS_SDT;
+>>> +    }
+>>> +
+>>>       if (current_virt) {
+>>>           /* Current V=1 and we are about to change to V=0 */
+>>>           env->vsstatus = env->mstatus & mstatus_mask;
+>>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>>> index e5de72453c..d8280ec956 100644
+>>> --- a/target/riscv/csr.c
+>>> +++ b/target/riscv/csr.c
+>>> @@ -540,6 +540,15 @@ static RISCVException aia_hmode32(CPURISCVState
+>>> *env, int csrno)
+>>>       return hmode32(env, csrno);
+>>>   }
+>>>   +static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
+>>> +{
+>>> +    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+>>> +        return RISCV_EXCP_NONE;
+>>> +    }
+>>> +
+>>> +    return hmode(env, csrno);
+>>> +}
+>>> +
+>>>   static RISCVException pmp(CPURISCVState *env, int csrno)
+>>>   {
+>>>       if (riscv_cpu_cfg(env)->pmp) {
+>>> @@ -1402,7 +1411,7 @@ static const target_ulong vs_delegable_excps =
+>>> DELEGABLE_EXCPS &
+>>>         (1ULL << (RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT)));
+>>>   static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE |
+>>> SSTATUS_SPIE |
+>>>       SSTATUS_UIE | SSTATUS_UPIE | SSTATUS_SPP | SSTATUS_FS |
+>>> SSTATUS_XS |
+>>> -    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS;
+>>> +    SSTATUS_SUM | SSTATUS_MXR | SSTATUS_VS | SSTATUS_SDT;
+>> This breaks  the v_1_10 constraint, as it is not part of 1.10
+>> specification.
+> 
+> Yes, you are right, I'll add individual checks for this bit.
+> 
+>>>     /*
+>>>    * Spec allows for bits 13:63 to be either read-only or writable.
+>>> @@ -1600,6 +1609,14 @@ static RISCVException
+>>> write_mstatus(CPURISCVState *env, int csrno,
+>>>           mask |= MSTATUS_VS;
+>>>       }
+>>>   +    if (riscv_env_smode_dbltrp_enabled(env, env->virt_enabled)) {
+>>> +        mask |= MSTATUS_SDT;
+>>> +        if ((val & MSTATUS_SDT) != 0) {
+>>> +            mstatus &= ~MSTATUS_SIE;
+>> No need to clean it, if MSTATUS_SIE will be cleaned in val.
+> 
+> Indeed.
+> 
+>>> +            val &= ~MSTATUS_SIE;
+>>> +        }
+>>> +    }
+>>> +
+>> I think we should also consider vsstatus for SIE field, as
+>> write_vsstatus doesn't fall through to write_mstatus.
+> 
+> It seems like write_vsstatus() allows any value to be written when
+> accessed directly. But it is masked correctly when swapping for hs to
+> virt in riscv_cpu_swap_hypervisor_regs(). So I guess the check for SIE
+> should actually be done in riscv_cpu_swap_hypervisor_regs() itself
+> before setting mstatus from vsstatus ?
 
-I wrote a fix so I will submit it once internal testing is done. You can 
-see the change at:
-https://gitlab.com/akihiko.odaki/qemu-kvm/-/commit/22161221aa2d2031d7ad1be7701852083aa9109a
+Hum actually, clearing SIE when writing vsstatus with SDT seems easier
+to handler but the specification does not seems to imply anything about
+legal vsstatus values when written  with V=0. And currently, the qemu
+implementation allow any value to be written so that seems that clearing
+vsstatus when using it to enter V=1 is better. But if any expert could
+step in there, that would be helpful :)
 
-Regards,
-Akihiko Odaki
+Thanks,
+
+Clément
+
+> 
+> 
+>>>       if (xl != MXL_RV32 || env->debugger) {
+>>>           if (riscv_has_ext(env, RVH)) {
+>>>               mask |= MSTATUS_MPV | MSTATUS_GVA;
+>>> @@ -2354,7 +2371,8 @@ static RISCVException
+>>> write_menvcfg(CPURISCVState *env, int csrno,
+>>>       if (riscv_cpu_mxl(env) == MXL_RV64) {
+>>>           mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>>>                   (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+>>> -                (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+>>> +                (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+>>> +                (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>>>       }
+>>>       env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
+>>>   @@ -2374,7 +2392,8 @@ static RISCVException
+>>> write_menvcfgh(CPURISCVState *env, int csrno,
+>>>       const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+>>>       uint64_t mask = (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+>>>                       (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+>>> -                    (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+>>> +                    (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+>>> +                    (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+>>>       uint64_t valh = (uint64_t)val << 32;
+>>>         env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
+>>> @@ -2425,9 +2444,10 @@ static RISCVException
+>>> read_henvcfg(CPURISCVState *env, int csrno,
+>>>        * henvcfg.pbmte is read_only 0 when menvcfg.pbmte = 0
+>>>        * henvcfg.stce is read_only 0 when menvcfg.stce = 0
+>>>        * henvcfg.adue is read_only 0 when menvcfg.adue = 0
+>>> +     * henvcfg.dte is read_only 0 when menvcfg.dte = 0
+>>>        */
+>>> -    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE |
+>>> HENVCFG_ADUE) |
+>>> -                           env->menvcfg);
+>>> +    *val = env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE |
+>>> HENVCFG_ADUE |
+>>> +                             HENVCFG_DTE) | env->menvcfg);
+>>>       return RISCV_EXCP_NONE;
+>>>   }
+>>>   @@ -2435,6 +2455,7 @@ static RISCVException
+>>> write_henvcfg(CPURISCVState *env, int csrno,
+>>>                                       target_ulong val)
+>>>   {
+>>>       uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE |
+>>> HENVCFG_CBZE;
+>>> +    uint64_t menvcfg_mask;
+>>>       RISCVException ret;
+>>>         ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+>>> @@ -2443,7 +2464,11 @@ static RISCVException
+>>> write_henvcfg(CPURISCVState *env, int csrno,
+>>>       }
+>>>         if (riscv_cpu_mxl(env) == MXL_RV64) {
+>>> -        mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+>>> HENVCFG_ADUE);
+>>> +        menvcfg_mask = HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
+>>> +        if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
+>>> +            menvcfg_mask |= HENVCFG_DTE;
+>>> +        }
+>>> +        mask |= env->menvcfg & menvcfg_mask;
+>>>       }
+>>>         env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
+>>> @@ -2461,8 +2486,8 @@ static RISCVException
+>>> read_henvcfgh(CPURISCVState *env, int csrno,
+>>>           return ret;
+>>>       }
+>>>   -    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE |
+>>> HENVCFG_ADUE) |
+>>> -                            env->menvcfg)) >> 32;
+>>> +    *val = (env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE |
+>>> HENVCFG_ADUE |
+>>> +                              HENVCFG_DTE) | env->menvcfg)) >> 32;
+>>>       return RISCV_EXCP_NONE;
+>>>   }
+>>>   @@ -2470,7 +2495,7 @@ static RISCVException
+>>> write_henvcfgh(CPURISCVState *env, int csrno,
+>>>                                        target_ulong val)
+>>>   {
+>>>       uint64_t mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+>>> -                                    HENVCFG_ADUE);
+>>> +                                    HENVCFG_ADUE | HENVCFG_DTE);
+>>
+>> Add the ssdbltrp guard here.
+> 
+> As said at the beginning, since henvcfgh uses the menvcfg value as the
+> mask, if DTE isn't enabled in menvcfg then henvcfg will not be written
+> as well (and the DTE write in menvcfg is guarded by ext_ssdbltrp).
+> 
+> Thanks for the review,
+> 
+> Clément
+> 
+>>
+>> Thanks,
+>> Zhiwei
+>>
+>>>       uint64_t valh = (uint64_t)val << 32;
+>>>       RISCVException ret;
+>>>   @@ -5246,7 +5271,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+>>>       [CSR_VSATP]       = { "vsatp",       hmode,   read_vsatp,   
+>>> write_vsatp,
+>>>                             .min_priv_ver =
+>>> PRIV_VERSION_1_12_0                },
+>>>   -    [CSR_MTVAL2]      = { "mtval2",      hmode,   read_mtval2,  
+>>> write_mtval2,
+>>> +    [CSR_MTVAL2]      = { "mtval2", dbltrp_hmode, read_mtval2,
+>>> write_mtval2,
+>>>                             .min_priv_ver =
+>>> PRIV_VERSION_1_12_0                },
+>>>       [CSR_MTINST]      = { "mtinst",      hmode,   read_mtinst,  
+>>> write_mtinst,
+>>>                             .min_priv_ver =
+>>> PRIV_VERSION_1_12_0                },
+> 
+
 
