@@ -4,81 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22989D3C520
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E03FD3C522
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1TM2-0006Al-Ep; Thu, 17 Oct 2024 12:28:02 -0400
+	id 1t1TNf-0007Vq-R6; Thu, 17 Oct 2024 12:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TM1-0006AV-Ia
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:28:01 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1TNd-0007V9-UW
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:29:41 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TLz-00011q-Hi
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:28:00 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4315e9e9642so4666435e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:27:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729182478; x=1729787278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DqbMicWOexpAEqZM48k3Pc+0QrbxcOh2qP4EZpZQqiw=;
- b=RLnPds7wdz30sLeYQiIHk5X3hfu9GcyzJhAJWp+TMR5hgxpHM/MURtJINp4I0+eWh0
- 3kezA7dj0p5H4xivSZeI12cRUbMBmhwg7s0qe+++haAMz5W7C7IHH+vvNlQ+mwmdbvj/
- fYsUN90UzM19NbWK2Ia+V1XniIHDLgvw1ULXiFcqstDST2ZAPmvC1OryeMmtBEE+kqfH
- AcH9dnH3Up+rKqqpeBX5WiQ3/j6iL93rq9UloL2xKzRTV3sSO6YUWX392qWiU14r6Lh/
- +Gd4Fw0B9WFlMVq7wv1pDETXaAKwsQKfxgyfHzM//5lDQgdoxxXQRGSp9vuiSnHbAmjB
- eVCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729182478; x=1729787278;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DqbMicWOexpAEqZM48k3Pc+0QrbxcOh2qP4EZpZQqiw=;
- b=BaCw0lC+jHzYcGJXGd7YafErnlSnikfyI9AeWSLwtCwpdyWTfONCNo1kpxEVIkIxvy
- ja54oN7BWHLk22XJLVwrRyUzGX7LHAyZjLjmnWWRW9NRt4CLOPH+vBOYCG7NB3MmAV4g
- +mqlw+1/qw3R1M+PLaS4m0x4Y/+456JwI183w0/Uq56+TRsBgK5ZbtxOna/TRobM8c+e
- 5zs2pfO+2LMn9ULgc+3Qwknn4Sp4ELvwfsAC6BRkmJU2CJo/dkRZFGKHXAYHKDwlyg6I
- VL0j8/qXJTjuOAxH1yUeGQ+FNtO/fycJjriiH/P845v4+l8kdRAwjRUu6jyBpISEhJf4
- Qpbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGvTxuG9O84SWuw6uiCHnGtHjA+j5k8cUkPRmSSkcHBpONl9yh6mdUPFiGocSonAFHVMmFkImGiDJY@nongnu.org
-X-Gm-Message-State: AOJu0YxJeYBZmRxdXnAE9sZw5TijBD+5EdNXWT6NMAG4GiQq752EMyg7
- n9Us0s5qGq5syx6a5Qfls4J/+QpmDBmvr/+eTT05KZSdipnXKE1HPfPlu2/31U4=
-X-Google-Smtp-Source: AGHT+IHK76GeH06rmDR26RCr5AbYLpiOdTkOoph9M6J6lhadnQNs54+kEa6vUBEZe6HfLRw5w1r06w==
-X-Received: by 2002:a05:600c:510d:b0:42c:bd4d:e8ba with SMTP id
- 5b1f17b1804b1-4311ded1c9dmr192995025e9.8.1729182477604; 
- Thu, 17 Oct 2024 09:27:57 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-431606d5910sm206785e9.43.2024.10.17.09.27.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 09:27:57 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] hw/sd/omap_mmc: Don't use sd_cmd_type_t
-Date: Thu, 17 Oct 2024 17:27:55 +0100
-Message-Id: <20241017162755.710698-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1TNc-0001K6-7K
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:29:41 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B796421B88;
+ Thu, 17 Oct 2024 16:29:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729182578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UZL7VD++A2u5yANofml/EK7BaK/dgiXYg5I2ZDkGQTI=;
+ b=F8TLtexUOxlvR7KHne34JEcmDqxyptyzLbhBFLjQDZTWGJ6kh9qyu/8Io6iC6Upi1LYdTp
+ 9+Cpukmpgw/o9TZN352+rCh+CV9FbrZGGveevuCrIkxaKSVDgBU5MdTQtb9Oju97I1fMsF
+ a3enQSCBDcTV7cZiNlNtd6aXvxZuRDc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729182578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UZL7VD++A2u5yANofml/EK7BaK/dgiXYg5I2ZDkGQTI=;
+ b=Xyot93eHuNeYUDvRxLh9UdrL5vyI4OMr9ybuSry7UBSgrZEPsQoCNGdKqPLNhA1qqtjhDc
+ AQbd25FiQFPR/WCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729182578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UZL7VD++A2u5yANofml/EK7BaK/dgiXYg5I2ZDkGQTI=;
+ b=F8TLtexUOxlvR7KHne34JEcmDqxyptyzLbhBFLjQDZTWGJ6kh9qyu/8Io6iC6Upi1LYdTp
+ 9+Cpukmpgw/o9TZN352+rCh+CV9FbrZGGveevuCrIkxaKSVDgBU5MdTQtb9Oju97I1fMsF
+ a3enQSCBDcTV7cZiNlNtd6aXvxZuRDc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729182578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UZL7VD++A2u5yANofml/EK7BaK/dgiXYg5I2ZDkGQTI=;
+ b=Xyot93eHuNeYUDvRxLh9UdrL5vyI4OMr9ybuSry7UBSgrZEPsQoCNGdKqPLNhA1qqtjhDc
+ AQbd25FiQFPR/WCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 41D2513A53;
+ Thu, 17 Oct 2024 16:29:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aEyVAnI7EWczSwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 17 Oct 2024 16:29:38 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Thomas Huth
+ <thuth@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
+In-Reply-To: <ZxEl4zYgHLoLeHCT@redhat.com>
+References: <20241017143211.17771-1-farosas@suse.de>
+ <20241017143211.17771-5-farosas@suse.de> <ZxEl4zYgHLoLeHCT@redhat.com>
+Date: Thu, 17 Oct 2024 13:29:35 -0300
+Message-ID: <87r08e3d74.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,126 +125,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 1ab08790bb75e4 we did some refactoring of the SD card
-implementation, which included a rearrangement of the sd_cmd_type_t
-enum values.  Unfortunately we didn't notice that this enum is not
-used solely inside the SD card model itself, but is also used by the
-OMAP MMC controller device.  In the OMAP MMC controller, it is used
-to implement the handling of the Type field of the MMC_CMD register,
-so changing the enum values so that they no longer lined up with the
-bit definitions for that register field broke the controller model.
-The effect is that Linux fails to boot from an SD card on the "sx1"
-machine.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Give omap-mmc its own enum which we can document as needing to match
-the encoding used in this device's register, so it isn't sharing
-sd_cmd_type_t with the SD card model any more.  We can then move
-sd_cmd_type_t's definition out of sd.h and into sd.c, which is the
-only place that uses it.
+> On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
+>> Recent changes to how we invoke the migration tests have
+>> (intentionally) caused them to not be part of the check-qtest target
+>> anymore. Add the check-migration-quick target so we don't lose
+>> migration code testing in this job.
+>
+> But 'check-migration-quick' is only the subset of migration tests,
+> 'check-migration' is all of the migration tests. So surely this is
+> a massive regressions in covage in CI pipelines.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 1ab08790bb75 ("hw/sd/sdcard: Store command type in SDProto")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/hw/sd/sd.h |  8 --------
- hw/sd/omap_mmc.c   | 22 ++++++++++++++++------
- hw/sd/sd.c         |  8 ++++++++
- 3 files changed, 24 insertions(+), 14 deletions(-)
+I'm not sure it is. There are tests there already for all the major
+parts of the code: precopy, postcopy, multifd, socket. Besides, we can
+tweak migration-quick to cover spots where we think we're losing
+coverage.
 
-diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
-index d35a839f5ef..f2458f37b3c 100644
---- a/include/hw/sd/sd.h
-+++ b/include/hw/sd/sd.h
-@@ -75,14 +75,6 @@ typedef enum  {
-     UHS_III             = 3,    /* currently not supported */
- } sd_uhs_mode_t;
- 
--typedef enum {
--    sd_spi,
--    sd_bc,     /* broadcast -- no response */
--    sd_bcr,    /* broadcast with response */
--    sd_ac,     /* addressed -- no data transfer */
--    sd_adtc,   /* addressed with data transfer */
--} sd_cmd_type_t;
--
- typedef struct {
-     uint8_t cmd;
-     uint32_t arg;
-diff --git a/hw/sd/omap_mmc.c b/hw/sd/omap_mmc.c
-index 91e9a3f1c6a..1d4e30e6b7b 100644
---- a/hw/sd/omap_mmc.c
-+++ b/hw/sd/omap_mmc.c
-@@ -103,6 +103,7 @@ static void omap_mmc_fifolevel_update(struct omap_mmc_s *host)
-     }
- }
- 
-+/* These must match the encoding of the MMC_CMD Response field */
- typedef enum {
-     sd_nore = 0,	/* no response */
-     sd_r1,		/* normal response command */
-@@ -112,8 +113,17 @@ typedef enum {
-     sd_r1b = -1,
- } sd_rsp_type_t;
- 
-+/* These must match the encoding of the MMC_CMD Type field */
-+typedef enum {
-+    SD_TYPE_BC = 0,     /* broadcast -- no response */
-+    SD_TYPE_BCR = 1,    /* broadcast with response */
-+    SD_TYPE_AC = 2,     /* addressed -- no data transfer */
-+    SD_TYPE_ADTC = 3,   /* addressed with data transfer */
-+} MMCCmdType;
-+
- static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
--                sd_cmd_type_t type, int busy, sd_rsp_type_t resptype, int init)
-+                             MMCCmdType type, int busy,
-+                             sd_rsp_type_t resptype, int init)
- {
-     uint32_t rspstatus, mask;
-     int rsplen, timeout;
-@@ -128,7 +138,7 @@ static void omap_mmc_command(struct omap_mmc_s *host, int cmd, int dir,
-     if (resptype == sd_r1 && busy)
-         resptype = sd_r1b;
- 
--    if (type == sd_adtc) {
-+    if (type == SD_TYPE_ADTC) {
-         host->fifo_start = 0;
-         host->fifo_len = 0;
-         host->transfer = 1;
-@@ -433,10 +443,10 @@ static void omap_mmc_write(void *opaque, hwaddr offset,
-         for (i = 0; i < 8; i ++)
-             s->rsp[i] = 0x0000;
-         omap_mmc_command(s, value & 63, (value >> 15) & 1,
--                (sd_cmd_type_t) ((value >> 12) & 3),
--                (value >> 11) & 1,
--                (sd_rsp_type_t) ((value >> 8) & 7),
--                (value >> 7) & 1);
-+                         (MMCCmdType)((value >> 12) & 3),
-+                         (value >> 11) & 1,
-+                         (sd_rsp_type_t) ((value >> 8) & 7),
-+                         (value >> 7) & 1);
-         omap_mmc_update(s);
-         break;
- 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index a5d2d929a8a..b2e2d58e013 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -71,6 +71,14 @@ typedef enum {
-     sd_illegal = -2,
- } sd_rsp_type_t;
- 
-+typedef enum {
-+    sd_spi,
-+    sd_bc,     /* broadcast -- no response */
-+    sd_bcr,    /* broadcast with response */
-+    sd_ac,     /* addressed -- no data transfer */
-+    sd_adtc,   /* addressed with data transfer */
-+} sd_cmd_type_t;
-+
- enum SDCardModes {
-     sd_inactive,
-     sd_card_identification_mode,
--- 
-2.34.1
+Since our CI offers nothing in terms of reproducibility or
+debuggability, I don't think it's productive to have an increasing
+amount of tests running in CI if that means we'll be dealing with
+timeouts and intermittent crashes constantly.
 
+>
+> Experience shows us that relying on humans to run tests periodically
+> doesn't work well, and they'll slowly bit rot. Migration maintainers
+> don't have a way to run this as gating test for every pull request
+> that merges, and pull requests coming from non-migration maintainers
+> can still break migration code.
+
+Right, but migration code would still be tested with migration-quick
+which is executed at every make check. Do we really need the full set in
+every pull request? We must draw a line somewhere, otherwise make check
+will just balloon in duration.
+
+>
+> Any tests in tree need to be exercised by CI as the minimum bar
+> to prevent bit rot from merges.
+>
+
+No disagreement here. But then I'm going to need advice on what to do
+when other maintainers ask us to stop writing migration tests because
+they take too long. I cannot send contributors away nor merge code
+without tests.
+
+Do we need nightly CI runs? Unit tests? Bear in mind there's a resource
+allocation issue there. Addressing problems with timeouts/races in our
+CI is not something any random person can do.
+
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  .gitlab-ci.d/buildtest.yml | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+>> index 34d3f4e9ab..37247dc5fa 100644
+>> --- a/.gitlab-ci.d/buildtest.yml
+>> +++ b/.gitlab-ci.d/buildtest.yml
+>> @@ -442,7 +442,7 @@ clang-system:
+>>      CONFIGURE_ARGS: --cc=3Dclang --cxx=3Dclang++ --enable-ubsan
+>>        --extra-cflags=3D-fno-sanitize-recover=3Dundefined
+>>      TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390=
+x-softmmu
+>> -    MAKE_CHECK_ARGS: check-qtest check-tcg
+>> +    MAKE_CHECK_ARGS: check-qtest check-tcg check-migration-quick
+>>=20=20
+>>  clang-user:
+>>    extends: .native_build_job_template
+>> --=20
+>> 2.35.3
+>>=20
+>>=20
+>
+> With regards,
+> Daniel
 
