@@ -4,74 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C12D3C523
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C521CD3C523
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:34:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1TQn-00009x-Lw; Thu, 17 Oct 2024 12:32:57 -0400
+	id 1t1TRf-0001P2-Gh; Thu, 17 Oct 2024 12:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TQl-00008x-4c
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1t1TRd-0001N2-Ij
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:33:49 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TQg-0001pi-PU
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42f6bec84b5so12478715e9.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:32:50 -0700 (PDT)
+ id 1t1TRc-0001ty-12
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:33:49 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9634c9160so1417345a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:33:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729182769; x=1729787569; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HsByr2/F9yb8R61V/RxanFmNShqqfc0i/+wi/KtFNd0=;
- b=AHDrErLvai/XZPaIXPua77LCAck8v6y7ffqL3vuOC1k6Ox1WOECi0lbXHZUGB12dmO
- 1HOxdIG/JEyO/9lSfo//9UA2DXowuQhMkVBVjEm7vYTpIzSJItglSR14DUatEAIuwNAH
- I8XXcTON7qx4AMkqvYU+kdlnTMZbo5aeI68cYOAjLxSOzYnH2hgyc2F/7NbfTXDHcAJt
- bSsrqoqG8rw9gep6wdqtqnkKM2i6V3RZv50EoWh9SYwiDPa4I1spTy4j3R4irl4aJto/
- IyU5jHTcc4777pNJgPr9vjpAsYougWULp1S7w1AoZFiEGJbAEE7FXUUt/Ex8hvLlyWk+
- 29RA==
+ d=linaro.org; s=google; t=1729182826; x=1729787626; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NIxNF6zcwUJBfNODab+3warksDD9gq8C5scBjhfrsAg=;
+ b=LCuRBtXuAwri2npqqBarHxg8I7Xpnlzk0w6j3jI2ns1n4QrsKl+hzllf0vBAs+xghg
+ ZCU+jdBBNkdW39heaASTH5ON4EtivcrUcgwXTiH3KaEGK6ejYi9cbYsNorAcGWQdGbeU
+ VC/PTM5FwTbP4fteehcvjERqRQVqtmJMHm30L7hAMCxgQE4SWsi5I7E+CMa1Rh9QupaM
+ qvs0Y2H9Eaj3yejigM1xnC/LjqIMsXrwh1+/KgEc1CNWPV2k7JfRXiWf1o2HzwpnI43d
+ 9q/b0VfiRSPRbmybkqfwSvHLBc3yFINAYhwUINjYYO1ykCZH04HNL6qyFBGmgBAewbX8
+ D1Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729182769; x=1729787569;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1729182826; x=1729787626;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HsByr2/F9yb8R61V/RxanFmNShqqfc0i/+wi/KtFNd0=;
- b=efi8DsIT094YGdIluRoRy4ZUNsxIGAaioWQTcM7XayzcNTGuU2ox1E/6KXzK+iKKXt
- EVIedEa4L6hAdch24Mr0qAcPUR7n1JdiwYfZVAGDGTjZZQnbL7SHMZxQcSWttonrg/73
- sfr3wTuxuLyTnYDs2jyQW3ez8QybKYbqQix3UxtOH5Q22VkRjRMHjfqvdCzxX6xTHoLK
- wwIccZunkN0NNPovUjCin/nd11/hEw64uhh8zAF7CyK5CgRjpv+a5S6LxDzGNz1ZjMry
- r4ihJp/KtyboHGKNunhHuJpXi3GeUBpI2cb6rLdmgd6W9B9tjUVUBb0RIspGyrT/s6j8
- rTpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXf8g8TFfGJZEi/6OZ4rRhjztZHWPtgQifOC1kDij3TCcu8ad1dH042j30K5hMsbzSuz8/K3IBjPw36@nongnu.org
-X-Gm-Message-State: AOJu0YzRn8CoEFxkWP3L4X3ncKfwM7CrNYf44/JSe5TsjD+Pn5vYzk9M
- MMUqJDus5YRWGAbpYCZ6b3D6g5hZTcm2RejIJs5MXd6hp737mLsQFV12kXZFSHg=
-X-Google-Smtp-Source: AGHT+IGgrrl26I9EWYTAQmdhEJoJ/ZPM0RwXUGPjojeSOV3jVFn8gANqOjVxPiKrodTqf9XJySUHcQ==
-X-Received: by 2002:a05:600c:4e10:b0:428:f0c2:ef4a with SMTP id
- 5b1f17b1804b1-4314a2cc3a3mr69365415e9.13.1729182769128; 
- Thu, 17 Oct 2024 09:32:49 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316067dc56sm545165e9.3.2024.10.17.09.32.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 09:32:48 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 0/2] arm: Add collie and sx functional tests
-Date: Thu, 17 Oct 2024 17:32:45 +0100
-Message-Id: <20241017163247.711244-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ bh=NIxNF6zcwUJBfNODab+3warksDD9gq8C5scBjhfrsAg=;
+ b=BP0DHPj2ucQ0d0gG7Gppl7EZyNwo9aUpDVXsYmbUbjCQ72120GUegz7nB03SsyeRhI
+ k9kZ8bydNOAbnM6KtlPqllDla8znRrSyXPIv5yQXZ1SiUqoTiHOc5sFUpDyS5Rg8FY9r
+ B5LglBA+DNOGA/9ki9U/YB3fnKwO6jrh+GEPLc/AbxoUdyEleAwTHwl1HdqFBkwizY9Q
+ dzJp7FIMZ1FzmAlbAZ8VyBAWvi3C4aQPTTFXkp8ZlkNhrQH8xEW7/UTHdh80xXOHnOIH
+ YDLEK6KGlNXDvcfwlqawLcT67OXdC4NRSMAHcZMbv9E0JUQymqKRxbDbWu2a8Wj8H2N7
+ 8P3w==
+X-Gm-Message-State: AOJu0Yx5zUt14xBizk8w+lMEGOpXjNP9ZwgpJpfp/ll0hcl6hpwgHPCp
+ WL0BZ49gchmEsHixiWFrvJp/kGMzGjTSGbD1eyVnswRe8u0fwV/nlIKCJmFst1LT8XaCkD9F1/Z
+ Hrj5qij0u3yXnTthWzBcCGpGj59ssGCEzzd7kxnNeo/7s7+yf
+X-Google-Smtp-Source: AGHT+IG64JfgvXFNngWjCJDJbM9oKUmzYmtRienA23i6R/PHJt+k8+sA2vyO+3DkEROrro2xPw5KucIBzrnwDx6NHM0=
+X-Received: by 2002:a05:6402:5201:b0:5c8:8416:cda7 with SMTP id
+ 4fb4d7f45d1cf-5c99510f3a8mr6175957a12.15.1729182826302; Thu, 17 Oct 2024
+ 09:33:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+References: <20241016083103.2541727-1-gaosong@loongson.cn>
+In-Reply-To: <20241016083103.2541727-1-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 17 Oct 2024 17:33:34 +0100
+Message-ID: <CAFEAcA8AwaM5nhGmwyOnVXy9dUNQ1xRWba9fmYznR=01oCBh=A@mail.gmail.com>
+Subject: Re: [PULL 0/5] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,37 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds new functional tests for the collie and sx1
-boards, which are the only remaining ones that survived the
-culling of the OMAP/PXA2xx/strongarm machines.
+On Wed, 16 Oct 2024 at 09:49, Song Gao <gaosong@loongson.cn> wrote:
+>
+> The following changes since commit f774a677507966222624a9b2859f06ede7608100:
+>
+>   Merge tag 'pull-target-arm-20241015-1' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-10-15 15:18:22 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20241016
+>
+> for you to fetch changes up to e376c2d87cbbad3483adcd5e827bdd144edb7d2c:
+>
+>   hw/loongarch/fw_cfg: Build in common_ss[] (2024-10-16 16:06:07 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20241016
+>
+> ----------------------------------------------------------------
 
-For these tests I'm indebted to Guenter Roeck, who has kindly
-built and made available the kernel images, rootfs, etc and
-documented the commands needed to boot them. All I've done
-here is wrap those up into test cases in our testcase
-framework by cribbing from some of our existing test code.
 
-Based-on: 20241017162755.710698-1-peter.maydell@linaro.org
-("hw/sd/omap_mmc: Don't use sd_cmd_type_t")
- -- the sd card test for the sx1 board will not pass without
-    that bugfix
 
-thanks
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
+
 -- PMM
-
-Peter Maydell (2):
-  tests/functional: Add a functional test for the collie board
-  tests/functional: Add a functional test for the sx1 board
-
- MAINTAINERS                         |  1 +
- tests/functional/meson.build        |  3 ++
- tests/functional/test_arm_collie.py | 31 +++++++++++++
- tests/functional/test_arm_sx1.py    | 72 +++++++++++++++++++++++++++++
- 4 files changed, 107 insertions(+)
- create mode 100755 tests/functional/test_arm_collie.py
- create mode 100755 tests/functional/test_arm_sx1.py
-
--- 
-2.34.1
-
 
