@@ -4,92 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DF4D374A1
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4986AD374A1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1RVB-0004Tw-S7; Thu, 17 Oct 2024 10:29:21 -0400
+	id 1t1RYB-0005QC-W2; Thu, 17 Oct 2024 10:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1RV8-0004Tf-Aq
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:29:18 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1RY8-0005NP-7r
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:32:25 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1RV6-0003Q9-Md
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:29:18 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c937b5169cso1630110a12.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:29:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729175354; x=1729780154; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eFOX/syYZtwFsFH68uKcljYWd2x+NpIGFddXxltWQT4=;
- b=WHED6oxLn4Xhi3XTN40wkTNSqR9gDD/RwNRGYDH2lpjbH5oEuF1Ti5wQqcWHE+ECO2
- 8G9rmv3KAtRti9XOqAr0IqAxqiKSiRby93Eza+XR+dsH4AmUeBIRHnDGenTj1RIVpHRq
- kU7SHTw1s6OC3zLv7f522cwQI5XCSCJhiitrgVN9kz7Jhd+zbgjGfMVk7OMRjurndxkY
- weHBhRhbjWL68hJHfxYf9uXC0Zn7XDAiNIDgoJjjUSxOQLbUdIBLqXCHYPhfGoc2e31l
- o+DowfALngPNNQzsawAJtbELSS3SUfgq4Q1mT+CH7uI3O2jF8RWwHiPCon7mYgjPbYVG
- wKXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729175354; x=1729780154;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eFOX/syYZtwFsFH68uKcljYWd2x+NpIGFddXxltWQT4=;
- b=rzG5UnPwgrbnA8cdMMYoLrpqLWjr7+VtOSPWnZjA2HS2KmzWS1NTGMYDUgRYVstvTN
- nc4kITlJB9X+il9GyhqoFbWBMIUWGovn13BadKTjOlqw1grqTHw535HbSHGoviOaOdpF
- ZUVlFcsO7aPiAkhLsrRaBpMnkyoNb6i7oF2svqVKXigDUwX7a4UKR32RFCcHNsAdYvMd
- lccWXs7/iMCy96HET6ffg/ZlTFmEDxiKK0jVA4W8+LCl5oi9NTtKCwOczwh+3cCIbhAA
- jMNKkHdI3/8mYIRsNCwJ8qfgNM6XTD3OFjcKS7QyDDz5nB0F/RWDhOuBfmIdYT+2jqpz
- gKIw==
-X-Gm-Message-State: AOJu0Yy/cdB9s3RxLrfJcT6H49Aa32iJeY44uEOayD7+c0GegyAdxXKn
- bTWMl4GByZ0TQh60GEq/+udk+YpZbd+aq2ynUH+1kZpXmReG2F+AS+2sZekblvNA2PCiQXreHg7
- ML1LgV330reu/pYrmfgmwEmErBtIJk9tKxy7OWQ==
-X-Google-Smtp-Source: AGHT+IFqQu5BsSjDaJ/Qq2jP0g37QIiFZ+q2FqbzPIoawFDWDK8RWGYsqGRH1uGeI2eeHFRw4RA6TDGSNtdAqvaKfg0=
-X-Received: by 2002:a05:6402:4404:b0:5c8:d9b8:9325 with SMTP id
- 4fb4d7f45d1cf-5c9a5a1c1aamr4631517a12.5.1729175354260; Thu, 17 Oct 2024
- 07:29:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1RY5-0003sf-DI
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:32:23 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9FBA521D4F;
+ Thu, 17 Oct 2024 14:32:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729175538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qIRM9LB7FwkHydC3GCwMPV0i8o72SEtPi5z7MK5aYuI=;
+ b=WtZpEtpXatHHkdPNey7Gf6cvt/rSj6xSZ0tEYceBh9bwWIgyQnQDP2do/7rGFmzrnmoDbf
+ VFxQjti3RnyUQ08bRxEZ0oynEqKMGGrGnBHO8M8D3q+CtpHQ7h4PE05/qqtLKGAu9Wp1Qn
+ wmhUPWLurVe1h8FXOKiyeeQ5+wqNkdA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729175538;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qIRM9LB7FwkHydC3GCwMPV0i8o72SEtPi5z7MK5aYuI=;
+ b=vjHR2lQQObrZ8e918wyAyaSnTI1dUxfuiv5YYH7QPWqtsL/FQS1yNFLy+a1zZeShvogdkE
+ RYIdDM0PqJ67xWAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WtZpEtpX;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vjHR2lQQ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729175538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qIRM9LB7FwkHydC3GCwMPV0i8o72SEtPi5z7MK5aYuI=;
+ b=WtZpEtpXatHHkdPNey7Gf6cvt/rSj6xSZ0tEYceBh9bwWIgyQnQDP2do/7rGFmzrnmoDbf
+ VFxQjti3RnyUQ08bRxEZ0oynEqKMGGrGnBHO8M8D3q+CtpHQ7h4PE05/qqtLKGAu9Wp1Qn
+ wmhUPWLurVe1h8FXOKiyeeQ5+wqNkdA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729175538;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qIRM9LB7FwkHydC3GCwMPV0i8o72SEtPi5z7MK5aYuI=;
+ b=vjHR2lQQObrZ8e918wyAyaSnTI1dUxfuiv5YYH7QPWqtsL/FQS1yNFLy+a1zZeShvogdkE
+ RYIdDM0PqJ67xWAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CD32F13A42;
+ Thu, 17 Oct 2024 14:32:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OJN+JO8fEWcDKQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 17 Oct 2024 14:32:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH 1/4] tests/qtest: Add check-migration
+Date: Thu, 17 Oct 2024 11:32:08 -0300
+Message-Id: <20241017143211.17771-2-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241017143211.17771-1-farosas@suse.de>
+References: <20241017143211.17771-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
- <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
- <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
- <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
- <CAFEAcA95QmpcsrgCj5uE-Ng8ahNir3MuVEHWBCvjb3UwBbOFRA@mail.gmail.com>
- <ec0e8a75-c59f-41b3-b559-43c057fca8fd@roeck-us.net>
- <CAFEAcA9AZS1dGaLG85zZE8U0d7AcrLgKXNbhxkCoP+PLmbFn2g@mail.gmail.com>
- <cf7c8f57-22d5-4a40-bd87-0f15f5457d48@roeck-us.net>
- <CAFEAcA98=2OdT9ykg5ibDuVLtSXuq4g0PLmSbxkYmt1SyKe9iQ@mail.gmail.com>
- <c354e331-39c4-4520-9a69-b62a8ecdddbc@roeck-us.net>
-In-Reply-To: <c354e331-39c4-4520-9a69-b62a8ecdddbc@roeck-us.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Oct 2024 15:29:02 +0100
-Message-ID: <CAFEAcA-NreDmpCoFgrTJ5dEto5jQbjRg1eCfqg9Ns8VwQ9-Qzw@mail.gmail.com>
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Aaro Koskinen <aaro.koskinen@iki.fi>, 
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- linux-omap@vger.kernel.org, 
- Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>, 
- Robert Jarzmik <robert.jarzmik@free.fr>,
- Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 9FBA521D4F
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCPT_COUNT_SEVEN(0.00)[10];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_COUNT_TWO(0.00)[2];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +134,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 17 Oct 2024 at 15:12, Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On 10/17/24 05:42, Peter Maydell wrote:
-> > On Tue, 15 Oct 2024 at 19:12, Guenter Roeck <linux@roeck-us.net> wrote:
-> >> Please let me know if https://github.com/groeck/linux-test-downloads.git
-> >> meets your needs. For now I added 'collie'. I'll add more after it is
-> >> in a state that is useful for you.
-> >
-> > Yes, that's great, exactly what we need. I've put together a QEMU
-> > 'functional test' case that downloads the collie rootfs and image
-> > and checks that they boot. (I'll send the patches for that out
-> > in a bit.)
-> >
-> > (I've coded the test case to pull the binaries for a specific
-> > git revision of that repo rather than always-from-head, so
-> > we're testing always the same thing against head-of-QEMU.)
-> >
->
-> Sounds good. I now also added information for sx1, so you should
-> be able to use that as well. Please let me know if you need any
-> others.
+Add two new targets, check-migration and check-migration-quick to
+allow dividing migration tests into a quick set and a slow set. With
+this it'll be possible to reduce the amount of migration tests that
+run by default as part of 'make check'.
 
-I think sx1 and collie are all we need currently.
+Keep under the 'migration-quick' suite only a few tests to serve as
+sanity check for every build and move the rest under the 'migration'
+suite.
 
-By the way, it looks to me like QEMU has a regression
-somewhere where we can't boot that sx1 test for the SD
-card version -- it hangs during kernel boot waiting for
-the MMC card. (An elderly QEMU binary I have boots OK.)
-I'm looking into what's happened there.
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ meson.build             |  6 +++---
+ tests/Makefile.include  |  2 ++
+ tests/qtest/meson.build | 47 +++++++++++++++++++++++++++++++++--------
+ 3 files changed, 43 insertions(+), 12 deletions(-)
 
--- PMM
+diff --git a/meson.build b/meson.build
+index 4ea1984fc5..92d38691f9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3,9 +3,9 @@ project('qemu', ['c'], meson_version: '>=1.1.0',
+                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
+         version: files('VERSION'))
+ 
+-add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true)
+-add_test_setup('slow', exclude_suites: ['thorough'], env: ['G_TEST_SLOW=1', 'SPEED=slow'])
+-add_test_setup('thorough', env: ['G_TEST_SLOW=1', 'SPEED=thorough'])
++add_test_setup('quick', exclude_suites: ['slow', 'thorough', 'migration'], is_default: true)
++add_test_setup('slow', exclude_suites: ['thorough', 'migration-quick'], env: ['G_TEST_SLOW=1', 'SPEED=slow'])
++add_test_setup('thorough', exclude_suites: ['migration-quick'], env: ['G_TEST_SLOW=1', 'SPEED=thorough'])
+ 
+ meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
+ 
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 010369bd3a..79c1350bfb 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -11,6 +11,8 @@ check-help:
+ 	@echo " $(MAKE) check-qtest              Run qtest tests"
+ 	@echo " $(MAKE) check-functional         Run python-based functional tests"
+ 	@echo " $(MAKE) check-functional-TARGET  Run functional tests for a given target"
++	@echo " $(MAKE) check-migration-quick    Run a small set of migration tests"
++	@echo " $(MAKE) check-migration          Run all migration tests"
+ 	@echo " $(MAKE) check-unit               Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
+ 	@echo " $(MAKE) check-block              Run block tests"
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b207e38696..27a802474a 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -406,14 +406,43 @@ foreach dir : target_dirs
+         test: executable(test, src, dependencies: deps)
+       }
+     endif
+-    test('qtest-@0@/@1@'.format(target_base, test),
+-         qtest_executables[test],
+-         depends: [test_deps, qtest_emulator, emulator_modules],
+-         env: qtest_env,
+-         args: ['--tap', '-k'],
+-         protocol: 'tap',
+-         timeout: slow_qtests.get(test, 60),
+-         priority: slow_qtests.get(test, 60),
+-         suite: ['qtest', 'qtest-' + target_base])
++
++    # The migration-test test runs several slow sub-tests. Add it to
++    # two separate targets, one for executing a few tests
++    # (migration-quick) and another for executing the full set
++    # (migration). This is done to reduce the amount of tests that run
++    # via make check.
++    if test == 'migration-test'
++      foreach opts : [
++        {
++          'test-args': ['--tap', '-k', '-m', 'slow'],
++          'test-suite': ['migration']
++        },
++        {
++          'test-args': ['--tap', '-k', '-m', 'quick'],
++          'test-suite': ['migration-quick']
++        }]
++
++        test(target_base,
++             qtest_executables[test],
++             depends: [test_deps, qtest_emulator, emulator_modules],
++             env: qtest_env,
++             args: opts['test-args'],
++             protocol: 'tap',
++             timeout: slow_qtests.get(test, 60),
++             priority: slow_qtests.get(test, 60),
++             suite: opts['test-suite'])
++      endforeach
++    else
++      test('qtest-@0@/@1@'.format(target_base, test),
++           qtest_executables[test],
++           depends: [test_deps, qtest_emulator, emulator_modules],
++           env: qtest_env,
++           args: ['--tap', '-k'],
++           protocol: 'tap',
++           timeout: slow_qtests.get(test, 60),
++           priority: slow_qtests.get(test, 60),
++           suite: ['qtest', 'qtest-' + target_base])
++    endif
+   endforeach
+ endforeach
+-- 
+2.35.3
+
 
