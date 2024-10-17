@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4201BD37491
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 13:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B31DD37498
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Qtx-0004Wz-8H; Thu, 17 Oct 2024 09:50:53 -0400
+	id 1t1Q5O-0005c9-13; Thu, 17 Oct 2024 08:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t1Qtv-0004We-2d
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:50:51 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <r.peniaev@gmail.com>)
- id 1t1Qtt-0007ln-KA
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:50:50 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2fb49510250so9916631fa.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 06:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729173047; x=1729777847; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3zYk6tB+YibjJ9nXCG2r36SrD1pGwrQpBNG6tqoH5d4=;
- b=icShNMJKTDGR4LeHbtlfCARh4jk9lN3IcUnT8InrZ6VtjacUxE6FjlEAG3a+csXul1
- ffCKKd/Z+93p3ebukvhuu0jtGMu242d0ekeb3OtrU3Uhkgn5VcMK0lpCf69M+yZSkRmh
- K8H4eDeZlFh9bwUL2LAKO6eqErS/t8M3J7NvrzqE/+MI+rCwdUbuheS0sOS5gbQnrJKe
- y7FypQStvS9kIi8+KLpLtf7zvJLrOEM6ED7ttklmZjNDziELyMO1fwGNUyrgf62oKfpb
- 5RJ00702csSMayI28+E1GXWhwFiiNmJl5IcYJrHkqvN8otrvi+14x9dN+3K6fFLmfX9e
- fLdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729173047; x=1729777847;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3zYk6tB+YibjJ9nXCG2r36SrD1pGwrQpBNG6tqoH5d4=;
- b=MDz7sCq31C2UbxQ7zYTTUA7oH2QDUxgFOB1heFlfwlcth6NRxTpVbawU9EIV250uRe
- smlPs8OWxnah+frBzzMbMXJt7Vw7t1OqTXEJaopx58SenH+YohXTq1Ha4MhiAvnxW0DY
- Om6MMoawh5SGm7LD+c9MfXaZevhBZauSsRtnsTrjB5MqocQ2krWBD0tY9iujOpEQSb9K
- tc9c0d3zjkI/fKErBnMlvAgbQnme8flw5CIg8N1AihxVQHwpvCEnZqU8sCVFFAYTGDWa
- fwe5OzQ1gIKs1nuunqqwwmnFXcqTjvYidGN4REqHf7blCvmjlHc+4QI+QOTpl/cEhkEO
- iG4A==
-X-Gm-Message-State: AOJu0YwFRJb6LEr1NpqXIfMf8oWXUXvvtv4i958DSUa1VBHQ8I+HHwbq
- PTjmvUfXmcnuKpsK2vutLtcROlG6tOdBCsLKsN79Xo+1mHbiS0w6gX6m3zdZWu+AvpRLR26oQaR
- NutAnteUxAKRYsAUBxrHSwM/IL6XMWxMJ
-X-Google-Smtp-Source: AGHT+IHIyHzRc07N740cjDuLIJ+1IH7/q+rNA+8TsL7PqME96hnZTDTlN2Rb58osovKcQHeKlaJqoXWm4INGuFHPocQ=
-X-Received: by 2002:a2e:b88d:0:b0:2fb:5a7e:5046 with SMTP id
- 38308e7fff4ca-2fb5a7e5310mr60924871fa.9.1729173047172; Thu, 17 Oct 2024
- 06:50:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t1Q5L-0005bH-Tw
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 08:58:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t1Q5K-0000Y1-D4
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 08:58:35 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HBo1nV015735;
+ Thu, 17 Oct 2024 12:58:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=gS0xWRYrY5GGaEk9y
+ 6Pmlu4HXJzr4kMuWVjTQXxgu+U=; b=hwlecouyVrD2fL5H4rcaJ+quxX93L6O5i
+ pYMMOD8tmMiQSz01LRRIUMpD5xxrLPMi83dssvUrSWjN+IPS1Ds+DQRe87TSaxn4
+ n5suxm37MBrhaAZhAGfXSxItRvtPqLbt/Eml+xXP7MCe07wjQHn8Fx44j1Gh/Gi2
+ CcOouGnYylXVuU/rvodhPj9NDWlsUxAmx86A97UzakpPM7LkGgfQ7NpqJzqS/qnT
+ hPoDrbaey2bTxc04JodL2aZHx8vwtNK/Cu5A1ghjt7XAd+WM/fFfDZDPJWhW3Af/
+ GPaDEiLYkuNK9ny3FWUTjjsnvT+7h/UjEuDqFt3xyOZNyIINgDBug==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42as8a2py6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 12:58:18 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49HAmKBs006338;
+ Thu, 17 Oct 2024 12:58:17 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4286516mwy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 12:58:17 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49HCwFkb45875688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Oct 2024 12:58:15 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D0A5820043;
+ Thu, 17 Oct 2024 12:58:15 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7045F20040;
+ Thu, 17 Oct 2024 12:58:15 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.92.150])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Oct 2024 12:58:15 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 2/2] tests/tcg: Test that sigreturn() does not corrupt the
+ signal mask
+Date: Thu, 17 Oct 2024 14:54:44 +0200
+Message-ID: <20241017125811.447961-3-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241017125811.447961-1-iii@linux.ibm.com>
+References: <20241017125811.447961-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-References: <20241016102605.459395-1-r.peniaev@gmail.com>
- <20241016102605.459395-8-r.peniaev@gmail.com>
- <CAMxuvaz9_7JBGqsJHZO0zuvrdO20oDef2v=6TSy345byzkm1Tw@mail.gmail.com>
-In-Reply-To: <CAMxuvaz9_7JBGqsJHZO0zuvrdO20oDef2v=6TSy345byzkm1Tw@mail.gmail.com>
-From: Roman Penyaev <r.peniaev@gmail.com>
-Date: Thu, 17 Oct 2024 15:48:39 +0200
-Message-ID: <CACZ9PQVYD8zen8KAOJ-+BebWRKSFwmFn42h2uDofog1LkrcHog@mail.gmail.com>
-Subject: Re: [PATCH v4 7/8] tests/unit/test-char: add unit test for the
- `mux-be` multiplexer
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=r.peniaev@gmail.com; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: B5GEhbjYwAf_sRZBSJoel3U0QfjqK8ri
+X-Proofpoint-ORIG-GUID: B5GEhbjYwAf_sRZBSJoel3U0QfjqK8ri
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=915 phishscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170086
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,30 +108,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+Add a small test to prevent regressions.
 
-On Wed, Oct 16, 2024 at 1:36=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi
->
-> On Wed, Oct 16, 2024 at 2:28=E2=80=AFPM Roman Penyaev <r.peniaev@gmail.co=
-m> wrote:
-> >
-> > The test is trivial: several backends, 1 `mux-be`, 1 frontend
-> > do the buffer write and read. Pipe is used for EAGAIN verification.
-> >
-> > Signed-off-by: Roman Penyaev <r.peniaev@gmail.com>
-> > Cc: "Marc-Andr=C3=A9 Lureau" <marcandre.lureau@redhat.com>
-> > Cc: qemu-devel@nongnu.org
-> > ---
-> >  tests/unit/test-char.c | 306 ++++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 304 insertions(+), 2 deletions(-)
->
-> please fix the few leaks (found with --enable-asan)
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/multiarch/sigreturn-sigmask.c | 51 +++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+ create mode 100644 tests/tcg/multiarch/sigreturn-sigmask.c
 
-Did not know about this option. Should be easy, thanks.
+diff --git a/tests/tcg/multiarch/sigreturn-sigmask.c b/tests/tcg/multiarch/sigreturn-sigmask.c
+new file mode 100644
+index 00000000000..e6cc904898d
+--- /dev/null
++++ b/tests/tcg/multiarch/sigreturn-sigmask.c
+@@ -0,0 +1,51 @@
++/*
++ * Test that sigreturn() does not corrupt the signal mask.
++ * Block SIGUSR2 and handle SIGUSR1.
++ * Then sigwait() SIGUSR2, which relies on it remaining blocked.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <pthread.h>
++#include <signal.h>
++#include <stdlib.h>
++#include <unistd.h>
++
++int seen_sig = -1;
++
++static void signal_func(int sig)
++{
++    seen_sig = sig;
++}
++
++static void *thread_func(void *arg)
++{
++    kill(getpid(), SIGUSR2);
++    return NULL;
++}
++
++int main(void)
++{
++    struct sigaction act = {
++        .sa_handler = signal_func,
++    };
++    pthread_t thread;
++    sigset_t set;
++    int sig;
++
++    assert(sigaction(SIGUSR1, &act, NULL) == 0);
++
++    assert(sigemptyset(&set) == 0);
++    assert(sigaddset(&set, SIGUSR2) == 0);
++    assert(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
++
++    kill(getpid(), SIGUSR1);
++    assert(seen_sig == SIGUSR1);
++
++    assert(pthread_create(&thread, NULL, thread_func, NULL) == 0);
++    assert(sigwait(&set, &sig) == 0);
++    assert(sig == SIGUSR2);
++    assert(pthread_join(thread, NULL) == 0);
++
++    return EXIT_SUCCESS;
++}
+-- 
+2.47.0
 
---
-Roman
 
