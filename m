@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B1BD2127C
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 11:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3476DD2A531
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 11:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Oo5-00063t-Po; Thu, 17 Oct 2024 07:36:41 -0400
+	id 1t1OpC-000069-U9; Thu, 17 Oct 2024 07:37:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1OlW-0003yR-Cc
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:34:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t1Om6-00042m-I8
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:34:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1OlU-0005t3-Gw
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:34:01 -0400
+ id 1t1Om1-0005w1-FW
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:34:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729164839;
+ s=mimecast20190719; t=1729164869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sqfDg+89JlLlFjWXSyUiz2kImf/iFKSDPk5xLTwI/84=;
- b=dpZ+N2BbTGwOMVOjEnwFudh0UJTio9Rx9aOY4i9pO04aDcYPxUM7pgycWMUL+sv3aMY6Pk
- 4bvISGLv3BkgOpXPQYYCzgddKGaTh1HiJ2veYdcL16chv3Io5vdaiTaRZOvwIuUB49sENY
- 8I2EcqEe9Tea7AS7QU881HmEZKfBRF0=
+ bh=cKRUsfFZ11ZMDTbQf+VCjO1+xfdWZu2cPKP9yAjsAwU=;
+ b=X1CIH/IRRZeyeGaukyErtrVe38x6EGnTi7hbyEhsvHS9SKTm9vQ1GlER6jCzv5EGNG9wZF
+ QmWwHDVInjiAedcjyZ+vnX9If7FiIfcASMwfrZ5J/nPLlEBHxbReblcegiUiUt6WO44nMc
+ hkhpVvu5ExOqyXY4fE7nXh9x1+QvDsA=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-psdCiJyWPK-_K5zzY6odug-1; Thu,
- 17 Oct 2024 07:33:58 -0400
-X-MC-Unique: psdCiJyWPK-_K5zzY6odug-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-4rmpNJtXM_WjWgtp7BQr7w-1; Thu,
+ 17 Oct 2024 07:34:28 -0400
+X-MC-Unique: 4rmpNJtXM_WjWgtp7BQr7w-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24ACA1955D5E
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 11:33:57 +0000 (UTC)
+ id 4CC6C1955EE8
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 11:34:27 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.94])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9E66319560A2; Thu, 17 Oct 2024 11:33:55 +0000 (UTC)
+ id 0FEB219560A2; Thu, 17 Oct 2024 11:34:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 05/31] backends: adapt to new import path for qobject data
+Subject: [PATCH v2 22/31] stubs: adapt to new import path for qobject data
  type headers
-Date: Thu, 17 Oct 2024 12:33:17 +0100
-Message-ID: <20241017113344.883424-6-berrange@redhat.com>
+Date: Thu, 17 Oct 2024 12:33:34 +0100
+Message-ID: <20241017113344.883424-23-berrange@redhat.com>
 In-Reply-To: <20241017113344.883424-1-berrange@redhat.com>
 References: <20241017113344.883424-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -92,22 +92,33 @@ qobject/.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- backends/cryptodev-hmp-cmds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ stubs/qmp-command-available.c | 2 +-
+ stubs/qmp-quit.c              | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/backends/cryptodev-hmp-cmds.c b/backends/cryptodev-hmp-cmds.c
-index 4f7220bb13..01396d227c 100644
---- a/backends/cryptodev-hmp-cmds.c
-+++ b/backends/cryptodev-hmp-cmds.c
-@@ -14,7 +14,7 @@
- #include "monitor/hmp.h"
- #include "monitor/monitor.h"
- #include "qapi/qapi-commands-cryptodev.h"
--#include "qapi/qmp/qdict.h"
-+#include "qobject/qdict.h"
+diff --git a/stubs/qmp-command-available.c b/stubs/qmp-command-available.c
+index 46540af7bf..8851faced1 100644
+--- a/stubs/qmp-command-available.c
++++ b/stubs/qmp-command-available.c
+@@ -1,5 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
  
+ bool qmp_command_available(const QmpCommand *cmd, Error **errp)
+ {
+diff --git a/stubs/qmp-quit.c b/stubs/qmp-quit.c
+index a3ff47f7bd..8fb523e905 100644
+--- a/stubs/qmp-quit.c
++++ b/stubs/qmp-quit.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "qapi/qapi-commands-control.h"
+-#include "qapi/qmp/dispatch.h"
++#include "qapi/qmp-registry.h"
  
- void hmp_info_cryptodev(Monitor *mon, const QDict *qdict)
+ void qmp_quit(Error **errp)
+ {
 -- 
 2.46.0
 
