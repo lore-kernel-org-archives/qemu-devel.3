@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BD1D37487
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 12:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B3AFD37485
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 13:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1PqM-00024Y-V9; Thu, 17 Oct 2024 08:43:06 -0400
+	id 1t1QMa-00037O-9w; Thu, 17 Oct 2024 09:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1PqL-000244-2V
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 08:43:05 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1PqJ-0006rQ-Cx
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 08:43:04 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c903f5bd0eso1666633a12.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 05:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729168981; x=1729773781; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6ZuKCrkaLzM33sZ5bBvK6gUY6ZZ4l7azgsAmnHgjSa4=;
- b=o/BIDqRohYZrVN81uqEv3e8i5sheaqfvt8QN7NcUf8HRzs3tCXKRtfladL8GzhTcED
- HQCOEcX4NmQktpPQab0WTpxrtIbv+D6i7PRB1XYg9fSQrTsv3twP5yJFClEJ4zJjg1+N
- Og/wisDOQURs3KjnqjZ6g0WSKw/79GIZNLQvhHvxG5D8jsxv8wZgpc9oSpPppWDCVMPG
- mAv5x1ilyHXkD2gHinO4ld2k062WvcGbDQEbmaKTELsPNPX42apxHi7lWSfQt4A3DCcm
- o9/yNqzGrsoLvzDJyQp9QOwlyqW3EIlhS8gHMbheI4IY89nAXeDg0YwxH/wZEQG/6S2f
- qNyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729168981; x=1729773781;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6ZuKCrkaLzM33sZ5bBvK6gUY6ZZ4l7azgsAmnHgjSa4=;
- b=gH8j1BDmk4j88FnX0SLFD9o1Cezm404fEpB48P/XNPQTMhZUkpcRJLmEJ2iacF4axt
- A4onuCBwDrl9bQHVEEm7tvxWEz5yuihKgATUGjQMN97hUgzLSS7othGcmsxSsmY3sQGI
- 7+7DD1aVSKyUBL9w5JrTR1zvkqISYkonYUAV0sfQLpLK1BpElLEEi0Wkx26YQtJO5cae
- Auy0Hykpp72jOB2OOZmocf91UjyY/0cUPDKjTzPZhjTJBhd1MMfAxIuLV3b2eo+5v+uh
- W8fIqJ4J5T8idJvZIyOnryX0qp18AtUqUbapU2NyMrcZSnYPjjgUIqHS7r/1KQEcwrDU
- sK5A==
-X-Gm-Message-State: AOJu0YwR7n4dwYNmfM3u3/kdQsYGfUjOVvy6dFouSCcht9Sy6ylS9e9W
- AwMGXQthjoJTkPeyHTE9MkPGHnYlccXIzMC1x/gfC3hCGzeOPOmWurYL9tzds1fsKhWnnQS21LW
- jpNPs6zHv2KxUnBTXGBb+KyqSttv1UF3gXzyH0A==
-X-Google-Smtp-Source: AGHT+IEArqXHn2TZ8HnQtNR/0yn1cUP2Pz25ofAsIP5SflIArI0A2LZyQBOx8pJDoP8BFftRxNs83QuFLQwbAuPCBV0=
-X-Received: by 2002:a05:6402:3513:b0:5c9:57bb:b922 with SMTP id
- 4fb4d7f45d1cf-5c957bbc823mr15253428a12.19.1729168981305; Thu, 17 Oct 2024
- 05:43:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1QMY-000372-5z; Thu, 17 Oct 2024 09:16:22 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1QMW-0003AR-DX; Thu, 17 Oct 2024 09:16:21 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XTpBl0XCzz6LDG1;
+ Thu, 17 Oct 2024 21:11:43 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id A46701400C9;
+ Thu, 17 Oct 2024 21:16:14 +0800 (CST)
+Received: from localhost (10.126.174.164) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 17 Oct
+ 2024 15:16:13 +0200
+Date: Thu, 17 Oct 2024 14:16:11 +0100
+To: Zhao Liu <zhao1.liu@intel.com>
+CC: "Daniel P =?ISO-8859-1?Q?Berrang=E9?=" <berrange@redhat.com>, "Igor
+ Mammedov" <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Ma?=
+ =?ISO-8859-1?Q?thieu-Daud=E9?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, "Michael S.Tsirkin " <mst@redhat.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eric Blake <eblake@redhat.com>, "Markus
+ Armbruster" <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Alex
+ =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, <qemu-devel@nongnu.org>,
+ <kvm@vger.kernel.org>, <qemu-riscv@nongnu.org>, <qemu-arm@nongnu.org>,
+ "Zhenyu Wang" <zhenyu.z.wang@intel.com>, Dapeng Mi
+ <dapeng1.mi@linux.intel.com>
+Subject: Re: [PATCH v3 7/7] i386/cpu: add has_caches flag to check smp_cache
+ configuration
+Message-ID: <20241017141611.00007566@Huawei.com>
+In-Reply-To: <20241012104429.1048908-8-zhao1.liu@intel.com>
+References: <20241012104429.1048908-1-zhao1.liu@intel.com>
+ <20241012104429.1048908-8-zhao1.liu@intel.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
- <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
- <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
- <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
- <CAFEAcA95QmpcsrgCj5uE-Ng8ahNir3MuVEHWBCvjb3UwBbOFRA@mail.gmail.com>
- <ec0e8a75-c59f-41b3-b559-43c057fca8fd@roeck-us.net>
- <CAFEAcA9AZS1dGaLG85zZE8U0d7AcrLgKXNbhxkCoP+PLmbFn2g@mail.gmail.com>
- <cf7c8f57-22d5-4a40-bd87-0f15f5457d48@roeck-us.net>
-In-Reply-To: <cf7c8f57-22d5-4a40-bd87-0f15f5457d48@roeck-us.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Oct 2024 13:42:49 +0100
-Message-ID: <CAFEAcA98=2OdT9ykg5ibDuVLtSXuq4g0PLmSbxkYmt1SyKe9iQ@mail.gmail.com>
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Aaro Koskinen <aaro.koskinen@iki.fi>, 
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- linux-omap@vger.kernel.org, 
- Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>, 
- Robert Jarzmik <robert.jarzmik@free.fr>,
- Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.126.174.164]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,23 +79,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Oct 2024 at 19:12, Guenter Roeck <linux@roeck-us.net> wrote:
-> Please let me know if https://github.com/groeck/linux-test-downloads.git
-> meets your needs. For now I added 'collie'. I'll add more after it is
-> in a state that is useful for you.
+RESEND as rejected by server (header issue, hopefully fixed)
 
-Yes, that's great, exactly what we need. I've put together a QEMU
-'functional test' case that downloads the collie rootfs and image
-and checks that they boot. (I'll send the patches for that out
-in a bit.)
+On Sat, 12 Oct 2024 18:44:29 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-(I've coded the test case to pull the binaries for a specific
-git revision of that repo rather than always-from-head, so
-we're testing always the same thing against head-of-QEMU.)
+> From: Alireza Sanaee <alireza.sanaee@huawei.com>
+> 
+> Add has_caches flag to SMPCompatProps, which helps in avoiding
+> extra checks for every single layer of caches in x86 (and ARM in
+> future).
+> 
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+LGTM
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-thanks
--- PMM
+> ---
+> Note: Picked from Alireza's series with the changes:
+>  * Moved the flag to SMPCompatProps with a new name "has_caches".
+>    This way, it remains consistent with the function and style of
+>    "has_clusters" in SMPCompatProps.
+>  * Dropped my previous TODO with the new flag.
+> ---
+> Changes since Patch v2:
+>  * Picked a new patch frome Alireza's ARM smp-cache series.
+> ---
+>  hw/core/machine-smp.c | 2 ++
+>  include/hw/boards.h   | 3 +++
+>  target/i386/cpu.c     | 9 ++++-----
+>  3 files changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> index f3edbded2e7b..16e456678cb6 100644
+> --- a/hw/core/machine-smp.c
+> +++ b/hw/core/machine-smp.c
+> @@ -367,6 +367,8 @@ bool machine_parse_smp_cache(MachineState *ms,
+>          return false;
+>      }
+>  
+> +    mc->smp_props.has_caches = true;
+> +
+>      return true;
+>  }
+>  
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index e4a1035e3fa1..af62b09c89d1 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -153,6 +153,8 @@ typedef struct {
+>   * @modules_supported - whether modules are supported by the machine
+>   * @cache_supported - whether cache (l1d, l1i, l2 and l3) configuration are
+>   *                    supported by the machine
+> + * @has_caches - whether cache properties are explicitly specified in the
+> + *               user provided smp-cache configuration
+>   */
+>  typedef struct {
+>      bool prefer_sockets;
+> @@ -163,6 +165,7 @@ typedef struct {
+>      bool drawers_supported;
+>      bool modules_supported;
+>      bool cache_supported[CACHE_LEVEL_AND_TYPE__MAX];
+> +    bool has_caches;
+>  } SMPCompatProps;
+>  
+>  /**
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index c8a04faf3764..6f711e98b527 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7853,12 +7853,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>  
+>  #ifndef CONFIG_USER_ONLY
+>      MachineState *ms = MACHINE(qdev_get_machine());
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>  
+> -    /*
+> -     * TODO: Add a SMPCompatProps.has_caches flag to avoid useless Updates
+> -     * if user didn't set smp_cache.
+> -     */
+> -    x86_cpu_update_smp_cache_topo(ms, cpu);
+> +    if (mc->smp_props.has_caches) {
+> +        x86_cpu_update_smp_cache_topo(ms, cpu);
+> +    }
+>  
+>      qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
+>  
+
 
