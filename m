@@ -4,67 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D73D2126D
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99287D2126D
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 10:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1NB6-00028T-41; Thu, 17 Oct 2024 05:52:20 -0400
+	id 1t1NIe-0003On-LP; Thu, 17 Oct 2024 06:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1NB5-000287-0L
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:52:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t1NId-0003OW-T4
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:00:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1NB3-0008N9-Do
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:52:18 -0400
+ id 1t1NIb-0000V6-Sz
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:00:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729158736;
+ s=mimecast20190719; t=1729159204;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sRCZu92U+3lT4QZfQdKJZNnd4n6WwOeUzsWnG0liseA=;
- b=XLrceho+SX9/GNYiqhSSaoyu9FmyGdzBmvA7biNzfGoP5a2wWaEtpvc9wRePe8tXxyfRar
- tUFzMZTp1tnt47Cleps9j5d6eRKpWqQBFRK39jB6Ib4cnlmB3KROVDm0Xtaw3W8882ZDzO
- orKJSFigebceAkybXNjBsYg8PIaCQfc=
+ bh=kENpIu1OOnzBQgq/xCBsvVL/ByVydWC7GeLK25TRH9g=;
+ b=ZX3c5J9FvmxlO6oZe8e9TZQdhSylWTzsRvkk0E9aaHQxXtWHY1MJAmtUUsNnJ7607V/+1K
+ bo1xOkNhLTO621BJLyxm0YQF0/SI1x6GpBcElh9CWMxw6RjKqD301PnIQhDbNlqSpEtYl+
+ gELq8H21r6XhMlDlQLpCdPc9w9yafJA=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-1bRzhTVeOmK3Zi-zVEnIjQ-1; Thu,
- 17 Oct 2024 05:52:14 -0400
-X-MC-Unique: 1bRzhTVeOmK3Zi-zVEnIjQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-5O2ehc_PNvOC7FJKHweiLg-1; Thu,
+ 17 Oct 2024 06:00:00 -0400
+X-MC-Unique: 5O2ehc_PNvOC7FJKHweiLg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E82C51956069; Thu, 17 Oct 2024 09:52:12 +0000 (UTC)
+ id 700881955F3F; Thu, 17 Oct 2024 09:59:59 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.94])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D08CD19560A7; Thu, 17 Oct 2024 09:52:09 +0000 (UTC)
-Date: Thu, 17 Oct 2024 10:52:06 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2FC1300018D; Thu, 17 Oct 2024 09:59:57 +0000 (UTC)
+Date: Thu, 17 Oct 2024 10:59:54 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Brad Smith <brad@comstyle.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Marc-Andr_ Lureau <marcandre.lureau@redhat.com>,
- Philippe Mathieu-Daud_ <philmd@linaro.org>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH] meson.build: Remove ncurses workaround for OpenBSD
-Message-ID: <ZxDeRtTWpsvxN3WI@redhat.com>
-References: <ZwnvT4srOStQopOr@humpty.home.comstyle.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: htafr <htafreit@gmail.com>, qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH 0/1] Insert LibSPDM in QEMU enabling in-tree compilation
+Message-ID: <ZxDgGsjRkLEA8r6_@redhat.com>
+References: <20241016163439.1130168-1-htafreit@gmail.com>
+ <CAKmqyKPUUgF1tLKCFF1FiT5HHEDDDg+=Yha2e38wSto4mKh_BA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZwnvT4srOStQopOr@humpty.home.comstyle.com>
+In-Reply-To: <CAKmqyKPUUgF1tLKCFF1FiT5HHEDDDg+=Yha2e38wSto4mKh_BA@mail.gmail.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -91,48 +89,84 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing qemu-trivial
-
-On Fri, Oct 11, 2024 at 11:38:55PM -0400, Brad Smith wrote:
-> meson.build: Remove ncurses workaround for OpenBSD
+On Thu, Oct 17, 2024 at 02:00:35PM +1000, Alistair Francis wrote:
+> On Thu, Oct 17, 2024 at 2:35 AM htafr <htafreit@gmail.com> wrote:
+> >
+> > (I) Summary
+> > ===========================================================================
+> >
+> > This patch is the beginning of the support of the Security Protocol and
+> > Data Model (SPDM). There are some known issues (see II), but it's
+> > usable and not many users are going to use this functionality for now,
+> > but for those who will it may facilitate the development.
+> >
+> > There are some people working with LibSPDM to implement the SPDM on
+> > emulated devices, however current works that use QEMU compile LibSPDM
+> > out-of-tree [1][2][3]. This patch enables the compilation of LibSPDM when
+> > user pass the parameter '--enable-libspdm' to configure file, this option
+> > is disabled by default. The following parameters were also added:
+> >
+> >   --libspdm-crypto=CHOICE  set LibSPDM crypto algorithm [mbedtls] (choices:
+> >                            mbedtls/openssl)
+> >   --libspdm-toolchain=VALUE
+> >                            toolchain to use for LibSPDM compilation [GCC]
+> >
+> > In order to facilitate future code development using LibSPDM API, this
+> > patch also provides the definition of the macro 'CONFIG_LIBSPDM'.
 > 
-> OpenBSD 7.5 has upgraded to ncurses 6.4.
+> We have talked about this before, see
+> https://patchew.org/QEMU/cover.1691509717.git.alistair.francis@wdc.com/
 > 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  meson.build | 2 +-
->  ui/curses.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+> The general agreement seemed to be that it will be hard to do SPDM
+> configuration inside QEMU, hence the external library (like the QEMU
+> TPM support).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+More generally, seeing this libspdm proposed for QEMU, without any
+corresponding usage of it it dubious. It is hard to judge whether
+it makes any sense, without seeing how it will be used in real
+device code inside QEMU.
 
+On the cryptography side, I'm not a fan of linking another
+crypto library to QEMU, that's different from what we already
+support in our crypto layer. openssl in particular is a problem
+due to its licensing - people tend to hand-waive away the
+licensing incompatibility by pretending openssl is a "system library"
+but I disagree with that interpretation.
+
+> > (II) Known Limitations
+> > ===========================================================================
+> >
+> > 1. This patch enables LibSPDM in-tree compilation for Linux systems only.
+> > 2. LibSPDM compilation uses CMake, so meson build system is making use
+> >    of the CMake module [4].
+> > 3. Some problems may occur when compiling LibSPDM with MbedTls such as:
+> >     error: "_GNU_SOURCE" redefined [-Werror]
+> >       10 | #define _GNU_SOURCE
+> >
+> >    It's possible to compile using --disable-werror.
+> >
+> > (III) Sample configuration
+> > ===========================================================================
+> >
+> > ../configure \
+> >   --disable-werror \
+> >   --enable-libspdm \
+> >   --libspdm-crypto=mbedtls \
+> >   --enable-gcov
+> >
+> > References:
+> > [1] riscv-spdm
+> >   Link: https://github.com/htafr/riscv-spdm
+> > [2] spdm-benchmark
+> >   Link: https://github.com/rcaalves/spdm-benchmark
+> > [3] qemu-spdm-emulation-guide
+> >   Link: https://github.com/twilfredo/qemu-spdm-emulation-guide
 > 
-> diff --git a/meson.build b/meson.build
-> index 4ea1984fc5..22e7629d81 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1374,7 +1374,7 @@ iconv = not_found
->  curses = not_found
->  if have_system and get_option('curses').allowed()
->    curses_test = '''
-> -    #if defined(__APPLE__) || defined(__OpenBSD__)
-> +    #ifdef __APPLE__
->      #define _XOPEN_SOURCE_EXTENDED 1
->      #endif
->      #include <locale.h>
-> diff --git a/ui/curses.c b/ui/curses.c
-> index ec61615f7c..4d0be9b37d 100644
-> --- a/ui/curses.c
-> +++ b/ui/curses.c
-> @@ -38,7 +38,7 @@
->  #include "ui/input.h"
->  #include "sysemu/sysemu.h"
->  
-> -#if defined(__APPLE__) || defined(__OpenBSD__)
-> +#ifdef __APPLE__
->  #define _XOPEN_SOURCE_EXTENDED 1
->  #endif
+> This one has been merged upstream and mainline QEMU supports it now:
+> 
+> https://www.qemu.org/docs/master/specs/spdm.html
 
+So with that merged, is this proposal for linking to libspdm redundant ?
 
 With regards,
 Daniel
