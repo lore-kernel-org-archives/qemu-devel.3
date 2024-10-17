@@ -4,129 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D6B3D3C526
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 17:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875BFD3C52A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 17:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1UbN-0005QN-1n; Thu, 17 Oct 2024 13:47:57 -0400
+	id 1t1Uh9-000721-LO; Thu, 17 Oct 2024 13:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1UbF-0005Oy-98
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:47:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1UbB-0002pN-DV
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:47:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729187256;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OGe8oGGeeiUi+F5s3emF2aDh6uT/NSPtKzdNasxpxKM=;
- b=DD4FwVvMeht42bY1XhEfnzuTjyxm2qN/V/7QPFKU1wXl9532ZKW6W47Me8/i7c9QIyCjck
- yqczO0kJHXt5x4zcJF0gK73zIHPHKvVxBHkryecahByzotT8aKUCqUu97oA7WjFi7vw5xy
- PDCahZIulSlD1F9+4E4xbZKLWLiV8MI=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-2maNFDWKO7KQnl10QWK5_A-1; Thu, 17 Oct 2024 13:47:34 -0400
-X-MC-Unique: 2maNFDWKO7KQnl10QWK5_A-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-539fbf73a2fso1135080e87.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 10:47:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Uh8-00071H-AD
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:53:54 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Uh6-0003cR-Nw
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:53:54 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20cbb1cf324so10391155ad.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 10:53:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729187631; x=1729792431; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=02oeOFeK7jtYuCzX8W9dU5PdVKq3pbuOMiR05+cTM30=;
+ b=D69r7sY0WKEuNIk0siDPcbPcuGOx8OVG+KyK1ZwHUBsw5ZFR2ew5YAx4Pde7Tb7Ue8
+ SNvKjNtDfLJA+DqOI6mQpXqutcOzKOww1szRmm10T5BKXdmoyYuurOH136ZHc5NDCbcp
+ bYwWxG3V3Gsl2MxapUvDDHJHBwdulPnuZo124aF3ElczjPYfK1aHqbYmrtK0fv/aJsYM
+ vDzpCDen1Z190/iH4NrEJAcLXqS42VfX/lHx7wb9wNX7xTdmqC/trqNeMNNod4uUWJmS
+ 1kdXxcW9iVBAbS6iQo7pUM5WpYjeY+cmQADsQ0X4TmDzUup7EbzXvHzJCTfs3fSvXj8t
+ i5Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729187253; x=1729792053;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OGe8oGGeeiUi+F5s3emF2aDh6uT/NSPtKzdNasxpxKM=;
- b=hJlXWPzOh+WkIr/F5HOAMGvB6YlGzROEkvlc/O9mIl1DJwr2mzxtjd7O10UWmBiGQO
- Fuh0LzU7JiczaKNa2EwmW8Zp5NkiPUwHIjkKaEUMV5WnnKrqPbzFUPxmy3RPeZiFbl4W
- MeUR8HU9Ef1F6C3FGt+jkHnH1nnjMA4nGsANzkPTYyB8n0g8BQNoTiOeInyXUigOWM2G
- bPxoXW0PJTd8Iy9cxF6pAfRF4Fj0adi6Ql0TbbdYgjaxS2avqjD4l3DrDGSR0K3lJCV+
- DZ1uZeC+Yw/InFVRjBxtx34axA8DDZmdcIb/bygsAANwbhFYCmGzPVYNlkQbaLoNj7KZ
- LwAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUShITFRJGEk7NbLTkctff1VPtMd8K3nFnlcP7Lwf96jWiodKH+pPgulA+bvpn7BEzNVIUOXPcQEl5R@nongnu.org
-X-Gm-Message-State: AOJu0YwPJIhYjWleigdXBGzHgV6BLHoHTLdhOpKdjPDA7/oVPo3xP2jz
- NseWckG3lMX8L+qH7xclkP7aBWwPrJptvl3ozV1ZzxjczaLoQB9FcT3NS9fRdF+qrfzZr/mk2RX
- IrECqZ9lg6XRWfiMUKk0A1PtcAB80wHW45phNbe3tzz2hcZYo8SsI
-X-Received: by 2002:a05:6512:e9d:b0:539:e510:d83f with SMTP id
- 2adb3069b0e04-539e54d8180mr11828227e87.5.1729187253081; 
- Thu, 17 Oct 2024 10:47:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERdge4WnSZy63B2ms1BKkO+/MeQZAV87AwkwN711cV85bXpngIV0gqGOEcn6wF/GpQHXFFVg==
-X-Received: by 2002:a05:6512:e9d:b0:539:e510:d83f with SMTP id
- 2adb3069b0e04-539e54d8180mr11828208e87.5.1729187252593; 
- Thu, 17 Oct 2024 10:47:32 -0700 (PDT)
-Received: from [192.168.10.28] ([151.95.144.54])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-431606a50f0sm2291545e9.33.2024.10.17.10.47.31
+ d=1e100.net; s=20230601; t=1729187631; x=1729792431;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=02oeOFeK7jtYuCzX8W9dU5PdVKq3pbuOMiR05+cTM30=;
+ b=j7yQM+wELniUT/PrDXMNBYne5y/lRXL24/XG7Ia7zSd7WTdja2GN8KDeZYVi3OPxYh
+ uZ4hDYzT8MBrCdidWsJ6M5ckcb8PapyrDOlPUJVj7LKAZBy8CfYAoLRTNgVsrvWYSikJ
+ oTHdkL9HuL/8AQLQUymDPHqX0adpUxQkdClLvsOn0mK+7MWdA9hCpEm9KOVeruUgxbDv
+ xotSOr/jhBD40K2B7efMBVMkMQeXbIWtJxhnPo4+Bb2U+YnrOg/b+Xfq3UY+gEV/IUta
+ D78RTlmLVju1BG9in5ocoZx3lF789FZdQBCtsTjlgySltEXR1AbsJwZgOH5sK6h9hV9V
+ Yb9g==
+X-Gm-Message-State: AOJu0YzeNFhnhmxR8tv66Z2TMPyLSYiEumQNBqM7nemLQdAG3iYyq9/g
+ tZ09/ENS5JD7ZV0r+0thEt53Jxpkq9YjnysHvy6nU6ZTSdve1dbEH0Pd6chMWz0=
+X-Google-Smtp-Source: AGHT+IGyA7u1b10iGVQrb28N/d5XTMtA2jAsrnF1YFrxdnEHtsgbGORXNhMnwGLviCOX5FjE3mCQ7A==
+X-Received: by 2002:a17:903:22cb:b0:20c:9821:699d with SMTP id
+ d9443c01a7336-20d27f41966mr130474815ad.51.1729187630791; 
+ Thu, 17 Oct 2024 10:53:50 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.88.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20d17f9d321sm47037755ad.68.2024.10.17.10.53.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 10:47:32 -0700 (PDT)
-Message-ID: <5cec4c84-e30e-4567-9afb-ef60b4b7c2e1@redhat.com>
-Date: Thu, 17 Oct 2024 19:47:31 +0200
+ Thu, 17 Oct 2024 10:53:50 -0700 (PDT)
+Message-ID: <5b6e9f3f-36e7-4b0f-8698-15a419095558@linaro.org>
+Date: Thu, 17 Oct 2024 14:53:45 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-9.1.1 00/49] Patch Round-up for stable 9.1.1, freeze on
- 2024-10-16 (frozen)
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ linux-omap@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+ Daniel Mack <daniel@zonque.org>, Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
+ <CAFEAcA95QmpcsrgCj5uE-Ng8ahNir3MuVEHWBCvjb3UwBbOFRA@mail.gmail.com>
+ <ec0e8a75-c59f-41b3-b559-43c057fca8fd@roeck-us.net>
+ <CAFEAcA9AZS1dGaLG85zZE8U0d7AcrLgKXNbhxkCoP+PLmbFn2g@mail.gmail.com>
+ <cf7c8f57-22d5-4a40-bd87-0f15f5457d48@roeck-us.net>
+ <CAFEAcA98=2OdT9ykg5ibDuVLtSXuq4g0PLmSbxkYmt1SyKe9iQ@mail.gmail.com>
+ <c354e331-39c4-4520-9a69-b62a8ecdddbc@roeck-us.net>
+ <CAFEAcA-NreDmpCoFgrTJ5dEto5jQbjRg1eCfqg9Ns8VwQ9-Qzw@mail.gmail.com>
+ <2e8046a2-c229-4ed5-add1-d31f437325b9@roeck-us.net>
+ <CAFEAcA9AfH7cTO8TYSh9E+FnYN8SbTLDkXW8W5Jwi9Kfcddr6g@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9AfH7cTO8TYSh9E+FnYN8SbTLDkXW8W5Jwi9Kfcddr6g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,30 +115,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/24 22:09, Michael Tokarev wrote:
-> The following patches are queued for QEMU stable v9.1.1:
-> 
->    https://gitlab.com/qemu-project/qemu/-/commits/staging-9.1
-> 
-> Patch freeze is 2024-10-16 (frozen), and the release is planned for 2024-10-18:
-> 
->    https://wiki.qemu.org/Planning/9.1
-> 
-> Please respond here or CC qemu-stable@nongnu.org on any additional patches
-> you think should (or shouldn't) be included in the release.
-> 
-> The changes which are staging for inclusion, with the original commit hash
-> from master branch, are given below the bottom line.
+On 17/10/24 13:07, Peter Maydell wrote:
+> On Thu, 17 Oct 2024 at 16:29, Guenter Roeck <linux@roeck-us.net> wrote:
 
-My next pull request includes a few more:
 
-https://gitlab.com/bonzini/qemu/-/commit/15d955975bd484c2c66af0d6daaa02a7d04d2256.patch
-https://gitlab.com/bonzini/qemu/-/commit/64e0e63ea16aa0122dc0c41a0679da0ae4616208.patch
-https://gitlab.com/bonzini/qemu/-/commit/615586cb356811e46c2e5f85c36db4b93f8381cd.patch
+>>> By the way, it looks to me like QEMU has a regression
+>>> somewhere where we can't boot that sx1 test for the SD
+>>> card version -- it hangs during kernel boot waiting for
+>>> the MMC card. (An elderly QEMU binary I have boots OK.)
+>>> I'm looking into what's happened there.
+>>>
+>>
+>> Yes, you are correct. I did a quick check; the problem started with v9.1.
+>> v9.0 boots fine.
+> 
+> It's an issue with commit 1ab08790bb75e4 -- when we did a refactor
+> of the SD card emulation we didn't notice that the omap mmc
+> controller was also using the sd_cmd_type_t enum and relied
+> on the values of that enum matching the meanings of the
+> different values of the controller's MMC_CMD register Type field.
+> I'm just testing a patch.
 
-Thanks,
+Doh indeed I missed that use in omap_mmc_command()...
 
-Paolo
+Thanks for the quick analysis!
 
+Phil.
 
 
