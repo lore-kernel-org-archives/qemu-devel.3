@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B286D21269
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394EDD21269
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1MwS-0004pi-7S; Thu, 17 Oct 2024 05:37:12 -0400
+	id 1t1MyO-0005Ua-Gl; Thu, 17 Oct 2024 05:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1MwQ-0004pZ-W5
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:37:11 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1MwO-0006hB-In
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:37:10 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c97c7852e8so1064404a12.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:37:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729157825; x=1729762625; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L75Sl1/BAFB0/DTIl9yjTsnnIy3r6b052E5OUpnVAx8=;
- b=qPAiGYqQL8jOEWVWMf3BqJIHzXApfoYHY7ImZV8BCuFJvCC48lnvZzIwyb0egTqS/A
- j6TSTEKwyk+ALIePHNiYoyFPOPB5tYaElYXtoWkRKy99Z9CkJkOLxiMdlGfBr5SJVi6d
- sP1go1eH6sORrbm38tF+U+5FZrce9X3VJMjdtITzgz9mDsVpY+8Qlz/4c0vr7Jaf6wS5
- jWBQSgxqEecckH1jNLK78c9exktNAteEUR5B4sFVbh+DRouM3BbmZ9ue+vVbAvUnyxpn
- +6FOJUp0iKFhTEverdaJNJyrE52GAuTrXfCGm9Db8h4tTFXywEPIOx6mI3diauIq72xf
- P1Uw==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t1MyM-0005UN-HU
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:39:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1t1MyA-0006kq-0f
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:38:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729157935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/i2tE+BymqkChQAvzNuP5V0DVRMsr+yVJBMxfyAZD8k=;
+ b=A0JJCRVuikZU4Ffv/QQftAr8iIm40PFkMnU5u8aQ7WhHk6CZ5DdJZOR2h+F7nhqCJXXzmT
+ tymBKbWj/dzK06n5ggMByhJoZrz9QW6pfYu/KnnnnOTW1WjkUv9cF5RGwmVX9x2eWvf8bH
+ FwnrfuuwdoMgmW4ya5MOUPdxgSNhEGQ=
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-201-1_LypRqmPfeMT24CxAR6-Q-1; Thu, 17 Oct 2024 05:38:53 -0400
+X-MC-Unique: 1_LypRqmPfeMT24CxAR6-Q-1
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-4a46f0510beso315453137.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:38:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729157825; x=1729762625;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L75Sl1/BAFB0/DTIl9yjTsnnIy3r6b052E5OUpnVAx8=;
- b=E2yqtHJGl3EsRgyv5fGIk9vnWJc9WxdwsKYS/3NSTquW2BP1Jrxfz94FsqRA2HQumi
- LyLXLkdw898nQJftp3InJjv3i+WUbEmeH8tqjf/5woyzYJZc2kdaNFxnmjdBKn763JRC
- yUuGi4owinQW2qu9Gn8oHx2e4GYuyumHOmlNnpS8oapAsKuXIBrffb6tpQjulvdzeOyF
- DBmZKdnzykVANyLKDWhO2qOzriSjLardp8PdeV/aCdALOrMK3KSUwh7cZ2xwncQHRlC7
- J+37kBRXA+GYktOsxclGzgocjltWj0PGqmGkeDlFpO8sY/l6PocBFsQyIpNXTmBlzwqh
- gF6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxygFkW5MIMSy0IDhBnEIgqyN6TAruG8rdYHdR4NC1qfx8OKdajDl2+LxlUW14jMkMd/tk+buqd2mS@nongnu.org
-X-Gm-Message-State: AOJu0Ywy+g8/P7UuK2XOFQmhLGU5tsAiLXh14/7GQL+cCbg5WEcBM41N
- PQok/4Z3TpZiXkLWvxJznCf+DBlylSdpWH6DWqLvgepVg8bSsdvMlHQpbuwsDsNMLqRFWLcEFAB
- k89j7CpVlu7nqlCfBQeOMpNUf+tOnFv/VSLtO/w==
-X-Google-Smtp-Source: AGHT+IHUkiMAKHzDU846yLKL1Oa1NDM8AbS8nXj4gOXkkGKL4bh3S1Wn1v6ji6NjlPpRIgu3b/KAlGBa++Tn+0zeOWw=
-X-Received: by 2002:a05:6402:2356:b0:5c9:62c3:e7f4 with SMTP id
- 4fb4d7f45d1cf-5c962c3e90fmr12358566a12.15.1729157825483; Thu, 17 Oct 2024
- 02:37:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729157933; x=1729762733;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/i2tE+BymqkChQAvzNuP5V0DVRMsr+yVJBMxfyAZD8k=;
+ b=ajK7sp7p9DkuqfKD77D9bZbRqJrZrZbWgyRIlxiYPPylNkkLAteDWYDQ8C2BHjXQtJ
+ L0i/EspfV0aH+E5YYpKZrlwL5lpxeOiTtrzwwlbi/ccZ+s1dEGn0gfMXp1R11aIwWxmh
+ 25OP011XRRMNDA7imn8SZd7ueCf1trYOwCeKW24uExmRqmCxM0i35uSVsDqX2JcZZAsZ
+ w+w1izL9587oYGclCSW0ka+6lXDNpbwEcwlcTcMKkNV89eITGvUSycoUGgYSqAK5vdmA
+ 75sxzNPIxNDwbDjxz3J6DmtqVchVketv30nvDcutoAuN7JyT1o3aWR73JFrWLyUJtifg
+ ZR6w==
+X-Gm-Message-State: AOJu0YylL5tVrj0L0ZPNAgLG2kITFJ09tkgMyDRyhpruoXPJV9nF85DM
+ 52YcEyjUf7xVYfMUnnS7HgGnJWSTyDpXQTQUOWvLP75W6ByzB3tIInTSlne043iGoNk8RyQNpN3
+ iRq09otW2L+CUXdyumaj/DMbEZ74njiVRS5bs7tf1VnjS2RLEXOtt
+X-Received: by 2002:a05:6102:134f:b0:4a4:7e16:6176 with SMTP id
+ ada2fe7eead31-4a47e16746fmr12004134137.6.1729157932769; 
+ Thu, 17 Oct 2024 02:38:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0YM6p5W4k2dNxRa2bdLEgfW5dplitxeAcefe+DTltq6BbpCOQUPMVek0QkbsMbOZov7wPSw==
+X-Received: by 2002:a05:6102:134f:b0:4a4:7e16:6176 with SMTP id
+ ada2fe7eead31-4a47e16746fmr12004124137.6.1729157932374; 
+ Thu, 17 Oct 2024 02:38:52 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
+ [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cc2295ac65sm26674906d6.81.2024.10.17.02.38.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Oct 2024 02:38:51 -0700 (PDT)
+Date: Thu, 17 Oct 2024 11:38:46 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, dbassey@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] vhost-user: fix shared object return values
+Message-ID: <cyf4qzsx56lwi6zbwlclzbhgg3xqhi3btrfwinfx7h6gn4equh@3vigo2wevqug>
+References: <20241016090606.2358056-1-aesteve@redhat.com>
+ <vmtm4zz6pkfcxr64wixa2wdjb7ujn2vaiapmziaqciiytcwe5v@7fh6zlfyf67l>
+ <CADSE00+UFCHOLQHndGThOmXt3eXo4RsJZKC+FyXOuaiPwJbBmQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20241016160712.962407-1-thuth@redhat.com>
- <Zw_oM-RStF4QhWik@redhat.com>
- <32d9779e-d531-4451-af2c-c76e86f5b921@redhat.com>
-In-Reply-To: <32d9779e-d531-4451-af2c-c76e86f5b921@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Oct 2024 10:36:54 +0100
-Message-ID: <CAFEAcA-Ptg8yRqOj7En1a5gQJgMYALDCxbp8sJ=64dWRuFf3vw@mail.gmail.com>
-Subject: Re: [PATCH] migration/dirtyrate: Silence warning about strcpy() on
- OpenBSD
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Hyman Huang <yong.huang@smartx.com>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADSE00+UFCHOLQHndGThOmXt3eXo4RsJZKC+FyXOuaiPwJbBmQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,30 +105,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 17 Oct 2024 at 06:41, Thomas Huth <thuth@redhat.com> wrote:
+On Thu, Oct 17, 2024 at 10:27:30AM +0200, Albert Esteve wrote:
+>Albert Esteve
 >
-> On 16/10/2024 18.22, Daniel P. Berrang=C3=A9 wrote:
-> > On Wed, Oct 16, 2024 at 06:07:12PM +0200, Thomas Huth wrote:
-> >> The linker on OpenBSD complains:
-> >>
-> >>   ld: warning: dirtyrate.c:447 (../src/migration/dirtyrate.c:447)(...)=
-:
-> >>   warning: strcpy() is almost always misused, please use strlcpy()
-> >
-> > Is that the only place it complains ?  We use 'strcpy' in almost
-> > 100 places across the codebase....
+>Senior Software Engineer
 >
-> There are only a fistful of other warnings. I guess most of the spots are
-> turned into inlined code by the compiler, so the linker never sees those
-> other occurrences.
+>Red Hat
+>
+>aesteve@redhat.com
+>
+>
+>
+>On Thu, Oct 17, 2024 at 9:38 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>>
+>> On Wed, Oct 16, 2024 at 11:06:06AM +0200, Albert Esteve wrote:
+>> >VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+>> >VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+>> >in the spec that they return 0 for successful
+>> >operations, non-zero otherwise. However,
+>> >implementation relies on the return types
+>> >of the virtio-dmabuf library, with opposite
+>> >semantics (true if everything is correct,
+>> >false otherwise). Therefore, current implementaion
+>>
+>> s/implementaion/implementation
+>>
+>> I hadn't seen it ;-P found with:
+>> ./scripts/checkpatch.pl --strict --branch master..HEAD --codespell
+>
+>Never used the checkpatch script for spelling. Thanks!
+>
+>>
+>> >violates the specification.
+>> >
+>> >Revert the logic so that the implementation
+>> >of the vhost-user handling methods matches
+>> >the specification.
+>> >
+>> >Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+>>
+>> This is in from 9.0 ...
+>>
+>> >Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+>>
+>> ... and this from 8.2, so should we consider stable branches?
+>
+>You mean in addition to the commits already reflected here?
 
-From my vm-build-openbsd buildlog:
+Nope, I just mean if we need to cc qemu-stable@nongnu.org in order to 
+backport this patch on stable branches.
+See docs/devel/stable-process.rst
 
-$ < /tmp/par0L_eB.par grep 'almost always misused'| wc -l
-305
+>
+>>
+>> I think it depends if the backends are checking that return value.
+>
+>The return value is optional (requires VHOST_USER_NEED_REPLY),
+>and I am not aware of any backend using this feature so far,
+>in general. So iiuc, that'd mean no need to include stable, right?
 
-(I've had these in my "ignore this type of warning" filter
-for grepping the build logs for years.)
+Yep, if no one uses it, we can avoid it for now. On the other hand if 
+the patch is simple, perhaps it might make sense to avoid future issues.
 
--- PMM
+Michael WDYT?
+
+Thanks
+Stefano
+
+>
+>Best,
+>Albert.
+>
+>>
+>> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>> >---
+>> > hw/virtio/vhost-user.c | 8 ++++----
+>> > 1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> Thanks for the fix!
+>>
+>> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+>>
+>> >
+>> >diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>> >index 00561daa06..90917352a4 100644
+>> >--- a/hw/virtio/vhost-user.c
+>> >+++ b/hw/virtio/vhost-user.c
+>> >@@ -1607,7 +1607,7 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+>> >     QemuUUID uuid;
+>> >
+>> >     memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+>> >-    return virtio_add_vhost_device(&uuid, dev);
+>> >+    return !virtio_add_vhost_device(&uuid, dev);
+>> > }
+>> >
+>> > static int
+>> >@@ -1623,16 +1623,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+>> >         struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
+>> >         if (dev != owner) {
+>> >             /* Not allowed to remove non-owned entries */
+>> >-            return 0;
+>> >+            return -EPERM;
+>> >         }
+>> >         break;
+>> >     }
+>> >     default:
+>> >         /* Not allowed to remove non-owned entries */
+>> >-        return 0;
+>> >+        return -EPERM;
+>> >     }
+>> >
+>> >-    return virtio_remove_resource(&uuid);
+>> >+    return !virtio_remove_resource(&uuid);
+>> > }
+>> >
+>> > static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
+>> >--
+>> >2.46.1
+>> >
+>>
+>
+
 
