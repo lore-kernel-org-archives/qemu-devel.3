@@ -4,140 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A072D21265
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B56BD21262
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1MdZ-0007iM-Tf; Thu, 17 Oct 2024 05:17:41 -0400
+	id 1t1Mdx-0008EP-Hm; Thu, 17 Oct 2024 05:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1t1MdX-0007iA-VF
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:17:40 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Mdw-00089a-12
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:18:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1t1MdW-0003he-23
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:17:39 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Mdu-0003ox-69
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:18:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729156657;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729156681;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3aR5/6oW8HF/UBo9q99JIkpNfjS/sm/Ou2ZYxlrIT3w=;
- b=ZX8oLiuTUwDGcjtWrz165Nxhd8JedqHRguyFJSS+/byUhHR5mkdo869m1WQP2R0ZhqNplz
- K4If5SASBfXhuZYKib6PmR00/+w70/5d2bALAmf0XNRyQJS8mTvnl3XZO5vPUBgXtfbXMP
- lvDShBQOTSSY1dFrOyGZCeqarLeOaJE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-ZM4RxZ1uOUy_TQzz0RnP5w-1; Thu, 17 Oct 2024 05:17:35 -0400
-X-MC-Unique: ZM4RxZ1uOUy_TQzz0RnP5w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d67f4bf98so395100f8f.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:17:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729156654; x=1729761454;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3aR5/6oW8HF/UBo9q99JIkpNfjS/sm/Ou2ZYxlrIT3w=;
- b=KusEuU3UKSnmwwXetgpga7P1eH15jXepAJe/idaqQeVnfjjBXPgKYRGa6No+F2tmMi
- YXCUpcyyM/xUoZLtHxIG7Te9rlBIgrgcIvXIeRJyeCkza7Dmzc2lwaU4Tw5KTCSrIbKG
- G/8fLKjrF3a4PBYUk9L8oHLMRojBN/HsWg+oLzznmFYGI6ERngNvLQX9iGziDsebIKve
- Pja+RJXJrHwvH4K3zAWE0qDat5Hzqj6GQ8S0gY3WgAcjbaN+KoLZC7wMNFbAInNFoEI3
- FedJgxXzDhqZ1TTkUE46kHfYtlgu2HFTzSv7eQ1Xg4JFCqKlQJudrlAObgQwZNWGccz3
- djvA==
-X-Gm-Message-State: AOJu0YwgGXjnKUooXkA8d06h8sqYPlqFtOzmfCbcH85FyGkVhIt5DQiV
- SZc+3kdbgsiL8EgO04MsAvUUNKc8gGLKtw2L+sP4F62HePzLcVrGF/4aMJ9Syucnj+J6zZy1/1j
- v+GWNVhqq20FQ+wezAaVweu7xhBgyPEkAuNSKBbUw8i8IGBeltjLTMKj3sEfQ
-X-Received: by 2002:adf:e707:0:b0:37c:cdb6:6a9e with SMTP id
- ffacd0b85a97d-37d86ba4447mr4244683f8f.9.1729156654027; 
- Thu, 17 Oct 2024 02:17:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaWXjDyFvW17JFq/7nEyYTzqDmOXkMdyEWOFhaD3v3NxKWhHFKZFmuLwzLgD8xP4byvSOErw==
-X-Received: by 2002:adf:e707:0:b0:37c:cdb6:6a9e with SMTP id
- ffacd0b85a97d-37d86ba4447mr4244669f8f.9.1729156653565; 
- Thu, 17 Oct 2024 02:17:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e10:ef90:4c84:58cb:a1ef:8b78?
- ([2a01:e0a:e10:ef90:4c84:58cb:a1ef:8b78])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fbf8567sm6651207f8f.76.2024.10.17.02.17.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 02:17:33 -0700 (PDT)
-Message-ID: <bc493771-e507-4027-af76-f9a95e99b81d@redhat.com>
-Date: Thu, 17 Oct 2024 11:17:32 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=HsB35bQWtFfG0rTwqrYotIUg9wjZsaqXQKsMYUvneNA=;
+ b=hE6hmrDrtqAFGLhYJ8KS4uQ+AclQ+95V4MS82c24ZiFbdcxa5JqCl2VTDNrpouVJ/05ERC
+ ArJ43PSo+DIcTMhRg1RRjDWNnPv1OwtnwEjDsEuW/jPCc784+QmNIFDX3UTSEmkaUAQtLm
+ DE6jpZ8gOsazQuoDEcW2nj2YGm0yJaU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-VoY5jZLPPQKbKRajasW5CA-1; Thu,
+ 17 Oct 2024 05:18:00 -0400
+X-MC-Unique: VoY5jZLPPQKbKRajasW5CA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E55219560B8
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:17:59 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.94])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC68D1956086; Thu, 17 Oct 2024 09:17:56 +0000 (UTC)
+Date: Thu, 17 Oct 2024 10:17:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, dbassey@redhat.com,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] vhost-user: fix shared object return values
+Message-ID: <ZxDWQWpKfp7wJ_Nh@redhat.com>
+References: <20241016090606.2358056-1-aesteve@redhat.com>
+ <ZxDOZjIixsfvGuQT@redhat.com>
+ <CADSE00+ae2kQSM-d=m=ach=KOyH5ffKWRLcpCuyb0s35SED=vg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
- <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
- <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
- <60169858-3930-4490-b42d-d04117ab9abd@daynix.com>
-Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <60169858-3930-4490-b42d-d04117ab9abd@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+In-Reply-To: <CADSE00+ae2kQSM-d=m=ach=KOyH5ffKWRLcpCuyb0s35SED=vg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,118 +89,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/2024 11:07, Akihiko Odaki wrote:
-> On 2024/10/17 16:32, Laurent Vivier wrote:
->> On 17/10/2024 08:59, Jason Wang wrote:
->>> On Mon, Oct 14, 2024 at 11:16 PM Laurent Vivier <lvivier@redhat.com> wrote:
->>>>
->>>> On 14/10/2024 10:30, Laurent Vivier wrote:
->>>>> Hi Akihiko,
->>>>>
->>>>> On 04/06/2024 09:37, Jason Wang wrote:
->>>>>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>
->>>>>> Multiqueue usage is not negotiated yet when realizing. If more than
->>>>>> one queue is added and the guest never requests to enable multiqueue,
->>>>>> the extra queues will not be deleted when unrealizing and leak.
->>>>>>
->>>>>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support
->>>>>> multiqueue")
->>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>> Signed-off-by: Jason Wang <jasowang@redhat.com>
->>>>>> ---
->>>>>>    hw/net/virtio-net.c | 4 +---
->>>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>>>
->>>>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>>>>> index 3cee2ef3ac..a8db8bfd9c 100644
->>>>>> --- a/hw/net/virtio-net.c
->>>>>> +++ b/hw/net/virtio-net.c
->>>>>> @@ -3743,9 +3743,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error 
->>>>>> **errp)
->>>>>>        n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
->>>>>>                                        n->net_conf.tx_queue_size);
->>>>>> -    for (i = 0; i < n->max_queue_pairs; i++) {
->>>>>> -        virtio_net_add_queue(n, i);
->>>>>> -    }
->>>>>> +    virtio_net_add_queue(n, 0);
->>>>>>        n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
->>>>>>        qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->>>>>
->>>>> This change breaks virtio net migration when multiqueue is enabled.
->>>>>
->>>>> I think this is because virtqueues are half initialized after migration : they are
->>>>> initialized on guest side (kernel is using them) but not on QEMU side (realized has only
->>>>> initialized one). After migration, they are not initialized by the call to
->>>>> virtio_net_set_multiqueue() from virtio_net_set_features() because 
->>>>> virtio_get_num_queues()
->>>>> reports already n->max_queue_pairs as this value is coming from the source guest memory.
->>>>>
->>>>> I don't think we have a way to half-initialize a virtqueue (to initialize them only on
->>>>> QEMU side as they are already initialized on kernel side).
->>>>>
->>>>> I think this change should be reverted to fix the migration issue.
->>>>>
->>>>
->>>> Moreover, if I look in the code of virtio_load() and virtio_add_queue() we can guess it's
->>>> not correct to migrate a virtqueue that is not initialized on the destination side 
->>>> because
->>>> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems' cannot be initialized
->>>> by virtio_load() and neither by virtio_add_queue() after virtio_load() as fields like
->>>> 'vring.num' are already initialized by virtio_load().
->>>>
->>>> For instance, in virtio_load() we set:
->>>>
->>>>       for (i = 0; i < num; i++) {
->>>>           vdev->vq[i].vring.num = qemu_get_be32(f);
->>>>
->>>> and in virtio_add_queue() we search for the firt available queue to add with:
->>>>
->>>>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->>>>           if (vdev->vq[i].vring.num == 0)
->>>>               break;
->>>>       }
->>>>
->>>> So virtio_add_queue() cannot be used to set:
->>>>
->>>>       vdev->vq[i].handle_output = handle_output;
->>>>       vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
->>>>
->>>> Moreover it would overwrite fields already set by virtio_load():
->>>>
->>>>       vdev->vq[i].vring.num = queue_size;
->>>>       vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
->>>>
->>>> It also explains why virtio_net_change_num_queue_pairs() (indirectly called by
->>>> virtio_net_set_features()) doesn't update the queue pair numbers: vring.num is already 
->>>> set
->>>> so it thinks there is no more queues to add.
->>>>
->>>> Thanks,
->>>> LAurent
->>>>
->>>
->>> I agree.
->>>
->>> Laurent, would you like to send a patch to revert this?
->>>
->>
->> Yes. I will also try to fix the leak in unrealize that the patch wanted to fix initially.
+On Thu, Oct 17, 2024 at 11:12:32AM +0200, Albert Esteve wrote:
+> On Thu, Oct 17, 2024 at 10:44 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Wed, Oct 16, 2024 at 11:06:06AM +0200, Albert Esteve wrote:
+> > > VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+> > > VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+> > > in the spec that they return 0 for successful
+> > > operations, non-zero otherwise. However,
+> > > implementation relies on the return types
+> > > of the virtio-dmabuf library, with opposite
+> > > semantics (true if everything is correct,
+> > > false otherwise). Therefore, current implementaion
+> > > violates the specification.
+> > >
+> > > Revert the logic so that the implementation
+> > > of the vhost-user handling methods matches
+> > > the specification.
+> > >
+> > > Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+> > > Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+> > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > ---
+> > >  hw/virtio/vhost-user.c | 8 ++++----
+> > >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > > index 00561daa06..90917352a4 100644
+> > > --- a/hw/virtio/vhost-user.c
+> > > +++ b/hw/virtio/vhost-user.c
+> > > @@ -1607,7 +1607,7 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+> > >      QemuUUID uuid;
+> > >
+> > >      memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> > > -    return virtio_add_vhost_device(&uuid, dev);
+> > > +    return !virtio_add_vhost_device(&uuid, dev);
+> > >  }
+> >
+> > This virtio_add_vhost_device() method returns a bool, but this
+> > vhost_user_backend_handle_shared_object_add() method returns
+> > an int, but fills that int with an inverted bool value. The
+> > caller then assigns the return value to an int, but then
+> > interprets the int as a bool, and assigns that bool result
+> > to an u64.
+> >
+> > This call chain is madness :-(
 > 
-> I wrote a fix so I will submit it once internal testing is done. You can see the change at:
-> https://gitlab.com/akihiko.odaki/qemu-kvm/-/commit/22161221aa2d2031d7ad1be7701852083aa9109a
+> TBF most of the madness is part of the already existing
+> handling infrastructure.
+> vhost_user_backend_handle_shared_object_add()
+> returns an int to be consistent with other handling
+> functions.
+> 
+> >
+> > Change vhost_user_backend_handle_shared_object_add to return
+> > a bool to reduce the madness IMHO.
+> 
+> Changing it to bool would make it inconsistent
+> wrt other handlers, and the casting would happen nonetheless
+> on assignment. Not sure if that is an improvement.
 
-It works fine for me but I don't know if it's a good idea to add queues while the state is 
-loading.
+Well when the caller does
 
-Jason, let me know which solution you prefer (revert or pre_load_queues helper).
+        payload.u64 = !!ret;
 
-CC'ing MST
+it is saying that it only cares about the values
+being 0 or 1. So how about just making these
+methods return 0 or 1 then.
 
-Thanks,
-Laurent
+> 
+> >
+> > >
+> > >  static int
+> > > @@ -1623,16 +1623,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+> > >          struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
+> > >          if (dev != owner) {
+> > >              /* Not allowed to remove non-owned entries */
+> > > -            return 0;
+> > > +            return -EPERM;
+> > >          }
+> > >          break;
+> > >      }
+> > >      default:
+> > >          /* Not allowed to remove non-owned entries */
+> > > -        return 0;
+> > > +        return -EPERM;
+> > >      }
+> > >
+> > > -    return virtio_remove_resource(&uuid);
+> > > +    return !virtio_remove_resource(&uuid);
+> > >  }
+> >
+> > These return values are inconsistent.
+> >
+> > In some places you're returning a negative errno, but in this
+> > last place you're returning true or false, by calling
+> > virtio_remove_resource which is a 'bool' method & inverting it.
+> 
+> Well, specification only distinguish between zero and non-zero values.
+> But for clarity, I guess I could do something like:
+> ```
+> if (!virtio_remove_resource(&uuid)) {
+>     return -EINVAL;
+> }
+> 
+> return 0;
+> ```
+> 
+> Same for the vhost_user_backend_handle_shared_object_add()
+> handler (in that case there is no inconsistency with positive or negative
+> return values, but still better to maintain similar strategy for all
+> handlers).
+
+Returning an errno value, when the caller only wants 0 or 1 is
+pointless.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
