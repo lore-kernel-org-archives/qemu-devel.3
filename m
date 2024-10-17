@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983BCD3C533
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 22:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C901D3C533
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 22:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Z0Y-0000YU-Dw; Thu, 17 Oct 2024 18:30:14 -0400
+	id 1t1Z43-0001RC-8Q; Thu, 17 Oct 2024 18:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Z0X-0000Xt-0h
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 18:30:13 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Z40-0001NL-QD
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 18:33:48 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Z0U-0001mb-CK
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 18:30:12 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-71e52582d0bso1143570b3a.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 15:30:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t1Z3y-0001ud-45
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 18:33:48 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7ea79711fd4so1055252a12.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 15:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729204205; x=1729809005; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729204425; x=1729809225; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UBPFVvnr+1JURmu1PrglpzYtpug3pt5Zh3R2pEzZkuY=;
- b=wIeHTYMEi0nGCOlhT1IJrS8t5v9rkh9OnydXgW24A2EdyRX/BLnwvAfKT0vakwLkcl
- VlTkYD2Bv8GGguo6+3iHepEmvlT7mrzkH4oRQFQ4yQq1sUwdmReZKqtjwU364puFn54G
- rTdwda6wrCqfWv3up5NcOIieupfEO3ql7uKyug0RRfoPQlhuKVHu07E+PJjclCnTLFEN
- BynNIpsxpxJb5dCOuGAxrseTvN2/bOskJBF6yosEd9wRoR+VWLWcl6M/EL7fE6/31PYP
- vg13ifwnU6IaFiiPqizy/HsmHasurPbuzE6CTcREPcTYHQbCIchbEsFtBVPEoP3ll0Zd
- Kmww==
+ bh=Czuq5TZLUM6h/fTZNMGw9xt2q/K9IRxXHkX5gz7HDEA=;
+ b=MMPoMFKz8PuipWasOqNmzyXEmWk7UKs/3OtXgmZGMfzZTHqN7CxHVNndgBifxUMRnB
+ Vd0BJ2qOrYcajS0BnJoftQEx2pkqVwIuhNqvtRYZQLpauMVqpoFa9xG6loXrIuzmNZbc
+ EPL/8kk//p7kZVRhvAJK5PTyR9To0WzKvNhxP60s78AjgTWIc6PM81zzfwiYljZD7OEm
+ fGa8Ev1i0U9OzBWHE43UQOH+QD0DD/O3MNb+1G657WuNrCnfPI9jYPxRPtOhuA2kPW8I
+ wIzdlBap8GbM/bbEXGOCZ/oIycTWWGxg7GIKO3cz4apwjRyLSX4QL894O5GiOfEq1JHV
+ Y1EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729204205; x=1729809005;
+ d=1e100.net; s=20230601; t=1729204425; x=1729809225;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UBPFVvnr+1JURmu1PrglpzYtpug3pt5Zh3R2pEzZkuY=;
- b=vlv+Bpo/bAkOTEXpTQ3yKAjbyeocEH8rRkWkCuUpCSAxnLJzhZJo6CCwUkE1c2B+Bm
- 0h2Qiq4OznZhKTS8UjqS2JMvI5KPL90z0m5YzFm6YJ/ICxJZVGX2n/SF/nRIQmpRrTyT
- Q11IMRePRciwA+qRLpS2/pbN/s2VymMCcUNYSUTKIy9g+gzvqpBUAGjxZy4p3c3HPXy9
- 1MLXoc0XFimjr/Btb85eKIvDxtqJwIMz3B5qaH3XWZVgU5YehsIMecnIyce4HgKFkN1U
- WBgsjH1Z1jQm8zCmoqdCA+9UupV7ucekpyYBxdjA67psJi+jhjnEPKhQ407khca+N2wg
- +Clg==
+ bh=Czuq5TZLUM6h/fTZNMGw9xt2q/K9IRxXHkX5gz7HDEA=;
+ b=ZspxSblK/COROyKzPtwSbT7eqAH24y0zbdUKmwN5BG8Evs4L0jV1IZtjAScqd8qvbq
+ uIR//3Yovo6VNQTDiy7ZqmCyZrLxdLaQHd3jtp4qNTc5E1IvwokWr7Imw2wEsmnWvp2P
+ D5h4EZATb4ZFKi/uDBKBo3RF/0uaLnJu5lplfuZRWeMXjJg5c6YDsARAPcKpONgjJkjO
+ YeGuZF2hUq89NRPyug3IyFwS9mC7ugTUP35peaqZimYJRL5WO6Aq0jTD3V7UNZW7JYEt
+ qEl1nUtGA5oOaeo5eZ7+ppphsjEpREq1DMNfapyrH3CjTzheTFXSKjmck+SOoBLZNmvH
+ 9uUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZ5ZZ+cnZHXbu6GRAI2t1WbFt4vyYwCfTUVm1Gdi+qRWxdrqwd5ehMegkSom4NDv0Qm1jLLJ4Z1OZn@nongnu.org
-X-Gm-Message-State: AOJu0Yz764w811enNp1j2Wq0m0xtiqulQ/1tu+J6xZ/9Mubth/r3h13T
- WZw0idyseJOmGEetJqOlyBbTXOArSX5LnC2Wbg/CPcyL7EA5PAGxOKpLvNwgNe8=
-X-Google-Smtp-Source: AGHT+IE7oxa1pNKXbknYm0iDvvAEewF1XwILscsKND6czFcSOdxM5HUMPngN37TZW+9yCYOD7YSXHA==
-X-Received: by 2002:a05:6a00:b4b:b0:71e:cb5:2219 with SMTP id
- d2e1a72fcca58-71ea31dcc63mr679657b3a.9.1729204204795; 
- Thu, 17 Oct 2024 15:30:04 -0700 (PDT)
+ AJvYcCXwqGti221BsqSqDm0QVFURJjBThdDkPdf2iofekgAxBVXL8aX+wR8OmA1gRLluS5xroqO2nwXJLI2j@nongnu.org
+X-Gm-Message-State: AOJu0YyBIpMHmSypIpGBjdePUmzstP8aa/ANP86sGnzUjNyW6S3rhGf1
+ ZHje7c4qQvPLPLvwSO1nHKlh7HrbmulxlcIJxcqiLzjfVzFRIkO1sF0CrXt9rUU=
+X-Google-Smtp-Source: AGHT+IGaf6ZBGyRUBI33IIIAt/eeiwxdUlH2Q1yChewHDfCw1COc1vWuF9rH9PebTTq9FcbbgXpG/A==
+X-Received: by 2002:a05:6a21:58d:b0:1d9:29fe:1de0 with SMTP id
+ adf61e73a8af0-1d92c5ae136mr447469637.50.1729204424685; 
+ Thu, 17 Oct 2024 15:33:44 -0700 (PDT)
 Received: from [192.168.100.35] ([45.176.88.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ea345b3e2sm165681b3a.176.2024.10.17.15.30.03
+ 41be03b00d2f7-7eacc25249esm118600a12.55.2024.10.17.15.33.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 15:30:04 -0700 (PDT)
-Message-ID: <c7077fab-aa63-46a0-bfc8-57187d812623@linaro.org>
-Date: Thu, 17 Oct 2024 19:30:01 -0300
+ Thu, 17 Oct 2024 15:33:44 -0700 (PDT)
+Message-ID: <64d36e10-aee5-4752-b075-2bfcf9e74bf1@linaro.org>
+Date: Thu, 17 Oct 2024 19:33:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20241017091401.783102-1-pbonzini@redhat.com>
+Subject: Re: [PATCH] hw/sd/omap_mmc: Don't use sd_cmd_type_t
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Guenter Roeck <linux@roeck-us.net>
+References: <20241017162755.710698-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241017091401.783102-1-pbonzini@redhat.com>
+In-Reply-To: <20241017162755.710698-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,23 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/24 06:14, Paolo Bonzini wrote:
-> 32-bit TSTEQ and TSTNE is subject to the same constraints as
-> for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
-> using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
+On 17/10/24 13:27, Peter Maydell wrote:
+> In commit 1ab08790bb75e4 we did some refactoring of the SD card
+> implementation, which included a rearrangement of the sd_cmd_type_t
+> enum values.  Unfortunately we didn't notice that this enum is not
+> used solely inside the SD card model itself, but is also used by the
+> OMAP MMC controller device.  In the OMAP MMC controller, it is used
+> to implement the handling of the Type field of the MMC_CMD register,
+> so changing the enum values so that they no longer lined up with the
+> bit definitions for that register field broke the controller model.
+> The effect is that Linux fails to boot from an SD card on the "sx1"
+> machine.
 > 
-> Adjust the constraint and make tcg_target_const_match use the
-> same sequence as tgen_cmp2: first check if the constant is a
-> valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
-> non-test comparisons, finally check if the constant is a valid
-> operand for 64-bit non-test comparisons.
+> Give omap-mmc its own enum which we can document as needing to match
+> the encoding used in this device's register, so it isn't sharing
+> sd_cmd_type_t with the SD card model any more.  We can then move
+> sd_cmd_type_t's definition out of sd.h and into sd.c, which is the
+> only place that uses it.
 > 
-> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 1ab08790bb75 ("hw/sd/sdcard: Store command type in SDProto")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tcg/s390x/tcg-target.c.inc | 24 ++++++++++++++++--------
->   1 file changed, 16 insertions(+), 8 deletions(-)
+>   include/hw/sd/sd.h |  8 --------
+>   hw/sd/omap_mmc.c   | 22 ++++++++++++++++------
+>   hw/sd/sd.c         |  8 ++++++++
+>   3 files changed, 24 insertions(+), 14 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Thanks!
 
