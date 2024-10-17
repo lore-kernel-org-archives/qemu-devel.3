@@ -4,70 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B81D2F7D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 01:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152CED2F7DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 01:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1FAD-0000cm-Od; Wed, 16 Oct 2024 21:18:54 -0400
+	id 1t1Fcf-0004S6-SG; Wed, 16 Oct 2024 21:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t1FAB-0000ca-SO
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 21:18:51 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t1FA9-0000GF-A6
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 21:18:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cx74vnZRBneM4hAA--.48669S3;
- Thu, 17 Oct 2024 09:18:32 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxD9bjZRBnhOctAA--.34474S3;
- Thu, 17 Oct 2024 09:18:29 +0800 (CST)
-Subject: Re: [PATCH] linux-headers: loongarch: add kvm_para.h and unistd_64.h
-To: gaosong <gaosong@loongson.cn>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-References: <20240929072240.251301-1-maobibo@loongson.cn>
- <6d4d65ad-9b35-ea5b-ae3d-0e1234477b66@loongson.cn>
- <88855d52-6efa-3fff-cded-a58f6b6f8408@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <ed1de5ad-7c1f-3276-ec8d-cf409fb0974b@loongson.cn>
-Date: Thu, 17 Oct 2024 09:18:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t1FcW-0004Oj-2H; Wed, 16 Oct 2024 21:48:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t1FcQ-00030S-Mi; Wed, 16 Oct 2024 21:48:06 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GLQPHs032060;
+ Thu, 17 Oct 2024 01:48:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Wgfcz87uZBAneHSMM
+ i1Wkl9ZAA23tfYn02tGR2s1e8U=; b=gtGJc4WTy11bHAx02PukDHzbTrbeyUoZn
+ qcuH/fGa3QqbXCxqVKf6uDy7ETm7ExaGjxCBmJEjRwQNOaSorrX/579rdarMaMRp
+ 9n1WJXkWmuo66KjUzN/471kGPELxEHr3nmYmqD1J4I6qb6hEESVQXtoOjeotvUtZ
+ GKzL7Sz+Z8BeNrDGWoZoxVRH+QXolewE1hfk+7sSWEG9o8AZ9noFkOc9RBXPpfBA
+ GGPTNiCyfDT5ai47a2vekxRMYPdKhKJWKlI8VH0cMbEAV/0N3SsmFlQKElXbP4eJ
+ N/rirVozqGdevHnoUw5rFPSI/ODUx15yaL3KNWdnEU5uFjKw1ASjA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42and7grv1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 01:48:01 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49H1m023011141;
+ Thu, 17 Oct 2024 01:48:00 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42and7gruu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 01:48:00 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GM8Zkn005936;
+ Thu, 17 Oct 2024 01:47:59 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42865140wq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 01:47:59 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49H1lvn139912090
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Oct 2024 01:47:58 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D39EF5805A;
+ Thu, 17 Oct 2024 01:47:57 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C68B58052;
+ Thu, 17 Oct 2024 01:47:57 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.153.16])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Oct 2024 01:47:57 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
+Subject: [PATCH v4 04/19] hw/s390x: Remove the possibility to load the
+ s390-netboot.img binary
+Date: Wed, 16 Oct 2024 21:47:33 -0400
+Message-ID: <20241017014748.829029-5-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241017014748.829029-1-jrossi@linux.ibm.com>
+References: <20241017014748.829029-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
-In-Reply-To: <88855d52-6efa-3fff-cded-a58f6b6f8408@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxD9bjZRBnhOctAA--.34474S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tF18Gw1rKryfKF1Uur13WrX_yoW8WFWfp3
- 9ayF18G3sxJ3ZYyr12g3W7GrW5tFZ8G3Z2v3W8KF92qrWqqw1IgrZ7urn0grWqqayrJFyj
- qF4fJ34UuFnxZrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.75,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4gguBsy5USMt0Y_qVBO0G9ZrTfMc_rBW
+X-Proofpoint-ORIG-GUID: Y4vCd4sgYo0wk_mdwPDAy6QQgD3U3_UI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410170011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,63 +113,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Jared Rossi <jrossi@linux.ibm.com>
 
+Since the netboot code has now been merged into the main s390-ccw.img
+binary, we don't need the separate s390-netboot.img anymore. Remove
+it and the code that was responsible for loading it.
 
-On 2024/10/16 下午4:41, gaosong wrote:
-> 在 2024/10/16 下午4:13, maobibo 写道:
->> ping.
->>
->> @Song
->>
->> Could you give some comments since it is LoongArch specific?
->>
->> Regards
->> Bibo Mao
->>
->> On 2024/9/29 下午3:22, Bibo Mao wrote:
->>> KVM LBT supports on LoongArch requires the linux-header kvm_para.h,
->>> also unistd_64.h is required by unistd.h on LoongArch since 6.11
->>>
->>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>> ---
->>>   scripts/update-linux-headers.sh | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
-> Acked-by: Song Gao <gaosong@loongson.cn>
-> 
-> Could you update the linux-headers togather?
-Sure, will do in next version.
+Co-authored by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ hw/s390x/ipl.h             | 12 +++------
+ hw/s390x/ipl.c             | 55 --------------------------------------
+ hw/s390x/s390-virtio-ccw.c | 10 ++-----
+ pc-bios/meson.build        |  1 -
+ 4 files changed, 6 insertions(+), 72 deletions(-)
 
-Regards
-Bibo Mao
-> 
-> the series[1]  need update kvm.h.
-> 
-> [1]: https://patchew.org/QEMU/20240929070405.235200-1-maobibo@loongson.cn/
-> 
-> Thanks.
-> Song Gao
->>> diff --git a/scripts/update-linux-headers.sh 
->>> b/scripts/update-linux-headers.sh
->>> index c34ac6454e..3c411f0318 100755
->>> --- a/scripts/update-linux-headers.sh
->>> +++ b/scripts/update-linux-headers.sh
->>> @@ -186,6 +186,10 @@ EOF
->>>       if [ $arch = riscv ]; then
->>>           cp "$hdrdir/include/asm/ptrace.h" 
->>> "$output/linux-headers/asm-riscv/"
->>>       fi
->>> +    if [ $arch = loongarch ]; then
->>> +        cp "$hdrdir/include/asm/kvm_para.h" 
->>> "$output/linux-headers/asm-loongarch/"
->>> +        cp "$hdrdir/include/asm/unistd_64.h" 
->>> "$output/linux-headers/asm-loongarch/"
->>> +    fi
->>>   done
->>>   arch=
->>>
->>> base-commit: 3b14a767eaca3df5534a162851f04787b363670e
->>>
-> 
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 57cd125769..b2105b616a 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -134,11 +134,8 @@ void s390_ipl_clear_reset_request(void);
+ /*
+  * The QEMU IPL Parameters will be stored at absolute address
+  * 204 (0xcc) which means it is 32-bit word aligned but not
+- * double-word aligned.
+- * Placement of data fields in this area must account for
+- * their alignment needs. E.g., netboot_start_address must
+- * have an offset of 4 + n * 8 bytes within the struct in order
+- * to keep it double-word aligned.
++ * double-word aligned. Placement of 64-bit data fields in this
++ * area must account for their alignment needs.
+  * The total size of the struct must never exceed 28 bytes.
+  * This definition must be kept in sync with the definition
+  * in pc-bios/s390-ccw/iplb.h.
+@@ -146,9 +143,9 @@ void s390_ipl_clear_reset_request(void);
+ struct QemuIplParameters {
+     uint8_t  qipl_flags;
+     uint8_t  reserved1[3];
+-    uint64_t netboot_start_addr;
++    uint64_t reserved2;
+     uint32_t boot_menu_timeout;
+-    uint8_t  reserved2[12];
++    uint8_t  reserved3[12];
+ } QEMU_PACKED;
+ typedef struct QemuIplParameters QemuIplParameters;
+ 
+@@ -178,7 +175,6 @@ struct S390IPLState {
+     char *initrd;
+     char *cmdline;
+     char *firmware;
+-    char *netboot_fw;
+     uint8_t cssid;
+     uint8_t ssid;
+     uint16_t devno;
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 5f60977ceb..8c490eeb52 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -288,7 +288,6 @@ static Property s390_ipl_properties[] = {
+     DEFINE_PROP_STRING("initrd", S390IPLState, initrd),
+     DEFINE_PROP_STRING("cmdline", S390IPLState, cmdline),
+     DEFINE_PROP_STRING("firmware", S390IPLState, firmware),
+-    DEFINE_PROP_STRING("netboot_fw", S390IPLState, netboot_fw),
+     DEFINE_PROP_BOOL("enforce_bios", S390IPLState, enforce_bios, false),
+     DEFINE_PROP_BOOL("iplbext_migration", S390IPLState, iplbext_migration,
+                      true),
+@@ -480,56 +479,6 @@ int s390_ipl_set_loadparm(uint8_t *loadparm)
+     return -1;
+ }
+ 
+-static int load_netboot_image(Error **errp)
+-{
+-    MachineState *ms = MACHINE(qdev_get_machine());
+-    S390IPLState *ipl = get_ipl_device();
+-    char *netboot_filename;
+-    MemoryRegion *sysmem =  get_system_memory();
+-    MemoryRegion *mr = NULL;
+-    void *ram_ptr = NULL;
+-    int img_size = -1;
+-
+-    mr = memory_region_find(sysmem, 0, 1).mr;
+-    if (!mr) {
+-        error_setg(errp, "Failed to find memory region at address 0");
+-        return -1;
+-    }
+-
+-    ram_ptr = memory_region_get_ram_ptr(mr);
+-    if (!ram_ptr) {
+-        error_setg(errp, "No RAM found");
+-        goto unref_mr;
+-    }
+-
+-    netboot_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, ipl->netboot_fw);
+-    if (netboot_filename == NULL) {
+-        error_setg(errp, "Could not find network bootloader '%s'",
+-                   ipl->netboot_fw);
+-        goto unref_mr;
+-    }
+-
+-    img_size = load_elf_ram(netboot_filename, NULL, NULL, NULL,
+-                            &ipl->start_addr,
+-                            NULL, NULL, NULL, 1, EM_S390, 0, 0, NULL,
+-                            false);
+-
+-    if (img_size < 0) {
+-        img_size = load_image_size(netboot_filename, ram_ptr, ms->ram_size);
+-        ipl->start_addr = KERN_IMAGE_START;
+-    }
+-
+-    if (img_size < 0) {
+-        error_setg(errp, "Failed to load network bootloader");
+-    }
+-
+-    g_free(netboot_filename);
+-
+-unref_mr:
+-    memory_region_unref(mr);
+-    return img_size;
+-}
+-
+ static bool is_virtio_ccw_device_of_type(IplParameterBlock *iplb,
+                                          int virtio_id)
+ {
+@@ -754,10 +703,6 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
+             ipl->iplb_valid = s390_gen_initial_iplb(ipl);
+         }
+     }
+-    if (ipl->netboot) {
+-        load_netboot_image(&error_fatal);
+-        ipl->qipl.netboot_start_addr = cpu_to_be64(ipl->start_addr);
+-    }
+     s390_ipl_set_boot_menu(ipl);
+     s390_ipl_prepare_qipl(cpu);
+ }
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 5aa8d207a3..529e53f308 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -197,11 +197,10 @@ static void s390_memory_init(MemoryRegion *ram)
+ static void s390_init_ipl_dev(const char *kernel_filename,
+                               const char *kernel_cmdline,
+                               const char *initrd_filename, const char *firmware,
+-                              const char *netboot_fw, bool enforce_bios)
++                              bool enforce_bios)
+ {
+     Object *new = object_new(TYPE_S390_IPL);
+     DeviceState *dev = DEVICE(new);
+-    char *netboot_fw_prop;
+ 
+     if (kernel_filename) {
+         qdev_prop_set_string(dev, "kernel", kernel_filename);
+@@ -212,11 +211,6 @@ static void s390_init_ipl_dev(const char *kernel_filename,
+     qdev_prop_set_string(dev, "cmdline", kernel_cmdline);
+     qdev_prop_set_string(dev, "firmware", firmware);
+     qdev_prop_set_bit(dev, "enforce_bios", enforce_bios);
+-    netboot_fw_prop = object_property_get_str(new, "netboot_fw", &error_abort);
+-    if (!strlen(netboot_fw_prop)) {
+-        qdev_prop_set_string(dev, "netboot_fw", netboot_fw);
+-    }
+-    g_free(netboot_fw_prop);
+     object_property_add_child(qdev_get_machine(), TYPE_S390_IPL,
+                               new);
+     object_unref(new);
+@@ -284,7 +278,7 @@ static void ccw_init(MachineState *machine)
+     s390_init_ipl_dev(machine->kernel_filename, machine->kernel_cmdline,
+                       machine->initrd_filename,
+                       machine->firmware ?: "s390-ccw.img",
+-                      "s390-netboot.img", true);
++                      true);
+ 
+     dev = qdev_new(TYPE_S390_PCI_HOST_BRIDGE);
+     object_property_add_child(qdev_get_machine(), TYPE_S390_PCI_HOST_BRIDGE,
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 090379763e..4823dff189 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -68,7 +68,6 @@ blobs = [
+   'kvmvapic.bin',
+   'pvh.bin',
+   's390-ccw.img',
+-  's390-netboot.img',
+   'slof.bin',
+   'skiboot.lid',
+   'palcode-clipper',
+-- 
+2.45.1
 
 
