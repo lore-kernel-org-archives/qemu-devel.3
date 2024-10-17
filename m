@@ -4,89 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5B2D3C52C
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 19:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF47D3C530
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 20:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1WG1-0000bK-9R; Thu, 17 Oct 2024 15:34:01 -0400
+	id 1t1Wgf-0004jI-23; Thu, 17 Oct 2024 16:01:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1WG0-0000bA-LG
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:34:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1WFy-0000hU-MJ
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:34:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729193636;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KKjGA1hLevvwG3GTVC3hcQC9Yd6a5bOpv2jSXD7fWrU=;
- b=b8dQ3aWc8POIhkgcmq7pYV5hQyApWqHCRLLoJ2AhoSj1Pzo4tey8MDRd0ulkN4XPlpXdMr
- U/kzguaX8VtVnLUO+1w/g2Lg3ymNRcAnucAKTRcKGgxNXDcVDLiJMVSNqp35JBZVn5yLjT
- 6nEeGip/1m61P19Ic4NPfayoAGrq0+Q=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-NWxBE0WoM5K08ARyd7qO2g-1; Thu, 17 Oct 2024 15:33:54 -0400
-X-MC-Unique: NWxBE0WoM5K08ARyd7qO2g-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5eb8825a75cso165634eaf.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 12:33:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t1Wgd-0004il-4L; Thu, 17 Oct 2024 16:01:31 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t1Wgb-0003wU-A0; Thu, 17 Oct 2024 16:01:30 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-71e49ad46b1so927675b3a.1; 
+ Thu, 17 Oct 2024 13:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729195287; x=1729800087; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=qXMlsPVqdUohbuotj+XekcsY/ZDHSR3Ki6REfk32/nk=;
+ b=BEQFXWq91uPrjiHzVMhv2rR26dTnC1Mv2v6+t8Wbak+TRMqGVwuuRureOcqiB0Olpk
+ 1bXxEyNaXUSh14WUsDlRDyLQTyqyfVj6dZ9bjqcQOTlfdWA5id/jEYrhVwg8r4MHM8jD
+ 0UV7i0Z03pPKtTYeV8n0sd9eZfo8fMWCCyT+mDggiMOq7aCaS13GVJ7T/37wDqPwfSTo
+ pGpEZQ+tSXTMpohirSKm9zJbchT9BONuZkiDueklSKhLN2lB2Q3ar5gRgOdGGeTrZQwX
+ Et4uPUsnTa2iwczNhg0fI3k52yAOX15PwGb1oAFXshQKlxdtuvSAwFCPhbiJ2remtamk
+ qCoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729193633; x=1729798433;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1729195287; x=1729800087;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KKjGA1hLevvwG3GTVC3hcQC9Yd6a5bOpv2jSXD7fWrU=;
- b=O7MWn/6o3Su7eEms27vmXcS3rQn+xeoTiWw+MfjU26B6FSLKPrzPwwhmZ1ROKlXtcR
- 437G91tPJhzHNGQAjURBHkpKMMecblPiTvXUl4Mh51/g0ijGZSJWb8zTE31wrA29PXyx
- FiqV6GVEYFNIIzxbOjPD/5q6Z32PbPLH7IaxgZNOFvPqCauyg6Xl/FBasUSuJnfHRj52
- T3iFypLuAu7FMOnyNmpKuYq1ivrZ5dZ6vehOTrAeiwOSxSthaGNVJfyude4Hanz1naqH
- mwK3P37s6jt2BOBpxZyZncpyXbqwGU89+XLYcpUpcvhjPINIpdkMYngRcVRx9I2GN0kP
- ScQw==
-X-Gm-Message-State: AOJu0Yy+WaErT+eO/X2zk/c8mzp/VtK0EXUBac4rBeFR40+cJRgnO0ZQ
- 6SvOzIxWdma4zs1CvMetpiNuAkaf5bPBvhXi6U/jhD4ghfdgB5PjVrElS7XFU2/nAizjG94xImi
- 1atjxWzL3g9FJR6QB+nGZjGad7Hfma9jKMesEoqA8pRqROQuYPmOP
-X-Received: by 2002:a05:6358:4403:b0:1b8:688e:6ea5 with SMTP id
- e5c5f4694b2df-1c3784a773dmr736763055d.22.1729193633526; 
- Thu, 17 Oct 2024 12:33:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzXGj7R5EmkVFQhfEERIIhsyTvzdPVQ8tWEd4lKePibTSXv5nLk88A6+3qMhvRs6KDgOeK5w==
-X-Received: by 2002:a05:6358:4403:b0:1b8:688e:6ea5 with SMTP id
- e5c5f4694b2df-1c3784a773dmr736761655d.22.1729193633121; 
- Thu, 17 Oct 2024 12:33:53 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cc2290fe81sm30956296d6.18.2024.10.17.12.33.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 12:33:52 -0700 (PDT)
-Date: Thu, 17 Oct 2024 15:33:49 -0400
-From: Peter Xu <peterx@redhat.com>
-To: yong.huang@smartx.com, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 5/6] migration: Support periodic RAMBlock dirty bitmap
- sync
-Message-ID: <ZxFmnZqgRlGaQax_@x1n>
-References: <cover.1729146786.git.yong.huang@smartx.com>
- <f61f1b3653f2acf026901103e1c73d157d38b08f.1729146786.git.yong.huang@smartx.com>
+ bh=qXMlsPVqdUohbuotj+XekcsY/ZDHSR3Ki6REfk32/nk=;
+ b=uz8qEMGqJiYeehAC9SAiDw0Vn12AvsBpx1eHKihBI6lnkTKPvlLhSd54mMjjzSLAx8
+ FizQnieqpfAntt27x5vAnFQr4TpPv1Ip7wuIcioKCz1z1tkRLKEGmdXtVv7s675yPSBd
+ RoMeJwTYPaYI3eaI948OwBp97PFDSKZGG6f2Bs7A4oPVGqculH9id95E74mrAEv3cX9N
+ dwWnVmruU2xJ3UmR1NAd2/pxUcL6+OTgaofozyrJpLKATmpqay+27jDcaX+oD6KpgwSL
+ XNiHrydkWEZl22FvFwuqdeb8JDkVBqceVMuLLbY3786xMfZxY6Onwdxg7S78hUCRfy+k
+ zE0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdKT3aV+TAKvc/uQcmqiyPh0MoQGchRTaBXC+jMDAqUjpRy//LPIxG0C8vAwNTTJu1kB5KHKF71elpkg==@nongnu.org,
+ AJvYcCWUufSB2r9ObKMFI5fvQk7wBgbm6gWdHOJAN0bWBFR9nVeEyzgt3XVbvG7tWo2FI8TPrmUPrjZ+Bw==@nongnu.org
+X-Gm-Message-State: AOJu0YwkaSiIsw1l3TWN2olkOs9Qwsp2iMy7s3Uz7EI+n7uWiXnEAKMF
+ CyfGQf/VW2Km124tIZreOUP9iFyKxVrKgiiZ4a+1uSEzCLln+98vMlJZiA==
+X-Google-Smtp-Source: AGHT+IHe8vD9Ttz3S8qQkWVx/0vlR99Ddr436sU7soPD9qQASDzYC1fC6wEU2lWcTJFsq9x7Vq9IjA==
+X-Received: by 2002:a05:6a00:2d25:b0:71e:5950:97d2 with SMTP id
+ d2e1a72fcca58-71ea3328e08mr136694b3a.17.1729195287121; 
+ Thu, 17 Oct 2024 13:01:27 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71ea34095f5sm39252b3a.117.2024.10.17.13.01.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Oct 2024 13:01:25 -0700 (PDT)
+Message-ID: <a7f786dc-860d-4b5e-8e03-4bc4d5539ad7@roeck-us.net>
+Date: Thu, 17 Oct 2024 13:01:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f61f1b3653f2acf026901103e1c73d157d38b08f.1729146786.git.yong.huang@smartx.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/sd/omap_mmc: Don't use sd_cmd_type_t
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20241017162755.710698-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20241017162755.710698-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,108 +144,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 02:42:54PM +0800, yong.huang@smartx.com wrote:
-> +void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-> +{
-> +    static uint64_t prev_sync_cnt;
+On 10/17/24 09:27, Peter Maydell wrote:
+> In commit 1ab08790bb75e4 we did some refactoring of the SD card
+> implementation, which included a rearrangement of the sd_cmd_type_t
+> enum values.  Unfortunately we didn't notice that this enum is not
+> used solely inside the SD card model itself, but is also used by the
+> OMAP MMC controller device.  In the OMAP MMC controller, it is used
+> to implement the handling of the Type field of the MMC_CMD register,
+> so changing the enum values so that they no longer lined up with the
+> bit definitions for that register field broke the controller model.
+> The effect is that Linux fails to boot from an SD card on the "sx1"
+> machine.
+> 
+> Give omap-mmc its own enum which we can document as needing to match
+> the encoding used in this device's register, so it isn't sharing
+> sd_cmd_type_t with the SD card model any more.  We can then move
+> sd_cmd_type_t's definition out of sd.h and into sd.c, which is the
+> only place that uses it.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 1ab08790bb75 ("hw/sd/sdcard: Store command type in SDProto")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-We may need to reset this in case migration got cancelled and invoked
-again, to make sure it keeps working in the 2nd run.
-
-> +    uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
-> +
-> +    /*
-> +     * The first iteration copies all memory anyhow and has no
-> +     * effect on guest performance, therefore omit it to avoid
-> +     * paying extra for the sync penalty.
-> +     */
-> +    if (sync_cnt <= 1) {
-> +        goto end;
-> +    }
-> +
-> +    if (sync_cnt == prev_sync_cnt) {
-> +        trace_cpu_throttle_dirty_sync();
-> +        WITH_RCU_READ_LOCK_GUARD() {
-> +            migration_bitmap_sync_precopy(false);
-> +        }
-> +    }
-> +
-> +end:
-> +    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
-> +
-> +    timer_mod(throttle_dirty_sync_timer,
-> +        qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
-> +            CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
-> +}
-
-Please both of you have a look on whether you agree I squash below into
-this patch when merge:
-
-===8<===
-From 84a2544eab73e35dbd35fed3b1440169915f9aa4 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Thu, 17 Oct 2024 15:27:19 -0400
-Subject: [PATCH] fixup! migration: Support periodic RAMBlock dirty bitmap sync
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/cpu-throttle.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-index 342681cdd4..3df287d8d3 100644
---- a/migration/cpu-throttle.c
-+++ b/migration/cpu-throttle.c
-@@ -36,6 +36,7 @@
- static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;
- static unsigned int throttle_percentage;
- static bool throttle_dirty_sync_timer_active;
-+static uint64_t throttle_dirty_sync_count_prev;
- 
- #define CPU_THROTTLE_PCT_MIN 1
- #define CPU_THROTTLE_PCT_MAX 99
-@@ -133,7 +134,6 @@ int cpu_throttle_get_percentage(void)
- 
- void cpu_throttle_dirty_sync_timer_tick(void *opaque)
- {
--    static uint64_t prev_sync_cnt;
-     uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
- 
-     /*
-@@ -145,7 +145,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-         goto end;
-     }
- 
--    if (sync_cnt == prev_sync_cnt) {
-+    if (sync_cnt == throttle_dirty_sync_count_prev) {
-         trace_cpu_throttle_dirty_sync();
-         WITH_RCU_READ_LOCK_GUARD() {
-             migration_bitmap_sync_precopy(false);
-@@ -153,7 +153,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-     }
- 
- end:
--    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
-+    throttle_dirty_sync_count_prev = stat64_get(&mig_stats.dirty_sync_count);
- 
-     timer_mod(throttle_dirty_sync_timer,
-         qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
-@@ -171,6 +171,11 @@ void cpu_throttle_dirty_sync_timer(bool enable)
- 
-     if (enable) {
-         if (!cpu_throttle_dirty_sync_active()) {
-+            /*
-+             * Always reset the dirty sync count cache, in case migration
-+             * was cancelled once.
-+             */
-+            throttle_dirty_sync_count_prev = 0;
-             timer_mod(throttle_dirty_sync_timer,
-                 qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
-                     CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
--- 
-2.45.0
-
--- 
-Peter Xu
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
 
