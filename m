@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739B6D21262
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4021ED21262
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1MrQ-0002U6-14; Thu, 17 Oct 2024 05:32:00 -0400
+	id 1t1Msp-0003JN-SL; Thu, 17 Oct 2024 05:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1MrO-0002TR-BT
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:31:58 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1MrL-0006Kv-0E
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:31:58 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2fb559b0b00so7417561fa.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:31:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729157512; x=1729762312; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tSUmQ+5UahoSL7J+r+hrCJZoKTaSjN8KDYFOwxiJCEU=;
- b=P5fahgx6oBiR9KAHWn4E+oLUnQMbboRs+yx8AF/xnut3e4tgHcD4qZYvIxCMSz1UgH
- w18IPiD6+hpmD6MZ85/5pKAu0mk3wH3+XcTbjaZnUqOa0cvsxkl1gK+CxkwlFjRU+sty
- xqXIINO/OXnkaMp88CCuqoAOQc6MnPUWq5dvGMKz++zeBtBZQpKQmHW5Q/d8a+Dizkss
- cqVQ3cHFsprU/R8tcj0WpuXrtvmAI4KwDCv53mMiKULflunb0uza3uayJVh66lnqMysq
- fNkwiOH91qJI9H1DV+cKX/19FqTdsAy66CmUd6olKfuD2bbS04nCG1LEJASgKji/RcPh
- Pp0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729157512; x=1729762312;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tSUmQ+5UahoSL7J+r+hrCJZoKTaSjN8KDYFOwxiJCEU=;
- b=LwSKnHpSVzw3OATW9wuv3VHRSZ6f43OLZJgm08CLfexYGm1lTeIdqy1ZASTZmWBUPz
- 07YPGa8HORp1OogL7LFIlJYjH6DR5xlgmBxuuStBtQ0Z+2ZVRfPUx7cwbx6/mVFJXzs0
- hp2INXdiq6OFLzz5s50hf3K4+3sEUdJe9DuyCw3WsgxWwQmOR5QiQ2Xv7NmO++NqElWT
- CnHbbP030Pd1AyCFYcLZgwl4p8AgLRN5U4MH64EO6u6kkRcdI9JxijW5iJ/xsODIbM2l
- 8O+sOlxTJe49vEfWRxiEN1QWfDmM5gUejCIbk7zT/EcMWzPTyaLK0D6zVWNtu7d4kVfh
- fODg==
-X-Gm-Message-State: AOJu0YwWyg5aWrB7q00QzjqrxZJ/GF46MJdqZXqlAi/ICC37RkzTudiQ
- vfpHVOD8HPhDBrJc28p5bvMcfV02XkW3EeDOBDnGBxKtItzv0hwwyHOLxN8Ju4pc2QL9NAIdr36
- mv+jfasAWvXD1UuGyyhranyY3St9adKWy0gQCSA==
-X-Google-Smtp-Source: AGHT+IGAZnqcJ5RNccv4A6agW8eBJGcDX4KYzqfozayQzmYtafk0pn5k9f2xu5wfWrcrc5qtI74jJ1qh+bFpHhB1vkI=
-X-Received: by 2002:a2e:702:0:b0:2fa:d67a:ada7 with SMTP id
- 38308e7fff4ca-2fb3f1b764amr79485471fa.23.1729157512018; Thu, 17 Oct 2024
- 02:31:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Mso-0003Il-IH
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:33:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Msm-0006O4-NU
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:33:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729157602;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tvqpccjRYLS/iTjVBI4Oy4N+qvc0IHSczp83xzva1TM=;
+ b=SEJBMtvtetJirpymY7P+tuF1JRGl8NeM3VMBvqCjrYLUOy1SkdcqrFY0pUG6jw97TJv5L+
+ /oWfvh5mbAWAUHAwBLuQXzpwyVvONzrIPLJFRWGh/3K8jbHZWkCDtkxw3vqr3gmEzv8hUX
+ up+MGOg6mE0GUw+4KnHAkvHJC1lE6w4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-BRXlZfLmNYm-sNTum8iNVQ-1; Thu,
+ 17 Oct 2024 05:33:21 -0400
+X-MC-Unique: BRXlZfLmNYm-sNTum8iNVQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 764271955E9F
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:33:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.94])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35A85300019D; Thu, 17 Oct 2024 09:33:17 +0000 (UTC)
+Date: Thu, 17 Oct 2024 10:33:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, dbassey@redhat.com,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] vhost-user: fix shared object return values
+Message-ID: <ZxDZ2r1xnG32CWAw@redhat.com>
+References: <20241016090606.2358056-1-aesteve@redhat.com>
+ <ZxDOZjIixsfvGuQT@redhat.com>
+ <CADSE00+ae2kQSM-d=m=ach=KOyH5ffKWRLcpCuyb0s35SED=vg@mail.gmail.com>
+ <ZxDWQWpKfp7wJ_Nh@redhat.com>
+ <CADSE00J32yA+A_tzp6eJxMoioUuQNEZvbyDoVCdqRErhORxFQg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20241016212407.139390-1-shentey@gmail.com>
- <20241016212407.139390-2-shentey@gmail.com>
-In-Reply-To: <20241016212407.139390-2-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Oct 2024 10:31:40 +0100
-Message-ID: <CAFEAcA93N-44Xi5hDgcA2iOJ=RD=4jRuJoHkZJ7ViRnaq55zeQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] hw/resettable: Add SOFT reset type
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org, 
- Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADSE00J32yA+A_tzp6eJxMoioUuQNEZvbyDoVCdqRErhORxFQg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,41 +91,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Oct 2024 at 22:24, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> This is a preparation for the next patch.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  include/hw/resettable.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/include/hw/resettable.h b/include/hw/resettable.h
-> index fd862f1e9f..0f25beaf21 100644
-> --- a/include/hw/resettable.h
-> +++ b/include/hw/resettable.h
-> @@ -40,6 +40,7 @@ typedef enum ResetType {
->      RESET_TYPE_WAKEUP,
->      RESET_TYPE_S390_CPU_INITIAL,
->      RESET_TYPE_S390_CPU_NORMAL,
-> +    RESET_TYPE_SOFT,
->  } ResetType;
+On Thu, Oct 17, 2024 at 11:28:56AM +0200, Albert Esteve wrote:
+> On Thu, Oct 17, 2024 at 11:18 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Thu, Oct 17, 2024 at 11:12:32AM +0200, Albert Esteve wrote:
+> > > On Thu, Oct 17, 2024 at 10:44 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > >
+> > > > On Wed, Oct 16, 2024 at 11:06:06AM +0200, Albert Esteve wrote:
+> > > > > VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+> > > > > VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+> > > > > in the spec that they return 0 for successful
+> > > > > operations, non-zero otherwise. However,
+> > > > > implementation relies on the return types
+> > > > > of the virtio-dmabuf library, with opposite
+> > > > > semantics (true if everything is correct,
+> > > > > false otherwise). Therefore, current implementaion
+> > > > > violates the specification.
+> > > > >
+> > > > > Revert the logic so that the implementation
+> > > > > of the vhost-user handling methods matches
+> > > > > the specification.
+> > > > >
+> > > > > Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+> > > > > Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+> > > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > > > ---
+> > > > >  hw/virtio/vhost-user.c | 8 ++++----
+> > > > >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > > > >
+> > > > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > > > > index 00561daa06..90917352a4 100644
+> > > > > --- a/hw/virtio/vhost-user.c
+> > > > > +++ b/hw/virtio/vhost-user.c
+> > > > > @@ -1607,7 +1607,7 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+> > > > >      QemuUUID uuid;
+> > > > >
+> > > > >      memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> > > > > -    return virtio_add_vhost_device(&uuid, dev);
+> > > > > +    return !virtio_add_vhost_device(&uuid, dev);
+> > > > >  }
+> > > >
+> > > > This virtio_add_vhost_device() method returns a bool, but this
+> > > > vhost_user_backend_handle_shared_object_add() method returns
+> > > > an int, but fills that int with an inverted bool value. The
+> > > > caller then assigns the return value to an int, but then
+> > > > interprets the int as a bool, and assigns that bool result
+> > > > to an u64.
+> > > >
+> > > > This call chain is madness :-(
+> > >
+> > > TBF most of the madness is part of the already existing
+> > > handling infrastructure.
+> > > vhost_user_backend_handle_shared_object_add()
+> > > returns an int to be consistent with other handling
+> > > functions.
+> > >
+> > > >
+> > > > Change vhost_user_backend_handle_shared_object_add to return
+> > > > a bool to reduce the madness IMHO.
+> > >
+> > > Changing it to bool would make it inconsistent
+> > > wrt other handlers, and the casting would happen nonetheless
+> > > on assignment. Not sure if that is an improvement.
+> >
+> > Well when the caller does
+> >
+> >         payload.u64 = !!ret;
+> >
+> > it is saying that it only cares about the values
+> > being 0 or 1. So how about just making these
+> > methods return 0 or 1 then.
+> 
+> Ah, I see your point. I introduced negative error
+> values just because I saw other handlers doing
+> it (e.g., vhost_user_backend_handle_vring_host_notifier()).
+> 
+> > > > >  static int
+> > > > > @@ -1623,16 +1623,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+> > > > >          struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
+> > > > >          if (dev != owner) {
+> > > > >              /* Not allowed to remove non-owned entries */
+> > > > > -            return 0;
+> > > > > +            return -EPERM;
+> 
+> So you are suggesting here it could be `return 1;` instead?
+> It does not look clear enough that it is an error value.
 
-We have in general been avoiding defining a "soft" reset
-because it's not clear what the meaning of it should be
-or how it applies across devices.
+Add API documentation comments to these methods
 
-If we want to define a new ResetType then we need
-to start with the documentation which says clearly
-what the semantics of it should be and when it
-will be triggered.
+ "Returns: 0 on success, 1 on error"
 
-You might prefer to avoid entangling that with this
-lan9118 refactoring.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-thanks
--- PMM
 
