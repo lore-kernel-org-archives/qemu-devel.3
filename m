@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD3ED21269
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248AAD2126D
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1N1x-0006ke-82; Thu, 17 Oct 2024 05:42:53 -0400
+	id 1t1N7Q-0000JL-Sl; Thu, 17 Oct 2024 05:48:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1N1v-0006kA-5e
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:42:51 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1N1s-00079C-Ne
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:42:50 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71e953f4e7cso290115b3a.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729158167; x=1729762967;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2opMkNSPL6jtOfrXOVnnly5aTbGxcOKqHOI6wui0PZc=;
- b=cjqfOEl5Tn2DHQXNi2J7RAaLXOWZzbQf3lPx9kM63cC7WpNOY1Mo+17YPE3qc/BMec
- sTCmx5HaB45Fj4Sy+ey3kPSNjKOksWjJJEPCyzZb/U+E5bBzKoRrWgS/h+I0AwRvoQVu
- HSEfJjie5StiXFIziBTkNX4NNQp9XidVeMT6QAFd1DzORnts9++cQDOiOcqJQaM5k77Y
- +7JE+sKRPah3XtDbMEs/VYu3fbbo9VPznoGa1sGLvLvaC7EMlfAOIdapMusUApQ5CA3K
- 8bowPs3Ay3aeGDWJPxyqfNyEQnVofFDzErs9t6F2KvlBgFriRcmRHY5CAbBqPAauvYKd
- 6vmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729158167; x=1729762967;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2opMkNSPL6jtOfrXOVnnly5aTbGxcOKqHOI6wui0PZc=;
- b=IMKid++Ha7RbKrv8RTDtUBAIOj+26dBkMexPlUTbge+XRu0nUn9xmh8DMKL/xNB1P6
- xDDd7YxDpQmTTMJ1HtmTtf/0+eISSpkuDAORNmR2MJPb1ZkJ1SaMPel3k5/CAH+KWRAH
- pwVwQvKP7bkMeghxWZOqocRDk0/xQBrKmO+8sspVS7f6JPMY+hm4aiXATEWWNCWGrtVL
- 4U3UlmY4H5iVlJopimtuoSBgsJXJzDmkG45ptLcA19gQ/AO1B88vT0sGTDglRXJIRg6e
- Ongubbp3n4R2rg2eI6DjR855CKXQVLv4rRW7iCrCYvLx5hsy095S3tl969miiXcRa+0p
- aPcA==
-X-Gm-Message-State: AOJu0YzS+gP6ZL4XbcZo7pT1r9paO87NOS43ex6d+jdt6QIV/aiOLizf
- mE9NZhj7GUjhXpioVlyBGYGpDgurufqM3DtG6on/0YPYdYsAQvpOIUkd+ng1bJRFl01JxiIjkhJ
- DSwg=
-X-Google-Smtp-Source: AGHT+IE6XtfhFpi/VLq/xlQWaucSBkhkY209NxdSb7XGmUpUHho37nr49QMUDUhzXM3K0qXGHaSNDw==
-X-Received: by 2002:a05:6a00:21d5:b0:71e:98a:b6b4 with SMTP id
- d2e1a72fcca58-71e4c156e77mr27106573b3a.11.1729158166688; 
- Thu, 17 Oct 2024 02:42:46 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
- ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e774cf4d8sm4521592b3a.149.2024.10.17.02.42.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 02:42:46 -0700 (PDT)
-Message-ID: <002f53e8-501e-4b4d-b1fc-67ec51e3a94f@daynix.com>
-Date: Thu, 17 Oct 2024 18:42:44 +0900
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1N7P-0000JA-Rc
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:48:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1N7O-0007if-7S
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:48:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729158508;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vA3k1KT9l6tS4a7pt6QNVfZPY5k5AvD5MkolekGRY8c=;
+ b=Taspic/PzQQRQ15BdpYB7Xte5mw6hCIvov3FQiM9/Nbf/TyqAgdX473XVBYQhdp+ZFNiYc
+ CKD0XlIRL0cfl1yi1SvaZmoIB10WBYhwxBT+XGuINafcTUqJrzVJhdr1Vpjzay51zedkWB
+ Pvro3te33811RLaPDn3iVfZiWeZQzXk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-y261WOyxMpaJOyteJDfpcw-1; Thu,
+ 17 Oct 2024 05:48:24 -0400
+X-MC-Unique: y261WOyxMpaJOyteJDfpcw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB2A11955F40; Thu, 17 Oct 2024 09:48:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.94])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E01319560A3; Thu, 17 Oct 2024 09:48:20 +0000 (UTC)
+Date: Thu, 17 Oct 2024 10:48:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@gmail.com
+Subject: Re: [PATCH v4 1/2] tpm: Use new ptm_cap_n structure for
+ PTM_GET_CAPABILITY
+Message-ID: <ZxDdYWIX33OZrhAE@redhat.com>
+References: <20241016175129.1319176-1-stefanb@linux.ibm.com>
+ <20241016175129.1319176-2-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
- <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
- <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
- <60169858-3930-4490-b42d-d04117ab9abd@daynix.com>
- <bc493771-e507-4027-af76-f9a95e99b81d@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <bc493771-e507-4027-af76-f9a95e99b81d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241016175129.1319176-2-stefanb@linux.ibm.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,153 +86,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/17 18:17, Laurent Vivier wrote:
-> On 17/10/2024 11:07, Akihiko Odaki wrote:
->> On 2024/10/17 16:32, Laurent Vivier wrote:
->>> On 17/10/2024 08:59, Jason Wang wrote:
->>>> On Mon, Oct 14, 2024 at 11:16 PM Laurent Vivier <lvivier@redhat.com> 
->>>> wrote:
->>>>>
->>>>> On 14/10/2024 10:30, Laurent Vivier wrote:
->>>>>> Hi Akihiko,
->>>>>>
->>>>>> On 04/06/2024 09:37, Jason Wang wrote:
->>>>>>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>>
->>>>>>> Multiqueue usage is not negotiated yet when realizing. If more than
->>>>>>> one queue is added and the guest never requests to enable 
->>>>>>> multiqueue,
->>>>>>> the extra queues will not be deleted when unrealizing and leak.
->>>>>>>
->>>>>>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the 
->>>>>>> guest doesn't support
->>>>>>> multiqueue")
->>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>> Signed-off-by: Jason Wang <jasowang@redhat.com>
->>>>>>> ---
->>>>>>>    hw/net/virtio-net.c | 4 +---
->>>>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>>>>
->>>>>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>>>>>> index 3cee2ef3ac..a8db8bfd9c 100644
->>>>>>> --- a/hw/net/virtio-net.c
->>>>>>> +++ b/hw/net/virtio-net.c
->>>>>>> @@ -3743,9 +3743,7 @@ static void 
->>>>>>> virtio_net_device_realize(DeviceState *dev, Error **errp)
->>>>>>>        n->net_conf.tx_queue_size = 
->>>>>>> MIN(virtio_net_max_tx_queue_size(n),
->>>>>>>                                        n->net_conf.tx_queue_size);
->>>>>>> -    for (i = 0; i < n->max_queue_pairs; i++) {
->>>>>>> -        virtio_net_add_queue(n, i);
->>>>>>> -    }
->>>>>>> +    virtio_net_add_queue(n, 0);
->>>>>>>        n->ctrl_vq = virtio_add_queue(vdev, 64, 
->>>>>>> virtio_net_handle_ctrl);
->>>>>>>        qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->>>>>>
->>>>>> This change breaks virtio net migration when multiqueue is enabled.
->>>>>>
->>>>>> I think this is because virtqueues are half initialized after 
->>>>>> migration : they are
->>>>>> initialized on guest side (kernel is using them) but not on QEMU 
->>>>>> side (realized has only
->>>>>> initialized one). After migration, they are not initialized by the 
->>>>>> call to
->>>>>> virtio_net_set_multiqueue() from virtio_net_set_features() because 
->>>>>> virtio_get_num_queues()
->>>>>> reports already n->max_queue_pairs as this value is coming from 
->>>>>> the source guest memory.
->>>>>>
->>>>>> I don't think we have a way to half-initialize a virtqueue (to 
->>>>>> initialize them only on
->>>>>> QEMU side as they are already initialized on kernel side).
->>>>>>
->>>>>> I think this change should be reverted to fix the migration issue.
->>>>>>
->>>>>
->>>>> Moreover, if I look in the code of virtio_load() and 
->>>>> virtio_add_queue() we can guess it's
->>>>> not correct to migrate a virtqueue that is not initialized on the 
->>>>> destination side because
->>>>> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems' 
->>>>> cannot be initialized
->>>>> by virtio_load() and neither by virtio_add_queue() after 
->>>>> virtio_load() as fields like
->>>>> 'vring.num' are already initialized by virtio_load().
->>>>>
->>>>> For instance, in virtio_load() we set:
->>>>>
->>>>>       for (i = 0; i < num; i++) {
->>>>>           vdev->vq[i].vring.num = qemu_get_be32(f);
->>>>>
->>>>> and in virtio_add_queue() we search for the firt available queue to 
->>>>> add with:
->>>>>
->>>>>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->>>>>           if (vdev->vq[i].vring.num == 0)
->>>>>               break;
->>>>>       }
->>>>>
->>>>> So virtio_add_queue() cannot be used to set:
->>>>>
->>>>>       vdev->vq[i].handle_output = handle_output;
->>>>>       vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
->>>>>
->>>>> Moreover it would overwrite fields already set by virtio_load():
->>>>>
->>>>>       vdev->vq[i].vring.num = queue_size;
->>>>>       vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
->>>>>
->>>>> It also explains why virtio_net_change_num_queue_pairs() 
->>>>> (indirectly called by
->>>>> virtio_net_set_features()) doesn't update the queue pair numbers: 
->>>>> vring.num is already set
->>>>> so it thinks there is no more queues to add.
->>>>>
->>>>> Thanks,
->>>>> LAurent
->>>>>
->>>>
->>>> I agree.
->>>>
->>>> Laurent, would you like to send a patch to revert this?
->>>>
->>>
->>> Yes. I will also try to fix the leak in unrealize that the patch 
->>> wanted to fix initially.
->>
->> I wrote a fix so I will submit it once internal testing is done. You 
->> can see the change at:
->> https://gitlab.com/akihiko.odaki/qemu-kvm/-/ 
->> commit/22161221aa2d2031d7ad1be7701852083aa9109a
-> 
-> It works fine for me but I don't know if it's a good idea to add queues 
-> while the state is loading.
+On Wed, Oct 16, 2024 at 01:51:28PM -0400, Stefan Berger wrote:
+> Use the new ptm_cap_n structure for getting the PTM_GET_CAPABILITY response
+> from swtpm. Previously only 17 bits could possibly have been set in ptm_cap
+> (=uint64_t) in big endian order and those bits are now found in the 2nd
 
-I couldn't come up with other options. The problem is that the number of 
-queues added during realization does not match with the loaded state. We 
-need to add queues after knowing the negotiated feature set and before 
-loading the queue states to fix this problem.
+   ^^ stray '=' sign 
 
-Reverting will add queues that are used when the multiqueue feature is 
-negotiated so it will fix migration for such cases, but will also break 
-the other cases (i.e., the multiqueue feature is not negotiated) as it 
-adds too many queues.
+> 32bit word in the response in the caps field.
+> 
+> This data structure makes it now clear that the 1st 32bit word carries the
+> tpm_result like all the other response structures of all other commands
+> do.
+> 
+> The changes are taken from the swtpm project's tpm_ioctl.h.
+> 
+> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+> ---
+>  backends/tpm/tpm_emulator.c | 14 ++++++++------
+>  backends/tpm/tpm_ioctl.h    | 13 ++++++++++++-
+>  backends/tpm/trace-events   |  2 +-
+>  3 files changed, 21 insertions(+), 8 deletions(-)
 
-Regards,
-Akihiko Odaki
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> 
-> Jason, let me know which solution you prefer (revert or pre_load_queues 
-> helper).
-> 
-> CC'ing MST
-> 
-> Thanks,
-> Laurent
-> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
