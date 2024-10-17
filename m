@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74BAD3C521
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C12D3C523
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 16:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1TQv-0000Ad-F3; Thu, 17 Oct 2024 12:33:05 -0400
+	id 1t1TQn-00009x-Lw; Thu, 17 Oct 2024 12:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TQp-0000A4-2R
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:59 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1t1TQl-00008x-4c
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:55 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1TQh-0001q3-PL
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:58 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-431137d12a5so12041295e9.1
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:32:51 -0700 (PDT)
+ id 1t1TQg-0001pi-PU
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 12:32:54 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42f6bec84b5so12478715e9.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 09:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729182770; x=1729787570; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2AgkgaAbQziOMfScOkAqQCRk4aNQbQUVYEqERQ+sqzM=;
- b=i5tDxpu165fhKhHk9bShqX52TRRKJ8KaA3d36gOPamUkGSI9SqBvXBC5yMiZBpOOBB
- 1R+rjsw53yyL7rE9aRrC3Lg7pz2VGVKh8BfJnAVBngUDsbzBZKHHi22koh3sdm4n1yrp
- SorR+L7ZybupUMSAttP7QUvTveCWQlwV0Mi8hTYPhn0wi2OHP+sAHGQUOcWqMocvXX66
- s+VwZOJQ6WY7R0sRvfW4eOfpw+x+esI2D9tJ+mm92PmCajAadW3pc6tRH4F2KTTA776S
- AgbHJuwXGZOpN+l9lmN+mNQi/Ik6fyeeW+ZLFucrdMp7p54uI2DMeAM00uyqorM9m+1E
- 37XQ==
+ d=linaro.org; s=google; t=1729182769; x=1729787569; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HsByr2/F9yb8R61V/RxanFmNShqqfc0i/+wi/KtFNd0=;
+ b=AHDrErLvai/XZPaIXPua77LCAck8v6y7ffqL3vuOC1k6Ox1WOECi0lbXHZUGB12dmO
+ 1HOxdIG/JEyO/9lSfo//9UA2DXowuQhMkVBVjEm7vYTpIzSJItglSR14DUatEAIuwNAH
+ I8XXcTON7qx4AMkqvYU+kdlnTMZbo5aeI68cYOAjLxSOzYnH2hgyc2F/7NbfTXDHcAJt
+ bSsrqoqG8rw9gep6wdqtqnkKM2i6V3RZv50EoWh9SYwiDPa4I1spTy4j3R4irl4aJto/
+ IyU5jHTcc4777pNJgPr9vjpAsYougWULp1S7w1AoZFiEGJbAEE7FXUUt/Ex8hvLlyWk+
+ 29RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729182770; x=1729787570;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2AgkgaAbQziOMfScOkAqQCRk4aNQbQUVYEqERQ+sqzM=;
- b=WwQE29OKEIcjb6qI269L009USI8d1yfQg6lcNxm7PblBVOz6u5yH+RljWoMi7dSI2T
- RbCllOZa1HH7+FWRfkKr1VkLYl/ir/p5e53k5LGvNRWsTDq+R7QgZJJ0MV8g/KRsv7N3
- EVFUZge8Fp/tg8V8Fhm8oopgxTlbCnAtNvYN5d7oqRIWyx45INNFH2pDOx878ZIPesNZ
- O70//HqDk0dGQHgyyfsBAt2eO4Lvv0zj4cuTCijjTHMwQvQR6eXtzJmXvAVtvFMs1fGT
- o6iw8p13wNIJeEFD6oH8ivugCphB09l2aa5A1LlAVXgDIOWUI8Zp/8fD4ynG/38JOz/Q
- a5Gw==
+ d=1e100.net; s=20230601; t=1729182769; x=1729787569;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HsByr2/F9yb8R61V/RxanFmNShqqfc0i/+wi/KtFNd0=;
+ b=efi8DsIT094YGdIluRoRy4ZUNsxIGAaioWQTcM7XayzcNTGuU2ox1E/6KXzK+iKKXt
+ EVIedEa4L6hAdch24Mr0qAcPUR7n1JdiwYfZVAGDGTjZZQnbL7SHMZxQcSWttonrg/73
+ sfr3wTuxuLyTnYDs2jyQW3ez8QybKYbqQix3UxtOH5Q22VkRjRMHjfqvdCzxX6xTHoLK
+ wwIccZunkN0NNPovUjCin/nd11/hEw64uhh8zAF7CyK5CgRjpv+a5S6LxDzGNz1ZjMry
+ r4ihJp/KtyboHGKNunhHuJpXi3GeUBpI2cb6rLdmgd6W9B9tjUVUBb0RIspGyrT/s6j8
+ rTpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW256c/KziddvLf06IjkJINFEqt91+NIQTk6Nk6cWZbhx7hmPZEUN2mSilcOn1rP9mEbJMAdinE1J+7@nongnu.org
-X-Gm-Message-State: AOJu0YzSOrPo4a0UH3thpa2AsCPLk/et/2goQ8cV/I60O7MfZUC0F1N/
- TDh487CFpIGOQoVzV7KCMLbSRqxTiMsplHCAxghwKOXE+6ZRoJyWzp92Vko1eNc=
-X-Google-Smtp-Source: AGHT+IEiZ11hPVxFdsgWTsoCL474PZCwiVi+Uoc7g8T1OZnst3FGZB1GV9b+SP1JIbWg4HV90wlMcQ==
-X-Received: by 2002:a05:600c:3ba9:b0:42c:b52b:4335 with SMTP id
- 5b1f17b1804b1-4311decaa31mr199654335e9.10.1729182770227; 
- Thu, 17 Oct 2024 09:32:50 -0700 (PDT)
+ AJvYcCXf8g8TFfGJZEi/6OZ4rRhjztZHWPtgQifOC1kDij3TCcu8ad1dH042j30K5hMsbzSuz8/K3IBjPw36@nongnu.org
+X-Gm-Message-State: AOJu0YzRn8CoEFxkWP3L4X3ncKfwM7CrNYf44/JSe5TsjD+Pn5vYzk9M
+ MMUqJDus5YRWGAbpYCZ6b3D6g5hZTcm2RejIJs5MXd6hp737mLsQFV12kXZFSHg=
+X-Google-Smtp-Source: AGHT+IGgrrl26I9EWYTAQmdhEJoJ/ZPM0RwXUGPjojeSOV3jVFn8gANqOjVxPiKrodTqf9XJySUHcQ==
+X-Received: by 2002:a05:600c:4e10:b0:428:f0c2:ef4a with SMTP id
+ 5b1f17b1804b1-4314a2cc3a3mr69365415e9.13.1729182769128; 
+ Thu, 17 Oct 2024 09:32:49 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316067dc56sm545165e9.3.2024.10.17.09.32.49
+ 5b1f17b1804b1-4316067dc56sm545165e9.3.2024.10.17.09.32.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 09:32:49 -0700 (PDT)
+ Thu, 17 Oct 2024 09:32:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Guenter Roeck <linux@roeck-us.net>,
 	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 2/2] tests/functional: Add a functional test for the sx1 board
-Date: Thu, 17 Oct 2024 17:32:47 +0100
-Message-Id: <20241017163247.711244-3-peter.maydell@linaro.org>
+Subject: [PATCH 0/2] arm: Add collie and sx functional tests
+Date: Thu, 17 Oct 2024 17:32:45 +0100
+Message-Id: <20241017163247.711244-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241017163247.711244-1-peter.maydell@linaro.org>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,131 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test for the sx1 board that uses the kernel and
-rootfs provided by Guenter Roeck in the linux-test-downloads repo:
- https://github.com/groeck/linux-test-downloads/
+This patchset adds new functional tests for the collie and sx1
+boards, which are the only remaining ones that survived the
+culling of the OMAP/PXA2xx/strongarm machines.
 
-We have three variants of the test for this board:
-  * just boot initrd
-  * boot with filesystem on SD card
-  * boot from flash
+For these tests I'm indebted to Guenter Roeck, who has kindly
+built and made available the kernel images, rootfs, etc and
+documented the commands needed to boot them. All I've done
+here is wrap those up into test cases in our testcase
+framework by cribbing from some of our existing test code.
 
-In all cases these images have a userspace that is configured to
-immediately reboot the system on successful boot, and the board
-itself supports telling QEMU to do the reboot, so we only need to
-wait for QEMU to exit (via -no-reboot).
+Based-on: 20241017162755.710698-1-peter.maydell@linaro.org
+("hw/sd/omap_mmc: Don't use sd_cmd_type_t")
+ -- the sd card test for the sx1 board will not pass without
+    that bugfix
 
-Since there are three subtests, the test as a whole takes about
-80s on my local machine. That's about the same as the aarch64_virt
-test, so give it the same overall test timeout as that one.
+thanks
+-- PMM
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-The sdcard test requires the 'hw/sd/omap_mmc: Don't use sd_cmd_type_t' bugfix.
----
- tests/functional/meson.build     |  2 +
- tests/functional/test_arm_sx1.py | 72 ++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+)
+Peter Maydell (2):
+  tests/functional: Add a functional test for the collie board
+  tests/functional: Add a functional test for the sx1 board
+
+ MAINTAINERS                         |  1 +
+ tests/functional/meson.build        |  3 ++
+ tests/functional/test_arm_collie.py | 31 +++++++++++++
+ tests/functional/test_arm_sx1.py    | 72 +++++++++++++++++++++++++++++
+ 4 files changed, 107 insertions(+)
+ create mode 100755 tests/functional/test_arm_collie.py
  create mode 100755 tests/functional/test_arm_sx1.py
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 0450805a9c4..ec72bfaf63e 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -16,6 +16,7 @@ test_timeouts = {
-   'aarch64_virt' : 360,
-   'acpi_bits' : 240,
-   'arm_raspi2' : 120,
-+  'arm_sx1' : 360,
-   'mips_malta' : 120,
-   'netdev_ethtool' : 180,
-   'ppc_40p' : 240,
-@@ -54,6 +55,7 @@ tests_arm_system_thorough = [
-   'arm_collie',
-   'arm_integratorcp',
-   'arm_raspi2',
-+  'arm_sx1',
-   'arm_vexpress',
- ]
- 
-diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/test_arm_sx1.py
-new file mode 100755
-index 00000000000..2d86405831e
---- /dev/null
-+++ b/tests/functional/test_arm_sx1.py
-@@ -0,0 +1,72 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Functional test that boots a Linux kernel on an sx1 machine
-+# and checks the console. We have three variants:
-+#  * just boot initrd
-+#  * boot with filesystem on SD card
-+#  * boot from flash
-+# In all cases these images have a userspace that is configured
-+# to immediately reboot the system on successful boot, so we
-+# only need to wait for QEMU to exit (via -no-reboot).
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, Asset
-+from qemu_test.utils import archive_extract
-+
-+class SX1Test(LinuxKernelTest):
-+
-+    ASSET_ZIMAGE = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/zImage',
-+        'a0271899a8dc2165f9e0adb2d0a57fc839ae3a469722ffc56c77e108a8887615')
-+
-+    ASSET_INITRD = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/rootfs-armv4.cpio',
-+        '35b0721249821aa544cd85b85d3cb8901db4c6d128eed86ab261e5d9e37d58f8')
-+
-+    ASSET_SD_FS = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/rootfs-armv4.ext2',
-+        'c1db7f43ef92469ebc8605013728c8950e7608439f01d13678994f0ce101c3a8')
-+
-+    ASSET_FLASH = Asset(
-+        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/sx1/flash',
-+        '17e6a2758fa38efd2666be0879d4751fd37d194f25168a8deede420df519b676')
-+
-+    CONSOLE_ARGS = 'console=ttyS0,115200 earlycon=uart8250,mmio32,0xfffb0000,115200n8'
-+
-+    def test_arm_sx1_initrd(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 rdinit=/sbin/init {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.launch_kernel(zimage_path,
-+                           initrd=initrd_path)
-+        self.vm.wait()
-+
-+    def test_arm_sx1_sd(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        sd_fs_path = self.ASSET_SD_FS.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 root=/dev/mmcblk0 rootwait {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.vm.add_args('-snapshot')
-+        self.vm.add_args('-drive', f'format=raw,if=sd,file={sd_fs_path}')
-+        self.launch_kernel(zimage_path)
-+        self.vm.wait()
-+
-+    def test_arm_sx1_flash(self):
-+        self.set_machine('sx1')
-+        zimage_path = self.ASSET_ZIMAGE.fetch()
-+        flash_path = self.ASSET_FLASH.fetch()
-+        self.vm.add_args('-append', f'kunit.enable=0 root=/dev/mtdblock3 rootwait {self.CONSOLE_ARGS}')
-+        self.vm.add_args('-no-reboot')
-+        self.vm.add_args('-snapshot')
-+        self.vm.add_args('-drive', f'format=raw,if=pflash,file={flash_path}')
-+        self.launch_kernel(zimage_path)
-+        self.vm.wait()
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
 -- 
 2.34.1
 
