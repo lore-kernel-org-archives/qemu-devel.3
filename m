@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6B0D3C52D
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 19:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E116D3C52D
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 19:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1W0z-0005ux-17; Thu, 17 Oct 2024 15:18:29 -0400
+	id 1t1WEr-0008J4-0C; Thu, 17 Oct 2024 15:32:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1t1W0w-0005to-0p
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:18:26 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1t1W0u-0006wj-9C
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:18:25 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-539e1543ab8so2365174e87.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 12:18:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729192702; x=1729797502; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=/NETH2CrDKwiZrM1jQK1ymEX1iv8quNwaR7MPB+BVBY=;
- b=RyEEImA/I4Px37pPIOG/7OfV3HRn1WYNLWPwLAF4xjLPZa3icqcBgli1dhmeDOMisg
- AOsEEhgPShy4L16siRmA1SveDkkgAP3FUEyOp/ZclwoLTmbwqNtC6O8NOzmOOekl/cSv
- bbsDIGPWjn8i7smJJI/LEx1JZw6tFJrPkpC2jkLA1wOXXcNyne7YxPZUjaOoaVa/fI+s
- CVmoY/sksJF5tt6nI+kdSQv7ShsZk9IEddMSubD94MAOSqfj4zWBiei5saoD6nyCEucf
- tsLh0d2J9UeNonSZsIo0GFONK0QLtPfmBidQuKj910G1nt8C06TavTuVA8W2eOU1F0Za
- +XUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729192702; x=1729797502;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/NETH2CrDKwiZrM1jQK1ymEX1iv8quNwaR7MPB+BVBY=;
- b=MLkJ/NTZ2c92Uj/zjMniS9rlVRl+IL+HMGmuleNCYYZF8+dfzEZtQ3eLlF3KHBEHFh
- I4g4Ogx8B4UFfWUNQBkwtfTUrMJypMs7cFg8ChJ/w873aMpEsv221Fe0FnokNArmEuc1
- PSTrseUkByWkwjCtblKcH7d3obF2sxB6ONEOq0Jnav3biYS7JbdTBcHkp8z1eQQsHiJZ
- BLiuE1kzYDPuK40N9Bj+CJNdaKypqiXyBhm4BWxmNP5InNPxmrmnCYc4miyoKbFSgDU7
- Fh224a5S62YVjdAbrU1xXfHmCOZSXKs1QHgIkq2bJf6zqWhSUCXU3hjOWAn9zk6Qu6oR
- 8B1g==
-X-Gm-Message-State: AOJu0YxCIDwHYpWmgLIkm9CRb+6KI+hp/EjpDKufHM1FxbguGjEJTKFs
- MnpI5z1rhc43Cn6+aBc9lBMIa8jdyarctQ46CShm5J9rJxoUjCCKDMufBid84KY=
-X-Google-Smtp-Source: AGHT+IGXBNDQRfhDmvwOm/78fr2SwqtRD8C8/v4sotwwPJJcpL3C+0frFyqEo/2+h1Yf6tgA4bXgkA==
-X-Received: by 2002:a05:6512:3989:b0:52c:e10b:cb33 with SMTP id
- 2adb3069b0e04-53a154d857fmr12794e87.50.1729192702024; 
- Thu, 17 Oct 2024 12:18:22 -0700 (PDT)
-Received: from [192.168.210.26] (83.11.13.124.ipv4.supernova.orange.pl.
- [83.11.13.124]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a68bc452asm1576866b.137.2024.10.17.12.18.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 12:18:20 -0700 (PDT)
-Message-ID: <d3f61522-afcf-404d-b5d7-ab94c18b59c2@linaro.org>
-Date: Thu, 17 Oct 2024 21:18:19 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t1WEh-0008IG-VO; Thu, 17 Oct 2024 15:32:40 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1t1WEd-0000Wp-Dd; Thu, 17 Oct 2024 15:32:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 22BCA99671;
+ Thu, 17 Oct 2024 22:32:06 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8BAB5156E11;
+ Thu, 17 Oct 2024 22:32:27 +0300 (MSK)
+Message-ID: <238508dd-f3f4-4274-8409-7ee242e4a5a7@tls.msk.ru>
+Date: Thu, 17 Oct 2024 22:32:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pcie: enable Extended tag field capability
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20241017-pcie-extend-v1-1-03eb1029f4ca@linaro.org>
- <20241017125724-mutt-send-email-mst@kernel.org>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB
-Organization: Linaro
-In-Reply-To: <20241017125724-mutt-send-email-mst@kernel.org>
+Subject: Re: [Stable-9.1.1 00/49] Patch Round-up for stable 9.1.1, freeze on
+ 2024-10-16 (frozen)
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
+ <5cec4c84-e30e-4567-9afb-ef60b4b7c2e1@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <5cec4c84-e30e-4567-9afb-ef60b4b7c2e1@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,24 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 17.10.2024 o 18:58, Michael S. Tsirkin pisze:
->> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
->> index 4b2f0805c6..54c0f1ec67 100644
->> --- a/hw/pci/pcie.c
->> +++ b/hw/pci/pcie.c
->> @@ -86,7 +86,8 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
->>        * Specification, Revision 1.1., or subsequent PCI Express Base
->>        * Specification revisions.
->>        */
->> -    pci_set_long(exp_cap + PCI_EXP_DEVCAP, PCI_EXP_DEVCAP_RBER);
->> +    pci_set_long(exp_cap + PCI_EXP_DEVCAP, PCI_EXP_DEVCAP_RBER |
->> +                 PCI_EXP_DEVCAP_EXT_TAG);
->>   
->>       pci_set_long(exp_cap + PCI_EXP_LNKCAP,
->>                    (port << PCI_EXP_LNKCAP_PN_SHIFT) |
-> 
-> We can't change capabilities unconditionally.
-> It needs at least a machine type compat thing.
+On 17.10.2024 20:47, Paolo Bonzini wrote:
 
-Thanks for review. Will look how to handle it better then.
+> My next pull request includes a few more:
+> 
+> https://gitlab.com/bonzini/qemu/-/commit/15d955975bd484c2c66af0d6daaa02a7d04d2256.patch
+> https://gitlab.com/bonzini/qemu/-/commit/64e0e63ea16aa0122dc0c41a0679da0ae4616208.patch
+> https://gitlab.com/bonzini/qemu/-/commit/615586cb356811e46c2e5f85c36db4b93f8381cd.patch
+
+yeah, I noted them already, either earlier or due to Cc: qemu-stable.
+These will be in the next release though since they missed the freeze
+date (Oct-16).
+
+I also note the wording in my cover letter for the series should be
+changed a bit, so it is clear the other possible patches will only
+be considered for the next stable release.
+
+Thank you for letting me know, that's the most important part anyway!
+
+/mjt
 
