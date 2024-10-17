@@ -4,98 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C2AD3C52C
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 20:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48773D3C530
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 20:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1X3y-0000Ey-G0; Thu, 17 Oct 2024 16:25:38 -0400
+	id 1t1XDe-0001yG-5U; Thu, 17 Oct 2024 16:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1t1X3w-0000EF-Cm
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 16:25:36 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1XDd-0001y7-2j
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 16:35:37 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1t1X3u-0006Sy-2s
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 16:25:36 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20ca96a155cso11216065ad.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 13:25:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729196732; x=1729801532; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=emq/pF99Weq//+1o2qFlB60qkHZsJbYzWrdr3wg7i5A=;
- b=wtTKhS2cYaw6si/eQzkTLEvpTajdYmGys0NjYflaSuZCdIPZEUnuaNrcmtgcmAV7O1
- cPb4zdMJ2F2fILS+X0I9f0RU4tjuTqJW8b+MSpT07JmkODrNr5zi1yVOes8s1gLuoSsg
- EgjHJwrSlx3bSSoZlxYtvrcLkKHgDI9849WJA51THyGIOlv6aDloKeD87CvhkfKiudG9
- L7C7h499vyypUaSiNHpJJbQ35izZ3e8G5E8rzlYb1Q80DsWhJVV6QB8MRWsCd3nwBZvy
- OPDJfH2UuHZRIFNhtaIkdtaOAlcQU7ICyd6uGfmHvTvcdCPAjV367mfvwNIa8QqOthaL
- fWIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729196732; x=1729801532;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=emq/pF99Weq//+1o2qFlB60qkHZsJbYzWrdr3wg7i5A=;
- b=kS02NdIHvtVq3mwUMa9iALl1AI0Do6C+DDXtTa1b6m+/MPCGrdraxBOm/jIircVQL0
- GlwiXWsDwTpg1wLK8MVG2QEK6Z1ER3JoRYm033Nw8SMkgV77tbcWsBslvbxAYXZOrDGS
- mWnwe1wU45g/eHLeLpO8kFtCVG6XgztniiKECXFO24jPRdK6GP7V7i7pP3tzLcrsT9y+
- BQ6C3xZJXRPFmVYeAfjGDwtQog12zVo9+VPEEtTiO8ZrIQaoTAN4AsAvCh/qEKh6N6XT
- PeotDt0705RlPsWSPNbeGYqAdAslMuRjAjTOalGWwfo6EqbOtwSO87DN1bxWBPSbiQX/
- HCmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4OUW3HvlrBx1DGitYZMifdGyZu4SwG2vnY4Ty23i6IDvo8TaYNIrRrGdELJvj4JaywqPrOLhNqxIA@nongnu.org
-X-Gm-Message-State: AOJu0YxhD/lww2iy77f0bLv3FN2bGtNcZTp4UjaBk71+XmeXM/NNvXVP
- Fh7WUUPkbVEMW073vTunh4eZWEc/L2y2RlGPslhIrD0AvO28t7MU9sBuZDxpyu0=
-X-Google-Smtp-Source: AGHT+IEhW9vljHw/FMQFX4+mOjH2vadhvy01NFUe4yUDQRSW05QQw5/Sgu9UF0E1asKtThsAGlbTPQ==
-X-Received: by 2002:a17:903:990:b0:20c:d428:adf4 with SMTP id
- d9443c01a7336-20e5a8f3e51mr2130685ad.38.1729196732288; 
- Thu, 17 Oct 2024 13:25:32 -0700 (PDT)
-Received: from [192.168.0.102] ([187.121.94.4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e5a90f1eesm355085ad.262.2024.10.17.13.25.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 13:25:31 -0700 (PDT)
-Message-ID: <ebf3ba9c-6891-4fb7-80e4-1169011b2e6d@linaro.org>
-Date: Thu, 17 Oct 2024 17:25:20 -0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1XDb-0007aP-6A
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 16:35:36 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EAEC21F451;
+ Thu, 17 Oct 2024 20:35:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729197333; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hGvje779wjcgbzJ/GjFcUN5JHM3JUUrMWiS7F4f1FGM=;
+ b=GWnU2nTHfZZ7gANAcxhOhp3dfXNT65pooypgb3vE8HkKx4MM37g+L+OuGkXzGz6BeaDMeQ
+ K2+Ls/+L/YWXaeWT4/M1C7u400SwwjGCGv7kU5TEeQhl3lwDAB44FVZ6wRHKaoblcpZTpZ
+ idZDrQvE61u9RLVfeSedCfeqG8XUDk4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729197333;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hGvje779wjcgbzJ/GjFcUN5JHM3JUUrMWiS7F4f1FGM=;
+ b=8epxWMxyk7x2EgcRgGvP3bVDfDW0to7GlBmBv1U/fQOPlWEZ7trvxlhdXebzDxMzQhuQRt
+ dVi1FU7lNkA2JxBw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="I/xoArwd";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gLkRQ2Y6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729197332; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hGvje779wjcgbzJ/GjFcUN5JHM3JUUrMWiS7F4f1FGM=;
+ b=I/xoArwd3STLMQb6vYC3QxPeLzYzSgfy4SQYBDgR4M7LC1k8m/c8BrBt0LrbH/YD6K4DQh
+ o/MT+JV8qPDNrurnfAecQUPeQEiiJZoLSF2b8rS+TKqQEPm9xQMsPVn6AdclVg+fAC3MFE
+ KkGrb5hp9CMcALVSm6i3FJ3SYpScihQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729197332;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hGvje779wjcgbzJ/GjFcUN5JHM3JUUrMWiS7F4f1FGM=;
+ b=gLkRQ2Y61I+tJZwJpOfSBDFDqma6PPCu40pdLbKWFseR7UgE/b6qMxUoAlsMAb/ZtqMNHZ
+ GS/DvfIhtWx8fvAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6973813A53;
+ Thu, 17 Oct 2024 20:35:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qSwJDBR1EWecDAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 17 Oct 2024 20:35:32 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, yong.huang@smartx.com
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 5/6] migration: Support periodic RAMBlock dirty
+ bitmap sync
+In-Reply-To: <ZxFmnZqgRlGaQax_@x1n>
+References: <cover.1729146786.git.yong.huang@smartx.com>
+ <f61f1b3653f2acf026901103e1c73d157d38b08f.1729146786.git.yong.huang@smartx.com>
+ <ZxFmnZqgRlGaQax_@x1n>
+Date: Thu, 17 Oct 2024 17:35:29 -0300
+Message-ID: <874j5a31ta.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/4] hw/acpi: Initialize ACPI Hotplug CPU Status with
- Support for vCPU `Persistence`
-To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com
-Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev,
- david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org,
- ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
- gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com,
- alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- linux@armlinux.org.uk, darren@os.amperecomputing.com,
- ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
- karl.heubaum@oracle.com, miguel.luis@oracle.com, salil.mehta@opnsrc.net,
- zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
- jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- shahuang@redhat.com, zhao1.liu@intel.com, linuxarm@huawei.com
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
- <20241014192205.253479-2-salil.mehta@huawei.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20241014192205.253479-2-salil.mehta@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: EAEC21F451
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,212 +125,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Salil,
+Peter Xu <peterx@redhat.com> writes:
 
-On 10/14/24 16:22, Salil Mehta wrote:
-> Certain CPU architecture specifications [1][2][3] prohibit changes to CPU
-> presence after the kernel has booted. This limitation exists because many system
-> initializations rely on the exact CPU count at boot time and do not expect it to
-> change later. For example, components like interrupt controllers, which are
-> closely tied to CPUs, or various per-CPU features, may not support configuration
-> changes once the kernel has been initialized. This presents a challenge for
-> virtualization features such as vCPU hotplug.
-> 
-> To address this issue, introduce an `is_enabled` state in the `AcpiCpuStatus`,
-> which reflects whether a vCPU has been hot-plugged or hot-unplugged in QEMU,
-> marking it as (un)available in the Guest Kernel. The `is_present` state should
-> be set based on the `acpi_persistent` flag. In cases where unplugged vCPUs need
-> to be deliberately simulated in the ACPI to maintain a persistent view of vCPUs,
-> this flag ensures the guest kernel continues to see those vCPUs.
-> 
-> Additionally, introduce an `acpi_persistent` property that can be used to
-> initialize the ACPI vCPU presence state accordingly. Architectures requiring
-> ACPI to expose a persistent view of vCPUs can override its default value. Refer
-> to the patch-set implelenting vCPU hotplug support for ARM for more details on
-> its usage.
-> 
-> References:
-> [1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt CPU Hotplug on
->      architectures that don’t Support CPU Hotplug (like ARM64)
->      a. Kernel Link: https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
->      b. Qemu Link:  https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf
-> [2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU Hotplug on
->      SoC Based Systems (like ARM64)
->      Link: https://kvmforum2020.sched.com/event/eE4m
-> [3] Check comment 5 in the bugzilla entry
->      Link: https://bugzilla.tianocore.org/show_bug.cgi?id=4481#c5
-> 
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> On Thu, Oct 17, 2024 at 02:42:54PM +0800, yong.huang@smartx.com wrote:
+>> +void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+>> +{
+>> +    static uint64_t prev_sync_cnt;
+>
+> We may need to reset this in case migration got cancelled and invoked
+> again, to make sure it keeps working in the 2nd run.
+>
+>> +    uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+>> +
+>> +    /*
+>> +     * The first iteration copies all memory anyhow and has no
+>> +     * effect on guest performance, therefore omit it to avoid
+>> +     * paying extra for the sync penalty.
+>> +     */
+>> +    if (sync_cnt <= 1) {
+>> +        goto end;
+>> +    }
+>> +
+>> +    if (sync_cnt == prev_sync_cnt) {
+>> +        trace_cpu_throttle_dirty_sync();
+>> +        WITH_RCU_READ_LOCK_GUARD() {
+>> +            migration_bitmap_sync_precopy(false);
+>> +        }
+>> +    }
+>> +
+>> +end:
+>> +    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+>> +
+>> +    timer_mod(throttle_dirty_sync_timer,
+>> +        qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+>> +            CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+>> +}
+>
+> Please both of you have a look on whether you agree I squash below into
+> this patch when merge:
+>
+> ===8<===
+> From 84a2544eab73e35dbd35fed3b1440169915f9aa4 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 17 Oct 2024 15:27:19 -0400
+> Subject: [PATCH] fixup! migration: Support periodic RAMBlock dirty bitmap sync
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   cpu-target.c          |  1 +
->   hw/acpi/cpu.c         | 35 ++++++++++++++++++++++++++++++++++-
->   include/hw/acpi/cpu.h | 21 +++++++++++++++++++++
->   include/hw/core/cpu.h | 21 +++++++++++++++++++++
->   4 files changed, 77 insertions(+), 1 deletion(-)
-> 
-> diff --git a/cpu-target.c b/cpu-target.c
-> index 499facf774..c8a29ab495 100644
-> --- a/cpu-target.c
-> +++ b/cpu-target.c
-> @@ -200,6 +200,7 @@ static Property cpu_common_props[] = {
->        */
->       DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
->                        MemoryRegion *),
-> +    DEFINE_PROP_BOOL("acpi-persistent", CPUState, acpi_persistent, false),
->   #endif
->       DEFINE_PROP_END_OF_LIST(),
->   };
-> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-> index 5cb60ca8bc..083c4010c2 100644
-> --- a/hw/acpi/cpu.c
-> +++ b/hw/acpi/cpu.c
-> @@ -225,7 +225,40 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
->       state->dev_count = id_list->len;
->       state->devs = g_new0(typeof(*state->devs), state->dev_count);
->       for (i = 0; i < id_list->len; i++) {
-> -        state->devs[i].cpu =  CPU(id_list->cpus[i].cpu);
-> +        struct CPUState *cpu = CPU(id_list->cpus[i].cpu);
-> +        /*
-> +         * In most architectures, CPUs that are marked as ACPI 'present' are
-> +         * also ACPI 'enabled' by default. These states remain consistent at
-> +         * both the QOM and ACPI levels.
-> +         */
-> +        if (cpu) {
-> +            state->devs[i].is_enabled = true;
-> +            state->devs[i].is_present = true;
-> +            state->devs[i].cpu = cpu;
-> +        } else {
-> +            state->devs[i].is_enabled = false;
+>  migration/cpu-throttle.c | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+> index 342681cdd4..3df287d8d3 100644
+> --- a/migration/cpu-throttle.c
+> +++ b/migration/cpu-throttle.c
+> @@ -36,6 +36,7 @@
+>  static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;
+>  static unsigned int throttle_percentage;
+>  static bool throttle_dirty_sync_timer_active;
+> +static uint64_t throttle_dirty_sync_count_prev;
+>  
+>  #define CPU_THROTTLE_PCT_MIN 1
+>  #define CPU_THROTTLE_PCT_MAX 99
+> @@ -133,7 +134,6 @@ int cpu_throttle_get_percentage(void)
+>  
+>  void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+>  {
+> -    static uint64_t prev_sync_cnt;
+>      uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+>  
+>      /*
+> @@ -145,7 +145,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+>          goto end;
+>      }
+>  
+> -    if (sync_cnt == prev_sync_cnt) {
+> +    if (sync_cnt == throttle_dirty_sync_count_prev) {
+>          trace_cpu_throttle_dirty_sync();
+>          WITH_RCU_READ_LOCK_GUARD() {
+>              migration_bitmap_sync_precopy(false);
+> @@ -153,7 +153,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+>      }
+>  
+>  end:
+> -    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+> +    throttle_dirty_sync_count_prev = stat64_get(&mig_stats.dirty_sync_count);
+>  
+>      timer_mod(throttle_dirty_sync_timer,
+>          qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+> @@ -171,6 +171,11 @@ void cpu_throttle_dirty_sync_timer(bool enable)
+>  
+>      if (enable) {
+>          if (!cpu_throttle_dirty_sync_active()) {
 > +            /*
-> +             * In some architectures, even 'unplugged' or 'disabled' QOM CPUs
-> +             * may be exposed as ACPI 'present.' This approach provides a
-> +             * persistent view of the vCPUs to the guest kernel. This could be
-> +             * due to an architectural constraint that requires every per-CPU
-> +             * component to be present at boot time, meaning the exact count of
-> +             * vCPUs must be known and cannot be altered after the kernel has
-> +             * booted. As a result, the vCPU states at the QOM and ACPI levels
-> +             * might become inconsistent. However, in such cases, the presence
-> +             * of vCPUs has been deliberately simulated at the ACPI level.
+> +             * Always reset the dirty sync count cache, in case migration
+> +             * was cancelled once.
 > +             */
-> +            if (acpi_persistent_cpu(first_cpu)) {
-> +                state->devs[i].is_present = true;
-> +                /*
-> +                 * `CPUHotplugState::AcpiCpuStatus::cpu` becomes insignificant
-> +                 * in this case
-> +                 */
-> +            } else {
-> +                state->devs[i].is_present = false;
-> +                state->devs[i].cpu = cpu;
+> +            throttle_dirty_sync_count_prev = 0;
+>              timer_mod(throttle_dirty_sync_timer,
+>                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+>                      CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+> -- 
+> 2.45.0
 
-I think it's better to set cpu here explicitly to NULL in both cases
-(persistent and non-persistent cases). Also, 'cpu' here is always NULL
-since it's inside the else block of "if (cpu)" conditional. So how about
-setting cpu to NULL at the end of the else block:
-
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index d34c1e601e..b830c0e85b 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -251,14 +251,14 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object 
-*owner,
-               */
-              if (acpi_persistent_cpu(first_cpu)) {
-                  state->devs[i].is_present = true;
--                /*
--                 * `CPUHotplugState::AcpiCpuStatus::cpu` becomes 
-insignificant
--                 * in this case
--                 */
-              } else {
-                  state->devs[i].is_present = false;
--                state->devs[i].cpu = cpu;
-              }
-+            /*
-+             * `CPUHotplugState::AcpiCpuStatus::cpu` becomes insignificant
-+             * in this case
-+             */
-+            state->devs[i].cpu = NULL;
-          }
-          state->devs[i].arch_id = id_list->cpus[i].arch_id;
-      }
-
-
-Cheers,
-Gustavo
-
-> +            }
-> +        }
->           state->devs[i].arch_id = id_list->cpus[i].arch_id;
->       }
->       memory_region_init_io(&state->ctrl_reg, owner, &cpu_hotplug_ops, state,
-> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-> index 32654dc274..bd3f9973c9 100644
-> --- a/include/hw/acpi/cpu.h
-> +++ b/include/hw/acpi/cpu.h
-> @@ -26,6 +26,8 @@ typedef struct AcpiCpuStatus {
->       uint64_t arch_id;
->       bool is_inserting;
->       bool is_removing;
-> +    bool is_present;
-> +    bool is_enabled;
->       bool fw_remove;
->       uint32_t ost_event;
->       uint32_t ost_status;
-> @@ -75,4 +77,23 @@ extern const VMStateDescription vmstate_cpu_hotplug;
->       VMSTATE_STRUCT(cpuhp, state, 1, \
->                      vmstate_cpu_hotplug, CPUHotplugState)
->   
-> +/**
-> + * acpi_persistent_cpu:
-> + * @cpu: The vCPU to check
-> + *
-> + * Checks if the vCPU state should always be reflected as *present* via ACPI
-> + * to the Guest. By default, this is False on all architectures and has to be
-> + * explicity set during initialization.
-> + *
-> + * Returns: True if it is ACPI 'persistent' CPU
-> + *
-> + */
-> +static inline bool acpi_persistent_cpu(CPUState *cpu)
-> +{
-> +    /*
-> +     * returns if 'Presence' of the vCPU is persistent and should be simulated
-> +     * via ACPI even after vCPUs have been unplugged in QOM
-> +     */
-> +    return cpu && cpu->acpi_persistent;
-> +}
->   #endif
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 04e9ad4996..299e96c45b 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -542,6 +542,27 @@ struct CPUState {
->       CPUPluginState *plugin_state;
->   #endif
->   
-> +    /*
-> +     * To implement the vCPU hotplug feature (which simulates CPU hotplug
-> +     * behavior), we need to dynamically create and destroy QOM vCPU objects,
-> +     * and (de)associate them with pre-existing KVM vCPUs while (un)parking the
-> +     * KVM vCPU context. One challenge is ensuring that these dynamically
-> +     * appearing or disappearing QOM vCPU objects are accurately reflected
-> +     * through ACPI to the Guest Kernel. Due to architectural constraints,
-> +     * changing the number of vCPUs after the guest kernel has booted may not
-> +     * always be possible.
-> +     *
-> +     * In certain architectures, to provide the guest kernel with a *persistent*
-> +     * view of vCPU presence, even when the QOM does not have a corresponding
-> +     * vCPU object, ACPI may simulate the presence of vCPUs by marking them as
-> +     * ACPI-disabled. This is achieved by setting `_STA.PRES=True` and
-> +     * `_STA.Ena=False` for unplugged vCPUs in QEMU's QOM.
-> +     *
-> +     * By default, this flag is set to `FALSE`, and it must be explicitly set
-> +     * to `TRUE` for architectures like ARM.
-> +     */
-> +    bool acpi_persistent;
-> +
->       /* TODO Move common fields from CPUArchState here. */
->       int cpu_index;
->       int cluster_index;
-
+LGTM
 
