@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E116D3C52D
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 19:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5B2D3C52C
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 19:34:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1WEr-0008J4-0C; Thu, 17 Oct 2024 15:32:50 -0400
+	id 1t1WG1-0000bK-9R; Thu, 17 Oct 2024 15:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1WEh-0008IG-VO; Thu, 17 Oct 2024 15:32:40 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1WG0-0000bA-LG
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:34:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1WEd-0000Wp-Dd; Thu, 17 Oct 2024 15:32:39 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 22BCA99671;
- Thu, 17 Oct 2024 22:32:06 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BAB5156E11;
- Thu, 17 Oct 2024 22:32:27 +0300 (MSK)
-Message-ID: <238508dd-f3f4-4274-8409-7ee242e4a5a7@tls.msk.ru>
-Date: Thu, 17 Oct 2024 22:32:27 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1WFy-0000hU-MJ
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 15:34:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729193636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KKjGA1hLevvwG3GTVC3hcQC9Yd6a5bOpv2jSXD7fWrU=;
+ b=b8dQ3aWc8POIhkgcmq7pYV5hQyApWqHCRLLoJ2AhoSj1Pzo4tey8MDRd0ulkN4XPlpXdMr
+ U/kzguaX8VtVnLUO+1w/g2Lg3ymNRcAnucAKTRcKGgxNXDcVDLiJMVSNqp35JBZVn5yLjT
+ 6nEeGip/1m61P19Ic4NPfayoAGrq0+Q=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-NWxBE0WoM5K08ARyd7qO2g-1; Thu, 17 Oct 2024 15:33:54 -0400
+X-MC-Unique: NWxBE0WoM5K08ARyd7qO2g-1
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-5eb8825a75cso165634eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 12:33:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729193633; x=1729798433;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KKjGA1hLevvwG3GTVC3hcQC9Yd6a5bOpv2jSXD7fWrU=;
+ b=O7MWn/6o3Su7eEms27vmXcS3rQn+xeoTiWw+MfjU26B6FSLKPrzPwwhmZ1ROKlXtcR
+ 437G91tPJhzHNGQAjURBHkpKMMecblPiTvXUl4Mh51/g0ijGZSJWb8zTE31wrA29PXyx
+ FiqV6GVEYFNIIzxbOjPD/5q6Z32PbPLH7IaxgZNOFvPqCauyg6Xl/FBasUSuJnfHRj52
+ T3iFypLuAu7FMOnyNmpKuYq1ivrZ5dZ6vehOTrAeiwOSxSthaGNVJfyude4Hanz1naqH
+ mwK3P37s6jt2BOBpxZyZncpyXbqwGU89+XLYcpUpcvhjPINIpdkMYngRcVRx9I2GN0kP
+ ScQw==
+X-Gm-Message-State: AOJu0Yy+WaErT+eO/X2zk/c8mzp/VtK0EXUBac4rBeFR40+cJRgnO0ZQ
+ 6SvOzIxWdma4zs1CvMetpiNuAkaf5bPBvhXi6U/jhD4ghfdgB5PjVrElS7XFU2/nAizjG94xImi
+ 1atjxWzL3g9FJR6QB+nGZjGad7Hfma9jKMesEoqA8pRqROQuYPmOP
+X-Received: by 2002:a05:6358:4403:b0:1b8:688e:6ea5 with SMTP id
+ e5c5f4694b2df-1c3784a773dmr736763055d.22.1729193633526; 
+ Thu, 17 Oct 2024 12:33:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzXGj7R5EmkVFQhfEERIIhsyTvzdPVQ8tWEd4lKePibTSXv5nLk88A6+3qMhvRs6KDgOeK5w==
+X-Received: by 2002:a05:6358:4403:b0:1b8:688e:6ea5 with SMTP id
+ e5c5f4694b2df-1c3784a773dmr736761655d.22.1729193633121; 
+ Thu, 17 Oct 2024 12:33:53 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6cc2290fe81sm30956296d6.18.2024.10.17.12.33.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Oct 2024 12:33:52 -0700 (PDT)
+Date: Thu, 17 Oct 2024 15:33:49 -0400
+From: Peter Xu <peterx@redhat.com>
+To: yong.huang@smartx.com, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 5/6] migration: Support periodic RAMBlock dirty bitmap
+ sync
+Message-ID: <ZxFmnZqgRlGaQax_@x1n>
+References: <cover.1729146786.git.yong.huang@smartx.com>
+ <f61f1b3653f2acf026901103e1c73d157d38b08f.1729146786.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-9.1.1 00/49] Patch Round-up for stable 9.1.1, freeze on
- 2024-10-16 (frozen)
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <qemu-stable-9.1.1-20241016195251@cover.tls.msk.ru>
- <5cec4c84-e30e-4567-9afb-ef60b4b7c2e1@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <5cec4c84-e30e-4567-9afb-ef60b4b7c2e1@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f61f1b3653f2acf026901103e1c73d157d38b08f.1729146786.git.yong.huang@smartx.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,23 +102,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.10.2024 20:47, Paolo Bonzini wrote:
+On Thu, Oct 17, 2024 at 02:42:54PM +0800, yong.huang@smartx.com wrote:
+> +void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+> +{
+> +    static uint64_t prev_sync_cnt;
 
-> My next pull request includes a few more:
-> 
-> https://gitlab.com/bonzini/qemu/-/commit/15d955975bd484c2c66af0d6daaa02a7d04d2256.patch
-> https://gitlab.com/bonzini/qemu/-/commit/64e0e63ea16aa0122dc0c41a0679da0ae4616208.patch
-> https://gitlab.com/bonzini/qemu/-/commit/615586cb356811e46c2e5f85c36db4b93f8381cd.patch
+We may need to reset this in case migration got cancelled and invoked
+again, to make sure it keeps working in the 2nd run.
 
-yeah, I noted them already, either earlier or due to Cc: qemu-stable.
-These will be in the next release though since they missed the freeze
-date (Oct-16).
+> +    uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+> +
+> +    /*
+> +     * The first iteration copies all memory anyhow and has no
+> +     * effect on guest performance, therefore omit it to avoid
+> +     * paying extra for the sync penalty.
+> +     */
+> +    if (sync_cnt <= 1) {
+> +        goto end;
+> +    }
+> +
+> +    if (sync_cnt == prev_sync_cnt) {
+> +        trace_cpu_throttle_dirty_sync();
+> +        WITH_RCU_READ_LOCK_GUARD() {
+> +            migration_bitmap_sync_precopy(false);
+> +        }
+> +    }
+> +
+> +end:
+> +    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+> +
+> +    timer_mod(throttle_dirty_sync_timer,
+> +        qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+> +            CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+> +}
 
-I also note the wording in my cover letter for the series should be
-changed a bit, so it is clear the other possible patches will only
-be considered for the next stable release.
+Please both of you have a look on whether you agree I squash below into
+this patch when merge:
 
-Thank you for letting me know, that's the most important part anyway!
+===8<===
+From 84a2544eab73e35dbd35fed3b1440169915f9aa4 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Thu, 17 Oct 2024 15:27:19 -0400
+Subject: [PATCH] fixup! migration: Support periodic RAMBlock dirty bitmap sync
 
-/mjt
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/cpu-throttle.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
+index 342681cdd4..3df287d8d3 100644
+--- a/migration/cpu-throttle.c
++++ b/migration/cpu-throttle.c
+@@ -36,6 +36,7 @@
+ static QEMUTimer *throttle_timer, *throttle_dirty_sync_timer;
+ static unsigned int throttle_percentage;
+ static bool throttle_dirty_sync_timer_active;
++static uint64_t throttle_dirty_sync_count_prev;
+ 
+ #define CPU_THROTTLE_PCT_MIN 1
+ #define CPU_THROTTLE_PCT_MAX 99
+@@ -133,7 +134,6 @@ int cpu_throttle_get_percentage(void)
+ 
+ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+ {
+-    static uint64_t prev_sync_cnt;
+     uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
+ 
+     /*
+@@ -145,7 +145,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+         goto end;
+     }
+ 
+-    if (sync_cnt == prev_sync_cnt) {
++    if (sync_cnt == throttle_dirty_sync_count_prev) {
+         trace_cpu_throttle_dirty_sync();
+         WITH_RCU_READ_LOCK_GUARD() {
+             migration_bitmap_sync_precopy(false);
+@@ -153,7 +153,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
+     }
+ 
+ end:
+-    prev_sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
++    throttle_dirty_sync_count_prev = stat64_get(&mig_stats.dirty_sync_count);
+ 
+     timer_mod(throttle_dirty_sync_timer,
+         qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+@@ -171,6 +171,11 @@ void cpu_throttle_dirty_sync_timer(bool enable)
+ 
+     if (enable) {
+         if (!cpu_throttle_dirty_sync_active()) {
++            /*
++             * Always reset the dirty sync count cache, in case migration
++             * was cancelled once.
++             */
++            throttle_dirty_sync_count_prev = 0;
+             timer_mod(throttle_dirty_sync_timer,
+                 qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
+                     CPU_THROTTLE_DIRTY_SYNC_TIMESLICE_MS);
+-- 
+2.45.0
+
+-- 
+Peter Xu
+
 
