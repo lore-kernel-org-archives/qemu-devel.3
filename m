@@ -4,86 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB6FD2F7C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Oct 2024 21:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B81D2F7D7
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 01:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1BpL-0001Zm-HW; Wed, 16 Oct 2024 17:45:07 -0400
+	id 1t1FAD-0000cm-Od; Wed, 16 Oct 2024 21:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t1BpB-0001Tj-7d; Wed, 16 Oct 2024 17:44:58 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t1Bp8-0003eC-D9; Wed, 16 Oct 2024 17:44:56 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43117ed8adbso3852555e9.2; 
- Wed, 16 Oct 2024 14:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729115092; x=1729719892; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WX2mI6ppfQWfDYmTu1E1XXHsE0s/s0kydxM7yOP659k=;
- b=A4llCo+2xXeVzzbgHj4QCRmBy3F7x15fmOuhdPuu6Qn1W5NUAN8hZbKphngZLRf2v+
- Lktk8GP6JuH/X5vgy2IqfXdW60jgU5+2W5O6XZGN4iJdfYHgDZHLrlSObYPR/R2oghNQ
- jGfflKIemayZlIcKaTuphpWTNf08KpqrqeQ7GPgISTZVzOZ20SURqw6PzPeNwKmzza0B
- Py425FYjDSsdHu5K3aSxP82F9+V6TQXQ7WcjKW5a6C3EvL3opsdoZE9BzZv9et43WlNy
- eJqFvlfO5JU0Z83hC2qoR6X3z2uaaHktOvXMNsQ/4XzrhiouFGSMCkEucjpAe+KzGigY
- 6tzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729115092; x=1729719892;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WX2mI6ppfQWfDYmTu1E1XXHsE0s/s0kydxM7yOP659k=;
- b=o3vjjaO2iHiMU4GsNwtpLdERx/kBnfA+r2WRlg2gN7J1FPiiio00LP6pwoYhOU5D72
- 3kLfB5ZAsBWGRQuaVdh+6IrHU5ZUBh+4Tilxbr724H0YzxU9CnKxuoMZnfDlaN7p/gSQ
- CXlWZATsrPyvih3etKL5PPIaTgmIa/NlpS9x4T7Uju4Yd+D8Btucng1cURe3nHI+4iS3
- C5oGWGJMlC3GG056GtkIq50NfsOiwU3SKutcgjJ/SBGPymfNvSfEYDnuT1Hel8Bm6t1l
- QBb6Q/wqtzglIx1KI8XfA9yuQU4uB8AFHafjbc8sEaa96evcdIJ4qvPci2QMzDEnlD6q
- Fw8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMLX8QTcF1hSsYCGmNv+/9QBZwMsjxlCdTAFCly5dgTvY1M5MossiA/LWwlfAd4FJprC5dwTEFCA==@nongnu.org
-X-Gm-Message-State: AOJu0YwHNSN8XOCW+zEiYiLewJ28sXzIJRSye/6UBAv1j3gKKc6P6JMo
- ZuwXomVJdwhem/peMaG+kvCF8ZySpjpeYmiFgylTezPQ2wmvt2H5j6w5+g==
-X-Google-Smtp-Source: AGHT+IExdsBlJGzb/wjO4RrxEqGRY4QCsHpirZGbvonS64fCqUY2yfpzt/Xjdrk2YYVNNtgt5fsNSA==
-X-Received: by 2002:a05:600c:1c07:b0:431:555d:e184 with SMTP id
- 5b1f17b1804b1-431555de292mr25738435e9.25.1729115091784; 
- Wed, 16 Oct 2024 14:44:51 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-191-025-143.77.191.pool.telefonica.de.
- [77.191.25.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43158c50f85sm5564815e9.43.2024.10.16.14.44.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Oct 2024 14:44:51 -0700 (PDT)
-Date: Wed, 16 Oct 2024 21:44:49 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/4] hw/net/lan9118: Extract lan9118_phy
-In-Reply-To: <CAFEAcA8cEFprRy-9AbPsGLU4p1DmVepmWCsgY1LkKh26tHo6qw@mail.gmail.com>
-References: <20241005205748.29203-1-shentey@gmail.com>
- <20241005205748.29203-2-shentey@gmail.com>
- <CAFEAcA_2EU8Q+=Zm7pKJpO42=nAeGf9jpCsoM8ped1ngw66gKw@mail.gmail.com>
- <E3D8FB20-605D-4E29-A430-DD3C4B01102D@gmail.com>
- <CAFEAcA8cEFprRy-9AbPsGLU4p1DmVepmWCsgY1LkKh26tHo6qw@mail.gmail.com>
-Message-ID: <F8F2E53B-B41E-4B16-AD0A-4725C0EC3F11@gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1t1FAB-0000ca-SO
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 21:18:51 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1t1FA9-0000GF-A6
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 21:18:51 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cx74vnZRBneM4hAA--.48669S3;
+ Thu, 17 Oct 2024 09:18:32 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxD9bjZRBnhOctAA--.34474S3;
+ Thu, 17 Oct 2024 09:18:29 +0800 (CST)
+Subject: Re: [PATCH] linux-headers: loongarch: add kvm_para.h and unistd_64.h
+To: gaosong <gaosong@loongson.cn>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20240929072240.251301-1-maobibo@loongson.cn>
+ <6d4d65ad-9b35-ea5b-ae3d-0e1234477b66@loongson.cn>
+ <88855d52-6efa-3fff-cded-a58f6b6f8408@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <ed1de5ad-7c1f-3276-ec8d-cf409fb0974b@loongson.cn>
+Date: Thu, 17 Oct 2024 09:18:08 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <88855d52-6efa-3fff-cded-a58f6b6f8408@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxD9bjZRBnhOctAA--.34474S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tF18Gw1rKryfKF1Uur13WrX_yoW8WFWfp3
+ 9ayF18G3sxJ3ZYyr12g3W7GrW5tFZ8G3Z2v3W8KF92qrWqqw1IgrZ7urn0grWqqayrJFyj
+ qF4fJ34UuFnxZrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.75,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,50 +87,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 15=2E Oktober 2024 09:27:40 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->On Mon, 14 Oct 2024 at 19:50, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
-e:
+On 2024/10/16 下午4:41, gaosong wrote:
+> 在 2024/10/16 下午4:13, maobibo 写道:
+>> ping.
 >>
+>> @Song
 >>
+>> Could you give some comments since it is LoongArch specific?
 >>
->> Am 14=2E Oktober 2024 12:47:52 UTC schrieb Peter Maydell <peter=2Emayde=
-ll@linaro=2Eorg>:
->> >> +typedef struct Lan9118PhyState {
->> >> +    uint32_t status;
->> >> +    uint32_t control;
->> >> +    uint32_t advertise;
->> >> +    uint32_t ints;
->> >> +    uint32_t int_mask;
->> >> +    IRQState irq;
->> >> +    bool link_down;
->> >> +} Lan9118PhyState;
->> >
->> >This takes state that was in a QOM object, and moves it
->> >into something that's kind of a device but not a QOM
->> >object=2E I think we should avoid that, because at some
->> >point somebody's going to have to QOMify this=2E
->> >
->> >Making this a QOM device is a bit awkward for migration
->> >compatibility, unfortunately=2E
+>> Regards
+>> Bibo Mao
 >>
->> Do we care about migration compatibility here? Or is it
->> sufficient to check the version? In the latter case I could
->> QOMify it=2E
->
->
->Doing a quick grep it looks like the lan9118 is only
->used in a set of Arm boards and none of them are ones where
->we care about migration across versions=2E So I think we're
->ok to break compat with a version-bump=2E We should mention
->the affected boards in the commit message=2E
+>> On 2024/9/29 下午3:22, Bibo Mao wrote:
+>>> KVM LBT supports on LoongArch requires the linux-header kvm_para.h,
+>>> also unistd_64.h is required by unistd.h on LoongArch since 6.11
+>>>
+>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>> ---
+>>>   scripts/update-linux-headers.sh | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+> Acked-by: Song Gao <gaosong@loongson.cn>
+> 
+> Could you update the linux-headers togather?
+Sure, will do in next version.
 
-V2 sent: <https://lore=2Ekernel=2Eorg/qemu-devel/20241016212407=2E139390-1=
--shentey@gmail=2Ecom/>
+Regards
+Bibo Mao
+> 
+> the series[1]  need update kvm.h.
+> 
+> [1]: https://patchew.org/QEMU/20240929070405.235200-1-maobibo@loongson.cn/
+> 
+> Thanks.
+> Song Gao
+>>> diff --git a/scripts/update-linux-headers.sh 
+>>> b/scripts/update-linux-headers.sh
+>>> index c34ac6454e..3c411f0318 100755
+>>> --- a/scripts/update-linux-headers.sh
+>>> +++ b/scripts/update-linux-headers.sh
+>>> @@ -186,6 +186,10 @@ EOF
+>>>       if [ $arch = riscv ]; then
+>>>           cp "$hdrdir/include/asm/ptrace.h" 
+>>> "$output/linux-headers/asm-riscv/"
+>>>       fi
+>>> +    if [ $arch = loongarch ]; then
+>>> +        cp "$hdrdir/include/asm/kvm_para.h" 
+>>> "$output/linux-headers/asm-loongarch/"
+>>> +        cp "$hdrdir/include/asm/unistd_64.h" 
+>>> "$output/linux-headers/asm-loongarch/"
+>>> +    fi
+>>>   done
+>>>   arch=
+>>>
+>>> base-commit: 3b14a767eaca3df5534a162851f04787b363670e
+>>>
+> 
 
-Best regards,
-Bernhard
-
->
->-- PMM
 
