@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B09D2F7EF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6893D2F7EF
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1KUB-0000Y9-BT; Thu, 17 Oct 2024 02:59:51 -0400
+	id 1t1KWY-0001J5-1w; Thu, 17 Oct 2024 03:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1KU8-0000Xe-TL
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:59:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1KU7-000279-B8
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:59:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729148386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q/i443zsBKNEHSCUusupLqTYR0Vj5FPMqVuN02srCug=;
- b=g2AkjO+dnpi2fU5tYy/mW6MDRy8pFXDHPqkaWcq4PxhdVZ5+R0362w6Zc6Lm72aRWBO7QD
- ftfqy1tOVmptUDC5B4yTWmrl8pw2aAlbaNBVwyuLhLaOlVZkgnUVqttjFL4VF4437QZzH5
- vv/LMjLHWdvsg/4RxrMvNjNpQ7oGzvA=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-PUVYtZvSNlaF8UeXoOxp5g-1; Thu, 17 Oct 2024 02:59:44 -0400
-X-MC-Unique: PUVYtZvSNlaF8UeXoOxp5g-1
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-7174c6cbdbaso693121b3a.2
- for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 23:59:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1t1KWV-0001Ik-DJ
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:02:15 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1t1KWS-00031s-Nz
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:02:14 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-287b8444ff3so237611fac.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 00:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729148531; x=1729753331;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8PgYFe1c0KnR4XqTrPH+isVedqVQdIaxZCPFvlhu5KM=;
+ b=N0jz7JcGHC+GT7LST5iBYdEkWiVfQh6Oz5/+RRDZXO42r7KT/nTk7I+c//Bt/0aB46
+ mAhD/8SGISyKtxgxSAmE5EcoU4ZN0gpml01rfRCn5Lnj6Ciapmnsy2SSgxmkts/qliyu
+ kq6XmVvIE69dwjt69Nr94JE2McaEKoPHudhdzQrYRX1xmKVNrIRrXoLVeWDY1HnFaq+I
+ jVtcNSu6zGe+zFTQ+mqnmanKAGFFWwqmkQd55t1WtkYBF9XvPh0YSqtmMllv89YLckaF
+ l+UwefL0mPgaSbIpc4EGGKk6N4+YWy8YTRgPJEHED3DvZuQOwG7NNtDna92/4hhprOf/
+ ky/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729148383; x=1729753183;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q/i443zsBKNEHSCUusupLqTYR0Vj5FPMqVuN02srCug=;
- b=YbLJc3go2Xq9PUPV3/lJBuEvcIaztmmKuDALzsUSnx+VBHKYhPH7e4leZ1hQ12v7Vz
- d1VnJSgaQ8gX2yjbTchCQcE+Jh/gPQBWZE+XZdrgWbJ5TsoWCskWy5SppgL3HhY3bxxB
- ahH+PBLORk1K0bUJxaQlgi5aglCBLxH/7/ulO/DQ+3nLZZHZ3WK6sIDm9UtvPT4LEdT+
- xKWQN1DBfCoKRZwQ3EEX5be1QLSgsk5DySApri5mGC7NLmf551HbZ8NiddCzY2MxTGdT
- UFFeHqwemKgvpCh/oZm2gqh//2C5QfPw/CQgaL0IYjRzS9pryQ9w2v75xAZiw3aCI3Mh
- m6qg==
+ d=1e100.net; s=20230601; t=1729148531; x=1729753331;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8PgYFe1c0KnR4XqTrPH+isVedqVQdIaxZCPFvlhu5KM=;
+ b=JMTAo3qwWLWxKY2x7WBMDrUgQ9CNuX5+u1e3tVz20Fuixtby+IJ/wUvATgRWQH8z7H
+ Zy426M0/dgrqDpjfCaYTLax48jnNETP5qVmVwyEY2VkL7hDWEKg/51bFYzISSrk3NxoK
+ Lz8WKST86VZKedRdS4Ak7FGJC7if7rpTUK2cRxm9TOXs/q770WetMqSt73mAVNa96ztn
+ JND4Lfc5VsKISrYeRj2n9ITCEGKCuP9We2aEao7+CJvycTqFWE/wuDwLqIvWw2AxfCMO
+ a5QTpK0dlIgoDqMMXFJKyrQcnbLkjANMzQqOZbar35aQvrz6JENfD0e0WYfnOSZLy69b
+ DwQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjBa/N0BXsW2l/q/gbzKY2No4cvkJ3i3zsaRXvfphsM5DTErTlTaOexsKSIku6k3fhTLBU+6vVld7u@nongnu.org
-X-Gm-Message-State: AOJu0YyIuw4tdRdSIV1meORVEoH+yxfp+SLKiiO5ApUvpLR0xIaOIPxF
- hqpNqdrHxlzruByxtGQJcM/BqfrxtSXbyepHnMwwoFcWlenJB9EwnMhGzgeAl/PNYHsYK9mwCHc
- /JZudtOpL692+VaOgnwh/mfzE8Dc+Fw4vZgWTwjzw7TMukgAgtjyYJ1o5BYCOMPXOtZenacHxFN
- oZuVMsVx4nNzvGPSAkbU23EFPPEtYM8gIYOxcsY/Uj
-X-Received: by 2002:a05:6a00:10cf:b0:71e:7294:bbc4 with SMTP id
- d2e1a72fcca58-71e7294be2amr13035429b3a.13.1729148382976; 
- Wed, 16 Oct 2024 23:59:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbCBXQ/YOubV6/a2hxvZ5Fau+X5ogdDodT3ogVAiHXl0s46nE4AXF0L1knH0+XHEINuTRcVqRT7Ecli6lwg/Q=
-X-Received: by 2002:a05:6a00:10cf:b0:71e:7294:bbc4 with SMTP id
- d2e1a72fcca58-71e7294be2amr13035417b3a.13.1729148382561; Wed, 16 Oct 2024
- 23:59:42 -0700 (PDT)
+ AJvYcCUp1m89Y+NNhfX/eObg9GsUFsCKZcLJ/pps3TA4C/TnQ0e1TwxMPK63auWJbUcLM/O71q6s1+c1iIVC@nongnu.org
+X-Gm-Message-State: AOJu0YyokYpHAofqYBGRZcDXznfIDX63qwC6+4marP0rpRfd/u0UxiQP
+ qIGfGnSWvX4LmU3J6FytmBPgf+lRVyJBC3ZYkipetiF1DdmIr49R8oVbyfpIANCiVP5qnYmJ68U
+ HkmctWat43I9beQpEMc/nh98A2AKN9dVonxtQog==
+X-Google-Smtp-Source: AGHT+IGek6BHHh+W+Tq6yFjy3EdDC6IACuBx704QOOIrr9b7ne/czxbvKYX/EZhrdyTtUgWcwDmGETv6F8xXVDS4UXg=
+X-Received: by 2002:a05:6870:9a9a:b0:277:df58:1647 with SMTP id
+ 586e51a60fabf-2886e01a9f1mr15421070fac.35.1729148530602; Thu, 17 Oct 2024
+ 00:02:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
-In-Reply-To: <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Thu, 17 Oct 2024 14:59:31 +0800
-Message-ID: <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+References: <20241016160712.962407-1-thuth@redhat.com>
+ <Zw_oM-RStF4QhWik@redhat.com>
+ <32d9779e-d531-4451-af2c-c76e86f5b921@redhat.com>
+In-Reply-To: <32d9779e-d531-4451-af2c-c76e86f5b921@redhat.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Thu, 17 Oct 2024 15:01:54 +0800
+Message-ID: <CAK9dgmbvs9DkUhF=zYfTHpatr=1CjDVR1TQ3kz8b+5tAFtBJww@mail.gmail.com>
+Subject: Re: [PATCH] migration/dirtyrate: Silence warning about strcpy() on
+ OpenBSD
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ee4b9e0624a6c379"
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,114 +94,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 14, 2024 at 11:16=E2=80=AFPM Laurent Vivier <lvivier@redhat.com=
-> wrote:
->
-> On 14/10/2024 10:30, Laurent Vivier wrote:
-> > Hi Akihiko,
+--000000000000ee4b9e0624a6c379
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Oct 17, 2024 at 1:40=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
+
+> On 16/10/2024 18.22, Daniel P. Berrang=C3=A9 wrote:
+> > On Wed, Oct 16, 2024 at 06:07:12PM +0200, Thomas Huth wrote:
+> >> The linker on OpenBSD complains:
+> >>
+> >>   ld: warning: dirtyrate.c:447 (../src/migration/dirtyrate.c:447)(...)=
+:
+> >>   warning: strcpy() is almost always misused, please use strlcpy()
 > >
-> > On 04/06/2024 09:37, Jason Wang wrote:
-> >> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Is that the only place it complains ?  We use 'strcpy' in almost
+> > 100 places across the codebase....
+>
+> There are only a fistful of other warnings. I guess most of the spots are
+> turned into inlined code by the compiler, so the linker never sees those
+> other occurrences.
+>
+> >> It's currently not a real problem in this case since both arrays
+> >> have the same size (256 bytes). But just in case somebody changes
+> >> the size of the source array in the future, let's better play safe
+> >> and use g_strlcpy() here instead.
 > >>
-> >> Multiqueue usage is not negotiated yet when realizing. If more than
-> >> one queue is added and the guest never requests to enable multiqueue,
-> >> the extra queues will not be deleted when unrealizing and leak.
-> >>
-> >> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest do=
-esn't support
-> >> multiqueue")
-> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> Signed-off-by: Jason Wang <jasowang@redhat.com>
+> >> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > >> ---
-> >>   hw/net/virtio-net.c | 4 +---
-> >>   1 file changed, 1 insertion(+), 3 deletions(-)
+> >>   migration/dirtyrate.c | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
 > >>
-> >> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> >> index 3cee2ef3ac..a8db8bfd9c 100644
-> >> --- a/hw/net/virtio-net.c
-> >> +++ b/hw/net/virtio-net.c
-> >> @@ -3743,9 +3743,7 @@ static void virtio_net_device_realize(DeviceStat=
-e *dev, Error **errp)
-> >>       n->net_conf.tx_queue_size =3D MIN(virtio_net_max_tx_queue_size(n=
-),
-> >>                                       n->net_conf.tx_queue_size);
-> >> -    for (i =3D 0; i < n->max_queue_pairs; i++) {
-> >> -        virtio_net_add_queue(n, i);
-> >> -    }
-> >> +    virtio_net_add_queue(n, 0);
-> >>       n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl=
-);
-> >>       qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+> >> diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+> >> index 233acb0855..090c76e934 100644
+> >> --- a/migration/dirtyrate.c
+> >> +++ b/migration/dirtyrate.c
+> >> @@ -444,7 +444,7 @@ static void get_ramblock_dirty_info(RAMBlock *bloc=
+k,
+> >>       info->ramblock_pages =3D qemu_ram_get_used_length(block) >>
+> >>                              qemu_target_page_bits();
+> >>       info->ramblock_addr =3D qemu_ram_get_host_addr(block);
+> >> -    strcpy(info->idstr, qemu_ram_get_idstr(block));
+> >> +    g_strlcpy(info->idstr, qemu_ram_get_idstr(block),
+> sizeof(info->idstr));
+> >>   }
 > >
-> > This change breaks virtio net migration when multiqueue is enabled.
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > >
-> > I think this is because virtqueues are half initialized after migration=
- : they are
-> > initialized on guest side (kernel is using them) but not on QEMU side (=
-realized has only
-> > initialized one). After migration, they are not initialized by the call=
- to
-> > virtio_net_set_multiqueue() from virtio_net_set_features() because virt=
-io_get_num_queues()
-> > reports already n->max_queue_pairs as this value is coming from the sou=
-rce guest memory.
 > >
-> > I don't think we have a way to half-initialize a virtqueue (to initiali=
-ze them only on
-> > QEMU side as they are already initialized on kernel side).
+> > Is it worth also adding
 > >
-> > I think this change should be reverted to fix the migration issue.
+> >    G_STATIC_ASSERT(sizeof((struct RamblockDirtyInfo){}.idstr) =3D=3D
+> >                    sizeof((struct RAMBlock){}.idstr));
 > >
+> > at the top of this file, since both of these fields are expected to
+> > be the same size by this code, to avoid truncation.
 >
-> Moreover, if I look in the code of virtio_load() and virtio_add_queue() w=
-e can guess it's
-> not correct to migrate a virtqueue that is not initialized on the destina=
-tion side because
-> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems' canno=
-t be initialized
-> by virtio_load() and neither by virtio_add_queue() after virtio_load() as=
- fields like
-> 'vring.num' are already initialized by virtio_load().
+> ... or alternatively check the return value of g_strlcpy() ? ... but that
+> wouldn't work if pstrcpy() if we switch to that function instead.
 >
-> For instance, in virtio_load() we set:
+> I don't mind either way - Peter, Fabiano, Hyman, what's your opinion here=
+?
 >
->      for (i =3D 0; i < num; i++) {
->          vdev->vq[i].vring.num =3D qemu_get_be32(f);
+>   Thomas
 >
-> and in virtio_add_queue() we search for the firt available queue to add w=
-ith:
 >
->      for (i =3D 0; i < VIRTIO_QUEUE_MAX; i++) {
->          if (vdev->vq[i].vring.num =3D=3D 0)
->              break;
->      }
->
-> So virtio_add_queue() cannot be used to set:
->
->      vdev->vq[i].handle_output =3D handle_output;
->      vdev->vq[i].used_elems =3D g_new0(VirtQueueElement, queue_size);
->
-> Moreover it would overwrite fields already set by virtio_load():
->
->      vdev->vq[i].vring.num =3D queue_size;
->      vdev->vq[i].vring.align =3D VIRTIO_PCI_VRING_ALIGN;
->
-> It also explains why virtio_net_change_num_queue_pairs() (indirectly call=
-ed by
-> virtio_net_set_features()) doesn't update the queue pair numbers: vring.n=
-um is already set
-> so it thinks there is no more queues to add.
->
-> Thanks,
-> LAurent
->
+Since RamblockDirtyInfo is only used in dirtyrate.c,  I'm inclined to just
+check the return value of g_strlcpy to avoid DoS attack, and fix this
+warning case by case.
 
-I agree.
+Thanks,
 
-Laurent, would you like to send a patch to revert this?
+Yong
 
-Thanks
+--=20
+Best regards
 
+--000000000000ee4b9e0624a6c379
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 17, 20=
+24 at 1:40=E2=80=AFPM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">t=
+huth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
+lid;border-left-color:rgb(204,204,204);padding-left:1ex">On 16/10/2024 18.2=
+2, Daniel P. Berrang=C3=A9 wrote:<br>
+&gt; On Wed, Oct 16, 2024 at 06:07:12PM +0200, Thomas Huth wrote:<br>
+&gt;&gt; The linker on OpenBSD complains:<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0ld: warning: dirtyrate.c:447 (../src/migration/dirtyra=
+te.c:447)(...):<br>
+&gt;&gt;=C2=A0 =C2=A0warning: strcpy() is almost always misused, please use=
+ strlcpy()<br>
+&gt; <br>
+&gt; Is that the only place it complains ?=C2=A0 We use &#39;strcpy&#39; in=
+ almost<br>
+&gt; 100 places across the codebase....<br>
+<br>
+There are only a fistful of other warnings. I guess most of the spots are <=
+br>
+turned into inlined code by the compiler, so the linker never sees those <b=
+r>
+other occurrences.<br>
+<br>
+&gt;&gt; It&#39;s currently not a real problem in this case since both arra=
+ys<br>
+&gt;&gt; have the same size (256 bytes). But just in case somebody changes<=
+br>
+&gt;&gt; the size of the source array in the future, let&#39;s better play =
+safe<br>
+&gt;&gt; and use g_strlcpy() here instead.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com"=
+ target=3D"_blank">thuth@redhat.com</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;=C2=A0 =C2=A0migration/dirtyrate.c | 2 +-<br>
+&gt;&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c<br>
+&gt;&gt; index 233acb0855..090c76e934 100644<br>
+&gt;&gt; --- a/migration/dirtyrate.c<br>
+&gt;&gt; +++ b/migration/dirtyrate.c<br>
+&gt;&gt; @@ -444,7 +444,7 @@ static void get_ramblock_dirty_info(RAMBlock *=
+block,<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0info-&gt;ramblock_pages =3D qemu_ram_get=
+_used_length(block) &gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_target_page_bits();<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0info-&gt;ramblock_addr =3D qemu_ram_get_=
+host_addr(block);<br>
+&gt;&gt; -=C2=A0 =C2=A0 strcpy(info-&gt;idstr, qemu_ram_get_idstr(block));<=
+br>
+&gt;&gt; +=C2=A0 =C2=A0 g_strlcpy(info-&gt;idstr, qemu_ram_get_idstr(block)=
+, sizeof(info-&gt;idstr));<br>
+&gt;&gt;=C2=A0 =C2=A0}<br>
+&gt; <br>
+&gt; Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@re=
+dhat.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+&gt; <br>
+&gt; <br>
+&gt; Is it worth also adding<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 G_STATIC_ASSERT(sizeof((struct RamblockDirtyInfo){}.idstr=
+) =3D=3D<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s=
+izeof((struct RAMBlock){}.idstr));<br>
+&gt; <br>
+&gt; at the top of this file, since both of these fields are expected to<br=
 >
+&gt; be the same size by this code, to avoid truncation.<br>
+<br>
+... or alternatively check the return value of g_strlcpy() ? ... but that <=
+br>
+wouldn&#39;t work if pstrcpy() if we switch to that function instead.<br>
+<br>
+I don&#39;t mind either way - Peter, Fabiano, Hyman, what&#39;s your opinio=
+n here?<br>
+<br>
+=C2=A0 Thomas<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><div class=3D"gmail_default"><fon=
+t face=3D"comic sans ms, sans-serif">Since=C2=A0RamblockDirtyInfo is only u=
+sed in dirtyrate.c,=C2=A0</font><span style=3D"font-family:Arial,Helvetica,=
+sans-serif">=C2=A0I</span><font face=3D"comic sans ms, sans-serif">&#39;m i=
+nclined to just</font></div><div class=3D"gmail_default"><font face=3D"comi=
+c sans ms, sans-serif">check the return value of g_strlcpy to=C2=A0avoid=C2=
+=A0DoS attack, and fix=C2=A0this</font></div><div class=3D"gmail_default"><=
+font face=3D"comic sans ms, sans-serif">warning=C2=A0</font><span style=3D"=
+font-family:&quot;comic sans ms&quot;,sans-serif">case by case.</span></div=
+></div><div class=3D"gmail_default"><span style=3D"font-family:&quot;comic =
+sans ms&quot;,sans-serif"><br></span></div><div class=3D"gmail_default"><sp=
+an style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Thanks,</span=
+></div><div class=3D"gmail_default"><span style=3D"font-family:&quot;comic =
+sans ms&quot;,sans-serif"><br></span></div><div class=3D"gmail_default"><sp=
+an style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yong</span></=
+div><div><br></div><span class=3D"gmail_signature_prefix">-- </span><br><di=
+v dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><font face=3D"comi=
+c sans ms, sans-serif">Best regards</font></div></div></div>
 
+--000000000000ee4b9e0624a6c379--
 
