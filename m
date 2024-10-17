@@ -4,126 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73E9D21274
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 10:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37416D21275
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 10:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1NkY-0004lr-9L; Thu, 17 Oct 2024 06:28:58 -0400
+	id 1t1NkA-0004hr-EN; Thu, 17 Oct 2024 06:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1NkW-0004kx-Ac
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:28:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t1Nk1-0004fB-Hv
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:28:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1NkU-0005Lg-Fv
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:28:56 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t1Nk0-0005K0-0Q
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:28:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729160933;
+ s=mimecast20190719; t=1729160901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eZPT49uwzro4d7hZVMTy2uAd9TlkB0WrEjAdjNCx7Oc=;
- b=J4vMK1Uy8CN5VY7LpdSmTBXqOMt52osQlfcbEQehzajFXjUB+zG1y/YEfevybz3kdXGJYi
- 0nlAUwGTV5S6ZNRqQizNBf/1H3FV2bxY4iXt80aHCKvMG+S3cEk6vvLirBB6ZOyZxjmVF+
- 039d4WWKEozXUfcxqsi9CM2HIALTXI8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BwsQu4OObXG8zFgQjaI3N/fpBdXK8yP9KVO21U2+Jbc=;
+ b=VT+KNxwhXh65KS2B+hEbp3LSYEisvM4YMRHaVvJIIbdb0EwYo9cKqNzhNyo7rGp4idoWNL
+ efP61GtP2ec+1NS+LjLfUsOIRW0BBRlJmrZ0lzH4u6fdeTRmr2iaKVr0wED3u+j/MOeSUz
+ uvcV1b/Lzjsp0W3FNsO9naqf4XAwk3k=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-OIgZOvWmPQCYXpYpWZ0nig-1; Thu, 17 Oct 2024 06:28:51 -0400
-X-MC-Unique: OIgZOvWmPQCYXpYpWZ0nig-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43154a0886bso4959445e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 03:28:51 -0700 (PDT)
+ us-mta-150-kYODo_8FM3-gLlBQv5SjiA-1; Thu, 17 Oct 2024 06:28:20 -0400
+X-MC-Unique: kYODo_8FM3-gLlBQv5SjiA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43159603c92so4155715e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 03:28:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729160930; x=1729765730;
+ d=1e100.net; s=20230601; t=1729160899; x=1729765699;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eZPT49uwzro4d7hZVMTy2uAd9TlkB0WrEjAdjNCx7Oc=;
- b=sBUtgzIPMCrX1F6nkTMh0FZC+TcVoYx13BbgHFQLtfLEcynB6jOZhkqNbjHwHsL3mh
- E/p7Rfy7UJidy6CJv7ITJnleYMAvtwgcYCbjX8EJQsx3Rzb55cQBMBZojN0wiFwrESyC
- DbJoom4ZuIzCOSFv4ixGO7H44J54TbKS36+OezJCTq86N+w0gcbhu4eRA7+C5yZ2PBwy
- +FA2gCL0zQ/nVj9m1Gdss65x38Vq6cF8aJ+w343bQvSI3WY3E11GseHFUoT0qwcySk8A
- +3idXn8vcjj90pvsA8sJN3NjrGQn9HXuow6duc+oFd9VGWru0+sUVHCur5eDVHqBti2l
- F9HA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfN+vXJVNtIpNCsBRhwuhzJpLubP0lQwtqUtbwwt24rihZB/9TEX6FVFNPrEvnoaKwvScPUukW83ID@nongnu.org
-X-Gm-Message-State: AOJu0YwnkVEFUNfYr6bkms8SglAW0RyOtTZf/7/aB2YfmZY/PHunImOG
- /uSV+WUEmq4JYlxL+O3t02JPqs3aCUWIFduqfXmR83f57Mm3Dx0Ar23PI9Ddpnvd+kFOgVpmSbk
- K/W3VROXlQfTMS1wLfKkdm0tz4v9Y11RzEgZvthezFFRs8gmnlQV3
-X-Received: by 2002:a05:600c:5492:b0:431:52a3:d9d9 with SMTP id
- 5b1f17b1804b1-43152a3dbdamr38085315e9.0.1729160930580; 
- Thu, 17 Oct 2024 03:28:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGC/D/5JnrQJu3ZnNnv+mnW3/gVtWcjW6Ub5OFQkdahljKFe/jKWA3K3KOXBEONJz6fyoqMhQ==
-X-Received: by 2002:a05:600c:5492:b0:431:52a3:d9d9 with SMTP id
- 5b1f17b1804b1-43152a3dbdamr38085135e9.0.1729160930022; 
- Thu, 17 Oct 2024 03:28:50 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43158c358c2sm21961455e9.6.2024.10.17.03.28.49
+ bh=BwsQu4OObXG8zFgQjaI3N/fpBdXK8yP9KVO21U2+Jbc=;
+ b=w6Xbxz9oFQouwcU3IHYsD3kgY3dRDMtQY5VWVIdG1R/dN5LTnImkQLaVmU59YN7LKI
+ eLygqfjMSn2OLHtu1da34CMVg24iG/aXkaA/TT4pMq6GQt9SAte04wDPxUTAX2FSP3VS
+ 3DvNSG4O6txpEdXbOSk6LxjKkKWoRFstoOhzBt5Mav6fAgi3Qgas3wffwIpnGOlzEf0L
+ OPjAVmdEDZ2JPVbSvOR7q2FPoVw+NNAf86T+cp2SL/mjb4X/C1YDdB5n6ixafQdO8H8r
+ Ns5SVmuAI9a+OCFmTowh4hcqnEeqwWlyPSe2WxXLKrMoitpM0K7b5YB+4cS6cygK8Sq/
+ NyZw==
+X-Gm-Message-State: AOJu0YzrcpoSxy7cJDlwBuGr6COGeumbnjNffpmir6ZFqEafQ0TFo/wg
+ /+wGDa8LDSFV9J/4y8yiQIo5W7yP9i+79f6GnLEu5t1kwXVDtbke+PUeYRsl9rOa+0Pe/Geya6i
+ +q2DbPk5f/BOIcSs3nudG1z1xPkbn8XKV3u0Z7dCR0SrE5MeVvG8s
+X-Received: by 2002:a05:600c:510e:b0:42e:8d0d:bca5 with SMTP id
+ 5b1f17b1804b1-431255d4dafmr141307115e9.2.1729160899349; 
+ Thu, 17 Oct 2024 03:28:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKgpDrU+sGDjK8Pis0QpsdnW8V0j1vOh9wWhCAfWujIPI53/X9XOWqjh4+tyssU/FQM2cyEw==
+X-Received: by 2002:a05:600c:510e:b0:42e:8d0d:bca5 with SMTP id
+ 5b1f17b1804b1-431255d4dafmr141306965e9.2.1729160898915; 
+ Thu, 17 Oct 2024 03:28:18 -0700 (PDT)
+Received: from [192.168.10.28] ([151.95.144.54])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43158c55fa3sm21622095e9.37.2024.10.17.03.28.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 03:28:49 -0700 (PDT)
-Message-ID: <d00d9e29-75a9-4355-98e0-b7c65e184691@redhat.com>
-Date: Thu, 17 Oct 2024 12:28:48 +0200
+ Thu, 17 Oct 2024 03:28:18 -0700 (PDT)
+Message-ID: <63828708-4c76-4549-bf83-647d3a743f20@redhat.com>
+Date: Thu, 17 Oct 2024 12:28:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/19] pc-bios/s390-ccw: Remove panics from SCSI IPL
- path
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com
-References: <20241017014748.829029-1-jrossi@linux.ibm.com>
- <20241017014748.829029-10-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241017091401.783102-1-pbonzini@redhat.com>
+ <CAFEAcA_1mryG9RyeAqfeRQOvqysO=vV3m=012kLmTsT6p-CdZA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241017014748.829029-10-jrossi@linux.ibm.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA_1mryG9RyeAqfeRQOvqysO=vV3m=012kLmTsT6p-CdZA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -132,7 +125,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,263 +141,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/2024 03.47, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 10/17/24 12:00, Peter Maydell wrote:
+> On Thu, 17 Oct 2024 at 10:14, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> 32-bit TSTEQ and TSTNE is subject to the same constraints as
+>> for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
+>> using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
+>>
+>> Adjust the constraint and make tcg_target_const_match use the
+>> same sequence as tgen_cmp2: first check if the constant is a
+>> valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
+>> non-test comparisons, finally check if the constant is a valid
+>> operand for 64-bit non-test comparisons.
+>>
+>> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > 
-> Remove panic-on-error from virtio-scsi IPL specific functions so that error
-> recovery may be possible in the future.
-> 
-> Functions that would previously panic now provide a return code.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/iplb.h          |   2 +
->   pc-bios/s390-ccw/bootmap.c       |  88 +++++++++++++-----
->   pc-bios/s390-ccw/jump2ipl.c      |   1 +
->   pc-bios/s390-ccw/main.c          |   2 +-
->   pc-bios/s390-ccw/virtio-blkdev.c |   4 +-
->   pc-bios/s390-ccw/virtio-scsi.c   | 147 +++++++++++++++++++++----------
->   6 files changed, 172 insertions(+), 72 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-> index 3758698468..639fa34919 100644
-> --- a/pc-bios/s390-ccw/iplb.h
-> +++ b/pc-bios/s390-ccw/iplb.h
-> @@ -94,6 +94,8 @@ struct QemuIplParameters {
->   typedef struct QemuIplParameters QemuIplParameters;
->   
->   extern QemuIplParameters qipl;
-> +extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-> +extern bool have_iplb;
+> Should this cc stable? Does it cause any current problems?
+> (AIUI the x86 target changes in your pending pullreq do
+> trigger this.)
 
-Why do you move these to the header file now here? You don't seem to be 
-using these in this patch? Should it be done in a later patch?
+Yeah, that's a good idea.  It's probably possible to construct x86 code 
+that triggers it (I'm surprised it wasn't found until now).
 
-Also the "extern IplParameterBlock iplb" is already available in this header 
-file, no need to add it again.
-
-...
-> diff --git a/pc-bios/s390-ccw/virtio-scsi.c b/pc-bios/s390-ccw/virtio-scsi.c
-> index 6b4a1caf8a..32fa81a247 100644
-> --- a/pc-bios/s390-ccw/virtio-scsi.c
-> +++ b/pc-bios/s390-ccw/virtio-scsi.c
-> @@ -26,7 +26,7 @@ static uint8_t scsi_inquiry_std_response[256];
->   static ScsiInquiryEvpdPages scsi_inquiry_evpd_pages_response;
->   static ScsiInquiryEvpdBl scsi_inquiry_evpd_bl_response;
->   
-> -static inline void vs_assert(bool term, const char **msgs)
-> +static inline bool vs_assert(bool term, const char **msgs)
->   {
->       if (!term) {
->           int i = 0;
-> @@ -35,11 +35,13 @@ static inline void vs_assert(bool term, const char **msgs)
->           while (msgs[i]) {
->               printf("%s", msgs[i++]);
->           }
-> -        panic(" !\n");
-> +        puts(" !");
->       }
-> +
-> +    return term;
->   }
->   
-> -static void virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
-> +static bool virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
->                                           const char *title)
->   {
->       const char *mr[] = {
-> @@ -56,8 +58,12 @@ static void virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
->           0
->       };
->   
-> -    vs_assert(resp->response == VIRTIO_SCSI_S_OK, mr);
-> -    vs_assert(resp->status == CDB_STATUS_GOOD, ms);
-> +    if (!vs_assert(resp->response == VIRTIO_SCSI_S_OK, mr) ||
-> +                !vs_assert(resp->status == CDB_STATUS_GOOD, ms)) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-
-Could be simplified to:
-
-     return vs_assert(resp->response == VIRTIO_SCSI_S_OK, mr) &&
-            vs_assert(resp->status == CDB_STATUS_GOOD, ms);
-
->   }
->   
-...
-> @@ -110,12 +123,13 @@ static bool scsi_inquiry(VDev *vdev, uint8_t evpd, uint8_t page,
->           { data, data_size, VRING_DESC_F_WRITE },
->       };
->   
-> -    vs_run("inquiry", inquiry, vdev, &cdb, sizeof(cdb), data, data_size);
-> +    int ret = vs_run("inquiry", inquiry,
-> +            vdev, &cdb, sizeof(cdb), data, data_size);
-
-Please indent the second line with the "(" in the previous line.
-
-> -    return virtio_scsi_response_ok(&resp);
-> +    return ret ? ret : virtio_scsi_response_ok(&resp);
->   }
-...
->           if (r->lun_list_len == 0) {
->               printf("no LUNs for target 0x%X\n", target);
->               continue;
-> @@ -283,7 +306,9 @@ int virtio_scsi_read_many(VDev *vdev,
->           data_size = sector_count * virtio_get_block_size() * f;
->           if (!scsi_read_10(vdev, sector * f, sector_count * f, load_addr,
->                             data_size)) {
-> -            virtio_scsi_verify_response(&resp, "virtio-scsi:read_many");
-> +            if (!virtio_scsi_verify_response(&resp, "virtio-scsi:read_many")) {
-> +                return 1;
-> +            }
->           }
->           load_addr += data_size;
->           sector += sector_count;
-> @@ -352,11 +377,16 @@ static int virtio_scsi_setup(VDev *vdev)
->               uint8_t code = resp.sense[0] & SCSI_SENSE_CODE_MASK;
->               uint8_t sense_key = resp.sense[2] & SCSI_SENSE_KEY_MASK;
->   
-> -            IPL_assert(resp.sense_len != 0, "virtio-scsi:setup: no SENSE data");
-> +            if (resp.sense_len == 0) {
-> +                puts("virtio-scsi: setup: no SENSE data");
-> +                return -EINVAL;
-> +            }
->   
-> -            IPL_assert(retry_test_unit_ready && code == 0x70 &&
-> -                       sense_key == SCSI_SENSE_KEY_UNIT_ATTENTION,
-> -                       "virtio-scsi:setup: cannot retry");
-> +            if (!retry_test_unit_ready || code != 0x70 ||
-> +                       sense_key != SCSI_SENSE_KEY_UNIT_ATTENTION) {
-> +                puts("virtio-scsi:setup: cannot retry");
-> +                return -EIO;
-> +            }
->   
->               /* retry on CHECK_CONDITION/UNIT_ATTENTION as it
->                * may not designate a real error, but it may be
-> @@ -367,16 +397,22 @@ static int virtio_scsi_setup(VDev *vdev)
->               continue;
->           }
->   
-> -        virtio_scsi_verify_response(&resp, "virtio-scsi:setup");
-> +        if (!virtio_scsi_verify_response(&resp, "virtio-scsi:setup")) {
-> +            return 1;
-
-Phew, there a bunch of places now that return "1" for e.g. response OK, but 
-this one here is now using "1" for error? ... that's quite confusing. Could 
-we maybe standardize on using negative values for error codes? (and 1/0 or 
-true/false only for functions that return OK/not OK ?), i.e. use a negative 
-error code here (returning -1 is also fine for me)?
-
-> +        }
->       }
->   
->       /* read and cache SCSI INQUIRY response */
-> -    if (!scsi_inquiry(vdev,
-> +    ret = scsi_inquiry(vdev,
->                         SCSI_INQUIRY_STANDARD,
->                         SCSI_INQUIRY_STANDARD_NONE,
->                         scsi_inquiry_std_response,
-> -                      sizeof(scsi_inquiry_std_response))) {
-> -        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:inquiry");
-> +                      sizeof(scsi_inquiry_std_response));
-> +    if (ret < 1) {
-> +        if (ret != 0 || !virtio_scsi_verify_response(&resp,
-> +                "virtio-scsi:setup:inquiry")) {
-> +            return 1;
-
-dito, use a negative error code here?
-
-> +        }
->       }
->   
->       if (virtio_scsi_inquiry_response_is_cdrom(scsi_inquiry_std_response)) {
-> @@ -385,12 +421,16 @@ static int virtio_scsi_setup(VDev *vdev)
->           vdev->scsi_block_size = VIRTIO_ISO_BLOCK_SIZE;
->       }
->   
-> -    if (!scsi_inquiry(vdev,
-> +    ret = scsi_inquiry(vdev,
->                         SCSI_INQUIRY_EVPD,
->                         SCSI_INQUIRY_EVPD_SUPPORTED_PAGES,
->                         evpd,
-> -                      sizeof(*evpd))) {
-> -        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:supported_pages");
-> +                      sizeof(*evpd));
-> +    if (ret < 1) {
-> +        if (ret != 0 || !virtio_scsi_verify_response(&resp,
-> +                "virtio-scsi:setup:supported_pages")) {
-> +            return 1;
-
-dito
-
-> +        }
->       }
->   
->       debug_print_int("EVPD length", evpd->page_length);
-> @@ -402,12 +442,16 @@ static int virtio_scsi_setup(VDev *vdev)
->               continue;
->           }
->   
-> -        if (!scsi_inquiry(vdev,
-> +        ret = scsi_inquiry(vdev,
->                             SCSI_INQUIRY_EVPD,
->                             SCSI_INQUIRY_EVPD_BLOCK_LIMITS,
->                             evpd_bl,
-> -                          sizeof(*evpd_bl))) {
-> -            virtio_scsi_verify_response(&resp, "virtio-scsi:setup:blocklimits");
-> +                          sizeof(*evpd_bl));
-> +        if (ret < 1) {
-> +            if (ret != 0 || !virtio_scsi_verify_response(&resp,
-> +                    "virtio-scsi:setup:blocklimits")) {
-> +                return 1;
-
-dito
-
-> +            }
->           }
->   
->           debug_print_int("max transfer", evpd_bl->max_transfer);
-> @@ -423,8 +467,12 @@ static int virtio_scsi_setup(VDev *vdev)
->       vdev->max_transfer = MIN_NON_ZERO(VIRTIO_SCSI_MAX_SECTORS,
->                                         vdev->max_transfer);
->   
-> -    if (!scsi_read_capacity(vdev, data, data_size)) {
-> -        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:read_capacity");
-> +    ret = scsi_read_capacity(vdev, data, data_size);
-> +    if (ret < 1) {
-> +        if (ret != 0 || !virtio_scsi_verify_response(&resp,
-> +                "virtio-scsi:setup:read_capacity")) {
-> +            return 1;
-
-dito
-
-> +        }
->       }
->       scsi_parse_capacity_report(data, &vdev->scsi_last_block,
->                                  (uint32_t *) &vdev->scsi_block_size);
-> @@ -439,10 +487,15 @@ int virtio_scsi_setup_device(SubChannelId schid)
->       vdev->schid = schid;
->       virtio_setup_ccw(vdev);
->   
-> -    IPL_assert(vdev->config.scsi.sense_size == VIRTIO_SCSI_SENSE_SIZE,
-> -               "Config: sense size mismatch");
-> -    IPL_assert(vdev->config.scsi.cdb_size == VIRTIO_SCSI_CDB_SIZE,
-> -               "Config: CDB size mismatch");
-> +    if (vdev->config.scsi.sense_size != VIRTIO_SCSI_SENSE_SIZE) {
-> +        puts("Config: sense size mismatch");
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (vdev->config.scsi.cdb_size != VIRTIO_SCSI_CDB_SIZE) {
-> +        puts("Config: CDB size mismatch");
-> +        return -EINVAL;
-> +    }
->   
->       puts("Using virtio-scsi.");
->   
-
-  Thomas
+Paolo
 
 
