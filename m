@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40668D3C526
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 17:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B63FD3C526
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 17:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1UXu-0003R6-3B; Thu, 17 Oct 2024 13:44:22 -0400
+	id 1t1UZ8-00049K-64; Thu, 17 Oct 2024 13:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1UXs-0003Qn-8s
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:44:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1UXq-0002Oy-Cd
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729187057;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ah06S2G+f5fluSA2AMIZ2frEtaGnaP8XBwL+xhcL0ho=;
- b=TpOzwQnSkzfvgFo4POaINuJxU2M+DzNTXWf4dkIPB66ov5CseV0292ZPU+Hxo9MivyftvL
- B5ixLbn4SpipReIBEqdj3OibdMZKYO1syHAECQBRY7a4Yd+2nwMVBrluQSZgPkC93zRAPg
- CR6LVyM83yIPEG6gMKcmyrvkPLtVbww=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-Z6Eu9b_pMouMyNg8vU5n3w-1; Thu, 17 Oct 2024 13:44:15 -0400
-X-MC-Unique: Z6Eu9b_pMouMyNg8vU5n3w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4315ad4938fso7181735e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 10:44:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t1UZ2-0003zW-8z
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:45:35 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t1UYz-0002gG-5U
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 13:45:31 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-208cf673b8dso13315375ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 10:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729187126; x=1729791926; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qFywNcmcgJ43zcWJxMMnwWB3PbNft5Hk5Q8Z5UGMiTY=;
+ b=xF0Y7K0W2iZ978UH3LkKGd96fMpKtGsE4Ds/3NN524sBnUoUPAmod5kgI6xXKHEFaJ
+ 1j/hGCVQaH9sBsqoB8WKjqIxAiBlzvQaPCRAF2UtZggRXDNSkZU8k/BJ8SknJCuXxFvD
+ o/ANQ5B6W3IXBz6Iejizf3vGEUaV072asbjJ6ccVZmka/oM5c/xOQbA9l6UoxwiH72/J
+ 54inqhGGdj879gQuXSomUIT93FiCS8eOZ3yTeDBw5j+ekRkWoSfugHPbCenW41nyENzK
+ 1GMbSxXTFcyA6VZ0Iyt3OK6z0W8ApPY5AXSf50EiBvmmRoTHJVqiVZ5zcYRnUDc39q9w
+ eVAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729187053; x=1729791853;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ah06S2G+f5fluSA2AMIZ2frEtaGnaP8XBwL+xhcL0ho=;
- b=s59BcnciCi7EeI4lZJa5pmnHge1J3z7hlLeDAaxit9ct8DyFzdwAqr8OBIpunQ1gri
- sTfSuBSZSWXvL3QkacA8JWWo43QJQVNr8ixIvghEOpMD1gpNCSsa6gyYy180tUKcZnuo
- SoX2aiUsuUFkiAehnAVTYlbBxSTOUIUudxJ9TCk4QWF92MOiwcZAJKt1Nfz0XQhH9/PS
- iuRw+cRWiqb30UrJrbjvlDPtkv7gEhVUA6/PzbuTpVZe0vZWm9lKivAacujqJDa8Duhh
- NJxTMqmB/Pbpamsx1oSCy88eG7o9oGpwSjs6Kn/p70db4X8Ix04A4R5jCG3fkOpuUjrd
- n6lA==
-X-Gm-Message-State: AOJu0YyYjnnvE0cMbDDg5MGwc9iWyVygBEmPDotJ19poQ4XcAy2hl6Fv
- 8VyNBdcjDjfvoikVjaVx8t9PXM9jOajp6eaTrCIv0rPM788HVqqqw0agbqsZYDUaCKXwMWS/xv3
- p8NGedACW2W5APWA9mt5IVHxo11UP5TJXvmddVY2W8x8EOfyLbprr5I7lhoIAJKCsjlV7XcgZ+U
- RNLnYFzSCcsnuTcozARGn99B9uoZpXxouDyzsQzAU=
-X-Received: by 2002:a05:600c:4f4e:b0:431:50fa:89c4 with SMTP id
- 5b1f17b1804b1-43150fa8c5cmr50005255e9.3.1729187053186; 
- Thu, 17 Oct 2024 10:44:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNNwcnR3SbCb79dyH9f2BBdc38k4iW4aYqKCIF9FPxrLpiKkuQROHuih9XSdsIIiZaSCRxHg==
-X-Received: by 2002:a05:600c:4f4e:b0:431:50fa:89c4 with SMTP id
- 5b1f17b1804b1-43150fa8c5cmr50005035e9.3.1729187052697; 
- Thu, 17 Oct 2024 10:44:12 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
+ d=1e100.net; s=20230601; t=1729187126; x=1729791926;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qFywNcmcgJ43zcWJxMMnwWB3PbNft5Hk5Q8Z5UGMiTY=;
+ b=etVMECZZw3cynYdjISjQehyGZuc2rFB5POWE1DR2wB1iQoD6615RPoYEkNEbj3/fdf
+ IxPbOh29lUtjtqKJoo7nzngDjGJM/ExAQUikHjTi8IMEQScWoXNc5IYiLnQ7bLZHBYJM
+ hKTskgR74ehF0aiSSsg/BAuX7UMbl1ezWpieGK2yxrsVw6qbxYBz0GXnHBZn6mNmYLk7
+ SuQAYz8SRqlhucZGHkhB1C95aVIjnewq0v3a+5no+RbcgrA/hk05QiCTjIahINscaj/j
+ TxAZSw69AA24cTLXrSrxpr+yLX0Iy5R9i4Fcmf7YSRwsQ2ttlwHa5kFeyr8D8rujccuq
+ 7QhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHkKB2MPt4tjdPY1mW8w6+X26962T1hglpKy1sEqZEOROpcWb9F9F67IX6fYMTULprHL6PAoivPxdS@nongnu.org
+X-Gm-Message-State: AOJu0YwIXuG3GZ1MAoMIdifToVUpWOgz7yIENusQ/wYIx+lVbigtxIvY
+ FsKPIDMXLj3zYg0cK3OYR2BYrwLWZc8kkugnr16iGQSn60HDdSwPIlomLgRbtmM=
+X-Google-Smtp-Source: AGHT+IFyl5lSOwvMsVrqNXpZ00oTzZ1ZeS1ntsSpghFB+UPqHwRlzP8u1RQt4tNXhd2CNJ5PRHnHdg==
+X-Received: by 2002:a17:902:d4c2:b0:20c:5a64:9bc6 with SMTP id
+ d9443c01a7336-20d27f3fd11mr142530235ad.50.1729187126570; 
+ Thu, 17 Oct 2024 10:45:26 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d94626094sm3148828f8f.88.2024.10.17.10.44.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 10:44:12 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PULL v2 00/26] x86 and KVM patches for 2024-10-15
-Date: Thu, 17 Oct 2024 19:44:08 +0200
-Message-ID: <20241017174409.832033-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
+ d9443c01a7336-20d17f9d436sm47180995ad.84.2024.10.17.10.45.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Oct 2024 10:45:26 -0700 (PDT)
+Message-ID: <42ccaafa-888c-45c2-9d60-d2aa66f4c833@linaro.org>
+Date: Thu, 17 Oct 2024 10:45:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Don't assert in regime_is_user() for E10
+ mmuidx values
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20241017172331.822587-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241017172331.822587-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,178 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f774a677507966222624a9b2859f06ede7608100:
+On 10/17/24 10:23, Peter Maydell wrote:
+> In regime_is_user() we assert if we're passed an ARMMMUIdx_E10_*
+> mmuidx value. This used to make sense because we only used this
+> function in ptw.c and would never use it on this kind of stage 1+2
+> mmuidx, only for an individual stage 1 or stage 2 mmuidx.
+> 
+> However, when we implemented FEAT_E0PD we added a callsite in
+> aa64_va_parameters(), which means this can now be called for
+> stage 1+2 mmuidx values if the guest sets the TCG_ELX.{E0PD0,E0PD1}
+> bits to enable use of the feature. This will then result in
+> an assertion failure later, for instance on a TLBI operation:
+> 
+> #6  0x00007ffff6d0e70f in g_assertion_message_expr
+>      (domain=0x0, file=0x55555676eeba "../../target/arm/internals.h", line=978, func=0x555556771d48 <__func__.5> "regime_is_user", expr=<optimised out>)
+>      at ../../../glib/gtestutils.c:3279
+> #7  0x0000555555f286d2 in regime_is_user (env=0x555557f2fe00, mmu_idx=ARMMMUIdx_E10_0) at ../../target/arm/internals.h:978
+> #8  0x0000555555f3e31c in aa64_va_parameters (env=0x555557f2fe00, va=18446744073709551615, mmu_idx=ARMMMUIdx_E10_0, data=true, el1_is_aa32=false)
+>      at ../../target/arm/helper.c:12048
+> #9  0x0000555555f3163b in tlbi_aa64_get_range (env=0x555557f2fe00, mmuidx=ARMMMUIdx_E10_0, value=106721347371041) at ../../target/arm/helper.c:5214
+> #10 0x0000555555f317e8 in do_rvae_write (env=0x555557f2fe00, value=106721347371041, idxmap=21, synced=true) at ../../target/arm/helper.c:5260
+> #11 0x0000555555f31925 in tlbi_aa64_rvae1is_write (env=0x555557f2fe00, ri=0x555557fbeae0, value=106721347371041) at ../../target/arm/helper.c:5302
+> #12 0x0000555556036f8f in helper_set_cp_reg64 (env=0x555557f2fe00, rip=0x555557fbeae0, value=106721347371041) at ../../target/arm/tcg/op_helper.c:965
+> 
+> Since we do know whether these mmuidx values are for usermode
+> or not, we can easily make regime_is_user() handle them:
+> ARMMMUIdx_E10_0 is user, and the other two are not.
+> 
+> Cc:qemu-stable@nongnu.org
+> Fixes: e4c93e44ab103f ("target/arm: Implement FEAT_E0PD")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/internals.h | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
 
-  Merge tag 'pull-target-arm-20241015-1' of https://git.linaro.org/people/p=
-maydell/qemu-arm into staging (2024-10-15 15:18:22 +0100)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 15d955975bd484c2c66af0d6daaa02a7d04d2256:
-
-  target/i386: Use only 16 and 32-bit operands for IN/OUT (2024-10-17 19:41=
-:30 +0200)
-
-----------------------------------------------------------------
-* tcg/s390x: Fix for TSTEQ/TSTNE
-* target/i386: Fixes for IN and OUT with REX prefix
-* target/i386: New CPUID features and logic fixes
-* target/i386: Add support save/load HWCR MSR
-* target/i386: Move more instructions to new decoder; separate decoding
-  and IR generation
-* target/i386/tcg: Use DPL-level accesses for interrupts and call gates
-* accel/kvm: perform capability checks on VM file descriptor when necessary
-* accel/kvm: dynamically sized kvm memslots array
-* target/i386: fixes for Hyper-V
-* docs/system: Add recommendations to Hyper-V enlightenments doc
-
-----------------------------------------------------------------
-
-v1->v2: new patch to fix tcg/s390x
-        mark new patch and "check for KVM_CAP_READONLY_MEM on VM" for stable
-
-Chao Gao (1):
-      target/i386: Add more features enumerated by CPUID.7.2.EDX
-
-Gao Shiyuan (1):
-      target/i386: Add support save/load HWCR MSR
-
-Paolo Bonzini (10):
-      tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
-      target/i386: convert bit test instructions to new decoder
-      target/i386: decode address before going back to translate.c
-      target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder
-      target/i386: do not check PREFIX_LOCK in old-style decoder
-      target/i386: list instructions still in translate.c
-      target/i386: assert that cc_op* and pc_save are preserved
-      target/i386/tcg: Use DPL-level accesses for interrupts and call gates
-      accel/kvm: check for KVM_CAP_MULTI_ADDRESS_SPACE on vm
-      accel/kvm: check for KVM_CAP_MEMORY_ATTRIBUTES on vm
-
-Peter Xu (4):
-      KVM: Dynamic sized kvm memslots array
-      KVM: Define KVM_MEMSLOTS_NUM_MAX_DEFAULT
-      KVM: Rename KVMMemoryListener.nr_used_slots to nr_slots_used
-      KVM: Rename KVMState->nr_slots to nr_slots_max
-
-Richard Henderson (1):
-      target/i386: Use only 16 and 32-bit operands for IN/OUT
-
-Tom Dohrmann (1):
-      accel/kvm: check for KVM_CAP_READONLY_MEM on VM
-
-Vitaly Kuznetsov (4):
-      target/i386: Fix conditional CONFIG_SYNDBG enablement
-      target/i386: Exclude 'hv-syndbg' from 'hv-passthrough'
-      target/i386: Make sure SynIC state is really updated before KVM_RUN
-      docs/system: Add recommendations to Hyper-V enlightenments doc
-
-Xiaoyao Li (4):
-      target/i386: Don't construct a all-zero entry for CPUID[0xD 0x3f]
-      target/i386: Enable fdp-excptn-only and zero-fcs-fds
-      target/i386: Construct CPUID 2 as stateful iff times > 1
-      target/i386: Make invtsc migratable when user sets tsc-khz explicitly
-
- docs/system/i386/hyperv.rst      |  43 +++-
- include/sysemu/kvm_int.h         |   7 +-
- target/i386/cpu.h                |   9 +
- target/i386/tcg/decode-new.h     |  19 +-
- accel/kvm/kvm-all.c              | 131 ++++++++----
- target/i386/cpu.c                |  21 +-
- target/i386/kvm/hyperv.c         |   1 +
- target/i386/kvm/kvm.c            |  47 +++--
- target/i386/machine.c            |  20 ++
- target/i386/tcg/seg_helper.c     |  17 +-
- target/i386/tcg/translate.c      | 444 ++++++-----------------------------=
-----
- target/i386/tcg/decode-new.c.inc | 145 +++++++++----
- target/i386/tcg/emit.c.inc       | 246 +++++++++++++++++++++-
- tcg/s390x/tcg-target.c.inc       |  24 ++-
- accel/kvm/trace-events           |   1 +
- 15 files changed, 682 insertions(+), 493 deletions(-)
---=20
-2.46.2
-
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 17 Oct 2024 11:09:52 +0200
-Subject: [PULL 11/26] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
-
-32-bit TSTEQ and TSTNE is subject to the same constraints as
-for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
-using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
-
-Adjust the constraint and make tcg_target_const_match use the
-same sequence as tgen_cmp2: first check if the constant is a
-valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
-non-test comparisons, finally check if the constant is a valid
-operand for 64-bit non-test comparisons.
-
-Reported-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-Cc: qemu-stable@nongnu.org
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tcg/s390x/tcg-target.c.inc | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index a5d57197a4b..27bccc14e50 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -565,6 +565,20 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     }
-=20
-     if (ct & TCG_CT_CONST_CMP) {
-+        if (is_tst_cond(cond)) {
-+            if (is_const_p16(uval) >=3D 0) {
-+                return true;  /* TMxx */
-+            }
-+            if (risbg_mask(uval)) {
-+                return true;  /* RISBG */
-+            }
-+            return false;
-+        }
-+
-+        if (type =3D=3D TCG_TYPE_I32) {
-+            return true;
-+        }
-+
-         switch (cond) {
-         case TCG_COND_EQ:
-         case TCG_COND_NE:
-@@ -584,13 +598,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
-             break;
-         case TCG_COND_TSTNE:
-         case TCG_COND_TSTEQ:
--            if (is_const_p16(uval) >=3D 0) {
--                return true;  /* TMxx */
--            }
--            if (risbg_mask(uval)) {
--                return true;  /* RISBG */
--            }
--            break;
-+            /* checked above, fallthru */
-         default:
-             g_assert_not_reached();
-         }
-@@ -3231,9 +3239,9 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpc=
-ode op)
-     case INDEX_op_rotl_i64:
-     case INDEX_op_rotr_i32:
-     case INDEX_op_rotr_i64:
-+        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i32:
-     case INDEX_op_negsetcond_i32:
--        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i64:
-     case INDEX_op_negsetcond_i64:
-         return C_O1_I2(r, r, rC);
---=20
-2.46.2
-
+r~
 
