@@ -4,78 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58BD9D37492
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 13:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2EDD37495
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 13:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1QlX-0002UX-Hz; Thu, 17 Oct 2024 09:42:11 -0400
+	id 1t1QFI-0001oH-3m; Thu, 17 Oct 2024 09:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1QlV-0002U6-Pc
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:42:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1QFG-0001o9-JO
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:08:50 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1QlR-0006QN-Ji
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:42:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729172523;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9CfZdrwtv4MuaHO9JzsZPIlORrtJE9yFU7JQ9B0pGso=;
- b=RJsbbFWKIPirD1xN3pmueGzHSoBCT7taCWYwYSQjQHWglxSFbjd1hLevfTKvOK5UFiNn9N
- Qm2iZt/aRLyXMNSBLUPpvPag+uExYocGwpjytFLWebZOcxLVUJj8Vx1odyU7gstdiLUR/Q
- iKHYG92vcjn2QpVyuYchHf0mN03XtY4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-dkIRoJOVPSuUlbgbL7bzww-1; Thu,
- 17 Oct 2024 09:42:00 -0400
-X-MC-Unique: dkIRoJOVPSuUlbgbL7bzww-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CDBE41955D9D; Thu, 17 Oct 2024 13:41:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.94])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6147019560A2; Thu, 17 Oct 2024 13:41:57 +0000 (UTC)
-Date: Thu, 17 Oct 2024 14:41:53 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?=C3=81gatha?= Freitas <htafreit@gmail.com>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com
-Subject: Re: [PATCH 0/1] Insert LibSPDM in QEMU enabling in-tree compilation
-Message-ID: <ZxEUIbTj5IWp6kOY@redhat.com>
-References: <20241016163439.1130168-1-htafreit@gmail.com>
- <CAKmqyKPUUgF1tLKCFF1FiT5HHEDDDg+=Yha2e38wSto4mKh_BA@mail.gmail.com>
- <ZxDgGsjRkLEA8r6_@redhat.com>
- <CALKrZCJ6cnocjddg4uu=0q0+vtVCzkEzC0=scnRWhLpGX4zQ8w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1QFE-00021B-6m
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 09:08:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XTp6X4BSXz6JBT8;
+ Thu, 17 Oct 2024 21:08:04 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id DBD3B140119;
+ Thu, 17 Oct 2024 21:08:44 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 17 Oct
+ 2024 15:08:44 +0200
+Date: Thu, 17 Oct 2024 14:08:43 +0100
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ Fan Ni <fan.ni@samsung.com>
+Subject: Re: [QEMU PATCH] hw/cxl/cxl-mailbox-util: Fix output buffer index
+ update when retrieving DC extents
+Message-ID: <20241017140843.00004685@huawei.com>
+In-Reply-To: <20241015190224.251293-1-nifan.cxl@gmail.com>
+References: <20241015190224.251293-1-nifan.cxl@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALKrZCJ6cnocjddg4uu=0q0+vtVCzkEzC0=scnRWhLpGX4zQ8w@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,136 +69,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 10:37:21AM -0300, Ágatha Freitas wrote:
-> On Thu, Oct 17, 2024 at 7:00 AM Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
-> 
-> > On Thu, Oct 17, 2024 at 02:00:35PM +1000, Alistair Francis wrote:
-> > > On Thu, Oct 17, 2024 at 2:35 AM htafr <htafreit@gmail.com> wrote:
-> > > >
-> > > > (I) Summary
-> > > >
-> > ===========================================================================
-> > > >
-> > > > This patch is the beginning of the support of the Security Protocol and
-> > > > Data Model (SPDM). There are some known issues (see II), but it's
-> > > > usable and not many users are going to use this functionality for now,
-> > > > but for those who will it may facilitate the development.
-> > > >
-> > > > There are some people working with LibSPDM to implement the SPDM on
-> > > > emulated devices, however current works that use QEMU compile LibSPDM
-> > > > out-of-tree [1][2][3]. This patch enables the compilation of LibSPDM
-> > when
-> > > > user pass the parameter '--enable-libspdm' to configure file, this
-> > option
-> > > > is disabled by default. The following parameters were also added:
-> > > >
-> > > >   --libspdm-crypto=CHOICE  set LibSPDM crypto algorithm [mbedtls]
-> > (choices:
-> > > >                            mbedtls/openssl)
-> > > >   --libspdm-toolchain=VALUE
-> > > >                            toolchain to use for LibSPDM compilation
-> > [GCC]
-> > > >
-> > > > In order to facilitate future code development using LibSPDM API, this
-> > > > patch also provides the definition of the macro 'CONFIG_LIBSPDM'.
-> > >
-> > > We have talked about this before, see
-> > > https://patchew.org/QEMU/cover.1691509717.git.alistair.francis@wdc.com/
-> > >
-> > > The general agreement seemed to be that it will be hard to do SPDM
-> > > configuration inside QEMU, hence the external library (like the QEMU
-> > > TPM support).
-> >
-> > More generally, seeing this libspdm proposed for QEMU, without any
-> > corresponding usage of it it dubious. It is hard to judge whether
-> > it makes any sense, without seeing how it will be used in real
-> > device code inside QEMU.
-> >
-> 
-> Currently, I'm working with EDK2 and QEMU so I have a branch [1] with
-> ongoing
-> modifications in files backends/spdm.c and hw/nvme/auth.c. Although the
-> current
-> modifications are able to exchange SPDM messages, it's far from being
-> complete
-> and it's not following better code practices yet. I'm making use of
-> Alistair's and
-> Mallawa's previous work in NVMe to authenticate it through PCI [2].
-> 
-> [1]  WIP: SPDM integration
->       Link: https://github.com/htafr/qemu/tree/libspdm-dev
-> [2] WIP: SPDM in OVMF
->       Link: https://github.com/htafr/edk2/tree/ovmf-spdm
-> 
-> 
-> >
-> > On the cryptography side, I'm not a fan of linking another
-> > crypto library to QEMU, that's different from what we already
-> > support in our crypto layer. openssl in particular is a problem
-> > due to its licensing - people tend to hand-waive away the
-> > licensing incompatibility by pretending openssl is a "system library"
-> > but I disagree with that interpretation.
-> >
-> > > > (II) Known Limitations
-> > > >
-> > ===========================================================================
-> > > >
-> > > > 1. This patch enables LibSPDM in-tree compilation for Linux systems
-> > only.
-> > > > 2. LibSPDM compilation uses CMake, so meson build system is making use
-> > > >    of the CMake module [4].
-> > > > 3. Some problems may occur when compiling LibSPDM with MbedTls such as:
-> > > >     error: "_GNU_SOURCE" redefined [-Werror]
-> > > >       10 | #define _GNU_SOURCE
-> > > >
-> > > >    It's possible to compile using --disable-werror.
-> > > >
-> > > > (III) Sample configuration
-> > > >
-> > ===========================================================================
-> > > >
-> > > > ../configure \
-> > > >   --disable-werror \
-> > > >   --enable-libspdm \
-> > > >   --libspdm-crypto=mbedtls \
-> > > >   --enable-gcov
-> > > >
-> > > > References:
-> > > > [1] riscv-spdm
-> > > >   Link: https://github.com/htafr/riscv-spdm
-> > > > [2] spdm-benchmark
-> > > >   Link: https://github.com/rcaalves/spdm-benchmark
-> > > > [3] qemu-spdm-emulation-guide
-> > > >   Link: https://github.com/twilfredo/qemu-spdm-emulation-guide
-> > >
-> > > This one has been merged upstream and mainline QEMU supports it now:
-> > >
-> > > https://www.qemu.org/docs/master/specs/spdm.html
-> >
-> > So with that merged, is this proposal for linking to libspdm redundant ?
-> >
->
-> I'm not sure if I understood the redundancy. Would it be against QEMU
-> practices
-> to have another openssl as well as mbedtls linked inside it?
+On Tue, 15 Oct 2024 11:51:26 -0700
+nifan.cxl@gmail.com wrote:
 
-QEMU doesn't link to either of those libraries. We preferentially use
-gnutls, with a fallback to gcrypt or nettle, to avoid the murky openssl
-licensing situation, and to a lesser extent because openssl has an
-unpleasant API to use. mbedtls isn't used because it is a more niche
-solution compared to what we already support, so wasn't compelling to
-support.
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> In the function of retrieving DC extents (cmd_dcd_get_dyn_cap_ext_list),
+> the output buffer index was not correctly updated while iterating the
+> extent list on the device, leaving the extents returned incorrect except for
+> the first one.
+> 
+> Fixes: 1c9221f19e ("hw/mem/cxl_type3: Add DC extent list representative ...")
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+I'll queue this up alongside that other fix.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+thanks,
+
+Jonathan
+p.s. I'm having some issues with the list servers bouncing my emails so this
+may not reach the list.
+
+> ---
+>  hw/cxl/cxl-mailbox-utils.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index c82ad50ac8..58f8930272 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -2233,6 +2233,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+>              stw_le_p(&out_rec->shared_seq, ent->shared_seq);
+>  
+>              record_done++;
+> +            out_rec++;
+>              if (record_done == record_count) {
+>                  break;
+>              }
 
 
