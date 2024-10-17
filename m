@@ -4,70 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4C4D2F7EF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 06:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF89D2F7F1
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 06:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1JtZ-0005T5-7Q; Thu, 17 Oct 2024 02:22:01 -0400
+	id 1t1K5p-00083K-Ju; Thu, 17 Oct 2024 02:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1JtW-0005SR-NJ
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:21:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1K5l-000830-1c
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:34:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1JtU-00063l-Kl
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:21:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1K5j-00025Q-M9
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 02:34:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729146114;
+ s=mimecast20190719; t=1729146873;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=giqjdkpUbPLz91ABl/6Kih7DnOcYraZ4JaS5w4cdBMM=;
- b=OeUcYdR6JEeHDGIvNgpxYFbrz4Uu3yiZzAyq0zpcN6F6oVoLG69i13vj6mR028HG4WRE7X
- IE+rtZmMINJw2fP/Mwc9nY2Us1Oh8XCd5+iCHXXbv31msmXxWilh+R65H9QKhKYm6/DWVw
- rZ0U11H6Gyu85ep9kkY0K84AyHZ7dLc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kyeFW8F58eg9bQP7olaA/2+XrDpleTSKUoyCc8mkoes=;
+ b=RjAAIXWUnxT0SGMIefs0FNMW/up0Dc08Ps5g8p9YcPF6W1I1yw2m9nrdad/nEC6N8WnjS0
+ 9U0sHjgsGZW/SuytjR3D0VjtPRB75+DhWAzg7uC64sPzkgiVRZx9GmTFTVoN3AS0corMA9
+ nsOx842SUO4WJgBDr3RdIjzBfMfG9fY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-bdwlg5CvMpGCtHM09ECGkQ-1; Thu,
- 17 Oct 2024 02:21:50 -0400
-X-MC-Unique: bdwlg5CvMpGCtHM09ECGkQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-Vk0sqeyRNRCUIOetyJF3oQ-1; Thu,
+ 17 Oct 2024 02:34:30 -0400
+X-MC-Unique: Vk0sqeyRNRCUIOetyJF3oQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 605AD19560AE; Thu, 17 Oct 2024 06:21:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2323C1956048; Thu, 17 Oct 2024 06:34:29 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 821D019560AE; Thu, 17 Oct 2024 06:21:46 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C879319560A3; Thu, 17 Oct 2024 06:34:28 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 45A5A21E6A28; Thu, 17 Oct 2024 08:21:44 +0200 (CEST)
+ id 5800A21E6A28; Thu, 17 Oct 2024 08:34:26 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  xieyongji@bytedance.com,  kwolf@redhat.com,
- hreitz@redhat.com,  Coiby.Xu@gmail.com,  pbonzini@redhat.com,
- berrange@redhat.com,  eduardo@habkost.net,
- mark.cave-ayland@ilande.co.uk,  michael.roth@amd.com,
- kkostiuk@redhat.com,  qemu-block@nongnu.org
-Subject: Re: [PATCH v2 6/7] hw/intc/openpic: Improve errors for out of
- bounds property values
-In-Reply-To: <db943e63-4968-4cb6-885b-3cd479ba8962@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 10 Oct 2024 14:40:28
- -0300")
-References: <20241010150144.986655-1-armbru@redhat.com>
- <20241010150144.986655-7-armbru@redhat.com>
- <db943e63-4968-4cb6-885b-3cd479ba8962@linaro.org>
-Date: Thu, 17 Oct 2024 08:21:44 +0200
-Message-ID: <87bjzj6yh3.fsf@pond.sub.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Kunwu <chentao@kylinos.cn>,  =?utf-8?Q?C=C3=A9?=
+ =?utf-8?Q?dric?= Le Goater
+ <clg@redhat.com>,  Alejandro Zeise <alejandro.zeise@seagate.com>
+Subject: Re: [PULL 07/17] crypto/hash-afalg: Implement new hash API
+In-Reply-To: <20241010162024.988284-8-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 10 Oct 2024 17:20:14
+ +0100")
+References: <20241010162024.988284-1-berrange@redhat.com>
+ <20241010162024.988284-8-berrange@redhat.com>
+Date: Thu, 17 Oct 2024 08:34:26 +0200
+Message-ID: <87zfn3ck5p.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -94,52 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On 10/10/24 12:01, Markus Armbruster wrote:
->> The error message doesn't matter much, as the "openpic" device isn't
->> user-creatable.  But it's the last use of
->> QERR_PROPERTY_VALUE_OUT_OF_RANGE, which has to go.  Change the message
->> just like the previous commit did for x86 CPUs.
->>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>   hw/intc/openpic.c | 5 +----
->>   1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
->> index 32bd880dfa..cd3d87768e 100644
->> --- a/hw/intc/openpic.c
->> +++ b/hw/intc/openpic.c
->> @@ -41,7 +41,6 @@
->>  #include "hw/pci/msi.h"
->>  #include "qapi/error.h"
->>  #include "qemu/bitops.h"
->> -#include "qapi/qmp/qerror.h"
->>  #include "qemu/module.h"
->>  #include "qemu/timer.h"
->>  #include "qemu/error-report.h"
->> @@ -1535,9 +1534,7 @@ static void openpic_realize(DeviceState *dev, Erro=
-r **errp)
->>      };
->>
->>      if (opp->nb_cpus > MAX_CPU) {
->> -        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE,
->> -                   TYPE_OPENPIC, "nb_cpus", (uint64_t)opp->nb_cpus,
->> -                   (uint64_t)0, (uint64_t)MAX_CPU);
->> +        error_setg(errp, "property 'nb_cpus' can be at most %d", MAX_CP=
-U);
->>          return;
->>      }
->>=20=20=20
+> From: Alejandro Zeise <alejandro.zeise@seagate.com>
 >
-> As another cleanup we could convert MAX_CPU to unsigned.
+> Updates the afalg hash driver to support the new accumulative
+> hashing changes as part of the patch series.
+>
+> Implements opening/closing of contexts, updating hash data
+> and finalizing the hash digest.
+>
+> In order to support the update function, a flag needs to be passed
+> to the kernel via the socket send call (MSG_MORE) to notify it that more
+> data is to be expected to calculate the hash correctly.
+> As a result, a new function was added to the iov helper utils to allow
+> passing a flag to the socket send call.
+>
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> [ clg: - Handled qcrypto_afalg_hash_ctx_new() errors in
+>          qcrypto_afalg_hash_new()
+>        - Freed alg_name in qcrypto_afalg_hash_new()
+>        - Reworked qcrypto_afalg_recv_from_kernel()
+>        - Split iov changes from original patch ]
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Existing uses are all fine as is.  Perhaps the maintainer has a
-preference.
+Semantic conflict with commit 8f525028bc6 broke the build:
 
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+    ../crypto/hash-afalg.c: In function =E2=80=98qcrypto_afalg_hash_free=E2=
+=80=99:
+    ../crypto/hash-afalg.c:145:5: error: unknown type name =E2=80=98QCrypto=
+AFAlg=E2=80=99; did you mean =E2=80=98QCryptoAFAlgo=E2=80=99?
+      145 |     QCryptoAFAlg *ctx =3D hash->opaque;
+          |     ^~~~~~~~~~~~
+          |     QCryptoAFAlgo
 
-Thanks!
+
+and more of the same.  I'll post a patch.
 
 
