@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16BDD374A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E668D374A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Rsa-0003au-Jq; Thu, 17 Oct 2024 10:53:32 -0400
+	id 1t1Rwq-0001Rd-Ml; Thu, 17 Oct 2024 10:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t1RsY-0003Qz-Aj
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:30 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t1RsW-0006zO-9s
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:29 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7d4fa972cbeso911883a12.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:53:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729176804; x=1729781604;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=71RCoEK2c3EE51YgECa9iN01Uc+4u3MvG3YZ4vrNInM=;
- b=SMkK3u1JDtaJJNV8jA7hTKpJNqZOLuklA7+B48TwrO1jc9euFu/RZC7V28tMIGepc0
- 1Rzhum5H/nCOShR8nTDlXl6Mp7tXQ33rr8dH1diLb4ivlhv0hte6ERExO89eYLb8PDg0
- qPn8jAaQ4z8l5mN0QnriAvGduI528/1iQrOQYJqrzZM1tVagVHZhLKMySRuquc8GiX1h
- x020V1HpVjDn5jr3/AOY3AHOVqXBikPAa7CMxGbRP0ZjsuonifIednXlGx48CcDHzekO
- d8CDcnJMK5bbTIUhqng60PLIaE6bjzdUXF4P56pz7j8gJSCFpR6byw6gzf3XeAIrzDbE
- 3Wfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729176804; x=1729781604;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=71RCoEK2c3EE51YgECa9iN01Uc+4u3MvG3YZ4vrNInM=;
- b=qvjm8sbjouQnE7EaYYFjwcfiIdTde+r5M6TI3EEPPRZ6J2mG2ZfJu0H6Cip4pq+icM
- E3HQx6/QaJIZ6cQazgqAhlCdX26f6sXdtMnZvveYddtKKuT+re1gzsYn/9rul6+nK3PG
- ZekLaKtoKlcxzTsN2dMjFG532A6MJp5Y/zXVzpdiEsqKhSEkHubjY/fSSpDFkyHu3Tq3
- L2Qr4/uflPpstk+Qu7UVHBVQeBAE5XxBamJV8T/tBSwih4bD80iSYKbPCEvl5ENB9syG
- gSCH3Iqe1oAB04AY0UtBcKRQnsVyX6qfDeMfVjS4Ni6DLi11WUdazTd5NO/iU/P+oKaw
- 8mfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcYFmDyRnVlC5vH2II6NP0LXsholRByQfq6iUeA7uQcGsPwOn0ClZ+qeTmkCJAUZ51LSqT695KJBWP@nongnu.org
-X-Gm-Message-State: AOJu0Ywr49BuJQQumJK1+21tqdeHQcXtJzxgiYvODSX5rmDuyUo5OO6Z
- 1et0x4jEYXTdXhdJEWdU4TFCxFKKZyQRmLlsZVZ91VScII7wyq8MZSrKLneiDqM=
-X-Google-Smtp-Source: AGHT+IE5Pn2etMSIgWE6FHlzO7/J/ea++TOT9G8x1+cQf+Xe4tLWUimUMOnFkixZkDVmF0kBxWLqFA==
-X-Received: by 2002:a05:6a20:78a5:b0:1d9:aa7:d6cc with SMTP id
- adf61e73a8af0-1d90aa7d708mr7845358637.24.1729176804554; 
- Thu, 17 Oct 2024 07:53:24 -0700 (PDT)
-Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e77371193sm4859580b3a.21.2024.10.17.07.53.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 07:53:24 -0700 (PDT)
-From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
-To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 6/9] target/riscv: Add Smdbltrp CSRs handling
-Date: Thu, 17 Oct 2024 16:52:17 +0200
-Message-ID: <20241017145226.365825-7-cleger@rivosinc.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241017145226.365825-1-cleger@rivosinc.com>
-References: <20241017145226.365825-1-cleger@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Rwo-0001RO-RG
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:57:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1Rwm-0007QO-Dq
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:57:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729177070;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=fpVnaxA9MzoGeKmLNdNn02WN/Jq99QrzFLHT90kRSHs=;
+ b=MoBUK9qunGmOf5EusYKZ87qu5LUn3ff4aluJr1cDQGSAOYrSNCM9dK4eJcbogULcsRpaWf
+ ega52PfW7MUE7ma2WroXlLuC0d7Yk8qxFq8SvAaOpfSRS1j9aigf/Q9D+FEIr3b35tULf+
+ pdVNsZB9VrcGtE9a3J7TfHsdshaZTg0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-pphpNZ9nPM2JiB8LgEzw5A-1; Thu,
+ 17 Oct 2024 10:57:47 -0400
+X-MC-Unique: pphpNZ9nPM2JiB8LgEzw5A-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BEC11955F42; Thu, 17 Oct 2024 14:57:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.94])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C02D419560A7; Thu, 17 Oct 2024 14:57:42 +0000 (UTC)
+Date: Thu, 17 Oct 2024 15:57:39 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
+Message-ID: <ZxEl4zYgHLoLeHCT@redhat.com>
+References: <20241017143211.17771-1-farosas@suse.de>
+ <20241017143211.17771-5-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=cleger@rivosinc.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241017143211.17771-5-farosas@suse.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,90 +87,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add `ext_smdbltrp`in RISCVCPUConfig and implement MSTATUS.MDT behavior.
-Also set MDT to 1 at reset according to the specification.
+On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
+> Recent changes to how we invoke the migration tests have
+> (intentionally) caused them to not be part of the check-qtest target
+> anymore. Add the check-migration-quick target so we don't lose
+> migration code testing in this job.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
----
- target/riscv/cpu.c      |  3 +++
- target/riscv/cpu_bits.h |  1 +
- target/riscv/cpu_cfg.h  |  1 +
- target/riscv/csr.c      | 13 +++++++++++++
- 4 files changed, 18 insertions(+)
+But 'check-migration-quick' is only the subset of migration tests,
+'check-migration' is all of the migration tests. So surely this is
+a massive regressions in covage in CI pipelines.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 39555364bf..15b21e4f7d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -959,6 +959,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
-             env->mstatus_hs = set_field(env->mstatus_hs,
-                                         MSTATUS64_UXL, env->misa_mxl);
-         }
-+        if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+            env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 1);
-+        }
-     }
-     env->mcause = 0;
-     env->miclaim = MIP_SGEIP;
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 0d0f253fcb..b368e27ca0 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -561,6 +561,7 @@
- #define MSTATUS_SDT         0x01000000
- #define MSTATUS_GVA         0x4000000000ULL
- #define MSTATUS_MPV         0x8000000000ULL
-+#define MSTATUS_MDT         0x40000000000ULL /* Smdbltrp extension */
- 
- #define MSTATUS64_UXL       0x0000000300000000ULL
- #define MSTATUS64_SXL       0x0000000C00000000ULL
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 518102d748..8ac1e7fce3 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -78,6 +78,7 @@ struct RISCVCPUConfig {
-     bool ext_sstc;
-     bool ext_smcntrpmf;
-     bool ext_ssdbltrp;
-+    bool ext_smdbltrp;
-     bool ext_svadu;
-     bool ext_svinval;
-     bool ext_svnapot;
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 9aa33611f7..9d2caf34ba 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1616,6 +1616,13 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
-         }
-     }
- 
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        mask |= MSTATUS_MDT;
-+        if ((val & MSTATUS_MDT) != 0) {
-+            val &= ~MSTATUS_MIE;
-+        }
-+    }
-+
-     if (xl != MXL_RV32 || env->debugger) {
-         if (riscv_has_ext(env, RVH)) {
-             mask |= MSTATUS_MPV | MSTATUS_GVA;
-@@ -1654,6 +1661,12 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
-     uint64_t valh = (uint64_t)val << 32;
-     uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
- 
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        mask |= MSTATUS_MDT;
-+        if ((valh & MSTATUS_MDT) != 0) {
-+            mask |= MSTATUS_MIE;
-+        }
-+    }
-     env->mstatus = (env->mstatus & ~mask) | (valh & mask);
- 
-     return RISCV_EXCP_NONE;
+Experience shows us that relying on humans to run tests periodically
+doesn't work well, and they'll slowly bit rot. Migration maintainers
+don't have a way to run this as gating test for every pull request
+that merges, and pull requests coming from non-migration maintainers
+can still break migration code.
+
+Any tests in tree need to be exercised by CI as the minimum bar
+to prevent bit rot from merges.
+
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  .gitlab-ci.d/buildtest.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index 34d3f4e9ab..37247dc5fa 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -442,7 +442,7 @@ clang-system:
+>      CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
+>        --extra-cflags=-fno-sanitize-recover=undefined
+>      TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
+> -    MAKE_CHECK_ARGS: check-qtest check-tcg
+> +    MAKE_CHECK_ARGS: check-qtest check-tcg check-migration-quick
+>  
+>  clang-user:
+>    extends: .native_build_job_template
+> -- 
+> 2.35.3
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
