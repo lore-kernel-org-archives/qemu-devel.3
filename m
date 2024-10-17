@@ -4,131 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48088D2F7F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BF3D2F7F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1L02-00086O-9V; Thu, 17 Oct 2024 03:32:46 -0400
+	id 1t1L5X-0001sj-Ip; Thu, 17 Oct 2024 03:38:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1t1L01-00086B-A6
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:32:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1L5W-0001sS-KG
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:38:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1t1Kzz-0006OT-KU
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:32:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1L5V-0000Eo-17
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:38:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729150360;
+ s=mimecast20190719; t=1729150704;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5Ns7Y7h3BXY8sjK3X2RjD4obu2pboMT4tHPwJEenVUs=;
- b=I7bjsj7fItVQCvAWG9ZGUPYOq3QgH/XJH1FlAtT6ZyD/MzFIqdoYkfJAbIVyMFZIZM8AX5
- z+iTM9l+r6bx2gO0wVjIjbZZw/QFfnlmRC8cDpXJYqIjwqI937KAAf4uHF3Lr3GFGHk3mm
- Qc7Q9AK0frRPIRON4AfA2EEfS/d3Pxc=
+ bh=TTGyRuqqhJp1uWWtgRzw4hlhV09tsV8Pn+t4RTc9FYU=;
+ b=MUM2erf1tULWBoA8WOD3bs/vHAVotY1DvZ6/HN4mwHlWVZCQs0mzdre2d41vBrWywrIdE0
+ 6t4iQ7hyxhEQu+o73pUtmJhc97KfYH7QbrHpjKz7JENs7dEcBnKw8oPj74iP1YF3msj+y9
+ O4ocOCxpSB94bqqzqL06vGG35KtAXMQ=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-Xz7yqIzEPTGtnVbqixQ_Qg-1; Thu, 17 Oct 2024 03:32:38 -0400
-X-MC-Unique: Xz7yqIzEPTGtnVbqixQ_Qg-1
+ us-mta-630-8c9YOz2dNBSx6bRy_bwPEQ-1; Thu, 17 Oct 2024 03:38:20 -0400
+X-MC-Unique: 8c9YOz2dNBSx6bRy_bwPEQ-1
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4315afcae6cso1776755e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 00:32:37 -0700 (PDT)
+ 5b1f17b1804b1-43157cff1d1so4822455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 00:38:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729150357; x=1729755157;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5Ns7Y7h3BXY8sjK3X2RjD4obu2pboMT4tHPwJEenVUs=;
- b=rKFu+8iM9R+9Mqe+63w+9iSrp3BVmLAhTtppwDMu7H6iX/5vH/k5EsLvMzZymTqrnj
- NsPCNpm2OYmjuC9v97nav23kQh7L1L+n4TQRPr8j0jfQZBVVKVU9M/hbZP3HD4wQ0gWe
- inEydxpEwN2wHLipU63790tCK0jJK/IrKMEUhpixvwj0Vxr6ba8kol216+giG4y2/sWE
- VeyG0FQ85vhwXbaljOowomJM+FiojYac6y6fC9JcrtrJ3j/VBBsIRkT1ptvT0bq+3GKR
- 6ANKXfqUh+YnpUyZO+KwGe1brmt6MIAadEawOxEwkC0P0N6uQQlFmAFGXlOuLjISRJjt
- NaZw==
+ d=1e100.net; s=20230601; t=1729150699; x=1729755499;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TTGyRuqqhJp1uWWtgRzw4hlhV09tsV8Pn+t4RTc9FYU=;
+ b=JbcS2OTMJMpB54WKC3p5vBUGPBlUMaSIjcauru2wPbrpol/nBsphbjGzUI7zkpntkW
+ hvDromighEzfhidzfupjuO5q+9sqctXWDQtJw9sO9WNGBDH70WS56RGx/kbq2B6WGIVy
+ OIpsvrlalO/AgcGwn89BP68HkavJMAebVffoE56TVP0sfqVJK6XIZWo+QoAxF+Sx4ZkI
+ DHj6hf8f1CjTZDJgp6tDSmEOdJJu6xIsCXog++QC4bZyxj7kHBwqIUNYARxF84+o7tzN
+ 7ARrRC0C/U7t70HIRjo2brHIWTZRAoSzdz+OkJTAr9UFpSVkzk6J3xMzkU/JtPaw9KNU
+ u9MA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgpTNJUKZPJ3QaW3FcHPy2OnN+7b1C5EsL9CEAJOEQBnt7OiKxyW8ri7lJ5g1RuEuO4pRg9bfn9yqy@nongnu.org
-X-Gm-Message-State: AOJu0YwhSQzhva9W0U33MSUpgudrlD/IZIq+gBVIWFsfR3+tsZLjKibt
- V3AMmin1TZZTG8jkHAu7i+2R7nBrZoIWOpTfUB3QBgWOFJxTABbXiP34nXl9F37q62eOtJQr6GG
- bSgPRRtUpYcGjBkZ1XryH9wZpiKg+154AW7GqJgsggkDXgtdN3Fu3
-X-Received: by 2002:a05:600c:4ecc:b0:431:416e:2603 with SMTP id
- 5b1f17b1804b1-431586fc9b3mr11904735e9.3.1729150356754; 
- Thu, 17 Oct 2024 00:32:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHXz5AgMrnL/JA2DZp2iqzhQWXgcUOD1VED7PYezijJZa+YWobCmjwctL5KlsKVJSde/xHNyQ==
-X-Received: by 2002:a05:600c:4ecc:b0:431:416e:2603 with SMTP id
- 5b1f17b1804b1-431586fc9b3mr11904505e9.3.1729150356237; 
- Thu, 17 Oct 2024 00:32:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e10:ef90:4c84:58cb:a1ef:8b78?
- ([2a01:e0a:e10:ef90:4c84:58cb:a1ef:8b78])
+ AJvYcCVVVNZxgjYO4zLRcPhSAkrlVTOeHaS2RmenQMQ1kwXSO2dEssARLtD66zjVimY886AoyVPsv0+iYLeV@nongnu.org
+X-Gm-Message-State: AOJu0YwNUNgyk7tLWptQxq2zPp244AvluPM/rzWofIbs8qio3oP8CS38
+ v7MDM7L6XchKawaOMhRY7y92gG8vzMyBEHWgSggiGU7Kb4pxCUZAWwK1qdTGxmNAUIXQ1RsXs+k
+ djtdhGx6JMnVAFS1U4pT3BJBmkZKIRWFd05/KNZooPlA1kTP414dM
+X-Received: by 2002:a05:600c:3ba9:b0:42c:b52b:4335 with SMTP id
+ 5b1f17b1804b1-4311decaa31mr185037325e9.10.1729150699114; 
+ Thu, 17 Oct 2024 00:38:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBGLuQxyLz7LAGVkx0PtyCNdSFiVAYp8/rGjaHQjNSGw4jtJec6mmxO8+z28k1hAVaEolhPQ==
+X-Received: by 2002:a05:600c:3ba9:b0:42c:b52b:4335 with SMTP id
+ 5b1f17b1804b1-4311decaa31mr185037125e9.10.1729150698669; 
+ Thu, 17 Oct 2024 00:38:18 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fa87d48sm6352993f8f.32.2024.10.17.00.32.35
+ 5b1f17b1804b1-43158c40378sm17032385e9.23.2024.10.17.00.38.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 00:32:35 -0700 (PDT)
-Message-ID: <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
-Date: Thu, 17 Oct 2024 09:32:34 +0200
+ Thu, 17 Oct 2024 00:38:18 -0700 (PDT)
+Message-ID: <88f084e2-4d3b-4ba7-a921-5ee8a9c143e7@redhat.com>
+Date: Thu, 17 Oct 2024 09:38:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Jason Wang <jasowang@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
- <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
+Subject: Re: [PATCH v4 07/19] pc-bios/s390-ccw: Remove panics from ISO IPL path
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241017014748.829029-1-jrossi@linux.ibm.com>
+ <20241017014748.829029-8-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241017014748.829029-8-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -137,7 +131,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,99 +147,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/2024 08:59, Jason Wang wrote:
-> On Mon, Oct 14, 2024 at 11:16 PM Laurent Vivier <lvivier@redhat.com> wrote:
->>
->> On 14/10/2024 10:30, Laurent Vivier wrote:
->>> Hi Akihiko,
->>>
->>> On 04/06/2024 09:37, Jason Wang wrote:
->>>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>
->>>> Multiqueue usage is not negotiated yet when realizing. If more than
->>>> one queue is added and the guest never requests to enable multiqueue,
->>>> the extra queues will not be deleted when unrealizing and leak.
->>>>
->>>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support
->>>> multiqueue")
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>> Signed-off-by: Jason Wang <jasowang@redhat.com>
->>>> ---
->>>>    hw/net/virtio-net.c | 4 +---
->>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>
->>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>>> index 3cee2ef3ac..a8db8bfd9c 100644
->>>> --- a/hw/net/virtio-net.c
->>>> +++ b/hw/net/virtio-net.c
->>>> @@ -3743,9 +3743,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->>>>        n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
->>>>                                        n->net_conf.tx_queue_size);
->>>> -    for (i = 0; i < n->max_queue_pairs; i++) {
->>>> -        virtio_net_add_queue(n, i);
->>>> -    }
->>>> +    virtio_net_add_queue(n, 0);
->>>>        n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
->>>>        qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->>>
->>> This change breaks virtio net migration when multiqueue is enabled.
->>>
->>> I think this is because virtqueues are half initialized after migration : they are
->>> initialized on guest side (kernel is using them) but not on QEMU side (realized has only
->>> initialized one). After migration, they are not initialized by the call to
->>> virtio_net_set_multiqueue() from virtio_net_set_features() because virtio_get_num_queues()
->>> reports already n->max_queue_pairs as this value is coming from the source guest memory.
->>>
->>> I don't think we have a way to half-initialize a virtqueue (to initialize them only on
->>> QEMU side as they are already initialized on kernel side).
->>>
->>> I think this change should be reverted to fix the migration issue.
->>>
->>
->> Moreover, if I look in the code of virtio_load() and virtio_add_queue() we can guess it's
->> not correct to migrate a virtqueue that is not initialized on the destination side because
->> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems' cannot be initialized
->> by virtio_load() and neither by virtio_add_queue() after virtio_load() as fields like
->> 'vring.num' are already initialized by virtio_load().
->>
->> For instance, in virtio_load() we set:
->>
->>       for (i = 0; i < num; i++) {
->>           vdev->vq[i].vring.num = qemu_get_be32(f);
->>
->> and in virtio_add_queue() we search for the firt available queue to add with:
->>
->>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->>           if (vdev->vq[i].vring.num == 0)
->>               break;
->>       }
->>
->> So virtio_add_queue() cannot be used to set:
->>
->>       vdev->vq[i].handle_output = handle_output;
->>       vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
->>
->> Moreover it would overwrite fields already set by virtio_load():
->>
->>       vdev->vq[i].vring.num = queue_size;
->>       vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
->>
->> It also explains why virtio_net_change_num_queue_pairs() (indirectly called by
->> virtio_net_set_features()) doesn't update the queue pair numbers: vring.num is already set
->> so it thinks there is no more queues to add.
->>
->> Thanks,
->> LAurent
->>
+On 17/10/2024 03.47, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> I agree.
+> Remove panic-on-error from IPL ISO El Torito specific functions so that error
+> recovery may be possible in the future.
 > 
-> Laurent, would you like to send a patch to revert this?
+> Functions that would previously panic now provide a return code.
 > 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+...
+> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+> index 414c3f1b47..5477cfe228 100644
+> --- a/pc-bios/s390-ccw/bootmap.c
+> +++ b/pc-bios/s390-ccw/bootmap.c
+> @@ -678,8 +678,10 @@ static bool is_iso_bc_entry_compatible(IsoBcSection *s)
+>       if (s->unused || !s->sector_count) {
+>           return false;
+>       }
+> -    read_iso_sector(bswap32(s->load_rba), magic_sec,
+> -                    "Failed to read image sector 0");
+> +    if (virtio_read(bswap32(s->load_rba), magic_sec)) {
+> +        puts("Failed to read image sector 0");
+> +        return false;
+> +    }
+>   
+>       /* Checking bytes 8 - 32 for S390 Linux magic */
+>       return !memcmp(magic_sec + 8, linux_s390_magic, 24);
+> @@ -692,28 +694,35 @@ static uint32_t sec_offset[ISO9660_MAX_DIR_DEPTH];
+>   /* Remained directory space in bytes */
+>   static uint32_t dir_rem[ISO9660_MAX_DIR_DEPTH];
+>   
+> -static inline uint32_t iso_get_file_size(uint32_t load_rba)
+> +static inline long iso_get_file_size(uint32_t load_rba)
+>   {
+>       IsoVolDesc *vd = (IsoVolDesc *)sec;
+>       IsoDirHdr *cur_record = &vd->vd.primary.rootdir;
+>       uint8_t *temp = sec + ISO_SECTOR_SIZE;
+>       int level = 0;
+>   
+> -    read_iso_sector(ISO_PRIMARY_VD_SECTOR, sec,
+> -                    "Failed to read ISO primary descriptor");
+> +    if (virtio_read(ISO_PRIMARY_VD_SECTOR, sec)) {
+> +        puts("Failed to read ISO primary descriptor");
+> +        return -EIO;
+> +    }
+> +
+>       sec_loc[0] = iso_733_to_u32(cur_record->ext_loc);
+>       dir_rem[0] = 0;
+>       sec_offset[0] = 0;
+>   
+>       while (level >= 0) {
+> -        IPL_assert(sec_offset[level] <= ISO_SECTOR_SIZE,
+> -                   "Directory tree structure violation");
+> +        if (sec_offset[level] > ISO_SECTOR_SIZE) {
+> +            puts("Directory tree structure violation");
+> +            return -EIO;
+> +        }
+>   
+>           cur_record = (IsoDirHdr *)(temp + sec_offset[level]);
+>   
+>           if (sec_offset[level] == 0) {
+> -            read_iso_sector(sec_loc[level], temp,
+> -                            "Failed to read ISO directory");
+> +            if (virtio_read(sec_loc[level], temp)) {
+> +                puts("Failed to read ISO directory");
+> +                return -EIO;
+> +            }
+>               if (dir_rem[level] == 0) {
+>                   /* Skip self and parent records */
+>                   dir_rem[level] = iso_733_to_u32(cur_record->data_len) -
+> @@ -758,8 +767,10 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
+>           if (dir_rem[level] == 0) {
+>               /* Nothing remaining */
+>               level--;
+> -            read_iso_sector(sec_loc[level], temp,
+> -                            "Failed to read ISO directory");
+> +            if (virtio_read(sec_loc[level], temp)) {
+> +                puts("Failed to read ISO directory");
+> +                return -EIO;
+> +            }
+>           }
+>       }
+>   
+> @@ -774,7 +785,7 @@ static void load_iso_bc_entry(IsoBcSection *load)
+>        * is padded and ISO_SECTOR_SIZE bytes aligned
+>        */
+>       uint32_t blks_to_load = bswap16(s.sector_count) >> ET_SECTOR_SHIFT;
+> -    uint32_t real_size = iso_get_file_size(bswap32(s.load_rba));
+> +    long real_size = iso_get_file_size(bswap32(s.load_rba));
+>   
+>       if (real_size) {
+>           /* Round up blocks to load */
 
-Yes. I will also try to fix the leak in unrealize that the patch wanted to fix initially.
+I think this check should now be changed to "real_size > 0" ?
+And in the "else" path, the function should return immediately?
 
-Thanks,
-Laurent
+  Thomas
 
 
