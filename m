@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13100D2F7FB
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F8ED2F7FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 07:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1L5n-0001wm-3Z; Thu, 17 Oct 2024 03:38:43 -0400
+	id 1t1LCE-0004Np-G4; Thu, 17 Oct 2024 03:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t1L5l-0001wA-Oz
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:38:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1t1L5h-0000Jd-Jz
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:38:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729150716;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9X7nDuMoSS5pjKY8f6BHUJyJcxz+/sepad7YcTY3Ovk=;
- b=fTTbFsxk/HS36Gry5Y7EGvH/x3OsAWF3MhkQwt4A3KtPBPL6ghGvTe81ordHJULNGJ5REu
- j0jHqCRiGQ9GC5zQTSHSADF1bXFcba+H6UiwUec6jtJoCaBP0JMRD2o1sacROPDYoNjtYO
- H4RPvQvxRSP0yFFkQPLqHmXs45RiwAg=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-rrsJtB03OBaccoylhqiqzg-1; Thu, 17 Oct 2024 03:38:34 -0400
-X-MC-Unique: rrsJtB03OBaccoylhqiqzg-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-46057904e03so14708271cf.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 00:38:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1LCC-0004NE-PP
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:45:20 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1LCA-0003FZ-Es
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 03:45:20 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-431481433bdso6554545e9.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 00:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729151116; x=1729755916;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qphpJxHufUzK/7GodwFYxlaC6HLyfnmR0ImsDWYRXwY=;
+ b=eNBbao/J+tLDihno/0DIH+xXk/47rnJ4jTcUyDUL5vsHSC0dJLMs80BLJ0TJCLYvp3
+ 91p5OlicFNV55mlEcU75mnZuAauSSYsNGlxrex+kYstdQH14CCcl/vibpiRNP9nZV4iI
+ hKbyabM6RV3429y0/1GUX23U4KQ39vwDzizjk3VSkrlUMXP2EAPLfUaea/m9Alus6Hwr
+ IzF/tz7BQXOAZ7VzxaXOsMSOJvt2OVVnbtXHRZsbKkYq1wVi1sV4tul0m2wPt3a3Pk8C
+ bbSh2Hu3MFU3LkSws+nH/KP/VFbwACQnF/13VCKdve4nZ4Rb7MNFSLQ4N/tdsiQFRHGc
+ UgSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729150714; x=1729755514;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9X7nDuMoSS5pjKY8f6BHUJyJcxz+/sepad7YcTY3Ovk=;
- b=rvDPdRF1xXTc+MGTcZM7BUAAynJzUbKYMKnhXcIyphcgtrQfeMxvyOshr/JGzi+ef9
- 4jrk7hTfRkRe+1zUGLNoGgop1S1U1oYHWFxKMOHNg9DHB3VXzgZQpb7rGb5pZxf4i9gz
- mA4qb5rSUMrOuGa/nOnWmZMibOhSynr/PHT5Hi0g2QL7PNAUyWppsEjP4aWP3A3IOThL
- E8lEUNuVDaQVPcVt+1i3Xgww8HHYO2Fxf9/0Ctlw6NLx4YVHQ+kd1i9Ocv061yofVnk9
- HyywTtmMLjX31mp034tKZGHdNc5GI1hRDQTajYsAjozub7xOlL3sDz/gSiWnjHEkyij5
- 553A==
-X-Gm-Message-State: AOJu0Yw/vYyJzDDxy/eLt27QE4vONFfX/RNqL1M3zbAcbV4hfOGwj/9I
- ycc8x8erCa+IHjmcedNAKCO1Mn11+2tWxVMyeUWuLTJbWhTd5Ww8PciHVNRG5B1fWC/RAE2Whlo
- Cpzz2wujVZtkex742xqqDr0+5DXJy6TN2hMMAsVQedRV4tDkIoCtp
-X-Received: by 2002:a05:622a:4c83:b0:45b:5e8e:3440 with SMTP id
- d75a77b69052e-4608a52b548mr89434121cf.60.1729150714122; 
- Thu, 17 Oct 2024 00:38:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdBYJJWeUlao4YQHGrcpFGu+fG5N+f0bVPHRANLeqg4xI/6upI/Yf2HyecsfPj+OV9ww130Q==
-X-Received: by 2002:a05:622a:4c83:b0:45b:5e8e:3440 with SMTP id
- d75a77b69052e-4608a52b548mr89433891cf.60.1729150713549; 
- Thu, 17 Oct 2024 00:38:33 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-231.retail.telecomitalia.it.
- [79.46.200.231]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4609bc1f0b4sm6071021cf.50.2024.10.17.00.38.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 00:38:32 -0700 (PDT)
-Date: Thu, 17 Oct 2024 09:38:23 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, dbassey@redhat.com, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] vhost-user: fix shared object return values
-Message-ID: <vmtm4zz6pkfcxr64wixa2wdjb7ujn2vaiapmziaqciiytcwe5v@7fh6zlfyf67l>
-References: <20241016090606.2358056-1-aesteve@redhat.com>
+ d=1e100.net; s=20230601; t=1729151116; x=1729755916;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qphpJxHufUzK/7GodwFYxlaC6HLyfnmR0ImsDWYRXwY=;
+ b=LUjwfSsIzCUawYxPW/f3qW2BI5yZ2Dmqr2ZmvBnKAV2xo5RYMOQm04fr3yt6FxSvs2
+ 5Lh1dB+sVUseMH2vQDTPBijDr0eCv9p/ckkwAkG1NqmC3WvLlwocaMzpjcHH3twXNsIG
+ voIdqCc0MNJnxszPtQ2B5WYFvsFp9F6BtoF2GidAOF1rX56qr1L0/GCv13YbBfH4PblQ
+ nBoQZF9xBIy+II6m/3j0KopU7K6PBbUZ1kNZFTPjuIq1NGu/4O/rQo2WRp9MZt9YSj4N
+ zyrHwDLOHe0SAOSjqT5A596WqreygeEno24WBo0sHUEb3BSVB1geSF9EwYFkbwoQYolW
+ nBIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAvmSVilwurGtSGw74MI37A57Ul0jOxC5K62pOxMXMDAYAPkM4AMZduSBvTwWTAPNa8Jh8hBYJjY79@nongnu.org
+X-Gm-Message-State: AOJu0YxD/IPIwcPqLUTB/Ze8y+6yfd0APM7K66X9MI1wyDtStIef5lRH
+ j9FmCq3BV7onWUAKrO2aZajgbzeyZGTzqgQ/UVhUFj87eskjMZbqRtgrAPUNMhc=
+X-Google-Smtp-Source: AGHT+IEqoVSMfqpkocZDBu2Stauh7XLeQx4gMkQh9KpphoIort2jcLbNmuJo4wUBsBgmzfXnW2t4BA==
+X-Received: by 2002:a05:600c:4f8e:b0:42f:8515:e490 with SMTP id
+ 5b1f17b1804b1-4311dea3cebmr209265805e9.5.1729151116057; 
+ Thu, 17 Oct 2024 00:45:16 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
+ ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37d7fa9090asm6384232f8f.57.2024.10.17.00.45.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Oct 2024 00:45:15 -0700 (PDT)
+Message-ID: <bd7ed74e-0ed6-4868-a05d-71c0bcaf6278@rivosinc.com>
+Date: Thu, 17 Oct 2024 09:45:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241016090606.2358056-1-aesteve@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/8] target/riscv: Implement Ssdbltrp exception handling
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue
+ <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+References: <20240925115808.77874-1-cleger@rivosinc.com>
+ <20240925115808.77874-4-cleger@rivosinc.com>
+ <CAKmqyKNYJjudgxA6z4dF5AP31NFn3ZOePMadjiVumja29oti5w@mail.gmail.com>
+ <109e3df4-416a-48a3-ae0b-b2a92f11c893@rivosinc.com>
+ <CAKmqyKPUrCw8xrTW_g5Sh3JWOkgjrkjCUNO28AXhGfFUfx1Y1A@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+In-Reply-To: <CAKmqyKPUrCw8xrTW_g5Sh3JWOkgjrkjCUNO28AXhGfFUfx1Y1A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=cleger@rivosinc.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,82 +107,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 16, 2024 at 11:06:06AM +0200, Albert Esteve wrote:
->VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
->VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
->in the spec that they return 0 for successful
->operations, non-zero otherwise. However,
->implementation relies on the return types
->of the virtio-dmabuf library, with opposite
->semantics (true if everything is correct,
->false otherwise). Therefore, current implementaion
 
-s/implementaion/implementation
 
-I hadn't seen it ;-P found with:
-./scripts/checkpatch.pl --strict --branch master..HEAD --codespell
+On 17/10/2024 06:29, Alistair Francis wrote:
+> On Mon, Oct 14, 2024 at 5:43 PM Clément Léger <cleger@rivosinc.com> wrote:
+>>
+>>
+>>
+>> On 11/10/2024 05:22, Alistair Francis wrote:
+>>> On Wed, Sep 25, 2024 at 9:59 PM Clément Léger <cleger@rivosinc.com> wrote:
+>>>>
+>>>> When the Ssdbltrp ISA extension is enabled, if a trap happens in S-mode
+>>>> while SSTATUS.SDT isn't cleared, generate a double trap exception to
+>>>> M-mode.
+>>>>
+>>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>>> ---
+>>>>  target/riscv/cpu.c        |  2 +-
+>>>>  target/riscv/cpu_bits.h   |  1 +
+>>>>  target/riscv/cpu_helper.c | 47 ++++++++++++++++++++++++++++++++++-----
+>>>>  3 files changed, 43 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>>> index cf06cd741a..65347ccd5a 100644
+>>>> --- a/target/riscv/cpu.c
+>>>> +++ b/target/riscv/cpu.c
+>>>> @@ -284,7 +284,7 @@ static const char * const riscv_excp_names[] = {
+>>>>      "load_page_fault",
+>>>>      "reserved",
+>>>>      "store_page_fault",
+>>>> -    "reserved",
+>>>> +    "double_trap",
+>>>>      "reserved",
+>>>>      "reserved",
+>>>>      "reserved",
+>>>> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+>>>> index 3a5588d4df..5557a86348 100644
+>>>> --- a/target/riscv/cpu_bits.h
+>>>> +++ b/target/riscv/cpu_bits.h
+>>>> @@ -699,6 +699,7 @@ typedef enum RISCVException {
+>>>>      RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
+>>>>      RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
+>>>>      RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
+>>>> +    RISCV_EXCP_DOUBLE_TRAP = 0x10,
+>>>>      RISCV_EXCP_SW_CHECK = 0x12, /* since: priv-1.13.0 */
+>>>>      RISCV_EXCP_HW_ERR = 0x13, /* since: priv-1.13.0 */
+>>>>      RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
+>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>>> index 395d8235ce..69da3c3384 100644
+>>>> --- a/target/riscv/cpu_helper.c
+>>>> +++ b/target/riscv/cpu_helper.c
+>>>> @@ -575,7 +575,9 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+>>>>          mstatus_mask |= MSTATUS_FS;
+>>>>      }
+>>>>      bool current_virt = env->virt_enabled;
+>>>> -
+>>>> +    if (riscv_env_smode_dbltrp_enabled(env, current_virt)) {
+>>>> +        mstatus_mask |= MSTATUS_SDT;
+>>>> +    }
+>>>>      g_assert(riscv_has_ext(env, RVH));
+>>>>
+>>>>      if (current_virt) {
+>>>> @@ -1707,6 +1709,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>>>>      CPURISCVState *env = &cpu->env;
+>>>>      bool virt = env->virt_enabled;
+>>>>      bool write_gva = false;
+>>>> +    bool vsmode_exc;
+>>>>      uint64_t s;
+>>>>      int mode;
+>>>>
+>>>> @@ -1721,6 +1724,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>>>>          !(env->mip & (1 << cause));
+>>>>      bool vs_injected = env->hvip & (1 << cause) & env->hvien &&
+>>>>          !(env->mip & (1 << cause));
+>>>> +    bool smode_double_trap = false;
+>>>> +    uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+>>>>      target_ulong tval = 0;
+>>>>      target_ulong tinst = 0;
+>>>>      target_ulong htval = 0;
+>>>> @@ -1837,13 +1842,35 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>>>>                  !async &&
+>>>>                  mode == PRV_M;
+>>>>
+>>>> +    vsmode_exc = env->virt_enabled && (((hdeleg >> cause) & 1) || vs_injected);
+>>>> +    /*
+>>>> +     * Check double trap condition only if already in S-mode and targeting
+>>>> +     * S-mode
+>>>> +     */
+>>>> +    if (cpu->cfg.ext_ssdbltrp && env->priv == PRV_S && mode == PRV_S) {
+>>>> +        bool dte = (env->menvcfg & MENVCFG_DTE) != 0;
+>>>> +        bool sdt = (env->mstatus & MSTATUS_SDT) != 0;
+>>>> +        /* In VS or HS */
+>>>> +        if (riscv_has_ext(env, RVH)) {
+>>>> +            if (vsmode_exc) {
+>>>> +                /* VS -> VS */
+>>>> +                /* Stay in VS mode, use henvcfg instead of menvcfg*/
+>>>> +                dte = (env->henvcfg & HENVCFG_DTE) != 0;
+>>>> +            } else if (env->virt_enabled) {
+>>>> +                /* VS -> HS */
+>>>> +                dte = false;
+>>>
+>>> I don't follow why this is false
+>>
+>> Hi Alistair,
+>>
+>> It's indeed probably lacking some comments here. The rationale is that
+>> if you are trapping from VS to HS, then at some point, you returned to
+>> VS using a sret/mret and thus cleared DTE, so rather than checking the
 
->violates the specification.
->
->Revert the logic so that the implementation
->of the vhost-user handling methods matches
->the specification.
->
->Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+s/DTE/SDT
 
-This is in from 9.0 ...
+> 
+> Why not just clear it at sret/mret? Instead of having this assumption
 
->Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+It has been cleared but since registers were swapped to enter virt mode,
+hypervisor SDT value is stored in mstatus_hs rather than mstatus. So I
+could have wrote it this way:
 
-... and this from 8.2, so should we consider stable branches?
++            } else if (env->virt_enabled) {
++                /* VS -> HS */
++                sdt = (env->mstatus_hs & MSTATUS_SDT);
 
-I think it depends if the backends are checking that return value.
+Since this is always 0 better assume it is 0 (but should be sdt = 0
+instead of dte = 0). But if you prefer using mstatus_hs for clarity, I
+can use that of course.
 
->Signed-off-by: Albert Esteve <aesteve@redhat.com>
->---
-> hw/virtio/vhost-user.c | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+Clément
 
-Thanks for the fix!
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->
->diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->index 00561daa06..90917352a4 100644
->--- a/hw/virtio/vhost-user.c
->+++ b/hw/virtio/vhost-user.c
->@@ -1607,7 +1607,7 @@ vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
->     QemuUUID uuid;
->
->     memcpy(uuid.data, object->uuid, sizeof(object->uuid));
->-    return virtio_add_vhost_device(&uuid, dev);
->+    return !virtio_add_vhost_device(&uuid, dev);
-> }
->
-> static int
->@@ -1623,16 +1623,16 @@ vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
->         struct vhost_dev *owner = virtio_lookup_vhost_device(&uuid);
->         if (dev != owner) {
->             /* Not allowed to remove non-owned entries */
->-            return 0;
->+            return -EPERM;
->         }
->         break;
->     }
->     default:
->         /* Not allowed to remove non-owned entries */
->-        return 0;
->+        return -EPERM;
->     }
->
->-    return virtio_remove_resource(&uuid);
->+    return !virtio_remove_resource(&uuid);
-> }
->
-> static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
->-- 
->2.46.1
->
+> 
+> Alistair
+> 
+>> value of mstatus_hs, just assume it is false.
+>>
+>> Thanks,
+>>
+>> Clément
+>>
+>>>
+>>> Alistair
+>>
 
 
