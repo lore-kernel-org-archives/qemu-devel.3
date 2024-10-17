@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68BB6D374A8
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CB1D374A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SDA-0007Bc-Jo; Thu, 17 Oct 2024 11:14:48 -0400
+	id 1t1SD6-0007Aw-Rb; Thu, 17 Oct 2024 11:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SD8-0007BM-Qt
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:46 -0400
+ id 1t1SD6-0007An-19
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:44 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SD7-00016G-96
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:46 -0400
+ id 1t1SD4-000161-AU
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:43 -0400
 Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBcgJ025032;
- Thu, 17 Oct 2024 15:14:39 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBdwt025043;
+ Thu, 17 Oct 2024 15:14:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=dB4HCRsy8IFj/zUVwchannUOHLDV6S6nVpfFBtaBAXE=; b=
- QzLs9vFrkNBOzP8y/ysnA9sMK5423ywIBAXQC/AKPcy0ORf8ShC7RJoN89rOCahW
- Yu19sEsOBxpOHgEfm8oL+EO9nfvZKoi6wy0rdhRrRhMKPwiXh7GO9OTsv7jUKLUj
- bVmXsi/orQICGaXGZUfQqw3MHlk9yzvNkLE7LjeRGKMJxMffSg/LPDV8n+dK1KAw
- m4C900tyOA2szOPC1zPCSrYAg167WPnhyOuFRpQymcqZroyqCO7IlAe7RKndrwYK
- 2LL3Fe8ArmPHRVanBev9E6Z6b+d2XIF5jzPObgm2wARK/G9tegsWMpFIbHh0zjyo
- qwG7M8bXVMHaBNX/YUC/3A==
+ corp-2023-11-20; bh=dHqvC9yA3JHZrC5YQ4nbBhN55KnyC1PMPI6TYC5Kff8=; b=
+ Ur8Nmb01oGrzhQr3nhkUbtI1S21aBLVIqJE+qjM2T+Y/IwnUnFSgkT4ajTnO4+qE
+ sgxAV3MDX+nV4NT4xSSqGrFC1OXOwFckpfjtCGYGIWKXHdsPPpMSxD9UNOrn2HPS
+ Gv1od1+eItN8FpHdrSCEF6ZROPcFzPgIMy2ZqvrRgJ6dc/EXbSqwRHSJOwEb4M+n
+ byIwkl5FKF0DhH/UB35OYxd/aXfFpxxo6J8V0wa+30ySPkq3jvdD9zVBsPcoN4Dr
+ 8mdrq31QAHfbn9taWLy5de2Hq5RhyUVSRaP5Bh2bOQKPj3nfnu8qTB0+sNYqUFXJ
+ J2q63/rymln20kXvZdshrg==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427g1apg28-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427g1apg25-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:39 +0000 (GMT)
+ Thu, 17 Oct 2024 15:14:36 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 49HEx45S027314; Thu, 17 Oct 2024 15:14:37 GMT
+ with ESMTP id 49HEYYDG027117; Thu, 17 Oct 2024 15:14:35 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 427fjgy6hd-1
+ 427fjgy6f7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:37 +0000
+ Thu, 17 Oct 2024 15:14:34 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgt017147;
- Thu, 17 Oct 2024 15:14:37 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgp017147;
+ Thu, 17 Oct 2024 15:14:34 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 427fjgy62e-15; Thu, 17 Oct 2024 15:14:37 +0000
+ ESMTP id 427fjgy62e-13; Thu, 17 Oct 2024 15:14:34 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,10 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 14/14] migration: allow commands during precreate and
- preconfig
-Date: Thu, 17 Oct 2024 08:14:15 -0700
-Message-Id: <1729178055-207271-15-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 12/14] qtest: connect in precreate
+Date: Thu, 17 Oct 2024 08:14:13 -0700
+Message-Id: <1729178055-207271-13-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
 References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
@@ -79,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410170105
-X-Proofpoint-GUID: fiSzgF2sQTmP4Pkbvt_qT7ZTyMXGMZU5
-X-Proofpoint-ORIG-GUID: fiSzgF2sQTmP4Pkbvt_qT7ZTyMXGMZU5
+X-Proofpoint-GUID: W6M4IeVqcy1Rn7hfg9dKg7hqC-nxz0fE
+X-Proofpoint-ORIG-GUID: W6M4IeVqcy1Rn7hfg9dKg7hqC-nxz0fE
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -106,105 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow various migration commands during the precreate and preconfig phases
-so migration may be set up and initiated at that time.
+Initialize the qtest connection and the chardev it depends on during the
+precreate phase.  Handle both forms of syntax:
+
+  -object qtest,id=<id>,chardev=<name>
+  -qtest chardev:<name>
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hmp-commands.hx     |  2 ++
- qapi/migration.json | 16 +++++++++++-----
- qapi/misc.json      |  3 ++-
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ system/vl.c | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 06746f0..c0f34e9 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -959,6 +959,7 @@ ERST
-         .params     = "uri",
-         .help       = "Continue an incoming migration from an -incoming defer",
-         .cmd        = hmp_migrate_incoming,
-+        .flags      = "p",
-     },
+diff --git a/system/vl.c b/system/vl.c
+index a985ab8..455c693 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1816,6 +1816,19 @@ static void object_option_foreach_add(
+     }
+ }
  
- SRST
-@@ -1000,6 +1001,7 @@ ERST
-         .help       = "Enable/Disable the usage of a capability for migration",
-         .cmd        = hmp_migrate_set_capability,
-         .command_completion = migrate_set_capability_completion,
-+        .flags      = "p",
-     },
++static void object_option_foreach(
++    bool (*type_opt_predicate)(const ObjectOption *opt),
++    void (*func)(ObjectOptions *opts))
++{
++    ObjectOption *opt, *next;
++
++    QTAILQ_FOREACH_SAFE(opt, &object_opts, next, next) {
++        if (type_opt_predicate(opt)) {
++            func(opt->opts);
++        }
++    }
++}
++
+ static void object_option_add_visitor(Visitor *v)
+ {
+     ObjectOption *opt = g_new0(ObjectOption, 1);
+@@ -2000,6 +2013,18 @@ static int monitor_add_chardev(void *opaque, QemuOpts *opts, Error **errp)
+     return ret;
+ }
  
- SRST
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 3af6aa1..0468c07 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -373,7 +373,8 @@
- #           }
- #        }
- ##
--{ 'command': 'query-migrate', 'returns': 'MigrationInfo' }
-+{ 'command': 'query-migrate', 'returns': 'MigrationInfo',
-+  'allow-preconfig': true }
++static void qtest_add_chardev(ObjectOptions *opts)
++{
++    g_autoptr(QDict) props = user_creatable_get_props(opts);
++    const char *chardev = qdict_get_str(props, "chardev");
++    chardev_add(chardev);
++}
++
++static bool option_is_qtest(const ObjectOption *opt)
++{
++    return g_str_equal(ObjectType_str(opt->opts->qom_type), "qtest");
++}
++
+ static bool option_is_monitor_chardev(void *opaque, QemuOpts *opts)
+ {
+     return chardev_find(qemu_opts_id(opts));
+@@ -2012,15 +2037,27 @@ static bool option_is_not_monitor_chardev(void *opaque, QemuOpts *opts)
  
- ##
- # @MigrationCapability:
-@@ -527,7 +528,8 @@
- #     <- { "return": {} }
- ##
- { 'command': 'migrate-set-capabilities',
--  'data': { 'capabilities': ['MigrationCapabilityStatus'] } }
-+  'data': { 'capabilities': ['MigrationCapabilityStatus'] },
-+  'allow-preconfig': true }
+ static void qemu_create_monitors(void)
+ {
++    const char *name;
++
+     qemu_opts_foreach(qemu_find_opts("mon"),
+                       monitor_add_chardev, NULL, &error_fatal);
  
- ##
- # @query-migrate-capabilities:
-@@ -551,7 +553,9 @@
- #           {"state": false, "capability": "x-colo"}
- #        ]}
- ##
--{ 'command': 'query-migrate-capabilities', 'returns':   ['MigrationCapabilityStatus']}
-+{ 'command': 'query-migrate-capabilities',
-+  'returns':   ['MigrationCapabilityStatus'],
-+  'allow-preconfig': true }
++    object_option_foreach(option_is_qtest, qtest_add_chardev);
++
++    if (qtest_chrdev && strstart(qtest_chrdev, "chardev:", &name)) {
++        chardev_add(g_strdup(name));
++    }
++
+     qemu_opts_filter_foreach(qemu_find_opts("chardev"),
+                       option_is_monitor_chardev,
+                       chardev_init_func, NULL, &error_fatal);
  
- ##
- # @MultiFDCompression:
-@@ -1297,7 +1301,8 @@
- #        }
- ##
- { 'command': 'query-migrate-parameters',
--  'returns': 'MigrationParameters' }
-+  'returns': 'MigrationParameters',
-+  'allow-preconfig': true }
+     qemu_opts_foreach(qemu_find_opts("mon"),
+                       mon_init_func, NULL, &error_fatal);
++
++    if (qtest_chrdev) {
++        qtest_server_init(qtest_chrdev, qtest_log, &error_fatal);
++    }
+ }
  
- ##
- # @migrate-start-postcopy:
-@@ -1751,7 +1756,8 @@
- { 'command': 'migrate-incoming',
-              'data': {'*uri': 'str',
-                       '*channels': [ 'MigrationChannel' ],
--                      '*exit-on-error': 'bool' } }
-+                      '*exit-on-error': 'bool' },
-+  'allow-preconfig': true }
+ static void qemu_create_early_backends(void)
+@@ -2098,10 +2135,6 @@ static bool object_create_late(const ObjectOption *opt)
  
- ##
- # @xen-save-devices-state:
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 559b66f..ce60493 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -241,7 +241,8 @@
- { 'command': 'human-monitor-command',
-   'data': {'command-line': 'str', '*cpu-index': 'int'},
-   'returns': 'str',
--  'features': [ 'savevm-monitor-nodes' ] }
-+  'features': [ 'savevm-monitor-nodes' ],
-+  'allow-preconfig': true }
+ static void qemu_create_late_backends(void)
+ {
+-    if (qtest_chrdev) {
+-        qtest_server_init(qtest_chrdev, qtest_log, &error_fatal);
+-    }
+-
+     net_init_clients();
  
- ##
- # @getfd:
+     object_option_foreach_add(object_create_late);
 -- 
 1.8.3.1
 
