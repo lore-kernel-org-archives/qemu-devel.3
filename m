@@ -4,85 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3F3D2127C
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 11:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4082D2127C
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 11:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1OX0-0000Em-2T; Thu, 17 Oct 2024 07:19:02 -0400
+	id 1t1OfA-0002J5-Tb; Thu, 17 Oct 2024 07:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1t1OWx-0000DF-7f
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:18:59 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkanwal@rivosinc.com>)
- id 1t1OWu-0003rz-UB
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:18:58 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-37d4c482844so548940f8f.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 04:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729163934; x=1729768734;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nwQGeKGdc9B5gHSGirsmxRp2PmCgVDi1PT7o+t/SJz0=;
- b=pMXOcWA0yjShuajdk4u7Jz05rB6MPLgVXco+CmFl1j6bDG65KRWajiei6ZjMEbTexZ
- NB13amuwXHwV4Vx+szp4VvvaGXBWDo5XYZXgC+V28HCUYz0C+yIRjiM2ruVN1y7cx9mK
- 3/0apnnFljhRNvJNiYpZlCjBDBHjiFI0g/qs/XawKcrclkNogpYhwJ5btwsZcJ5s7GQx
- Zb8BbFZq7hYVMZF74bJ4OD0ezwREsOpVuEyDnJ6lKoJvjnufD8mUzQHznwBTyQJCNlam
- PuReXyUzDDlCDkndm8J9ZEEnGVbWFVKJN5uzV/Qlx709TyzTRpuPsm2IpDTw6PGrjSPH
- wuhw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1Of8-0002Im-SD
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:27:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1Of6-0004op-PK
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 07:27:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729164440;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WxwWYReb1MGUsBhi3qCU56PpwRxbBB4Fpo2FhE635i4=;
+ b=H/O8bnGcaIW63+QXE1qcV8wBAREOnEqv1C0eXpt6aj56aAUST75myMtuPG24Uhg1c/9EE3
+ Fowg9bH/3hKqE5/SfxWCP2UKWXd+J7A7GbobChKf1aJfIQ9JvBjZLcM4dHHhxUlZ+QHjvi
+ WVyNxEaTgH4nChm2SKmBe3DG8NQs17k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-113-ECS0ZVYSPgGzYP_lKNtnLA-1; Thu, 17 Oct 2024 07:27:19 -0400
+X-MC-Unique: ECS0ZVYSPgGzYP_lKNtnLA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d67f4bf98so453823f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 04:27:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729163934; x=1729768734;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nwQGeKGdc9B5gHSGirsmxRp2PmCgVDi1PT7o+t/SJz0=;
- b=PaDCtjNf9Z/apvBn2tTKuqjY5UB01+sVebUy13c1x85y9YxxAoSxdly3eEDMJo0m89
- 0xnvfalAWSJMYTXHl2J1dTutKZM0jaCSxOZL54JqSkd6MbLEdv5eqWMhYXuLKng/7cZ8
- uDEEOPSSfJssukhc1r0pppyYNz0TvH5NDX7T7y9KFEOhybaZzGgZsV1rbFOcGA+zXnHV
- 2FEj1RAr4so1ni/8R2djTeWAWsRlKmYrvA8Ye6FdKSP6+6KaNvYLJa4ZvIEwu63Pxp4C
- KkHRHgs8gja4IpG2hysyseiXrRWCvRxNWfOKHoSoH4ogBIPFoIRTTyZmnlVN4LE+Wxa9
- vSHA==
+ d=1e100.net; s=20230601; t=1729164438; x=1729769238;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WxwWYReb1MGUsBhi3qCU56PpwRxbBB4Fpo2FhE635i4=;
+ b=qq8V3aERRXRUH0p4AERGLbHFRvm8QMxBv0i3WYMN9bcVcuN9wjHVy6V8Aqy5Q5IH91
+ QuoFXzWG8TbHEldA4wwMtQ66x7UUifTqpORwKvvUu2n/zePs7Smgo5e88elafGPK1EKC
+ s1+2nAcWdr6VzPoy1EG/iy3UEUZaA3daktBN53p3Pom5uqSaKxHqwCuV0gGSqSmQUXW0
+ JOvwFFYzbLqKwT7kkOVkwWimllv7rbTWbGYGPJdEZagpoV7GBezSogKxNG4QVRg4MmcU
+ xWD46HUURDRTUkpO44XPo91BaqTTfvGshbGK3KHJOJkBGuMsXC5bXiyncEJzFRkomEV3
+ 8oRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7ZknYrbJ497SSlmAhkEgNrVvtEHuwrAmZojh4uaeaQjkLcSip+/0vYGfZ8Dk5th/gM/MSyDGz9Zr7@nongnu.org
-X-Gm-Message-State: AOJu0Yx0Xuf+NO1lGpL25HCy4a8SgtwDgqZJ1Y91IW+sTq4VfhfBjq0S
- kcA8qAlPnyvLftAskZW2bq0aGgvbPs4ytoESpmmjr+DFhjMYoRqGaQzgjMr1i9nj5Yd/dg9PA4g
- m82WDfhRXHMCY0RNRU2OUULXZ/wC/mB6Haz30YA==
-X-Google-Smtp-Source: AGHT+IEwWY4RDJobWM7wH8c8/cBqZTzfGOrjf1XRhgOhd/C8ngat2KJaU0bmhojWWyOqGYeocWW8FLdPV/nKJdqdC9w=
-X-Received: by 2002:a5d:5590:0:b0:37d:4cef:538b with SMTP id
- ffacd0b85a97d-37d86c02a86mr4601798f8f.26.1729163933985; Thu, 17 Oct 2024
- 04:18:53 -0700 (PDT)
+ AJvYcCWaJl3CzFi6OmNWDl/UYSj4XwZydCaNDqcEjBXmwr54/Bg0v8/1dsbKhdnidwymYMvsuqvuex/CnFIq@nongnu.org
+X-Gm-Message-State: AOJu0Yx2qj5pthmELVPk+yysr9QCR5yfe+GJXAbxsxjVa+eovBU4jgqT
+ frXLuqTkHQVA+HkeZPlr46uIiN8h07O4a0qM5FEP/r2UKoemFj+rncFHnripKWmsNM/HVu51Pi6
+ dIK+ioApJzv6rQeSMfiTYSUy/dueOijge89r4veehUxgkNVBbc+KesTC1V9SMUUw=
+X-Received: by 2002:a5d:4a06:0:b0:374:c8e5:d56a with SMTP id
+ ffacd0b85a97d-37d86d68ee4mr4618044f8f.48.1729164437775; 
+ Thu, 17 Oct 2024 04:27:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvYCtC1tL/2mEtI7wR7cJFqDHfo9GBc63xE8QEKnEeRJf/fpjXLAuT8tbwnbmOYb/gJqfOXg==
+X-Received: by 2002:a5d:4a06:0:b0:374:c8e5:d56a with SMTP id
+ ffacd0b85a97d-37d86d68ee4mr4618032f8f.48.1729164437393; 
+ Thu, 17 Oct 2024 04:27:17 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43158c35c7fsm23128695e9.10.2024.10.17.04.27.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Oct 2024 04:27:17 -0700 (PDT)
+Message-ID: <de5ab616-aa5b-4cb1-af56-1f4dc377b5f6@redhat.com>
+Date: Thu, 17 Oct 2024 13:27:15 +0200
 MIME-Version: 1.0
-References: <20240619152708.135991-1-rkanwal@rivosinc.com>
- <20240619152708.135991-4-rkanwal@rivosinc.com>
- <CANzO1D33XPxXAJ8kxBz0oa1R8pb5et3BQV5EELiEvdhSjj3S1Q@mail.gmail.com>
-In-Reply-To: <CANzO1D33XPxXAJ8kxBz0oa1R8pb5et3BQV5EELiEvdhSjj3S1Q@mail.gmail.com>
-From: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Date: Thu, 17 Oct 2024 12:18:43 +0100
-Message-ID: <CAECbVCuQ-tWFrskOZ3FcG+nziamTb8fHV8iA5VOUfhFa4AvAMA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] target/riscv: Add support for Control Transfer
- Records extension CSRs.
-To: Frank Chang <frank.chang@sifive.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
- beeman@rivosinc.com, tech-control-transfer-records@lists.riscv.org, 
- jason.chien@sifive.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=rkanwal@rivosinc.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 16/19] s390x: Rebuild IPLB for SCSI device directly
+ from DIAG308
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241017014748.829029-1-jrossi@linux.ibm.com>
+ <20241017014748.829029-17-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241017014748.829029-17-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,245 +148,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 27, 2024 at 10:28=E2=80=AFAM Frank Chang <frank.chang@sifive.co=
-m> wrote:
->
-> Rajnesh Kanwal <rkanwal@rivosinc.com> =E6=96=BC 2024=E5=B9=B46=E6=9C=8819=
-=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=8811:27=E5=AF=AB=E9=81=93=EF=
-=BC=9A
-> >
-> > This commit adds support for [m|s|vs]ctrcontrol, sctrstatus and
-> > sctrdepth CSRs handling.
-> >
-> > Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-> > ---
-> >  target/riscv/cpu.h     |   5 ++
-> >  target/riscv/cpu_cfg.h |   2 +
-> >  target/riscv/csr.c     | 128 +++++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 135 insertions(+)
-> >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index a185e2d494..3d4d5172b8 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -263,6 +263,11 @@ struct CPUArchState {
-> >      target_ulong mcause;
-> >      target_ulong mtval;  /* since: priv-1.10.0 */
-> >
-> > +    uint64_t mctrctl;
-> > +    uint32_t sctrdepth;
-> > +    uint32_t sctrstatus;
-> > +    uint64_t vsctrctl;
-> > +
-> >      /* Machine and Supervisor interrupt priorities */
-> >      uint8_t miprio[64];
-> >      uint8_t siprio[64];
-> > diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> > index d9354dc80a..d329a65811 100644
-> > --- a/target/riscv/cpu_cfg.h
-> > +++ b/target/riscv/cpu_cfg.h
-> > @@ -123,6 +123,8 @@ struct RISCVCPUConfig {
-> >      bool ext_zvfhmin;
-> >      bool ext_smaia;
-> >      bool ext_ssaia;
-> > +    bool ext_smctr;
-> > +    bool ext_ssctr;
->
-> Base on: https://github.com/riscv/riscv-control-transfer-records/pull/29
-> Smctr and Ssctr depend on both S-mode and Sscsrind.
-> We should add the implied rules for Smctr and Ssctr.
->
-> Regards,
-> Frank Chang
+On 17/10/2024 03.47, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Because virtio-scsi type devices use a non-architected IPLB pbt code they cannot
+> be set and stored normally. Instead, the IPLB must be rebuilt during re-ipl.
+> 
+> As s390x does not natively support multiple boot devices, the devno field is
+> used to store the position in the boot order for the device.
+> 
+> Handling the rebuild as part of DIAG308 removes the need to check the devices
+> for invalid IPLBs later in the IPL.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   hw/s390x/ipl.h              | 11 ++++--
+>   include/hw/s390x/ipl/qipl.h |  3 +-
+>   hw/s390x/ipl.c              | 75 +++++++------------------------------
+>   pc-bios/s390-ccw/jump2ipl.c | 11 ++++--
+>   target/s390x/diag.c         |  9 ++++-
+>   5 files changed, 39 insertions(+), 70 deletions(-)
+> 
+> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+> index 54eb48fd6e..aead1d6ae5 100644
+> --- a/hw/s390x/ipl.h
+> +++ b/hw/s390x/ipl.h
+> @@ -24,6 +24,7 @@
+>   
+>   void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
+>   void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
+> +void s390_rebuild_iplb(uint16_t index, IplParameterBlock *iplb);
+>   void s390_ipl_update_diag308(IplParameterBlock *iplb);
+>   int s390_ipl_prepare_pv_header(Error **errp);
+>   int s390_ipl_pv_unpack(void);
+> @@ -65,7 +66,8 @@ struct S390IPLState {
+>       bool enforce_bios;
+>       bool iplb_valid;
+>       bool iplb_valid_pv;
+> -    bool netboot;
+> +    bool rebuilt_iplb;
+> +    uint16_t iplb_index;
+>       /* reset related properties don't have to be migrated or reset */
+>       enum s390_reset reset_type;
+>       int reset_cpu_index;
+> @@ -172,11 +174,14 @@ static inline bool iplb_valid_pv(IplParameterBlock *iplb)
+>   
+>   static inline bool iplb_valid(IplParameterBlock *iplb)
+>   {
+> +    uint32_t len = be32_to_cpu(iplb->len);
+> +
+>       switch (iplb->pbt) {
+>       case S390_IPL_TYPE_FCP:
+> -        return be32_to_cpu(iplb->len) >= S390_IPLB_MIN_FCP_LEN;
+> +        return len >= S390_IPLB_MIN_FCP_LEN;
+>       case S390_IPL_TYPE_CCW:
+> -        return be32_to_cpu(iplb->len) >= S390_IPLB_MIN_CCW_LEN;
+> +        return (len >= S390_IPLB_MIN_CCW_LEN);
 
-Hi Frank,
+Style inconsistency: In the FCP case, you did the return statement without 
+parentheses, so I'd suggest to remove them here, too.
 
-Are you referring to the checks in riscv_cpu_validate_set_extensions()?
-These checks are already present in the last patch.
+> +    case S390_IPL_TYPE_QEMU_SCSI:
+>       default:
+>           return false;
+>       }
+> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+> index e56b181298..451f3b1684 100644
+> --- a/include/hw/s390x/ipl/qipl.h
+> +++ b/include/hw/s390x/ipl/qipl.h
+> @@ -28,7 +28,8 @@
+>    */
+>   struct QemuIplParameters {
+>       uint8_t  qipl_flags;
+> -    uint8_t  reserved1[3];
+> +    uint8_t  index;
+> +    uint8_t  reserved1[2];
+>       uint64_t reserved2;
+>       uint32_t boot_menu_timeout;
+>       uint8_t  reserved3[2];
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index aec79f41a8..50fde05b67 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -448,7 +448,6 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
+>   
+>   static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>   {
+> -    S390IPLState *ipl = get_ipl_device();
+>       CcwDevice *ccw_dev = NULL;
+>       SCSIDevice *sd;
+>       int devtype;
+> @@ -481,9 +480,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>               iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
+>               break;
+>           case CCW_DEVTYPE_VIRTIO_NET:
+> -            /* The S390IPLState netboot is true if ANY IPLB may use netboot */
+> -            ipl->netboot = true;
+> -            /* Fall through to CCW_DEVTYPE_VIRTIO case */
+>           case CCW_DEVTYPE_VIRTIO:
+>               iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
+>               iplb->blk0_len =
+> @@ -508,6 +504,17 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>       return false;
+>   }
+>   
+> +
 
-https://lore.kernel.org/qemu-riscv/20240619152708.135991-7-rkanwal@rivosinc=
-.com/
+Remove the additonal empty line, please.
+
+> +void s390_rebuild_iplb(uint16_t dev_index, IplParameterBlock *iplb)
+> +{
+> +    S390IPLState *ipl = get_ipl_device();
+> +    uint16_t index;
+> +    index = ipl->rebuilt_iplb ? ipl->iplb_index : dev_index;
+> +
+> +    ipl->rebuilt_iplb = s390_build_iplb(get_boot_device(index), iplb);
+> +    ipl->iplb_index = index;
+> +}
+
+With the nits fixed:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
->
->
-> >      bool ext_sscofpmf;
-> >      bool ext_smepmp;
-> >      bool rvv_ta_all_1s;
-> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> > index 2f92e4b717..0b5bf4d050 100644
-> > --- a/target/riscv/csr.c
-> > +++ b/target/riscv/csr.c
-> > @@ -621,6 +621,48 @@ static RISCVException pointer_masking(CPURISCVStat=
-e *env, int csrno)
-> >      return RISCV_EXCP_ILLEGAL_INST;
-> >  }
-> >
-> > +/*
-> > + * M-mode:
-> > + * Without ext_smctr raise illegal inst excep.
-> > + * Otherwise everything is accessible to m-mode.
-> > + *
-> > + * S-mode:
-> > + * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-> > + * Otherwise everything other than mctrctl is accessible.
-> > + *
-> > + * VS-mode:
-> > + * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-> > + * Without hstateen.ctr raise virtual illegal inst excep.
-> > + * Otherwise allow sctrctl (vsctrctl), sctrstatus, 0x200-0x2ff entry r=
-ange.
-> > + * Always raise illegal instruction exception for sctrdepth.
-> > + */
-> > +static RISCVException ctr_mmode(CPURISCVState *env, int csrno)
-> > +{
-> > +    /* Check if smctr-ext is present */
-> > +    if (riscv_cpu_cfg(env)->ext_smctr) {
-> > +        return RISCV_EXCP_NONE;
-> > +    }
-> > +
-> > +    return RISCV_EXCP_ILLEGAL_INST;
-> > +}
-> > +
-> > +static RISCVException ctr_smode(CPURISCVState *env, int csrno)
-> > +{
-> > +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
-> > +
-> > +    if (!cfg->ext_smctr && !cfg->ext_ssctr) {
-> > +        return RISCV_EXCP_ILLEGAL_INST;
-> > +    }
-> > +
-> > +    RISCVException ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-> > +    if (ret =3D=3D RISCV_EXCP_NONE && csrno =3D=3D CSR_SCTRDEPTH &&
-> > +        env->virt_enabled) {
-> > +        return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-> > +    }
-> > +
-> > +    return ret;
-> > +}
-> > +
-> >  static RISCVException aia_hmode(CPURISCVState *env, int csrno)
-> >  {
-> >      int ret;
-> > @@ -3835,6 +3877,86 @@ static RISCVException write_satp(CPURISCVState *=
-env, int csrno,
-> >      return RISCV_EXCP_NONE;
-> >  }
-> >
-> > +static RISCVException rmw_sctrdepth(CPURISCVState *env, int csrno,
-> > +                                    target_ulong *ret_val,
-> > +                                    target_ulong new_val, target_ulong=
- wr_mask)
-> > +{
-> > +    uint64_t mask =3D wr_mask & SCTRDEPTH_MASK;
-> > +
-> > +    if (ret_val) {
-> > +        *ret_val =3D env->sctrdepth;
-> > +    }
-> > +
-> > +    env->sctrdepth =3D (env->sctrdepth & ~mask) | (new_val & mask);
-> > +
-> > +    /* Correct depth. */
-> > +    if (wr_mask & SCTRDEPTH_MASK) {
-> > +        uint64_t depth =3D get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> > +
-> > +        if (depth > SCTRDEPTH_MAX) {
-> > +            depth =3D SCTRDEPTH_MAX;
-> > +            env->sctrdepth =3D set_field(env->sctrdepth, SCTRDEPTH_MAS=
-K, depth);
-> > +        }
-> > +
-> > +        /* Update sctrstatus.WRPTR with a legal value */
-> > +        depth =3D 16 << depth;
-> > +        env->sctrstatus =3D
-> > +            env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
-> > +    }
-> > +
-> > +    return RISCV_EXCP_NONE;
-> > +}
-> > +
-> > +static RISCVException rmw_sctrstatus(CPURISCVState *env, int csrno,
-> > +                                     target_ulong *ret_val,
-> > +                                     target_ulong new_val, target_ulon=
-g wr_mask)
-> > +{
-> > +    uint32_t depth =3D 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK)=
-;
-> > +    uint32_t mask =3D wr_mask & SCTRSTATUS_MASK;
-> > +
-> > +    if (ret_val) {
-> > +        *ret_val =3D env->sctrstatus;
-> > +    }
-> > +
-> > +    env->sctrstatus =3D (env->sctrstatus & ~mask) | (new_val & mask);
-> > +
-> > +    /* Update sctrstatus.WRPTR with a legal value */
-> > +    env->sctrstatus =3D env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (d=
-epth - 1));
-> > +
-> > +    return RISCV_EXCP_NONE;
-> > +}
-> > +
-> > +static RISCVException rmw_xctrctl(CPURISCVState *env, int csrno,
-> > +                                    target_ulong *ret_val,
-> > +                                    target_ulong new_val, target_ulong=
- wr_mask)
-> > +{
-> > +    uint64_t csr_mask, mask =3D wr_mask;
-> > +    uint64_t *ctl_ptr =3D &env->mctrctl;
-> > +
-> > +    if (csrno =3D=3D CSR_MCTRCTL) {
-> > +        csr_mask =3D MCTRCTL_MASK;
-> > +    } else if (csrno =3D=3D CSR_SCTRCTL && !env->virt_enabled) {
-> > +        csr_mask =3D SCTRCTL_MASK;
-> > +    } else {
-> > +        /*
-> > +         * This is for csrno =3D=3D CSR_SCTRCTL and env->virt_enabled =
-=3D=3D true
-> > +         * or csrno =3D=3D CSR_VSCTRCTL.
-> > +         */
-> > +        csr_mask =3D VSCTRCTL_MASK;
-> > +        ctl_ptr =3D &env->vsctrctl;
-> > +    }
-> > +
-> > +    mask &=3D csr_mask;
-> > +
-> > +    if (ret_val) {
-> > +        *ret_val =3D *ctl_ptr & csr_mask;
-> > +    }
-> > +
-> > +    *ctl_ptr =3D (*ctl_ptr & ~mask) | (new_val & mask);
-> > +
-> > +    return RISCV_EXCP_NONE;
-> > +}
-> > +
-> >  static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-> >                                    target_ulong *val)
-> >  {
-> > @@ -5771,6 +5893,12 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D=
- {
-> >      [CSR_SPMBASE] =3D    { "spmbase", pointer_masking, read_spmbase,
-> >                           write_spmbase                                =
-      },
-> >
-> > +    [CSR_MCTRCTL]    =3D { "mctrctl",    ctr_mmode,  NULL, NULL, rmw_x=
-ctrctl },
-> > +    [CSR_SCTRCTL]    =3D { "sctrctl",    ctr_smode,  NULL, NULL, rmw_x=
-ctrctl },
-> > +    [CSR_VSCTRCTL]   =3D { "vsctrctl",   ctr_smode,  NULL, NULL, rmw_x=
-ctrctl },
-> > +    [CSR_SCTRDEPTH]  =3D { "sctrdepth",  ctr_smode,  NULL, NULL, rmw_s=
-ctrdepth },
-> > +    [CSR_SCTRSTATUS] =3D { "sctrstatus", ctr_smode,  NULL, NULL, rmw_s=
-ctrstatus },
-> > +
-> >      /* Performance Counters */
-> >      [CSR_HPMCOUNTER3]    =3D { "hpmcounter3",    ctr,    read_hpmcount=
-er },
-> >      [CSR_HPMCOUNTER4]    =3D { "hpmcounter4",    ctr,    read_hpmcount=
-er },
-> > --
-> > 2.34.1
-> >
-> >
+  Thomas
+
+
 
