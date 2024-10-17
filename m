@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F8DD374A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B497AD374A6
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1RsQ-0003AK-FH; Thu, 17 Oct 2024 10:53:22 -0400
+	id 1t1RsC-0002xw-4f; Thu, 17 Oct 2024 10:53:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t1RsO-00039R-8m
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:21 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1t1RsA-0002th-5E
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:06 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1t1RsM-0006yR-Na
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:20 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7ea9739647bso716593a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:53:18 -0700 (PDT)
+ id 1t1Rs8-0006tj-Ie
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:53:05 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-71e983487a1so413324b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729176797; x=1729781597;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729176783; x=1729781583;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8U2uO9qd5IodOHkoxi5qOiNsNpKEr6lwWDwDi6hiUAM=;
- b=P/DPa+6eggrnluSy1MMU4IxeTaiFmNdZO3usIxhmUaP69GZqGS+UwQQh7QCCjtsECY
- +zg+/8u6aAi7vZDixkjHcdx0rAaZ4DUmOCPEJx9KB2ayeyMPB9c3FsAPl7qGcuHJB/is
- yjKr9BPaNtxIDcFBF9x8zGHlOKWbKVFxzMZMzZotASXtuEHcTz4MQNHd6GvNuCb0E5/j
- pHx0kaxii+dzkv1CQ4RiC0xTyCijXmB2jU/FiXKehR+0O7cT7xJ9nbhLxa8/H0vFu1Vt
- Uy4RlpudKbV2vVhL6XIo99/7LKBd+1AFNHBbGyLy3j8Q3TBP3gYte9/TL7fZlEXn/S1L
- MAdg==
+ bh=ROFq32OHcffyErje8nbh+cbnR480vNSOfFeXksAbJNo=;
+ b=B674B8l1E2vtzYtpKRwYNwYYqXFQk2QbP1WzmEzFMt5zMGWHjYVR4hQz+kkQG0wpp/
+ MWsSGLeUDO5tlFaXZvDld4lYRfz6z6Jn3MjIsPmGYYw0RquPJWDrWhWFUOoedN3CpSmZ
+ IIBRHTbaSve7bg8YxxHbzlG15z0G22YwkRuXjEwau6W25M3RmnwWyR4YbRdIkZdPFRPd
+ PLKLf9CFUhAd5BFfVBDFmfPXtYkWgPsT2KuyN2obwDLipOaRj5OxOKDhZQif4yTcJo/p
+ 17YbXuRXmlqNx1wy/CgSN8pDXeL/U5apEHML03zNG/g322EgqJhBstOY/dqDxbgmJNNh
+ auWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729176797; x=1729781597;
+ d=1e100.net; s=20230601; t=1729176783; x=1729781583;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8U2uO9qd5IodOHkoxi5qOiNsNpKEr6lwWDwDi6hiUAM=;
- b=wcbSJsTlppeczw+QDeskgNOx0815npmCzd6Qur1N6SzdwVEIleehgx6+clu8oTOTBN
- s7h8wryf7mqnisaiM6vaSdpC88niHUSiwimqBX6oTyuwRIr9YK6uqf/02jWqDUjhupR6
- NUvuzaHEHZhm9vX9KTXZhT7xwLiTnUgZ1xlfMGIbT9DuJEyBc7xu8VN0d08Jmy3TpTfC
- 2oAr3pQ5R3duBxICXrpo3nwUlSVdZl091+lqIlJz26HS48KSkqauIn0ByXKOkk4tbAKn
- Qf7V2QAJnpaf7yQy06w36gPdJSvNVPueWz6szSHVRYsfsthpPitqAzujO1fPNl7GLRoR
- G5wA==
+ bh=ROFq32OHcffyErje8nbh+cbnR480vNSOfFeXksAbJNo=;
+ b=b7kShxrzfhDF2Baep2OB4ezDZYapiBtq7PfzmlJX6urI4nb4SUUx4mJA1O7QKnul3V
+ yNw1ZzSyncw3Q7wfVtWyFZUwqoXRNUwYkoidAY56YPtldIE+ZHzHb/WQgFvnqXhlru4q
+ uySO9nFre3RW0tsxHvd++fOTHpEsnkDTkc/C2GcSlNO1etwjh6B5uEaaGcbj5oLxbofu
+ 1+YzXHt3KCb7LKFgpz3wTDbFkDBqLmmFRhSP15l/kP7VBebin0/mR1Ubiw77XGoP4vGs
+ l3IIztK7o1OLbCLhFUG6YYAFhye40cZ24WOVD0k4d7D46u7r+2NlqDXijvFcelCgAJTB
+ 0c+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXA0LfENR/LwmJqEm1Lde5/H/8kbv34IfSCFlNp1+lUzZYJ+Oj7pf8yv875+GS5IL2Aa7Lj1XUIDlUt@nongnu.org
-X-Gm-Message-State: AOJu0YyNFAMUhihmZFgPXgzU6suO3PHek/52uxuVpBM2Hl6t61tOKLe+
- XMH7+Q15KcBuBX4aeNVZeb4ZYyNpzf7i00g7yDa7Z93idQ54SHstoz80nZnI0Lc=
-X-Google-Smtp-Source: AGHT+IGdBSTXg+mry+zVHa3vNQVHkpcMmvB7181D5FtKONcEnB8GgcMl5i8g+fu2XMrP8lhm8tz2pg==
-X-Received: by 2002:a05:6a20:8829:b0:1d9:a90:8879 with SMTP id
- adf61e73a8af0-1d90a908937mr7134563637.21.1729176797522; 
- Thu, 17 Oct 2024 07:53:17 -0700 (PDT)
+ AJvYcCWSPpQ85ojn6VHZAiBYeK7RRzvqq/EeF4D5iqd2OPa4ofAEMihI+9f3vlj/dNKWMUq9y4YS3WV50MP0@nongnu.org
+X-Gm-Message-State: AOJu0YxZHkMzHuqfQ3XGmzwVdfi7WLvYHWqYYqWmleZQTDvXsjQZ3F7j
+ bZk0lQ71Y4/PcpgHFZm6+lgqB9MvWzHtXXSzEj1C7sRFUDERsjTnexKy0GTOlnw=
+X-Google-Smtp-Source: AGHT+IHsyu8NbVrWAmmUYrhz3x06P3pM4VDyiscQxYj9VFNOPaxiZpUMTm3lFreUZTeK7AfT8XGShQ==
+X-Received: by 2002:a05:6a00:1490:b0:71e:4414:eb21 with SMTP id
+ d2e1a72fcca58-71e44154fa8mr30156605b3a.17.1729176783050; 
+ Thu, 17 Oct 2024 07:53:03 -0700 (PDT)
 Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71e77371193sm4859580b3a.21.2024.10.17.07.53.10
+ d2e1a72fcca58-71e77371193sm4859580b3a.21.2024.10.17.07.52.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 07:53:16 -0700 (PDT)
+ Thu, 17 Oct 2024 07:53:02 -0700 (PDT)
 From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
 To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -71,17 +71,18 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 5/9] target/riscv: Add Ssdbltrp ISA extension enable switch
-Date: Thu, 17 Oct 2024 16:52:16 +0200
-Message-ID: <20241017145226.365825-6-cleger@rivosinc.com>
+Subject: [PATCH v4 3/9] target/riscv: Implement Ssdbltrp sret,
+ mret and mnret behavior
+Date: Thu, 17 Oct 2024 16:52:14 +0200
+Message-ID: <20241017145226.365825-4-cleger@rivosinc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241017145226.365825-1-cleger@rivosinc.com>
 References: <20241017145226.365825-1-cleger@rivosinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=cleger@rivosinc.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=cleger@rivosinc.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,33 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the switch to enable the Ssdbltrp ISA extension.
+When the Ssdbltrp extension is enabled, SSTATUS.SDT field is cleared
+when executing sret. When executing mret/mnret, SSTATUS.SDT is cleared
+when returning to U, VS or VU and VSSTATUS.SDT is cleared when returning
+to VU from HS.
 
 Signed-off-by: Clément Léger <cleger@rivosinc.com>
 ---
- target/riscv/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/riscv/op_helper.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5224eb356d..39555364bf 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -190,6 +190,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
-     ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
-     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-@@ -1506,6 +1507,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
-     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-     MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
-+    MULTI_EXT_CFG_BOOL("ssdbltrp", ext_ssdbltrp, false),
-     MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
-     MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
-     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 180886f32a..dabc74de39 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -287,6 +287,18 @@ target_ulong helper_sret(CPURISCVState *env)
+                         get_field(mstatus, MSTATUS_SPIE));
+     mstatus = set_field(mstatus, MSTATUS_SPIE, 1);
+     mstatus = set_field(mstatus, MSTATUS_SPP, PRV_U);
++
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        if (riscv_has_ext(env, RVH)) {
++            target_ulong prev_vu = get_field(env->hstatus, HSTATUS_SPV) &&
++                                   prev_priv == PRV_U;
++            /* Returning to VU from HS, vsstatus.sdt = 0 */
++            if (!env->virt_enabled && prev_vu) {
++                env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++            }
++        }
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++    }
+     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -297,7 +309,6 @@ target_ulong helper_sret(CPURISCVState *env)
+         target_ulong hstatus = env->hstatus;
+ 
+         prev_virt = get_field(hstatus, HSTATUS_SPV);
+-
+         hstatus = set_field(hstatus, HSTATUS_SPV, 0);
+ 
+         env->hstatus = hstatus;
+@@ -328,6 +339,22 @@ static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
+         riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
+     }
+ }
++static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
++                                   target_ulong prev_priv,
++                                   target_ulong prev_virt)
++{
++    /* If returning to U, VS or VU, sstatus.sdt = 0 */
++    if (prev_priv == PRV_U || (prev_virt &&
++        (prev_priv == PRV_S || prev_priv == PRV_U))) {
++        mstatus = set_field(mstatus, MSTATUS_SDT, 0);
++        /* If returning to VU, vsstatus.sdt = 0 */
++        if (prev_virt && prev_priv == PRV_U) {
++            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
++        }
++    }
++
++    return mstatus;
++}
+ 
+ target_ulong helper_mret(CPURISCVState *env)
+ {
+@@ -345,6 +372,9 @@ target_ulong helper_mret(CPURISCVState *env)
+     mstatus = set_field(mstatus, MSTATUS_MPP,
+                         riscv_has_ext(env, RVU) ? PRV_U : PRV_M);
+     mstatus = set_field(mstatus, MSTATUS_MPV, 0);
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
++    }
+     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+@@ -378,6 +408,9 @@ target_ulong helper_mnret(CPURISCVState *env)
+     if (prev_priv < PRV_M) {
+         env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, false);
+     }
++    if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
++        env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
++    }
+ 
+     if (riscv_has_ext(env, RVH) && prev_virt) {
+         riscv_cpu_swap_hypervisor_regs(env);
 -- 
 2.45.2
 
