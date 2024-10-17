@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325CDD374A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFB9D374A9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SD1-00078q-5q; Thu, 17 Oct 2024 11:14:39 -0400
+	id 1t1SCr-00075U-7V; Thu, 17 Oct 2024 11:14:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCz-00078Z-Ry
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:37 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1t1SCp-00074r-GM
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:27 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCy-00015S-8o
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:37 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBnqq019214;
- Thu, 17 Oct 2024 15:14:34 GMT
+ id 1t1SCn-00013I-KS
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:27 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBdpI000302;
+ Thu, 17 Oct 2024 15:14:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=nVLfvU6z6TFVUuJXM+XTPs9gEglgTTsCo0vqv9CyJeE=; b=
- Qf4cEnW3AcNWkGZYF0+v7uWDeWOz8hDOlEwADSxDLBh1c71/anCxioNKdb86hVgI
- absQCmV8xcwEN+ggGJ9KIsusEXbF6JE8RfFinpTUFYKhVr8X0MbOl5eBqlfLNwin
- cq/lGhDEmbHVK2C+K8phj6wgpXPCG8PV5CdbU1aHemHyERMnMBbxL0437Qi9R6/z
- CFVzr7W3+DgqNFFXsMMpoJzFF8ZN701vE3B2ZnWlMbClrJUyySgxPdORpq/VDLAQ
- w2qvzm1tsuDGmK7fpR08lZ7FtWBoaBHJhqqOuY0RequAEGi82uNeXgbfq1i/tosZ
- fHVMbGVLD0QWMnWjCpQI7Q==
+ :date:from:message-id:subject:to; s=corp-2023-11-20; bh=n2jyMnxa
+ ZtbkIgyEE0HE4pfchrWhkrfJNQvpORfedj0=; b=bKCRutFu6AHW9RBVec0jyKvO
+ MIkpdJri98HFDEPOkFE4TA5hg73SRIMG/j+ysU2L/vwQorrnYGkqqBOMQwK06a3y
+ J1Y4NzseUKUlUpSH4X17cclk24qt3HZEa/GtsixB2wZpyrgbRXiXI+0Ekxuu4cPa
+ k6NQgTYEsZkPhlBs7ZdFqSPCJf1nL6WqOKrIFdzlpT9f8/wo1xTMPU+tKaccO9Cj
+ 5M5TcxUbiZB8+OMSfTO358IQABnRVIxJWU49RRusSkMVZr9UAlOfEKqSatoSPI7L
+ WFVRwiR9Hx4cOTt3KpUbqhqXVFGBFcSvfSRs0ONoJwMoAYNTcqpZWTwziitKxA==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427h5cq32v-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427h09p4hy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:33 +0000 (GMT)
+ Thu, 17 Oct 2024 15:14:19 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 49HElkJQ027278; Thu, 17 Oct 2024 15:14:33 GMT
+ with ESMTP id 49HEfFFl027182; Thu, 17 Oct 2024 15:14:18 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 427fjgy6du-1
+ 427fjgy63c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:33 +0000
+ Thu, 17 Oct 2024 15:14:17 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgn017147;
- Thu, 17 Oct 2024 15:14:32 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgR017147;
+ Thu, 17 Oct 2024 15:14:17 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 427fjgy62e-12; Thu, 17 Oct 2024 15:14:32 +0000
+ ESMTP id 427fjgy62e-1; Thu, 17 Oct 2024 15:14:17 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,12 +63,10 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 11/14] monitor: connect in precreate
-Date: Thu, 17 Oct 2024 08:14:12 -0700
-Message-Id: <1729178055-207271-12-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 00/14] precreate phase
+Date: Thu, 17 Oct 2024 08:14:01 -0700
+Message-Id: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-17_16,2024-10-17_01,2024-09-30_01
@@ -78,10 +75,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410170105
-X-Proofpoint-ORIG-GUID: axZp5SQDVKM2MrM2ZumBzW2L4RUO4cKJ
-X-Proofpoint-GUID: axZp5SQDVKM2MrM2ZumBzW2L4RUO4cKJ
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Proofpoint-GUID: tFdCHiLWBFP7EF8Aj4pB2_VBKPaFdZzn
+X-Proofpoint-ORIG-GUID: tFdCHiLWBFP7EF8Aj4pB2_VBKPaFdZzn
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,146 +102,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete monitor connections as early as possible, prior to
-qemu_create_early_backends, so the user can issue commands during the
-precreate phase.
+Define a new qemu initialization phase called 'precreate' which occurs
+before most backends or devices have been created.  The only exception
+is monitor and qtest devices and their associated chardevs.
 
-Make a list of the chardev's referenced by all monitors.  Create the
-chardevs, then create the monitors.  Exclude monitor chardevs and
-monitors from the later creation phases.
+QEMU runs in the main loop during this phase.  Monitor connections are
+active and can receive migration configuration commands.  QEMU starts
+listening on the normal migration URI during this phase, which can come
+from either the QEMU command line or from a migrate_incoming command.
+Thus the user can issue query-migrate to get the socket-address for
+dynamically allocated port numbers during precreate.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- system/vl.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 77 insertions(+), 4 deletions(-)
+In this series QEMU passes through and does not linger in the precreate
+phase, and the user sees no change in behavior.  The cpr-transfer series
+will linger in the phase for an incoming CPR operation, and exit the phase
+when the migrate command is send to source QEMU and causes destination QEMU
+to read CPR state.
 
-diff --git a/system/vl.c b/system/vl.c
-index 3c592b9..a985ab8 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1939,6 +1939,11 @@ static bool object_create_early(const ObjectOption *opt)
-         return false;
-     }
- 
-+    /* Reason: already created. */
-+    if (g_str_equal(type, "mon")) {
-+        return false;
-+    }
-+
-     return true;
- }
- 
-@@ -1956,6 +1961,68 @@ static void qemu_apply_machine_options(QDict *qdict)
-     }
- }
- 
-+typedef struct NamedElement {
-+    char *name;
-+    QTAILQ_ENTRY(NamedElement) next;
-+} NamedElement;
-+
-+static QTAILQ_HEAD(, NamedElement) monitor_chardevs =
-+    QTAILQ_HEAD_INITIALIZER(monitor_chardevs);
-+
-+static void chardev_add(const char *name)
-+{
-+    NamedElement *elem = g_new0(NamedElement, 1);
-+
-+    elem->name = g_strdup(name);
-+    QTAILQ_INSERT_TAIL(&monitor_chardevs, elem, next);
-+}
-+
-+static bool chardev_find(const char *name)
-+{
-+    NamedElement *elem;
-+
-+    QTAILQ_FOREACH(elem, &monitor_chardevs, next) {
-+        if (g_str_equal(elem->name, name)) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static int monitor_add_chardev(void *opaque, QemuOpts *opts, Error **errp)
-+{
-+    g_autofree char *chardev = NULL;
-+    int ret = monitor_chardev_name(opts, &chardev, errp);
-+
-+    if (!ret && chardev) {
-+        chardev_add(chardev);
-+    }
-+    return ret;
-+}
-+
-+static bool option_is_monitor_chardev(void *opaque, QemuOpts *opts)
-+{
-+    return chardev_find(qemu_opts_id(opts));
-+}
-+
-+static bool option_is_not_monitor_chardev(void *opaque, QemuOpts *opts)
-+{
-+    return !chardev_find(qemu_opts_id(opts));
-+}
-+
-+static void qemu_create_monitors(void)
-+{
-+    qemu_opts_foreach(qemu_find_opts("mon"),
-+                      monitor_add_chardev, NULL, &error_fatal);
-+
-+    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
-+                      option_is_monitor_chardev,
-+                      chardev_init_func, NULL, &error_fatal);
-+
-+    qemu_opts_foreach(qemu_find_opts("mon"),
-+                      mon_init_func, NULL, &error_fatal);
-+}
-+
- static void qemu_create_early_backends(void)
- {
-     MachineClass *machine_class = MACHINE_GET_CLASS(current_machine);
-@@ -1994,7 +2061,8 @@ static void qemu_create_early_backends(void)
-     /* spice must initialize before chardevs (for spicevmc and spiceport) */
-     qemu_spice.init();
- 
--    qemu_opts_foreach(qemu_find_opts("chardev"),
-+    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
-+                      option_is_not_monitor_chardev,
-                       chardev_init_func, NULL, &error_fatal);
- 
- #ifdef CONFIG_VIRTFS
-@@ -2020,6 +2088,11 @@ static void qemu_create_early_backends(void)
-  */
- static bool object_create_late(const ObjectOption *opt)
- {
-+    /* Reason: already created. */
-+    if (g_str_equal(ObjectType_str(opt->opts->qom_type), "mon")) {
-+        return false;
-+    }
-+
-     return !object_create_early(opt) && !object_create_pre_sandbox(opt);
- }
- 
-@@ -2045,9 +2118,6 @@ static void qemu_create_late_backends(void)
-         exit(1);
-     }
- 
--    qemu_opts_foreach(qemu_find_opts("mon"),
--                      mon_init_func, NULL, &error_fatal);
--
-     if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
-         exit(1);
-     if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
-@@ -3730,6 +3800,9 @@ void qemu_init(int argc, char **argv)
- 
-     accel = configure_accelerators(argv[0]);
- 
-+    os_setup_signal_handling();
-+    qemu_create_monitors();
-+
-     /*
-      * QOM objects created after this point see all global and
-      * compat properties.
+A future series may wish to add a command-line argument and monitor
+command that enters and exits the precreate phase for general purpose use.
+That would enable the user to issue monitor commands that specify backend
+creation parameters.
+
+Now that both the monitor and migration are initialized early, one could
+implement a future scheme in which very few parameters are passed on the
+command line, and all backend and device creation parameters are passed
+in the migration stream.
+
+Patches 1-5 untangle dependencies between accelerator and migration
+initialization, allowing the latter to be called earlier.  Currently
+configure_accelerators chooses the accelerator, defines compatability
+properties needed to initialize migration, and creates the machine in
+accel_init_machine.  The patches split configure_accelerators into a first
+part which probes for accelerators and defines properties, and a second
+part which creates the machine.  The second part is called after the
+precreate phase.  The patches also set machine options earlier, so they
+are known when migration is initialized.
+
+Patch 6 defines the boundaries of the precreate phase.
+
+Patches 7-12 define and use helper functions to extract monitor and qtest
+options from the command line, find their associated chardevs, and initialize
+the monitor and qtest devices early, prior to qemu_create_early_backends.
+
+Patches 13-14 contain miscellany.
+
+Steve Sistare (14):
+  accel: encapsulate search state
+  accel: accel preinit function
+  accel: split configure_accelerators
+  accel: set accelerator and machine props earlier
+  migration: init and listen during precreate
+  vl: precreate phase
+  monitor: chardev name
+  qom: get properties
+  qemu-option: filtered foreach
+  qemu-options: pass object to filter
+  monitor: connect in precreate
+  qtest: connect in precreate
+  net: cleanup for precreate phase
+  migration: allow commands during precreate and preconfig
+
+ accel/accel-system.c            |   2 -
+ accel/kvm/kvm-all.c             |  58 +++++----
+ accel/xen/xen-all.c             |  11 +-
+ hmp-commands.hx                 |   2 +
+ include/monitor/monitor.h       |   1 +
+ include/qapi/visitor.h          |   1 +
+ include/qemu/accel.h            |   1 +
+ include/qemu/option.h           |   5 +
+ include/qom/object_interfaces.h |   8 ++
+ monitor/monitor.c               |  21 ++++
+ net/net.c                       |   4 +-
+ qapi/migration.json             |  16 ++-
+ qapi/misc.json                  |   3 +-
+ qom/object_interfaces.c         |  27 ++--
+ system/vl.c                     | 270 ++++++++++++++++++++++++++++++----------
+ target/i386/nvmm/nvmm-all.c     |  10 +-
+ target/i386/whpx/whpx-all.c     |  14 ++-
+ util/qemu-option.c              |  25 ++++
+ 18 files changed, 358 insertions(+), 121 deletions(-)
+
 -- 
 1.8.3.1
 
