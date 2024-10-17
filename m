@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5642D374A9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFF5D37499
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SZf-000186-N1; Thu, 17 Oct 2024 11:38:03 -0400
+	id 1t1SZZ-00017D-0G; Thu, 17 Oct 2024 11:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3WC8RZwYKCjsolnrbedlldib.Zljnbjr-absbiklkdkr.lod@flex--roqueh.bounces.google.com>)
- id 1t1SZf-00017x-2g
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:38:03 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
+ <3Ty8RZwYKCjIfceiSVUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--roqueh.bounces.google.com>)
+ id 1t1SZY-00016q-2i
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:37:56 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3WC8RZwYKCjsolnrbedlldib.Zljnbjr-absbiklkdkr.lod@flex--roqueh.bounces.google.com>)
- id 1t1SZd-00040x-IT
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:38:02 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e2974759f5fso1263688276.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 08:38:00 -0700 (PDT)
+ <3Ty8RZwYKCjIfceiSVUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--roqueh.bounces.google.com>)
+ id 1t1SZW-0003zw-E8
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:37:55 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-6e3705b2883so22171877b3.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 08:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1729179480; x=1729784280; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=S+2ZXkQ0LYwfL6luLg/39hG+1Q0aCrDxY1HPUr03Alc=;
- b=L8JVvZgkOYsNOVBHzhQQkp0iVAs4d+a+JefKEsLVGrXmJDFqasPSfJ2vL713oaD+Qg
- +hgaRdMyH5vLLOBDMWKb9OgNpp4K64rtWQlqOnPX/jUoXJG+fybOkzPR/Y4YffNQHbb/
- BiDpvEvTc38EdLktAUL0msP/haqWIhTpWBLerNvjrqoCXOi/AFxDlqte2dhuA0Jxi899
- LTmxx9yid9CCxGqd8FKlLvEDigCLo/WpXdLcvrBvqzNbvAdvdmsicdne4bZ/HeUuXeSg
- JuYGKI8HoT7YwTWpggKcRs8lJTg2x+okeE1BtC67LaZBkI+8s8RnnOMLyk3eEKWOLed7
- kFFw==
+ d=google.com; s=20230601; t=1729179471; x=1729784271; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Ehdp2Jc10Ed986kjvJKnnSj6NpKv0OtHdeeoEpYkPPs=;
+ b=v1+GOu6ypAHdtxvZ4EFbhDGiR7kpo/AhNCIhIAMdB94qWhTNEbg1aVC3aUU2pd/fZs
+ /ekrGGSJ1NRJz6kfp+N/4e5KDjtyGoXx2+YcU7IJvfpFHo/NcBETHKItXtxsh4iPdwuO
+ MyGYD4KkjdbLiM9Vi1Ao3vB5lfykD4nfrb6QSzPWbrQOfxTOw2v8D0RUGWR9gtqoimsw
+ cP7DnZPmLmrAZuVKyyAyYz+lvep4mHzG0LJTe3Cserihvn2BCOfPCSuvZnsNunKyZgQR
+ t3qf1PU416ppZ5qvhJ3TenyYvXsZcuSpNFHB105alVD2lpF4dzY9ccrME9nRdsg8LP69
+ F1cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729179480; x=1729784280;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S+2ZXkQ0LYwfL6luLg/39hG+1Q0aCrDxY1HPUr03Alc=;
- b=WkFk/a/qVDqQmriS9QIYMwdnk9MzW/qE4slJzbZ7W1jgQSg+NQCX3F15WdewoX1DUU
- erdkKjQGiFXtfYXWbCFrKtqUgqQtmFQSluk1EPHIauHxqwSAxJDuaRyiclEViLdx+iwQ
- fF97Mm3gawOhROlZlyNrJTDLqLa5vOBH4ZA4J23XkFWtvpDBRn5U3HJgaR7djJMdhRxk
- ZC+cVUsj1T5KgdhXt1vW7Tm8XeF8NZcxNZuk0HdwgkZr5dBJVh8RumHHBrZtyfJf6Cnr
- yqBeanm8EqepHZzpzSLuo0vdOCmhBCWCgOI6dBtQ9TGNqDEJa44aOpLuCw+2tZqPANfT
- bEXw==
-X-Gm-Message-State: AOJu0Yw7Ifhk8Mkj+FJFHQZyHFTde2Nt1g888gGCKnGjszmjD0SyEP3d
- zdG5hD9wDzibANIY+xYy5ZLdhAftFnICNwPc/HBvY5HNfQJ+wT2qFojwJeE95+5UB/Lbya3dRso
- zJg==
-X-Google-Smtp-Source: AGHT+IE8ZmIvehVmTdQ6Nn/Yfl5g8brQXze4ezSwqu5inp0XhT1qRKiCMlqrYhM7SSLsirDWuVsRCqTbuyE=
+ d=1e100.net; s=20230601; t=1729179471; x=1729784271;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ehdp2Jc10Ed986kjvJKnnSj6NpKv0OtHdeeoEpYkPPs=;
+ b=LS9rURkO0vFVc6b3kjPDil2071jhYzM+poqBZqSHQBXv6RTDP5LZ8HS8Qwnhd8SzDY
+ OJs0kvzrqtXisaWSH/nLohVh2zOsGXbSVkrjt8FIG2Gyy9Uaqqs1bf72LdKOS0hWCMT0
+ hQAvj4iUO1kcCptknIRtE2v7/PoUbhnljHkT1tk6awLfOqvA5LfhLvcbdPj34/XQs8n1
+ nZewcY93urpZDByp2/48MAhz/trhMokQh1CAIoq9qUTKCxuSPaw02B/zDMTUiaXtCFBQ
+ xnAisLJHNSzEMSioC+zArRnXXHHRdCjLSsshN/4Y3ivks9KK0NNoITCC8ZgCrn5pqQ2Y
+ 6RMg==
+X-Gm-Message-State: AOJu0YzRAWP2RBaNrbRCwpgzsIRiF0/MvIHZXPir7NwZ7Z3rorXBAt96
+ nH5DJ9u1WudW4fQRjVOAmRyTvKCMCeYFPmV07wYb/WawfbPu8aRRh02PgqefIH4i56gv69IRuj3
+ QcA==
+X-Google-Smtp-Source: AGHT+IGJH640c2igNcZnm9c9q82XHuTlLyQFti5sMb3unEMYkFns7WtJ88wHPWMOfEHM33QqgKU5JaNqxAE=
 X-Received: from roqueh-desktop.svl.corp.google.com
  ([2a00:79e0:2e5b:9:1adf:42eb:8cf9:56e9])
- (user=roqueh job=sendgmr) by 2002:a25:aa84:0:b0:e29:6b0b:5c85 with SMTP id
- 3f1490d57ef6-e2b9cddf4d3mr7280276.1.1729179480097; Thu, 17 Oct 2024 08:38:00
- -0700 (PDT)
-Date: Thu, 17 Oct 2024 08:37:44 -0700
-In-Reply-To: <20241017153745.509978-1-roqueh@google.com>
+ (user=roqueh job=sendgmr) by 2002:a05:690c:6e0a:b0:6e3:345e:5f89 with SMTP id
+ 00721157ae682-6e3d3bdc32bmr1692147b3.0.1729179471136; Thu, 17 Oct 2024
+ 08:37:51 -0700 (PDT)
+Date: Thu, 17 Oct 2024 08:37:43 -0700
 Mime-Version: 1.0
-References: <20241017153745.509978-1-roqueh@google.com>
 X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
-Message-ID: <20241017153745.509978-2-roqueh@google.com>
-Subject: [PATCH v2 1/2] gdbstub: Fix wrong CPUState pointer in breakpoint
- functions
+Message-ID: <20241017153745.509978-1-roqueh@google.com>
+Subject: [PATCH v2 0/2] Fix for multi-process gdbstub breakpoints
 From: Roque Arcudia Hernandez <roqueh@google.com>
 To: richard.henderson@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org, 
  philmd@linaro.org, slongfield@google.com, komlodi@google.com
 Cc: qemu-devel@nongnu.org, Roque Arcudia Hernandez <roqueh@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3WC8RZwYKCjsolnrbedlldib.Zljnbjr-absbiklkdkr.lod@flex--roqueh.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3Ty8RZwYKCjIfceiSVUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--roqueh.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -94,85 +91,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the context of using the remote gdb with multiple
-processes/inferiors (multiple cluster machine) a given breakpoint
-will target an specific inferior. If needed the remote protocol will
-use the packet 'H op thread-id' with op = 'g' to change focus to the
-inferior we want to insert/remove the breakpoint to, for instance
-'Hgp3.3' and not 'Hcp3.3'.
+This patch series modifies the gdbstub to address a bug running a
+multi cluster machine in QEMU using TCG. The machine where the
+problem was seen had several clusters of CPUs with similar
+architectures and similar memory layout all working with physical
+addresses. It was discovered under gdb debugging that a breakpoint
+targeting one cluster misfired on the wrong cluster quite frequently
+with no possible workaround since gdb was also unaware of any
+breakpoint in that cluster and simply reported SIGTRAP.
 
-This is supported by the documentation of the H packets:
+The sequence that discovered the bug adds N inferiors and adds a
+breakpoint on inferior N. Then after continuing an unrelated thread
+stops the execution when its PC hits the same address of the break
+targeting a different inferior.
 
- > 'H op thread-id'
- > Set thread for subsequent operations ('m', 'M', 'g', 'G',
- > et.al.). Depending on the operation to be performed, op should be
- > 'c' for step and continue operations (note that this is
- > deprecated, supporting the 'vCont' command is a better option),
- > and 'g' for other operations.
+target extended-remote :1234
+add-inferior
+inferior 2
+attach 2
+...
+add-inferior
+inferior N
+attach N
+add-symbol-file /path/to/foo.elf
+break foo
+> Breakpoint 1 at 0xf00add
+info break
+> Num     Type           Disp Enb Address    What
+> 1       breakpoint     keep y   0x00f00add in foo
+>                                            at foo.c:1234 inf N
+continue
+> Continuing.
+>
+> Thread 2.1 received signal SIGTRAP, Trace/breakpoint trap.
+> [Switching to Thread 2.2]
+> 0xf00add in ?? ()
 
-This can also be verified in the GDB source code file gdb/remote.c.
-Functions remote_target::insert_breakpoint and
-remote_target::remove_breakpoint will eventually call
-remote_target::set_general_thread if it needs to change the process
-focus and not remote_target::set_continue_thread.
+The main problem is the current implementation of
+'tcg_insert_breakpoint' and 'tcg_remove_breakpoint' insert and remove
+breakpoints to all the CPUs in the system regardless of what the
+remote gdb protocol implements.
 
-This can be seen around a comment that says:
+If we look at the current source code of GDB we can see that the
+function 'remote_target::insert_breakpoint' in file gdb/remote.c has
+the intention to select the process ID of the inferior where the
+break was inserted.
 
-      /* Make sure the remote is pointing at the right process, if
-         necessary.  */
+int
+remote_target::insert_breakpoint (struct gdbarch *gdbarch,
+                                  struct bp_target_info *bp_tgt)
+{
+...
+  /* Make sure the remote is pointing at the right process, if
+     necessary.  */
+  if (!gdbarch_has_global_breakpoints (current_inferior ()->arch ()))
+    set_general_process ();
+...
+}
 
-Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
----
- gdbstub/gdbstub.c   |  4 ++--
- gdbstub/internals.h | 13 +++++++++++--
- 2 files changed, 13 insertions(+), 4 deletions(-)
+https:sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/remote.c;h=2c3988cb5075655e8a799d1cc5d4760ad8ed426e;hb=HEAD#l11023
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b1def7e71d..64ad81e53f 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1148,7 +1148,7 @@ static void handle_insert_bp(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    res = gdb_breakpoint_insert(gdbserver_state.c_cpu,
-+    res = gdb_breakpoint_insert(gdbserver_state.g_cpu,
-                                 gdb_get_cmd_param(params, 0)->val_ul,
-                                 gdb_get_cmd_param(params, 1)->val_ull,
-                                 gdb_get_cmd_param(params, 2)->val_ull);
-@@ -1172,7 +1172,7 @@ static void handle_remove_bp(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    res = gdb_breakpoint_remove(gdbserver_state.c_cpu,
-+    res = gdb_breakpoint_remove(gdbserver_state.g_cpu,
-                                 gdb_get_cmd_param(params, 0)->val_ul,
-                                 gdb_get_cmd_param(params, 1)->val_ull,
-                                 gdb_get_cmd_param(params, 2)->val_ull);
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index bf5a5c6302..e67fb6fe37 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -48,8 +48,17 @@ enum RSState {
- 
- typedef struct GDBState {
-     bool init;       /* have we been initialised? */
--    CPUState *c_cpu; /* current CPU for step/continue ops */
--    CPUState *g_cpu; /* current CPU for other ops */
-+    /*
-+     * Current CPU for step/continue ops. Updated by the remote packet
-+     * 'Hc thread-id'
-+     */
-+    CPUState *c_cpu;
-+    /*
-+     * Current CPU for other ops such as memory accesses ('m'/'M'), general
-+     * register accesses ('g'/'G'), breakpoint management ('z'/'Z'), etc.
-+     * Updated by the remote packet 'Hg thread-id'
-+     */
-+    CPUState *g_cpu;
-     CPUState *query_cpu; /* for q{f|s}ThreadInfo */
-     enum RSState state; /* parsing state */
-     char line_buf[MAX_PACKET_LENGTH];
+This would not happen when we input the 'break' in gdb but it is
+deferred until the time we execute the 'continue' command. Because we
+might be currently selecting an inferior that is not the one where we
+previously set the breakpoint, the remote gdb has to make sure we
+move the focus to the process ID of the inferior where we inserted
+the break.
+
+In the previous example this will translate to something like:
+
+HgpN.M
+Z0,00f00add,4
+
+Another thing that is wrong with the current implementation (and it
+affects both TCG and KVM mode) is that the remote gdb protocol uses
+'Hg' and not 'Hc' to select the process. Functions
+'gdb_breakpoint_insert' and 'gdb_breakpoint_remove' receive wrongly
+'gdbserver_state.c_cpu' instead of 'gdbserver_state.g_cpu'.
+
+This is supported by the documentation of 'H op thread-id' where op =
+'c' is reserved to the step and continue:
+
+https:sourceware.org/gdb/current/onlinedocs/gdb.html/Packets.html
+
+And it can be verified that the function 'set_general_process' in the
+previous code snippet will eventually call
+'remote_target::set_general_thread' and not
+'remote_target::set_continue_thread' if it needs to change focus.
+
+A third scenario that has to be taken into account is the case of a
+break on a specific thread, for instance the sequence:
+
+inferior 1
+break bar thread 1.3
+break bar thread 1.4
+
+The remote protocol expects the gdbstub to apply the break to the
+process ID of inferior 1 and considers the specific thread-id as a
+breakpoint condition (not too different from a 'break if').
+
+In this case the packet exchange may look like:
+
+Hgp1.1
+Z0,00ba2add,4
+
+There wouldn't be an independent set of packets for 'Hgp1.3' and
+'Hgp1.4'.
+
+In the gdb source code, the handling of the specific thread-id
+happens during breakpoint evaluation in function
+'bpstat_check_breakpoint_conditions' of file gdb/breakpoint.c
+
+https:sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/breakpoint.c;h=17bd627f867cf3d4dc81322ed1919ba40cbb237d;hb=HEAD#l5550
+
+The proposed fix inserts or removes a breakpoint to all the cpus
+sharing the same process ID as the one selected with the latest
+received 'Hg' packet.
+
+Roque Arcudia Hernandez (2):
+  gdbstub: Fix wrong CPUState pointer in breakpoint functions
+  gdbstub: Apply breakpoints only to the relevant CPUs
+
+ accel/tcg/tcg-accel-ops.c | 37 +++++++++++++++++++++++--------------
+ gdbstub/gdbstub.c         | 10 ++++++++--
+ gdbstub/internals.h       | 13 +++++++++++--
+ include/exec/gdbstub.h    | 12 ++++++++++++
+ 4 files changed, 54 insertions(+), 18 deletions(-)
+
 -- 
 2.47.0.rc1.288.g06298d1525-goog
 
