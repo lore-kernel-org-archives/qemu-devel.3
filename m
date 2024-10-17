@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA2DD374A9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C17CD374A9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SSN-0006SM-NE; Thu, 17 Oct 2024 11:30:32 -0400
+	id 1t1SX1-0008K1-C1; Thu, 17 Oct 2024 11:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1SSJ-0006Q6-4C
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:30:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1SSE-00039m-KX
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:30:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729179020;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=t1Xf++nCYGqvn/3bHmYFDtUgvJ4VAkFrA294hdhwlUo=;
- b=HvZj2vshIAS/qeRj6Xi7DQmDf2duD+sBaX5f79CRMFDb1XT0JaKAQpyqGtlkCd3NAXwIfB
- Aq5TLlySyG/wH4MlzxBH4h8vHqOdZEi5rIVtxQk5hIfMHnMbxI0Ch0+qUfJjvE9zuJCAd6
- EsWXWgPI7KU51isyU7OTnjrvriUtDLA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-84ov-eGgM-6A_V_UMaU9cw-1; Thu,
- 17 Oct 2024 11:30:17 -0400
-X-MC-Unique: 84ov-eGgM-6A_V_UMaU9cw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3453819560BA; Thu, 17 Oct 2024 15:30:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.94])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE6E519560A2; Thu, 17 Oct 2024 15:30:06 +0000 (UTC)
-Date: Thu, 17 Oct 2024 16:30:03 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH v3 1/7] hw/core: Make CPU topology enumeration
- arch-agnostic
-Message-ID: <ZxEte1KBwWuCdkb1@redhat.com>
-References: <20241012104429.1048908-1-zhao1.liu@intel.com>
- <20241012104429.1048908-2-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t1SWz-0008Jo-5a
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:35:17 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roqueh@google.com>) id 1t1SWw-0003ob-4h
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:35:15 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3e6010a3bbfso46407b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 08:35:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1729179311; x=1729784111; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1HKcOJtQqUpgADS85x9pvH9/g33I9cenjUOsTdfxZF8=;
+ b=yr2uBiiXRRar2v/fb1T8PnNe6BdoKLhshyBl0yqD1Uhyc7CSMopuzM1R97k1mqVEJv
+ zcAE5Og63mFVq8gq8f/AQspvcxOip6dxHw48bQyQUwx1Kjzq7V7SdIui7BnoivT2VEDZ
+ tpdvkQcZlqzKDvscG0WjIHSc7EKnFGW0GfIedQBwR2Kj3Q69Y1sT2i4xbCd/2lgHZjCW
+ gshycPFKW2qsnPpuYG82C0uwkEklTZS0EStm9rL/mcNHmyhSedGbnJ9CqviI4K4xl1gv
+ p5GDW0HSdx/n7s7BSiDPYKc7hyQEIBowUBz1yZM3SgvuMnlk045Y2zmFZoXx8i0NhNMn
+ ul3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729179311; x=1729784111;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1HKcOJtQqUpgADS85x9pvH9/g33I9cenjUOsTdfxZF8=;
+ b=rm4Cmg6aMncMciWQgpHfao/97i9uv0FkUlEIKqUoeU5Q4ZJMfw1Loqdx0QDUQGigtY
+ N7C2Rx7VVdb1kGJWBQBniP8HKCoQBddQYVVOQ6i7qaJZWUN9umdMfD8Kd9Nb1mppnq/5
+ KzSjsdAHA6DOFaf6zu8k9Fz4m6Rj6i45lbqfKwdOVxmjtiZj3w0kRrv4vPtbCeaWgDWC
+ cNHO4JmOhOu5Iv/eGWRqKdCZcethiBPeEaj77BxQARM2V+cQIo82y6zzhVz6ftLRnHaA
+ Yn49D7yDx3j/3IMtOrl0khWp5irO+sOGy0jZWqgHYmi+1UPIftadiiGxBlA7iDing6AG
+ pRxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUoGC6vq9PbH68Z3As5FFShZKEmOqeDM6+xA6M4OdoHPlz3z2AodvTPP6auV9IBJ2GOdoVhsxEud7K@nongnu.org
+X-Gm-Message-State: AOJu0Yx3w9UDQ9/fDLE1dw1c6+oVv5KEfxeSARWNbS1WKXRpQq2wyq0z
+ /L13jq8sdThsHJjtSDTaL+UtQ9bdYxCB+wEAMWK+e6iewi1SD80WuH0A1qj3TR1V5ZdqjmfJcTU
+ Zeel4av+hSzhjqFuMCwmeYABINEcyYYDft92W
+X-Google-Smtp-Source: AGHT+IFMF1WqNd/AX105v8Hj56R65omEzX3+Mzpr0jpffbqghbiLf+QZ5RTdXBD9wf7N/b6mYsAQ4e11PtkX6BfmSKQ=
+X-Received: by 2002:a05:6808:2f13:b0:3e5:df53:2f7b with SMTP id
+ 5614622812f47-3e5df532f95mr13075275b6e.44.1729179309524; Thu, 17 Oct 2024
+ 08:35:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241012104429.1048908-2-zhao1.liu@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+References: <20240906225451.1039718-1-roqueh@google.com>
+ <20240906225451.1039718-2-roqueh@google.com>
+ <87v7y71tr4.fsf@draig.linaro.org>
+In-Reply-To: <87v7y71tr4.fsf@draig.linaro.org>
+From: Roque Arcudia Hernandez <roqueh@google.com>
+Date: Thu, 17 Oct 2024 08:34:57 -0700
+Message-ID: <CAKbPEtYUcyXTSBW3Vs_g=UAMcNLbRJG0==bheO043-CW_XOFTA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] gdbstub: Fix wrong CPUState pointer in breakpoint
+ functions
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@linaro.org, 
+ slongfield@google.com, komlodi@google.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=roqueh@google.com; helo=mail-oi1-x22b.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,145 +91,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 12, 2024 at 06:44:23PM +0800, Zhao Liu wrote:
-> Cache topology needs to be defined based on CPU topology levels. Thus,
-> define CPU topology enumeration in qapi/machine.json to make it generic
-> for all architectures.
-> 
-> To match the general topology naming style, rename CPU_TOPO_LEVEL_* to
-> CPU_TOPOLOGY_LEVEL_*, and rename SMT and package levels to thread and
-> socket.
-> 
-> Also, enumerate additional topology levels for non-i386 arches, and add
-> a CPU_TOPOLOGY_LEVEL_DEFAULT to help future smp-cache object to work
-> with compatibility requirement of arch-specific cache topology models.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-> ---
-> Changes since Patch v2:
->  * Updated version of new QAPI structures to v9.2. (Jonathan)
-> 
-> Changes since Patch v1:
->  * Dropped prefix of CpuTopologyLevel enumeration. (Markus)
->  * Rename CPU_TOPO_LEVEL_* to CPU_TOPOLOGY_LEVEL_* to match the QAPI's
->    generated code. (Markus)
-> 
-> Changes since RFC v2:
->  * Dropped cpu-topology.h and cpu-topology.c since QAPI has the helper
->    (CpuTopologyLevel_str) to convert enum to string. (Markus)
->  * Fixed text format in machine.json (CpuTopologyLevel naming, 2 spaces
->    between sentences). (Markus)
->  * Added a new level "default" to de-compatibilize some arch-specific
->    topo settings. (Daniel)
->  * Moved CpuTopologyLevel to qapi/machine-common.json, at where the
->    cache enumeration and smp-cache object would be added.
->    - If smp-cache object is defined in qapi/machine.json, storage-daemon
->      will complain about the qmp cmds in qapi/machine.json during
->      compiling.
-> 
-> Changes since RFC v1:
->  * Used QAPI to enumerate CPU topology levels.
->  * Dropped string_to_cpu_topo() since QAPI will help to parse the topo
->    levels.
-> ---
->  hw/i386/x86-common.c       |   4 +-
->  include/hw/i386/topology.h |  22 +-----
->  qapi/machine-common.json   |  46 +++++++++++-
->  target/i386/cpu.c          | 144 ++++++++++++++++++-------------------
->  target/i386/cpu.h          |   4 +-
->  5 files changed, 124 insertions(+), 96 deletions(-)
-> 
+I'm adding extra documentation to those fields in a new patchset.
 
-> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-> index dff49fce1154..bf740383038b 100644
-> --- a/include/hw/i386/topology.h
-> +++ b/include/hw/i386/topology.h
-> @@ -39,7 +39,7 @@
-
->      unsigned threads_per_core;
->  } X86CPUTopoInfo;
->  
-> -/*
-> - * CPUTopoLevel is the general i386 topology hierarchical representation,
-> - * ordered by increasing hierarchical relationship.
-> - * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-> - * or AMD (CPUID[0x80000026]).
-> - */
-> -enum CPUTopoLevel {
-> -    CPU_TOPO_LEVEL_INVALID,
-> -    CPU_TOPO_LEVEL_SMT,
-> -    CPU_TOPO_LEVEL_CORE,
-> -    CPU_TOPO_LEVEL_MODULE,
-> -    CPU_TOPO_LEVEL_DIE,
-> -    CPU_TOPO_LEVEL_PACKAGE,
-> -    CPU_TOPO_LEVEL_MAX,
-> -};
-> -
-
-snip
-
-> @@ -18,3 +18,47 @@
->  ##
->  { 'enum': 'S390CpuEntitlement',
->    'data': [ 'auto', 'low', 'medium', 'high' ] }
-> +
-> +##
-> +# @CpuTopologyLevel:
-> +#
-> +# An enumeration of CPU topology levels.
-> +#
-> +# @invalid: Invalid topology level.
-
-Previously all topology levels were internal to QEMU, and IIUC
-this CPU_TOPO_LEVEL_INVALID appears to have been a special
-value to indicate  the cache was absent ?
-
-Now we're exposing this directly to the user as a settable
-option. We need to explain what effect setting 'invalid'
-has on the CPU cache config.
-
-> +#
-> +# @thread: thread level, which would also be called SMT level or
-> +#     logical processor level.  The @threads option in
-> +#     SMPConfiguration is used to configure the topology of this
-> +#     level.
-> +#
-> +# @core: core level.  The @cores option in SMPConfiguration is used
-> +#     to configure the topology of this level.
-> +#
-> +# @module: module level.  The @modules option in SMPConfiguration is
-> +#     used to configure the topology of this level.
-> +#
-> +# @cluster: cluster level.  The @clusters option in SMPConfiguration
-> +#     is used to configure the topology of this level.
-> +#
-> +# @die: die level.  The @dies option in SMPConfiguration is used to
-> +#     configure the topology of this level.
-> +#
-> +# @socket: socket level, which would also be called package level.
-> +#     The @sockets option in SMPConfiguration is used to configure
-> +#     the topology of this level.
-> +#
-> +# @book: book level.  The @books option in SMPConfiguration is used
-> +#     to configure the topology of this level.
-> +#
-> +# @drawer: drawer level.  The @drawers option in SMPConfiguration is
-> +#     used to configure the topology of this level.
-> +#
-> +# @default: default level.  Some architectures will have default
-> +#     topology settings (e.g., cache topology), and this special
-> +#     level means following the architecture-specific settings.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+On Fri, Oct 4, 2024 at 1:46=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
+.org> wrote:
+>
+> Roque Arcudia Hernandez <roqueh@google.com> writes:
+>
+> > In the context of using the remote gdb with multiple
+> > processes/inferiors (multiple cluster machine) a given breakpoint
+> > will target an specific inferior. If needed the remote protocol will
+> > use the packet 'H op thread-id' with op =3D 'g' to change focus to the
+> > inferior we want to insert/remove the breakpoint to, for instance
+> > 'Hgp3.3' and not 'Hcp3.3'.
+> >
+> > This is supported by the documentation of the H packets:
+> >
+> >  > 'H op thread-id'
+> >  > Set thread for subsequent operations ('m', 'M', 'g', 'G',
+> >  > et.al.). Depending on the operation to be performed, op should be
+> >  > 'c' for step and continue operations (note that this is
+> >  > deprecated, supporting the 'vCont' command is a better option),
+> >  > and 'g' for other operations.
+>
+> Can we better comment:
+>
+>     CPUState *c_cpu; /* current CPU for step/continue ops */
+>     CPUState *g_cpu; /* current CPU for other ops */
+>
+> in GDBState?
+>
+> >
+> > This can also be verified in the GDB source code file gdb/remote.c.
+> > Functions remote_target::insert_breakpoint and
+> > remote_target::remove_breakpoint will eventually call
+> > remote_target::set_general_thread if it needs to change the process
+> > focus and not remote_target::set_continue_thread.
+> >
+> > This can be seen around a comment that says:
+> >
+> >       /* Make sure the remote is pointing at the right process, if
+> >          necessary.  */
+> >
+> > Google-Bug-Id: 355027002
+> > Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+> > ---
+> >  gdbstub/gdbstub.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> > index d08568cea0..98574eba68 100644
+> > --- a/gdbstub/gdbstub.c
+> > +++ b/gdbstub/gdbstub.c
+> > @@ -1148,7 +1148,7 @@ static void handle_insert_bp(GArray *params, void=
+ *user_ctx)
+> >          return;
+> >      }
+> >
+> > -    res =3D gdb_breakpoint_insert(gdbserver_state.c_cpu,
+> > +    res =3D gdb_breakpoint_insert(gdbserver_state.g_cpu,
+> >                                  gdb_get_cmd_param(params, 0)->val_ul,
+> >                                  gdb_get_cmd_param(params, 1)->val_ull,
+> >                                  gdb_get_cmd_param(params, 2)->val_ull)=
+;
+> > @@ -1172,7 +1172,7 @@ static void handle_remove_bp(GArray *params, void=
+ *user_ctx)
+> >          return;
+> >      }
+> >
+> > -    res =3D gdb_breakpoint_remove(gdbserver_state.c_cpu,
+> > +    res =3D gdb_breakpoint_remove(gdbserver_state.g_cpu,
+> >                                  gdb_get_cmd_param(params, 0)->val_ul,
+> >                                  gdb_get_cmd_param(params, 1)->val_ull,
+> >                                  gdb_get_cmd_param(params, 2)->val_ull)=
+;
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
