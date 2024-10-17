@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFB9D374A9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 668D6D374A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SCr-00075U-7V; Thu, 17 Oct 2024 11:14:29 -0400
+	id 1t1SCy-000783-N9; Thu, 17 Oct 2024 11:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCp-00074r-GM
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:27 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1t1SCw-00077i-DE
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:34 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCn-00013I-KS
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:27 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBdpI000302;
- Thu, 17 Oct 2024 15:14:19 GMT
+ id 1t1SCu-00014b-Ns
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:34 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBntI019222;
+ Thu, 17 Oct 2024 15:14:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2023-11-20; bh=n2jyMnxa
- ZtbkIgyEE0HE4pfchrWhkrfJNQvpORfedj0=; b=bKCRutFu6AHW9RBVec0jyKvO
- MIkpdJri98HFDEPOkFE4TA5hg73SRIMG/j+ysU2L/vwQorrnYGkqqBOMQwK06a3y
- J1Y4NzseUKUlUpSH4X17cclk24qt3HZEa/GtsixB2wZpyrgbRXiXI+0Ekxuu4cPa
- k6NQgTYEsZkPhlBs7ZdFqSPCJf1nL6WqOKrIFdzlpT9f8/wo1xTMPU+tKaccO9Cj
- 5M5TcxUbiZB8+OMSfTO358IQABnRVIxJWU49RRusSkMVZr9UAlOfEKqSatoSPI7L
- WFVRwiR9Hx4cOTt3KpUbqhqXVFGBFcSvfSRs0ONoJwMoAYNTcqpZWTwziitKxA==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2023-11-20; bh=I6kRe7XWAeep7YalOEQJIxLpst0wY/dkjO24wZibC4o=; b=
+ Mp20yxItkyuXuqU0ail9GztN9w1CGM1E3Om3daSeR3qdRDoN+aeVnVkfuRja4g7K
+ gl9gidDUAX75kJW+RdduiH3pGACbZsGkx21dwguIih8/cv+WpD6ins1NWkxfUXba
+ 3srYGZ+psiQ2ay96ZxTAwdYLNobBtWXLiTsxhC+wh/eFvP2vOZZ/K6FDSpwbjmKG
+ J73pvPH9BO2iO7SaQzqaLBZmNZHTVOXlcTBbhL2CWCi+7y2AjjOaYDRyCPPFqHpH
+ BPMKnVel9Kwt8JpnIj7kdhLfCRh/8k3kj74lJAMfEnFOw6HGRIMS5hR0i76SBIv7
+ myoGBhyCoxbBUaGKLyUh2g==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427h09p4hy-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427h5cq32q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:19 +0000 (GMT)
+ Thu, 17 Oct 2024 15:14:29 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 49HEfFFl027182; Thu, 17 Oct 2024 15:14:18 GMT
+ with ESMTP id 49HE0skJ027565; Thu, 17 Oct 2024 15:14:29 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 427fjgy63c-1
+ 427fjgy6b9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:17 +0000
+ Thu, 17 Oct 2024 15:14:29 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgR017147;
- Thu, 17 Oct 2024 15:14:17 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgh017147;
+ Thu, 17 Oct 2024 15:14:28 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 427fjgy62e-1; Thu, 17 Oct 2024 15:14:17 +0000
+ ESMTP id 427fjgy62e-9; Thu, 17 Oct 2024 15:14:28 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -63,10 +64,12 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 00/14] precreate phase
-Date: Thu, 17 Oct 2024 08:14:01 -0700
-Message-Id: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 08/14] qom: get properties
+Date: Thu, 17 Oct 2024 08:14:09 -0700
+Message-Id: <1729178055-207271-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
+References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-17_16,2024-10-17_01,2024-09-30_01
@@ -75,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410170105
-X-Proofpoint-GUID: tFdCHiLWBFP7EF8Aj4pB2_VBKPaFdZzn
-X-Proofpoint-ORIG-GUID: tFdCHiLWBFP7EF8Aj4pB2_VBKPaFdZzn
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: DYbuSD6wqBf0Xw-a9nDdZE3qJnt73d0M
+X-Proofpoint-GUID: DYbuSD6wqBf0Xw-a9nDdZE3qJnt73d0M
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -102,87 +105,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a new qemu initialization phase called 'precreate' which occurs
-before most backends or devices have been created.  The only exception
-is monitor and qtest devices and their associated chardevs.
+Extract a subroutine from user_creatable_add_qapi that converts object
+options to a dictionary of properties and returns them.  Use g_autoptr
+to simplify the code.  No functional change.
 
-QEMU runs in the main loop during this phase.  Monitor connections are
-active and can receive migration configuration commands.  QEMU starts
-listening on the normal migration URI during this phase, which can come
-from either the QEMU command line or from a migrate_incoming command.
-Thus the user can issue query-migrate to get the socket-address for
-dynamically allocated port numbers during precreate.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ include/qapi/visitor.h          |  1 +
+ include/qom/object_interfaces.h |  8 ++++++++
+ qom/object_interfaces.c         | 27 ++++++++++++++-------------
+ 3 files changed, 23 insertions(+), 13 deletions(-)
 
-In this series QEMU passes through and does not linger in the precreate
-phase, and the user sees no change in behavior.  The cpr-transfer series
-will linger in the phase for an incoming CPR operation, and exit the phase
-when the migrate command is send to source QEMU and causes destination QEMU
-to read CPR state.
-
-A future series may wish to add a command-line argument and monitor
-command that enters and exits the precreate phase for general purpose use.
-That would enable the user to issue monitor commands that specify backend
-creation parameters.
-
-Now that both the monitor and migration are initialized early, one could
-implement a future scheme in which very few parameters are passed on the
-command line, and all backend and device creation parameters are passed
-in the migration stream.
-
-Patches 1-5 untangle dependencies between accelerator and migration
-initialization, allowing the latter to be called earlier.  Currently
-configure_accelerators chooses the accelerator, defines compatability
-properties needed to initialize migration, and creates the machine in
-accel_init_machine.  The patches split configure_accelerators into a first
-part which probes for accelerators and defines properties, and a second
-part which creates the machine.  The second part is called after the
-precreate phase.  The patches also set machine options earlier, so they
-are known when migration is initialized.
-
-Patch 6 defines the boundaries of the precreate phase.
-
-Patches 7-12 define and use helper functions to extract monitor and qtest
-options from the command line, find their associated chardevs, and initialize
-the monitor and qtest devices early, prior to qemu_create_early_backends.
-
-Patches 13-14 contain miscellany.
-
-Steve Sistare (14):
-  accel: encapsulate search state
-  accel: accel preinit function
-  accel: split configure_accelerators
-  accel: set accelerator and machine props earlier
-  migration: init and listen during precreate
-  vl: precreate phase
-  monitor: chardev name
-  qom: get properties
-  qemu-option: filtered foreach
-  qemu-options: pass object to filter
-  monitor: connect in precreate
-  qtest: connect in precreate
-  net: cleanup for precreate phase
-  migration: allow commands during precreate and preconfig
-
- accel/accel-system.c            |   2 -
- accel/kvm/kvm-all.c             |  58 +++++----
- accel/xen/xen-all.c             |  11 +-
- hmp-commands.hx                 |   2 +
- include/monitor/monitor.h       |   1 +
- include/qapi/visitor.h          |   1 +
- include/qemu/accel.h            |   1 +
- include/qemu/option.h           |   5 +
- include/qom/object_interfaces.h |   8 ++
- monitor/monitor.c               |  21 ++++
- net/net.c                       |   4 +-
- qapi/migration.json             |  16 ++-
- qapi/misc.json                  |   3 +-
- qom/object_interfaces.c         |  27 ++--
- system/vl.c                     | 270 ++++++++++++++++++++++++++++++----------
- target/i386/nvmm/nvmm-all.c     |  10 +-
- target/i386/whpx/whpx-all.c     |  14 ++-
- util/qemu-option.c              |  25 ++++
- 18 files changed, 358 insertions(+), 121 deletions(-)
-
+diff --git a/include/qapi/visitor.h b/include/qapi/visitor.h
+index 27b85d4..640b941 100644
+--- a/include/qapi/visitor.h
++++ b/include/qapi/visitor.h
+@@ -268,6 +268,7 @@ void visit_complete(Visitor *v, void *opaque);
+  */
+ void visit_free(Visitor *v);
+ 
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(Visitor, visit_free)
+ 
+ /*** Visiting structures ***/
+ 
+diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+index 02b11a7..2384263 100644
+--- a/include/qom/object_interfaces.h
++++ b/include/qom/object_interfaces.h
+@@ -98,6 +98,14 @@ Object *user_creatable_add_type(const char *type, const char *id,
+ void user_creatable_add_qapi(ObjectOptions *options, Error **errp);
+ 
+ /**
++ * user_creatable_get_props:
++ * @options: the object definition
++ *
++ * Convert @options to a dictionary of properties and return it.
++ */
++QDict *user_creatable_get_props(ObjectOptions *options);
++
++/**
+  * user_creatable_parse_str:
+  * @str: the object definition string as passed on the command line
+  * @errp: if an error occurs, a pointer to an area to store the error
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index e0833c8..104d75c 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -139,26 +139,27 @@ out:
+ 
+ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+ {
+-    Visitor *v;
+-    QObject *qobj;
+-    QDict *props;
+-    Object *obj;
++    g_autoptr(Visitor) v;
++    g_autoptr(Object) obj;
++    g_autoptr(QDict) props = user_creatable_get_props(options);
+ 
+-    v = qobject_output_visitor_new(&qobj);
+-    visit_type_ObjectOptions(v, NULL, &options, &error_abort);
+-    visit_complete(v, &qobj);
+-    visit_free(v);
+-
+-    props = qobject_to(QDict, qobj);
+     qdict_del(props, "qom-type");
+     qdict_del(props, "id");
+ 
+     v = qobject_input_visitor_new(QOBJECT(props));
+     obj = user_creatable_add_type(ObjectType_str(options->qom_type),
+                                   options->id, props, v, errp);
+-    object_unref(obj);
+-    qobject_unref(qobj);
+-    visit_free(v);
++}
++
++QDict *user_creatable_get_props(ObjectOptions *options)
++{
++    g_autoptr(Visitor) v;
++    QObject *qobj;
++
++    v = qobject_output_visitor_new(&qobj);
++    visit_type_ObjectOptions(v, NULL, &options, &error_abort);
++    visit_complete(v, &qobj);
++    return qobject_to(QDict, qobj);
+ }
+ 
+ char *object_property_help(const char *name, const char *type,
 -- 
 1.8.3.1
 
