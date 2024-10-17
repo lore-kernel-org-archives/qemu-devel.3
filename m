@@ -4,51 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A95E4D2F7DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 02:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB944D2F7DA
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 02:09:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Fv6-0008Dv-Ah; Wed, 16 Oct 2024 22:07:20 -0400
+	id 1t1FwW-00032m-Lk; Wed, 16 Oct 2024 22:08:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t1Fv3-0008Da-0C
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 22:07:17 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1t1Fv0-0005cK-HR
- for qemu-devel@nongnu.org; Wed, 16 Oct 2024 22:07:16 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxHLNMcRBnWdohAA--.50483S3;
- Thu, 17 Oct 2024 10:07:08 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBxztVMcRBnh_MtAA--.34438S2;
- Thu, 17 Oct 2024 10:07:08 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>
-Subject: [PATCH v2 0/2] linux-headers: loongarch: Add kvm_para.h and
- unistd_64.h
-Date: Thu, 17 Oct 2024 10:07:06 +0800
-Message-Id: <20241017020708.1728620-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1t1FwU-0002o9-5o
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 22:08:46 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1t1FwS-0005iU-Io
+ for qemu-devel@nongnu.org; Wed, 16 Oct 2024 22:08:45 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2fb3110b964so4470521fa.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Oct 2024 19:08:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729130921; x=1729735721; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=/lHDJsKUIaxi7z6e9EGaZueXzmZ5dFz/yaqT/pm6Ujw=;
+ b=jzOKuI2U2l2QZyofjlhkLWwR5TQeZvk/I+pYbIGdE/N+9JjZhMQaz5Wkke9FQA1i7l
+ KgMQtYGlzEfuyxB7+wzzuosDjwRejj68XfARJxIxLhevRleNmucMmoKfRK8XvGvl0ncu
+ 37nNfjlRY3PFqikJoP+79rCG4GtYI3W7P7Ke7DrVtVfDDdhNH4LQtZCf7DSQGsIWf3RM
+ R65IIdlLSR7H6y0RReYZqea2qf23MgZPFLbdHHo5otG1iibB2DcmZkK4mDndV5f+tQd1
+ nzet+RolprX6uNMNQUXblngqx2p2CzP4o/gq9PXE0+2x9OJNlp90Mj9i8o2memZxb8d/
+ BIKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729130921; x=1729735721;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/lHDJsKUIaxi7z6e9EGaZueXzmZ5dFz/yaqT/pm6Ujw=;
+ b=HC7izhb54yXuzNVnwSs94JRtUrGqDi77qOa6qnC/CPanflJ8VJhAVFFmhWvnoWDP9b
+ THC3qFzeF/I1DfI+Wt1fm0Uel9wxLTcwikMYznv62FdQRMWsjWLjgqr0wFOt/sDxkpsr
+ fNXrjZtkKLZyrHWmWKjxw0/ym0IDh+O1/X8UAuwbrBGpYd7oP5+ATSOpTT/ZMt+1bFyM
+ w2iGA5AV/Ps3I1liIyq4T6qHAkdIaIa8edrj75C0/WBeb18BGANW6W1kiI+trSOQGkZR
+ dtMd3KN9K9/93VkZogNkjyi8EknNSrr9ZzXF2mJOaS9mxaLHL8xJ/zPVKk/pFWDBSRLj
+ NJKg==
+X-Gm-Message-State: AOJu0Yz6X/tMdKoglzSwaFFx7MWv1np+vpuGX+e0KslOR9WwrVzuCyYn
+ 3O+oCS8ukXctOmaqzvnhir5DpU/P3Hk7YLs/FpYJbloS7nmv4q/GlVNs4VHRBmwGYAUOZh4PBNc
+ v2Dswq31TP9mwMitRDOC1tFzkRCu1dZXHrL9gN2L+5Q==
+X-Google-Smtp-Source: AGHT+IGl2IOtvqPwzMAKGTLSwcyH96BJrwGnZstARHsI2MT+PPq1xKy7gFO7vlM/PKusqCbjXilZHQ/zmHIJhVyNS3A=
+X-Received: by 2002:a2e:b8ce:0:b0:2fa:d84a:bd8f with SMTP id
+ 38308e7fff4ca-2fb3f2d1667mr84320471fa.30.1729130921177; Wed, 16 Oct 2024
+ 19:08:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxztVMcRBnh_MtAA--.34438S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Liu Jaloo <liu.jaloo@gmail.com>
+Date: Thu, 17 Oct 2024 10:08:53 +0800
+Message-ID: <CAOYM0N2N7v7aWzyGLdcrMbEknKrqOD1WDrp8u2Zh-cBL33z-Eg@mail.gmail.com>
+Subject: How to use "subprojects/slirp.wrap"?
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000053bb4b0624a2aa61"
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=liu.jaloo@gmail.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,53 +83,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-linux-headers/asm/unistd.h:3:10: fatal error: asm/unistd_64.h: No such file or directory
- #include <asm/unistd_64.h>
+--00000000000053bb4b0624a2aa61
+Content-Type: text/plain; charset="UTF-8"
 
-Also update linux-headers to v6.12-rc3
+I want to build qemu with libslirp which built from source code but not
+from the system.
+Maybe the "subprojects/slirp.wrap" is the right way, is it? But I can't
+find more information about how to use it on the internet. Is there some
+notes about that? Thanks.
 
----
-v1 ... v2:
-  1. update header files in directory linux-headers to v6.12-rc3
----
-Bibo Mao (2):
-  linux-headers: loongarch: Add kvm_para.h and unistd_64.h
-  linux-headers: Update to Linux v6.12-rc3
+--00000000000053bb4b0624a2aa61
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- include/standard-headers/drm/drm_fourcc.h     |  43 +++
- include/standard-headers/linux/const.h        |  17 +
- include/standard-headers/linux/ethtool.h      | 226 +++++++++++++
- include/standard-headers/linux/fuse.h         |  22 +-
- .../linux/input-event-codes.h                 |   2 +
- include/standard-headers/linux/pci_regs.h     |  41 ++-
- .../standard-headers/linux/virtio_balloon.h   |  16 +-
- include/standard-headers/linux/virtio_gpu.h   |   1 +
- linux-headers/asm-arm64/mman.h                |   9 +
- linux-headers/asm-arm64/unistd.h              |  25 +-
- linux-headers/asm-generic/unistd.h            |   6 +-
- linux-headers/asm-loongarch/kvm.h             |  24 ++
- linux-headers/asm-loongarch/kvm_para.h        |  21 ++
- linux-headers/asm-loongarch/unistd.h          |   4 +-
- linux-headers/asm-loongarch/unistd_64.h       | 320 ++++++++++++++++++
- linux-headers/asm-riscv/kvm.h                 |   7 +
- linux-headers/asm-riscv/unistd.h              |  41 +--
- linux-headers/asm-x86/kvm.h                   |   2 +
- linux-headers/asm-x86/unistd_64.h             |   1 +
- linux-headers/asm-x86/unistd_x32.h            |   1 +
- linux-headers/linux/bits.h                    |   3 +
- linux-headers/linux/const.h                   |  17 +
- linux-headers/linux/iommufd.h                 | 143 ++++++--
- linux-headers/linux/kvm.h                     |  23 +-
- linux-headers/linux/mman.h                    |   1 +
- linux-headers/linux/psp-sev.h                 |  28 ++
- scripts/update-linux-headers.sh               |   4 +
- 27 files changed, 955 insertions(+), 93 deletions(-)
- create mode 100644 linux-headers/asm-loongarch/kvm_para.h
- create mode 100644 linux-headers/asm-loongarch/unistd_64.h
+<div dir=3D"ltr"><div>I want to build qemu with libslirp which built from s=
+ource code but not from the system.</div><div>Maybe the &quot;subprojects/s=
+lirp.wrap&quot; is the right way, is it? But I can&#39;t find more informat=
+ion about how to use it on the internet. Is there some notes about that? Th=
+anks.<br></div></div>
 
-
-base-commit: 7e3b6d8063f245d27eecce5aabe624b5785f2a77
--- 
-2.39.3
-
+--00000000000053bb4b0624a2aa61--
 
