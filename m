@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219B6D374A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 325CDD374A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 15:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1SCy-000780-6P; Thu, 17 Oct 2024 11:14:36 -0400
+	id 1t1SD1-00078q-5q; Thu, 17 Oct 2024 11:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCv-00077H-Ql
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:33 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1t1SCz-00078Z-Ry
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:37 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1t1SCu-00014Q-3A
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:33 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBdMG025055;
- Thu, 17 Oct 2024 15:14:26 GMT
+ id 1t1SCy-00015S-8o
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 11:14:37 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFBnqq019214;
+ Thu, 17 Oct 2024 15:14:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2023-11-20; bh=zJQyAAgoRK7Sa1RkUhlX0t66qLvJZN64Bq3Y4xKVkos=; b=
- i8gMZCXedeopozj0wz8e6EwP3/lAW/iJNs+j2Vj/hzKWjVQ9JbBKt0RJDXcZOsvM
- Ec3j0HuPNBzqcDr8fbx4VZuv/DmAM3jSDS2saw1CCEtjdHY+h8q1qkjxsAepP0yd
- ABKNs/SLHFlB3FkCnBI0CSQ/azy2VZ3vlRDSCHYfn5wIcowdUAqkZNczOVOa5q6u
- y1ujihhJ95PTkpXHwWOM21UphZfPxPAjtbpkgPVvmSvU6makkLOG1h16ECu6DT3m
- 3afKpQCrerREfEWYxUDTUdirb/+DHuWRfhO90e09qQnUpMOxYksmfUbt5JRLuSK/
- wotszkuWErhqgmVaWO3S0Q==
+ corp-2023-11-20; bh=nVLfvU6z6TFVUuJXM+XTPs9gEglgTTsCo0vqv9CyJeE=; b=
+ Qf4cEnW3AcNWkGZYF0+v7uWDeWOz8hDOlEwADSxDLBh1c71/anCxioNKdb86hVgI
+ absQCmV8xcwEN+ggGJ9KIsusEXbF6JE8RfFinpTUFYKhVr8X0MbOl5eBqlfLNwin
+ cq/lGhDEmbHVK2C+K8phj6wgpXPCG8PV5CdbU1aHemHyERMnMBbxL0437Qi9R6/z
+ CFVzr7W3+DgqNFFXsMMpoJzFF8ZN701vE3B2ZnWlMbClrJUyySgxPdORpq/VDLAQ
+ w2qvzm1tsuDGmK7fpR08lZ7FtWBoaBHJhqqOuY0RequAEGi82uNeXgbfq1i/tosZ
+ fHVMbGVLD0QWMnWjCpQI7Q==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427g1apg1q-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 427h5cq32v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:26 +0000 (GMT)
+ Thu, 17 Oct 2024 15:14:33 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 49HE32Dj027154; Thu, 17 Oct 2024 15:14:24 GMT
+ with ESMTP id 49HElkJQ027278; Thu, 17 Oct 2024 15:14:33 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 427fjgy68j-1
+ 427fjgy6du-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Oct 2024 15:14:24 +0000
+ Thu, 17 Oct 2024 15:14:33 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgb017147;
- Thu, 17 Oct 2024 15:14:24 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49HFEHgn017147;
+ Thu, 17 Oct 2024 15:14:32 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 427fjgy62e-6; Thu, 17 Oct 2024 15:14:24 +0000
+ ESMTP id 427fjgy62e-12; Thu, 17 Oct 2024 15:14:32 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -64,9 +64,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 05/14] migration: init and listen during precreate
-Date: Thu, 17 Oct 2024 08:14:06 -0700
-Message-Id: <1729178055-207271-6-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 11/14] monitor: connect in precreate
+Date: Thu, 17 Oct 2024 08:14:12 -0700
+Message-Id: <1729178055-207271-12-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
 References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
@@ -78,10 +78,10 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2409260000 definitions=main-2410170105
-X-Proofpoint-GUID: Zoe9OEV40VBqLYRAoDdAtf3JXB0B91v5
-X-Proofpoint-ORIG-GUID: Zoe9OEV40VBqLYRAoDdAtf3JXB0B91v5
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: axZp5SQDVKM2MrM2ZumBzW2L4RUO4cKJ
+X-Proofpoint-GUID: axZp5SQDVKM2MrM2ZumBzW2L4RUO4cKJ
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,91 +105,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize the migration object as early as possible so that migration
-configuration commands may be sent during the precreate phase.  Also,
-start listening for the incoming migration connection during precreate,
-so that the listen port number is assigned (if dynamic), and the user
-can discover it during precreate via query-migrate.  The precreate phase
-will be delineated in a subsequent patch.
+Complete monitor connections as early as possible, prior to
+qemu_create_early_backends, so the user can issue commands during the
+precreate phase.
 
-The code previously called migration_object_init after memory backends
-were created so that a subsequent migrate-set-capabilities call to set
-MIGRATION_CAPABILITY_POSTCOPY_RAM would verify all backends support
-postcopy.  See migrate_caps_check and postcopy_ram_supported_by_host.
-The new code calls migration_object_init before backends are created.
-However, migrate-set-capabilities will only be received during the
-precreate phase for CPR, and CPR does not support postcopy.  If the
-precreate phase is generalized in the future, then the ram compatibility
-check must be deferred to the start of migration.
+Make a list of the chardev's referenced by all monitors.  Create the
+chardevs, then create the monitors.  Exclude monitor chardevs and
+monitors from the later creation phases.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- system/vl.c | 35 +++++++++++++----------------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ system/vl.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 77 insertions(+), 4 deletions(-)
 
 diff --git a/system/vl.c b/system/vl.c
-index bca2292..d32203c 100644
+index 3c592b9..a985ab8 100644
 --- a/system/vl.c
 +++ b/system/vl.c
-@@ -2753,17 +2753,7 @@ void qmp_x_exit_preconfig(Error **errp)
-         replay_vmstate_init();
+@@ -1939,6 +1939,11 @@ static bool object_create_early(const ObjectOption *opt)
+         return false;
      }
  
--    if (incoming) {
--        Error *local_err = NULL;
--        if (strcmp(incoming, "defer") != 0) {
--            qmp_migrate_incoming(incoming, false, NULL, true, true,
--                                 &local_err);
--            if (local_err) {
--                error_reportf_err(local_err, "-incoming %s: ", incoming);
--                exit(1);
--            }
--        }
--    } else if (autostart) {
-+    if (!incoming && autostart) {
-         qmp_cont(NULL);
-     }
- }
-@@ -3751,6 +3741,18 @@ void qemu_init(int argc, char **argv)
-      * called from do_configure_accelerator().
-      */
- 
-+    /* Creates a QOM object */
-+    migration_object_init();
-+
-+    if (incoming && !g_str_equal(incoming, "defer")) {
-+        Error *local_err = NULL;
-+        qmp_migrate_incoming(incoming, false, NULL, true, true, &local_err);
-+        if (local_err) {
-+            error_reportf_err(local_err, "-incoming %s: ", incoming);
-+            exit(1);
-+        }
++    /* Reason: already created. */
++    if (g_str_equal(type, "mon")) {
++        return false;
 +    }
 +
-     suspend_mux_open();
+     return true;
+ }
  
-     qemu_disable_default_devices();
-@@ -3773,20 +3775,9 @@ void qemu_init(int argc, char **argv)
-                      machine_class->name, machine_class->deprecation_reason);
+@@ -1956,6 +1961,68 @@ static void qemu_apply_machine_options(QDict *qdict)
+     }
+ }
+ 
++typedef struct NamedElement {
++    char *name;
++    QTAILQ_ENTRY(NamedElement) next;
++} NamedElement;
++
++static QTAILQ_HEAD(, NamedElement) monitor_chardevs =
++    QTAILQ_HEAD_INITIALIZER(monitor_chardevs);
++
++static void chardev_add(const char *name)
++{
++    NamedElement *elem = g_new0(NamedElement, 1);
++
++    elem->name = g_strdup(name);
++    QTAILQ_INSERT_TAIL(&monitor_chardevs, elem, next);
++}
++
++static bool chardev_find(const char *name)
++{
++    NamedElement *elem;
++
++    QTAILQ_FOREACH(elem, &monitor_chardevs, next) {
++        if (g_str_equal(elem->name, name)) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static int monitor_add_chardev(void *opaque, QemuOpts *opts, Error **errp)
++{
++    g_autofree char *chardev = NULL;
++    int ret = monitor_chardev_name(opts, &chardev, errp);
++
++    if (!ret && chardev) {
++        chardev_add(chardev);
++    }
++    return ret;
++}
++
++static bool option_is_monitor_chardev(void *opaque, QemuOpts *opts)
++{
++    return chardev_find(qemu_opts_id(opts));
++}
++
++static bool option_is_not_monitor_chardev(void *opaque, QemuOpts *opts)
++{
++    return !chardev_find(qemu_opts_id(opts));
++}
++
++static void qemu_create_monitors(void)
++{
++    qemu_opts_foreach(qemu_find_opts("mon"),
++                      monitor_add_chardev, NULL, &error_fatal);
++
++    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
++                      option_is_monitor_chardev,
++                      chardev_init_func, NULL, &error_fatal);
++
++    qemu_opts_foreach(qemu_find_opts("mon"),
++                      mon_init_func, NULL, &error_fatal);
++}
++
+ static void qemu_create_early_backends(void)
+ {
+     MachineClass *machine_class = MACHINE_GET_CLASS(current_machine);
+@@ -1994,7 +2061,8 @@ static void qemu_create_early_backends(void)
+     /* spice must initialize before chardevs (for spicevmc and spiceport) */
+     qemu_spice.init();
+ 
+-    qemu_opts_foreach(qemu_find_opts("chardev"),
++    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
++                      option_is_not_monitor_chardev,
+                       chardev_init_func, NULL, &error_fatal);
+ 
+ #ifdef CONFIG_VIRTFS
+@@ -2020,6 +2088,11 @@ static void qemu_create_early_backends(void)
+  */
+ static bool object_create_late(const ObjectOption *opt)
+ {
++    /* Reason: already created. */
++    if (g_str_equal(ObjectType_str(opt->opts->qom_type), "mon")) {
++        return false;
++    }
++
+     return !object_create_early(opt) && !object_create_pre_sandbox(opt);
+ }
+ 
+@@ -2045,9 +2118,6 @@ static void qemu_create_late_backends(void)
+         exit(1);
      }
  
--    /*
--     * Create backends before creating migration objects, so that it can
--     * check against compatibilities on the backend memories (e.g. postcopy
--     * over memory-backend-file objects).
--     */
-     qemu_create_late_backends();
-     phase_advance(PHASE_LATE_BACKENDS_CREATED);
- 
--    /*
--     * Note: creates a QOM object, must run only after global and
--     * compat properties have been set up.
--     */
--    migration_object_init();
+-    qemu_opts_foreach(qemu_find_opts("mon"),
+-                      mon_init_func, NULL, &error_fatal);
 -
-     /* parse features once if machine provides default cpu_type */
-     current_machine->cpu_type = machine_class_default_cpu_type(machine_class);
-     if (cpu_option) {
+     if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
+         exit(1);
+     if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
+@@ -3730,6 +3800,9 @@ void qemu_init(int argc, char **argv)
+ 
+     accel = configure_accelerators(argv[0]);
+ 
++    os_setup_signal_handling();
++    qemu_create_monitors();
++
+     /*
+      * QOM objects created after this point see all global and
+      * compat properties.
 -- 
 1.8.3.1
 
