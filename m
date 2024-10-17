@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40221D21264
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A143D21262
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 09:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1MaD-0005mh-Ex; Thu, 17 Oct 2024 05:14:13 -0400
+	id 1t1Mau-0006M6-Lv; Thu, 17 Oct 2024 05:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1MaB-0005m0-8j
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:14:11 -0400
+ id 1t1Mat-0006Lf-0Y
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:14:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1Ma9-0002Ug-Ie
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:14:11 -0400
+ id 1t1Mar-0002hb-Jt
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 05:14:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729156448;
+ s=mimecast20190719; t=1729156492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=7D2q4GegnvVC8fr/YynFn0Bq28q3DgZueEGrK5m0WmE=;
- b=J59/0djnUr1+/eruHKFK6gKtXhgwLnWKOJRJwRFpVFTDta6QGwRD8yTcgDU20JtUIpJlqx
- XaOPqNBifqJOSt6ppVOrodr+k0x5vWTaztJfHsoqlX/dl5lAVVuBH5VL7OLtUu35k6L3LX
- V1acg7tdYL6RYj4hhUat2G7RHFUga/c=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x0gpUptpWKApUHwiJ6LoyEnuhzJeGxkEeZTr3Sc3qSk=;
+ b=NNYAmwexdR33tXwNxCHie4ULaNn7VHc+SVqpYVSymPWEo8hQgswdCfxNhrilyQZ+Ae0LxU
+ NLhVXFfakofgawE2t7QRXhoywoiRW8h8Dg6qMvfL+NsdkOj+vGc9Ui1Fzu2MXS333LcZiT
+ ihnBdoosyqjje2+wfNCgUU/bc47VXE8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-1BanoPX5MmiOR3Ql8CVsRQ-1; Thu, 17 Oct 2024 05:14:07 -0400
-X-MC-Unique: 1BanoPX5MmiOR3Ql8CVsRQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d5116f0a6so285509f8f.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:14:07 -0700 (PDT)
+ us-mta-572-USHUzyZCPhGqZ-s85bdKPA-1; Thu, 17 Oct 2024 05:14:51 -0400
+X-MC-Unique: USHUzyZCPhGqZ-s85bdKPA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-37d5ca192b8so346897f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 02:14:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729156446; x=1729761246;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7D2q4GegnvVC8fr/YynFn0Bq28q3DgZueEGrK5m0WmE=;
- b=dj8zqB+PvMUnBu87o47CFNCrZRWLt5rCgPifATIarD6XF0dsHpqiEFXpXihdLVHRbu
- xvTAiI9/EGNKgYMP+t155AWA5RrDH44Mau+jojOueEh7BCJnDMbCKhhjMAyfv2R1oWrD
- If+ZrgZypk5Yiz1wO+rjH6IkROcmFz3B1ZCdqyJps/UxaNetuXvzvKukXL03zvCy9hKF
- G+TjuAn9QHqXXkCkhX/1l+TU/1RdDs0mOQfyXMl326uVD5ab6ultAr4JLtIvu0m4hKYS
- 3CCIGd/l1Gt883tzlNJMs7FrhyAq42Q/BDy7ygjkNHX8HvIdyZJgean4/g/0QAR/f9CJ
- /wgA==
-X-Gm-Message-State: AOJu0YxRa6LDThtBz9NKYu3VlD/IZazeKy0wJpQrPu+rgvqnOywDOGUU
- HLTmokJELAEEXtqK/xXeIXO5JrdwYjZkWz9mNQgi7580k9oUBtOtGw63mRUD9HHBVrVzMaaYnwt
- yRejWnAxsHaZxdlajSugfcMOt2eY1Wy2AVs/nSoIudJE0RDz6wPtYuwJkOLjt47/GtopxaB+pJZ
- zBF+rhs/Cp91TWjWgMbTnNlLT9tprrFqFO41msBdk=
-X-Received: by 2002:a5d:598d:0:b0:37d:3b79:d1e9 with SMTP id
- ffacd0b85a97d-37d5fe95608mr13673703f8f.8.1729156445659; 
- Thu, 17 Oct 2024 02:14:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGorrcSt99f5CxJdubWbZAPchM1CNTi3d8kJpD82eGfhjp9hw/0v8D4+PPmrYS5EZFKiX3dzw==
-X-Received: by 2002:a5d:598d:0:b0:37d:3b79:d1e9 with SMTP id
- ffacd0b85a97d-37d5fe95608mr13673679f8f.8.1729156445143; 
- Thu, 17 Oct 2024 02:14:05 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fbf838dsm6661997f8f.78.2024.10.17.02.14.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Oct 2024 02:14:04 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tcg/s390x: fix constraint for 32-bit TSTEQ/TSTNE
-Date: Thu, 17 Oct 2024 11:14:01 +0200
-Message-ID: <20241017091401.783102-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
+ d=1e100.net; s=20230601; t=1729156489; x=1729761289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x0gpUptpWKApUHwiJ6LoyEnuhzJeGxkEeZTr3Sc3qSk=;
+ b=iJ2Nkfw4wVPIGLI+gRm9X1+kGtkMfwn2+lzipXOxjzkRh4aA2MXxAXtbhGUSLFOYpu
+ ZZDigGcgGAm/LQFCu9fWYJoklrrVrOrYUnUY/ektJRYtyUi3L1+X/yPoj6Hpl7BvGnGX
+ KW82pwhoWH/JKJpAwhPUYq6fLdy5osYSTpSCI2fbVeRDE2RXiKYZB8/lv73MWwhlEFoB
+ RFQPeLPDc4igxZ9v63ixNaBC9CnmGTw2N/7SPXiE1Ol6Yq/EK60qfzBKUQVLRr34keq+
+ XgrGKU5HTjbuGD1exlbHmHom2nvRaMSypvjTkcTLplxm8EecvZSSi48nicA3FXgw2POP
+ 0kBw==
+X-Gm-Message-State: AOJu0Yw80Ivx1pF48xW8J41JzKZQHob4zoEFB1cm/bHKKSaQRI9/2vCM
+ DGIjZ/lpBat7CFQhrcjzDl3McVCbG4I/YnAt2aaQ0eaLBjWJgzZLVwgYsfU7PeGTH71MCFIK3Jt
+ DxSkuL7Rjd7MzYMrQDyFeD3lphGesvJhsPHjXzDZaQug2Z8uD1EUz/9pVyYhARdH6QC++NCqRTR
+ 7ESCrO/xJQ8/XT24v6zsKgSsZX7WtRbKWgUYBmgSsI
+X-Received: by 2002:a5d:6b91:0:b0:37d:3baa:9f34 with SMTP id
+ ffacd0b85a97d-37d93dca7acmr1546720f8f.1.1729156489022; 
+ Thu, 17 Oct 2024 02:14:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUD2gWc9o/yxgGJ9qGrskbcsyuaBWAD5Fr6jJMnHfwnZum/OZh9G2qMNSyaV4JToBrLDgGQTAk7rVZ7F5r07s=
+X-Received: by 2002:a5d:6b91:0:b0:37d:3baa:9f34 with SMTP id
+ ffacd0b85a97d-37d93dca7acmr1546705f8f.1.1729156488670; Thu, 17 Oct 2024
+ 02:14:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20241015141711.528342-1-pbonzini@redhat.com>
+ <20241015141711.528342-14-pbonzini@redhat.com>
+ <b48f19ae-0e73-48d1-a29e-0dd0e4570a39@linaro.org>
+In-Reply-To: <b48f19ae-0e73-48d1-a29e-0dd0e4570a39@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 17 Oct 2024 11:14:35 +0200
+Message-ID: <CABgObfb_Hgdx=naeyOBQeyzcj43db3pSu-JbsfLNmdW-c4k1WA@mail.gmail.com>
+Subject: Re: [PULL 13/25] target/i386: convert CMPXCHG8B/CMPXCHG16B to new
+ decoder
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -101,74 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-32-bit TSTEQ and TSTNE is subject to the same constraints as
-for 64-bit, but setcond_i32 and negsetcond_i32 were incorrectly
-using TCG_CT_CONST ("i") instead of TCG_CT_CONST_CMP ("C").
+On Wed, Oct 16, 2024 at 6:37=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+> On s390x the cdrom-test generates:
+>
+> tcg/s390x/tcg-target.c.inc:1284:tgen_cmp2: code should not be reached
 
-Adjust the constraint and make tcg_target_const_match use the
-same sequence as tgen_cmp2: first check if the constant is a
-valid operand for TSTEQ/TSTNE, then accept everything for 32-bit
-non-test comparisons, finally check if the constant is a valid
-operand for 64-bit non-test comparisons.
+Backend bug, sent "[PATCH] tcg/s390x: fix constraint for 32-bit
+TSTEQ/TSTNE" to fix it.
 
-Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tcg/s390x/tcg-target.c.inc | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index a5d57197a4b..27bccc14e50 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -565,6 +565,20 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     }
- 
-     if (ct & TCG_CT_CONST_CMP) {
-+        if (is_tst_cond(cond)) {
-+            if (is_const_p16(uval) >= 0) {
-+                return true;  /* TMxx */
-+            }
-+            if (risbg_mask(uval)) {
-+                return true;  /* RISBG */
-+            }
-+            return false;
-+        }
-+
-+        if (type == TCG_TYPE_I32) {
-+            return true;
-+        }
-+
-         switch (cond) {
-         case TCG_COND_EQ:
-         case TCG_COND_NE:
-@@ -584,13 +598,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
-             break;
-         case TCG_COND_TSTNE:
-         case TCG_COND_TSTEQ:
--            if (is_const_p16(uval) >= 0) {
--                return true;  /* TMxx */
--            }
--            if (risbg_mask(uval)) {
--                return true;  /* RISBG */
--            }
--            break;
-+            /* checked above, fallthru */
-         default:
-             g_assert_not_reached();
-         }
-@@ -3231,9 +3239,9 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
-     case INDEX_op_rotl_i64:
-     case INDEX_op_rotr_i32:
-     case INDEX_op_rotr_i64:
-+        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i32:
-     case INDEX_op_negsetcond_i32:
--        return C_O1_I2(r, r, ri);
-     case INDEX_op_setcond_i64:
-     case INDEX_op_negsetcond_i64:
-         return C_O1_I2(r, r, rC);
--- 
-2.46.2
+Paolo
 
 
