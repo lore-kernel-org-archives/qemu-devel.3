@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6886D374A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965D7D374A2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 14:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Rp9-0001TL-KF; Thu, 17 Oct 2024 10:50:03 -0400
+	id 1t1Rrx-0002a8-7G; Thu, 17 Oct 2024 10:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1t1Row-0001S8-Of
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:49:47 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1Rrv-0002Zl-G9
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:52:51 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1t1Rou-0006E9-T5
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:49:46 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2fb584a8f81so12897111fa.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:49:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1Rrt-0006s4-Pi
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 10:52:51 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7ea784aea63so621367a12.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 07:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1729176580; x=1729781380; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r62nnLCkuDM/Z6qpnbUBKPxbjg3b9wlo1mmXrcAbnnc=;
- b=dILreH+fPUdLsoshfZB9OWbttKqv7fOYHCU1KAZ4kjQCyfxBw2PWViNYV6Zvx4SzXo
- QdLTBSoLXHcaf+RFB7dSiCC/icn8DmJYWTSgSJEkDpwDTYaVulnK6ARRbS1QDnbRgsic
- PVh1JmnlcIxSezaUVm3FzEnByRa1pmrF0ox6DEWQPIFg+1Vo/5jMtSP3PD/V5UlutZ9/
- e+bjT0VzJpFgOo5JmWB3m3fr5Mn3VMBXOAz6sPW/bzHPekYMablvZaqffEkopodeaYqQ
- 3gfU9ZYOBYpDFRTcUESqkZA2qpRxgT6d5cKyonrrXs6tTMNNGmY4XYLU5G6uAAK45Krr
- To/w==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729176768; x=1729781568;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6eg+2AFKnUk0+TQpBNtTr72DYLo/5v1jGGUKbtDh4A4=;
+ b=UM18RA7i/8/5kufIiSHVg2vH1qv8IDfgveN9KF+eycfmuphNp63qSd1XfwyQQpYMfl
+ wq06cwwoHeB0cU0c7xJIfKAvaHp7nJhGyW1kMj0kqhO1lgpE+MOB9iXTKNp7kgoIyCkc
+ xgLL0MDfGc+3aaR39NBG0vVbo7htrh94AH8TMlG/TQSLL4Mz1ROtePukhYZjfPwBGU7W
+ K2PnXrXF+qGiyly27uhaXllBgdJb99BqVRiiKdFq/k9FH5boZk/9gPjCiT1UFM8jBLIn
+ bJc8Cnv7E3euHzn0JmcPrwz91LMnHRYhLvmk9wMcLdlupj4CLUEyzFhzHc6SpoK0AkN9
+ aOMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729176580; x=1729781380;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r62nnLCkuDM/Z6qpnbUBKPxbjg3b9wlo1mmXrcAbnnc=;
- b=Uyz1F1GF19EgAtr0sYDsG0+FFkTIYfeeV7XVlqbP01dhPdiBMXLE1abm9CiJRAG5+0
- ChXKljME3UN/lXCSedzi/RBNbP48NLK+KiXucSS+Eat65j7y1N5Q9En8JVdNff8WVzJa
- YinvtkOgD/kn7ETk9XqvisMMk74w6XhR/jkM1mfbV/hbIC8y8VagQ3oesyc3WSAUDD/C
- reABS7SJ39pAYDORrTDAQsl/Lk1BYSGopI6miIJ9K1+/k0ct6C4KdzL3UinD72vnu2Y5
- AxsD38Viesbd1m6wtYdNOCCgfoT6kCUPU9Sif5oncHrEHMS+QaYDemaEoOxemrZdUAX4
- uMuQ==
+ d=1e100.net; s=20230601; t=1729176768; x=1729781568;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6eg+2AFKnUk0+TQpBNtTr72DYLo/5v1jGGUKbtDh4A4=;
+ b=Y0mc0el+CO/l61/vtDibOIwKPQKiDn0rIgjcZ05NiupuGIWa93MfFjA6OkFFs0pDxv
+ vNLcZO2EFIfGf9RFPR2Z5x3pDi2/vuVqd+ivt5pfUQCyBmmvOaLek5gJ85WcFs3c7QBt
+ C55itc1+KSimToTsYzefRGibaA/YvfySLhRom+Yp2gp2tlAH9fY1I7EyGbHbsOgwKOy/
+ 3Ov/RHvXKNaoCBWtGvk5x220opJkFNvIAlSHPCvAVLrOmwhk661I47Rjd3nylI7Ql+vk
+ 1PoHNVugoXeUn4evoa5cnUo+cUrjw37G4ydQgfQirorSCUsLDfcPAd9W6c/R5hodVmwC
+ 9d5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWF/N9m5DurgRpQe4SngInCUn0dC+R78VdL1aN8dnAVYTAozrau4f8OkqZ50b39LEgrc18coU/eMdYg@nongnu.org
-X-Gm-Message-State: AOJu0Yzk+eWI4112qMTs78+M7H3/iIGgAmNkGuhxVLzW0dH6UvhBZnZe
- XQdeUF1oOHMYvs8Gnv2qEIS78Er7YCNJC/BupLpvd2ZfEcyvqI2CmPTHuNzix6TQb1TcUUVcWDp
- uNEX66QMxbQjSs/e9tjFJE3rITgeue1kJLVdEAA==
-X-Google-Smtp-Source: AGHT+IGwnuVxRApSWU7BNyC4HbA6HTk2R3pX0DIXM00zqBvTU4N3O4o0rZobbLeq9YSL0ep3ld7qVHG4l1lVU7C8DU4=
-X-Received: by 2002:a2e:4601:0:b0:2fb:599a:a900 with SMTP id
- 38308e7fff4ca-2fb61b4789fmr45930771fa.15.1729176580349; Thu, 17 Oct 2024
- 07:49:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20241014181948.1974405-1-frank.chang@sifive.com>
- <20241014181948.1974405-3-frank.chang@sifive.com>
- <1b9a53b3-79d0-4ba2-9450-35e28ecfbd79@rivosinc.com>
-In-Reply-To: <1b9a53b3-79d0-4ba2-9450-35e28ecfbd79@rivosinc.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Thu, 17 Oct 2024 22:49:29 +0800
-Message-ID: <CAE_xrPiMxUYRdAH7XXmb9Qmv6f1bJwFQL+OBHEV7OiD7E=WQrQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/5] target/riscv: Handle Smrnmi interrupt and exception
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ AJvYcCX0XPTfj9nXemyLxp9HBu5HRcTOuO2nlL2G8Jj5fnBW+q6JoI64DoqYeu2DiXwvgDJje8yM6a8LGyZB@nongnu.org
+X-Gm-Message-State: AOJu0YwR/jXIw1BFzm9iyMb4ZdYuGPQtA675MNPTsuMfh+Ny3OoEMkef
+ 5yZSU3MNpoEYM8atZwVOp4jccTbxuVx2GKIo807XW68dm4vsQJ37wuHgWtIeBhA=
+X-Google-Smtp-Source: AGHT+IGEhPbqJ9/0OpFcNbDpzNRRmPj9I5OQcut0Uop5LuFZe7PvkfhaQYWQZj8HHyB5UjBXKIJJgg==
+X-Received: by 2002:a05:6a21:680d:b0:1d9:18af:d150 with SMTP id
+ adf61e73a8af0-1d918afd18dmr6080330637.21.1729176768451; 
+ Thu, 17 Oct 2024 07:52:48 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71e77371193sm4859580b3a.21.2024.10.17.07.52.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Oct 2024 07:52:47 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Tommy Wu <tommy.wu@sifive.com>
-Content-Type: multipart/alternative; boundary="000000000000d395940624ad4b17"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=frank.chang@sifive.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v4 1/9] target/riscv: fix henvcfg potentially containing stale
+ bits
+Date: Thu, 17 Oct 2024 16:52:12 +0200
+Message-ID: <20241017145226.365825-2-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241017145226.365825-1-cleger@rivosinc.com>
+References: <20241017145226.365825-1-cleger@rivosinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=cleger@rivosinc.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,120 +104,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d395940624ad4b17
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+With the current implementation, if we had the current scenario:
+- set bit x in menvcfg
+- set bit x in henvcfg
+- clear bit x in menvcfg
+then, the internal variable env->henvcfg would still contain bit x due
+to both a wrong menvcfg mask used in write_henvcfg() as well as a
+missing update of henvcfg upon menvcfg update.
+This can lead to some wrong interpretation of the context. In order to
+update henvcfg upon menvcfg writing, call write_henvcfg() after writing
+menvcfg and fix the mask computation used in write_henvcfg() that is
+used to mesk env->menvcfg value (which could still lead to some stale
+bits). The same mechanism is also applied for henvcfgh writing.
 
-Hi Cl=C3=A9ment,
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+---
+ target/riscv/csr.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-On Thu, Oct 17, 2024 at 10:14=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
-vosinc.com> wrote:
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index b84b436151..9e832e0b39 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2345,6 +2345,8 @@ static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
++                                    target_ulong val);
+ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                                     target_ulong val)
+ {
+@@ -2357,6 +2359,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                 (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+     }
+     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
++    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -2368,6 +2371,8 @@ static RISCVException read_menvcfgh(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
++                                    target_ulong val);
+ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+                                      target_ulong val)
+ {
+@@ -2378,6 +2383,7 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+     uint64_t valh = (uint64_t)val << 32;
+ 
+     env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
++    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -2435,6 +2441,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+                                     target_ulong val)
+ {
+     uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
++    uint64_t menvcfg_mask = 0;
+     RISCVException ret;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+@@ -2443,10 +2450,11 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+     }
+ 
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+-        mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE);
++        menvcfg_mask = HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
++        mask |= env->menvcfg & menvcfg_mask;
+     }
+ 
+-    env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
++    env->henvcfg = (env->henvcfg & ~menvcfg_mask) | (val & mask);
+ 
+     return RISCV_EXCP_NONE;
+ }
+@@ -2469,8 +2477,9 @@ static RISCVException read_henvcfgh(CPURISCVState *env, int csrno,
+ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+                                      target_ulong val)
+ {
+-    uint64_t mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
++    uint64_t menvcfg_mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+                                     HENVCFG_ADUE);
++    uint64_t mask = env->menvcfg & menvcfg_mask;
+     uint64_t valh = (uint64_t)val << 32;
+     RISCVException ret;
+ 
+@@ -2479,7 +2488,7 @@ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+         return ret;
+     }
+ 
+-    env->henvcfg = (env->henvcfg & ~mask) | (valh & mask);
++    env->henvcfg = (env->henvcfg & ~menvcfg_mask) | (valh & mask);
+     return RISCV_EXCP_NONE;
+ }
+ 
+-- 
+2.45.2
 
->
->
-> On 14/10/2024 20:19, frank.chang@sifive.com wrote:
-> > @@ -1679,6 +1718,20 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-> >      target_ulong mtval2 =3D 0;
-> >      int sxlen =3D 0;
-> >      int mxlen =3D 0;
-> > + bool nnmi_excep =3D false;
-> > +
-> > + if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
-> > + env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, false);
-> > + env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPV,
-> > + env->virt_enabled);
-> > + env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_MNPP,
-> > + env->priv);
-> > + env->mncause =3D cause | ((target_ulong)1U << (TARGET_LONG_BITS - 1))=
-;
-> > + env->mnepc =3D env->pc;
-> > + env->pc =3D env->rnmi_irqvec;
-> > + riscv_cpu_set_mode(env, PRV_M, virt);
->
-> Hi Frank,
->
-> Does it make sense to use the virt value here since if we are going to
-> PRV_M mode, then virt should be false ?
->
-
-Yes, you are right.
-We need to pass virt_en to false as we are going to switch to M-mode.
-Otherwise, we may hit the assertion in:
-riscv_pmu_cycle_update_priv(), and riscv_pmu_icount_update_priv()
-The TLB will also not be flushed properly on the virt mode changed.
-
-I will fix it in the next patchset.
-
-Thanks,
-Frank Chang
-
-
->
-> Thanks,
->
-> Cl=C3=A9ment
->
->
-> > + return;
-> > + }
->
->
-
---000000000000d395940624ad4b17
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0Cl=C3=A9ment,</div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 17, 2024=
- at 10:14=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger &lt;<a href=3D"mailto:cleger@r=
-ivosinc.com">cleger@rivosinc.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex"><br>
-<br>
-On 14/10/2024 20:19, <a href=3D"mailto:frank.chang@sifive.com" target=3D"_b=
-lank">frank.chang@sifive.com</a> wrote:<br>
-&gt; @@ -1679,6 +1718,20 @@ void riscv_cpu_do_interrupt(CPUState *cs)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 target_ulong mtval2 =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int sxlen =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 int mxlen =3D 0;<br>
-&gt; + bool nnmi_excep =3D false;<br>
-&gt; +<br>
-&gt; + if (cpu-&gt;cfg.ext_smrnmi &amp;&amp; env-&gt;rnmip &amp;&amp; async=
-) {<br>
-&gt; + env-&gt;mnstatus =3D set_field(env-&gt;mnstatus, MNSTATUS_NMIE, fals=
-e);<br>
-&gt; + env-&gt;mnstatus =3D set_field(env-&gt;mnstatus, MNSTATUS_MNPV,<br>
-&gt; + env-&gt;virt_enabled);<br>
-&gt; + env-&gt;mnstatus =3D set_field(env-&gt;mnstatus, MNSTATUS_MNPP,<br>
-&gt; + env-&gt;priv);<br>
-&gt; + env-&gt;mncause =3D cause | ((target_ulong)1U &lt;&lt; (TARGET_LONG_=
-BITS - 1));<br>
-&gt; + env-&gt;mnepc =3D env-&gt;pc;<br>
-&gt; + env-&gt;pc =3D env-&gt;rnmi_irqvec;<br>
-&gt; + riscv_cpu_set_mode(env, PRV_M, virt);<br>
-<br>
-Hi Frank,<br>
-<br>
-Does it make sense to use the virt value here since if we are going to<br>
-PRV_M mode, then virt should be false ?<br></blockquote><div><br></div><div=
->Yes, you are right.</div><div>We need to pass virt_en to false as we are g=
-oing to switch to M-mode.</div><div>Otherwise, we may hit the assertion in:=
-<br></div><div>riscv_pmu_cycle_update_priv(), and=C2=A0riscv_pmu_icount_upd=
-ate_priv()<br></div><div>The TLB will also not be flushed properly on the v=
-irt mode changed.</div><div><br></div><div>I will fix it in the next patchs=
-et.</div><div><br></div><div>Thanks,</div><div>Frank Chang</div><div>=C2=A0=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Thanks,<br>
-<br>
-Cl=C3=A9ment<br>
-<br>
-<br>
-&gt; + return;<br>
-&gt; + }<br>
-<br>
-</blockquote></div></div>
-
---000000000000d395940624ad4b17--
 
