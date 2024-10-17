@@ -4,133 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52F6D21274
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 10:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0216AD21272
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 11:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1Noq-0006mz-L4; Thu, 17 Oct 2024 06:33:24 -0400
+	id 1t1OG8-0004S1-7n; Thu, 17 Oct 2024 07:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1Noo-0006kj-HT
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:33:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1t1OG4-0004RA-Hb; Thu, 17 Oct 2024 07:01:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t1Nol-0006W0-HY
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 06:33:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729161195;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RHca4pvRoZkohBuLKqJU3k5QegE3GxCGkY+li/2m3n8=;
- b=XngyK5NUZSPwNb2TL9y/O8T5ilghDViE3qTbPjr3dh7GpLF3RdD+P75M+NmfIZOKS7bTwB
- KS05dDb2336IyRr1waXzMgiKKKBrVCEwHbMIAUph540EvOYbfJyEYe+0gzvuZj70QrbUdX
- sJ8oVInrAFD5pwis9xNXB9f+afnKlEk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-691-GfLLGfbKOwWTz2VEp1fLHQ-1; Thu, 17 Oct 2024 06:33:12 -0400
-X-MC-Unique: GfLLGfbKOwWTz2VEp1fLHQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d5606250aso280145f8f.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 03:33:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729161191; x=1729765991;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RHca4pvRoZkohBuLKqJU3k5QegE3GxCGkY+li/2m3n8=;
- b=tNKbsmd3QM1FUejcKy3j/52aK9+eK/FhacqhEhQDrZk9LF7cywq1XqqfBv9fw6W23W
- ryLjkaaSbOUyo5ZUyEZnmOLYdSjVRrp8pDL7riWL6itNKTDjJ7dGNP363EtA0TeRBQ6V
- riilvvvVJd+PcoECJ246ypgVNacm0s/LAvAerd5k6Q/TUf+vxAUSdsl+jttguyWdcm2p
- s/EM47bpU8Y6JtOPSzyf6PRY32YGrzcJ3c0k0wNGivo6i9lxWYm2nya+kYVJ5xU3UdRA
- 7I3ZTQZ9k/qD2iJa2GbytNaeOxPqDd5phjuiOAhC+PP8MgrYz/tcB+329uxNuJ7/e4SZ
- /ewg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1lki31DMjHToQAjzckHc2mTXglPujwwV+YGotr4cj0+5bGabnplrDEOo7cnUMjjPIQIhdUJAlslpR@nongnu.org
-X-Gm-Message-State: AOJu0Yy3Nxf2oSSQ4mo2Cj4NBWf8JypjIna+/vc+vu23HJsEGZd8/vgm
- sUVwSMy6RjSi3X4dR7IW68ZME95/IjFsCA232wgvYXT6bsxSJ48d7lGEWpvSXb1mKDaunsuGlm4
- FRmfFoRIcIT6Wom5EC+SMQXhttOEaJhiAeAYmO9iSIUWFW3a4OqUJ
-X-Received: by 2002:adf:ea41:0:b0:37d:4cd6:6f2f with SMTP id
- ffacd0b85a97d-37d86ba83b6mr4449398f8f.3.1729161191319; 
- Thu, 17 Oct 2024 03:33:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGU87CmKPPdk1/4656KY9He8ndFm//psEVx5/ulSARJu3dUuA3lKJcvWm7I0qMnsjuoyiWlng==
-X-Received: by 2002:adf:ea41:0:b0:37d:4cd6:6f2f with SMTP id
- ffacd0b85a97d-37d86ba83b6mr4449385f8f.3.1729161190911; 
- Thu, 17 Oct 2024 03:33:10 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37d7fc403d3sm6802314f8f.101.2024.10.17.03.33.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 03:33:10 -0700 (PDT)
-Message-ID: <9f7f0503-0366-43f0-a3af-a5f2221fc3a2@redhat.com>
-Date: Thu, 17 Oct 2024 12:33:08 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1t1OG2-0001OV-Bi; Thu, 17 Oct 2024 07:01:32 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49H1uXHj029531;
+ Thu, 17 Oct 2024 11:01:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=JMKF6/3gOcaVX3X6PUCPqG3ffFJ6DLpQqd8NxVw26
+ 3k=; b=qpPMVq8hN7qCNVaevDvx2OM9H/ga5XVSHNC99aPObpAa86Z/JIKqD71ZN
+ qnF380kNdWI1RxkP6rJzvnLd3tICOu/mle2lF/LtOBkCGxNraJlv9aTOcow++fvj
+ l7YE4t1JLf4ZbxaUOscD84IKm4KVIUmpoVu2TvCjmnnOhVW9UpaEjqCvr9EmaIxC
+ YE6ZzvEQ4i7zjLBO0iA2XN/Rv5IYScr/+Wvm9AT9/ncZG8Fo0Iey14xaD/n9JqGV
+ 0J9Z8z69/CGno6OfXUPcitAwuJ+6+Vy9GUQu9Ogs7YrBXJeWyae9N9YWzjiib8oo
+ p8FCkU5jzWxhwX2/8168JMNlXE5JQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42asbd26vf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 11:01:22 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49HB11Od024358;
+ Thu, 17 Oct 2024 11:01:22 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42asbd26v5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 11:01:22 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49HAc5PD004965;
+ Thu, 17 Oct 2024 11:01:20 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285nje7ur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2024 11:01:20 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49HB1HtV52756740
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Oct 2024 11:01:17 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4FF8D2004B;
+ Thu, 17 Oct 2024 11:01:17 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9EB0020040;
+ Thu, 17 Oct 2024 11:01:14 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com.com (unknown
+ [9.124.221.207])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Oct 2024 11:01:14 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PATCH] spapr: nested: Add support for DPDES SPR in GSB for TCG L0
+Date: Thu, 17 Oct 2024 16:30:33 +0530
+Message-ID: <20241017110033.3929988-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: iGzB93uo62242JNkh6cxJp4v6oSQ3J4H
+X-Proofpoint-GUID: jPOsK5XYgT9YbZrns-F5WQQuzYj4FWjm
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/19] pc-bios/s390-ccw: Remove panics from Netboot IPL
- path
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com
-References: <20241017014748.829029-1-jrossi@linux.ibm.com>
- <20241017014748.829029-12-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241017014748.829029-12-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
+ clxscore=1011 adultscore=0 priorityscore=1501 mlxlogscore=627
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170074
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -148,103 +116,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/2024 03.47, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Remove panic-on-error from Netboot specific functions so that error recovery
-> may be possible in the future.
-> 
-> Functions that would previously panic now provide a return code.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/s390-ccw.h   |  2 +-
->   pc-bios/s390-ccw/bootmap.c    |  1 +
->   pc-bios/s390-ccw/netmain.c    | 17 +++++++++++------
->   pc-bios/s390-ccw/virtio-net.c |  7 +++++--
->   4 files changed, 18 insertions(+), 9 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 3e844abd71..344ad15655 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -57,7 +57,7 @@ unsigned int get_loadparm_index(void);
->   void main(void);
->   
->   /* netmain.c */
-> -void netmain(void);
-> +int netmain(void);
->   
->   /* sclp.c */
->   void sclp_print(const char *string);
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index a277fc3431..f1cfb7aaa8 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -1073,6 +1073,7 @@ void zipl_load(void)
->   
->       if (virtio_get_device_type() == VIRTIO_ID_NET) {
->           netmain();
-> +        panic("\n! Cannot IPL from this network !\n");
->       }
->   
->       if (ipl_scsi()) {
-> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-> index bc6ad8695f..0bb359e09f 100644
-> --- a/pc-bios/s390-ccw/netmain.c
-> +++ b/pc-bios/s390-ccw/netmain.c
-> @@ -464,7 +464,7 @@ static bool find_net_dev(Schib *schib, int dev_no)
->       return false;
->   }
->   
-> -static void virtio_setup(void)
-> +static bool virtio_setup(void)
->   {
->       Schib schib;
->       int ssid;
-> @@ -495,10 +495,10 @@ static void virtio_setup(void)
->           }
->       }
->   
-> -    IPL_assert(found, "No virtio net device found");
-> +    return found;
->   }
->   
-> -void netmain(void)
-> +int netmain(void)
->   {
->       filename_ip_t fn_ip;
->       int rc, fnlen;
-> @@ -506,11 +506,15 @@ void netmain(void)
->       sclp_setup();
->       puts("Network boot starting...");
->   
-> -    virtio_setup();
-> +    if (!virtio_setup()) {
-> +        puts("No virtio net device found.");
-> +        return 1;
-> +    }
->   
->       rc = net_init(&fn_ip);
->       if (rc) {
-> -        panic("Network initialization failed. Halting.");
-> +        puts("Network initialization failed.");
-> +        return 1;
->       }
->   
->       fnlen = strlen(fn_ip.filename);
-> @@ -528,5 +532,6 @@ void netmain(void)
->           jump_to_low_kernel();
->       }
->   
-> -    panic("Failed to load OS from network.");
-> +    puts("Failed to load OS from network.");
-> +    return 1;
->   }
+The DPDES support for doorbell emulation and handling for KVM on PAPR
+guests was added in Linux via [1]. Subsequently, a new GSB element for
+DPDES was added in Linux; the same has been missing in QEMU L0. Add
+support for DPDES register's APIv2 GSB element and required handling in
+`spapr_nested.c`.
 
-I'd maybe also change the netmain() function to return -1 in case of errors.
+Currently, booting a KVM guest inside a QEMU TCG guest fails with the
+below crash. The crash is encountered when GUEST_RUN_VCPU hcall made
+into QEMU TCG L0 fails because H_INVALID_ELEMENT_VALUE is returned as
+the mapping of the element ID corresponding to DPDES (unknown to QEMU
+TCG L0) in GSR (Guest State Request) of TCG guest's KVM to the GSB
+(Guest State Buffer) elements of QEMU TCG L0 fails.
 
-Anyway:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+ KVM: unknown exit, hardware reason ffffffffffffffea
+ NIP 0000000000000100   LR 0000000000000000 CTR 0000000000000000 XER 0000000000000000 CPU#0
+ MSR 0000000000003000 HID0 0000000000000000  HF 6c002000 iidx 3 didx 3
+ TB 00000000 00000000 DECR 0
+ GPR00 0000000000000000 0000000000000000 0000000000000000 000000007fe00000
+ GPR04 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR08 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR12 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR16 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR20 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR24 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ GPR28 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+ CR 00000000  [ -  -  -  -  -  -  -  -  ]     RES 000@ffffffffffffffff
+  SRR0 0000000000000000  SRR1 0000000000000000    PVR 0000000000801200 VRSAVE 0000000000000000
+ SPRG0 0000000000000000 SPRG1 0000000000000000  SPRG2 0000000000000000  SPRG3 0000000000000000
+ SPRG4 0000000000000000 SPRG5 0000000000000000  SPRG6 0000000000000000  SPRG7 0000000000000000
+ HSRR0 0000000000000000 HSRR1 0000000000000000
+  CFAR 0000000000000000
+  LPCR 0000000000560413
+  PTCR 0000000000000000   DAR 0000000000000000  DSISR 0000000000000000
+
+Fix this by adding the required support and handling in QEMU TCG L0.
+
+[1] https://lore.kernel.org/all/20240605113913.83715-1-gautam@linux.ibm.com/
+
+Fixes: 4a575f9a0567 ("spapr: nested: Initialize the GSB elements lookup table.")
+Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+---
+ hw/ppc/spapr_nested.c         | 3 +++
+ include/hw/ppc/spapr_nested.h | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index c02785756c1e..b696ad537a77 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -194,6 +194,7 @@ static void nested_save_state(struct nested_ppc_state *save, PowerPCCPU *cpu)
+         save->fscr = env->spr[SPR_FSCR];
+         save->pspb = env->spr[SPR_PSPB];
+         save->ctrl = env->spr[SPR_CTRL];
++        save->dpdes = env->spr[SPR_DPDES];
+         save->vrsave = env->spr[SPR_VRSAVE];
+         save->dar = env->spr[SPR_DAR];
+         save->dsisr = env->spr[SPR_DSISR];
+@@ -293,6 +294,7 @@ static void nested_load_state(PowerPCCPU *cpu, struct nested_ppc_state *load)
+         env->spr[SPR_FSCR] = load->fscr;
+         env->spr[SPR_PSPB] = load->pspb;
+         env->spr[SPR_CTRL] = load->ctrl;
++        env->spr[SPR_DPDES] = load->dpdes;
+         env->spr[SPR_VRSAVE] = load->vrsave;
+         env->spr[SPR_DAR] = load->dar;
+         env->spr[SPR_DSISR] = load->dsisr;
+@@ -982,6 +984,7 @@ struct guest_state_element_type guest_state_element_types[] = {
+     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_FSCR,  fscr),
+     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_PSPB,   pspb),
+     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_CTRL,  ctrl),
++    GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DPDES, dpdes),
+     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_VRSAVE, vrsave),
+     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DAR,   dar),
+     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_DSISR,  dsisr),
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index 93ef14adcc5e..3b5cd993c256 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -99,7 +99,8 @@
+ #define GSB_VCPU_SPR_HASHKEYR   0x1050
+ #define GSB_VCPU_SPR_HASHPKEYR  0x1051
+ #define GSB_VCPU_SPR_CTRL       0x1052
+-                    /* RESERVED 0x1053 - 0x1FFF */
++#define GSB_VCPU_SPR_DPDES      0x1053
++                    /* RESERVED 0x1054 - 0x1FFF */
+ #define GSB_VCPU_SPR_CR         0x2000
+ #define GSB_VCPU_SPR_PIDR       0x2001
+ #define GSB_VCPU_SPR_DSISR      0x2002
+
+base-commit: aa54f5be44be786636a5d51cc1612ad208a24849
+-- 
+2.47.0
 
 
