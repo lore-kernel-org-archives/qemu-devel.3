@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8549D2F7FD
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 08:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383F1D1AD36
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Oct 2024 08:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1LcB-0001Ql-KW; Thu, 17 Oct 2024 04:12:13 -0400
+	id 1t1LiH-0002Mb-Qe; Thu, 17 Oct 2024 04:18:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1Lc5-0001QR-Uh
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 04:12:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t1Li7-0002LX-Rz; Thu, 17 Oct 2024 04:18:21 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1Lc4-0005NW-CH
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 04:12:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729152721;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gVAGaBvuCY6JlId0LiXsQitr1nNbAhkBdI+45fAxrRE=;
- b=NA84BkSuJ5TtwOAzMeWcx2wTPi4l+jNSUObA8pOuml/6StDSsWhKmRhXv/D8Nn6jyzvlrK
- n44s4oCMCVi/sZ7p8crdyQId6oE3nX/+1SVEJpNpvUxsjLww50v2XeU88gA6rEMuieyifK
- zzI9J4lkQrQPV8BF10joGNO3khraO3A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-F0iAS8N4NoqXDVP3Kt5UFw-1; Thu,
- 17 Oct 2024 04:11:57 -0400
-X-MC-Unique: F0iAS8N4NoqXDVP3Kt5UFw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AFA41955D42; Thu, 17 Oct 2024 08:11:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.94])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87FF1300018D; Thu, 17 Oct 2024 08:11:54 +0000 (UTC)
-Date: Thu, 17 Oct 2024 09:11:50 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- alejandro.zeise@seagate.com, peter.maydell@linaro.org
-Subject: Re: [PATCH] crypto/hash-afalg: Fix broken build
-Message-ID: <ZxDDHPl1vhoNyVvV@redhat.com>
-References: <20241017064742.2770242-1-armbru@redhat.com>
- <0a727cfe-af7c-4838-9336-2a6b2b555b8e@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1t1Li5-0007gT-Ip; Thu, 17 Oct 2024 04:18:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729153097; x=1760689097;
+ h=message-id:date:mime-version:from:subject:to:cc:
+ references:in-reply-to:content-transfer-encoding;
+ bh=jwUcg/w2I2IwDZp85rkfOYl+VTxWX6Z3JaM75ADodRs=;
+ b=f+UwIHoG08KcmeeGBDjC8u2Y+g5xZrhkrGEprHtUWQ6LMyyhbz1QrwrS
+ CXZD+Bp8MN4UwbBa22exIFL9blAyTKmW8vaSLcAYk44nCP/+35vSgarO+
+ hvB5VF5iHGuvRN9yE3CTeQn6d/MizxZxzOZTDlPbomJYA59Xfg8kwAjNM
+ HEUGBbKafmagfEfiBsKHftpFbO69lpvxU8XsOe8OCOQMZouloTPYvOwK9
+ HGbucYh1Uo/8pwsTr6fjOSNw5TXtJ2o7utrCRJy7TVGouH0rLFTAtCjtk
+ QUgdgd7hTC438ViSYnM44+wlMLFb2K1dKn4xowYfRfxm4ONy/OPLWX3Jx w==;
+X-CSE-ConnectionGUID: mHbD0kJ6SBqx5nguXgG0MA==
+X-CSE-MsgGUID: YtLwPalBQX2JpPyIoE77IQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28724515"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="28724515"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Oct 2024 01:18:11 -0700
+X-CSE-ConnectionGUID: 0UeNAiZoSWC3bCHTka1xtA==
+X-CSE-MsgGUID: VMDGMppOSnuBbD5wGVU/7w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,210,1725346800"; d="scan'208";a="78821110"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.38])
+ ([10.124.224.38])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Oct 2024 01:18:08 -0700
+Message-ID: <bbcfcbbd-1666-4e97-ae18-f47202d89009@intel.com>
+Date: Thu, 17 Oct 2024 16:18:06 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v6] i386/cpu: fixup number of addressable IDs for logical
+ processors in the physical package
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, pbonzini@redhat.com,
+ imammedo@redhat.com, xieyongji@bytedance.com, chaiwen.cc@bytedance.com,
+ qemu-stable@nongnu.org, Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-devel@nongnu.org
+References: <20241009035638.59330-1-xuchuangxclwt@bytedance.com>
+ <cc83fc31-7a77-4e32-a861-3c1dc8592a04@intel.com>
+ <2f6b952d-4c21-4db5-9a8a-84a0c10feca8@bytedance.com>
+ <a48fcd78-d1c4-4359-bc18-d04147a93f50@intel.com> <ZwyRsq4EIooifRvb@intel.com>
+Content-Language: en-US
+In-Reply-To: <ZwyRsq4EIooifRvb@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0a727cfe-af7c-4838-9336-2a6b2b555b8e@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.038,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,89 +87,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 08:54:04AM +0200, Cédric Le Goater wrote:
-> On 10/17/24 08:47, Markus Armbruster wrote:
-> > Fux build broken by semantic conflict with commit
-> > 8f525028bc6 (qapi/crypto: Rename QCryptoAFAlg to QCryptoAFAlgo).
-> > 
-> > Fixes: 90c3dc60735a (crypto/hash-afalg: Implement new hash API)
-> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+On 10/14/2024 11:36 AM, Zhao Liu wrote:
+>>>> On 10/9/2024 11:56 AM, Chuang Xu wrote:
+>>>>> When QEMU is started with:
+>>>>> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+>>>>> -smp 180,sockets=2,dies=1,cores=45,threads=2
+>>>>>
+>>>>> On Intel platform:
+>>>>> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+>>>>> logical processors in the physical package".
+>>>>>
+>>>>> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a
+>>>>> value of 90 for
+>>>>> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+>>>>> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+>>>>> CPUID.04H.EAX[31:26], which matches the expected result.
+>>>>>
+>>>>> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+>>>>> we'd beter round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+>>>>> integer too. Otherwise we may encounter unexpected results in guest.
+>>>>>
+>>>>> For example, when QEMU is started with CLI above and xtopology
+>>>>> is disabled,
+>>>>> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/
+>>>>> (1+CPUID.04H.EAX[31:26]) to
+>>>>> calculate threads-per-core in detect_ht(). Then guest will get
+>>>>> "90/ (1+63)=1"
+>>>>> as the result, even though threads-per-core should actually be 2.
+>>>>
+>>>> It's kernel's bug instead.
+>>>>
+>>>> In 1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of
+>>>> "Intel 64 Architecture Processor Topology Enumeration" [1], it is
+>>>>
+>>>>    - SMT_Mask_Width = Log2(RoundToNearestPof2(CPUID.1:EBX[23:16])/
+>>>> (CPUID.(EAX=4,ECX=0):EAX[31:26]) + 1))
+>>>>
+>>>> The value of CPUID.1:EBX[23:16] needs to be *rounded* to the
+>>>> neartest power-of-two integer instead of itself being the
+>>>> power-of-two.
+>>>>
+>>>> This also is consistency with the SDM, where the comment for bit
+>>>> 23-16 of CPUID.1:EBX is:
+>>>>
+>>>>    The nearest power-of-2 integer that is not smaller than EBX[23:16] is
+>>>>    the number of unique initial APIC IDs reserved for addressing
+>>>>    different logical processors in a physical package.
+>>>>
+>>>> What I read from this is, the nearest power-of-2 integer that is not
+>>>> smaller than EBX[23:16] is a different thing than EBX[23:16]. i.e.,
+>>>
+>>> Yes, when I read sdm, I also thought it was a kernel bug. But on my
+>>> 192ht spr host, the value of CPUID.1:EBX[23:16] was indeed rounded up
+>>>
+>>> to the nearest power of 2 by the hardware. After communicating with
+>>> Intel technical support staff, we thought that perhaps the description
+>>> in sdm
+>>>
+>>> is not so accurate, and rounding up CPUID.1:EBX[23:16] to the power of 2
+>>> in qemu may be more in line with the hardware behavior.
+>>
+>> I think above justification is important. We need to justify our changes
+>> with the fact and correct reason.
+>>
+>> I somehow agree to set EBX[23:16] to a value of power-of-2, because the
+>> 1.5.3 "Sub ID Extraction Parameters for initial APIC ID" of "Intel 64
+>> Architecture Processor Topology Enumeration" spec says
+>>
+>>      CPUID.1:EBX[23:16] represents the maximum number of addressable IDs
+>>      (initial APIC ID) that can be assigned to logical processors in a
+>>      physical package. The value may not be the same as the number of
+>>      logical processors that are present in the hardware of a physical
+>>      package.
+>>
+>> It uses the word "may not".
 > 
-> My bad :/ Obviously, I didn't catch this at compile time, nor did CI.
+> IMO, I don't quite understand your confusion regarding this. I've already
+> explained the meaning of addressable ID, and the spec you referenced also
+> clarifies its significance. The reason for this modification is not
+> because of the two words "may not".
+> 
+> Whether it is "be" or "not be" the same as the number of logical
+> processors, the essence is that due to topology, the actual number of
+> initial IDs that can be accommodated in the APIC ID may exceed the number
+> of logical processors.
 
-Yeah, this is a clear gap in our CI that I will post a patch for.
+I have the confusion because no matter from SDM:
 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+   Bit 23-16: Maximum number of addressable IDs for logical processors in
+              this physical package*
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+   * The nearest power-of-2 integer that is not smaller than EBX[23:16]
+     is the number of unique initial APIC IDs reserved for addressing
+     different logical processors in a physical package.
 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> > ---
-> >   crypto/hash-afalg.c | 10 +++++-----
-> >   1 file changed, 5 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/crypto/hash-afalg.c b/crypto/hash-afalg.c
-> > index 06e1e4699c..8c0ce5b520 100644
-> > --- a/crypto/hash-afalg.c
-> > +++ b/crypto/hash-afalg.c
-> > @@ -142,7 +142,7 @@ QCryptoHash *qcrypto_afalg_hash_new(QCryptoHashAlgo alg, Error **errp)
-> >   static
-> >   void qcrypto_afalg_hash_free(QCryptoHash *hash)
-> >   {
-> > -    QCryptoAFAlg *ctx = hash->opaque;
-> > +    QCryptoAFAlgo *ctx = hash->opaque;
-> >       if (ctx) {
-> >           qcrypto_afalg_comm_free(ctx);
-> > @@ -159,7 +159,7 @@ void qcrypto_afalg_hash_free(QCryptoHash *hash)
-> >    * be provided to calculate the final hash.
-> >    */
-> >   static
-> > -int qcrypto_afalg_send_to_kernel(QCryptoAFAlg *afalg,
-> > +int qcrypto_afalg_send_to_kernel(QCryptoAFAlgo *afalg,
-> >                                    const struct iovec *iov,
-> >                                    size_t niov,
-> >                                    bool more_data,
-> > @@ -183,7 +183,7 @@ int qcrypto_afalg_send_to_kernel(QCryptoAFAlg *afalg,
-> >   }
-> >   static
-> > -int qcrypto_afalg_recv_from_kernel(QCryptoAFAlg *afalg,
-> > +int qcrypto_afalg_recv_from_kernel(QCryptoAFAlgo *afalg,
-> >                                      QCryptoHashAlgo alg,
-> >                                      uint8_t **result,
-> >                                      size_t *result_len,
-> > @@ -222,7 +222,7 @@ int qcrypto_afalg_hash_update(QCryptoHash *hash,
-> >                                 size_t niov,
-> >                                 Error **errp)
-> >   {
-> > -    return qcrypto_afalg_send_to_kernel((QCryptoAFAlg *) hash->opaque,
-> > +    return qcrypto_afalg_send_to_kernel((QCryptoAFAlgo *) hash->opaque,
-> >                                           iov, niov, true, errp);
-> >   }
-> > @@ -232,7 +232,7 @@ int qcrypto_afalg_hash_finalize(QCryptoHash *hash,
-> >                                    size_t *result_len,
-> >                                    Error **errp)
-> >   {
-> > -    return qcrypto_afalg_recv_from_kernel((QCryptoAFAlg *) hash->opaque,
-> > +    return qcrypto_afalg_recv_from_kernel((QCryptoAFAlgo *) hash->opaque,
-> >                                             hash->alg, result, result_len, errp);
-> >   }
-> 
-> 
+or from "Intel 64 Architecture Processor Topology Enumeration" spec，(Jan 
+2018, revision 1.1), 1.5.3 "sub ID Extraction Parameters for Inital APIC ID"
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+   RoundToNearestPof2(CPUID.1:EBX[23:16])
 
+or from "Intel 64 Architecture Processor Topology Enumeration" 
+spec，(April 2023, revision 2.0), 1.6.1 Legacy Extraction Algorithm
+
+https://cdrdv2-public.intel.com/775917/intel-64-architecture-processor-topology-enumeration.pdf
+
+   "MaximumLogicalProcessorIDsPerPackage" is calculated by rounding
+    CPUID.01H.EBX[23:16] to nearest power of 2.
+
+what I read from them is that EBX[23:16] is a different thing than 
+pow2ceil(EBX[23:16]) and EBX[23:16] doesn't need to be power-of-2, but 
+the patch are trying to make it power-of-2.
+
+Then I consult it with Intel internal architect. I was told that 
+EBX[23:16] used to be that software was to round to the next power of 2. 
+However, software had issues a long time ago because applications could 
+then compute the wrong power of 2 based on APIC ID holes or some 
+applications would use it directly (without round it up to power-of-2).
+So intel became to report exact power-of-2 and this behavior is not 
+documented.
 
