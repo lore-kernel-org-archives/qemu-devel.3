@@ -4,80 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D9CD3001B
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A2CD3001C
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1pbT-0003qn-Ib; Fri, 18 Oct 2024 12:13:27 -0400
+	id 1t1phK-000892-8e; Fri, 18 Oct 2024 12:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1t1pbO-0003ll-41
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:13:23 -0400
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1t1pbK-0004Ov-38
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:13:21 -0400
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-7b15495f04dso122313785a.0
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 09:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1729267995; x=1729872795; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lWkU6s2NOVNttOr0QYI8NeG1kjlYmYzZJu3z4aGvls0=;
- b=Wh0Kg0iNEnSMAKd0ZUq08vj6o7j5anycn/NYjghg7It0H2xt8OJS63s6tYU9ad/BmL
- 8bKut87VS6JdJcCj60k5Ml23BqaANZwC2Xe2Ztn+QedvhlhHXEQReIqipTPIT9TA5yhw
- iXPw2OJnoS/hlKoaDZNWnhVzwoOVGK8HCTJ/NL5tEqg6PxyKU6Hv9RRZstSQZ8dlEurG
- Vl2avwEKJrKtgG/0W1CoYdkNOVIOU9FpL2UsHJmEdt8E88Jit6YjKoAZk67Wsg3+dnYV
- Ir1tmMcTmomblcJ968gQnHUss5c+++cO9fQ/wB6WPqhp78lZ43J1Er2WCJM0pc686U4P
- gHzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729267995; x=1729872795;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lWkU6s2NOVNttOr0QYI8NeG1kjlYmYzZJu3z4aGvls0=;
- b=GkxVB5I0MSURJ3tQ2uS0ZYwxjPaNpVVmve4rpfWWG/dp/Ihtc7RdZQngwxFkPmanL+
- QtUC2hMb33lb6WgeM0q2ZKOExi0C2AhaU1S+3rKr1IhsiwSYMkMmi6f65qQQuby4FA3v
- ceIOPlOFxhYcs6LzG4Z/aBahX+HFrJOVI1AbsPrnST9yTzjOkIehFRHSF+t8+1Hse/qs
- WRtTnddCyjTqUN6qHOs97feMbKv6yOz5JnpduU68/UPazdJsYJPdLnFxUftS7tj5lcWI
- 9T2CoAMeplz5GHYBsfROHhv09t6mSwkzKdFNS0SoBoEnB+VEQAUm2vA77X0YyvdcwAgK
- f7tw==
-X-Gm-Message-State: AOJu0Yw01eZcAJ9LCMeDkrh59v1nWpff4tO3yvE6WrrHdBcKL7SbLXFi
- B+5PdNROPlPQUrF0ptVIGKF0uqWkuf6NyPOZWabnt4/wHtDwO+d4tEzUV1/kfZg=
-X-Google-Smtp-Source: AGHT+IEqKAO0ketnSqmhUBvPOV068tf2A5Q37gpR9t7bNJ8EjmxgVJSGSr2XZ2oPQNDkOHcwr/ymVw==
-X-Received: by 2002:a05:620a:2492:b0:7b1:4579:61fa with SMTP id
- af79cd13be357-7b157beea8fmr371565785a.55.1729267994804; 
- Fri, 18 Oct 2024 09:13:14 -0700 (PDT)
-Received: from PC2K9PVX.TheFacebook.com
- (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b156fa55cfsm81677385a.67.2024.10.18.09.13.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Oct 2024 09:13:14 -0700 (PDT)
-From: Gregory Price <gourry@gourry.net>
-To: linux-cxl@vger.kernel.org
-Cc: qemu-devel@nongnu.org, svetly.todorov@memverge.com,
- jonathan.cameron@huawei.com, nifan.cxl@gmail.com
-Subject: [PATCH RFC v3 2/3] cxl_type3: add MHD callbacks
-Date: Fri, 18 Oct 2024 12:12:51 -0400
-Message-ID: <20241018161252.8896-3-gourry@gourry.net>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241018161252.8896-1-gourry@gourry.net>
-References: <20241018161252.8896-1-gourry@gourry.net>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1phI-00088X-EK
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:19:28 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1t1phF-00059F-7Y
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:19:28 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XVVHq2Cs8z67fBs;
+ Sat, 19 Oct 2024 00:18:31 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id B4695140680;
+ Sat, 19 Oct 2024 00:19:14 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 18 Oct
+ 2024 18:19:14 +0200
+Date: Fri, 18 Oct 2024 17:19:12 +0100
+To: Alejandro Lucero Palau <alucerop@amd.com>
+CC: Zhi Wang <zhiw@nvidia.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@redhat.com>, Ira Weiny <ira.weiny@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "linux-cxl@vger.kernel.org"
+ <linux-cxl@vger.kernel.org>, Dave Jiang <dave.jiang@intel.com>, "Dan
+ Williams" <dan.j.williams@intel.com>, Alex Williamson
+ <alex.williamson@redhat.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>
+Subject: Re: [PATCH RFC 0/5] hw/cxl: Type 2 Device RFC
+Message-ID: <20241018171912.00001e44@Huawei.com>
+In-Reply-To: <29528327-90d0-5aa7-d756-0a88a396d6f6@amd.com>
+References: <20230517-rfc-type2-dev-v1-0-6eb2e470981b@intel.com>
+ <5827f6e5-6de9-4ec1-83eb-b2e552092498@redhat.com>
+ <4085e18e-65bb-4b0e-bb72-f05e69996cbc@nvidia.com>
+ <29528327-90d0-5aa7-d756-0a88a396d6f6@amd.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=gourry@gourry.net; helo=mail-qk1-x735.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,202 +74,175 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Svetly Todorov <svetly.todorov@memverge.com>
+On Fri, 18 Oct 2024 16:25:58 +0100
+Alejandro Lucero Palau <alucerop@amd.com> wrote:
 
-Introduce an API for validating DC adds, removes, and responses
-against a multi-headed device.
+> On 10/18/24 15:49, Zhi Wang wrote:
+> > On 17/10/2024 19.57, C=E9dric Le Goater wrote: =20
+> >> External email: Use caution opening links or attachments
+> >>
+> >>
+> >> Hello,
+> >>
+> >> On 5/18/23 04:45, Ira Weiny wrote: =20
+> >>> Type 2 devices are not yet a reality.=A0 Developing core kernel suppo=
+rt
+> >>> is difficult without some test device to model against.
+> >>>
+> >>> Define a type 2 device 'cxl-accel'.=A0 This device is derived from the
+> >>> type 3 device and retains all that functionality for now.
+> >>>
+> >>> Mock up a couple of accelerator features (Back Invalidate [BI] and
+> >>> Unordered IO [UIO]) as examples for the RFC.=A0 These have no
+> >>> functionality other than to report the features as present for softwa=
+re
+> >>> to key off of.
+> >>>
+> >>> Defining these devices in qemu can be done with the following example:
+> >>>
+> >>> ...
+> >>>  =A0=A0 -device
+> >>> cxl-accel,bus=3Dsw0p0,volatile-memdev=3Dcxl-ac-mem5,id=3Dcxl-dev5,sn=
+=3D0xCAFE0005
+> >>> ...
+> >>>
+> >>> NOTE: I'm leaving off Michael Tsirkin for now because this is really
+> >>> rough and I'm mainly sending it out because it was talked about in the
+> >>> CXL community call on 5/16.
+> >>>
+> >>> Not-Yet-Signed-off-by: Ira Weiny <ira.weiny@intel.com> =20
+> >>
+> >> A recent proposal to add support in VFIO for CXL passthrough uses
+> >> this emulated device and a sample driver for a proof of concept.
+> >> For this effort, it would be very useful to have a QEMU model for
+> >> a CXL type2 device, even partially implemented.
+> >>
+> >> I haven't found any updates of this series. What are the plans for
+> >> upstream today ?
+> >> =20
+> > I was discussing this with Ira and Jonathan in the LPC and CXL discord
+> > groups. (Irq and Jonathan, please feel free to correct me) I think we
+> > all thought that having the emulated device support in QEMU and a sample
+> > CXL type-2 driver in the upstream kernel could be valuable for
+> >
+> > 1) people who wish to contribute and propose changes, like refactor, and
+> > code tweaks related to CXL type-2 support in the kernel. They can
+> > validate their patches to check if they break something without a CXL
+> > type-2 device.
+> >
+> > 2) people who wish to contribute on solving problems of CXL type-2
+> > generic code, e.g. loading sequences of modules... They can get involved
+> > without a real HW.
+> >
+> > My gut feeling is I can start to work with folks to get it into the
+> > mainline together with the sample driver when CXL type-2 support is
+> > merged. So people can play with it. =20
+>=20
+>=20
+> I did use an emulated Type2 device for my initial development and I'm=20
+> still using it for wider testing. It is basically same than the Type3=20
+> with small changes. I think a proper solution should include command=20
+> line options for configuring the device with flexibility or maybe=20
+> referring to a file with that specific configuration. Note there exist=20
+> optional functionalities like HDM decoder, and CXL.cache will need such=20
+> a flexibility as well.
 
-mhd_reserve_extents() is called during a DC add request. This allows
-a multi-headed device to check whether the requested extents belong
-to another host. If not, then this function can claim those extents
-in the MHD state and allow the cxl_type3 code to follow suit in the
-host-local blk_bitmap.
+In the first instance, I'd just make up a single reasonable configuration.
+Later, it may make sense to make it flexible.
 
-mhd_reclaim_extents() is called during the DC add response. It allows
-the MHD to reclaim extents that were preallocated to a host during the
-request but rejected in the response.
 
-mhd_release_extent() is called during the DC release response. It can
-be invoked after a host frees an extent in its local bitmap, allowing
-the MHD handler to release that same extent in the multi-host state.
+>=20
+> The RFC contains the driver for such emulated device implemented inside=20
+> the tools/testing/cxl directory, although it has changed since then, but=
+=20
+> happy to share it. It is almost equal to the code inside efx_cxl.c along=
+=20
+> with the functions/macros for defining the driver.
+>=20
+> FWIW, although I'm working on Type2 support, I really think qemu could=20
+> help for development and testing complex CXL infrastructures, more for=20
+> memory expanders aka Type3 than Type2. I know this requires a good=20
+> effort but IMO, it will pay off.
 
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Signed-off-by: Svetly Todorov <svetly.todorov@memverge.com>
----
- hw/cxl/cxl-mailbox-utils.c  | 28 +++++++++++++++++++++++++++-
- hw/mem/cxl_type3.c          | 17 +++++++++++++++++
- include/hw/cxl/cxl_device.h |  8 ++++++++
- 3 files changed, 52 insertions(+), 1 deletion(-)
+I'm definitely not against adding support and Zhi's rough sketch sounds
+about right.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 10de26605c..112272e9ac 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2545,6 +2545,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
- {
-     CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
-     CXLDCExtentList *extent_list = &ct3d->dc.extents;
-     uint32_t i;
-     uint64_t dpa, len;
-@@ -2579,6 +2580,11 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
-         ct3d->dc.total_extent_count += 1;
-         ct3_set_region_block_backed(ct3d, dpa, len);
-     }
-+
-+    if (cvc->mhd_reclaim_extents)
-+        cvc->mhd_reclaim_extents(&ct3d->parent_obj, &ct3d->dc.extents_pending,
-+                in);
-+
-     /* Remove the first extent group in the pending list */
-     cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
- 
-@@ -2612,6 +2618,7 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-         uint32_t *updated_list_size)
- {
-     CXLDCExtent *ent, *ent_next;
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
-     uint64_t dpa, len;
-     uint32_t i;
-     int cnt_delta = 0;
-@@ -2632,6 +2639,13 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-             goto free_and_exit;
-         }
- 
-+        /* In an MHD, check that this DPA range belongs to this host */
-+        if (cvc->mhd_access_valid &&
-+            !cvc->mhd_access_valid(&ct3d->parent_obj, dpa, len)) {
-+            ret = CXL_MBOX_INVALID_PA;
-+            goto free_and_exit;
-+        }
-+
-         /* After this point, extent overflow is the only error can happen */
-         while (len > 0) {
-             QTAILQ_FOREACH(ent, updated_list, node) {
-@@ -2704,9 +2718,11 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
- {
-     CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
-     CXLDCExtentList updated_list;
-     CXLDCExtent *ent, *ent_next;
--    uint32_t updated_list_size;
-+    uint32_t updated_list_size, i;
-+    uint64_t dpa, len;
-     CXLRetCode ret;
- 
-     if (in->num_entries_updated == 0) {
-@@ -2724,6 +2740,16 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-         return ret;
-     }
- 
-+    /* Updated_entries contains the released extents. Free those in the MHD */
-+    for (i = 0; cvc->mhd_release_extent && i < in->num_entries_updated; ++i) {
-+        dpa = in->updated_entries[i].start_dpa;
-+        len = in->updated_entries[i].len;
-+
-+        if (cvc->mhd_release_extent) {
-+            cvc->mhd_release_extent(&ct3d->parent_obj, dpa, len);
-+        }
-+    }
-+
-     /*
-      * If the dry run release passes, the returned updated_list will
-      * be the updated extent list and we just need to clear the extents
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index b7b24b6a32..a94b9931d2 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -799,6 +799,7 @@ static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
- {
-     CXLDCExtent *ent, *ent_next;
-     CXLDCExtentGroup *group, *group_next;
-+    CXLType3Class *cvc = CXL_TYPE3_CLASS(ct3d);
-     int i;
-     CXLDCRegion *region;
- 
-@@ -817,6 +818,10 @@ static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
-     for (i = 0; i < ct3d->dc.num_regions; i++) {
-         region = &ct3d->dc.regions[i];
-         g_free(region->blk_bitmap);
-+        if (cvc->mhd_release_extent) {
-+            cvc->mhd_release_extent(&ct3d->parent_obj, region->base,
-+                    region->len);
-+        }
-     }
- }
- 
-@@ -2077,6 +2082,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-     CXLEventDynamicCapacity dCap = {};
-     CXLEventRecordHdr *hdr = &dCap.hdr;
-     CXLType3Dev *dcd;
-+    CXLType3Class *cvc;
-     uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
-     uint32_t num_extents = 0;
-     CxlDynamicCapacityExtentList *list;
-@@ -2094,6 +2100,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-     }
- 
-     dcd = CXL_TYPE3(obj);
-+    cvc = CXL_TYPE3_GET_CLASS(dcd);
-     if (!dcd->dc.num_regions) {
-         error_setg(errp, "No dynamic capacity support from the device");
-         return;
-@@ -2166,6 +2173,13 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-         num_extents++;
-     }
- 
-+    /* If this is an MHD, attempt to reserve the extents */
-+    if (type == DC_EVENT_ADD_CAPACITY && cvc->mhd_reserve_extents &&
-+       !cvc->mhd_reserve_extents(&dcd->parent_obj, records, rid)) {
-+        error_setg(errp, "mhsld is enabled and extent reservation failed");
-+        return;
-+    }
-+
-     /* Create extent list for event being passed to host */
-     i = 0;
-     list = records;
-@@ -2304,6 +2318,9 @@ static void ct3_class_init(ObjectClass *oc, void *data)
-     cvc->set_cacheline = set_cacheline;
-     cvc->mhd_get_info = NULL;
-     cvc->mhd_access_valid = NULL;
-+    cvc->mhd_reserve_extents = NULL;
-+    cvc->mhd_reclaim_extents = NULL;
-+    cvc->mhd_release_extent = NULL;
- }
- 
- static const TypeInfo ct3d_info = {
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index b2dc7fb769..13c97b576f 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -14,6 +14,7 @@
- #include "hw/pci/pci_device.h"
- #include "hw/register.h"
- #include "hw/cxl/cxl_events.h"
-+#include "qapi/qapi-commands-cxl.h"
- 
- #include "hw/cxl/cxl_cpmu.h"
- /*
-@@ -682,6 +683,13 @@ struct CXLType3Class {
-                                size_t *len_out,
-                                CXLCCI *cci);
-     bool (*mhd_access_valid)(PCIDevice *d, uint64_t addr, unsigned int size);
-+    bool (*mhd_reserve_extents)(PCIDevice *d,
-+                                CxlDynamicCapacityExtentList *records,
-+                                uint8_t rid);
-+    bool (*mhd_reclaim_extents)(PCIDevice *d,
-+                                CXLDCExtentGroupList *groups,
-+                                CXLUpdateDCExtentListInPl *in);
-+    bool (*mhd_release_extent)(PCIDevice *d, uint64_t dpa, uint64_t len);
- };
- 
- struct CSWMBCCIDev {
--- 
-2.43.0
+>=20
+> > 3) people who would like to try on vfio-cxl.
+> >
+> > What would be nice to include in the patchset V1 in my mind:
+> >
+> > (Ira and Jonathan and folks please feel free to comment)
+> >
+> > Must have:
+> >    - HDM decoder support (>1 HDM decoder). (which I have done it in my
+> > tree, so the CXL core can create a CXL region)
+> >
+> > Nice to have:
+> >    - CXLType2 device system reset handler. As what mentioned in my cover
+> > letter, a system reset handler is required to reset the device state.
+> > Linux kernel CXL core assumes the HW is pre-configured by FW if it sees
+> > CXL.mem is enabled when enumerating the device. So I have to kill QEMU
+> > instead of resetting the virtual machine when debugging.
+> >
+> >    - CXLType2 device in the patch should be derived from PCIDevice
+> > (current it is derived from the CXLType3 device, which carries quite
+> > some unnecessary stuff to present to the guest)
+> >
+> >    - Refactor of the current QEMU FWMS code to deliver the guest access
+> > to the virtual memory backend to the correct emulated CXL device (which
+> > is currently hardcoded to connect to cxl-type3 device in QEMU. Without
+> > this, the access to the CXL region from the guest seems problematic but
+> > creating CXL region is still fine.)
+> >
+> > Thanks,
+> > Zhi.
+> > =20
+> >> For vfio-cxl, see :
+> >>
+> >> * [RFC] vfio: introduce vfio-cxl to support CXL type-2 accelerator
+> >> passthrough
+> >>   =A0 https://lore.kernel.org/kvm/20240920223446.1908673-1-zhiw@nvidia=
+.com
+> >> * [RFC] Introduce vfio-cxl to support CXL type-2 device passthrough
+> >>   =A0 https://lore.kernel.org/all/20240921071440.1915876-1-zhiw@nvidia=
+.com/
+> >>
+> >>
+> >> Thanks,
+> >>
+> >> C.
+> >>
+> >>
+> >> =20
+> >>> ---
+> >>> Ira Weiny (5):
+> >>>  =A0=A0=A0=A0=A0=A0 hw/cxl: Use define for build bug detection
+> >>>  =A0=A0=A0=A0=A0=A0 hw/cxl: Refactor component register initialization
+> >>>  =A0=A0=A0=A0=A0=A0 hw/cxl: Derive a CXL accelerator device from Type=
+-3
+> >>>  =A0=A0=A0=A0=A0=A0 hw/cxl/accel: Add Back-Invalidate decoder capbili=
+ty structure
+> >>>  =A0=A0=A0=A0=A0=A0 hw/cxl: Add UIO HDM decoder register fields
+> >>>
+> >>>  =A0 docs/system/devices/cxl.rst=A0=A0=A0 | 11 ++++++
+> >>>  =A0 hw/cxl/cxl-component-utils.c=A0=A0 | 80
+> >>> +++++++++++++++++++-----------------------
+> >>>  =A0 hw/mem/cxl_type3.c=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 | 39 ++++=
+++++++++++++++++
+> >>>  =A0 include/hw/cxl/cxl_component.h | 51 +++++++++++++++++++--------
+> >>>  =A0 include/hw/cxl/cxl_device.h=A0=A0=A0 | 16 +++++++++
+> >>>  =A0 include/hw/pci/pci_ids.h=A0=A0=A0=A0=A0=A0 |=A0 1 +
+> >>>  =A0 6 files changed, 141 insertions(+), 57 deletions(-)
+> >>> ---
+> >>> base-commit: 8eb2a03258313f404ca0c8609a8f9009b9b4318c
+> >>> change-id: 20230517-rfc-type2-dev-c2d661a29d96
+> >>>
+> >>> Best regards, =20
 
 
