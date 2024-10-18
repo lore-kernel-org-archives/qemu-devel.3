@@ -4,97 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E641D30007
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B81D3000A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1nDN-00076U-85; Fri, 18 Oct 2024 09:40:25 -0400
+	id 1t1nDd-00078a-N1; Fri, 18 Oct 2024 09:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t1nDK-00075o-Qj
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:40:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1nDc-00077w-Od
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:40:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t1nDH-0001fu-Ni
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:40:22 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49IARbcD014408;
- Fri, 18 Oct 2024 13:40:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gUKnZn
- +fdcsvnSGF5bMNaqtdfANEx3Ec/jN+ssTCGns=; b=OPc7P1g9/1GUyDWEXTcHx2
- imQTQlFumwepxA6v+Wu0R5O1mHThg+yS3+Y/iscCj4z0ULljXfpTqq8f+EnNWrM6
- HSItvCBukhhQ0+H103oY8rH9nPhM46TvlpeJg5Nhesy5RdKo15cIi0UPCZfO+99v
- PCwq9n4WObWPK6dwt/gEjhOFetxY47isFSX8pbpH/Poqz+Y4i4gkH4IIKnEyTfl+
- Y/qce1VbK9U+QHKrD+mKQEgF+XWxx6YCq6NuDUEssjAAUcCSdcTv7PYi+LcTvt8m
- OcVZRDotpSZT9W9/raOtfqiZ1hLuj1zU8KJ4FNEM+BNxXAy7yEYWHeSBkStAferQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aqgr94up-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 13:40:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49IBBbGl027432;
- Fri, 18 Oct 2024 13:40:15 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4283ty4wwm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 13:40:15 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49IDeFlT11534944
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Oct 2024 13:40:15 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C4F95805D;
- Fri, 18 Oct 2024 13:40:15 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A57F258043;
- Fri, 18 Oct 2024 13:40:14 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Oct 2024 13:40:14 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL v1 1/3] tpm: Use new ptm_cap_n structure for PTM_GET_CAPABILITY
-Date: Fri, 18 Oct 2024 09:40:02 -0400
-Message-ID: <20241018134004.2110276-2-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241018134004.2110276-1-stefanb@linux.ibm.com>
-References: <20241018134004.2110276-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1nDa-0001jh-Az
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:40:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729258837;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EspAzy36YyRuKRnAum8NxNnjzUB8tKz+NNbWx/dpw7o=;
+ b=i4ozU8Kt2qKKWXm882xRF2yNl0Q72RZM0dnqw7J/BqLv2EyykNOZw5n2vRVnNPooLomegx
+ u7WfI4KJBR9S3YzFYlwxMpdQ5vFL6esZBZlLewl+kWnNQ3MXP+nbYdYgO6hcWeGizEU0MZ
+ U8shQLHcEV4pRobB6k+NtC/66djyIWw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-Oz7WqmGoPaWBRbJY3PXAKQ-1; Fri,
+ 18 Oct 2024 09:40:32 -0400
+X-MC-Unique: Oz7WqmGoPaWBRbJY3PXAKQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F54E1955BFE; Fri, 18 Oct 2024 13:40:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.196])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E8E31956086; Fri, 18 Oct 2024 13:40:29 +0000 (UTC)
+Date: Fri, 18 Oct 2024 15:40:16 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: Re: [PATCH v2 0/4] block: Miscellaneous minor Coverity fixes
+Message-ID: <ZxJlQJ0j8wDYkWAV@redhat.com>
+References: <20241008164708.2966400-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: qS5-_6sKJetGyOgpDOAtNWDo8W7R5WdU
-X-Proofpoint-GUID: qS5-_6sKJetGyOgpDOAtNWDo8W7R5WdU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 spamscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410180085
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241008164708.2966400-1-peter.maydell@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,121 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the new ptm_cap_n structure for getting the PTM_GET_CAPABILITY response
-from swtpm. Previously only 17 bits could possibly have been set in ptm_cap
-(uint64_t) in big endian order and those bits are now found in the 2nd
-32bit word in the response in the caps field.
+Am 08.10.2024 um 18:47 hat Peter Maydell geschrieben:
+> This patchset is the remaining stragglers from my
+> first set of "minor Coverity fixes" patches posted a
+> couple of months back:
+> https://patchew.org/QEMU/20240731143617.3391947-1-peter.maydell@linaro.org/
+> Of that series, patches 3, 4, 5 and 6 are upstream now.
+> 
+> In this v2 series:
+>  * patch 1 (old patch 2) has had a long line wrapped;
+>    already reviewed
+>  * patch 2 (old patch 7) now has hex2decimal() return "UINT_MAX"
+>    instead of "-1"; already reviewed
+>  * patch 3 is new, and fixes an error in an iotests reference
+>    output file that's been lurking around for a few years now
+>  * patch 4 (replacement for old patch 1) takes Kevin Wolf's
+>    suggestion to make vdi SECTOR_SIZE a 64-bit constant so we
+>    don't have to carefully cast it every time we want to use
+>    it in a multiplication
+> 
+> Patches 3 and 4 need review; patch 4 passes "./check -vdi"
+> except that 297 (the python-linter) fails for unrelated reasons.
 
-This data structure makes it now clear that the 1st 32bit word carries the
-tpm_result like all the other response structures of all other commands
-do.
+Thanks, applied to the block branch.
 
-The changes are taken from the swtpm project's tpm_ioctl.h.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- backends/tpm/tpm_emulator.c | 14 ++++++++------
- backends/tpm/tpm_ioctl.h    | 13 ++++++++++++-
- backends/tpm/trace-events   |  2 +-
- 3 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 5a8fba9bde..b0e2fb3fc7 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -72,7 +72,7 @@ struct TPMEmulator {
-     CharBackend ctrl_chr;
-     QIOChannel *data_ioc;
-     TPMVersion tpm_version;
--    ptm_cap caps; /* capabilities of the TPM */
-+    uint32_t caps; /* capabilities of the TPM */
-     uint8_t cur_locty_number; /* last set locality */
-     Error *migration_blocker;
- 
-@@ -239,13 +239,15 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
- 
- static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
- {
-+    ptm_cap_n cap_n;
-+
-     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_CAPABILITY,
--                             &tpm_emu->caps, 0, sizeof(tpm_emu->caps)) < 0) {
-+                             &cap_n, 0, sizeof(cap_n)) < 0) {
-         error_report("tpm-emulator: probing failed : %s", strerror(errno));
-         return -1;
-     }
- 
--    tpm_emu->caps = be64_to_cpu(tpm_emu->caps);
-+    tpm_emu->caps = be32_to_cpu(cap_n.u.resp.caps);
- 
-     trace_tpm_emulator_probe_caps(tpm_emu->caps);
- 
-@@ -254,7 +256,7 @@ static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
- 
- static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
- {
--    ptm_cap caps = 0;
-+    uint32_t caps = 0;
-     const char *tpm = NULL;
- 
-     /* check for min. required capabilities */
-@@ -527,8 +529,8 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
- static int tpm_emulator_block_migration(TPMEmulator *tpm_emu)
- {
-     Error *err = NULL;
--    ptm_cap caps = PTM_CAP_GET_STATEBLOB | PTM_CAP_SET_STATEBLOB |
--                   PTM_CAP_STOP;
-+    uint32_t caps = PTM_CAP_GET_STATEBLOB | PTM_CAP_SET_STATEBLOB |
-+                    PTM_CAP_STOP;
- 
-     if (!TPM_EMULATOR_IMPLEMENTS_ALL_CAPS(tpm_emu, caps)) {
-         error_setg(&tpm_emu->migration_blocker,
-diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
-index 1933ab6855..ee2dd15d35 100644
---- a/backends/tpm/tpm_ioctl.h
-+++ b/backends/tpm/tpm_ioctl.h
-@@ -29,6 +29,16 @@
- 
- typedef uint32_t ptm_res;
- 
-+/* PTM_GET_CAPABILITY: Get supported capabilities (ioctl's) */
-+struct ptm_cap_n {
-+    union {
-+        struct {
-+            ptm_res tpm_result; /* will always be TPM_SUCCESS (0) */
-+            uint32_t caps;
-+        } resp; /* response */
-+    } u;
-+};
-+
- /* PTM_GET_TPMESTABLISHED: get the establishment bit */
- struct ptm_est {
-     union {
-@@ -242,7 +252,8 @@ struct ptm_lockstorage {
-     } u;
- };
- 
--typedef uint64_t ptm_cap;
-+typedef uint64_t ptm_cap; /* CUSE-only; use ptm_cap_n otherwise */
-+typedef struct ptm_cap_n ptm_cap_n;
- typedef struct ptm_est ptm_est;
- typedef struct ptm_reset_est ptm_reset_est;
- typedef struct ptm_loc ptm_loc;
-diff --git a/backends/tpm/trace-events b/backends/tpm/trace-events
-index cb5cfa6510..05e30533ce 100644
---- a/backends/tpm/trace-events
-+++ b/backends/tpm/trace-events
-@@ -16,7 +16,7 @@ tpm_util_show_buffer_content(const char *buf) "%s"
- # tpm_emulator.c
- tpm_emulator_set_locality(uint8_t locty) "setting locality to %d"
- tpm_emulator_handle_request(void) "processing TPM command"
--tpm_emulator_probe_caps(uint64_t caps) "capabilities: 0x%"PRIx64
-+tpm_emulator_probe_caps(uint32_t caps) "capabilities: 0x%x"
- tpm_emulator_set_buffer_size(uint32_t buffersize, uint32_t minsize, uint32_t maxsize) "buffer size: %u, min: %u, max: %u"
- tpm_emulator_startup_tpm_resume(bool is_resume, size_t buffersize) "is_resume: %d, buffer size: %zu"
- tpm_emulator_get_tpm_established_flag(uint8_t flag) "got established flag: %d"
--- 
-2.47.0
+Kevin
 
 
