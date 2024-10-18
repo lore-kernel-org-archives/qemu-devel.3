@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC0DFD3C54C
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 06:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C7ED3C54C
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 07:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1gpn-0003WN-SU; Fri, 18 Oct 2024 02:51:39 -0400
+	id 1t1h0B-0006Hi-MH; Fri, 18 Oct 2024 03:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1gpj-0003W2-M2
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 02:51:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t1gpe-0007hl-HS
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 02:51:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729234286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nqhRtrW+ZdVP8Aa7mSqxhgF0ooHtMQMOU2vLkC/eJCc=;
- b=B9WK0dQfsZtdixJD7aJFiiU4p74/RoyCQbo1RqrkqpY+Y+lAHIUMPrIBDBSCZua6fwD2Ww
- JUZDQSIKpSmVQ+9dg+TnYqO4c2pcnMLAxmYIdixqJCCu+LIi3qjmxsLndLciBPj7Nnem4h
- wBtln0++zGUPMf/Ao4QQuZhcZkWN3Bg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-QqQqTjNRM4eWgwh8RyIEWg-1; Fri, 18 Oct 2024 02:51:24 -0400
-X-MC-Unique: QqQqTjNRM4eWgwh8RyIEWg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-37d95264eb4so828978f8f.2
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 23:51:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1h09-0006H2-AR
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 03:02:21 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1t1h07-0000UY-EO
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 03:02:21 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4315baec69eso13114735e9.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 00:02:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1729234936; x=1729839736;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6T5PNVntjW0REyqQGx791ahhcx4V0j46YX3K6ntMxjg=;
+ b=m08/5BkY6p+VX6BsJdg55gJMhJpwXHnCUTv/4wsc3KSU4r1tM/WKYvD3bMxl6NVV8t
+ IHzmhng7bOZC3TpioEbw4VvkSb8vjjTxIzh5XJTs9vofE65RlP3UV1sDTlQ6Z7p+jGD9
+ KTBG1yBRAGoJvAASYojZcdRwlFBvEu8P0zh8J6IslNN8ryJ4pzJ+Mw0opdJXSG54lmNz
+ wT9tk2nOoPmIBgSkWb2mU1LR4QfuTHXZ4I4WFMD0zm6B5Z+JKpS5og6tX3OISsG+NAPQ
+ Dt0w2cpPjRx+ELLXFBcIsgMyJmYU/aAZie31t9zppKTpryYncTRGWBoyuATXw7SAQn7U
+ qf6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729234283; x=1729839083;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nqhRtrW+ZdVP8Aa7mSqxhgF0ooHtMQMOU2vLkC/eJCc=;
- b=OoloVCxhbZrA0qnTumUpo6Pg/YRjWZeq31+astGC+wHyvLz+TJY9C71/65bdMnSPSx
- 2hWbyhUsvxTeSmfmRutaKYJNQxkBG6MjvTXXbGBlEZxQo9AkR+UIBti0aF5+s5wIaAkN
- dYoBsipOQvJhIdHwGp/zvXlb2MBHKiMWJ7AEg0WXiaKIaxAgH9Q8qAoOEKecRSN/J1p7
- 7vPoA3JsUkadZbk5uyWUd9a4iqcTsQQPdGCQPFDoEn6+eVWiPxNH3c8kmdlP2RKw39dy
- yKMWKU71bKQUM6yxH4dVLOQfDV0QzaeBZR9/KltogsOwXA9B76R3D6nCpWpHyHojFMPU
- JjFA==
-X-Gm-Message-State: AOJu0Yx9BtJFSd6L178NI75pSkBz6I6j6iUSiqgm23+/MIhbQ1LlVlxk
- k/cvkT2LsdXns5yMgTTcTndyRKWCdfMiym+WyECy5bFHYvRAMjjS+ZaUVd5vxaFEmEtmfp1Cpen
- GaTJe2XCIP86aa6UhkimF54ThJyQbqt7GIF1vcCfWo2dw0VPZwVHM2WzxG3Ynd7jMjJy2QVEoTC
- M8+ZnlUpPFUaVPaL1x4sjvq7SdREI=
-X-Received: by 2002:a5d:404f:0:b0:37d:2d45:b3d4 with SMTP id
- ffacd0b85a97d-37eab71218dmr926508f8f.52.1729234282989; 
- Thu, 17 Oct 2024 23:51:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQy2ua3U6QXnIYTacUIV/fRzkfTAB1qfOllaRaFi5H/4DY3wHzqcpsOnWmHTG2Wc/IoSKxtnx8qCBgo2/zvvU=
-X-Received: by 2002:a5d:404f:0:b0:37d:2d45:b3d4 with SMTP id
- ffacd0b85a97d-37eab71218dmr926498f8f.52.1729234282581; Thu, 17 Oct 2024
- 23:51:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729234936; x=1729839736;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6T5PNVntjW0REyqQGx791ahhcx4V0j46YX3K6ntMxjg=;
+ b=gJDLi8NEI1O4fckAbW+KHBckA5Ii79AzctKSalNxQWwixgAY1ffUPjzvrfo3u3s3Up
+ G36EHxBqCtYcTtdRyrg6SMQ3TidmDupmCZKZoPUVa8ZNHOak8o1IRgJtZldk/70A3b9R
+ Wu8LqsQfE9msOXhcPvhwQvrUHOBe68+z0IGAqAErArZP28TPCB652qfPZn8BoReoOlGC
+ y9nBekprqeuhpRHDKfn7HGWdagHVsYUaxhI2Y8YgjOcdRPbrJuR3aVsp+voQ+xUi1wC5
+ B1vu9f/SLhXGXo21o3smEZwR3iPAzzKePeTw9HPzwaTXy97I7M7s326VIH02dkrP4IxH
+ 4vOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUk8V48trpkKusIxG4DegRWVGnGPGbYxwDFVDZmBavfqud1VSLrZ8D22/6fSQw6r7FOTqCVYEKx/qpW@nongnu.org
+X-Gm-Message-State: AOJu0Yz/O52k4JpG8aTMKrOx1DUj5ifS4wwSEKQqaXBZaTijoXBZeROM
+ Jt8Iq8A2676tFKT3D3diPEA3D1xJHu6kt8AXlxirlDpYJ+gnpm6NIX+zSU4NT+o=
+X-Google-Smtp-Source: AGHT+IHyZdtTkN+FPOjaCL30zMi3Y95DH3S3k5eD6VlfMEuWSY9xKYAsl/pd8krtrznjEwTukKRh2Q==
+X-Received: by 2002:a05:600c:4fd4:b0:431:5f1b:a7c4 with SMTP id
+ 5b1f17b1804b1-431616ad74cmr8238235e9.34.1729234936487; 
+ Fri, 18 Oct 2024 00:02:16 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
+ ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ecf027d09sm1105318f8f.18.2024.10.18.00.02.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Oct 2024 00:02:16 -0700 (PDT)
+Message-ID: <34909283-eff5-4ba3-bc9e-afcf8ec2b481@rivosinc.com>
+Date: Fri, 18 Oct 2024 09:02:15 +0200
 MIME-Version: 1.0
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-11-pbonzini@redhat.com>
- <SY0P300MB10266B5144972CDF92AF065795472@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
- <CABgObfaX+KhYx3Wo8jGG_hLh_c6t=nYEPZt3FXKQMyOqivVDgA@mail.gmail.com>
- <SY0P300MB1026EAB6DCBDDCD602E7A67C95402@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB1026EAB6DCBDDCD602E7A67C95402@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 18 Oct 2024 08:51:11 +0200
-Message-ID: <CABgObfYWd4aAaVk58TSBNTqB=VwgFS_=LnmmvGj3FWXg770uFg@mail.gmail.com>
-Subject: Re: [PATCH 10/16] rust: introduce alternative implementation of
- offset_of!
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000025ae870624babbd7"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] target/riscv: Implement Ssdbltrp sret, mret and
+ mnret behavior
+To: Alistair Francis <alistair23@gmail.com>, Ved Shanbhogue <ved@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Atish Patra
+ <atishp@rivosinc.com>, qemu-devel@nongnu.org
+References: <20240925115808.77874-1-cleger@rivosinc.com>
+ <20240925115808.77874-3-cleger@rivosinc.com>
+ <CAKmqyKPrHtsjAnc8kX__BeHvxoMvm+MmYLWSgh5TKdx0FE8o9A@mail.gmail.com>
+ <Zwlz8LUEGB4Fa611@ved-XPS-8940>
+ <CAKmqyKMtJK_2yoUoudVoZorW=A5fX=m5RvG_vvHNHj45nQy_hw@mail.gmail.com>
+ <20241017182710.GA403564@vedvyas-XPS-13-9310>
+ <CAKmqyKMir+rXf_ebU_XxkOk=5=v5tkT+g6j8Km_YGCjjX=cqUA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+In-Reply-To: <CAKmqyKMir+rXf_ebU_XxkOk=5=v5tkT+g6j8Km_YGCjjX=cqUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=cleger@rivosinc.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,200 +110,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000025ae870624babbd7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il ven 18 ott 2024, 05:16 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
-
->
-> Paolo Bonzini <pbonzini@redhat.com> writes:
->
-> > On Thu, Oct 17, 2024 at 7:35=E2=80=AFAM Junjie Mao <junjie.mao@hotmail.=
-com>
-> wrote:
-> >> Paolo Bonzini <pbonzini@redhat.com> writes:
-> >> > offset_of! was stabilized in Rust 1.77.0.  Use an alternative
-> implemenation
-> >> > that was found on the Rust forums, and whose author agreed to licens=
-e
-> as
-> >> > MIT for use in QEMU.
-> >> >
-> >> > The alternative allows only one level of field access, but apart
-> >> > from this can be used just by replacing core::mem::offset_of! with
-> >> > qemu_api::offset_of!.
-> >>
-> >> How about a macro like this (which essentially comes from memoffset
-> >> crate [1])? It has the same use as core::mem::offset_of! (except the
-> >> same single-level limitation) and does not need wrapping structures wi=
-th
-> >> with_offsets!.
-> >
-> > Unfortunately offset_from is not available in const context, and
-> > offset_of! is needed to fill in the Property and VMStateDescription
-> > arrays.
-> >
-> > That said, I noticed now that declare_properties! does not declare the
-> > resulting array as const, so that would be possible. But if
-> > declare_properties could use a non-mut static, that would be better.
->
-> Agree.
->
-> Then how about converting with_offsets! to a derive attribute
-> (e.g. #[derive(offsets)])? The current approach introduces one more
-> level of indentation. When we later upgrade the minimal supported
-> version of Rust and switch to std::mem::offset_of!, we'll need a large
-> diff to adjust the indentation which may be annoying to rebase upon. An
-> attribute seems easier to manage.
->
-
-Ok, using quote! to generate the with_offsets! {} call should be easy.
-
-Paolo
 
 
-> I can help draft the macro early next week if you think that is valuable.
->
-> Junjie Mao
->
-> >
-> > Paolo
-> >
-> >> macro_rules! offset_of {
-> >>     ($parent:ty, $field:tt) =3D> {{
-> >>         let uninit =3D std::mem::MaybeUninit::<$parent>::uninit();
-> >>         let base =3D uninit.as_ptr();
-> >>         // SAFETY:
-> >>         //
-> >>         // MaybeUninit<$parent> has the same size and alignment as
-> $parent, so
-> >>         // projection to $field is in bound.
-> >>         //
-> >>         // addr_of! does not create intermediate references to the
-> uninitialized
-> >>         // memory, thus no UB is involved.
-> >>         let field =3D unsafe { std::ptr::addr_of!((*base).$field) };
-> >>         // SAFETY:
-> >>         //
-> >>         // Both base and field point to the MaybeUninit<$parent> and
-> are casted
-> >>         // to u8 for calculating their distance.
-> >>         unsafe { field.cast::<u8>().offset_from(base.cast::<u8>()) as
-> usize }
-> >>     }};
-> >> }
-> >>
-> >> [1] https://docs.rs/memoffset/latest/memoffset/
->
->
+On 18/10/2024 04:21, Alistair Francis wrote:
+> On Fri, Oct 18, 2024 at 4:27 AM Ved Shanbhogue <ved@rivosinc.com> wrote:
+>>
+>> Alistair Francis wrote:
+>>> $ grep -r sstatus.SDT | grep SRET
+>>> src/hypervisor.adoc:if the new privilege mode is VU, the `SRET`
+>>> instruction sets `vsstatus.SDT`
+>>>
+>>> What am I missing here?
+>>
+>> https://github.com/riscv/riscv-isa-manual/blob/ef2ec9dc9afd003d0dab6d5ca36db59864c8483c/src/machine.adoc?plain=1#L538
+> 
+> Ah, I thought you were quoting the spec directly.
+> 
+> Makes sense. This patch misses the MDT bit clearing though. I'm
+> guessing that's implemented in a different patch, but it should be
+> pulled in here instead
 
---00000000000025ae870624babbd7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is actually done in the patch that adds Smdbltrp (this on is for
+Ssdbltrp).
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 18 ott 2024, 05:16 Junjie Mao &lt;<a href=3D"ma=
-ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" =
-rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; On Thu, Oct 17, 2024 at 7:35=E2=80=AFAM Junjie Mao &lt;<a href=3D"mail=
-to:junjie.mao@hotmail.com" target=3D"_blank" rel=3D"noreferrer">junjie.mao@=
-hotmail.com</a>&gt; wrote:<br>
-&gt;&gt; Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D=
-"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
-&gt;&gt; &gt; offset_of! was stabilized in Rust 1.77.0.=C2=A0 Use an altern=
-ative implemenation<br>
-&gt;&gt; &gt; that was found on the Rust forums, and whose author agreed to=
- license as<br>
-&gt;&gt; &gt; MIT for use in QEMU.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; The alternative allows only one level of field access, but ap=
-art<br>
-&gt;&gt; &gt; from this can be used just by replacing core::mem::offset_of!=
- with<br>
-&gt;&gt; &gt; qemu_api::offset_of!.<br>
-&gt;&gt;<br>
-&gt;&gt; How about a macro like this (which essentially comes from memoffse=
-t<br>
-&gt;&gt; crate [1])? It has the same use as core::mem::offset_of! (except t=
-he<br>
-&gt;&gt; same single-level limitation) and does not need wrapping structure=
-s with<br>
-&gt;&gt; with_offsets!.<br>
-&gt;<br>
-&gt; Unfortunately offset_from is not available in const context, and<br>
-&gt; offset_of! is needed to fill in the Property and VMStateDescription<br=
->
-&gt; arrays.<br>
-&gt;<br>
-&gt; That said, I noticed now that declare_properties! does not declare the=
-<br>
-&gt; resulting array as const, so that would be possible. But if<br>
-&gt; declare_properties could use a non-mut static, that would be better.<b=
-r>
-<br>
-Agree.<br>
-<br>
-Then how about converting with_offsets! to a derive attribute<br>
-(e.g. #[derive(offsets)])? The current approach introduces one more<br>
-level of indentation. When we later upgrade the minimal supported<br>
-version of Rust and switch to std::mem::offset_of!, we&#39;ll need a large<=
-br>
-diff to adjust the indentation which may be annoying to rebase upon. An<br>
-attribute seems easier to manage.<br></blockquote></div></div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">Ok, using quote! to generate the with_offs=
-ets! {} call should be easy.</div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D=
-"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-I can help draft the macro early next week if you think that is valuable.<b=
-r>
-<br>
-Junjie Mao<br>
-<br>
-&gt;<br>
-&gt; Paolo<br>
-&gt;<br>
-&gt;&gt; macro_rules! offset_of {<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0($parent:ty, $field:tt) =3D&gt; {{<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let uninit =3D std::mem::MaybeUni=
-nit::&lt;$parent&gt;::uninit();<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let base =3D uninit.as_ptr();<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// SAFETY:<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0//<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// MaybeUninit&lt;$parent&gt; has=
- the same size and alignment as $parent, so<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// projection to $field is in bou=
-nd.<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0//<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// addr_of! does not create inter=
-mediate references to the uninitialized<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// memory, thus no UB is involved=
-.<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let field =3D unsafe { std::ptr::=
-addr_of!((*base).$field) };<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// SAFETY:<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0//<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// Both base and field point to t=
-he MaybeUninit&lt;$parent&gt; and are casted<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0// to u8 for calculating their di=
-stance.<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsafe { field.cast::&lt;u8&gt;()=
-.offset_from(base.cast::&lt;u8&gt;()) as usize }<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0}};<br>
-&gt;&gt; }<br>
-&gt;&gt;<br>
-&gt;&gt; [1] <a href=3D"https://docs.rs/memoffset/latest/memoffset/" rel=3D=
-"noreferrer noreferrer" target=3D"_blank">https://docs.rs/memoffset/latest/=
-memoffset/</a><br>
-<br>
-</blockquote></div></div></div>
+Thanks,
 
---00000000000025ae870624babbd7--
+Clément
+
+> 
+> Alistair
+> 
+>>
+>>
+>> regards
+>> ved
 
 
