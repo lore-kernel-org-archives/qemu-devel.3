@@ -4,106 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2ED7D2F7E8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 08:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8172D2127B
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 08:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1iaI-0007dc-MN; Fri, 18 Oct 2024 04:43:47 -0400
+	id 1t1ic9-0008SD-0D; Fri, 18 Oct 2024 04:45:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t1iaG-0007dA-TY; Fri, 18 Oct 2024 04:43:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1ic5-0008R3-07; Fri, 18 Oct 2024 04:45:37 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t1iaE-0003RB-2u; Fri, 18 Oct 2024 04:43:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I8bNMY025156;
- Fri, 18 Oct 2024 08:43:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aNgMLq
- eyJ+9ETqBnDGbeS8eewDF/fybCxfnEDW5Wpmk=; b=rfiFKBUvWOUoeuDEcz6T5B
- GQVONlXFI6VD2hR+sBr677fnN8Q/3ggDli17ujrb71CC+bRGlm9EauWHxxdTEDD5
- KWvyOsRmCJBLuzWA7gAOj4HsOCv81FnosqynHC3Bw7HGSj0DV7/iT3LfMxEpZqAi
- quexOFxe8ojOFvwjNFTIUnxb2wzZaCzoEI9VYK0zkY6V+OUjv0NW7rY4uP+lNHnE
- tHWDjPDiW21E/iVa1x2iNjiuyEBI3dTABhXknFZevmJjzP9rjZkplxNfIpnc5fk7
- EJrC3lnCJwV2eLJyNaT0TB8r1qsg/W9tE71/UCvHPcX/JQEr3WjkcABOyTU6GZQg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42asbd7wku-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 08:43:35 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49I8hZJO011914;
- Fri, 18 Oct 2024 08:43:35 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42asbd7wkq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 08:43:35 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49I7cDiO002426;
- Fri, 18 Oct 2024 08:43:34 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284en3f79-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 08:43:34 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49I8hW2649676690
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Oct 2024 08:43:32 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 830F258060;
- Fri, 18 Oct 2024 08:43:32 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAD665804E;
- Fri, 18 Oct 2024 08:43:29 +0000 (GMT)
-Received: from [9.124.220.95] (unknown [9.124.220.95])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Oct 2024 08:43:29 +0000 (GMT)
-Message-ID: <952fc526-03a5-4965-9bba-f3aa30147370@linux.ibm.com>
-Date: Fri, 18 Oct 2024 14:13:28 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1ibz-0003hh-BD; Fri, 18 Oct 2024 04:45:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729241131; x=1760777131;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=1hzdX0SAedJp2ZbWcaKLwBlRgfiMbk9wET1obgyYSH0=;
+ b=AsOAJ5vbnZ00jNHfTMG016aXWv5fi765h55NANHhwiYXj+UJoZ8FSBjd
+ NgjRavFF7VINS1jm4IdwaoJwsUK2MTspFxdqkg96iFgMxkxlG6g4PRbQe
+ Y0GdqTDHFuKDslJL8BOZYmq/omBpDdDWtmBCx2ULZUVRghHbU33SHWVOp
+ 1S+4I1+DxgIXLZ6dOo9rC11WqylKH4OKE1sywVPsbOGpEvLFKrTHaJKjG
+ +kbGmCYYIUSJdF5gUJgR8KWA9g3/mYscrT1UaP9kTd01SKCyVAlTPAejf
+ MvV+TNu/WqjtWYWRNgYQkXRUUL8cu5VpNu7Mz31GrsR7LCTV4dYGt3Z3L w==;
+X-CSE-ConnectionGUID: KzubaHeYSAic4i3FQT1eGw==
+X-CSE-MsgGUID: lHwM/tyoRpmYzPWssVgJmA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="39305840"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="39305840"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Oct 2024 01:45:26 -0700
+X-CSE-ConnectionGUID: BIYrmkbwQmuSAshnFlJ3Ug==
+X-CSE-MsgGUID: vn3Ep1RJQbukF0MCtS2swQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="102105402"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa002.fm.intel.com with ESMTP; 18 Oct 2024 01:45:21 -0700
+Date: Fri, 18 Oct 2024 17:01:36 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v3 1/7] hw/core: Make CPU topology enumeration
+ arch-agnostic
+Message-ID: <ZxIj8CWZd7u+cysK@intel.com>
+References: <20241012104429.1048908-1-zhao1.liu@intel.com>
+ <20241012104429.1048908-2-zhao1.liu@intel.com>
+ <ZxEte1KBwWuCdkb1@redhat.com> <ZxHJri+rgdGKf/0L@intel.com>
+ <ZxIUd9tMi9o1UVOS@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spapr: nested: Add support for DPDES SPR in GSB for TCG L0
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>
-Cc: David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20241017110033.3929988-1-amachhiw@linux.ibm.com>
- <07af4e02-aa2a-494c-9279-cd70389fc97e@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <07af4e02-aa2a-494c-9279-cd70389fc97e@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ipi2fBEKfu4kddEj_ZYxpp9K1bgVyA3A
-X-Proofpoint-GUID: plfxq4MFxZaFzvh5uAVEkp57vi5iax2a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=910
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180052
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <ZxIUd9tMi9o1UVOS@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,93 +101,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Amit,
+On Fri, Oct 18, 2024 at 08:55:35AM +0100, Daniel P. Berrang� wrote:
+> Date: Fri, 18 Oct 2024 08:55:35 +0100
+> From: "Daniel P. Berrang�" <berrange@redhat.com>
+> Subject: Re: [PATCH v3 1/7] hw/core: Make CPU topology enumeration
+>  arch-agnostic
+> 
+> On Fri, Oct 18, 2024 at 10:36:30AM +0800, Zhao Liu wrote:
+> > Hi Daniel,
+> > 
+> > > > -/*
+> > > > - * CPUTopoLevel is the general i386 topology hierarchical representation,
+> > > > - * ordered by increasing hierarchical relationship.
+> > > > - * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
+> > > > - * or AMD (CPUID[0x80000026]).
+> > > > - */
+> > > > -enum CPUTopoLevel {
+> > > > -    CPU_TOPO_LEVEL_INVALID,
+> > > > -    CPU_TOPO_LEVEL_SMT,
+> > > > -    CPU_TOPO_LEVEL_CORE,
+> > > > -    CPU_TOPO_LEVEL_MODULE,
+> > > > -    CPU_TOPO_LEVEL_DIE,
+> > > > -    CPU_TOPO_LEVEL_PACKAGE,
+> > > > -    CPU_TOPO_LEVEL_MAX,
+> > > > -};
+> > > > -
+> > > 
+> > > snip
+> > > 
+> > > > @@ -18,3 +18,47 @@
+> > > >  ##
+> > > >  { 'enum': 'S390CpuEntitlement',
+> > > >    'data': [ 'auto', 'low', 'medium', 'high' ] }
+> > > > +
+> > > > +##
+> > > > +# @CpuTopologyLevel:
+> > > > +#
+> > > > +# An enumeration of CPU topology levels.
+> > > > +#
+> > > > +# @invalid: Invalid topology level.
+> > > 
+> > > Previously all topology levels were internal to QEMU, and IIUC
+> > > this CPU_TOPO_LEVEL_INVALID appears to have been a special
+> > > value to indicate  the cache was absent ?
+> > 
+> > Now I haven't support this logic.
+> > x86 CPU has a "l3-cache" property, and maybe that property can be
+> > implemented or replaced by the "invalid" level support you mentioned.
+> > 
+> > > Now we're exposing this directly to the user as a settable
+> > > option. We need to explain what effect setting 'invalid'
+> > > has on the CPU cache config.
+> > 
+> > If user set "invalid", QEMU will report the error message:
+> > 
+> > qemu-system-x86_64: Invalid cache topology level: invalid. The topology should match valid CPU topology level
+> > 
+> > Do you think this error message is sufficient?
+> 
+> If the user cannot set 'invalid' as an input, and no QEMU interface
+> will emit, then ideally we would not define 'invalid' in the QAPI
+> schema at all.
+> 
+> This woudl require us to have some internal only way to record
+> "invalid", separately from the topology level, or with a magic
+> internal only constant that doesn't clash with the public enum
+> constants. I guess the latter would be less work e.g. we could
+> "abuse" the 'MAX' constant value
+> 
+>    #define CPU_TOPOLOGY_LEVEL_INVALID CPU_TOPOLOGY_LEVEL_MAX
+> 
+> or separate it with a negative value
+> 
+>    #define CPU_TOPOLOGY_LEVEL_INVALID -1
+>
 
-On 10/18/24 10:47, Harsh Prateek Bora wrote:
-> Hi Amit,
-> 
-> On 10/17/24 16:30, Amit Machhiwal wrote:
->> The DPDES support for doorbell emulation and handling for KVM on PAPR
->> guests was added in Linux via [1]. Subsequently, a new GSB element for
->> DPDES was added in Linux; the same has been missing in QEMU L0. Add
-> 
-> s/QEMU L0/ TCG L0 implementation?
-> 
->> support for DPDES register's APIv2 GSB element and required handling in
->> `spapr_nested.c`.
->>
->> Currently, booting a KVM guest inside a QEMU TCG guest fails with the
->> below crash. The crash is encountered when GUEST_RUN_VCPU hcall made
->> into QEMU TCG L0 fails because H_INVALID_ELEMENT_VALUE is returned as
->> the mapping of the element ID corresponding to DPDES (unknown to QEMU
->> TCG L0) in GSR (Guest State Request) of TCG guest's KVM to the GSB
->> (Guest State Buffer) elements of QEMU TCG L0 fails.
-> 
-> GSB full form would be more appropriate along with first mention of GSB 
-> in above text.
-> 
-> With that:
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> 
->>
+This's a clever idea. Thank you!
 
-<snip>
+Rgards,
+Zhao
 
->> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
->> index c02785756c1e..b696ad537a77 100644
->> --- a/hw/ppc/spapr_nested.c
->> +++ b/hw/ppc/spapr_nested.c
->> @@ -194,6 +194,7 @@ static void nested_save_state(struct 
->> nested_ppc_state *save, PowerPCCPU *cpu)
->>           save->fscr = env->spr[SPR_FSCR];
->>           save->pspb = env->spr[SPR_PSPB];
->>           save->ctrl = env->spr[SPR_CTRL];
->> +        save->dpdes = env->spr[SPR_DPDES];
->>           save->vrsave = env->spr[SPR_VRSAVE];
->>           save->dar = env->spr[SPR_DAR];
->>           save->dsisr = env->spr[SPR_DSISR];
->> @@ -293,6 +294,7 @@ static void nested_load_state(PowerPCCPU *cpu, 
->> struct nested_ppc_state *load)
->>           env->spr[SPR_FSCR] = load->fscr;
->>           env->spr[SPR_PSPB] = load->pspb;
->>           env->spr[SPR_CTRL] = load->ctrl;
->> +        env->spr[SPR_DPDES] = load->dpdes;
->>           env->spr[SPR_VRSAVE] = load->vrsave;
->>           env->spr[SPR_DAR] = load->dar;
->>           env->spr[SPR_DSISR] = load->dsisr;
-
-Looks like we overlooked above inits already present in existing code.
-I just checked above inits in nested_{save,load}_state are already
-present as common code between apiv1 & apiv2. So, we only need the inits
-below for initializing the lookup table.
-
-regards,
-Harsh
->> @@ -982,6 +984,7 @@ struct guest_state_element_type 
->> guest_state_element_types[] = {
->>       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_FSCR,  fscr),
->>       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_PSPB,   pspb),
->>       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_CTRL,  ctrl),
->> +    GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DPDES, dpdes),
->>       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_VRSAVE, vrsave),
->>       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DAR,   dar),
->>       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_DSISR,  dsisr),
->> diff --git a/include/hw/ppc/spapr_nested.h 
->> b/include/hw/ppc/spapr_nested.h
->> index 93ef14adcc5e..3b5cd993c256 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -99,7 +99,8 @@
->>   #define GSB_VCPU_SPR_HASHKEYR   0x1050
->>   #define GSB_VCPU_SPR_HASHPKEYR  0x1051
->>   #define GSB_VCPU_SPR_CTRL       0x1052
->> -                    /* RESERVED 0x1053 - 0x1FFF */
->> +#define GSB_VCPU_SPR_DPDES      0x1053
->> +                    /* RESERVED 0x1054 - 0x1FFF */
->>   #define GSB_VCPU_SPR_CR         0x2000
->>   #define GSB_VCPU_SPR_PIDR       0x2001
->>   #define GSB_VCPU_SPR_DSISR      0x2002
->>
->> base-commit: aa54f5be44be786636a5d51cc1612ad208a24849
-> 
 
