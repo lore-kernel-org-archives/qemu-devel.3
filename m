@@ -4,103 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A91AD374BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67718D3DEA0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 17:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1q0d-0006ZV-NT; Fri, 18 Oct 2024 12:39:27 -0400
+	id 1t1qQR-0002db-0h; Fri, 18 Oct 2024 13:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1t1q0b-0006ZH-LR; Fri, 18 Oct 2024 12:39:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1qQJ-0002c7-CX
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 13:05:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1t1q0Z-0007GF-5m; Fri, 18 Oct 2024 12:39:25 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I5ZmqP012502;
- Fri, 18 Oct 2024 16:39:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=4l6ycdWKy89aNwP9a7+sQlQATT/ixd0heq1Un9P4P
- S4=; b=A85tZjV1jNt3F6IZLC86kCEsP9o/WEbpSGOc3ffpbZCAYTXiEDV+is+T3
- tlTTHKZE+2X3U28TpkOz1pYN9qADoWX6hWKrNJKad2bIO1N2VdKgEsOENveHvujx
- ARb7VSv0y3X1pPa6hoeCApWHppfn5/IS/rDJaWAUQKf0iBMONxvhrwxL73JkObre
- LfrUMJ3YHt5RQjDhl4dwU6Y7rYF7w8HFIQSlsbxXrPqhm2iAuJF01CTBWKezJaPl
- +H/IAaJik2YLfq8IZ66ilgFMCg+CluhUOpbV7kJvwabxAhAsnZid3tblO16SnKbp
- juGQf72UlLG4XDr0Inz56Bb84hyPQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42bhnfbex3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 16:39:16 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49IGdGkU031902;
- Fri, 18 Oct 2024 16:39:16 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42bhnfbex0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 16:39:16 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49IEG4Q4002408;
- Fri, 18 Oct 2024 16:39:14 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284en5pbf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 16:39:14 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49IGdBL221758402
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Oct 2024 16:39:11 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 03E012004D;
- Fri, 18 Oct 2024 16:39:11 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 31E8A20040;
- Fri, 18 Oct 2024 16:39:09 +0000 (GMT)
-Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com.com (unknown
- [9.124.218.176])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Oct 2024 16:39:08 +0000 (GMT)
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
- Amit Machhiwal <amachhiw@linux.ibm.com>
-Subject: [PATCH v2] spapr: nested: Add support for DPDES SPR in GSB for TCG L0
-Date: Fri, 18 Oct 2024 22:08:49 +0530
-Message-ID: <20241018163849.2080847-1-amachhiw@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: fkYflSc5H1oixf_tAx6f4zoiQbJCPL8A
-X-Proofpoint-ORIG-GUID: tK5CJU7O2Q0XXgZ5GDNw6HZ5W2d252ea
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1qQE-0001bd-Im
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 13:05:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729271152;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VNs3jxj3h+ZtoWTf8ds5Q5Wd4AYh/FhFgJvB4iHhF4A=;
+ b=IEJTBOqi6i+qEcbqkr3Bf2quq4neQaeJTvFEbSpKM5noyBtAe7qU15qnzL7gab4gsaBztt
+ VFpmp2NADdhYxcybPww6s9Aoh4XuaCGLBkgqlHVGMT7NifBjEGORpNsKcz+20odWBMGF2q
+ woB5wckHfVaABT6h4eGVpxFCUiRzrAU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-i93OVWj4OOCuYEcQg4a7Kg-1; Fri,
+ 18 Oct 2024 13:05:50 -0400
+X-MC-Unique: i93OVWj4OOCuYEcQg4a7Kg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D70B519560B4
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 17:05:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.196])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2096619560A2; Fri, 18 Oct 2024 17:05:47 +0000 (UTC)
+Date: Fri, 18 Oct 2024 19:05:39 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 00/16] rust: allow older versions of rustc and bindgen
+Message-ID: <ZxKVY_5pfP3cAlcP@redhat.com>
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <ZxJjLpDe0-A_6PEL@redhat.com>
+ <2f34640b-77ad-4267-975e-7898b6f8e38d@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- suspectscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=842
- malwarescore=0 bulkscore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180102
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2f34640b-77ad-4267-975e-7898b6f8e38d@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,92 +86,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DPDES support for doorbell emulation and handling for KVM on PAPR
-guests was added in Linux via [1]. Subsequently, a new GSB (Guest State
-Buffer) element for DPDES was added in Linux; the same has been missing
-in TCG L0 implementation. Add support for DPDES register's APIv2 GSB
-element and required handling in `spapr_nested.c`.
+Am 18.10.2024 um 17:43 hat Paolo Bonzini geschrieben:
+> On 10/18/24 15:31, Daniel P. Berrangé wrote:
+> > On Tue, Oct 15, 2024 at 03:17:18PM +0200, Paolo Bonzini wrote:
+> > > On top of this, the required version of bindgen is still too new
+> > > for Debian 12 and Ubuntu 22.04.  This is fixed by the last four patches.
+> > > 
+> > > This is an RFC for two reasons.  First, because it would be a valid
+> > > decision to delay enabling of Rust until at least some of these
+> > > features are available in all supported distros.
+> > 
+> > Lets say we maximise our back compatibility today, and have to
+> > carry some sub-optimal code patterns.
+> > 
+> > 1, 2, 3, 4 years down the lines, we can gradually eliminate
+> > those undesired code patterns / workarounds, as older distros
+> > naturally age-out of our matrix.  After 4 years our entire
+> > matrix will have cycled, so we're not needing to carry this
+> > debt for very long (4 years is not long in the context of a
+> > project like QEMU which has been going several decades)
+> 
+> I agree, for what it's worth.
+> 
+> > Personally I tend towards quicker adoption of Rust, despite
+> > the need for short term workarounds, as they'll disappear
+> > again reasonably quickly.
+> 
+> Yes, especially since (as Kevin pointed out) most of the workarounds are
+> okay in terms of maintainability.  If the worst is "if let", and it only
+> occurs in a dependency, we're in a good place overall.
 
-Currently, booting a KVM guest inside a QEMU TCG guest fails with the
-following crash. The crash occurs while handling the GUEST_RUN_VCPU
-hcall made in TCG L0. In the hcall handling path, map_and_getset_state()
-calls getset_state(), which, in turn, calls guest_state_request_check()
-to validate the GSR (Guest State Request) elements. During this process,
-guest_state_request_check() iterates over the GSR elements and receives
-a NULL return code from guest_state_element_type_find() for the type
-variable corresponding to the DPDES register's elemetn ID (which was
-unknown to TCG L0). Subsequently, getset_state() returns H_P3,
-ultimately leading to the hcall failure and causing the KVM guest to
-crash.
+s/if let/let else/
 
- KVM: unknown exit, hardware reason ffffffffffffffea
- NIP 0000000000000100   LR 0000000000000000 CTR 0000000000000000 XER 0000000000000000 CPU#0
- MSR 0000000000003000 HID0 0000000000000000  HF 6c002000 iidx 3 didx 3
- TB 00000000 00000000 DECR 0
- GPR00 0000000000000000 0000000000000000 0000000000000000 000000007fe00000
- GPR04 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR08 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR12 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR16 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR20 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR24 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- GPR28 0000000000000000 0000000000000000 0000000000000000 0000000000000000
- CR 00000000  [ -  -  -  -  -  -  -  -  ]     RES 000@ffffffffffffffff
-  SRR0 0000000000000000  SRR1 0000000000000000    PVR 0000000000801200 VRSAVE 0000000000000000
- SPRG0 0000000000000000 SPRG1 0000000000000000  SPRG2 0000000000000000  SPRG3 0000000000000000
- SPRG4 0000000000000000 SPRG5 0000000000000000  SPRG6 0000000000000000  SPRG7 0000000000000000
- HSRR0 0000000000000000 HSRR1 0000000000000000
-  CFAR 0000000000000000
-  LPCR 0000000000560413
-  PTCR 0000000000000000   DAR 0000000000000000  DSISR 0000000000000000
+"only occurs in a dependency" is probably not the right argument while
+we haven't really started writing our own Rust code. If it were
+available, we would probably use it in new code. But even without that,
+the conclusion is the same, of course: This doesn't prevent implementing
+anything and is far from being a show stopper.
 
-Fix this by adding the required support in TCG L0 implementation of
-APIv2.
+I'm in favour of anything that lets up keep the phase of duplication as
+short as possible if it doesn't severly limit what we can do. And I
+don't see anything in this series that would do that.
 
-[1] https://lore.kernel.org/all/20240605113913.83715-1-gautam@linux.ibm.com/
+> > >                                                   Another possibility
+> > > could be to accept Rust 1.64.0 but require installing a newer bindgen
+> > > (0.66.x for example) on those two distros with an older release.
+> > 
+> > How difficult is it to get newer 'bindgen' installed on these
+> > platforms ? The audience here is not so much distros trying to
+> > package new QEMU, as that's ony relevant for new distro, but
+> > rather it is end usrs/contributors building QEMU for themslves.
+> 
+> Very simple - "cargo install bindgen-cli", as already seen in the
+> fedora-rust-nightly container's Dockerfile (note: building QEMU does _not_
+> need cargo).  In fact we could in fact do it via libvirt-ci, and it's quite
+> possible that MacOS or some BSDs will need it.
+> 
+> Personally I'd be okay with allowing Debian 12 but not Ubuntu 22.04, for
+> various reasons:
+> 
+> - Ubuntu 22.04 has a new rustc and an old bindgen---so it's really just
+> laziness.
+> 
+> - any workarounds for Debian 12 would last shorter, and anyway
+> 
+> - Debian 12 has the really important feature (--allowlist-file), whereas the
+> lack of --generate-cstr is only annoying.
+> 
+> > Can it be done automagically in the same way we "do the right thing"
+> > with the 3rd party crates we depend on, or is bindgen special in
+> > some way that makes it more inconvenient for users ?
+> 
+> bindgen is special in that it has a metric ton of indirect dependencies,
+> which we'd all have to write a meson.build for (by hand). :/
 
-Fixes: 4a575f9a0567 ("spapr: nested: Initialize the GSB elements lookup table.")
-Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
----
-Changes since v1:
-    - Addressed Harsh's comments on v1
-    - Updated the patch description to more precise details of the issue 
-    - v1: https://lore.kernel.org/all/20241017110033.3929988-1-amachhiw@linux.ibm.com/
+If configure errors out with a message "Please run 'cargo install
+bindgen-cli'" and that is really enough to make it build, I think that
+should be enough to be counted as supporting the distro.
 
- hw/ppc/spapr_nested.c         | 1 +
- include/hw/ppc/spapr_nested.h | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index c02785756c1e..1b41c8fb8b67 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -982,6 +982,7 @@ struct guest_state_element_type guest_state_element_types[] = {
-     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_FSCR,  fscr),
-     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_PSPB,   pspb),
-     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_CTRL,  ctrl),
-+    GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DPDES, dpdes),
-     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_VRSAVE, vrsave),
-     GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DAR,   dar),
-     GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_DSISR,  dsisr),
-diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-index 93ef14adcc5e..3b5cd993c256 100644
---- a/include/hw/ppc/spapr_nested.h
-+++ b/include/hw/ppc/spapr_nested.h
-@@ -99,7 +99,8 @@
- #define GSB_VCPU_SPR_HASHKEYR   0x1050
- #define GSB_VCPU_SPR_HASHPKEYR  0x1051
- #define GSB_VCPU_SPR_CTRL       0x1052
--                    /* RESERVED 0x1053 - 0x1FFF */
-+#define GSB_VCPU_SPR_DPDES      0x1053
-+                    /* RESERVED 0x1054 - 0x1FFF */
- #define GSB_VCPU_SPR_CR         0x2000
- #define GSB_VCPU_SPR_PIDR       0x2001
- #define GSB_VCPU_SPR_DSISR      0x2002
-
-base-commit: aa54f5be44be786636a5d51cc1612ad208a24849
--- 
-2.47.0
+Kevin
 
 
