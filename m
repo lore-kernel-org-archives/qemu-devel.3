@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B53D3C549
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DDFD3C54C
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1fS3-00066y-9O; Fri, 18 Oct 2024 01:23:03 -0400
+	id 1t1fXl-0007DJ-6e; Fri, 18 Oct 2024 01:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1fS1-00066V-8G
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:23:01 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1t1fXi-0007Co-0n
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:28:54 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t1fRz-00074e-5Z
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:23:01 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-20cb89a4e4cso12223105ad.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 22:22:58 -0700 (PDT)
+ id 1t1fXf-0007kK-My
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:28:53 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-7db54269325so1388573a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 22:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729228977; x=1729833777;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729229330; x=1729834130;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bgI5l4SwGV7obPPim0dYwKQ7q4Oi0kthTyD1lt9oHkA=;
- b=qiM/QoVQ0r02NJJLo4vIdeOIAHFt7Ff/URlGuXCX3t8SLuTnr6jqaQrK1InrKmTbJx
- e3B/hWF8/XE334gL8sDdXmCELNEAVogJ9fUVCgxrwrFIgktwOyLvQJPbcNvQA53SrP1M
- isvLiKvB9PHHWfK9+wqJGh2PrPs12tORtVSHEs+TvlsX8eHccHvfHPOpWvxlNBD3aD7L
- xidUOO+Wc9usFcRPy+Ro3cE67uscqWsLA6OfzCGQrKzG3zHhZndGJmW8tt9g7yfWsPCd
- XRrmJinLDRT2Q3ouMvQ7FygdUfu30tvWca/fxYWrYvBFrif/Ki/df01VDUET85ptmFw+
- onyg==
+ bh=7lkY7o8upz7BFgv/zNO9pDfD5iIrdfFvxVUHDeQKrC0=;
+ b=2L/U9CoheatvAM0WGcZxL27vTIL7YwGUNEpxJ6v42M/ui/nA7/lUKRCCdxasG6+lC/
+ nIDmSRyhVYwpXBWFYFgxkhmm+w1jCjuSELRq8DcN6uFzWYfU564fFBtJBGZ+T/oGcWiH
+ NqzW8EcYK0Zw2dEuxZ5oLyv7XHVgy00ArDbJl7tuMeiBwoGhOA82dfitBH5F6Ro0Eg7O
+ T9AVgVJg9uJPj6YM+rqbD96wsROjUxA9uM1jREfRJqdM94DeKBw5oaMHz7WrtZkMjfTy
+ q7pBDoEMPNEpz5lKVOYJ+Qy2XFk9Q9c3L3U1I3sxMEjJmrId+JBXN8O0rtK7xxp/yxe9
+ rSYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729228977; x=1729833777;
+ d=1e100.net; s=20230601; t=1729229330; x=1729834130;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bgI5l4SwGV7obPPim0dYwKQ7q4Oi0kthTyD1lt9oHkA=;
- b=CIRSqSgQGk6m/d8JufcxvqEw6DQO/aB/64F3dvS4piZAV6WTC+xJvCNvK4G3IepSJh
- tEFJqQ+FPALSHAouGobzygioBn+EIwY4NzUa2CwvbWBqgdYUBIhjOvt40AYgxX39TrKj
- L5kUv3B/iBAYztZrerhM4EAqIm1jwh7EGoyn3iofFbdeai7JERu3q2mZE2NiqMLxYT+C
- HlTWekc2ZveNiopFdAjelWo+dVM/mZijITRpuBI+pe8HHy3WHyYvk1cxICdVkk4kvfBa
- o88aJDjVSsN4TiZ76xRrYtQqoEqE2l0gXUCg6qQtCNHoZtQnYar/e43p6Cw6vGuKQdMj
- PR9g==
+ bh=7lkY7o8upz7BFgv/zNO9pDfD5iIrdfFvxVUHDeQKrC0=;
+ b=naP1+RrfbY5YCkYXImVC3PyFYakp2q3bd+1f2Qh+5MvmjSrgIhCsfDlP8kMgKNxOCK
+ pFoQjYAm5+j+1e5j6HM6xm9JK7miAPmuld/W3e+/UdQ7zNQrMMiYIan8fL1N+M1TbBeq
+ Gem01u1PeqwP/CvLid7eywJK2XAIH9gwB2Wbl7ylYJFuTVt+0bTvTqVekj3AtAw7mks4
+ FOLNeuksQeCJvWfvlAE6t0oOwBBX4fc7hefddIMcoYguU20ypRWAHtIoQ6t2bIv/kur1
+ w1Wd+iZ2lZdC5cJa8bb0eAcM0F9TLF8/MYC3EtVe47kIxEOPzMfIBAaxS3osLA+3ZeRL
+ nOGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCpRiteE2N5f6pPbh2Jw7d52ZDh6DPQvs7ftQA432qXTTzv4BpV9/tBVJHwifSApOffc/nqK7lm4DQ@nongnu.org
-X-Gm-Message-State: AOJu0Yz4rxJJBzzhH/hd1uJLpuHcCOHKQSIqLhUTekm+oQSVn0s2dPDW
- oxl5Vaexi0RlFDB+qH8cTIHny0+1gX8E0L89xtnp+iOEICrkztvF7lNmXzRVWbI=
-X-Google-Smtp-Source: AGHT+IH0UwDaXM18+txyRRj6WHUuEhOrMfq+2kJf31HWBaY7U5G05nQuw+u/EaEEQMbF+bel+44bzA==
-X-Received: by 2002:a17:902:d510:b0:20c:8839:c517 with SMTP id
- d9443c01a7336-20e5a928cb1mr14387175ad.53.1729228977448; 
- Thu, 17 Oct 2024 22:22:57 -0700 (PDT)
+ AJvYcCXClkQOszshsLpjc6tAfnEUBsGgLc9NsgNUBw1C2L5Vyv//vqLmrblhTEB9XD4ruDz6LqGBDq3BsEF/@nongnu.org
+X-Gm-Message-State: AOJu0YweM2g2By5t6jM7ZMm7+wiaGGFhwGkb6hJCdBtkrgKozWXHn+Xo
+ r1zjMl51V/jNWjybuvz5RtQGgxIgiUijlYWlWZKL/OyV46D8whbRN2FSiN+QoTY=
+X-Google-Smtp-Source: AGHT+IF6IVDrAghxgM7XqFs28lp/RlJDbORFsaQ+GVdtRjLx/ZxZCLApKn9acYac7dTJcJSnzfch9w==
+X-Received: by 2002:a05:6a21:1643:b0:1d9:23ab:470 with SMTP id
+ adf61e73a8af0-1d92c5298d3mr1732872637.29.1729229329992; 
+ Thu, 17 Oct 2024 22:28:49 -0700 (PDT)
 Received: from [157.82.202.230] ([157.82.202.230])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e5a8d7408sm5003595ad.155.2024.10.17.22.22.52
+ d9443c01a7336-20e5a8d6794sm5090145ad.151.2024.10.17.22.28.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Oct 2024 22:22:57 -0700 (PDT)
-Message-ID: <e2c0584f-c8da-4cdd-932d-a87ee2cd838f@daynix.com>
-Date: Fri, 18 Oct 2024 14:22:51 +0900
+ Thu, 17 Oct 2024 22:28:49 -0700 (PDT)
+Message-ID: <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
+Date: Fri, 18 Oct 2024 14:28:44 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] ui/sdl2: Implement dpy dmabuf functions
+Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -85,14 +85,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
 References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
- <20241015043238.114034-3-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-6-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241015043238.114034-3-dmitry.osipenko@collabora.com>
+In-Reply-To: <20241015043238.114034-6-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::533;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,202 +115,257 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/10/15 13:32, Dmitry Osipenko wrote:
-> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+> handle fence as soon as it's signalled instead of periodically polling
+> the fence status. This feature is required for enabling DRM context
+> support in Qemu because legacy fencing mode isn't supported for DRM
+> contexts in virglrenderer.
 > 
-> If EGL is used, we can rely on dmabuf to import textures without
-> doing copies.
-> 
-> To get this working on X11, we use the existing SDL hint:
-> SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
-> 
-> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->   include/ui/sdl2.h |  7 ++++++
->   ui/sdl2-gl.c      | 63 +++++++++++++++++++++++++++++++++++++++++++++++
->   ui/sdl2.c         | 31 +++++++++++++++++++++++
->   3 files changed, 101 insertions(+)
+>   hw/display/virtio-gpu-gl.c     |   3 +
+>   hw/display/virtio-gpu-virgl.c  | 134 ++++++++++++++++++++++++++++-----
+>   include/hw/virtio/virtio-gpu.h |  14 ++++
+>   3 files changed, 133 insertions(+), 18 deletions(-)
 > 
-> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-> index dbe6e3d9739b..9daf5ecffae7 100644
-> --- a/include/ui/sdl2.h
-> +++ b/include/ui/sdl2.h
-> @@ -45,6 +45,7 @@ struct sdl2_console {
->       bool gui_keysym;
->       SDL_GLContext winctx;
->       QKbdState *kbd;
-> +    bool has_dmabuf;
->   #ifdef CONFIG_OPENGL
->       QemuGLShader *gls;
->       egl_fb guest_fb;
-> @@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
->                                void *d3d_tex2d);
->   void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
->                              uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-> +                            QemuDmaBuf *dmabuf);
-> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-> +                            QemuDmaBuf *dmabuf);
-> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
-> +void sdl2_gl_console_init(struct sdl2_console *scon);
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index 7c0e448b4661..53d938f23f20 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -170,6 +170,9 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>       if (gl->renderer_state >= RS_INITED) {
+>   #if VIRGL_VERSION_MAJOR >= 1
+>           qemu_bh_delete(gl->cmdq_resume_bh);
+> +
+> +        virtio_gpu_virgl_reset_async_fences(g);
+> +        qemu_bh_delete(gl->async_fence_bh);
+>   #endif
+>           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>               timer_free(gl->print_stats);
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index b32ce44ba2b1..ad6512987079 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -891,6 +891,7 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+>   void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                         struct virtio_gpu_ctrl_command *cmd)
+>   {
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>       bool cmd_suspended = false;
+>       int ret;
 >   
->   #endif /* SDL2_H */
-> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-> index b1fe96d6af22..7612af18292c 100644
-> --- a/ui/sdl2-gl.c
-> +++ b/ui/sdl2-gl.c
-> @@ -26,6 +26,8 @@
->    */
+> @@ -992,35 +993,117 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
 >   
->   #include "qemu/osdep.h"
-> +#include "qemu/main-loop.h"
-> +#include "qemu/error-report.h"
->   #include "ui/console.h"
->   #include "ui/input.h"
->   #include "ui/sdl2.h"
-> @@ -249,3 +251,64 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>       trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
 >   
->       SDL_GL_SwapWindow(scon->real_window);
+> -    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
+> -    if (ret)
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: virgl_renderer_create_fence error: %s",
+> -                      __func__, strerror(-ret));
+> +    if (gl->context_fence_enabled &&
+> +        (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX)) {
+> +        uint32_t flags = 0;
+> +
+> +        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
+> +                                                  cmd->cmd_hdr.ring_idx,
+> +                                                  cmd->cmd_hdr.fence_id);
+> +        if (ret)
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: virgl_renderer_context_create_fence error: %s",
+> +                          __func__, strerror(ret));
+> +    } else {
+> +        ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
+> +        if (ret)
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: virgl_renderer_create_fence error: %s",
+> +                          __func__, strerror(-ret));
+> +    }
 >   }
+>   
+> -static void virgl_write_fence(void *opaque, uint32_t fence)
+> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
+>   {
+> -    VirtIOGPU *g = opaque;
+> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
+>       struct virtio_gpu_ctrl_command *cmd, *tmp;
+> +    VirtIOGPU *g = opaque;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>   
+> -    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> -        /*
+> -         * the guest can end up emitting fences out of order
+> -         * so we should check all fenced cmds not just the first one.
+> -         */
+> -        if (cmd->cmd_hdr.fence_id > fence) {
+> -            continue;
+> +    qemu_mutex_lock(&gl->async_fence_lock);
 > +
-> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-> +                            QemuDmaBuf *dmabuf)
-> +{
-> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +    QSLIST_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
+> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> +            /*
+> +             * the guest can end up emitting fences out of order
+> +             * so we should check all fenced cmds not just the first one.
+> +             */
+> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
+> +                continue;
+> +            }
+> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
+> +                    continue;
+> +                }
+> +                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
+> +                    continue;
+> +                }
+> +            } else if (f->ring_idx >= 0) {
+> +                /* ctx0 GL-query fences don't have ring info */
+> +                continue;
+> +            }
+> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> +            g_free(cmd);
+>           }
+> -        trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
+> -        virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+> -        QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> -        g_free(cmd);
 > +
-> +    assert(scon->opengl);
-> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-> +
-> +    egl_dmabuf_import_texture(dmabuf);
-> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
-> +        error_report("%s: failed fd=%d", __func__, qemu_dmabuf_get_fd(dmabuf));
-> +    }
-> +
-> +    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
-> +                            qemu_dmabuf_get_width(dmabuf),
-> +                            qemu_dmabuf_get_height(dmabuf),
-> +                            0, 0,
-> +                            qemu_dmabuf_get_width(dmabuf),
-> +                            qemu_dmabuf_get_height(dmabuf),
-> +                            NULL);
-> +
-> +    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-> +        scon->guest_fb.dmabuf = dmabuf;
-> +    }
-> +}
-> +
-> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-> +                            QemuDmaBuf *dmabuf)
-> +{
-> +    egl_dmabuf_release_texture(dmabuf);
-> +}
-> +
-> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
-> +{
-> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-> +
-> +    return scon->has_dmabuf;
-> +}
-> +
-> +void sdl2_gl_console_init(struct sdl2_console *scon)
-> +{
-> +    bool hidden = scon->hidden;
-> +
-> +    scon->hidden = true;
-> +    scon->surface = qemu_create_displaysurface(1, 1);
-> +    sdl2_window_create(scon);
-> +
-> +    /*
-> +     * QEMU checks whether console supports dma-buf before switching
-> +     * to the console.  To break this chicken-egg problem we pre-check
-> +     * dma-buf availability beforehand using a dummy SDL window.
-> +     */
-> +    scon->has_dmabuf = qemu_egl_has_dmabuf();
-> +
-> +    sdl2_window_destroy(scon);
-> +    qemu_free_displaysurface(scon->surface);
-> +
-> +    scon->surface = NULL;
-> +    scon->hidden = hidden;
-> +}
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index bd4f5a9da14a..607181071b84 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -120,6 +120,9 @@ void sdl2_window_create(struct sdl2_console *scon)
->           /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
->           scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+> +        trace_virtio_gpu_fence_resp(f->fence_id);
+> +        QSLIST_REMOVE(&gl->async_fenceq, f, virtio_gpu_virgl_context_fence,
+> +                      next);
+> +        g_free(f);
+>           g->inflight--;
+>           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>               trace_virtio_gpu_dec_inflight_fences(g->inflight);
+>           }
 >       }
 > +
-> +    qemu_egl_display = eglGetCurrentDisplay();
+> +    qemu_mutex_unlock(&gl->async_fence_lock);
+> +}
 > +
->       sdl_update_caption(scon);
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
+> +{
+> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    QSLIST_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
+> +        QSLIST_REMOVE(&gl->async_fenceq, f, virtio_gpu_virgl_context_fence,
+> +                      next);
+> +        g_free(f);
+> +    }
+> +}
+> +
+> +static void
+> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+> +                                  int64_t ring_idx, uint64_t fence_id)
+> +{
+> +    struct virtio_gpu_virgl_context_fence *f;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
+> +    f->ctx_id = ctx_id;
+> +    f->ring_idx = ring_idx;
+> +    f->fence_id = fence_id;
+> +
+> +    qemu_mutex_lock(&gl->async_fence_lock);
+> +    QSLIST_INSERT_HEAD(&gl->async_fenceq, f, next);
+> +    qemu_mutex_unlock(&gl->async_fence_lock);
+> +
+> +    qemu_bh_schedule(gl->async_fence_bh);
+> +}
+> +
+> +static void virgl_write_fence(void *opaque, uint32_t fence)
+> +{
+> +    VirtIOGPU *g = opaque;
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
+> +}
+> +
+> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+> +                                      uint32_t ring_idx, uint64_t fence)
+> +{
+> +    VirtIOGPU *g = opaque;
+
+What about taking the BQL here instead of having a QEMUBH?
+
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
 >   }
 >   
-> @@ -820,6 +823,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
->       .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
->       .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
->       .dpy_gl_update           = sdl2_gl_scanout_flush,
+>   static virgl_renderer_gl_context
+> @@ -1110,6 +1193,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>           dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
+>           dpy_gl_scanout_disable(g->parent_obj.scanout[i].con);
+>       }
 > +
-> +    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
-> +    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
-> +    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
+> +    virtio_gpu_virgl_reset_async_fences(g);
+>   }
+>   
+>   void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> @@ -1127,6 +1212,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       if (qemu_egl_display) {
+>           virtio_gpu_3d_cbs.version = 4;
+>           virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +        virtio_gpu_3d_cbs.write_context_fence = virgl_write_context_fence;
+> +        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
+> +        flags |= VIRGL_RENDERER_THREAD_SYNC;
+> +        gl->context_fence_enabled = true;
+> +#endif
+>       }
+>   #endif
+>   #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+> @@ -1160,6 +1251,13 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+>                                       virtio_gpu_virgl_resume_cmdq_bh,
+>                                       g);
+> +
+> +    gl->async_fence_bh = aio_bh_new(qemu_get_aio_context(),
+> +                                    virtio_gpu_virgl_async_fence_bh,
+> +                                    g);
+> +
+> +    qemu_mutex_init(&gl->async_fence_lock);
+> +    QSLIST_INIT(&gl->async_fenceq);
+>   #endif
+>   
+>       return 0;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 230fa0c4ee0a..5673f0be85f4 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -229,6 +229,13 @@ struct VirtIOGPUClass {
+>                                Error **errp);
 >   };
 >   
->   static bool
-> @@ -847,6 +854,28 @@ static void sdl2_display_early_init(DisplayOptions *o)
->       }
->   }
+> +struct virtio_gpu_virgl_context_fence {
+> +    uint32_t ctx_id;
+> +    int64_t ring_idx;
+> +    uint64_t fence_id;
+> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+> +};
+> +
+>   /* VirtIOGPUGL renderer states */
+>   typedef enum {
+>       RS_START,       /* starting state */
+> @@ -246,6 +253,12 @@ struct VirtIOGPUGL {
+>       QEMUTimer *print_stats;
 >   
-> +static void sdl2_set_hint_x11_force_egl(void)
-> +{
-> +#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(EGL_KHR_platform_x11)
-
-EGL_KHR_platform_x11 is always defined when CONFIG_OPENGL is defined.
-Check CONFIG_OPENGL for the availability of EGL APIs.
-
-> +    Display *x_disp = XOpenDisplay(NULL);
-
-The availability of Xlib must be checked.
-
-> +    EGLDisplay egl_display;
+>       QEMUBH *cmdq_resume_bh;
 > +
-> +    if (!x_disp) {
-> +        return;
-> +    }
+> +    QEMUBH *async_fence_bh;
+> +    QemuMutex async_fence_lock;
+> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
 > +
-> +    /* Prefer EGL over GLX to get dma-buf support. */
-> +    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
- > +> +    if (egl_display != EGL_NO_DISPLAY) {
-> +        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
-
-SDL may not be going to use X11 but may use e.g., Wayland.
-
-> +        eglTerminate(egl_display);
-> +    }
-> +
-> +    XCloseDisplay(x_disp);
-> +#endif
-> +}
-> +
->   static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
->   {
->       uint8_t data = 0;
-> @@ -877,6 +906,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
->       SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+> +    bool context_fence_enabled;
+>   };
+>   
+>   struct VhostUserGPU {
+> @@ -360,5 +373,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset(VirtIOGPU *g);
+>   int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+>   
 >   #endif
->       SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
-> +    sdl2_set_hint_x11_force_egl();
->       SDL_EnableScreenSaver();
->       memset(&info, 0, sizeof(info));
->       SDL_VERSION(&info.version);
-> @@ -923,6 +953,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
->           sdl2_console[i].kbd = qkbd_state_init(con);
->           if (display_opengl) {
->               qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-> +            sdl2_gl_console_init(&sdl2_console[i]);
->           }
->           register_displaychangelistener(&sdl2_console[i].dcl);
->   
 
 
