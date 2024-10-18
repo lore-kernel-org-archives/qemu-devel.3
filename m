@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF59D30007
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3B7D3000A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1n20-0005jd-83; Fri, 18 Oct 2024 09:28:40 -0400
+	id 1t1n21-0005kJ-GD; Fri, 18 Oct 2024 09:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1y-0005iN-5s
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1x-0005iM-Td
  for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:28:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1w-0007Q7-JM
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1v-0007Pp-TY
  for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:28:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729258115;
+ s=mimecast20190719; t=1729258114;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ELTbiLR5hOhveedIClubmCc02LrhhFa+4jBCPxM+J2w=;
- b=f5Bpxd5PmCI8CI/6RxBnjP6mLBfhdAKbaVrGVy1haNIr0pdZR2MXZaKXelFM4pOpjd4dKS
- t4/voel8SJmIqElW/7hh0VCdGcxn3dH80/lWa3KqcH4+JXpbSER9+WdKRtJ0t8slMTGGNK
- 9gsS2mzntH628pPzy0oabndHPMXCHcM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=QQRxXRqdTuUACav3jzy7aDxOljOguqE9mvLS15D3YOc=;
+ b=CWYSdxtqYpp9SpUqr8PDAsQEgD5xun13R/KTYi8Y9lK4/U7em+kaIjtaY4LEsytr0PzwTP
+ v+9f3k5sni83DRp5W+j+3JIMG4sNmKIScRsCDVL8ix17PO0nw3TxL0WwxHZ6iHn5PT8+Vy
+ 9DAFC3NHuryMozFHSkuCDACqraYvCr0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-rywRtPSaO4Oj5RwQFhCRNA-1; Fri,
- 18 Oct 2024 09:28:32 -0400
-X-MC-Unique: rywRtPSaO4Oj5RwQFhCRNA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-4EgQKPWtPeGSi1oIjC4gIw-1; Fri,
+ 18 Oct 2024 09:28:31 -0400
+X-MC-Unique: 4EgQKPWtPeGSi1oIjC4gIw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB34F195609D; Fri, 18 Oct 2024 13:28:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5DF2A19560BA; Fri, 18 Oct 2024 13:28:29 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CCAA1956056; Fri, 18 Oct 2024 13:28:30 +0000 (UTC)
+ id D386119560A3; Fri, 18 Oct 2024 13:28:28 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5CD7121E68B2; Fri, 18 Oct 2024 15:28:24 +0200 (CEST)
+ id 5512621E688F; Fri, 18 Oct 2024 15:28:24 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 7/9] target/i386/cpu: Improve errors for out of bounds property
- values
-Date: Fri, 18 Oct 2024 15:28:22 +0200
-Message-ID: <20241018132824.3379780-8-armbru@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 5/9] block: Adjust check_block_size() signature
+Date: Fri, 18 Oct 2024 15:28:20 +0200
+Message-ID: <20241018132824.3379780-6-armbru@redhat.com>
 In-Reply-To: <20241018132824.3379780-1-armbru@redhat.com>
 References: <20241018132824.3379780-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -86,94 +85,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error message for a "stepping" value that is out of bounds is a
-bit odd:
-
-    $ qemu-system-x86_64 -cpu qemu64,stepping=16
-    qemu-system-x86_64: can't apply global qemu64-x86_64-cpu.stepping=16: Property .stepping doesn't take value 16 (minimum: 0, maximum: 15)
-
-The "can't apply global" part is an unfortunate artifact of -cpu's
-implementation.  Left for another day.
-
-The remainder feels overly verbose.  Change it to
-
-    qemu64-x86_64-cpu: can't apply global qemu64-x86_64-cpu.stepping=16: parameter 'stepping' can be at most 15
-
-Likewise for "family", "model", and "tsc-frequency".
+Parameter @id is no longer used, drop.  Return a bool to indicate
+success / failure, as recommended by qapi/error.h.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20241010150144.986655-6-armbru@redhat.com>
+Message-ID: <20241010150144.986655-4-armbru@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/cpu.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ util/block-helpers.h                 |  3 +--
+ block/export/vduse-blk.c             |  7 ++-----
+ block/export/vhost-user-blk-server.c |  6 +-----
+ hw/core/qdev-properties-system.c     |  6 +-----
+ util/block-helpers.c                 | 10 ++++++----
+ 5 files changed, 11 insertions(+), 21 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index cd0dfd03fd..5267dad850 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -31,7 +31,6 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qapi/qapi-visit-machine.h"
--#include "qapi/qmp/qerror.h"
- #include "standard-headers/asm-x86/kvm_para.h"
- #include "hw/qdev-properties.h"
- #include "hw/i386/topology.h"
-@@ -5455,8 +5454,8 @@ static void x86_cpuid_version_set_family(Object *obj, Visitor *v,
-         return;
-     }
-     if (value > max) {
--        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-+        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
-+                   name ? name : "null", max);
-         return;
-     }
+diff --git a/util/block-helpers.h b/util/block-helpers.h
+index b53295a529..838b0825f6 100644
+--- a/util/block-helpers.h
++++ b/util/block-helpers.h
+@@ -13,7 +13,6 @@
+ #define MAX_BLOCK_SIZE          (2 * MiB)
+ #define MAX_BLOCK_SIZE_STR      "2 MiB"
  
-@@ -5494,8 +5493,8 @@ static void x86_cpuid_version_set_model(Object *obj, Visitor *v,
-         return;
-     }
-     if (value > max) {
--        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-+        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
-+                   name ? name : "null", max);
-         return;
-     }
+-void check_block_size(const char *id, const char *name, int64_t value,
+-                      Error **errp);
++bool check_block_size(const char *name, int64_t value, Error **errp);
  
-@@ -5528,8 +5527,8 @@ static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
-         return;
-     }
-     if (value > max) {
--        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-+        error_setg(errp, "parameter '%s' can be at most %" PRIu64,
-+                   name ? name : "null", max);
-         return;
-     }
+ #endif /* BLOCK_HELPERS_H */
+diff --git a/block/export/vduse-blk.c b/block/export/vduse-blk.c
+index 172f73cef4..bd852e538d 100644
+--- a/block/export/vduse-blk.c
++++ b/block/export/vduse-blk.c
+@@ -273,7 +273,6 @@ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
+     uint64_t logical_block_size = VIRTIO_BLK_SECTOR_SIZE;
+     uint16_t num_queues = VDUSE_DEFAULT_NUM_QUEUE;
+     uint16_t queue_size = VDUSE_DEFAULT_QUEUE_SIZE;
+-    Error *local_err = NULL;
+     struct virtio_blk_config config = { 0 };
+     uint64_t features;
+     int i, ret;
+@@ -297,10 +296,8 @@ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
  
-@@ -5623,16 +5622,15 @@ static void x86_cpuid_set_tsc_freq(Object *obj, Visitor *v, const char *name,
-                                    void *opaque, Error **errp)
+     if (vblk_opts->has_logical_block_size) {
+         logical_block_size = vblk_opts->logical_block_size;
+-        check_block_size(exp->id, "logical-block-size", logical_block_size,
+-                         &local_err);
+-        if (local_err) {
+-            error_propagate(errp, local_err);
++        if (!check_block_size("logical-block-size", logical_block_size,
++                              errp)) {
+             return -EINVAL;
+         }
+     }
+diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
+index 50c358e8cd..d9d2014d9b 100644
+--- a/block/export/vhost-user-blk-server.c
++++ b/block/export/vhost-user-blk-server.c
+@@ -319,7 +319,6 @@ static int vu_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
  {
-     X86CPU *cpu = X86_CPU(obj);
--    const int64_t min = 0;
-     const int64_t max = INT64_MAX;
-     int64_t value;
+     VuBlkExport *vexp = container_of(exp, VuBlkExport, export);
+     BlockExportOptionsVhostUserBlk *vu_opts = &opts->u.vhost_user_blk;
+-    Error *local_err = NULL;
+     uint64_t logical_block_size;
+     uint16_t num_queues = VHOST_USER_BLK_NUM_QUEUES_DEFAULT;
  
-     if (!visit_type_int(v, name, &value, errp)) {
+@@ -330,10 +329,7 @@ static int vu_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
+     } else {
+         logical_block_size = VIRTIO_BLK_SECTOR_SIZE;
+     }
+-    check_block_size(exp->id, "logical-block-size", logical_block_size,
+-                     &local_err);
+-    if (local_err) {
+-        error_propagate(errp, local_err);
++    if (!check_block_size("logical-block-size", logical_block_size, errp)) {
+         return -EINVAL;
+     }
+ 
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 60bcd821de..35deef05f3 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -588,18 +588,14 @@ const PropertyInfo qdev_prop_losttickpolicy = {
+ static void set_blocksize(Object *obj, Visitor *v, const char *name,
+                           void *opaque, Error **errp)
+ {
+-    DeviceState *dev = DEVICE(obj);
+     Property *prop = opaque;
+     uint32_t *ptr = object_field_prop_ptr(obj, prop);
+     uint64_t value;
+-    Error *local_err = NULL;
+ 
+     if (!visit_type_size(v, name, &value, errp)) {
          return;
      }
--    if (value < min || value > max) {
--        error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, min, max);
-+    if (value < 0 || value > max) {
-+        error_setg(errp, "parameter '%s' can be at most %" PRId64,
-+                   name ? name : "null", max);
+-    check_block_size(dev->id ? : "", name, value, &local_err);
+-    if (local_err) {
+-        error_propagate(errp, local_err);
++    if (!check_block_size(name, value, errp)) {
          return;
      }
+     *ptr = value;
+diff --git a/util/block-helpers.c b/util/block-helpers.c
+index fb5de348e2..052b4e1476 100644
+--- a/util/block-helpers.c
++++ b/util/block-helpers.c
+@@ -14,7 +14,6 @@
  
+ /**
+  * check_block_size:
+- * @id: The unique ID of the object
+  * @name: The name of the property being validated
+  * @value: The block size in bytes
+  * @errp: A pointer to an area to store an error
+@@ -23,13 +22,14 @@
+  * 1. At least MIN_BLOCK_SIZE
+  * 2. No larger than MAX_BLOCK_SIZE
+  * 3. A power of 2
++ *
++ * Returns: true on success, false on failure
+  */
+-void check_block_size(const char *id, const char *name, int64_t value,
+-                      Error **errp)
++bool check_block_size(const char *name, int64_t value, Error **errp)
+ {
+     if (!value) {
+         /* unset */
+-        return;
++        return true;
+     }
+ 
+     if (value < MIN_BLOCK_SIZE || value > MAX_BLOCK_SIZE
+@@ -38,5 +38,7 @@ void check_block_size(const char *id, const char *name, int64_t value,
+                    "parameter %s must be a power of 2 between %" PRId64
+                    " and %" PRId64,
+                    name, MIN_BLOCK_SIZE, MAX_BLOCK_SIZE);
++        return false;
+     }
++    return true;
+ }
 -- 
 2.46.0
 
