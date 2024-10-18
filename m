@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE548D2FFFA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A57AD30019
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1p7J-00044s-EH; Fri, 18 Oct 2024 11:42:17 -0400
+	id 1t1p8D-0004yl-So; Fri, 18 Oct 2024 11:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1p7H-00044b-QX
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:42:15 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1t1p8C-0004y7-LJ
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:43:12 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1p7D-00010T-Sm
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:42:14 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c94dd7e1c0so2850855a12.0
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 08:42:10 -0700 (PDT)
+ id 1t1p8A-00013Q-OG
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:43:12 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c40aea5c40so4068148a12.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 08:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729266129; x=1729870929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729266189; x=1729870989; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=m21PZad2rLJLTKcO9mA/D+REAZ1vjk35GaRaPiKNmj4=;
- b=VJsULgu3RtX6uT7v0+2ImzG5jWinyen7j1/fOwkvedPcoC97dg8YsHw7reLJP4IIe3
- p2tlKqa24lUQq7O7ShUoHBbA6BHjb8w/veb3BcvnZGpyCpNMJJJvDR2g43e18n8vv2m5
- heKFsyvIFfAP6/+R7lYdXw3tYD2kTanOczfjNhEaE1Xj/ei0e1sZfMA8oa79StrtnyaT
- vYlp5sZ8TIBK9Wsx7tddConuRtOMHXRVZQ1LzByPpwQdA6v0ucYZmd7sd9hhoC8xYPhw
- zbEr9vbg4dHOtXNK34BPUU77GIcioLTVIF75izybKY/jErLJCe2jNO6D/7Zl3RnDnNtk
- CXqg==
+ bh=+CgZWY9fB6p2WqZGCXblHXKAsQRULhetRVvwpPUjPeo=;
+ b=YxPslvXfF+I3zxp6V7iKkNLA1nCwYw5z9SCob9UhLJoHCqgHOysqPzKJr4kr3jwrnZ
+ KfAKVrYRkhuxoOi9G2N542VcAQ/BSwm4rqwHNjcG5kLSSIl6k+Oxv4Anu6mLlWoCXQqs
+ qOLIOTG+YFVVFewnzMdP043cf9OUsdjqueSkLGrcq1z7jldFJxYZR/2Cjagt3Bnsw32y
+ TCr1fDBC8IjGv8r4hpCgVhXXKlDA1R++zHl0+iACgxUSaVBQg4jybM86Bjv9xCBRJwbP
+ 9FM0SHtoCRge19z8XH1Lyuj7ZkjfE2Y3Ej0ywQLj+yHQKud/PXFBfSe0ltBFjNxZLaos
+ Ih0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729266129; x=1729870929;
+ d=1e100.net; s=20230601; t=1729266189; x=1729870989;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=m21PZad2rLJLTKcO9mA/D+REAZ1vjk35GaRaPiKNmj4=;
- b=X69DDrWka4UAR5OX1OB2gh4KO3Y8EGP+X4XxMkRPHgZxWM4yl6j/bRoRVVFL2aSQJ0
- vu301JZ7nIXQjseXPsb79jUAFWmAIN+URpvWJywKPoxmmnV+7JDPDBFUbeg/mJVGUhXF
- PTiNbSD4KKkS8Sd8qWYSMaADOAr0oGs7D5c6trLBaD6VPF9pAqNcZGBjerpDVwQYQroi
- 9qAoAFcNY8f9afhzOUym5jZBMx+LOWr9kQ/Y8+7t+B1jx44sOc8KOfVAVpkmzRCBsrdz
- hK+Y1M8fAXRCRhTZ3ltEZi/u4Y/rFRktUk8FCPc8ZbyS/TwBrZYcI/pd2u8i2/f8HDNZ
- lpVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyVBkvlbZqrzVx2IW2QaLwbdQxBzKazZ9SPrTMo6lgS0xxEH98qqaVfcrfX/qDNJBLllQdHv4VPnuB@nongnu.org
-X-Gm-Message-State: AOJu0YybFdHRr56b4bWzWEt7n3rlRxz+6La/A9dgJegNfdFaqN9GMDKp
- rsDVVYzDABvJYra+K4EUKe9Zs/eOCGdHtF30ymm9AMcOb6EVkhKpshbAK6BGbhYJY8try40RVnF
- CaTCeXoofmawLeZtAOgNPrj5TdhMxVZVUMVdXNg==
-X-Google-Smtp-Source: AGHT+IFuLLwvIDrP4XbdWJg78Pgv3gv/5c2TyddvTYt7E+ReihDkGz9gNx/VqLFwLGYiLOPpCzaOgCXI/yqPEL/XXpI=
-X-Received: by 2002:a05:6402:26ce:b0:5c9:87a0:4fcc with SMTP id
- 4fb4d7f45d1cf-5ca0ac62747mr2093839a12.16.1729266129425; Fri, 18 Oct 2024
- 08:42:09 -0700 (PDT)
+ bh=+CgZWY9fB6p2WqZGCXblHXKAsQRULhetRVvwpPUjPeo=;
+ b=Txx50VaJZieQUBXwGy5fy0Y8zMeobPZtWiaiachFexjwZRODOVUFata5si3TfyWZ5z
+ qBlC/QWncehPBm1knRHFYfMEzKzYS5qUB112qSakcT1Cq2gPPpfzl4y+Tc+y8e/IXcxN
+ hNr+AoOlYFZgKwUInQtiud5DBcx/+JGN8bc1J3OmMZKpBKUDJn5YuqS3eC21kzCVmqNz
+ +xMI8wzjNAiLB6N0JMX5+9mKMySYPOJOKpKe6wyBGVEe8KuNx6Lh1bs7CU9HSgJfqEoF
+ yivBKZT1KNzN7R4uQ0p+0LXLTTTpR+AevxqclJMIfg09U3zQ0hRH0GW0evBBKQ1mpuoB
+ lQ9A==
+X-Gm-Message-State: AOJu0YyBODg7X63dC1RKBP57ZhLmt1amQNpymtorHj6fw2QujaJaNX8O
+ JfKRfWYhoC5gu2MqM0+n/OzRLfxoESH7WAKMd/+mExHt1RkS3ZszHVTl1CJlUG8Xw+t5YZ5ls7I
+ R22sAoLAjm6IIuDw2azZ8s7hwUyUW/mrG/4JxFQ==
+X-Google-Smtp-Source: AGHT+IGCAPHfuffTy+wCZfeUaCcLRP+GK02cq1rvOmkO3ilyrb7hBnkO/lVN+19xNWLlrMLkoeHplE4jyJsGZ7wnN04=
+X-Received: by 2002:a05:6402:28ca:b0:5c9:46a7:527 with SMTP id
+ 4fb4d7f45d1cf-5ca0b117cacmr3059569a12.17.1729266189161; Fri, 18 Oct 2024
+ 08:43:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241007171700.1594342-1-titusr@google.com>
-In-Reply-To: <20241007171700.1594342-1-titusr@google.com>
+References: <20241015135649.4189256-1-jlu@pengutronix.de>
+In-Reply-To: <20241015135649.4189256-1-jlu@pengutronix.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 18 Oct 2024 16:41:58 +0100
-Message-ID: <CAFEAcA-YKnQT4QUrqSgJR1_XOo-xVOCR+4Um0xxP-sZdopgHHA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: add Quanta GSZ bmc machine
-To: Titus Rwantare <titusr@google.com>
-Cc: minyard@acm.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- venture@google.com, wuhaotsh@google.com
+Date: Fri, 18 Oct 2024 16:42:58 +0100
+Message-ID: <CAFEAcA9sjszCj=Fu-A-=qQV_jawnomJ-Nqnd=Vx2vLKmYZ1-nQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/sd/sdcard: Allow user creation of eMMCs
+To: Jan Luebbe <jlu@pengutronix.de>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,26 +89,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Oct 2024 at 18:17, Titus Rwantare <titusr@google.com> wrote:
+On Tue, 15 Oct 2024 at 14:57, Jan Luebbe <jlu@pengutronix.de> wrote:
 >
-> This patch adds the quanta-gsz-bmc target, a current Google machine of
-> the day. This machine will be used as a platform to enable features such
-> as the PECI bmc interface, and Intel eSPI virtual wire interface in
-> QEMU.
+> For testing eMMC-specific functionality (such as handling boot
+> partitions), it would be very useful to attach them to generic VMs such
+> as x86_64 via the sdhci-pci device:
+>  ...
+>  -drive if=none,id=emmc-drive,file=emmc.img,format=raw \
+>  -device sdhci-pci \
+>  -device emmc,id=emmc0,drive=emmc-drive,boot-partition-size=1048576 \
+>  ...
 >
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-> ---
+> While most eMMCs are soldered to boards, they can also be connected to
+> SD controllers with just a passive adapter, such as:
+>  https://docs.radxa.com/en/accessories/emmc-to-usd
+>  https://github.com/voltlog/emmc-wfbga153-microsd
+>
+> The only change necessary to make the options above work is to avoid
+> disabling user_creatable, so do that. The SDHCI-PCI driver in the Linux
+> kernel already supports this just fine.
+>
+> Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
 
-Nothing obviously wrong-looking here, but I am assuming
-somebody who knows the hardware will review this.
+Applied to target-arm.next, thanks (unless anybody would
+prefer it to go via some other route).
 
-For a new machine type, you should add something to docs/
-for it. (See also
-https://patchew.org/QEMU/20241018141332.942844-1-peter.maydell@linaro.org/
-which is a series I just posted today that expands out
-the "*-bmc" wildcards previously used in the doc titles
-for these boards.)
-
-thanks
 -- PMM
 
