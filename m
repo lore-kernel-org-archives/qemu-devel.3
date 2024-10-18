@@ -4,61 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2368BD30007
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E127AD30007
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1n51-0002xF-5k; Fri, 18 Oct 2024 09:31:47 -0400
+	id 1t1n7U-0004ne-Ok; Fri, 18 Oct 2024 09:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1n4y-0002jd-8q
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:31:44 -0400
+ id 1t1n7R-0004mD-7t
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:34:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1n4w-0008Dr-Ce
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:31:43 -0400
+ id 1t1n7O-0000IJ-PQ
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:34:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729258301;
+ s=mimecast20190719; t=1729258453;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+gmtm/O3HwNMVlM6XVnxpZorunulEMWieBBsnBuSNsw=;
- b=UQ0TTsZWgurPDwt6nPZQ7MH5bRnTKEWO3cFqyJMw7tm5hw/pWiC6LVboGwTco7ut/5h9n+
- iG4NnAfSaT7r/P8BoqEoQlwEVCrfjkTyzlXJuj4ITAB11eEV7vwG7i6IsLcOJO8RJ9MWTK
- oyGzyVF+1a9Ko43suDyRfKGQzRNZorA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=io+ggkxIPwCoOF52BTebbnwKuui9DQCBbc3iCviBYag=;
+ b=EcOfKFiB/TbsKfaJnVNkRbrKnaKvObfFg8PMgkLw5RWruFplVoR7qNqkOJaS185fSCG8K0
+ bNjAHwbgMOa1ODkTFBadgrPelhLlgqAc7dXaH+/Eweau6aYmFtKyw69J0ojTL1NwX8HUD/
+ RFjxICax+PeTvisixR+5uWXEhotH4tg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-BG_h4o2EM9WpE3BdvS3gUw-1; Fri,
- 18 Oct 2024 09:31:40 -0400
-X-MC-Unique: BG_h4o2EM9WpE3BdvS3gUw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-9UOrbd1aOAW7-_8DrWFESA-1; Fri,
+ 18 Oct 2024 09:34:10 -0400
+X-MC-Unique: 9UOrbd1aOAW7-_8DrWFESA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E21918E6582
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 13:31:32 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00FDB1955D9D; Fri, 18 Oct 2024 13:34:09 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9473196586C; Fri, 18 Oct 2024 13:31:30 +0000 (UTC)
-Date: Fri, 18 Oct 2024 14:31:26 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B13619560A3; Fri, 18 Oct 2024 13:34:06 +0000 (UTC)
+Date: Fri, 18 Oct 2024 14:34:03 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 00/16] rust: allow older versions of rustc and bindgen
-Message-ID: <ZxJjLpDe0-A_6PEL@redhat.com>
-References: <20241015131735.518771-1-pbonzini@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 31/31] system: remove unused qerror.h header
+Message-ID: <ZxJjy84YC2xgkZpS@redhat.com>
+References: <20241017113344.883424-1-berrange@redhat.com>
+ <20241017113344.883424-32-berrange@redhat.com>
+ <ZxI1q0ucLSSo0Ijc@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241015131735.518771-1-pbonzini@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZxI1q0ucLSSo0Ijc@intel.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,66 +89,38 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 15, 2024 at 03:17:18PM +0200, Paolo Bonzini wrote:
-> On top of this, the required version of bindgen is still too new
-> for Debian 12 and Ubuntu 22.04.  This is fixed by the last four patches.
+On Fri, Oct 18, 2024 at 06:17:15PM +0800, Zhao Liu wrote:
+> Hi Daniel,
 > 
-> This is an RFC for two reasons.  First, because it would be a valid
-> decision to delay enabling of Rust until at least some of these
-> features are available in all supported distros.
+> On Thu, Oct 17, 2024 at 12:33:43PM +0100, Daniel P. Berrangé wrote:
+> > Date: Thu, 17 Oct 2024 12:33:43 +0100
+> > From: "Daniel P. Berrangé" <berrange@redhat.com>
+> > Subject: [PATCH v2 31/31] system: remove unused qerror.h header
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  system/rtc.c | 1 -
+> >  1 file changed, 1 deletion(-)
+> > 
+> > diff --git a/system/rtc.c b/system/rtc.c
+> > index e3bc2095f9..216d2aee3a 100644
+> > --- a/system/rtc.c
+> > +++ b/system/rtc.c
+> > @@ -25,7 +25,6 @@
+> >  #include "qemu/osdep.h"
+> >  #include "qemu/cutils.h"
+> >  #include "qapi/error.h"
+> > -#include "qapi/qmp/qerror.h"
+> >  #include "qemu/error-report.h"
+> >  #include "qemu/option.h"
+> >  #include "qemu/timer.h"
+> > -- 
+> > 2.46.0
+> > 
+> 
+> Ah, this qerror.h is added by patch 23 accidentally.
 
-Lets say we maximise our back compatibility today, and have to
-carry some sub-optimal code patterns.
-
-1, 2, 3, 4 years down the lines, we can gradually eliminate
-those undesired code patterns / workarounds, as older distros
-naturally age-out of our matrix.  After 4 years our entire
-matrix will have cycled, so we're not needing to carry this
-debt for very long (4 years is not long in the context of a
-project like QEMU which has been going several decades)
-
-IOW, we're deciding between
-
- * creating a bit of rust technical debt in the immediate
-   term, in order to enable rust by default sooner
-
-vs
-
- * avoiding Rust technical debt, but delaying ability to
-   enable rust by default.
-
-We could consider all C code to be technical debt though,
-and if we don't have Rust by default we'll continue  adding
-yet more C code. IOW, option is just moving the debt from
-Rust back to C, which is arguably worse on balance.
-
-Personally I tend towards quicker adoption of Rust, despite
-the need for short term workarounds, as they'll disappear
-again reasonably quickly.
-
->                                                  Another possibility
-> could be to accept Rust 1.64.0 but require installing a newer bindgen
-> (0.66.x for example) on those two distros with an older release.
-
-How difficult is it to get newer 'bindgen' installed on these
-platforms ? The audience here is not so much distros trying to
-package new QEMU, as that's ony relevant for new distro, but
-rather it is end usrs/contributors building QEMU for themslves.
-
-Can it be done automagically in the same way we "do the right thing"
-with the 3rd party crates we depend on, or is bindgen special in
-some way that makes it more inconvenient for users ?
-
->                                                                   Second,
-> because the series is missing the CI updates to actually ensure that
-> these minimum versions keep working.
-
-On the last point, see
-
-  https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg02688.html
-
-with that series, it should be just a matter of adding '--enable-rust'
-in a few key jobs.
+Doh, fixing my own mistake :-)
 
 
 With regards,
