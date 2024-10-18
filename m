@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B838D3C54E
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5A7D3C54D
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1faG-0008GL-3l; Fri, 18 Oct 2024 01:31:32 -0400
+	id 1t1faa-0008RB-Jj; Fri, 18 Oct 2024 01:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fa9-0008FC-Jx; Fri, 18 Oct 2024 01:31:25 -0400
+ id 1t1faT-0008Md-W5; Fri, 18 Oct 2024 01:31:46 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fa7-00089Y-UF; Fri, 18 Oct 2024 01:31:25 -0400
+ id 1t1faP-00089Y-5h; Fri, 18 Oct 2024 01:31:43 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 18 Oct
- 2024 13:31:12 +0800
+ 2024 13:31:14 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 18 Oct 2024 13:31:12 +0800
+ Transport; Fri, 18 Oct 2024 13:31:14 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -36,10 +36,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 01/16] aspeed/smc: Fix write incorrect data into flash in
- user mode
-Date: Fri, 18 Oct 2024 13:30:57 +0800
-Message-ID: <20241018053112.1886173-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 06/16] hw/arm/aspeed: Correct fmc_model w25q80bl for
+ ast1030-a1 EVB
+Date: Fri, 18 Oct 2024 13:31:02 +0800
+Message-ID: <20241018053112.1886173-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
@@ -71,149 +71,42 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the design of ASPEED SPI controllers user mode, users write the
-data to flash, the SPI drivers set the Control Register(0x10) bit 0 and 1
-enter user mode. Then, SPI drivers send flash commands for writing data.
-Finally, SPI drivers set the Control Register (0x10) bit 2 to stop
-active control and restore bit 0 and 1.
+Currently, the default fmc_model was "sst25vf032b" whose size was 4MB for
+ast1030-a1 EVB. However, according to the schematic of ast1030-a1 EVB,
+ASPEED shipped default flash of fmc_cs0 and fmc_cs1 were "w25q80bl" and
+"w25q256", respectively. The size of w25q80bl is 1MB and the size of w25q256
+is 32MB.
 
-According to the design of ASPEED SMC model, firmware writes the
-Control Register and the "aspeed_smc_flash_update_ctrl" function is called.
-Then, this function verify Control Register(0x10) bit 0 and 1. If it set user
-mode, the value of s->snoop_index is SNOOP_START else SNOOP_OFF.
-If s->snoop_index is SNOOP_START, the "aspeed_smc_do_snoop" function verify
-the first incomming data is a new flash command and writes the corresponding
-dummy bytes if need.
+The fmc_cs0 was connected to AST1030 A1 internal flash and the fmc_cs1 was
+connected to external flash. The internal flash could not be changed because
+it was placed into AST1030 A1 chip. Users only can change fmc_cs1 external
+flash.
 
-However, it did not check the current unselect status. If current unselect
-status is "false" and firmware set the IO MODE by Control Register bit 31:28,
-the value of s->snoop_index will be changed to SNOOP_START again and
-"aspeed_smc_do_snoop" misunderstand that the incomming data is the new flash
-command and it causes writing unexpected data into flash.
+So far, only supports to set the default fmc_model for all chip select pins.
+In other words, users cannot set the different default flash model for
+fmc_cs0 and fmc_cs1, respectively.
 
-Example:
-1. Firmware set user mode by Control Register bit 0 and 1(0x03)
-2. SMC model set s->snoop SNOOP_START
-3. Firmware set Quad Page Program with 4-Byte Address command (0x34)
-4. SMC model verify this flash command and it needs 4 dummy bytes.
-5. Firmware send 4 bytes address.
-6. SMC model receives 4 bytes address
-7. Firmware set QPI IO MODE by Control Register bit 31. (0x80000003)
-8. SMC model verify new user mode by Control Register bit 0 and 1.
-   Then, set s->snoop SNOOP_START again. (It is the wrong behavior.)
-9. Firmware send 0xebd8c134 data and it should be written into flash.
-   However, SMC model misunderstand that the first incoming data, 0x34,
-   is the new command because the value of s->snoop is changed to SNOOP_START.
-   Finally, SMC sned the incorrect data to flash model.
-
-Introduce a new unselect attribute in AspeedSMCState to save the current
-unselect status for user mode and set it "true" by default.
-Update "aspeed_smc_flash_update_ctrl" function to check the previous unselect
-status. If both new unselect status and previous unselect status is different,
-update s->snoop_index value and call "aspeed_smc_flash_do_select".
-
-Increase VMStateDescription version 1.
+Correct fmc_model default flash to w25q80bl the same as AST1030 A1
+internal flash for ast1030-a1 EVB.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/ssi/aspeed_smc.c         | 39 +++++++++++++++++++++++++------------
- include/hw/ssi/aspeed_smc.h |  1 +
- 2 files changed, 28 insertions(+), 12 deletions(-)
+ hw/arm/aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index e3fdc66cb2..8a6145afe9 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -417,7 +417,7 @@ static void aspeed_smc_flash_do_select(AspeedSMCFlash *fl, bool unselect)
-     AspeedSMCState *s = fl->controller;
- 
-     trace_aspeed_smc_flash_select(fl->cs, unselect ? "un" : "");
--
-+    s->unselect = unselect;
-     qemu_set_irq(s->cs_lines[fl->cs], unselect);
- }
- 
-@@ -677,22 +677,35 @@ static const MemoryRegionOps aspeed_smc_flash_ops = {
- static void aspeed_smc_flash_update_ctrl(AspeedSMCFlash *fl, uint32_t value)
- {
-     AspeedSMCState *s = fl->controller;
--    bool unselect;
-+    bool unselect = false;
-+    uint32_t old_mode;
-+    uint32_t new_mode;
-+
-+    old_mode = s->regs[s->r_ctrl0 + fl->cs] & CTRL_CMD_MODE_MASK;
-+    new_mode = value & CTRL_CMD_MODE_MASK;
- 
--    /* User mode selects the CS, other modes unselect */
--    unselect = (value & CTRL_CMD_MODE_MASK) != CTRL_USERMODE;
-+    if (old_mode == CTRL_USERMODE) {
-+        if (new_mode != CTRL_USERMODE) {
-+            unselect = true;
-+        }
- 
--    /* A change of CTRL_CE_STOP_ACTIVE from 0 to 1, unselects the CS */
--    if (!(s->regs[s->r_ctrl0 + fl->cs] & CTRL_CE_STOP_ACTIVE) &&
--        value & CTRL_CE_STOP_ACTIVE) {
--        unselect = true;
-+        /* A change of CTRL_CE_STOP_ACTIVE from 0 to 1, unselects the CS */
-+        if (!(s->regs[s->r_ctrl0 + fl->cs] & CTRL_CE_STOP_ACTIVE) &&
-+            value & CTRL_CE_STOP_ACTIVE) {
-+            unselect = true;
-+        }
-+    } else {
-+        if (new_mode != CTRL_USERMODE) {
-+            unselect = true;
-+        }
-     }
- 
-     s->regs[s->r_ctrl0 + fl->cs] = value;
- 
--    s->snoop_index = unselect ? SNOOP_OFF : SNOOP_START;
--
--    aspeed_smc_flash_do_select(fl, unselect);
-+    if (unselect != s->unselect) {
-+        s->snoop_index = unselect ? SNOOP_OFF : SNOOP_START;
-+        aspeed_smc_flash_do_select(fl, unselect);
-+    }
- }
- 
- static void aspeed_smc_reset(DeviceState *d)
-@@ -737,6 +750,7 @@ static void aspeed_smc_reset(DeviceState *d)
- 
-     s->snoop_index = SNOOP_OFF;
-     s->snoop_dummies = 0;
-+    s->unselect = true;
- }
- 
- static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
-@@ -1261,12 +1275,13 @@ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
- 
- static const VMStateDescription vmstate_aspeed_smc = {
-     .name = "aspeed.smc",
--    .version_id = 2,
-+    .version_id = 3,
-     .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedSMCState, ASPEED_SMC_R_MAX),
-         VMSTATE_UINT8(snoop_index, AspeedSMCState),
-         VMSTATE_UINT8(snoop_dummies, AspeedSMCState),
-+        VMSTATE_BOOL(unselect, AspeedSMCState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 234dca32b0..25b95e7406 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -82,6 +82,7 @@ struct AspeedSMCState {
- 
-     uint8_t snoop_index;
-     uint8_t snoop_dummies;
-+    bool unselect;
- };
- 
- typedef struct AspeedSegments {
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index bf68224295..b4b1ce9efb 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1642,7 +1642,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     mc->init = aspeed_minibmc_machine_init;
+     amc->i2c_init = ast1030_evb_i2c_init;
+     mc->default_ram_size = 0;
+-    amc->fmc_model = "sst25vf032b";
++    amc->fmc_model = "w25q80bl";
+     amc->spi_model = "w25q256";
+     amc->num_cs = 2;
+     amc->macs_mask = 0;
 -- 
 2.34.1
 
