@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D213D2FFE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8268D2FFE3
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1jiZ-000139-5n; Fri, 18 Oct 2024 05:56:23 -0400
+	id 1t1jij-00015s-1s; Fri, 18 Oct 2024 05:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jiS-0000t8-4U
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:56:16 -0400
+ id 1t1jig-00015S-O9
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:56:30 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jiQ-0003CU-8F
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:56:15 -0400
+ id 1t1jif-0003Cw-CN
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:56:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729245374; x=1760781374;
+ t=1729245390; x=1760781390;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=GclsUKq5iF/L79XfDgO5GV7LQxXZ0boO5JF0s0ZZ/l0=;
- b=TRszDU1HB5wZFXn/JSTZW+HkWI3DEKlKiM6Kahr2Tv7i1uLClgbHxPHw
- ZVm5J92tYXf3rGWcSND4IFBcD6SRUe0SghZ247tpHwQOnE6FcLu4NSTm6
- 5QpS43VFdQDHwVdRSg8xidemkqISrZu9xFQ05FpTVQrZA9+L5pTLIq2Eh
- 1XoTZPhM0lja0uwAbpdblZCR1+jJZP5Z/c2erfy7q6/gneQZFwmV5G/lJ
- DKxIiYuJCIrm0CktgzxhDlqZv9kz4g1tbVOsGGApGGktXQaXPRqa4sa0G
- 14kw5JxI26zK1PvzdJchDgvOHVzdBCxnrvu/PPdBGRnkm56X/8o7XsZal Q==;
-X-CSE-ConnectionGUID: i4aOVgWGSbu78AquOQCcQg==
-X-CSE-MsgGUID: bzxJWjTXTu6c3zLa32+JBA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="39358532"
-X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="39358532"
+ bh=ccAVKFNyn7Rw7zj9Wk7Yg437uQCQPBLcBud5bCQ9xAE=;
+ b=ChF8Pdte+hR9oYI1LhWZTXG6818GxqVnodhMHqvqcn3js9WOjmE/+Yn2
+ 1bFsRMNx/shQhL9jH52jHEniao79VdWAapTNicM6PM1OFdrvBInMEAXCd
+ NOPa/MbK/HoUIkQwR2UR34ilfTr/45YrEV5U5CMDRppn0zjH9db4KY/cr
+ KaYVxoTJRYwbgRiLiREvvSZ/3/kISrzcCvmMFtoshVEbu/u/f2bnpyaVz
+ cECe48oebaVEkwJzs9eILiut26+5w8wrNIMJqfvLkwJu0eyV/8NTMOTBi
+ 9yKSsuwcRI4EbwRJNfX8y0GbwTP5BWVSRPu3SFw/4Vqx+WdeerdaUdeNS Q==;
+X-CSE-ConnectionGUID: 6bS/6Z1iSbih86JIoFKlHA==
+X-CSE-MsgGUID: AON57lYqRLKf78WtTgqrIQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="39358542"
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="39358542"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Oct 2024 02:56:12 -0700
-X-CSE-ConnectionGUID: CCZCLZDKQpG/9N9VZM2yBA==
-X-CSE-MsgGUID: Iifc/VtoQ66GAXpbMRb05g==
+ 18 Oct 2024 02:56:28 -0700
+X-CSE-ConnectionGUID: Xs7jXKmMRMOB58e+M32dJQ==
+X-CSE-MsgGUID: QcWMYGt+R4aD/4wdahUzDA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="78836115"
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="78836130"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 18 Oct 2024 02:56:11 -0700
-Date: Fri, 18 Oct 2024 18:12:26 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 18 Oct 2024 02:56:27 -0700
+Date: Fri, 18 Oct 2024 18:12:42 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 26/31] trace: adapt to new import path for qobject
- data type headers
-Message-ID: <ZxI0inEy/OvgUe1p@intel.com>
+Subject: Re: [PATCH v2 27/31] ui: adapt to new import path for qobject data
+ type headers
+Message-ID: <ZxI0mtdkhbGL125i@intel.com>
 References: <20241017113344.883424-1-berrange@redhat.com>
- <20241017113344.883424-27-berrange@redhat.com>
+ <20241017113344.883424-28-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241017113344.883424-27-berrange@redhat.com>
+In-Reply-To: <20241017113344.883424-28-berrange@redhat.com>
 Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
@@ -85,10 +85,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 12:33:38PM +0100, Daniel P. Berrangé wrote:
-> Date: Thu, 17 Oct 2024 12:33:38 +0100
+On Thu, Oct 17, 2024 at 12:33:39PM +0100, Daniel P. Berrangé wrote:
+> Date: Thu, 17 Oct 2024 12:33:39 +0100
 > From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: [PATCH v2 26/31] trace: adapt to new import path for qobject data
+> Subject: [PATCH v2 27/31] ui: adapt to new import path for qobject data
 >  type headers
 > 
 > The qobject data type headers have moved from qapi/qmp/ to
@@ -96,7 +96,7 @@ On Thu, Oct 17, 2024 at 12:33:38PM +0100, Daniel P. Berrangé wrote:
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  trace/trace-hmp-cmds.c | 2 +-
+>  ui/ui-hmp-cmds.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
