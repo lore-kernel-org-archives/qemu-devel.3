@@ -4,61 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD0FD3000A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2368BD30007
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1n50-0002s9-8i; Fri, 18 Oct 2024 09:31:46 -0400
+	id 1t1n51-0002xF-5k; Fri, 18 Oct 2024 09:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LF+j=RO=kaod.org=clg@ozlabs.org>)
- id 1t1n4g-0002XY-Sm; Fri, 18 Oct 2024 09:31:32 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1n4y-0002jd-8q
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:31:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LF+j=RO=kaod.org=clg@ozlabs.org>)
- id 1t1n4e-00087y-C6; Fri, 18 Oct 2024 09:31:26 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XVQZp4pTnz4wnp;
- Sat, 19 Oct 2024 00:31:14 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1n4w-0008Dr-Ce
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:31:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729258301;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=+gmtm/O3HwNMVlM6XVnxpZorunulEMWieBBsnBuSNsw=;
+ b=UQ0TTsZWgurPDwt6nPZQ7MH5bRnTKEWO3cFqyJMw7tm5hw/pWiC6LVboGwTco7ut/5h9n+
+ iG4NnAfSaT7r/P8BoqEoQlwEVCrfjkTyzlXJuj4ITAB11eEV7vwG7i6IsLcOJO8RJ9MWTK
+ oyGzyVF+1a9Ko43suDyRfKGQzRNZorA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-BG_h4o2EM9WpE3BdvS3gUw-1; Fri,
+ 18 Oct 2024 09:31:40 -0400
+X-MC-Unique: BG_h4o2EM9WpE3BdvS3gUw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XVQZh5ybFz4wcl;
- Sat, 19 Oct 2024 00:31:05 +1100 (AEDT)
-Message-ID: <b3970e21-cbd0-4bca-a857-df55d48c8468@kaod.org>
-Date: Fri, 18 Oct 2024 15:31:02 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E21918E6582
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 13:31:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9473196586C; Fri, 18 Oct 2024 13:31:30 +0000 (UTC)
+Date: Fri, 18 Oct 2024 14:31:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 00/16] rust: allow older versions of rustc and bindgen
+Message-ID: <ZxJjLpDe0-A_6PEL@redhat.com>
+References: <20241015131735.518771-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 02/16] hw/block:m25p80: Fix coding style
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
- <20241018053112.1886173-3-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241018053112.1886173-3-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=LF+j=RO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241015131735.518771-1-pbonzini@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,94 +81,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/18/24 07:30, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl
+On Tue, Oct 15, 2024 at 03:17:18PM +0200, Paolo Bonzini wrote:
+> On top of this, the required version of bindgen is still too new
+> for Debian 12 and Ubuntu 22.04.  This is fixed by the last four patches.
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> This is an RFC for two reasons.  First, because it would be a valid
+> decision to delay enabling of Rust until at least some of these
+> features are available in all supported distros.
+
+Lets say we maximise our back compatibility today, and have to
+carry some sub-optimal code patterns.
+
+1, 2, 3, 4 years down the lines, we can gradually eliminate
+those undesired code patterns / workarounds, as older distros
+naturally age-out of our matrix.  After 4 years our entire
+matrix will have cycled, so we're not needing to carry this
+debt for very long (4 years is not long in the context of a
+project like QEMU which has been going several decades)
+
+IOW, we're deciding between
+
+ * creating a bit of rust technical debt in the immediate
+   term, in order to enable rust by default sooner
+
+vs
+
+ * avoiding Rust technical debt, but delaying ability to
+   enable rust by default.
+
+We could consider all C code to be technical debt though,
+and if we don't have Rust by default we'll continue  adding
+yet more C code. IOW, option is just moving the debt from
+Rust back to C, which is arguably worse on balance.
+
+Personally I tend towards quicker adoption of Rust, despite
+the need for short term workarounds, as they'll disappear
+again reasonably quickly.
+
+>                                                  Another possibility
+> could be to accept Rust 1.64.0 but require installing a newer bindgen
+> (0.66.x for example) on those two distros with an older release.
+
+How difficult is it to get newer 'bindgen' installed on these
+platforms ? The audience here is not so much distros trying to
+package new QEMU, as that's ony relevant for new distro, but
+rather it is end usrs/contributors building QEMU for themslves.
+
+Can it be done automagically in the same way we "do the right thing"
+with the 3rd party crates we depend on, or is bindgen special in
+some way that makes it more inconvenient for users ?
+
+>                                                                   Second,
+> because the series is missing the CI updates to actually ensure that
+> these minimum versions keep working.
+
+On the last point, see
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg02688.html
+
+with that series, it should be just a matter of adding '--enable-rust'
+in a few key jobs.
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/block/m25p80.c | 22 ++++++++++++++--------
->   1 file changed, 14 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-> index f7123f9e68..3f55b8f385 100644
-> --- a/hw/block/m25p80.c
-> +++ b/hw/block/m25p80.c
-> @@ -61,7 +61,8 @@ typedef struct FlashPartInfo {
->        */
->       uint8_t id[SPI_NOR_MAX_ID_LEN];
->       uint8_t id_len;
-> -    /* there is confusion between manufacturers as to what a sector is. In this
-> +    /*
-> +     * there is confusion between manufacturers as to what a sector is. In this
->        * device model, a "sector" is the size that is erased by the ERASE_SECTOR
->        * command (opcode 0xd8).
->        */
-> @@ -168,7 +169,7 @@ typedef struct FlashPartInfo {
->   /*
->    * Spansion read mode command length in bytes,
->    * the mode is currently not supported.
-> -*/
-> + */
->   
->   #define SPANSION_CONTINUOUS_READ_MODE_CMD_LEN 1
->   #define WINBOND_CONTINUOUS_READ_MODE_CMD_LEN 1
-> @@ -189,7 +190,8 @@ static const FlashPartInfo known_devices[] = {
->   
->       { INFO("at45db081d",  0x1f2500,      0,  64 << 10,  16, ER_4K) },
->   
-> -    /* Atmel EEPROMS - it is assumed, that don't care bit in command
-> +    /*
-> +     * Atmel EEPROMS - it is assumed, that don't care bit in command
->        * is set to 0. Block protection is not supported.
->        */
->       { INFO("at25128a-nonjedec", 0x0,     0,         1, 131072, EEPROM) },
-> @@ -275,10 +277,13 @@ static const FlashPartInfo known_devices[] = {
->       { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
->       { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
->       { INFO_STACKED("mt25qu01g", 0x20bb21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
-> -    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
-> -    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
-> +    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096,
-> +                   ER_4K | ER_32K, 2) },
-> +    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096,
-> +                   ER_4K | ER_32K, 2) },
->   
-> -    /* Spansion -- single (large) sector size only, at least
-> +    /*
-> +     * Spansion -- single (large) sector size only, at least
->        * for the chips listed here (without boot sectors).
->        */
->       { INFO("s25sl032p",   0x010215, 0x4d00,  64 << 10,  64, ER_4K) },
-> @@ -549,7 +554,8 @@ static void blk_sync_complete(void *opaque, int ret)
->       qemu_iovec_destroy(iov);
->       g_free(iov);
->   
-> -    /* do nothing. Masters do not directly interact with the backing store,
-> +    /*
-> +     * do nothing. Masters do not directly interact with the backing store,
->        * only the working copy so no mutexing required.
->        */
->   }
-> @@ -1843,7 +1849,7 @@ static void m25p80_register_types(void)
->   
->       type_register_static(&m25p80_info);
->       for (i = 0; i < ARRAY_SIZE(known_devices); ++i) {
-> -        TypeInfo ti = {
-> +        const TypeInfo ti = {
->               .name       = known_devices[i].part_name,
->               .parent     = TYPE_M25P80,
->               .class_init = m25p80_class_init,
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
