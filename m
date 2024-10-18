@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F48D2FFE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16E7D2FFE3
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1jjg-0003Sj-FX; Fri, 18 Oct 2024 05:57:32 -0400
+	id 1t1jkG-0004AR-Eq; Fri, 18 Oct 2024 05:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jje-0003PE-TQ
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:57:30 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ id 1t1jkC-0004A4-1w
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:58:06 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jjd-0003F5-E9
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:57:30 -0400
+ id 1t1jkA-0003GB-Jg
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:58:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729245450; x=1760781450;
+ t=1729245482; x=1760781482;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=CfFQveU7PNVXCnx6MckeIU5ayV2Ut7YQqTWRONbf5m8=;
- b=jLPJtwEz+Jiiio+Yy9i0IWSN151TDuaL+zjlIh8Jw3PkNsAGR0svC1RQ
- WM5213ueiSPyUipxnq5+XTQr/vsO0XmfMnESk6qP3IC4MrVXmLNZqJqHn
- Gq7ZZwjYWjgG3c/wH1Go1otqmF6QWM/PFefPNJDIlUPxm9cyXCcVXeJUl
- 8IRrmTGGpyP1ar+21m6awS0IRw4JTZvvHJO24TSu8X/4vpEy1NfR2Rkbn
- SFYjcsd046fIuzeLtHRCDnFmYJO0YVbjqP9FwLAuhxv2ly8fy7ifrlMet
- kh70eqZ0NxLYPmk8aJo05fHOmm4ZgWqXoINhiPHQbtARfchqUHw+9cQd8 g==;
-X-CSE-ConnectionGUID: es2T2V38Tou41v1D1vO9Gg==
-X-CSE-MsgGUID: V+6T0xR3S4iWPf4qGLogog==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28874122"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="28874122"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Oct 2024 02:57:28 -0700
-X-CSE-ConnectionGUID: 3/fvcj1kSmahxIOkht3TOw==
-X-CSE-MsgGUID: O/hzx3koTFOFGD/KciUlDA==
+ bh=jAkq0ztM7dYi6TnQpQKiP5IiHXy1PvoeDqvEj3le+Vk=;
+ b=JF1p9FmS5Fl4kiPi8iIdWn9cVvIzwIpAd7WC7C6FJR+rDhDCsDWgbaPf
+ MWqzP7xXrwgHRUOW6hdDimnWITpzXh5HcOHXlopsZ2pjGj0zh04FGnS9c
+ yRglh9T57i4iaM7sfvJxTXBZja/Nr8CY8IC3s+Fd/5tlWiVoAW0G6nvO6
+ Ob5OEPeXWvrVSZZG9hm+MBJnCu9vGPLWd+tEFFjhgm85mdfhqKTMs5/3K
+ seKsp5zs1XcrwvM974cJBc6mBJrpszHC5hx8f6C6WrwmobelmGzHBr5QX
+ kTydesFHJxtc0nKclVBk85FXur5nA6JP+Vd8VbrYU0mW+5Pu8I7Jxk9QY g==;
+X-CSE-ConnectionGUID: Xk9xMOHXQx6EpDXAE1vZMA==
+X-CSE-MsgGUID: T0sfiM4zQW+sHxrq0HLDTA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="54182973"
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="54182973"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Oct 2024 02:58:01 -0700
+X-CSE-ConnectionGUID: /ZPT3qd3Q/ydIvPNuiU7jw==
+X-CSE-MsgGUID: QrgG/QDOTE+4UPeNSmkmdw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="78866420"
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="82793548"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 18 Oct 2024 02:57:26 -0700
-Date: Fri, 18 Oct 2024 18:13:41 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 18 Oct 2024 02:58:00 -0700
+Date: Fri, 18 Oct 2024 18:14:15 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 29/31] qapi: remove header file compatibility symlinks
-Message-ID: <ZxI01WJu8GsQ7tr6@intel.com>
+Subject: Re: [PATCH v2 30/31] qga: remove unused qerror.h header
+Message-ID: <ZxI099UT2dk4s1c2@intel.com>
 References: <20241017113344.883424-1-berrange@redhat.com>
- <20241017113344.883424-30-berrange@redhat.com>
+ <20241017113344.883424-31-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241017113344.883424-30-berrange@redhat.com>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241017113344.883424-31-berrange@redhat.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -84,42 +84,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 12:33:41PM +0100, Daniel P. Berrangé wrote:
-> Date: Thu, 17 Oct 2024 12:33:41 +0100
+On Thu, Oct 17, 2024 at 12:33:42PM +0100, Daniel P. Berrangé wrote:
+> Date: Thu, 17 Oct 2024 12:33:42 +0100
 > From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: [PATCH v2 29/31] qapi: remove header file compatibility symlinks
-> 
-> All code is converted to the new 'qobject/' import path, so
-> the temporary header file compatibility symlinks are now
-> redundant.
+> Subject: [PATCH v2 30/31] qga: remove unused qerror.h header
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  qapi/qmp/dispatch.h    | 1 -
->  qapi/qmp/json-parser.h | 1 -
->  qapi/qmp/json-writer.h | 1 -
->  qapi/qmp/qbool.h       | 1 -
->  qapi/qmp/qdict.h       | 1 -
->  qapi/qmp/qjson.h       | 1 -
->  qapi/qmp/qlist.h       | 1 -
->  qapi/qmp/qlit.h        | 1 -
->  qapi/qmp/qnull.h       | 1 -
->  qapi/qmp/qnum.h        | 1 -
->  qapi/qmp/qobject.h     | 1 -
->  qapi/qmp/qstring.h     | 1 -
->  12 files changed, 12 deletions(-)
->  delete mode 120000 qapi/qmp/dispatch.h
->  delete mode 120000 qapi/qmp/json-parser.h
->  delete mode 120000 qapi/qmp/json-writer.h
->  delete mode 120000 qapi/qmp/qbool.h
->  delete mode 120000 qapi/qmp/qdict.h
->  delete mode 120000 qapi/qmp/qjson.h
->  delete mode 120000 qapi/qmp/qlist.h
->  delete mode 120000 qapi/qmp/qlit.h
->  delete mode 120000 qapi/qmp/qnull.h
->  delete mode 120000 qapi/qmp/qnum.h
->  delete mode 120000 qapi/qmp/qobject.h
->  delete mode 120000 qapi/qmp/qstring.h
+>  qga/commands-bsd.c   | 1 -
+>  qga/commands-linux.c | 1 -
+>  qga/commands-posix.c | 1 -
+>  3 files changed, 3 deletions(-)
 > 
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
