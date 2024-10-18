@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A84C6D30007
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B6CD30008
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1mt8-0008LZ-MJ; Fri, 18 Oct 2024 09:19:30 -0400
+	id 1t1mtD-0008MI-5z; Fri, 18 Oct 2024 09:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1t1mt7-0008LQ-Bl
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:19:29 -0400
-Received: from mail-db8eur05on2072a.outbound.protection.outlook.com
- ([2a01:111:f403:2614::72a]
- helo=EUR05-DB8-obe.outbound.protection.outlook.com)
+ id 1t1mt8-0008La-TC
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:19:30 -0400
+Received: from mail-db5eur02on20729.outbound.protection.outlook.com
+ ([2a01:111:f403:2608::729]
+ helo=EUR02-DB5-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1t1mt4-0005an-Px
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:19:28 -0400
+ id 1t1mt5-0005az-9l
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:19:30 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yDa/Z4LVPHfoZx2oebpbJhsgR/8CSdvZaHYASq3FfziCh9CaioA9nU/k+OSurNgbOaWiOybmxQ0HtJBbz8cGa/1IH+hFxXKHAvkjR7wOSLESC7/EHVv7cvjPCytqQZlwhQAJHLGQqfN7p0qRSCrLO4VO1tz36xDcIHOivHOZAsaoNSeV0sEoZQNNBhVlP73reKCQ2g0ybqca0g6zur5O8GxJMK6qzkm523kuz40GtIT6uQpORG73LPXVkLjfJWsVm3cSZrq5O+ZjAms6H+zjvZynpTW7tqYCgzDLN8jCBCWLhmi7w0euKZzAZuN/u/FtHFqb7njNXk2jaqzD9ISCOg==
+ b=Y625CU7ol1sb7JvK+30yQjcVoU/nubhqOPNGwGan26/BvZHWPVjgVb0BrD2XRv5xSbJxHOy/rO1rsi3fIMOxbl7k7HsYFtoEBbGUpLbYOq60FBMhSP8zbvDfp1NAgg/rSt4O4ort2U5S9uDWYKjCaO76noQ5jrEell8dWlbgCgxHbdZDA2bLkohcH4JvARDAO0FSY6StQ0Q+oi3RLsZyWm/X956+F4tYmr2DSjvHkYOlJmEk4Ibpb/GtzHvMErvNWq3BxsRFvZNus/qJl+CKIdbt+gWcl0ST1i6+pcpbteGPltTd9gVkeaP8pzJq+BfBt8NP1m8kvwa2ocSI+k5JDw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BEmKwWCGcmpH14NswYF3OEdWGiRmw06OjqX/pb8ejko=;
- b=XLW3AOHv2de47C2pbs4rDJxXX9ZhR/hNOEAu0CGPiHdLWbB2IlIve28XOrIGF2HQNo3TnGH03tgBuxS81RIpvutPS4FunVKNeoStLl0K704dA0AZPtSk9cOEIKiVuv01mS282xF7dj311MX2mv38xU9WI3jCNIianh1Vhknbo3IkQ2051YafLJyCR58kfC53JDFEg9RkagOhyd5GVjUQHl2ktU80rDs59MgkdL6qiyWBV2DShWAAfVnNWuLPfsW6vICYBL23UuEf0hvsYL4IA9j3Q0J31AUiPhCHYgx561a2CdUITkq36/Vfmr6bb9eTR9zS+FI4W6iznNUHkE0zgw==
+ bh=laIGXlrPJrOF4CIktZeKC+Mdh4KBEEY17olu7zYoTvo=;
+ b=uABqNze6KglPDG3Uddb3IB5Wkw4A5BriTfKf953rH9vSBGO7sZcyaqt2gYeujVscSwR15iZyaPUJj+iVoxSy8Zc9Js9dvbiWq8y5w8V+MGFJCO8l1xikjRqAHvoAyHFRlUmTWweGF209a7Wqd3EQR3+AgFXchPE7XAdDmpJMRM4ZhpxfaNSkcJNfmOS9/3FRKZko8u1DgGBwaVyMoUl6s5QWuP2rtZUr0CBOQwOWOk73WRVNjYFtW6ak9l9a6TV8fTNyuFjLBy3//ouz9XPhjIRYk+r7S2IAWEYz6NmaTJC/n3g9/3+0TMeTrsfTQvZSh8r/iSK/WfA+bB5FLM95Cw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BEmKwWCGcmpH14NswYF3OEdWGiRmw06OjqX/pb8ejko=;
- b=VhKzAEiHNx8XfLviQJkZ5zLPYp8loD2jzPMyfCtv+7ZBawIet7QKIOvp1NS8EGhO7HAvvc/VmDhPGXcZiVzrEQyFrkv2QlPQoigeWc6c+K9xZIFRzjHzAUpfKYVkGDA9x5pVBtiXJiv1i1/idgb/O9+1UAT6dm7WaEY0t8yUahHQCWZkvuqac6icxRdY0T17TvWvB9PfT0WNBB1d198KuRiDkt/FQELoFCOsQtMnCr2BCDwOtukgV0wkuAbzdlHcNCIYOWiRCJKM5rTlw/6KBoXrvJd+GQa4qAB4UW3WBKYHtd0Y86+QQ4sojjUrt1CJFFzZTyV0LEL5GTGWHDiZDg==
+ bh=laIGXlrPJrOF4CIktZeKC+Mdh4KBEEY17olu7zYoTvo=;
+ b=CPUHeKPsthbHHjYidHEDK5cqcwEBE3p5YD3Smaxwlk0Y8tHBpsR8386Rhv9hegZeCXARTca1T56wseLeAAvOE/rVvnZ3h62XmcnThH/2BrXY2nKQnKT2U77Y2FwE0zYVjJLjFeu3KWs2Hz98tLd5VnaMGNe1dK7X6V+IjhjZDFmKK6K8r4DSyz9Cxs2u2J/zcZKhy1PJU52NG2fgWSygKvot+oaLD1smjWeVkgvTY+pN482b21Xf1TJ6XsQh25A/G5uDli9GMEo7ByRxkR16MOwrgbGs/TXxGWR12n1e0TDNrWynrn2MQ7ETBPJK45WQ9Tjm6yy45YE7UXFApcGptA==
 Received: from AM9PR09MB4851.eurprd09.prod.outlook.com (2603:10a6:20b:2d4::13)
- by DU0PR09MB6298.eurprd09.prod.outlook.com (2603:10a6:10:415::12)
+ by GV2PR09MB5889.eurprd09.prod.outlook.com (2603:10a6:150:ae::17)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.22; Fri, 18 Oct
- 2024 13:18:46 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.21; Fri, 18 Oct
+ 2024 13:19:20 +0000
 Received: from AM9PR09MB4851.eurprd09.prod.outlook.com
  ([fe80::2fed:370:dd45:13a2]) by AM9PR09MB4851.eurprd09.prod.outlook.com
  ([fe80::2fed:370:dd45:13a2%6]) with mapi id 15.20.8069.020; Fri, 18 Oct 2024
- 13:18:46 +0000
+ 13:19:20 +0000
 From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, "cfu@mips.com"
  <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
  "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/8] Add CP0 MemoryMapID register implementation
-Thread-Topic: [PATCH v2 1/8] Add CP0 MemoryMapID register implementation
-Thread-Index: AQHbIVwvyUJ3qMyeD0CUTzhAqgeeqA==
-Date: Fri, 18 Oct 2024 13:18:45 +0000
-Message-ID: <AM9PR09MB4851FB6034EDB7FA191BA47E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+Subject: [PATCH v2 2/8] Add support for emulation of CRC32 instructions
+Thread-Topic: [PATCH v2 2/8] Add support for emulation of CRC32 instructions
+Thread-Index: AQHbIVx/R3c9oMbvj0aG2U7xVQ7y0A==
+Date: Fri, 18 Oct 2024 13:19:20 +0000
+Message-ID: <AM9PR09MB4851159EEED6EFB71176524684402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -64,68 +64,68 @@ msip_labels:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM9PR09MB4851:EE_|DU0PR09MB6298:EE_
-x-ms-office365-filtering-correlation-id: cbce13e8-c90a-4125-e8a9-08dcef776521
+x-ms-traffictypediagnostic: AM9PR09MB4851:EE_|GV2PR09MB5889:EE_
+x-ms-office365-filtering-correlation-id: 71509ca5-f32f-49a3-d824-08dcef7779bb
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?nXSmvegtG+lDBimP5TjsAZUungwHun7xuSxc5pDj2V2wrxYB0SXFM70hi3?=
- =?iso-8859-1?Q?tOnChcL5TPp4yUDoAs7TSITVxX4CMWXRd/tpb9mdf4h6o8kz7JaCjYvl1f?=
- =?iso-8859-1?Q?KCZ1UH/eFsQzNjMFceydck/V3coMjVK2HPbqacvGoHkxH1u1DSdc2+VrDG?=
- =?iso-8859-1?Q?g+VghITu+Ny1zPd1+MeGwDcT9myLmHe9aff7VqrOza+YC9X4O3f93M/cHT?=
- =?iso-8859-1?Q?Eq0IXWTzHHgs1Ovziq3WAq5MdSsrRjo9sDxn5glRCJA6CI0diMHOqtcCIv?=
- =?iso-8859-1?Q?DkYboGBw+vxyanEi5EycbI7cd3g2Ew2V94kat/SNXAKNhm1lrkyXIXVQWd?=
- =?iso-8859-1?Q?7v3VALO7zNCNorc2wv/CMoAkXUtN5OHwICK5TMoE2YofbpU7tUQLJPocKJ?=
- =?iso-8859-1?Q?uPDBAHCR4paGyRyCVrtGTrzxJH1VgeQRsjTZJdRSONN4Ek4gyHvpRXqv0E?=
- =?iso-8859-1?Q?HsX7zigkG3yeYGIK7665+UNUgjMudjKUiWAqIrxhjMV1LcSl8WRDXJFl4J?=
- =?iso-8859-1?Q?xvLHn/gazzU69rENJn++7neYs3HJS/L5cM6R6Qww0eRRSA8Jq8cx5e07uZ?=
- =?iso-8859-1?Q?C1oFsBYI/LXm4a7nICmyFFZvymKMwWzrfVSqc8g1+DylvR0+AZGsI4Oi7g?=
- =?iso-8859-1?Q?Bya7jn6XyQQ17UmXgYQ2LOfPnjRqAeN+iESBKO+Lbe970mmVE34I0hrHis?=
- =?iso-8859-1?Q?6aODpJ8VGVYzWTfIMgJl2APPu4HGKxJSBS4Ziy9+PcHo2+7E0DIAWBtPrZ?=
- =?iso-8859-1?Q?oV4QDIlo1mAlNShScm5A3iQKvo6OCyi75ZWajJ9zfWCyzFRdqy94wkgjwn?=
- =?iso-8859-1?Q?/DA/l4/M47vx/tJ7hkuv4DMsb7BSpEr8BrWDgNrn2S8LRII/IZkvF09QjB?=
- =?iso-8859-1?Q?im0w/HicW1l7NhKaF9JCLihMlZybuNlqmlNT0krMKWzdFD6S02jZBLqSh8?=
- =?iso-8859-1?Q?6kyJILqWM9hiSAm8QxVtv2Yd+yEAvKPcKU3eiglWqJjH0qQHDSrY4HHFRe?=
- =?iso-8859-1?Q?5QcJ+XmsyQcxE8wrdvcTN2Dr0+lEAnLRrkA0TXzq4U4Wm1VTAts3NjiQoC?=
- =?iso-8859-1?Q?fJEJA4nHP5zD3J6kTKOOWuMcYCe0hsojKyxqzVdbBVs3y2MuZZm4k3/wOc?=
- =?iso-8859-1?Q?hyobo038+dwnHmHtNrqtxl+eZkAJ8+jouValrzlYEeuZePYBI3/s7z5wDd?=
- =?iso-8859-1?Q?H2OBBUJMtxnQMHAJGkV53pm0+m46rpsiF8yMQhfTuX2D7iojwKpOme41Ll?=
- =?iso-8859-1?Q?tDhMa9wEqXR9KiLlLUsImbaJtyzmSdt1RzXrx1ynYSQ/7q19ceF2gpXGqt?=
- =?iso-8859-1?Q?oWOkZOkEvycSUGbjfxNN3uDFlUS6cjwobx7li1D5CWKrsgTH1VkaKW2SEY?=
- =?iso-8859-1?Q?c8ZUR4RUU2dDV7p5+de9lZkp6U4wX5OKYb3Es2ie0XHt/gHkQDPx2CYL8h?=
- =?iso-8859-1?Q?j2apC1lvgIElcKUy?=
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?3OL3NZJA75IuPmnPTC8f9afEoRNV2bvk8WYbF5NIoTwQDSGeDvtxKkTJ2j?=
+ =?iso-8859-1?Q?9DGl17jQrL+zlTlbxc/L2fycElqsIeyueBBNtjt/bCaCl8+eB3oh9lriEm?=
+ =?iso-8859-1?Q?GoUJrgsdDJ0B2AhTN/5cF1z8JQXhmzCtr72IjTNxrgN3/Bsmw7Z/8DUg0/?=
+ =?iso-8859-1?Q?GQTOtgUaszI6F44RATaJFrCr7Z3tEl5+SehmczoOgAuXfw+aIXQde6cpsA?=
+ =?iso-8859-1?Q?zqCQvTRva028kKkipsLh0GzsILMVUSXUsSvnwvlBDd/a9CQzL4nv6i9HRe?=
+ =?iso-8859-1?Q?6ifct1keLDezIGYEIqz6GfPqADeTtAADXq40pOXBAd5hZHNRnKkgMefwS2?=
+ =?iso-8859-1?Q?AQ/uXthmdWvdpP4I2AW/g29Xc+s22GOJnLItoT1GGtiNM5XNfDoMgbMK2n?=
+ =?iso-8859-1?Q?jdDoTGJcNDuiO2pPvTvi3g4Kqud0yZ8+W6LGaNpLFA/5RxQHkeILMpb1sp?=
+ =?iso-8859-1?Q?Y4e7mcSzqBWG0GgFIuFsEmSCQTSNh5VTBw2W/5QBi12rhTnBNio8wzxc88?=
+ =?iso-8859-1?Q?lNfHIOZtpjxSvRDyo1pcnqYukeCQ7buqLfy3Tzmq/SfHc2Pi5vanl6k7Lo?=
+ =?iso-8859-1?Q?xK4jF+MDVEl+meorRxHqZbLDRLOGL3LNRVX4dJ8zrLi/Dwcyd3Qa2WyPH2?=
+ =?iso-8859-1?Q?j9BFIDeLtH7t19TIoKk5Kn93kC0KXXoAPL44CDWWWcL4tB/+XYlpPr3GWc?=
+ =?iso-8859-1?Q?VJ+5NA7h883FRGteR/lSKfCdynPMsWRulPnIIH0VKRYnY0HPZyaDCAl2Ja?=
+ =?iso-8859-1?Q?Wxz1YoLvAOuiEIeiuVjxL0GpwXuSq3fIwMlkwl8QgJDqzwVFa5uD/vDaT/?=
+ =?iso-8859-1?Q?Vyqw4qIUvY8NM1KtVmGmXPXQ04NaqjEw+fqw2HK3QHYbbq5sR0qc2k9IBA?=
+ =?iso-8859-1?Q?jqtoCosBhRApAMk2a3/J20yPIfCL/B6LBN85gBfzq/qB0LY4dF5Vm7+zfA?=
+ =?iso-8859-1?Q?xKKdUnNXr9ynWI6BOSVoMroNirHM02PimfB8DkFa+kidYqmRMJWDeCbcsm?=
+ =?iso-8859-1?Q?ktHOTaayfRR4qouL3vWCvcDZmot+18wiX5yLyauWMVblCN1tyfIKKVtaKg?=
+ =?iso-8859-1?Q?bDqRewRFyb9oX1WWaCwhJ19V0pMIM132ffh5F6r840Ail8ts3TxVPkDkMR?=
+ =?iso-8859-1?Q?nSqld3rU+K7X2SO9MnDzFvChZLLiJBqvsM+ckoPyszpOk7XSR2NY1nbh3N?=
+ =?iso-8859-1?Q?1+Lig2+RyLbtMSoz8NwDkAuphgQu9cJVQRsZhjPHHdjdzp8TwrwB/X2mjS?=
+ =?iso-8859-1?Q?MiyNnfVCWYpFYIyWPHR3oSWTr+AGfy9+31M7eVv3EN5fTnMIO42hVEcS/m?=
+ =?iso-8859-1?Q?cvLq2r+3DRnu3mcpr+0oURsDCA5/IVem0lHX5zxXqpkNm95Euke9hh0NRX?=
+ =?iso-8859-1?Q?XxrrFlsyuR67sj5cNWxHeLY30fV0DA9LyQLJRdaSpbk+SMBv/SeLCBJROz?=
+ =?iso-8859-1?Q?y1wOQjGdfZpH+Esh?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM9PR09MB4851.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT; SFP:1102; 
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?e6u3y5naVV1VGMPiYJgAwferqvgORyho4o8aZ9psrijZjuWwnhbpPOm9J8?=
- =?iso-8859-1?Q?GdoUZle6akBlNycLL+nnFPCH/auYAhM9pvLAUA6bLm+uSGjkl0wRlsi6d9?=
- =?iso-8859-1?Q?F7CBYNC2SpQySwHgkWlhSY8cLA7ms0u6iEltoBJpGPl484xTRHzeuQfDA1?=
- =?iso-8859-1?Q?0tfjOHEqsT5xNgfTvCAfOC0x1nCyoi6Yd9Z/i8BHmmSIvZGiq+0+GvoAdu?=
- =?iso-8859-1?Q?CcM+Bhpnb9iF/q+SMb7xx+rwqmCrtu/at1MDfszydbhvPezKgIxR+ceeFj?=
- =?iso-8859-1?Q?XTkWM70mCw89nZFkgBSSQ0EZVS900RtH8iOddRNFA8jv6odpxwq6s9ohoI?=
- =?iso-8859-1?Q?4TMToXVd4nTuR2usqvqLdT5mXpXRxyZfGa6rv/lBCg7Ogn8xibkTi7zwwk?=
- =?iso-8859-1?Q?hTF9+QW7KqgYQ4A7wg0VGJhFZq2TMcsvuczX1c59aNrCJIvR2j5SKvC+jb?=
- =?iso-8859-1?Q?VPXlOZFO0ShKji6LtAlPhPajzWDGZq5Ps2lJ3CpniiBPdQrpMFkp+uKIcY?=
- =?iso-8859-1?Q?tebiri02rOS1O0IFb+ygFvdZOHkH1rxiE5k6cF4Fu4TMu/Cr86o3ECo/VJ?=
- =?iso-8859-1?Q?wq52SpRm2QDIvLR4hW5kfXjq2TLZPt7sBY/W8rVztiUXuw1RlatsSAluvy?=
- =?iso-8859-1?Q?4EQV6vQus/ZC/1M1PfTIg8Cd0ZomqP04fQX04sY8zuYwhvPKWa06uetnt3?=
- =?iso-8859-1?Q?pbGTivLgfA1lSupdrXIq5uNNZI4iQ+zxzuO8AGXDil7C9qo6mDJGBv0Hhm?=
- =?iso-8859-1?Q?pMGGz8xsZd//dMS+5DunxAn5SJ4QaWesylR9CaV/+0vipGdvnruWbywiQ0?=
- =?iso-8859-1?Q?N3EkDelZ2I4iPC0cr80OzBc0GlC8tYS51lr6fEFicOh0G6u+vZX95aBQ1G?=
- =?iso-8859-1?Q?h7FWYBnkJs8Fy+NBtJSrsu08qBagY7j+/WLXfduJY3t0fLyuFKxzWR7ycf?=
- =?iso-8859-1?Q?BSi5SsGF0+8dmRCyY/iTgfUHE6a+ipsLzU3WXqTqDljhKLBDdPiJG0CDy0?=
- =?iso-8859-1?Q?l+jvc6kYQNUWmto3zEdYl9htL53el4Jgd9XuRzMU9S+1mvrggAPT67S/uv?=
- =?iso-8859-1?Q?1yJA4uo1HiZ9MlhkrBHRfF0yClRhDREVNX4Qmdz+HTeYEIeOclxieIKcmR?=
- =?iso-8859-1?Q?0Yn/DQn7H02PuqVq7TxFLMH8KKtpjr6u/5iQ4TBvJjTibJeL2clKjbRVWC?=
- =?iso-8859-1?Q?9qKEtYQAoaFZq+MlUKLUlF8iv60gCRHon9IqnSuiSWhRS4/foOqyuyimdw?=
- =?iso-8859-1?Q?TT0zmwpfQF/uR3ZnBHy3UPiyGO/rpEeH/APqbjN2keCcuX8fVXcfNVf+SC?=
- =?iso-8859-1?Q?baNXeg6IUvNmSa+jiJ0vLwfgP9FZScy92cGyqdmmrgNJJNHOjD/ND1v0Vx?=
- =?iso-8859-1?Q?AxJGVFNhwP+CONuiIn7Lg7hpHBKbcYNDf575YUVIr3YCMaLu6xeLRyQv28?=
- =?iso-8859-1?Q?0n7PWtmkjYeNJ0Fs7zcPhrRwp1ljCWvE3zBluQdK/74JWdmlSv7ZyyTSgm?=
- =?iso-8859-1?Q?EohGkaEdhHa3lhn7l5snkmGLsm4vn5sHlDS7I/BR+MLVEkG1TbG6pu/ciZ?=
- =?iso-8859-1?Q?7JZy/vYBti0Dq1+OVJ11Koe9jyL+736T0gJkFBWDsj20I4YdpSK9PGMElg?=
- =?iso-8859-1?Q?0J8aG9DmJg39fMLEwZ1+V83bc1K7w4AwZBZQmXmqSr6PjJhOWErRlM2Q?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DMDnApg9hmB+PytEEqPTC412QNbncpSV3mDapvNz5waf7JsNZSC2fS9Sj4?=
+ =?iso-8859-1?Q?MLw5rtbLA2xV6f8HXe8QGjayFUPZbykyLGYhOaMt4hDDGuSXCUDEldjT6x?=
+ =?iso-8859-1?Q?EP84e+Ndzt1RQiZHLKFxrlnp/3B9dIvNESi6QKY7+672oy15mltg2n4FJx?=
+ =?iso-8859-1?Q?dgT0Ek03S+FEk3WNgEiHNZbIBlO+OXWrKSrni7Sh3d71qSKU6DyopdDwv9?=
+ =?iso-8859-1?Q?7QOlKWSMbv58SFJW8N5B3bD9QvTQt1Tmb7xqlmOzaAvRH/KLX6yei7JWE0?=
+ =?iso-8859-1?Q?lyuiGkxeOIP8YlneVsRuakNwsBlZbgjRRk1m5EcDk/XrBiAAzEIXYdxqpz?=
+ =?iso-8859-1?Q?tivrdirgM9keinfeGN6Xn6gtB07TQjrVim5QhTz5iMChtx15HGU8aVt4km?=
+ =?iso-8859-1?Q?FmGh59TfCJ6u3+pjngHs6OUFMjNaXJCsEU0Bbt4skTgB4hIfrHBhJfFDiG?=
+ =?iso-8859-1?Q?EwAmBvjSXBCtgvHnXCt4A93T47o4lNM3nM+tbQhkEOmIWe25YuyK/LPtYb?=
+ =?iso-8859-1?Q?7n8FPdfRTAatAyUJQV/mx/y7U4TWbBIF/rIGnTt5TPpLND0e6UL5SD5pW4?=
+ =?iso-8859-1?Q?wX8Z9yvgK3pL8FRGiB5mItWZnuKLC5nLT0VgknSahWrfLXNuWax+Kyt0cH?=
+ =?iso-8859-1?Q?WxFFO61LKE0QeGXvClA6nO/kWIMXn1Sc6oLt+QEhwDf4XOC4bUFcwHjImS?=
+ =?iso-8859-1?Q?6HOy86EMoRWWET+6NYfzQbG4g/fkZ2/1/BEgmNaaj0cAStzT/0OKvv3SQw?=
+ =?iso-8859-1?Q?UpWP9oU69UkVvKcCZgr5wF8ew7VIMODudVqZPUFW41lthOiOAWHQLsz1RX?=
+ =?iso-8859-1?Q?hpsZnxaEx0ezNReNmYil91Kqi79ngc5HUeyZoz8u3MkDb6i3iYUVePT+9/?=
+ =?iso-8859-1?Q?+5V3Fi04xC98mVyvGRrk0GpKKD0z4xsCuBIjYCYUczkcjHPKAtdunemmaK?=
+ =?iso-8859-1?Q?dU58Nl1mRSSAhnkpD/xEWr0bMWGzC5384Jk9jWufqh7TY96PbPdSz0gPa0?=
+ =?iso-8859-1?Q?QquzHHhgzj3R6OKH6cHx51quSZLbCtjC673KQ89fej7cFp5rudwlqyCjnY?=
+ =?iso-8859-1?Q?TrtfwOgKH9olQQ4U7aUP/bbNzsEO/GOuy9R8iPF1och7DJwMJRa0+yQ8J3?=
+ =?iso-8859-1?Q?DWOJu3L+vdx8CTisdzM07rnE1AaFRmPGlizv/RcdrPjb6UmGxZEbS6Kr1c?=
+ =?iso-8859-1?Q?4Qj1ghpUPtxdh1OjTX4Ajq3D4WvhjCGa4jIXhvxo5gRM5VF0fmWJlusA/M?=
+ =?iso-8859-1?Q?+jmWaN7SOsxwJJ0yp5oF9Cxy1iSLyfinqb1vYdfVf72Hs20WjNjrQEBmFC?=
+ =?iso-8859-1?Q?+qjGLST74QsgXAvVvg951cVVYJ42KxmJETRPsvsJKkqPubtjqrGLUScctm?=
+ =?iso-8859-1?Q?L7BhrzoMLTm0waT/qwV9/efXCzYbtDg9WqVWFTIR9bWuQrGGFWibvBGpww?=
+ =?iso-8859-1?Q?OcoU7o8uQsHKWpYhwMSz+8rxAv7i9hQf00Ll30vUyf5PXdf33dO4uYTjVF?=
+ =?iso-8859-1?Q?IUgsdjqu6cXrnt+7FVDJO4FE6XY3sXzPt7L9UO2Mus6I9J+80HcE7AFmOw?=
+ =?iso-8859-1?Q?SSMee39sqLk9Lrsi9he+z4qIBlfGkTKHl+QiY2KTDxoJmfvDR+GdYugrrI?=
+ =?iso-8859-1?Q?cFm5tAUGV0pMD26g1xFGgU/Lm8at/ayVJlVi524f5ep9MmnskveXw7Kg?=
  =?iso-8859-1?Q?=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
@@ -133,22 +133,21 @@ MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: AM9PR09MB4851.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cbce13e8-c90a-4125-e8a9-08dcef776521
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Oct 2024 13:18:45.6013 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71509ca5-f32f-49a3-d824-08dcef7779bb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Oct 2024 13:19:20.1892 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: rP2Fkh8s6Oaki2LuLzV4R9QnNpNWHlHsAYtrYjBMZPSgojAY8lRP76YGLzITqd7LLPoDl+HRGvvqHwIvOMr7X0Ln/2CNMu+89MdMN6W1drs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR09MB6298
-Received-SPF: pass client-ip=2a01:111:f403:2614::72a;
+X-MS-Exchange-CrossTenant-userprincipalname: GS2JOb6lE7V3pb81xZbkoN0E3v73cU6rgt1gOSLu7FmagXW9FzsMRyz+mUpLxj7UX7bctisXSUCnwTD6Qc56/Nfj4btTjDLKtLGQERG0Fp4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR09MB5889
+Received-SPF: pass client-ip=2a01:111:f403:2608::729;
  envelope-from=aleksandar.rakic@htecgroup.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
+ helo=EUR02-DB5-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,60 +164,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CP0 MemoryMapID register implementation.=0A=
+Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.=0A=
+Reuse zlib crc32() and Linux crc32c().=0A=
 =0A=
-Cherry-picked 9e0cb40adb110c2c76e2e97719ba8afcce72bcf5=0A=
+Cherry-picked 4cc974938aee1588f852590509004e340c072940=0A=
 from https://github.com/MIPS/gnutools-qemu=0A=
 =0A=
 Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>=0A=
 Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>=0A=
 Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>=0A=
 ---=0A=
- target/mips/sysemu/machine.c | 7 +++++--=0A=
- 1 file changed, 5 insertions(+), 2 deletions(-)=0A=
+ target/mips/helper.h        |  2 ++=0A=
+ target/mips/meson.build     |  1 +=0A=
+ target/mips/tcg/op_helper.c | 26 ++++++++++++++++++++++++++=0A=
+ target/mips/tcg/translate.c | 37 +++++++++++++++++++++++++++++++++++++=0A=
+ target/mips/tcg/translate.h |  1 +=0A=
+ 5 files changed, 67 insertions(+)=0A=
 =0A=
-diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c=0A=
-index 213fd637fc..91cd9f1900 100644=0A=
---- a/target/mips/sysemu/machine.c=0A=
-+++ b/target/mips/sysemu/machine.c=0A=
-@@ -142,6 +142,7 @@ static int get_tlb(QEMUFile *f, void *pv, size_t size,=
+diff --git a/target/mips/helper.h b/target/mips/helper.h=0A=
+index 0f8462febb..752748d5e6 100644=0A=
+--- a/target/mips/helper.h=0A=
++++ b/target/mips/helper.h=0A=
+@@ -21,6 +21,8 @@ DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)=
 =0A=
-     qemu_get_betls(f, &v->VPN);=0A=
-     qemu_get_be32s(f, &v->PageMask);=0A=
-     qemu_get_be16s(f, &v->ASID);=0A=
-+    qemu_get_be32s(f, &v->MMID);=0A=
-     qemu_get_be16s(f, &flags);=0A=
-     v->G =3D (flags >> 10) & 1;=0A=
-     v->C0 =3D (flags >> 7) & 3;=0A=
-@@ -167,6 +168,7 @@ static int put_tlb(QEMUFile *f, void *pv, size_t size,=
-=0A=
-     r4k_tlb_t *v =3D pv;=0A=
+ DEF_HELPER_FLAGS_1(dbitswap, TCG_CALL_NO_RWG_SE, tl, tl)=0A=
+ #endif=0A=
  =0A=
-     uint16_t asid =3D v->ASID;=0A=
-+    uint32_t mmid =3D v->MMID;=0A=
-     uint16_t flags =3D ((v->EHINV << 15) |=0A=
-                       (v->RI1 << 14) |=0A=
-                       (v->RI0 << 13) |=0A=
-@@ -183,6 +185,7 @@ static int put_tlb(QEMUFile *f, void *pv, size_t size,=
-=0A=
-     qemu_put_betls(f, &v->VPN);=0A=
-     qemu_put_be32s(f, &v->PageMask);=0A=
-     qemu_put_be16s(f, &asid);=0A=
-+    qemu_put_be32s(f, &mmid);=0A=
-     qemu_put_be16s(f, &flags);=0A=
-     qemu_put_be64s(f, &v->PFN[0]);=0A=
-     qemu_put_be64s(f, &v->PFN[1]);=0A=
-@@ -204,8 +207,8 @@ static const VMStateInfo vmstate_info_tlb =3D {=0A=
++DEF_HELPER_3(crc32, tl, tl, tl, i32)=0A=
++DEF_HELPER_3(crc32c, tl, tl, tl, i32)=0A=
+ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)=0A=
  =0A=
- static const VMStateDescription vmstate_tlb =3D {=0A=
-     .name =3D "cpu/tlb",=0A=
--    .version_id =3D 2,=0A=
--    .minimum_version_id =3D 2,=0A=
-+    .version_id =3D 3,=0A=
-+    .minimum_version_id =3D 3,=0A=
-     .fields =3D (const VMStateField[]) {=0A=
-         VMSTATE_UINT32(nb_tlb, CPUMIPSTLBContext),=0A=
-         VMSTATE_UINT32(tlb_in_use, CPUMIPSTLBContext),=0A=
+ /* microMIPS functions */=0A=
+diff --git a/target/mips/meson.build b/target/mips/meson.build=0A=
+index a26d1e1f79..d2d686fc0c 100644=0A=
+--- a/target/mips/meson.build=0A=
++++ b/target/mips/meson.build=0A=
+@@ -7,6 +7,7 @@ mips_ss.add(files(=0A=
+   'gdbstub.c',=0A=
+   'msa.c',=0A=
+ ))=0A=
++mips_ss.add(zlib)=0A=
+ =0A=
+ if have_system=0A=
+   subdir('sysemu')=0A=
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c=0A=
+index 65403f1a87..22600697f0 100644=0A=
+--- a/target/mips/tcg/op_helper.c=0A=
++++ b/target/mips/tcg/op_helper.c=0A=
+@@ -25,6 +25,8 @@=0A=
+ #include "exec/exec-all.h"=0A=
+ #include "exec/memop.h"=0A=
+ #include "fpu_helper.h"=0A=
++#include "qemu/crc32c.h"=0A=
++#include <zlib.h>=0A=
+ =0A=
+ static inline target_ulong bitswap(target_ulong v)=0A=
+ {=0A=
+@@ -143,6 +145,30 @@ target_ulong helper_rotx(target_ulong rs, uint32_t shi=
+ft, uint32_t shiftx,=0A=
+     return (int64_t)(int32_t)(uint32_t)tmp5;=0A=
+ }=0A=
+ =0A=
++/* these crc32 functions are based on target/arm/helper-a64.c */=0A=
++target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)=
+=0A=
++{=0A=
++    uint8_t buf[8];=0A=
++    target_ulong mask =3D ((sz * 8) =3D=3D 64) ?=0A=
++                        (target_ulong) -1ULL :=0A=
++                        ((1ULL << (sz * 8)) - 1);=0A=
++=0A=
++    m &=3D mask;=0A=
++    stq_le_p(buf, m);=0A=
++    return (int32_t) (crc32(val ^ 0xffffffff, buf, sz) ^ 0xffffffff);=0A=
++}=0A=
++=0A=
++target_ulong helper_crc32c(target_ulong val, target_ulong m, uint32_t sz)=
+=0A=
++{=0A=
++    uint8_t buf[8];=0A=
++    target_ulong mask =3D ((sz * 8) =3D=3D 64) ?=0A=
++                        (target_ulong) -1ULL :=0A=
++                        ((1ULL << (sz * 8)) - 1);=0A=
++    m &=3D mask;=0A=
++    stq_le_p(buf, m);=0A=
++    return (int32_t) (crc32c(val, buf, sz) ^ 0xffffffff);=0A=
++}=0A=
++=0A=
+ void helper_fork(target_ulong arg1, target_ulong arg2)=0A=
+ {=0A=
+     /*=0A=
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c=0A=
+index 333469b268..256fa0893e 100644=0A=
+--- a/target/mips/tcg/translate.c=0A=
++++ b/target/mips/tcg/translate.c=0A=
+@@ -430,6 +430,7 @@ enum {=0A=
+     OPC_LWE            =3D 0x2F | OPC_SPECIAL3,=0A=
+ =0A=
+     /* R6 */=0A=
++    OPC_CRC32          =3D 0x0F | OPC_SPECIAL3,=0A=
+     R6_OPC_PREF        =3D 0x35 | OPC_SPECIAL3,=0A=
+     R6_OPC_CACHE       =3D 0x25 | OPC_SPECIAL3,=0A=
+     R6_OPC_LL          =3D 0x36 | OPC_SPECIAL3,=0A=
+@@ -13691,6 +13692,30 @@ static void decode_opc_special2_legacy(CPUMIPSStat=
+e *env, DisasContext *ctx)=0A=
+     }=0A=
+ }=0A=
+ =0A=
++static void gen_crc32(DisasContext *ctx, int rd, int rs, int rt, int sz,=
+=0A=
++                      int crc32c)=0A=
++{=0A=
++    TCGv t0;=0A=
++    TCGv t1;=0A=
++    TCGv_i32 tsz =3D tcg_constant_i32(1 << sz);=0A=
++    if (rd =3D=3D 0) {=0A=
++        /* Treat as NOP. */=0A=
++        return;=0A=
++    }=0A=
++    t0 =3D tcg_temp_new();=0A=
++    t1 =3D tcg_temp_new();=0A=
++=0A=
++    gen_load_gpr(t0, rt);=0A=
++    gen_load_gpr(t1, rs);=0A=
++=0A=
++    if (crc32c) {=0A=
++        gen_helper_crc32c(cpu_gpr[rd], t0, t1, tsz);=0A=
++    } else {=0A=
++        gen_helper_crc32(cpu_gpr[rd], t0, t1, tsz);=0A=
++    }=0A=
++=0A=
++}=0A=
++=0A=
+ static void decode_opc_special3_r6(CPUMIPSState *env, DisasContext *ctx)=
+=0A=
+ {=0A=
+     int rs, rt, rd, sa;=0A=
+@@ -13705,6 +13730,17 @@ static void decode_opc_special3_r6(CPUMIPSState *e=
+nv, DisasContext *ctx)=0A=
+ =0A=
+     op1 =3D MASK_SPECIAL3(ctx->opcode);=0A=
+     switch (op1) {=0A=
++    case OPC_CRC32:=0A=
++        if (unlikely(!ctx->crcp) ||=0A=
++            unlikely((extract32(ctx->opcode, 6, 2) =3D=3D 3) &&=0A=
++                     (!(ctx->hflags & MIPS_HFLAG_64))) ||=0A=
++            unlikely((extract32(ctx->opcode, 8, 3) >=3D 2))) {=0A=
++            gen_reserved_instruction(ctx);=0A=
++        }=0A=
++        gen_crc32(ctx, rt, rs, rt,=0A=
++                  extract32(ctx->opcode, 6, 2),=0A=
++                  extract32(ctx->opcode, 8, 3));=0A=
++        break;=0A=
+     case R6_OPC_PREF:=0A=
+         if (rt >=3D 24) {=0A=
+             /* hint codes 24-31 are reserved and signal RI */=0A=
+@@ -15346,6 +15382,7 @@ static void mips_tr_init_disas_context(DisasContext=
+Base *dcbase, CPUState *cs)=0A=
+     ctx->abs2008 =3D (env->active_fpu.fcr31 >> FCR31_ABS2008) & 1;=0A=
+     ctx->mi =3D (env->CP0_Config5 >> CP0C5_MI) & 1;=0A=
+     ctx->gi =3D (env->CP0_Config5 >> CP0C5_GI) & 3;=0A=
++    ctx->crcp =3D (env->CP0_Config5 >> CP0C5_CRCP) & 1;=0A=
+     restore_cpu_state(env, ctx);=0A=
+ #ifdef CONFIG_USER_ONLY=0A=
+         ctx->mem_idx =3D MIPS_HFLAG_UM;=0A=
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h=0A=
+index 2b6646b339..ce2c1da6f4 100644=0A=
+--- a/target/mips/tcg/translate.h=0A=
++++ b/target/mips/tcg/translate.h=0A=
+@@ -51,6 +51,7 @@ typedef struct DisasContext {=0A=
+     bool abs2008;=0A=
+     bool mi;=0A=
+     int gi;=0A=
++    bool crcp;=0A=
+ } DisasContext;=0A=
+ =0A=
+ #define DISAS_STOP       DISAS_TARGET_0=0A=
 -- =0A=
 2.34.1=
 
