@@ -4,75 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8ADD2FFFA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406B0D30019
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1p3o-0001K7-5E; Fri, 18 Oct 2024 11:38:40 -0400
+	id 1t1p4I-0001ip-Lz; Fri, 18 Oct 2024 11:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1p3n-0001Jx-6c
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:38:39 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1p3l-0000Tq-6q
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:38:38 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5c903f5bd0eso3851859a12.3
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 08:38:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729265915; x=1729870715; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=22e+AwVFs/2jb6cCc5l+7cN5yNe3vbM4QSll7c09c2M=;
- b=gnbfBBRG2rWqcXYARhMZXR3PT3hMZif3oimJGvFL9w7fhbiLOt/FXO0VnVhg1uLlsF
- 9NBfTmyU6dUUEWz2P/NmRzoG1Vjr5KrQtJUHaQ3J7NFl4XaNRdeRBs8NfWEDLE8fT4vh
- AswdshM4Tb3VfjrLQvwQpg11VrppLahF4B5NyvmuN5eUM2u6ulJL+EC0TCg+pAG4vV10
- 4gHHMkcnySxnPBfToAPF4p6VMrcVTiefR2//S4pDGPAH/lue2P8988ruNfTSWe8yAax1
- IbapSa3SS1ilKb2H2xRdNpJRzcaWgLB27lUr1+zY61rodyHF6AdrkYAZIWyVM0sw6idb
- Z4Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729265915; x=1729870715;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=22e+AwVFs/2jb6cCc5l+7cN5yNe3vbM4QSll7c09c2M=;
- b=jD4RPHFMGvd7xI+gPlczEIOzeo7PbGLL2esNOGZxl8wAvKiYxRFViGQ5EBapbrDTkJ
- 5l2nb0FxoAyB7HBs1BKOK6BK1bd5z2tKYKwyzwSSdxMn7fPhf385IAjcM++EsBIteQIJ
- 9U+ZfoZn3hi9HBFKIpMlhjZ2mAbb/chQ29/D0dyGADUyu3RdAZaKAYo2imnBhYLghk62
- 0H2gwr9nL4OQJldeF9gnIS2Ml0s0v8SG5YTuBsAuUnHj6warEMSw9DIiZwa2/mIyYsdH
- ITLXRv+f0hgY9AAHcimVDjKzPZr5gXdknSNMQgLLtlo3NOOsUKkAim30slRmi3WhJM2F
- AQ9Q==
-X-Gm-Message-State: AOJu0YxrrAY8F/lv5yIXcxR5n/zoJO4ibabZqo9Ik1LfeV0hALq/dpOV
- 0rvkwiDrFioBXnXJa+9GM0hAa0yy0r0x0fv0cMl6uAsgHLccgvakJREVrfUqyrmPPCF7BgvxEWE
- ZP3ojR+6xnr2w8HTYHOMuNcEr5uUF2vJaf/H6rQ==
-X-Google-Smtp-Source: AGHT+IHJFN7n/M+4xw87/t+z7MunTJ2de4TdTSnlcE3bDkWF4gTkAmp5S84vh1t+R8lEp3Sbb5ShXGJA//5ldTGc2sE=
-X-Received: by 2002:a05:6402:2187:b0:5ca:efb:b87d with SMTP id
- 4fb4d7f45d1cf-5ca0efbb8c5mr635284a12.15.1729265915138; Fri, 18 Oct 2024
- 08:38:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1p4D-0001ad-MQ
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:39:05 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1p49-0000UT-QY
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:39:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729265942; x=1760801942;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=GwmZO2yTE0HlvRQDKxXlG0S/PHmepUUMltt+SvxZdOg=;
+ b=GUHUqJpWe4XDd11EKaUZKOxlN8rUIGLu1OR/XMXL8mGsBdgeW/B/+sd1
+ UZQeJXd33qPNuaNGRpYtBwMcflM0Oldc9oCgd5xQZKEjF4FFoX9vakj9q
+ pHDuh614sT0JEjgpCfdlFPyWtg9eAh6HXpho8VPTgKxAJ4/y+hYbk+xGp
+ VmrZmqmIODd8Kwef2eUj9TzyxJE9xr262KE3FCiFRMd2466FuDWb1WSoo
+ qifE4M23TKDar24umrqOtJ3yf6IUfE4JaYenPyjOsDi2lrbKoRPucqwWU
+ DJ1jbEjU4vV7Rx+yjOP0sjdDDbITd5OcmmmUDvHI+KAknA0XX36yvH1Xs A==;
+X-CSE-ConnectionGUID: JvIEIgDPSVOsoUOqZyOc6A==
+X-CSE-MsgGUID: pNRk9Rd8Sc6CYGWxIuIavA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="39345699"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="39345699"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Oct 2024 08:39:00 -0700
+X-CSE-ConnectionGUID: HVFmqqryQZKqucqd7brDVg==
+X-CSE-MsgGUID: rNLgTtW+QxeUHBkQq5lfwg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,214,1725346800"; d="scan'208";a="79243723"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa010.fm.intel.com with ESMTP; 18 Oct 2024 08:38:58 -0700
+Date: Fri, 18 Oct 2024 23:55:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 04/16] rust: patch bilge-impl to allow compilation with
+ 1.63.0
+Message-ID: <ZxKE4iRE0TA4P5Ja@intel.com>
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20241010173929.3910466-1-tavip@google.com>
-In-Reply-To: <20241010173929.3910466-1-tavip@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 18 Oct 2024 16:38:24 +0100
-Message-ID: <CAFEAcA9X1bdtxRL9fm_rnw9ezMZSW6HaURfMsA4aLMSHM4fzdw@mail.gmail.com>
-Subject: Re: [RFC PATCH] cli: add connect-gpios option
-To: Octavian Purdila <tavip@google.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, armbru@redhat.com, 
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241015131735.518771-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,45 +84,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 10 Oct 2024 at 18:39, Octavian Purdila <tavip@google.com> wrote:
->
-> From: Valentin Ghita <valentinghita@google.com>
->
-> Add option to allow for connecting device GPIOs. This is useful when
-> adding a peripheral device from the command line which uses an
-> interrupt.
->
-> It takes the following options:
->
-> * in-dev-path, out-dev-path - required, the device canonical object
->   path (e.g. /machine/peripheral-anon/device[0],
->   /machine/iotkit/cluster0/armv7m0) for the devices that should have
->   their in <-> out GPIOs connected
->
-> * in-gpio-name, out-gpio-name - optional, the name of the GPIO list;
->   if not specified, the unnamed GPIO list is used
->
-> * in-gpio-index, out-gpio-index - optional, the index in the GPIO list
->   that identifies the GPIO to be used; if not specified 0 (the first
->   GPIO in the list) is used
->
-> Usage example:
->
->  # add the tmp105 sensor and connects its irq line to the CPU
->  qemu-system-arm \
->   --machine mps2-an505 \
->   --device tmp105,bus=/versatile_i2c/i2c,address=0x50 \
->   --connect-gpios out-dev-path=/machine/peripheral-anon/device[0],\
->     in-dev-path=/machine/iotkit/cluster0/armv7m0,in-gpio-index=100
+On Tue, Oct 15, 2024 at 03:17:22PM +0200, Paolo Bonzini wrote:
+> Date: Tue, 15 Oct 2024 15:17:22 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 04/16] rust: patch bilge-impl to allow compilation with
+>  1.63.0
+> X-Mailer: git-send-email 2.46.2
+> 
+> Apply a patch that removes "let ... else" constructs, replacing them with
+> "if let ... else" or "let ... = match ...".  "let ... else" was stabilized in
+> Rust 1.65.0.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  .gitattributes                                |  2 +
+>  subprojects/bilge-impl-0.2-rs.wrap            |  1 +
+>  .../packagefiles/bilge-impl-1.63.0.patch      | 45 +++++++++++++++++++
+>  3 files changed, 48 insertions(+)
+>  create mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+> 
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-This seems to be moving down the path towards "create and
-wire up machines on the command line". We shouldn't
-be doing that ad-hoc with one small commandline option
-at a time, we should be doing it with a coherent plan.
-
-I think Philippe will know the current intentions in this area.
-
-thanks
--- PMM
 
