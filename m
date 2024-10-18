@@ -4,85 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC32D3C53F
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 03:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3EB3D3C549
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 04:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1dru-0004eG-0V; Thu, 17 Oct 2024 23:41:38 -0400
+	id 1t1eBP-0007Yt-Op; Fri, 18 Oct 2024 00:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1drq-0004db-Ll; Thu, 17 Oct 2024 23:41:35 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
+ id 1t1eBN-0007YB-6Y; Fri, 18 Oct 2024 00:01:45 -0400
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1drn-00051i-Aq; Thu, 17 Oct 2024 23:41:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729222891; x=1760758891;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=L5YH9Y1EQZKE2ItXEjex7LOcAdkKR8Mn+jEmyjCz4xs=;
- b=Qxq4ya7BLJr89ZZL32oM9zRDHe7aMKKnJyR+yTAvJM8qwcCngQ5u+lbY
- Jsv8wN6Tr7yuevLrQ3+LsKA9qvrdUDtoW5SFdUT7PMPcTjP2L+k0w3Hh6
- HRp3xm5PadGkpSrq1GE68G/ArJR3TnwIpWk6N03MLlZZHj7cHMCUK89vR
- pjxzupjNliLnpOu+N0CRaQ67Ew4p9D2f29W4dW8SEe/zvGCL4MQDczaYR
- +kZ++jEvMZOnPgflCSp12Ck6iRwbv8s3aOhzQ9Jmw0zsI8vtxcXTAP6F1
- Xha+LNFWrQtGAQdw/kexakGk2eZHEU4vn6O0Urwtx7phr9yjPD9Qfo+1X Q==;
-X-CSE-ConnectionGUID: 3uzHhdgHRGCvtTbgnM/xSA==
-X-CSE-MsgGUID: VJpI0CjsTsOcKCiB9PxTwQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="28623133"
-X-IronPort-AV: E=Sophos;i="6.11,212,1725346800"; d="scan'208";a="28623133"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2024 20:41:27 -0700
-X-CSE-ConnectionGUID: uN0AIhknT6ORiSDRsmYrVw==
-X-CSE-MsgGUID: oZCzeqvgTuSFPN9dk1XFsw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,212,1725346800"; d="scan'208";a="83818764"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 17 Oct 2024 20:41:21 -0700
-Date: Fri, 18 Oct 2024 11:57:36 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 6/7] i386/pc: Support cache topology in -machine for
- PC machine
-Message-ID: <ZxHcsPyqT6MLJ9hG@intel.com>
-References: <20241012104429.1048908-1-zhao1.liu@intel.com>
- <20241012104429.1048908-7-zhao1.liu@intel.com>
- <ZxEs3DGGgCqGT5yK@redhat.com>
+ (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
+ id 1t1eBL-0006p1-6C; Fri, 18 Oct 2024 00:01:44 -0400
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal
+ [10.202.2.41])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 5D2D511401D8;
+ Fri, 18 Oct 2024 00:01:39 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+ by phl-compute-01.internal (MEProxy); Fri, 18 Oct 2024 00:01:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trainwit.ch; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1729224099;
+ x=1729310499; bh=kE76ksr+yr0X5jcs7T/kmdpnmVgXuaWx/5RYapRPNaI=; b=
+ aXkMlc0yGdjWQCPd1C89CkdIapaCrsRy3cAHlmo+DSpqrsbQ9N6/XEP7ABeqnW3V
+ ZRsTKM01tXgQNnexaMeQgqJIEXjFNnECDK3gMSfkVCZeLRKjj0hMdqFFrwdNviKb
+ a+o6heAQURMY/2OW/ITw1f7FM6Jr9gTXoYuwO7A2WfiQsb/YeQTanolCKCqcqdTJ
+ jyaeNBAEGp/f3yagGNyqfG7bMzN5ibgsjAeQ6xOuJIbHCW/nqA6IWqMXSqREy3Yn
+ 7ICvYQuQxFX8j4SwrQAQgAP/I2WKn/yYU9BvS2r4boK4fAr6L8R/iJj1mNO+VGbu
+ xUmfs8EZGgujpkDIOjjQDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729224099; x=
+ 1729310499; bh=kE76ksr+yr0X5jcs7T/kmdpnmVgXuaWx/5RYapRPNaI=; b=O
+ 6oWYS9h2P/skBiU9pRhaje6PZiWLAtVRnfg4vKp2lRHESEqK25NlIEryjsKwIZsX
+ 7jguf7/F4tK32uG4GQVr7B4USalsGGqLTAI7/5whqV8UUFlWLGqZzMFtQltZ/hPQ
+ VYSUoD42jXD1A01M6wq0M2H2q2e1Bg8EOLzJzoB7JsXmspNDhCt/e9emovH2jNx+
+ LkLH7OKB+YxBjb+UC0LqD8PcCPAuGyflc33b6ZVTBzPLXH1ZJMXS35APowjpYTX1
+ i8PblIk5KtFIiC2NBcgK67D6AcXOxQSDTjB+LIC9576/Ky1pvB2a27SjNyfiJpsw
+ sOSVdD60YJHXMZNFBRioQ==
+X-ME-Sender: <xms:ot0RZzUXN_o9Ttoyfa9Q7lPIvvI3YyZJU6_fQirJELQPZYoqbSNDFg>
+ <xme:ot0RZ7mbIKthPiSbwCVutl5wWmOWbs4-G3olMGgAAp5PBccyOgzENGCTk9Df90mtx
+ DMB0iHxTMWaPFmzIUY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehvddgjeekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+ necuhfhrohhmpefluhhlihgruceomhhiughnihhghhhtsehtrhgrihhnfihithdrtghhqe
+ enucggtffrrghtthgvrhhnpeeggfefvdduheeuhfeihffhfedutedvtdekjeeuffekfeei
+ veelvefhheduuddttdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+ hlfhhrohhmpehmihgunhhighhhthesthhrrghinhifihhtrdgthhdpnhgspghrtghpthht
+ ohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepfhhoshhsseguvghfmhgrtg
+ hrohdrihhtpdhrtghpthhtohepmhgrrhgtvghlrdgrphhfvghlsggruhhmsehgmhgrihhl
+ rdgtohhmpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtth
+ hopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepqhgvmhhuqdgslhho
+ tghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonh
+ hgnhhurdhorhhgpdhrtghpthhtohepmhhsthesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:ot0RZ_bbthwn_ffe6G4bieZNifgWwduYHB8oXQadbttt_AseHwn-Nw>
+ <xmx:ot0RZ-UXJuOpgts4Bsk9Sm-N5fpR2XdnwDdDNix55vtZnQ8v69veHw>
+ <xmx:ot0RZ9muD8oD7-cTp2egpkpGc6-fHMInkFi_d1xhb8qN1xDiuw9zHA>
+ <xmx:ot0RZ7cEt_6rpFeGYbQkelI3METDNmw-0UeAb4ohnBO3saQpJYmx5w>
+ <xmx:o90RZ7aznAUdJtUIfSinrw7pT_bWLPPz0-gd_TsQu-l7ca7SKtf-gWum>
+Feedback-ID: ic5914928:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 56F43780068; Fri, 18 Oct 2024 00:01:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZxEs3DGGgCqGT5yK@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Date: Fri, 18 Oct 2024 15:01:19 +1100
+From: Julia <midnight@trainwit.ch>
+To: qemu-devel@nongnu.org
+Cc: "Keith Busch" <kbusch@kernel.org>, "Klaus Jensen" <its@irrelevant.dk>,
+ "Jesper Devantier" <foss@defmacro.it>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ "open list:nvme" <qemu-block@nongnu.org>
+Message-Id: <71d8eded-5700-4584-99e5-ab6195d9c959@app.fastmail.com>
+In-Reply-To: <20241015103351.688803-1-midnight@trainwit.ch>
+References: <20241015103351.688803-1-midnight@trainwit.ch>
+Subject: Re: [PATCH] hw/nvme: Remove references to PCI IRQ "pulsing" when
+ asserting
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.157;
+ envelope-from=midnight@trainwit.ch; helo=fhigh-a6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,100 +114,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+Actually, it seems that trace_pci_nvme_irq_pin is emitted even if the IRQ is not asserted due to a setting of the interrupt masks.  Which is weird because there's no corresponding one for deasserting. Possibly this should be reworded for 'interrupt is high (but might be masked?)', or just leave it to the standard PCI IRQ traces.
 
-> > +    ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-> > +        Define cache properties for SMP system.
-> > +
-> > +        ``cache=cachename`` specifies the cache that the properties will be
-> > +        applied on. This field is the combination of cache level and cache
-> > +        type. It supports ``l1d`` (L1 data cache), ``l1i`` (L1 instruction
-> > +        cache), ``l2`` (L2 unified cache) and ``l3`` (L3 unified cache).
-> > +
-> > +        ``topology=topologylevel`` sets the cache topology level. It accepts
-> > +        CPU topology levels including ``thread``, ``core``, ``module``,
-> > +        ``cluster``, ``die``, ``socket``, ``book``, ``drawer`` and a special
-> > +        value ``default``. If ``default`` is set, then the cache topology will
-> > +        follow the architecture's default cache topology model. If another
-> > +        topology level is set, the cache will be shared at corresponding CPU
-> > +        topology level. For example, ``topology=core`` makes the cache shared
-> > +        by all threads within a core.
-> > +
-> > +        Example:
-> > +
-> > +        ::
-> > +
-> > +            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
+Julia
+
+On Tue, 15 Oct 2024, at 21:33, julia wrote:
+> The NVMe subsystem logs "pulsing IRQ pin" when it is asserting the PCI(e)
+> IRQ. This is confusing as it implies a short pulse, not the level-triggered
+> interrupts PCI(e) uses.
+>
+> Also remove the pci_irq_pulse() function marked with FIXME as it is no
+> longer used by any calls.
+>
+> Signed-off-by: julia <midnight@trainwit.ch>
+> ---
+>  hw/nvme/trace-events |  2 +-
+>  include/hw/pci/pci.h | 10 ----------
+>  2 files changed, 1 insertion(+), 11 deletions(-)
+>
+> diff --git a/hw/nvme/trace-events b/hw/nvme/trace-events
+> index 3a67680c6a..5d96d622ff 100644
+> --- a/hw/nvme/trace-events
+> +++ b/hw/nvme/trace-events
+> @@ -1,6 +1,6 @@
+>  # successful events
+>  pci_nvme_irq_msix(uint32_t vector) "raising MSI-X IRQ vector %u"
+> -pci_nvme_irq_pin(void) "pulsing IRQ pin"
+> +pci_nvme_irq_pin(void) "asserting IRQ pin"
+>  pci_nvme_irq_masked(void) "IRQ is masked"
+>  pci_nvme_dma_read(uint64_t prp1, uint64_t prp2) "DMA read, 
+> prp1=0x%"PRIx64" prp2=0x%"PRIx64""
+>  pci_nvme_dbbuf_config(uint64_t dbs_addr, uint64_t eis_addr) 
+> "dbs_addr=0x%"PRIx64" eis_addr=0x%"PRIx64""
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index eb26cac810..863aab0b80 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -667,16 +667,6 @@ static inline void pci_irq_deassert(PCIDevice 
+> *pci_dev)
+>      pci_set_irq(pci_dev, 0);
+>  }
 > 
-> There are 4 cache types, l1d, l1i, l2, l3.
+> -/*
+> - * FIXME: PCI does not work this way.
+> - * All the callers to this method should be fixed.
+> - */
+> -static inline void pci_irq_pulse(PCIDevice *pci_dev)
+> -{
+> -    pci_irq_assert(pci_dev);
+> -    pci_irq_deassert(pci_dev);
+> -}
+> -
+>  MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+>  void pci_set_power(PCIDevice *pci_dev, bool state);
 > 
-> In this example you've only set properties for l1d, l1i caches.
-> 
-> What does this mean for l2 / l3 caches ?
-
-Omitting "cache" will default to using the "default" level.
-
-I think I should add the above description to the documentation.
-
-> Are they reported as not existing, or are they to be reported at
-> some built-in default topology level.
-
-It's the latter.
-
-If a machine doesn't support l2/l3, then QEMU will also report the error
-like:
-
-qemu-system-*: l2 cache topology not supported by this machine
-
-> If the latter, how does the user know what that built-in default is, 
-
-Currently, the default cache model for x86 is L1 per core, L2 per core,
-and L3 per die. Similar to the topology levels, there is still no way to
-expose this to users. I can descript default cache model in doc.
-
-But I feel like we're back to the situation we discussed earlier:
-"default" CPU topology support should be related to the CPU model, but
-in practice, QEMU supports it at the machine level. The cache topology
-depends on CPU topology support and can only continue to be added on top
-of the machine.
-
-So do you think we can add topology and cache information in CpuModelInfo
-so that query-cpu-model-expansion can expose default CPU/cache topology
-information to users?
-
-This way, users can customize CPU/cache topology in -smp and
--machine smp-cache. Although the QMP command is targeted at the CPU model
-while our CLI is at the machine level, at least we can expose the
-information to users.
-
-If you agree to expose the default topology/cache info in
-query-cpu-model-expansion, can I work on this in a separate series? :)
-
-> and avoid nonsense like l1d being at socket level, and l3 being at the
-> core level ?
-
-Thank you! I ensured l1 must be lower than l2 and l2 must be lower than
-l3, but missed l1 must be lower than l3.
-
-The level check is incomplete due to the influence of "default." I think
-the check should be placed after the arch CPU sets the cache model,
-so that "default" is consumed.
-
-> Can we explicitly disable a l2/l3 cache, or must it always exists ?
-
-Now we can't disable it through -machine smp-cache (while x86 CPU support
-l3-cache=off), but as you mentioned, I can try using "invalid" to support
-this scenario, which would be more general. Similarly, if you agree, I
-can also add this support in a separate series.
-
-> The QAPI has an "invalid" topology level. You've not documented
-> that as permitted here, but the qapi parser will happily allow
-> it. What semantics will that have ? 
-
-Because the current this patch throws an error for "invalid", so I didn't
-included it in the doc.
-
-Thanks,
-Zhao
-
+> -- 
+> 2.44.1
 
