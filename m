@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2F1D3C54E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3192D3C54C
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1fae-0008WN-01; Fri, 18 Oct 2024 01:31:56 -0400
+	id 1t1faH-0008GY-6z; Fri, 18 Oct 2024 01:31:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1faO-0008IH-4V; Fri, 18 Oct 2024 01:31:40 -0400
+ id 1t1faF-0008Fk-A3; Fri, 18 Oct 2024 01:31:31 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1faM-00089Y-IM; Fri, 18 Oct 2024 01:31:39 -0400
+ id 1t1faC-00089Y-6F; Fri, 18 Oct 2024 01:31:30 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 18 Oct
- 2024 13:31:14 +0800
+ 2024 13:31:13 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 18 Oct 2024 13:31:14 +0800
+ Transport; Fri, 18 Oct 2024 13:31:13 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -36,10 +36,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 05/16] hw/arm/aspeed: Correct spi_model w25q256 for
- ast1030-a1 EVB.
-Date: Fri, 18 Oct 2024 13:31:01 +0800
-Message-ID: <20241018053112.1886173-6-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 02/16] hw/block:m25p80: Fix coding style
+Date: Fri, 18 Oct 2024 13:30:58 +0800
+Message-ID: <20241018053112.1886173-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
@@ -71,31 +70,82 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the default spi_model was "sst25vf032b" whose size was 4MB for
-ast1030-a1 EVB. However, according to the schematic of ast1030-a1 EVB,
-ASPEED shipped default flash of spi1 and spi2 were w25q256 whose size
-was 32MB.
-
-Correct spi_model default flash to w25q256 for ast1030-a1 EVB.
+Fix coding style issues from checkpatch.pl
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/block/m25p80.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index cf0c6c580b..bf68224295 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1643,7 +1643,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     amc->i2c_init = ast1030_evb_i2c_init;
-     mc->default_ram_size = 0;
-     amc->fmc_model = "sst25vf032b";
--    amc->spi_model = "sst25vf032b";
-+    amc->spi_model = "w25q256";
-     amc->num_cs = 2;
-     amc->macs_mask = 0;
-     aspeed_machine_class_init_cpus_defaults(mc);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index f7123f9e68..3f55b8f385 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -61,7 +61,8 @@ typedef struct FlashPartInfo {
+      */
+     uint8_t id[SPI_NOR_MAX_ID_LEN];
+     uint8_t id_len;
+-    /* there is confusion between manufacturers as to what a sector is. In this
++    /*
++     * there is confusion between manufacturers as to what a sector is. In this
+      * device model, a "sector" is the size that is erased by the ERASE_SECTOR
+      * command (opcode 0xd8).
+      */
+@@ -168,7 +169,7 @@ typedef struct FlashPartInfo {
+ /*
+  * Spansion read mode command length in bytes,
+  * the mode is currently not supported.
+-*/
++ */
+ 
+ #define SPANSION_CONTINUOUS_READ_MODE_CMD_LEN 1
+ #define WINBOND_CONTINUOUS_READ_MODE_CMD_LEN 1
+@@ -189,7 +190,8 @@ static const FlashPartInfo known_devices[] = {
+ 
+     { INFO("at45db081d",  0x1f2500,      0,  64 << 10,  16, ER_4K) },
+ 
+-    /* Atmel EEPROMS - it is assumed, that don't care bit in command
++    /*
++     * Atmel EEPROMS - it is assumed, that don't care bit in command
+      * is set to 0. Block protection is not supported.
+      */
+     { INFO("at25128a-nonjedec", 0x0,     0,         1, 131072, EEPROM) },
+@@ -275,10 +277,13 @@ static const FlashPartInfo known_devices[] = {
+     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+     { INFO_STACKED("mt25qu01g", 0x20bb21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+-    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
+-    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
++    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096,
++                   ER_4K | ER_32K, 2) },
++    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096,
++                   ER_4K | ER_32K, 2) },
+ 
+-    /* Spansion -- single (large) sector size only, at least
++    /*
++     * Spansion -- single (large) sector size only, at least
+      * for the chips listed here (without boot sectors).
+      */
+     { INFO("s25sl032p",   0x010215, 0x4d00,  64 << 10,  64, ER_4K) },
+@@ -549,7 +554,8 @@ static void blk_sync_complete(void *opaque, int ret)
+     qemu_iovec_destroy(iov);
+     g_free(iov);
+ 
+-    /* do nothing. Masters do not directly interact with the backing store,
++    /*
++     * do nothing. Masters do not directly interact with the backing store,
+      * only the working copy so no mutexing required.
+      */
+ }
+@@ -1843,7 +1849,7 @@ static void m25p80_register_types(void)
+ 
+     type_register_static(&m25p80_info);
+     for (i = 0; i < ARRAY_SIZE(known_devices); ++i) {
+-        TypeInfo ti = {
++        const TypeInfo ti = {
+             .name       = known_devices[i].part_name,
+             .parent     = TYPE_M25P80,
+             .class_init = m25p80_class_init,
 -- 
 2.34.1
 
