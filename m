@@ -4,94 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E49AD2FFEC
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 10:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 911ECD2FFF8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 12:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1kND-0001wl-2c; Fri, 18 Oct 2024 06:38:23 -0400
+	id 1t1lkR-0007fW-8I; Fri, 18 Oct 2024 08:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t1kNB-0001wM-0j
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:38:21 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t1kN9-00084T-9U
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:38:20 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-539e13375d3so2263526e87.3
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 03:38:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729247897; x=1729852697; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vsZGqTrATme0i7W+JISJIbfmq3xvv7D9OokIpSyW/Aw=;
- b=QSNdwgNnhBW4m1uBI901W2nHkenk45HSKeQHIwLpJE//mluct9KZkO3I6w2X2NJocU
- fO/+5AGkF6ZHFMEXl6/Kiqs4jOtqg+HvFJauWgUfsZgguHci42njeY0N1VBUSfN7kKm2
- dG9FRsInx0pXDxDMXU3g6oZh3f0VG/IAwDHEOyX4fPDojL2oE2UhGmM690kCXtuxjg69
- oBTuMYePrMaw2TaGuIo7epKnbzlFjawerHMS2lAmsE3l2ypOZBgtgCRqwcMobDfmG+nz
- YAW/9GiXEAlD/2qXdoiG5Qddb1zv2Mj83DnfKOShHwyffsxH0hrGFNEbzIJgIZMYAqla
- 1u4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729247897; x=1729852697;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vsZGqTrATme0i7W+JISJIbfmq3xvv7D9OokIpSyW/Aw=;
- b=jidg0MOoY/dCu3s758amg58DlFfcfouZbe05jyLusxfwlEC2Sa+b5nQ1kH9gkxreSP
- 4dJFeatnUitD+PnSoEkrTIA19tLrEJrPO/urboAU5Z+Qzyw6PtFU+3CCfEKehZexOF/P
- xyKLwks6UJ6mis5vO5WSXUutAP65R870R5rIkE7mz2N8JNK2iC7zXvhGS/ci+V5b1ICU
- Eo0bim3kGIxigCe69BwPdbBp/V9+oYIqX9JepKebQdj7O3uBivhZ1Cu+vjvHFwJi9iOV
- /alpUAUF4inEhwMV66EvxWjifqKChUn1e2+3xgfrV93KvHjrHDdGAndWMmU0Lhdzb3kn
- IUEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQv3jKnmfkM+4S4XtIhWwmDkLyNEbbt4K8iF4oBXNXe4pghWTxJR2KZaXd+lFnJf0b2ChlD/fUrWMs@nongnu.org
-X-Gm-Message-State: AOJu0Yy0zcPJPraqIIY6Fbp6EMZFzOXzFDj5spR24XDLAxe+Q7aj8QW0
- thm0scEldHnfOTTEVq7+EBljzWLrBODBFlS0S8PvPsrPvLa4SZzJ38up435z22w=
-X-Google-Smtp-Source: AGHT+IGKXiSyKr0PFvL0ptSZXZ6cnTGKWQXBDW7GLhSKl4bLLJGQLde+YEnFzUWoJ7ksTCPgzGL1+g==
-X-Received: by 2002:a05:6512:3095:b0:53a:3a:f4f4 with SMTP id
- 2adb3069b0e04-53a154adea6mr1000658e87.31.1729247896953; 
- Fri, 18 Oct 2024 03:38:16 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ca0b0f977csm561642a12.83.2024.10.18.03.38.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Oct 2024 03:38:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8BA485F863;
- Fri, 18 Oct 2024 11:38:14 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Fabiano Rosas
- <farosas@suse.de>,  qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
-In-Reply-To: <ZxIxsw265Au7fI-x@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 18 Oct 2024 11:00:19 +0100")
-References: <20241017143211.17771-1-farosas@suse.de>
- <20241017143211.17771-5-farosas@suse.de> <ZxEl4zYgHLoLeHCT@redhat.com>
- <87r08e3d74.fsf@suse.de> <ZxIj694WqXwwMRIY@redhat.com>
- <CAFEAcA8XCBrbqGDesL+5su-2Bk_YR1iQ6_X_j9tJZmNK1Kw=pQ@mail.gmail.com>
- <ZxIxsw265Au7fI-x@redhat.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Fri, 18 Oct 2024 11:38:14 +0100
-Message-ID: <87ed4d8zmx.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1lkJ-0007ej-0K
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 08:06:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1lkH-0003UF-DU
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 08:06:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729253174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0GmJsbmZbfEk7JZtvep5XlsYZgrfd/O2JlM7Ljfl28E=;
+ b=Q1cYy1otDQVjHoGCN9teN2CZv8BaIdi+2uy/+5iY3+F7NnRa4w6Hk7nf8jPu7GRi0/HyQo
+ ghoZZ1LrZOqe7b3B4/a14vtyDkWcBI2GXSnwma/1RwoqQobOBrXYE1SYJYIBC7UjmeWq0Q
+ SVN2RGq/e9yeOOK3iVe6J5bZx2nGNPw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-J6VWwWDwOdySMyo1zOR0Gg-1; Fri,
+ 18 Oct 2024 08:06:10 -0400
+X-MC-Unique: J6VWwWDwOdySMyo1zOR0Gg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 585201955F40; Fri, 18 Oct 2024 12:06:09 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.39.194.196])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 80AEF19560A3; Fri, 18 Oct 2024 12:06:06 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, manos.pitsidianakis@linaro.org, pbonzini@redhat.com,
+ qemu-trivial@nongnu.org
+Subject: [PATCH] configure: Replace literally printed '\n' with newline
+Date: Fri, 18 Oct 2024 14:05:57 +0200
+Message-ID: <20241018120557.43586-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,59 +78,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+The idea here was to leave an empty line before the message, but by
+default, echo prints '\n' literally instead of interpreting it. Use a
+separate echo without parameter instead like in other places in the
+script.
 
-> On Fri, Oct 18, 2024 at 10:46:55AM +0100, Peter Maydell wrote:
->> On Fri, 18 Oct 2024 at 10:01, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
-om> wrote:
->> >
->> > On Thu, Oct 17, 2024 at 01:29:35PM -0300, Fabiano Rosas wrote:
->> > > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->> > >
->> > > > On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
-<snip>
->
-> Migration-test *used* to take 15 minutes to run, but that was a
-> very long time ago. A run of it today is around 1m20.
->
-> That said, if you are building multiple system emulators, we
-> run the same test multiple times, and with the number of
-> targets we have, that will be painful.
+Fixes: 6fdc5bc173188f5e4942616b16d589500b874a15
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ configure | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-I think this is the main problem. We run the whole set of tests for
-every system emulator we build and I doubt we are actually increasing
-any coverage. One suggestion I made previously was to change the test
-selection logic so we only run all the tests for the KVM target and one
-TCG target. For the other targets we should run the basic tests only to
-ensure there is now architecture specific breakage for migration
-generally.
+diff --git a/configure b/configure
+index 72d1a94225..0918147156 100755
+--- a/configure
++++ b/configure
+@@ -2062,7 +2062,8 @@ chmod +x config.status
+ rm -r "$TMPDIR1"
+ 
+ if test "$rust" != disabled; then
+-  echo '\nINFO: Rust bindings generation with `bindgen` might fail in some cases where'
++  echo
++  echo 'INFO: Rust bindings generation with `bindgen` might fail in some cases where'
+   echo 'the detected `libclang` does not match the expected `clang` version/target. In'
+   echo 'this case you must pass the path to `clang` and `libclang` to your build'
+   echo 'command invocation using the environment variables CLANG_PATH and LIBCLANG_PATH'
+-- 
+2.47.0
 
-> That could be a good reason to split the migration-test into
-> two distinct programs. One program that runs for every target,
-> and one that is only run once, for some arbitrary "primary"
-> target ?  Or could we make use of glib's g_test_thorough
-> for this - a primary target runs with "SPEED=3Dthrough" and
-> all other targets with normal settings. That would give us
-> a way to optimize any of the qtests to reduce redundant
-> testing where appropriate.
-
-Does splitting the tests make it easier? Would meson just pick which
-arches for the "migrtion-full" experience?
-
-My idea was just to pass the list of configured builds as an environment
-variable and without it default to everything. That way running the test
-by hand would still have full coverage.
-
->
->
-> If we move alot of testing out into a migration unit test,
-> this also solves the redundancy problem.
->
->
-> With regards,
-> Daniel
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
