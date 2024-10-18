@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE33D3C54D
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C553BD3C54C
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1fay-0000m7-MK; Fri, 18 Oct 2024 01:32:17 -0400
+	id 1t1fbo-0002lD-4r; Fri, 18 Oct 2024 01:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fau-0000cr-Iu; Fri, 18 Oct 2024 01:32:13 -0400
+ id 1t1fba-0002JI-Je; Fri, 18 Oct 2024 01:32:57 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fas-0008E2-2m; Fri, 18 Oct 2024 01:32:12 -0400
+ id 1t1fbX-0008E2-1d; Fri, 18 Oct 2024 01:32:53 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 18 Oct
- 2024 13:31:16 +0800
+ 2024 13:31:17 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 18 Oct 2024 13:31:16 +0800
+ Transport; Fri, 18 Oct 2024 13:31:17 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -36,9 +36,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 13/16] test/qtest/aspeed_smc-test: Support to test AST2600
-Date: Fri, 18 Oct 2024 13:31:09 +0800
-Message-ID: <20241018053112.1886173-14-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 15/16] test/qtest/aspeed_smc-test: Support write page
+ command with QPI mode
+Date: Fri, 18 Oct 2024 13:31:11 +0800
+Message-ID: <20241018053112.1886173-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
@@ -70,84 +71,141 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_ast2600_evb function and reused testcases for AST2600 testing.
-The spi base address, flash base address and ce index of fmc_cs0 are
-0x1E620000, 0x20000000 and 0, respectively.
-The default flash model of fmc_cs0 is "mx66u51235f" whose size is 64MB,
-so set jedec_id 0xc2253a.
+Add a new testcase for write page command with QPI mode testing.
+Currently, only run this testcase for AST2500, AST2600 and AST1030.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/qtest/aspeed_smc-test.c | 41 +++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ tests/qtest/aspeed_smc-test.c | 74 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
 
 diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index 0171ecf4ed..30f997679c 100644
+index c5c38e23c5..59f3876cdc 100644
 --- a/tests/qtest/aspeed_smc-test.c
 +++ b/tests/qtest/aspeed_smc-test.c
-@@ -737,21 +737,62 @@ static void test_ast2500_evb(TestData *data)
+@@ -36,6 +36,7 @@
+ #define R_CE_CTRL           0x04
+ #define   CRTL_EXTENDED0       0  /* 32 bit addressing for SPI */
+ #define R_CTRL0             0x10
++#define   CTRL_IO_QUAD_IO      BIT(31)
+ #define   CTRL_CE_STOP_ACTIVE  BIT(2)
+ #define   CTRL_READMODE        0x0
+ #define   CTRL_FREADMODE       0x1
+@@ -62,6 +63,7 @@ enum {
+     ERASE_SECTOR = 0xd8,
+ };
+ 
++#define CTRL_IO_MODE_MASK  (BIT(31) | BIT(30) | BIT(29) | BIT(28))
+ #define FLASH_PAGE_SIZE           256
+ 
+ typedef struct TestData {
+@@ -171,6 +173,18 @@ static void spi_ctrl_stop_user(const TestData *data)
+     spi_writel(data, ctrl_reg, ctrl);
+ }
+ 
++static void spi_ctrl_set_io_mode(const TestData *data, uint32_t value)
++{
++    uint32_t ctrl_reg = R_CTRL0 + data->cs * 4;
++    uint32_t ctrl = spi_readl(data, ctrl_reg);
++    uint32_t mode;
++
++    mode = value & CTRL_IO_MODE_MASK;
++    ctrl &= ~CTRL_IO_MODE_MASK;
++    ctrl |= mode;
++    spi_writel(data, ctrl_reg, ctrl);
++}
++
+ static void flash_reset(const TestData *data)
+ {
+     spi_conf(data, 1 << (CONF_ENABLE_W0 + data->cs));
+@@ -659,6 +673,60 @@ static void test_write_block_protect_bottom_bit(const void *data)
+     flash_reset(test_data);
+ }
+ 
++static void test_write_page_qpi(const void *data)
++{
++    const TestData *test_data = (const TestData *)data;
++    uint32_t my_page_addr = test_data->page_addr;
++    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
++    uint32_t page[FLASH_PAGE_SIZE / 4];
++    uint32_t page_pattern[] = {
++        0xebd8c134, 0x5da196bc, 0xae15e729, 0x5085ccdf
++    };
++    int i;
++
++    spi_conf(test_data, 1 << (CONF_ENABLE_W0 + test_data->cs));
++
++    spi_ctrl_start_user(test_data);
++    flash_writeb(test_data, 0, EN_4BYTE_ADDR);
++    flash_writeb(test_data, 0, WREN);
++    flash_writeb(test_data, 0, PP);
++    flash_writel(test_data, 0, make_be32(my_page_addr));
++
++    /* Set QPI mode */
++    spi_ctrl_set_io_mode(test_data, CTRL_IO_QUAD_IO);
++
++    /* Fill the page pattern */
++    for (i = 0; i < ARRAY_SIZE(page_pattern); i++) {
++        flash_writel(test_data, 0, make_be32(page_pattern[i]));
++    }
++
++    /* Fill the page with its own addresses */
++    for (; i < FLASH_PAGE_SIZE / 4; i++) {
++        flash_writel(test_data, 0, make_be32(my_page_addr + i * 4));
++    }
++
++    /* Restore io mode */
++    spi_ctrl_set_io_mode(test_data, 0);
++    spi_ctrl_stop_user(test_data);
++
++    /* Check what was written */
++    read_page(test_data, my_page_addr, page);
++    for (i = 0; i < ARRAY_SIZE(page_pattern); i++) {
++        g_assert_cmphex(page[i], ==, page_pattern[i]);
++    }
++    for (; i < FLASH_PAGE_SIZE / 4; i++) {
++        g_assert_cmphex(page[i], ==, my_page_addr + i * 4);
++    }
++
++    /* Check some other page. It should be full of 0xff */
++    read_page(test_data, some_page_addr, page);
++    for (i = 0; i < FLASH_PAGE_SIZE / 4; i++) {
++        g_assert_cmphex(page[i], ==, 0xffffffff);
++    }
++
++    flash_reset(test_data);
++}
++
+ static void test_palmetto_bmc(TestData *data)
+ {
+     int ret;
+@@ -736,6 +804,8 @@ static void test_ast2500_evb(TestData *data)
+                         data, test_write_page_mem);
      qtest_add_data_func("/ast2500/smc/read_status_reg",
                          data, test_read_status_reg);
++    qtest_add_data_func("/ast2500/smc/write_page_qpi",
++                        data, test_write_page_qpi);
  }
-+
-+static void test_ast2600_evb(TestData *data)
-+{
-+    int ret;
-+    int fd;
-+
-+    fd = g_file_open_tmp("qtest.m25p80.mx66u51235f.XXXXXX",
-+                         &data->tmp_path, NULL);
-+    g_assert(fd >= 0);
-+    ret = ftruncate(fd, 64 * 1024 * 1024);
-+    g_assert(ret == 0);
-+    close(fd);
-+
-+    data->s = qtest_initf("-machine ast2600-evb "
-+                          "-drive file=%s,format=raw,if=mtd",
-+                          data->tmp_path);
-+
-+    /* fmc cs0 with mx66u51235f flash */
-+    data->flash_base = 0x20000000;
-+    data->spi_base = 0x1E620000;
-+    data->jedec_id = 0xc2253a;
-+    data->cs = 0;
-+    data->node = "/machine/soc/fmc/ssi.0/child[0]";
-+    /* beyond 16MB */
-+    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
-+
-+    qtest_add_data_func("/ast2600/smc/read_jedec", data, test_read_jedec);
-+    qtest_add_data_func("/ast2600/smc/erase_sector", data, test_erase_sector);
-+    qtest_add_data_func("/ast2600/smc/erase_all",  data, test_erase_all);
-+    qtest_add_data_func("/ast2600/smc/write_page", data, test_write_page);
-+    qtest_add_data_func("/ast2600/smc/read_page_mem",
-+                        data, test_read_page_mem);
-+    qtest_add_data_func("/ast2600/smc/write_page_mem",
-+                        data, test_write_page_mem);
-+    qtest_add_data_func("/ast2600/smc/read_status_reg",
-+                        data, test_read_status_reg);
-+}
+ 
+ static void test_ast2600_evb(TestData *data)
+@@ -773,6 +843,8 @@ static void test_ast2600_evb(TestData *data)
+                         data, test_write_page_mem);
+     qtest_add_data_func("/ast2600/smc/read_status_reg",
+                         data, test_read_status_reg);
++    qtest_add_data_func("/ast2600/smc/write_page_qpi",
++                        data, test_write_page_qpi);
+ }
+ 
+ static void test_ast1030_evb(TestData *data)
+@@ -810,6 +882,8 @@ static void test_ast1030_evb(TestData *data)
+                         data, test_write_page_mem);
+     qtest_add_data_func("/ast1030/smc/read_status_reg",
+                         data, test_read_status_reg);
++    qtest_add_data_func("/ast1030/smc/write_page_qpi",
++                        data, test_write_page_qpi);
+ }
+ 
  int main(int argc, char **argv)
- {
-     TestData palmetto_data;
-     TestData ast2500_evb_data;
-+    TestData ast2600_evb_data;
-     int ret;
- 
-     g_test_init(&argc, &argv, NULL);
- 
-     test_palmetto_bmc(&palmetto_data);
-     test_ast2500_evb(&ast2500_evb_data);
-+    test_ast2600_evb(&ast2600_evb_data);
-     ret = g_test_run();
- 
-     qtest_quit(palmetto_data.s);
-     qtest_quit(ast2500_evb_data.s);
-+    qtest_quit(ast2600_evb_data.s);
-     unlink(palmetto_data.tmp_path);
-     unlink(ast2500_evb_data.tmp_path);
-+    unlink(ast2600_evb_data.tmp_path);
-     return ret;
- }
 -- 
 2.34.1
 
