@@ -4,101 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D4DD30011
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 14:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3632AD30011
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 14:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1oJk-0002if-R4; Fri, 18 Oct 2024 10:51:04 -0400
+	id 1t1oLO-0003Po-4R; Fri, 18 Oct 2024 10:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1oJh-0002hZ-OV
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:51:02 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1oJg-0003J5-9p
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:51:01 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1oLJ-0003OU-4D
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:52:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1oLH-0003Sc-8P
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:52:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729263157;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kto4jOESjM4YPXs+xEO1b6ux7o92PTe1a/5hIJtkswU=;
+ b=ADrqH6Iv+bk37F51wdB7F040F5wcW1dAR6vr0iSfBafMR1o6J+EfNt6TXg2dR/RvUCR4G7
+ ic0515/1zm9zqVBZqp59WAvxynR8mOCZvIQvYh/+jJNUmTOzuhi+jxsl1VrujJHF8sSGfa
+ iN2OtuReDVsSenniCn89Q5v1gdC7zR4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-0UJCNVlkM827D9l0j7eSDg-1; Fri,
+ 18 Oct 2024 10:52:35 -0400
+X-MC-Unique: 0UJCNVlkM827D9l0j7eSDg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D5C6A211BB;
- Fri, 18 Oct 2024 14:50:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729263058; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M3sNzrTkYFKAo83lV0vdD+mOe0/7Nh861cceNM/7tQ8=;
- b=k+6hJaYgExW3KgM5kCPXLWx2lOAGfvF9Dt5aCgG0td7gbOcjzyniY28ekEnChZYkPqAgGC
- Lfdmf9zgtrskKGewT5Bx+aY/bq1tP+u8q4APEiib4rGunmQPN5JJGCKjTO9kgzp3ksGTk4
- TQurxQk5hXmu3t9yAue4gc3jXahiG4g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729263058;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M3sNzrTkYFKAo83lV0vdD+mOe0/7Nh861cceNM/7tQ8=;
- b=IGSZ7aUjVzNyOrHZHMrMcdGyRkwcFwzG33PwHlT2THhSNoPKVnYSlR08+CpWMioq9pVVEh
- u2Xz4LB7N97zyXAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729263058; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M3sNzrTkYFKAo83lV0vdD+mOe0/7Nh861cceNM/7tQ8=;
- b=k+6hJaYgExW3KgM5kCPXLWx2lOAGfvF9Dt5aCgG0td7gbOcjzyniY28ekEnChZYkPqAgGC
- Lfdmf9zgtrskKGewT5Bx+aY/bq1tP+u8q4APEiib4rGunmQPN5JJGCKjTO9kgzp3ksGTk4
- TQurxQk5hXmu3t9yAue4gc3jXahiG4g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729263058;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M3sNzrTkYFKAo83lV0vdD+mOe0/7Nh861cceNM/7tQ8=;
- b=IGSZ7aUjVzNyOrHZHMrMcdGyRkwcFwzG33PwHlT2THhSNoPKVnYSlR08+CpWMioq9pVVEh
- u2Xz4LB7N97zyXAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6109213433;
- Fri, 18 Oct 2024 14:50:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 81pHCtJ1EmdTPgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 18 Oct 2024 14:50:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH] Migration: Add trace points for vmstate handler
- insertion/removal
-In-Reply-To: <20241018144426.826802-1-peterx@redhat.com>
-References: <20241018144426.826802-1-peterx@redhat.com>
-Date: Fri, 18 Oct 2024 11:50:55 -0300
-Message-ID: <87o73h1n3k.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3073B195608C; Fri, 18 Oct 2024 14:52:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.196])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4DEF9300019D; Fri, 18 Oct 2024 14:52:31 +0000 (UTC)
+Date: Fri, 18 Oct 2024 16:52:27 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH 0/2] fix backup-discard-source test for XFS
+Message-ID: <ZxJ2K7Um5HEeYsGj@redhat.com>
+References: <20240620144402.65896-1-vsementsov@yandex-team.ru>
+ <db0eca3d-c90f-474e-ab17-e8f8552c1d96@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.25 / 50.00]; BAYES_HAM(-2.95)[99.78%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <db0eca3d-c90f-474e-ab17-e8f8552c1d96@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,21 +82,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Am 03.10.2024 um 08:39 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> Hi Kevin!
+> 
+> Now I revisit my old series, and looking here I see that I forget add you into CC.
+> 
+> Does it still make sense?
 
-> SaveStateEntry has lots of magics internally, on alias_id, get_id() being
-> able to overwrite the original idstr, compat fields, ID_ANY, and so on.  It
-> may not be always clear that what all these fields are being registered for
-> some device we care.
->
-> Add trace points for SaveStateEntry insertions/removals, so that we know
-> what was being registered.  For insertions, we dump everything that might
-> be useful.  For removal, only section_id is needed because that's the
-> unique identifier for an SeveStateEntry.
->
-> Cc: Laurent Vivier <lvivier@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Oops, I missed this one indeed.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Thanks, applied to the block branch.
+
+Kevin
+
 
