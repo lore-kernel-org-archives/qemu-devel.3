@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76896D30011
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE90D30016
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 15:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1obL-0001Cf-3M; Fri, 18 Oct 2024 11:09:15 -0400
+	id 1t1oqy-0004zI-NE; Fri, 18 Oct 2024 11:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1obF-0001Bk-V1
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:09:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t1obE-0005dn-2G
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:09:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729264143;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WdxZ8/ZiJB7I6MWZqwFtw0ZOwZ10i/ZCOegjVYgqpx8=;
- b=Ckpp6pN/xwvNckkqiBWfaQLzXy62+VohZcm75prxkv5GLv6SKmCRu6M/MmizukKjqeFWf2
- ND9f1HC8hZKXneXOrp1wdR+GukLWBm9lAHyDL3Usf6mvZQZPMB/85yyFT76kTw0uGPp1q/
- O4UPGi1BnKZaBV0jgZaKh5x6XTDQpD4=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-aO8TlqujMTWykuzCvs_5Uw-1; Fri, 18 Oct 2024 11:09:02 -0400
-X-MC-Unique: aO8TlqujMTWykuzCvs_5Uw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6cbe3f76876so66660696d6.1
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 08:09:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729264141; x=1729868941;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t1oqw-0004yl-JG
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:25:22 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t1oqu-0007ct-K7
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 11:25:22 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2fb584a8f81so27219031fa.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 08:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729265119; x=1729869919; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WdxZ8/ZiJB7I6MWZqwFtw0ZOwZ10i/ZCOegjVYgqpx8=;
- b=EfxhOxFHYiNKz9z84OwcmQwmQuf55a9Ns8GL1xVmikgep5/wsMTht4p6o9I2pEbFkH
- tYJkHrjkX6vNrPWvYZPSvHka1dRYnH/RpdaY3i5e5Q1TcYha9iBR0Tuxps79DdRKVFps
- qdsqfDqR8U+3Ck7vJNNSfAUjz7+/zUEVEzwUJTPO/eYhHuVg8pJCOZvDb8dnx9CJVOrt
- 8n39P9EePx4W6pJHHmrVmQ0p7EBZcKLdPLP1rM2mRMMqBNEQ1zQBYOR5/WNZl9uTsSTC
- b3ThEPFuxxFXijXa61gacbKxbyzbLjqv9UUxQSp93kST5LSsGL5by7bp3BF+B5P56LIq
- E+0g==
-X-Gm-Message-State: AOJu0YyMdRgPI6vSbFZ88Nf7Xv8hEqHUuXV+GpZR1tSANmZMeZryKa01
- cLxsA9xTnPji5y/5g3Cva1CvsOlmuACENgXzkyLkoOdwglbBUGZpdEKdZAex3Fb+YCkazH4rWy8
- QovXIlnBUpx7rmeE3bFGORSKdSoxNbfuLurPVxUC/PMOkJuqy2uu7KxSeE2KO
-X-Received: by 2002:a05:6214:3a81:b0:6cb:ca0a:4749 with SMTP id
- 6a1803df08f44-6cde1b82eeemr50520486d6.21.1729264141452; 
- Fri, 18 Oct 2024 08:09:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4r7LKezVq7mWurTIya8NTo1L8OFUrPR+MeUrRIxBo9nUZOc4C+FUAxrz3FZhDdz0R/lx+7A==
-X-Received: by 2002:a05:6214:3a81:b0:6cb:ca0a:4749 with SMTP id
- 6a1803df08f44-6cde1b82eeemr50519736d6.21.1729264140875; 
- Fri, 18 Oct 2024 08:09:00 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6cde114e81esm7818836d6.53.2024.10.18.08.08.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Oct 2024 08:09:00 -0700 (PDT)
-Date: Fri, 18 Oct 2024 11:08:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: yong.huang@smartx.com
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 0/6] migration: auto-converge refinements for huge VM
-Message-ID: <ZxJ6CoP3WUfj1jVg@x1n>
-References: <cover.1729146786.git.yong.huang@smartx.com>
+ bh=wQTsppqQg8l9iM4w+0DERoHy56Ihw+GYNagsipVysbk=;
+ b=riwekbz7As76Wo4PwP2KZsEpPOYm1XhwlOsawGyCjsUKgSQp3GGIq21Pe54uxzq7fP
+ A4/YIge/2bLaJY3Rk2txQQjeIndY/YB9fc2fMmlwU3zFCjYyyBQZD1qNRRfuYj3eFZzD
+ 7VBqdKjK4BHdoGCgPR7+uJEU/qBMk5p7Kfi2beMi2C2JecRZrsHjemIwHzTK8ig+/SzU
+ qPe0ifeQXfvAYx7o7cVS7296N0H1gseN0kcbjLmNf7e+5E6CTkaHnTgIjE714dd9MZvW
+ XPdAZlGuH8aaJaPmmeperxsnKE8V2xIzp9t810wktVsZLAU6We56zC31fz9xlJcSZLvf
+ CNFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729265119; x=1729869919;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wQTsppqQg8l9iM4w+0DERoHy56Ihw+GYNagsipVysbk=;
+ b=VcjY3fI2yRXqlH9NHFF1skFL2D2NiJsMB0Dn4xwZi00baKo9vbA9y3u/CV+C7Js+Rn
+ xdA6GOsTkSDZQqn7hfXZGXkMvcrMWQQipWLY3FShyQ/0x1aXkYty9TDcSqJ3cyg54yH0
+ BfQa3XSq3LXxcmu1AP7kOW8SYRlizqA5EwRo48dnNkRGoA2SjKNLyGzHfFl2xfPb3OEe
+ /bCIqsVtO07AmaZLKdxPkSeY2YtuyFwt5CMOZ0wcN78WdVnXJ9haEjHsRVSveoq77/rn
+ VGMHo5ge20ye1pivPirga32jy8I7fPsfzyxLgpWhOesLiasTYz5Ms8/PBPT+nXGdIvCV
+ 21eQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTkwG8oYZTaNN3prcxm4WIw1fJkIrKEn/Z98z15wYClt9PtO1eWMhNJFsPCw/APwrEoWq24bp3Z4wY@nongnu.org
+X-Gm-Message-State: AOJu0YwFYHeK7Tkl0GPQGqnQAyhAW7E/cSTa2CMis6fQjLhXoKiumWjm
+ kwY+6KWiZgIbJ5ZqpqEd0Uvjrfq/TGo/4Dji1xPf67BZ3Z+TynZFKFsTrO03L6opxK0sfs0XCWq
+ j9fFdKZ3iHXohG4+hiyxQvosIvavLS6U9h77cRw==
+X-Google-Smtp-Source: AGHT+IEamTRTBFUYUPwoPO/y8uvrMHHHCn1vQce02s3kL2+4o8ZsJySjmMeebBXJ8+OdinIj1idZT0Nueb+RVh9Fe1Q=
+X-Received: by 2002:a2e:4601:0:b0:2fb:599a:a900 with SMTP id
+ 38308e7fff4ca-2fb82ea506cmr15566441fa.15.1729265118561; Fri, 18 Oct 2024
+ 08:25:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1729146786.git.yong.huang@smartx.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20241017143211.17771-1-farosas@suse.de>
+ <20241017143211.17771-5-farosas@suse.de>
+ <ZxEl4zYgHLoLeHCT@redhat.com> <87r08e3d74.fsf@suse.de>
+ <ZxIj694WqXwwMRIY@redhat.com>
+In-Reply-To: <ZxIj694WqXwwMRIY@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 18 Oct 2024 16:25:07 +0100
+Message-ID: <CAFEAcA9eFApeeLBQvFC8zPNo+Ovk5woA5HKzaQ5j3=hd-G4smw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,18 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 02:42:49PM +0800, yong.huang@smartx.com wrote:
-> From: Hyman Huang <yong.huang@smartx.com>
-> 
-> v4:
-> 1. split the [PATCH v3 1/6] into smaller patches.
-> 2. refine some comment and commit message
-> 3. fix race issue for the throttle_dirty_sync_timer
-> 4. refine the util function cpu_throttle_dirty_sync_timer
-
-queued, with a fixup squashed to patch 5 per discussion, thanks.
-
--- 
-Peter Xu
-
+T24gRnJpLCAxOCBPY3QgMjAyNCBhdCAxMDowMSwgRGFuaWVsIFAuIEJlcnJhbmfDqSA8YmVycmFu
+Z2VAcmVkaGF0LmNvbT4gd3JvdGU6DQo+IFRlc3QgcmVsaWFiaWxpdHkgaXMgYSBkaWZmZXJlbnQg
+dGhpbmcuIElmIGEgcGFydGljdWxhciB0ZXN0IGlzDQo+IGZsYWt5LCBpdCBuZWVkcyB0byBlaXRo
+ZXIgYmUgZml4ZWQgb3IgZGlzYWJsZWQuIFNwbGl0dGluZyBpbnRvDQo+IGEgZmFzdCAmIHNsb3cg
+Z3JvdXBpbmcgZG9lc24ndCBhZGRyZXNzIHJlbGlhYmlsaXR5LCBqdXN0IGhpZGVzDQo+IHRoZSBw
+cm9ibGVtIGZyb20gdmlldy4NCg0KT24gdGhlIHN1YmplY3Qgb2YgJ2ZsYWt5JywgaGVyZSdzIGFu
+b3RoZXIgbG93LXJlcGVhdGFiaWxpdHkNCmludGVybWl0dGVudCB3aXRoIG1pZ3JhdGlvbi10ZXN0
+IHRoYXQgSSBqdXN0IHJhbiBpbnRvIGluDQonbWFrZSB2bS1idWlsZC1vcGVuYnNkJzoNCg0K4pa2
+ICA5Ny85MTYgL3BwYzY0L21pZ3JhdGlvbi9tdWx0aWZkL3RjcC9wbGFpbi9jYW5jZWwNCiAgICAg
+ICAgICAgT0sNCuKWtiAgOTYvOTE2IC9pMzg2L21pZ3JhdGlvbi9wcmVjb3B5L3RjcC90bHMveDUw
+OS9hbGxvdy1hbm9uLWNsaWVudA0KICAgICAgICAgICBPSw0K4pa2ICA5Ny85MTYgL3BwYzY0L21p
+Z3JhdGlvbi9tdWx0aWZkL3RjcC9wbGFpbi96bGliIC0NCkVSUk9SOi4uL3NyYy90ZXN0cy9xdGVz
+dC9taWdyYXRpb24taGVscGVycy5jOjMyMjpjaGVja19taWdyYXRpb25fc3RhdHVzOg0KYXNzZXJ0
+aW9uIGZhaWxlZCAoY3VycmVudF9zdGF0dXMgIT0gImZhaWxlZCIpOiAoImZhaWxlZCIgIT0gImZh
+aWxlZCIpDQpGQUlMDQrilrYgIDk3LzkxNg0KICAgICAgICAgICBFUlJPUg0K4pa2ICA5NS85MTYg
+L2FhcmNoNjQvbWlncmF0aW9uL211bHRpZmQvdGNwL2NoYW5uZWxzL3BsYWluL25vbmUNCiAgICAg
+ICAgICAgT0sNCiA5Ny85MTYgcWVtdTpxdGVzdCtxdGVzdC1wcGM2NCAvIHF0ZXN0LXBwYzY0L21p
+Z3JhdGlvbi10ZXN0DQogICAgICAgICAgIEVSUk9SICAgICAgICAgIDEzNC4zOHMgICBraWxsZWQg
+Ynkgc2lnbmFsIDYgU0lHQUJSVA0K4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCVIOKcgCAg4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCVDQpzdGRlcnI6DQp3YXJuaW5nOiBmZDogbWlncmF0aW9uIHRv
+IGEgZmlsZSBpcyBkZXByZWNhdGVkLiBVc2UgZmlsZTogaW5zdGVhZC4NCndhcm5pbmc6IGZkOiBt
+aWdyYXRpb24gdG8gYSBmaWxlIGlzIGRlcHJlY2F0ZWQuIFVzZSBmaWxlOiBpbnN0ZWFkLg0KKioN
+CkVSUk9SOi4uL3NyYy90ZXN0cy9xdGVzdC9taWdyYXRpb24taGVscGVycy5jOjMyMjpjaGVja19t
+aWdyYXRpb25fc3RhdHVzOg0KYXNzZXJ0aW9uIGZhaWxlZCAoY3VycmVudF9zdGF0dXMgIT0gImZh
+aWxlZCIpOiAoImZhaWxlZCIgIT0gImZhaWxlZCIpDQpxZW11LXN5c3RlbS1wcGM2NDogRmFpbGVk
+IHRvIGNvbm5lY3QgdG8gJzEyNy4wLjAuMToyNDEwOSc6IEFkZHJlc3MNCmFscmVhZHkgaW4gdXNl
+DQpxZW11LXN5c3RlbS1wcGM2NDogRmFpbGVkIHRvIHBlZWsgYXQgY2hhbm5lbA0KDQoodGVzdCBw
+cm9ncmFtIGV4aXRlZCB3aXRoIHN0YXR1cyBjb2RlIC02KQ0K4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV
+4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCV4oCVDQoNClByb2JhYmx5IGh0
+dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvQ0FGRUFjQThwOUJLQ3JuOUVmRlhUcEhF
+KzV3LV84emh0RV81MlNwWkx1Uy0renBGNUdnQG1haWwuZ21haWwuY29tLw0KDQppbiBhIHNsaWdo
+dGx5IGRpZmZlcmVudCBmb3JtLg0KDQp0aGFua3MNCi0tIFBNTQ0K
 
