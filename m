@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034E4D3C537
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 04:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8536ED3C549
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 04:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1ewa-0008Nd-Np; Fri, 18 Oct 2024 00:50:33 -0400
+	id 1t1exC-0008Qa-I0; Fri, 18 Oct 2024 00:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1ewX-0008NB-D2
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:50:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t1exB-0008QG-AH
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:51:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1ewU-0003TB-0d
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:50:29 -0400
+ id 1t1ex9-0003UL-Rq
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:51:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729227023;
+ s=mimecast20190719; t=1729227067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zhZBF5pA5vIM/2RY/WKCrQNAHI5L2/gLt6Zs0GcreNI=;
- b=fHaCKqFnqEjPxsgyKMXCLzaYZHbnGgszuVA9FVMfzgkGmxUHVCmkAq9RInZXkp6bPbIFHg
- b0qDdTvEk0eXMHjVs2SsDb2TmTZkrQTIAoyLN3cPGfp9hwSMyXMZsu+uNRWXlzHqqNJQqQ
- PmetTx/NP4VXiNzODECJuSziCzYAISM=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2DXD/44HBFMmoZZy1zCKCZEliz8wxao+RbWclm9iY2w=;
+ b=gFrQiozDYqVd6EoL5QiiSvos9ovoApsoBlcCdHSSnMRhCKpS4rM9iwnyRDfg7H695WPMfg
+ o+9i/jqWthjMyBRm4ddGAjya5ZcJB/rqEXbx3JMcEboz68o1S9Ps+JBgOplJoC0AiIRnIi
+ 9TG9+yKkEZyE5K9KffGc/Za7yiGmuqE=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-JnaMGbE_Pd62RybygCk5HA-1; Fri, 18 Oct 2024 00:50:21 -0400
-X-MC-Unique: JnaMGbE_Pd62RybygCk5HA-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2e2e8a71e3aso1575100a91.3
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 21:50:20 -0700 (PDT)
+ us-mta-645-ryDLhpJfN0SXwDs8_hl69w-1; Fri, 18 Oct 2024 00:51:05 -0400
+X-MC-Unique: ryDLhpJfN0SXwDs8_hl69w-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-7db9418552fso1400145a12.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 21:51:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729227020; x=1729831820;
+ d=1e100.net; s=20230601; t=1729227064; x=1729831864;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zhZBF5pA5vIM/2RY/WKCrQNAHI5L2/gLt6Zs0GcreNI=;
- b=cKcUGhrpzGyiR+VqqO7Hg+7vyXe4Fn3d9+vNTAI5bBwgUpNkz9yTvd81ZgMxrBA19s
- EsukYNiWvT40RK4va/9ibqCtvaRdMCoYYfkUAmn9eNnIt3i3iHcja9KMaunEw4vOj4ig
- qOaU9VEAWlGVwRdt3/agoiyRvRMKq41rGAd9P7bSzcDGUu/7X+S4tn7Lgoa64McyryQz
- jdNi1ZKhWQ9LpCSQfzZx9QRfdb59VjiwRBly+D6Hr3Id8QbDUROcnbMUDcDR+vvtU0wG
- rUvhCY3pTXkbXHCEp/BeHS2omG8m/0sZOaFaHfjhEekp0drvjhLIKps2Hv7Pd9Yzahs2
- sp4g==
+ bh=2DXD/44HBFMmoZZy1zCKCZEliz8wxao+RbWclm9iY2w=;
+ b=BVpmbl715CEPAuD61JxbkcmVAhrctr6Qdt6K8YBzAaMD8QTk4e3swozVsKI4eNbVxb
+ dOYP8rQ/PRVCI7WJSdERSIrvCAjt9c20gwr4O1/Ckxxd8TbZVa0SXPgTc8jO7FMk7OIm
+ XzXKP9j4xxlIxrSXf97oGdAdxOUntQYs+hRvUoQ38U/Lpjol0/O6ZcqenJyHff57ytb6
+ tt1u0Sj+SAxjAZpOZ2urfrtsnK1SsLetlbD/LipGRphY+txSJTFTiNQTkQmGdYKcMUGM
+ FBCYPvr7suGoN9W5c85eDMmjsT1znuplqooVY3fa4MHWmoVG+xUL4LhTBexfTHu5HVk9
+ s3DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYYHpHi1UDB/IpsLA7MJi+ttqD1F2tmY+v74trL4wRwpsUSj21SfILIrPk2s5tgixqG6e11Ox1rQWq@nongnu.org
-X-Gm-Message-State: AOJu0YzaRpF3zcM/ZkkvrhlyUkAA2or2KThw8Uu44EJK8jVz9ezeyCCc
- KtIDUscngPUnxGZdG2pwXgkLCljY6j1nH+nYHVEtutJNta4aphKPy5A/hyUduFYoeAuCI126x4u
- 2vVzh/a/sTjCl6Tf8eZ7zTZDPOPgWJm8v0J/M8W/t3KvwjnOUM6VI9HSsu53u9Da55Eizd+T0PT
- AHoUviDoiOCt6kHW90afPAd3NV5K8=
-X-Received: by 2002:a17:90b:241:b0:2c9:b72:7a1f with SMTP id
- 98e67ed59e1d1-2e5618da965mr1794963a91.28.1729227019859; 
- Thu, 17 Oct 2024 21:50:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGS3HIkSW1cbLMZSkwMS/X7FRd3XcTWRv3hYEfnex4Cga20OJZnfWqTSpBJ+nysrXlTW61A/pGcxodRLB8KF+s=
-X-Received: by 2002:a17:90b:241:b0:2c9:b72:7a1f with SMTP id
- 98e67ed59e1d1-2e5618da965mr1794941a91.28.1729227019414; Thu, 17 Oct 2024
- 21:50:19 -0700 (PDT)
+ AJvYcCWbFnWLx4k1wtyS7oL3Mezc2lCNuKojH5Hzzn6OBOTDE+8gKn1q6PdcVYYV8EOrM2nVdeToCzL/5U6b@nongnu.org
+X-Gm-Message-State: AOJu0YykteyjZqvlhO1opOIkRMtOrd3g3KPXXazNtflWyTMBdT2nd5OJ
+ bW50Hf8v98EzvoWxgPDJD/+aebqEAnbDuT9ltjmDnGGB3IWsu1ANB6kRIDlTx/gVPyQwlk9eODD
+ /QmwyTwxM5OtrfwnNTpvV/y3jSCtBj6pEH8e0PSTpBrdCKUE1S6dz1seC79au+6cDz7OHjrPUsS
+ bOkB0y07bGuQhaAs1hfr/2a8iSeRA=
+X-Received: by 2002:a17:90a:a018:b0:2e3:b168:70f5 with SMTP id
+ 98e67ed59e1d1-2e56172c05fmr1667089a91.21.1729227064206; 
+ Thu, 17 Oct 2024 21:51:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExFBfo67QNSdIcOrLGYd0lqQdhJx3X/TVRCx17tbL4x49bySrhAVt7nDj4naCDdKzMF3xXvQduoFKPkA3X/rA=
+X-Received: by 2002:a17:90a:a018:b0:2e3:b168:70f5 with SMTP id
+ 98e67ed59e1d1-2e56172c05fmr1667065a91.21.1729227063822; Thu, 17 Oct 2024
+ 21:51:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-9-jasowang@redhat.com>
- <a46a895a-4961-43fa-99d8-3bda7612bb9a@redhat.com>
- <14bcc2cf-f934-4aa3-8cab-21803a930adc@redhat.com>
- <CACGkMEs5P=Gmo4xTbwH1SPTjwjMoeAcK+fiVXQE0BRrRh-hAwg@mail.gmail.com>
- <d186fb3c-a036-4a20-a4e7-33119bd8b4b9@redhat.com>
- <60169858-3930-4490-b42d-d04117ab9abd@daynix.com>
- <bc493771-e507-4027-af76-f9a95e99b81d@redhat.com>
- <002f53e8-501e-4b4d-b1fc-67ec51e3a94f@daynix.com>
-In-Reply-To: <002f53e8-501e-4b4d-b1fc-67ec51e3a94f@daynix.com>
+References: <20240909204254.1446800-1-sw@weilnetz.de>
+ <CYYPR11MB8432028036D306D2FB6F4A359B9A2@CYYPR11MB8432.namprd11.prod.outlook.com>
+ <bc8991ef-91af-419c-beda-f0ece8eda019@weilnetz.de>
+ <CYYPR11MB8432723FB4A5A76E3ABB02699B402@CYYPR11MB8432.namprd11.prod.outlook.com>
+In-Reply-To: <CYYPR11MB8432723FB4A5A76E3ABB02699B402@CYYPR11MB8432.namprd11.prod.outlook.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 18 Oct 2024 12:50:07 +0800
-Message-ID: <CACGkMEvfXDbYPX=itXWoNCzAR9tjYKf9DPNyuqsA_VQeXo9DXA@mail.gmail.com>
-Subject: Re: [PULL 08/20] virtio-net: Add only one queue pair when realizing
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>
+Date: Fri, 18 Oct 2024 12:50:52 +0800
+Message-ID: <CACGkMEu7vT6Xdpw2SYSMrhQ+bhQnBN6-u=zEmL=fW3vHR6aLMw@mail.gmail.com>
+Subject: Re: [PATCH] Fix calculation of minimum in colo_compare_tcp
+To: "Zhang, Chen" <chen.zhang@intel.com>
+Cc: Stefan Weil <sw@weilnetz.de>, Li Zhijian <lizhijian@fujitsu.com>, 
+ qemu-stable <qemu-stable@nongnu.org>, QEMU Trivial <qemu-trivial@nongnu.org>, 
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,169 +105,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 5:42=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
+On Fri, Oct 18, 2024 at 10:48=E2=80=AFAM Zhang, Chen <chen.zhang@intel.com>=
+ wrote:
 >
-> On 2024/10/17 18:17, Laurent Vivier wrote:
-> > On 17/10/2024 11:07, Akihiko Odaki wrote:
-> >> On 2024/10/17 16:32, Laurent Vivier wrote:
-> >>> On 17/10/2024 08:59, Jason Wang wrote:
-> >>>> On Mon, Oct 14, 2024 at 11:16=E2=80=AFPM Laurent Vivier <lvivier@red=
-hat.com>
-> >>>> wrote:
-> >>>>>
-> >>>>> On 14/10/2024 10:30, Laurent Vivier wrote:
-> >>>>>> Hi Akihiko,
-> >>>>>>
-> >>>>>> On 04/06/2024 09:37, Jason Wang wrote:
-> >>>>>>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >>>>>>>
-> >>>>>>> Multiqueue usage is not negotiated yet when realizing. If more th=
-an
-> >>>>>>> one queue is added and the guest never requests to enable
-> >>>>>>> multiqueue,
-> >>>>>>> the extra queues will not be deleted when unrealizing and leak.
-> >>>>>>>
-> >>>>>>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the
-> >>>>>>> guest doesn't support
-> >>>>>>> multiqueue")
-> >>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >>>>>>> Signed-off-by: Jason Wang <jasowang@redhat.com>
-> >>>>>>> ---
-> >>>>>>>    hw/net/virtio-net.c | 4 +---
-> >>>>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
-> >>>>>>>
-> >>>>>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> >>>>>>> index 3cee2ef3ac..a8db8bfd9c 100644
-> >>>>>>> --- a/hw/net/virtio-net.c
-> >>>>>>> +++ b/hw/net/virtio-net.c
-> >>>>>>> @@ -3743,9 +3743,7 @@ static void
-> >>>>>>> virtio_net_device_realize(DeviceState *dev, Error **errp)
-> >>>>>>>        n->net_conf.tx_queue_size =3D
-> >>>>>>> MIN(virtio_net_max_tx_queue_size(n),
-> >>>>>>>                                        n->net_conf.tx_queue_size)=
-;
-> >>>>>>> -    for (i =3D 0; i < n->max_queue_pairs; i++) {
-> >>>>>>> -        virtio_net_add_queue(n, i);
-> >>>>>>> -    }
-> >>>>>>> +    virtio_net_add_queue(n, 0);
-> >>>>>>>        n->ctrl_vq =3D virtio_add_queue(vdev, 64,
-> >>>>>>> virtio_net_handle_ctrl);
-> >>>>>>>        qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
-> >>>>>>
-> >>>>>> This change breaks virtio net migration when multiqueue is enabled=
-.
-> >>>>>>
-> >>>>>> I think this is because virtqueues are half initialized after
-> >>>>>> migration : they are
-> >>>>>> initialized on guest side (kernel is using them) but not on QEMU
-> >>>>>> side (realized has only
-> >>>>>> initialized one). After migration, they are not initialized by the
-> >>>>>> call to
-> >>>>>> virtio_net_set_multiqueue() from virtio_net_set_features() because
-> >>>>>> virtio_get_num_queues()
-> >>>>>> reports already n->max_queue_pairs as this value is coming from
-> >>>>>> the source guest memory.
-> >>>>>>
-> >>>>>> I don't think we have a way to half-initialize a virtqueue (to
-> >>>>>> initialize them only on
-> >>>>>> QEMU side as they are already initialized on kernel side).
-> >>>>>>
-> >>>>>> I think this change should be reverted to fix the migration issue.
-> >>>>>>
-> >>>>>
-> >>>>> Moreover, if I look in the code of virtio_load() and
-> >>>>> virtio_add_queue() we can guess it's
-> >>>>> not correct to migrate a virtqueue that is not initialized on the
-> >>>>> destination side because
-> >>>>> fields like 'vdev->vq[i].handle_output' or 'vdev->vq[i].used_elems'
-> >>>>> cannot be initialized
-> >>>>> by virtio_load() and neither by virtio_add_queue() after
-> >>>>> virtio_load() as fields like
-> >>>>> 'vring.num' are already initialized by virtio_load().
-> >>>>>
-> >>>>> For instance, in virtio_load() we set:
-> >>>>>
-> >>>>>       for (i =3D 0; i < num; i++) {
-> >>>>>           vdev->vq[i].vring.num =3D qemu_get_be32(f);
-> >>>>>
-> >>>>> and in virtio_add_queue() we search for the firt available queue to
-> >>>>> add with:
-> >>>>>
-> >>>>>       for (i =3D 0; i < VIRTIO_QUEUE_MAX; i++) {
-> >>>>>           if (vdev->vq[i].vring.num =3D=3D 0)
-> >>>>>               break;
-> >>>>>       }
-> >>>>>
-> >>>>> So virtio_add_queue() cannot be used to set:
-> >>>>>
-> >>>>>       vdev->vq[i].handle_output =3D handle_output;
-> >>>>>       vdev->vq[i].used_elems =3D g_new0(VirtQueueElement, queue_siz=
-e);
-> >>>>>
-> >>>>> Moreover it would overwrite fields already set by virtio_load():
-> >>>>>
-> >>>>>       vdev->vq[i].vring.num =3D queue_size;
-> >>>>>       vdev->vq[i].vring.align =3D VIRTIO_PCI_VRING_ALIGN;
-> >>>>>
-> >>>>> It also explains why virtio_net_change_num_queue_pairs()
-> >>>>> (indirectly called by
-> >>>>> virtio_net_set_features()) doesn't update the queue pair numbers:
-> >>>>> vring.num is already set
-> >>>>> so it thinks there is no more queues to add.
-> >>>>>
-> >>>>> Thanks,
-> >>>>> LAurent
-> >>>>>
-> >>>>
-> >>>> I agree.
-> >>>>
-> >>>> Laurent, would you like to send a patch to revert this?
-> >>>>
-> >>>
-> >>> Yes. I will also try to fix the leak in unrealize that the patch
-> >>> wanted to fix initially.
-> >>
-> >> I wrote a fix so I will submit it once internal testing is done. You
-> >> can see the change at:
-> >> https://gitlab.com/akihiko.odaki/qemu-kvm/-/
-> >> commit/22161221aa2d2031d7ad1be7701852083aa9109a
-> >
-> > It works fine for me but I don't know if it's a good idea to add queues
-> > while the state is loading.
+> Add Trivial patches Maintainers.
 >
-> I couldn't come up with other options. The problem is that the number of
-> queues added during realization does not match with the loaded state. We
-> need to add queues after knowing the negotiated feature set and before
-> loading the queue states to fix this problem.
 >
-> Reverting will add queues that are used when the multiqueue feature is
-> negotiated so it will fix migration for such cases, but will also break
-> the other cases (i.e., the multiqueue feature is not negotiated) as it
-> adds too many queues.
 >
-> Regards,
-> Akihiko Odaki
+> Hi Jason/Michael/Laurent,
+>
+> Can you help to pick up this patch for upstream and stable?
 
-I wonder if the following is much more simpler:
+Queued.
 
-1) introducing booleans whether the queue has been deleted
-2) in unrelize, deleted only the queue that has not been deleted
-
-?
+Btw, if you want -stable next time, please cc it.
 
 Thanks
 
 >
-> >
-> > Jason, let me know which solution you prefer (revert or pre_load_queues
-> > helper).
-> >
-> > CC'ing MST
-> >
-> > Thanks,
-> > Laurent
-> >
 >
+>
+> Thanks
+>
+> Chen
+>
+>
+>
+> From: Stefan Weil <sw@weilnetz.de>
+> Sent: Friday, October 18, 2024 3:44 AM
+> To: Zhang, Chen <chen.zhang@intel.com>; Li Zhijian <lizhijian@fujitsu.com=
+>; Jason Wang <jasowang@redhat.com>; qemu-stable <qemu-stable@nongnu.org>; =
+QEMU Trivial <qemu-trivial@nongnu.org>
+> Cc: qemu-devel@nongnu.org
+> Subject: Re: [PATCH] Fix calculation of minimum in colo_compare_tcp
+>
+>
+>
+> It looks like nobody has sent a pull request for this fix up to now. Is i=
+t trivial enough for qemu-trivial? And maybe qemu-stable could also apply i=
+t to older versions.
+>
+> Stefan W.
+>
+> Am 10.09.24 um 04:38 schrieb Zhang, Chen:
+>
+> -----Original Message-----
+>
+> From: Stefan Weil <sw@weilnetz.de>
+>
+> Sent: Tuesday, September 10, 2024 4:43 AM
+>
+> To: Zhang, Chen <chen.zhang@intel.com>; Li Zhijian <lizhijian@fujitsu.com=
+>;
+>
+> Jason Wang <jasowang@redhat.com>
+>
+> Cc: qemu-devel@nongnu.org; Stefan Weil <sw@weilnetz.de>
+>
+> Subject: [PATCH] Fix calculation of minimum in colo_compare_tcp
+>
+>
+>
+> GitHub's CodeQL reports a critical error which is fixed by using the MIN
+>
+> macro:
+>
+>
+>
+>     Unsigned difference expression compared to zero
+>
+>
+>
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+>
+>
+>
+> Looks good to me.
+>
+> Reviewed-by: Zhang Chen <chen.zhang@intel.com>
+>
+>
+>
+> Thanks
+>
+> Chen
+>
+>
+>
+> ---
+>
+>  net/colo-compare.c | 3 +--
+>
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+>
+>
+> diff --git a/net/colo-compare.c b/net/colo-compare.c index
+>
+> c4ad0ab71f..39f90c4065 100644
+>
+> --- a/net/colo-compare.c
+>
+> +++ b/net/colo-compare.c
+>
+> @@ -412,8 +412,7 @@ static void colo_compare_tcp(CompareState *s,
+>
+> Connection *conn)
+>
+>       * can ensure that the packet's payload is acknowledged by
+>
+>       * primary and secondary.
+>
+>      */
+>
+> -    uint32_t min_ack =3D conn->pack - conn->sack > 0 ?
+>
+> -                       conn->sack : conn->pack;
+>
+> +    uint32_t min_ack =3D MIN(conn->pack, conn->sack);
+>
+>
+>
+>  pri:
+>
+>      if (g_queue_is_empty(&conn->primary_list)) {
+>
+> --
+>
+> 2.39.3 (Apple Git-146)
 
 
