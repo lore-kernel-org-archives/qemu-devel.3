@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B0CD2FFE3
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 10:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D9AD2FFE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 10:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1jn7-0005Fg-Hf; Fri, 18 Oct 2024 06:01:06 -0400
+	id 1t1jnh-000605-UW; Fri, 18 Oct 2024 06:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jn5-0005FI-Hc
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:01:03 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t1jn4-0003g9-0o
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:01:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729245662; x=1760781662;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=5ufCzBdmKPj60fl5mufwTvDv/tqBFn2MI7Lp8YJsNZU=;
- b=XqAQsZGcJ4lsq2L6Ch5wv5e8f+toDJaywh0A7N9SUFglMkOHJjzeXPqI
- UnoYX59pfY1g7SSE9YBG/fhzQJZLNQ70XA5P0Gfk4MyPz3LL8MGJPV2YT
- oXUlq5FThEA3hayoNvN6OtGPutgSID1+gqPdfdQqLJJjaM+BUpQ5w2xfk
- 6n+SzGsaYrOJ0A1vj14vngvOxjTDYlArFU9HcDu7FdzQxyD/V/ntRlSym
- QnZ7sJP+SnZhpRd5wbmYnbBEUPtUIgPU8Os9bU374FApeDqDzjMSAn/2e
- DMwQUkvKYDgSsHwGLw7Frl5TdKZ0WeEzBaRpjcjVqLkgqwkrHEEIfzh/a A==;
-X-CSE-ConnectionGUID: DLK7dIWuQOuOpFdN8kYZVA==
-X-CSE-MsgGUID: 0iifwqznRuSsZIB2lL3bEw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28874479"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="28874479"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Oct 2024 03:01:01 -0700
-X-CSE-ConnectionGUID: OcTKzu2NSdyC2Y11Rr0u+Q==
-X-CSE-MsgGUID: c6WGjDT6T4qTmahEKd3k9g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="83461282"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 18 Oct 2024 03:00:59 -0700
-Date: Fri, 18 Oct 2024 18:17:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 31/31] system: remove unused qerror.h header
-Message-ID: <ZxI1q0ucLSSo0Ijc@intel.com>
-References: <20241017113344.883424-1-berrange@redhat.com>
- <20241017113344.883424-32-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t1jnc-0005uB-GY
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:01:39 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t1jnZ-0003ij-IU
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 06:01:36 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c99be0a4bbso2567071a12.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 03:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729245691; x=1729850491; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EceJMD5TFFW28sEBYAnTnnk355nDba/Ev8Vf3NXQHxQ=;
+ b=bxoB28wMp99mJ3xdNiD1smbu3C6RV3s8THKyANCI4hbIwyyld61C3mvZV8t8m7okyx
+ ohQEPfdbpdkIQpic1Wg2E/loMynNGFvrgyc5z/1mABqo3ATcy30+ha0Vpdfckumxy/4h
+ OwG0GPyjVapd9DHVq907q95/UM3C5Jim068GigS1iRoQ+uvLT3NDR6mCEQZNGW8V/Hop
+ azPIWaqO/7L95t+sY0fk73n5rI69TDDlONpSGe2XYIAyQVS/Z002DBLhCCSOV3mGVJ4z
+ f/+hQwa+hQfsm2LFaWFWuV3fgJMBlJtXX/7F+0TcMFhEqacEmCPBVJLkpteTxth+hghr
+ 2XVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729245691; x=1729850491;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EceJMD5TFFW28sEBYAnTnnk355nDba/Ev8Vf3NXQHxQ=;
+ b=q//nASvIXLoQglVX459zwD/XQyvkKPuKOcWboB7bq8V15BFqiq/+y0rEeViCFXKkWX
+ qHTk8iaFiImtNLEc47JkAolsL+FZIsb3aYPvIpToUZJ4JxE+D8Cn/3BuUK9CbDA8v/UN
+ xGDXncFwFyGPrHFMNcUu330JJr5XR/f9e2c6mZRXi1dVchWOO0KZvkE1UCPD6Hbda0Rw
+ yMJXxkfEWkUoUwJmSKFB0m0d8uUoOsMLJ+vSk9Xbe5Vxx9IVmvtphxiBG/xd9yK3G+t2
+ 7oN2y+4D2uQij9g2X+c07gjovdy5sUtSX7GxCXugD0075o+6hrlz3bYgCUpxTMJqSp04
+ 3d4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnSKOW+v2sOhBQI3NM4NMJxBpDVY3AXzxYVb01I22Ln151++9+Aq4jyXHdExzHgZf0Gr5cqPrq+nvt@nongnu.org
+X-Gm-Message-State: AOJu0Ywom19QtR9XhSVwtS4cUabXKRuSSz2WSsnbZWoymSg4+z8lGpkT
+ jHIDMDtB86OBcbQVGE7nw8pvRCyDoqtcAaWpQ5LXdJe2H+PsOyz+QIHQ6ZEZNos=
+X-Google-Smtp-Source: AGHT+IEDSxbCrlx25fjyK8bHdzmrM1cAxNXPz/tyNwGjzf/ZGH+OdLM0Jm8+kkTlgW5Frk6BCtFLAw==
+X-Received: by 2002:a17:907:7da1:b0:a9a:2d04:b577 with SMTP id
+ a640c23a62f3a-a9a69ba71d2mr175520566b.32.1729245691269; 
+ Fri, 18 Oct 2024 03:01:31 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a68a8d9e4sm73106566b.9.2024.10.18.03.01.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Oct 2024 03:01:30 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 413755F863;
+ Fri, 18 Oct 2024 11:01:29 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: open list <linux-kernel@vger.kernel.org>,  Linux ARM
+ <linux-arm-kernel@lists.infradead.org>,  lkft-triage@lists.linaro.org,
+ Linux Regressions <regressions@lists.linux.dev>,  qemu-devel@nongnu.org,
+ Arnd Bergmann <arnd@arndb.de>,  Mark Brown <broonie@kernel.org>,  Catalin
+ Marinas <catalin.marinas@arm.com>,  Aishwarya TCV <Aishwarya.TCV@arm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Anders Roxell
+ <anders.roxell@linaro.org>
+Subject: Re: Qemu v9.0.2: Boot failed qemu-arm with Linux next-20241017 tag.
+In-Reply-To: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
+ (Naresh Kamboju's message of "Fri, 18 Oct 2024 12:35:13 +0530")
+References: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Fri, 18 Oct 2024 11:01:29 +0100
+Message-ID: <87v7xp91c6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241017113344.883424-32-berrange@redhat.com>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,37 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+Naresh Kamboju <naresh.kamboju@linaro.org> writes:
 
-On Thu, Oct 17, 2024 at 12:33:43PM +0100, Daniel P. Berrangé wrote:
-> Date: Thu, 17 Oct 2024 12:33:43 +0100
-> From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: [PATCH v2 31/31] system: remove unused qerror.h header
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  system/rtc.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/system/rtc.c b/system/rtc.c
-> index e3bc2095f9..216d2aee3a 100644
-> --- a/system/rtc.c
-> +++ b/system/rtc.c
-> @@ -25,7 +25,6 @@
->  #include "qemu/osdep.h"
->  #include "qemu/cutils.h"
->  #include "qapi/error.h"
-> -#include "qapi/qmp/qerror.h"
->  #include "qemu/error-report.h"
->  #include "qemu/option.h"
->  #include "qemu/timer.h"
-> -- 
-> 2.46.0
-> 
+> The QEMU-ARMv7 boot has failed with the Linux next-20241017 tag.
+> The boot log is incomplete, and no kernel crash was detected.
+> However, the system did not proceed far enough to reach the login prompt.
+>
+> Please find the incomplete boot log links below for your reference.
+> The Qemu version is 9.0.2.
+> The arm devices TI beaglebone x15 boot pass.
+>
+> This is always reproducible.
+> First seen on Linux next-20241017 tag.
+>   Good: next-20241016
+>   Bad: next-20241017
+>
+> qemu-armv7:
+>   boot:
+>     * clang-19-lkftconfig
+>     * gcc-13-lkftconfig
+>     * clang-nightly-lkftconfig
+>
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>
+> Boot log:
+> -------
+> [    0.000000] Booting Linux on physical CPU 0x0
+> [    0.000000] Linux version 6.12.0-rc3-next-20241017
+> (tuxmake@tuxmake) (arm-linux-gnueabihf-gcc (Debian 13.3.0-5) 13.3.0,
+> GNU ld (GNU Binutils for Debian) 2.43.1) #1 SMP @1729156545
+> [    0.000000] CPU: ARMv7 Processor [414fc0f0] revision 0 (ARMv7), cr=3D1=
+0c5387d
+> [    0.000000] CPU: div instructions available: patching division code
+> [    0.000000] CPU: PIPT / VIPT nonaliasing data cache, PIPT instruction =
+cache
+> [    0.000000] OF: fdt: Machine model: linux,dummy-virt
+> [    0.000000] random: crng init done
+> [    0.000000] earlycon: pl11 at MMIO 0x09000000 (options '')
+> [    0.000000] printk: legacy bootconsole [pl11] enabled
+> [    0.000000] Memory policy: Data cache writealloc
+> [    0.000000] efi: UEFI not found.
+> [    0.000000] cma: Size (0x04000000) of region at 0x00000000 exceeds
+> limit (0x00000000)
+> [    0.000000] cma: Failed to reserve 64 MiB on node -1
 
-Ah, this qerror.h is added by patch 23 accidentally.
+Is this a highmem related thing. Passing -m 2G allows it to get further
+and 4G is obviously at the limit of 32 bit?
 
-Regards,
-Zhao
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
