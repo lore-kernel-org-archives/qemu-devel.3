@@ -4,97 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7ECD3000A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB82D3000A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1nDL-00075z-FY; Fri, 18 Oct 2024 09:40:23 -0400
+	id 1t1nNr-0003fb-L7; Fri, 18 Oct 2024 09:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t1nDJ-000756-QL; Fri, 18 Oct 2024 09:40:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1t1nDI-0001gE-0L; Fri, 18 Oct 2024 09:40:21 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49IA86gc014840;
- Fri, 18 Oct 2024 13:40:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Hqr7pG
- ln3zixPvjDaGq+216Npx+0IDnaZG6qi8edrK8=; b=MQs9omOsUwyKvd3urdKUwF
- IlSWvUxmKG/qI0+fp2b2EwSFaf3ICNMt9iyPefTMoswpHanoe3ZTQzG+eKyhtiE7
- yMphlZiZwiuDXDV8vkCbb1DXjIj9ihDnclNDjKhVRymSncLGTFogZG5jyevt3Frr
- x3MPTl1tEH4KFOyfXVx8MkuB4VUssfHeMaPbhmYfixIZJQBiC8RfwR6DDC0q7d8U
- gmbAOxuxRiTd6JY45wv3NKEIIuyDq5h13TbGj8onlfg1kKPZ/uA2zP7wYauyjjiU
- 4lr/SKzwrcI87J9ou1iPKPV8vORa8Mx/9K5TMS4QsF9SCXprDmTa/jKqCsxf7SNg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42aqgr94v1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 13:40:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49IB9WDR027499;
- Fri, 18 Oct 2024 13:40:16 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4283ty4wx0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 13:40:16 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49IDeGDl14484036
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Oct 2024 13:40:16 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6130F58043;
- Fri, 18 Oct 2024 13:40:16 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA3C05805D;
- Fri, 18 Oct 2024 13:40:15 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Oct 2024 13:40:15 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL v1 3/3] tests: Wait for migration completion on destination
- QEMU to avoid failures
-Date: Fri, 18 Oct 2024 09:40:04 -0400
-Message-ID: <20241018134004.2110276-4-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241018134004.2110276-1-stefanb@linux.ibm.com>
-References: <20241018134004.2110276-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1nNq-0003fN-Dk
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:51:14 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t1nNo-0003pn-8K
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:51:14 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DD5AD21BAC;
+ Fri, 18 Oct 2024 13:51:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729259467; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zcwS89eTgtSFqEzZCizHlepTRkpI+Hwf7yXt4T6jDKk=;
+ b=gK0lv3dlDeKyH0GWId+6oK/y/+82Hx10rHUQ4qaTs6UMevDSeiI0Vew2+qFB+srHwMlOdB
+ m51/3b3wyqg1AOLxbb5N31rrz7EQ1gKUnj7+YF5IOZK66C/LVcalv2zUQlTROt2xn7CrQS
+ nxZ6yZm9MK+N3YVdSqj9B1zoRRxEOYc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729259467;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zcwS89eTgtSFqEzZCizHlepTRkpI+Hwf7yXt4T6jDKk=;
+ b=9BUMZa6LsfmvS1zuOgK2pG+XV7DJSTF9o7l6Y7Fq7duIGn07ry8eQVkTX8FUbDdIw0osB0
+ aaSKOEa5xcJrm1CQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hgrvYtpu;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=N2iZ5wDu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1729259466; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zcwS89eTgtSFqEzZCizHlepTRkpI+Hwf7yXt4T6jDKk=;
+ b=hgrvYtpupsGbCUdy+wsbFy7HRd3veiFgyKH+GvsE7wSxsatzu1O9H5HBYyAzNJByv9dq02
+ 1f6ziEnSnYezVumZ9p79i9CdBNu3InYtShGOiws4uWOymP8wvLDq0bo+y+naz0VgynzI7s
+ MV/l8YUifQrftl8Pk5gCUDu4sekU2D8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1729259466;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zcwS89eTgtSFqEzZCizHlepTRkpI+Hwf7yXt4T6jDKk=;
+ b=N2iZ5wDuDJ2EOaeHj95pX7YNWYlTxJLsRZvkkoYQytYZdud+RaeIpEubD+nmy81iN2s3K/
+ Su7TAI/gw7d0/5DA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 676FE13680;
+ Fri, 18 Oct 2024 13:51:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AyXKC8pnEmcFLAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 18 Oct 2024 13:51:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Be?=
+ =?utf-8?Q?nn=C3=A9e?=
+ <alex.bennee@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Wainer dos Santos Moschetta
+ <wainersm@redhat.com>
+Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
+In-Reply-To: <ZxIxsw265Au7fI-x@redhat.com>
+References: <20241017143211.17771-1-farosas@suse.de>
+ <20241017143211.17771-5-farosas@suse.de> <ZxEl4zYgHLoLeHCT@redhat.com>
+ <87r08e3d74.fsf@suse.de> <ZxIj694WqXwwMRIY@redhat.com>
+ <CAFEAcA8XCBrbqGDesL+5su-2Bk_YR1iQ6_X_j9tJZmNK1Kw=pQ@mail.gmail.com>
+ <ZxIxsw265Au7fI-x@redhat.com>
+Date: Fri, 18 Oct 2024 10:51:03 -0300
+Message-ID: <87zfn11pvc.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 1RPzNwBbzJHVVpVA7oqEmlxASimqLt8f
-X-Proofpoint-GUID: 1RPzNwBbzJHVVpVA7oqEmlxASimqLt8f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 mlxlogscore=883 malwarescore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 spamscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410180085
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: DD5AD21BAC
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[8];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,38 +137,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than waiting for the completion of migration on the source side,
-wait for it on the destination QEMU side to avoid accessing the TPM TIS
-memory mapped registers before QEMU could restore their state. This
-error condition could be triggered on busy systems where the destination
-QEMU did not have enough time to restore the TIS state while the test case
-was already reading its registers. The test case was for example reading
-the STS register and received an unexpected value (0xffffffff), which
-lead to a segmentation fault later on due to trying to read 0xffff bytes
-from the TIS into a buffer.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Cc:  <qemu-stable@nongnu.org>
-Reported-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/qtest/tpm-tests.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On Fri, Oct 18, 2024 at 10:46:55AM +0100, Peter Maydell wrote:
+>> On Fri, 18 Oct 2024 at 10:01, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
+om> wrote:
+>> >
+>> > On Thu, Oct 17, 2024 at 01:29:35PM -0300, Fabiano Rosas wrote:
+>> > > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>> > >
+>> > > > On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
+>> > > >> Recent changes to how we invoke the migration tests have
+>> > > >> (intentionally) caused them to not be part of the check-qtest tar=
+get
+>> > > >> anymore. Add the check-migration-quick target so we don't lose
+>> > > >> migration code testing in this job.
+>> > > >
+>> > > > But 'check-migration-quick' is only the subset of migration tests,
+>> > > > 'check-migration' is all of the migration tests. So surely this is
+>> > > > a massive regressions in covage in CI pipelines.
+>> > >
+>> > > I'm not sure it is. There are tests there already for all the major
+>> > > parts of the code: precopy, postcopy, multifd, socket. Besides, we c=
+an
+>> > > tweak migration-quick to cover spots where we think we're losing
+>> > > coverage.
+>> >
+>> > Each of the tests in migration-test  were added for a good reason,
+>> > generally to address testing gaps where we had functional regressions
+>> > in the past. I don't think its a good idea to stop running such tests
+>> > in CI as gating on new contributions. Any time we've had optional
+>> > tests in QEMU, we've seen repeated regressions in the area in question.
+>> >
+>> > > Since our CI offers nothing in terms of reproducibility or
+>> > > debuggability, I don't think it's productive to have an increasing
+>> > > amount of tests running in CI if that means we'll be dealing with
+>> > > timeouts and intermittent crashes constantly.
+>> >
+>> > Test reliability is a different thing. If a particular test is
+>> > flaky, it needs to either be fixed or disabled. Splitting into
+>> > a fast & slow grouping doesn't address reliability, just hides
+>> > the problem from view.
+>>=20
+>> A lot of the current reliability issue is timeouts -- sometimes
+>> our CI runners just run really slow (I have seen an example where
+>> between a normal and a slow run on the same commit both the
+>> compile and test times were 10x different...) So any test
+>> that is not a fast-to-complete is much much more likely to
+>> hit its timeout if the runner is running slowly. When I am
+>> doing CI testing for merges "migration test timed out again"
+>> is really really common.
+>
+> If its frequently timing out, then we've got the timeouts
+> wrong, or we have some genuine bugs in there to be fixed.
+>
+>> > > No disagreement here. But then I'm going to need advice on what to do
+>> > > when other maintainers ask us to stop writing migration tests because
+>> > > they take too long. I cannot send contributors away nor merge code
+>> > > without tests.
+>> >
+>> > In general, I think it is unreasonable for other maintainers to
+>> > tell us to stop adding test coverage for migration, and would
+>> > push back against such a request.
+>>=20
+>> We do not have infinite CI resources, unfortunately. Migration
+>> is competing with everything else for time on CI. You have to
+>> find a balance between "what do we run every time" and "what
+>> do we only run when specifically testing a migration pullreq".
+>> Similarly, there's a lot of iotests but we don't run all of them
+>> for every block backend for every CI job via "make check".
+>
+> The combos we don't run for iotests are a good source of
+> regressions too :-(
+>
+>> Long test times for tests run under "make check" are also bad
+>> for individual developers -- if I'm running "make check" to
+>> test a target/arm change I've made I don't really want that
+>> to then spend 15 minutes testing the migration code that
+>> I haven't touched and that is vanishingly unlikely to be
+>> affected by my patches.
+>
+> Migration-test *used* to take 15 minutes to run, but that was a
+> very long time ago. A run of it today is around 1m20.
+>
+> That said, if you are building multiple system emulators, we
+> run the same test multiple times, and with the number of
+> targets we have, that will be painful.
+>
+> That could be a good reason to split the migration-test into
+> two distinct programs. One program that runs for every target,
+> and one that is only run once, for some arbitrary "primary"
+> target ?
 
-diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
-index fb94496bbd..197714f8d9 100644
---- a/tests/qtest/tpm-tests.c
-+++ b/tests/qtest/tpm-tests.c
-@@ -114,7 +114,7 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-                      sizeof(tpm_pcrread_resp));
- 
-     tpm_util_migrate(src_qemu, uri);
--    tpm_util_wait_for_migration_complete(src_qemu);
-+    tpm_util_wait_for_migration_complete(dst_qemu);
- 
-     tpm_util_pcrread(dst_qemu, tx, tpm_pcrread_resp,
-                      sizeof(tpm_pcrread_resp));
--- 
-2.47.0
+What do you mean by distinct programs? It's not the migration-test that
+decides on which targets it runs, it's meson.build. We register a test()
+for each target, same as with any other qtest. Maybe I misunderstood
+you...
 
+>  Or could we make use of glib's g_test_thorough
+> for this - a primary target runs with "SPEED=3Dthrough" and
+> all other targets with normal settings. That would give us
+> a way to optimize any of the qtests to reduce redundant
+> testing where appropriate.
+
+This still requires a new make target I think. Otherwise we'd run *all*
+thorough tests for a QEMU target and not only migration-test in thorough
+mode.
+
+>
+>
+> If we move alot of testing out into a migration unit test,
+> this also solves the redundancy problem.
+>
+>
+> With regards,
+> Daniel
 
