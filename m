@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C53D3C549
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B53D3C549
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1fMb-00054H-Ut; Fri, 18 Oct 2024 01:17:26 -0400
+	id 1t1fS3-00066y-9O; Fri, 18 Oct 2024 01:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t1fMa-00053m-Ex; Fri, 18 Oct 2024 01:17:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1t1fMX-0006SP-U8; Fri, 18 Oct 2024 01:17:24 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HJSAvV017516;
- Fri, 18 Oct 2024 05:17:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0FHp8t
- tCFkdSoRM8M47qWWPn1nX8WXLKtCphrTErj4M=; b=B0EPTBZk4zKwg5LRVyZWd+
- MytDr6dBvBHhnGKuWffGg9a72BkB6+0LtUh4i6dxIAEhgB2JlzN5aBntTSTzanrL
- GcZU9xAB1Ub1w6UHCQI9hIu0bswrDOQCOlG2MLTx+qDzuCMlrBCRSWo0diuxdPwM
- Ns01LpqUqAuDQH1U7Nsx+ntrWaA1a67bYrD0al3+/rLOm+cLrDRFzun/Wdv/u6is
- /qY/igGt6kFTbbT2hiK93xgfECLVirceqF/3BBoxfDHvc3dQhhdh1/P9+XPADqFk
- Vx2gRoZb3KYH1k/vnSFkYqd/uP4PZFeotfOISLxLkTmDcz6J62Vpm7uI5rowWmKQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ar0u6qsg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 05:17:15 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49I5HESh029720;
- Fri, 18 Oct 2024 05:17:14 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42ar0u6qsc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 05:17:14 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49I4YwSs006415;
- Fri, 18 Oct 2024 05:17:14 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284xkjgdv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Oct 2024 05:17:14 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49I5HCi651183928
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Oct 2024 05:17:13 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF2E25804E;
- Fri, 18 Oct 2024 05:17:12 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DEF435803F;
- Fri, 18 Oct 2024 05:17:09 +0000 (GMT)
-Received: from [9.124.220.95] (unknown [9.124.220.95])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 18 Oct 2024 05:17:09 +0000 (GMT)
-Message-ID: <07af4e02-aa2a-494c-9279-cd70389fc97e@linux.ibm.com>
-Date: Fri, 18 Oct 2024 10:47:08 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spapr: nested: Add support for DPDES SPR in GSB for TCG L0
-To: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>
-Cc: David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-References: <20241017110033.3929988-1-amachhiw@linux.ibm.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20241017110033.3929988-1-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 1mve9AEtLiHPf8mLzLVxm1yuWvvcyMsn
-X-Proofpoint-ORIG-GUID: niZx0BWZKniiFyII0ubBw06uW-5GIU9W
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t1fS1-00066V-8G
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:23:01 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t1fRz-00074e-5Z
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 01:23:01 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-20cb89a4e4cso12223105ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 22:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729228977; x=1729833777;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bgI5l4SwGV7obPPim0dYwKQ7q4Oi0kthTyD1lt9oHkA=;
+ b=qiM/QoVQ0r02NJJLo4vIdeOIAHFt7Ff/URlGuXCX3t8SLuTnr6jqaQrK1InrKmTbJx
+ e3B/hWF8/XE334gL8sDdXmCELNEAVogJ9fUVCgxrwrFIgktwOyLvQJPbcNvQA53SrP1M
+ isvLiKvB9PHHWfK9+wqJGh2PrPs12tORtVSHEs+TvlsX8eHccHvfHPOpWvxlNBD3aD7L
+ xidUOO+Wc9usFcRPy+Ro3cE67uscqWsLA6OfzCGQrKzG3zHhZndGJmW8tt9g7yfWsPCd
+ XRrmJinLDRT2Q3ouMvQ7FygdUfu30tvWca/fxYWrYvBFrif/Ki/df01VDUET85ptmFw+
+ onyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729228977; x=1729833777;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bgI5l4SwGV7obPPim0dYwKQ7q4Oi0kthTyD1lt9oHkA=;
+ b=CIRSqSgQGk6m/d8JufcxvqEw6DQO/aB/64F3dvS4piZAV6WTC+xJvCNvK4G3IepSJh
+ tEFJqQ+FPALSHAouGobzygioBn+EIwY4NzUa2CwvbWBqgdYUBIhjOvt40AYgxX39TrKj
+ L5kUv3B/iBAYztZrerhM4EAqIm1jwh7EGoyn3iofFbdeai7JERu3q2mZE2NiqMLxYT+C
+ HlTWekc2ZveNiopFdAjelWo+dVM/mZijITRpuBI+pe8HHy3WHyYvk1cxICdVkk4kvfBa
+ o88aJDjVSsN4TiZ76xRrYtQqoEqE2l0gXUCg6qQtCNHoZtQnYar/e43p6Cw6vGuKQdMj
+ PR9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCpRiteE2N5f6pPbh2Jw7d52ZDh6DPQvs7ftQA432qXTTzv4BpV9/tBVJHwifSApOffc/nqK7lm4DQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz4rxJJBzzhH/hd1uJLpuHcCOHKQSIqLhUTekm+oQSVn0s2dPDW
+ oxl5Vaexi0RlFDB+qH8cTIHny0+1gX8E0L89xtnp+iOEICrkztvF7lNmXzRVWbI=
+X-Google-Smtp-Source: AGHT+IH0UwDaXM18+txyRRj6WHUuEhOrMfq+2kJf31HWBaY7U5G05nQuw+u/EaEEQMbF+bel+44bzA==
+X-Received: by 2002:a17:902:d510:b0:20c:8839:c517 with SMTP id
+ d9443c01a7336-20e5a928cb1mr14387175ad.53.1729228977448; 
+ Thu, 17 Oct 2024 22:22:57 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e5a8d7408sm5003595ad.155.2024.10.17.22.22.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Oct 2024 22:22:57 -0700 (PDT)
+Message-ID: <e2c0584f-c8da-4cdd-932d-a87ee2cd838f@daynix.com>
+Date: Fri, 18 Oct 2024 14:22:51 +0900
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0
- spamscore=0 bulkscore=0 adultscore=0 mlxlogscore=776 phishscore=0
- suspectscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180029
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/6] ui/sdl2: Implement dpy dmabuf functions
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-3-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241015043238.114034-3-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,107 +114,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Amit,
+On 2024/10/15 13:32, Dmitry Osipenko wrote:
+> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> 
+> If EGL is used, we can rely on dmabuf to import textures without
+> doing copies.
+> 
+> To get this working on X11, we use the existing SDL hint:
+> SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
+> 
+> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   include/ui/sdl2.h |  7 ++++++
+>   ui/sdl2-gl.c      | 63 +++++++++++++++++++++++++++++++++++++++++++++++
+>   ui/sdl2.c         | 31 +++++++++++++++++++++++
+>   3 files changed, 101 insertions(+)
+> 
+> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+> index dbe6e3d9739b..9daf5ecffae7 100644
+> --- a/include/ui/sdl2.h
+> +++ b/include/ui/sdl2.h
+> @@ -45,6 +45,7 @@ struct sdl2_console {
+>       bool gui_keysym;
+>       SDL_GLContext winctx;
+>       QKbdState *kbd;
+> +    bool has_dmabuf;
+>   #ifdef CONFIG_OPENGL
+>       QemuGLShader *gls;
+>       egl_fb guest_fb;
+> @@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
+>                                void *d3d_tex2d);
+>   void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>                              uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
+> +void sdl2_gl_console_init(struct sdl2_console *scon);
+>   
+>   #endif /* SDL2_H */
+> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+> index b1fe96d6af22..7612af18292c 100644
+> --- a/ui/sdl2-gl.c
+> +++ b/ui/sdl2-gl.c
+> @@ -26,6 +26,8 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+> +#include "qemu/error-report.h"
+>   #include "ui/console.h"
+>   #include "ui/input.h"
+>   #include "ui/sdl2.h"
+> @@ -249,3 +251,64 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>   
+>       SDL_GL_SwapWindow(scon->real_window);
+>   }
+> +
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +
+> +    assert(scon->opengl);
+> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+> +
+> +    egl_dmabuf_import_texture(dmabuf);
+> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
+> +        error_report("%s: failed fd=%d", __func__, qemu_dmabuf_get_fd(dmabuf));
+> +    }
+> +
+> +    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            0, 0,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            NULL);
+> +
+> +    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
+> +        scon->guest_fb.dmabuf = dmabuf;
+> +    }
+> +}
+> +
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    egl_dmabuf_release_texture(dmabuf);
+> +}
+> +
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
+> +{
+> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +
+> +    return scon->has_dmabuf;
+> +}
+> +
+> +void sdl2_gl_console_init(struct sdl2_console *scon)
+> +{
+> +    bool hidden = scon->hidden;
+> +
+> +    scon->hidden = true;
+> +    scon->surface = qemu_create_displaysurface(1, 1);
+> +    sdl2_window_create(scon);
+> +
+> +    /*
+> +     * QEMU checks whether console supports dma-buf before switching
+> +     * to the console.  To break this chicken-egg problem we pre-check
+> +     * dma-buf availability beforehand using a dummy SDL window.
+> +     */
+> +    scon->has_dmabuf = qemu_egl_has_dmabuf();
+> +
+> +    sdl2_window_destroy(scon);
+> +    qemu_free_displaysurface(scon->surface);
+> +
+> +    scon->surface = NULL;
+> +    scon->hidden = hidden;
+> +}
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index bd4f5a9da14a..607181071b84 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -120,6 +120,9 @@ void sdl2_window_create(struct sdl2_console *scon)
+>           /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+>           scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+>       }
+> +
+> +    qemu_egl_display = eglGetCurrentDisplay();
+> +
+>       sdl_update_caption(scon);
+>   }
+>   
+> @@ -820,6 +823,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
+>       .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
+>       .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
+>       .dpy_gl_update           = sdl2_gl_scanout_flush,
+> +
+> +    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
+> +    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
+> +    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
+>   };
+>   
+>   static bool
+> @@ -847,6 +854,28 @@ static void sdl2_display_early_init(DisplayOptions *o)
+>       }
+>   }
+>   
+> +static void sdl2_set_hint_x11_force_egl(void)
+> +{
+> +#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(EGL_KHR_platform_x11)
 
-On 10/17/24 16:30, Amit Machhiwal wrote:
-> The DPDES support for doorbell emulation and handling for KVM on PAPR
-> guests was added in Linux via [1]. Subsequently, a new GSB element for
-> DPDES was added in Linux; the same has been missing in QEMU L0. Add
+EGL_KHR_platform_x11 is always defined when CONFIG_OPENGL is defined.
+Check CONFIG_OPENGL for the availability of EGL APIs.
 
-s/QEMU L0/ TCG L0 implementation?
+> +    Display *x_disp = XOpenDisplay(NULL);
 
-> support for DPDES register's APIv2 GSB element and required handling in
-> `spapr_nested.c`.
-> 
-> Currently, booting a KVM guest inside a QEMU TCG guest fails with the
-> below crash. The crash is encountered when GUEST_RUN_VCPU hcall made
-> into QEMU TCG L0 fails because H_INVALID_ELEMENT_VALUE is returned as
-> the mapping of the element ID corresponding to DPDES (unknown to QEMU
-> TCG L0) in GSR (Guest State Request) of TCG guest's KVM to the GSB
-> (Guest State Buffer) elements of QEMU TCG L0 fails.
+The availability of Xlib must be checked.
 
-GSB full form would be more appropriate along with first mention of GSB 
-in above text.
+> +    EGLDisplay egl_display;
+> +
+> +    if (!x_disp) {
+> +        return;
+> +    }
+> +
+> +    /* Prefer EGL over GLX to get dma-buf support. */
+> +    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
+ > +> +    if (egl_display != EGL_NO_DISPLAY) {
+> +        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
 
-With that:
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+SDL may not be going to use X11 but may use e.g., Wayland.
 
-> 
->   KVM: unknown exit, hardware reason ffffffffffffffea
->   NIP 0000000000000100   LR 0000000000000000 CTR 0000000000000000 XER 0000000000000000 CPU#0
->   MSR 0000000000003000 HID0 0000000000000000  HF 6c002000 iidx 3 didx 3
->   TB 00000000 00000000 DECR 0
->   GPR00 0000000000000000 0000000000000000 0000000000000000 000000007fe00000
->   GPR04 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR08 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR12 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR16 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR20 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR24 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   GPR28 0000000000000000 0000000000000000 0000000000000000 0000000000000000
->   CR 00000000  [ -  -  -  -  -  -  -  -  ]     RES 000@ffffffffffffffff
->    SRR0 0000000000000000  SRR1 0000000000000000    PVR 0000000000801200 VRSAVE 0000000000000000
->   SPRG0 0000000000000000 SPRG1 0000000000000000  SPRG2 0000000000000000  SPRG3 0000000000000000
->   SPRG4 0000000000000000 SPRG5 0000000000000000  SPRG6 0000000000000000  SPRG7 0000000000000000
->   HSRR0 0000000000000000 HSRR1 0000000000000000
->    CFAR 0000000000000000
->    LPCR 0000000000560413
->    PTCR 0000000000000000   DAR 0000000000000000  DSISR 0000000000000000
-> 
-> Fix this by adding the required support and handling in QEMU TCG L0.
-> 
-> [1] https://lore.kernel.org/all/20240605113913.83715-1-gautam@linux.ibm.com/
-> 
-> Fixes: 4a575f9a0567 ("spapr: nested: Initialize the GSB elements lookup table.")
-> Suggested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com > ---
->   hw/ppc/spapr_nested.c         | 3 +++
->   include/hw/ppc/spapr_nested.h | 3 ++-
->   2 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-> index c02785756c1e..b696ad537a77 100644
-> --- a/hw/ppc/spapr_nested.c
-> +++ b/hw/ppc/spapr_nested.c
-> @@ -194,6 +194,7 @@ static void nested_save_state(struct nested_ppc_state *save, PowerPCCPU *cpu)
->           save->fscr = env->spr[SPR_FSCR];
->           save->pspb = env->spr[SPR_PSPB];
->           save->ctrl = env->spr[SPR_CTRL];
-> +        save->dpdes = env->spr[SPR_DPDES];
->           save->vrsave = env->spr[SPR_VRSAVE];
->           save->dar = env->spr[SPR_DAR];
->           save->dsisr = env->spr[SPR_DSISR];
-> @@ -293,6 +294,7 @@ static void nested_load_state(PowerPCCPU *cpu, struct nested_ppc_state *load)
->           env->spr[SPR_FSCR] = load->fscr;
->           env->spr[SPR_PSPB] = load->pspb;
->           env->spr[SPR_CTRL] = load->ctrl;
-> +        env->spr[SPR_DPDES] = load->dpdes;
->           env->spr[SPR_VRSAVE] = load->vrsave;
->           env->spr[SPR_DAR] = load->dar;
->           env->spr[SPR_DSISR] = load->dsisr;
-> @@ -982,6 +984,7 @@ struct guest_state_element_type guest_state_element_types[] = {
->       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_FSCR,  fscr),
->       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_PSPB,   pspb),
->       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_CTRL,  ctrl),
-> +    GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DPDES, dpdes),
->       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_VRSAVE, vrsave),
->       GUEST_STATE_ELEMENT_ENV_DW(GSB_VCPU_SPR_DAR,   dar),
->       GUEST_STATE_ELEMENT_ENV_W(GSB_VCPU_SPR_DSISR,  dsisr),
-> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-> index 93ef14adcc5e..3b5cd993c256 100644
-> --- a/include/hw/ppc/spapr_nested.h
-> +++ b/include/hw/ppc/spapr_nested.h
-> @@ -99,7 +99,8 @@
->   #define GSB_VCPU_SPR_HASHKEYR   0x1050
->   #define GSB_VCPU_SPR_HASHPKEYR  0x1051
->   #define GSB_VCPU_SPR_CTRL       0x1052
-> -                    /* RESERVED 0x1053 - 0x1FFF */
-> +#define GSB_VCPU_SPR_DPDES      0x1053
-> +                    /* RESERVED 0x1054 - 0x1FFF */
->   #define GSB_VCPU_SPR_CR         0x2000
->   #define GSB_VCPU_SPR_PIDR       0x2001
->   #define GSB_VCPU_SPR_DSISR      0x2002
-> 
-> base-commit: aa54f5be44be786636a5d51cc1612ad208a24849
+> +        eglTerminate(egl_display);
+> +    }
+> +
+> +    XCloseDisplay(x_disp);
+> +#endif
+> +}
+> +
+>   static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>   {
+>       uint8_t data = 0;
+> @@ -877,6 +906,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>       SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+>   #endif
+>       SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
+> +    sdl2_set_hint_x11_force_egl();
+>       SDL_EnableScreenSaver();
+>       memset(&info, 0, sizeof(info));
+>       SDL_VERSION(&info.version);
+> @@ -923,6 +953,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>           sdl2_console[i].kbd = qkbd_state_init(con);
+>           if (display_opengl) {
+>               qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
+> +            sdl2_gl_console_init(&sdl2_console[i]);
+>           }
+>           register_displaychangelistener(&sdl2_console[i].dcl);
+>   
+
 
