@@ -4,106 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A56B0D3C544
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 03:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096DAD3C53F
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 03:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1dEJ-000785-NR; Thu, 17 Oct 2024 23:00:43 -0400
+	id 1t1dTe-0001li-1a; Thu, 17 Oct 2024 23:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t1dEI-00077v-FR
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 23:00:42 -0400
-Received: from mail-sy4aus01olkn20817.outbound.protection.outlook.com
- ([2a01:111:f403:2819::817]
+ id 1t1dTb-0001l8-Mr
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 23:16:31 -0400
+Received: from mail-sy4aus01olkn20824.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::824]
  helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t1dEF-0000Xg-W2
- for qemu-devel@nongnu.org; Thu, 17 Oct 2024 23:00:42 -0400
+ id 1t1dTZ-00027m-L8
+ for qemu-devel@nongnu.org; Thu, 17 Oct 2024 23:16:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fZpz2rznh32+3kXdinVh9Z+lJSFFmzM1Q+8JfvdUD/hjbQNounDSOsB1xSzbwMOeyLzEzRfQmF/C1b5N4IgFo27YF08VdidWkqX93ZSxdC9ZMTGY+3rX9i2XPIq5wjfkogbcvqfBnUsgfUGR+cZys4DhIJ9Q9//InXMcMhlcZ0RtgxtEyTK52fkRZawBhfBXcASWafxEGEuJ6lO1pxCpUOc6vNIbfjiMgZAxEGSfTMsI+mA+wAbNmKnWcULNxq4iVDufEnUWIFSthDvAKuQwxCJ+qkTiH+j9/FD25aBmkNPo+w/Qgia99bQWeb5KQAV2H2yz9/vjN6ydi26NKzSFvA==
+ b=SeWurpaNV2sGyLExviZV2SS+CK14KP2PAIqXBPIXR6z9i2y0ldB+CSV9D4DN2GguX6V2+sUZcenSeQo03x485XwrgKK/O+3OZGmM3ljlGotqMJrL3j3TKX06oyYZMi5bN0/obpLpDipBOpb4+DKdNy4w41C+en+Xe2kmkSqkQGhfuj8nOGpnzQae9d10fvHMKMqI6Ui0t9k6twO7+MSnfQeHNCghFEcHA8ceH85NtIHqGih22w4WzpHnJ10YgemJMtYJcNStt5W9M8a6PcR4gGM8AhHEcwECtVygTkgviBKgnBojaqx3b5eqA7+mcC4fKxy9dJdgMKtt5XVCkQgV5Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IgRTJ4XMEdPwWt4n0iJPlWwydO0YkVfuJ3ObH45b7v0=;
- b=Jac+Awhh1arHTj2tDOTRHgqxdhzGh6v6/Y74HWlUGAVzFtEhvkhnGdcLRnmlCE6Pi7RyLxdX5Mww//TfkIBJH7/ilHTgf5ctdfixwFc4pKM5d6ne+wdf/siiSp56Fpd/UnFN+H/Y6vfxr8M2FTPEoDzlBtIcEnm9KH5ZZXOJYdA8rSqvZGiGDk6BWPbgI97ldGt81GTcSYF2P5chHDffS2jOcZaqqXuOeTULD5xAqmYy4LezlUg6PSsnBM9gDeRsEcF3oSP7FMT13X+eBs/fwtYxG2M0r+w8o7SxW8apMYDzAHZ1jucDBmRBCq07nbGO/D8vqLSHvtMEspq0AzNmkw==
+ bh=K43+vNRgbm8C5vFldEQfkKvXBU1sRReq86swRDtA770=;
+ b=vCSbfgZxLBEQg6QxkbKaaPs+Uy9ai8AmSXiQiKUpavzLunYNP4dq75J5jVAWNsgSZ62DmxbWJvqna4IKe9yu1JBlHxyhLaOYyqiZymasH4ha5GKmAb/ysWb9OW5wHae4vy+qBBYdacepXJaxcZCx3l2vr86UMz4e4ymRB2qcTFuswvlv9FyluXj5vwuUvfniOmmGo1EvwI7+vWEAZ4n7Ai+Yv9F/7eviPwFVtoPInPLUOuE1SrOmk/Q8u8maepgswIv/h62aPF+Cq/4K6uvhAWubsJBebQTFDm8udU3bOXL7GVaZfUvwiMsQFKedBXwXvtk//nKxYcttc3DDK6+MUw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IgRTJ4XMEdPwWt4n0iJPlWwydO0YkVfuJ3ObH45b7v0=;
- b=LmPt7QIwiJQNgJm3F4PGW2CZBQ4MirXKTWSQ6F2dFgCldcqjHsmG5po/BD0f7+qgDiT7ci4isLlwMR2/onarEb4cHmiWx/JpyoJ6lP4Pswq3lmSZWBB/zWYzTnMORbOtyaVatHCyMvKxntQI8MLM+Eohm+DQ4ddwvy6u+R6n/yBtkQPqdTIVBd4GIT5SAoYr8ZoLke977p8PB02GZPcay6lcE1iiWo0WJH4CpnxCBYdX05oWLVaHriIQFW9quyiziTrA8S2xOzVaACyMLmWKUbzvmJMLTxTOOUUMPX/yOd1IUjEeAmA2uRjxM/48sP6xKS2YDhooA6acriTa50fXVg==
+ bh=K43+vNRgbm8C5vFldEQfkKvXBU1sRReq86swRDtA770=;
+ b=OYK0y9A2UAPVuwWj8BemuR3Dn2YIBEzrpaZci9ebyCoTr/IKytgz/Tz5acA0kc/Gl4SqJqKXkcK7q3GPyW1n7WX+aNLgD7oBtQYsHiZ9iqEIdAmEEAIa6oJni4SdloyByHb0yI9q3m6wdGXEoLG7QEthKKH2IEE2TuK+per4jNxk7oejfOfRwvrzDfKIVhy1MDVoo75aGKmXn6gioo398qf4rsWts7BgW7Yq7tUwVEIJQ8Lb6N7mZUNhSGo+wkf6onenQPgkWgHSq34Ak56/E9Z1eU46vOAMYgR0eafk6o1tKLFzjp0DTCt/J5oVb6rjhyMEqvVdPbfR41SG/zTTvQ==
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by SY7P300MB0055.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:238::11) with
+ by SY8P300MB0477.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:29a::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.19; Fri, 18 Oct
- 2024 03:00:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.23; Fri, 18 Oct
+ 2024 03:16:22 +0000
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.020; Fri, 18 Oct 2024
- 03:00:33 +0000
+ 03:16:22 +0000
 References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-13-pbonzini@redhat.com>
- <SY0P300MB102670D06E55A6B463CD1BDA95462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
- <CABgObfbqhmr=45c9ZiYoDAanM7Gsinz4RnwGMrivYDQgzP8kTw@mail.gmail.com>
- <SY0P300MB10269110D64F40C0F5AF0E7595462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <20241015131735.518771-11-pbonzini@redhat.com>
+ <SY0P300MB10266B5144972CDF92AF065795472@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <CABgObfaX+KhYx3Wo8jGG_hLh_c6t=nYEPZt3FXKQMyOqivVDgA@mail.gmail.com>
 User-agent: mu4e 1.6.10; emacs 27.1
 From: Junjie Mao <junjie.mao@hotmail.com>
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 12/16] rust: allow version 1.63.0 of rustc
-Date: Fri, 18 Oct 2024 10:44:41 +0800
-In-reply-to: <SY0P300MB10269110D64F40C0F5AF0E7595462@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Message-ID: <SY0P300MB1026A5E47899229BA3F559F595402@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain
-X-ClientProxiedBy: KL1PR0401CA0033.apcprd04.prod.outlook.com
- (2603:1096:820:e::20) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 10/16] rust: introduce alternative implementation of
+ offset_of!
+Date: Fri, 18 Oct 2024 11:01:21 +0800
+In-reply-to: <CABgObfaX+KhYx3Wo8jGG_hLh_c6t=nYEPZt3FXKQMyOqivVDgA@mail.gmail.com>
+Message-ID: <SY0P300MB1026EAB6DCBDDCD602E7A67C95402@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: SG2PR02CA0069.apcprd02.prod.outlook.com
+ (2603:1096:4:54::33) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87jze6m7y1.fsf@hotmail.com>
+X-Microsoft-Original-Message-ID: <87froum77n.fsf@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY7P300MB0055:EE_
-X-MS-Office365-Filtering-Correlation-Id: b69bd719-db1f-4d87-91bb-08dcef21085c
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0477:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8a9ebbe2-cea3-4285-5971-08dcef233dc5
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|15080799006|7092599003|5072599009|8060799006|461199028|19110799003|1602099012|10035399004|3412199025|440099028|4302099013|1710799026;
-X-Microsoft-Antispam-Message-Info: TekBbxQWPy1LuZ2LyWQw3vYNTsTtegAj2Lt0LTTY3lcLvT9uLWTSX+W4uKFx+AM/tTpxOQcsC1ziWsjEks+ww10yBQN/15tS2sE32BpZSH8am1e0KdtbuMIlO2TcWI8Ca/NvhK3CXe2pXd4gCGX8fdXJVuBAHhTNzAbEMzelKrGrK3QioPRIBM14UokViOXn/GQP6bBCJ2Yp/WW3zKWdCSfJPaVxQtL6vfvxcnk1gz5Gro3OCfgLNzj+co0qxCEtq2deD95lJ33fVBmErk+axhhAgML27ESuJDkptyQ9y0Ec1k04ICbcxWdtzqIc1fd7BZ8jCbQFgTGEqZuvgGC0SUQUpx8oRD/mLkyr1CzX3lcQk37dVVlNb812qQs8y5FX5eaIZgAHBEiJ3CIpzb/VMOmu1iSE+6E/FBXti2lyQVUoeBCNeiRWEi4W2sKGXImGEfGy6oGmxYLri1OuALvsx/5ngNfl36v2E8r1VNVr+vrN8jYDyxDNREWR3lIS/VzBRB603oNGKGtGQgsCWCcm8Y00YBTkebLEcAc0WnKJu4xYmhKOMyfJK2oI8cjzKzoFHZAFUVaTSGWY0mXw4u6KeNpfIwecimrDV6W5hDgZvnA440WK/J70joHkEg+E2WSrMeUAPgQkpcOTSwVo1xGTq8uRdLT0DmN5f8x9H2UK795jQzudEl3EevlYJhxVPcneIFyoP2tAYb1y3mUkNroONWx5XfPYX0yoBQORlqvrbyMYvX1XUNc78goj1BJ2DAdLGv71wJHvGABqq6Y8g6djMKIxmG1W8QK0oyTTBf4GhndMi8GVhBuUOZAEsTVcU/Uv65Qfy53QrAkK0t95Sa8Zbc55GHTNNt7RQRRsozsBk3LsX1L0OULURysOHZ7J2OxNQohu8E2wImDQDO66rxVJDQ==
+ ARA:14566002|19110799003|5072599009|6090799003|461199028|8060799006|7092599003|15080799006|3412199025|440099028|10035399004;
+X-Microsoft-Antispam-Message-Info: 0NRbFzaGagItGIfLn9EEXj8EZah5QqHzmsDCJtc0xhvLho4p88F5qevO1lGx1MvZt/RECMzc9V/9N+w+1DhVkycpr+tfbYkM1cJA/C1z+L+3v557NDCddj+CfVxe9U0+oSPYpgoaSzY1L15+sV22z/5O1p7J6gkn90aMYYd77smB3FCnWZhZoQqRR1556Joc7f7oJFCnfwK6SAzDxfLZUCb4hT/7qOMLMi2J+s5GDP3xE8dzXhqPxOZ4b7UR908FAaHDbwhX0Zw9sf/DiYnaNAJaDrGgLbuu7CQaYmtIVLSY/xeSqrLwjd0Duh/dFtZnJFD8innxig6AOR2P2C1/4tVblZgG3dJ9FjTLBdk+4Xh0bh7HG+bAFYNiP1w6z+8RiHFlnS8L7GbBeCJA5J04lIkvqlktYsHJEwhJZltSM0WXfwOW99EtKCJH3tdC3vYbqbFdZ7wMcyDS+L8dPRK9eujHiVfAHR8XPDbNRZ7qDIeizjOEHDpGzVCSIfc31qjs1GHTyM4ov8QBdUrh4Nwl7ZfQ3pB8V0wRKG3EfTAYfg8T5+iJ7apQr8Dgk7jDbAcn07NdxVT8NIP93QQ6HfXDC5F3dZ+hKAs/VY473DVGYx/IZ6SwvpVN+ThWnwab0+f/mUPdHcFGdUA0lkIqznH5PbOM4L1CiIVB7XgAeGV/brEdiTJ5XQXnkBKTn2N1PMr2wLySgB9nz/PUY3MApr848628082lneBFgJMlpDbKhJWYPWjuipBQK3/hBf6s9VgR1K5N7CkfbQDDoKqUXX5ZA0ddQ/R7UgKlXyKwh0wCrR7x3JrtXWaSJEOX3lLfbycNDOCAlOJF+O1sjsSyeDb1ZQ==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4PoQA8+6aDxmQzUEtx6Bb734SD3vR49zvVqAZ+A5x5fB/gUoiR5KRrbcsbkL?=
- =?us-ascii?Q?FihDZ6AO01kd5LqzlRiT1wZwzVgNzwzSsGxvIoIPfRboCNkIZXTOLuOD7U1E?=
- =?us-ascii?Q?VYmlpl6k5JwNTKefX6hBxigDmPw3pfypuo5mB7VZlKNZbYRIwXHsCGCo0mhq?=
- =?us-ascii?Q?aNne6zNasFeu42fABihN6oID01HeuTZo01HgUxncrFaH/5LlkL9gCKX221mo?=
- =?us-ascii?Q?L2RBj/+UThLxgQDUA+3z2jJow+ccaxuAIIIAgY90Jl9plBBo46xFzOgCYLm5?=
- =?us-ascii?Q?4Ag9mvMDiqOyNpcLEL6OetQDAT4bgYTgbEPQ1nOF9fG8nKKJMLME9t6gACrT?=
- =?us-ascii?Q?7Yg2TgoVxYlenNaHhuWg4Brw+h4uPiocuEGlli85e4Ev8r+Wt74Wq3LGYAqx?=
- =?us-ascii?Q?UyDNBa633F69/s4fslc0VlxslPUj9uPbgWja7HvW6ZmTd69gA25TmkTyB6lt?=
- =?us-ascii?Q?xeWIouEKvtwDZKL4gIXY7yCp4yA4rZVbMZF5GzEpEIS9zc6shRVT4SpgiGek?=
- =?us-ascii?Q?xs6oHxatNsPo/Y+WZiL4FvNKja6bLYxZZ19aQgD0VncRe4ZbM/89j9bH9WDi?=
- =?us-ascii?Q?FFUvnLs6SGAm4mHY3K1EcJrwnkHhE8pdS2fHlIVmOQ122lkfbepK5c/R9cEY?=
- =?us-ascii?Q?X8+ViCg5WFbHh51aloeInZYceDDkhdLfiP106WKGKl+o+Hs7gOAV/l8HdoK9?=
- =?us-ascii?Q?6K7P/1ClrHkyCc6y8D/5/Lgpk43ucPbN0t3ioTKGFaD/vfVrZA9VDTD9dQ1Q?=
- =?us-ascii?Q?OpnELe0xjWwz1IEtyFAmcgbRINIh6qo00k7GIto0L4T9uMu5JOrfFRf1ia8d?=
- =?us-ascii?Q?eqCKk8kEFxkcMVtq2fPGKt19Lamlq2BaODC9hHtHxifdpg+ufck/BCOFX2eY?=
- =?us-ascii?Q?gdBV8EmK3rg9s5ajAxifX5+EmFKydz6DvsjE0DXzHmU9+FDHWZVzdI3F1spr?=
- =?us-ascii?Q?Gg+3l9Mzok9Ai2FPcMU2FLnunAHUYjEP9W9ag4Z7Qfv8n6eksrgN8dt/rnvJ?=
- =?us-ascii?Q?1Qh6FJYym9gB323D/4lR1JGwNqE8YOqYVvai+hTMLwnk5QRAZoONXrV/s8dU?=
- =?us-ascii?Q?U/VrMl9OR0gmr5CbNnSFfcpzgcc9AN0CkUc/PwSgLllvOkNXo4gcJoG5VgMy?=
- =?us-ascii?Q?LQIPiexDTc228JcqyWdCqaZXYC8SsDqAWpDuJVStpnr7B+mZfXdWPDGWXKxu?=
- =?us-ascii?Q?1FyNC+3TtqbFJj8FFwRwvPzz7eXWZASUEuovXbgoG2Zpq3+9asAPOHzyKqc?=
- =?us-ascii?Q?=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bDVuZXRCMDNUL1gvemlkU0tIYkh1aGdrSzhaMExmWnlRVGVNVmJqU0Q3VFcy?=
+ =?utf-8?B?cUtWZlBuTzJWMGVFY3RsY0srR3lBcndlL3ljK01SMHVPUXgxUC9QZ2pnaHQ5?=
+ =?utf-8?B?Qm0zR1lVa1NmRW1Qa0FQRWlDWTF4SlF5cGhyR2lYM1BYeGV0OEVDUEVHVUZj?=
+ =?utf-8?B?MnZhWDB6dTVvVUt0WVRKaFpyZEFUMXpLaUxyVkpjKy9qY0xtdmI0TFRoSThZ?=
+ =?utf-8?B?MlEyYWZ4aHFFd2dhZnJDTEgwWTZ0Qi9idWZzQ3d4c1BoSCtjdDFNeWxHdm16?=
+ =?utf-8?B?RFZoQWkvRFNIMExrcE5kRjZaazlxRXo1NUMxcVpVRDFOSE5hVVZuV1NyRUdY?=
+ =?utf-8?B?dFRhY0dRYi9ZRnRtci81YnFobXRHWVI5bDBtTDdXbHJ0NDdRRWR5VXVkRERv?=
+ =?utf-8?B?Zzg1Qys1ZFpKSEEyM0FLVnJ6aUswYjVaMWl5TlV2WkN0MWhWYm9DUEZ5WXF2?=
+ =?utf-8?B?WDdhZjVWNktrNGNjTTFNUTd5dk9YbEtZaWREUDQ4NEM1cDhsZGFkSG9hdnNU?=
+ =?utf-8?B?K3BoWjNXbGo2UU9PekpqQUZiSE05WHROTzdjVjRUbkZXbS8rNWdQWFpuMDhP?=
+ =?utf-8?B?T0JXek9PS1h4YVkxRlIrV3FpalZteGQ1dHh0RVBsemZBV3ZqQWVWODRKM0hz?=
+ =?utf-8?B?RENvV003eEJXMUZKSy9CZGF1b3h3OHM4MFVZU1E1R3NwNkM3d1JyVnJXdHdU?=
+ =?utf-8?B?alVhaXlmSERHV0ErM0xPSE83eER0M3dob3o5UUxVNFhkeEd6QlcrN3RqYTJG?=
+ =?utf-8?B?WHI2TDAxT1VQMXR1QWE2QjVrR3V4aTNFdG8wck1IaWsrNnRSQ3RTa1llbDRH?=
+ =?utf-8?B?U0JiNmtjUTVKRWNRYjYxQjRIUzRYT2FUZGJEN1VFZ1JOMFgrRm5NRzR3Kzcr?=
+ =?utf-8?B?QjVtem5nbWdHY21PdTRqRXVRTGdyWXlQRDJhUWtBOUJ6WWhtRVNpOHZNVyt4?=
+ =?utf-8?B?OFJJcUdTWExHMExCd1A4SCt2NjhBZmFzb0tSZWw3dzVzaVNGNHk5TWFKTXpB?=
+ =?utf-8?B?L1F5V0FibmpWWmtHTkRGZVdwNVY1NkVjUFowNWw5TEwwR0VKSDRKWXYvcTlV?=
+ =?utf-8?B?RHlpaHdLUmdvVHAwTlNnSURwL1JWZk02TjF4cjVZR3ZDandhREJGL0FwT3lD?=
+ =?utf-8?B?NGhqK1JNb3EyRjFjUzVkS3V0alEvZm5TNzZaYXpuUmVXMTNKU3FoVS9uOEkw?=
+ =?utf-8?B?WWI5VDd3bFRzVU0rZG4wdDd6MzcrbmZVTzFwd2dFZmFzTlMvNDg0LzhZT3FF?=
+ =?utf-8?B?ZS9XMGdqTlNmV3dIZ01kbUxlcTJLZEREcmR5QWdyN1QwSGxIMmRFOG5BWlJJ?=
+ =?utf-8?B?a2pwV3VWZkh4RTBaQ1RqbzB1Y3NFczR2c1ZpNVhCNWx5VjJuSG5xKzI4eG9N?=
+ =?utf-8?B?aGxsTE1kTFBqZS9ES2FLL0tKS3pqYmFSeXdaQTJhYWhDWmtyRFovOEpOWmRJ?=
+ =?utf-8?B?dWdoOXhpVVczSjU1STBDZTRLUG1nSi9LUWRRNm9pVlJia0pKeENncjZlRTVJ?=
+ =?utf-8?B?UEppbWJLR1pCNVFYWS94QVdXZ2ZtLzZYejdwbGZqaDJXcDZrT0ZnRG5yNDB6?=
+ =?utf-8?B?WGVXQlJzbGwyUTFzOUZFTDRBdUR0OUs5WG4wV3pHdndWeW80ZElJbXU3SURS?=
+ =?utf-8?Q?1SbqTt6IVcXsbvIE9C7/pmdpqSXhaKzNNT+TRfWBHc2c=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: b69bd719-db1f-4d87-91bb-08dcef21085c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8a9ebbe2-cea3-4285-5971-08dcef233dc5
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2024 03:00:33.5590 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2024 03:16:22.2750 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB0055
-Received-SPF: pass client-ip=2a01:111:f403:2819::817;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0477
+Received-SPF: pass client-ip=2a01:111:f403:2819::824;
  envelope-from=junjie.mao@hotmail.com;
  helo=AUS01-SY4-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
@@ -128,56 +135,73 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-Junjie Mao <junjie.mao@hotmail.com> writes:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Paolo Bonzini <pbonzini@redhat.com> writes:
+> On Thu, Oct 17, 2024 at 7:35=E2=80=AFAM Junjie Mao <junjie.mao@hotmail.co=
+m> wrote:
+>> Paolo Bonzini <pbonzini@redhat.com> writes:
+>> > offset_of! was stabilized in Rust 1.77.0.  Use an alternative implemen=
+ation
+>> > that was found on the Rust forums, and whose author agreed to license =
+as
+>> > MIT for use in QEMU.
+>> >
+>> > The alternative allows only one level of field access, but apart
+>> > from this can be used just by replacing core::mem::offset_of! with
+>> > qemu_api::offset_of!.
+>>
+>> How about a macro like this (which essentially comes from memoffset
+>> crate [1])? It has the same use as core::mem::offset_of! (except the
+>> same single-level limitation) and does not need wrapping structures with
+>> with_offsets!.
 >
->> Il mer 16 ott 2024, 08:10 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
->>
->>  In my Ubuntu 22.04 environment (rustc 1.76.0 and bindgen 0.59.1 from
->>  apt) the feature `proc_macro_byte_character` is not yet stablized but
->>  used in proc-macro2. Downgrading proc-macro2 to 1.0.79 [1] and syn to
->>  2.0.58 fixes that issue for me.
->>
->> This is handled by patch 5. Try "meson subprojects update --reset".
->>
+> Unfortunately offset_from is not available in const context, and
+> offset_of! is needed to fill in the Property and VMStateDescription
+> arrays.
 >
-> Yes, that works. Thanks for the info!
+> That said, I noticed now that declare_properties! does not declare the
+> resulting array as const, so that would be possible. But if
+> declare_properties could use a non-mut static, that would be better.
 
-After cleaning everything to build from scratch, I met another issue:
+Agree.
 
-  bilge-0.2-rs| Downloading bilge-impl-0.2-rs source from https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
-  Download size: 24524
-  Downloading: ..........
-  bilge-0.2-rs| Applying diff file "bilge-impl-1.63.0.patch"
-  bilge-0.2-rs| patching file src/shared/discriminant_assigner.rs
-  bilge-0.2-rs| Hunk #1 FAILED at 26 (different line endings).
-  bilge-0.2-rs| 1 out of 1 hunk FAILED -- saving rejects to file src/shared/discriminant_assigner.rs.rej
-  bilge-0.2-rs| patching file src/shared/fallback.rs
-  bilge-0.2-rs| Hunk #1 FAILED at 22 (different line endings).
-  bilge-0.2-rs| 1 out of 1 hunk FAILED -- saving rejects to file src/shared/fallback.rs.rej
+Then how about converting with_offsets! to a derive attribute
+(e.g. #[derive(offsets)])? The current approach introduces one more
+level of indentation. When we later upgrade the minimal supported
+version of Rust and switch to std::mem::offset_of!, we'll need a large
+diff to adjust the indentation which may be annoying to rebase upon. An
+attribute seems easier to manage.
 
-  ../subprojects/bilge-0.2.0/meson.build:9:0: ERROR: Failed to apply diff file "bilge-impl-1.63.0.patch"
+I can help draft the macro early next week if you think that is valuable.
 
-It turns out that the sources in bilge-impl have CRLF line endings and
-`patch` does not ignore that even with the `-l` option:
-
-  ~/Projects/qemu/subprojects$ tar xf packagecache/bilge-impl-0.2.0.tar.gz
-  ~/Projects/qemu/subprojects$ cd bilge-impl-0.2.0/
-  ~/Projects/qemu/subprojects/bilge-impl-0.2.0$ patch -l -f -p1 -i ../packagefiles/bilge-impl-1.63.0.patch
-  patching file src/shared/discriminant_assigner.rs
-  Hunk #1 FAILED at 26 (different line endings).
-  1 out of 1 hunk FAILED -- saving rejects to file src/shared/discriminant_assigner.rs.rej
-  patching file src/shared/fallback.rs
-  Hunk #1 FAILED at 22 (different line endings).
-  1 out of 1 hunk FAILED -- saving rejects to file src/shared/fallback.rs.rej
-  ~/Projects/qemu/subprojects/bilge-impl-0.2.0$ file src/shared/discriminant_assigner.rs
-  src/shared/discriminant_assigner.rs: ASCII text, with CRLF line terminators
-
-Meson uses patch with the command above as the first preference to apply
-diffs. That command is not yet customizable.
-
---
-Best Regards
 Junjie Mao
+
+>
+> Paolo
+>
+>> macro_rules! offset_of {
+>>     ($parent:ty, $field:tt) =3D> {{
+>>         let uninit =3D std::mem::MaybeUninit::<$parent>::uninit();
+>>         let base =3D uninit.as_ptr();
+>>         // SAFETY:
+>>         //
+>>         // MaybeUninit<$parent> has the same size and alignment as $pare=
+nt, so
+>>         // projection to $field is in bound.
+>>         //
+>>         // addr_of! does not create intermediate references to the unini=
+tialized
+>>         // memory, thus no UB is involved.
+>>         let field =3D unsafe { std::ptr::addr_of!((*base).$field) };
+>>         // SAFETY:
+>>         //
+>>         // Both base and field point to the MaybeUninit<$parent> and are=
+ casted
+>>         // to u8 for calculating their distance.
+>>         unsafe { field.cast::<u8>().offset_from(base.cast::<u8>()) as us=
+ize }
+>>     }};
+>> }
+>>
+>> [1] https://docs.rs/memoffset/latest/memoffset/
 
