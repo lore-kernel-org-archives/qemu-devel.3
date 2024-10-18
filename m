@@ -4,99 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B43D3000F
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 14:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A8BD30011
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 14:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1npD-0007ou-Jp; Fri, 18 Oct 2024 10:19:31 -0400
+	id 1t1nrO-0001JF-A8; Fri, 18 Oct 2024 10:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t1npB-0007oQ-Py
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:19:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1nrN-0001J2-K9
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:21:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1t1np9-0007vn-V1
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:19:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t1nrL-0008VR-4m
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 10:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729261167;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729261302;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UJOSYBHAZch2hYcvcBohsQccqRoQwkaRO0O84tEZW2M=;
- b=AMpApmXsURhVQMTVsAjYz62lfvc2gaflGCvbj2nP66S5IpYDH0Hesl202XJ9VjCEQUGn56
- U3iEDbmtbbxSGHs6TzEYlTMQfYK4lhEX1RXZBwIuLOGxX9+khtGBlIShJTOxGB4bJdYnXi
- l12IvPqCiGeULbMw97g1VSpf24JTJTE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-jlPv5qLRPbaV7OFmGN-bVQ-1; Fri, 18 Oct 2024 10:19:25 -0400
-X-MC-Unique: jlPv5qLRPbaV7OFmGN-bVQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d5a3afa84so1112177f8f.3
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 07:19:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729261164; x=1729865964;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UJOSYBHAZch2hYcvcBohsQccqRoQwkaRO0O84tEZW2M=;
- b=b2t/t3LlzC5oQekYk5/VGOzqfMGDPE2aNLKOcLVn9fhP2dOPbqusaxhPmy9MSyXl0e
- dWRHn9Ukit9V7My7FKgArhq0sFbkzj/XAGvH9mz1vt3PMxXVTT2zknuRhGJX8eWiUJjG
- jKXBFCJFoyuLaWq8l/Q8US9vj+a6qzpNYyiXQaN054VwSBq/KPfdaeQcyiof+0gL6Jri
- 05IXQ5HsTtx7jABDztU00tSI+X9p/MuHABFws33Wb+rztHR/K/2yIr/GHbsgn03k8+mi
- /P+m60wIBU1ckm9ln1Y0g8iULDTG8r+mA6GKntxu8iwy2fVUGFNQQsrCiGnQ6IWHl0mm
- LUVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoe8o70lLKeyI9EtdBvntsocIELyff6cFYtIdJ0JKjTuPHRrBeGO5CAf/OZzKaNnbLYW8YVkBudXkP@nongnu.org
-X-Gm-Message-State: AOJu0Yw6JNZTnCMCxNqsaQjyfgwEJNbS7AF+47M9Esm2giv1qSunnuGI
- aUwP+U/1YoZW/eo5g9l32RDyKxrXZTRzde7f2lXiI7tmp3v3cPxShlGbsaI0Cs+JIDVuSf18ZTF
- xIUx43wAsy2zoPX/bF2P3K8dJKSSNzgFabtJVSM9Yg+bfJ7ge2Uxk
-X-Received: by 2002:a05:600c:4fd4:b0:431:5f1b:a7c4 with SMTP id
- 5b1f17b1804b1-431616ad74cmr19220385e9.34.1729261164381; 
- Fri, 18 Oct 2024 07:19:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGY5/kTEFzyh7grd2Gu5Y+US50j6UCRJ6Ucx+9qSxguTt45KZ951RtWVGt6B0CTJ2MpuF/GbA==
-X-Received: by 2002:a05:600c:4fd4:b0:431:5f1b:a7c4 with SMTP id
- 5b1f17b1804b1-431616ad74cmr19219985e9.34.1729261163960; 
- Fri, 18 Oct 2024 07:19:23 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43160e11425sm25668095e9.28.2024.10.18.07.19.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Oct 2024 07:19:23 -0700 (PDT)
-Date: Fri, 18 Oct 2024 16:19:20 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, maz@kernel.org,
- jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, andrew.jones@linux.dev, david@redhat.com,
- philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
- oliver.upton@linux.dev, pbonzini@redhat.com, gshan@redhat.com,
- rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org,
- npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com,
- maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com,
- linuxarm@huawei.com, gustavo.romero@linaro.org
-Subject: Re: [PATCH V1 3/4] hw/acpi: Reflect ACPI vCPU {present,enabled}
- states in ACPI _STA.{PRES,ENA} Bits
-Message-ID: <20241018161920.20524a97@imammedo.users.ipa.redhat.com>
-In-Reply-To: <ZxHuVC0uDL7kEB2i@intel.com>
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
- <20241014192205.253479-4-salil.mehta@huawei.com>
- <ZxHuVC0uDL7kEB2i@intel.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=byjjYIr54rwBDgvUEajbwWjJ6r9T/yWI+kI4C0mFKyQ=;
+ b=I/F+8EqOR6zK73/8EBU3146UZMjgeRUhxEZP2t9TVTrEbd/4Tq9Ihta1o0utCRbPF96BbC
+ E5gFxB1rxIG/DXuX6c7NFB3UkWVx+wm/zPDXPlLw5PbzHvQiq/2CafYsNybHdDTnEGQf3Q
+ RLaN4GeQNYftkeR+f+PjXKo83AwsDD0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-t54DNw0yNtqkrbbz_cJ6iA-1; Fri,
+ 18 Oct 2024 10:21:39 -0400
+X-MC-Unique: t54DNw0yNtqkrbbz_cJ6iA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 84CD01955F3F; Fri, 18 Oct 2024 14:21:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.61])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F143300018D; Fri, 18 Oct 2024 14:21:33 +0000 (UTC)
+Date: Fri, 18 Oct 2024 15:21:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
+Message-ID: <ZxJu6vfFVP6lYym_@redhat.com>
+References: <20241017143211.17771-1-farosas@suse.de>
+ <20241017143211.17771-5-farosas@suse.de>
+ <ZxEl4zYgHLoLeHCT@redhat.com> <87r08e3d74.fsf@suse.de>
+ <ZxIj694WqXwwMRIY@redhat.com> <87y12l1pv7.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y12l1pv7.fsf@suse.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -118,166 +91,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Oct 2024 13:12:52 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+On Fri, Oct 18, 2024 at 10:51:08AM -0300, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Thu, Oct 17, 2024 at 01:29:35PM -0300, Fabiano Rosas wrote:
+> >> Daniel P. Berrangé <berrange@redhat.com> writes:
+> >> 
+> >> > On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
+> >> >> Recent changes to how we invoke the migration tests have
+> >> >> (intentionally) caused them to not be part of the check-qtest target
+> >> >> anymore. Add the check-migration-quick target so we don't lose
+> >> >> migration code testing in this job.
+> >> >
+> >> > But 'check-migration-quick' is only the subset of migration tests,
+> >> > 'check-migration' is all of the migration tests. So surely this is
+> >> > a massive regressions in covage in CI pipelines.
+> >> 
+> >> I'm not sure it is. There are tests there already for all the major
+> >> parts of the code: precopy, postcopy, multifd, socket. Besides, we can
+> >> tweak migration-quick to cover spots where we think we're losing
+> >> coverage.
+> >
+> > Each of the tests in migration-test  were added for a good reason,
+> > generally to address testing gaps where we had functional regressions
+> > in the past. I don't think its a good idea to stop running such tests
+> > in CI as gating on new contributions. Any time we've had optional
+> > tests in QEMU, we've seen repeated regressions in the area in question.
+> >
+> >> Since our CI offers nothing in terms of reproducibility or
+> >> debuggability, I don't think it's productive to have an increasing
+> >> amount of tests running in CI if that means we'll be dealing with
+> >> timeouts and intermittent crashes constantly.
+> >
+> > Test reliability is a different thing. If a particular test is
+> > flaky, it needs to either be fixed or disabled.
+> 
+> The problem is that in this community the idea of "fix" is: wait until
+> someone with the appropriate skill level and interest stumbles upon the
+> problem on their own and fix it in anger.
+> 
+> For it to be a proper strategy, we'd need to create an issue in gitlab
+> referencing the bug, have a proper reproducer and encourage contributors
+> to work on the issue.
 
-> Hi Salil,
->=20
-> On Mon, Oct 14, 2024 at 08:22:04PM +0100, Salil Mehta wrote:
-> > Date: Mon, 14 Oct 2024 20:22:04 +0100
-> > From: Salil Mehta <salil.mehta@huawei.com>
-> > Subject: [PATCH V1 3/4] hw/acpi: Reflect ACPI vCPU {present,enabled} st=
-ates
-> >  in ACPI _STA.{PRES,ENA} Bits
-> > X-Mailer: git-send-email 2.34.1
-> >=20
-> > Reflect the ACPI CPU hotplug `is_{present, enabled}` states in the `_ST=
-A.PRES`
-> > (presence) and `_STA.ENA` (enabled) bits when the guest kernel evaluate=
-s the
-> > ACPI `_STA` method during initialization, as well as when vCPUs are hot=
--plugged
-> > or hot-unplugged. The presence of unplugged vCPUs may need to be delibe=
-rately
-> > *simulated* at the ACPI level to maintain a *persistent* view of vCPUs =
-for the
-> > guest kernel.
-> >=20
-> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> > ---
-> >  hw/acpi/cpu.c | 26 ++++++++++++++++++++++----
-> >  1 file changed, 22 insertions(+), 4 deletions(-)
-> >  =20
->=20
-> It seems this patch changes ACPI table layout and then breaks current
-> ACPI table qtest. I'm not sure how to do such modifications. Maybe you
-> should first disable the related checks, then modify the code, update
-> the qtest, and finally re-enable the checks for qtest. This can help
-> to avoid any qtest failure due to this patch?
+It is policy that we should be creating issues in gitlab for any
+flaky tests. I wouldn't say we've been perfect at that, but we
+should be doing it, and that link ought to be linked in the code
+if we disable the test there.
 
-see comment at the top of tests/qtest/bios-tables-test.c
+> - It was disabled in March 2023 and stood there *not testing anything*
+>   while a major refactoring of the test code was happening.
+> 
+> - The test was fixed in June 2023, but not reenabled in fear of getting
+>   flak from the community for breaking CI again (or at least that's the
+>   feeling I got from talking to Juan).
+> 
+> - mapped-ram (which relies entirely on multifd) started being worked on
+>   and I had to enable the test in my own branch to be able to test the
+>   code properly. While disabled, it caught several issues in mapped-ram.
+> 
+> - In October 2023 the test is re-enabled an immediately exposes issues
+>   in the code.
+> 
+> This is how I started working on the migration code. Maybe you can
+> appreciate why I don't feel confident about this fix or disable
+> strategy. It has eaten many hours of my work.
 
->=20
-> I think it should get Igor's advice on this. :)
->=20
-> Attach the error I met:
->=20
-> =E2=96=B6   2/920 ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_a=
-sl: assertion failed: (all_tables_match) ERROR
-> =E2=96=B6   3/920 ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_a=
-sl: assertion failed: (all_tables_match) ERROR
->   2/920 qemu:qtest+qtest-i386 / qtest-i386/bios-tables-test              =
-                  ERROR            1.24s   killed by signal 6 SIGABRT
-> >>> G_TEST_DBUS_DAEMON=3D/media/liuzhao/data/qemu-cook/tests/dbus-vmstate=
--daemon.sh ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summar=
-y=3D1 MESON_TEST_ITERATION=3D1 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_e=
-rror=3D1:print_summary=3D1:print_stacktrace=3D1 QTEST_QEMU_BINARY=3D./qemu-=
-system-i386 MALLOC_PERTURB_=3D142 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on=
-_error=3D1:print_summary=3D1:print_stacktrace=3D1 QTEST_QEMU_STORAGE_DAEMON=
-_BINARY=3D./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=3D./qemu-img =
-PYTHON=3D/media/liuzhao/data/qemu-cook/build/pyvenv/bin/python3 /media/liuz=
-hao/data/qemu-cook/build/tests/qtest/bios-tables-test --tap -k =20
-> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
-> stderr:
-> acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-VRT5V=
-2], Expected [aml:tests/data/acpi/x86/pc/DSDT].
-> See source file tests/qtest/bios-tables-test.c for instructions on how to=
- update expected files.
-> acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-TTT5V2.dsl, aml:/=
-tmp/aml-VRT5V2], Expected [asl:/tmp/asl-XXM5V2.dsl, aml:tests/data/acpi/x86=
-/pc/DSDT].
-> **
-> ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion fail=
-ed: (all_tables_match)
->=20
-> (test program exited with status code -6)
-> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95
->=20
->   3/920 qemu:qtest+qtest-x86_64 / qtest-x86_64/bios-tables-test          =
-                  ERROR            1.25s   killed by signal 6 SIGABRT
-> >>> G_TEST_DBUS_DAEMON=3D/media/liuzhao/data/qemu-cook/tests/dbus-vmstate=
--daemon.sh ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summar=
-y=3D1 MESON_TEST_ITERATION=3D1 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_e=
-rror=3D1:print_summary=3D1:print_stacktrace=3D1 MSAN_OPTIONS=3Dhalt_on_erro=
-r=3D1:abort_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 QTEST_QEMU_=
-STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=
-=3D./qemu-img PYTHON=3D/media/liuzhao/data/qemu-cook/build/pyvenv/bin/pytho=
-n3 MALLOC_PERTURB_=3D41 QTEST_QEMU_BINARY=3D./qemu-system-x86_64 /media/liu=
-zhao/data/qemu-cook/build/tests/qtest/bios-tables-test --tap -k =20
-> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
-> stderr:
-> acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-D5K5V=
-2], Expected [aml:tests/data/acpi/x86/pc/DSDT].
-> See source file tests/qtest/bios-tables-test.c for instructions on how to=
- update expected files.
-> acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-G6K5V2.dsl, aml:/=
-tmp/aml-D5K5V2], Expected [asl:/tmp/asl-AQD5V2.dsl, aml:tests/data/acpi/x86=
-/pc/DSDT].
-> **
-> ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion fail=
-ed: (all_tables_match)
->=20
-> (test program exited with status code -6)
->=20
->=20
-> Regards,
-> Zhao
->=20
->=20
+The migration subsystem was definitely suffering from insufficient
+maintainer resources available historically, which is reflected
+in some of the testing problems we've had & largely how I ended
+up spending so much time on migration code too.
+
+> > Looking at its execution time right now, I'd say migration test
+> > is pretty good, considering the permutations we have to target.
+> >
+> > It gets a bad reputation because historically it has been as
+> > much as x20 slower than it is today, and has also struggled
+> > with reliability. The latter is a reflection of the complexity
+> > of migration and and IMHO actually justifies greater testing,
+> > as long as we put in time to address bugs.
+> >
+> > Also we've got one single test program, covering an entire
+> > subsystem in one go, rather than lots of short individual
+> > test programs, so migration unfairly gets blamed for being
+> > slow, when it simply covers alot of functionality in one
+> > program.
+> 
+> And still you think it's not worth it having a separate target for
+> testing migration. FWIW, I also proposed splittling it into multiple
+> meson tests, which you also rejected. It would be so much easier to move
+> all of this into a separate target and let those who want nothing do to
+> with to just ignore it.
+
+In the qtests/meson.build, I see we register separate
+suites - a generic "qtest" suite, and a "qtest-$TARGET"
+suite. What's missing here is a suite for subsystem
+classification, which I guess is more or less what you
+proposed here for migration.
+
+How about (in addition to the idea of splitting migration-test
+into one part run for all targets, and one part run for just
+one target), we generalize this concept to work for any
+subsystem tagging
+
+qtest_subsystems = {
+  'migration-test': ['migration'],
+  'cdrom-test': ['block'],
+  'ahci-test': ['block'],
+  ....
+}
+
+
+then when registering tests we could do
+
+   suites = ['qtest', 'qtest-' + target_base]
+   foreach subsys: qtest_subsystems.get(test, [])
+     suites += ['qtest-' + subsys, 'qtest-' + target_base + '-' + subsys]
+   endforeach
+
+   test(....
+         suite: suites)
+
+that would give us a way to run just the migration tests, or
+just the migration tests on x86_64, etc, likewise for other
+subsystems we want to tag, while still keeping 'make check-qtest'
+as the full coverage.
+
+> >> > Any tests in tree need to be exercised by CI as the minimum bar
+> >> > to prevent bit rot from merges.
+> >> >
+> >> 
+> >> No disagreement here. But then I'm going to need advice on what to do
+> >> when other maintainers ask us to stop writing migration tests because
+> >> they take too long. I cannot send contributors away nor merge code
+> >> without tests.
+> >
+> > In general, I think it is unreasonable for other maintainers to
+> > tell us to stop adding test coverage for migration, and would
+> > push back against such a request. 
+> 
+> This might be a larger issue in QEMU. I also heard the same back in 2021
+> when doing ppc work: "don't add too many tests because the CI buckles
+> and people get mad". The same with adding too much logging really. We're
+> hostages to the gitlab CI unfortunately.
+
+Yep, we need more investment in our CI resources. There were some
+ideas discussed at KVM Forum that could help with this, which
+should be publicised soon.
+
+
+> > This feels like something that should be amenable to unit testing.
+> > Might need a little re-factoring of migration code to make it
+> > easier to run a subset of its logic in isolation, but that'd
+> > probably be a win anyway, as such work usually makes code cleaner.
+> 
+> I'll invest some time in that. I've no idea how we do unit testing in
+> QEMU.
+
+Mostly starts with the standard glib test program setup, where by
+you create a tests/unit/test-<blah>.c file, with functions for
+each test case that you register with g_test_add, same as qtest.
+
+The key difference from qtest is that you then just directly
+link the test binary to the code to be tested, and call into
+it internal QEMU APIs directly. In this case, it would involve
+linking to the 'libmigration' meson static library object.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
