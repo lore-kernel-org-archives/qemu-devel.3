@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5A7D3C54D
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA39DD3C54D
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1faa-0008RB-Jj; Fri, 18 Oct 2024 01:31:52 -0400
+	id 1t1fap-0000O6-OQ; Fri, 18 Oct 2024 01:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1faT-0008Md-W5; Fri, 18 Oct 2024 01:31:46 -0400
+ id 1t1fao-0000K0-31; Fri, 18 Oct 2024 01:32:06 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1faP-00089Y-5h; Fri, 18 Oct 2024 01:31:43 -0400
+ id 1t1fam-0008E2-Ku; Fri, 18 Oct 2024 01:32:05 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 18 Oct
- 2024 13:31:14 +0800
+ 2024 13:31:16 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 18 Oct 2024 13:31:14 +0800
+ Transport; Fri, 18 Oct 2024 13:31:16 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -36,10 +36,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 06/16] hw/arm/aspeed: Correct fmc_model w25q80bl for
- ast1030-a1 EVB
-Date: Fri, 18 Oct 2024 13:31:02 +0800
-Message-ID: <20241018053112.1886173-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 11/16] test/qtest/aspeed_smc-test: Support to test all
+ flash models
+Date: Fri, 18 Oct 2024 13:31:07 +0800
+Message-ID: <20241018053112.1886173-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
@@ -71,42 +71,88 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the default fmc_model was "sst25vf032b" whose size was 4MB for
-ast1030-a1 EVB. However, according to the schematic of ast1030-a1 EVB,
-ASPEED shipped default flash of fmc_cs0 and fmc_cs1 were "w25q80bl" and
-"w25q256", respectively. The size of w25q80bl is 1MB and the size of w25q256
-is 32MB.
-
-The fmc_cs0 was connected to AST1030 A1 internal flash and the fmc_cs1 was
-connected to external flash. The internal flash could not be changed because
-it was placed into AST1030 A1 chip. Users only can change fmc_cs1 external
-flash.
-
-So far, only supports to set the default fmc_model for all chip select pins.
-In other words, users cannot set the different default flash model for
-fmc_cs0 and fmc_cs1, respectively.
-
-Correct fmc_model default flash to w25q80bl the same as AST1030 A1
-internal flash for ast1030-a1 EVB.
+Currently, these test cases used the hardcode offset 0x1400000 (0x14000 * 256)
+which was beyond the 16MB flash size for flash page read/write command testing.
+However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" whose size
+is 1MB. To test all flash models, introduces a new page_addr member in TestData
+structure, so users can set the offset for flash parge read/write command
+testing.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/aspeed_smc-test.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index bf68224295..b4b1ce9efb 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1642,7 +1642,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     mc->init = aspeed_minibmc_machine_init;
-     amc->i2c_init = ast1030_evb_i2c_init;
-     mc->default_ram_size = 0;
--    amc->fmc_model = "sst25vf032b";
-+    amc->fmc_model = "w25q80bl";
-     amc->spi_model = "w25q256";
-     amc->num_cs = 2;
-     amc->macs_mask = 0;
+diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+index b8ab20b43d..6db18451d2 100644
+--- a/tests/qtest/aspeed_smc-test.c
++++ b/tests/qtest/aspeed_smc-test.c
+@@ -72,6 +72,7 @@ typedef struct TestData {
+     char *tmp_path;
+     uint8_t cs;
+     const char *node;
++    uint32_t page_addr;
+ } TestData;
+ 
+ /*
+@@ -256,7 +257,7 @@ static void assert_page_mem(const TestData *data, uint32_t addr,
+ static void test_erase_sector(const void *data)
+ {
+     const TestData *test_data = (const TestData *)data;
+-    uint32_t some_page_addr = 0x600 * FLASH_PAGE_SIZE;
++    uint32_t some_page_addr = test_data->page_addr;
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+@@ -308,7 +309,7 @@ static void test_erase_sector(const void *data)
+ static void test_erase_all(const void *data)
+ {
+     const TestData *test_data = (const TestData *)data;
+-    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
++    uint32_t some_page_addr = test_data->page_addr;
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+@@ -358,8 +359,8 @@ static void test_erase_all(const void *data)
+ static void test_write_page(const void *data)
+ {
+     const TestData *test_data = (const TestData *)data;
+-    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+-    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
++    uint32_t my_page_addr = test_data->page_addr;
++    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+@@ -395,8 +396,8 @@ static void test_write_page(const void *data)
+ static void test_read_page_mem(const void *data)
+ {
+     const TestData *test_data = (const TestData *)data;
+-    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+-    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
++    uint32_t my_page_addr = test_data->page_addr;
++    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+@@ -438,7 +439,7 @@ static void test_read_page_mem(const void *data)
+ static void test_write_page_mem(const void *data)
+ {
+     const TestData *test_data = (const TestData *)data;
+-    uint32_t my_page_addr = 0x15000 * FLASH_PAGE_SIZE;
++    uint32_t my_page_addr = test_data->page_addr;
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+@@ -679,6 +680,8 @@ static void test_palmetto_bmc(TestData *data)
+     data->jedec_id = 0x20ba19;
+     data->cs = 0;
+     data->node = "/machine/soc/fmc/ssi.0/child[0]";
++    /* beyond 16MB */
++    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
+ 
+     qtest_add_data_func("/ast2400/smc/read_jedec", data, test_read_jedec);
+     qtest_add_data_func("/ast2400/smc/erase_sector", data, test_erase_sector);
 -- 
 2.34.1
 
