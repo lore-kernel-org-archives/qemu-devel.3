@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA39DD3C54D
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEACFD3C54D
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 05:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1fap-0000O6-OQ; Fri, 18 Oct 2024 01:32:07 -0400
+	id 1t1faa-0008R8-K8; Fri, 18 Oct 2024 01:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fao-0000K0-31; Fri, 18 Oct 2024 01:32:06 -0400
+ id 1t1faL-0008Hb-IX; Fri, 18 Oct 2024 01:31:38 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t1fam-0008E2-Ku; Fri, 18 Oct 2024 01:32:05 -0400
+ id 1t1faK-00089Y-2O; Fri, 18 Oct 2024 01:31:37 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 18 Oct
- 2024 13:31:16 +0800
+ 2024 13:31:13 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Fri, 18 Oct 2024 13:31:16 +0800
+ Transport; Fri, 18 Oct 2024 13:31:13 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -36,10 +36,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 11/16] test/qtest/aspeed_smc-test: Support to test all
- flash models
-Date: Fri, 18 Oct 2024 13:31:07 +0800
-Message-ID: <20241018053112.1886173-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 04/16] hw/block/m25p80: Add SFDP table for w25q80bl flash
+Date: Fri, 18 Oct 2024 13:31:00 +0800
+Message-ID: <20241018053112.1886173-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
@@ -71,88 +70,89 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, these test cases used the hardcode offset 0x1400000 (0x14000 * 256)
-which was beyond the 16MB flash size for flash page read/write command testing.
-However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" whose size
-is 1MB. To test all flash models, introduces a new page_addr member in TestData
-structure, so users can set the offset for flash parge read/write command
-testing.
+Add the SFDP table for the Windbond w25q80bl flash.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/qtest/aspeed_smc-test.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ hw/block/m25p80.c      |  3 ++-
+ hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
+ hw/block/m25p80_sfdp.h |  2 +-
+ 3 files changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index b8ab20b43d..6db18451d2 100644
---- a/tests/qtest/aspeed_smc-test.c
-+++ b/tests/qtest/aspeed_smc-test.c
-@@ -72,6 +72,7 @@ typedef struct TestData {
-     char *tmp_path;
-     uint8_t cs;
-     const char *node;
-+    uint32_t page_addr;
- } TestData;
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 411d810d3b..e2e84f8b5f 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -356,7 +356,8 @@ static const FlashPartInfo known_devices[] = {
+     { INFO("w25x64",      0xef3017,      0,  64 << 10, 128, ER_4K) },
+     { INFO("w25q64",      0xef4017,      0,  64 << 10, 128, ER_4K) },
+     { INFO("w25q80",      0xef5014,      0,  64 << 10,  16, ER_4K) },
+-    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K) },
++    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K),
++      .sfdp_read = m25p80_sfdp_w25q80bl },
+     { INFO("w25q256",     0xef4019,      0,  64 << 10, 512, ER_4K),
+       .sfdp_read = m25p80_sfdp_w25q256 },
+     { INFO("w25q512jv",   0xef4020,      0,  64 << 10, 1024, ER_4K),
+diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+index 82d84cc21f..a03a291a09 100644
+--- a/hw/block/m25p80_sfdp.c
++++ b/hw/block/m25p80_sfdp.c
+@@ -404,6 +404,42 @@ static const uint8_t sfdp_w25q01jvq[] = {
+ };
+ define_sfdp_read(w25q01jvq);
  
++static const uint8_t sfdp_w25q80bl[] = {
++    0x53, 0x46, 0x44, 0x50, 0x05, 0x01, 0x00, 0xff,
++    0x00, 0x05, 0x01, 0x10, 0x80, 0x00, 0x00, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0x7f, 0x00,
++    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
++    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
++    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x0f, 0x52,
++    0x10, 0xd8, 0x00, 0x00, 0x23, 0x02, 0xa6, 0x00,
++    0x81, 0x6c, 0x14, 0xa7, 0xed, 0x61, 0x76, 0x33,
++    0x7a, 0x75, 0x7a, 0x75, 0xf7, 0xa2, 0xd5, 0x5c,
++    0x00, 0xf7, 0x1d, 0xff, 0xe9, 0x30, 0xc0, 0x80,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++};
++define_sfdp_read(w25q80bl);
++
  /*
-@@ -256,7 +257,7 @@ static void assert_page_mem(const TestData *data, uint32_t addr,
- static void test_erase_sector(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t some_page_addr = 0x600 * FLASH_PAGE_SIZE;
-+    uint32_t some_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
+  * Integrated Silicon Solution (ISSI)
+  */
+diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+index 89c2d8f72d..35785686a0 100644
+--- a/hw/block/m25p80_sfdp.h
++++ b/hw/block/m25p80_sfdp.h
+@@ -25,7 +25,7 @@ uint8_t m25p80_sfdp_mx66l1g45g(uint32_t addr);
  
-@@ -308,7 +309,7 @@ static void test_erase_sector(const void *data)
- static void test_erase_all(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t some_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
+ uint8_t m25p80_sfdp_w25q256(uint32_t addr);
+ uint8_t m25p80_sfdp_w25q512jv(uint32_t addr);
+-
++uint8_t m25p80_sfdp_w25q80bl(uint32_t addr);
+ uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
  
-@@ -358,8 +359,8 @@ static void test_erase_all(const void *data)
- static void test_write_page(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-+    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -395,8 +396,8 @@ static void test_write_page(const void *data)
- static void test_read_page_mem(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-+    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -438,7 +439,7 @@ static void test_read_page_mem(const void *data)
- static void test_write_page_mem(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -679,6 +680,8 @@ static void test_palmetto_bmc(TestData *data)
-     data->jedec_id = 0x20ba19;
-     data->cs = 0;
-     data->node = "/machine/soc/fmc/ssi.0/child[0]";
-+    /* beyond 16MB */
-+    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
- 
-     qtest_add_data_func("/ast2400/smc/read_jedec", data, test_read_jedec);
-     qtest_add_data_func("/ast2400/smc/erase_sector", data, test_erase_sector);
+ uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
 -- 
 2.34.1
 
