@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8536ED3C549
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 04:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9498D3C549
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 04:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1exC-0008Qa-I0; Fri, 18 Oct 2024 00:51:10 -0400
+	id 1t1f2n-0001kG-2E; Fri, 18 Oct 2024 00:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1exB-0008QG-AH
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:51:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1f2j-0001jy-7D; Fri, 18 Oct 2024 00:56:53 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t1ex9-0003UL-Rq
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 00:51:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729227067;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2DXD/44HBFMmoZZy1zCKCZEliz8wxao+RbWclm9iY2w=;
- b=gFrQiozDYqVd6EoL5QiiSvos9ovoApsoBlcCdHSSnMRhCKpS4rM9iwnyRDfg7H695WPMfg
- o+9i/jqWthjMyBRm4ddGAjya5ZcJB/rqEXbx3JMcEboz68o1S9Ps+JBgOplJoC0AiIRnIi
- 9TG9+yKkEZyE5K9KffGc/Za7yiGmuqE=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-ryDLhpJfN0SXwDs8_hl69w-1; Fri, 18 Oct 2024 00:51:05 -0400
-X-MC-Unique: ryDLhpJfN0SXwDs8_hl69w-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-7db9418552fso1400145a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Oct 2024 21:51:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729227064; x=1729831864;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2DXD/44HBFMmoZZy1zCKCZEliz8wxao+RbWclm9iY2w=;
- b=BVpmbl715CEPAuD61JxbkcmVAhrctr6Qdt6K8YBzAaMD8QTk4e3swozVsKI4eNbVxb
- dOYP8rQ/PRVCI7WJSdERSIrvCAjt9c20gwr4O1/Ckxxd8TbZVa0SXPgTc8jO7FMk7OIm
- XzXKP9j4xxlIxrSXf97oGdAdxOUntQYs+hRvUoQ38U/Lpjol0/O6ZcqenJyHff57ytb6
- tt1u0Sj+SAxjAZpOZ2urfrtsnK1SsLetlbD/LipGRphY+txSJTFTiNQTkQmGdYKcMUGM
- FBCYPvr7suGoN9W5c85eDMmjsT1znuplqooVY3fa4MHWmoVG+xUL4LhTBexfTHu5HVk9
- s3DQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbFnWLx4k1wtyS7oL3Mezc2lCNuKojH5Hzzn6OBOTDE+8gKn1q6PdcVYYV8EOrM2nVdeToCzL/5U6b@nongnu.org
-X-Gm-Message-State: AOJu0YykteyjZqvlhO1opOIkRMtOrd3g3KPXXazNtflWyTMBdT2nd5OJ
- bW50Hf8v98EzvoWxgPDJD/+aebqEAnbDuT9ltjmDnGGB3IWsu1ANB6kRIDlTx/gVPyQwlk9eODD
- /QmwyTwxM5OtrfwnNTpvV/y3jSCtBj6pEH8e0PSTpBrdCKUE1S6dz1seC79au+6cDz7OHjrPUsS
- bOkB0y07bGuQhaAs1hfr/2a8iSeRA=
-X-Received: by 2002:a17:90a:a018:b0:2e3:b168:70f5 with SMTP id
- 98e67ed59e1d1-2e56172c05fmr1667089a91.21.1729227064206; 
- Thu, 17 Oct 2024 21:51:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExFBfo67QNSdIcOrLGYd0lqQdhJx3X/TVRCx17tbL4x49bySrhAVt7nDj4naCDdKzMF3xXvQduoFKPkA3X/rA=
-X-Received: by 2002:a17:90a:a018:b0:2e3:b168:70f5 with SMTP id
- 98e67ed59e1d1-2e56172c05fmr1667065a91.21.1729227063822; Thu, 17 Oct 2024
- 21:51:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1f2f-00049x-JH; Fri, 18 Oct 2024 00:56:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729227409; x=1760763409;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=bGu/+Db0FA2igHiNwYPOV2iX0Touqy0Pg/UF/MibiE4=;
+ b=DBCEBZhqcHWlRT0gN2sxUAmhnSICDjUI/tDxBQ8fA0OQDmGEcoADctUx
+ f4nR8Duy14IJ9cIQ9QyVloP1g1g/XDsUc06BekbRJ7OCOxUQVhuxeFwHm
+ gYdZMhHBGLkbKh6mY8XKlqOI2aT/nn4x9jdqxSiymRlj7toEQ8LB124h1
+ 8rYDHGCGv4FlOqP5pFv26hpB0UYSZKOrSwtKMUpDlek7YeGcWCXB7Bfsk
+ yrzjj3HzmYxlkdUDHrOyiA6EI2xNfNVbovcc/QyFbY/WXuWaLxzSFsqZs
+ 6sKxX+f2+YTXUnAOu3X/hX04hknBjH06SCL+AH+GLbt77OK6iSztM+zHM g==;
+X-CSE-ConnectionGUID: JGV9Cr5eQZ2neZvOIl8e4g==
+X-CSE-MsgGUID: ljwC1UfYTXSXc26egJNlLw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="28184833"
+X-IronPort-AV: E=Sophos;i="6.11,212,1725346800"; d="scan'208";a="28184833"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Oct 2024 21:56:45 -0700
+X-CSE-ConnectionGUID: 7gnTr/A0RBauVJqQ4cSmrw==
+X-CSE-MsgGUID: mufS2+6KR1OT1OeLqwYIEA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,212,1725346800"; d="scan'208";a="78664072"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 17 Oct 2024 21:56:37 -0700
+Date: Fri, 18 Oct 2024 13:12:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ imammedo@redhat.com, andrew.jones@linux.dev, david@redhat.com,
+ philmd@linaro.org, eric.auger@redhat.com, will@kernel.org,
+ ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com,
+ alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com,
+ salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
+ wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, linuxarm@huawei.com, gustavo.romero@linaro.org
+Subject: Re: [PATCH V1 3/4] hw/acpi: Reflect ACPI vCPU {present,enabled}
+ states in ACPI _STA.{PRES,ENA} Bits
+Message-ID: <ZxHuVC0uDL7kEB2i@intel.com>
+References: <20241014192205.253479-1-salil.mehta@huawei.com>
+ <20241014192205.253479-4-salil.mehta@huawei.com>
 MIME-Version: 1.0
-References: <20240909204254.1446800-1-sw@weilnetz.de>
- <CYYPR11MB8432028036D306D2FB6F4A359B9A2@CYYPR11MB8432.namprd11.prod.outlook.com>
- <bc8991ef-91af-419c-beda-f0ece8eda019@weilnetz.de>
- <CYYPR11MB8432723FB4A5A76E3ABB02699B402@CYYPR11MB8432.namprd11.prod.outlook.com>
-In-Reply-To: <CYYPR11MB8432723FB4A5A76E3ABB02699B402@CYYPR11MB8432.namprd11.prod.outlook.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 18 Oct 2024 12:50:52 +0800
-Message-ID: <CACGkMEu7vT6Xdpw2SYSMrhQ+bhQnBN6-u=zEmL=fW3vHR6aLMw@mail.gmail.com>
-Subject: Re: [PATCH] Fix calculation of minimum in colo_compare_tcp
-To: "Zhang, Chen" <chen.zhang@intel.com>
-Cc: Stefan Weil <sw@weilnetz.de>, Li Zhijian <lizhijian@fujitsu.com>, 
- qemu-stable <qemu-stable@nongnu.org>, QEMU Trivial <qemu-trivial@nongnu.org>, 
- Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241014192205.253479-4-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,133 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 18, 2024 at 10:48=E2=80=AFAM Zhang, Chen <chen.zhang@intel.com>=
- wrote:
->
-> Add Trivial patches Maintainers.
->
->
->
-> Hi Jason/Michael/Laurent,
->
-> Can you help to pick up this patch for upstream and stable?
+Hi Salil,
 
-Queued.
-
-Btw, if you want -stable next time, please cc it.
-
-Thanks
-
->
->
->
-> Thanks
->
-> Chen
->
->
->
-> From: Stefan Weil <sw@weilnetz.de>
-> Sent: Friday, October 18, 2024 3:44 AM
-> To: Zhang, Chen <chen.zhang@intel.com>; Li Zhijian <lizhijian@fujitsu.com=
->; Jason Wang <jasowang@redhat.com>; qemu-stable <qemu-stable@nongnu.org>; =
-QEMU Trivial <qemu-trivial@nongnu.org>
-> Cc: qemu-devel@nongnu.org
-> Subject: Re: [PATCH] Fix calculation of minimum in colo_compare_tcp
->
->
->
-> It looks like nobody has sent a pull request for this fix up to now. Is i=
-t trivial enough for qemu-trivial? And maybe qemu-stable could also apply i=
-t to older versions.
->
-> Stefan W.
->
-> Am 10.09.24 um 04:38 schrieb Zhang, Chen:
->
-> -----Original Message-----
->
-> From: Stefan Weil <sw@weilnetz.de>
->
-> Sent: Tuesday, September 10, 2024 4:43 AM
->
-> To: Zhang, Chen <chen.zhang@intel.com>; Li Zhijian <lizhijian@fujitsu.com=
->;
->
-> Jason Wang <jasowang@redhat.com>
->
-> Cc: qemu-devel@nongnu.org; Stefan Weil <sw@weilnetz.de>
->
-> Subject: [PATCH] Fix calculation of minimum in colo_compare_tcp
->
->
->
-> GitHub's CodeQL reports a critical error which is fixed by using the MIN
->
-> macro:
->
->
->
->     Unsigned difference expression compared to zero
->
->
->
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
->
->
->
-> Looks good to me.
->
-> Reviewed-by: Zhang Chen <chen.zhang@intel.com>
->
->
->
-> Thanks
->
-> Chen
->
->
->
+On Mon, Oct 14, 2024 at 08:22:04PM +0100, Salil Mehta wrote:
+> Date: Mon, 14 Oct 2024 20:22:04 +0100
+> From: Salil Mehta <salil.mehta@huawei.com>
+> Subject: [PATCH V1 3/4] hw/acpi: Reflect ACPI vCPU {present,enabled} states
+>  in ACPI _STA.{PRES,ENA} Bits
+> X-Mailer: git-send-email 2.34.1
+> 
+> Reflect the ACPI CPU hotplug `is_{present, enabled}` states in the `_STA.PRES`
+> (presence) and `_STA.ENA` (enabled) bits when the guest kernel evaluates the
+> ACPI `_STA` method during initialization, as well as when vCPUs are hot-plugged
+> or hot-unplugged. The presence of unplugged vCPUs may need to be deliberately
+> *simulated* at the ACPI level to maintain a *persistent* view of vCPUs for the
+> guest kernel.
+> 
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 > ---
->
->  net/colo-compare.c | 3 +--
->
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
->
->
-> diff --git a/net/colo-compare.c b/net/colo-compare.c index
->
-> c4ad0ab71f..39f90c4065 100644
->
-> --- a/net/colo-compare.c
->
-> +++ b/net/colo-compare.c
->
-> @@ -412,8 +412,7 @@ static void colo_compare_tcp(CompareState *s,
->
-> Connection *conn)
->
->       * can ensure that the packet's payload is acknowledged by
->
->       * primary and secondary.
->
->      */
->
-> -    uint32_t min_ack =3D conn->pack - conn->sack > 0 ?
->
-> -                       conn->sack : conn->pack;
->
-> +    uint32_t min_ack =3D MIN(conn->pack, conn->sack);
->
->
->
->  pri:
->
->      if (g_queue_is_empty(&conn->primary_list)) {
->
-> --
->
-> 2.39.3 (Apple Git-146)
+>  hw/acpi/cpu.c | 26 ++++++++++++++++++++++----
+>  1 file changed, 22 insertions(+), 4 deletions(-)
+> 
+
+It seems this patch changes ACPI table layout and then breaks current
+ACPI table qtest. I'm not sure how to do such modifications. Maybe you
+should first disable the related checks, then modify the code, update
+the qtest, and finally re-enable the checks for qtest. This can help
+to avoid any qtest failure due to this patch?
+
+I think it should get Igor's advice on this. :)
+
+Attach the error I met:
+
+▶   2/920 ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion failed: (all_tables_match) ERROR
+▶   3/920 ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion failed: (all_tables_match) ERROR
+  2/920 qemu:qtest+qtest-i386 / qtest-i386/bios-tables-test                                ERROR            1.24s   killed by signal 6 SIGABRT
+>>> G_TEST_DBUS_DAEMON=/media/liuzhao/data/qemu-cook/tests/dbus-vmstate-daemon.sh ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_BINARY=./qemu-system-i386 MALLOC_PERTURB_=142 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=./qemu-img PYTHON=/media/liuzhao/data/qemu-cook/build/pyvenv/bin/python3 /media/liuzhao/data/qemu-cook/build/tests/qtest/bios-tables-test --tap -k
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+stderr:
+acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-VRT5V2], Expected [aml:tests/data/acpi/x86/pc/DSDT].
+See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
+acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-TTT5V2.dsl, aml:/tmp/aml-VRT5V2], Expected [asl:/tmp/asl-XXM5V2.dsl, aml:tests/data/acpi/x86/pc/DSDT].
+**
+ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion failed: (all_tables_match)
+
+(test program exited with status code -6)
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+
+  3/920 qemu:qtest+qtest-x86_64 / qtest-x86_64/bios-tables-test                            ERROR            1.25s   killed by signal 6 SIGABRT
+>>> G_TEST_DBUS_DAEMON=/media/liuzhao/data/qemu-cook/tests/dbus-vmstate-daemon.sh ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_IMG=./qemu-img PYTHON=/media/liuzhao/data/qemu-cook/build/pyvenv/bin/python3 MALLOC_PERTURB_=41 QTEST_QEMU_BINARY=./qemu-system-x86_64 /media/liuzhao/data/qemu-cook/build/tests/qtest/bios-tables-test --tap -k
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+stderr:
+acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-D5K5V2], Expected [aml:tests/data/acpi/x86/pc/DSDT].
+See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
+acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-G6K5V2.dsl, aml:/tmp/aml-D5K5V2], Expected [asl:/tmp/asl-AQD5V2.dsl, aml:tests/data/acpi/x86/pc/DSDT].
+**
+ERROR:../tests/qtest/bios-tables-test.c:553:test_acpi_asl: assertion failed: (all_tables_match)
+
+(test program exited with status code -6)
+
+
+Regards,
+Zhao
+
 
 
