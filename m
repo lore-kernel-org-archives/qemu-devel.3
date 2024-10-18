@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B47D3000A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD0FD3000A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 13:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1n21-0005ki-Qx; Fri, 18 Oct 2024 09:28:41 -0400
+	id 1t1n50-0002s9-8i; Fri, 18 Oct 2024 09:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1y-0005iz-JY
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:28:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=LF+j=RO=kaod.org=clg@ozlabs.org>)
+ id 1t1n4g-0002XY-Sm; Fri, 18 Oct 2024 09:31:32 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t1n1t-0007Oo-PE
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 09:28:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729258112;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nlQmu/jBaqVvffDbQ3FpNPvwuk8rFn+3FbqwIY4nfdc=;
- b=WX1l3IF2Lfb3QoLTTItOC2JemaalahIsU30I3TyiVNuIdnDV2YGyKCPsMbqFbF6Z7JWoBC
- iERe+QTJnXs14FZjwPjxdciMFmxRHyJ2QZyVRVZot7XwePmgEGDjgrnlzbeh2KjFOFL4o9
- JPb2FhoemuQ/jXreNMM+e/iIVpmZ0Y8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-lMMfIUOzPBCuN3ZjjsHh-w-1; Fri,
- 18 Oct 2024 09:28:31 -0400
-X-MC-Unique: lMMfIUOzPBCuN3ZjjsHh-w-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <SRS0=LF+j=RO=kaod.org=clg@ozlabs.org>)
+ id 1t1n4e-00087y-C6; Fri, 18 Oct 2024 09:31:26 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XVQZp4pTnz4wnp;
+ Sat, 19 Oct 2024 00:31:14 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4E27195608F; Fri, 18 Oct 2024 13:28:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5DA7195607C; Fri, 18 Oct 2024 13:28:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 58EF221E6891; Fri, 18 Oct 2024 15:28:24 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 6/9] target/i386/cpu: Avoid mixing signed and unsigned in
- property setters
-Date: Fri, 18 Oct 2024 15:28:21 +0200
-Message-ID: <20241018132824.3379780-7-armbru@redhat.com>
-In-Reply-To: <20241018132824.3379780-1-armbru@redhat.com>
-References: <20241018132824.3379780-1-armbru@redhat.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XVQZh5ybFz4wcl;
+ Sat, 19 Oct 2024 00:31:05 +1100 (AEDT)
+Message-ID: <b3970e21-cbd0-4bca-a857-df55d48c8468@kaod.org>
+Date: Fri, 18 Oct 2024 15:31:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v1 02/16] hw/block:m25p80: Fix coding style
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
+ <20241018053112.1886173-3-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241018053112.1886173-3-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=LF+j=RO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,144 +74,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properties "family", "model", and "stepping" are visited as signed
-integers.  They are backed by bits in CPUX86State member
-@cpuid_version.  The code to extract and insert these bits mixes
-signed and unsigned.  Not actually wrong, but avoiding such mixing is
-good practice.
+On 10/18/24 07:30, Jamin Lin wrote:
+> Fix coding style issues from checkpatch.pl
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Visit them as unsigned integers instead.
 
-This adds a few mildly ugly cast in arguments of error_setg().  The
-next commit will get rid of them again.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Property "tsc-frequency" is also visited as signed integer.  The value
-ultimately flows into the kernel, where it is 31 bits unsigned.  The
-QEMU code freely mixes int, uint32_t, int64_t.  I elect not to attempt
-draining this swamp today.
+Thanks,
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20241010150144.986655-5-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
- target/i386/cpu.c | 45 +++++++++++++++++++++------------------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+C.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0d30191482..cd0dfd03fd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5433,13 +5433,13 @@ static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    int64_t value;
-+    uint64_t value;
- 
-     value = (env->cpuid_version >> 8) & 0xf;
-     if (value == 0xf) {
-         value += (env->cpuid_version >> 20) & 0xff;
-     }
--    visit_type_int(v, name, &value, errp);
-+    visit_type_uint64(v, name, &value, errp);
- }
- 
- static void x86_cpuid_version_set_family(Object *obj, Visitor *v,
-@@ -5448,16 +5448,15 @@ static void x86_cpuid_version_set_family(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    const int64_t min = 0;
--    const int64_t max = 0xff + 0xf;
--    int64_t value;
-+    const uint64_t max = 0xff + 0xf;
-+    uint64_t value;
- 
--    if (!visit_type_int(v, name, &value, errp)) {
-+    if (!visit_type_uint64(v, name, &value, errp)) {
-         return;
-     }
--    if (value < min || value > max) {
-+    if (value > max) {
-         error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, min, max);
-+                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-         return;
-     }
- 
-@@ -5475,11 +5474,11 @@ static void x86_cpuid_version_get_model(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    int64_t value;
-+    uint64_t value;
- 
-     value = (env->cpuid_version >> 4) & 0xf;
-     value |= ((env->cpuid_version >> 16) & 0xf) << 4;
--    visit_type_int(v, name, &value, errp);
-+    visit_type_uint64(v, name, &value, errp);
- }
- 
- static void x86_cpuid_version_set_model(Object *obj, Visitor *v,
-@@ -5488,16 +5487,15 @@ static void x86_cpuid_version_set_model(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    const int64_t min = 0;
--    const int64_t max = 0xff;
--    int64_t value;
-+    const uint64_t max = 0xff;
-+    uint64_t value;
- 
--    if (!visit_type_int(v, name, &value, errp)) {
-+    if (!visit_type_uint64(v, name, &value, errp)) {
-         return;
-     }
--    if (value < min || value > max) {
-+    if (value > max) {
-         error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, min, max);
-+                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-         return;
-     }
- 
-@@ -5511,10 +5509,10 @@ static void x86_cpuid_version_get_stepping(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    int64_t value;
-+    uint64_t value;
- 
-     value = env->cpuid_version & 0xf;
--    visit_type_int(v, name, &value, errp);
-+    visit_type_uint64(v, name, &value, errp);
- }
- 
- static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
-@@ -5523,16 +5521,15 @@ static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
- {
-     X86CPU *cpu = X86_CPU(obj);
-     CPUX86State *env = &cpu->env;
--    const int64_t min = 0;
--    const int64_t max = 0xf;
--    int64_t value;
-+    const uint64_t max = 0xf;
-+    uint64_t value;
- 
--    if (!visit_type_int(v, name, &value, errp)) {
-+    if (!visit_type_uint64(v, name, &value, errp)) {
-         return;
-     }
--    if (value < min || value > max) {
-+    if (value > max) {
-         error_setg(errp, QERR_PROPERTY_VALUE_OUT_OF_RANGE, "",
--                   name ? name : "null", value, min, max);
-+                   name ? name : "null", value, (int64_t)0, (int64_t)max);
-         return;
-     }
- 
--- 
-2.46.0
+
+> ---
+>   hw/block/m25p80.c | 22 ++++++++++++++--------
+>   1 file changed, 14 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> index f7123f9e68..3f55b8f385 100644
+> --- a/hw/block/m25p80.c
+> +++ b/hw/block/m25p80.c
+> @@ -61,7 +61,8 @@ typedef struct FlashPartInfo {
+>        */
+>       uint8_t id[SPI_NOR_MAX_ID_LEN];
+>       uint8_t id_len;
+> -    /* there is confusion between manufacturers as to what a sector is. In this
+> +    /*
+> +     * there is confusion between manufacturers as to what a sector is. In this
+>        * device model, a "sector" is the size that is erased by the ERASE_SECTOR
+>        * command (opcode 0xd8).
+>        */
+> @@ -168,7 +169,7 @@ typedef struct FlashPartInfo {
+>   /*
+>    * Spansion read mode command length in bytes,
+>    * the mode is currently not supported.
+> -*/
+> + */
+>   
+>   #define SPANSION_CONTINUOUS_READ_MODE_CMD_LEN 1
+>   #define WINBOND_CONTINUOUS_READ_MODE_CMD_LEN 1
+> @@ -189,7 +190,8 @@ static const FlashPartInfo known_devices[] = {
+>   
+>       { INFO("at45db081d",  0x1f2500,      0,  64 << 10,  16, ER_4K) },
+>   
+> -    /* Atmel EEPROMS - it is assumed, that don't care bit in command
+> +    /*
+> +     * Atmel EEPROMS - it is assumed, that don't care bit in command
+>        * is set to 0. Block protection is not supported.
+>        */
+>       { INFO("at25128a-nonjedec", 0x0,     0,         1, 131072, EEPROM) },
+> @@ -275,10 +277,13 @@ static const FlashPartInfo known_devices[] = {
+>       { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+>       { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+>       { INFO_STACKED("mt25qu01g", 0x20bb21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+> -    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
+> -    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
+> +    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096,
+> +                   ER_4K | ER_32K, 2) },
+> +    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096,
+> +                   ER_4K | ER_32K, 2) },
+>   
+> -    /* Spansion -- single (large) sector size only, at least
+> +    /*
+> +     * Spansion -- single (large) sector size only, at least
+>        * for the chips listed here (without boot sectors).
+>        */
+>       { INFO("s25sl032p",   0x010215, 0x4d00,  64 << 10,  64, ER_4K) },
+> @@ -549,7 +554,8 @@ static void blk_sync_complete(void *opaque, int ret)
+>       qemu_iovec_destroy(iov);
+>       g_free(iov);
+>   
+> -    /* do nothing. Masters do not directly interact with the backing store,
+> +    /*
+> +     * do nothing. Masters do not directly interact with the backing store,
+>        * only the working copy so no mutexing required.
+>        */
+>   }
+> @@ -1843,7 +1849,7 @@ static void m25p80_register_types(void)
+>   
+>       type_register_static(&m25p80_info);
+>       for (i = 0; i < ARRAY_SIZE(known_devices); ++i) {
+> -        TypeInfo ti = {
+> +        const TypeInfo ti = {
+>               .name       = known_devices[i].part_name,
+>               .parent     = TYPE_M25P80,
+>               .class_init = m25p80_class_init,
 
 
