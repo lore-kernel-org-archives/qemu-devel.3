@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF923D2F7ED
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509B4D30016
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1psb-0004br-LL; Fri, 18 Oct 2024 12:31:09 -0400
+	id 1t1ptZ-0005Hf-90; Fri, 18 Oct 2024 12:32:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1psQ-0004bO-As; Fri, 18 Oct 2024 12:31:00 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1ptX-0005FO-HP
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:32:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t1psN-0006dV-H4; Fri, 18 Oct 2024 12:30:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 46F3699D47;
- Fri, 18 Oct 2024 19:30:30 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 238EB1578B6;
- Fri, 18 Oct 2024 19:30:53 +0300 (MSK)
-Message-ID: <b502d39d-f74d-4e8d-b645-cecce9e170b7@tls.msk.ru>
-Date: Fri, 18 Oct 2024 19:30:53 +0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t1ptU-0006jN-Mm
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:32:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729269122;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WSge55wAhHNuoM35XbLzq8lU61J+TYnwAqZD8ofvPEc=;
+ b=LUzVhSnjRuvIPJWsdIa6vRgjISnN3GwRR1blD/dsV/mCA5VgADtnzfeO6Q8W8seE+IH7OQ
+ xoQxfaYL7P/SULuQVpQYdO8fvrhJK+tr+C+YFJX0uviCXwJEtWZZCL5tcvMKejFvHhhhtw
+ Nsznjibcz+9y+oZAbqrCMWNDyaMopbo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-Lt5R7bCMPGiAN_9hkni7GQ-1; Fri,
+ 18 Oct 2024 12:32:00 -0400
+X-MC-Unique: Lt5R7bCMPGiAN_9hkni7GQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD4DA1955F3D; Fri, 18 Oct 2024 16:31:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.196])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 89C4230001A5; Fri, 18 Oct 2024 16:31:54 +0000 (UTC)
+Date: Fri, 18 Oct 2024 18:31:51 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: luzhipeng <luzhipeng@cestc.cn>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH] vmdk:truncate more one sector in init extent
+Message-ID: <ZxKNd_KqTJ9p_IIg@redhat.com>
+References: <20240822105237.777-1-luzhipeng@cestc.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] replace error_setg(&error_fatal, ...) with error_report()
-To: Tudor Gheorghiu <tudor.reda@gmail.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <ZwRgbNs4Hz-Drt2V@redaops>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ZwRgbNs4Hz-Drt2V@redaops>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240822105237.777-1-luzhipeng@cestc.cn>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,47 +81,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-08.10.2024 01:27, Tudor Gheorghiu wrote:
-> According to include/qapi/error.h:
-> * Please don't error_setg(&error_fatal, ...), use error_report() and
-> * exit(), because that's more obvious.
+Am 22.08.2024 um 12:52 hat luzhipeng geschrieben:
+> issue:https://gitlab.com/qemu-project/qemu/-/issues/1357
+> empty vmdk only contains metadata, ovftool failed.
+> So it allocates more one sector for empty disk. the ovftool
+> command line: ovftool input.ovf output.ova
 > 
-> Patch updates all instances of error_setg(&error_fatal, ...) with
-> error_report(...), adds the explicit exit(1) and removes redundant
-> return statements.
-> 
-> Signed-off-by: Tudor Gheorghiu <tudor.reda@gmail.com>
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2587
+> Signed-off-by: luzhipeng <luzhipeng@cestc.cn>
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+I think this commit message needs more of the information from the bug
+report, otherwise it seems unexplainable why adding an empty sector
+should make a difference.
 
+> diff --git a/block/vmdk.c b/block/vmdk.c
+> index 78f6433607..283dee9b49 100644
+> --- a/block/vmdk.c
+> +++ b/block/vmdk.c
+> @@ -2286,7 +2286,7 @@ vmdk_init_extent(BlockBackend *blk, int64_t filesize, bool flat, bool compress,
+>          goto exit;
+>      }
+>  
+> -    ret = blk_co_truncate(blk, le64_to_cpu(header.grain_offset) << 9, false,
+> +    ret = blk_co_truncate(blk, (le64_to_cpu(header.grain_offset) << 9) + BDRV_SECTOR_SIZE,
+> +                          false, PREALLOC_MODE_OFF, 0, errp);
+>      if (ret < 0) {
+>          goto exit;
 
-> @@ -49,9 +50,9 @@ void allwinner_a10_bootrom_setup(AwA10State *s, BlockBackend *blk)
->       g_autofree uint8_t *buffer = g_new0(uint8_t, rom_size);
->   
->       if (blk_pread(blk, 8 * KiB, rom_size, buffer, 0) < 0) {
-> -        error_setg(&error_fatal, "%s: failed to read BlockBackend data",
-> +        error_report("%s: failed to read BlockBackend data",
->                      __func__);
-> -        return;
-> +        exit(1);
->       }
+This is not a good fix. It means that we will always leave an empty
+sector after the header, even if more data follows.
 
-I queued this patch to qemu-trivial, with additional change, - folding this __func__ to
-the previous line, since there's no need to split the line anymore.  Like this:
+Does the problem really only happen with empty images? I think we don't
+necessarily add an end-of-stream marker for other images either, we just
+align the image size to full sectors at the end of 'qemu-img convert'.
 
-      if (blk_pread(blk, 8 * KiB, rom_size, buffer, 0) < 0) {
--        error_setg(&error_fatal, "%s: failed to read BlockBackend data",
--                   __func__);
--        return;
-+        error_report("%s: failed to read BlockBackend data", __func__);
-+        exit(1);
-      }
+I wonder if vmdk_co_pwritev_compressed() should be changed to write both
+a footer and an explicit end-of-stream marker for streamOptimized images
+in the bytes == 0 case.
 
-Here and in 2 other allwinner-* files.
+Kevin
 
-Thanks,
-
-/mjt
 
