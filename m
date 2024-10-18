@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EFD8D2FFE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86FC2D2FFE1
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 09:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1ja0-0004H2-3u; Fri, 18 Oct 2024 05:47:32 -0400
+	id 1t1jZZ-0003pU-MO; Fri, 18 Oct 2024 05:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1jZf-000496-Ho
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:47:15 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t1jZd-0002G4-0u
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:47:10 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5c935d99dc5so2047437a12.1
- for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 02:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729244827; x=1729849627; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mVB74vrHQENJH6UT6acezh0cU5co5ZJhROpwtq8lFf0=;
- b=YiOhMJZB+My397Big/cbFUh8hbGJHnvnbxEU8bifWjh2oXAILOBEJT5KdlGwS3EIHH
- KSxcMSmHoyjIdDGni3r6gGwJR2xiI6Hj1UiL4KVWF0Xw7Z+rlmQrQo3EcEbZRhMIKBgB
- Q9Ob2wlLF+UVLtjFfe6e3cC8kn9Aw1B59L1yZkivBQ0n5KBA0eiBJQP09nPCe/BFbYjJ
- t2G7766arsswtXclWQ32tbYI4PRuy0vWbsdUF3lSReXmiviIr/gpSwceBksUpcFQDmWE
- wTYPjpIZntAKYe1HLqMnr6a4sIuiy60BHUppniTuu9VB2S8U5nqCiqIr31GhMaRIx7jp
- sUQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729244827; x=1729849627;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mVB74vrHQENJH6UT6acezh0cU5co5ZJhROpwtq8lFf0=;
- b=ucuTZLTDWFNe4ducq+VuL6s9+dbSF/g6w25gG/4R58GCJ2LaANopOSerBD1NX4H0nX
- YWrzdvPr+v2dPvul9SQHlwtmNI1sBqf0Av/1UxEo03VEYXFEihO8VTNVbfX+eKE5YcOH
- fM71HltENWPpXAbue+9TLtj5oGfx6Sun0EOgGufXpNkxe9hnNktVDOMiudtNfC5wgQfp
- iYMhkLUvEYWKcuo3XiYheqiHWh+mQV3fISCCBs+Dbuc/uWZzD278718GEdixdw1lGXiH
- tzwrkqpXm8sAtgGVh62hYYTsdHblXdSYEmtJzCUZKSVf1u1jq/Abdvn8WDAXsKYgoTwN
- gyjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVI4X8Yu/4AfUEmf44DuK4WHmWp+TUpupBZ3yHa9V7G2qT+EEcGUBCNw0V88NrRN79zItbCApe2mbtQ@nongnu.org
-X-Gm-Message-State: AOJu0YxYW31QsgkCcMTKi8gXRIbEoq+AfDRYqODtE5kqJ0E4aUjxRLcj
- eL7/ExjvbVjS2Au9yZRV5WuSaq3fTue1pGcK+EnySRsSPJAKlBCUUsFh59F58Ze4Gue7Dj5GiAg
- sNgLdZV4d8JR27SqK3embHbqh1uU+GPpk0cj2xA==
-X-Google-Smtp-Source: AGHT+IEu8K6WS+0vvqeSuuvP1R3H+/YqPQaUqZEXLWimD9DxKR0DUFuDutn+nGnWXuMy49BAP4GC+AF2sn4GC0n6/+o=
-X-Received: by 2002:a05:6402:5241:b0:5c9:16e2:4db1 with SMTP id
- 4fb4d7f45d1cf-5ca0ac620afmr1294912a12.8.1729244826879; Fri, 18 Oct 2024
- 02:47:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1jZW-0003nI-P3
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:47:02 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t1jZR-0002Dv-K9
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 05:47:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729244817; x=1760780817;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=TdCRYriQGL2ze7PaTeD1CZVUfvmf8JwXiL7On7FzRHk=;
+ b=EZgDR92klV0n+Jinx3ZapNIUa5L2kIgfpWCb2+bwOBwet+2/6m/bhOA4
+ N51XkemH8N5/vbF5u+wxcDvvbMZWA/n8NgcJ0LLpek9FBFZ5FLvBXgn7B
+ A/aIJnk+Xpy+eHC+7KtuSNob2tFyo57CSa6mMTv8dYCqGFA9kFNTv51e2
+ gPAyLLjr2sXgZ+/S8gw/FAmtKglQUEqibhclS/WSFiC+0zgOy6/JGwMMe
+ WiSofJ8uxcbLJW6UO8dwLBe2PyrOpj/unMSpqRIDm6/clP+GrfiRnDspr
+ 6pSlyacjUwG3ejRAADFfO/QiFPwqm7uh1WVatRQI5uBTcfHneG5HP4S1p A==;
+X-CSE-ConnectionGUID: TOVC4ubtSmughLNvtgQMMw==
+X-CSE-MsgGUID: ee1TkTtqRa2kGrn3YKKhLw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11228"; a="39398615"
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="39398615"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Oct 2024 02:46:56 -0700
+X-CSE-ConnectionGUID: yRdmgDnUQC+uMGM1d6L2eQ==
+X-CSE-MsgGUID: q16Q4e6OSYiUf3Bm98KuSw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,213,1725346800"; d="scan'208";a="83402126"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 18 Oct 2024 02:46:55 -0700
+Date: Fri, 18 Oct 2024 18:03:10 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 21/31] stats: adapt to new import path for qobject
+ data type headers
+Message-ID: <ZxIyXpxKMAUp9Qxh@intel.com>
+References: <20241017113344.883424-1-berrange@redhat.com>
+ <20241017113344.883424-22-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20241017143211.17771-1-farosas@suse.de>
- <20241017143211.17771-5-farosas@suse.de>
- <ZxEl4zYgHLoLeHCT@redhat.com> <87r08e3d74.fsf@suse.de>
- <ZxIj694WqXwwMRIY@redhat.com>
-In-Reply-To: <ZxIj694WqXwwMRIY@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 18 Oct 2024 10:46:55 +0100
-Message-ID: <CAFEAcA8XCBrbqGDesL+5su-2Bk_YR1iQ6_X_j9tJZmNK1Kw=pQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241017113344.883424-22-berrange@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.068,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,75 +85,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Oct 2024 at 10:01, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+On Thu, Oct 17, 2024 at 12:33:33PM +0100, Daniel P. Berrangé wrote:
+> Date: Thu, 17 Oct 2024 12:33:33 +0100
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: [PATCH v2 21/31] stats: adapt to new import path for qobject data
+>  type headers
+> 
+> The qobject data type headers have moved from qapi/qmp/ to
+> qobject/.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  stats/stats-hmp-cmds.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> On Thu, Oct 17, 2024 at 01:29:35PM -0300, Fabiano Rosas wrote:
-> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-> >
-> > > On Thu, Oct 17, 2024 at 11:32:11AM -0300, Fabiano Rosas wrote:
-> > >> Recent changes to how we invoke the migration tests have
-> > >> (intentionally) caused them to not be part of the check-qtest target
-> > >> anymore. Add the check-migration-quick target so we don't lose
-> > >> migration code testing in this job.
-> > >
-> > > But 'check-migration-quick' is only the subset of migration tests,
-> > > 'check-migration' is all of the migration tests. So surely this is
-> > > a massive regressions in covage in CI pipelines.
-> >
-> > I'm not sure it is. There are tests there already for all the major
-> > parts of the code: precopy, postcopy, multifd, socket. Besides, we can
-> > tweak migration-quick to cover spots where we think we're losing
-> > coverage.
->
-> Each of the tests in migration-test  were added for a good reason,
-> generally to address testing gaps where we had functional regressions
-> in the past. I don't think its a good idea to stop running such tests
-> in CI as gating on new contributions. Any time we've had optional
-> tests in QEMU, we've seen repeated regressions in the area in question.
->
-> > Since our CI offers nothing in terms of reproducibility or
-> > debuggability, I don't think it's productive to have an increasing
-> > amount of tests running in CI if that means we'll be dealing with
-> > timeouts and intermittent crashes constantly.
->
-> Test reliability is a different thing. If a particular test is
-> flaky, it needs to either be fixed or disabled. Splitting into
-> a fast & slow grouping doesn't address reliability, just hides
-> the problem from view.
 
-A lot of the current reliability issue is timeouts -- sometimes
-our CI runners just run really slow (I have seen an example where
-between a normal and a slow run on the same commit both the
-compile and test times were 10x different...) So any test
-that is not a fast-to-complete is much much more likely to
-hit its timeout if the runner is running slowly. When I am
-doing CI testing for merges "migration test timed out again"
-is really really common.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-> > No disagreement here. But then I'm going to need advice on what to do
-> > when other maintainers ask us to stop writing migration tests because
-> > they take too long. I cannot send contributors away nor merge code
-> > without tests.
->
-> In general, I think it is unreasonable for other maintainers to
-> tell us to stop adding test coverage for migration, and would
-> push back against such a request.
-
-We do not have infinite CI resources, unfortunately. Migration
-is competing with everything else for time on CI. You have to
-find a balance between "what do we run every time" and "what
-do we only run when specifically testing a migration pullreq".
-Similarly, there's a lot of iotests but we don't run all of them
-for every block backend for every CI job via "make check".
-
-Long test times for tests run under "make check" are also bad
-for individual developers -- if I'm running "make check" to
-test a target/arm change I've made I don't really want that
-to then spend 15 minutes testing the migration code that
-I haven't touched and that is vanishingly unlikely to be
-affected by my patches.
-
-thanks
--- PMM
 
