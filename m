@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510DBD3F29E
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 21:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A45ACD3C547
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 06:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1uZd-0001xp-JL; Fri, 18 Oct 2024 17:31:53 -0400
+	id 1t22WU-0000rI-CB; Sat, 19 Oct 2024 02:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t1uZb-0001xh-Pz
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 17:31:52 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t22WQ-0000qz-Mf
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 02:01:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t1uZZ-00083j-U4
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 17:31:51 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1729287096; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=D/QqWorOkJA1pNOBIn6sKZ/fLeDwi1mA4UlEr7se/Tu/efI0cQsr/Hc7ZQ3cEogN2GeHhbMhgF62dWLRODmcwTeSkh0arOGCgobCzPDxpqk/Y7s3vhtZJtcRDbKTwrl48o+8V/twvUVLFBot5Uk4uLrtGtFH+nThNkwkiUPih4M=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1729287096;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=LXXoBs4X/hBLqGM0zkccMo/cdFgF1gW++CFbevlQFxc=; 
- b=jb7UWl1sMHO34pBtX5f8zFbfPnnNw+9xNhgu5ycRFF0g+R+wfjmGbkN95Gci7W37t+feC6CmMDYjaZC1sF5x7N5n+Ney5LklOqR17GrOwwDQdScvLwk8kNliIhLp7GnwdnI1QxbFOYsN2vyo+grRF/ezeRUTw39cAWzWeq5hgk8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729287096; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=LXXoBs4X/hBLqGM0zkccMo/cdFgF1gW++CFbevlQFxc=;
- b=BLfqnmOySVaUse9rILwCsGD3I6MycNcecPP6qVYKeo53wuf+7eJ5DER48qw2u3bk
- j8CRDjdBVCloM2ZjOkvc+Qlu2OWHp4ILWd2u41QwxtYyzpQAcNJsCjLD4DHT3aVwQsN
- qDVPRVR/bAAJVr6WbDSnw88JRsRqieF1CGcrSsmM=
-Received: by mx.zohomail.com with SMTPS id 1729287094761984.6438213480325;
- Fri, 18 Oct 2024 14:31:34 -0700 (PDT)
-Message-ID: <f79ebab7-fe1c-419d-89d5-6238b0b36ba5@collabora.com>
-Date: Sat, 19 Oct 2024 00:31:27 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t22WL-00034D-Kn
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 02:01:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729317658;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=d95iGD4/mKN7eUCuXr/LnAXufyE2M3N2BIqzhui/lrw=;
+ b=KFVG5buAeaAbiTAExUAyfPMsqC4zbTahX3B9XESEkXXPsBzxPhPpgjb5U+IDK8mVhMbBxZ
+ Zi2Ik0vukpstjNnw+O3Lzx2+TOe4H7MS1aJIZYRufyZSy09n87x3oN+J/IUg0r5dNvm8Xy
+ D7Uqlq5x4oSQI3wL7XxiazBrRWezhhY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-nECQXZAON06b2UDNOZR3rQ-1; Sat,
+ 19 Oct 2024 02:00:55 -0400
+X-MC-Unique: nECQXZAON06b2UDNOZR3rQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 403D719560A5; Sat, 19 Oct 2024 06:00:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D542E1956086; Sat, 19 Oct 2024 06:00:53 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8AA9721E6A28; Sat, 19 Oct 2024 08:00:51 +0200 (CEST)
+Resent-To: peter.maydell@linaro.org, philmd@linaro.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Sat, 19 Oct 2024 08:00:51 +0200
+Resent-Message-ID: <878qukfx7w.fsf@pond.sub.org>
+X-From-Line: armbru@redhat.com  Fri Oct 18 15:28:24 2024
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 639B521E6827; Fri, 18 Oct 2024 15:28:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 9/9] qerror: QERR_PROPERTY_VALUE_OUT_OF_RANGE is no longer
+ used, drop
+Date: Fri, 18 Oct 2024 15:28:24 +0200
+Message-ID: <20241018132824.3379780-10-armbru@redhat.com>
+In-Reply-To: <20241018132824.3379780-1-armbru@redhat.com>
+References: <20241018132824.3379780-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
- <20241015043238.114034-6-dmitry.osipenko@collabora.com>
- <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.249,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,18 +93,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/18/24 08:28, Akihiko Odaki wrote:
->> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
->> +                                      uint32_t ring_idx, uint64_t fence)
->> +{
->> +    VirtIOGPU *g = opaque;
-> 
-> What about taking the BQL here instead of having a QEMUBH?
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20241010150144.986655-8-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qapi/qmp/qerror.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-That will block virglrenderer thread writing the fence, which in turns
-might block other virglrenderer threads.
-
+diff --git a/include/qapi/qmp/qerror.h b/include/qapi/qmp/qerror.h
+index 101c1141b9..d1db6f18cd 100644
+--- a/include/qapi/qmp/qerror.h
++++ b/include/qapi/qmp/qerror.h
+@@ -23,7 +23,4 @@
+ #define QERR_MISSING_PARAMETER \
+     "Parameter '%s' is missing"
+ 
+-#define QERR_PROPERTY_VALUE_OUT_OF_RANGE \
+-    "Property %s.%s doesn't take value %" PRId64 " (minimum: %" PRId64 ", maximum: %" PRId64 ")"
+-
+ #endif /* QERROR_H */
 -- 
-Best regards,
-Dmitry
+2.46.0
+
+
 
