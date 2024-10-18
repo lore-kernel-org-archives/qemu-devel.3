@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909D7D30019
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10872D3001B
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Oct 2024 16:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t1paV-00035X-2g; Fri, 18 Oct 2024 12:12:27 -0400
+	id 1t1pbP-0003lZ-RH; Fri, 18 Oct 2024 12:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1paT-00035L-En
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:12:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t1paR-0004Iu-4g
- for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:12:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729267941;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rFb22aFeFZKwSAP3hHjtLSDkSlgY5x2/d6eHUr7Eths=;
- b=BeaZeawHBX7vTubsYuLhxl0iRjuLi6kTDV8ol3gjyJnMGUjVWWKW7GFdH9GzRwB+I1P9Tp
- IiZMPgijdiQ5pUXxdvnGJCe70QnCtXzIo3mJ8s4x73CSrJQRczp9S/HKNe8mPbOKDh/2ry
- zcT4j7FnLuloq0SNDLlR5MwUL+N7kO4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-FZ8KCrhYPMi-MdziMFiR0w-1; Fri,
- 18 Oct 2024 12:12:17 -0400
-X-MC-Unique: FZ8KCrhYPMi-MdziMFiR0w-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A0C71955F42; Fri, 18 Oct 2024 16:12:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4350019560AD; Fri, 18 Oct 2024 16:12:12 +0000 (UTC)
-Date: Fri, 18 Oct 2024 17:12:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: Re: [PATCH 4/4] ci: Add check-migration-quick to the clang job
-Message-ID: <ZxKI2fYaveHJpHGO@redhat.com>
-References: <20241017143211.17771-1-farosas@suse.de>
- <20241017143211.17771-5-farosas@suse.de>
- <ZxEl4zYgHLoLeHCT@redhat.com> <87r08e3d74.fsf@suse.de>
- <ZxIj694WqXwwMRIY@redhat.com>
- <CAFEAcA9eFApeeLBQvFC8zPNo+Ovk5woA5HKzaQ5j3=hd-G4smw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1t1pbK-0003ke-Ak
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:13:18 -0400
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1t1pbH-0004Ob-DH
+ for qemu-devel@nongnu.org; Fri, 18 Oct 2024 12:13:17 -0400
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7b13bf566c0so141760585a.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Oct 2024 09:13:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gourry.net; s=google; t=1729267993; x=1729872793; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y/0cRfb4YBF8cPInnUDV/L7Jp4pgWglmeJbCtRCfJPQ=;
+ b=HNFcszvgCsCQpBwfNyRF30E11MocbpOraEzo9kzfMqaez1xGn4M+UvoItRolF8GcJ5
+ Lb5ABzCCWqtlq9YetA/ylo87VOi5jZQ0OeDWjCCN6eUjZD3UN5294YHU5JsV3pukPmbn
+ UwQuK+ORf6pBl0MbPFMru9zP/tHluHD6VwP+JZRvx8DxbG3mbpNYDXGqEx56PjaASukQ
+ +w9M3i/aLWxQxgbALlSvHWJVlcFwGU90Fmpn+y/F1Zr91HMnjMYJp9LuSTuPvxOyYfZV
+ Q8/N8w32ZunGU1zZtQdk753ZgRmYxuHBan81WFaRjKPpsz/4TEChkY5H5vaN1kg7hnqk
+ o+yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729267993; x=1729872793;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=y/0cRfb4YBF8cPInnUDV/L7Jp4pgWglmeJbCtRCfJPQ=;
+ b=au6oRU4yckc0zpfSGEcYyvQ+j4B2MLwh/7ZJtC0/2AtDWP3zJubh2d8hIANIEJl7+Y
+ OnSHYlfODRCtnECTCbcX/qilYKgq1IK0qJuxVXNLSTgjuNHVjx2OV7p+C4sF5fFtlFNT
+ dE4G9+++qCwjqf9UI1bln5JgDy6zhP8pN//3a5sDEm0F7UNu6S+uJI7z255Q07l9f/rd
+ O1BOfGwKsAMICMLTszHUQUBYA2xKVOiqLtbb/xdI45XED0mAqjgOfwRhdlpDW6ZYeHW2
+ J6ssAO6hS9H6frN+ltePIK+UKr5TVPEV3CpQvyqpIaJZr2GmccK8MezFn5IgeH4RNrtP
+ edFg==
+X-Gm-Message-State: AOJu0Yx/e2SY3FhCKNXIBkNfrv5/+nF4UmCxnWKf8RnXlAdTcxyOgPwd
+ 2UYss3kPPb6PagKmbw3xC45eCZlbDOJm0yKpf2slRQuBaxbRyHR571mYfPOItfM=
+X-Google-Smtp-Source: AGHT+IHgiNaZWimN4akiargJriy+PnqMz0dQ4VKMrO8LERPUv3AnoxXaArowIO1TsiS2YWVAiX8YXQ==
+X-Received: by 2002:a05:620a:2402:b0:7b1:4948:109f with SMTP id
+ af79cd13be357-7b157bf13camr287097685a.57.1729267993256; 
+ Fri, 18 Oct 2024 09:13:13 -0700 (PDT)
+Received: from PC2K9PVX.TheFacebook.com
+ (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b156fa55cfsm81677385a.67.2024.10.18.09.13.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Oct 2024 09:13:12 -0700 (PDT)
+From: Gregory Price <gourry@gourry.net>
+To: linux-cxl@vger.kernel.org
+Cc: qemu-devel@nongnu.org, svetly.todorov@memverge.com,
+ jonathan.cameron@huawei.com, nifan.cxl@gmail.com
+Subject: [PATCH RFC v3 1/3] cxl-mailbox-utils: move CXLUpdateDCExtentListInPl
+ into header
+Date: Fri, 18 Oct 2024 12:12:50 -0400
+Message-ID: <20241018161252.8896-2-gourry@gourry.net>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241018161252.8896-1-gourry@gourry.net>
+References: <20241018161252.8896-1-gourry@gourry.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9eFApeeLBQvFC8zPNo+Ovk5woA5HKzaQ5j3=hd-G4smw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=gourry@gourry.net; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,55 +91,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 18, 2024 at 04:25:07PM +0100, Peter Maydell wrote:
-> On Fri, 18 Oct 2024 at 10:01, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > Test reliability is a different thing. If a particular test is
-> > flaky, it needs to either be fixed or disabled. Splitting into
-> > a fast & slow grouping doesn't address reliability, just hides
-> > the problem from view.
-> 
-> On the subject of 'flaky', here's another low-repeatability
-> intermittent with migration-test that I just ran into in
-> 'make vm-build-openbsd':
-> 
-> ▶  97/916 /ppc64/migration/multifd/tcp/plain/cancel
->            OK
-> ▶  96/916 /i386/migration/precopy/tcp/tls/x509/allow-anon-client
->            OK
-> ▶  97/916 /ppc64/migration/multifd/tcp/plain/zlib -
-> ERROR:../src/tests/qtest/migration-helpers.c:322:check_migration_status:
-> assertion failed (current_status != "failed"): ("failed" != "failed")
-> FAIL
-> ▶  97/916
->            ERROR
-> ▶  95/916 /aarch64/migration/multifd/tcp/channels/plain/none
->            OK
->  97/916 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test
->            ERROR          134.38s   killed by signal 6 SIGABRT
-> ――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
-> stderr:
-> warning: fd: migration to a file is deprecated. Use file: instead.
-> warning: fd: migration to a file is deprecated. Use file: instead.
-> **
-> ERROR:../src/tests/qtest/migration-helpers.c:322:check_migration_status:
-> assertion failed (current_status != "failed"): ("failed" != "failed")
-> qemu-system-ppc64: Failed to connect to '127.0.0.1:24109': Address
-> already in use
+From: Svetly Todorov <svetly.todorov@memverge.com>
 
-This is interesting, as I suspect it is a sign of a genuine portability
-problem, as there are some subtle sockets binding differences between
-Linux and *BSDs IIRC.
+Allows other CXL devices to access host DCD-add-response payload.
 
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Signed-off-by: Svetly Todorov <svetly.todorov@memverge.com>
+---
+ hw/cxl/cxl-mailbox-utils.c  | 16 ----------------
+ include/hw/cxl/cxl_device.h | 16 ++++++++++++++++
+ 2 files changed, 16 insertions(+), 16 deletions(-)
 
-With regards,
-Daniel
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 72c03d85cf..10de26605c 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2446,22 +2446,6 @@ void cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list)
+     g_free(group);
+ }
+ 
+-/*
+- * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
+- * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
+- */
+-typedef struct CXLUpdateDCExtentListInPl {
+-    uint32_t num_entries_updated;
+-    uint8_t flags;
+-    uint8_t rsvd[3];
+-    /* CXL r3.1 Table 8-169: Updated Extent */
+-    struct {
+-        uint64_t start_dpa;
+-        uint64_t len;
+-        uint8_t rsvd[8];
+-    } QEMU_PACKED updated_entries[];
+-} QEMU_PACKED CXLUpdateDCExtentListInPl;
+-
+ /*
+  * For the extents in the extent list to operate, check whether they are valid
+  * 1. The extent should be in the range of a valid DC region;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index c3e93b876a..b2dc7fb769 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -552,6 +552,22 @@ typedef struct CXLDCExtentGroup {
+ } CXLDCExtentGroup;
+ typedef QTAILQ_HEAD(, CXLDCExtentGroup) CXLDCExtentGroupList;
+ 
++/*
++ * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
++ * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
++ */
++typedef struct CXLUpdateDCExtentListInPl {
++    uint32_t num_entries_updated;
++    uint8_t flags;
++    uint8_t rsvd[3];
++    /* CXL r3.1 Table 8-169: Updated Extent */
++    struct {
++        uint64_t start_dpa;
++        uint64_t len;
++        uint8_t rsvd[8];
++    } QEMU_PACKED updated_entries[];
++} QEMU_PACKED CXLUpdateDCExtentListInPl;
++
+ typedef struct CXLDCRegion {
+     uint64_t base;       /* aligned to 256*MiB */
+     uint64_t decode_len; /* aligned to 256*MiB */
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
