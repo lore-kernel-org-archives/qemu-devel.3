@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A04D3C922
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 16:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A148D3C921
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 16:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2CUt-0001vT-AI; Sat, 19 Oct 2024 12:40:11 -0400
+	id 1t2CUy-00021w-Vz; Sat, 19 Oct 2024 12:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUr-0001v7-76
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:09 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUs-0001vX-Ts
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:10 -0400
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUo-0003h3-TD
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:08 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUq-0003gr-2F
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:10 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 02A3217F9F4
- for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 18:39:59 +0200 (CEST)
-Received: (qmail 9771 invoked by uid 990); 19 Oct 2024 16:39:58 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 3B4681802EC
+ for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 18:39:58 +0200 (CEST)
+Received: (qmail 9732 invoked by uid 990); 19 Oct 2024 16:39:58 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 19 Oct 2024 18:39:58 +0200
+ Sat, 19 Oct 2024 18:39:57 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH v2 4/7] target/arm: call plugin trap callbacks
-Date: Sat, 19 Oct 2024 18:39:37 +0200
-Message-ID: <be4c64f56a4a7f25a2769c0eccd2ed6e1d8cb9ee.1729355735.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [RFC PATCH v2 2/7] plugins: add hooks for new trap related callbacks
+Date: Sat, 19 Oct 2024 18:39:35 +0200
+Message-ID: <7ac6b4373e393e99070470818f6197fa34f9e3a9.1729355735.git.neither@nut.email>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1729355735.git.neither@nut.email>
 References: <20231021122502.26746-1-neither@nut.email>
  <cover.1729355735.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.83479) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.43479
+X-Rspamd-Bar: ----
+X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) BAYES_HAM(-2.999999) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -4.099999
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=QW5b+c8GerXmJWDNBXe+kTqzYLQkqZ+V6ikpQTJsG78=;
- b=Dwzd9ejyKQW+iC6emONffpP14xKf6tH85Pp3LCf3wawqHFZHM/nrBRRrnN6hfpmuiG0hKnFrbS
- aG1W1P4Ng/k+3WOVGgNAt3JRZXw6nz1rIuhdLlJOvcdUxralJIuUsXx64Dle78VjR9ptrelCQcmn
- LmDZZW85shk1H1Aff2YA6d+aphCSSbLZeEPyyHU3btUfOl/drs/gwk+WEwQfRekg16p5xY3n80YR
- n7ODFibt+cbEiqIXAidJdKi0v0kB6VPAtBH6weFMhmnBMmb+nIwc/jVSPaSkh6khhELYYw7oZtLm
- MMk9JDzpl5FGJFSht3FqhYbiz5G/y+bUB2wolQxCr/PnSUWd+es1s3jlaCJ0kwkHT8hwa2Hld8vA
- lMGA25QrST6h39s4uABTlZYHCAk6/C8Wg+aIIKyYku+zyc7s7kOiq/R4vgjQOnz7NWxKbL7ZThQp
- I741x7rweD3RQn6YeMN3C3mKAWrEmEslDKMSBktaKbHpbAhQ54/ipb4FcnGq8PY6lDVPg3wunQHx
- 1XhMKbYTo6wcOgh/wVD9o8gcj+E9shLe6UaSPuAS74gAtlpsxENLaTpGKmcMwFh//FaFTwNMzP+v
- IDSBExGb7Yiz7Im9VCZ6/CdnCCzhRvJ5+MrwCYtKHh5InX4ftzuAiZR0zDyD4KDHuImo3srsdA6E
- w=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
+ bh=2PREUqFIHRAtdmmzZJyaj9MVcqZad6TdGsxcSG5umK0=;
+ b=PMi/3/uaxWjE6nzJF/yJC5e+P9c+r3VFvQcRZ+1Gx/D2sw31UPrBhhCPYHxz4H0t9lk95IARPd
+ jARxKLEk+vnOFtVICZKH1gB1wugBdISWL0d2FACRpCbiXh2+JTBvppZcpXrooDe/QCfGKVLFDrtn
+ asbRMeqDUxFqHnQ7LO72hrQMSwGe4c0SUQ8eQ5eINjL90GzD3kwzpIUafvpMUzlLmsh6zPpRzMq8
+ e2GIdzw1eYuDw8cMdFxMx7rEoup0CMGqclsco2N7w36tZyi0G4TwuW4xLdgDoJCAwoZrd9iLh2No
+ 9ZX/DKRcoYkeKEtFO/tzEaMAJnGTxalgcHQlAbHVnLkNu1qaseZ2Cyw85JZS+6cL+oU+u6B2+tDV
+ BjbT8lOG7QUvwV1SSjrB81Q0ka4MQpESZjH34VsNGJXs8F+3sT7fpc/EAg5au2oWgrPMAJtjy/j9
+ /oTdCasD+Fhq3ulvXSqGJ7Rx1w3N04295pFxeb7IJ9scrEkFLrv09noQu3GfCKuocxJD+Mvo777Y
+ 7niwnl+cOUlBlatrlsgUW6RVRGeMTyOZj7Os+6UxSII+1NmdieT74IVWGrW9e+VxCsi/DORBE6Ju
+ T321xahybeJZvBRwE0w0lgzlcyu1I3k7+vVidVy5r9bVfCsh/UqiBbQ9Zkk9hsfBXlpJ8mNuoZUw
+ k=
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,82 +83,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+The plugin API allows registration of callbacks for a variety of VCPU
+related events, such as VCPU reset, idle and resume. In addition, we
+recently introduced API for registering callbacks for trap events,
+specifically for interrupts, exceptions and semihosting events.
 
-This change places hooks for ARM (and Aarch64) targets. We decided to
-treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
-since they are, presumably, async in nature.
+This change introduces the corresponding hooks called from target
+specific code inside qemu.
 
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/arm/helper.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ include/qemu/plugin.h | 12 ++++++++++++
+ plugins/core.c        | 24 ++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0a731a38e8..f636e216c8 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -31,6 +31,7 @@
- #endif
- #include "cpregs.h"
- #include "target/arm/gtimer.h"
-+#include "qemu/plugin.h"
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 9726a9ebf3..71f03b83f4 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -160,6 +160,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
+ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
+ void qemu_plugin_vcpu_idle_cb(CPUState *cpu);
+ void qemu_plugin_vcpu_resume_cb(CPUState *cpu);
++void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu);
++void qemu_plugin_vcpu_exception_cb(CPUState *cpu);
++void qemu_plugin_vcpu_semihosting_cb(CPUState *cpu);
+ void
+ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
+                          uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
+@@ -242,6 +245,15 @@ static inline void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+ static inline void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+ { }
  
- #define ARM_CPU_FREQ 1000000000 /* FIXME: 1 GHz, should be configurable */
- 
-@@ -11147,6 +11148,24 @@ static void take_aarch32_exception(CPUARMState *env, int new_mode,
++void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu)
++{ }
++
++void qemu_plugin_vcpu_exception_cb(CPUState *cpu)
++{ }
++
++void qemu_plugin_vcpu_semihosting_cb(CPUState *cpu)
++{ }
++
+ static inline void
+ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+                          uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6,
+diff --git a/plugins/core.c b/plugins/core.c
+index 9de997069c..4f80f1cb72 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -100,6 +100,9 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+     case QEMU_PLUGIN_EV_VCPU_EXIT:
+     case QEMU_PLUGIN_EV_VCPU_IDLE:
+     case QEMU_PLUGIN_EV_VCPU_RESUME:
++    case QEMU_PLUGIN_EV_VCPU_INTERRUPT:
++    case QEMU_PLUGIN_EV_VCPU_EXCEPTION:
++    case QEMU_PLUGIN_EV_VCPU_SEMIHOSTING:
+         /* iterate safely; plugins might uninstall themselves at any time */
+         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+             qemu_plugin_vcpu_simple_cb_t func = cb->f.vcpu_simple;
+@@ -547,6 +550,27 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
      }
  }
  
-+static void arm_do_plugin_vcpu_interrupt_cb(CPUState *cs)
++void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu)
 +{
-+    switch (cs->exception_index) {
-+    case EXCP_IRQ:
-+    case EXCP_VIRQ:
-+    case EXCP_NMI:
-+    case EXCP_VINMI:
-+    case EXCP_FIQ:
-+    case EXCP_VFIQ:
-+    case EXCP_VFNMI:
-+    case EXCP_VSERR:
-+        qemu_plugin_vcpu_interrupt_cb(cs);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs);
++    if (cpu->cpu_index < plugin.num_vcpus) {
++        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INTERRUPT);
 +    }
 +}
 +
- static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
- {
-     /*
-@@ -11819,6 +11838,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
-         arm_handle_psci_call(cpu);
-         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
-+        arm_do_plugin_vcpu_interrupt_cb(cs);
-         return;
-     }
- 
-@@ -11830,6 +11850,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
- #ifdef CONFIG_TCG
-     if (cs->exception_index == EXCP_SEMIHOST) {
-         tcg_handle_semihosting(cs);
-+        qemu_plugin_vcpu_semihosting_cb(cs);
-         return;
-     }
- #endif
-@@ -11855,6 +11876,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (!kvm_enabled()) {
-         cs->interrupt_request |= CPU_INTERRUPT_EXITTB;
-     }
++void qemu_plugin_vcpu_exception_cb(CPUState *cpu)
++{
++    if (cpu->cpu_index < plugin.num_vcpus) {
++        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_EXCEPTION);
++    }
++}
 +
-+    arm_do_plugin_vcpu_interrupt_cb(cs);
- }
- #endif /* !CONFIG_USER_ONLY */
- 
++void qemu_plugin_vcpu_semihosting_cb(CPUState *cpu)
++{
++    if (cpu->cpu_index < plugin.num_vcpus) {
++        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_SEMIHOSTING);
++    }
++}
++
+ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+                                        qemu_plugin_vcpu_simple_cb_t cb)
+ {
 -- 
 2.45.2
 
