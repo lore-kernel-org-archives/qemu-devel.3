@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F8DD3E1BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 07:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062FBD3E1BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 07:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t248x-0004a2-0U; Sat, 19 Oct 2024 03:44:59 -0400
+	id 1t249j-0005HE-Rc; Sat, 19 Oct 2024 03:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1t248v-0004ZQ-1H
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 03:44:57 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1t249h-0005Gl-Qk
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 03:45:45 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1t248t-0006XW-HN
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 03:44:56 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e56df894d4so1039944a91.3
- for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 00:44:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <arikalo@gmail.com>) id 1t249g-0006lk-9K
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 03:45:45 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7ea76a12c32so2376789a12.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 00:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729323894; x=1729928694; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729323943; x=1729928743; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LKGSxQH5ULr4e+aetQYRdQv7SYmv6bDHR0TMuRl2C5E=;
- b=BrouAZ1ZI04RyYEaXv4yA2KDvIT2ywAaDs5bc0q8TxSt9yOICBS6O7ICmP+UO2D6IE
- /omcbXkKkGpPSTRBvxwkkkKpcgAIyDScJWiNUYkmL8t4ilTfMZgTAK8DiX5bUeX0lHud
- hLVz/dDmTk63ZcgYBkLd48PusD0tul7WWVhR1blB8zZ3l+U+ompOao5mHibnahJowN/q
- BqFETw/ARZXCBkp7TyKraEonI/419nhR9Yp+BMT7lpctLglgujhRTXwfdmEs5Uz4Ot76
- mF3GX3IeoPgK0X+jvGUtNChcM3QPVGbNZCvLDHGqAxdj3HKAK90RUwCh1u84lPjvvLC8
- 2gDA==
+ bh=0wyymaC6beqcqd1286NHD1IZ08lXBxOM3cyXORWGk34=;
+ b=QYotnVgOar/QF+IS1qJUNL3FrOaHh+FPxJAJfA/0hNGFbVSXuSohHsM0eDXB77B8Ln
+ +kXzkpU0zt/ibLY8p97pGVc/K6PPEIPXxnbQCHXXyrknZJWFKIGBF9I6rEqAT3Jmmjcx
+ fT9ScWk0fcfwUDGkYmHASgssc4TXi2qwriMW6InvpaanoUUKRA5T1vrgZUVcXjdqX9ZQ
+ z+DWgPCL95pOm1jVA9AsE1olNkybfHHb2fUbjp+jVxtxrk3XSViOKhldQF3oRMwKnlth
+ ps/vJGWe6INNG36BVDyzxcdNCnyRqxC9bobVEuiIms4mWDKYqhJnKQ85eaN5hoA3CO3M
+ SVBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729323894; x=1729928694;
+ d=1e100.net; s=20230601; t=1729323943; x=1729928743;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LKGSxQH5ULr4e+aetQYRdQv7SYmv6bDHR0TMuRl2C5E=;
- b=pbEIdbRlFk3UetHV85adhUyxAC6Dl8EcGyH062rkqr8qZnjMJWP1Y6OTkGwv0Kp+LE
- cMNgFaHRAplIZEWpnAz6Lbfwqjtz8rq5tNj6KdSq15Wy9NII+K9++lyhqiYYz7VnnusC
- iGF/xklTiw8nrgcI5u0l2df3nNxd9y6CPhBz5c9fJerYTPSkzpSUq4Rc94pLDGiH5jpA
- 3mlPdVBaKMCIZWByGKW1BLH/cEdFdWjGtEK9Mo1ozjeRgf0+hdEN8Dy8+zL69lvAliZE
- u5evTIr5jO+evOWAUFwtf6RHNz7eggl6CMxV7smb/Rwda82g+fQKhLNNboodABuqoRnd
- /ARA==
-X-Gm-Message-State: AOJu0YzauP97tiwTUHqwCFAq/V3P/iaXdG8NRzp+dpOO3xrJNgTae6yj
- hBnY+Sx6rKtfljwFt8DBizVRad0daXuS+V2RqdqsPDcVsFSnicV0rzSXlUY7Mbs8sBFRTX6wfoE
- 7u80VWqbA01IhZvdHVCaj+oqEeAA=
-X-Google-Smtp-Source: AGHT+IHiUrD4H8Kysa66zBmjWn9n8v/GGp+68UUxut6PqAMwPhRTNE2dG4j6wQ9D0vsAUnxA3FjFSU+3z6Jgfz6irEo=
-X-Received: by 2002:a17:90a:e643:b0:2e2:cd80:4d44 with SMTP id
- 98e67ed59e1d1-2e561900bf3mr6216353a91.28.1729323894011; Sat, 19 Oct 2024
- 00:44:54 -0700 (PDT)
+ bh=0wyymaC6beqcqd1286NHD1IZ08lXBxOM3cyXORWGk34=;
+ b=lI4OrrHu0GBj5O0XF35QwD8uADpIfweQ+xrZ5dj3G8oFc2OUYjTHiNFMPGIJg0ly3z
+ Le/CtJHPiyJyK1RgMH/jWBe0H1xW/xqHxu2MISRQ/YCqRg6kvq6DHjT4WyLZUp5rSvEj
+ Rl72sP6OPCSFy0OtdagvZ5Cre3TyzDh9hYZWpEa2/7IK7eBXe+dCtSnEeWS6+YfCEWhd
+ TBWaXzgDPKeU4H0/cmbkOK0VqLF9VDDZL7EvYwWkUD9XDSGmWex+zAYoc1yYVa/OJrZK
+ RUtPqyVbj6meCdE5Gx8if1WvPNIVwoIdae8N4Ov+o7W5IrYB3O0ZXm+bqT32qypljVM9
+ vjLw==
+X-Gm-Message-State: AOJu0YwuaQdzRC3dGx7f30jAq7ho6fdZG2zE0mUP0kQaKqbRtai7dhLw
+ WcM29280BjXgJYkl1YhB4HEDMiNBAOuyPTSm0eWUsDdB/7F7Rlicc7vIr9nFn8iY/eM2Mg3W5MV
+ nmZB+iW1ZXPy0V+0oRUq/+iFrvBc=
+X-Google-Smtp-Source: AGHT+IFZ2jeu+Wn/CLgaSsS3kmRmxBEo3FRvYGhM6fPUArDtuWuEpWpTwZbOMe1dxSLBN7O+1P6Wt7B9NhuViJKKSvI=
+X-Received: by 2002:a05:6a21:1519:b0:1d8:d235:b561 with SMTP id
+ adf61e73a8af0-1d92c32cb67mr7492684637.0.1729323942867; Sat, 19 Oct 2024
+ 00:45:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <AM9PR09MB4851159EEED6EFB71176524684402@AM9PR09MB4851.eurprd09.prod.outlook.com>
-In-Reply-To: <AM9PR09MB4851159EEED6EFB71176524684402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+References: <AM9PR09MB4851B248008D8045D466EA0B84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+In-Reply-To: <AM9PR09MB4851B248008D8045D466EA0B84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 From: Aleksandar Rikalo <arikalo@gmail.com>
-Date: Sat, 19 Oct 2024 09:44:42 +0200
-Message-ID: <CAGQJe6osWkzcxx4PR4q5O_fQDop-cwHdn1gQYh4HiQs_J4TMaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/8] Add support for emulation of CRC32 instructions
+Date: Sat, 19 Oct 2024 09:45:31 +0200
+Message-ID: <CAGQJe6rpiYnA06TNv1hT5rtMTj4q8AEVBOu2JXoSh2UxyPEkHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] Add micromips to P5600
 To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "cfu@mips.com" <cfu@mips.com>, 
  "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000067816a0624cf980c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=arikalo@gmail.com; helo=mail-pj1-x1033.google.com
+Content-Type: multipart/alternative; boundary="00000000000050fb880624cf9bf2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=arikalo@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,62 +88,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000067816a0624cf980c
+--00000000000050fb880624cf9bf2
 Content-Type: text/plain; charset="UTF-8"
 
 >
-> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
-> Reuse zlib crc32() and Linux crc32c().
+> Add micromips to P5600.
 >
-> Cherry-picked 4cc974938aee1588f852590509004e340c072940
+> Cherry-picked d7bf2c2f7f2e03b55c6e9c57eec5c3e6207005a0
 > from https://github.com/MIPS/gnutools-qemu
 >
-> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
-> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+> Signed-off-by: Matthew Fortune <matthew.fortune@imgtec.com>
 > Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 > ---
->  target/mips/helper.h        |  2 ++
->  target/mips/meson.build     |  1 +
->  target/mips/tcg/op_helper.c | 26 ++++++++++++++++++++++++++
->  target/mips/tcg/translate.c | 37 +++++++++++++++++++++++++++++++++++++
->  target/mips/tcg/translate.h |  1 +
->  5 files changed, 67 insertions(+)
+>  target/mips/cpu-defs.c.inc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 
 Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
 
 -- Aleksandar
 
---00000000000067816a0624cf980c
+--00000000000050fb880624cf9bf2
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
 e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">Add emulation of MIPS&#39; CRC32 (Cyclic Redundancy Chec=
-k) instructions.<br>
-Reuse zlib crc32() and Linux crc32c().<br>
+;padding-left:1ex">Add micromips to P5600.<br>
 <br>
-Cherry-picked 4cc974938aee1588f852590509004e340c072940<br>
+Cherry-picked d7bf2c2f7f2e03b55c6e9c57eec5c3e6207005a0<br>
 from <a href=3D"https://github.com/MIPS/gnutools-qemu" rel=3D"noreferrer" t=
 arget=3D"_blank">https://github.com/MIPS/gnutools-qemu</a><br>
 <br>
-Signed-off-by: Yongbok Kim &lt;<a href=3D"mailto:yongbok.kim@mips.com" targ=
-et=3D"_blank">yongbok.kim@mips.com</a>&gt;<br>
-Signed-off-by: Aleksandar Markovic &lt;<a href=3D"mailto:amarkovic@wavecomp=
-.com" target=3D"_blank">amarkovic@wavecomp.com</a>&gt;<br>
+Signed-off-by: Faraz Shahbazker &lt;<a href=3D"mailto:fshahbazker@wavecomp.=
+com" target=3D"_blank">fshahbazker@wavecomp.com</a>&gt;<br>
+Signed-off-by: Matthew Fortune &lt;<a href=3D"mailto:matthew.fortune@imgtec=
+.com" target=3D"_blank">matthew.fortune@imgtec.com</a>&gt;<br>
 Signed-off-by: Aleksandar Rakic &lt;<a href=3D"mailto:aleksandar.rakic@htec=
 group.com" target=3D"_blank">aleksandar.rakic@htecgroup.com</a>&gt;<br>
 ---<br>
-=C2=A0target/mips/helper.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 ++<br>
-=C2=A0target/mips/meson.build=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
-=C2=A0target/mips/tcg/op_helper.c | 26 ++++++++++++++++++++++++++<br>
-=C2=A0target/mips/tcg/translate.c | 37 ++++++++++++++++++++++++++++++++++++=
-+<br>
-=C2=A0target/mips/tcg/translate.h |=C2=A0 1 +<br>
-=C2=A05 files changed, 67 insertions(+)<br></blockquote><div><br></div><div=
->Reviewed-by: Aleksandar Rikalo &lt;<a href=3D"mailto:arikalo@gmail.com">ar=
-ikalo@gmail.com</a>&gt;<br><br>-- Aleksandar<br><br></div></div></div>
+=C2=A0target/mips/cpu-defs.c.inc | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br></blockquote><div><b=
+r></div><div>Reviewed-by: Aleksandar Rikalo &lt;<a href=3D"mailto:arikalo@g=
+mail.com">arikalo@gmail.com</a>&gt;<br><br>-- Aleksandar<br> <br></div></di=
+v></div>
 
---00000000000067816a0624cf980c--
+--00000000000050fb880624cf9bf2--
 
