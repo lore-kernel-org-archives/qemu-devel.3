@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD81D3C923
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 17:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDA1D3C923
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 17:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2DGx-0003GM-ML; Sat, 19 Oct 2024 13:29:51 -0400
+	id 1t2DaR-0006Q7-Hd; Sat, 19 Oct 2024 13:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1t2DGw-0003GD-PT
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 13:29:50 -0400
-Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mrolnik@gmail.com>) id 1t2DGv-0001Y6-9j
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 13:29:50 -0400
-Received: by mail-ua1-x92a.google.com with SMTP id
- a1e0cc1a2514c-84fcb49691fso966035241.3
- for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 10:29:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729358988; x=1729963788; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mRx6I5UIL0lJKXEhh8jODYiE5PeoCQVTR0JvhTjfNX0=;
- b=UOn2jWFY+KxvNyfZJGebnRh3cR8eaPjAg5jlkfHts1YfDJa3zW8/FhMNXiXtmd0wal
- Ld5JHMF8HCe5t2MRnEAYhYfoNmdomEg69VtIytD65M7MrkYAEHDc3ayZchdJQdfK6BCe
- MwxiNdRpnu2GsltzhnI18Vvjbf71faal9vIz34TGTpwCOd0XiroU9zaPZpsH4A/VBSb2
- J47KCQLA8g3hlT4o8B3eJubmM9rkk7W2b3are3LDLbEtWlhmIsNX3RXcodBOkynHiNWx
- sF8WbtSqBxT3oVyZoJuFf+Vkp0X8FEcVD9QGthCo5yiCtwkoOhpmpR2psot05u0PZeyg
- RXSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729358988; x=1729963788;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mRx6I5UIL0lJKXEhh8jODYiE5PeoCQVTR0JvhTjfNX0=;
- b=r2ETqmdxe/g7GeegnHBixCIQYRVFDAWUnz1QAU5La9+d6Rqt81/UE+jwxoQf20I4Ku
- IEKbDuObtk9j/u5MnDGR9B+mT3Ohugk4ky3+NdX5t+2UZ82peD0xYdumpWdxgj6A+fcI
- r9mAelP0JWzYPS/N0ZYWkIkdWo0US2/coW9Mry2yBUdrDwvPIiLwe8nYbKCZR1x2Xxii
- AbOcGZ4RpX2WGTcXlP08lsp4EZDfFACglIprFFFymm8IXarNh8uw66v2jtdhjTOBCDLc
- GmuVyNTg8R4/p4DBem5Op5fe0JQMDNG4i5xsXaPsXAWGiJPqXds9TfB4j2ZCARNC4+u4
- qJyg==
-X-Gm-Message-State: AOJu0YzfJAJNxsdmLJSssxZvOA8uQbSuQBYg800nmaeD/v/7fn16Rf/L
- QpAUg9cJTdEQhYM++7/IYfDbuKmQxbF0qj7jk+ht4vuiWrZg6p1+sNiH3NVEL71F+V1TriOaUzT
- u3S4IsoWGAmbj0Xn7wjY0xHhCIsSKAwSB
-X-Google-Smtp-Source: AGHT+IHmW8bvc1YKFMvjJA3EoObQ4hwSQwka7cIeNgSJEDivDkfTkFb2YspBswH6o4I5MT/p4jUSXFTdJOFw8ukPvzw=
-X-Received: by 2002:a05:6102:c8b:b0:4a5:b32d:be00 with SMTP id
- ada2fe7eead31-4a5d6b8ec29mr6340258137.18.1729358987866; Sat, 19 Oct 2024
- 10:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <BATV+7dbdd60f9d3e313c8464+7727+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1t2DaK-0006P3-0y
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 13:49:54 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+7dbdd60f9d3e313c8464+7727+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1t2DaH-0003uo-Pv
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 13:49:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=w8Y5lpqYM3xfVxbgiR+/LqeVzQufssW/kjhGjN5kTC0=; b=ZS8ai37j6ycdYA+mL2u3f8C1eX
+ c73kczc8wEvl3wL7ot/Xby6RVXdkkg1+ynLPcXq1cK8ElWxTEtJj6gcZWhq2bO6x3BcZEc8opai8u
+ pWroDDNYdJ/+wFvDHVSjhBp5bREQ/5Fu944C5FOLdAy2Wwm1H6KW14zisBzpjbd/b3PVAjB1Z/LPz
+ 0BxTDGS35jOYcewB9DEz/cJdSiKHH/VZhdVXZSyEfz72oqtWicQuZwMZxfF2mgnUvimgOkJ7kryq7
+ MEtA1mqZ5rhOqXC3mg0Mx8MseWfPmYne6Xh14fjSsxuUfV0l3WyoacQPaBJ3xMbTxBzW9dFF7H/XY
+ Ogwxh+Cg==;
+Received: from [2001:8b0:10b:5:d113:3be8:859d:21d1]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1t2DZs-0000000EVy8-2JIh; Sat, 19 Oct 2024 17:49:25 +0000
+Message-ID: <c1eb33ffd66d45af77dea58db8bdca3dcd2468c4.camel@infradead.org>
+Subject: Re: [PATCH net-next v7] ptp: Add support for the AMZNC10C 'vmclock'
+ device
+From: David Woodhouse <dwmw2@infradead.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Richard Cochran <richardcochran@gmail.com>, Peter Hilber
+ <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org, 
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>, 
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>, "Chashper,
+ David" <chashper@amazon.com>, "Mohamed Abuelfotoh, Hazem"
+ <abuehaze@amazon.com>,  Paolo Abeni <pabeni@redhat.com>, "Christopher S .
+ Hall" <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>,
+ John Stultz <jstultz@google.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,  Thomas Gleixner
+ <tglx@linutronix.de>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc Zyngier
+ <maz@kernel.org>,  Mark Rutland <mark.rutland@arm.com>, Daniel Lezcano
+ <daniel.lezcano@linaro.org>, Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,  qemu-devel
+ <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Date: Sat, 19 Oct 2024 18:49:24 +0100
+In-Reply-To: <20241014131238.405c1e58@kernel.org>
+References: <78969a39b51ec00e85551b752767be65f6794b46.camel@infradead.org>
+ <20241009173253.5eb545db@kernel.org>
+ <c20d5f27c9106f3cb49e2d8467ade680f0092f91.camel@infradead.org>
+ <20241014131238.405c1e58@kernel.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-4uhuXRaHDvHj0yGejv4T"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
- <5807fbae77440ce091c1480a173e371a72142952.1729355735.git.neither@nut.email>
-In-Reply-To: <5807fbae77440ce091c1480a173e371a72142952.1729355735.git.neither@nut.email>
-From: Michael Rolnik <mrolnik@gmail.com>
-Date: Sat, 19 Oct 2024 20:29:09 +0300
-Message-ID: <CAK4993jgSfvHDvtgtzeqEYneN9k8c7Qru_KH5FXJDfgmzJiX4w@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 5/7] target/avr: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000293b580624d7c45b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
- envelope-from=mrolnik@gmail.com; helo=mail-ua1-x92a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+7dbdd60f9d3e313c8464+7727+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,110 +94,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000293b580624d7c45b
+
+--=-4uhuXRaHDvHj0yGejv4T
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Michael Rolnik <mrolnik@gmail.com>
+On Mon, 2024-10-14 at 13:12 -0700, Jakub Kicinski wrote:
+> On Mon, 14 Oct 2024 08:25:35 +0100 David Woodhouse wrote:
+> > On Wed, 2024-10-09 at 17:32 -0700, Jakub Kicinski wrote:
+> > > On Sun, 06 Oct 2024 08:17:58 +0100 David Woodhouse wrote:=C2=A0=20
+> > > > +config PTP_1588_CLOCK_VMCLOCK
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0tristate "Virtual machin=
+e PTP clock"
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0depends on X86_TSC || AR=
+M_ARCH_TIMER
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0depends on PTP_1588_CLOC=
+K && ACPI && ARCH_SUPPORTS_INT128
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0default y=C2=A0=20
+> > >=20
+> > > Why default to enabled? Linus will not be happy..=C2=A0=20
+> >=20
+> > Want an incremental patch to change that?
+>=20
+> Yes please and thank you! We gotta straighten it out before=20
+> the merge window.
 
-On Sat, Oct 19, 2024 at 7:39=E2=80=AFPM Julian Ganz <neither@nut.email> wro=
-te:
+Hm, as I (finally) come to do that, I realise that many of the others
+defined in drivers/ptp/Kconfig are also 'default y'. Which is only
+really 'default PTP_1588_CLOCK' in practice since they all depend on
+that.
 
-> We recently introduced API for registering callbacks for trap related
-> events as well as the corresponding hook functions. Due to differences
-> between architectures, the latter need to be called from target specific
-> code.
->
-> This change places the hook for AVR targets. That architecture appears
-> to only know interrupts.
->
-> Signed-off-by: Julian Ganz <neither@nut.email>
-> ---
->  target/avr/helper.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/target/avr/helper.c b/target/avr/helper.c
-> index 345708a1b3..be94552674 100644
-> --- a/target/avr/helper.c
-> +++ b/target/avr/helper.c
-> @@ -28,6 +28,7 @@
->  #include "exec/cpu_ldst.h"
->  #include "exec/address-spaces.h"
->  #include "exec/helper-proto.h"
-> +#include "qemu/plugin.h"
->
->  bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->  {
-> @@ -97,6 +98,8 @@ void avr_cpu_do_interrupt(CPUState *cs)
->      env->sregI =3D 0; /* clear Global Interrupt Flag */
->
->      cs->exception_index =3D -1;
-> +
-> +    qemu_plugin_vcpu_interrupt_cb(cs);
->  }
->
->  hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-> --
-> 2.45.2
->
->
+Most importantly, PTP_1588_CLOCK_KVM is 'default y'. And that one is
+fundamentally broken (at least in the presence of live migration if
+guests care about their clock suddenly being wrong) which is why it's
+being superseded by the new VMCLOCK thing. We absolutely don't want to
+leave the _KVM one enabled by default and not its _VMCLOCK replacement.
 
---=20
-Best Regards,
-Michael Rolnik
+Please advise... I suspect the best answer is to leave it as it is?=20
 
---000000000000293b580624d7c45b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=-4uhuXRaHDvHj0yGejv4T
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-<div dir=3D"ltr">Reviewed-by: Michael Rolnik &lt;<a href=3D"mailto:mrolnik@=
-gmail.com">mrolnik@gmail.com</a>&gt;<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Oct 19, 2024 at 7:39=E2=80=
-=AFPM Julian Ganz &lt;neither@nut.email&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">We recently introduced API for registeri=
-ng callbacks for trap related<br>
-events as well as the corresponding hook functions. Due to differences<br>
-between architectures, the latter need to be called from target specific<br=
->
-code.<br>
-<br>
-This change places the hook for AVR targets. That architecture appears<br>
-to only know interrupts.<br>
-<br>
-Signed-off-by: Julian Ganz &lt;neither@nut.email&gt;<br>
----<br>
-=C2=A0target/avr/helper.c | 3 +++<br>
-=C2=A01 file changed, 3 insertions(+)<br>
-<br>
-diff --git a/target/avr/helper.c b/target/avr/helper.c<br>
-index 345708a1b3..be94552674 100644<br>
---- a/target/avr/helper.c<br>
-+++ b/target/avr/helper.c<br>
-@@ -28,6 +28,7 @@<br>
-=C2=A0#include &quot;exec/cpu_ldst.h&quot;<br>
-=C2=A0#include &quot;exec/address-spaces.h&quot;<br>
-=C2=A0#include &quot;exec/helper-proto.h&quot;<br>
-+#include &quot;qemu/plugin.h&quot;<br>
-<br>
-=C2=A0bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)<br>
-=C2=A0{<br>
-@@ -97,6 +98,8 @@ void avr_cpu_do_interrupt(CPUState *cs)<br>
-=C2=A0 =C2=A0 =C2=A0env-&gt;sregI =3D 0; /* clear Global Interrupt Flag */<=
-br>
-<br>
-=C2=A0 =C2=A0 =C2=A0cs-&gt;exception_index =3D -1;<br>
-+<br>
-+=C2=A0 =C2=A0 qemu_plugin_vcpu_interrupt_cb(cs);<br>
-=C2=A0}<br>
-<br>
-=C2=A0hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)<br>
--- <br>
-2.45.2<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Best Regards,=
-<br>Michael Rolnik</div>
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMDE5MTc0OTI0WjAvBgkqhkiG9w0BCQQxIgQgRq4iA97q
+HGX11+qQ5OSyI2X2cUHvQlfkKG48HtzJdvwwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAOmNqCusnryCeHJepho6ua5FQ4AVjBO075
+VPBF3F2tzkrlyN3h+eo6Pg3x0xwt+HAJfLQsnd1K0gl387/XhIE8ufzgPs79Zzy3Ej29fK4fffwZ
+p40cKLwTXsON4FjBwXHdop1sQLFgvylnLhFYDSXsLWs3x7rDcFpqE2sjSfHYtiJtCbtphN2UqK73
+LLIDArdHSNGs09sbsEMep2SYuVn55kYBlkz4sjpQfcO5Z8iFnKCYR6KiUfnGPgWsjxhvyYDssQX4
+iu0XpYQerb5RJTOg9spoBY+VuqFewfwjni9F82ou/IpYjao2Sv1ugBDw13LRjfmwS0G5VyLj/qfw
+ULawlK8AW7NeUe/MIvukTiLfAFsBVHLPSXsmOh6rSVVzMnmuGvep0ou6LFA1u59AxG6KlcPjfAj4
+pDsax8SnctRA0YTu9taVoDkNIAfJI5yRREOz5+XTOt3nSgqno9kpL5RqoW/wgWb6dDsYeW/vexs/
+nfRDyU3sNgyy0B7j+4MQ+syqGYBkwsF7+YR5sSsbtOUpgxe2dTZVDLWyhaJTCg31d8ISOwWGcd+B
+e7xnUS2uVC42QXFgIwTmtMblHcaq8tgbC+Q19Z+ZGBNsb+/v7r5c729PmxH2KYpiW6NCLrGFIeOn
+r3cAJRJc1a6SGg5bRcgQxQXUWiPsoXDr3ey/2Fz3JwAAAAAAAA==
 
---000000000000293b580624d7c45b--
+
+--=-4uhuXRaHDvHj0yGejv4T--
 
