@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34E4D3C921
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 16:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFE6D3C921
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 16:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2CUx-000208-QR; Sat, 19 Oct 2024 12:40:15 -0400
+	id 1t2CUx-0001zp-EB; Sat, 19 Oct 2024 12:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUs-0001vY-UH
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:10 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUv-0001yu-Dp
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:13 -0400
 Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUp-0003gU-H2
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:10 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1t2CUt-0003zY-Qr
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 12:40:13 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 4078117F753
- for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 18:39:57 +0200 (CEST)
-Received: (qmail 9700 invoked by uid 990); 19 Oct 2024 16:39:57 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 31DDF17F810
+ for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 18:40:00 +0200 (CEST)
+Received: (qmail 9824 invoked by uid 990); 19 Oct 2024 16:40:00 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 19 Oct 2024 18:39:56 +0200
+ Sat, 19 Oct 2024 18:40:00 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>
-Subject: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
- exceptions and traps
-Date: Sat, 19 Oct 2024 18:39:33 +0200
-Message-ID: <cover.1729355735.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [RFC PATCH v2 7/7] target/sparc: call plugin trap callbacks
+Date: Sat, 19 Oct 2024 18:39:40 +0200
+Message-ID: <baadbcc7a25a0d5c7428482673a61a422e96c289.1729355735.git.neither@nut.email>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20231021122502.26746-1-neither@nut.email>
+In-Reply-To: <cover.1729355735.git.neither@nut.email>
 References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: /
-X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-0.000013) MIME_GOOD(-0.1)
-X-Rspamd-Score: 0.899986
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.994807) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -5.594807
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=evIaEZnuYYugfnefbvuAAsBQdMwoHWbcJqmDYP+uTkw=;
- b=HvuH0CYm9MxPKp5Nx1rSjvBBu66c0UDuNCLiRkzB59BW7aVirP4MTW1QGW+DzmO1l/qEKgp5g0
- xhmSeoTz4AJ3QesoAjoQ98G5PAAsJbwWNewn0fM7/roq4iFWt2zT2Ykpa7JqN1mHxu0u3Gjj3k10
- L7rUh2lMkwfcS4VVwrvsAyZqIMwujYqhlHjdocuoXJTNGFDUF+LQsWnAnJob9sMeHKPq7BVgW2Co
- E8dRyoHMw1Wbh8rM9WDCpL1AEWKRmhhZH9Q32m/TbZWnruwjUvTCN24IO40BpjPd36aY1pAQSg1c
- TK967X9Xj1eBOyEpqKquCuXMgGDN1C9FZvl5oEKNuSeYqd5T8zyn4zMaasUjX503nqs/iqvX+1CA
- w5eygLEQFVW5sfTYGdDoXjL5azdL8LO6BVwUeKgEnnhDBxLpL8Z4kKDbZL2EVnWBTenhqbTjsYv6
- Ey0Vmob4ALvQgQsq+Cq9befMpvbc5ieOo1KQqHfDjBlg0ZmddEzharqEHv1cV3eq8vYMBRFfSxU3
- XNhMncANrKOP4L05AiGh7JBBy7ZHDa/sc/HUh6C7F+tAtyGGwKIRQfGbWCyd3kIdXweB5fESSl1p
- apAxt+spR1B4sMq4i6eFHHvmQbmosEjZVP2atFftE2ZBEWEvd2Qr/UpBAw4gGjUpM8OY75zCzb0/
- k=
+ bh=0DIXz22ZQVybjpDzj+NirHJXZfr6QSriqPOofdXhjlE=;
+ b=lzCnfXIllGcULlYAEBS9aQbHYKtUBBQmsR6BkMlfr208O3+okvULCTX8gFPY1OawgtFs5EGfAQ
+ XHsHCAMXkDrbe9OTL4IiCQL4Tbd9/apwL048msbHroiHHzlxr3997HSsgirZo1TXoXtqJbFU9SoB
+ 3M2vxSoqDwTGmql4NyGwY5i1EdgGWpOnRHnYO8/cV6QQ0qXRyQO529FbsKEFZFsY1eo0Ai1eJMcf
+ bPmJHoMjagBYqOMVxOrBYrA5iR6lv3kxBMIbKPb4hd3SPt7kQzPZPKFpgwxgQFTsHIBFrr/mFDQw
+ HcM8gS84jLvja9Tx1+sY5DfB9d0UBR3fA9wh/HYUXAtgVhE0WtfiWWpwD6ehNa8HsjVhRWVcALuf
+ 6RXboiSasx4t7pQqadXFzpEb7cKcDOP289QzWp9xzX12iThtTyspC0B+hQsoj4IXqURPWvI7pGzq
+ 4vYF/QiczlD0gaLNIGFvTHB3Gyq2fP5gfF0pTqgzr0mS26oynbsQbSUx1m2cU9YmBkRRdPXHw5+X
+ Zdl4CMIDQC3H1Hf9z1aJiLILsEgDfQOxdVc6YGiyNHAqT+LX9ZbNwD1Dd0j7JJbBy+pZIb3dVvqJ
+ DgIQy5hcXkV4JM79PjAx31IvaSf18AcA2E9ObNu4ZZ3WCSt7dgMV4MAxx3JvPnQd12GxgyYBE+Kp
+ s=
 Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
  helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
@@ -80,63 +82,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some analysis greatly benefits, or depends on, information about
-interrupts. For example, we may need to handle the execution of a new
-translation block differently if it is not the result of normal program
-flow but of an interrupt.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-Even with the existing interfaces, it is more or less possible to
-discern these situations, e.g. as done by the cflow plugin. However,
-this process poses a considerable overhead to the core analysis one may
-intend to perform.
+This change places hooks for SPARC (32bit and 64bit) targets. We treat
+any interrupt other than EXTINT and IVEC as exceptions as they appear to
+be synchroneous events. Also note that SPARC targets do not have
+semihosting events.
 
-These changes introduce a generic and easy-to-use interface for plugin
-authors in the form of callbacks for different types of traps. Patch 1
-defines the callback registration functions and supplies a somewhat
-narrow definition of the event the callbacks are called. Patch 2 adds
-some hooks for triggering the callbacks. Patch 3 adds an example plugin
-showcasing the new API. The remaining patches call the hooks for a
-selection of architectures, mapping architecture specific events to the
-three categories defined in patch 1. Future non-RFC patchsets will call
-these hooks for all architectures (that have some concept of trap or
-interrupt).
+Signed-off-by: Julian Ganz <neither@nut.email>
+---
+ target/sparc/int32_helper.c |  7 +++++++
+ target/sparc/int64_helper.c | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
 
-Sidenote: I'm likely doing something wrong for one architecture or
-the other. For example, with the old version Alex Bennée suggested
-registering a helper function with arm_register_el_change_hook() for
-arm, which is not what I ended up doing. And for AVR my approach to just
-assume only (asynchroneous) interrupts exist is also likely too naïve.
-
-Since v1:
-  - Split the one callback into multiple callbacks
-  - Added a target-agnostic definition of the relevant event(s)
-  - Call hooks from architecture-code rather than accel/tcg/cpu-exec.c
-  - Added a plugin showcasing API usage
-
-Julian Ganz (7):
-  plugins: add API for registering trap related callbacks
-  plugins: add hooks for new trap related callbacks
-  contrib/plugins: add plugin showcasing new trap related API
-  target/arm: call plugin trap callbacks
-  target/avr: call plugin trap callbacks
-  target/riscv: call plugin trap callbacks
-  target/sparc: call plugin trap callbacks
-
- contrib/plugins/Makefile     |  1 +
- contrib/plugins/traps.c      | 89 ++++++++++++++++++++++++++++++++++++
- include/qemu/plugin-event.h  |  3 ++
- include/qemu/plugin.h        | 12 +++++
- include/qemu/qemu-plugin.h   | 45 ++++++++++++++++++
- plugins/core.c               | 42 +++++++++++++++++
- plugins/qemu-plugins.symbols |  3 ++
- target/arm/helper.c          | 23 ++++++++++
- target/avr/helper.c          |  3 ++
- target/riscv/cpu_helper.c    |  8 ++++
- target/sparc/int32_helper.c  |  7 +++
- target/sparc/int64_helper.c  | 10 ++++
- 12 files changed, 246 insertions(+)
- create mode 100644 contrib/plugins/traps.c
-
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index f2dd8bcb2e..4eb41694f7 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/cpu_ldst.h"
+ #include "exec/log.h"
+ #include "sysemu/runstate.h"
++#include "qemu/plugin.h"
+ 
+ static const char * const excp_names[0x80] = {
+     [TT_TFAULT] = "Instruction Access Fault",
+@@ -172,4 +173,10 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+         env->qemu_irq_ack(env, intno);
+     }
+ #endif
++
++    if (intno == TT_EXTINT) {
++        qemu_plugin_vcpu_interrupt_cb(cs);
++    } else {
++        qemu_plugin_vcpu_exception_cb(cs);
++    }
+ }
+diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
+index bd14c7a0db..f4175ef912 100644
+--- a/target/sparc/int64_helper.c
++++ b/target/sparc/int64_helper.c
+@@ -23,6 +23,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/log.h"
+ #include "trace.h"
++#include "qemu/plugin.h"
+ 
+ #define DEBUG_PCALL
+ 
+@@ -253,6 +254,15 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+     }
+     env->npc = env->pc + 4;
+     cs->exception_index = -1;
++
++    switch (intno) {
++    case TT_EXTINT:
++    case TT_IVEC:
++        qemu_plugin_vcpu_interrupt_cb(cs);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs);
++    }
+ }
+ 
+ trap_state *cpu_tsptr(CPUSPARCState* env)
 -- 
 2.45.2
 
