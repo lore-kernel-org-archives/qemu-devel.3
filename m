@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D3DD3C912
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3C5D3C912
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2Klp-0008OO-S3; Sat, 19 Oct 2024 21:30:13 -0400
+	id 1t2KmU-0000IL-37; Sat, 19 Oct 2024 21:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Kln-0008NM-Ul; Sat, 19 Oct 2024 21:30:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1t2Km7-0008VX-1X; Sat, 19 Oct 2024 21:30:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Klm-0005OL-07; Sat, 19 Oct 2024 21:30:11 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JLldSN000320;
- Sun, 20 Oct 2024 01:30:08 GMT
+ id 1t2Km5-0005Rj-HC; Sat, 19 Oct 2024 21:30:30 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JNH25K014798;
+ Sun, 20 Oct 2024 01:30:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=3baPwsJ4d9/44iWyL
- E2uKRwn3a4yRi/xHKhWUigxytk=; b=Ku7eyp2jkpOPnnQ7xB6XCs6LQLeoPX+NG
- QRouuTvrzah4+QoRSAB+VtGVV8PVwHAOahvvaMvXMQZ++u+dQzsq7w3Fv79HBa5q
- TKP3DB3g+blXR4JJ6PACDMKElpYMFa4AmHZxps4bVvGIpXwHvwM0Jm7aAs3tp3jK
- SdvxE69KCvW8ddchVZm8NghL+uyzbIrZLcOY4gxpdjn4wNyhRB6ouOxWpHmL+E74
- 3EYnMJ3QW3tmFNdV6S6+p/TdADuW1KxmNqOykk5HTVWVHEQnzTJQrtihRo0Pd47b
- Ua8RBKaf9RXlW2i0Qd6HsW76ueiICnAHtX+5/eu0NZJ+AtwzRdpoA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5h2u6hw-1
+ :mime-version:references:subject:to; s=pp1; bh=IBd7XKsnz2tFDBl4O
+ +fp2irEqRK0riAvhQ/a7waerBM=; b=gzDVlsYpzgutxaI2WSmLpWSZHTLMbxjSZ
+ s9FeCvMZrhc/WkZQh7g/35RoO/dfsF41Dr34SlZM+keZdykucdDKxcfkfQFBlyP2
+ Swj7eajG5rD0OFoZQXGJs1ookWJVEDD7RiPlpKnVn2XtyEdLiIAVCvOC12TJKoqb
+ 9uoQWYeUoikwFo3LcWHeypo3QHDuUp6V4TvVNwz/NliJctYBYEKlEfXXREUNTj2O
+ GE4TdbXueosmdE6Kl3YbOFuHN/bryZUp1/JVGHQEYoBot3f8TprwwSsxDMMNqoUE
+ IMB4X4sx6Y+ygyMXF8lHsrXicDLV5qbx1y1Bvn2D2C3XG+fHUg0LQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eu3192-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:08 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49K1LVR4005946;
- Sun, 20 Oct 2024 01:30:07 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 428651k9he-1
+ Sun, 20 Oct 2024 01:30:27 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49K0bGUr028864;
+ Sun, 20 Oct 2024 01:30:27 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42cqfx8501-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:07 +0000
+ Sun, 20 Oct 2024 01:30:27 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49K1U6jb46465410
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49K1UPbF15598282
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 20 Oct 2024 01:30:06 GMT
+ Sun, 20 Oct 2024 01:30:25 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 305F45805F;
- Sun, 20 Oct 2024 01:30:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CC53B5805A;
+ Sun, 20 Oct 2024 01:30:25 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8197D5805A;
- Sun, 20 Oct 2024 01:30:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 29A6758054;
+ Sun, 20 Oct 2024 01:30:25 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.54.50])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 20 Oct 2024 01:30:05 +0000 (GMT)
+ Sun, 20 Oct 2024 01:30:25 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v5 06/19] docs/system/s390x/bootdevices: Update the
- documentation about network booting
-Date: Sat, 19 Oct 2024 21:29:40 -0400
-Message-ID: <20241020012953.1380075-7-jrossi@linux.ibm.com>
+Subject: [PATCH v5 19/19] tests/qtest: Add s390x boot order tests to
+ cdrom-test.c
+Date: Sat, 19 Oct 2024 21:29:53 -0400
+Message-ID: <20241020012953.1380075-20-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241020012953.1380075-1-jrossi@linux.ibm.com>
 References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: cCRNL62IssOueBBfT4jDAaTPhXoM2cek
-X-Proofpoint-ORIG-GUID: cCRNL62IssOueBBfT4jDAaTPhXoM2cek
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: MMQzzU9-9Lhy1edbiaDlOCZaEo--XlZa
+X-Proofpoint-ORIG-GUID: MMQzzU9-9Lhy1edbiaDlOCZaEo--XlZa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=948
- adultscore=0 clxscore=1015 phishscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ lowpriorityscore=0
+ adultscore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ mlxlogscore=896 mlxscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410200009
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -109,50 +108,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Remove the information about the separate s390-netboot.img from
-the documentation.
+Add two new qtests to verify that a valid IPL device can successfully boot after
+failed IPL attempts from one or more invalid devices.
 
-Co-authored by: Thomas Huth <thuth@redhat.com>
+cdrom-test/as-fallback-device: Defines the primary boot target as a device that
+is invalid for IPL and a second boot target that is valid for IPL. Ensures that
+the valid device will be selected after the initial failed IPL.
+
+cdrom-test/as-last-option: Defines the maximum number of boot devices (8)
+where only the final entry in the boot order is valid. Ensures that a valid
+device will be selected even after multiple failed IPL attempts from both
+virtio-blk and virtio-scsi device types.
+
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- docs/system/s390x/bootdevices.rst | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ tests/qtest/cdrom-test.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
-index 1a7a18b43b..c97efb8fc0 100644
---- a/docs/system/s390x/bootdevices.rst
-+++ b/docs/system/s390x/bootdevices.rst
-@@ -82,23 +82,17 @@ Note that ``0`` can be used to boot the default entry.
- Booting from a network device
- -----------------------------
- 
--Beside the normal guest firmware (which is loaded from the file ``s390-ccw.img``
--in the data directory of QEMU, or via the ``-bios`` option), QEMU ships with
--a small TFTP network bootloader firmware for virtio-net-ccw devices, too. This
--firmware is loaded from a file called ``s390-netboot.img`` in the QEMU data
--directory. In case you want to load it from a different filename instead,
--you can specify it via the ``-global s390-ipl.netboot_fw=filename``
--command line option.
--
--The ``bootindex`` property is especially important for booting via the network.
--If you don't specify the ``bootindex`` property here, the network bootloader
--firmware code won't get loaded into the guest memory so that the network boot
--will fail. For a successful network boot, try something like this::
-+The firmware that ships with QEMU includes a small TFTP network bootloader
-+for virtio-net-ccw devices.  The ``bootindex`` property is especially
-+important for booting via the network. If you don't specify the ``bootindex``
-+property here, the network bootloader won't be taken into consideration and
-+the network boot will fail. For a successful network boot, try something
-+like this::
- 
-  qemu-system-s390x -netdev user,id=n1,tftp=...,bootfile=... \
-                    -device virtio-net-ccw,netdev=n1,bootindex=1
- 
--The network bootloader firmware also has basic support for pxelinux.cfg-style
-+The network bootloader also has basic support for pxelinux.cfg-style
- configuration files. See the `PXELINUX Configuration page
- <https://wiki.syslinux.org/wiki/index.php?title=PXELINUX#Configuration>`__
- for details how to set up the configuration file on your TFTP server.
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index 9d72b24e4b..c86725a511 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -213,6 +213,30 @@ static void add_s390x_tests(void)
+                         "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
+                         "-device virtio-blk,drive=d2,bootindex=1 "
+                         "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
++    qtest_add_data_func("cdrom/boot/as-fallback-device",
++                        "-device virtio-serial -device virtio-scsi "
++                        "-device virtio-blk,drive=d1,bootindex=1 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
++                        "-device virtio-blk,drive=d2,bootindex=2 "
++                        "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
++    qtest_add_data_func("cdrom/boot/as-last-option",
++                        "-device virtio-serial -device virtio-scsi "
++                        "-device virtio-blk,drive=d1,bootindex=1 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
++                        "-device virtio-blk,drive=d2,bootindex=2 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d2 "
++                        "-device virtio-blk,drive=d3,bootindex=3 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d3 "
++                        "-device scsi-hd,drive=d4,bootindex=4 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d4 "
++                        "-device scsi-hd,drive=d5,bootindex=5 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d5 "
++                        "-device virtio-blk,drive=d6,bootindex=6 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d6 "
++                        "-device scsi-hd,drive=d7,bootindex=7 "
++                        "-drive driver=null-co,read-zeroes=on,if=none,id=d7 "
++                        "-device scsi-cd,drive=d8,bootindex=8 "
++                        "-drive if=none,id=d8,media=cdrom,file=", test_cdboot);
+     if (qtest_has_device("x-terminal3270")) {
+         qtest_add_data_func("cdrom/boot/without-bootindex",
+                             "-device virtio-scsi -device virtio-serial "
 -- 
 2.45.1
 
