@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34CE7D3C912
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD08D3C927
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2KmW-0000Lg-1K; Sat, 19 Oct 2024 21:30:56 -0400
+	id 1t2KmW-0000Li-9M; Sat, 19 Oct 2024 21:30:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Kly-0008TO-Sq; Sat, 19 Oct 2024 21:30:23 -0400
+ id 1t2Km5-0008Ux-Ff; Sat, 19 Oct 2024 21:30:33 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Klw-0005QR-Pa; Sat, 19 Oct 2024 21:30:22 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JFP8XE018361;
- Sun, 20 Oct 2024 01:30:19 GMT
+ id 1t2Km3-0005RM-E4; Sat, 19 Oct 2024 21:30:29 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JLQxvT008451;
+ Sun, 20 Oct 2024 01:30:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=FE2kBH2KVAs0bEoEk
- eM9AWo8BWkBeyGKzMjsgfo91+E=; b=QotMy6EH/8NWZ1NZjVPo9eyhpuIKoX9FJ
- 0b7Ubui+6P8sIfxXDM5QRGmgtwbOc77R6KO8exdza+amxCTvH8uFXlNjh+w2wsyE
- ln6Ugwfi/HWWLC7+FTFNN18aNfs//21ZMCQy9EIAmRo2ejF6tY9+H6iKRtajj6Oz
- 0JBGdv7dV9pYovW67bLJ4PImTNHxHToJc5PFoyIz/p2MIecZXtCF5ut0OU3Lmvlk
- hBaMVGZKCr+0NG+5+ib4IIsps2L4YnvmUlvB/8tXwwuaW2xOewUQXGMtL3Fb5nkN
- x1eC28QSL76PzkQPFnqBNDTwNCHUeF0ZAErZeAn96tiZ0pntizwIA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5h2u6ja-1
+ :mime-version:references:subject:to; s=pp1; bh=VdrsLLGQBfeXMjBpw
+ NW/MVttg8IBmqSrZLc6ds9qbrU=; b=R6JXG/6/RzqAH8w20toHd2UmlbP4Ik1pB
+ iT281jDd0k64lJUfEZiiFuNvEKugoDOp/Yff6gMKiaJ7Flniu2A6kRUGcgPIW9Ch
+ 6JpCSuD7fG+qbh5rT2FFcbzAa2rxWHYR8CdhNkvmnZSerPrNpCjkHSg+UYZmXwY+
+ ZFRXwuukrzMo4GCsdhOMDA1RObfet2kxA/AA1/NUYm1KKZxBTpsoD6H193EUp7ne
+ dEYJGin4e5E8q0b8KsrET+ml/qQnIO+0WtRIUqDCAC2T59P2bgPxKNrUGkPBA3R0
+ 2NOdSDGTH86micUCxqy98L/Aoc/bQZ3v8cY54kI1hj1//8FFlgpuw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5hm376y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:19 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49K0g08u005377;
- Sun, 20 Oct 2024 01:30:18 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4285njuc04-1
+ Sun, 20 Oct 2024 01:30:25 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49K0bIqZ028885;
+ Sun, 20 Oct 2024 01:30:24 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42cqfx84yh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:18 +0000
+ Sun, 20 Oct 2024 01:30:24 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49K1UGeX27394646
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49K1UNTg49414438
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 20 Oct 2024 01:30:16 GMT
+ Sun, 20 Oct 2024 01:30:23 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A466C5805C;
- Sun, 20 Oct 2024 01:30:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E6A8658054;
+ Sun, 20 Oct 2024 01:30:22 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F34DD58054;
- Sun, 20 Oct 2024 01:30:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 438115805D;
+ Sun, 20 Oct 2024 01:30:22 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.54.50])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 20 Oct 2024 01:30:15 +0000 (GMT)
+ Sun, 20 Oct 2024 01:30:22 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v5 13/19] include/hw/s390x: Add include files for common IPL
- structs
-Date: Sat, 19 Oct 2024 21:29:47 -0400
-Message-ID: <20241020012953.1380075-14-jrossi@linux.ibm.com>
+Subject: [PATCH v5 17/19] pc-bios/s390x: Enable multi-device boot loop
+Date: Sat, 19 Oct 2024 21:29:51 -0400
+Message-ID: <20241020012953.1380075-18-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241020012953.1380075-1-jrossi@linux.ibm.com>
 References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: byp2QnvmBLxt3Jeh93SUT0KPFujYE9Ih
-X-Proofpoint-ORIG-GUID: byp2QnvmBLxt3Jeh93SUT0KPFujYE9Ih
+X-Proofpoint-ORIG-GUID: YiBcfiRNY6Xv63td80alpiIC9sz4Wu0P
+X-Proofpoint-GUID: YiBcfiRNY6Xv63td80alpiIC9sz4Wu0P
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999
- adultscore=0 clxscore=1015 phishscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ spamscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 mlxlogscore=957 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410200009
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -108,386 +107,211 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Currently, structures defined in both hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
-must be kept in sync, which is prone to error. Instead, create a new directory
-at include/hw/s390x/ipl/ to contain the definitions that must be shared.
+Allow attempts to boot from multiple IPL devices. If the first device fails to
+IPL, select the pre-built IPLB for the next device in the boot order and attempt
+to IPL from it. Continue this process until IPL is successful or there are no
+devices left to try.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/ipl.h              | 104 +-----------------------------
- include/hw/s390x/ipl/qipl.h | 123 ++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/iplb.h     |  84 ++----------------------
- pc-bios/s390-ccw/Makefile   |   2 +-
- 4 files changed, 130 insertions(+), 183 deletions(-)
- create mode 100644 include/hw/s390x/ipl/qipl.h
+ pc-bios/s390-ccw/iplb.h     | 24 ++++++++++++++++++++
+ pc-bios/s390-ccw/jump2ipl.c |  7 +++---
+ pc-bios/s390-ccw/main.c     | 45 +++++++++++++++++++++++--------------
+ pc-bios/s390-ccw/netmain.c  |  2 +-
+ 4 files changed, 57 insertions(+), 21 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index b2105b616a..fa394c339d 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -16,95 +16,11 @@
- #include "cpu.h"
- #include "exec/address-spaces.h"
- #include "hw/qdev-core.h"
-+#include "hw/s390x/ipl/qipl.h"
- #include "qom/object.h"
- 
--struct IPLBlockPVComp {
--    uint64_t tweak_pref;
--    uint64_t addr;
--    uint64_t size;
--} QEMU_PACKED;
--typedef struct IPLBlockPVComp IPLBlockPVComp;
--
--struct IPLBlockPV {
--    uint8_t  reserved18[87];    /* 0x18 */
--    uint8_t  version;           /* 0x6f */
--    uint32_t reserved70;        /* 0x70 */
--    uint32_t num_comp;          /* 0x74 */
--    uint64_t pv_header_addr;    /* 0x78 */
--    uint64_t pv_header_len;     /* 0x80 */
--    struct IPLBlockPVComp components[0];
--} QEMU_PACKED;
--typedef struct IPLBlockPV IPLBlockPV;
--
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} QEMU_PACKED;
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[0];
--} QEMU_PACKED;
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} QEMU_PACKED;
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
- #define DIAG308_FLAGS_LP_VALID 0x80
- 
--union IplParameterBlock {
--    struct {
--        uint32_t len;
--        uint8_t  reserved0[3];
--        uint8_t  version;
--        uint32_t blk0_len;
--        uint8_t  pbt;
--        uint8_t  flags;
--        uint16_t reserved01;
--        uint8_t  loadparm[8];
--        union {
--            IplBlockCcw ccw;
--            IplBlockFcp fcp;
--            IPLBlockPV pv;
--            IplBlockQemuScsi scsi;
--        };
--    } QEMU_PACKED;
--    struct {
--        uint8_t  reserved1[110];
--        uint16_t devno;
--        uint8_t  reserved2[88];
--        uint8_t  reserved_ext[4096 - 200];
--    } QEMU_PACKED;
--} QEMU_PACKED;
--typedef union IplParameterBlock IplParameterBlock;
--
- int s390_ipl_set_loadparm(uint8_t *loadparm);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
- int s390_ipl_prepare_pv_header(Error **errp);
-@@ -131,24 +47,6 @@ void s390_ipl_clear_reset_request(void);
- #define QIPL_FLAG_BM_OPTS_CMD   0x80
- #define QIPL_FLAG_BM_OPTS_ZIPL  0x40
- 
--/*
-- * The QEMU IPL Parameters will be stored at absolute address
-- * 204 (0xcc) which means it is 32-bit word aligned but not
-- * double-word aligned. Placement of 64-bit data fields in this
-- * area must account for their alignment needs.
-- * The total size of the struct must never exceed 28 bytes.
-- * This definition must be kept in sync with the definition
-- * in pc-bios/s390-ccw/iplb.h.
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} QEMU_PACKED;
--typedef struct QemuIplParameters QemuIplParameters;
--
- #define TYPE_S390_IPL "s390-ipl"
- OBJECT_DECLARE_SIMPLE_TYPE(S390IPLState, S390_IPL)
- 
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-new file mode 100644
-index 0000000000..0ef04af027
---- /dev/null
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -0,0 +1,123 @@
-+/*
-+ * S/390 boot structures
-+ *
-+ * Copyright 2024 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at
-+ * your option) any later version. See the COPYING file in the top-level
-+ * directory.
-+ */
-+
-+#ifndef S390X_QIPL_H
-+#define S390X_QIPL_H
-+
-+/* Boot Menu flags */
-+#define QIPL_FLAG_BM_OPTS_CMD   0x80
-+#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
-+
-+#define QIPL_ADDRESS  0xcc
-+#define LOADPARM_LEN    8
-+
-+/*
-+ * The QEMU IPL Parameters will be stored at absolute address
-+ * 204 (0xcc) which means it is 32-bit word aligned but not
-+ * double-word aligned. Placement of 64-bit data fields in this
-+ * area must account for their alignment needs.
-+ * The total size of the struct must never exceed 28 bytes.
-+ */
-+struct QemuIplParameters {
-+    uint8_t  qipl_flags;
-+    uint8_t  reserved1[3];
-+    uint64_t reserved2;
-+    uint32_t boot_menu_timeout;
-+    uint8_t  reserved3[12];
-+} QEMU_PACKED;
-+typedef struct QemuIplParameters QemuIplParameters;
-+
-+struct IPLBlockPVComp {
-+    uint64_t tweak_pref;
-+    uint64_t addr;
-+    uint64_t size;
-+} QEMU_PACKED;
-+typedef struct IPLBlockPVComp IPLBlockPVComp;
-+
-+struct IPLBlockPV {
-+    uint8_t  reserved18[87];    /* 0x18 */
-+    uint8_t  version;           /* 0x6f */
-+    uint32_t reserved70;        /* 0x70 */
-+    uint32_t num_comp;          /* 0x74 */
-+    uint64_t pv_header_addr;    /* 0x78 */
-+    uint64_t pv_header_len;     /* 0x80 */
-+    struct IPLBlockPVComp components[0];
-+} QEMU_PACKED;
-+typedef struct IPLBlockPV IPLBlockPV;
-+
-+struct IplBlockCcw {
-+    uint8_t  reserved0[85];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+    uint8_t  vm_flags;
-+    uint8_t  reserved3[3];
-+    uint32_t vm_parm_len;
-+    uint8_t  nss_name[8];
-+    uint8_t  vm_parm[64];
-+    uint8_t  reserved4[8];
-+} QEMU_PACKED;
-+typedef struct IplBlockCcw IplBlockCcw;
-+
-+struct IplBlockFcp {
-+    uint8_t  reserved1[305 - 1];
-+    uint8_t  opt;
-+    uint8_t  reserved2[3];
-+    uint16_t reserved3;
-+    uint16_t devno;
-+    uint8_t  reserved4[4];
-+    uint64_t wwpn;
-+    uint64_t lun;
-+    uint32_t bootprog;
-+    uint8_t  reserved5[12];
-+    uint64_t br_lba;
-+    uint32_t scp_data_len;
-+    uint8_t  reserved6[260];
-+    uint8_t  scp_data[0];
-+} QEMU_PACKED;
-+typedef struct IplBlockFcp IplBlockFcp;
-+
-+struct IplBlockQemuScsi {
-+    uint32_t lun;
-+    uint16_t target;
-+    uint16_t channel;
-+    uint8_t  reserved0[77];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+} QEMU_PACKED;
-+typedef struct IplBlockQemuScsi IplBlockQemuScsi;
-+
-+union IplParameterBlock {
-+    struct {
-+        uint32_t len;
-+        uint8_t  reserved0[3];
-+        uint8_t  version;
-+        uint32_t blk0_len;
-+        uint8_t  pbt;
-+        uint8_t  flags;
-+        uint16_t reserved01;
-+        uint8_t  loadparm[LOADPARM_LEN];
-+        union {
-+            IplBlockCcw ccw;
-+            IplBlockFcp fcp;
-+            IPLBlockPV pv;
-+            IplBlockQemuScsi scsi;
-+        };
-+    } QEMU_PACKED;
-+    struct {
-+        uint8_t  reserved1[110];
-+        uint16_t devno;
-+        uint8_t  reserved2[88];
-+        uint8_t  reserved_ext[4096 - 200];
-+    } QEMU_PACKED;
-+} QEMU_PACKED;
-+typedef union IplParameterBlock IplParameterBlock;
-+
-+#endif
 diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index 3758698468..16643f5879 100644
+index 16643f5879..08f259ff31 100644
 --- a/pc-bios/s390-ccw/iplb.h
 +++ b/pc-bios/s390-ccw/iplb.h
-@@ -12,88 +12,14 @@
- #ifndef IPLB_H
- #define IPLB_H
+@@ -17,9 +17,11 @@
+ #endif
  
--#define LOADPARM_LEN    8
-+#ifndef QEMU_PACKED
-+#define QEMU_PACKED __attribute__((packed))
-+#endif
- 
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} __attribute__ ((packed));
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[];
--} __attribute__ ((packed));
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} __attribute__ ((packed));
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
--struct IplParameterBlock {
--    uint32_t len;
--    uint8_t  reserved0[3];
--    uint8_t  version;
--    uint32_t blk0_len;
--    uint8_t  pbt;
--    uint8_t  flags;
--    uint16_t reserved01;
--    uint8_t  loadparm[LOADPARM_LEN];
--    union {
--        IplBlockCcw ccw;
--        IplBlockFcp fcp;
--        IplBlockQemuScsi scsi;
--    };
--} __attribute__ ((packed));
--typedef struct IplParameterBlock IplParameterBlock;
--
--extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
--
--#define QIPL_ADDRESS  0xcc
--
--/* Boot Menu flags */
--#define QIPL_FLAG_BM_OPTS_CMD   0x80
--#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
--
--/*
-- * This definition must be kept in sync with the definition
-- * in hw/s390x/ipl.h
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} __attribute__ ((packed));
--typedef struct QemuIplParameters QemuIplParameters;
-+#include <qipl.h>
+ #include <qipl.h>
++#include <string.h>
  
  extern QemuIplParameters qipl;
-+extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+ extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
++extern bool have_iplb;
  
  #define S390_IPL_TYPE_FCP 0x00
  #define S390_IPL_TYPE_CCW 0x02
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 27cbb354af..db9e8f0892 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -3,7 +3,7 @@ all: build-all
- 	@true
+@@ -49,4 +51,26 @@ static inline bool set_iplb(IplParameterBlock *iplb)
+     return manage_iplb(iplb, false);
+ }
  
- include config-host.mak
--CFLAGS = -O2 -g
-+CFLAGS = -O2 -g -I $(SRC_PATH)/../../include/hw/s390x/ipl
- MAKEFLAGS += -rR
++/*
++ * The IPL started on the device, but failed in some way.  If the IPLB chain
++ * still has more devices left to try, use the next device in order.
++ */
++static inline bool load_next_iplb(void)
++{
++    IplParameterBlock *next_iplb;
++
++    if (qipl.chain_len < 1) {
++        return false;
++    }
++
++    qipl.index++;
++    next_iplb = (IplParameterBlock *) qipl.next_iplb;
++    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
++
++    qipl.chain_len--;
++    qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
++
++    return true;
++}
++
+ #endif /* IPLB_H */
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 99d18947d1..86321d0f46 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -45,9 +45,10 @@ int jump_to_IPL_code(uint64_t address)
+      */
+     if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
+         iplb.devno = qipl.index;
+-        if (!set_iplb(&iplb)) {
+-            panic("Failed to set IPLB");
+-        }
++    }
++
++    if (have_iplb && !set_iplb(&iplb)) {
++        panic("Failed to set IPLB");
+     }
  
- GIT_SUBMODULES = roms/SLOF
+     /*
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index ab4709e16e..a4d1c05aac 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -23,7 +23,7 @@ static SubChannelId blk_schid = { .one = 1 };
+ static char loadparm_str[LOADPARM_LEN + 1];
+ QemuIplParameters qipl;
+ IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+-static bool have_iplb;
++bool have_iplb;
+ static uint16_t cutype;
+ LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
+ 
+@@ -55,6 +55,12 @@ void write_iplb_location(void)
+     }
+ }
+ 
++static void copy_qipl(void)
++{
++    QemuIplParameters *early_qipl = (QemuIplParameters *)QIPL_ADDRESS;
++    memcpy(&qipl, early_qipl, sizeof(QemuIplParameters));
++}
++
+ unsigned int get_loadparm_index(void)
+ {
+     return atoi(loadparm_str);
+@@ -152,6 +158,7 @@ static void menu_setup(void)
+ 
+     /* If loadparm was set to any other value, then do not enable menu */
+     if (memcmp(loadparm_str, LOADPARM_EMPTY, LOADPARM_LEN) != 0) {
++        menu_set_parms(qipl.qipl_flags & ~BOOT_MENU_FLAG_MASK, 0);
+         return;
+     }
+ 
+@@ -183,7 +190,6 @@ static void css_setup(void)
+ static void boot_setup(void)
+ {
+     char lpmsg[] = "LOADPARM=[________]\n";
+-    have_iplb = store_iplb(&iplb);
+ 
+     if (memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+         ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
+@@ -191,6 +197,10 @@ static void boot_setup(void)
+         sclp_get_loadparm_ascii(loadparm_str);
+     }
+ 
++    if (have_iplb) {
++        menu_setup();
++    }
++
+     memcpy(lpmsg + 10, loadparm_str, 8);
+     puts(lpmsg);
+ 
+@@ -208,6 +218,7 @@ static bool find_boot_device(void)
+ 
+     switch (iplb.pbt) {
+     case S390_IPL_TYPE_CCW:
++        vdev->scsi_device_selected = false;
+         debug_print_int("device no. ", iplb.ccw.devno);
+         blk_schid.ssid = iplb.ccw.ssid & 0x3;
+         debug_print_int("ssid ", blk_schid.ssid);
+@@ -231,15 +242,8 @@ static bool find_boot_device(void)
+ static int virtio_setup(void)
+ {
+     VDev *vdev = virtio_get_device();
+-    QemuIplParameters *early_qipl = (QemuIplParameters *)QIPL_ADDRESS;
+     int ret;
+ 
+-    memcpy(&qipl, early_qipl, sizeof(QemuIplParameters));
+-
+-    if (have_iplb) {
+-        menu_setup();
+-    }
+-
+     switch (vdev->senseid.cu_model) {
+     case VIRTIO_ID_NET:
+         puts("Network boot device detected");
+@@ -271,10 +275,9 @@ static void ipl_boot_device(void)
+         dasd_ipl(blk_schid, cutype);
+         break;
+     case CU_TYPE_VIRTIO:
+-        if (virtio_setup()) {
+-            return;    /* Only returns in case of errors */
++        if (virtio_setup() == 0) {
++            zipl_load();
+         }
+-        zipl_load();
+         break;
+     default:
+         printf("Attempting to boot from unexpected device type 0x%X\n", cutype);
+@@ -307,14 +310,22 @@ static void probe_boot_device(void)
+ 
+ void main(void)
+ {
++    copy_qipl();
+     sclp_setup();
+     css_setup();
+-    boot_setup();
+-    if (have_iplb && find_boot_device()) {
+-        ipl_boot_device();
+-    } else {
++    have_iplb = store_iplb(&iplb);
++    if (!have_iplb) {
+         probe_boot_device();
+     }
+ 
+-    panic("Failed to IPL. Halting...");
++    while (have_iplb) {
++        boot_setup();
++        if (have_iplb && find_boot_device()) {
++            ipl_boot_device();
++        }
++        have_iplb = load_next_iplb();
++    }
++
++    panic("No suitable device for IPL. Halting...");
++
+ }
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index d1a6c9a91c..e46e470db4 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -478,7 +478,7 @@ static bool virtio_setup(void)
+      */
+     enable_mss_facility();
+ 
+-    if (store_iplb(&iplb)) {
++    if (have_iplb || store_iplb(&iplb)) {
+         IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
+         dev_no = iplb.ccw.devno;
+         debug_print_int("device no. ", dev_no);
 -- 
 2.45.1
 
