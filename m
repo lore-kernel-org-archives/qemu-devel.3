@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E84BD3C92A
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 20:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C91D3C92A
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 20:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2cdH-0004Ex-Np; Sun, 20 Oct 2024 16:34:35 -0400
+	id 1t2cjW-0005aA-Nl; Sun, 20 Oct 2024 16:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2cdF-0004EB-Jy
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:34:33 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2cjT-0005Zp-Lq
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:40:59 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2cdE-0006ys-2M
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:34:33 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5c948c41edeso4366251a12.1
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 13:34:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2cjR-0007fa-Tz
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:40:59 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2e2fb304e7dso3150502a91.1
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 13:40:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729456470; x=1730061270; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T7FP+Hz3sNeRNIYVqCJ3bmGxv9UjGLV2xCkZcFke+iE=;
- b=u/j6+3BohxxHfsJmVlQ0WSt+kGeBqH0sDcgKbC+hIBXiwEmaxxNDz+wg2Zn8bxdPNv
- N05KRuqlE05ok5WKjnpYmIV7h3Cp8Vp/FnUQO4Mp4k29/uF+esCBKb1GwLpSoWXNm5wo
- ptFT0wCh7wOGZ4R4M+eYC229Ra0dmyy84bHyh5nQwWCAzXRAyVvStl4btQ+3HGJL1eIw
- Tu92AJQgt/Wa1mmquo3RiFOGg/x8cArWItEgQDvUj1pPvCxGQ79HzbJmFuxQonphrpfL
- s37sQL1XsHgHTk+zsyPEazba4Qqe3c0WiPFDx7C/hvQ1YkTbCyhIJCKDhlgDlwfFBmbF
- hv/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729456470; x=1730061270;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1729456856; x=1730061656; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=T7FP+Hz3sNeRNIYVqCJ3bmGxv9UjGLV2xCkZcFke+iE=;
- b=C3WFhewyPKjiyrsJuBsOfHoETzh0qK2q8GbAR4JfqyQ+HjNKEBGY8iqRZIRIFtiRPt
- LIs4l39bar2zhDWSiCArrSaxGR4a/p9pvB5hKplR1MA3axf48mCwrva8wZmpY0Ee3lhb
- FyujSyaJ2sE1iHMuI2aJeDLUlWiJQf+FGwqD2J8RPZixQhx5eFPd1UllkmTxIOScXqjs
- xcNqE0DmGy3mR5yFt7awAcEOMlchgo108z9UJhTWDCm3H+dxkihgeOi6p0Nv3OnhJQux
- Fn0E4S46W5q19+xa6yAhyIKDhTT8vLD96G6yqV7907Wqcl/KLaYWPP5e0US0gESc0fTw
- 0n6A==
+ bh=SM5a9G+mhGVVM/mmHm9TPrfAIdGF8n2Q9ABiOyT/8ro=;
+ b=g0YSJmLWNFN1aUmarQh9W2f25sDfmvlYR/d/L21UTn4Hzq8pRhVv0GpPTahwmSW1WO
+ Q+mOWewFm1OVSDnoWQbyEbenb0zdcW5lDWI24XxCHSqOSRcNIgdgzvpayL6CBo21sDRo
+ 9W+dHgX3Cx7aZqWGfhW2E7PHcy4DCRqWt2J5sKY3nfvGyu1FhGL5WbZjbQiyxVRZWrgZ
+ 1ex9KoGaI1ZdQr9K7avojeL/AMoCWuMdLjaYgPa5ZkKNc3jTDgfK42oDiG179j8ivDVu
+ 126haFB2PrZE7kQHnI7HQlwFK2t8EzIFzqhW+laj8ve1jurv42LXFoq930awNSX1TCqr
+ jAYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729456856; x=1730061656;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SM5a9G+mhGVVM/mmHm9TPrfAIdGF8n2Q9ABiOyT/8ro=;
+ b=cgCAjzwNFzcn7fQnEpyLVlI414gKcczjcbq2VaI6NFrrGvagoVqqIp0PPSzijMHhHc
+ Q0mNLlSLgSfVCqwtE4pC2ZCCG85/UjR1DeCbqRCd6uC2AeSUONPq7g+ehGTtHaoLgoAS
+ UnxCxPNaKhTi/xoRdDF3kuvhXBzOMh84edxzTgIjAEe7OxoxB2mxrSFmcdrrOD11/TVO
+ sr3RasfQMbCbGEnp9zVO7FtislIV5jDLafK8r+9U9dYa5P0OrOvxt7Och3wU51BxSDyK
+ XPNl+1D/uXavXdwwkBG/U0+/LnQSZ8RYuisiaumkrlEF/Pk5+gCGOCjoAjJ0VG2JOBz5
+ uuNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSYQ0Av088YH9yYOz91W69tvHRNW6apKmGJjyUn5jQjjuXeY/dR3IaeaOg2gu+Lmne+9mGVbWuPakF@nongnu.org
-X-Gm-Message-State: AOJu0Yw4vO8bhSNy9xO75YcHFlGER5+39HmS92fum4V4wMJ1BD/LPSHN
- 5+uLatBCvmhN7JWBk4bMvbVm1YPcyqD+tZWCMVVxc1u7R41Ih5gtSkGLQBaf9mw=
-X-Google-Smtp-Source: AGHT+IH2uhq+ceHnc8hriZ6G6qhlcBvnadRqwG89PGOA3dMeVCmDOTOcW/sTN2bkeB2KRtrKSxSunA==
-X-Received: by 2002:a05:6402:2693:b0:5ca:d533:1c7b with SMTP id
- 4fb4d7f45d1cf-5cad5331cb4mr3617953a12.28.1729456469942; 
- Sun, 20 Oct 2024 13:34:29 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cb66a653f5sm1218081a12.26.2024.10.20.13.34.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 20 Oct 2024 13:34:28 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C25185F8A7;
- Sun, 20 Oct 2024 21:34:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@kaod.org>,  Jean-Christophe Dubois <jcd@tribudubois.net>,  Igor
- Mitsyanko <i.mitsyanko@gmail.com>,  Andrey Smirnov
- <andrew.smirnov@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,
- Alistair Francis <alistair@alistair23.me>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 0/7] docs/system/arm: Provide at least skeleton docs for
- all boards
-In-Reply-To: <20241018141332.942844-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Fri, 18 Oct 2024 15:13:25 +0100")
-References: <20241018141332.942844-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Sun, 20 Oct 2024 21:34:26 +0100
-Message-ID: <87bjzev7hp.fsf@draig.linaro.org>
+ AJvYcCVq3ZD9WQq3E9oOuGZV0bVpoXzK7PH50i8Bhms5bDAzoQ5/OxvCTuPfc6HOYReKXHBhEPVo6czU5u0x@nongnu.org
+X-Gm-Message-State: AOJu0YzEFqSmEnI9tUlWAVurWl4p+mb5BmnHguXZsw/yD/326vjkGzo7
+ /DQtuWSwpw9t/b5X/KzpACZlKVWoCJ283kwtcDCfrt0YEcP20StDBUA1Le+DxM4=
+X-Google-Smtp-Source: AGHT+IG9g4svMEdfkoG8yxSd4qTZEcshxlisf2Cc4nYGCz4UsgvXzsLTCs5qnsH5/ov97TGHPImp5Q==
+X-Received: by 2002:a17:90a:17ef:b0:2e1:89aa:65b7 with SMTP id
+ 98e67ed59e1d1-2e56171dbc8mr10890187a91.9.1729456856262; 
+ Sun, 20 Oct 2024 13:40:56 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e5ad5178ebsm1968351a91.57.2024.10.20.13.40.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Oct 2024 13:40:55 -0700 (PDT)
+Message-ID: <4ad3279d-1764-4a34-9ac8-3b1650fd1c91@linaro.org>
+Date: Sun, 20 Oct 2024 13:40:53 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/14] target/i386: use builtin popcnt or parity to
+ compute PF, if available
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20241020155324.35273-1-pbonzini@redhat.com>
+ <20241020155324.35273-13-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241020155324.35273-13-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,48 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 10/20/24 08:53, Paolo Bonzini wrote:
+> This removes the 256 byte parity table from the executable on
+> x86, s390 and RISC-V/zbb hosts.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   include/qemu/host-utils.h                | 16 ++++++++++++++++
+>   target/i386/tcg/helper-tcg.h             | 12 ++++++++++++
+>   target/i386/tcg/cc_helper_template.h.inc | 20 ++++++++++----------
+>   target/i386/tcg/cc_helper.c              |  2 ++
+>   target/i386/tcg/int_helper.c             |  4 ++--
+>   5 files changed, 42 insertions(+), 12 deletions(-)
+> 
+> diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
+> index ead97d354d6..bd4c684e5b5 100644
+> --- a/include/qemu/host-utils.h
+> +++ b/include/qemu/host-utils.h
+> @@ -126,6 +126,13 @@ static inline uint64_t muldiv64_round_up(uint64_t a, uint32_t b, uint32_t c)
+>   }
+>   #endif
+>   
+> +#if defined __POPCNT__ || defined __s390x__|| defined __riscv_zbb
+> +#define HAVE_FAST_CTPOP 1
+> +#endif
+> +#if defined __i386__ || defined __x86_64__ || defined HAVE_FAST_CTPOP
+> +#define HAVE_FAST_PARITY8 1
+> +#endif
 
-> In target-arm.rst there is an apologetic note:
->
->   Unfortunately many of the Arm boards QEMU supports are currently
->   undocumented; you can get a complete list by running
->   ``qemu-system-aarch64 --machine help``.
->
-> However, the situation isn't actually as bleak as this suggests:
-> over the years we have generally insisted on documentation for
-> new machine types and have filled in some of the gaps where
-> there was no documentation for older machine types. Plus we just
-> deleted a lot of older undocumented or underdocumented boards.
->
-> I did a check of all the board types listed in --help and we
-> really don't have very many left that weren't listed in the
-> documentation. This series does some cleanup of existing
-> docs to ensure that every board covered by a .rst file has
-> a line in the right place in the list that lists the board
-> name explicitly. It then adds placeholder docs for the remaining
-> undocumented boards:
->  * nuri, smdkc210 (Exynos4 boards)
->  * xlnx-zcu102
->  * mcimx6ul-evk
->  * mcimx7d-sabre
->
-> and removes the apologetic note about the list being incomplete.
->
-> The placeholder docs are obviously not very useful, but they
-> mean we at least have an entry in the list for the board
-> that gives the manufacturer's name for the board, and we
-> have a place to put expanded information in future if anybody
-> wants to write it.
->
-> Anybody who has more information on the above boards is of
-> course welcome to expand on the minimal files here :-)
+This misses out on a few, and is rather pointless; see below.
 
-For the series:
+> +/*
+> + * parity8 - return the parity (1 = odd) of an 8-bit value.
+> + * @val: The value to search
+> + */
+> +static inline int parity8(uint8_t val)
+> +{
+> +    return __builtin_parity(val);
+> +}
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+This should be pretty darn close to ideal for all hosts.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> +#ifdef HAVE_FAST_PARITY8
+> +static inline unsigned int compute_pf(uint8_t x)
+> +{
+> +    return !parity8(x) * CC_P;
+> +}
+> +#else
+>   extern const uint8_t parity_table[256];
+> +static inline unsigned int compute_pf(uint8_t x)
+> +{
+> +    return parity_table[x];
+> +}
+> +#endif
+
+All common hosts have either parity or popcount.  I think there's no point keeping the 
+other path for some hosts (non-zbb riscv, older sparc64, ?).  They are just as well served 
+by pulling in libgcc's implementations.
+
+
+r~
 
