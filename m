@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45297D3C92D
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 15:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCC9D3C92A
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 15:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2YGC-0003hz-R9; Sun, 20 Oct 2024 11:54:28 -0400
+	id 1t2YFz-0003Om-OI; Sun, 20 Oct 2024 11:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2YG3-0003Us-Gh
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:54:19 -0400
+ id 1t2YFi-0003NF-FZ
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2YG1-0005Rt-5s
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:54:18 -0400
+ id 1t2YFf-0005Q1-Jn
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729439656;
+ s=mimecast20190719; t=1729439633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rdCTjRuJWU9eu1zEMJ2p20wsDU/+YEzfRzwCWhFB3yM=;
- b=CXdsvnOa5C/j30ATpnxii9qOQDFM5Vz+5cYg5+I9Qbzc/NydE7nle8RpRJsCwUv17W641A
- 0LmhWN5d4CPG0A6t+fzyA+eGSHHYRpDjxBCY7HrZd/1sBskHLQznu5QkGt3HDRTV+AMp9Z
- gfxWdcDcw3vg+B4+qChHY0Xo8ALwoxA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u4PvFEk58IPsCXTEM1w79SZ0J2i929/FJcA19Ybp0Gg=;
+ b=R0aOo5uYsLF/EWpWZFxUvgbS90PqPOHaF1ATXdIvXyelCDNWBQHg/1at5/4S3ffqjXj53g
+ ZMP/KIPfU/du9gCx3+Bx0X9HeZ1aBrmVpaOZ9Bd8LqYVCoiPSr2PWTagS3M7ebaCK8mpyG
+ zpmnJ8l42JKLbpU1YddXjN6eGBW7TW8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-NxBTyTQzMoKA4weyoH27QQ-1; Sun, 20 Oct 2024 11:54:13 -0400
-X-MC-Unique: NxBTyTQzMoKA4weyoH27QQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d5a3afa84so1859821f8f.3
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 08:54:12 -0700 (PDT)
+ us-mta-648-ASvykA80PHiJO2dxNZ3tfA-1; Sun, 20 Oct 2024 11:53:52 -0400
+X-MC-Unique: ASvykA80PHiJO2dxNZ3tfA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d43e7acd9so1935942f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 08:53:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729439651; x=1730044451;
+ d=1e100.net; s=20230601; t=1729439630; x=1730044430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rdCTjRuJWU9eu1zEMJ2p20wsDU/+YEzfRzwCWhFB3yM=;
- b=TvwjKeKvTpK7X1iEmDSyVj51RIlXseWgLwKUchoZ1lfLFv3TR3PuHupH1SCTlZqQut
- nuaaGi3JbkQSKW/3LlREV2lpF/96Z7NuUgPs36uLPEoNocttJZM9oNC5Q0+sqM2RBwdV
- kJcieDrbSx+Nh/vttzT7yuTo0B98Llu1OMHaw2wm3BlRJh/kxoSXW0xKXKBHsokhMbfM
- qeGYEI9i5bqq8DMefZr+HYVxjnwMpy8Y38MJHkCgwkyksQPUPvorT/3xkTtS2Zxl6meC
- 7TJbcQn45ahkSvBZOmh0ZFKDnLrQD9LL3b8QTK+fBVOJZBkZxg93gXN913u1mZRpn6M1
- veqw==
-X-Gm-Message-State: AOJu0YxdK7k5HL35koI7CtW5mqV2gKf2fFeUkuwSwKDCRuYwsVcDLfK2
- sf1O9YyRqCJWoABFKZqJFcX8eNbmbLVdnJ0A16jndVE854UjshgOB7g7yGmcuZ5euBIIKLQxpQE
- nu70oXfxn5NMOoZA6NpdvSquIE3wem2HWdVkt3EdDJlZvQMK/U6B0b5Xw9EDzMjTCpKGzkCZOhx
- aKkK2ocditBlw7k1e52/x6dHOTc8gniZYjmDssG2o=
-X-Received: by 2002:adf:f6d2:0:b0:37c:d299:b5f0 with SMTP id
- ffacd0b85a97d-37eab6ec6camr5327420f8f.59.1729439650906; 
- Sun, 20 Oct 2024 08:54:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYWBXyX46VYVA7kzUy0SkLvAFBfoAYjzVeL4dAj59yP8wZStDJT74AzOHqBwAPxGhzbkSWuw==
-X-Received: by 2002:adf:f6d2:0:b0:37c:d299:b5f0 with SMTP id
- ffacd0b85a97d-37eab6ec6camr5327412f8f.59.1729439650386; 
- Sun, 20 Oct 2024 08:54:10 -0700 (PDT)
+ bh=u4PvFEk58IPsCXTEM1w79SZ0J2i929/FJcA19Ybp0Gg=;
+ b=JhTJJJfFCq/d3TQIgqRCpTfDPHy7LBedaJDVaCwIgUDj3SYQzmQk/9wawiKu3wZene
+ KBlipgo27Z3RKQ+IIysGQrliwwSYshcdeY1bnnMM/vLr07Z3Uex73Kl2fyYmHDIw+VS6
+ ysXqiMSjjg3PhMgaGBBYlgsVfm6+7Nu6qZXFkNHf6KhuJro3IsIgL0PiI6CeoBs3u9UQ
+ ZwIjGWk595ncx6aMi5rnNMfl+RlBCMnxr4GRFeLK+BnF8uJijEei9I0QBWEnVJu83YFx
+ o/b/+WY8vhTWRdWgWoqgMamH+hjCZircFbi0DoPPki8QVhdBFDM8aVH5ivVFo0/W5n95
+ ltRA==
+X-Gm-Message-State: AOJu0YxTXWo2DDmMOmrvuG4WnN3AyvpKIGvkK4uGWWJ9nDBiZkaUFFFh
+ oujKJB7Sf8/Bzt9DizhcsSibQqiaw5ymih4wQ9eS1kIF21tyuQc5vQaqPL/E51mIOEbQWoE4E0w
+ ARe8OGlg4QdJmGw/O9cv/U2q2EbtuKZLcTC2WvtaAkZC+CGvfoeVwi8HwXIgqnvzkupN9yDGuLh
+ XGvMI5VCwec/ALxsgO3SK93ipmsyUlrO66ePFBllI=
+X-Received: by 2002:adf:9bce:0:b0:374:c3e4:d6de with SMTP id
+ ffacd0b85a97d-37eb47693ebmr5568572f8f.41.1729439630471; 
+ Sun, 20 Oct 2024 08:53:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYs5PhMmHMVurLaUGvUD3qQLkrgINiHMsLxe/lrIiMjEMIN9exT2J2RBGEAZcGZ9RUH5GKZg==
+X-Received: by 2002:adf:9bce:0:b0:374:c3e4:d6de with SMTP id
+ ffacd0b85a97d-37eb47693ebmr5568560f8f.41.1729439629969; 
+ Sun, 20 Oct 2024 08:53:49 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0ba7dffsm1991213f8f.116.2024.10.20.08.54.08
+ ffacd0b85a97d-37ee0b9bb66sm1979910f8f.95.2024.10.20.08.53.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 20 Oct 2024 08:54:08 -0700 (PDT)
+ Sun, 20 Oct 2024 08:53:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 13/14] target/i386: use higher-precision arithmetic to compute
- CF
-Date: Sun, 20 Oct 2024 17:53:23 +0200
-Message-ID: <20241020155324.35273-14-pbonzini@redhat.com>
+Subject: [PATCH 07/14] target/i386: optimize computation of ZF from
+ CC_OP_DYNAMIC
+Date: Sun, 20 Oct 2024 17:53:17 +0200
+Message-ID: <20241020155324.35273-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241020155324.35273-1-pbonzini@redhat.com>
 References: <20241020155324.35273-1-pbonzini@redhat.com>
@@ -103,110 +103,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the operands of the arithmetic instruction fit within a half-register,
-it's easiest to use a comparison instruction to compute the carry.
-`
+Most uses of CC_OP_DYNAMIC are for CMP/JB/JE or similar sequences.
+We can optimize many of them to avoid computation of the flags.
+This eliminates both TCG ops to set up the new cc_op, and helper
+instructions because evaluating just ZF is much cheaper.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/cc_helper_template.h.inc | 37 ++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ target/i386/helper.h        |  1 +
+ target/i386/tcg/cc_helper.c | 20 ++++++++++++++++++++
+ target/i386/tcg/translate.c | 10 +++++++---
+ 3 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
-index 8af8b8539f9..f29a6dfb77c 100644
---- a/target/i386/tcg/cc_helper_template.h.inc
-+++ b/target/i386/tcg/cc_helper_template.h.inc
-@@ -22,12 +22,17 @@
- #if DATA_BITS == 8
- #define SUFFIX b
- #define DATA_TYPE uint8_t
-+#define WIDER_TYPE uint32_t
- #elif DATA_BITS == 16
- #define SUFFIX w
- #define DATA_TYPE uint16_t
-+#define WIDER_TYPE uint32_t
- #elif DATA_BITS == 32
- #define SUFFIX l
- #define DATA_TYPE uint32_t
-+#if HOST_LONG_BITS <= 64
-+#define WIDER_TYPE uint64_t
-+#endif
- #elif DATA_BITS == 64
- #define SUFFIX q
- #define DATA_TYPE uint64_t
-@@ -62,9 +67,18 @@ static uint32_t glue(compute_all_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
-                                          DATA_TYPE src3)
- {
-     uint32_t cf, pf, af, zf, sf, of;
-+
-+#ifdef WIDER_TYPE
-+    WIDER_TYPE src13 = (WIDER_TYPE) src1 + (WIDER_TYPE) src3;
-+    DATA_TYPE src2 = dst - src13;
-+
-+    cf = dst < src13;
-+#else
-     DATA_TYPE src2 = dst - src1 - src3;
+diff --git a/target/i386/helper.h b/target/i386/helper.h
+index eeb8df56eaa..3f67098f11f 100644
+--- a/target/i386/helper.h
++++ b/target/i386/helper.h
+@@ -1,5 +1,6 @@
+ DEF_HELPER_FLAGS_4(cc_compute_all, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl, int)
+ DEF_HELPER_FLAGS_4(cc_compute_c, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl, int)
++DEF_HELPER_FLAGS_3(cc_compute_nz, TCG_CALL_NO_RWG_SE, tl, tl, tl, int)
  
-     cf = (src3 ? dst <= src1 : dst < src1);
-+#endif
-+
-     pf = compute_pf(dst);
-     af = (dst ^ src1 ^ src2) & 0x10;
-     zf = (dst == 0) << 6;
-@@ -76,7 +90,13 @@ static uint32_t glue(compute_all_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
- static int glue(compute_c_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
-                                        DATA_TYPE src3)
- {
-+#ifdef WIDER_TYPE
-+    WIDER_TYPE src13 = (WIDER_TYPE) src1 + (WIDER_TYPE) src3;
-+
-+    return dst < src13;
-+#else
-     return src3 ? dst <= src1 : dst < src1;
-+#endif
+ DEF_HELPER_3(write_eflags, void, env, tl, i32)
+ DEF_HELPER_1(read_eflags, tl, env)
+diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+index 40583c04cf9..c24e6a14c07 100644
+--- a/target/i386/tcg/cc_helper.c
++++ b/target/i386/tcg/cc_helper.c
+@@ -95,6 +95,26 @@ static target_ulong compute_all_adcox(target_ulong dst, target_ulong src1,
+     return (src1 & ~(CC_C | CC_O)) | (dst * CC_C) | (src2 * CC_O);
  }
  
- static uint32_t glue(compute_all_sub, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2)
-@@ -104,9 +124,18 @@ static uint32_t glue(compute_all_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
-                                          DATA_TYPE src3)
++target_ulong helper_cc_compute_nz(target_ulong dst, target_ulong src1,
++                                  int op)
++{
++    target_ulong mask;
++
++    if (CC_OP_HAS_EFLAGS(op)) {
++        return ~src1 & CC_Z;
++    } else {
++        MemOp size = cc_op_size(op);
++
++        if (size == MO_TL) {
++            /* Avoid shift count overflow when computing the mask below.  */
++            return dst;
++        }
++
++        mask = (1ull << (8 << size)) - 1;
++        return dst & mask;
++    }
++}
++
+ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
+                                    target_ulong src2, int op)
  {
-     uint32_t cf, pf, af, zf, sf, of;
-+
-+#ifdef WIDER_TYPE
-+    WIDER_TYPE src23 = (WIDER_TYPE) src2 + (WIDER_TYPE) src3;
-+    DATA_TYPE src1 = dst + src23;
-+
-+    cf = src1 < src23;
-+#else
-     DATA_TYPE src1 = dst + src2 + src3;
- 
-     cf = (src3 ? src1 <= src2 : src1 < src2);
-+#endif
-+
-     pf = compute_pf(dst);
-     af = (dst ^ src1 ^ src2) & 0x10;
-     zf = (dst == 0) << 6;
-@@ -118,9 +147,16 @@ static uint32_t glue(compute_all_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
- static int glue(compute_c_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
-                                        DATA_TYPE src3)
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 1a9a2fe709e..5e326ab1aff 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -1008,15 +1008,19 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
+ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
  {
-+#ifdef WIDER_TYPE
-+    WIDER_TYPE src23 = (WIDER_TYPE) src2 + (WIDER_TYPE) src3;
-+    DATA_TYPE src1 = dst + src23;
-+
-+    return src1 < src23;
-+#else
-     DATA_TYPE src1 = dst + src2 + src3;
- 
-     return (src3 ? src1 <= src2 : src1 < src2);
-+#endif
- }
- 
- static uint32_t glue(compute_all_logic, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
-@@ -258,3 +294,4 @@ static int glue(compute_c_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- #undef DATA_TYPE
- #undef DATA_MASK
- #undef SUFFIX
-+#undef WIDER_TYPE
+     switch (s->cc_op) {
+-    case CC_OP_DYNAMIC:
+-        gen_compute_eflags(s);
+-        /* FALLTHRU */
+     case CC_OP_EFLAGS:
+     case CC_OP_ADCX:
+     case CC_OP_ADOX:
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
+                              .imm = CC_Z };
++    case CC_OP_DYNAMIC:
++        gen_update_cc_op(s);
++        if (!reg) {
++            reg = tcg_temp_new();
++        }
++        gen_helper_cc_compute_nz(reg, cpu_cc_dst, cpu_cc_src, cpu_cc_op);
++        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = reg, .imm = 0 };
+     default:
+         {
+             MemOp size = cc_op_size(s->cc_op);
 -- 
 2.46.2
 
