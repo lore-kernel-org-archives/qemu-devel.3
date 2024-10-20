@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B829D3C92A
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 19:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2496ED3C92D
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 19:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2bkO-0000pC-3h; Sun, 20 Oct 2024 15:37:52 -0400
+	id 1t2bwa-0002Km-8Z; Sun, 20 Oct 2024 15:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2bkM-0000ox-Cg
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 15:37:50 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2bwY-0002KT-SC
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 15:50:26 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2bkK-0001Rx-Ux
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 15:37:50 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a9a6acac4c3so375322066b.0
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 12:37:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2bwX-0002Yc-CP
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 15:50:26 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20cf3e36a76so36571455ad.0
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 12:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729453065; x=1730057865; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QvFdx3DM0sYJp01pVvhNq8L+693g+/1//XNAAq1DiJE=;
- b=Rf9gO49AzuW5pOsE2isE/jTfFNifCmHkPIRfh2f5PVv/JZJkJ/B6RMA0SrozjCcAiT
- ZZ3FiRhWWcPBFlPTKgntRjY4s6+KHxK40urPX4PeqVh3oOwZT+nebTnPq0ugPPm/4t5L
- zLZ10srtKoIp4rup3d+a7NLPomuEsmRXhXPILecZQPIjVG+ZSQsP2cHH8YPgvFDs6n3R
- E8tteUphljej27UcixDioEcshpei/8H1bEEeZXv7C8sn5cQbzVnhtyil14z5Rf2fZfPD
- l94NEoIas82EO1BhxQkN/odJ14bFjuoXfP9dk9Ax4wpNWxw2fKTlIKSH31OD+ZcC7Hjy
- tKRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729453065; x=1730057865;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1729453823; x=1730058623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QvFdx3DM0sYJp01pVvhNq8L+693g+/1//XNAAq1DiJE=;
- b=gXQYkHR9kUDU7QMk1ZO3F4tTznjpvx0HsNXzRLlqTEaskxXfy1dytZZ9hVYHMtSuSW
- Sslx3cfUchTQaIvHbeQGKMrFqt/9o+7MaBXDJ9TqOS94JvhPiF+cwiIwqUVQ7I23zqQY
- CeInhqIcx/FMXxrTXK+hoRSvPRFKgHqDmvVsuuHsU3eLxJOEZm/l4dBcn7BBV5kx/VCE
- Xwc/Ij7VenRFqUcPoeiEMwbr3E0MXKPM+Ne04qRWWU6HlwqJh0Athcsd3krQVaed7O4u
- 7gf6oSy5ta7ICVFz/38r/zlmyU4g+2YkPYzrp4PHCafp+obXGgkUaBRkzBQEM9INqF5u
- 8YjQ==
-X-Gm-Message-State: AOJu0YxdNTnErLrWRWXostvJGuYgVFx5fEFc/hxFcTNOnZrdZ4MWupbK
- ZFMkoDllqCMcZsDafa/exhxu54gJEWxa8BB87LQRx8LGoxi9s3N5dpjZFtP6TWxEAcjQL1NC0Gm
- z
-X-Google-Smtp-Source: AGHT+IEvFXKgadClULPA/WpQO2Il5C5p4DHOf5Wy4d5ynsCR051OW4RP5aST3bUIY5Z51p3PNLOhMw==
-X-Received: by 2002:a17:906:c155:b0:a99:f4be:7a6a with SMTP id
- a640c23a62f3a-a9a69c92093mr810114166b.47.1729453064537; 
- Sun, 20 Oct 2024 12:37:44 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912d623fsm120323866b.9.2024.10.20.12.37.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 20 Oct 2024 12:37:43 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D83CC5F8A7;
- Sun, 20 Oct 2024 20:37:42 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
- exceptions and traps
-In-Reply-To: <cover.1729355735.git.neither@nut.email> (Julian Ganz's message
- of "Sat, 19 Oct 2024 18:39:33 +0200")
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Sun, 20 Oct 2024 20:37:42 +0100
-Message-ID: <87jze2va49.fsf@draig.linaro.org>
+ bh=wj4ce5Z/iyRz2oiy5YwHhi/LOTOdHZPuQ4SLNxRMF4w=;
+ b=K7D+hMTS1XKcLOVpVdzxR827HVdmmGb3VTwh8iZZbGtkQvpZIRsOBWkDxP3WD0GqsC
+ DqkUJryKi32hMm8SNkObETX1N+T2aW+cm2LFkRb3DdmuoP8JdqtzMkchDdAShycwxzRb
+ scTF/CyA3PlWipsKfleWj1Rdm1FY8F1lkU2WYBlV71pvcK1g3XDUY7xWmRv0nqkMVuzi
+ 7wzYlKSQiYu2x7sMl5pj0U9ze0vlx2791J7/HJYAxClYQ3s1YmT7biBU8uBRuLBEEd3X
+ vVmKW87tZPRwlDDIO6T5ahF6uq262RQEJchKppnFPzRl/jcywrxNv6kuGu4OWiNnen5l
+ cfUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729453823; x=1730058623;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wj4ce5Z/iyRz2oiy5YwHhi/LOTOdHZPuQ4SLNxRMF4w=;
+ b=win7p6rBUopAkOzBuXJULTkiNlf6FRoJ4EID9NhryINK2R90vgh7Rac8qGlUgOm6Dt
+ e7ohLgXYyf6DmvMheeiRN5zsBP9CEiqAG4G0MO4S7qWVkg+2pOtI3rOv2dx+hpRUzii/
+ nB05kZijGj9Wd6HGo5xSar4jo6z8rIvTVWgsoXuQm+VvuUBIybvoRKaIKSuJIcR8XIeb
+ xnfhI9K71jPmbCOTQqnPoeipLm3Yfrkmaij/X4jIlOl77Z/UIXQ9zsUczoRrqtFiSwaR
+ iXtz7p2E73uLHsw55iLMGw9Pja/ybQfTkDYimmh4E2j9kgsa0dVKTN1XWwkThJhR7WH4
+ WKhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvuU6IV3A+Wa6FSV5NNWV750mo1lfTGFB8r6jrs/lNWtHrpPhwOIDu+FMs/RnaWFd9DUTEKbTxfkb4@nongnu.org
+X-Gm-Message-State: AOJu0Yy0h3lphUUEvX3gnb2905YvrBCAMbqa0u0kN7NmMxgw2oDhNnj9
+ hAOKK4AOTjcuVsTHvwSucHVVlWMgtXQLlSyXxZXx3qtvKU8tHgYOPzIZgAE7RYk=
+X-Google-Smtp-Source: AGHT+IEJzdioqUZ399yTPZIjAU54zAc/9GR4IH5lw4csnKamrXIkbaQv0A3pUWGvo0Jeb/KYq/Q0LA==
+X-Received: by 2002:a17:903:990:b0:20c:d428:adf4 with SMTP id
+ d9443c01a7336-20e5a8f3e51mr151374535ad.38.1729453822918; 
+ Sun, 20 Oct 2024 12:50:22 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7eee6521sm13383805ad.31.2024.10.20.12.50.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Oct 2024 12:50:22 -0700 (PDT)
+Message-ID: <441b10c2-5792-49ad-af07-028b9cf47368@linaro.org>
+Date: Sun, 20 Oct 2024 12:50:20 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/14] target/i386: use tcg_gen_ext_tl when applicable
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20241020155324.35273-1-pbonzini@redhat.com>
+ <20241020155324.35273-2-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241020155324.35273-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,18 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+On 10/20/24 08:53, Paolo Bonzini wrote:
+> Prefer it to gen_ext_tl in the common case where the destination is known.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/translate.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 
-> Some analysis greatly benefits, or depends on, information about
-> interrupts. For example, we may need to handle the execution of a new
-> translation block differently if it is not the result of normal program
-> flow but of an interrupt.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-For future iterations please post as a new series as tagging onto an old
-series will confuse tooling like patchew. I shall try and get around to
-reviewing later this week.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
