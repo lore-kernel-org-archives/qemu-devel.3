@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF4CD3C92D
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 15:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33207D3C92A
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 15:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2YFN-0003Lx-T8; Sun, 20 Oct 2024 11:53:37 -0400
+	id 1t2YG6-0003Wx-9s; Sun, 20 Oct 2024 11:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2YFL-0003LC-S0
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t2YFi-0003NH-Jj
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2YFK-0005P5-2r
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:35 -0400
+ id 1t2YFf-0005Pi-JF
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 11:53:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729439611;
+ s=mimecast20190719; t=1729439621;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=tD++BQ9h6ta2uKNlUNxRwlSqhs8vQvZoIRKWukTm62Q=;
- b=ZbUYvO2obLH4tLOfsBtnkFb9dxH7Nr9a3vTd0XsU1ouQuiw9lYZxgYfCNL1EwAdrussaU+
- jUTO6aSovQjCQMgGnHHzkdTibob/ZjMBPPKwOfWYtjmYDzuC0RiF0rt68XS8DtaMIyKacT
- 1RhnOf3TCK2S594ser0vueshfYC2E0I=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZG7pDim8gIa7OEsfLMhqCQMQAwzlje+SQX3YGIdJRk4=;
+ b=fvNrf7e0pW7H/eXr1uBpVM6J+3NUDjtauXAImnZr0Sgpjulqs+RMLZJnLG0xhmLS9Ws4Fs
+ CWTzhIscq0ALrsigDpF5BBoLcq5KPzbyBhYMDBmkb3VB583TcWMbfCHvXiQwVXVHAWZ+fy
+ BckwSXwWH1uEQJ6g2FBGCuiT4omoJEg=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-QQURD0hKNIaPmkYsUoGIuA-1; Sun, 20 Oct 2024 11:53:28 -0400
-X-MC-Unique: QQURD0hKNIaPmkYsUoGIuA-1
+ us-mta-361-oou1QCbyPVuykxrT6N1Jpw-1; Sun, 20 Oct 2024 11:53:39 -0400
+X-MC-Unique: oou1QCbyPVuykxrT6N1Jpw-1
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43151a9ea95so22247695e9.1
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 08:53:28 -0700 (PDT)
+ 5b1f17b1804b1-431518e6d8fso24230505e9.0
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 08:53:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729439607; x=1730044407;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tD++BQ9h6ta2uKNlUNxRwlSqhs8vQvZoIRKWukTm62Q=;
- b=V4WHHnz6hlscCPf+UmucXAULZ8pAAoJhbKJwNPJum3lA/60hSDe8IEm0kI9Er/ed4w
- Go9kTz+mSkdXgvCfqzdOEToj9RPwT1NwGWS5asfKivWnsC08W+pKxRI7MaiDJ+402tJk
- rayBCM9XF6YljuLXPU0snHAaBLsbnmT3qnBo1aQNQ9F/oV0f/1zSL1pPUM2tN6kit1Ae
- G0SFgrn0qiafZZQetUnglQkspxQ/dcW5a72p3DeQurah5ylpKEDqQSrm31uQrzF7xkAB
- fCaTSrUikB+bfYM+cWGQatgTGslyqqRfS4Q/LPbQtQWlqoUBOWJ3NlGE3Hz6Vcsi1D2I
- bI/A==
-X-Gm-Message-State: AOJu0Ywr9Vz9cClHwn6qgFbKV/7M4pw8250qLC1KN40vVMecEYDAIi+0
- krUoyXkCCeoLIO6vfR0KezJ2h4dCg7dtYwkjehvOIG3ov4EQDPziOrVQGb2UhK23If54iO8eWhN
- 4u4kfyWqN2LtQls+cbPbchE5OqP352xpApRZx08HiOf3GUocO/F7lKXKPkbOg0e0daOYNJN/ciF
- xlF6xdOFx1ETtSwwmdwUb9eyzLQD4/SNVzZRsu8rY=
-X-Received: by 2002:a05:600c:4fd2:b0:431:15f1:421d with SMTP id
- 5b1f17b1804b1-43158760531mr86106415e9.16.1729439606760; 
- Sun, 20 Oct 2024 08:53:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmGox0vj62zqitgOre88p3xDLd8okrdL2AqeKlrZ6EhYArjxRxCYi911G/mdA6dwOueiZzTA==
-X-Received: by 2002:a05:600c:4fd2:b0:431:15f1:421d with SMTP id
- 5b1f17b1804b1-43158760531mr86106225e9.16.1729439606288; 
- Sun, 20 Oct 2024 08:53:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729439616; x=1730044416;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZG7pDim8gIa7OEsfLMhqCQMQAwzlje+SQX3YGIdJRk4=;
+ b=NkgzXMYQL+VeziNy0pzUlaYpD1Lk1X1la4LfHHZYWrxbIQg9UVNeNcdaH3r2AQR34U
+ MxYQ3IT5XnD+vAfTDEAmzVPytM8GgZ0uzFd5qNaJzWzH2q7zcoRnlYpQNjOXqsavJ/u4
+ Zdx+CJt8ec5XtAWalTBN1cfzu2Df/2cTZ5lW3zIcVIZdS1DonzWwozp4/AGHpVEProPJ
+ rpWE5Q/YbmbWrIVJVXl+a+SwxlVzD+sGTmgHJ1GEqvoUFh88rorcYFgYUUixpzNoZcXd
+ eg8OYOcPW2TwbV5mBUlrPQ8Ook8nXuLD/aG4UGjZd0lolBJ8NXd93EjktKQs32cVUnaV
+ B5kQ==
+X-Gm-Message-State: AOJu0Yxw037bJVniwfQI/76b1D86n/i+T2JQ0Rq5U1jOJGs5a++VaNH4
+ PkKVbYtE+iMpVCq39pbmUnw3ElcmU81xDOVbEZx9Sjv21HdeSA8KCB1CoYNUzIwL4LydMl/5Rju
+ QGONBY9kt6nqz3gtjbDRlkqDXV5JiH0iMBQFvUPdPbzLQatysDlXr/d50Un8ft7ucxfOSGKK/NS
+ xeU7uVckwSHwsIf04gllhG0aUwxq1CWuPBVkxa0eY=
+X-Received: by 2002:a05:600c:c89:b0:431:5c1c:250b with SMTP id
+ 5b1f17b1804b1-43161633321mr70622655e9.1.1729439616474; 
+ Sun, 20 Oct 2024 08:53:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkachAWDb3R5jKP+xQSpQUj5WQCI4H1d2THyn09b/y6GSBk3CTXpj3MmloHeRBMBjAFFXT0g==
+X-Received: by 2002:a05:600c:c89:b0:431:5c1c:250b with SMTP id
+ 5b1f17b1804b1-43161633321mr70622455e9.1.1729439615860; 
+ Sun, 20 Oct 2024 08:53:35 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f5c2cb8sm27174105e9.31.2024.10.20.08.53.25
+ 5b1f17b1804b1-4316f57112esm27392755e9.6.2024.10.20.08.53.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 20 Oct 2024 08:53:25 -0700 (PDT)
+ Sun, 20 Oct 2024 08:53:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 00/14] target/i386: miscellaneous flags improvements
-Date: Sun, 20 Oct 2024 17:53:10 +0200
-Message-ID: <20241020155324.35273-1-pbonzini@redhat.com>
+Subject: [PATCH 03/14] target/i386: remove CC_OP_CLR
+Date: Sun, 20 Oct 2024 17:53:13 +0200
+Message-ID: <20241020155324.35273-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20241020155324.35273-1-pbonzini@redhat.com>
+References: <20241020155324.35273-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,67 +102,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This includes improved translation of checks, microoptimization of the
-helpers, and improvements to the cc_op_* functions from Richard.
+Just use CC_OP_EFLAGS; it is not that likely that the flags computed by
+CC_OP_CLR survive the end of the basic block, in which case there is no
+need to spill cc_op_src.
 
-Unlike his original patches[1] I didn't convert cc_op_live() to a switch
-statement, instead keeping the array but making sure that all of its
-entries are nonzero.  The only zero entry was CC_OP_CLR, which is now
-changed to spill the constant value of EFLAGS to cc_op_src.  While this
-has a 0.2% cost in number of TCG ops, getting rid of the special
-case for CC_OP_CLR makes it even easier to optimize computation of ZF
-from CC_OP_DYNAMIC; this is quite common, for example in switch
-statements that have CMP/JG/JE sequences (JE followed JL/JG/JA/JB seems
-less common than the opposite, though that's not universal).
+cc_op_src now does need spilling if the XOR is followed by a memory
+operation, but this only costs 0.2% extra TCG ops.  They will be recouped
+by simplifications in how QEMU evaluates ZF at runtime, which are even
+greater with this change.
 
-On a quick-and-dirty run of "ls -lR", the changes add ~750 spills of
-0x44 to cc_op_src; but it also reduces to one half the calls to
-cc_compute_all (most of them are completely eliminated), and that
-is a lot more expensive.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.h           |  1 -
+ target/i386/cpu-dump.c      |  1 -
+ target/i386/tcg/cc_helper.c |  3 ---
+ target/i386/tcg/translate.c | 10 ----------
+ target/i386/tcg/emit.c.inc  | 15 ++++-----------
+ 5 files changed, 4 insertions(+), 26 deletions(-)
 
-One thing I noticed is that those spills are really huge (11 bytes).
-It might help to move cc_* at the very beginning of CPUX86State, because
-the number of accesses to cc_* is comparable to the number of accesses
-to registers (despite cc_* being mostly written, while registers are
-both read and written).
-
-Thanks,
-
-Paolo
-
-[1] https://patchew.org/QEMU/20240701025115.1265117-1-richard.henderson@linaro.org/
-
-Paolo Bonzini (10):
-  target/i386: use tcg_gen_ext_tl when applicable
-  target/i386: remove CC_OP_CLR
-  target/i386: optimize computation of ZF from CC_OP_DYNAMIC
-  target/i386: optimize TEST+Jxx sequences
-  target/i386: add a few more trivial CCPrepare cases
-  target/i386: add a note about gen_jcc1
-  target/i386: make flag variables unsigned
-  target/i386: use builtin popcnt or parity to compute PF, if available
-  target/i386: use higher-precision arithmetic to compute CF
-  target/i386: use + to put flags together
-
-Richard Henderson (4):
-  target/i386: Tidy cc_op_str usage
-  target/i386: Rearrange CCOp
-  target/i386: Introduce cc_op_size
-  target/i386: Wrap cc_op_live with a validity check
-
- include/qemu/host-utils.h                |  16 +++
- target/i386/cpu.h                        |  33 ++++--
- target/i386/helper.h                     |   1 +
- target/i386/tcg/helper-tcg.h             |  12 +++
- target/i386/tcg/cc_helper_template.h.inc | 127 +++++++++++++++--------
- target/i386/cpu-dump.c                   |  18 ++--
- target/i386/tcg/cc_helper.c              |  25 ++++-
- target/i386/tcg/int_helper.c             |   4 +-
- target/i386/tcg/translate.c              | 103 ++++++++++++------
- target/i386/tcg/decode-new.c.inc         |   2 +-
- target/i386/tcg/emit.c.inc               |  24 ++---
- 11 files changed, 249 insertions(+), 116 deletions(-)
-
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 74886d1580f..567fefa1d7b 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1283,7 +1283,6 @@ typedef enum {
+     CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
+     CC_OP_ADOX, /* CC_SRC2 = O, CC_SRC = rest.  */
+     CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
+-    CC_OP_CLR, /* Z and P set, all other flags clear.  */
+ 
+     CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
+     CC_OP_MULW,
+diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
+index dc6723aedee..a72ed93bd2f 100644
+--- a/target/i386/cpu-dump.c
++++ b/target/i386/cpu-dump.c
+@@ -91,7 +91,6 @@ static const char * const cc_op_str[] = {
+     [CC_OP_BMILGQ] = "BMILGQ",
+ 
+     [CC_OP_POPCNT] = "POPCNT",
+-    [CC_OP_CLR] = "CLR",
+ };
+ 
+ static void
+diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+index dbddaa2fcb3..40583c04cf9 100644
+--- a/target/i386/tcg/cc_helper.c
++++ b/target/i386/tcg/cc_helper.c
+@@ -104,8 +104,6 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
+ 
+     case CC_OP_EFLAGS:
+         return src1;
+-    case CC_OP_CLR:
+-        return CC_Z | CC_P;
+     case CC_OP_POPCNT:
+         return dst ? 0 : CC_Z;
+ 
+@@ -243,7 +241,6 @@ target_ulong helper_cc_compute_c(target_ulong dst, target_ulong src1,
+     case CC_OP_LOGICW:
+     case CC_OP_LOGICL:
+     case CC_OP_LOGICQ:
+-    case CC_OP_CLR:
+     case CC_OP_POPCNT:
+         return 0;
+ 
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index dc308f31041..a20fbb019c8 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -309,7 +309,6 @@ static const uint8_t cc_op_live[CC_OP_NB] = {
+     [CC_OP_ADCX] = USES_CC_DST | USES_CC_SRC,
+     [CC_OP_ADOX] = USES_CC_SRC | USES_CC_SRC2,
+     [CC_OP_ADCOX] = USES_CC_DST | USES_CC_SRC | USES_CC_SRC2,
+-    [CC_OP_CLR] = 0,
+     [CC_OP_POPCNT] = USES_CC_DST,
+ };
+ 
+@@ -803,10 +802,6 @@ static void gen_mov_eflags(DisasContext *s, TCGv reg)
+         tcg_gen_mov_tl(reg, cpu_cc_src);
+         return;
+     }
+-    if (s->cc_op == CC_OP_CLR) {
+-        tcg_gen_movi_tl(reg, CC_Z | CC_P);
+-        return;
+-    }
+ 
+     dst = cpu_cc_dst;
+     src1 = cpu_cc_src;
+@@ -897,7 +892,6 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+                              .reg2 = cpu_cc_src, .use_reg2 = true };
+ 
+     case CC_OP_LOGICB ... CC_OP_LOGICQ:
+-    case CC_OP_CLR:
+     case CC_OP_POPCNT:
+         return (CCPrepare) { .cond = TCG_COND_NEVER };
+ 
+@@ -969,7 +963,6 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
+                              .imm = CC_S };
+-    case CC_OP_CLR:
+     case CC_OP_POPCNT:
+         return (CCPrepare) { .cond = TCG_COND_NEVER };
+     default:
+@@ -988,7 +981,6 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src2,
+                              .no_setcond = true };
+-    case CC_OP_CLR:
+     case CC_OP_POPCNT:
+         return (CCPrepare) { .cond = TCG_COND_NEVER };
+     case CC_OP_MULB ... CC_OP_MULQ:
+@@ -1013,8 +1005,6 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
+     case CC_OP_ADCOX:
+         return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
+                              .imm = CC_Z };
+-    case CC_OP_CLR:
+-        return (CCPrepare) { .cond = TCG_COND_ALWAYS };
+     default:
+         {
+             MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index fd17a9b1eca..790307dbba8 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1452,19 +1452,12 @@ static void gen_bt_flags(DisasContext *s, X86DecodedInsn *decode, TCGv src, TCGv
+      * C is the result of the test, Z is unchanged, and the others
+      * are all undefined.
+      */
+-    switch (s->cc_op) {
+-    case CC_OP_DYNAMIC:
+-    case CC_OP_CLR:
+-    case CC_OP_EFLAGS:
+-    case CC_OP_ADCX:
+-    case CC_OP_ADOX:
+-    case CC_OP_ADCOX:
++    if (s->cc_op == CC_OP_DYNAMIC || CC_OP_HAS_EFLAGS(s->cc_op)) {
+         /* Generate EFLAGS and replace the C bit.  */
+         cf = tcg_temp_new();
+         tcg_gen_setcond_tl(TCG_COND_TSTNE, cf, src, mask);
+         prepare_update_cf(decode, s, cf);
+-        break;
+-    default:
++    } else {
+         /*
+          * Z was going to be computed from the non-zero status of CC_DST.
+          * We can get that same Z value (and the new C value) by leaving
+@@ -1475,7 +1468,6 @@ static void gen_bt_flags(DisasContext *s, X86DecodedInsn *decode, TCGv src, TCGv
+         decode->cc_dst = cpu_cc_dst;
+         decode->cc_op = ((s->cc_op - CC_OP_MULB) & 3) + CC_OP_SARB;
+         tcg_gen_shr_tl(decode->cc_src, src, s->T1);
+-        break;
+     }
+ }
+ 
+@@ -4724,7 +4716,8 @@ static void gen_XOR(DisasContext *s, X86DecodedInsn *decode)
+         decode->op[2].unit == X86_OP_INT &&
+         decode->op[1].n == decode->op[2].n) {
+         tcg_gen_movi_tl(s->T0, 0);
+-        decode->cc_op = CC_OP_CLR;
++        decode->cc_op = CC_OP_EFLAGS;
++        decode->cc_src = tcg_constant_tl(CC_Z | CC_P);
+     } else {
+         MemOp ot = decode->op[1].ot;
+ 
 -- 
 2.46.2
 
