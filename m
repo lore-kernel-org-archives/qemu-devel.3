@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E5AD3C92A
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 17:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8903DD3C92D
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 18:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2Zuh-0000Y3-K0; Sun, 20 Oct 2024 13:40:23 -0400
+	id 1t2asH-0007dI-SA; Sun, 20 Oct 2024 14:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1t2Zuc-0000Xm-R2
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 13:40:19 -0400
-Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t2asF-0007cu-JQ
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 14:41:55 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1t2ZuY-0006wW-CK
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 13:40:18 -0400
-Received: by mail-ua1-x934.google.com with SMTP id
- a1e0cc1a2514c-84fc1a5e65bso1091981241.2
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 10:40:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t2asD-0004eO-TP
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 14:41:55 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2e56750bb0dso1446230a91.0
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 11:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729446009; x=1730050809; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5dQElZmdOpFlm9UG88kAU1LTaBVdJQXUvWqA3Tf+jXw=;
- b=iMJI2piBC8HitD5qq0cVI7XX4dgW3lDrN8XUsOLjSd7Bva13WM2l+8aKOVrkejZJdU
- Kx6rOxVxE4I3oh05ftDoj7jh3uC8NCaRPl9qBpJnwencFQvnDKrjjkIrpAYQeMldnMqY
- Jl+2jTxIDvge35b6Jn1/QEAOeysSajmVmN8UszyqAVfl4PE6pOv2ZHT2HGpGzLAjCg30
- oZ+Y2gp5Gyf9oHjVMCfRifLMfObeTj0G9OF8mzCd6oz4kUmW1d3iJ/TSdeji2zdNSL6O
- /Z2A9k2b/1rRbf+NR5NPOwddmX87wWwC74QpK1CWEpGieaWd3giv1wnGRuRSiFOqWEgy
- uhqA==
+ d=linaro.org; s=google; t=1729449712; x=1730054512; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qbigL00Vzz8+yu/Kuji5fZH3h3ETffg0XrlbJJzPBpg=;
+ b=izsTomSCMBbRYox65S/qAsqAWRj7CIyqv1c6VnI/yf6dYDPjrE7LQdzqmlL+5MCMw2
+ 7ibS/Wl/a1kLogW1HufUut6pQ1h0W/j56zIg2s4Mikxy33VundS+WkwRgAWICbopWaWF
+ Sbi8tyTFTF3FukXZeBSjK2UHp14CZTzL7//J1q7kmFurXcQxCzyYJ9H3HjP0D/YbAcF/
+ CDGsjEq7i54syPKC4r023pcQE/pbkAMwmEezu1GFsNyhuy+A0ZcoKfrhHnIiLNZzw1KH
+ mTMsQVq+xZ2/dZAJG3c28zyChgsrkpnrv5y9fJQGCFS+zVZVMvupug0Px8Bt8kP0Lndx
+ WxPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729446009; x=1730050809;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5dQElZmdOpFlm9UG88kAU1LTaBVdJQXUvWqA3Tf+jXw=;
- b=rIakdgEdfcEYEdCR1wwIGHWYoThT6IKh5IQJnEz7K1hDM/pUhFAZ2TNT+K84fAreH9
- 20yi2zB8MXV0F0mAu9Evu5yxPFzb3c5VzTJU4l2BJ0c0rlx8Z1NHWAn2TG+92Sja/6Kx
- IHVKcL7nCrJe1lMac8x6PKk1vDzE2iw/hkyj7a1+cFn5OgmJsfMXJoIM3QaPzFw1oDwr
- jHWgNKahMXoOUur8S9YE9ahUMnD1a3nokgEUQQFAAvhVQG7No0gX1LMeKZaRuhSkr9uE
- VvIsJJ9GOmHpEBfxwtvm8L7+adK0Q1d2d6/qH40WBmclp2Bddue7HoV1cwcnGaVU8ZtJ
- qYyQ==
+ d=1e100.net; s=20230601; t=1729449712; x=1730054512;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qbigL00Vzz8+yu/Kuji5fZH3h3ETffg0XrlbJJzPBpg=;
+ b=rU0yPSKBcPachRdQfJFe7pBss8PO4nFYVYTHTMxpk2ygderJ2kATxn6DGjdeCbO3tD
+ 1Zquu54jRQTAoyX2y177JWhYKZU/6lfbTE1AoiejCnnXsyxIE7bS71Y+16WCalskrFjy
+ 5TQQFzPeM9LLDdm/eh+t66KxePKe98ehgXemHP9N1AekOG6tPnX6Sw3AT3bq9iCg1KAJ
+ tuoYB5uFRusR9P2l9flKKq7TPaz6/tVpBbRHAMW299Nq5p84anRu5PvxIqHpn3l9/sj4
+ QiBzMJRoig51EJws2nQGoIk/jvEUSBsH8EpcpyHvs4qGt1HTGxdG656TJanMelROmnv1
+ MKfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3wBkyqPUQY3uJgfRltln7sGaYTRXColblC5CAbj9FYcNpquZswVY4vOiNTNJ/l/12kIXrDKRywW+B@nongnu.org
-X-Gm-Message-State: AOJu0YxfNaKFvZauWZ11kkgGb1deOAjEfw0iUCVxcR1E/X27y7fMSNPw
- 3D8imDHr5WxKG+8jvu5MIFNj/oJmB7xSla3IVcPDjBEXPsLZuiiBQgjJy4sdySWBdbm7gIddKqc
- Q7dwPRlEyqBdBTUSaTFQOaxvni20g5/dDKFGYEQ==
-X-Google-Smtp-Source: AGHT+IG4vi/NuEfb80CzvtYT1ihWDnjiE86tCBRUI0Pm+Ge1Bb280g9GXaYQ34p3oxV9/F2MPuI42yWtHFMEmMGjwcQ=
-X-Received: by 2002:a05:6102:3a0d:b0:49e:94e8:acd5 with SMTP id
- ada2fe7eead31-4a5d6b746e3mr8432271137.22.1729446009509; Sun, 20 Oct 2024
- 10:40:09 -0700 (PDT)
+ AJvYcCWa/lruB4szC4Ix7PMkux1Qr92fXIPHkW6/xeCKy7c4mNOjvRAAuAzlZX2Ps0/tq5jdijX7DIahSLtV@nongnu.org
+X-Gm-Message-State: AOJu0YwIWS9PkH2elAnvAHHdoyN9WMGcsiA1HreamVAnJ5w53TG24dtT
+ OXB7oGofks+hiGlIQLhGGYitZ1uZeTA0ZMHI225q/RprzGTljRuHGCMoeVGYFA4=
+X-Google-Smtp-Source: AGHT+IEOQekqMCnQzkAvVTLqoqdr0aDr6RyWYXrDRPd4qiXmKQCS9MY6hwJADbAMiIha5baYUsn7zw==
+X-Received: by 2002:a17:90b:68e:b0:2e2:d175:5f8d with SMTP id
+ 98e67ed59e1d1-2e5616de96fmr11147626a91.10.1729449711632; 
+ Sun, 20 Oct 2024 11:41:51 -0700 (PDT)
+Received: from [192.168.100.35] ([45.176.88.162])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e5ad38837csm1859680a91.29.2024.10.20.11.41.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Oct 2024 11:41:50 -0700 (PDT)
+Message-ID: <a79706ef-9c53-4fb8-857c-e49475a55405@linaro.org>
+Date: Sun, 20 Oct 2024 15:41:47 -0300
 MIME-Version: 1.0
-References: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
-In-Reply-To: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sun, 20 Oct 2024 23:09:57 +0530
-Message-ID: <CA+G9fYsMg0fA-jraEvC==0a-22J97o-uBmbLJt16_ZKBpOT8EQ@mail.gmail.com>
-Subject: Re: Qemu v9.0.2: Boot failed qemu-arm with Linux next-20241017 tag.
-To: open list <linux-kernel@vger.kernel.org>, 
- Linux ARM <linux-arm-kernel@lists.infradead.org>, lkft-triage@lists.linaro.org,
- Linux Regressions <regressions@lists.linux.dev>, qemu-devel@nongnu.org
-Cc: Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>,
- Aishwarya TCV <Aishwarya.TCV@arm.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Anders Roxell <anders.roxell@linaro.org>,
- Vincenzo Frascino <vincenzo.frascino@arm.com>, 
- Thomas Gleixner <tglx@linutronix.de>, Geert Uytterhoeven <geert@linux-m68k.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
- envelope-from=naresh.kamboju@linaro.org; helo=mail-ua1-x934.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] Add support for emulation of CRC32 instructions
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+References: <AM9PR09MB4851159EEED6EFB71176524684402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <AM9PR09MB4851159EEED6EFB71176524684402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,107 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Oct 2024 at 12:35, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> The QEMU-ARMv7 boot has failed with the Linux next-20241017 tag.
-> The boot log is incomplete, and no kernel crash was detected.
-> However, the system did not proceed far enough to reach the login prompt.
->
-> Please find the incomplete boot log links below for your reference.
-> The Qemu version is 9.0.2.
-> The arm devices TI beaglebone x15 boot pass.
->
-> This is always reproducible.
-> First seen on Linux next-20241017 tag.
->   Good: next-20241016
->   Bad: next-20241017
->
-> qemu-armv7:
->   boot:
->     * clang-19-lkftconfig
->     * gcc-13-lkftconfig
->     * clang-nightly-lkftconfig
+Hi Aleksandar,
 
-Anders bisected this boot regressions and found,
-# first bad commit:
-  [efe8419ae78d65e83edc31aad74b605c12e7d60c]
-    vdso: Introduce vdso/page.h
-
-We are investigating the reason for boot failure due to this commit.
-
-Anyone have noticed a similar qemu-arm boot regressions with
-the Linux next-20241017 and  next-20241018 tags ?
+On 18/10/24 10:19, Aleksandar Rakic wrote:
+> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
+> Reuse zlib crc32() and Linux crc32c().
+> 
+> Cherry-picked 4cc974938aee1588f852590509004e340c072940
+> from https://github.com/MIPS/gnutools-qemu
+> 
+> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
+> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+> ---
+>   target/mips/helper.h        |  2 ++
+>   target/mips/meson.build     |  1 +
+>   target/mips/tcg/op_helper.c | 26 ++++++++++++++++++++++++++
+>   target/mips/tcg/translate.c | 37 +++++++++++++++++++++++++++++++++++++
+>   target/mips/tcg/translate.h |  1 +
+>   5 files changed, 67 insertions(+)
 
 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> Boot log:
-> -------
-> [    0.000000] Booting Linux on physical CPU 0x0
-> [    0.000000] Linux version 6.12.0-rc3-next-20241017
-> (tuxmake@tuxmake) (arm-linux-gnueabihf-gcc (Debian 13.3.0-5) 13.3.0,
-> GNU ld (GNU Binutils for Debian) 2.43.1) #1 SMP @1729156545
-> [    0.000000] CPU: ARMv7 Processor [414fc0f0] revision 0 (ARMv7), cr=10c5387d
-> [    0.000000] CPU: div instructions available: patching division code
-> [    0.000000] CPU: PIPT / VIPT nonaliasing data cache, PIPT instruction cache
-> [    0.000000] OF: fdt: Machine model: linux,dummy-virt
-> [    0.000000] random: crng init done
-> [    0.000000] earlycon: pl11 at MMIO 0x09000000 (options '')
-> [    0.000000] printk: legacy bootconsole [pl11] enabled
-> [    0.000000] Memory policy: Data cache writealloc
-> [    0.000000] efi: UEFI not found.
-> [    0.000000] cma: Size (0x04000000) of region at 0x00000000 exceeds
-> limit (0x00000000)
-> [    0.000000] cma: Failed to reserve 64 MiB on node -1
->
-> <nothing after this>
->
-> Boot log link,
-> -----
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241017/testrun/25476340/suite/boot/test/clang-19-lkftconfig/log
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241017/testrun/25476340/suite/boot/test/clang-19-lkftconfig/details/
->
-> Build images:
-> ------
->  - https://storage.tuxsuite.com/public/linaro/lkft/tests/2nYi2nidfMq35VigDlxJblZzokr/
->
-> Steps to reproduce via qemu:
-> ----------------
-> /usr/bin/qemu-system-arm -cpu cortex-a15 \
->           -machine virt,gic-version=3 \
->           -nographic -nic none -m 4G -monitor \
->           none -no-reboot -smp 2 \
->           -kernel zImage \
->           -append \"console=ttyAMA0,115200 rootwait root=/dev/vda
-> debug verbose console_msg_format=syslog systemd.log_level=warning rw
-> earlycon\"
->           -drive
-> file=debian_trixie_armhf_rootfs.ext4,if=none,format=raw,id=hd0 \
->           -device virtio-blk-device,drive=hd0
->
-> Steps to reproduce with tuxrun reproducer:
-> ---------------
-> - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/2nYi2nidfMq35VigDlxJblZzokr/reproducer
->
-> Boot history compare link:
-> ------------------------
-> - https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20241017/testrun/25476340/suite/boot/test/clang-19-lkftconfig/history/
->
-> metadata:
-> ----
->   git describe: next-20241017
->   git repo: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
->   git sha: 7df1e7189cecb6965ce672e820a5ec6cf499b65b
->   kernel config:
-> https://storage.tuxsuite.com/public/linaro/lkft/tests/2nYi2nidfMq35VigDlxJblZzokr/config
->   build url: https://storage.tuxsuite.com/public/linaro/lkft/tests/2nYi2nidfMq35VigDlxJblZzokr/
->   toolchain: clang-19, gcc-13 and clang-nightly
->   config: lkftconfig
->   arch: arm
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+> diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+> index 333469b268..256fa0893e 100644
+> --- a/target/mips/tcg/translate.c
+> +++ b/target/mips/tcg/translate.c
+> @@ -430,6 +430,7 @@ enum {
+>       OPC_LWE            = 0x2F | OPC_SPECIAL3,
+>   
+>       /* R6 */
+> +    OPC_CRC32          = 0x0F | OPC_SPECIAL3,
+>       R6_OPC_PREF        = 0x35 | OPC_SPECIAL3,
+>       R6_OPC_CACHE       = 0x25 | OPC_SPECIAL3,
+>       R6_OPC_LL          = 0x36 | OPC_SPECIAL3,
 
-- Naresh
+
+> @@ -13705,6 +13730,17 @@ static void decode_opc_special3_r6(CPUMIPSState *env, DisasContext *ctx)
+>   
+>       op1 = MASK_SPECIAL3(ctx->opcode);
+>       switch (op1) {
+> +    case OPC_CRC32:
+> +        if (unlikely(!ctx->crcp) ||
+> +            unlikely((extract32(ctx->opcode, 6, 2) == 3) &&
+> +                     (!(ctx->hflags & MIPS_HFLAG_64))) ||
+> +            unlikely((extract32(ctx->opcode, 8, 3) >= 2))) {
+> +            gen_reserved_instruction(ctx);
+> +        }
+> +        gen_crc32(ctx, rt, rs, rt,
+> +                  extract32(ctx->opcode, 6, 2),
+> +                  extract32(ctx->opcode, 8, 3));
+> +        break;
+
+New opcode must be implemented in decodetree format, please
+add these in target/mips/tcg/rel6* files (the change should be
+trivial and should only involve modifying few lines -- see for
+example commit 675bf34a6fe and around).
+
+Thanks,
+
+Phil.
+
 
