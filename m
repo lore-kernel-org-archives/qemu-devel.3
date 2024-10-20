@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB046D3C912
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29487D3C912
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 01:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2KmY-0000NZ-8B; Sat, 19 Oct 2024 21:30:58 -0400
+	id 1t2Kll-0008LO-5t; Sat, 19 Oct 2024 21:30:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Km3-0008Ud-6V; Sat, 19 Oct 2024 21:30:29 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1t2Klj-0008J1-MM; Sat, 19 Oct 2024 21:30:07 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1t2Km0-0005Qx-LN; Sat, 19 Oct 2024 21:30:26 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JKtWNY007893;
- Sun, 20 Oct 2024 01:30:23 GMT
+ id 1t2Klf-0005Bu-FU; Sat, 19 Oct 2024 21:30:07 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49K0Y5iQ006185;
+ Sun, 20 Oct 2024 01:30:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ycmWTkMQ0DGW8j1xL
- QO7tO0kV2SI1GA4Ch1+0FDDO7s=; b=JqMeH03abxMt5NZLhUSSEWsT+rVuBTuda
- AueX/vOUNmZiJ16zkJCznN640VAcKsU89pkJKRenabJ8Pw1m1c4cTI6APg3aPGyJ
- MNuZrcJ6Uga48tFoIufiDTNuHQxyvCDq+OoEuSvhDTpy8931JsBwH3dyjnSIAEWY
- eP62GGfr+uD77/urAeMLl0/Ahkp56FN3aU6pBIajNUi3anmD1mrpkzcXigJuRO7A
- 9HVxTBMugCiqPi/x4jXRMQiR9qNbqpSKuQEDnWtsm+FqEwtg+axWdgbJtw6IzpKO
- klg5QyhOTDVqMefz0wehjuf9ZsaI3gd4HM0tFxQnjVZdZHMVFlwtQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5h2u6je-1
+ :mime-version:references:subject:to; s=pp1; bh=nZfxV30OpSJrqRz+m
+ Fm2rsQlrHoNu9RXj2DQGr+svdA=; b=qIxX4POKVcJFjHFVWyXv79LxdcMzhR6Gm
+ V6hZy1kRepuICy8GFR1VorajfVtA3Kj+sFAvBaGWCPByWYNeioyirheAUyhRQ6ks
+ DDMHRZ/I/qCVcWC8nHha7E01TS1bFWbIXLoTpYoJMLwg2Bd0Jhsp+SYj4kRXfjYT
+ rwBz6DNv47JX44VXCl5CWjjGuIHLxmHkkZuxHbVkzcENyon+fVelx3Ka4kH17UT0
+ WaWp3Oyjy+nG7TtEaAScyyeQ3MC6CeD7LY0Ex2hjChr7o167YXjRVWE0TMrQhVEh
+ DWzScIrpCFq1Icx3sbuodqlBo7JXBgFn+MYq/4s8hE0zXlZWiuHSQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5fcb19d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:22 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49JNS8YX006789;
- Sun, 20 Oct 2024 01:30:21 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4284xkufyf-1
+ Sun, 20 Oct 2024 01:30:01 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49K0bGUc028864;
+ Sun, 20 Oct 2024 01:30:01 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42cqfx84vv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 20 Oct 2024 01:30:21 +0000
+ Sun, 20 Oct 2024 01:30:01 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49K1UJhl45351192
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49K1U0Rb28574242
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 20 Oct 2024 01:30:20 GMT
+ Sun, 20 Oct 2024 01:30:00 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D08225805C;
- Sun, 20 Oct 2024 01:30:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0D9575805C;
+ Sun, 20 Oct 2024 01:30:00 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 29BA45805D;
- Sun, 20 Oct 2024 01:30:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 436B658054;
+ Sun, 20 Oct 2024 01:29:59 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.61.54.50])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 20 Oct 2024 01:30:19 +0000 (GMT)
+ Sun, 20 Oct 2024 01:29:59 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: frankja@linux.ibm.com, jrossi@linux.ibm.com
-Subject: [PATCH v5 15/19] hw/s390x: Build an IPLB for each boot device
-Date: Sat, 19 Oct 2024 21:29:49 -0400
-Message-ID: <20241020012953.1380075-16-jrossi@linux.ibm.com>
+Subject: [PATCH v5 02/19] pc-bios/s390-ccw: Use the libc from SLOF and remove
+ sclp prints
+Date: Sat, 19 Oct 2024 21:29:36 -0400
+Message-ID: <20241020012953.1380075-3-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241020012953.1380075-1-jrossi@linux.ibm.com>
 References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Nu59A0ukvOQf44eUkJgWOlFg1U8jKdKY
-X-Proofpoint-ORIG-GUID: Nu59A0ukvOQf44eUkJgWOlFg1U8jKdKY
+X-Proofpoint-ORIG-GUID: DhFqYt_0o5iLDc-6D_QCmf_AcMVkLiUf
+X-Proofpoint-GUID: DhFqYt_0o5iLDc-6D_QCmf_AcMVkLiUf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999
- adultscore=0 clxscore=1015 phishscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ priorityscore=1501
+ bulkscore=0 mlxscore=0 clxscore=1015 mlxlogscore=999 phishscore=0
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410200009
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -107,253 +108,1161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Build an IPLB for any device with a bootindex (up to a maximum of 8 devices).
+We are already using the libc from SLOF for the s390-netboot.img, and
+this libc implementation is way more complete and accurate than the
+simple implementation that we currently use for the s390-ccw.img binary.
+Since we are now always assuming that the SLOF submodule is available
+when building the s390-ccw bios (see commit bf6903f6944f), we can drop
+the simple implementation and use the SLOF libc for the s390-ccw.img
+binary, too.
 
-The IPLB chain is placed immediately before the BIOS in memory. Because this
-is not a fixed address, the location of the next IPLB and number of remaining
-boot devices is stored in the QIPL global variable for possible later access by
-the guest during IPL.
+Additionally replace sclp_print calls with puts/printf now that it is avaliable.
 
+Co-authored by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- hw/s390x/ipl.h              |   1 +
- include/hw/s390x/ipl/qipl.h |   4 +-
- hw/s390x/ipl.c              | 129 ++++++++++++++++++++++++++++--------
- 3 files changed, 105 insertions(+), 29 deletions(-)
+ pc-bios/s390-ccw/netboot.mak     |  3 --
+ pc-bios/s390-ccw/bootmap.h       |  4 +-
+ pc-bios/s390-ccw/libc.h          | 89 --------------------------------
+ pc-bios/s390-ccw/s390-ccw.h      | 30 ++++-------
+ pc-bios/s390-ccw/bootmap.c       | 47 ++++++++---------
+ pc-bios/s390-ccw/cio.c           | 78 +++++++++++++---------------
+ pc-bios/s390-ccw/dasd-ipl.c      |  5 +-
+ pc-bios/s390-ccw/jump2ipl.c      |  5 +-
+ pc-bios/s390-ccw/libc.c          | 88 -------------------------------
+ pc-bios/s390-ccw/main.c          | 14 ++---
+ pc-bios/s390-ccw/menu.c          | 51 +++++++++---------
+ pc-bios/s390-ccw/netmain.c       | 10 ++--
+ pc-bios/s390-ccw/sclp.c          |  7 +--
+ pc-bios/s390-ccw/virtio-blkdev.c |  6 +--
+ pc-bios/s390-ccw/virtio-scsi.c   | 17 +++---
+ pc-bios/s390-ccw/virtio.c        |  2 +-
+ pc-bios/s390-ccw/Makefile        | 15 ++++--
+ 17 files changed, 136 insertions(+), 335 deletions(-)
+ delete mode 100644 pc-bios/s390-ccw/libc.h
+ delete mode 100644 pc-bios/s390-ccw/libc.c
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index b670bad551..54eb48fd6e 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -20,6 +20,7 @@
- #include "qom/object.h"
+diff --git a/pc-bios/s390-ccw/netboot.mak b/pc-bios/s390-ccw/netboot.mak
+index 046aa35587..d2b3d8ee74 100644
+--- a/pc-bios/s390-ccw/netboot.mak
++++ b/pc-bios/s390-ccw/netboot.mak
+@@ -1,9 +1,6 @@
  
- #define DIAG308_FLAGS_LP_VALID 0x80
-+#define MAX_BOOT_DEVS 8 /* Max number of devices that may have a bootindex */
+-SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+-
+ NETOBJS := start.o sclp.o cio.o virtio.o virtio-net.o jump2ipl.o netmain.o
  
- void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index b67d2ae061..1da4f75aa8 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -32,7 +32,9 @@ struct QemuIplParameters {
-     uint8_t  reserved1[3];
-     uint64_t reserved2;
-     uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
-+    uint8_t  reserved3[2];
-+    uint16_t chain_len;
-+    uint64_t next_iplb;
- } QEMU_PACKED;
- typedef struct QemuIplParameters QemuIplParameters;
+-LIBC_INC := -nostdinc -I$(SLOF_DIR)/lib/libc/include
+ LIBNET_INC := -I$(SLOF_DIR)/lib/libnet
  
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 656996b500..ed152a9dd2 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -56,6 +56,13 @@ static bool iplb_extended_needed(void *opaque)
-     return ipl->iplbext_migration;
+ NETLDFLAGS := $(LDFLAGS) -Wl,-Ttext=0x7800000
+diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+index d4690a88c2..4a7d8a91f1 100644
+--- a/pc-bios/s390-ccw/bootmap.h
++++ b/pc-bios/s390-ccw/bootmap.h
+@@ -336,9 +336,7 @@ static inline void print_volser(const void *volser)
+ 
+     ebcdic_to_ascii((char *)volser, ascii, 6);
+     ascii[6] = '\0';
+-    sclp_print("VOLSER=[");
+-    sclp_print(ascii);
+-    sclp_print("]\n");
++    printf("VOLSER=[%s]\n", ascii);
  }
  
-+/* Place the IPLB chain immediately before the BIOS in memory */
-+static uint64_t find_iplb_chain_addr(uint64_t bios_addr, uint16_t count)
-+{
-+    return (bios_addr & TARGET_PAGE_MASK)
-+            - (count * sizeof(IplParameterBlock));
-+}
-+
- static const VMStateDescription vmstate_iplb_extended = {
-     .name = "ipl/iplb_extended",
-     .version_id = 0,
-@@ -398,6 +405,17 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
-     return ccw_dev;
- }
- 
-+static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
-+{
-+    S390IPLState *ipl = get_ipl_device();
-+    uint16_t count = ipl->qipl.chain_len;
-+    uint64_t len = sizeof(IplParameterBlock) * count;
-+    uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
-+
-+    cpu_physical_memory_write(chain_addr, iplb_chain, len);
-+    return chain_addr;
-+}
-+
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
- {
-     int i;
-@@ -428,54 +446,51 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
-     }
- }
- 
--static bool s390_gen_initial_iplb(S390IPLState *ipl)
-+static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
--    DeviceState *dev_st;
-+    S390IPLState *ipl = get_ipl_device();
-     CcwDevice *ccw_dev = NULL;
-     SCSIDevice *sd;
-     int devtype;
-     uint8_t *lp;
- 
--    dev_st = get_boot_device(0);
--    if (dev_st) {
--        ccw_dev = s390_get_ccw_device(dev_st, &devtype);
+ static inline bool unused_space(const void *p, size_t size)
+diff --git a/pc-bios/s390-ccw/libc.h b/pc-bios/s390-ccw/libc.h
+deleted file mode 100644
+index bcdc45732d..0000000000
+--- a/pc-bios/s390-ccw/libc.h
++++ /dev/null
+@@ -1,89 +0,0 @@
+-/*
+- * libc-style definitions and functions
+- *
+- * Copyright (c) 2013 Alexander Graf <agraf@suse.de>
+- *
+- * This code is free software; you can redistribute it and/or modify it
+- * under the terms of the GNU General Public License as published by the
+- * Free Software Foundation; either version 2 of the License, or (at your
+- * option) any later version.
+- */
+-
+-#ifndef S390_CCW_LIBC_H
+-#define S390_CCW_LIBC_H
+-
+-typedef unsigned long      size_t;
+-typedef int                bool;
+-typedef unsigned char      uint8_t;
+-typedef unsigned short     uint16_t;
+-typedef unsigned int       uint32_t;
+-typedef unsigned long long uint64_t;
+-
+-static inline void *memset(void *s, int c, size_t n)
+-{
+-    size_t i;
+-    unsigned char *p = s;
+-
+-    for (i = 0; i < n; i++) {
+-        p[i] = c;
 -    }
 -
-     /*
-      * Currently allow IPL only from CCW devices.
-      */
-+    ccw_dev = s390_get_ccw_device(dev_st, &devtype);
-     if (ccw_dev) {
-         lp = ccw_dev->loadparm;
+-    return s;
+-}
+-
+-static inline void *memcpy(void *s1, const void *s2, size_t n)
+-{
+-    uint8_t *dest = s1;
+-    const uint8_t *src = s2;
+-    size_t i;
+-
+-    for (i = 0; i < n; i++) {
+-        dest[i] = src[i];
+-    }
+-
+-    return s1;
+-}
+-
+-static inline int memcmp(const void *s1, const void *s2, size_t n)
+-{
+-    size_t i;
+-    const uint8_t *p1 = s1, *p2 = s2;
+-
+-    for (i = 0; i < n; i++) {
+-        if (p1[i] != p2[i]) {
+-            return p1[i] > p2[i] ? 1 : -1;
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+-static inline size_t strlen(const char *str)
+-{
+-    size_t i;
+-    for (i = 0; *str; i++) {
+-        str++;
+-    }
+-    return i;
+-}
+-
+-static inline char *strcat(char *dest, const char *src)
+-{
+-    int i;
+-    char *dest_end = dest + strlen(dest);
+-
+-    for (i = 0; i <= strlen(src); i++) {
+-        dest_end[i] = src[i];
+-    }
+-    return dest;
+-}
+-
+-static inline int isdigit(int c)
+-{
+-    return (c >= '0') && (c <= '9');
+-}
+-
+-uint64_t atoui(const char *str);
+-char *uitoa(uint64_t num, char *str, size_t len);
+-
+-#endif
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index c977a52b50..6f6d95d170 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -13,6 +13,11 @@
  
-         switch (devtype) {
-         case CCW_DEVTYPE_SCSI:
-             sd = SCSI_DEVICE(dev_st);
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
--            ipl->iplb.blk0_len =
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-+            iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_QEMU_SCSI;
--            ipl->iplb.scsi.lun = cpu_to_be32(sd->lun);
--            ipl->iplb.scsi.target = cpu_to_be16(sd->id);
--            ipl->iplb.scsi.channel = cpu_to_be16(sd->channel);
--            ipl->iplb.scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.scsi.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-+            iplb->scsi.lun = cpu_to_be32(sd->lun);
-+            iplb->scsi.target = cpu_to_be16(sd->id);
-+            iplb->scsi.channel = cpu_to_be16(sd->channel);
-+            iplb->scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         case CCW_DEVTYPE_VFIO:
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
--            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-+            iplb->pbt = S390_IPL_TYPE_CCW;
-+            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         case CCW_DEVTYPE_VIRTIO_NET:
-+            /* The S390IPLState netboot is true if ANY IPLB may use netboot */
-             ipl->netboot = true;
-             /* Fall through to CCW_DEVTYPE_VIRTIO case */
-         case CCW_DEVTYPE_VIRTIO:
--            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
--            ipl->iplb.blk0_len =
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-+            iplb->blk0_len =
-                 cpu_to_be32(S390_IPLB_MIN_CCW_LEN - S390_IPLB_HEADER_LEN);
--            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
--            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
--            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-+            iplb->pbt = S390_IPL_TYPE_CCW;
-+            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-+            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
-             break;
-         }
+ /* #define DEBUG */
  
-@@ -484,8 +499,8 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-             lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-         }
++#include <stdbool.h>
++#include <stddef.h>
++#include <stdint.h>
++#include <stdio.h>
++
+ typedef unsigned char      u8;
+ typedef unsigned short     u16;
+ typedef unsigned int       u32;
+@@ -26,9 +31,6 @@ typedef unsigned long long u64;
+ #define EBUSY   2
+ #define ENODEV  3
  
--        s390_ipl_convert_loadparm((char *)lp, ipl->iplb.loadparm);
--        ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
-+        s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-+        iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
-         return true;
-     }
-@@ -493,6 +508,62 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
-     return false;
+-#ifndef NULL
+-#define NULL    0
+-#endif
+ #ifndef MIN
+ #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+ #endif
+@@ -87,7 +89,7 @@ bool menu_is_enabled_enum(void);
+ __attribute__ ((__noreturn__))
+ static inline void panic(const char *string)
+ {
+-    sclp_print(string);
++    printf("ERROR: %s\n ", string);
+     disabled_wait();
  }
  
-+static bool s390_init_all_iplbs(S390IPLState *ipl)
-+{
-+    int iplb_num = 0;
-+    IplParameterBlock iplb_chain[7];
-+    DeviceState *dev_st = get_boot_device(0);
-+    Object *machine = qdev_get_machine();
-+
-+    /*
-+     * Parse the boot devices.  Generate an IPLB for only the first boot device
-+     * which will later be set with DIAG308.
-+     */
-+    if (!dev_st) {
-+        ipl->qipl.chain_len = 0;
-+        return false;
-+    }
-+
-+    /* If no machine loadparm was defined fill it with spaces */
-+    if (memcmp(S390_CCW_MACHINE(machine)->loadparm, NO_LOADPARM, 8) == 0) {
-+        object_property_set_str(machine, "loadparm", "        ", NULL);
-+    }
-+
-+    iplb_num = 1;
-+    s390_build_iplb(dev_st, &ipl->iplb);
-+
-+    /*  Index any fallback boot devices */
-+    while (get_boot_device(iplb_num)) {
-+        iplb_num++;
-+    }
-+
-+    if (iplb_num > MAX_BOOT_DEVS) {
-+        warn_report("Excess boot devices defined! %d boot devices found, "
-+                    "but only the first %d will be considered.",
-+                    iplb_num, MAX_BOOT_DEVS);
-+
-+        iplb_num = MAX_BOOT_DEVS;
-+    }
-+
-+    ipl->qipl.chain_len = iplb_num - 1;
-+
-+    /*
-+     * Build fallback IPLBs for any boot devices above index 0, up to a
-+     * maximum amount as defined in ipl.h
-+     */
-+    if (iplb_num > 1) {
-+        /* Start at 1 because the IPLB for boot index 0 is not chained */
-+        for (int i = 1; i < iplb_num; i++) {
-+            dev_st = get_boot_device(i);
-+            s390_build_iplb(dev_st, &iplb_chain[i - 1]);
-+        }
-+
-+        ipl->qipl.next_iplb = s390_ipl_map_iplb_chain(iplb_chain);
-+    }
-+
-+    return iplb_num;
-+}
-+
- static bool is_virtio_ccw_device_of_type(IplParameterBlock *iplb,
-                                          int virtio_id)
+@@ -109,20 +111,10 @@ static inline void fill_hex_val(char *out, void *ptr, unsigned size)
+     }
+ }
+ 
+-static inline void print_int(const char *desc, u64 addr)
+-{
+-    char out[] = ": 0xffffffffffffffff\n";
+-
+-    fill_hex_val(&out[4], &addr, sizeof(addr));
+-
+-    sclp_print(desc);
+-    sclp_print(out);
+-}
+-
+ static inline void debug_print_int(const char *desc, u64 addr)
  {
-@@ -620,7 +691,7 @@ void s390_ipl_reset_request(CPUState *cs, enum s390_reset reset_type)
-              * this is the original boot device's SCSI
-              * so restore IPL parameter info from it
-              */
--            ipl->iplb_valid = s390_gen_initial_iplb(ipl);
-+            ipl->iplb_valid = s390_build_iplb(get_boot_device(0), &ipl->iplb);
+ #ifdef DEBUG
+-    print_int(desc, addr);
++    printf("%s 0x%X\n", desc, addr);
+ #endif
+ }
+ 
+@@ -147,18 +139,14 @@ static inline void debug_print_addr(const char *desc, void *p)
+ static inline void IPL_assert(bool term, const char *message)
+ {
+     if (!term) {
+-        sclp_print("\n! ");
+-        sclp_print(message);
+-        panic(" !\n"); /* no return */
++        panic(message); /* no return */
+     }
+ }
+ 
+ static inline void IPL_check(bool term, const char *message)
+ {
+     if (!term) {
+-        sclp_print("\n! WARNING: ");
+-        sclp_print(message);
+-        sclp_print(" !\n");
++        printf("WARNING: %s\n", message);
+     }
+ }
+ 
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index a2137449dc..3cc79706be 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -8,7 +8,8 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "s390-arch.h"
+ #include "bootmap.h"
+@@ -21,7 +22,7 @@
+ 
+ #ifdef DEBUG_FALLBACK
+ #define dputs(txt) \
+-    do { sclp_print("zipl: " txt); } while (0)
++    do { printf("zipl: " txt); } while (0)
+ #else
+ #define dputs(fmt, ...) \
+     do { } while (0)
+@@ -270,7 +271,7 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+         prev_block_nr = cur_block_nr;
+     }
+ 
+-    sclp_print("No zipl boot menu data found. Booting default entry.");
++    printf("No zipl boot menu data found. Booting default entry.");
+     return 0;
+ }
+ 
+@@ -338,22 +339,22 @@ static void ipl_eckd_cdl(void)
+     block_number_t bmt_block_nr, s1b_block_nr;
+ 
+     /* we have just read the block #0 and recognized it as "IPL1" */
+-    sclp_print("CDL\n");
++    puts("CDL");
+ 
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+     read_block(1, ipl2, "Cannot read IPL2 record at block 1");
+ 
+     mbr = &ipl2->mbr;
+     if (!magic_match(mbr, ZIPL_MAGIC)) {
+-        sclp_print("No zIPL section in IPL2 record.\n");
++        puts("No zIPL section in IPL2 record.");
+         return;
+     }
+     if (!block_size_ok(mbr->blockptr.xeckd.bptr.size)) {
+-        sclp_print("Bad block size in zIPL section of IPL2 record.\n");
++        puts("Bad block size in zIPL section of IPL2 record.");
+         return;
+     }
+     if (mbr->dev_type != DEV_TYPE_ECKD) {
+-        sclp_print("Non-ECKD device type in zIPL section of IPL2 record.\n");
++        puts("Non-ECKD device type in zIPL section of IPL2 record.");
+         return;
+     }
+ 
+@@ -366,11 +367,11 @@ static void ipl_eckd_cdl(void)
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+     read_block(2, vlbl, "Cannot read Volume Label at block 2");
+     if (!magic_match(vlbl->key, VOL1_MAGIC)) {
+-        sclp_print("Invalid magic of volume label block.\n");
++        puts("Invalid magic of volume label block.");
+         return;
+     }
+     if (!magic_match(vlbl->f.key, VOL1_MAGIC)) {
+-        sclp_print("Invalid magic of volser block.\n");
++        puts("Invalid magic of volser block.");
+         return;
+     }
+     print_volser(vlbl->f.volser);
+@@ -384,8 +385,8 @@ static void print_eckd_ldl_msg(ECKD_IPL_mode_t mode)
+     LDL_VTOC *vlbl = (void *)sec; /* already read, 3rd block */
+     char msg[4] = { '?', '.', '\n', '\0' };
+ 
+-    sclp_print((mode == ECKD_CMS) ? "CMS" : "LDL");
+-    sclp_print(" version ");
++    printf((mode == ECKD_CMS) ? "CMS" : "LDL");
++    printf(" version ");
+     switch (vlbl->LDL_version) {
+     case LDL1_VERSION:
+         msg[0] = '1';
+@@ -398,7 +399,7 @@ static void print_eckd_ldl_msg(ECKD_IPL_mode_t mode)
+         msg[1] = '?';
+         break;
+     }
+-    sclp_print(msg);
++    printf("%s", msg);
+     print_volser(vlbl->volser);
+ }
+ 
+@@ -419,7 +420,7 @@ static void ipl_eckd_ldl(ECKD_IPL_mode_t mode)
+         if (!magic_match(ipl1->bip.magic, ZIPL_MAGIC)) {
+             return; /* not applicable layout */
+         }
+-        sclp_print("unlabeled LDL.\n");
++        puts("unlabeled LDL.");
+     }
+     verify_boot_info(&ipl1->bip);
+ 
+@@ -466,7 +467,7 @@ static void print_eckd_msg(void)
+             *p-- = ' ';
          }
      }
-     if (reset_type == S390_RESET_MODIFIED_CLEAR ||
-@@ -714,7 +785,9 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
-     if (!ipl->kernel || ipl->iplb_valid) {
-         cpu->env.psw.addr = ipl->bios_start_addr;
-         if (!ipl->iplb_valid) {
--            ipl->iplb_valid = s390_gen_initial_iplb(ipl);
-+            ipl->iplb_valid = s390_init_all_iplbs(ipl);
-+        } else {
-+            ipl->qipl.chain_len = 0;
+-    sclp_print(msg);
++    printf("%s", msg);
+ }
+ 
+ static void ipl_eckd(void)
+@@ -488,11 +489,11 @@ static void ipl_eckd(void)
+     if (eckd_valid_address((ExtEckdBlockPtr *)&vlbl->f.br, 0)) {
+         ldipl_bmt = eckd_find_bmt((ExtEckdBlockPtr *)&vlbl->f.br);
+         if (ldipl_bmt) {
+-            sclp_print("List-Directed\n");
++            puts("List-Directed");
+             /* LD-IPL does not use the S1B bock, just make it NULL */
+             run_eckd_boot_script(ldipl_bmt, NULL_BLOCK_NR);
+             /* Only return in error, retry as CCW-IPL */
+-            sclp_print("Retrying IPL ");
++            printf("Retrying IPL ");
+             print_eckd_msg();
+         }
+         memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+@@ -634,7 +635,7 @@ static void ipl_scsi(void)
+         return;
+     }
+ 
+-    sclp_print("Using SCSI scheme.\n");
++    puts("Using SCSI scheme.");
+     debug_print_int("MBR Version", mbr->version_id);
+     IPL_check(mbr->version_id == 1,
+               "Unknown MBR layout version, assuming version 1");
+@@ -743,7 +744,7 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
+             if (cur_record->file_flags & 0x2) {
+                 /* Subdirectory */
+                 if (level == ISO9660_MAX_DIR_DEPTH - 1) {
+-                    sclp_print("ISO-9660 directory depth limit exceeded\n");
++                    puts("ISO-9660 directory depth limit exceeded");
+                 } else {
+                     level++;
+                     sec_loc[level] = iso_733_to_u32(cur_record->ext_loc);
+@@ -778,9 +779,9 @@ static void load_iso_bc_entry(IsoBcSection *load)
+     if (real_size) {
+         /* Round up blocks to load */
+         blks_to_load = (real_size + ISO_SECTOR_SIZE - 1) / ISO_SECTOR_SIZE;
+-        sclp_print("ISO boot image size verified\n");
++        puts("ISO boot image size verified");
+     } else {
+-        sclp_print("ISO boot image size could not be verified\n");
++        puts("ISO boot image size could not be verified");
+     }
+ 
+     read_iso_boot_image(bswap32(s.load_rba),
+@@ -896,7 +897,7 @@ static void zipl_load_vblk(void)
+     }
+ 
+     if (blksize != VIRTIO_DASD_DEFAULT_BLOCK_SIZE) {
+-        sclp_print("Using guessed DASD geometry.\n");
++        puts("Using guessed DASD geometry.");
+         virtio_assume_eckd();
+     }
+     ipl_eckd();
+@@ -909,7 +910,7 @@ static void zipl_load_vscsi(void)
+         ipl_iso_el_torito();
+     }
+ 
+-    sclp_print("Using guessed DASD geometry.\n");
++    puts("Using guessed DASD geometry.");
+     virtio_assume_eckd();
+     ipl_eckd();
+ }
+@@ -944,5 +945,5 @@ void zipl_load(void)
+         panic("\n! Unknown IPL device type !\n");
+     }
+ 
+-    sclp_print("zIPL load failed.\n");
++    puts("zIPL load failed.");
+ }
+diff --git a/pc-bios/s390-ccw/cio.c b/pc-bios/s390-ccw/cio.c
+index 83ca27ab41..7b09a38c96 100644
+--- a/pc-bios/s390-ccw/cio.c
++++ b/pc-bios/s390-ccw/cio.c
+@@ -11,7 +11,8 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "s390-arch.h"
+ #include "helper.h"
+@@ -90,9 +91,9 @@ static void print_eckd_dasd_sense_data(SenseDataEckdDasd *sd)
+     char msgline[512];
+ 
+     if (sd->config_info & 0x8000) {
+-        sclp_print("Eckd Dasd Sense Data (fmt 24-bytes):\n");
++        puts("Eckd Dasd Sense Data (fmt 24-bytes):");
+     } else {
+-        sclp_print("Eckd Dasd Sense Data (fmt 32-bytes):\n");
++        puts("Eckd Dasd Sense Data (fmt 32-bytes):");
+     }
+ 
+     strcat(msgline, "    Sense Condition Flags :");
+@@ -158,22 +159,21 @@ static void print_eckd_dasd_sense_data(SenseDataEckdDasd *sd)
+     if (sd->status[1] & SNS_STAT2_IMPRECISE_END) {
+         strcat(msgline, " [Imprecise-End]");
+     }
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
+-
+-    print_int("    Residual Count     =", sd->res_count);
+-    print_int("    Phys Drive ID      =", sd->phys_drive_id);
+-    print_int("    low cyl address    =", sd->low_cyl_addr);
+-    print_int("    head addr & hi cyl =", sd->head_high_cyl_addr);
+-    print_int("    format/message     =", sd->fmt_msg);
+-    print_int("    fmt-dependent[0-7] =", sd->fmt_dependent_info[0]);
+-    print_int("    fmt-dependent[8-15]=", sd->fmt_dependent_info[1]);
+-    print_int("    prog action code   =", sd->program_action_code);
+-    print_int("    Configuration info =", sd->config_info);
+-    print_int("    mcode / hi-cyl     =", sd->mcode_hicyl);
+-    print_int("    cyl & head addr [0]=", sd->cyl_head_addr[0]);
+-    print_int("    cyl & head addr [1]=", sd->cyl_head_addr[1]);
+-    print_int("    cyl & head addr [2]=", sd->cyl_head_addr[2]);
++    puts(msgline);
++
++    printf("    Residual Count     = 0x%X\n", sd->res_count);
++    printf("    Phys Drive ID      = 0x%X\n", sd->phys_drive_id);
++    printf("    low cyl address    = 0x%X\n", sd->low_cyl_addr);
++    printf("    head addr & hi cyl = 0x%X\n", sd->head_high_cyl_addr);
++    printf("    format/message     = 0x%X\n", sd->fmt_msg);
++    printf("    fmt-dependent[0-7] = 0x%llX\n", sd->fmt_dependent_info[0]);
++    printf("    fmt-dependent[8-15]= 0x%llX\n", sd->fmt_dependent_info[1]);
++    printf("    prog action code   = 0x%X\n", sd->program_action_code);
++    printf("    Configuration info = 0x%X\n", sd->config_info);
++    printf("    mcode / hi-cyl     = 0x%X\n", sd->mcode_hicyl);
++    printf("    cyl & head addr [0]= 0x%X\n", sd->cyl_head_addr[0]);
++    printf("    cyl & head addr [1]= 0x%X\n", sd->cyl_head_addr[1]);
++    printf("    cyl & head addr [2]= 0x%X\n", sd->cyl_head_addr[2]);
+ }
+ 
+ static void print_irb_err(Irb *irb)
+@@ -182,7 +182,7 @@ static void print_irb_err(Irb *irb)
+     uint64_t prev_ccw = *(uint64_t *)u32toptr(irb->scsw.cpa - 8);
+     char msgline[256];
+ 
+-    sclp_print("Interrupt Response Block Data:\n");
++    puts("Interrupt Response Block Data:");
+ 
+     strcat(msgline, "    Function Ctrl :");
+     if (irb->scsw.ctrl & SCSW_FCTL_START_FUNC) {
+@@ -194,8 +194,7 @@ static void print_irb_err(Irb *irb)
+     if (irb->scsw.ctrl & SCSW_FCTL_CLEAR_FUNC) {
+         strcat(msgline, " [Clear]");
+     }
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
++    puts(msgline);
+ 
+     msgline[0] = '\0';
+     strcat(msgline, "    Activity Ctrl :");
+@@ -220,8 +219,7 @@ static void print_irb_err(Irb *irb)
+     if (irb->scsw.ctrl & SCSW_ACTL_SUSPENDED) {
+         strcat(msgline, " [Suspended]");
+     }
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
++    puts(msgline);
+ 
+     msgline[0] = '\0';
+     strcat(msgline, "    Status Ctrl :");
+@@ -240,9 +238,7 @@ static void print_irb_err(Irb *irb)
+     if (irb->scsw.ctrl & SCSW_SCTL_STATUS_PEND) {
+         strcat(msgline, " [Status-Pending]");
+     }
+-
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
++    puts(msgline);
+ 
+     msgline[0] = '\0';
+     strcat(msgline, "    Device Status :");
+@@ -270,8 +266,7 @@ static void print_irb_err(Irb *irb)
+     if (irb->scsw.dstat & SCSW_DSTAT_UEXCP) {
+         strcat(msgline, " [Unit-Exception]");
+     }
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
++    puts(msgline);
+ 
+     msgline[0] = '\0';
+     strcat(msgline, "    Channel Status :");
+@@ -299,12 +294,11 @@ static void print_irb_err(Irb *irb)
+     if (irb->scsw.cstat & SCSW_CSTAT_CHAINCHK) {
+         strcat(msgline, " [Chaining-Check]");
+     }
+-    strcat(msgline, "\n");
+-    sclp_print(msgline);
++    puts(msgline);
+ 
+-    print_int("    cpa=", irb->scsw.cpa);
+-    print_int("    prev_ccw=", prev_ccw);
+-    print_int("    this_ccw=", this_ccw);
++    printf("    cpa= 0x%X\n", irb->scsw.cpa);
++    printf("    prev_ccw= 0x%llX\n", prev_ccw);
++    printf("    this_ccw= 0x%llX\n", this_ccw);
+ }
+ 
+ /*
+@@ -341,7 +335,7 @@ static int __do_cio(SubChannelId schid, uint32_t ccw_addr, int fmt, Irb *irb)
+         return -1;
+     }
+     if (rc) {
+-        print_int("ssch failed with cc=", rc);
++        printf("ssch failed with cc= 0x%x\n", rc);
+         return rc;
+     }
+ 
+@@ -350,7 +344,7 @@ static int __do_cio(SubChannelId schid, uint32_t ccw_addr, int fmt, Irb *irb)
+     /* collect status */
+     rc = tsch(schid, irb);
+     if (rc) {
+-        print_int("tsch failed with cc=", rc);
++        printf("tsch failed with cc= 0x%X\n", rc);
+     }
+ 
+     return rc;
+@@ -406,12 +400,12 @@ int do_cio(SubChannelId schid, uint16_t cutype, uint32_t ccw_addr, int fmt)
+             continue;
+         }
+ 
+-        sclp_print("cio device error\n");
+-        print_int("  ssid  ", schid.ssid);
+-        print_int("  cssid ", schid.cssid);
+-        print_int("  sch_no", schid.sch_no);
+-        print_int("  ctrl-unit type", cutype);
+-        sclp_print("\n");
++        printf("cio device error\n");
++        printf("  ssid  0x%X\n", schid.ssid);
++        printf("  cssid 0x%X\n", schid.cssid);
++        printf("  sch_no 0x%X\n", schid.sch_no);
++        printf("  ctrl-unit type 0x%X\n", cutype);
++        printf("\n");
+         print_irb_err(&irb);
+         if (cutype == CU_TYPE_DASD_3990 || cutype == CU_TYPE_DASD_2107 ||
+             cutype == CU_TYPE_UNKNOWN) {
+diff --git a/pc-bios/s390-ccw/dasd-ipl.c b/pc-bios/s390-ccw/dasd-ipl.c
+index 254bb1a15e..ae751adec1 100644
+--- a/pc-bios/s390-ccw/dasd-ipl.c
++++ b/pc-bios/s390-ccw/dasd-ipl.c
+@@ -8,7 +8,8 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "s390-arch.h"
+ #include "dasd-ipl.h"
+@@ -82,7 +83,7 @@ static int run_dynamic_ccw_program(SubChannelId schid, uint16_t cutype,
+     do {
+         has_next = dynamic_cp_fixup(cpa, &next_cpa);
+ 
+-        print_int("executing ccw chain at ", cpa);
++        printf("executing ccw chain at 0x%X\n", cpa);
+         enable_prefixing();
+         rc = do_cio(schid, cutype, cpa, CCW_FMT0);
+         disable_prefixing();
+diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
+index 78f5f46533..80b7f6a1f3 100644
+--- a/pc-bios/s390-ccw/jump2ipl.c
++++ b/pc-bios/s390-ccw/jump2ipl.c
+@@ -6,7 +6,8 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "s390-arch.h"
+ 
+@@ -57,7 +58,7 @@ void jump_to_IPL_code(uint64_t address)
+     debug_print_int("set IPL addr to", address ?: *reset_psw & PSW_MASK_SHORT_ADDR);
+ 
+     /* Ensure the guest output starts fresh */
+-    sclp_print("\n");
++    printf("\n");
+ 
+     /*
+      * HACK ALERT.
+diff --git a/pc-bios/s390-ccw/libc.c b/pc-bios/s390-ccw/libc.c
+deleted file mode 100644
+index 3187923950..0000000000
+--- a/pc-bios/s390-ccw/libc.c
++++ /dev/null
+@@ -1,88 +0,0 @@
+-/*
+- * libc-style definitions and functions
+- *
+- * Copyright 2018 IBM Corp.
+- * Author(s): Collin L. Walling <walling@linux.vnet.ibm.com>
+- *
+- * This code is free software; you can redistribute it and/or modify it
+- * under the terms of the GNU General Public License as published by the
+- * Free Software Foundation; either version 2 of the License, or (at your
+- * option) any later version.
+- */
+-
+-#include "libc.h"
+-#include "s390-ccw.h"
+-
+-/**
+- * atoui:
+- * @str: the string to be converted.
+- *
+- * Given a string @str, convert it to an integer. Leading spaces are
+- * ignored. Any other non-numerical value will terminate the conversion
+- * and return 0. This function only handles numbers between 0 and
+- * UINT64_MAX inclusive.
+- *
+- * Returns: an integer converted from the string @str, or the number 0
+- * if an error occurred.
+- */
+-uint64_t atoui(const char *str)
+-{
+-    int val = 0;
+-
+-    if (!str || !str[0]) {
+-        return 0;
+-    }
+-
+-    while (*str == ' ') {
+-        str++;
+-    }
+-
+-    while (*str) {
+-        if (!isdigit(*(unsigned char *)str)) {
+-            break;
+-        }
+-        val = val * 10 + *str - '0';
+-        str++;
+-    }
+-
+-    return val;
+-}
+-
+-/**
+- * uitoa:
+- * @num: an integer (base 10) to be converted.
+- * @str: a pointer to a string to store the conversion.
+- * @len: the length of the passed string.
+- *
+- * Given an integer @num, convert it to a string. The string @str must be
+- * allocated beforehand. The resulting string will be null terminated and
+- * returned. This function only handles numbers between 0 and UINT64_MAX
+- * inclusive.
+- *
+- * Returns: the string @str of the converted integer @num
+- */
+-char *uitoa(uint64_t num, char *str, size_t len)
+-{
+-    long num_idx = 1; /* account for NUL */
+-    uint64_t tmp = num;
+-
+-    IPL_assert(str != NULL, "uitoa: no space allocated to store string");
+-
+-    /* Count indices of num */
+-    while ((tmp /= 10) != 0) {
+-        num_idx++;
+-    }
+-
+-    /* Check if we have enough space for num and NUL */
+-    IPL_assert(len > num_idx, "uitoa: array too small for conversion");
+-
+-    str[num_idx--] = '\0';
+-
+-    /* Convert int to string */
+-    while (num_idx >= 0) {
+-        str[num_idx--] = num % 10 + '0';
+-        num /= 10;
+-    }
+-
+-    return str;
+-}
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 5506798098..203df20965 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -8,7 +8,9 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <stdlib.h>
++#include <string.h>
++#include <stdio.h>
+ #include "helper.h"
+ #include "s390-arch.h"
+ #include "s390-ccw.h"
+@@ -50,7 +52,7 @@ void write_iplb_location(void)
+ 
+ unsigned int get_loadparm_index(void)
+ {
+-    return atoui(loadparm_str);
++    return atoi(loadparm_str);
+ }
+ 
+ static int is_dev_possibly_bootable(int dev_no, int sch_no)
+@@ -176,7 +178,7 @@ static void boot_setup(void)
+ 
+     sclp_get_loadparm_ascii(loadparm_str);
+     memcpy(lpmsg + 10, loadparm_str, 8);
+-    sclp_print(lpmsg);
++    puts(lpmsg);
+ 
+     /*
+      * Clear out any potential S390EP magic (see jump_to_low_kernel()),
+@@ -228,7 +230,7 @@ static int virtio_setup(void)
+ 
+     switch (vdev->senseid.cu_model) {
+     case VIRTIO_ID_NET:
+-        sclp_print("Network boot device detected\n");
++        puts("Network boot device detected");
+         vdev->netboot_start_addr = qipl.netboot_start_addr;
+         return 0;
+     case VIRTIO_ID_BLOCK:
+@@ -261,7 +263,7 @@ static void ipl_boot_device(void)
+         }
+         break;
+     default:
+-        print_int("Attempting to boot from unexpected device type", cutype);
++        printf("Attempting to boot from unexpected device type 0x%X\n", cutype);
+         panic("\nBoot failed.\n");
+     }
+ }
+@@ -287,7 +289,7 @@ static void probe_boot_device(void)
          }
      }
-     s390_ipl_set_boot_menu(ipl);
+ 
+-    sclp_print("Could not find a suitable boot device (none specified)\n");
++    puts("Could not find a suitable boot device (none specified)");
+ }
+ 
+ void main(void)
+diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
+index d601952d3e..84062e94af 100644
+--- a/pc-bios/s390-ccw/menu.c
++++ b/pc-bios/s390-ccw/menu.c
+@@ -9,7 +9,10 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <ctype.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
+ #include "s390-ccw.h"
+ #include "sclp.h"
+ #include "s390-time.h"
+@@ -93,7 +96,7 @@ static int read_prompt(char *buf, size_t len)
+         case KEYCODE_BACKSP:
+             if (idx > 0) {
+                 buf[--idx] = 0;
+-                sclp_print("\b \b");
++                printf("\b \b");
+             }
+             continue;
+         case KEYCODE_ENTER:
+@@ -103,7 +106,7 @@ static int read_prompt(char *buf, size_t len)
+             /* Echo input and add to buffer */
+             if (idx < len) {
+                 buf[idx++] = inp[0];
+-                sclp_print(inp);
++                printf("%s", inp);
+             }
+         }
+     }
+@@ -140,22 +143,19 @@ static int get_index(void)
+         }
+     }
+ 
+-    return atoui(buf);
++    return atoi(buf);
+ }
+ 
+ static void boot_menu_prompt(bool retry)
+ {
+-    char tmp[11];
+-
+     if (retry) {
+-        sclp_print("\nError: undefined configuration"
++        printf("\nError: undefined configuration"
+                    "\nPlease choose:\n");
+     } else if (timeout > 0) {
+-        sclp_print("Please choose (default will boot in ");
+-        sclp_print(uitoa(timeout / 1000, tmp, sizeof(tmp)));
+-        sclp_print(" seconds):\n");
++        printf("Please choose (default will boot in %d seconds):\n",
++               (int)(timeout / 1000));
+     } else {
+-        sclp_print("Please choose:\n");
++        puts("Please choose:");
+     }
+ }
+ 
+@@ -163,7 +163,6 @@ static int get_boot_index(bool *valid_entries)
+ {
+     int boot_index;
+     bool retry = false;
+-    char tmp[5];
+ 
+     do {
+         boot_menu_prompt(retry);
+@@ -172,8 +171,7 @@ static int get_boot_index(bool *valid_entries)
+     } while (boot_index < 0 || boot_index >= MAX_BOOT_ENTRIES ||
+              !valid_entries[boot_index]);
+ 
+-    sclp_print("\nBooting entry #");
+-    sclp_print(uitoa(boot_index, tmp, sizeof(tmp)));
++    printf("\nBooting entry #%d", boot_index);
+ 
+     return boot_index;
+ }
+@@ -187,9 +185,9 @@ static int zipl_print_entry(const char *data, size_t len)
+     buf[len] = '\n';
+     buf[len + 1] = '\0';
+ 
+-    sclp_print(buf);
++    printf("%s", buf);
+ 
+-    return buf[0] == ' ' ? atoui(buf + 1) : atoui(buf);
++    return buf[0] == ' ' ? atoi(buf + 1) : atoi(buf);
+ }
+ 
+ int menu_get_zipl_boot_index(const char *menu_data)
+@@ -209,7 +207,7 @@ int menu_get_zipl_boot_index(const char *menu_data)
+     }
+ 
+     /* Print banner */
+-    sclp_print("s390-ccw zIPL Boot Menu\n\n");
++    puts("s390-ccw zIPL Boot Menu\n");
+     menu_data += strlen(menu_data) + 1;
+ 
+     /* Print entries */
+@@ -221,37 +219,34 @@ int menu_get_zipl_boot_index(const char *menu_data)
+         valid_entries[entry] = true;
+ 
+         if (entry == 0) {
+-            sclp_print("\n");
++            printf("\n");
+         }
+     }
+ 
+-    sclp_print("\n");
++    printf("\n");
+     return get_boot_index(valid_entries);
+ }
+ 
+ int menu_get_enum_boot_index(bool *valid_entries)
+ {
+-    char tmp[3];
+     int i;
+ 
+-    sclp_print("s390-ccw Enumerated Boot Menu.\n\n");
++    puts("s390-ccw Enumerated Boot Menu.\n");
+ 
+     for (i = 0; i < MAX_BOOT_ENTRIES; i++) {
+         if (valid_entries[i]) {
+             if (i < 10) {
+-                sclp_print(" ");
++                printf(" ");
+             }
+-            sclp_print("[");
+-            sclp_print(uitoa(i, tmp, sizeof(tmp)));
+-            sclp_print("]");
++            printf("[%d]", i);
+             if (i == 0) {
+-                sclp_print(" default\n");
++                printf(" default\n");
+             }
+-            sclp_print("\n");
++            printf("\n");
+         }
+     }
+ 
+-    sclp_print("\n");
++    printf("\n");
+     return get_boot_index(valid_entries);
+ }
+ 
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index 5cd619b2d6..509119be15 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -293,7 +293,7 @@ static int load_kernel_with_initrd(filename_ip_t *fn_ip,
+     printf("Loading pxelinux.cfg entry '%s'\n", entry->label);
+ 
+     if (!entry->kernel) {
+-        printf("Kernel entry is missing!\n");
++        puts("Kernel entry is missing!\n");
+         return -1;
+     }
+ 
+@@ -515,13 +515,13 @@ void main(void)
+     int rc, fnlen;
+ 
+     sclp_setup();
+-    sclp_print("Network boot starting...\n");
++    puts("Network boot starting...");
+ 
+     virtio_setup();
+ 
+     rc = net_init(&fn_ip);
+     if (rc) {
+-        panic("Network initialization failed. Halting.\n");
++        panic("Network initialization failed. Halting.");
+     }
+ 
+     fnlen = strlen(fn_ip.filename);
+@@ -535,9 +535,9 @@ void main(void)
+     net_release(&fn_ip);
+ 
+     if (rc > 0) {
+-        sclp_print("Network loading done, starting kernel...\n");
++        puts("Network loading done, starting kernel...");
+         jump_to_low_kernel();
+     }
+ 
+-    panic("Failed to load OS from network\n");
++    panic("Failed to load OS from network.");
+ }
+diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
+index 7251f9af4d..4a07de018d 100644
+--- a/pc-bios/s390-ccw/sclp.c
++++ b/pc-bios/s390-ccw/sclp.c
+@@ -8,7 +8,7 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
+ #include "s390-ccw.h"
+ #include "sclp.h"
+ 
+@@ -101,11 +101,6 @@ long write(int fd, const void *str, size_t len)
+     return len;
+ }
+ 
+-void sclp_print(const char *str)
+-{
+-    write(1, str, strlen(str));
+-}
+-
+ void sclp_get_loadparm_ascii(char *loadparm)
+ {
+ 
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index a81207b52e..2666326801 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -8,7 +8,7 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "virtio.h"
+ #include "virtio-scsi.h"
+@@ -76,7 +76,7 @@ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list
+         return -1;
+     }
+ 
+-    sclp_print(".");
++    printf(".");
+     status = virtio_read_many(sec, (void *)addr, sec_num);
+     if (status) {
+         panic("I/O Error");
+@@ -230,7 +230,7 @@ int virtio_blk_setup_device(SubChannelId schid)
+     vdev->schid = schid;
+     virtio_setup_ccw(vdev);
+ 
+-    sclp_print("Using virtio-blk.\n");
++    puts("Using virtio-blk.");
+ 
+     return 0;
+ }
+diff --git a/pc-bios/s390-ccw/virtio-scsi.c b/pc-bios/s390-ccw/virtio-scsi.c
+index d1a84b937c..6b4a1caf8a 100644
+--- a/pc-bios/s390-ccw/virtio-scsi.c
++++ b/pc-bios/s390-ccw/virtio-scsi.c
+@@ -9,7 +9,8 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
++#include <stdio.h>
+ #include "s390-ccw.h"
+ #include "virtio.h"
+ #include "scsi.h"
+@@ -30,9 +31,9 @@ static inline void vs_assert(bool term, const char **msgs)
+     if (!term) {
+         int i = 0;
+ 
+-        sclp_print("\n! ");
++        printf("\n! ");
+         while (msgs[i]) {
+-            sclp_print(msgs[i++]);
++            printf("%s", msgs[i++]);
+         }
+         panic(" !\n");
+     }
+@@ -236,11 +237,11 @@ static int virtio_scsi_locate_device(VDev *vdev)
+             if (resp.response == VIRTIO_SCSI_S_BAD_TARGET) {
+                 continue;
+             }
+-            print_int("target", target);
++            printf("target 0x%X\n", target);
+             virtio_scsi_verify_response(&resp, "SCSI cannot report LUNs");
+         }
+         if (r->lun_list_len == 0) {
+-            print_int("no LUNs for target", target);
++            printf("no LUNs for target 0x%X\n", target);
+             continue;
+         }
+         luns = r->lun_list_len / 8;
+@@ -264,7 +265,7 @@ static int virtio_scsi_locate_device(VDev *vdev)
+         }
+     }
+ 
+-    sclp_print("Warning: Could not locate a usable virtio-scsi device\n");
++    puts("Warning: Could not locate a usable virtio-scsi device");
+     return -ENODEV;
+ }
+ 
+@@ -379,7 +380,7 @@ static int virtio_scsi_setup(VDev *vdev)
+     }
+ 
+     if (virtio_scsi_inquiry_response_is_cdrom(scsi_inquiry_std_response)) {
+-        sclp_print("SCSI CD-ROM detected.\n");
++        puts("SCSI CD-ROM detected.");
+         vdev->is_cdrom = true;
+         vdev->scsi_block_size = VIRTIO_ISO_BLOCK_SIZE;
+     }
+@@ -443,7 +444,7 @@ int virtio_scsi_setup_device(SubChannelId schid)
+     IPL_assert(vdev->config.scsi.cdb_size == VIRTIO_SCSI_CDB_SIZE,
+                "Config: CDB size mismatch");
+ 
+-    sclp_print("Using virtio-scsi.\n");
++    puts("Using virtio-scsi.");
+ 
+     return virtio_scsi_setup(vdev);
+ }
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index 5edd058d88..8c6b0a8a92 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -8,7 +8,7 @@
+  * directory.
+  */
+ 
+-#include "libc.h"
++#include <string.h>
+ #include "s390-ccw.h"
+ #include "cio.h"
+ #include "virtio.h"
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index 6207911b53..3f4232636e 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -33,13 +33,18 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+ .PHONY : all clean build-all distclean
+ 
+ OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o \
+-	  virtio.o virtio-scsi.o virtio-blkdev.o libc.o cio.o dasd-ipl.o
++	  virtio.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
++
++SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
++
++LIBC_INC := -nostdinc -I$(SLOF_DIR)/lib/libc/include
+ 
+ EXTRA_CFLAGS += -Wall
+ EXTRA_CFLAGS += -ffreestanding -fno-delete-null-pointer-checks -fno-common -fPIE
+ EXTRA_CFLAGS += -fwrapv -fno-strict-aliasing -fno-asynchronous-unwind-tables
+ EXTRA_CFLAGS += -msoft-float
+ EXTRA_CFLAGS += -std=gnu99
++EXTRA_CFLAGS += $(LIBC_INC)
+ LDFLAGS += -Wl,-pie -nostdlib -z noexecstack
+ 
+ cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>/dev/null
+@@ -55,18 +60,18 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-march=z900,-march=z10)) 3> config-cc.mak
+ -include config-cc.mak
+ 
++include $(SRC_PATH)/netboot.mak
++
+ build-all: s390-ccw.img s390-netboot.img
+ 
+-s390-ccw.elf: $(OBJECTS)
+-	$(call quiet-command,$(CC) $(LDFLAGS) -o $@ $(OBJECTS),Linking)
++s390-ccw.elf: $(OBJECTS) libc.a
++	$(call quiet-command,$(CC) $(LDFLAGS) -o $@ $^,Linking)
+ 
+ s390-ccw.img: s390-ccw.elf
+ 	$(call quiet-command,$(STRIP) --strip-unneeded $< -o $@,Stripping $< into)
+ 
+ $(OBJECTS): Makefile
+ 
+-include $(SRC_PATH)/netboot.mak
+-
+ ALL_OBJS = $(sort $(OBJECTS) $(NETOBJS) $(LIBCOBJS) $(LIBNETOBJS))
+ -include $(ALL_OBJS:%.o=%.d)
+ 
 -- 
 2.45.1
 
