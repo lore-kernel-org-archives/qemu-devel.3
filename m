@@ -4,142 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED3CDD3C92D
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 13:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48040D3C92A
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 14:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2Vdk-0006QC-J3; Sun, 20 Oct 2024 09:06:36 -0400
+	id 1t2WXg-0005vv-TB; Sun, 20 Oct 2024 10:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t2Vdj-0006Pp-5j
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 09:06:35 -0400
-Received: from mail-mw2nam12on2069.outbound.protection.outlook.com
- ([40.107.244.69] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2WXf-0005vV-2g
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 10:04:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1t2Vdh-0006YY-0H
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 09:06:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jojxCZoSx0W4TOpZZPKoAAG2+y+Z8Xg+yUfuoXOP19/SkCpo6M55lteB2HtLKu5sX7Y3K//C9zxFsgF6VRbt37XJ0l+53SrBO7oWxh0zuQG0HCaH7p1Ngro3XvM1OO2zJpIAGUbiW1/BgkreJMgboIzJwIFLFlsXQDqg4fMQsDbhVeoN3Tns2Ih6zbqMEgL4hTgOhCctOfG1L2vwsEFuvPiih4+FKMCIRi6CSEooiGD15ZpSQKw0VbhI+pp7wlsBsUqw6J10R6yKT7wMoEz/aMfAyRAf9lyErPfS1zmw3nu9OeEJYBYgwQAOcZJyl7yBYyKfWfKPEFkMISQRL1QsVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/rN1XjDfNqpntAwwv1iXDekLCdezAfuraYXpHDUB6+c=;
- b=LkkUDfrpHaHVs//yUUhRi2u7LVt59/RUPiMiiT3p8nWtM+Vy0O2Vp/ZaDxn45Mu0BrF00JLvuNUWdeUdV7yY/O71Emo95fp3nymO9g1Pae5PxY2i/wtQNncAaTV9dGp0AVTD8kwROmV/Vk9KPe+k94e6gO6P3USV+2tsEjQpD89NrBo5u5O1xhiiOG1kAKDr3C42bjDJKKDH5X4kcXxV0+Scu5IjIyOUGQ6Gbk4YMLnCnzJpxZ4S1tyI/pn4CSuPBq9czt6qJZkPDs9QzHfg69kR4+ae7qfS7NZQDt5C5oky81YkNC11xPXgJFID/L9vy4ix/SFOlQA0QWFbHtSeKA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/rN1XjDfNqpntAwwv1iXDekLCdezAfuraYXpHDUB6+c=;
- b=AwGX1N84F+NVy2JlTrNNLvESJiLuVHZAtUbeAsdp9PYgcIeImxe6Aru1c3UUDYLmAJA2b4oT9xvAmFBsbJcDebeYzq0brQGv6Wo9KlsOgmKUYCUgrsBEJDi+moRqxBcm3eMg8EqhjrutaOk+ZAbWafBnxtlAbtbG4i6hl1EXeP759vlxHgZq51FKepenuGsREtZQ1juMAWOgG9er3Hnfc70opDJLFt+Sz4iOPBDCLHyd4Lm/pSP2VPz1wDE4FJ9Spwqwzr9b07jEt/OmwEPxRy3c5k92Rac8cNNeu8opIUKM+VQX9iiQaO32a7Lrb6vMAiXqBL5TRS9/HQu+FS7/KQ==
-Received: from BLAPR03CA0039.namprd03.prod.outlook.com (2603:10b6:208:32d::14)
- by DS0PR12MB7995.namprd12.prod.outlook.com (2603:10b6:8:14e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.27; Sun, 20 Oct
- 2024 13:01:24 +0000
-Received: from BL02EPF0001A0F9.namprd03.prod.outlook.com
- (2603:10b6:208:32d:cafe::b9) by BLAPR03CA0039.outlook.office365.com
- (2603:10b6:208:32d::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28 via Frontend
- Transport; Sun, 20 Oct 2024 13:01:24 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL02EPF0001A0F9.mail.protection.outlook.com (10.167.242.100) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8093.14 via Frontend Transport; Sun, 20 Oct 2024 13:01:23 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sun, 20 Oct
- 2024 06:01:11 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sun, 20 Oct
- 2024 06:01:11 -0700
-Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server id 15.2.1544.4 via Frontend Transport; Sun, 20 Oct
- 2024 06:01:09 -0700
-From: Avihai Horon <avihaih@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, Avihai Horon
- <avihaih@nvidia.com>
-Subject: [PATCH 0/3] vfio/migration: Some bug fixes and cleanups
-Date: Sun, 20 Oct 2024 16:01:05 +0300
-Message-ID: <20241020130108.27148-1-avihaih@nvidia.com>
-X-Mailer: git-send-email 2.21.3
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2WXd-0004Eu-8E
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 10:04:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729433059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8FlJt8mPZIXVABfLuiOXyn44/7JT+JqMaoMZBDZJknU=;
+ b=RSiLm3bdk10O+5DzsN5cuMAC5+RS6Q9I9OsrgPFQTUxTOzG1g/mSbgiBarW3vF6KVayxn1
+ KNeP0piUFK4EdawSyYh8uGR/XkFR2LveHCeyeQtRkD86ctL6JktHMa5WdNlhx5XX8yA8Kx
+ EDiiUw087FzJpR/GeSU9ai3c5erQ0VU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-274-j_m6gUE9OVKNcyr4P5OurA-1; Sun, 20 Oct 2024 10:04:17 -0400
+X-MC-Unique: j_m6gUE9OVKNcyr4P5OurA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4315a0f25afso25282265e9.3
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 07:04:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729433056; x=1730037856;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8FlJt8mPZIXVABfLuiOXyn44/7JT+JqMaoMZBDZJknU=;
+ b=lFQFA8Ze4AzZcGTLvDr8NiDMxSwRod0eb+KIRYl6xchWdHs8JOoV+LjeA1xAoNCf7m
+ RFs9C31u7kk3+3siTevWkMaD7P8iTYMkYrRtZmCqXWD+PA58xJnVLL/6mejzEIuH39Eb
+ sGmBDIDzjoI/DsU/lFeWZqJQu4OGoS8u7LSCmuXkqxpp+wFhX6seYD7BiMZpAdXmNgjv
+ 61zjYKX1wTSKplKxxqzZQ1LSKQQwq2DaNyNT8i4uD/sF4b73wHFxsZje6DLBgJcG77yo
+ 2XFnQFkvz03cpa5wpcOkVz5NKX2kQnh1UM62Hr2vw+Ie0Vv5Idr3TOdRB9V1NOpfvdOM
+ v1hQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUI0Ub9rATmbaNtd/1BmNRl+kDaO5fPoBBR47KEG77CoRegF6qpF+OA0ugtwzwuf0+GDPfXvkMAl6PZ@nongnu.org
+X-Gm-Message-State: AOJu0YxELuJt1VQ6XHBnYfsSOt+j11ML5epToMbNtSZzecAiRdt6ZBln
+ qYuwY+m+8lRLI8jYcT7gvDUB2WbLDPhq7pT25Csc2nIxaLuEPbsCJBemfIIDIdfotbdTDe7siZO
+ Kn250dTOprABwkF6TGc9w+Ie6LunI310btQwcbEYrshoOYTmVKOza
+X-Received: by 2002:a05:600c:5489:b0:431:5df7:b310 with SMTP id
+ 5b1f17b1804b1-4316162800bmr62230505e9.8.1729433056086; 
+ Sun, 20 Oct 2024 07:04:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEH+mew9NZxIKpufEAl7qhfK3U9q6zL/jFCmLUul4HxBP0dnCqNmDKaK0F50fNMV6hx38fOAQ==
+X-Received: by 2002:a05:600c:5489:b0:431:5df7:b310 with SMTP id
+ 5b1f17b1804b1-4316162800bmr62230355e9.8.1729433055738; 
+ Sun, 20 Oct 2024 07:04:15 -0700 (PDT)
+Received: from [192.168.10.27] ([151.95.144.54])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43160682586sm77271525e9.1.2024.10.20.07.04.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Oct 2024 07:04:14 -0700 (PDT)
+Message-ID: <e98fb78a-ff2a-4c32-a7b0-95b73b54d94d@redhat.com>
+Date: Sun, 20 Oct 2024 16:04:11 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A0F9:EE_|DS0PR12MB7995:EE_
-X-MS-Office365-Filtering-Correlation-Id: a3fa9710-e193-4525-7c72-08dcf1074d00
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?TNl9BnJq1m5GPr7sOR/1rgsNOFFEKztMX5azwezAh0DFYqojnqYvlsY7DJ2q?=
- =?us-ascii?Q?CUSTHkgROJHI+uMBlurPI6dvMClZdB8r9K+X4shqe8Wec3uqOplSqQK1DZxj?=
- =?us-ascii?Q?5T1Rd37ROyfcHQg24N9VTcydqHFsC+b3YM+BURDzc3iQ4+FlSu8cOKX6ewnN?=
- =?us-ascii?Q?sCh7TvkgOoTB3UKrH75anKd6Vno3ykGt6lqVYILR8IxAEMxzd0gB4hwRy2U9?=
- =?us-ascii?Q?lU6zV8x/EuBbFh4eTypmx4rJ30xS+JLmJtpMaom1FyDs4lrT0pmb2cUxiiNy?=
- =?us-ascii?Q?X8wPkpdYlQ9Hyb6RU98skyKMpHGUXXaLDrWh9Fi5bHeCYDjb/Gb7gG0qimeZ?=
- =?us-ascii?Q?cu3dnekwcL7U+dzKc2StVvL+MQcmvlpdDShK+5bY0W09MXUwE2dlEdcwx0bU?=
- =?us-ascii?Q?kMUyuujdzEArhCZI2dcAPLQlrjDLoACt0PN25WjFuOcfbsMUr9bGj97RIm0H?=
- =?us-ascii?Q?DQfT22ALPnF+FKkIMk/NczEi9+rt9yoIiIVs/xlLurCyjJwyjc9y8cRzdlbB?=
- =?us-ascii?Q?QrxhvOZp3UKXz+DngAI5qN3niirca0g+F5BgcaWEQHsEKTXHNB/P9i6SzgbJ?=
- =?us-ascii?Q?XN84RYwRVuCOS4DwtxP1U9OsV84MwlYUbRwrXXp5yFCKuBQ1e0pNyuSq0Fa8?=
- =?us-ascii?Q?mCTLv1tbQAZT8Et/tGynilfeKbMgbh4dEs/p8gkEHVVhJflvF84fkPd3BEGj?=
- =?us-ascii?Q?BalWmoU1kX34wyvoKCY2l9WTxQhNBGvEB82aGelwu12yRXQoY7PLUSxHFzyk?=
- =?us-ascii?Q?aglLbCFx/s4I0SDZEDIt+vU27rGpIirr6b2+QpDSTLFHF9qGW7swF3+U4dSW?=
- =?us-ascii?Q?UbQHPWBqhfa5HqH4N+vpGxOtIHaGER5BvCPalDQCQo9vUEc/dQctS19en1v/?=
- =?us-ascii?Q?m2Rdrxe0Vr3U8L4i/rK53QRt3kD88cBRikihF1+35CXMG9kgWxQ4rsMCeP2+?=
- =?us-ascii?Q?tokkyk44j9dPk+Pilz7/Fmu2UrOsu6ia8Bpe06F5oelKfhpK7Ng9FonZ57o7?=
- =?us-ascii?Q?r0kFu3/oci2uMIyYSxEa4PBoQWeSBsiAbzAVx4bxx7K+AX3yO/BMUi9ktiW8?=
- =?us-ascii?Q?ANT2xGM3zFBU0dJlqYIZN3ApooHrjqme8X6X0jLzsvFIKvWL3FKnM0jU7AAK?=
- =?us-ascii?Q?iIxvB34U1ViHne+Wo9jdCmxuTZlsF5wzin/oqlk/gB+1nuc60PkWEd1M6GB/?=
- =?us-ascii?Q?+qYwIcX48VtBkvQpsnCbFrGjkpBZaGUWYsawR8SqU4DzbGmS1BwO1ALKQsSo?=
- =?us-ascii?Q?SlEmlYqBPen1snSGjIxSXzMsPfutbOKUkDLZLn0tTzlttS5wZmd0OPNZ5azH?=
- =?us-ascii?Q?Q0UfDFl6DgL2BIZQ2hBDaWv6JR9HJq6KEa7aWfqURRA6tO3I62MmZUkzyC4O?=
- =?us-ascii?Q?2jIZ8Je15KAMmPSxOitFiZntEv3e1k9jeyYuuwtSXAbEVxUKxA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2024 13:01:23.6679 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a3fa9710-e193-4525-7c72-08dcf1074d00
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0F9.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7995
-Received-SPF: softfail client-ip=40.107.244.69;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] Revert use of clock_gettime for benchmarking
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+References: <AM9PR09MB485113D76C5AE02516C08E8E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <AM9PR09MB485113D76C5AE02516C08E8E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-1.699, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,23 +144,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This small series contains some bug fixes and cleanups.
-Reviews are welcome.
+On 10/18/24 15:20, Aleksandar Rakic wrote:
+> This patch reverts the commit (with SHA
+> 50290c002c045280f8defad911901e16bfb52884 from
+> https://github.com/MIPS/gnutools-qemu) that breaks for mingw builds,
+> where clock_gettime and CLOCK_MONOTONIC are not available.
+> 
+> Cherry-picked d57c735e1af1ca719dbd0c3a904ad70c9c31cbb7
+> from https://github.com/MIPS/gnutools-qemu
+> 
+> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 
-Thanks.
+Can you change it to use qemu_clock_get_ns(QEMU_CLOCK_REALTIME) instead? 
+  It's the same as clock_gettime() on POSIX systems and works on Windows 
+as well.
 
-Avihai Horon (3):
-  vfio/migration: Report only stop-copy size in
-    vfio_state_pending_exact()
-  vfio/migration: Refactor vfio_vmstate_change/_prepare() error
-    reporting
-  vfio/migration: Change trace formats from hex to decimal
+Plus, because the result is just use uint64_t, tsub and tdiv become 
+simple subtraction and (double)a / b respectively; and timestr is also 
+just as simple with:
 
- hw/vfio/migration.c  | 34 +++++++++++++++++++++-------------
- hw/vfio/trace-events | 10 +++++-----
- 2 files changed, 26 insertions(+), 18 deletions(-)
+-    double frac_sec = tv->tv_nsec / 1e9;
++    uint64_t sec = nsec / NANOSECONDS_PER_SECOND;
++    double frac_sec = (nsec % NANOSECONDS_PER_SECOND) / 1e9;
 
--- 
-2.40.1
+Paolo
 
 
