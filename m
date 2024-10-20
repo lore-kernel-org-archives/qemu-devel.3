@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC89D3C92A
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 20:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A009D3C92D
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 20:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2cBL-0007hW-CP; Sun, 20 Oct 2024 16:05:43 -0400
+	id 1t2cNa-0000dz-Vx; Sun, 20 Oct 2024 16:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t2cBK-0007hB-Bw
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:05:42 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1t2cNZ-0000dr-T0
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:18:21 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t2cBG-0004QH-TA
- for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:05:41 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-20bb39d97d1so34415225ad.2
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 13:05:37 -0700 (PDT)
+ id 1t2cNY-0005Ih-Ba
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 16:18:21 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7c1324be8easo3400736a12.1
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 13:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729454737; x=1730059537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729455498; x=1730060298; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MlQBpHmMmDsdDctkEulIme4QCbIC2xCJIRQDh0Wlj8M=;
- b=r0w9w9wqNATc/dhhbWE5hXwZE1eEvgYm/bj/+Hy+bScYwG9a6iq+pERbLnEL8Poi3G
- nuUZfAbqVW27PLV/l8vJFdbPqvAgRBgRkWGOFxKVGZ5tNeusxuhm5y+SDVCzkSXWrXjS
- QnkgJtyht6aubPIR5gvIUsGMZWjuRs43MQmM1p21hg9UfT8JjskAif3BzPUXybwuyIjC
- PJfB0P8wZPKiLxJ/YSvWSndpjvjX6PisjFBvEsyH4qxqPKyq/DRtq47LgvoORMaQQ9ui
- yESxDTeZCllinpg5O+rrx0wJQlnCg9E+TLEdni0RYq8n5Jw/E23xPI2+0Vm48pLfvgsD
- 4TUQ==
+ bh=8xWP5gP8x73DMuJxldxKhHQh1gMj6RimeiQtp9i8ONY=;
+ b=kZvCNP208UoCbf3dHfnzqRH32ersqXJaVndRpT8l2IG3G9yCx7S0bm93jlv8A9v33l
+ CjWUDtbsjWNzunsp+lduGzxuc1Oz2UlEyXf01GMuC1GuLzJzE63hADMUkpk0RqU/52e3
+ tPelYpUseVJRuQo/avnEAiZJ8uyFVw+bIisrV1cg8mpxBdOxDB2SAiX3UxQoWPt+v4OT
+ YlHROthF0V0/w0iUkkVGhDOAuwCWMyYZWRVDTs00WU8BGctaDCreFlptmTqgc4hh18gH
+ oRAjwT9xiWN0St3osJnZ3JCooyqt69wJAXzJX6+ZELTXgTF97F6e96n3Ptrd21pXMKdW
+ baow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729454737; x=1730059537;
+ d=1e100.net; s=20230601; t=1729455498; x=1730060298;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MlQBpHmMmDsdDctkEulIme4QCbIC2xCJIRQDh0Wlj8M=;
- b=GX0JcrqkHshVVzrZmcFlzOYsQqVBEOTFOidY1fnsY/PsbQgFWkKmxpyafidcGuj0o4
- rw/oVLH1Xor6zmoeBZhgK6Qnn+W8DL1xASfKgbceGuj5lssmnu9r4rWVwZHuomxE1x7e
- BhVLAX4s9e3m8dtVGLYti7ywOiqDdt9LDECVkRBvemlLC3X4D9qm46PVzGMnqauXjxNp
- PyRw1NjDOhKtp3KR2LrbzwjFxmTsFqP/r6Qx2IeYKnd48GRe4veZaqwbhuN4ZxrnxPNf
- 2uX5FiDuq75zsyWaMpeM8f57UxhtpWNTzuq5pqnLHSjU85uTYtz2Iv0JpUE/mqyqvj9D
- dfBA==
+ bh=8xWP5gP8x73DMuJxldxKhHQh1gMj6RimeiQtp9i8ONY=;
+ b=JePadMNEh1os40gAPxvmMVzPHbbxkPQ96vBXsfsGaPi/h31oyWfTNq49GRg1wlsVO3
+ QkAbCEmaVqiRWTCpmsQ+wXVWdsUT4n5I0xUzLLpRWQu17ZWaMPxABKWNxw7LP4ACnwjH
+ LRXsOpm13tHKdCxmWzDO0Y8yApKslavSFU3HpRhKVUm2soqjdEMhnXqTSTnDUuSLUt5X
+ VqvptmMJgot/JGnI2jLAAgZJh/WYH496h+M4xnFeaWHEUvxoth7dF/BoQlLyx/CbRTC0
+ DZJFbc7rFjP9nkRcDno8zqgNYHvYhpg8oTy5n1cLH9QFV13StyWdSzJN6AmDQvV48chH
+ HxbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWo0koKOZzUN1Na3G8eIUhndrfOLZqxEyKsafiWPnIOAKnQgwd8uX6u19ni/9OWzRK6zJ0H8pbDjgt@nongnu.org
-X-Gm-Message-State: AOJu0YwNLND3a1AEAz9YFb4HYXWBfAEw7fNvqn779SFPK0pk4NI3S1PL
- wdHIwHHoiLXJREvHbiYT8BpeEIhdCY8v8YaP5SCF0wozCGl0QEP5XujTW/a5bX81NIXkb+fM9s2
- c
-X-Google-Smtp-Source: AGHT+IGMmn/fzPs7fhjmZqM3AZaBY56bqEQ9BnZ/9ShF50U+05CNhgRpjIwCc+MY/zqMpQ99dnPyBQ==
-X-Received: by 2002:a17:902:e744:b0:20b:770b:ad3b with SMTP id
- d9443c01a7336-20e59a9c3edmr122185085ad.0.1729454736725; 
- Sun, 20 Oct 2024 13:05:36 -0700 (PDT)
+ AJvYcCU/9cjVGKrYIXbvmJIp5Or/2hMYEKyN7BLAnl1YzdA/sqXovwDdndPUC8wrw7M160C861RVkAmt6Yht@nongnu.org
+X-Gm-Message-State: AOJu0YyGlnrIQBU5+iUY//4Xwh83alNvemqI3FZPVc7DYmSq3f+Wba0A
+ wM4EYwC0DENuYaSu83ZwzdruM8giFhLyi1GoqWaUs9QgCYdvN/jSt/IKMBrbJvw=
+X-Google-Smtp-Source: AGHT+IERLltircntvkDwAdqhxHsdNqYZ3ecGxDXE+O1NbeDwwTqHEmjSJ+DuUFV+qERMLt+BRbpu+A==
+X-Received: by 2002:a17:90b:4b92:b0:2e2:c744:2eea with SMTP id
+ 98e67ed59e1d1-2e565063adcmr12536077a91.13.1729455498235; 
+ Sun, 20 Oct 2024 13:18:18 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabc118fsm1635386a12.70.2024.10.20.13.05.36
+ 98e67ed59e1d1-2e5ad366c7asm1984139a91.19.2024.10.20.13.18.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Oct 2024 13:05:36 -0700 (PDT)
-Message-ID: <d36362ab-a99e-4e3f-b6e5-13890e20bc6a@linaro.org>
-Date: Sun, 20 Oct 2024 13:05:34 -0700
+ Sun, 20 Oct 2024 13:18:17 -0700 (PDT)
+Message-ID: <bf2c054f-8664-41cd-9041-795adac25d2e@linaro.org>
+Date: Sun, 20 Oct 2024 13:18:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/14] target/i386: Wrap cc_op_live with a validity check
+Subject: Re: [PATCH 07/14] target/i386: optimize computation of ZF from
+ CC_OP_DYNAMIC
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20241020155324.35273-1-pbonzini@redhat.com>
- <20241020155324.35273-7-pbonzini@redhat.com>
+ <20241020155324.35273-8-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241020155324.35273-7-pbonzini@redhat.com>
+In-Reply-To: <20241020155324.35273-8-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,20 +99,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/20/24 08:53, Paolo Bonzini wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
-> 
-> Assert that op is known and that cc_op_live_ is populated.
+> Most uses of CC_OP_DYNAMIC are for CMP/JB/JE or similar sequences.
+> We can optimize many of them to avoid computation of the flags.
+> This eliminates both TCG ops to set up the new cc_op, and helper
+> instructions because evaluating just ZF is much cheaper.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/cpu.h                |  1 -
->   target/i386/tcg/translate.c      | 21 ++++++++++++++++++---
->   target/i386/tcg/decode-new.c.inc |  2 +-
->   target/i386/tcg/emit.c.inc       |  4 ++--
->   4 files changed, 21 insertions(+), 7 deletions(-)
+>   target/i386/helper.h        |  1 +
+>   target/i386/tcg/cc_helper.c | 20 ++++++++++++++++++++
+>   target/i386/tcg/translate.c | 10 +++++++---
+>   3 files changed, 28 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/i386/helper.h b/target/i386/helper.h
+> index eeb8df56eaa..3f67098f11f 100644
+> --- a/target/i386/helper.h
+> +++ b/target/i386/helper.h
+> @@ -1,5 +1,6 @@
+>   DEF_HELPER_FLAGS_4(cc_compute_all, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl, int)
+>   DEF_HELPER_FLAGS_4(cc_compute_c, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl, int)
+> +DEF_HELPER_FLAGS_3(cc_compute_nz, TCG_CALL_NO_RWG_SE, tl, tl, tl, int)
+>   
+>   DEF_HELPER_3(write_eflags, void, env, tl, i32)
+>   DEF_HELPER_1(read_eflags, tl, env)
+> diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+> index 40583c04cf9..c24e6a14c07 100644
+> --- a/target/i386/tcg/cc_helper.c
+> +++ b/target/i386/tcg/cc_helper.c
+> @@ -95,6 +95,26 @@ static target_ulong compute_all_adcox(target_ulong dst, target_ulong src1,
+>       return (src1 & ~(CC_C | CC_O)) | (dst * CC_C) | (src2 * CC_O);
+>   }
+>   
+> +target_ulong helper_cc_compute_nz(target_ulong dst, target_ulong src1,
+> +                                  int op)
+> +{
+> +    target_ulong mask;
+> +
+> +    if (CC_OP_HAS_EFLAGS(op)) {
+> +        return ~src1 & CC_Z;
+> +    } else {
+> +        MemOp size = cc_op_size(op);
+> +
+> +        if (size == MO_TL) {
+> +            /* Avoid shift count overflow when computing the mask below.  */
+> +            return dst;
+> +        }
+> +
+> +        mask = (1ull << (8 << size)) - 1;
 
-Wrt keeping the array,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+FWIW, MAKE_64BIT_MASK(0, 8 << size) does not have the overflow problem.
 
 
 r~
