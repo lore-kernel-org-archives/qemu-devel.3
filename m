@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA6ED3C92C
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Oct 2024 19:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F2BBD3C908
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Oct 2024 00:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2FEO-0002zU-Po; Sat, 19 Oct 2024 15:35:20 -0400
+	id 1t2Jky-0001Fe-7O; Sat, 19 Oct 2024 20:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t2FEL-0002yr-0F
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 15:35:17 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t2FEI-00085n-Ah
- for qemu-devel@nongnu.org; Sat, 19 Oct 2024 15:35:15 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-71e5ae69880so2561962b3a.2
- for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 12:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729366512; x=1729971312; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jMYMUPPeR8e7kVcIuMTmEWr4UdhcI/rIQip2UFKGRxE=;
- b=SLO8crD/MEoblw5ik8EgyV0PKdhH+9j3aUykSFV6S0Qs4v1/YuR9TofPQzJUbMlQWu
- J2r9qSfER8KNpWIShv/2bZdPc++SOZnvxU7TFY3Mn/diVFEY42nZNrBE0tD+/lsQbU+B
- btND7xb4BaKNmr2B+KLFufhs73QNtMZKNwn1GP+zKp+0bSBomaqGpb0/ayIR2jjS3zUm
- CGDHT3Sgh4GK7p97sCrQVyQQ8MkOqrdWUA6DMPlgPTEl1AyFaKjyvyi6C3uhz7REPMOh
- E1MFvFFWJ/CJiFBIfegq5ejNeljmRbZpoPAEcDmNdXJ9BjzHEtItum4hZgxC4R5pTjaQ
- XS0w==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t2Jkw-0001FD-DR
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 20:25:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1t2Jku-0006uo-Ab
+ for qemu-devel@nongnu.org; Sat, 19 Oct 2024 20:25:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729383908;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kvw50wVORKIfWSnXkRoGS7iwCbT0dnFS0KOL060uOz8=;
+ b=TNSp0MkpxghRPnpHfMyOi73sKUNn4KgSbuHjEk0gQsyNGcghZpLKZWvV901dMG2E+a4TpB
+ ZpPGjQkDFlidb4e9Oo4BSfjRbiuvqKFoqeE3VCWdLQsyy87rIU0Tmqwyi4q9kBrh7ujtCw
+ nna+zh+hkEiVV6/w8s+sw9y1ZZjHZ9k=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-219-vQTOhQdnNaOQMG4BMge_2g-1; Sat, 19 Oct 2024 20:25:06 -0400
+X-MC-Unique: vQTOhQdnNaOQMG4BMge_2g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4316de700f2so3463595e9.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Oct 2024 17:25:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729366512; x=1729971312;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729383905; x=1729988705;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jMYMUPPeR8e7kVcIuMTmEWr4UdhcI/rIQip2UFKGRxE=;
- b=E2m0ho5pU3XoMjsSBIcwBZzTtFQNnuurrXgUohz0a1LdkiT6UyBwvY9pPDeDHIN0rp
- p2Fs+ONROXJjH587TPvN9fCjJmfytN2uRaYj9BOh7daxjXqHRBOXrY3CJW47ShGt9rGW
- 3gB7IJgfO2pC8g17ZsfHTg6n8UpsPw9zTDQDpZWMi7G+FbO6PJAsTVIyBVEmjWY3pl8W
- nwAGxxtx72qR8ehbIJQfMFZdZSewnunGgvGPp40XbBHDTiknLIIQ6jvMUjFY9XJIhgpy
- fF/QHBb4ClEcqUfYwaQCP11T442Qd21Xuw6ViS2Xu2t82SjUR0xpnHOFAVzen25D4uvG
- sZLg==
+ bh=kvw50wVORKIfWSnXkRoGS7iwCbT0dnFS0KOL060uOz8=;
+ b=P7Hth+NPsJghIi6NTU+lF3gFrzqZeMJmPNhaaiMXWCA2OE+IQlPjPQf0kM0JWTyElL
+ cE5fN0C54H1Ym9ax+pwuciUXXWN58y0slIZLl/OyfCRoTj+VLKVyzuk1Rqm4D2x3EIX+
+ pQg1LYHus2kUnKfP3Hc2RitPtMOPEOVEBmjBbrZnwMPjJC9faLCsh3wykM6lh9LggTUb
+ UaB0R5fG6aVsWtjnkuLutL+h+8/zDHiY1JYB8VL8QNudlS4qAuE40cWPcb48guitmwMz
+ nxdY0PcCGjHDRFQCAVI5WrQkLUKtrVe8UwAG5TupJoj+jQurGwCRuLvBKNNUZQM4xShP
+ 1YaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgSOUN0jdtV2qYfEms6rCOWOwGhUNl4Ukx0qV8r1ef5Ky1nDv7/fZHad7bwBoejlD4HATi0PbjASjF@nongnu.org
-X-Gm-Message-State: AOJu0Yyv4xiSFkz+VrBLBGZNyBWLY9AEApiZi0yCiCeHKZ/C+MdQ2rmj
- HylgF0k9do+IHA7lIO3g7a2xqwu1aWI51w4B/ZR1iaZvZANj9WJA0xzlsLy+TOo=
-X-Google-Smtp-Source: AGHT+IFhc2BzJoHRB4t+Vt+Hc/frpGtJHVTItTmwuFZSAbDOOKtLux/D6vBO5DplX6x9arKeN0uHwQ==
-X-Received: by 2002:a05:6a00:2353:b0:71e:744a:3fbc with SMTP id
- d2e1a72fcca58-71ea32cff62mr9593195b3a.21.1729366512581; 
- Sat, 19 Oct 2024 12:35:12 -0700 (PDT)
-Received: from [192.168.100.35] ([45.176.88.162])
+ AJvYcCUrDKxRk338QUReT7xy1aiDF9sWqJ1V2HEnuuHgvLPfYFjbpl41vLmgkJwgMZoHOb0vjK+nAPp1QC07@nongnu.org
+X-Gm-Message-State: AOJu0YwRXKcrMbEkaE4hR7Vdj8NfNaeHF93q4WdMQVOq+2z1fVJ45h83
+ XJTOVIeJ1baTPJFb/3BR3tGw80JXEDL/NBucbdOA4Y/rcOvgKizWXlpOQPZitsb8lT4Bx7GD74s
+ l1JYigxwaviZcY3W6zV/W3FpobzkeZe9A1MEoJE/lCOiZGsrPlx27
+X-Received: by 2002:a05:600c:5120:b0:431:5533:8f0b with SMTP id
+ 5b1f17b1804b1-431616a3a96mr54681775e9.32.1729383904993; 
+ Sat, 19 Oct 2024 17:25:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+g3bl+/izovNmul847299Mtm1dab1fu+xK9SWhM2VVTWpoDTV6u3AwoZCN/YnUULpW6ggkA==
+X-Received: by 2002:a05:600c:5120:b0:431:5533:8f0b with SMTP id
+ 5b1f17b1804b1-431616a3a96mr54681665e9.32.1729383904625; 
+ Sat, 19 Oct 2024 17:25:04 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:7405:9900:56a3:401a:f419:5de9])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec13ea0ddsm95964b3a.143.2024.10.19.12.35.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 19 Oct 2024 12:35:12 -0700 (PDT)
-Message-ID: <5ae0d26e-d969-48e3-9bfd-8a07db727620@linaro.org>
-Date: Sat, 19 Oct 2024 16:35:07 -0300
+ 5b1f17b1804b1-4316f58ae0asm8000365e9.23.2024.10.19.17.25.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 19 Oct 2024 17:25:03 -0700 (PDT)
+Date: Sat, 19 Oct 2024 20:25:01 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v2] intel_iommu: Introduce property "x-stale-tm" to
+ control Transient Mapping (TM) field
+Message-ID: <20241019202416-mutt-send-email-mst@kernel.org>
+References: <20241010075354.3582221-1-zhenzhong.duan@intel.com>
+ <CACGkMEt+M=nEiivOM4OPm6jxe9ygDm-41nDxQUCBMskETFAO8Q@mail.gmail.com>
+ <SJ0PR11MB6744C0B9DE8D32354242099992472@SJ0PR11MB6744.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] Revert use of clock_gettime for benchmarking
-To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-block <qemu-block@nongnu.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <AM9PR09MB485113D76C5AE02516C08E8E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <AM9PR09MB485113D76C5AE02516C08E8E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <SJ0PR11MB6744C0B9DE8D32354242099992472@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.25,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,51 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 18/10/24 10:20, Aleksandar Rakic wrote:
-> This patch reverts the commit (with SHA
-> 50290c002c045280f8defad911901e16bfb52884 from
-> https://github.com/MIPS/gnutools-qemu) that breaks for mingw builds,
-> where clock_gettime and CLOCK_MONOTONIC are not available.
-
-Isn't get_clock() what we want here?
-
-> Cherry-picked d57c735e1af1ca719dbd0c3a904ad70c9c31cbb7
-> from https://github.com/MIPS/gnutools-qemu
+On Thu, Oct 17, 2024 at 07:57:53AM +0000, Duan, Zhenzhong wrote:
 > 
-> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
-> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-> ---
->   qemu-io-cmds.c | 77 +++++++++++++++++++++++++-------------------------
->   1 file changed, 39 insertions(+), 38 deletions(-)
+> 
+> >-----Original Message-----
+> >From: Jason Wang <jasowang@redhat.com>
+> >Subject: Re: [PATCH v2] intel_iommu: Introduce property "x-stale-tm" to control
+> >Transient Mapping (TM) field
+> >
+> >On Thu, Oct 10, 2024 at 3:57 PM Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >wrote:
+> >>
+> >> VT-d spec removed Transient Mapping (TM) field from second-level page-tables
+> >> and treat the field as Reserved(0) since revision 3.2.
+> >>
+> >> Changing the field as reserved(0) will break backward compatibility, so
+> >> introduce a property "x-stale-tm" to allow user to control the setting.
+> >
+> >Nit: I think we probably don't need the x prefix? As we try to
+> >maintain the compatibility via:
+> >
+> >> +    { TYPE_INTEL_IOMMU_DEVICE, "x-stale-tm", "on" },
+> >
+> >?
+> 
+> I'm fine to remove it. But,
+> The prefix "x-" is used to indicate that a feature is experimental.
 
-Please Cc maintainers (done now):
+No, it is used to indicate that the feature is not part of
+a stable API.
 
-$ ./scripts/get_maintainer.pl -f qemu-io-cmds.c
-Kevin Wolf <kwolf@redhat.com> (supporter:Block layer core)
-Hanna Reitz <hreitz@redhat.com> (supporter:Block layer core)
-
-> @@ -904,7 +905,7 @@ static const cmdinfo_t readv_cmd = {
->   
->   static int readv_f(BlockBackend *blk, int argc, char **argv)
->   {
-> -    struct timespec t1, t2;
-> +    struct timeval t1, t2;
->       bool Cflag = false, qflag = false, vflag = false;
->       int c, cnt, ret;
->       char *buf;
-> @@ -964,9 +965,9 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
->           return -EINVAL;
->       }
->   
-> -    clock_gettime(CLOCK_MONOTONIC, &t1);
-> +    gettimeofday(&t1, NULL);
->       ret = do_aio_readv(blk, &qiov, offset, flags, &total);
-> -    clock_gettime(CLOCK_MONOTONIC, &t2);
-> +    gettimeofday(&t2, NULL);
->   
->       if (ret < 0) {
->           printf("readv failed: %s\n", strerror(-ret));
+> Couldn't we have a property both experimental and compatible?
+> I see a lot of such properties:
+> 
+> # grep "x-" /sdb/qemu/hw/i386/pc.c
+>     { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
+>     { "ICH9-LPC", "x-smi-periodic-timer", "off" },
+>     { TYPE_INTEL_IOMMU_DEVICE, "x-stale-tm", "on" },
+>     { TYPE_X86_CPU, "x-amd-topoext-features-only", "false" },
+>     { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
+>     { "ICH9-LPC", "x-keep-pci-slot-hpc", "false" },
+>     { TYPE_X86_CPU, "x-vendor-cpuid-only", "off" },
+>     { "ICH9-LPC", "x-keep-pci-slot-hpc", "true" },
+>     { "ICH9-LPC", "x-smi-cpu-hotunplug", "off" },
+>     { "ICH9-LPC", "x-smi-cpu-hotplug", "off" },
+>     { TYPE_X86_CPU, "x-intel-pt-auto-level", "off" },
+>     { TYPE_X86_CPU, "x-hv-synic-kvm-only", "on" },
+>     { TYPE_X86_CPU, "x-migrate-smi-count", "off" },
+>     { TYPE_X86_CPU, "x-hv-max-vps", "0x40" },
+>     { "i440FX-pcihost", "x-pci-hole64-fix", "off" },
+>     { "q35-pcihost", "x-pci-hole64-fix", "off" },
+>     { "kvmclock", "x-mach-use-reliable-get-clock", "off" },
+>     { "ICH9-LPC", "x-smi-broadcast", "off" },
+> 
+> Thanks
+> Zhenzhong
 
 
