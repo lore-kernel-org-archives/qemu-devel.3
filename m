@@ -4,77 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA40BD0E6CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A46D0E6CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2nsK-0007xD-1F; Mon, 21 Oct 2024 04:34:53 -0400
+	id 1t2ntS-0000Gf-SA; Mon, 21 Oct 2024 04:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t2nsG-0007um-Hz
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:34:48 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2ntG-0000CL-By
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:35:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t2nsE-0005Ce-2X
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:34:47 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2ntD-0005QC-8t
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:35:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729499684;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729499735;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KKo+r6t/x9djfPmI784QlQOfkufBFGpF6QbYJkAYTyg=;
- b=C93Ju6bqaYUQ79k5Is0ypnN6N2V60TwNby/kOBNkLqKgYmQ/tT9nOXp81dda/yWhIalu10
- eKHM8ENmIZZsnwvIsguNUUxwjpJc6e0fMkLHapvF04vsJWN3Xv0ol4mtj8BK9Sb1EtJxgO
- 5piHYck2A3Lu03ERh+m65ANFnqOPSlg=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-ycbf6NiJNdWIyEY2rF4oPA-1; Mon, 21 Oct 2024 04:34:41 -0400
-X-MC-Unique: ycbf6NiJNdWIyEY2rF4oPA-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-71ea6b901fcso4337466b3a.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:34:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729499680; x=1730104480;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KKo+r6t/x9djfPmI784QlQOfkufBFGpF6QbYJkAYTyg=;
- b=qqTf1tpOMTfyRsCTTFbwe39WoiaR7F628PHOSfM5I3LH7wOHbSjzo9hvSRpVhiuwDq
- 3j2gSQLHZtB05JwIuUGHPx2x+QU4SrGJ0lsX4QMM5f2YSDo9cc0t8K45trhRO0b8N2QI
- Uo7t41ODmqDd6l2q6Tvsjyp7mOjdO4dcLTd/T/4JvHuWpXDy61IWsNBq6OAoqx+WpUqg
- djPp4Gal4wMQsIp+U1B4HXZSDn+bJ5uYcLhI98izXkVO0d+C74+X2t4MP1BYgulu0FTq
- mCMT+0dUhmfT80dYCFRnyQ92RfgQ72ryoF9iLZmzKGSFJPn0UjS889IPgq0JaycYTTsj
- 3hiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8BSzo966OOxiemG9nV/V3psxTjdcPI8aLsy5d/mFNJnbFHSQicIkznZiEl3u9fmSgQZOhv6fYkSP3@nongnu.org
-X-Gm-Message-State: AOJu0YzYoujvwhCzX8oKAaLy/D8iMt5ukqXX3LTtaYgYMrZksT0D6t/a
- 4DDL41X3uwOnKNvMSVyKZncY4srVFVPmenIZsrJE49QGF9DiTMYFJF1Ph0WX/oL9fYFzG4KNIWp
- wwEmQ6Kcupou1MnnJj7+fYoxD5oC7NiBivmhax+gm15n8LKATUCDl+iqWXKZPVoiZL37dP4YVkN
- jpOJ7nckXq0zouHn4mSZjfDapRpi+JL4QJ96wOc+DO
-X-Received: by 2002:a05:6a00:2e1d:b0:71e:51ae:d765 with SMTP id
- d2e1a72fcca58-71ea3339d8cmr14237999b3a.27.1729499680089; 
- Mon, 21 Oct 2024 01:34:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEJQOvpLMT0t4eu743aBsobWNZpRhfRmolZxheKU6WCea6eZXLifcXzrxSBYE7526ut8C4eVd29NThHyycH3o=
-X-Received: by 2002:a05:6a00:2e1d:b0:71e:51ae:d765 with SMTP id
- d2e1a72fcca58-71ea3339d8cmr14237988b3a.27.1729499679680; Mon, 21 Oct 2024
- 01:34:39 -0700 (PDT)
+ bh=ITMHCREG1i4rwSD3Hir9F6AnXdUrVJFNJttuvlRHknY=;
+ b=PSb7/ToLfPcsdUViz/lgPAMs0drg5eeemse9OUbzzFMIv4eLvXsF5vapWGi1ExV9/ndR3L
+ WelBnGajZ+WtqGkgNiWcdTZAuJpCG6dOCqdlMiRv/yJoqQ4jWwL0X0FdQkjGHCb2RMj6vg
+ 3mQuqN+YtBhzBB4z7VLXcC3KsLl2KbM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-1gvUk4sMPU6kYp4zqiBuzg-1; Mon,
+ 21 Oct 2024 04:35:29 -0400
+X-MC-Unique: 1gvUk4sMPU6kYp4zqiBuzg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E93271956096; Mon, 21 Oct 2024 08:35:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16342300018D; Mon, 21 Oct 2024 08:35:25 +0000 (UTC)
+Date: Mon, 21 Oct 2024 09:35:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+Subject: Re: [Question] What is the =?utf-8?Q?defin?=
+ =?utf-8?B?aXRpb24gb2Yg4oCccHJpdmF0ZeKAnQ==?= fields in QOM?
+Message-ID: <ZxYSSp1wkifLy3tV@redhat.com>
+References: <ZxPZ5oUDRcVroh7o@intel.com>
 MIME-Version: 1.0
-References: <20241008-mask-v1-1-679ae2720bd5@daynix.com>
-In-Reply-To: <20241008-mask-v1-1-679ae2720bd5@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 21 Oct 2024 16:34:28 +0800
-Message-ID: <CACGkMEuk0VeCDwsv8NJm-iBHDxgQVRFB5ny-9=WPXatC9oKWMw@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Avoid indirection_table_mask overflow
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZxPZ5oUDRcVroh7o@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -96,25 +85,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 8, 2024 at 2:51=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
->
-> We computes indirections_len by adding 1 to indirection_table_mask, but
-> it may overflow indirection_table_mask is UINT16_MAX. Check if
-> indirection_table_mask is small enough before adding 1.
->
-> Fixes: 590790297c0d ("virtio-net: implement RSS configuration command")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/net/virtio-net.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
+On Sun, Oct 20, 2024 at 12:10:14AM +0800, Zhao Liu wrote:
+> Hi maintainers and list,
+> 
+> In the QOM structure, the class and object structs have two members:
+> parent_class and parent_obj, which are often marked as "< private >" in
+> the comment.
+> 
+> I couldn’t find information on why to define ‘private’ and ‘public’,
+> even in the earliest QOM commits and the patch emails I could find.
+> 
+> Does ‘private’ refer to the internal implementation code of QOM, or does
+> it refer to the specific code that defines and implements this object
+> and its class?
+> 
+> I understand the original idea of private field indicates it cannot be
+> accessed directly out of the "private" scope.
 
-Queued.
+I see two scenarios
 
-Thanks
+ * Devices where the structs are in the include/..../<blah>.h
+
+   The private/public comments are a message to other code in QEMU about
+   which fields are OK to access directly, and which should not be accessed.
+
+
+ * Devices where the structs are in the ../<blah>.c
+
+   The private/public comments look entirely pointless, as everything
+   is private to the .c file.
+
+
+99% of the time it seems the "parent" / "parent_obj" fields are the only
+one marked private. There are a handful of classes where other fields are
+under the private comment, but not many. 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
