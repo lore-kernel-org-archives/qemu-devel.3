@@ -4,125 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5A1D3C53F
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 06:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB1DD3DEA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 06:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2lxb-0002OW-Aw; Mon, 21 Oct 2024 02:32:13 -0400
+	id 1t2mE1-0004bH-8x; Mon, 21 Oct 2024 02:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2lxZ-0002ON-FZ
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:32:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2mDy-0004b5-OY
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:49:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2lxX-0000ES-P0
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:32:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2mDx-0001xW-4B
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:49:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729492324;
+ s=mimecast20190719; t=1729493342;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ISefsF479RvHV+vrC6uixw+VR9UlYq+sxwzmumiQNHc=;
- b=FjnIDzPgPi0ZP7U9/PAozdfjo0MilqM/4Y3ZltfmoFTPuQjMmjl2iDL4btGNk0h/EkdUAG
- E2sywiGlmBEb6TC2BaZ+4Xuws4jGNN52P51pBAzDJMZTpos+ZFzJxwFaS2x29lWfyULwuA
- LqGVezbtNf/ZDMbnog0+tURh7wTh3wU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9c0oDs7P9vWzE7FGbKcBEbCMSd7nRvNCYwNwx22Gvpw=;
+ b=D5GqIBWEZvVNVIRGNhxP0AONPaOgPinS8PFQDIp9a0iOZFRJvJ2UWBhw5PZ8UR4inzVW55
+ 5RJcjBOsYsTKszLu6RdDEqMY2hoW02USFiDsGaFsg8Mxsd9jSN6egM6xL8vfoVmNRmghSN
+ adyPkX1PYtLK9Ma5rZeU3yCZgm9YknM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-Fiv7vy9SP8Cu2FZyCmzVMQ-1; Mon, 21 Oct 2024 02:32:03 -0400
-X-MC-Unique: Fiv7vy9SP8Cu2FZyCmzVMQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-431518ae047so24100215e9.0
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 23:32:02 -0700 (PDT)
+ us-mta-605-rmfHcP3nP2S0_L1V4tCzwg-1; Mon, 21 Oct 2024 02:49:00 -0400
+X-MC-Unique: rmfHcP3nP2S0_L1V4tCzwg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43151e4ef43so30185335e9.3
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 23:49:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729492321; x=1730097121;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ISefsF479RvHV+vrC6uixw+VR9UlYq+sxwzmumiQNHc=;
- b=YgOZwmhy4H781DPlWp4lWVTk+YKozPtow3HdKed3ZCgZICv3jcZczIYPfWG0jDRQdm
- kQ3b0EauF9f+kd6JaZvoeeIOVUbUfwvXpcXZkx5TxyCLVKwBmZFXkromZoLc+Dc9bA+o
- oEwFa8hY7jnwH0qBEF0iQtRWMKmaAsE3+Gz/HWRmRAVnO+/iOq0y0eOrc2MXMnwgyBEG
- OkafzRmYfhMXCMZid2wKK4f+eGLy7DIXuPkeK1l551DW6YhYfcuYeu2/j8PenZ1JvyWy
- 9vM/mYRRQxxiZ/4siGkZjTjDSkfVESQOUf7m2RbC6m+0rvJy26VvlRY8CVT6y56Dac9P
- 8Juw==
-X-Gm-Message-State: AOJu0YwYl6Ph1HqHQL+8KD6c5EN4iyM9hXstXIhanPj90o+DECCmre9C
- LHfNDQL5iTnvLgCnmOOxfFFTn9i/TQrbGC6lQSXnQ3AeZHkC4lJ8eFQxmLb6vqPAut9tse5Nj1z
- vj+1+P++kgLRGSQOS1O1YXb9QWjRqFPGzH1RweKyfOBVG0vadPj1qvwMLY7uEXvQ=
-X-Received: by 2002:a05:600c:3c9a:b0:431:47e7:9f45 with SMTP id
- 5b1f17b1804b1-43158756c5dmr83406005e9.11.1729492321052; 
- Sun, 20 Oct 2024 23:32:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+d+/1PWy67FUzNjqXoi1LJNViA4IB9YD28stG9NllVAQGFMjv4qfYXGR4N5B5X1KXbwK3dQ==
-X-Received: by 2002:a05:600c:3c9a:b0:431:47e7:9f45 with SMTP id
- 5b1f17b1804b1-43158756c5dmr83405915e9.11.1729492320690; 
- Sun, 20 Oct 2024 23:32:00 -0700 (PDT)
-Received: from [192.168.10.47] ([151.95.144.54])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-4316f57124csm45614005e9.8.2024.10.20.23.31.59
+ d=1e100.net; s=20230601; t=1729493339; x=1730098139;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9c0oDs7P9vWzE7FGbKcBEbCMSd7nRvNCYwNwx22Gvpw=;
+ b=eV4c9WIcNvtHJsXBlsdMn9ZtZs5SQuLFvX+gZwkZtE8OuVeyhBkeypWGaxnaaWjKXx
+ ekiTpZZwXdDpJjH0ifMe6NO/RdSDoNNSOIypv3wPPYbfPQktLglBLEa/G91EsqxMUE4R
+ S5Iu+B7PFcHJchHpAS0PmBtNv+pnBk8DpmoLb93Yu7t2hYvSTjd3IwJgCYjMk0gYOlLa
+ JQrXQmjjfwct/enfDDkXCqPX5c6cGz4RnoF4MEHKWeRjtuoh4tcPj/s+fWb5f0wTfNOt
+ rdmePuJSVtrcUApQJBoYPbK5N+TPyx48gKmgTD0cx/xxg4+cQh+rPI0HiROqxcuQW2qa
+ sUsA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuJTXgQYfyi+vh+r5M5qRllN75ZyHjed8YTdznVDusB8clFK4vosU5n/EylzJwQNLzkzOYAw1PiOO+@nongnu.org
+X-Gm-Message-State: AOJu0YwdNe7GQ5czntpA2f5sxso+zk5a44qfAdLuVLo/btSIRlldkahb
+ AjhrCTeR6l2rsEsPt8DjK7SXadToaPEKXs8R7f0Ehz1A7sN/m21AF0NT6HFY6Df/kl8U5uszPfe
+ vZorGGXkmdMk3O/QkUf9GRhbhbLiNGTrqr7aMaaVZx8la1q7DjZ79
+X-Received: by 2002:a05:600c:674a:b0:431:508a:1a7b with SMTP id
+ 5b1f17b1804b1-431616a3f91mr75803715e9.34.1729493339630; 
+ Sun, 20 Oct 2024 23:48:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEw7sq1nsVfqc2YxIDlMBEhtkCCrrQDszUMamWqN26ZP86psESxs/R0WUm9j9HeRUuj08ngkQ==
+X-Received: by 2002:a05:600c:674a:b0:431:508a:1a7b with SMTP id
+ 5b1f17b1804b1-431616a3f91mr75803535e9.34.1729493339291; 
+ Sun, 20 Oct 2024 23:48:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0ba7c27sm3448704f8f.115.2024.10.20.23.48.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Oct 2024 23:32:00 -0700 (PDT)
-Message-ID: <5db62c58-b6e3-4f83-9954-ff2bcb1108bc@redhat.com>
-Date: Mon, 21 Oct 2024 08:31:59 +0200
+ Sun, 20 Oct 2024 23:48:58 -0700 (PDT)
+Message-ID: <59275410-e818-4a50-a98d-041e55bb36cc@redhat.com>
+Date: Mon, 21 Oct 2024 08:48:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rust: introduce alternative implementation of offset_of!
-To: Junjie Mao <junjie.mao@hotmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <SY0P300MB10265E25557DB71EE426525795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <SY0P300MB10265E25557DB71EE426525795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Subject: Re: [PATCH 1/3] vfio/migration: Report only stop-copy size in
+ vfio_state_pending_exact()
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Zhiyi Guo <zhguo@redhat.com>
+References: <20241020130108.27148-1-avihaih@nvidia.com>
+ <20241020130108.27148-2-avihaih@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241020130108.27148-2-avihaih@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -140,59 +152,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/24 07:40, Junjie Mao wrote:
-> offset_of! was stabilized in Rust 1.77.0. Use an alternative implemenation
-> that was found on the Rust forums, and whose author agreed to license as
-> MIT for use in QEMU.
-> 
-> The alternative allows only one level of field access, but apart from this
-> can be used just by replacing core::mem::offset_of! with
-> qemu_api::offset_of!.
-> 
-> Using offset_of! prior Rust 1.77.0 requires the structure to have the
-> derive(qemu_api_macros::Offsets) attribute.
-> 
-> Apply as a replacement of 10/16 of Paolo's RFC series [1].
-> 
-> Also remove subprojects/syn-2.0.66 if there is an existing build. An additional
-> feature cfg is added to packagefiles/syn-2-rs/meson.build, which requires meson
-> to re-checkout the subproject.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20241015131735.518771-1-pbonzini@redhat.com
-> 
-> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
++Zhiyi
 
-Thanks.  I still prefer to keep the procedural macro code minimal, and 
-have the code generation in a separate macro, but this is a nice start!
-
-> +fn is_c_repr(input: &DeriveInput) -> Result<(), proc_macro2::TokenStream> {
-> +    let expected = parse_quote! { #[repr(C)] };
-> +
-> +    for attr in &input.attrs {
-> +        if attr == &expected {
-> +            return Ok(());
-> +        }
-> +    }
-> +
-> +    Err(quote! { "Can only generate offsets for structs with a C representation." })
-> +}
-
-Probably can use any() here.
-
-> +/// A derive macro that generate field offsets for using `offset_of!` in
-> +/// versions of Rust prior to 1.77
-> +#[proc_macro_derive(Offsets)]
-> +pub fn derive_offsets(input: TokenStream) -> TokenStream {
-> +    let input = parse_macro_input!(input as DeriveInput);
-> +
-> +    let expanded = match derive_offsets_or_error(input) {
-> +        Ok(ts) => ts,
-> +        Err(msg) => quote! { compile_error!(#msg); },
-
-It should use quote_spanned! here.
-
-Paolo
+On 10/20/24 15:01, Avihai Horon wrote:
+> vfio_state_pending_exact() is used to update migration core how much
+> device data is left for the device migration. Currently, the sum of
+> pre-copy and stop-copy sizes of the VFIO device are reported.
+> 
+> The pre-copy size is obtained via the VFIO_MIG_GET_PRECOPY_INFO ioctl,
+> which returns the amount of device data available to be transferred
+> while the device is in the PRE_COPY states.
+> 
+> The stop-copy size is obtained via the VFIO_DEVICE_FEATURE_MIG_DATA_SIZE
+> ioctl, which returns the total amount of device data left to be
+> transferred in order to complete the device migration.
+> 
+> According to the above, current implementation is wrong -- it reports
+> extra overlapping data because pre-copy size is already contained in
+> stop-copy size. Fix it by reporting only stop-copy size.
+> 
+> Fixes: eda7362af959 ("vfio/migration: Add VFIO migration pre-copy support")
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> --->   hw/vfio/migration.c | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 17199b73ae..992dc3b102 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -576,9 +576,6 @@ static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
+>   
+>       if (vfio_device_state_is_precopy(vbasedev)) {
+>           vfio_query_precopy_size(migration);
+> -
+> -        *must_precopy +=
+> -            migration->precopy_init_size + migration->precopy_dirty_size;
+>       }
+>   
+>       trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
 
 
