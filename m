@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0419FD17122
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D653D17123
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2wnI-0002jw-JR; Mon, 21 Oct 2024 14:06:16 -0400
+	id 1t2woQ-0003eK-7g; Mon, 21 Oct 2024 14:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wnC-0002hI-68
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:06:11 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1t2woN-0003e8-2W
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:07:23 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wn8-0008E7-Js
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:06:08 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20cf6eea3c0so37360305ad.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 11:06:06 -0700 (PDT)
+ id 1t2woL-0008NJ-8r
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:07:22 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-71e5a62031aso3295358b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 11:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729533965; x=1730138765; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729534040; x=1730138840; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=adOVEpwN3SehtM61Yol35EmLzyaay4Z2RtnvTBsdKMc=;
- b=FKZwBND+oYADHSOVgIeyYFewG4kGkspcimR9neeiaj7iZn86/Suqjxj6jJb3GBEH6b
- 6UvigGFc2BqonRP26glRxKE0y/fmpyfRa2Q7tLsTwd1bmGDO1IqgxM2hzVeR14BPz2wk
- 3rrZfWicr98RKCGbtwJ8fOIp3KNhOWwBTUtiR3VbxP5yDiXp5ZnGwjEXGpNGc/diJ0n9
- XCz4SrbQI8J+cD7wqTCbThBuYCUfnsXNT/IqNVhDkis/mwAUlbvgov8WOpn0yU5ATybm
- zjZqhJ85SSwlkbRi0NZbbEDMmnqdPUPAT93Z7he9RNBCBeksOwgfr+Ywz8ro2Lo6/Dju
- 1pkQ==
+ bh=JawWysb92gFUwqXce/svGIAl6+lEZQVuCrdGibHz4PM=;
+ b=jp7D15+QYj7gvpjfbf6vabrcnVgSAdnY26mDkAZnHlHhrNW+frrOpmQvo/8O2BybtB
+ 51Ei1BmWP6xAFPil5GpApjLLfmeHky2Mfp3kk2eiHgvF8OqKhn/M5yqLJBk3uTbMSM2Z
+ CR+zad1xFLGrw/2mWLj63/Bvt/LEWOO8nq3Wd2SNqYbZOcBLzxe8PaRIfAA+Zl1HLonY
+ M3CgVC/swzej7P0Isv4XvQqkYaeTMgQrCPDMj4ZwlZczXp70NmxHHDbveAsYOTLwXyf0
+ a6AySdpR3HcGzUHNaiW2xnZYSzrSxZ7bNVCcAyvW7ZyQvww7Pa0tHx0tISYhJbYAGRxz
+ dFBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729533965; x=1730138765;
+ d=1e100.net; s=20230601; t=1729534040; x=1730138840;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=adOVEpwN3SehtM61Yol35EmLzyaay4Z2RtnvTBsdKMc=;
- b=mgykAlac6Z9JUqijXt0Mr7Pz3+dB1WQ9xcWDwZ+KCZTCuKg4cKlf8isgEc1mW13D3F
- 5WWdOrIivl49FWxAEf2f+fhirtSoVpFlBuRLLPW/GC3/Jlg2T/Iy7EYbqoFSfF8fZXMF
- masfdX7ZQUZ01rB3uRR3QjdM6sFyja0VkP6tijn6I3tFR0yKZ0WIQLDAJhuRpDTkVUrX
- xkcrhaY0TrDfY37rOe2Prwlh/yql04vg+rtuiZQQVh9HXApqAc06hXT+DxRi47+C8quj
- nrWHA7BbcrsMFpnB/ocrubDiU7W2QDa6L6haQDFpM2hKSVztHrzE+h2G4eltMf4W9PeF
- GORQ==
+ bh=JawWysb92gFUwqXce/svGIAl6+lEZQVuCrdGibHz4PM=;
+ b=Njw7HJq7Zfn8Al/BrpV4/cxDj2lf/X+P9eFdzdIuZvrTm/LakN9pqH1bg3DmX2XjOI
+ sEqAxhLZRRFHo1G978z2najzNDJrmir8vgzAChW9DUKoXkI5wf0FS108noiiW3HFUzvo
+ MJNZZSiC0ncxjApSKIWasLZGg7YPPTEdlFSGsr/UNStG0cX1YeLoz2lhKCWLtTO+STLu
+ uwoyqOi/H/P0NqvxQ0KVxPcuGsncyUFLJowNYDyrzI2ecbkPDxsU1rnAYRDfk4kfDdqG
+ equZCp8g63XeHUdsystD/KQ3bFY3rLU+NzWXLLGeAlm+QhypAq5ejm68avF7kKTQoVfy
+ 8XuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSmLBHIs1VFRuHQoADsJR9ubvSCRgzeUAz1lWJQhHTeJSfoEUzJaoqQbwYb0kXhsUKbXABDTfudJSW@nongnu.org
-X-Gm-Message-State: AOJu0YzIcK5JGiTQQR6bWUOuOzwcikdKg3WtPcOLnYO+1A2KiDXijzB5
- cKShHt1kkTXRF7in74h1Y2SVNq7nxmZopxmwwH+G0ZrgAyBldu9KYZmf01ivpKw=
-X-Google-Smtp-Source: AGHT+IEPkByozEkXdIAoXy7jqtvcI+gtYrHLyveydgTDPjKAWhpN54y/y24c/2idZYuKz3w3L+rkpQ==
-X-Received: by 2002:a17:902:ccc8:b0:20c:c704:629e with SMTP id
- d9443c01a7336-20e5a93e82amr200824085ad.56.1729533965000; 
- Mon, 21 Oct 2024 11:06:05 -0700 (PDT)
+ AJvYcCWNnDTocIqTCw7TckNCQ5sCpKr61RSavaLoVtxrY0o/phFyJypyj9RGB9Kus2mI2m3Io35ZqkLcy5Ma@nongnu.org
+X-Gm-Message-State: AOJu0YzsEomeJYWCuzLmR1kvLv/h7b9TJhZTd0a3wC8bSJcJrrolyLOY
+ E0muJ1yTQwuUvKz/mIPlOEJpt4I9Co0AY2jOhIYhuflOtQIe4usEjGoUc2m5j6U=
+X-Google-Smtp-Source: AGHT+IHnc/0zM1V/UfqtXESc8ucbzFauWyejMLyBKNH/Obvn7Bhh7ZeQ3Em3HZGz6fzHOfdJBgoIZg==
+X-Received: by 2002:a05:6a00:b4c:b0:71d:f423:e6cc with SMTP id
+ d2e1a72fcca58-71ea314be4amr14600140b3a.8.1729534039818; 
+ Mon, 21 Oct 2024 11:07:19 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0bd309sm28771385ad.151.2024.10.21.11.06.04
+ d2e1a72fcca58-71ec1338c80sm3187412b3a.48.2024.10.21.11.07.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 11:06:04 -0700 (PDT)
-Message-ID: <89f9402c-fd7a-476c-96af-ad24dfdc3c00@linaro.org>
-Date: Mon, 21 Oct 2024 11:06:03 -0700
+ Mon, 21 Oct 2024 11:07:19 -0700 (PDT)
+Message-ID: <97f8c999-c6b1-46d2-aef3-3a81c2156865@linaro.org>
+Date: Mon, 21 Oct 2024 11:07:18 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v2 3/7] contrib/plugins: add plugin showcasing new
@@ -77,8 +77,8 @@ From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 In-Reply-To: <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -100,6 +100,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+
 
 On 10/19/24 09:39, Julian Ganz wrote:
 > We recently introduced new plugin API for registration of trap related
@@ -211,6 +213,13 @@ On 10/19/24 09:39, Julian Ganz wrote:
 > +    max_vcpus = info->system.max_vcpus;
 > +    traps = calloc(max_vcpus, sizeof(TrapCounters));
 
+Instead of allocating data for max number of vcpu, you can use a 
+qemu_plugin_scoreboard, which was introduced recently, and covers 
+exactly this need, by providing an array that gets automatically 
+redimensioned when a vcpu is added.
+
+A simple example using it can be found with bb plugin:
+https://gitlab.com/qemu-project/qemu/-/blob/master/tests/tcg/plugins/bb.c
 
 > +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
 > +    qemu_plugin_vcpu_for_each(id, vcpu_init);
@@ -222,5 +231,5 @@ On 10/19/24 09:39, Julian Ganz wrote:
 > +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
 > +
 > +    return 0;
-> +
+> +}
 
