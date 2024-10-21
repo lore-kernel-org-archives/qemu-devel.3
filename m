@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99747D1713F
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE96D17141
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t30L3-0001y8-6t; Mon, 21 Oct 2024 17:53:21 -0400
+	id 1t30Qr-0002so-MM; Mon, 21 Oct 2024 17:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t30L1-0001xo-Nc
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:53:19 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t30Qq-0002sa-1p
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:59:20 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t30Kz-000715-Ut
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:53:19 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-207115e3056so40678705ad.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 14:53:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t30Qo-0007RS-DZ
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:59:19 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7ea16c7759cso2647694a12.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 14:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729547596; x=1730152396; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GNEVRddww0ZBJdEbz2UkA6f292X2zUPaCf7SZK0mWEo=;
- b=u8L5CLnPLgZawiOJTlCozF0wjgHNljRX7xgUHhQXeYjaJB8QZHZKEYMnhOEWKUTorl
- /Ty+VFEYekkvqFjc0ee5AQapvwWLxLK8ciuEPROj2+nhnHlkP4Rh/Yiwdgqh1dGTExdx
- 8uC7xdQIZaQHG8DVSmQvAe9sB0kaWaoTdInbTGAflweUcvVAj1BOMS1lWImqgT69pxR7
- K7SyBTMHsjUdCnoMQemKvdx4VqMNnlhAtNJmQXlX2bIBeQ6WhBqy6UU+waD6oN3GqsBm
- TxPtjkf/pESh/Zob9quHreW53PbO9+OJatwN2uhSMwWcMPBDk5e+20PCTnGyUKkmqeCp
- NKIw==
+ d=linaro.org; s=google; t=1729547956; x=1730152756; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DqFI8ZYDnDsXFc50KRTwaLB1LYve6odeXoK/WEo0osk=;
+ b=LduYETB5hH/zXLQFyJTc5/45MyMs8br0GlVCoZH9mTqc/fCfgeOwLoedvpoGOwkuJL
+ Dpc1tGb3MyceDI59QVXORPuBdz8mAyM/QjLRCvcXlzh53QZWupDjSBdXvAbfsaVcJguK
+ evI+SfYhQGoWYSQMYRA4TlZDqf4fSGoqrEcabgDauVEyxyQy+eRQtBagL9grgsEORvUe
+ pFbbM7yr9JW04wecPyZeZ0EoXrQWmA5y4l08gXT6tF2YT07z8X/2Rdl1bEw3Fpn8Wm5Z
+ Gz5IaUYlS7ysbxnn5qglq4xguhjTx4eF23rQYlLlqIx9GdOFbnZ+igolCJuawmNuC3HV
+ 0Jww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729547596; x=1730152396;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729547956; x=1730152756;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GNEVRddww0ZBJdEbz2UkA6f292X2zUPaCf7SZK0mWEo=;
- b=MqeXpQmslTthjtREt9WlnuxbBHhXVonJ09SyX6i9/TcooEUq36hkCphBmXotx3rTBW
- +JtMg5BrpGcOv+2GXNy0OH1b0JTeDB+7MorOi/vFp3UGUO8GHDs+vjBVBnqKdLCWLd/6
- Z7zLjcanKoFcSzGMulccznK/7Abxg0qVC9b0uib44RG+SuWedobB++USOK2KUq1BGABu
- k2ILLnjAcy6eNM7PTc1Can1hhNXK26pnBZzmf+JRYVUU8XNfuR6QrHsPsOP+fBghnySt
- cSxwQ/5C16lX9q9SvLH2JVE6vr4B+9bPpSbMB6/7hZq7Ot3pOoDgy1id747d8PfKbv/6
- c5NA==
+ bh=DqFI8ZYDnDsXFc50KRTwaLB1LYve6odeXoK/WEo0osk=;
+ b=uJHXzz1OSDSd37Kv5MHLQVR+Ap1YZMK8URA4zHP06J2T5IQfLZywvuBJtVNw96jw+E
+ J1Pc2l5JxfW+eWzBUUMi+4m+RGf3rleW9w1tDTuqkqzPC/eXvopzUTZhYb346BMUEfqC
+ xcs2xsTQd/snFs9b8GC8fX5AOTM+bEZ4oB/egjlRCsxATAua2uR5ZNwpXuu2CcsvxVFg
+ y/lkPq1c0IBhuQ53GLRT8Wc/5tZz4bgwnKEvKqdhLqFs1W7+e+9JZVJeTRsSwMHS6/4j
+ JPsZe9oZcKVzCoCfPp4BWKOS1Xm3oiFh1taXm+18BNs3FFny7PiAm6zGzP0p/dKIWf0E
+ mOlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNfuREbXH/r81FWvMyMIr2dayH9GXLkWqHXKwXMIkAeVriBsB95idCVu4rn0P84dkRaPY1S/1fNJra@nongnu.org
-X-Gm-Message-State: AOJu0YyD93yCdbQqGHCYt3Yh+23Ms+93bFt7Uc4Ufu3K4eGgaJYSuxrO
- XTigGdpv2LQXdnyR3SZyLymtVWHrmSfA28HSKO3Jq8Mp4vIwlhfIt4yley4hOho=
-X-Google-Smtp-Source: AGHT+IFpbnjL9TcLTWpU/xKdBIAU0UCY9NmCf+ShXhAfP4f89UocFgf/0yOZrjCouzUD0iuiSNhPjg==
-X-Received: by 2002:a17:903:2907:b0:20e:57c8:6ab3 with SMTP id
- d9443c01a7336-20e5a71b492mr132565585ad.4.1729547596231; 
- Mon, 21 Oct 2024 14:53:16 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0bd4e6sm30608025ad.148.2024.10.21.14.53.15
+ AJvYcCWrHmzjEzbFeDGYXTb0biZODpfe1x0IIfj99nHsNv8A3MnMTzW8H893uC5IsmS+aFKjtOofKVGScskf@nongnu.org
+X-Gm-Message-State: AOJu0Yz4jWWo9ZC6SbwLHdMJ4FQW2Gkw+WmM4lups8dbHj8E6KlGY2PL
+ 69cSnlAx5TiXjPMK2dXFW80mJ44gTGFa5p76N9APZK9EFa58Scs66Gd2izJifmY=
+X-Google-Smtp-Source: AGHT+IE6t4nIEYXkBI6wDxzqueRXT6YuAwS35JkaFsCsHBlPX55LpSWi2c41A4OhCulkvsTTBqiDqA==
+X-Received: by 2002:a05:6a20:b40b:b0:1d6:fb1b:d096 with SMTP id
+ adf61e73a8af0-1d96dece7fcmr441366637.26.1729547956596; 
+ Mon, 21 Oct 2024 14:59:16 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7eaeab581b1sm3621191a12.45.2024.10.21.14.59.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 14:53:15 -0700 (PDT)
-Message-ID: <a39045a4-8e04-4c9f-853f-1ed366650059@linaro.org>
-Date: Mon, 21 Oct 2024 14:53:13 -0700
+ Mon, 21 Oct 2024 14:59:16 -0700 (PDT)
+Message-ID: <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
+Date: Mon, 21 Oct 2024 14:59:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: explicitly permit a "commonly known identity" with
- SoB
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20241021190939.1482466-1-berrange@redhat.com>
+Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
+ exceptions and traps
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241021190939.1482466-1-berrange@redhat.com>
+To: Julian Ganz <nenut@skiff.uberspace.de>, Julian Ganz <neither@nut.email>,
+ qemu-devel@nongnu.org
+References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
+ <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
+ <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,61 +101,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/24 12:09, Daniel P. Berrangé wrote:
-> The docs for submitting a patch describe using your "Real Name" with
-> the Signed-off-by line. Although somewhat ambiguous, this has often
-> been interpreted to mean someone's legal name.
+On 10/21/24 14:02, Julian Ganz wrote:
+> Hi, Pierrick,
 > 
-> In recent times, there's been a general push back[1] against the notion
-> that use of Signed-off-by in a project automatically requires / implies
-> the use of legal ("real") names and greater awareness of the downsides.
+> October 21, 2024 at 8:00 PM, "Pierrick Bouvier" wrote:
+>> I agree it would be useful. Beyond the scope of this series, it would be
+>> nice if we could add a control flow related API instead of asking to
+>> plugins to do it themselves.
+>>
+>> If we would provide something like this, is there still a value to add
+>> an API to detect interrupt/exceptions/traps events?
+>>
+>> Note: It's not a critic against what you sent, just an open question on
+>> *why* it's useful to access this QEMU implementation related information
+>> vs something more generic.
 > 
-> Full discussion of the problems of such policies is beyond the scope of
-> this commit message, but at a high level they are liable to marginalize,
-> disadvantage, and potentially result in harm, to contributors.
+> The motivation for this API is a plugin that simulates a RISC-V tracing
+> unit (and produces a trace). For that we actually also needed to
+> track the "regular" control flow, i.e. find out whether a branch was
+> taken or where a jump went. That wasn't hard, especially considering
+> that the TCG API already gives you (more or less) basic blocks. Still,
+> we ended up tracing every instruction because that made some of the logic
+> much simpler and easier to reason about.
 > 
-> TL;DR: there are compelling reasons for a person to choose distinct
-> identities in different contexts & a decision to override that choice
-> should not be taken lightly.
+> We realized that we need a trap API because they:
+> * can occur at any time/point of execusion
+> * usually come with additional effects such as mode changes.
 > 
-> A number of key projects have responded to the issues raised by making
-> it clear that a contributor is free to determine the identity used in
-> SoB lines:
-> 
->   * Linux has clarified[2] that they merely expect use of the
->     contributor's "known identity", removing the previous explicit
->     rejection of pseudonyms.
-> 
->   * CNCF has clarified[3] that the real name is simply the identity
->     the contributor chooses to use in the context of the community
->     and does not have to be a legal name, nor birth name, nor appear
->     on any government ID.
-> 
-> Since we have no intention of ever routinely checking any form of ID
-> documents for contributors[4], realistically we have no way of knowing
-> anything about the name they are using, except through chance, or
-> through the contributor volunteering the information. IOW, we almost
-> certainly already have people using pseudonyms for contributions.
-> 
-> This proposes to accept that reality and eliminate unnecessary friction,
-> by following Linux & the CNCF in merely asking that a contributors'
-> commonly known identity, of their choosing, be used with the SoB line.
-> 
-> [1] Raised in many contexts at many times, but a decent overall summary
->      can be read at https://drewdevault.com/2023/10/31/On-real-names.html
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d4563201f33a022fc0353033d9dfeb1606a88330
-> [3] https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
-> [4] Excluding the rare GPG key signing parties for regular maintainers
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   .gitlab-ci.d/check-dco.py         | 5 ++++-
->   docs/devel/submitting-a-patch.rst | 7 ++++++-
->   2 files changed, 10 insertions(+), 2 deletions(-)
 
+Thanks for sharing your insights.
+I think there is definitely value in what you offer, and I'm trying to 
+think how we could extend it in the future easily, without having 
+another callback when a new event appear. In my experience on plugins, 
+the least callbacks we have, and the simpler they are, the better it is.
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Maybe we could have a single API like:
 
+enum qemu_plugin_cf_event_type {
+	QEMU_PLUGIN_CF_INTERRUPT;
+	QEMU_PLUGIN_CF_TRAP;
+	QEMU_PLUGIN_CF_SEMIHOSTING;
+};
 
-r~
+/* Sum type, a.k.a. "Rust-like" enum */
+typedef struct {
+     enum qemu_plugin_cf_event_type ev;
+     union {
+         data_for_interrupt interrupt;
+         data_for_trap trap;
+         data_for_semihosting semihosting;
+} qemu_plugin_cf_event;
+/* data_for_... could contain things like from/to addresses, interrupt 
+id, ... */
+
+...
+
+void on_cf_event(qemu_plugin_cf_event ev)
+{
+	switch (ev.type) {
+		case QEMU_PLUGIN_CF_TRAP:
+			...
+		case QEMU_PLUGIN_CF_SEMIHOSTING:
+			...
+		default:
+			g_assert_not_reached();
+	}
+}
+
+/* a plugin can register to one or several event - we could provide a 
+QEMU_PLUGIN_CF_ALL for plugins tracking all events. */
+qemu_plugin_register_cf_cb(QEMU_PLUGIN_CF_TRAP, &on_cf_event);
+qemu_plugin_register_cf_cb(QEMU_PLUGIN_CF_SEMIHOSTING, &on_cf_event);
+
+This way, a single callback can be registered for one or several events. 
+And in the future, we are free to attach more data for every event, and 
+add other events (TB_FALLTHROUGH, TB_JUMP, etc).
+
+> Helpers for discerning whether an instruction is a jump, a branch
+> instruction or something else would certainly be helpful if you wanted
+> cross-platform control flow tracing of some sort, but afaik given such
+> helpers you would just need to check the last instruction in a
+> translation block and check where the PC goes after that. Additional
+> callbacks for specifically this situation strike me as a bit
+> excessive.
+>
+> But I could be wrong about that.
+>
+
+You're right, and the current cflow plugin is more a demonstration of 
+using existing API than an efficient solution to this problem.
+For cflow detection specifically, I think we can do better, by adding 
+instrumentation right where we chain/jump between tb, and of course, 
+tracking other events like you did in this series.
+
+> Regards,
+> Julian
 
