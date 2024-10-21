@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08862D3C935
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FEF5D0E6C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2wFr-0000Zt-56; Mon, 21 Oct 2024 13:31:43 -0400
+	id 1t2wPq-0002IW-Ed; Mon, 21 Oct 2024 13:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wFp-0000ZI-8o
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:31:41 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1t2wPc-0002HD-Ga
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:41:51 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wFm-0004Gk-Mp
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:31:41 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7ea76a12c32so3871651a12.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:31:38 -0700 (PDT)
+ id 1t2wPZ-0005aD-Aa
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:41:46 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2e2eb9dde40so3806228a91.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:41:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729531897; x=1730136697; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1729532503; x=1730137303; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=htmhe3uW6BEe0N2w6YHfI1YKOHTFcSo6L6OVyV6OVk8=;
- b=VEgyGPasKAUiB9b/ckgnBS4jDadXvkl+v2PK6Z2DcM4iWmdR1Xk4RXuGTbxuKB9Od3
- JGADZjJ0hQxz2xqszlGXbBdlfsNLAMywrRLZ+zAsCc69VQ1A9xlZuHjkTQQEhPboIxdG
- PNcPc9zsmSDyGZglvc3+/8iVHBx88pqvYoNf3grKitBMDvEeExal48qUqgsdqgWTnq+Z
- DY5tSbrT/veBy4efJG+03sd2DZSCH/QDxc4D4dlSrEcAyq+VQTqm66EQ7T0OgCrCSRRY
- VvOkuAk/fBD5kKKikFlyN1xsRfXl7hB1WFKB1wlqKnYhYTYphLpQsBc2DzjZD10hzdOu
- jNpA==
+ bh=BNXZBs6f6NVmwJIAqcqK7SQ9wLULaON6OpQnkUk7TFo=;
+ b=sJ8qd/HYiGdu/fRm2aO5B1FUYg9yFgR5rJndx+XIA71RVDMjdPXlh5q3xGXSfq4oZw
+ +VhqgfE9/vCjVipl3ChkNpzmqXk40epXZ4OrgWJ0GFJKrFgodRnFrq3OU/VVB9s/yAhe
+ u8FAclHUhY27oM+TV1RHuDTxGhVuqA2Dd4WBhGh+5bsE1B6zv05APfKhw+5OgxZgJPfG
+ uIrVCRYRofRJXkiQxqO9uNZG6DCqtsKixO+l5MOJZE/B6e3Iba8b5ebukThHtCcN4KPo
+ wHeROVCm26NOqZumF1kt7mWAkVhpxog06Y4C/MEZ8SqJud9DGtpMlEVu5p02dfNbiwRK
+ Fq0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729531897; x=1730136697;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729532503; x=1730137303;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=htmhe3uW6BEe0N2w6YHfI1YKOHTFcSo6L6OVyV6OVk8=;
- b=EiapJFAL1yghxMH0BXlveQPirJzavNjoMzBsx/BSsRq6uGywqk5o0xVI4KXfg/Clgj
- 9xHcoKOQnpFonVGYlbZpfrEGuNTWVKqqnFv6PNjMILOp9mhX+d2JhLXS9UFQAbGQWMNi
- MPBJvTWWILUdeaeTxxPc7HWPFcsBAw7wOos8ziQ7tjK0xu72Lf2AVAikrnK4+MEuOSO/
- CKUXnrADHyZt4NpAU7Ya1gE6h+nmPmUKIJADUcVErhiKDuw4xLidZHnnZmm9vHxRyirS
- Xioks0wfpgurpzqHAFgDfZP1Wqb3iilwo7Q2gembkQuSkDR8CF7On7ZLF5NMGyHoG0Ly
- uyVA==
+ bh=BNXZBs6f6NVmwJIAqcqK7SQ9wLULaON6OpQnkUk7TFo=;
+ b=oWGM5CjG6BF6fYeRSs4cSJe/J8Dci21lpdAB3Rza4EPo1dtl2qW+S5JjTelN5XJMXG
+ c7gsyj8Rh0e+5KBq52bEEqvg+NIfANYdxFBDn3CLN/d1VOwrtncxSSfRzxBxc5+BOOJx
+ sQZjkIUNrzW+7IqkEGq+B5XRi+SZFcqkEfccoDgtWassDL2MccL2M2u6sNtWv0aeOu/q
+ V8BtfdeaFtwusop0ZhhUJWdy7nkIdh3Dvaw5FWxWAQ1PbgoIvLV8Lly1BIljxlKD+9Vw
+ yNYvSUJS1pgJIfzEv+JKMH8Uif01W7gwQxxGsY5Rv1BkO9OOCp9u6unrmAojckMpXrHG
+ 86zQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCYBG3vqnQNIkIIJgWoB61EmLENc08MNRGzHCdmADntByn8YUh3d67uhxznnwa0nHVnqhTzQh64HOB@nongnu.org
-X-Gm-Message-State: AOJu0YyHSSxmXqtJO0ywTD0tvDVnKOXwamA00uw58lHE5m5CiVP6M1cl
- M+RXvK1+xhSSM41poL3RkRmHP7U9q/l/tIJDI7IhBZtIz9VJ0GqJ6pF9yqW0cH8=
-X-Google-Smtp-Source: AGHT+IHVC+AjOFUj/gd3ZIyMFNaAkyJ4gq/NxZrOhgrhoxUreMZuHQiRMgchDb7zcsd6khHzrwB4YQ==
-X-Received: by 2002:a05:6a21:3182:b0:1d9:3ed:28c0 with SMTP id
- adf61e73a8af0-1d92c49b151mr18355068637.2.1729531897151; 
- Mon, 21 Oct 2024 10:31:37 -0700 (PDT)
+ AJvYcCXR3HeqEKw+mvvaILB1h0hEpShPNvZSoQo/eR90b4BHXk9oDngMlA3De1sN0GfDkAIm2VU0pYf2fGYu@nongnu.org
+X-Gm-Message-State: AOJu0YyxalEFXzzSiG65kxYPHeB8eltAJrICWWmZcQ5lQbm1nPXAlC6N
+ oBvWYWrE9ndKCgsSq0ebrn6A0NtmWH9iFwW9NThjZVCQkHelkFGEaHSARnV6gIQ=
+X-Google-Smtp-Source: AGHT+IG4IEJCmRgUvXdqUmsyBs+8DLgV/+madM+ru0mGJpltXcioxiI2sl9EeCqkP4ectf4jyPIFYg==
+X-Received: by 2002:a17:90b:4b0d:b0:2e2:d434:854c with SMTP id
+ 98e67ed59e1d1-2e5616e6688mr14817164a91.2.1729532503506; 
+ Mon, 21 Oct 2024 10:41:43 -0700 (PDT)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabb91b5sm2904012a12.73.2024.10.21.10.31.36
+ 98e67ed59e1d1-2e5ad25cb15sm4146245a91.11.2024.10.21.10.41.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 10:31:36 -0700 (PDT)
-Message-ID: <80ef4f57-e461-4bbc-8130-ba2cea14e88e@linaro.org>
-Date: Mon, 21 Oct 2024 10:31:35 -0700
+ Mon, 21 Oct 2024 10:41:43 -0700 (PDT)
+Message-ID: <34df66e6-087d-4e27-9edf-e723db959d43@linaro.org>
+Date: Mon, 21 Oct 2024 10:41:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/14] tcg: Reset data_gen_ptr correctly
-Content-Language: en-US
+Subject: Re: [PATCH v6 02/14] disas/riscv: Fix vsetivli disassembly
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- zhiwei_liu@linux.alibaba.com, qemu-stable@nongnu.org
+ zhiwei_liu@linux.alibaba.com
 References: <20241016193140.2206352-1-richard.henderson@linaro.org>
- <20241016193140.2206352-2-richard.henderson@linaro.org>
+ <20241016193140.2206352-3-richard.henderson@linaro.org>
+Content-Language: en-US
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241016193140.2206352-2-richard.henderson@linaro.org>
+In-Reply-To: <20241016193140.2206352-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,39 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
 On 10/16/24 12:31, Richard Henderson wrote:
-> This pointer needs to be reset after overflow just like
-> code_buf and code_ptr.
+> The first immediate field is unsigned, whereas operand_vimm
+> extracts a signed value.  There is no need to mask the result
+> with 'u'; just print the immediate with 'i'.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+> Fixes: 07f4964d178 ("disas/riscv.c: rvv: Add disas support for vector instructions")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/tcg.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   disas/riscv.h | 2 +-
+>   disas/riscv.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 5decd83cf4..0babae1b88 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -1399,7 +1399,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
->           goto retry;
->       }
->       qatomic_set(&s->code_gen_ptr, next);
-> -    s->data_gen_ptr = NULL;
->       return tb;
->   }
->   
-> @@ -6172,6 +6171,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
->        */
->       s->code_buf = tcg_splitwx_to_rw(tb->tc.ptr);
->       s->code_ptr = s->code_buf;
-> +    s->data_gen_ptr = NULL;
->   
->   #ifdef TCG_TARGET_NEED_LDST_LABELS
->       QSIMPLEQ_INIT(&s->ldst_labels);
+> diff --git a/disas/riscv.h b/disas/riscv.h
+> index 16a08e4895..0d1f89ce8a 100644
+> --- a/disas/riscv.h
+> +++ b/disas/riscv.h
+> @@ -290,7 +290,7 @@ enum {
+>   #define rv_fmt_fd_vs2                 "O\t3,F"
+>   #define rv_fmt_vd_vm                  "O\tDm"
+>   #define rv_fmt_vsetvli                "O\t0,1,v"
+> -#define rv_fmt_vsetivli               "O\t0,u,v"
+> +#define rv_fmt_vsetivli               "O\t0,i,v"
+>   #define rv_fmt_rs1_rs2_zce_ldst       "O\t2,i(1)"
+>   #define rv_fmt_push_rlist             "O\tx,-i"
+>   #define rv_fmt_pop_rlist              "O\tx,i"
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 5965574d87..fc0331b90b 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -4808,7 +4808,7 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+>           break;
+>       case rv_codec_vsetivli:
+>           dec->rd = operand_rd(inst);
+> -        dec->imm = operand_vimm(inst);
+> +        dec->imm = extract32(inst, 15, 5);
+>           dec->vzimm = operand_vzimm10(inst);
+>           break;
+>       case rv_codec_zcb_lb:
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
