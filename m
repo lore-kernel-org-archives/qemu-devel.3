@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6301D15DA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF569D15DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2tzG-0003yq-3n; Mon, 21 Oct 2024 11:06:26 -0400
+	id 1t2u1v-0004w9-8Y; Mon, 21 Oct 2024 11:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2tzE-0003yb-Aq
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:06:24 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1t2u1r-0004vD-4T
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:09:07 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2tzC-0003Pj-S9
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:06:24 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5c94861ee25so2332528a12.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 08:06:22 -0700 (PDT)
+ id 1t2u1p-0003he-AC
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:09:06 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2fb584a8f81so49344981fa.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 08:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729523180; x=1730127980; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aHVfiBOgNmdbZgMRSPscD65XRrYsmp8Bx8PVi0hGNMk=;
- b=enoWH+Y4W0CFKS+o/FyPHRz5PA2QV32k5MTkiIHRlRP0k91bCSJN+xLwImROIyPXEx
- PUnGowZ5ehFVybWEobm/9+so96sYnWa9aUXRnNByanRYnELml5PjpU7j8tP2TFzJEX3a
- 7CD8xacWkn3fx9d4GtjAOOQLDwJ5cGoPVVxi6i0hWpovbssdhvx1L5NpwTg6Xk3CToE9
- +/vTco1kKlAD5Jl76QgTUGM6eSHMaCTa3hKpptwOIzBLNdqRJtKr5Ugo5MFMdwZaMI9r
- JU9wjlnuZaQE1riLADs8PbHYlTaKEHTEd1HeCCGMvkoGqwMJRJX/iyT5qYgBHFwtgeMR
- hlmg==
+ d=linaro.org; s=google; t=1729523343; x=1730128143; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tBiNo7TNCD508RfgxEyHjKPVyw0CLHRlRIkc1GYxQbE=;
+ b=lt9wn4IwYp1gZxG/WjERm+9R4EjKG8UrctkRfCumV1an5y71Hwhxjh50r5sxn+d+CD
+ qx9EeBohfauFLoEnRxMsMzDkJdKdaeUVcHDO3c/sBrfSjRBDRn2GXqImyy9axIEOYtdQ
+ ew8uFgwVeePUhgLcZMBpofUvPexJR0h/xSROhfr1XYSezAAvmEsr4mUhgmQ0GWc+u88y
+ 51Rxb6b1nCJxekyD+t2Gr8co1dbruaV1Nx5ENqeS2hjGg5cc3EBJ73j7P8095+iykEFj
+ TJXfFNlZ5wcgPHAbcD45x63Cg5WqXLFauhI6RdDtngSEB5ytBCra6UAS3ad89StyvTvR
+ ncrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729523180; x=1730127980;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aHVfiBOgNmdbZgMRSPscD65XRrYsmp8Bx8PVi0hGNMk=;
- b=vN9hq1wYgyN8zVOcY1LezCiak2e9I/r2mBGzlGfieC3DwYJe4JGooMG8jJl45Qpuw9
- +5Sd3HSgoDk7evmL027JmEsxB1rojnhUiv84eypnueH5Yg6c1UCpN3BXk05zrRMSztR/
- znwCgCJm1q5+pKEgHj+P19BHUOLH0pFZbQuoTvT8Zw/JOYxhyOQeK7j3IGMHdQPHCAdU
- sukCHQsAuYftmKz+HCGE0r1Pwd6CDoIdvYa6IuocbgwfKdhqj385Ou79KhxVfJr5OJfF
- RFkVGsN/gitsms1fftxyhKeHuCb63xnfl/Z9nkZ5pR1JGWTcEqD0JulJiow10/KQY5q9
- W15Q==
+ d=1e100.net; s=20230601; t=1729523343; x=1730128143;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tBiNo7TNCD508RfgxEyHjKPVyw0CLHRlRIkc1GYxQbE=;
+ b=ZMQhTwn/raArqzFt5All71dKR6odseU5dbOCy74UDfjoLBFkuRs1WgctNBpGDhlODK
+ vnwAuLWdvEO7Ggd2jL9fLmy9V5qeLn6xTHiif1vi4E8E6BnW3ONvOLWMLun/MEcKcZ0s
+ EGLCIZsUc7bhZyehiKs2bTOyeoqjFr4GpZjJPx09oKZ4I8B0+pUMAEmfBUiYZs/D2RpI
+ JT9yNYNGfB/9AhUY0+MseLtn27qndmn/nFQ0JX40/p0gLLpp22DvKlRLzU1youdvHfPX
+ lA+D/j1hge3xr249bgdbr4kg/GZ4f8rLY+6nlClbm2aWwW0YM+5Q9QllC2z3rPlbSdIa
+ rE+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPPtmt3B//LCKHx9rGYl899pkjlYB5uOPXudYTZkPYiOLjSGTnKSiI900gthwWLQRXyN6xnfDg3W/5@nongnu.org
-X-Gm-Message-State: AOJu0YyqzgE/jJqUZjFPr8GQTxyp0kVH7ylWhdUdsFiZC9H1biSB0wy/
- AcGqx4/SWJbKx8ChwndtvGvMKbi2ANHTxuhZaYpnGPHxmem+eH7hu9HXT169ds9XI4TV4JW6xFR
- xDSdKg/gEdGUwJdCbTxMZfQbDXM+rJu2SXLhvDA==
-X-Google-Smtp-Source: AGHT+IH/AnGzVe5cIuryZ/BqoRYgUiSZbNgXU75XWSn4Iu/CtfFeJrYE0owtMAblNaWNRUrIhSq6buzwjPp+Kk+OHhU=
-X-Received: by 2002:a05:6402:2548:b0:5c7:202f:ec9b with SMTP id
- 4fb4d7f45d1cf-5ca0ac61ec7mr12275820a12.16.1729523180037; Mon, 21 Oct 2024
- 08:06:20 -0700 (PDT)
+ AJvYcCX5aa973m/gqFGefgI4E0u/87qSXNIGQ9qWjfsKeQHGqi3MHglTe6/+JjHA5w4OpmVhM+U3AiKwA2bB@nongnu.org
+X-Gm-Message-State: AOJu0YxulcO/equbU/MXr/I2KZhwtKE0eUU363dwg+q303ahNCv0rTsa
+ wzop90GcfwrbN+MTExqA2LQneXCbw5qD0J7bPu8Y0yTtH/HPuVajmMyiNnEFuLvL/lMKpdphGhn
+ eGZHqgkXO9owtXOXlUl3mQAM+2pmXbY4lKJl0sw==
+X-Google-Smtp-Source: AGHT+IG5lGasFFnScks6XFop3zELbFzBkDIuDV1wED0vuSbo3H0Lf1PBIWzMpPRR4LkEhRhm7qN76viqVGgHUZO/XKg=
+X-Received: by 2002:a2e:4a0a:0:b0:2fb:5d41:bdac with SMTP id
+ 38308e7fff4ca-2fb82e93cbfmr47687531fa.1.1729523342563; Mon, 21 Oct 2024
+ 08:09:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <ZxPZ5oUDRcVroh7o@intel.com>
- <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
- <ZxZjqypRL7d2rMuQ@intel.com>
- <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
- <ZxZwwe1ULIUqEdKN@intel.com>
-In-Reply-To: <ZxZwwe1ULIUqEdKN@intel.com>
+References: <20241021150153.487057-1-iii@linux.ibm.com>
+In-Reply-To: <20241021150153.487057-1-iii@linux.ibm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Oct 2024 16:06:08 +0100
-Message-ID: <CAFEAcA9E_-J3EJ+izeErnHDAwaP1LoctRaihu=5xTYrMSnqVig@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BQuestion=5D_What_is_the_definition_of_=E2=80=9Cprivate?=
- =?UTF-8?Q?=E2=80=9D_fields_in_QOM=3F?=
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+Date: Mon, 21 Oct 2024 16:08:51 +0100
+Message-ID: <CAFEAcA9W6Fb-gvCx268xV+CV7LyWJwCQGqkKFpGQjdT+WiAEUQ@mail.gmail.com>
+Subject: Re: [PATCH] tests/tcg: Stop using exit() in the gdbstub testcases
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +91,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 21 Oct 2024 at 16:02, Zhao Liu <zhao1.liu@intel.com> wrote:
+On Mon, 21 Oct 2024 at 16:02, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
 >
-> On Mon, Oct 21, 2024 at 03:20:39PM +0100, Peter Maydell wrote:
-> > What I mean by "the private/public markers are unnecessary" is
-> > that they don't tell the reader anything, because all the fields
-> > in a QOM device struct are private.
+> GDB 15 does not like exit() anymore:
 >
-> This time I really understand the question of whether it's okay to
-> directly access parent_obj/parent_class. :-)
+>     (gdb) python exit(0)
+>     Python Exception <class 'SystemExit'>: 0
+>     Error occurred in Python: 0
 >
-> > If you're not in the implementation of that class, then you shouldn't
-> > really be directly touching any of the fields in the state struct.
-> > (In some places we take a shortcut and do it. But really it's almost
-> > never necessary.)
->
-> Thank you for your further explanation! I hadn=E2=80=99t noticed that. So=
-, for
-> other code (code outside the class/object implementation) to access the
-> fields other than parent_obj/parent_class of class/state struct, the
-> most ideal way would be to use the set/get property interfaces as
-> much as possible instead of accessing them directly, right?
+> Use the GDB's own exit command, like it's already done in a couple
+> places, everywhere.
 
-Yes, or whatever APIs (functions etc) are provided for working
-with the class. If you have a specific example we could probably
-make some more concrete suggestions.
+This is the same bug that commit 93a3048dcf4565 is
+fixing, but it looks like we didn't catch everywhere.
 
+thanks
 -- PMM
 
