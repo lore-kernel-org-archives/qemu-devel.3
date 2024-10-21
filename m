@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4666CD0E6F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32C40D0E6EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2pwA-00017J-Hh; Mon, 21 Oct 2024 06:46:58 -0400
+	id 1t2pwX-0001g6-OJ; Mon, 21 Oct 2024 06:47:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2pw8-000176-Pj
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:46:56 -0400
+ id 1t2pwW-0001eL-MG
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:47:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2pw6-0003XR-Hd
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:46:56 -0400
+ id 1t2pwU-0003a0-U1
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:47:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729507612;
+ s=mimecast20190719; t=1729507638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2XTDE69lU6wHVViIexu/TcDJqXZ1NzHfBgSwaHK3G70=;
- b=HgibfZI5bU9d/UNHkwMpZGMoJAc9MKsYnk/m+6xCZICzY+22DNvYOnUOKCT8uwFszmPtoH
- 0hUErL43sNFMwkQucVtJhwOqI5I5FXMVoAUBrQk5+uR/k+pHqFkq9ArOcqAde6Pl0Oy3xx
- NSEQu0KGygIDihiMksg8N5psNUKzPe0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nOVx/dP4UStu4JJZrHz8GvwYSs/ljoTJ5doKqYykNuU=;
+ b=Hf5ZfBiHiliFnXovAjRM/ilU1rGqj0Yxmo667Khdi12awzNgPls83+0RJZpo11OHs0fojX
+ 4kntlUBIbkuL3RD7a+QSQspl6r9lVtzzNpa1AF1AECOOttH6NFyCkWEp+AOiqQQs+3Cw97
+ 9/Ax8vivHOADCQ3JtyPVRemZsL+0uQ8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-Oo7hlqtvOQiPOzH-JoEyGg-1; Mon, 21 Oct 2024 06:46:50 -0400
-X-MC-Unique: Oo7hlqtvOQiPOzH-JoEyGg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-431673032e6so17210365e9.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:46:50 -0700 (PDT)
+ us-mta-134-OTl0MqxRMiiVZAMhRN-GKA-1; Mon, 21 Oct 2024 06:47:17 -0400
+X-MC-Unique: OTl0MqxRMiiVZAMhRN-GKA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d609ef9f7so2060478f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:47:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729507609; x=1730112409;
+ d=1e100.net; s=20230601; t=1729507635; x=1730112435;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2XTDE69lU6wHVViIexu/TcDJqXZ1NzHfBgSwaHK3G70=;
- b=sIJTFzvk0mddPgChe3KK3tbaWgBSZMpQ6B/5lTZU7r0k+Gx8utNht9dlwvxljU9s0a
- ebqYKiZH4tKi3XJeE1k+QsHYuZFQUnE4J1JZvdVHDYC89+JBvGTadG98NCp92VGsvmZ+
- vKQ0p9sghWILE2xRY04d26vSeos/vacf8iXI5vHABINYnZABwBwztWQdQMDPiWDvWpDP
- czRqvFpOr/SPSO4XRvreUyzrOWInczgThc09tQVRPPiGq7bBsYVrhIntSPqMkklFqgZh
- 7lkvrMbxVwI9q0fDg9M7QPk8VqBf6BUfcg+PXZ5W8l0adbO4y4gzpj7DPaYVKJGhEOms
- URxA==
-X-Gm-Message-State: AOJu0YwCZE/e94U8lKsSTt2ecEe1EgA/9hw8PKFInODeCbAERXJVZGWb
- 9tmYcqyUHYT2QYBKNe1sW9/MtLQXjZl3zTHsRi+0QdkSNxFcdjJzjiX8TVo2Gk9optQEEN573Rd
- oMbORVDvsKK7w9/A0WilqAwXh097w3QlsMp2lbd0cjyRC+OgqwCRxf/k6l7p+Xf8ArWKPox/kv0
- bZSZK7DjYyu0Z0jDpo8iG3B7ZqTrs=
-X-Received: by 2002:a5d:4d03:0:b0:374:b35e:ea6c with SMTP id
- ffacd0b85a97d-37eb487a49amr7814224f8f.40.1729507609308; 
- Mon, 21 Oct 2024 03:46:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtTf10O2OoORD+Vey4c4EfsjTjeqeXzcPBJJcnkjRk8VUkBGtARkEWXCnsCSxZCepGx+CFZ/0S4pdvrnuDbYM=
-X-Received: by 2002:a5d:4d03:0:b0:374:b35e:ea6c with SMTP id
- ffacd0b85a97d-37eb487a49amr7814210f8f.40.1729507608922; Mon, 21 Oct 2024
- 03:46:48 -0700 (PDT)
+ bh=nOVx/dP4UStu4JJZrHz8GvwYSs/ljoTJ5doKqYykNuU=;
+ b=xVZ6QPYAD7VYiR09lcH0mHuqsFLTAlhoWsA5UFKUVJ62lVl0J9BSf3CSymdbKqh3pk
+ ofJhNp9jfYOUMXbdvLP1bp7uQzB1786TNHuAw8Ubr5be2IRsqGdwX/Yr844u4l/yWKSR
+ Qawg2KPht0+z/Wepz47DqQJEUQiUQ2+mLkaHnunKwWvOO73NLg5RNKdv6argtaSh7geX
+ twqMOUGnQtu+z3gpnNuLMQPnD6oFOETYil1h4BLkltJr+f9CywFFW8dzhh7jOKXOG4h2
+ v7dtXZGZF4uUhFq7S6IlW8dMCuE/sZKaanrJ3DsN41k4wSBlaegapHL8GoJC9+tSC+Xv
+ ZkAA==
+X-Gm-Message-State: AOJu0Yw3tEIJwTEkwa/6PpJ551FbdPhlYqpcU75VwcMn6jqdyGVjuva8
+ ECrzsLn/2EmBuVjRjvpSjSXPu97z9lTLFzdqhrwtWp94l4XoK7IHRzIHfmWh4BU6yDqCcc0zUgU
+ peYfw5qeS5z75kicdSPmxRIv4zC82UblmzHNLi4geB9snh/RP8VLu8AvVW0J+jX9ogpWgT6y1gW
+ /0RnMBKBKjfCqNy318QQFE/AdgoT6Qfg7JMWmjcA==
+X-Received: by 2002:adf:fb45:0:b0:37c:d23f:e465 with SMTP id
+ ffacd0b85a97d-37eab712dbfmr6378525f8f.55.1729507634881; 
+ Mon, 21 Oct 2024 03:47:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLv9VUDyQ/Em58uBwbIr45rzFfbC2fXesrjBmWLNWJVRf+dZoJYsnqybub6lBBbGrsjeqSEhbrnHrfavPAus8=
+X-Received: by 2002:adf:fb45:0:b0:37c:d23f:e465 with SMTP id
+ ffacd0b85a97d-37eab712dbfmr6378514f8f.55.1729507634526; Mon, 21 Oct 2024
+ 03:47:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241018144306.954716-1-pbonzini@redhat.com>
- <20241018144306.954716-7-pbonzini@redhat.com>
- <SY0P300MB10265F36FDD39FD0B258F37795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB10265F36FDD39FD0B258F37795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <20241018144306.954716-9-pbonzini@redhat.com>
+ <SY0P300MB1026A61776DE7025EC7B9F1C95432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB1026A61776DE7025EC7B9F1C95432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 21 Oct 2024 12:46:38 +0200
-Message-ID: <CABgObfYqBVRjynXWSY08=p49zk9wnfBe8xwhNtMY5FGDZtC0jA@mail.gmail.com>
-Subject: Re: [PATCH 06/13] rust: remove unused macro module_init!
+Date: Mon, 21 Oct 2024 12:47:04 +0200
+Message-ID: <CABgObfZ79VZUbwqm_vsYvSGdbk5Fz-b06bf5__b3D+LC9wNfnA@mail.gmail.com>
+Subject: Re: [PATCH 08/13] rust: build integration test for the qemu_api crate
 To: Junjie Mao <junjie.mao@hotmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000aaaa720624fa5e70"
+Content-Type: multipart/alternative; boundary="0000000000003150bc0624fa604c"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -99,91 +99,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000aaaa720624fa5e70
+--0000000000003150bc0624fa604c
 Content-Type: text/plain; charset="UTF-8"
 
-Il lun 21 ott 2024, 12:19 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
+Il lun 21 ott 2024, 12:34 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
 >
 > Paolo Bonzini <pbonzini@redhat.com> writes:
 >
-> > Registering the object is now done by the #[derive(Object)] macro.
+> > Adjust the integration test to compile with a subset of QEMU object
+> > files, and make it actually create an object of the class it defines.
+> >
+> > Follow the Rust filesystem conventions, where tests go in tests/ if
+> > they use the library in the same way any other code would.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 >
-> The module_init! macro is still necessary when a device needs more logic
-> (in addition to a single type registration) in module init. That is not
-> rare among the devices in C we have today.
+> Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 >
-> Manos and I had a conversation on this. He mentioned that he had a
-> second Rust device that needs this macro [1].
+> A few minor comments on cosmetic below.
+>
+> > ---
+> >  meson.build                  | 10 ++++-
+> >  rust/qemu-api/meson.build    | 20 +++++++--
+> >  rust/qemu-api/src/tests.rs   | 49 ----------------------
+> >  rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
+> >  4 files changed, 104 insertions(+), 53 deletions(-)
+> >  delete mode 100644 rust/qemu-api/src/tests.rs
+> >  create mode 100644 rust/qemu-api/tests/tests.rs
+> >
+> <snip>
+> > diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+> > new file mode 100644
+> > index 00000000000..57bab62772d
+> > --- /dev/null
+> > +++ b/rust/qemu-api/tests/tests.rs
+> > @@ -0,0 +1,78 @@
+> > +// Copyright 2024, Linaro Limited
+> > +// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > +// SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +use core::ffi::CStr;
+> > +
+> > +use qemu_api::{
+> > +    bindings::*, declare_properties, define_property,
+> > +    definitions::Class,
+> > +    definitions::ObjectImpl,
+> > +    device_class_init, vm_state_description,
+>
+> Cargo fmt (with the current rust/rustfmt.toml) formats those lines in a
+> different way, and ...
 >
 
-Ok, I will change derive(Object) to use module_init! instead. What matters
-is that module_init! is also fixed to not use the .ctors section.
+I will tweak this.
 
 Paolo
 
-
-> [1] https://lore.kernel.org/qemu-devel/itblf.by425lac4ow@linaro.org/
+> +};
+> > +
+> <snip>
+> > +    impl ObjectImpl for DummyState {
+> > +        type Class = DummyClass;
+> > +        const TYPE_INFO: qemu_api::bindings::TypeInfo =
+> qemu_api::type_info! { Self };
+> > +        const TYPE_NAME: &'static CStr = c"dummy";
+> > +        const PARENT_TYPE_NAME: Option<&'static CStr> =
+> Some(TYPE_DEVICE);
+> > +        const ABSTRACT: bool = false;
+> > +        const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut
+> Object)> = None;
+> > +        const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut
+> Object)> = None;
+> > +        const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut
+> Object)> = None;
+> > +    }
+> > +
+> > +    impl Class for DummyClass {
+> > +        const CLASS_INIT: Option<
+> > +            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut
+> core::ffi::c_void),
+> > +            > = Some(dummy_class_init);
+>
+> ... ditto. Shall we tweak the formats here or adjust the rustfmt
+> settings later?
 >
 > --
 > Best Regards
 > Junjie Mao
 >
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  rust/qemu-api/src/definitions.rs | 43 --------------------------------
-> >  1 file changed, 43 deletions(-)
->
 >
 
---000000000000aaaa720624fa5e70
+--0000000000003150bc0624fa604c
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 21 ott 2024, 12:19 Junjie Mao &lt;<a href=3D"ma=
+class=3D"gmail_attr">Il lun 21 ott 2024, 12:34 Junjie Mao &lt;<a href=3D"ma=
 ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
 </div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
 order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
 Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" =
 rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
 <br>
-&gt; Registering the object is now done by the #[derive(Object)] macro.<br>
-<br>
-The module_init! macro is still necessary when a device needs more logic<br=
+&gt; Adjust the integration test to compile with a subset of QEMU object<br=
 >
-(in addition to a single type registration) in module init. That is not<br>
-rare among the devices in C we have today.<br>
+&gt; files, and make it actually create an object of the class it defines.<=
+br>
+&gt;<br>
+&gt; Follow the Rust filesystem conventions, where tests go in tests/ if<br=
+>
+&gt; they use the library in the same way any other code would.<br>
+&gt;<br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
 <br>
-Manos and I had a conversation on this. He mentioned that he had a<br>
-second Rust device that needs this macro [1].<br></blockquote></div></div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">Ok, I will change derive(Objec=
-t) to use module_init! instead. What matters is that module_init! is also f=
-ixed to not use the .ctors section.</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div c=
-lass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Reviewed-by: Junjie Mao &lt;<a href=3D"mailto:junjie.mao@hotmail.com" targe=
+t=3D"_blank" rel=3D"noreferrer">junjie.mao@hotmail.com</a>&gt;<br>
 <br>
-[1] <a href=3D"https://lore.kernel.org/qemu-devel/itblf.by425lac4ow@linaro.=
-org/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lore.kernel.o=
-rg/qemu-devel/itblf.by425lac4ow@linaro.org/</a><br>
+A few minor comments on cosmetic below.<br>
+<br>
+&gt; ---<br>
+&gt;=C2=A0 meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 | 10 ++++-<br>
+&gt;=C2=A0 rust/qemu-api/meson.build=C2=A0 =C2=A0 | 20 +++++++--<br>
+&gt;=C2=A0 rust/qemu-api/src/<a href=3D"http://tests.rs" rel=3D"noreferrer =
+noreferrer" target=3D"_blank">tests.rs</a>=C2=A0 =C2=A0| 49 ---------------=
+-------<br>
+&gt;=C2=A0 rust/qemu-api/tests/<a href=3D"http://tests.rs" rel=3D"noreferre=
+r noreferrer" target=3D"_blank">tests.rs</a> | 78 +++++++++++++++++++++++++=
++++++++++++<br>
+&gt;=C2=A0 4 files changed, 104 insertions(+), 53 deletions(-)<br>
+&gt;=C2=A0 delete mode 100644 rust/qemu-api/src/<a href=3D"http://tests.rs"=
+ rel=3D"noreferrer noreferrer" target=3D"_blank">tests.rs</a><br>
+&gt;=C2=A0 create mode 100644 rust/qemu-api/tests/<a href=3D"http://tests.r=
+s" rel=3D"noreferrer noreferrer" target=3D"_blank">tests.rs</a><br>
+&gt;<br>
+&lt;snip&gt;<br>
+&gt; diff --git a/rust/qemu-api/tests/<a href=3D"http://tests.rs" rel=3D"no=
+referrer noreferrer" target=3D"_blank">tests.rs</a> b/rust/qemu-api/tests/<=
+a href=3D"http://tests.rs" rel=3D"noreferrer noreferrer" target=3D"_blank">=
+tests.rs</a><br>
+&gt; new file mode 100644<br>
+&gt; index 00000000000..57bab62772d<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/rust/qemu-api/tests/<a href=3D"http://tests.rs" rel=3D"noreferre=
+r noreferrer" target=3D"_blank">tests.rs</a><br>
+&gt; @@ -0,0 +1,78 @@<br>
+&gt; +// Copyright 2024, Linaro Limited<br>
+&gt; +// Author(s): Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidi=
+anakis@linaro.org" target=3D"_blank" rel=3D"noreferrer">manos.pitsidianakis=
+@linaro.org</a>&gt;<br>
+&gt; +// SPDX-License-Identifier: GPL-2.0-or-later<br>
+&gt; +<br>
+&gt; +use core::ffi::CStr;<br>
+&gt; +<br>
+&gt; +use qemu_api::{<br>
+&gt; +=C2=A0 =C2=A0 bindings::*, declare_properties, define_property,<br>
+&gt; +=C2=A0 =C2=A0 definitions::Class,<br>
+&gt; +=C2=A0 =C2=A0 definitions::ObjectImpl,<br>
+&gt; +=C2=A0 =C2=A0 device_class_init, vm_state_description,<br>
+<br>
+Cargo fmt (with the current rust/rustfmt.toml) formats those lines in a<br>
+different way, and ...<br></blockquote></div></div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">I will tweak this.</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><=
+div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>
+&gt; +};<br>
+&gt; +<br>
+&lt;snip&gt;<br>
+&gt; +=C2=A0 =C2=A0 impl ObjectImpl for DummyState {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 type Class =3D DummyClass;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const TYPE_INFO: qemu_api::bindings::Type=
+Info =3D qemu_api::type_info! { Self };<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const TYPE_NAME: &amp;&#39;static CStr =
+=3D c&quot;dummy&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const PARENT_TYPE_NAME: Option&lt;&amp;&#=
+39;static CStr&gt; =3D Some(TYPE_DEVICE);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const ABSTRACT: bool =3D false;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const INSTANCE_INIT: Option&lt;unsafe ext=
+ern &quot;C&quot; fn(obj: *mut Object)&gt; =3D None;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const INSTANCE_POST_INIT: Option&lt;unsaf=
+e extern &quot;C&quot; fn(obj: *mut Object)&gt; =3D None;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const INSTANCE_FINALIZE: Option&lt;unsafe=
+ extern &quot;C&quot; fn(obj: *mut Object)&gt; =3D None;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 impl Class for DummyClass {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const CLASS_INIT: Option&lt;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe extern &quot;C&quot;=
+ fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; =3D Some(dummy_class_i=
+nit);<br>
+<br>
+... ditto. Shall we tweak the formats here or adjust the rustfmt<br>
+settings later?<br>
 <br>
 --<br>
 Best Regards<br>
 Junjie Mao<br>
 <br>
-&gt;<br>
-&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
-" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 rust/qemu-api/src/<a href=3D"http://definitions.rs" rel=3D"noref=
-errer noreferrer" target=3D"_blank">definitions.rs</a> | 43 ---------------=
------------------<br>
-&gt;=C2=A0 1 file changed, 43 deletions(-)<br>
-<br>
 </blockquote></div></div></div>
 
---000000000000aaaa720624fa5e70--
+--0000000000003150bc0624fa604c--
 
 
