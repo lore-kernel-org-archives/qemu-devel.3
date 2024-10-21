@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87895D3C933
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 03:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561EFD3C933
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 04:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2jMA-0005Al-71; Sun, 20 Oct 2024 23:45:22 -0400
+	id 1t2jkE-0007Nv-NK; Mon, 21 Oct 2024 00:10:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2jM7-0005AK-QJ; Sun, 20 Oct 2024 23:45:19 -0400
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1t2jjy-0007Lc-S9
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 00:10:00 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2jM6-0002Ke-BN; Sun, 20 Oct 2024 23:45:19 -0400
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-4a492f73befso1056991137.2; 
- Sun, 20 Oct 2024 20:45:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1t2jjx-0004EU-Ac
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 00:09:58 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20bb39d97d1so36419435ad.2
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 21:09:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729482317; x=1730087117; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ji23ZJD5Z0v9qFSN8xOpbbcFvETbXKjj2Lz0GxzlBxY=;
- b=hJEUtRyEb7GTogme6AeZCicsRK6sv+QfEUdc0ii0XrIRn5DpxjKVBnVDJ38VJHM6X4
- kFzUQyk5I4ZRAfM75M5VHxMHDldDqeLvT9shAw54ARDyMO/PWNcEpAGauzlqkB06bong
- GPa/epqi8Kb0ehAvjT8IP6uWo3l0ROvjuj26+/LQ+M/AOnKVCnlgSh0bIpvzG2sZ+3rS
- zEhLuxr1QmAh3Ey/od9ibpBo+UtdFvThA1cGalSE8SIkwlfBOvfjzUB1hFmCFB9cctae
- x3EYSQe2A+OZI/CTAdP9+VCfj13mCSREIEV+Bwbp2Ddad2KITKXLbq+k0fS0vmDJ+Q+r
- eFnQ==
+ d=sifive.com; s=google; t=1729483795; x=1730088595; darn=nongnu.org;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OwVJe7wl6Df047z4n/QoSabetufigoEzxYrd+cn69aw=;
+ b=VmyvRcgmf6B5iVq3QYy+SKUnuj4INlSXnBVUPne66WgnCWFWPuPjh6peclSPAsp9Qk
+ bso5OgQJPbLEzDCfJIzojuAxA8++QUfKuZ8Dk+11kJALmGfK6nVLiR8xGg22DNJtmKwn
+ I5nY4jmkZrNxqw75yMrrnksPRuyvknf5VTii5+E+0cNcJggUp9PmIpxp34KcrcfXldAg
+ Fm5Gg/InOvDl5z3nlnVMfzoKkizUjnisqBfuXKAbZlYmfe3TAHAngD+P1EytFwR4efMY
+ zHEODfU27f5o/N8qepVswtMqdes1AFZzpZtk2TvHrJHrbrBbfXkV9g6pGVxmfcK97AIA
+ kVkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729482317; x=1730087117;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ji23ZJD5Z0v9qFSN8xOpbbcFvETbXKjj2Lz0GxzlBxY=;
- b=BF07S/60Jbmjl1mBPc6NcyMoszJjeBGkIHY/XmgRfik4J9J1zGurwh+7oiRsXx/Jru
- rimFyTm9oBXDoRVpZYH+rYawfSTKSoqywaJz+3vXjqxG9x9hxKHDaz4gaJt6+4552m/N
- smMChvbd9EuH0tesIIzdJlODzarKEjXsktSuw9GZ+b0FggC5IuBXZDQhlcjT26nviJ7m
- V8UOzyXwlVlkUHK4ldvOsnh4t7u5L0jOuNmPPST4YwmZALNAaCVUoKdJwTh8nBmz72UK
- 6oC4PsoKWA+F/axPmA8ZJBesksALnwJEdNJ5Lhgf3rrkvWgvwCD24rY+yLPJ15nVafdE
- cEmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3lPQdKQyqo2LXE0NykM4STC3gzKFJMaydMYoR96FULisu7/VYXzs3r+I94rlzP+MmN/Wl7PcSh9Bu@nongnu.org
-X-Gm-Message-State: AOJu0Ywt0MS8t9ZhLz1MFNcn1we+SXK/QzE+hcOcXr/cdBPeYrkqOOli
- +sfrN/aDA6vzWAoxFIGVDCQXP0IT6h71d7qIMgQwZhr4hT1LHCAPxaoLc8x4CvBb1mFnKiGyvyn
- 9VcjeWPVk925w71ZNvCB0cJpmQTw=
-X-Google-Smtp-Source: AGHT+IHZ6jDzckV6WsLjgwDzz3wWhFFp/2ESz7RrLuNpxz1yNXBhZR65HNnOKvUPtzOVrutgD0eyYOq+bEBkMosSM0c=
-X-Received: by 2002:a05:6102:442a:b0:4a3:f4b3:d07e with SMTP id
- ada2fe7eead31-4a5d6a8dfc2mr8748537137.8.1729482316822; Sun, 20 Oct 2024
- 20:45:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240910045419.1252277-1-alistair.francis@wdc.com>
- <2ef501ab-df75-418b-9c94-df47b9389723@redhat.com>
-In-Reply-To: <2ef501ab-df75-418b-9c94-df47b9389723@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 21 Oct 2024 13:44:50 +1000
-Message-ID: <CAKmqyKOJ8NridjUwD60WBj4sWzPQbWBQuLPNQ+32NWpN_242Fg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/2] riscv: char: Avoid dropped charecters
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, peter.maydell@linaro.org, 
- Bin Meng <bmeng.cn@gmail.com>, palmer@dabbelt.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, 
- Alistair Francis <Alistair.Francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- atishp@rivosinc.com, dbarboza@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ d=1e100.net; s=20230601; t=1729483795; x=1730088595;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OwVJe7wl6Df047z4n/QoSabetufigoEzxYrd+cn69aw=;
+ b=XgT1hZXaNm75hIPgNyLuT3jSu8x4A1tbnK4lDtxCxdLD0suqCsDedgch151HmCUNPC
+ +YsqeSKeOFvGzc4TRDlniNQiulI034JS6HlOQLyowQcgk5ecrmSUQO7D/4bqY6b6xYCm
+ 8K3hmMQaYt/aV34O8Txa82mZK+qjrvKA8Hr6N0uM/KX0VAwVma4fnHAR454lhaWKppSG
+ aS28dSTZuq1QwhtSURfavUpb7hvK+yCgL5HTKvPKhk/zFOM0LnHZqD/BmfSNfTiUcDc5
+ lQd08kq0pJWdnXVbK1z1/b8Nu19sYARU3JmLugeYISPGNoJj6NU0X8zl9UWmJCeKILJy
+ odMg==
+X-Gm-Message-State: AOJu0Yyv2czcJA4P9y8b/WiwNBFQxqQ13oqNmY8lWE+VCZGDziqBwS7b
+ bxq7yE2295aYVnYWN6dYgRGVOCkEIGckyHsC1ddFEoBb+1Trkjln5jPcjd2yTRRkb54TA+pj1/0
+ pNB0ERefbUFb1nQQWmSJfbeM5H0XKGQLbZ1HFzFDkmAhiaBz+nCz1qsuTsKL6mRdHFf5mazgPuV
+ ZCRlKd6iJEafHxGQkP73WEcXNNX6nM5vRZgg==
+X-Google-Smtp-Source: AGHT+IEYScQBVVlOFS2dVqmQWINMu2ecqVajApJTE975BxkebBmnPbcyBq5J1gXMVMe85A0RVjEVHg==
+X-Received: by 2002:a17:902:f9cc:b0:20c:9ecd:11c2 with SMTP id
+ d9443c01a7336-20e5a95025amr125265865ad.55.1729483794962; 
+ Sun, 20 Oct 2024 21:09:54 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7f0dfc09sm16863485ad.236.2024.10.20.21.09.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 20 Oct 2024 21:09:54 -0700 (PDT)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH 2/2] hw/riscv: Support different address-cells for initrd
+Date: Mon, 21 Oct 2024 12:09:42 +0800
+Message-Id: <20241021040942.400-3-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20241021040942.400-1-jim.shu@sifive.com>
+References: <20241021040942.400-1-jim.shu@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,46 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 11:22=E2=80=AFPM Thomas Huth <thuth@redhat.com> wro=
-te:
->
-> On 10/09/2024 06.54, Alistair Francis wrote:
-> > This series fixes: https://gitlab.com/qemu-project/qemu/-/issues/2114
-> >
-> > This converts the RISC-V charecter device callers of qemu_chr_fe_write(=
-)
-> > to either use qemu_chr_fe_write_all() or to call qemu_chr_fe_write() as=
-ync
-> > and act on the return value.
-> >
-> > v4:
-> >   - Drop the unused char_tx_time
-> >   - Update the migration in vmstate_sifive_uart
-> > v3:
-> >   - Fixup spelling
-> > v2:
-> >   - Use Fifo8 for the Sifive UART instead of a custom FIFO
-> >
-> > Alistair Francis (2):
-> >    hw/char: riscv_htif: Use blocking qemu_chr_fe_write_all
-> >    hw/char: sifive_uart: Print uart characters async
->
->   Hi!
->
-> What's the status of these patches? Are they good to go, or do they still
-> need more work? (I'm asking because I'd like to convert
-> tests/avocado/riscv_opensbi.py to the functional test framework, but it
-> would be good to have the problem with the dropped characters fixed first=
-)
+The cells of 'initrd-start/end' should follow the '#address-cell'.
+QEMU API could support 1 and 2 cells.
 
-I think they are good to go
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ hw/riscv/boot.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index ad45bd7a6a..76b099c696 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -182,6 +182,7 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+     void *fdt = machine->fdt;
+     hwaddr start, end;
+     ssize_t size;
++    uint32_t acells;
+ 
+     g_assert(filename != NULL);
+ 
+@@ -209,9 +210,18 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+ 
+     /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
+     if (fdt) {
++        acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
++                                       NULL, NULL);
++        if (acells == 0) {
++            error_report("dtb file invalid (#address-cells 0)");
++            exit(1);
++        }
++
+         end = start + size;
+-        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-start", start);
+-        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-end", end);
++        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-start",
++                                     acells, start);
++        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-end",
++                                     acells, end);
+     }
+ }
+ 
+-- 
+2.17.1
 
-Alistair
-
->
->   Thanks,
->    Thomas
->
 
