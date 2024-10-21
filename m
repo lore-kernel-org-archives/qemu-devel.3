@@ -4,73 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D9AD17141
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 22:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA77D17148
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 23:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t30ct-0005J0-JH; Mon, 21 Oct 2024 18:11:47 -0400
+	id 1t31uy-0003um-2e; Mon, 21 Oct 2024 19:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t30cr-0005HM-DW
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 18:11:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t31uv-0003th-2b; Mon, 21 Oct 2024 19:34:29 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t30cp-00005q-F2
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 18:11:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729548702;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gtXGrparmXIOrkwwKyP0UqmHurw0c3HQhLzvm4cZ1XQ=;
- b=S8F5e7N7rqpW1rpcmA2EcTdLn2Pj0ShOmgip+gqGQIWK/5i2pRy9mpjQv/ypselV6hE5Tq
- hNGW4LaYjoUQ7wFyMSVSWYIsx8WeNA14RjRvFSIK7hjyWn2iAJJv+ktw2IUvzVtThrjtwL
- BVCJeLs6YyaYHbPUvnQq7Fc+zDe7tuk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-367-un9Y_0GEPG-VTSeMKNy_GA-1; Mon,
- 21 Oct 2024 18:11:36 -0400
-X-MC-Unique: un9Y_0GEPG-VTSeMKNy_GA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD46D19560B1; Mon, 21 Oct 2024 22:11:34 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.209])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 262E230001A3; Mon, 21 Oct 2024 22:11:30 +0000 (UTC)
-Date: Tue, 22 Oct 2024 00:11:28 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
- Hanna Reitz <hreitz@redhat.com>, dmitry.fomichev@wdc.com,
- qemu-block@nongnu.org, dlemoal@kernel.org
-Subject: Re: [PATCH v2] block/file-posix: optimize append write
-Message-ID: <ZxbRkOg6wB37NAxj@redhat.com>
-References: <20241004104123.236457-1-faithilikerun@gmail.com>
- <ZxJynt-0ySt3DG7W@redhat.com>
- <CAAAx-8KtfoM+gVRzUjCCLY8vEG=5vcoRGcxBzDDG6DArC8L7tA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1t31ut-0001IK-0m; Mon, 21 Oct 2024 19:34:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=codeconstruct.com.au; s=2022a; t=1729553655;
+ bh=d5JG5wsjW6g0mdPZ4zU9j4RNCbMgtN5vhJXF39unCJY=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=dJFw6+bbE8K2hVjPq0+GMFMViwTaxI8L6NmHSCR4jkZCmshsZM0oUGEkFYxnUlo8I
+ gu4ioocE0FN56C75emwEE92WA8HsMyVLB93vwzOpuPFXcD8cw+A0IAESg5lln/PW/l
+ 5ZdBkcxshypDuA8yW7DD9fYa4M89k+vDyn7snrkkQHtB6SpTV3wmx9lYh6mce7HGqI
+ +j5C7ruJThqcxZq7im1nsgRG6hdjsqrN4iYALqIguf7QiFu8cupNmXXLbGd3ayzTzB
+ sdy4pVCJqNvO2l6fxk0W79DrWZ6T4rJk9FI+yfLfXo1LpWG5ENoCgz+GySA9bRTIZg
+ In6kjSCjM5G9w==
+Received: from [192.168.68.112]
+ (ppp118-210-184-223.adl-adc-lon-bras34.tpg.internode.on.net
+ [118.210.184.223])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 0F7D2649D3;
+ Tue, 22 Oct 2024 07:34:12 +0800 (AWST)
+Message-ID: <df7845ea9bb3b4841ba18dbeb10e9b109a28af51.camel@codeconstruct.com.au>
+Subject: Re: [SPAM] [PATCH v1 11/16] test/qtest/aspeed_smc-test: Support to
+ test all flash models
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Joel
+ Stanley <joel@jms.id.au>,  Alistair Francis <alistair@alistair23.me>, Kevin
+ Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>, "open list:Block layer
+ core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+Date: Tue, 22 Oct 2024 10:04:11 +1030
+In-Reply-To: <777c3650-5e02-4ab0-a900-ecb0e425b935@kaod.org>
+References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
+ <20241018053112.1886173-12-jamin_lin@aspeedtech.com>
+ <777c3650-5e02-4ab0-a900-ecb0e425b935@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAAx-8KtfoM+gVRzUjCCLY8vEG=5vcoRGcxBzDDG6DArC8L7tA@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,113 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.10.2024 um 15:21 hat Sam Li geschrieben:
-> Kevin Wolf <kwolf@redhat.com> 于2024年10月18日周五 16:37写道：
-> >
-> > Am 04.10.2024 um 12:41 hat Sam Li geschrieben:
-> > > When the file-posix driver emulates append write, it holds the lock
-> > > whenever accessing wp, which limits the IO queue depth to one.
-> > >
-> > > The write IO flow can be optimized to allow concurrent writes. The lock
-> > > is held in two cases:
-> > > 1. Assumed that the write IO succeeds, update the wp before issuing the
-> > > write.
-> > > 2. If the write IO fails, report that zone and use the reported value
-> > > as the current wp.
-> >
-> > What happens with the concurrent writes that started later and may not
-> > have completed yet? Can we really just reset to the reported value
-> > before all other requests have completed, too?
-> >
-> > > Signed-off-by: Sam Li <faithilikerun@gmail.com>
-> > > ---
-> > >  block/file-posix.c | 57 ++++++++++++++++++++++++++++++----------------
-> > >  1 file changed, 38 insertions(+), 19 deletions(-)
-> > >
-> > > diff --git a/block/file-posix.c b/block/file-posix.c
-> > > index 90fa54352c..a65a23cb2c 100644
-> > > --- a/block/file-posix.c
-> > > +++ b/block/file-posix.c
-> > > @@ -2482,18 +2482,46 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
-> > >      BDRVRawState *s = bs->opaque;
-> > >      RawPosixAIOData acb;
-> > >      int ret;
-> > > -    uint64_t offset = *offset_ptr;
-> > > +    uint64_t end_offset, end_zone, offset = *offset_ptr;
-> > > +    uint64_t *wp;
-> >
-> > Without CONFIG_BLKZONED, these are unused variables and break the build.
-> >
-> > They are only used in the first CONFIG_BLKZONED block, so you could just
-> > declare them locally there.
-> 
-> Thanks! Will do.
-> 
-> >
-> > >
-> > >      if (fd_open(bs) < 0)
-> > >          return -EIO;
-> > >  #if defined(CONFIG_BLKZONED)
-> > >      if ((type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) &&
-> > >          bs->bl.zoned != BLK_Z_NONE) {
-> > > -        qemu_co_mutex_lock(&bs->wps->colock);
-> > > -        if (type & QEMU_AIO_ZONE_APPEND) {
-> > > -            int index = offset / bs->bl.zone_size;
-> > > -            offset = bs->wps->wp[index];
-> > > +        BlockZoneWps *wps = bs->wps;
-> > > +        int index = offset / bs->bl.zone_size;
-> > > +
-> > > +        qemu_co_mutex_lock(&wps->colock);
-> >
-> > This is preexisting, but what is the reason for using coroutine locks
-> > here? There doesn't seem to be any code running under the lock that can
-> > yield, so a normal mutex might be more efficient.
-> 
-> Using coroutine locks is to avoid blocking in coroutines. QemuMutex
-> blocks the thread when the lock is held instead of yielding.
+On Mon, 2024-10-21 at 14:39 +0200, C=C3=A9dric Le Goater wrote:
+> On 10/18/24 07:31, Jamin Lin wrote:
+> > Currently, these test cases used the hardcode offset 0x1400000 (0x14000=
+ * 256)
+> > which was beyond the 16MB flash size for flash page read/write command =
+testing.
+> > However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" wh=
+ose size
+> > is 1MB. To test all flash models, introduces a new page_addr member in =
+TestData
+> > structure, so users can set the offset for flash parge read/write comma=
+nd
+> > testing.
+>=20
+> The commit title and description are confusing. By "all flash" models,
+> do you mean "all Aspeed SoC" models ?
 
-Right, but usually you have to wait only for a very short time until the
-mutex is released again and CoMutexes are more expensive then.
+I think it only relates to the SoCs insofar as the AST1030 embeds some
+flash in the SoC? Otherwise it's dependent on the flash model
+associated with the board?
 
-You absolutely do need to use CoMutex when the coroutine can yield in
-the critical section, but if it can't, the CoMutex is often worse.
+>=20
+> Since the change is introducing a 'page_addr' data field. I think
+> this should be the title.
 
-Though as I said here...
+I agree that including something about page_addr in the title would be
+an improvement.
 
-> > Hm... Looking a bit closer, get_zones_wp() could probably be a
-> > coroutine_fn and call hdev_co_ioctl() instead of calling ioctl()
-> > directly in order to avoid blocking.
-
-...we should probably use a coroutine version of ioctl() instead of
-the blocking one, and then you do need the CoMutex.
-
-> > > +        wp = &wps->wp[index];
-> >
-> > Also preexisting, but who guarantees that index is within the bounds? A
-> > stacked block driver may try to grow the file size.
-> 
-> Right. It needs to be checked if it's over nr_zones.
-
-Can you send a separate fix for this, please? (Can be both in one
-patch series, though.)
-
-> >
-> > > +        if (!BDRV_ZT_IS_CONV(*wp)) {
-> > > +            if (type & QEMU_AIO_WRITE && offset != *wp) {
-> > > +                error_report("write offset 0x%" PRIx64 " is not equal to the wp"
-> > > +                             " of zone[%d] 0x%" PRIx64 "", offset, index, *wp);
-> >
-> > We can't error_report() in an I/O path that can be triggered by the
-> > guest, it could result in unbounded log file growth.
-> 
-> Those error messages show in the err path and are good for debugging
-> zoned device emulation.
-> 
-> I was wondering if there is a better approach to print errors? Use
-> error_report_once() to reduce the log?
-
-If it's for debugging, I think trace points are best.
-
-Kevin
-
+Andrew
 
