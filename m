@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4754DD1712A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30157D1712B
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:31:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2y4i-0004mh-Mv; Mon, 21 Oct 2024 15:28:20 -0400
+	id 1t2y6q-0005Z9-72; Mon, 21 Oct 2024 15:30:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2y4h-0004mW-DG
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:28:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2y4e-00088d-Kt
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:28:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729538895;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X98Z595kI5lo4x47X1tRFuVxXIilxUW+2m35/lEKFsY=;
- b=H0Dg8tvP5YnEwk5MmBMuZ6hYLplb9yVq0udakOOhx6k0/xMzjSxaGACaqY1XlpC7EXc7aq
- zUr4D9JsjXSKO0mqbJJYEs8ejZppQCOaluFxp5F8YhGLaSLpzK0og+62S9kmBvL7kgm14L
- wCOxsukYNJGkmE8ZvtgzUPbb3bTEeao=
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
- [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-zhhXITcQMxyBVFNVVDAg4g-1; Mon, 21 Oct 2024 15:28:13 -0400
-X-MC-Unique: zhhXITcQMxyBVFNVVDAg4g-1
-Received: by mail-vk1-f199.google.com with SMTP id
- 71dfb90a1353d-50d5732d0c7so1054515e0c.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 12:28:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t2y6c-0005Xp-Q7
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:30:29 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1t2y6b-0008Sl-7H
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:30:18 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7db908c9c83so3049152a12.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 12:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1729539015; x=1730143815; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wtFFM01MtMk7bKwjAfnzZ86kCwFKc7QNS/KueXIyn24=;
+ b=fkkVMHDoBNxk9zi/y3l8mySsqSLoYvJhxodKYCsvfP54pN7z3AIuB+Ov8jHZD+7OUa
+ pj/4LQlybPT3PWOkCsvgonPG4PjwrKXAK0UJ+iN5SkbACLHe3ub2SXJmqZTGdDo48RPN
+ 6ctcm2r4hSzN8U2futOSmfhCYCfXWINExIbnHfENreXJ+3vH0a5mX3fThFJye1J/fTxX
+ iPy45H07Z3waeFLBIdFPevJlXC/GNFTo7czs9GH40EJN4jD7Gz9vO9aHKfNBl9qKAOeh
+ eW39BhaRh7BrKsJka392Hi8G+Wegz9JDBbHJmfClFQ10rKPhqUBT+CKumslHbXHSyFDz
+ ZM9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729538893; x=1730143693;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X98Z595kI5lo4x47X1tRFuVxXIilxUW+2m35/lEKFsY=;
- b=mQcWgad/eI17uQVLqqvA8I1SU6YIa1L9kU1wMYTB2v2lGgLb8ffVv9TtmWdEbJh8aw
- mMGJOZibcYRwP4f1t10tzh0miqDV/0+4GBBXDCWv0O/CnBAE5U8QYxiQBMdGUaWVFMN3
- NdLbXTvYDiffmcmqYmnhiJltIa8naB4pvxOausXHmayl7OF1QTgYT1RRx5blnQJ86Y6J
- qWT8A4O3T2hCvtQX/vVYOV9AsS6LbgsoDWP59605KMlTU3+ULoEWj1PiWzikZfyyHUhY
- EJr8bQ054RvifWYIaBRJ0Oyjub0y0bNdhR9dQkbHlfkJeweRxiuuZaCFat6oJkzyfLhg
- UTzA==
-X-Gm-Message-State: AOJu0Yxs8pl7RAmoEMGf4XlI+keUFGaNRiUIG6gWPD0Jau0tBIPfng9J
- ocQw/3iQ6JDlcMq+/M0XbEFvl/1YkThvPjD3mtl6VaGb3NaI2usZmasLFD7ysYomuzsYtaNqVqB
- 1pnfLUDhWN0oXBnaen4rdxBH7oxIi/0erSqEPNv/K0PG9rXmIZSD/
-X-Received: by 2002:a05:6122:3d0f:b0:50d:4aa2:fa16 with SMTP id
- 71dfb90a1353d-50dda3aaef6mr9353711e0c.12.1729538893272; 
- Mon, 21 Oct 2024 12:28:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHu2c5FgNYQVVmBwK0+Xa3Q/NHwYSlzkHw1KJ2N1NHpxmpIiwBxMV3+h+9z2XxPp6XEyj8wQ==
-X-Received: by 2002:a05:6122:3d0f:b0:50d:4aa2:fa16 with SMTP id
- 71dfb90a1353d-50dda3aaef6mr9353678e0c.12.1729538892756; 
- Mon, 21 Oct 2024 12:28:12 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b165a5c526sm199582185a.78.2024.10.21.12.28.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 12:28:12 -0700 (PDT)
-Date: Mon, 21 Oct 2024 15:28:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC V1 11/14] monitor: connect in precreate
-Message-ID: <ZxarSUBGD7LpK_v6@x1n>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-12-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1729539015; x=1730143815;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wtFFM01MtMk7bKwjAfnzZ86kCwFKc7QNS/KueXIyn24=;
+ b=kjrmX/wcUYr16p7iGvaKVWhbNyxc2SUDRTsh/Ivi5iPr0SPSEddgZRo4GBwmx0my54
+ z95bjDaBsJEl84cWfiU2LkIg4uaMjTWfIEYpI1UPAP5SjSh2/ChV1mEVwHsaXfPzfSRD
+ PLPtwsu4yG8YokF3sc9jCTIv1WjU/TCarRYjEXT3EHJOI4tjI67Tj8e+EqQIvobz5+/b
+ xzRKgwMu8bFTcwDAhDtWUHnGAgJjDErat8qj9MBD9BToUTlMqypk1kqUc5aAjAeeQabG
+ E1920oCDp0hIvWdZUHcaaLeKwJBvqQYz2QYpJenQ5GFvL+y7YgDsS52KkzYsycGGcBGw
+ pJEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUctciwXtVIxVMbYtZnQy4mcbMcbAeeR61EZGlRtP5xcRo3gFDdfd+c447HrapVDAiyiVVtPb/ZynFa@nongnu.org
+X-Gm-Message-State: AOJu0YxlcRZYVR3gnE95jJodfFw3+q+l8Ko4IlHuJxfGZcl98lneC/PO
+ t1p2gasI4hKxwjKytaX7VYS+ZWIAyt67C7AMYVrG8K4Sy1jS/V0r0JjrKHCnkQQ=
+X-Google-Smtp-Source: AGHT+IEkUNzzlVgHu0mQ344HQHz8Mu++7c6xwW5NhPYSujGQN9oo8xcijGXWZtTRdoo9Fv9gsy2bpg==
+X-Received: by 2002:a05:6a20:ba29:b0:1d9:6a6b:f7a4 with SMTP id
+ adf61e73a8af0-1d96a6bf9a2mr1425189637.49.1729539015484; 
+ Mon, 21 Oct 2024 12:30:15 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:bcc0:242b:63dc:6000:cdfb:8dda?
+ ([2804:7f0:bcc0:242b:63dc:6000:cdfb:8dda])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7eaeaafd36esm3542130a12.6.2024.10.21.12.30.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 12:30:15 -0700 (PDT)
+Message-ID: <25ae806f-38de-425f-8590-1c605d93197d@ventanamicro.com>
+Date: Mon, 21 Oct 2024 16:30:11 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1729178055-207271-12-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hw/riscv: Support different address-cells for initrd
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Conor Dooley <conor@kernel.org>
+References: <20241021040942.400-1-jim.shu@sifive.com>
+ <20241021040942.400-3-jim.shu@sifive.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241021040942.400-3-jim.shu@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,170 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 08:14:12AM -0700, Steve Sistare wrote:
-> Complete monitor connections as early as possible, prior to
-> qemu_create_early_backends, so the user can issue commands during the
-> precreate phase.
+
+
+On 10/21/24 1:09 AM, Jim Shu wrote:
+> The cells of 'initrd-start/end' should follow the '#address-cell'.
+> QEMU API could support 1 and 2 cells.
 > 
-> Make a list of the chardev's referenced by all monitors.  Create the
-> chardevs, then create the monitors.  Exclude monitor chardevs and
-> monitors from the later creation phases.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
->  system/vl.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 77 insertions(+), 4 deletions(-)
+>   hw/riscv/boot.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
 > 
-> diff --git a/system/vl.c b/system/vl.c
-> index 3c592b9..a985ab8 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1939,6 +1939,11 @@ static bool object_create_early(const ObjectOption *opt)
->          return false;
->      }
->  
-> +    /* Reason: already created. */
-> +    if (g_str_equal(type, "mon")) {
-> +        return false;
-> +    }
-
-Why monitor are part of "object"s?  I thought it was only registered on
-qemu_find_opts("mon").
-
-Same question to object_create_late() below.
-
-> +
->      return true;
->  }
->  
-> @@ -1956,6 +1961,68 @@ static void qemu_apply_machine_options(QDict *qdict)
->      }
->  }
->  
-> +typedef struct NamedElement {
-> +    char *name;
-> +    QTAILQ_ENTRY(NamedElement) next;
-> +} NamedElement;
-> +
-> +static QTAILQ_HEAD(, NamedElement) monitor_chardevs =
-> +    QTAILQ_HEAD_INITIALIZER(monitor_chardevs);
-> +
-> +static void chardev_add(const char *name)
-> +{
-> +    NamedElement *elem = g_new0(NamedElement, 1);
-> +
-> +    elem->name = g_strdup(name);
-> +    QTAILQ_INSERT_TAIL(&monitor_chardevs, elem, next);
-> +}
-> +
-> +static bool chardev_find(const char *name)
-> +{
-> +    NamedElement *elem;
-> +
-> +    QTAILQ_FOREACH(elem, &monitor_chardevs, next) {
-> +        if (g_str_equal(elem->name, name)) {
-> +            return true;
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index ad45bd7a6a..76b099c696 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -182,6 +182,7 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+>       void *fdt = machine->fdt;
+>       hwaddr start, end;
+>       ssize_t size;
+> +    uint32_t acells;
+>   
+>       g_assert(filename != NULL);
+>   
+> @@ -209,9 +210,18 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+>   
+>       /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
+>       if (fdt) {
+> +        acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
+> +                                       NULL, NULL);
+> +        if (acells == 0) {
+> +            error_report("dtb file invalid (#address-cells 0)");
+> +            exit(1);
 > +        }
-> +    }
-> +    return false;
-> +}
 > +
-> +static int monitor_add_chardev(void *opaque, QemuOpts *opts, Error **errp)
-> +{
-> +    g_autofree char *chardev = NULL;
-> +    int ret = monitor_chardev_name(opts, &chardev, errp);
-> +
-> +    if (!ret && chardev) {
-> +        chardev_add(chardev);
-> +    }
-> +    return ret;
-> +}
-> +
-> +static bool option_is_monitor_chardev(void *opaque, QemuOpts *opts)
-> +{
-> +    return chardev_find(qemu_opts_id(opts));
-> +}
-> +
-> +static bool option_is_not_monitor_chardev(void *opaque, QemuOpts *opts)
-> +{
-> +    return !chardev_find(qemu_opts_id(opts));
-> +}
-> +
-> +static void qemu_create_monitors(void)
+>           end = start + size;
+> -        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-start", start);
+> -        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-end", end);
+> +        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-start",
+> +                                     acells, start);
+> +        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-end",
+> +                                     acells, end);
+>       }
 
-Would be good to add some generic comment on why monitors' chardev can be
-created earlier before the rest.
+Is this a legal format for linux,initrd-start and linux,initrd-end?
 
-PS: I'm not yet sure this is required for the initial support for
-cpr-transfer, as there's no chardev fds involved yet?  IOW, I am curious
-what happens if this code init all chardevs instead of monitor-only.
+This link:
 
-> +{
-> +    qemu_opts_foreach(qemu_find_opts("mon"),
-> +                      monitor_add_chardev, NULL, &error_fatal);
-> +
-> +    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
-> +                      option_is_monitor_chardev,
-> +                      chardev_init_func, NULL, &error_fatal);
-> +
-> +    qemu_opts_foreach(qemu_find_opts("mon"),
-> +                      mon_init_func, NULL, &error_fatal);
-> +}
-> +
->  static void qemu_create_early_backends(void)
->  {
->      MachineClass *machine_class = MACHINE_GET_CLASS(current_machine);
-> @@ -1994,7 +2061,8 @@ static void qemu_create_early_backends(void)
->      /* spice must initialize before chardevs (for spicevmc and spiceport) */
->      qemu_spice.init();
->  
-> -    qemu_opts_foreach(qemu_find_opts("chardev"),
-> +    qemu_opts_filter_foreach(qemu_find_opts("chardev"),
-> +                      option_is_not_monitor_chardev,
->                        chardev_init_func, NULL, &error_fatal);
->  
->  #ifdef CONFIG_VIRTFS
-> @@ -2020,6 +2088,11 @@ static void qemu_create_early_backends(void)
->   */
->  static bool object_create_late(const ObjectOption *opt)
->  {
-> +    /* Reason: already created. */
-> +    if (g_str_equal(ObjectType_str(opt->opts->qom_type), "mon")) {
-> +        return false;
-> +    }
-> +
->      return !object_create_early(opt) && !object_create_pre_sandbox(opt);
->  }
->  
-> @@ -2045,9 +2118,6 @@ static void qemu_create_late_backends(void)
->          exit(1);
->      }
->  
-> -    qemu_opts_foreach(qemu_find_opts("mon"),
-> -                      mon_init_func, NULL, &error_fatal);
-> -
->      if (foreach_device_config(DEV_SERIAL, serial_parse) < 0)
->          exit(1);
->      if (foreach_device_config(DEV_PARALLEL, parallel_parse) < 0)
-> @@ -3730,6 +3800,9 @@ void qemu_init(int argc, char **argv)
->  
->      accel = configure_accelerators(argv[0]);
->  
-> +    os_setup_signal_handling();
+https://www.kernel.org/doc/Documentation/devicetree/bindings/chosen.txt
 
-Didn't immediately see why this line.  Some explanations / comments could
-be helpful..
+Defines both attributes as:
 
-> +    qemu_create_monitors();
-> +
->      /*
->       * QOM objects created after this point see all global and
->       * compat properties.
-> -- 
-> 1.8.3.1
-> 
+"These properties hold the physical start and end address of an initrd that's
+loaded by the bootloader."
 
--- 
-Peter Xu
+So I'm not sure if this format you're using here is valid.
 
+
+Conor, care to weight in? Thanks,
+
+Daniel
+
+>   }
+>   
 
