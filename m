@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D23CD3C934
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F020D3C934
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2h2I-0004Xo-FM; Sun, 20 Oct 2024 21:16:42 -0400
+	id 1t2h3o-0005Ht-RH; Sun, 20 Oct 2024 21:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2h2H-0004XU-LY; Sun, 20 Oct 2024 21:16:41 -0400
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1t2h3n-0005Hg-7u; Sun, 20 Oct 2024 21:18:15 -0400
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2h2G-00050C-4o; Sun, 20 Oct 2024 21:16:41 -0400
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-50d479aef64so1137267e0c.0; 
- Sun, 20 Oct 2024 18:16:39 -0700 (PDT)
+ id 1t2h3l-00054k-Qu; Sun, 20 Oct 2024 21:18:15 -0400
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4a47240d31aso918442137.3; 
+ Sun, 20 Oct 2024 18:18:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729473398; x=1730078198; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729473492; x=1730078292; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uPUXo26fAxeAF+yc+Y1wdYpMWacKjp8hqrAnA4Br5FU=;
- b=FhuXmkEJaNaL9kcVMgBpigsK+0B6oyYE4Q1zh5l9LmTECSpiBz0CkaYMViTqVQ/7hh
- l4TYZZE4UAwls4AU7N9Iu4S0PKcafnepQCHva0HHV9lJ57JXvnNv79N3EW8Ski14YH1l
- JgHsEuut8QVA6NQuD23vG+KjKJkN9i6lCZm1nraqgvVvDIIeinHJiXBSN5QgYZpU6MGe
- yz8wZIfmxyFyUCCYFtX5ZU3ej8BP8KDTeaInEMtSX+qbyuoFWfvmkq4FrDqkIGvSAlQz
- gWkeQf+tf++94u4o97mnR+y8IkNz9iUviyTTot7+qL6ptRXaoqMpLiacqf5Soqk6mmVV
- xGfA==
+ bh=ujWRKNiFsHe9bXMP6bid7jJhiedcxpq6ZAGBZrUbVLc=;
+ b=nXOk+x6cf4JiUYXm/ogMEZ5CDfwJJpNLl32zAVu98k3ax2xhAhIkjDE9Tt+ctjKGSi
+ ecna2+F9aejqN+86g6a7FBTsl+2G6iZkAqLXwRXyL364qeqWJHQc0LkWTfC/JetKHmCi
+ 4/LhktLftXCsHuWFfKW6xVAUdeawmlz8RpYI2Zu8NcwgptVZerF/2Gujy3YpcnJpKvSE
+ CIAsiUaB5D9XWorr7ffTKS7IzE7KYDYkDlyH1b4uHpAnQChrS7+zyr4Ii15VT2wIhc7a
+ cjFRlXAygsp2v/lvd3BSvo8HPG9VvzJpt/f/1M5VPMZuN0jZk+qV7lqT2cZK0Sg35UbH
+ YAqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729473398; x=1730078198;
+ d=1e100.net; s=20230601; t=1729473492; x=1730078292;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uPUXo26fAxeAF+yc+Y1wdYpMWacKjp8hqrAnA4Br5FU=;
- b=NFr741hIJVLJ6fB22QUeBV67UFxDwMud0pXwx4beaTuWmwmSROg4xCi+wdWtgrU2eR
- nq06/qjQWuZTpPHpVbSCgQHZ2pNFoND/XKlJvouCRW4/B/V14dIkVmZEZm6A6QsJfFGL
- lTbuPiJK93FRkTp7he+LlUQEOdwdd9V3ZOfufSi1Os7JzFv522RceNSYAeRNZdKk7w2J
- 0uhGo+2vwV8inY0LYrigCAm4oGm4BDpSQ7zSSxyiTHpS0t/uzGf+9KvhFxnb7GZG6Kmd
- sJQiFO2tmdytAUS1ZsT7N6HZf8zKx5/4qj3qP1BnqT90XLduKxZ0mfHqbGOksrDcqMou
- Qeqw==
+ bh=ujWRKNiFsHe9bXMP6bid7jJhiedcxpq6ZAGBZrUbVLc=;
+ b=i5zkKEAYIFHcEHJbItAzCT4IfOFJl9x3R3jOu29jAJEjEvkvTzlRV40wb/bytUNCha
+ DDiiL1DkoskiQ+NtOTwUiahJks2QAw+SGQWDVmQ6E405wXYgJ0sOaNg49OxqKL21fOxa
+ HSReT6PREucWFC4cc6U9Z1SVob4ZergxnBMM+ftl2exHQRHZQY9SPqtxFGqAx/62DDFn
+ 15myUrtckauSfQe5jkFDia+3Dnjn98W58fppL8/rKlT0UwemgzF01d+jnij1PKnc54lK
+ hErgG5slANCuYWB8IiXMHffh+ByGEdrHIkr7lg9OS53VlpTh/pM4srmtxlGqpAWXMXN1
+ 4e/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQX3zENhxgRk02AISCWIFT7HDPULK+MwuH8ap6X+ixcLFHDZuNIczqdQl3PfCAyWP06u+x9fXZXqGR@nongnu.org,
- AJvYcCXQqmYy43l7CHpVdbZxwpn8GwyPgeBXC51vls/dSJ244T+VG7fDKSFfgTF00MzDp5hY86ZG30ybdFgCWZw=@nongnu.org
-X-Gm-Message-State: AOJu0YznNIRc+TF1df7mThmK92fj4i3+GpUyFKQn7bROQEV9d+XrbrsJ
- paAGLZMU76298UOZbAVBy7cAUE/RCDIfwhq33DPji1mX6wP8BLsoAGXxb70xpSL4pYsasgPkQjz
- 8JhgrTf8NBpdyGVsYMyyySrcxkFk=
-X-Google-Smtp-Source: AGHT+IHreIxUiXrC3/Y9hBC5qPulpPe7FAloNTdQP5ZS04HhVjzCUm08B0Mzw++8dw1hUqeGrYfpUi4BHoYd7D8JhlI=
-X-Received: by 2002:a05:6102:6cd:b0:49d:4812:913f with SMTP id
- ada2fe7eead31-4a5d6ba42e3mr6445852137.23.1729473398363; Sun, 20 Oct 2024
- 18:16:38 -0700 (PDT)
+ AJvYcCXV6KLQz9IbhokxgEl8q7m5vmZy79Ax37UmyqvzM6DSEtztqT4WTFn5LgUEx+sxSM5H2yn7skumKrcy@nongnu.org
+X-Gm-Message-State: AOJu0YymbK57jC9HSvDlGiBhEzCEyCkW768ZNebev5VmmHC7POOzlpxg
+ D0B1HCDnOXT27YvRxWRF6DV4YhwIWLJG7ygZsAxUBUNBRwAjjnTIRt8KzCdyLCrmAw6jw/TUGD/
+ iSZQrq8XB3QX8sKM71sK3nMCNpkA=
+X-Google-Smtp-Source: AGHT+IGtbOQhhOc2h3UB8283Fs616HptgE+8aGzGPo8MyfGnqUp15TlFEbgPpV55adA6GL2+zOMuoVxakUeK0U42SPg=
+X-Received: by 2002:a05:6102:3753:b0:4a4:8756:d8bc with SMTP id
+ ada2fe7eead31-4a5d6ba8e48mr6896167137.23.1729473492510; Sun, 20 Oct 2024
+ 18:18:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241016193140.2206352-1-richard.henderson@linaro.org>
- <20241016193140.2206352-2-richard.henderson@linaro.org>
-In-Reply-To: <20241016193140.2206352-2-richard.henderson@linaro.org>
+ <20241016193140.2206352-3-richard.henderson@linaro.org>
+In-Reply-To: <20241016193140.2206352-3-richard.henderson@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 21 Oct 2024 11:16:12 +1000
-Message-ID: <CAKmqyKN2ykc=M4YsjqHKALLfPo05C0MwpmMtPXctAckfU8cmfQ@mail.gmail.com>
-Subject: Re: [PATCH v6 01/14] tcg: Reset data_gen_ptr correctly
+Date: Mon, 21 Oct 2024 11:17:46 +1000
+Message-ID: <CAKmqyKNz_GAOZfRUatWMJGTVzS0tM=JX+81V4-Bhq88ipGgQLA@mail.gmail.com>
+Subject: Re: [PATCH v6 02/14] disas/riscv: Fix vsetivli disassembly
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- zhiwei_liu@linux.alibaba.com, qemu-stable@nongnu.org
+ zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,42 +95,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Oct 17, 2024 at 5:35=E2=80=AFAM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> This pointer needs to be reset after overflow just like
-> code_buf and code_ptr.
+> The first immediate field is unsigned, whereas operand_vimm
+> extracts a signed value.  There is no need to mask the result
+> with 'u'; just print the immediate with 'i'.
 >
-> Cc: qemu-stable@nongnu.org
-> Fixes: 57a269469db ("tcg: Infrastructure for managing constant pools")
+> Fixes: 07f4964d178 ("disas/riscv.c: rvv: Add disas support for vector ins=
+tructions")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  tcg/tcg.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  disas/riscv.h | 2 +-
+>  disas/riscv.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 5decd83cf4..0babae1b88 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -1399,7 +1399,6 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
->          goto retry;
->      }
->      qatomic_set(&s->code_gen_ptr, next);
-> -    s->data_gen_ptr =3D NULL;
->      return tb;
->  }
->
-> @@ -6172,6 +6171,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *t=
-b, uint64_t pc_start)
->       */
->      s->code_buf =3D tcg_splitwx_to_rw(tb->tc.ptr);
->      s->code_ptr =3D s->code_buf;
-> +    s->data_gen_ptr =3D NULL;
->
->  #ifdef TCG_TARGET_NEED_LDST_LABELS
->      QSIMPLEQ_INIT(&s->ldst_labels);
+> diff --git a/disas/riscv.h b/disas/riscv.h
+> index 16a08e4895..0d1f89ce8a 100644
+> --- a/disas/riscv.h
+> +++ b/disas/riscv.h
+> @@ -290,7 +290,7 @@ enum {
+>  #define rv_fmt_fd_vs2                 "O\t3,F"
+>  #define rv_fmt_vd_vm                  "O\tDm"
+>  #define rv_fmt_vsetvli                "O\t0,1,v"
+> -#define rv_fmt_vsetivli               "O\t0,u,v"
+> +#define rv_fmt_vsetivli               "O\t0,i,v"
+>  #define rv_fmt_rs1_rs2_zce_ldst       "O\t2,i(1)"
+>  #define rv_fmt_push_rlist             "O\tx,-i"
+>  #define rv_fmt_pop_rlist              "O\tx,i"
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 5965574d87..fc0331b90b 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -4808,7 +4808,7 @@ static void decode_inst_operands(rv_decode *dec, rv=
+_isa isa)
+>          break;
+>      case rv_codec_vsetivli:
+>          dec->rd =3D operand_rd(inst);
+> -        dec->imm =3D operand_vimm(inst);
+> +        dec->imm =3D extract32(inst, 15, 5);
+>          dec->vzimm =3D operand_vzimm10(inst);
+>          break;
+>      case rv_codec_zcb_lb:
 > --
 > 2.43.0
 >
