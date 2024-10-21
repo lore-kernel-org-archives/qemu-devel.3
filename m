@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128F2D0E6E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32815D0E6E8
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2pZh-0001dV-Jf; Mon, 21 Oct 2024 06:23:45 -0400
+	id 1t2pjx-0003Td-R9; Mon, 21 Oct 2024 06:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2pZg-0001d0-9Z
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:23:44 -0400
-Received: from mail-me3aus01olkn2082f.outbound.protection.outlook.com
- ([2a01:111:f403:2818::82f]
- helo=AUS01-ME3-obe.outbound.protection.outlook.com)
+ id 1t2pjw-0003TE-3R
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:34:20 -0400
+Received: from mail-sy4aus01olkn20828.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::828]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2pZe-0000Z6-Pg
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:23:44 -0400
+ id 1t2pju-00025t-DM
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:34:19 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gLYtAabdbqU7VhKl/o/UMZyG8VjNotADt1S7KLzTFWJoaXYn4PL7J4YpTZg6UGJjcVcFUuLu5Ss+LX7sXSJ1XrbcvwO2KVUyGiotjh3qkDV5jBvsb35d9ELHBfl12dNMmirUKEGzWqJKxpbUXejejFSq8uGqsAc/AuVwZdOCtGZ1QiAq4jK8X53ua1kIMKWwsRvwbsSjt0pJQJOkBGdPm+qOX6l6ifVSjicncLccM22svXWCvOdei/hg9w7VcEHUXP+N6Sek1ZXBF3Ase0Un+qVPhjDOiye8PncVL++4CI1UsuiOR8chVppH4vaZyDjTebGwwJ9YPO/CNzoqUhr3AQ==
+ b=cdB/OBiK7vuB8VwEwgC5+sTYAHkXh8kQ/vz73PYcmAe03UqBKGu3EQub+GKaHusfXWLDAhMlrK5DrT4VcOy7CfK6UZfhyHKrxwEcu//MEr6gbFdTHiRkXgDya7l8XdiEqkWvROpIcTK96xWt6Y+iqQhqm3e6e79xkp/B1DJWZ+DuaoFqI5noNl1tg65qYCZxSNq+Bt7Cm644K1gPLqF1jT3Fr3Rfu2ed1ocEzURCJSlOeGv8Y6sUWjiUkqgmyIoGsEsCf8hacrqrDyoNojfqtHXmhM+Jtn1sxUzL8jeIb3CbtnOxKH3sWpQIpFK0yRIBe0DkQhi+fahongj5udQxtA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hiyOUQlLstM4OULquOsPAE+gWW9Z/lXo5woUbll+vmk=;
- b=ozpTT9sG1zop4l8rq+BSCbWH6qUnq4468mBUcC3NJJDNGFmKB7ZTzpDNwUTRw8pWqBlrj/O8HaGN9e0F4fCqrRvT288TMK1BUxXu/z1+XukiTuW28+4NGm+1BS1goKwbRf6/radq5TFNAdUerNClABcCLU4L5UhjnojewLRzRBDWgvLGqwdsjKLx83NqzsE4Aw/4EDi7uT0rqrVk0M24EElDCYfYA526gxuYi15fefXy3FbL/uEwGs75LzWYaLoifOQrgqeGR7cvIAp85pkggS6hvj7SfxjaPV9HlmcFSYdrb91AWrpBSp69Ng496okatJ7sIi1+t0WgqPdvjdqiDg==
+ bh=qOYc1GRjNvnCIeUT7Pg9qcOmcixEQGjU9uBs35jRuGw=;
+ b=Dl/302uXs77yZus5E11okh1J6MgB2Eo5GvC/lGXcD4SU/1OU2Bn3yhDgI/HBylqu7+Jwq+5SRbC5YDAfxVMcGOQiNm6tIX6Sx2cwrm0ZYZ2GkJ1+iHLvzpec3wf1tNsHuvw9x3c/hhy3JqrYeYPwAcQeGXz0rHAhrWWENZExcavIS643sVwwb7bzitHC9ogFu4I/FOb+/Jw56EBbpNGFd6+w1NJlDXwTa7p+8k3lz/LShGKsEX6VD6+0QURE9uMSy5JdlZSTbKT27RutReCgjAXqEr44tSQjv0AP+wlebXWD2D+dHL0dFjqjmiSpQ5lBB0MFS1BhWnfbq02ff8eyAQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hiyOUQlLstM4OULquOsPAE+gWW9Z/lXo5woUbll+vmk=;
- b=Rw1USBhErghModYkSdoVioXWkrgnIldYia516UfWS06oNlSufr7e4bjmUNukoAAU5GvBLkiEpQb54XSZvjq/H5N1tWAvA5mzQpr1CVVe2HK2jHW7zKN1+V7ADrU4/QUxl1h8CiQOzmewLBqcStF2IWA1q/qtUK5rGCCdn6PsPHFQeZfjBldn+ZysbVizrmCMk7crArz99DvMJGxlxB6i/pRIwVblDc2i/DVmN8K7j3Nz5YTIQf2cG1RcAf93fvN8Qao4xz1005++S4uWU4DfHZb3vI+8t4ntj9kzB9LK+v6NqgrtLUCMmqFPLbHRsjOkUtEMjkP4GlXu9OFMApNLZA==
+ bh=qOYc1GRjNvnCIeUT7Pg9qcOmcixEQGjU9uBs35jRuGw=;
+ b=u5D14psm7uVryLbcES/lYZ09gRLPxVxuHdX7aSueWKFv8gunumFP8fklEN2pqKEmlUTsyE1SUaz3eJbMCwAj1brLW2bCTozV3jrFnv2Hvm7oLWosA0v2lMs3klD0E4lfv6muQ00oTEzTIaysOyPo/2/15iPxhoWuOXlg5mb1Izvryg40+fjCG5IZiA85OjVv1iNeGeJoutRohhX5YWv3Z5AmbvXrxUZwBMid+jsYFXOZmkL52DkTy0oZAdZY7m8M+ccuERFJhVdOVBHOoV65lvWpmxOKI6aslYhqCN2S5ATTMJoUoRP0+ptfFisJ7hrzwAZnhD88Nf/K844pVbY2Kg==
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by SY0P300MB0641.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:285::10) with
+ by SY7P300MB0749.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:28b::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Mon, 21 Oct
- 2024 10:23:37 +0000
+ 2024 10:34:12 +0000
 Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.027; Mon, 21 Oct 2024
- 10:23:37 +0000
+ 10:34:12 +0000
 References: <20241018144306.954716-1-pbonzini@redhat.com>
- <20241018144306.954716-8-pbonzini@redhat.com>
+ <20241018144306.954716-9-pbonzini@redhat.com>
 User-agent: mu4e 1.6.10; emacs 27.1
 From: Junjie Mao <junjie.mao@hotmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 07/13] rust: modernize #[derive(Object)] for ELF platforms
-Date: Mon, 21 Oct 2024 18:23:14 +0800
-In-reply-to: <20241018144306.954716-8-pbonzini@redhat.com>
-Message-ID: <SY0P300MB1026DEEDBF3647B82CA9125495432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Subject: Re: [PATCH 08/13] rust: build integration test for the qemu_api crate
+Date: Mon, 21 Oct 2024 18:28:26 +0800
+In-reply-to: <20241018144306.954716-9-pbonzini@redhat.com>
+Message-ID: <SY0P300MB1026A61776DE7025EC7B9F1C95432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 Content-Type: text/plain
-X-ClientProxiedBy: SI2PR01CA0025.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::10) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-ClientProxiedBy: SG2P153CA0044.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::13)
+ To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87y12hsqjk.fsf@hotmail.com>
+X-Microsoft-Original-Message-ID: <87ttd5sq1w.fsf@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY0P300MB0641:EE_
-X-MS-Office365-Filtering-Correlation-Id: d905fe47-87c5-4337-ed46-08dcf1ba6c0f
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY7P300MB0749:EE_
+X-MS-Office365-Filtering-Correlation-Id: b16dff7a-7f9c-4c89-106d-08dcf1bbe75d
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|15080799006|7092599003|8060799006|19110799003|461199028|5072599009|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: xlqRdrAgWovneMBPnStq1iUVtqNKPn4tCsdJT48zdDC7C8G1ZF2+DywpSqYHjy8kXh4AtGFQ5rp9uTf9h6nUiN3mMFsd+beQQiDSrYEv1KdLBU3t9lfehF91RpAhRDX5PkKw29r0VUhXToaGTsh1r2qiRFdv0DB04JL+XFg6zEFNE0BtKklMOt30mvJNNTw4vTHxO7yPACcFIsLSOf5M6JsXh18eXp/MAt0TyExqDv4mwqRmj8tSeorPopUcuj45yw57qFktytyFHrRnkCRED7vM86kE9FXBqAYwv4g5aVzxsvPRGlddnuN9Xsn3NsnlJNV/oymGgsLLZg/5ETgPQMvBl1XNbM+0HlgCPEPBuRMzRaAGAcn/5Yor3XhKmYfPKxD81v9deJ8oFaZOU6k598Ps8G36owayhC9b4HSdkjFdG+NwLa0/MpUxparHohiEJUu+TlSBnvifUNxZ4lk8t/CjLsDBwPp10yfIhZBg3CmUgnaFiRF0YMGf1CvDCET4PV577m3dbAQAcR39O+Z1ayNedcL0lIONZNKV0zIuBlDoYL3dvFgyh6ijhV7bCeQkxMdXekqYxPMAeRAxe+3tDPLQ95DwSkmi05/aiqohhkFhjAnJkp/vBifpwA3O1dGWHN03NpTWhkSX3GR+a55KvVLaPbDCwuaG5PfImAc+DASzdUgLu7TZ1UrcHdGySPz/IlAQi1eYKf24GOTIFXUE6eJLoLlLxKMwNgyKvqMoFYc=
+ ARA:14566002|15080799006|7092599003|19110799003|8060799006|5072599009|461199028|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: wStYBcMvMY2A8FuNGbA5Go/rbFO67Nvm/VB74LNnHc7322wYC0mH+opb0aih9zfgleF8ZncaGzfPQHFoRrjJcztICvP7sarE0EBmNYJFQyFbjRZsWjRspI+DNiTJkqKEuYbrJO5dS09zM1m4OjxDYAEuEFEdP4F3kk6aqFIDiqbBlOIxqPiQV+85ACIxJH+LtCLamFhwXIbNMPu42pg54njKZ5pBcK7H17+9/w+FO2wRzZSL8/KoZnZ9WjuKcAkTSsHz3udhmW4XUQNpYUFt3oK09THfH/OmZzYknhXDl4QJQVgt6JZfTV4HKqZOFD1twTDkJLBxT/a++DE0afClbSzcIJHkSIqBbHQ2o4GWUubDlMFGkzK2JkNbiYCT97Ln1mcKx+DoVRLJ2cJTId34foyiCSN2TsxCkx2CnW3zBIYSBkammMqOoXd2Q7eo9Cz2ZtRn6W1OMPk6HHK/yzY0LZTz7X6CS5LBy7+lCMX0PmLOnJFKj/45ngwx3SdCtfvGB9yWz6KnHeUmPnUqaM5UIX9vKop7lMlJiIP3OaA9Nd/LSYc34JeVTxogb3tYImhlWI/xGo3vYzImD+FWKnUVDRfMinP6fK8Vvz4+CExQeZieisEyBGKEcY/TW8L+xa1XYbXXN4CNPgXLpzcZP0Q75mXkN+WecqcFYfxhpsAn3uWjL6m2ii1o8N+Gs6ZJd+nCd2CUWD6WC/eMFyFebaXbWnO7aXY9Gkb/7wCZ5s4kiKo=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tGRGaSmDrZjTTWE9aKlOL1n7QWeg21DJGTSqfMtfchgfDZKQvAJT9ZCQbbbu?=
- =?us-ascii?Q?vrY/A7QdLK+CwQHRnGTtl3FHEogGFiwjgpk3E/nsYVyRnE+yixuaVI8hXurN?=
- =?us-ascii?Q?h7PQL0BndbbA8t19J6IwHpjy9S7+Xaf+esO2BN000A4qJGCG4FU1Wq4qV9ZJ?=
- =?us-ascii?Q?JX6agh5Oh6WSZUjg+8m7xtsF1ScilP65exnSTVNPXiX6zXXL8UZqeGExrecB?=
- =?us-ascii?Q?QVU7eYddYXm3xXwRMHt4e8qZGcBI0+jSWbF8s6wuqgcQOJrSdr8AO6ignEKJ?=
- =?us-ascii?Q?h3dqW40vPB6L3zVZGA+U6ZFtyZjjivAEPzJwYhwbwNC2vVQ1g3Ki4FL1gnBZ?=
- =?us-ascii?Q?vF3i8XYLShzlwIAdy1bH9HfcdkxTT2/MhmJtRy6IJRQYutg3+y0XHkTV3CMA?=
- =?us-ascii?Q?MmNRNrYr29upEj/Hhm0PuJR1SnRJoOdDCnG3qKXEh+X6pstXtW7g5VsLPS+F?=
- =?us-ascii?Q?1zttjL/LJyzqoUXmT1tg/HwGBJ5pOYQmpQlvFKt7Y+6758KiFdETx/5op8QU?=
- =?us-ascii?Q?MQSbvt/LqWfFuVMrFINWsm1KaFtPshksg3E9sMRZiZzizprxEz9Tlj2CEKBH?=
- =?us-ascii?Q?NB/KtXK551CU599uZwmf5grEaaAsmjoXVVSZA0vldt3c1v84R9QJ/imPe3sb?=
- =?us-ascii?Q?Xb7VxTTMA+DMRlLNELmnk71+hyUfcUtGP+Zcbjv7RZZ3ng/H6xr2H+p0UIif?=
- =?us-ascii?Q?oSO9KBgVe3VlFOz4TMtm3NslVfJ7jsJg3ZXMgPita808ZF33g+w/3bPzmBTV?=
- =?us-ascii?Q?BbiG+lhtkHgZhAtgJCuWHVUNlVKvO0DBlAGysdPkrHU8n+sf4Mnga/1e1mUx?=
- =?us-ascii?Q?TW/0ktQW0wa/EByvOnVYnIj9gYhOb6DI9NzNamkexKsywEOrzt70U99wsT4j?=
- =?us-ascii?Q?f+Bu/x8b4w3fov/quSpU2cQa97AlajQnWyle/UCyt5trTeb7OkwMsbEoMDMt?=
- =?us-ascii?Q?aDqOi2K3c8IlLW4RPdCaSFu/S5T4CtIqblKFhBSfsuZrOB7WvqVvkd4JDhkD?=
- =?us-ascii?Q?VL/0CIQwRau8v8MhNVnzRU0cSjRlYXk5merQVmS+lC/9SlI1rAH8VC3sYWbN?=
- =?us-ascii?Q?TXNfLi1wrcpTw4UudA4LtgaxqlCw7egEFduIh0Z64eEvBG4HImCB3l2LEmz+?=
- =?us-ascii?Q?HrYhDjRYNbihG6JH9Qo3wmIMx3jyHobvgcG8wWTPfjJfOhPlPy+LR1npWOZS?=
- =?us-ascii?Q?12ATowMGSP8tpG8C4jDJgtcxcsfIoXjFQQ4AZd8cZ1UiehechCo5oGLy0pA?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?eGTBZqa2ywhQeDOfF88jd9D7S/iUGNcZ9uBRIxt0nT83dUTQWc/z1fqKiqUa?=
+ =?us-ascii?Q?IL6P0QKukNc4uKQ3OF66jrkW05+VCk87RsJWMUlHrc8SJyZFQhgPxjMJr4PO?=
+ =?us-ascii?Q?ND466SM4AKY6gnXJ3ihA4RaIQmY2JGOF5O7sv6NDvQBznjUGptLzDvZlXaLz?=
+ =?us-ascii?Q?AOpDuNwlPY4ASpwyWsoJA9zEA8MJlL1H5XgMADM6NfpDor9gvJOXLz12WUBy?=
+ =?us-ascii?Q?TMqsI2LtYXIVLCt/Dlb4MEhsLwIKnmF6F5077QRanbq14nxnL6StBdeR8b3m?=
+ =?us-ascii?Q?BQS+OIdZeduLCsqKCWUPvj+GsKk34YgXzO1lu5VQ61yzYjVqZbx2QI+W1pNJ?=
+ =?us-ascii?Q?njsN4aWZZd6f/nNZUb6/9fEDcHO2BLagY14kXkqx2V6I3mjtq0KrW4VxDon3?=
+ =?us-ascii?Q?F0J5PECNfRpZdKbhHfi2qsYBd9pdQXBIhuiHsXBRQ713/JkAXaBtZDhTg2F1?=
+ =?us-ascii?Q?GB5kEa353ZpFFCEoTnus3Pzp4/EY9CrSR8jEc7obJpQNxcihsiIl8wwz/g+G?=
+ =?us-ascii?Q?VbV/RK+W7X6/oizMbRmmJVDilHNFAXhlZQRAfydpUWoJGcFxC1lShujtv09D?=
+ =?us-ascii?Q?W0xsvQzslpF7bxwOpam7jPx0LjRQkqXt6gy0RhDN1jMizELyhoXKxi8g2nYs?=
+ =?us-ascii?Q?DStPYzrQWinxNVhAtSGRAdMcPDuXcSwCIx7O4pk0fbSNgE8yRPUbk5Hvksec?=
+ =?us-ascii?Q?P8W/9bPM0mSoMYcB54GJCdkGGEW90S/nr/qjmHm2JINdc2EgSMVigcewZ8pr?=
+ =?us-ascii?Q?LKpe9Jy1IYqVplbn6RncLJ2e8rC2s90RKdaRt+7D7XlKy33VupUJe6hmARig?=
+ =?us-ascii?Q?Gzplcwl5d7Uhmcw3L9PdILiHeNDdnrR301p6aMoVajOWLnuoSRJIi08A+ZYf?=
+ =?us-ascii?Q?PIRYdSdjdzOvbUwiX/51kK7ptA/XyHKAHCfVX4lAYVKxAA02vfX6qKw/b5Q/?=
+ =?us-ascii?Q?hf4Qy5jpegvlVsTQWvGccbCU6cKPMIDJRY6t8UcBS15kiImq2vUJdaaCDpe8?=
+ =?us-ascii?Q?4pqft1s6eV/zceDMVFLeULcS3QwF5NHolJL6B1vJqua5CzKe+xu74K5mo3mW?=
+ =?us-ascii?Q?C3p4R0h98Fe0rRqUHsdkTyYmDaXFfdqXjJ3DCiftoBtJk6Z/wikWunbNV289?=
+ =?us-ascii?Q?pCt9Pgk01GmyOezkuXgjhkGrZLmANcy/BBD47u6oPpMq6UNyoW2GC/t0dM+7?=
+ =?us-ascii?Q?6WZKmkTD8H6YkcQYQbapY4i5dDXAPz+wVVNEt5LEGjMZHYSgbG3h/h+HnO0?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: d905fe47-87c5-4337-ed46-08dcf1ba6c0f
+X-MS-Exchange-CrossTenant-Network-Message-Id: b16dff7a-7f9c-4c89-106d-08dcf1bbe75d
 X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 10:23:36.0557 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 10:34:12.4186 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY0P300MB0641
-Received-SPF: pass client-ip=2a01:111:f403:2818::82f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY7P300MB0749
+Received-SPF: pass client-ip=2a01:111:f403:2819::828;
  envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-ME3-obe.outbound.protection.outlook.com
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,17 +127,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Some newer ABI implementations do not provide .ctors; and while
-> some linkers rewrite .ctors into .init_array, not all of them do.
-> Use the newer .init_array ABI, which works more reliably, and
-> apply it to all non-Apple, non-Windows platforms.
+> Adjust the integration test to compile with a subset of QEMU object
+> files, and make it actually create an object of the class it defines.
 >
-> This is similar to how the ctor crate operates; without this change,
-> "#[derive(Object)]" does not work on Fedora 41.
+> Follow the Rust filesystem conventions, where tests go in tests/ if
+> they use the library in the same way any other code would.
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
 Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+
+A few minor comments on cosmetic below.
+
+> ---
+>  meson.build                  | 10 ++++-
+>  rust/qemu-api/meson.build    | 20 +++++++--
+>  rust/qemu-api/src/tests.rs   | 49 ----------------------
+>  rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 104 insertions(+), 53 deletions(-)
+>  delete mode 100644 rust/qemu-api/src/tests.rs
+>  create mode 100644 rust/qemu-api/tests/tests.rs
+>
+<snip>
+> diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+> new file mode 100644
+> index 00000000000..57bab62772d
+> --- /dev/null
+> +++ b/rust/qemu-api/tests/tests.rs
+> @@ -0,0 +1,78 @@
+> +// Copyright 2024, Linaro Limited
+> +// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +use core::ffi::CStr;
+> +
+> +use qemu_api::{
+> +    bindings::*, declare_properties, define_property,
+> +    definitions::Class,
+> +    definitions::ObjectImpl,
+> +    device_class_init, vm_state_description,
+
+Cargo fmt (with the current rust/rustfmt.toml) formats those lines in a
+different way, and ...
+
+> +};
+> +
+<snip>
+> +    impl ObjectImpl for DummyState {
+> +        type Class = DummyClass;
+> +        const TYPE_INFO: qemu_api::bindings::TypeInfo = qemu_api::type_info! { Self };
+> +        const TYPE_NAME: &'static CStr = c"dummy";
+> +        const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_DEVICE);
+> +        const ABSTRACT: bool = false;
+> +        const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
+> +        const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
+> +        const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
+> +    }
+> +
+> +    impl Class for DummyClass {
+> +        const CLASS_INIT: Option<
+> +            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
+> +            > = Some(dummy_class_init);
+
+... ditto. Shall we tweak the formats here or adjust the rustfmt
+settings later?
 
 --
 Best Regards
