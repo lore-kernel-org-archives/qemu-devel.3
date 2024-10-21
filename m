@@ -4,97 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EE3D15DB8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0F3D15DB8
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2v9h-0005WC-Sa; Mon, 21 Oct 2024 12:21:18 -0400
+	id 1t2vLP-0003d9-JU; Mon, 21 Oct 2024 12:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2v9O-0005Kd-TY
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:20:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2vLI-0003ck-BV
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:33:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2v9N-00049x-Db
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:20:58 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2vLG-0005sd-7z
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729527656;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729528390;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mstckrJMDjF6iw5guSYUvdoOXAtEPcsm4kpIPxJNTvQ=;
- b=LThZ7420qjkq2Hz5ccHaIeAOPCwSgHjcYFeERb9IyKNe1Ar0kSc64232Z0NFBqXemjUgLi
- bNyJjB1vY0JGtHbqg2GwKK/kU42cgBOZNEoJOpbwkCsrR4FOCCzn6PRtRB0UkYU7cBBDkz
- 81lLrBvM4/74EP2x/kdfL732skXlGdk=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-6fA5r8rJM2254_5I03tTmg-1; Mon, 21 Oct 2024 12:20:55 -0400
-X-MC-Unique: 6fA5r8rJM2254_5I03tTmg-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b14634dba8so863227685a.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:20:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729527654; x=1730132454;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mstckrJMDjF6iw5guSYUvdoOXAtEPcsm4kpIPxJNTvQ=;
- b=swAxG5dbGXFijo+96BhZpe26HjQAFFFp6zV7hWz5cDZaFcXgUHQ6pMZpx9pgYQS2/H
- 388p+SmkatH8CIOnpa7GzTs+xzOtWvXEIJbKggR1N/YH9RuL387jXrX9k2Xh/5LUVq+b
- ZuAtSdUzA2mwf7ZSs0hAw4uU1HuiLE4TOO0JkPeoffCAFOJ96/POAXLl3IiTPUDRcUDk
- qmeW1JE9x5EOx7utAM8hkSuFh97KvBBMej8a8MBBwbb3IJU4LwoqjSA620D4sduf/o5J
- YnodoZAr2HXZCwidLtEBuoxknMkevNG/31JJqvdEZ5lRDV4ECLNYP2P3mLPMpe3yZCOr
- gZDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhIsgY6anf4yN7HqK4U4s9LrKfZXgfqwYUf1DAiQL8ALGnPGF/oHWvTHW19d/JnFoDyqJu3BjgCZfV@nongnu.org
-X-Gm-Message-State: AOJu0Yx9SEysi1bjRzlJNyiSWz9VkPrhfTjYyig81ABL/jW4S1iJ+0AG
- w4HGP9z7hLfbj+/CmYBTFvt+WgYxGi0hCNlgh3e9gA0cK+epbeYOoCjYKq2UJJWbWd2cYGDd3jV
- gUhTN4RTNjDIhu/D0WFTVKEQPXuZKcAZHJjzMABbc4DYjV/h5sWBu
-X-Received: by 2002:a05:620a:4620:b0:7a9:8679:993 with SMTP id
- af79cd13be357-7b157b3fda4mr1408578585a.13.1729527654524; 
- Mon, 21 Oct 2024 09:20:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3VHCI3p4b2OXIcOQqyeIoABfVO81wHSg/RLsTnOEM5BuMIK7JsWWI2G2bHN4LsN7fnWrxdQ==
-X-Received: by 2002:a05:620a:4620:b0:7a9:8679:993 with SMTP id
- af79cd13be357-7b157b3fda4mr1408575685a.13.1729527654250; 
- Mon, 21 Oct 2024 09:20:54 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b165a06daasm184731285a.70.2024.10.21.09.20.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 09:20:53 -0700 (PDT)
-Date: Mon, 21 Oct 2024 12:20:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC V1 04/14] accel: set accelerator and machine props earlier
-Message-ID: <ZxZ_Y3DYgs8ZlhaI@x1n>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-5-git-send-email-steven.sistare@oracle.com>
- <87ldyl1mah.fsf@suse.de>
- <628ceba7-9cf4-4ad2-b3e5-6af4037a0bc1@oracle.com>
- <4c0645c9-a38b-4399-ba30-cf2ced63fc5e@oracle.com>
- <3da9ec87-3466-4fad-b4c0-2bcfe3853b5a@oracle.com>
+ bh=czTzyusJhdFbIBOhJ6nk4bk8jyhDfHA49rQZdwW3KIw=;
+ b=Iklgl1V9QSQLvW72lk8LTCW++RlyuWt0r8GhDGwA36QRZKxFMNKJt+BOlYfKRTtVyRFT06
+ 7aEro/U2lexFGIIOBNHog4zOfZeRxQ79v4ud8MxZHn+SxEzlCYJjdlHHBq8uawIFjIvz9F
+ TsQRV+mKSZzCCMee0il9cEoUksXUGZw=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-in-PLQe6M82t9tZxdrJXwg-1; Mon,
+ 21 Oct 2024 12:33:07 -0400
+X-MC-Unique: in-PLQe6M82t9tZxdrJXwg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00CFE19560B5; Mon, 21 Oct 2024 16:33:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31034300019D; Mon, 21 Oct 2024 16:33:03 +0000 (UTC)
+Date: Mon, 21 Oct 2024 17:33:00 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Hyman Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 2/5] tests/migration: Make initrd-stress.img built by
+ default
+Message-ID: <ZxaCPPeymA6YfVre@redhat.com>
+References: <cover.1729275266.git.yong.huang@smartx.com>
+ <777e9f8e3fe4d0e565cf62efbef6cda83a6b06a4.1729275266.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3da9ec87-3466-4fad-b4c0-2bcfe3853b5a@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <777e9f8e3fe4d0e565cf62efbef6cda83a6b06a4.1729275266.git.yong.huang@smartx.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,45 +86,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 18, 2024 at 03:15:56PM -0400, Steven Sistare wrote:
-> I understand this now.  The old code worked in this order:
+On Sat, Oct 19, 2024 at 02:25:04AM +0800, Hyman Huang wrote:
+> The initrd-stress.img was compiled by specifying the target,
+> to make it easier for developers to play the guestperf tool,
+> make it built when dependencies suffices.
 > 
->   qemu_create_early_backends()
->     ... creates "-object can-bus,id=canbus"
->   qemu_create_machine()
->   qemu_apply_machine_options()
->     applies link property "canbus0" with value canbus, finds canbus object
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> ---
+>  tests/migration/meson.build | 33 ++++++++++++++++++++-------------
+>  1 file changed, 20 insertions(+), 13 deletions(-)
 > 
-> The new code fails:
-> 
->   qemu_create_machine()
->   qemu_apply_machine_options()
->     applies link property "canbus0" with value canbus,
->     error because fails to find canbus object
->   ...
->   qemu_exit_precreate()
->     qemu_create_early_backends()
->       ... creates "-object can-bus,id=canbus"
-> 
-> The fix is to provide a new function, called before qemu_create_machine,
-> which creates only the backends that are needed to create the machine.
-> AFAIK can-bus is the only one, because the xlnx-zcu102 machine has
-> link properties.
+> diff --git a/tests/migration/meson.build b/tests/migration/meson.build
+> index a91aa61c65..d9e5b0d241 100644
+> --- a/tests/migration/meson.build
+> +++ b/tests/migration/meson.build
+> @@ -1,18 +1,25 @@
+> +sysprof = not_found
+> +glib_static = not_found
+> +
 
-Wanna share more on the specific solution?  I wonder if the plan is to add
-one more special window for creating -object just for can-bus, and how to
-justify that extra phase.  Perhaps whatever that do not require fd to back
-it (so not affected by CPR)?  But not sure whether that's too special.
+These two assignments should be redundant, given that the next two
+line unconditionally overwrite them.
 
-I wished it could be simply put into the "very early" stage (pre-sandbox),
-but I think object_create_pre_sandbox() did mention that we need explicit
-reasons for those, and I'm not sure whether this reason justifies either
-for why can-bus is so special so can be created without the sandboxing.
+>  sysprof = dependency('sysprof-capture-4', method: 'pkg-config', required: false)
+>  glib_static = dependency('glib-2.0', version: glib_req_ver, required: false,
+>                           method: 'pkg-config', static: true)
 
+'dependency()' should already return "not_found" given you have
+'required: false'
+
+>  
+> -stress = executable(
+> -  'stress',
+> -  files('stress.c'),
+> -  dependencies: [glib_static, sysprof],
+> -  link_args: ['-static'],
+> -  build_by_default: false,
+> -)
+>  
+> -custom_target(
+> -  'initrd-stress.img',
+> -  output: 'initrd-stress.img',
+> -  input: stress,
+> -  command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@']
+> -)
+> +if host_os == 'linux' and sysprof.found() and glib_static.found()
+> +    stress = executable(
+> +      'stress',
+> +      files('stress.c'),
+> +      dependencies: [glib_static, sysprof],
+> +      link_args: ['-static'],
+> +    )
+> +
+> +    custom_target(
+> +      'initrd-stress.img',
+> +      output: 'initrd-stress.img',
+> +      input: stress,
+> +      command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@'],
+> +      build_by_default: true,
+> +      depends: [stress],
+> +    )
+> +endif
+
+Assuming you remove the two redundant assignments at the top, then
+
+  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
