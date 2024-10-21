@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C84ED15DBB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC66D15DBA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vOw-0006bu-AC; Mon, 21 Oct 2024 12:37:04 -0400
+	id 1t2vOz-0006oT-M0; Mon, 21 Oct 2024 12:37:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2vOI-0006Fw-9H
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:36:24 -0400
+ id 1t2vOC-00065s-2G
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:36:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2vOG-0006LL-Gh
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:36:22 -0400
+ id 1t2vO6-0006Ji-Si
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:36:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729528579;
+ s=mimecast20190719; t=1729528569;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q6fXeEeyQn++bTLgXgQsS/yFO40vxiI7losxFrd52jU=;
- b=f5VoJM674a8AWIC6FcLDvQbLk665Gjce00sd1kXuDW8UCesNJL6xImptyMbbjPAiTxyvKX
- BOgfBfjfVdV+r7ti9549QlQqWsjTE+FhUFKZ7QsHHeomL8c7S5vo6pa6im8TqrI68FB8Rg
- aS9kPdcXeC8AcwIydqgrnQt5VDCZWTw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q404IxZFk+NIfcxl+Tcr9XRM6bnBKtIpSop9l9a12Xk=;
+ b=ictC8xMQGsEzxlhMG1jC3ioeGnlkUHdZXNr2x4/PpjPnxjdYxUORHKsUNkS7QDdsbCLJYY
+ p9RtfwRBNpBni/6solWaxcQA7oCEPHeluKm5QU9peEmJS3nJF401oJnJDKh5ACuQg1l47I
+ hjgOjWEG57rPsVxuRoppnjHDpG/xNZM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-wo72bBCBOU6_3b8s-vCNKg-1; Mon, 21 Oct 2024 12:36:18 -0400
-X-MC-Unique: wo72bBCBOU6_3b8s-vCNKg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d458087c0so3166889f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:36:17 -0700 (PDT)
+ us-mta-342-xAyz1ud0OsWaj2LXtjagRw-1; Mon, 21 Oct 2024 12:36:08 -0400
+X-MC-Unique: xAyz1ud0OsWaj2LXtjagRw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4315f48bd70so28269635e9.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:36:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729528576; x=1730133376;
+ d=1e100.net; s=20230601; t=1729528566; x=1730133366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q6fXeEeyQn++bTLgXgQsS/yFO40vxiI7losxFrd52jU=;
- b=t6eYaX9volYjCK3imRZhvfIG1yPm+fCwpN6XBzeZaHoipkn5ALvKrfD6oF0g8dN/r3
- C+ozPJE7z96DS2/0OllWB+tlYv00+Vks9lVsrcn0pd4mEIevC0D7q8votBULoS5IZ1zI
- aMVUrwkoGAFjp4NDPR2vCeQ2YsLSFdZMN1/9giDdnObX6bFjONNMAy0kgvm3Tj/UjVvz
- Jtb55BjJUIuiy67OQCR/14uaQRm0g1OcY5fCUkihZW6DA6t/t4MhCDZS9Hu2fxuOuBLw
- OIgePtShcIrZP6F0MpX8dXIwj2CiedVXYk97wa3VKbYz7d2PdcO6BBnrNn2NcRUKobYo
- V0SA==
-X-Gm-Message-State: AOJu0Yw+IqJ5dxdI5xc6H/4efCkLOE8xzCSJ0W9E+lPE9JENh8EK10Ql
- l3Drgaa5NTlersiUfH71MGqd6tvgabZLScJD1tKTDvveRfzkLYrzDu32XxZu0cZoe19xuD6REGA
- TZuf+8gz0Nz+WIClUzPHL2RNvd0XGB9H5CaG4/OEEJbhvLeYXlZgwPMRNaTAiyRqYBmb5FUtupi
- vZTNjrnTnjhUQUEclDBi9iZP7ucCMR3hDnssqfxac=
-X-Received: by 2002:adf:f10e:0:b0:37e:d92f:c24a with SMTP id
- ffacd0b85a97d-37ef12624ebmr186003f8f.7.1729528575910; 
- Mon, 21 Oct 2024 09:36:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMK3/foCCFBtMo7wEMvC8DQ/6La2pEr8BWwn0ngNksc+uOYCltyX6UNBYr2vLrTUWfb2nrFQ==
-X-Received: by 2002:adf:f10e:0:b0:37e:d92f:c24a with SMTP id
- ffacd0b85a97d-37ef12624ebmr185978f8f.7.1729528575370; 
- Mon, 21 Oct 2024 09:36:15 -0700 (PDT)
+ bh=Q404IxZFk+NIfcxl+Tcr9XRM6bnBKtIpSop9l9a12Xk=;
+ b=lcVgPOvrthamK7UnWGUQ4pn/A2TawrX4PpzUAspijK6wfrOISysleLY1jI27W5Os8p
+ z70flVfJsTAAZXx789KhnZAj6sXxg0hRghGFoDnsqHwtpiFHydhgMa5RYqdJZhzBsQbV
+ 1/5lmYq4xpBm+ELusc+i1Q0gb8JKTIYqWBm5XFMPzbmSVi7ty/5FyZSziaWlt9sMz/3U
+ gt1Jlhoaa+5OCERhTE63eHwI6DRta34rCjQ7j/Y0C1ZuziN57VMvlYdkNjba4FY72aVO
+ Qsa9Iex19sTgceURlh9LQz7vP0fDu5QpJ7Sjp3CQMZprx0FfsD34s+sCEyAq6AdMT67v
+ O8Zg==
+X-Gm-Message-State: AOJu0YyavooiB/pSlnHLAIfQwtuY+LLrqHsyePz5cz5I087gwYzdZdFV
+ J0lU3UWelfNMBpGPTyffCiKxAnPqBb+alaPJPLu+SCHCqDcHLHaLjJ4LbUZa22KEg14VzleNB2C
+ yGs9uo6vn4edzIWwJJcZS6+pibDAM2+4CqSDHQRiTnuN0NIesm6wSFisMx6aMJ26WDTl28Lbl5I
+ Sgjkc1CJEOvlHIhIu8do6KYBSns4EDrIdxX1uh1rw=
+X-Received: by 2002:a05:600c:19d2:b0:431:3c67:fb86 with SMTP id
+ 5b1f17b1804b1-431616a404dmr88541325e9.33.1729528566373; 
+ Mon, 21 Oct 2024 09:36:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHecvCZ1N1dVcHdMc7UcS3N7JC2ht0pL/nBidv/7JzOv05qnQEXa6OPB3xkVzspDNQhi6fJOQ==
+X-Received: by 2002:a05:600c:19d2:b0:431:3c67:fb86 with SMTP id
+ 5b1f17b1804b1-431616a404dmr88541095e9.33.1729528565907; 
+ Mon, 21 Oct 2024 09:36:05 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0a584f7sm4698516f8f.53.2024.10.21.09.36.13
+ 5b1f17b1804b1-4316f57102asm62047065e9.1.2024.10.21.09.36.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 09:36:14 -0700 (PDT)
+ Mon, 21 Oct 2024 09:36:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: [PATCH v2 10/13] qdev: make properties array "const"
-Date: Mon, 21 Oct 2024 18:35:35 +0200
-Message-ID: <20241021163538.136941-11-pbonzini@redhat.com>
+ Junjie Mao <junjie.mao@hotmail.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 07/13] rust: build integration test for the qemu_api crate
+Date: Mon, 21 Oct 2024 18:35:32 +0200
+Message-ID: <20241021163538.136941-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241021163538.136941-1-pbonzini@redhat.com>
 References: <20241021163538.136941-1-pbonzini@redhat.com>
@@ -103,182 +103,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Constify all accesses to qdev properties, except for the
-ObjectPropertyAccessor itself.  This makes it possible to place them in
-read-only memory, and also lets Rust bindings switch from "static mut"
-arrays to "static"; which is advantageous, because mutable statics are
-highly discouraged.
+Adjust the integration test to compile with a subset of QEMU object
+files, and make it actually create an object of the class it defines.
 
+Follow the Rust filesystem conventions, where tests go in tests/ if
+they use the library in the same way any other code would.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/qdev-core.h       |  4 ++--
- include/hw/qdev-properties.h |  4 ++--
- hw/core/qdev-properties.c    | 26 +++++++++++++-------------
- system/qdev-monitor.c        |  2 +-
- 4 files changed, 18 insertions(+), 18 deletions(-)
+ meson.build                  | 10 ++++-
+ rust/qemu-api/meson.build    | 26 ++++++++++--
+ rust/qemu-api/src/lib.rs     |  3 --
+ rust/qemu-api/src/tests.rs   | 49 ----------------------
+ rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 110 insertions(+), 56 deletions(-)
+ delete mode 100644 rust/qemu-api/src/tests.rs
+ create mode 100644 rust/qemu-api/tests/tests.rs
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index aa97c34a4be..f9fa291cc63 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -132,7 +132,7 @@ struct DeviceClass {
-      * ensures a compile-time error if someone attempts to assign
-      * dc->props directly.
-      */
--    Property *props_;
-+    const Property *props_;
+diff --git a/meson.build b/meson.build
+index 6739165908e..3c71d129494 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3326,7 +3326,15 @@ if have_rust and have_system
  
-     /**
-      * @user_creatable: Can user instantiate with -device / device_add?
-@@ -935,7 +935,7 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
-  * you attempt to add an existing property defined by a parent class.
-  * To modify an inherited property you need to use????
-  */
--void device_class_set_props(DeviceClass *dc, Property *props);
-+void device_class_set_props(DeviceClass *dc, const Property *props);
+   # Prohibit code that is forbidden in Rust 2024
+   rustc_args += ['-D', 'unsafe_op_in_unsafe_fn']
+-  add_project_arguments(rustc_args, native: false, language: 'rust')
++
++  # Apart from procedural macros, our Rust executables will often link
++  # with C code, so include all the libraries that C code needs.  This
++  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
++  # passing -nodefaultlibs to the linker "was more ideological to
++  # start with than anything".
++  add_project_arguments(rustc_args + ['-C', 'default-linker-libraries'],
++      native: false, language: 'rust')
++
+   add_project_arguments(rustc_args, native: true, language: 'rust')
+ endif
  
- /**
-  * device_class_set_parent_realize() - set up for chaining realize fns
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 09aa04ca1e2..26ebd230685 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -37,7 +37,7 @@ struct PropertyInfo {
-     int (*print)(Object *obj, Property *prop, char *dest, size_t len);
-     void (*set_default_value)(ObjectProperty *op, const Property *prop);
-     ObjectProperty *(*create)(ObjectClass *oc, const char *name,
--                              Property *prop);
-+                              const Property *prop);
-     ObjectPropertyAccessor *get;
-     ObjectPropertyAccessor *set;
-     ObjectPropertyRelease *release;
-@@ -223,7 +223,7 @@ void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
-  * On error, store error in @errp.  Static properties access data in a struct.
-  * The type of the QOM property is derived from prop->info.
-  */
--void qdev_property_add_static(DeviceState *dev, Property *prop);
-+void qdev_property_add_static(DeviceState *dev, const Property *prop);
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 42ea815fa5a..1fc36078027 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -14,11 +14,31 @@ _qemu_api_rs = static_library(
+     '--cfg', 'MESON',
+     # '--cfg', 'feature="allocator"',
+   ],
+-  dependencies: [
+-    qemu_api_macros,
+-  ],
+ )
  
- /**
-  * qdev_alias_all_properties: Create aliases on source for all target properties
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 86a583574dd..315196bd85a 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -749,7 +749,7 @@ const PropertyInfo qdev_prop_array = {
+ qemu_api = declare_dependency(
+   link_with: _qemu_api_rs,
++  dependencies: qemu_api_macros,
+ )
++
++# Rust executables do not support objects, so add an intermediate step.
++rust_qemu_api_objs = static_library(
++    'rust_qemu_api_objs',
++    objects: [libqom.extract_all_objects(recursive: false),
++              libhwcore.extract_all_objects(recursive: false)])
++
++test('rust-qemu-api-integration',
++    executable(
++        'rust-qemu-api-integration',
++        'tests/tests.rs',
++        override_options: ['rust_std=2021', 'build.rust_std=2021'],
++        rust_args: ['--test'],
++        install: false,
++        dependencies: [qemu_api, qemu_api_macros],
++        link_whole: [rust_qemu_api_objs, libqemuutil]),
++    args: [
++        '--test',
++        '--format', 'pretty',
++    ],
++    protocol: 'rust',
++    suite: ['unit', 'rust'])
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index e72fb4b4bb1..6bc68076aae 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -30,9 +30,6 @@ unsafe impl Sync for bindings::VMStateDescription {}
+ pub mod definitions;
+ pub mod device_class;
  
- /* --- public helpers --- */
+-#[cfg(test)]
+-mod tests;
+-
+ use std::alloc::{GlobalAlloc, Layout};
  
--static Property *qdev_prop_walk(Property *props, const char *name)
-+static const Property *qdev_prop_walk(const Property *props, const char *name)
- {
-     if (!props) {
-         return NULL;
-@@ -763,10 +763,10 @@ static Property *qdev_prop_walk(Property *props, const char *name)
-     return NULL;
- }
- 
--static Property *qdev_prop_find(DeviceState *dev, const char *name)
-+static const Property *qdev_prop_find(DeviceState *dev, const char *name)
- {
-     ObjectClass *class;
--    Property *prop;
-+    const Property *prop;
- 
-     /* device properties */
-     class = object_get_class(OBJECT(dev));
-@@ -840,7 +840,7 @@ void qdev_prop_set_string(DeviceState *dev, const char *name, const char *value)
- 
- void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
- {
--    Property *prop;
-+    const Property *prop;
- 
-     prop = qdev_prop_find(dev, name);
-     object_property_set_str(OBJECT(dev), name,
-@@ -956,7 +956,7 @@ const PropertyInfo qdev_prop_size = {
- /* --- object link property --- */
- 
- static ObjectProperty *create_link_property(ObjectClass *oc, const char *name,
--                                            Property *prop)
-+                                            const Property *prop)
- {
-     return object_class_property_add_link(oc, name, prop->link_type,
-                                           prop->offset,
-@@ -969,7 +969,7 @@ const PropertyInfo qdev_prop_link = {
-     .create = create_link_property,
- };
- 
--void qdev_property_add_static(DeviceState *dev, Property *prop)
-+void qdev_property_add_static(DeviceState *dev, const Property *prop)
- {
-     Object *obj = OBJECT(dev);
-     ObjectProperty *op;
-@@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
-                              field_prop_getter(prop->info),
-                              field_prop_setter(prop->info),
-                              prop->info->release,
--                             prop);
-+                             (Property *)prop);
- 
-     object_property_set_description(obj, prop->name,
-                                     prop->info->description);
-@@ -994,7 +994,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
- }
- 
- static void qdev_class_add_property(DeviceClass *klass, const char *name,
--                                    Property *prop)
-+                                    const Property *prop)
- {
-     ObjectClass *oc = OBJECT_CLASS(klass);
-     ObjectProperty *op;
-@@ -1007,7 +1007,7 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
-                                        field_prop_getter(prop->info),
-                                        field_prop_setter(prop->info),
-                                        prop->info->release,
--                                       prop);
-+                                       (Property *)prop);
-     }
-     if (prop->set_default) {
-         prop->info->set_default_value(op, prop);
-@@ -1046,7 +1046,7 @@ static void qdev_get_legacy_property(Object *obj, Visitor *v,
-  * Do not use this in new code!  QOM Properties added through this interface
-  * will be given names in the "legacy" namespace.
-  */
--static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
-+static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop)
- {
-     g_autofree char *name = NULL;
- 
-@@ -1058,12 +1058,12 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
-     name = g_strdup_printf("legacy-%s", prop->name);
-     object_class_property_add(OBJECT_CLASS(dc), name, "str",
-         prop->info->print ? qdev_get_legacy_property : prop->info->get,
--        NULL, NULL, prop);
-+        NULL, NULL, (Property *)prop);
- }
- 
--void device_class_set_props(DeviceClass *dc, Property *props)
-+void device_class_set_props(DeviceClass *dc, const Property *props)
- {
--    Property *prop;
-+    const Property *prop;
- 
-     dc->props_ = props;
-     for (prop = props; prop && prop->name; prop++) {
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 44994ea0e16..c346ea6ae4b 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -751,7 +751,7 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
- 
- #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
- 
--static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
-+static void qdev_print_props(Monitor *mon, DeviceState *dev, const Property *props,
-                              int indent)
- {
-     if (!props)
+ #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
+diff --git a/rust/qemu-api/src/tests.rs b/rust/qemu-api/src/tests.rs
+deleted file mode 100644
+index df54edbd4e2..00000000000
+--- a/rust/qemu-api/src/tests.rs
++++ /dev/null
+@@ -1,49 +0,0 @@
+-// Copyright 2024, Linaro Limited
+-// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+-// SPDX-License-Identifier: GPL-2.0-or-later
+-
+-use crate::{
+-    bindings::*, declare_properties, define_property, device_class_init, vm_state_description,
+-};
+-
+-#[test]
+-fn test_device_decl_macros() {
+-    // Test that macros can compile.
+-    vm_state_description! {
+-        VMSTATE,
+-        name: c"name",
+-        unmigratable: true,
+-    }
+-
+-    #[repr(C)]
+-    pub struct DummyState {
+-        pub char_backend: CharBackend,
+-        pub migrate_clock: bool,
+-    }
+-
+-    declare_properties! {
+-        DUMMY_PROPERTIES,
+-            define_property!(
+-                c"chardev",
+-                DummyState,
+-                char_backend,
+-                unsafe { &qdev_prop_chr },
+-                CharBackend
+-            ),
+-            define_property!(
+-                c"migrate-clk",
+-                DummyState,
+-                migrate_clock,
+-                unsafe { &qdev_prop_bool },
+-                bool
+-            ),
+-    }
+-
+-    device_class_init! {
+-        dummy_class_init,
+-        props => DUMMY_PROPERTIES,
+-        realize_fn => None,
+-        reset_fn => None,
+-        vmsd => VMSTATE,
+-    }
+-}
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+new file mode 100644
+index 00000000000..aa1e0568c69
+--- /dev/null
++++ b/rust/qemu-api/tests/tests.rs
+@@ -0,0 +1,78 @@
++// Copyright 2024, Linaro Limited
++// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++use core::ffi::CStr;
++
++use qemu_api::{
++    bindings::*,
++    declare_properties, define_property,
++    definitions::{Class, ObjectImpl},
++    device_class_init, vm_state_description,
++};
++
++#[test]
++fn test_device_decl_macros() {
++    // Test that macros can compile.
++    vm_state_description! {
++        VMSTATE,
++        name: c"name",
++        unmigratable: true,
++    }
++
++    #[repr(C)]
++    #[derive(qemu_api_macros::Object)]
++    pub struct DummyState {
++        pub _parent: DeviceState,
++        pub migrate_clock: bool,
++    }
++
++    #[repr(C)]
++    pub struct DummyClass {
++        pub _parent: DeviceClass,
++    }
++
++    declare_properties! {
++        DUMMY_PROPERTIES,
++            define_property!(
++                c"migrate-clk",
++                DummyState,
++                migrate_clock,
++                unsafe { &qdev_prop_bool },
++                bool
++            ),
++    }
++
++    device_class_init! {
++        dummy_class_init,
++        props => DUMMY_PROPERTIES,
++        realize_fn => None,
++        legacy_reset_fn => None,
++        vmsd => VMSTATE,
++    }
++
++    impl ObjectImpl for DummyState {
++        type Class = DummyClass;
++        const TYPE_INFO: qemu_api::bindings::TypeInfo = qemu_api::type_info! { Self };
++        const TYPE_NAME: &'static CStr = c"dummy";
++        const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_DEVICE);
++        const ABSTRACT: bool = false;
++        const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
++        const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
++        const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
++    }
++
++    impl Class for DummyClass {
++        const CLASS_INIT: Option<
++            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
++        > = Some(dummy_class_init);
++        const CLASS_BASE_INIT: Option<
++            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
++        > = None;
++    }
++
++    unsafe {
++        module_call_init(module_init_type::MODULE_INIT_QOM);
++        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()) as *mut _);
++    }
++}
 -- 
 2.46.2
 
