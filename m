@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760FCD15DB9
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7823D15DB8
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2v0x-0003z1-OH; Mon, 21 Oct 2024 12:12:15 -0400
+	id 1t2v11-000405-O5; Mon, 21 Oct 2024 12:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0s-0003yG-Eu
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0v-0003ys-HI
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0q-0003BY-LI
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0t-0003Bp-4C
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729527128;
+ s=mimecast20190719; t=1729527130;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yYwZiGw0VXAp52pkCAH0yBX6aMBQKwqlcr7JzQV2whk=;
- b=Ow29coXytaXRxsiaGhtCzFd/ibKr54aHp4R20lCrROZDpp1GtGJ/RtMTs5CdaIOpB8qftK
- nyRJccMzwylYtnvEpaeJim3n3rDiEuWoWWDcYSlYhulf4fu7mebmROk4qn1/kAWRKgjtRS
- bUhAE/8lf6hy39eJ6Qlp9K1eSg7uCxU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mizX3M55BFKGE8vpxdYUHjqWhqmWAHspo77dmcY4NRE=;
+ b=ZU8sZa4XLiDMHN7Su6HLQwBTILWAQFCNy+YX3NuXNZQ5TKWgKzdsepCx0NsS/l3NrPVHmu
+ L53ESvwejx4kHWSkAGnu+OOPmG/QeG/gGS61mtmDHHhnAFnt7izhhlkY6BNtpB/GTSzL/6
+ C/8USObLIOBpOudk6e+1Jfx4cL2WLVk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619--lG1nOiENKyPAwy78zMUSg-1; Mon,
- 21 Oct 2024 12:12:04 -0400
-X-MC-Unique: -lG1nOiENKyPAwy78zMUSg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-qSipYl5wOPuAansvfHPOQw-1; Mon,
+ 21 Oct 2024 12:12:06 -0400
+X-MC-Unique: qSipYl5wOPuAansvfHPOQw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DB751955EAA; Mon, 21 Oct 2024 16:12:03 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56C881955F69; Mon, 21 Oct 2024 16:12:05 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0F5531956089; Mon, 21 Oct 2024 16:12:01 +0000 (UTC)
+ id 294581956089; Mon, 21 Oct 2024 16:12:03 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL v2 12/20] tests/functional: Convert the Avocado i386 tuxrun test
-Date: Mon, 21 Oct 2024 18:11:46 +0200
-Message-ID: <20241021161156.176427-3-thuth@redhat.com>
+Subject: [PULL v2 13/20] tests/functional: Convert the Avocado x86_64 tuxrun
+ test
+Date: Mon, 21 Oct 2024 18:11:47 +0200
+Message-ID: <20241021161156.176427-4-thuth@redhat.com>
 In-Reply-To: <20241021161156.176427-1-thuth@redhat.com>
 References: <20241021161156.176427-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,78 +83,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Move the tests to a new file so that they can be run via
-qemu-system-i386 in the functional framework.
+qemu-system-x86_64 in the functional framework.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241011131937.377223-10-thuth@redhat.com>
+Message-ID: <20241011131937.377223-11-thuth@redhat.com>
 ---
- MAINTAINERS                          |  1 +
- tests/avocado/tuxrun_baselines.py    | 16 -------------
- tests/functional/meson.build         |  4 ++++
- tests/functional/test_i386_tuxrun.py | 35 ++++++++++++++++++++++++++++
- 4 files changed, 40 insertions(+), 16 deletions(-)
- create mode 100755 tests/functional/test_i386_tuxrun.py
+ MAINTAINERS                            |  1 +
+ tests/avocado/tuxrun_baselines.py      | 18 -------------
+ tests/functional/meson.build           |  1 +
+ tests/functional/test_x86_64_tuxrun.py | 36 ++++++++++++++++++++++++++
+ 4 files changed, 38 insertions(+), 18 deletions(-)
+ create mode 100755 tests/functional/test_x86_64_tuxrun.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index ffc50bc0be..0c1966e985 100644
+index 0c1966e985..c7cd5a28d9 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1782,6 +1782,7 @@ F: hw/isa/apm.c
- F: include/hw/isa/apm.h
- F: tests/unit/test-x86-topo.c
- F: tests/qtest/test-x86-cpuid-compat.c
-+F: tests/functional/test_i386_tuxrun.py
+@@ -1785,6 +1785,7 @@ F: tests/qtest/test-x86-cpuid-compat.c
+ F: tests/functional/test_i386_tuxrun.py
  F: tests/functional/test_mem_addr_space.py
  F: tests/functional/test_pc_cpu_hotplug_props.py
++F: tests/functional/test_x86_64_tuxrun.py
  F: tests/functional/test_x86_cpu_model_versions.py
+ 
+ PC Chipset
 diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index 6856a8f46a..f1463336e9 100644
+index f1463336e9..55a4a42d77 100644
 --- a/tests/avocado/tuxrun_baselines.py
 +++ b/tests/avocado/tuxrun_baselines.py
-@@ -223,22 +223,6 @@ def test_arm64be(self):
-                  "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
-         self.common_tuxrun(csums=sums)
- 
--    def test_i386(self):
+@@ -341,21 +341,3 @@ def test_sh4(self):
+         time.sleep(0.1)
+         exec_command_and_wait_for_pattern(self, 'halt',
+                                           "reboot: System halted")
+-
+-    def test_x86_64(self):
 -        """
--        :avocado: tags=arch:i386
--        :avocado: tags=cpu:coreduo
+-        :avocado: tags=arch:x86_64
 -        :avocado: tags=machine:q35
--        :avocado: tags=tuxboot:i386
+-        :avocado: tags=cpu:Nehalem
+-        :avocado: tags=tuxboot:x86_64
 -        :avocado: tags=image:bzImage
+-        :avocado: tags=root:sda
 -        :avocado: tags=shutdown:nowait
 -        """
--        sums = {"bzImage" :
--                "a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956",
--                "rootfs.ext4.zst" :
--                "f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a" }
+-        sums = { "bzImage" :
+-                 "2bc7480a669ee9b6b82500a236aba0c54233debe98cb968268fa230f52f03461",
+-                 "rootfs.ext4.zst" :
+-                 "b72ac729769b8f51c6dffb221113c9a063c774dbe1d66af30eb593c4e9999b4b" }
 -
--        self.common_tuxrun(csums=sums, drive="virtio-blk-pci")
--
-     def test_mips32(self):
-         """
-         :avocado: tags=arch:mips
+-        self.common_tuxrun(csums=sums,
+-                           drive="driver=ide-hd,bus=ide.0,unit=0")
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 96a83f54f7..ad112faf36 100644
+index ad112faf36..cbc3b20bd4 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -66,6 +66,10 @@ tests_avr_system_thorough = [
-   'avr_mega2560',
- ]
+@@ -167,6 +167,7 @@ tests_x86_64_system_quick = [
  
-+tests_i386_system_thorough = [
-+  'i386_tuxrun',
-+]
-+
- tests_loongarch64_system_thorough = [
-   'loongarch64_virt',
- ]
-diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
+ tests_x86_64_system_thorough = [
+   'acpi_bits',
++  'x86_64_tuxrun',
+   'linux_initrd',
+   'multiprocess',
+   'netdev_ethtool',
+diff --git a/tests/functional/test_x86_64_tuxrun.py b/tests/functional/test_x86_64_tuxrun.py
 new file mode 100755
-index 0000000000..c593ffbe8c
+index 0000000000..4f96139871
 --- /dev/null
-+++ b/tests/functional/test_i386_tuxrun.py
-@@ -0,0 +1,35 @@
++++ b/tests/functional/test_x86_64_tuxrun.py
+@@ -0,0 +1,36 @@
 +#!/usr/bin/env python3
 +#
 +# Functional test that boots known good tuxboot images the same way
@@ -170,22 +167,23 @@ index 0000000000..c593ffbe8c
 +from qemu_test import Asset
 +from qemu_test.tuxruntest import TuxRunBaselineTest
 +
-+class TuxRunI386Test(TuxRunBaselineTest):
++class TuxRunX86Test(TuxRunBaselineTest):
 +
-+    ASSET_I386_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/i386/bzImage',
-+        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
-+    ASSET_I386_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
-+        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
++    ASSET_X86_64_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/x86_64/bzImage',
++        '2bc7480a669ee9b6b82500a236aba0c54233debe98cb968268fa230f52f03461')
++    ASSET_X86_64_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/x86_64/rootfs.ext4.zst',
++        'b72ac729769b8f51c6dffb221113c9a063c774dbe1d66af30eb593c4e9999b4b')
 +
-+    def test_i386(self):
++    def test_x86_64(self):
 +        self.set_machine('q35')
-+        self.cpu="coreduo"
++        self.cpu="Nehalem"
++        self.root='sda'
 +        self.wait_for_shutdown=False
-+        self.common_tuxrun(kernel_asset=self.ASSET_I386_KERNEL,
-+                           rootfs_asset=self.ASSET_I386_ROOTFS,
-+                           drive="virtio-blk-pci")
++        self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
++                           rootfs_asset=self.ASSET_X86_64_ROOTFS,
++                           drive="driver=ide-hd,bus=ide.0,unit=0")
 +
 +if __name__ == '__main__':
 +    TuxRunBaselineTest.main()
