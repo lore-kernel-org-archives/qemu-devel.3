@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46F6D3C934
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AA3D3C934
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2h6Z-000679-MO; Sun, 20 Oct 2024 21:21:07 -0400
+	id 1t2hIe-0007O6-PS; Sun, 20 Oct 2024 21:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2h6X-00066N-JO; Sun, 20 Oct 2024 21:21:05 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2h6U-0005Rl-Pa; Sun, 20 Oct 2024 21:21:05 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-50d4780a24eso1155494e0c.3; 
- Sun, 20 Oct 2024 18:21:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729473661; x=1730078461; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UznisbEf9CBPMHUDTh/7NBJolyhF1qw7Kwjbqtcxcdg=;
- b=czr3dMTgXE91A6NwbCcduXZhDPgVXssCOzzNd2binfzOPF4hbPibFTqlxe4j9uSaiL
- xUGALjwx2bAvzBL0pfK0lTFxKduHKcNpCP9Y6STdGYOXDD7RfQesMaatvqHPc1oiV6IL
- xsLRRQx78VAHmn13gjwA6DcDafzRfRoKZTBoZNEguE3eLfem0IO/o1/idMgiPd4HW64E
- zaVobLlZ/vRqzDkBHEjV2De0ZvNho5vFVAfGDfJKY6U2vdeGCmPPDqb/J2BGy51Z9VtP
- Mm2y5E8fIAVujKOIHbG8JdqERshIABp0xqbZQ4iuTdF+blxB9/TVlGBrlqnUOL4Vf8q7
- uNxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729473661; x=1730078461;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UznisbEf9CBPMHUDTh/7NBJolyhF1qw7Kwjbqtcxcdg=;
- b=CjaYQwX9FsQJl0vPno2vT3hhiRL+bcaMV2yt+n83tBmarbGIIyy+jL4gjAfqHxE2Do
- E8G/UuGjHKLqvDG5CXWGMC9GrNVE6KMvzXfI3T1J5bS+Q4Bk83W8NmA/ZASiPAwUQq8g
- QRXsW5jcIEea4vaqc+AQF0c1jhIoJ3zPJvfSA6HW4TPD3mwOh6Mnw5Z9DHNuhMH4aZYN
- 533GOGbB9ZyFu9pEEpfcKu02+xtWfs4vzUzTkBWDBHrPP/Qt0mH6oyzMFOOrLHZqYamc
- s4NqSCo2MfpryTY3zIn6QPo1npAytN73zq8rRWeqzvdBW2zxmPh+VKcNUXlrJ6cKSBvS
- CqLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4ig6tJu+mHBIqJXi/NiptJFMNi4iggunCr4MzxWsmg0aprBgBikykgGbLltO9yyZl0mbMyNRjs10s@nongnu.org
-X-Gm-Message-State: AOJu0Yz3rzSWTdBvjVQeE8FJ2TwUWZ5BIRwQzV2IXJDYbWraSaIK7GZF
- 6p2rEgeb1AE/i+gDUlLxVbOVuclgdlEZawFTvkW+fj/1QhV4CfpB2WMy6ifMKNe8WAOlsWlLWGQ
- kfyIAUHS7nvJ5JPm10BHNfHZyU+k=
-X-Google-Smtp-Source: AGHT+IHNcuzC143W7nusYkBoXzHm7eI1wxp+Hd4uY0r6p6a7DUutI4Ng6ooY55wVU1Wk16HrSxA3K9/SzEN6b1c0rbc=
-X-Received: by 2002:a05:6122:65a1:b0:509:e5b5:d133 with SMTP id
- 71dfb90a1353d-50dda165c10mr7173110e0c.6.1729473661129; Sun, 20 Oct 2024
- 18:21:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t2hId-0007Ny-2N
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 21:33:35 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t2hIa-0006cf-SK
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 21:33:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1729474399; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=JT1vigzz1a0dkQF1ec17mN1/7BcAkR1ksM7+yCx8b1GyEvH9zMC1JNhN9K/213/HhDUD6ZzYCfPpM3GQgnDyKrg8QoBpdP8XxUWJ2Do4ROqxlnUibJUAyLOkiXZRNyySTafxiKCV3pjQwXSp9xxhZT47SmfwHwk+n+0gDSrii9k=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1729474399;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Bn9L4cw6nmjmUBjGHiJafbNgNUiNyMYJgvU9xWTerU4=; 
+ b=cTNJ6qQ8PwV2AeiEpfLnQNg1PhKl1dSDgDF0VrNAfeq8xfCO4GXdqTonUUVgtvOERsHehaho/Tt+QpMnTVD0CKpMRtKJRFQtioP9Cl0TatvLQN2rQcfqIZnGYIFDTfoLO9SSj1E8EbNIOQ/D/Sef8yfMz+DDanTXJtzHkuR9SR4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729474399; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=Bn9L4cw6nmjmUBjGHiJafbNgNUiNyMYJgvU9xWTerU4=;
+ b=ITnK7XqT4RJt500aKH1LAZGTrDvKu9OJ/nLrl70vcdpnZGpTBm4S8uhZATnmzg6o
+ XvLOJ1gR2XX24565Qor60CX0rkKeW7H8glyjvv4KNgw4s7+XvI5GxSkkox/pwV2WpQr
+ RYs2cBLGwiv9OdVOOheisS0MtgwJ2FZ+M4jVh9aI=
+Received: by mx.zohomail.com with SMTPS id 1729474398809783.3277928801351;
+ Sun, 20 Oct 2024 18:33:18 -0700 (PDT)
+Message-ID: <80b0dfe7-ad00-4ef5-a7a3-fbd196c6b5ab@collabora.com>
+Date: Mon, 21 Oct 2024 04:33:12 +0300
 MIME-Version: 1.0
-References: <20241016193140.2206352-1-richard.henderson@linaro.org>
- <20241016193140.2206352-4-richard.henderson@linaro.org>
-In-Reply-To: <20241016193140.2206352-4-richard.henderson@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 21 Oct 2024 11:20:35 +1000
-Message-ID: <CAKmqyKNr_tvSakP74CV1pBsGL-7XSsPW326FJud3cOVSmxAV9Q@mail.gmail.com>
-Subject: Re: [PATCH v6 03/14] util: Add RISC-V vector extension probe in
- cpuinfo
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- zhiwei_liu@linux.alibaba.com, 
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] virtio-gpu: Support DRM native context
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-7-dmitry.osipenko@collabora.com>
+ <897267cd-4502-48f9-8cab-87cd83770cb6@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <897267cd-4502-48f9-8cab-87cd83770cb6@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,137 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 5:35=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->
-> Add support for probing RISC-V vector extension availability in
-> the backend. This information will be used when deciding whether
-> to use vector instructions in code generation.
->
-> Cache lg2(vlenb) for the backend. The storing of lg2(vlenb) means
-> we can convert all of the division into subtraction.
->
-> While the compiler doesn't support RISCV_HWPROBE_EXT_ZVE64X,
-> we use RISCV_HWPROBE_IMA_V instead. RISCV_HWPROBE_IMA_V is more
-> strictly constrainted than RISCV_HWPROBE_EXT_ZVE64X. At least in
-> current QEMU implemenation, the V vector extension depends on the
-> zve64d extension.
->
-> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Message-ID: <20241007025700.47259-2-zhiwei_liu@linux.alibaba.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 10/18/24 08:33, Akihiko Odaki wrote:
+>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>> index 0d1de7dc398c..cfd4ed8a104f 100644
+>> --- a/hw/display/virtio-gpu.c
+>> +++ b/hw/display/virtio-gpu.c
+>> @@ -1521,6 +1521,21 @@ void virtio_gpu_device_realize(DeviceState
+>> *qdev, Error **errp)
+>>   #endif
+>>       }
+>>   +    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+>> +#ifdef VIRGL_VERSION_MAJOR
+> 
+> This ifdef is unnecessary.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+The VIRGL_VERSION_MAJOR is defined only when virtio-gpu is built with
+enabled virgl support. It's necessary to have the ifdef, otherwise
+you'll get a build failure when compiling QEMU with disabled virgl support.
 
-Alistair
-
-> ---
->  host/include/riscv/host/cpuinfo.h |  2 ++
->  util/cpuinfo-riscv.c              | 24 ++++++++++++++++++++++--
->  2 files changed, 24 insertions(+), 2 deletions(-)
->
-> diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv/host/=
-cpuinfo.h
-> index 2b00660e36..cdc784e7b6 100644
-> --- a/host/include/riscv/host/cpuinfo.h
-> +++ b/host/include/riscv/host/cpuinfo.h
-> @@ -10,9 +10,11 @@
->  #define CPUINFO_ZBA             (1u << 1)
->  #define CPUINFO_ZBB             (1u << 2)
->  #define CPUINFO_ZICOND          (1u << 3)
-> +#define CPUINFO_ZVE64X          (1u << 4)
->
->  /* Initialized with a constructor. */
->  extern unsigned cpuinfo;
-> +extern unsigned riscv_lg2_vlenb;
->
->  /*
->   * We cannot rely on constructor ordering, so other constructors must
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 8cacc67645..16114ffd32 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -4,6 +4,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/host-utils.h"
->  #include "host/cpuinfo.h"
->
->  #ifdef CONFIG_ASM_HWPROBE_H
-> @@ -13,6 +14,7 @@
->  #endif
->
->  unsigned cpuinfo;
-> +unsigned riscv_lg2_vlenb;
->  static volatile sig_atomic_t got_sigill;
->
->  static void sigill_handler(int signo, siginfo_t *si, void *data)
-> @@ -34,7 +36,7 @@ static void sigill_handler(int signo, siginfo_t *si, vo=
-id *data)
->  /* Called both as constructor and (possibly) via other constructors. */
->  unsigned __attribute__((constructor)) cpuinfo_init(void)
->  {
-> -    unsigned left =3D CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND;
-> +    unsigned left =3D CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND | CPUIN=
-FO_ZVE64X;
->      unsigned info =3D cpuinfo;
->
->      if (info) {
-> @@ -50,6 +52,9 @@ unsigned __attribute__((constructor)) cpuinfo_init(void=
-)
->  #endif
->  #if defined(__riscv_arch_test) && defined(__riscv_zicond)
->      info |=3D CPUINFO_ZICOND;
-> +#endif
-> +#if defined(__riscv_arch_test) && defined(__riscv_zve64x)
-> +    info |=3D CPUINFO_ZVE64X;
->  #endif
->      left &=3D ~info;
->
-> @@ -65,7 +70,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void=
-)
->              && pair.key >=3D 0) {
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA :=
- 0;
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB :=
- 0;
-> -            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB);
-> +            info |=3D pair.value & RISCV_HWPROBE_IMA_V ? CPUINFO_ZVE64X =
-: 0;
-> +            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZVE64X);
->  #ifdef RISCV_HWPROBE_EXT_ZICOND
->              info |=3D pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZI=
-COND : 0;
->              left &=3D ~CPUINFO_ZICOND;
-> @@ -113,6 +119,20 @@ unsigned __attribute__((constructor)) cpuinfo_init(v=
-oid)
->          assert(left =3D=3D 0);
->      }
->
-> +    if (info & CPUINFO_ZVE64X) {
-> +        /*
-> +         * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
-> +         * We are guaranteed by Zve64x that VLEN >=3D 64, and that
-> +         * EEW of {8,16,32,64} are supported.
-> +         *
-> +         * Cache VLEN in a convenient form.
-> +         */
-> +        unsigned long vlenb;
-> +        /* Read csr "vlenb" with "csrr %0, vlenb" : "=3Dr"(vlenb) */
-> +        asm volatile(".insn i 0x73, 0x2, %0, zero, -990" : "=3Dr"(vlenb)=
-);
-> +        riscv_lg2_vlenb =3D ctz32(vlenb);
-> +    }
-> +
->      info |=3D CPUINFO_ALWAYS;
->      cpuinfo =3D info;
->      return info;
-> --
-> 2.43.0
->
->
+-- 
+Best regards,
+Dmitry
 
