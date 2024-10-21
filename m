@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658B3D0E6F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4666CD0E6F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2puV-0000SE-V1; Mon, 21 Oct 2024 06:45:15 -0400
+	id 1t2pwA-00017J-Hh; Mon, 21 Oct 2024 06:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2puU-0000RW-0h
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:45:14 -0400
+ id 1t2pw8-000176-Pj
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:46:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2puR-0003Rj-Pv
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:45:13 -0400
+ id 1t2pw6-0003XR-Hd
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:46:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729507509;
+ s=mimecast20190719; t=1729507612;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Hwc0m6a8g1TMX3VbIm/9LRZOMvkOBPKkVJTMm2raJfs=;
- b=e4K6VXVQxayKbfcF0lbsm17ZjTa4xThqV2TNPpI/agiqulnubSO5aJMxuf6Ow4oEhtKOUV
- vLBzBpcT6exAYJWYRl0C20WMV6ib4NdCYxS5teGw/pplu2/ns16BdZcRUJNGR0OH8I4UH3
- sqNi6CY1sffWauvCsDcXuUovwdtPBS4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2XTDE69lU6wHVViIexu/TcDJqXZ1NzHfBgSwaHK3G70=;
+ b=HgibfZI5bU9d/UNHkwMpZGMoJAc9MKsYnk/m+6xCZICzY+22DNvYOnUOKCT8uwFszmPtoH
+ 0hUErL43sNFMwkQucVtJhwOqI5I5FXMVoAUBrQk5+uR/k+pHqFkq9ArOcqAde6Pl0Oy3xx
+ NSEQu0KGygIDihiMksg8N5psNUKzPe0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-hoIRZUfEO2ii5-63CjydQA-1; Mon, 21 Oct 2024 06:45:07 -0400
-X-MC-Unique: hoIRZUfEO2ii5-63CjydQA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4316655b2f1so17639815e9.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:45:07 -0700 (PDT)
+ us-mta-318-Oo7hlqtvOQiPOzH-JoEyGg-1; Mon, 21 Oct 2024 06:46:50 -0400
+X-MC-Unique: Oo7hlqtvOQiPOzH-JoEyGg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-431673032e6so17210365e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:46:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729507506; x=1730112306;
+ d=1e100.net; s=20230601; t=1729507609; x=1730112409;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Hwc0m6a8g1TMX3VbIm/9LRZOMvkOBPKkVJTMm2raJfs=;
- b=ULi1NTtshNPSploKSuNYG7Iqtg1K5Qk0hfvlkx2VslAF69e1sNh6+sCvvmSDzxT9Uq
- Pu/z2HaeExhyhQyY5IJ8iGMvLDHEcb8cYdQSh/mTh6qLv2xd/ZChNMvBe3Wbn+2ZIdo3
- f8gkCfd7B91tFi7ZnAQ1hJAA1+wu8QtyY4N5VtmXfnmkPqWK23RDtoPhPyxcgxqo/qOJ
- DuBpgF0KbZH5LpKrEl07Iujas96gcG1H25g5W8jtOBCfRHYR+wfjYFM/QdeZIIah/lTq
- +N8+WwUZJBSkEx0485KeA/p55Yl2UvlX4PbKxQxcliWn7P26PO5UIkQIZLxz/ofn2zIR
- AxlQ==
-X-Gm-Message-State: AOJu0YyVJFLJvewjBe8U5mmVZlkuFd6C3KyVJC5ICIFSIXdpq1ybv5ar
- y0IjCOjbPYH1aExiu3uzWalX+u2mlKlIBHfz0uDHNEOSr0GZWsh2QQ5LYaVv/M45zTqKuY8DI3t
- G/6gtPz2NF5v5zmN9JRihj73sMWL0Qqpql5TUG902822K1aztfIzoSX/TTUIhBPFZLo30QCFjeR
- G2w0AsqusqrnM+V//b41WvzX3Odds=
-X-Received: by 2002:adf:e988:0:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-37eab710526mr7035767f8f.48.1729507506291; 
- Mon, 21 Oct 2024 03:45:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2D0/gL7jcZtdLF5hHlr1cfVvujFBSr4QRhocSn9oLgzn2vNuEhCkixazStIp7+fYLWx849+W1NKA8pKUAWIc=
-X-Received: by 2002:adf:e988:0:b0:37c:cc67:8b1f with SMTP id
- ffacd0b85a97d-37eab710526mr7035748f8f.48.1729507505662; Mon, 21 Oct 2024
- 03:45:05 -0700 (PDT)
+ bh=2XTDE69lU6wHVViIexu/TcDJqXZ1NzHfBgSwaHK3G70=;
+ b=sIJTFzvk0mddPgChe3KK3tbaWgBSZMpQ6B/5lTZU7r0k+Gx8utNht9dlwvxljU9s0a
+ ebqYKiZH4tKi3XJeE1k+QsHYuZFQUnE4J1JZvdVHDYC89+JBvGTadG98NCp92VGsvmZ+
+ vKQ0p9sghWILE2xRY04d26vSeos/vacf8iXI5vHABINYnZABwBwztWQdQMDPiWDvWpDP
+ czRqvFpOr/SPSO4XRvreUyzrOWInczgThc09tQVRPPiGq7bBsYVrhIntSPqMkklFqgZh
+ 7lkvrMbxVwI9q0fDg9M7QPk8VqBf6BUfcg+PXZ5W8l0adbO4y4gzpj7DPaYVKJGhEOms
+ URxA==
+X-Gm-Message-State: AOJu0YwCZE/e94U8lKsSTt2ecEe1EgA/9hw8PKFInODeCbAERXJVZGWb
+ 9tmYcqyUHYT2QYBKNe1sW9/MtLQXjZl3zTHsRi+0QdkSNxFcdjJzjiX8TVo2Gk9optQEEN573Rd
+ oMbORVDvsKK7w9/A0WilqAwXh097w3QlsMp2lbd0cjyRC+OgqwCRxf/k6l7p+Xf8ArWKPox/kv0
+ bZSZK7DjYyu0Z0jDpo8iG3B7ZqTrs=
+X-Received: by 2002:a5d:4d03:0:b0:374:b35e:ea6c with SMTP id
+ ffacd0b85a97d-37eb487a49amr7814224f8f.40.1729507609308; 
+ Mon, 21 Oct 2024 03:46:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtTf10O2OoORD+Vey4c4EfsjTjeqeXzcPBJJcnkjRk8VUkBGtARkEWXCnsCSxZCepGx+CFZ/0S4pdvrnuDbYM=
+X-Received: by 2002:a5d:4d03:0:b0:374:b35e:ea6c with SMTP id
+ ffacd0b85a97d-37eb487a49amr7814210f8f.40.1729507608922; Mon, 21 Oct 2024
+ 03:46:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241018144306.954716-1-pbonzini@redhat.com>
- <20241018144306.954716-10-pbonzini@redhat.com>
- <SY0P300MB1026DF84A11DD5A72EC45EEB95432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <SY0P300MB1026DF84A11DD5A72EC45EEB95432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+ <20241018144306.954716-7-pbonzini@redhat.com>
+ <SY0P300MB10265F36FDD39FD0B258F37795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB10265F36FDD39FD0B258F37795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 21 Oct 2024 12:44:54 +0200
-Message-ID: <CABgObfYox+Un798wFjxktDsa7XnjXmgM8ohTeotD2eFpqAweeg@mail.gmail.com>
-Subject: Re: [PATCH 09/13] rust: clean up define_property macro
+Date: Mon, 21 Oct 2024 12:46:38 +0200
+Message-ID: <CABgObfYqBVRjynXWSY08=p49zk9wnfBe8xwhNtMY5FGDZtC0jA@mail.gmail.com>
+Subject: Re: [PATCH 06/13] rust: remove unused macro module_init!
 To: Junjie Mao <junjie.mao@hotmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000008306fb0624fa58a9"
+Content-Type: multipart/alternative; boundary="000000000000aaaa720624fa5e70"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -99,164 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008306fb0624fa58a9
+--000000000000aaaa720624fa5e70
 Content-Type: text/plain; charset="UTF-8"
 
-Il lun 21 ott 2024, 12:39 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
+Il lun 21 ott 2024, 12:19 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
 >
 > Paolo Bonzini <pbonzini@redhat.com> writes:
 >
-> > Use the "struct update" syntax to initialize most of the fields to zero,
-> > and simplify the handmade type-checking of $name.
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  rust/qemu-api/src/device_class.rs | 29 ++++++-----------------------
-> >  1 file changed, 6 insertions(+), 23 deletions(-)
-> >
-> > diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/
-> device_class.rs
-> > index 2219b9f73d0..5aba426d243 100644
-> > --- a/rust/qemu-api/src/device_class.rs
-> > +++ b/rust/qemu-api/src/device_class.rs
-> > @@ -29,44 +29,27 @@ macro_rules! device_class_init {
-> >  macro_rules! define_property {
-> >      ($name:expr, $state:ty, $field:expr, $prop:expr, $type:expr,
-> default = $defval:expr$(,)*) => {
-> >          $crate::bindings::Property {
-> > -            name: {
-> > -                #[used]
-> > -                static _TEMP: &::core::ffi::CStr = $name;
-> > -                _TEMP.as_ptr()
-> > -            },
-> > +            // use associated function syntax for type checking
-> > +            name: ::core::ffi::CStr::as_ptr($name),
-> >              info: $prop,
-> >              offset: ::core::mem::offset_of!($state, $field)
-> >                  .try_into()
-> >                  .expect("Could not fit offset value to type"),
-> > -            bitnr: 0,
-> > -            bitmask: 0,
-> >              set_default: true,
-> >              defval: $crate::bindings::Property__bindgen_ty_1 { u:
-> $defval.into() },
-> > -            arrayoffset: 0,
-> > -            arrayinfo: ::core::ptr::null(),
-> > -            arrayfieldsize: 0,
-> > -            link_type: ::core::ptr::null(),
-> > +            ..unsafe {
-> ::core::mem::MaybeUninit::<$crate::bindings::Property>::zeroed().assume_init()
-> }
+> > Registering the object is now done by the #[derive(Object)] macro.
 >
-> zeroed() is const only since 1.75.0 [1]. Is there any alternative for
-> older Rust versions?
+> The module_init! macro is still necessary when a device needs more logic
+> (in addition to a single type registration) in module init. That is not
+> rare among the devices in C we have today.
+>
+> Manos and I had a conversation on this. He mentioned that he had a
+> second Rust device that needs this macro [1].
 >
 
-Yes: manual implementation of a Zeroable trait, as in the series I sent
-before one. For now I am not worrying about the MSRV, since the
-hacks/workarounds from those patches do not become any worse.
+Ok, I will change derive(Object) to use module_init! instead. What matters
+is that module_init! is also fixed to not use the .ctors section.
 
 Paolo
 
->
-> [1] https://doc.rust-lang.org/std/mem/union.MaybeUninit.html#method.zeroed
+
+> [1] https://lore.kernel.org/qemu-devel/itblf.by425lac4ow@linaro.org/
 >
 > --
 > Best Regards
 > Junjie Mao
 >
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >  rust/qemu-api/src/definitions.rs | 43 --------------------------------
+> >  1 file changed, 43 deletions(-)
+>
 >
 
---0000000000008306fb0624fa58a9
+--000000000000aaaa720624fa5e70
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 21 ott 2024, 12:39 Junjie Mao &lt;<a href=3D"ma=
+class=3D"gmail_attr">Il lun 21 ott 2024, 12:19 Junjie Mao &lt;<a href=3D"ma=
 ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
 </div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
 order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
 Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" =
 rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
 <br>
-&gt; Use the &quot;struct update&quot; syntax to initialize most of the fie=
-lds to zero,<br>
-&gt; and simplify the handmade type-checking of $name.<br>
-&gt;<br>
-&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
-" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 rust/qemu-api/src/<a href=3D"http://device_class.rs" rel=3D"nore=
-ferrer noreferrer" target=3D"_blank">device_class.rs</a> | 29 ++++++-------=
-----------------<br>
-&gt;=C2=A0 1 file changed, 6 insertions(+), 23 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/rust/qemu-api/src/<a href=3D"http://device_class.rs" rel=
-=3D"noreferrer noreferrer" target=3D"_blank">device_class.rs</a> b/rust/qem=
-u-api/src/<a href=3D"http://device_class.rs" rel=3D"noreferrer noreferrer" =
-target=3D"_blank">device_class.rs</a><br>
-&gt; index 2219b9f73d0..5aba426d243 100644<br>
-&gt; --- a/rust/qemu-api/src/<a href=3D"http://device_class.rs" rel=3D"nore=
-ferrer noreferrer" target=3D"_blank">device_class.rs</a><br>
-&gt; +++ b/rust/qemu-api/src/<a href=3D"http://device_class.rs" rel=3D"nore=
-ferrer noreferrer" target=3D"_blank">device_class.rs</a><br>
-&gt; @@ -29,44 +29,27 @@ macro_rules! device_class_init {<br>
-&gt;=C2=A0 macro_rules! define_property {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ($name:expr, $state:ty, $field:expr, $prop:expr, $=
-type:expr, default =3D $defval:expr$(,)*) =3D&gt; {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $crate::bindings::Property {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name: {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #[used]<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 static _TEMP:=
- &amp;::core::ffi::CStr =3D $name;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 _TEMP.as_ptr(=
-)<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 // use associated function =
-syntax for type checking<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name: ::core::ffi::CStr::as=
-_ptr($name),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 info: $prop,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 offset: ::core::mem::o=
-ffset_of!($state, $field)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .try_int=
-o()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .expect(=
-&quot;Could not fit offset value to type&quot;),<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitnr: 0,<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitmask: 0,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set_default: true,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 defval: $crate::bindin=
-gs::Property__bindgen_ty_1 { u: $defval.into() },<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayoffset: 0,<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayinfo: ::core::ptr::nul=
-l(),<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayfieldsize: 0,<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 link_type: ::core::ptr::nul=
-l(),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ..unsafe { ::core::mem::May=
-beUninit::&lt;$crate::bindings::Property&gt;::zeroed().assume_init() }<br>
+&gt; Registering the object is now done by the #[derive(Object)] macro.<br>
 <br>
-zeroed() is const only since 1.75.0 [1]. Is there any alternative for<br>
-older Rust versions?<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">Yes: manual implementation of a Zeroable trait, as in t=
-he series I sent before one. For now I am not worrying about the MSRV, sinc=
-e the hacks/workarounds from those patches do not become any worse.</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+The module_init! macro is still necessary when a device needs more logic<br=
+>
+(in addition to a single type registration) in module init. That is not<br>
+rare among the devices in C we have today.<br>
 <br>
-[1] <a href=3D"https://doc.rust-lang.org/std/mem/union.MaybeUninit.html#met=
-hod.zeroed" rel=3D"noreferrer noreferrer" target=3D"_blank">https://doc.rus=
-t-lang.org/std/mem/union.MaybeUninit.html#method.zeroed</a><br>
+Manos and I had a conversation on this. He mentioned that he had a<br>
+second Rust device that needs this macro [1].<br></blockquote></div></div><=
+div dir=3D"auto"><br></div><div dir=3D"auto">Ok, I will change derive(Objec=
+t) to use module_init! instead. What matters is that module_init! is also f=
+ixed to not use the .ctors section.</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div c=
+lass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+[1] <a href=3D"https://lore.kernel.org/qemu-devel/itblf.by425lac4ow@linaro.=
+org/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lore.kernel.o=
+rg/qemu-devel/itblf.by425lac4ow@linaro.org/</a><br>
 <br>
 --<br>
 Best Regards<br>
 Junjie Mao<br>
 <br>
+&gt;<br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 rust/qemu-api/src/<a href=3D"http://definitions.rs" rel=3D"noref=
+errer noreferrer" target=3D"_blank">definitions.rs</a> | 43 ---------------=
+-----------------<br>
+&gt;=C2=A0 1 file changed, 43 deletions(-)<br>
+<br>
 </blockquote></div></div></div>
 
---0000000000008306fb0624fa58a9--
+--000000000000aaaa720624fa5e70--
 
 
