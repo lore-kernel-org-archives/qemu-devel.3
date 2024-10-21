@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66874D0E6C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0038ED3C935
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2w9J-0007OG-GF; Mon, 21 Oct 2024 13:24:57 -0400
+	id 1t2wBe-00089M-Sp; Mon, 21 Oct 2024 13:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t2w9E-0007Ns-3M
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:24:53 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2wBc-00088p-CT
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:27:20 -0400
+Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t2w9C-0003NR-O2
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:24:51 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-20bb39d97d1so43788335ad.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:24:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2wBa-0003fB-ER
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:27:20 -0400
+Received: by mail-il1-x12b.google.com with SMTP id
+ e9e14a558f8ab-3a3a3075af2so18818805ab.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729531489; x=1730136289; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1729531637; x=1730136437; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t7Icxzzv87BzYtTsRoj8tqe9WQ7Sq7Ylu5Sa2wNsa7o=;
- b=NexGQ+e6eykkXkmN4nq7MVN3tjcnHKc/S+kZ5KGEpNk/S4yDSmsKkLDh+spDb39fik
- nUHJ1fIPodyJRfpdeLem79vZTVWW/1c7dw2/Ja6IC0FNTWo8CV+DS0sl1f5UoRZeaSQZ
- HHuk7OLv0e+TncBuGTI/nKebq2VMo2CyZWhc2qM34s4VLnJu7XMtlv9FHaedzci7q0cg
- n5D+7AiulCpcMZCcsdeZIj3PQN5s28+6Wi5fJaMTqR99PFql0QFFb65ONqj9b7yemerY
- ZeWLWuEyvHmxTjkQr71/GlHEgYxSOSO3CfxAhEuYEhH04Mtn6DPwuZWLJDZ8kIO8XBqw
- faZw==
+ bh=c3IS+X8h/ozkvRZAsKBeqDO187tvvQaB/SjIKwzNJsI=;
+ b=u4XAkx6xhKFbGrga3laJmUB3embX4zWoxsnwjwwEp0gcsYAkjdF6g546rSJAAUEKuc
+ TsuVY6D16T0okUR1imv+DwkgeQwH/7rQlmHwlb4phYkPALk0fIpdJ9cvvK/zzNpvTW49
+ SFXzQOMbv+upZccycgS5u+z4K4tFWLgzFDeNFJFMy/eV4rj3h8fkx4l2M6PjGKvH8D+G
+ 1YvPCfEQ4AT1sY25J+lurQJjcswH0XuFjJ+NHANILbgyvUXK+n2xuHDQdDfGhaYJTcZS
+ QL0FHQBF3Rbfmv3cwerDi56bEPnmThzwjSmagM8XBiEnmNxHRyhLBdterVBtQN4F8pGb
+ Ynwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729531489; x=1730136289;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729531637; x=1730136437;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t7Icxzzv87BzYtTsRoj8tqe9WQ7Sq7Ylu5Sa2wNsa7o=;
- b=k2XQ6XOMcpivKL0PuAcEZIDKUPbHLanJeWxZi4gYKCg+HFT9Cam4ZmAaG94ptDpy5+
- 59gYzTyx6NG3JpS7DxFj4OTHdYniupGYLQ0feB9p7isEiFBzJkaVxlFsGptQDA600rhF
- 1TUPeZdk1F3UFqLMB+K8kvqwRsTNbMZ1Ld7btppXUjmGA67urDkX83bmW77k80DRKxh5
- ApcDcT7D+de8Z85CmuO5iKW4q/YgNz01Q5d/r3ADMyiDsB1TB3qfX0pqREJYI2Scjt1B
- yqIlcJY7ZHaQ5PMI+FdEKVB9NlIegvdlPeaVv6o0Pw6bo7PD23jNiOWz3d1if9cVo/Fj
- uGQQ==
+ bh=c3IS+X8h/ozkvRZAsKBeqDO187tvvQaB/SjIKwzNJsI=;
+ b=Fq+pjhX/yj3/6IedC5f8x1mAHznTEZtqCIMOmeqQwsqcGyYZ1VI77AoRPzHUIqUrku
+ jsuM7ybweWd4Hcn0dbHnYt7w6UgQedABj35jPpTnQe+oLuP5yqFwWvYEaN08mOicEffo
+ ++Ym5f1QS9ChCKnLniYG2FDkETXuOxt9616oxlHiblHa/8WQYwNO5J/P4e38mX2UjDGE
+ RR/IOv4g2SWHt6A3RfR6UD3lyfWA8mnfmATWoHzSxsYl8b1hUH8vIlgSnsaQMvsdXyYc
+ vLDBUqCp3EzxCXTYVrR2TiQRp/mbNXhmv4S3HrtwNTOG0p+HNzSZbt7YSyDgBcvcykud
+ fshA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIDpkNBDi/31OmG2Pas+AnqXg5Wb7aDxN9wYg8YT+tYVVRTuRUpmuhXQsJiaLx3enKLFdOkXMGyKzy@nongnu.org
-X-Gm-Message-State: AOJu0YykCwQGA0QVPqc5l35W2mmn/QDnFpJsz0Cfdrpi1oxI5wGkOw3o
- 0w1Shd9XkcR8+f5X6DoVFBjw3Qj4ckcJAy1UNXXW4euo2961CQ/CQ7pRSe/4YIo=
-X-Google-Smtp-Source: AGHT+IH/AW4gDEoKfqFoPLCynYf+JMwGgFcBr8Pd50reEWg00AT5Md+8jKxeC6jWxo+IscDTq8BO8A==
-X-Received: by 2002:a17:902:e741:b0:20c:d578:d712 with SMTP id
- d9443c01a7336-20e94b5fa6amr7881765ad.59.1729531488960; 
- Mon, 21 Oct 2024 10:24:48 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7eee7116sm28772295ad.36.2024.10.21.10.24.48
+ AJvYcCX87wq68NMEaIfFTvV+CbH4YU7mmMvhQmk1B4rztEzU9HyKoed9u0VxT278zx6H6d5VlMb2hAuRSlw9@nongnu.org
+X-Gm-Message-State: AOJu0Yy7PbiwlKf5yCrfqxCGWlBJuy3MIcdOG34hw4miL5x37QeEap31
+ ofiR/I1duPUuHveqvXt4unXmuYvPW4yVHA20Ezkh8l+pasj1wYR4YwD69kTHN2A=
+X-Google-Smtp-Source: AGHT+IH34qZAeM8waCtrMRxYsT/OR8cpljbNq1iEyL1WAiSxxj9jrddGih97hU2qbv+fWA+hiy+0tQ==
+X-Received: by 2002:a05:6e02:13ac:b0:3a3:e58d:cfe3 with SMTP id
+ e9e14a558f8ab-3a3f40545f0mr96157675ab.8.1729531636738; 
+ Mon, 21 Oct 2024 10:27:16 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7eaeab3d0ffsm3410503a12.38.2024.10.21.10.27.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 10:24:48 -0700 (PDT)
-Message-ID: <6ee8e20f-a48a-4f4e-a3ea-29bf29a9d630@linaro.org>
-Date: Mon, 21 Oct 2024 10:24:46 -0700
+ Mon, 21 Oct 2024 10:27:16 -0700 (PDT)
+Message-ID: <5135e8bb-945a-4385-88c0-1b79208e8d2b@linaro.org>
+Date: Mon, 21 Oct 2024 10:27:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: Introduce ase_3d_available() helper
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
- <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20241021145832.34920-1-philmd@linaro.org>
- <7eb739af-c39e-4d5d-a439-99abceca7f00@linaro.org>
+Subject: Re: [PATCH v4] scripts/symlink-install-tree.py: Fix MESONINTROSPECT
+ parsing
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <7eb739af-c39e-4d5d-a439-99abceca7f00@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Christophe Lyon <christophe.lyon@linaro.org>
+References: <20241018130852.931509-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241018130852.931509-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-il1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,22 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/24 08:02, Philippe Mathieu-Daudé wrote:
-> On 21/10/24 11:58, Philippe Mathieu-Daudé wrote:
->> Determine if the MIPS-3D ASE is implemented by checking
->> the state of the 3D bit in the FIR CP1 control register.
->> Remove the then unused ASE_MIPS3D definition.
+On 10/18/24 06:08, Peter Maydell wrote:
+> From: Akihiko Odaki <akihiko.odaki@daynix.com>
 > 
-> I forgot to mention:
+> The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
+> must be parsed with shlex.split().  Otherwise the script will fail if
+> the build directory has a character like "~" in it.
 > 
->   "Note, this allows using MIPS-3D on the 20Kc model."
+> Note: this fix cannot be backported directly to any stable branch
+> that doesn't require Meson version 1.4.0 or better; otherwise it will
+> work OK on Linux but will break on Windows hosts.
+> 
+> (Unfortunately, Meson prior to version 1.4.0 was inconsistent between
+> host OSes about how it quoted arguments, and used a different quoting
+> process on Windows hosts.  Our current git trunk already requires
+> 1.5.0 as of commit 07f0d32641e ("Require meson version 1.5.0"), but
+> the stable branches are still on older Meson.)
+> 
+> Fixes: cf60ccc330 ("cutils: Introduce bundle mechanism")
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> [PMM: Updated commit message to give all the detail about the
+> Meson version compability requirements.]
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> This is essentially back to version 1 of Akihiko's patch, now we
+> have a new enough Meson; I just updated the commit message.
+>   https://patchew.org/QEMU/20230812061540.5398-1-akihiko.odaki@daynix.com/
+> (I have dropped the various reviewed-by and tested-by headers because
+> I figured the passage of time was enough to make them moot.)
+> 
+>   scripts/symlink-install-tree.py | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/scripts/symlink-install-tree.py b/scripts/symlink-install-tree.py
+> index 8ed97e3c943..b72563895c5 100644
+> --- a/scripts/symlink-install-tree.py
+> +++ b/scripts/symlink-install-tree.py
+> @@ -4,6 +4,7 @@
+>   import errno
+>   import json
+>   import os
+> +import shlex
+>   import subprocess
+>   import sys
+>   
+> @@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -> str:
+>       return str(PurePath(d1, *PurePath(d2).parts[1:]))
+>   
+>   introspect = os.environ.get('MESONINTROSPECT')
+> -out = subprocess.run([*introspect.split(' '), '--installed'],
+> +out = subprocess.run([*shlex.split(introspect), '--installed'],
+>                        stdout=subprocess.PIPE, check=True).stdout
+>   for source, dest in json.loads(out).items():
+>       bundle_dest = destdir_join('qemu-bundle', dest)
 
-Did you mean mips64dspr2?
-The 20Kc model has ASE_MIPS3D.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-If so,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+I confirm this fixes the error when the path to qemu src tree contains '~'.
 
