@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52621D0E6C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA40BD0E6CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2np0-0006e1-Vj; Mon, 21 Oct 2024 04:31:27 -0400
+	id 1t2nsK-0007xD-1F; Mon, 21 Oct 2024 04:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2noi-0006cY-3o
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:31:08 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t2nog-000520-0w
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:31:07 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-539f7606199so4483035e87.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729499463; x=1730104263; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uSase5F8Se/7lv486orJ9GQ0ZYi2ta33Ui1zZEod1lY=;
- b=zOpYkzfdlFp0jlNV0nFSV2UvxN4KaGziwoT0LD+4II8qj6xQVk30PZ+MAp7gc7YgZ4
- /HjrdGNLz+q4OCdFfZzFQ9FZVZo1iRfvAeuIwdTJAJpnurXxtlyHSlbpvdHZZQ2Nk97X
- EiH+Q16O3jLGocHyOa7i/b7hg+8CrEb9mDMT9OHZ8o3STjWkfiZ0W8vtGnkFXxyBVrt/
- H1jou3GTDXDuWTfRwDFeJOldjLLaHl1hdmWNQBpSTGRPfG56w1BINt4jAot9X1J1x0fe
- EOkMuvwS2wv8vIr7vZOlWzMzF/OiXsuUvbY3kgeNa/yFbcb8FV3g+FChwpGUpr4gp8OS
- E89g==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t2nsG-0007um-Hz
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:34:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t2nsE-0005Ce-2X
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:34:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729499684;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KKo+r6t/x9djfPmI784QlQOfkufBFGpF6QbYJkAYTyg=;
+ b=C93Ju6bqaYUQ79k5Is0ypnN6N2V60TwNby/kOBNkLqKgYmQ/tT9nOXp81dda/yWhIalu10
+ eKHM8ENmIZZsnwvIsguNUUxwjpJc6e0fMkLHapvF04vsJWN3Xv0ol4mtj8BK9Sb1EtJxgO
+ 5piHYck2A3Lu03ERh+m65ANFnqOPSlg=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-478-ycbf6NiJNdWIyEY2rF4oPA-1; Mon, 21 Oct 2024 04:34:41 -0400
+X-MC-Unique: ycbf6NiJNdWIyEY2rF4oPA-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-71ea6b901fcso4337466b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:34:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729499463; x=1730104263;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uSase5F8Se/7lv486orJ9GQ0ZYi2ta33Ui1zZEod1lY=;
- b=CUN78Y5hcDsuUKchBLKbP7sSJ2AbV1gG6we2fokPPx8G5lb1gEmNa7lvAvALnwaVmd
- q9IlVLL9h+gglluV0KBRvE4ihfNLpI4mgdrM8Z940JtZgI+BZ53dqDH7m+x8le40lamU
- m1f2I/YN8+x+c1RZ84cxf3L5pIgRX840JaxA10FMSkZCnSb2ASO9K5GkSm2VBR8iMiJg
- xdKzOzZ3MxVtEI28L/0utNyiVW0P2BKhAAiBxnZGDNV0VhOgYcuFbRSX1unH99RVdYXu
- 7rlI5r5HSWd7b3YZ6dbhS7n9MeSknG6wV2Dyi/lery55faiWcnc7g3fVsETY0aJTolHo
- x6Fw==
-X-Gm-Message-State: AOJu0YwzRumuBj4Ur+rr++cwExl9ZxRBNQV1fk/1lpZexNbfmGgQ2MK9
- zXxVPGtru8XEawoOLu1HmgjpsnOAaCFR4XlpsrwgLp3/+Odf3Z4VAYyZ9/8efWaNqjRt+dU5rf9
- v
-X-Google-Smtp-Source: AGHT+IHsLB8lmAUTiSJrE/sEB8DeJzMa/8JTXq7XOPiCOlmJEqIof62waP3w8f4UA3ptHBfJWSihSQ==
-X-Received: by 2002:a05:6512:39d0:b0:539:8c02:64d5 with SMTP id
- 2adb3069b0e04-53a15229e78mr4584584e87.27.1729499462069; 
- Mon, 21 Oct 2024 01:31:02 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cb66a6d0e7sm1767248a12.51.2024.10.21.01.31.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 01:31:01 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A7EBD5F8B9;
- Mon, 21 Oct 2024 09:31:00 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] testing: Enhance gdb probe script
-In-Reply-To: <20241015145848.387281-1-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Tue, 15 Oct 2024 14:58:48 +0000")
-References: <20241015145848.387281-1-gustavo.romero@linaro.org>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Mon, 21 Oct 2024 09:31:00 +0100
-Message-ID: <874j55q2m3.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1729499680; x=1730104480;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KKo+r6t/x9djfPmI784QlQOfkufBFGpF6QbYJkAYTyg=;
+ b=qqTf1tpOMTfyRsCTTFbwe39WoiaR7F628PHOSfM5I3LH7wOHbSjzo9hvSRpVhiuwDq
+ 3j2gSQLHZtB05JwIuUGHPx2x+QU4SrGJ0lsX4QMM5f2YSDo9cc0t8K45trhRO0b8N2QI
+ Uo7t41ODmqDd6l2q6Tvsjyp7mOjdO4dcLTd/T/4JvHuWpXDy61IWsNBq6OAoqx+WpUqg
+ djPp4Gal4wMQsIp+U1B4HXZSDn+bJ5uYcLhI98izXkVO0d+C74+X2t4MP1BYgulu0FTq
+ mCMT+0dUhmfT80dYCFRnyQ92RfgQ72ryoF9iLZmzKGSFJPn0UjS889IPgq0JaycYTTsj
+ 3hiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8BSzo966OOxiemG9nV/V3psxTjdcPI8aLsy5d/mFNJnbFHSQicIkznZiEl3u9fmSgQZOhv6fYkSP3@nongnu.org
+X-Gm-Message-State: AOJu0YzYoujvwhCzX8oKAaLy/D8iMt5ukqXX3LTtaYgYMrZksT0D6t/a
+ 4DDL41X3uwOnKNvMSVyKZncY4srVFVPmenIZsrJE49QGF9DiTMYFJF1Ph0WX/oL9fYFzG4KNIWp
+ wwEmQ6Kcupou1MnnJj7+fYoxD5oC7NiBivmhax+gm15n8LKATUCDl+iqWXKZPVoiZL37dP4YVkN
+ jpOJ7nckXq0zouHn4mSZjfDapRpi+JL4QJ96wOc+DO
+X-Received: by 2002:a05:6a00:2e1d:b0:71e:51ae:d765 with SMTP id
+ d2e1a72fcca58-71ea3339d8cmr14237999b3a.27.1729499680089; 
+ Mon, 21 Oct 2024 01:34:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEJQOvpLMT0t4eu743aBsobWNZpRhfRmolZxheKU6WCea6eZXLifcXzrxSBYE7526ut8C4eVd29NThHyycH3o=
+X-Received: by 2002:a05:6a00:2e1d:b0:71e:51ae:d765 with SMTP id
+ d2e1a72fcca58-71ea3339d8cmr14237988b3a.27.1729499679680; Mon, 21 Oct 2024
+ 01:34:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20241008-mask-v1-1-679ae2720bd5@daynix.com>
+In-Reply-To: <20241008-mask-v1-1-679ae2720bd5@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 21 Oct 2024 16:34:28 +0800
+Message-ID: <CACGkMEuk0VeCDwsv8NJm-iBHDxgQVRFB5ny-9=WPXatC9oKWMw@mail.gmail.com>
+Subject: Re: [PATCH] virtio-net: Avoid indirection_table_mask overflow
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,16 +99,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
-
-> Use list and set comprehension to simplify code. Also, gently handle
-> invalid gdb filenames.
+On Tue, Oct 8, 2024 at 2:51=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
+com> wrote:
 >
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> We computes indirections_len by adding 1 to indirection_table_mask, but
+> it may overflow indirection_table_mask is UINT16_MAX. Check if
+> indirection_table_mask is small enough before adding 1.
+>
+> Fixes: 590790297c0d ("virtio-net: implement RSS configuration command")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  hw/net/virtio-net.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
 
-Queued to gdbstub/next, thanks.
+Queued.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks
+
 
