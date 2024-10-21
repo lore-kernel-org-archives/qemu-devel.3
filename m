@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10578D17128
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5293D17128
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2xif-0008FC-KC; Mon, 21 Oct 2024 15:05:33 -0400
+	id 1t2xlN-0000X7-Uj; Mon, 21 Oct 2024 15:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t2xic-0008Es-Ft; Mon, 21 Oct 2024 15:05:30 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t2xia-0006CR-He; Mon, 21 Oct 2024 15:05:30 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9869D9AAD7;
- Mon, 21 Oct 2024 22:04:56 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E3DE415981A;
- Mon, 21 Oct 2024 22:05:23 +0300 (MSK)
-Message-ID: <cd4d904e-82c2-42d0-8aa3-5906f7182024@tls.msk.ru>
-Date: Mon, 21 Oct 2024 22:05:23 +0300
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t2xlK-0000Wk-JV
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:08:18 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1t2xlI-0006HO-UX
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:08:18 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-207115e3056so39473075ad.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 12:08:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729537695; x=1730142495; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LyEo/yBiRCCh6vu9a2yHnzdVVuVO6WqniHs107zzNcY=;
+ b=tdVFZyuRgrbGruppJFt0NRcR85is/ljL7y8IzDu6WNroxi60jRMqzDNzk3jSEDjhMe
+ mqlM4Tn4N16D9Ljzx2G9L6iQ8J0OtjbR3rw6R/3TtJWWpHnWedkpS0h9TumCpfqyM0R6
+ xfd44an6z+kAdOInsEjjjSEVQl2nXjcVTNsprR49frh8sYoODqgFXh3XV10CW9/824RY
+ QUEGPqh9of2waXdldOjq9VajtRrSyO5RV0L2nAp7aSfRZSE3VsRfo8bmXhB2oI1BiEf7
+ +TD+DmDEZFxaQcHRHkubvHZIJff8F80J7KKU6lJJXaiI4XNkO4DTvuSKE2EarwxqdH0r
+ C6LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729537695; x=1730142495;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LyEo/yBiRCCh6vu9a2yHnzdVVuVO6WqniHs107zzNcY=;
+ b=ZXmv4uHshxqnehGjtebei3xVZwjCn1V9xrfqgdauCmjYyFmG+VLe/iejzeVJHAKEDf
+ x5xHJPsdl7XqJLOxsO5eVnCA8JGC9eONaPsOWIeipsEktM9Cd1ovIl+kynTqT2IV+Ltf
+ sc8z9vRP704Q4q4cqDXY1mXVCsbxFJTK5zw0nyyFJ+c0ApeEyQ4CBlj7ILsXGDQS7rlm
+ TRqx+21lywh9GgXgALIYjCGAUQHt6vknbCNmIzzEWmz0WUjAvZ28tzNwVfyoeIDxGqrI
+ yOvZYGOaXMsRlcmxiM1ER5E0hKAsWxRk2NM1/vYLj7gFrxfmOPmUkgfIQMh1jQ75YeDQ
+ 9zkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQQ7CAncjk7QJKAsktJZTZ70vGJV2mcD08xU00Zxzc5VJ+suHyDWU/fu1QCpopXJc+COT6iEZXHQRs@nongnu.org
+X-Gm-Message-State: AOJu0YxHu4FqkocN0h85oZz/14Xq4Kfy7SiMRgNSgEhLmvS20W3sg+xl
+ lAD6nOL3jVjFT3LiiBhz9CZXPR4Ua9FiBGRT/yEE79OXX41BrUkkg4zpT8gRJwQ=
+X-Google-Smtp-Source: AGHT+IFGK3KT2jfAEF4aQSzNJv7tHzhNelyc19tkfxMWZkFURJpYzUsR8ze7Bdh34Idxsox0DYI0TA==
+X-Received: by 2002:a17:902:ec85:b0:20d:27fa:1911 with SMTP id
+ d9443c01a7336-20e5a71aebdmr197003065ad.8.1729537695001; 
+ Mon, 21 Oct 2024 12:08:15 -0700 (PDT)
+Received: from [192.168.0.102] ([187.121.94.4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7f0dd499sm29345915ad.223.2024.10.21.12.08.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 12:08:14 -0700 (PDT)
+Message-ID: <e22adb4e-86a2-43aa-a9f4-2e9f40bb4d87@linaro.org>
+Date: Mon, 21 Oct 2024 16:08:11 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] KVM: Dynamic sized kvm memslots array
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
-References: <20240917163835.194664-1-peterx@redhat.com>
- <20240917163835.194664-2-peterx@redhat.com>
- <52cc6540-b1ff-495e-9b98-98f13ecbf380@tls.msk.ru> <ZxZnLXD4w2HV07gJ@x1n>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <ZxZnLXD4w2HV07gJ@x1n>
+Subject: Re: [PATCH] tests/tcg: Stop using exit() in the gdbstub testcases
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20241021150153.487057-1-iii@linux.ibm.com>
+ <CAFEAcA9W6Fb-gvCx268xV+CV7LyWJwCQGqkKFpGQjdT+WiAEUQ@mail.gmail.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <CAFEAcA9W6Fb-gvCx268xV+CV7LyWJwCQGqkKFpGQjdT+WiAEUQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-21.10.2024 17:37, Peter Xu wrote:
-> Michael,
+Hi,
+
+On 10/21/24 12:08, Peter Maydell wrote:
+> On Mon, 21 Oct 2024 at 16:02, Ilya Leoshkevich <iii@linux.ibm.com> wrote:
+>>
+>> GDB 15 does not like exit() anymore:
+>>
+>>      (gdb) python exit(0)
+>>      Python Exception <class 'SystemExit'>: 0
+>>      Error occurred in Python: 0
+>>
+>> Use the GDB's own exit command, like it's already done in a couple
+>> places, everywhere.
 > 
-> On Fri, Oct 18, 2024 at 06:38:53PM +0300, Michael Tokarev wrote:
->> Looking at this from qemu-stable PoV, I'm not 100% sure this change is good
->> for stable-7.2 series, because 7.2 lacks v8.1.0-1571-g5b23186a95
->> "kvm: Return number of free memslots" commit, which was a preparation for
->> for memory devices that consume multiple memslots.
->>
->> I did a backport of this change (currently it is at the tip of staging-7.2
->> branch of https://gitlab.com/mjt0k/qemu.git) - I had to tweak context and
->> also to remove now-unused local variable in kvm-all.c.  It builds and the
->> tests run fine, but I'm not really sure it does what it is intended to do.
->>
->> Should anything else be picked up for 7.2 for all this to work, or should
->> this change not be back-ported to 7.2 ?
->>
->> (for more recent releases, everything looks ok).
-> 
-> I don't remember anything this series logically depends on (besides any
-> context-wise change).
+> This is the same bug that commit 93a3048dcf4565 is
+> fixing, but it looks like we didn't catch everywhere.
 
-Well, 7.2 is a bit old by now, and the commit I already mentioned above is
-also quite old, - at the time you started working on this series, this
-commit (v8.1.0-1571-g5b23186a95) has been in the tree for a long time
-already.  This change might be relevant here or might be not.
+Yep.
 
-> If there's uncertainty / challenge from backporting to some stable branches
-> from your POV, we can still keep things simple and skip the series, as it's
-> only a perf regression and only happens during live migrations (which can
-> enlarge the downtime, for example) but not daily VM use.
+So maybe now change in test_gdbstub.py this line:
 
-For this change alone, I did the backport, I just am not sure it makes sense.
+     gdb.execute(f"exit {fail_count}")
 
-It would be great if you take a look, including the change I mentioned above
-(it isn't in 7.2), there: https://gitlab.com/mjt0k/qemu/-/commits/staging-7.2
-Or we can just drop it for 7.2 per the above.
+to use the new gdb_exit()?
 
-Thanks,
 
-/mjt
+BTW, last news from this issue is that it seems to be fixed
+in GDB 15.2 [0] (I haven't tried it). However, the fix using
+gdb.exit(n) is still correct.
+
+Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+
+
+Cheers,
+Gustavo
+
+[0] https://sourceware.org/bugzilla/show_bug.cgi?id=31946
 
