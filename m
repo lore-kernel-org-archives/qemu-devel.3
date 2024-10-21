@@ -4,69 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFE4D0E6F5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22187D0E6F7
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qhC-00028B-Cg; Mon, 21 Oct 2024 07:35:37 -0400
+	id 1t2qhF-00028M-FA; Mon, 21 Oct 2024 07:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh0-00026D-Eb
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgy-000266-MF
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgy-0001gg-DB
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgt-0001Uu-1T
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729510518;
+ s=mimecast20190719; t=1729510514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PrlK2hZEBCCrTkovizM4jFgPgyk/oE7aw+Iyqndpn2Y=;
- b=EMrkdXx73sqlrRH8ayCy7WB/tjaxk5vnp0rObV1jT0cxOtErR7UVDC2cUV0sbrqBOuHfsb
- h9JjeGAepDy2SHtTnBss0wV+7K4fvdLgkx7UpvN5JXOokkbHwYrS7oGL5Lg8J6OtksZCNQ
- ZxH+jXkR8By+pZplGoaNoOwFHLSwrkY=
+ bh=2AW0JMFGDoiKZeDB3X89zNWa0sAywienipoUJUTxBUY=;
+ b=UqlBBY0GK3Z5RaLDnZxVQ4+tQApI4ENJX5IDF7ND+88zbhKx2B4TDdyRAX4/eQLv40ijNI
+ rC6dnsXoY9XxMkrLtn46IGOMuhRkPwDjyaMyIo4CdYqy14W9zLXeFxTieK7bkjXxnkqNrD
+ vgj5Lvq53tNg6BgJBEBcVGhIK3jsKiY=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-JJUlpszONxebWnGNvu9DvA-1; Mon,
- 21 Oct 2024 07:35:13 -0400
-X-MC-Unique: JJUlpszONxebWnGNvu9DvA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-S6ySwIVVMbGipxhQLkAgpw-1; Mon,
+ 21 Oct 2024 07:35:08 -0400
+X-MC-Unique: S6ySwIVVMbGipxhQLkAgpw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 606AB195608C; Mon, 21 Oct 2024 11:35:12 +0000 (UTC)
+ id 6553419560B2; Mon, 21 Oct 2024 11:35:07 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5ABD1955F42; Mon, 21 Oct 2024 11:35:09 +0000 (UTC)
+ id 11C7319560AA; Mon, 21 Oct 2024 11:35:04 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 03/21] MAINTAINERS: A new maintainer for the qtests
-Date: Mon, 21 Oct 2024 13:34:40 +0200
-Message-ID: <20241021113500.122500-4-thuth@redhat.com>
+	Brad Smith <brad@comstyle.com>
+Subject: [PULL 01/21] tests/vm: update openbsd image to 7.6
+Date: Mon, 21 Oct 2024 13:34:38 +0200
+Message-ID: <20241021113500.122500-2-thuth@redhat.com>
 In-Reply-To: <20241021113500.122500-1-thuth@redhat.com>
 References: <20241021113500.122500-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,48 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since I blundered into becoming the maintainer of the new functional
-test  framework in QEMU (tests/functional/) recently, I need to drop
-some other duties - it's getting too much for me otherwise. Laurent
-is also quite busy with other projects nowadays, so I looked around
-for help.
-Fabiano did quite a lot of work in the qtests in the past already,
-and is also already a maintainer for migration, so I thought he
-would be a very good fit, thus I asked him whether he would be
-interested to help out with the qtests and he agreed.
-Thank you very much, Fabiano!
+From: Brad Smith <brad@comstyle.com>
 
-Message-ID: <20241011141344.379781-1-thuth@redhat.com>
-Acked-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Remove tomli as Python has been updated to 3.11.
+
+[thuth: The "Time appears wrong" line is now necessary since the server
+ seems to provide a wrong timestamp. We likely have to remove that again
+ later once the server is running with the correct time again]
+
+Signed-off-by: Brad Smith <brad@comstyle.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <ZwtmfVlWgFRF9G8W@humpty.home.comstyle.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/vm/openbsd | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c21d6a2f9e..d1a9959031 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3259,7 +3259,7 @@ F: tests/qtest/qmp-cmd-test.c
- T: git https://repo.or.cz/qemu/armbru.git qapi-next
+diff --git a/tests/vm/openbsd b/tests/vm/openbsd
+index 49cab08782..dfd11c93f0 100755
+--- a/tests/vm/openbsd
++++ b/tests/vm/openbsd
+@@ -22,8 +22,8 @@ class OpenBSDVM(basevm.BaseVM):
+     name = "openbsd"
+     arch = "x86_64"
  
- qtest
--M: Thomas Huth <thuth@redhat.com>
-+M: Fabiano Rosas <farosas@suse.de>
- M: Laurent Vivier <lvivier@redhat.com>
- R: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
-@@ -3277,7 +3277,7 @@ M: Alexander Bulekov <alxndr@bu.edu>
- R: Paolo Bonzini <pbonzini@redhat.com>
- R: Bandan Das <bsd@redhat.com>
- R: Stefan Hajnoczi <stefanha@redhat.com>
--R: Thomas Huth <thuth@redhat.com>
-+R: Fabiano Rosas <farosas@suse.de>
- R: Darren Kenny <darren.kenny@oracle.com> 
- R: Qiuhao Li <Qiuhao.Li@outlook.com>
- S: Maintained
+-    link = "https://cdn.openbsd.org/pub/OpenBSD/7.5/amd64/install75.iso"
+-    csum = "034435c6e27405d5a7fafb058162943c194eb793dafdc412c08d49bb56b3892a"
++    link = "https://cdn.openbsd.org/pub/OpenBSD/7.6/amd64/install76.iso"
++    csum = "60cba8cb391b50bba8fa10fc768bd0529636f5345d82133c93e22c798d8e5269"
+     size = "20G"
+     pkgs = [
+         # tools
+@@ -32,7 +32,6 @@ class OpenBSDVM(basevm.BaseVM):
+         "pkgconf",
+         "bzip2", "xz",
+         "ninja",
+-        "py3-tomli",
+ 
+         # gnu tools
+         "bash",
+@@ -160,6 +159,7 @@ class OpenBSDVM(basevm.BaseVM):
+ 
+         self.print_step("Installation started now, this will take a while")
+         self.console_wait_send("Location of sets",        "done\n")
++        self.console_wait_send("Time appears wrong.  Set to", "\n")
+ 
+         self.console_wait("successfully completed")
+         self.print_step("Installation finished, rebooting")
 -- 
 2.47.0
 
