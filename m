@@ -4,110 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E896D1712F
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 20:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE254D17132
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 20:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2ycx-0004I1-PI; Mon, 21 Oct 2024 16:03:43 -0400
+	id 1t2yvE-0007bF-4T; Mon, 21 Oct 2024 16:22:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t2ycw-0004Hl-Dw
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:03:42 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
+ id 1t2yvC-0007at-2d
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:22:34 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t2ycu-0003By-Ud
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:03:42 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7869721C92;
- Mon, 21 Oct 2024 20:03:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729541018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MsYuCRfHwcn0K8D5h3Hx8noUoEz8N3cWRINGmU2PRUQ=;
- b=up4ExQZVtIrWZZt4Z9meVg0iquPRGUdIiOeLaCdZcNbZwZS/o3IkLHfSM1wt8bkKrWmI64
- m1WVybbk3ISLjuQ9DqjUqMVGy10hGXhraukC6zQeci9YYihhAYvCX+XDqdN+nTjodE9BfI
- /25eN/20NDUqRy/4U5PampPR6wWs/O0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729541018;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MsYuCRfHwcn0K8D5h3Hx8noUoEz8N3cWRINGmU2PRUQ=;
- b=OwYZPtnGT2LplkmC+VoUDMjTyj8awU17u9F6QbOrRJxqVXqeAWA9P8FxTc/9x4d+LKHqiP
- MIzaK8yVgCIcH/DQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729541018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MsYuCRfHwcn0K8D5h3Hx8noUoEz8N3cWRINGmU2PRUQ=;
- b=up4ExQZVtIrWZZt4Z9meVg0iquPRGUdIiOeLaCdZcNbZwZS/o3IkLHfSM1wt8bkKrWmI64
- m1WVybbk3ISLjuQ9DqjUqMVGy10hGXhraukC6zQeci9YYihhAYvCX+XDqdN+nTjodE9BfI
- /25eN/20NDUqRy/4U5PampPR6wWs/O0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729541018;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MsYuCRfHwcn0K8D5h3Hx8noUoEz8N3cWRINGmU2PRUQ=;
- b=OwYZPtnGT2LplkmC+VoUDMjTyj8awU17u9F6QbOrRJxqVXqeAWA9P8FxTc/9x4d+LKHqiP
- MIzaK8yVgCIcH/DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F1475139E0;
- Mon, 21 Oct 2024 20:03:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rDNqLZmzFmelOwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 21 Oct 2024 20:03:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Steve Sistare
- <steven.sistare@oracle.com>
-Subject: Re: [RFC V1 01/14] accel: encapsulate search state
-In-Reply-To: <1729178055-207271-2-git-send-email-steven.sistare@oracle.com>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-2-git-send-email-steven.sistare@oracle.com>
-Date: Mon, 21 Oct 2024 17:03:34 -0300
-Message-ID: <874j55dy09.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
+ id 1t2yv9-00056p-UV
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:22:33 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id E5027180490
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 22:22:28 +0200 (CEST)
+Received: (qmail 20508 invoked by uid 990); 21 Oct 2024 20:22:28 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Mon, 21 Oct 2024 22:22:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.35 / 50.00]; BAYES_HAM(-2.55)[98.01%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org,oracle.com];
- MIME_TRACE(0.00)[0:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; MISSING_XM_UA(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[11]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, oracle.com:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Mon, 21 Oct 2024 20:22:28 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <nenut@skiff.uberspace.de>
+Message-ID: <960a7d505c64c9c426dd70445d2acd843bd396db@skiff.uberspace.de>
+TLS-Required: No
+Subject: Re: [RFC PATCH v2 3/7] contrib/plugins: add plugin showcasing new
+ trap related API
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Julian Ganz"
+ <neither@nut.email>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <97f8c999-c6b1-46d2-aef3-3a81c2156865@linaro.org>
+References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
+ <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
+ <97f8c999-c6b1-46d2-aef3-3a81c2156865@linaro.org>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.258281) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.141718
+Received-SPF: pass client-ip=185.26.156.114;
+ envelope-from=nenut@skiff.uberspace.de; helo=mailgate02.uberspace.is
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,12 +73,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+October 21, 2024 at 8:07 PM, "Pierrick Bouvier" wrote:
+> On 10/19/24 09:39, Julian Ganz wrote:
+> >  + max_vcpus =3D info->system.max_vcpus;
+> >  + traps =3D calloc(max_vcpus, sizeof(TrapCounters));
+> >=20
+>=20Instead of allocating data for max number of vcpu, you can use a qemu=
+_plugin_scoreboard, which was introduced recently, and covers exactly thi=
+s need, by providing an array that gets automatically redimensioned when =
+a vcpu is added.
+>=20
+>=20A simple example using it can be found with bb plugin:
+> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/tcg/plugins/b(=
+id, vb.c
 
-> Save the state of the search for a working machine accelerator in
-> the new structure AccelSearch.  No functional change.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Thanks for pointing this out! I scrolled past the scoreboard API at least=
+ once without realizing what it was.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Regards,
+Julian
 
