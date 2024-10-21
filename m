@@ -4,130 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB1DD3DEA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 06:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786EAD3E18D
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 06:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2mE1-0004bH-8x; Mon, 21 Oct 2024 02:49:09 -0400
+	id 1t2mMm-0005lH-M9; Mon, 21 Oct 2024 02:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2mDy-0004b5-OY
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:49:06 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2mMg-0005kt-0e
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:58:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2mDx-0001xW-4B
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:49:06 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2mMe-0002of-4F
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 02:58:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729493342;
+ s=mimecast20190719; t=1729493881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9c0oDs7P9vWzE7FGbKcBEbCMSd7nRvNCYwNwx22Gvpw=;
- b=D5GqIBWEZvVNVIRGNhxP0AONPaOgPinS8PFQDIp9a0iOZFRJvJ2UWBhw5PZ8UR4inzVW55
- 5RJcjBOsYsTKszLu6RdDEqMY2hoW02USFiDsGaFsg8Mxsd9jSN6egM6xL8vfoVmNRmghSN
- adyPkX1PYtLK9Ma5rZeU3yCZgm9YknM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/yPg2vrOMvIsDMWz3/Z3cTAVby2WLe/QDULH5ZMH7Ok=;
+ b=ShZzz8eWG7NbjszlIvogmx2tId9a2Q+k+8AyA+dP0GMg9BMX5T4eS88X8rRb5phuZPnO2Y
+ 0t/PzI8JzQ4bXLAE4chZdqtYHYQlFPd/RrpXejCFl9wfb+JtnLFFB57vsnslwYnQoI2ctQ
+ tLQ6XO8R5WhstVepttir4PedjD8ggUQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-rmfHcP3nP2S0_L1V4tCzwg-1; Mon, 21 Oct 2024 02:49:00 -0400
-X-MC-Unique: rmfHcP3nP2S0_L1V4tCzwg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43151e4ef43so30185335e9.3
- for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 23:49:00 -0700 (PDT)
+ us-mta-249-w7iKiDHtMTKwH50vXUNRmg-1; Mon, 21 Oct 2024 02:57:57 -0400
+X-MC-Unique: w7iKiDHtMTKwH50vXUNRmg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4317391101aso4065345e9.2
+ for <qemu-devel@nongnu.org>; Sun, 20 Oct 2024 23:57:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729493339; x=1730098139;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9c0oDs7P9vWzE7FGbKcBEbCMSd7nRvNCYwNwx22Gvpw=;
- b=eV4c9WIcNvtHJsXBlsdMn9ZtZs5SQuLFvX+gZwkZtE8OuVeyhBkeypWGaxnaaWjKXx
- ekiTpZZwXdDpJjH0ifMe6NO/RdSDoNNSOIypv3wPPYbfPQktLglBLEa/G91EsqxMUE4R
- S5Iu+B7PFcHJchHpAS0PmBtNv+pnBk8DpmoLb93Yu7t2hYvSTjd3IwJgCYjMk0gYOlLa
- JQrXQmjjfwct/enfDDkXCqPX5c6cGz4RnoF4MEHKWeRjtuoh4tcPj/s+fWb5f0wTfNOt
- rdmePuJSVtrcUApQJBoYPbK5N+TPyx48gKmgTD0cx/xxg4+cQh+rPI0HiROqxcuQW2qa
- sUsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuJTXgQYfyi+vh+r5M5qRllN75ZyHjed8YTdznVDusB8clFK4vosU5n/EylzJwQNLzkzOYAw1PiOO+@nongnu.org
-X-Gm-Message-State: AOJu0YwdNe7GQ5czntpA2f5sxso+zk5a44qfAdLuVLo/btSIRlldkahb
- AjhrCTeR6l2rsEsPt8DjK7SXadToaPEKXs8R7f0Ehz1A7sN/m21AF0NT6HFY6Df/kl8U5uszPfe
- vZorGGXkmdMk3O/QkUf9GRhbhbLiNGTrqr7aMaaVZx8la1q7DjZ79
-X-Received: by 2002:a05:600c:674a:b0:431:508a:1a7b with SMTP id
- 5b1f17b1804b1-431616a3f91mr75803715e9.34.1729493339630; 
- Sun, 20 Oct 2024 23:48:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEw7sq1nsVfqc2YxIDlMBEhtkCCrrQDszUMamWqN26ZP86psESxs/R0WUm9j9HeRUuj08ngkQ==
-X-Received: by 2002:a05:600c:674a:b0:431:508a:1a7b with SMTP id
- 5b1f17b1804b1-431616a3f91mr75803535e9.34.1729493339291; 
- Sun, 20 Oct 2024 23:48:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
- ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0ba7c27sm3448704f8f.115.2024.10.20.23.48.58
+ d=1e100.net; s=20230601; t=1729493876; x=1730098676;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/yPg2vrOMvIsDMWz3/Z3cTAVby2WLe/QDULH5ZMH7Ok=;
+ b=wiUTmjkhKxzPQjr/wy1L9cMxSdollFeXvwUqVCgsplDBHG+niY3xDntX+stYSD/yAf
+ sx1dnfZN5WUxV/hF7f1Y28hzy7bcfRfvriM6w1ZKawXj5GqgXMhF9RRw+qNB2gtgrrUN
+ znxxoY/atfe3CzafKz0VZ8m5p8PK1bjRe8J7F1HETT5kGZTf69QdqOImnM2tcPnPsHO2
+ p9pbASi+qEDxoOOaE+mTUmSL5RHYnMh4+WqJabhjZYe5IHnA4rfh/jRCVZkUw+abf7Ci
+ 4hrpYCA6YsuyHrA6ZCGV1pQc6OWhRFC20bAYFwSN+xvdPh3Q3bQDrtWejU26ZJ9gLemV
+ QdRg==
+X-Gm-Message-State: AOJu0Yyg/m53GNwxN++KbZ/2Owaxm0sioDTdTL/msI91FtQra/MCqkcQ
+ gs2Cq5VSXJ0MjxazxupAsuDGpuqn3M1+CksQBayBg0U9qnPEKFSsWAwU5afkv1lBEZcFoPE4eiT
+ 8gxnrMRR/DdaVM/EnTITwQ6sPtXt4dmpNeIsa0nn4CObr6X9Mn8mO
+X-Received: by 2002:a5d:6a89:0:b0:378:89d8:8242 with SMTP id
+ ffacd0b85a97d-37ea21949d1mr6646987f8f.26.1729493875862; 
+ Sun, 20 Oct 2024 23:57:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEM4RDDiCTWytilBxLz4/EerQtRhz+fWFXf8NzbhstWh368b31aDcOk8MGm3BCEQ4MR02clQA==
+X-Received: by 2002:a5d:6a89:0:b0:378:89d8:8242 with SMTP id
+ ffacd0b85a97d-37ea21949d1mr6646962f8f.26.1729493875227; 
+ Sun, 20 Oct 2024 23:57:55 -0700 (PDT)
+Received: from [192.168.10.47] ([151.95.144.54])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-4316f5c2b46sm45900745e9.36.2024.10.20.23.57.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Oct 2024 23:48:58 -0700 (PDT)
-Message-ID: <59275410-e818-4a50-a98d-041e55bb36cc@redhat.com>
-Date: Mon, 21 Oct 2024 08:48:57 +0200
+ Sun, 20 Oct 2024 23:57:54 -0700 (PDT)
+Message-ID: <3fbecfbc-5ba7-4bca-9948-ebf8bf0a1637@redhat.com>
+Date: Mon, 21 Oct 2024 08:57:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vfio/migration: Report only stop-copy size in
- vfio_state_pending_exact()
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Zhiyi Guo <zhguo@redhat.com>
-References: <20241020130108.27148-1-avihaih@nvidia.com>
- <20241020130108.27148-2-avihaih@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241020130108.27148-2-avihaih@nvidia.com>
+Subject: Re: [PATCH 10/25] target/i386: finish converting 0F AE to the new
+ decoder
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: qemu-devel@nongnu.org
+References: <20240608084113.2770363-1-pbonzini@redhat.com>
+ <20240608084113.2770363-11-pbonzini@redhat.com>
+ <8076e922-1839-4e8e-9dbf-35c064a439fc@roeck-us.net>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <8076e922-1839-4e8e-9dbf-35c064a439fc@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
@@ -152,43 +142,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Zhiyi
+On 10/21/24 03:49, Guenter Roeck wrote:
+> Hi,
+> 
+> On Sat, Jun 08, 2024 at 10:40:58AM +0200, Paolo Bonzini wrote:
+>> This is already partly implemented due to VLDMXCSR and VSTMXCSR; finish
+>> the job.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> While testing qemu v9.1, I noticed the following crash when testing qemu-system-i386
+> with pentium3 CPU.
 
-On 10/20/24 15:01, Avihai Horon wrote:
-> vfio_state_pending_exact() is used to update migration core how much
-> device data is left for the device migration. Currently, the sum of
-> pre-copy and stop-copy sizes of the VFIO device are reported.
+Is this enough to fix it?
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ee2a508ae9a..cda32ee6784 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -345,9 +345,9 @@ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+          [1] = X86_OP_ENTRYw(RDxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3),
+          [2] = X86_OP_ENTRYr(WRxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3 zextT0),
+          [3] = X86_OP_ENTRYr(WRxxBASE,   R,y, cpuid(FSGSBASE) chk(o64) p_f3 zextT0),
+-        [5] = X86_OP_ENTRY0(LFENCE,          cpuid(SSE2) p_00),
++        [5] = X86_OP_ENTRY0(LFENCE,          cpuid(SSE) p_00),
+          [6] = X86_OP_ENTRY0(MFENCE,          cpuid(SSE2) p_00),
+-        [7] = X86_OP_ENTRY0(SFENCE,          cpuid(SSE2) p_00),
++        [7] = X86_OP_ENTRY0(SFENCE,          cpuid(SSE) p_00),
+      };
+  
+      static const X86OpEntry group15_mem[8] = {
+
+>    22:	39 c6                	cmp    %eax,%esi
+>    24:	0f 82 6a ff ff ff    	jb     0xffffffffffffff94
+>    2a:*	0f 09                	wbinvd 		<-- trapping instruction
+
+This is a bit weird, as wbinvd is not affected by this patch.  However,
+a checkout of Linux has
+
+         asm volatile("sfence" : :: "memory");
+         kernel_fpu_end();
+}
+
+at the end of lib/raid6/sse1.c and it would indeed be affected by this
+patch.  SSE2 was not present in Pentium III, but SSE was.
+
+Paolo
+
+> Code starting with the faulting instruction
+> ===========================================
+>     0:	0f 09                	wbinvd
+> EAX: 00001000 EBX: c1367008 ECX: c1368008 EDX: c119deb0
+> ESI: 00001000 EDI: 00000ff8 EBP: c119de84 ESP: c119de68
+> DS: 007b ES: 007b FS: 00d8 GS: 0000 SS: 0068 EFLAGS: 00010246
+> CR0: 80050033 CR2: ffd39000 CR3: 06144000 CR4: 000006d0
+> Call Trace:
+> ? show_regs (arch/x86/kernel/dumpstack.c:479)
+> ? die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434 arch/x86/kernel/dumpstack.c:447)
+> ? do_trap (arch/x86/kernel/traps.c:156 arch/x86/kernel/traps.c:197)
+> ? do_error_trap (arch/x86/include/asm/traps.h:58 arch/x86/kernel/traps.c:218)
+> ? raid6_sse12_gen_syndrome (lib/raid6/sse1.c:147)
+> ? exc_overflow (arch/x86/kernel/traps.c:301)
+> ? exc_invalid_op (arch/x86/kernel/traps.c:316)
+> ? raid6_sse12_gen_syndrome (lib/raid6/sse1.c:147)
+> ? handle_exception (arch/x86/entry/entry_32.S:1055)
+> ? exc_overflow (arch/x86/kernel/traps.c:301)
+> ? raid6_sse12_gen_syndrome (lib/raid6/sse1.c:147)
+> ? exc_overflow (arch/x86/kernel/traps.c:301)
+> ? raid6_sse12_gen_syndrome (lib/raid6/sse1.c:147)
+> ? raid6_sse11_gen_syndrome (lib/raid6/sse1.c:100)
+> raid6_select_algo (lib/raid6/algos.c:179 (discriminator 2) lib/raid6/algos.c:273 (discriminator 2))
+> ? libcrc32c_mod_init (lib/raid6/algos.c:243)
+> do_one_initcall (init/main.c:1269)
+> ? rdinit_setup (init/main.c:1317)
+> ? parse_args (kernel/params.c:153 kernel/params.c:186)
+> kernel_init_freeable (init/main.c:1330 (discriminator 1) init/main.c:1347 (discriminator 1) init/main.c:1366 (discriminator 1) init/main.c:1580 (discrim
+> ? rdinit_setup (init/main.c:1317)
+> ? rest_init (init/main.c:1461)
+> kernel_init (init/main.c:1471)
+> ? schedule_tail (kernel/sched/core.c:5266)
+> ret_from_fork (arch/x86/kernel/process.c:153)
+> ? rest_init (init/main.c:1461)
+> ret_from_fork_asm (arch/x86/entry/entry_32.S:737)
+> entry_INT80_32 (arch/x86/entry/entry_32.S:945)
 > 
-> The pre-copy size is obtained via the VFIO_MIG_GET_PRECOPY_INFO ioctl,
-> which returns the amount of device data available to be transferred
-> while the device is in the PRE_COPY states.
 > 
-> The stop-copy size is obtained via the VFIO_DEVICE_FEATURE_MIG_DATA_SIZE
-> ioctl, which returns the total amount of device data left to be
-> transferred in order to complete the device migration.
-> 
-> According to the above, current implementation is wrong -- it reports
-> extra overlapping data because pre-copy size is already contained in
-> stop-copy size. Fix it by reporting only stop-copy size.
-> 
-> Fixes: eda7362af959 ("vfio/migration: Add VFIO migration pre-copy support")
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> --->   hw/vfio/migration.c | 3 ---
->   1 file changed, 3 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 17199b73ae..992dc3b102 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -576,9 +576,6 @@ static void vfio_state_pending_exact(void *opaque, uint64_t *must_precopy,
->   
->       if (vfio_device_state_is_precopy(vbasedev)) {
->           vfio_query_precopy_size(migration);
-> -
-> -        *must_precopy +=
-> -            migration->precopy_init_size + migration->precopy_dirty_size;
->       }
->   
->       trace_vfio_state_pending_exact(vbasedev->name, *must_precopy, *can_postcopy,
 
 
