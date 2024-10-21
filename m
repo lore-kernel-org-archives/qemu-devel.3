@@ -4,81 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F84D0E6D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC03D0E6D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2ofC-0000eR-QZ; Mon, 21 Oct 2024 05:25:22 -0400
+	id 1t2ogJ-00019p-3f; Mon, 21 Oct 2024 05:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2ofB-0000e7-HO
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:25:21 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2of9-00026p-Qb
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:25:21 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c903f5bd0eso7714100a12.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 02:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729502718; x=1730107518; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BMyzPiugsasCOpptOZqFnzcxcSGh7UZ3aQX0Zs6ye5w=;
- b=SO/3thCfh2tErEUQxSzNGbXqLrqW51P/uO1XQpzWcaCa+Pt31eIkWmBWkvmoiBdf0L
- dcQ79cnhdJJyE/sNeC+8XSqtMqggXkfqLGUMi9t56LSmbtDww26CS//WVUJah/Qu4inB
- BrQblZxFwVSH3D5V6r7w2jRmU1Ew59QlAB6PitfDCFvAIsKBYAKMg/C+y24mme+W4ygF
- lwXwRwg7yCCr2unY/CZ1UtSVL5BJnM7NhwhmvLQx4jK8W4PTZ+Azyk1MgRfU7cDTrcvO
- bkDhyt8aUVMUDYp5CrfqjWJp+JNnQMTDPEqr7JgWPNHu5vh2CtdC6F3K++VpuY3Cw3Wf
- JkIw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2ogA-00018h-JR
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:26:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2og7-00029Z-8F
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:26:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729502777;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Pn5o9N8+6c16gHIAjCpOAUT+p46CNRuOUUIUzHumVZg=;
+ b=PI8ZHtdra2XDk8UhejpaJm41MIJuUIztFgdF4Ds/MwGHqYzCHB0+vx3dBKTi+yoY//dJzb
+ ZrqKvuStolqHnidJ0y4TqJ1mIt92G9aGAJcpvzzzY5OiAepwxDhTFP0TnbK7Zg7/NoalFU
+ NXpClkzhsku2yhq3T95098UUgN0oP1E=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-XthiMMzaODeEE-n3NChMgQ-1; Mon, 21 Oct 2024 05:26:16 -0400
+X-MC-Unique: XthiMMzaODeEE-n3NChMgQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d603515cfso1884165f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 02:26:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729502718; x=1730107518;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BMyzPiugsasCOpptOZqFnzcxcSGh7UZ3aQX0Zs6ye5w=;
- b=CfrpkZnghYP+PV6LyMP/x8IZYcMJnv9hcoIvLUiIwmqlhEYPMkVkaK5l8gGTqQwDZz
- 6bdr+T+SPIye8mDh7H0fzoXLEf9EEETdLUlA+iydX5eLwcKZffP00yBsZwzrT/nCr3st
- 0DcvDN+Dc0XCNMaSgvS5bYDartvFgZenU7DhW+7ezbHVeDiblyCyGDL7vHXkjb4TQsio
- pHi0QTCuRLz8Jf5oJ3QUPfN6awBB09eMpolMsq0Q6FXsA0+ygurJnH5MrenyfIVpUZW4
- +LQyrJF3b9uOIB9BPfVJ5HEUXt08cqttgpaAEi5DTclmEdSssCOwL488wLbZRZn96Uiw
- qxYg==
+ d=1e100.net; s=20230601; t=1729502775; x=1730107575;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Pn5o9N8+6c16gHIAjCpOAUT+p46CNRuOUUIUzHumVZg=;
+ b=piLXYUjxwNhWmunnR3OSdgSp4xfMJex7l602WZrhFFjk3asLLcRuYEcE6YbGdV9fxw
+ LzYcP0Ikb0y9d/Vz2OgC3F8w0Ipkt2VLV+eOyENDcKouSgfqUR+h/TDszkQhaHR26vtj
+ T3epw209FrfM+Ly1cDVOYiSO6TiYXbI/lPOQEir7XD5VI3j3tHNlN+T/Mp7wBHnki7tO
+ o3qXrAeA+24keC6xUkJmwEEJBiER2suzhTyktw9HtjMt2qbsuclnMDPtN1Gu4GaBlgF9
+ yh+rANJii3XxdwyHeZkwJ07Y2p6WfA+DtfasO3AeTpLUwqocZENP3nPT5wWzZRl3KJZh
+ jpVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8DkCXdMUs2mIZ8PIe7qs5ua/wEUFU+hVvYFZA07GPq+1M3gtkobY70M8XDfsz4HEKnliIkvv9ARrN@nongnu.org
-X-Gm-Message-State: AOJu0Ywk2Is8CYwNffdhk2N93/mUEDZxSXq791u4b4N1VwWWqAaA68zZ
- T1SoxvuiL2tVu+jNpDUbSIz7VbqPnWnfWkfq2gncgrrJEoncffDBcA7pWjzzaDfIG3ayTQ8yMS9
- y45L8pusR/zruNjfQu5cc9qqytJQI4mIUDP0Lwagd2fswhU9e
-X-Google-Smtp-Source: AGHT+IHDTAE9YEa+9R04KrrkA+80UPVk6AFr6VUatGo8NpUOzrq1MDsbg2yyyw8u01gjj0VfVZjZbR2MteYGZ8noHoE=
-X-Received: by 2002:a05:6402:2681:b0:5ca:1598:195b with SMTP id
- 4fb4d7f45d1cf-5ca15981b74mr7104640a12.28.1729502717837; Mon, 21 Oct 2024
- 02:25:17 -0700 (PDT)
+ AJvYcCXrgWYHjGKqKFOjJ5I+f+3Gt3QJjXlxSJjcl3WyOU2PeUb8fSp3Qqjo4X9RvNaC/j4rPBgtT9AZVkkG@nongnu.org
+X-Gm-Message-State: AOJu0Yy615glicCFV/bPfDtSghZ+96WyVcvNKuwmuywHYMHcAIf+Xy83
+ 0kz64VbkrwWeZRAmIAbeUloifr1YUqwI9I6HZ9zQgvRbINwTpauLjfV5kKngNN9adEkfzV+jdtj
+ VFeWBRuxZbkE7gvqMOddShe6rZnW0owEfNdMCe5U+n1V/TOY2R82y
+X-Received: by 2002:a5d:4d89:0:b0:371:9360:c4a8 with SMTP id
+ ffacd0b85a97d-37ea21402a2mr7419782f8f.6.1729502774998; 
+ Mon, 21 Oct 2024 02:26:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyByKyEsVI/DUvO0hyT++N41yIIJC/Aq6e01fl+fhkMVBfWBoqPEokYVz+i+Juaozf9EirwA==
+X-Received: by 2002:a5d:4d89:0:b0:371:9360:c4a8 with SMTP id
+ ffacd0b85a97d-37ea21402a2mr7419766f8f.6.1729502774592; 
+ Mon, 21 Oct 2024 02:26:14 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0a47b07sm3833703f8f.25.2024.10.21.02.26.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 02:26:14 -0700 (PDT)
+Message-ID: <d44a9631-521f-44e0-82a7-a49f0610b593@redhat.com>
+Date: Mon, 21 Oct 2024 11:26:13 +0200
 MIME-Version: 1.0
-References: <ZxPZ5oUDRcVroh7o@intel.com>
-In-Reply-To: <ZxPZ5oUDRcVroh7o@intel.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Oct 2024 10:25:07 +0100
-Message-ID: <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BQuestion=5D_What_is_the_definition_of_=E2=80=9Cprivate?=
- =?UTF-8?Q?=E2=80=9D_fields_in_QOM=3F?=
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 09/19] pc-bios/s390-ccw: Remove panics from SCSI IPL
+ path
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
+ <20241020012953.1380075-10-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241020012953.1380075-10-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,29 +148,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 19 Oct 2024 at 16:54, Zhao Liu <zhao1.liu@intel.com> wrote:
->
-> Hi maintainers and list,
->
-> In the QOM structure, the class and object structs have two members:
-> parent_class and parent_obj, which are often marked as "< private >" in
-> the comment.
->
-> I couldn=E2=80=99t find information on why to define =E2=80=98private=E2=
-=80=99 and =E2=80=98public=E2=80=99,
-> even in the earliest QOM commits and the patch emails I could find.
+On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Remove panic-on-error from virtio-scsi IPL specific functions so that error
+> recovery may be possible in the future.
+> 
+> Functions that would previously panic now provide a return code.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/bootmap.c       |  88 ++++++++++++++-----
+>   pc-bios/s390-ccw/virtio-blkdev.c |   4 +-
+>   pc-bios/s390-ccw/virtio-scsi.c   | 143 +++++++++++++++++++++----------
+>   3 files changed, 164 insertions(+), 71 deletions(-)
 
-This is a rather old thing which I think was originally
-borrowed from glib's commenting convention.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I'm fairly sure that we decided a while back that they were entirely
-unnecessary, so you don't need to add them in new code. (I can't
-actually find anything with a quick list search about that though
-so maybe I'm misremembering.)
-
-Either way, there's still a lot of them floating around in the codebase
-that were added before we made that decision.
-
-thanks
--- PMM
 
