@@ -4,47 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296A4D0E6F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E72D0E6EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2ptP-0007ei-5U; Mon, 21 Oct 2024 06:44:07 -0400
+	id 1t2ptH-0007eD-BU; Mon, 21 Oct 2024 06:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t2ptM-0007eU-VN; Mon, 21 Oct 2024 06:44:04 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1t2ptJ-0003DJ-Ug; Mon, 21 Oct 2024 06:44:04 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8AADD4E6001;
- Mon, 21 Oct 2024 12:44:00 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id uMOB6HvHBZia; Mon, 21 Oct 2024 12:43:58 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4C05C4E6010; Mon, 21 Oct 2024 12:43:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4A49F746F60;
- Mon, 21 Oct 2024 12:43:58 +0200 (CEST)
-Date: Mon, 21 Oct 2024 12:43:58 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Guenter Roeck <linux@roeck-us.net>
-cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v3 06/12] target/ppc: Split out helper_dbczl for 970 (fwd)
-Message-ID: <416c2534-d975-6123-00dc-060ec00c1e24@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2ptF-0007di-MB
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:43:57 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2ptD-0003C9-UA
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:43:57 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5cb6ca2a776so737573a12.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729507434; x=1730112234; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=37o+teMgXK5nVK9AwaJu04IyIsgtDOU2Tc6RrKmSKRI=;
+ b=vFCc4P6Lq3b6CP+dA+kCMflcGrbkKZOmOkzE4ApIO+Skit0XNFz8e+pDf26gWoBA7w
+ SDyjn5hWAxi69YVJdvfOIViZYZeSsZEdOSd5QMlab1rQJEgBermXUo+tFRQAJUZqPF2D
+ 8L2LRyy4t+9IeeviV1DNqPJBaw7z3iY2NdIYy2BSFbBQoIi6Tsvsgw0H5UyO549nZKxQ
+ yHG1dmPLInFc+tUW4uvyfS5b5G7Xi9txk2dyOw2/nZRPvGIkURXG74yx6KJ8C4hIFrF+
+ kikffW1kspmToY7GhXT3mJYjC3CDp8djt6BJaWwuHWDtL6MWV2mYQOXrA/OtuxNXyFWU
+ OrUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729507434; x=1730112234;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=37o+teMgXK5nVK9AwaJu04IyIsgtDOU2Tc6RrKmSKRI=;
+ b=o8LX7vsE4xPswKqWA/4Ic3fpmGXkAuo59eDxnk2IzkrHgAPEiL1DNcKb+IZtwp/vBx
+ s/2V/0Z/c+g9++CopFbk+iQncTeAnU1ofxk/YDXyfnUpmYmh1AdaVL/gvV09hSgBNwr+
+ 9wAnkc6gs4D3NaMq4xjB+oS/DoU7oPOxlZflvLswvHHAm18az5VGryDcn+/uejkXaQT9
+ 0xtIRIibtslSnjxecyYPB9wmEIHCWVlYWKxSjlMGpadHPNQ2Lwdprd7wdoKCeMouaqX1
+ sgzm4DEu7MSc52fQm1PaWWP5a2rLG6C1xnVlmyWUKduv+QeQ6AyAAfOaHksKnTqCd2DI
+ lrzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWdtEBLZRW4hEeGZKjVmkPqecXZ6HCZs53y8+Hfbtgw4mNE0Dq4SJVR202BWMAfD6EbWi8Or50neREV@nongnu.org
+X-Gm-Message-State: AOJu0YweVYynovlN3TUBuH3Go9Y3a88br99hp2pVwG5c+W3SXem94zi0
+ Gkx8JJbDP++IB9LcJ8yyXObSPyB9dvZFp66E/sbIVgFdNvpVZ5zPkverKBYyosJMnQXMXUBeHpM
+ ev5KDN+3dRDKtxMhoEtWYd10nQ1VDOINeNoUaJA==
+X-Google-Smtp-Source: AGHT+IGyVnet55uildmqsNeBSCttB2U4tz8ICFm+J0+MfIRHCz/JRTiXCBZtOb7Nxd+Q+PQMv4gV7NA/ZKAS2tNTilE=
+X-Received: by 2002:a05:6402:2088:b0:5c9:57bd:e9d with SMTP id
+ 4fb4d7f45d1cf-5ca0ac6463fmr9083653a12.19.1729507433896; Mon, 21 Oct 2024
+ 03:43:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20241010173929.3910466-1-tavip@google.com>
+ <CAFEAcA9X1bdtxRL9fm_rnw9ezMZSW6HaURfMsA4aLMSHM4fzdw@mail.gmail.com>
+ <ZxKHSB8l1HmtxrZ6@redhat.com>
+ <CAFEAcA_Q_6Vd00Hyy4cUtMCN9=nX=SxqhRAB6Fhrd5_D_jyD0A@mail.gmail.com>
+ <CAGWr4cSfrONXCZd6ZaJ23F-uHBvc6nf9WZw6gmBfuHtyoUZ0VQ@mail.gmail.com>
+In-Reply-To: <CAGWr4cSfrONXCZd6ZaJ23F-uHBvc6nf9WZw6gmBfuHtyoUZ0VQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 21 Oct 2024 11:43:41 +0100
+Message-ID: <CAFEAcA83La0kXbCKT=wXmme9YH84fsYYvYsKeS5vB1_Tw9Z0eQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] cli: add connect-gpios option
+To: Octavian Purdila <tavip@google.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, pbonzini@redhat.com, eduardo@habkost.net, 
+ armbru@redhat.com, =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,145 +97,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Resend with fixed ppc list address.)
-
-On Sun, 20 Oct 2024, Guenter Roeck wrote:
-> Hi,
-> 
-> On Fri, Jul 19, 2024 at 11:07:01AM +1000, Richard Henderson wrote:
->> We can determine at translation time whether the insn is or
->> is not dbczl.  We must retain a runtime check against the
->> HID5 register, but we can move that to a separate function
->> that never affects other ppc models.
->> 
->> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
->> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> I see an odd failure when trying to boot ppc64 images in qemu v9.1.0 and
-> v9.1.1.
-> 
-> Starting network: udhcpc: started, v1.36.1
-> malloc(): corrupted top size
-> Aborted
-
-Do you have more info on what reproduces this? What is the QEMU command and 
-what guest code is running? This looks like something may be using dcbzl on 
-something else than a 970 or if this is emulating a 970 then I don't see why 
-this stopped working. Looking at the reproducer may help.
-
-Regards,
-BALATON Zoltan
-
-> /usr/share/udhcpc/default.script: line 41: can't create : nonexistent 
-> directory
-> 
-> I bisected the problem to this patch; bisect log is attached.
-> I also found that the problem has been fixed in mainline qemu. Bisect
-> points to commit: f168808d7d10 ("accel/tcg: Add TCGCPUOps.tlb_fill_align")
-> as the fix. I attached this bisect log as well.
-> 
-> Reverting this patch isn't easy due to several follow-up commits. Applying
-> commit f168808d7d10 plus several preceding commits on top of v9.1.1 seems
-> to fix the problem. The commits I applied are
-> 
-> da335fe12a5d include/exec/memop: Move get_alignment_bits from tcg.h
-> c5809eee452b include/exec/memop: Rename get_alignment_bits
-> e5b063e81fd2 include/exec/memop: Introduce memop_atomicity_bits
-> f168808d7d10 accel/tcg: Add TCGCPUOps.tlb_fill_align
-> 
-> Obviously I have no idea if this is even remotely correct, so please take
-> this report as purely informational in case someone else observes a similar
-> problem.
-> 
-> Thanks,
-> Guenter
-> 
-> ---
-> Bug introduced:
-> 
-> # bad: [fd1952d814da738ed107e05583b3e02ac11e88ff] Update version for v9.1.0 
-> release
-> # good: [c25df57ae8f9fe1c72eee2dab37d76d904ac382e] Update version for 9.0.0 
-> release
-> git bisect start 'v9.1.0' 'v9.0.0'
-> # good: [2529ea2d561ea9fe359fb19ebdcfeb8b6cddd219] hw/acpi/ich9: Remove dead 
-> code related to 'acpi_memory_hotplug'
-> git bisect good 2529ea2d561ea9fe359fb19ebdcfeb8b6cddd219
-> # good: [76e375fc3c538bd6e4232314f693b56536a50b73] docs/qapidoc: add QMP 
-> highlighting to annotated qmp-example blocks
-> git bisect good 76e375fc3c538bd6e4232314f693b56536a50b73
-> # bad: [60d30cff8472c0bf05a40b0f55221fb4efb768e2] target/ppc: Move SPR 
-> indirect registers into PnvCore
-> git bisect bad 60d30cff8472c0bf05a40b0f55221fb4efb768e2
-> # bad: [6c635326425091e164b563a7ce96408ef74ff2ec] vfio/{iommufd,container}: 
-> Remove caps::aw_bits
-> git bisect bad 6c635326425091e164b563a7ce96408ef74ff2ec
-> # good: [23fa74974d8c96bc95cbecc0d4e2d90f984939f6] Merge tag 
-> 'pull-target-arm-20240718' of https://git.linaro.org/people/pmaydell/qemu-arm 
-> into staging
-> git bisect good 23fa74974d8c96bc95cbecc0d4e2d90f984939f6
-> # good: [c135d5eaafe7aa2533da663d8e5a34a424b71eb9] tests/tcg/aarch64: Fix 
-> test-mte.py
-> git bisect good c135d5eaafe7aa2533da663d8e5a34a424b71eb9
-> # good: [6af69d02706c821797802cfd56acdac13a7c9422] Merge tag 
-> 'nvme-next-pull-request' of https://gitlab.com/birkelund/qemu into staging
-> git bisect good 6af69d02706c821797802cfd56acdac13a7c9422
-> # bad: [71bce0e1fb1a866dde4a4b6016fc18b09f317338] Merge tag 
-> 'pull-tcg-20240723' of https://gitlab.com/rth7680/qemu into staging
-> git bisect bad 71bce0e1fb1a866dde4a4b6016fc18b09f317338
-> # bad: [62fe57c6d23fe8136d281f0e37ec8a9fab08b60a] target/ppc: Split out 
-> helper_dbczl for 970
-> git bisect bad 62fe57c6d23fe8136d281f0e37ec8a9fab08b60a
-> # good: [3b9991e35c08be7fd6b84090b2114ff1bfd44d3f] target/arm: Use 
-> set/clear_helper_retaddr in SVE and SME helpers
-> git bisect good 3b9991e35c08be7fd6b84090b2114ff1bfd44d3f
-> # good: [521a80d895ec8ef0200dcac9b9b19e60b0cc1d1a] target/ppc: Hoist 
-> dcbz_size out of dcbz_common
-> git bisect good 521a80d895ec8ef0200dcac9b9b19e60b0cc1d1a
-> # first bad commit: [62fe57c6d23fe8136d281f0e37ec8a9fab08b60a] target/ppc: 
-> Split out helper_dbczl for 970
-> 
-> ---
-> Bug fixed:
-> 
-> # pass: [72b0b80714066a435502b67cdb55a7868ba0487d] Merge tag 'for-upstream' 
-> of https://gitlab.com/bonzini/qemu into staging
-> # fail: [fd1952d814da738ed107e05583b3e02ac11e88ff] Update version for v9.1.0 
-> release
-> git bisect start '--term-bad=pass' '--term-good=fail' 'HEAD' 'v9.1.0'
-> # fail: [4ae7d11b70a840eec7aa27269093b15d04ebc84e] Merge tag 
-> 'pull-tcg-20240922' of https://gitlab.com/rth7680/qemu into staging
-> git bisect fail 4ae7d11b70a840eec7aa27269093b15d04ebc84e
-> # fail: [b5ab62b3c0050612c7f9b0b4baeb44ebab42775a] Merge tag 'for-upstream' 
-> of https://gitlab.com/bonzini/qemu into staging
-> git bisect fail b5ab62b3c0050612c7f9b0b4baeb44ebab42775a
-> # pass: [1bfb726112ea4fda07c988f08df32d1eebb9abec] ui/pixman: generalize 
-> shared_image_destroy
-> git bisect pass 1bfb726112ea4fda07c988f08df32d1eebb9abec
-> # fail: [7e3b6d8063f245d27eecce5aabe624b5785f2a77] Merge tag 
-> 'crypto-fixes-pull-request' of https://gitlab.com/berrange/qemu into staging
-> git bisect fail 7e3b6d8063f245d27eecce5aabe624b5785f2a77
-> # pass: [e530581ee06573fcf48c7f7a6c3f8ec6e5809243] target/arm: Fix alignment 
-> fault priority in get_phys_addr_lpae
-> git bisect pass e530581ee06573fcf48c7f7a6c3f8ec6e5809243
-> # pass: [795592fef7d5d66a67b95a7f45cc1a84883db6a8] accel/tcg: Use the 
-> alignment test in tlb_fill_align
-> git bisect pass 795592fef7d5d66a67b95a7f45cc1a84883db6a8
-> # fail: [9d08a70ddc08e9b6ecf870fd232531c78fe0b208] tests/tcg: Run 
-> test-proc-mappings.py on i386
-> git bisect fail 9d08a70ddc08e9b6ecf870fd232531c78fe0b208
-> # fail: [da335fe12a5da71a33d7afc2075a341f26213f53] include/exec/memop: Move 
-> get_alignment_bits from tcg.h
-> git bisect fail da335fe12a5da71a33d7afc2075a341f26213f53
-> # fail: [e5b063e81fd2b30aad1e9128238871c71b62a666] include/exec/memop: 
-> Introduce memop_atomicity_bits
-> git bisect fail e5b063e81fd2b30aad1e9128238871c71b62a666
-> # pass: [f168808d7d100ed96c52c4438c4ddb557bd086bf] accel/tcg: Add 
-> TCGCPUOps.tlb_fill_align
-> git bisect pass f168808d7d100ed96c52c4438c4ddb557bd086bf
-> # first pass commit: [f168808d7d100ed96c52c4438c4ddb557bd086bf] accel/tcg: 
-> Add TCGCPUOps.tlb_fill_align
-> 
+On Fri, 18 Oct 2024 at 19:50, Octavian Purdila <tavip@google.com> wrote:
 >
+> On Fri, Oct 18, 2024 at 9:09=E2=80=AFAM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> > At the moment our design is "QEMU command line options are for
+> > doing the equivalent of plugging in PCI cards into slots, not
+> > for the equivalent of soldering chips onto boards". And in
+> > that view of the world "link this gpio line from the tmp105
+> > up to the armv7m interrupt controller" is not something to do on
+> > the command line, because it's definitely soldering wires.
+> > So for current QEMU the answer is "if the AN505 has a tmp105
+> > sensor, we should be creating it in the C code for the machine,
+> > and if it doesn't then we don't support creating it on the
+> > command line".
+> >
+>
+> I should have used a better example, like:
+>
+> qemu-system-arm \
+>   --machine rt595-evk \
+>   --device tmp105,bus=3D/flexcomm6-i2c,address=3D0x50 \
+>   --connect-gpios in-dev-path=3D/machine/soc/gpio,in-gpio-index=3D22,\
+>     out-dev-path=3D/machine/peripheral-anon/device[0]
+>
+> This enables use-cases like plugging in daughter cards on a board that
+> has I2C/SPI/GPIO pins exposed on a header. IMO this is very similar to
+> plugging in PCI cards into slots.
+
+So in the current design framework, the way you would model
+that kind of daughtercard is that you define a bus type
+corresponding to the daughtercard slot. For instance, for the
+Arduino Shield daughtercard spec supported by the mps3 boards,
+you would define the machine models to implement that
+bus (which wraps up i2c, gpio etc), and define some models
+of Shield daughtercards. Then users can use "-device tmp105-shield"
+on the command line and they don't need to know the internal
+details of which IRQ lines on the board are supposed to be used
+by the daughterboard, etc. This matches the real world hardware
+where the user plugs in a daughterboard rather than soldering
+wires directly between components.
+
+Directly exposing to users a "plug GPIO lines together" interface
+has some awkward sharp edges:
+ * it is effectively making the QOM paths into user-facing APIs,
+   which restricts our ability to refactor the implementation
+   of the board without breaking existing user command lines.
+   (In particular, anything using /machine/peripheral-anon/ is
+   extremely vulnerable to changes in the board code.)
+ * the user needs to know exactly how the board is wired up,
+   including details like what GPIO inputs are free and which
+   are used, and how each device orders its GPIO input lines.
+ * at the moment there is no guard against trying to plug two
+   GPIOs into a single output -- it just won't do the right thing.
+   Currently we can say "that's a bug in QEMU C code if we do that",
+   but a user-facing interface ought to be more robust.
+ * how does this interact with hotpluggable devices? If you
+   gpio-connect to a hotpluggable device and then hot-unplug
+   it do we refuse the unplug, auto-disconnect the gpios, or
+   just crash?
+
+As I say, the "I want to be able to plug devices together on
+the command line" usecase is real -- but I think that satisfying
+it is something we should do with a coherent approach to the
+whole problem, not piecemeal.
+
+thanks
+-- PMM
 
