@@ -4,94 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C059CD15DBE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26A8D0E6C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vfy-0005qt-Cy; Mon, 21 Oct 2024 12:54:39 -0400
+	id 1t2voM-00013D-SB; Mon, 21 Oct 2024 13:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2vft-0005qI-HL
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:54:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2vo2-0000mp-2I
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:03:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2vfr-0007sW-FQ
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:54:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t2vnw-0000Vn-8K
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:02:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729529667;
+ s=mimecast20190719; t=1729530167;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YVn9vmOHLhwH/Tj5FhoHsRnBhNXAYaGyHN/KyaqzXD8=;
- b=FiBS+qLtdRYd4H8zn5iQaefUHGWI37hHN/t0SAk/zJnyjS62Ee3t8U8hwBAnLKtP0GkBCw
- a4CWS05EgRro8X5wylbUmB3t4ek/FmfOAWznEvs6+jdVxLFQw+74kLFNhMFmXB6E9lY5oY
- 5FC+losz+0PQd/KY0ZIpE2/Gcc1oFDI=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-s6LTINmwOoetVHO3wCuVqg-1; Mon, 21 Oct 2024 12:54:25 -0400
-X-MC-Unique: s6LTINmwOoetVHO3wCuVqg-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cbf054c552so73534636d6.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:54:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729529665; x=1730134465;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YVn9vmOHLhwH/Tj5FhoHsRnBhNXAYaGyHN/KyaqzXD8=;
- b=sntsIdqxnQriQH+2B9y2jHjnDx1+37Ep19SAG6VIw9uYpPFACjlA6PfKjeOS1nQ6fh
- ZR6Iujj5e4mfxYp8i6nKzJkHCLyWPrxHBjWfWZOz3RqVjQzYhmtf76xS+1cs/1IyUTnd
- hKn03s/j7J/8J122jmSDrjHSfVCYOruR/31t5loPBr/LJ3JfOgCVlOMGQdi/zi8+DnTx
- hYmFVfQMfoWonR0bABSC1cnsW6yzK8aqlzlRNGfe9+tkBS+tnCOBQCED4b8t4VdzZple
- zFx8p6WEhH3+PRlJTHg6OPNI2Mqxg7m78X60vzX7KVwhCSZ3ECyqvchiYHnWrZFpM6he
- 8DQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhsX55/c0N0KYQjP8yhvQrbNBnq2zj9WoQSurS5IZTBwtpH1l6hsdnmtSykUa8EdlUXGGJkXeVGRPW@nongnu.org
-X-Gm-Message-State: AOJu0YywLJf7X6MnIAHwnHD0xykGhy98MagyO6K0UZveZ5EScBEA1fZs
- htVR8vbRfJVbrgRKRYHBggdHp/6Tb8Fj4iEUFvMZVUSZTR6k7ARW4CnvDxewlVQpVplerZavHrl
- SOgiexwdwGpU2XqWIiIrzTVusfTfo4CT3WvYFreiRsEtpI8gju9pO
-X-Received: by 2002:a05:6214:5f0d:b0:6cb:e453:590 with SMTP id
- 6a1803df08f44-6cde15f1d5amr210407806d6.37.1729529665206; 
- Mon, 21 Oct 2024 09:54:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOACHACU1xbBfz1LNzRDtmQrJY8yDQG5Q4d19dFGaoMG9fXQmNOEy/VUPrBY8fJdNabHCqGg==
-X-Received: by 2002:a05:6214:5f0d:b0:6cb:e453:590 with SMTP id
- 6a1803df08f44-6cde15f1d5amr210407476d6.37.1729529664857; 
- Mon, 21 Oct 2024 09:54:24 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ce008acc74sm19292886d6.21.2024.10.21.09.54.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 09:54:24 -0700 (PDT)
-Date: Mon, 21 Oct 2024 12:54:22 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 2/3] vfio/migration: Refactor
- vfio_vmstate_change/_prepare() error reporting
-Message-ID: <ZxaHPo7GRPuby5ky@x1n>
-References: <20241020130108.27148-1-avihaih@nvidia.com>
- <20241020130108.27148-3-avihaih@nvidia.com>
- <cfca06dd-cfd3-4a36-a80f-b8e2ddecbf88@redhat.com>
- <ZxZ4Y5KSNPcuN8-X@x1n>
- <68d60abe-32b6-49b3-bc60-6c92909252f0@redhat.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=m2zWrkNVx2xnC4LFAmT1p7XEvzJ6bp4zlouhIOq9nic=;
+ b=UeKpHRvQqg57b2Ph/ezdvw1iMD4ZcrskqzYdpw/CwE/1DhSk1YhV38u8xpbkoA9QUlbd2b
+ EwO3iCXY1PpyeWxb3QIOI+RYMaWWV9WyeKnvrrta31sqLjv0ddBswz66tJHkstYqsuJUNR
+ zpzB6uC9u8R1sopCha8P412hh9gm+ps=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-u2VYxB7zPtGYgynKBLfrEQ-1; Mon,
+ 21 Oct 2024 13:02:43 -0400
+X-MC-Unique: u2VYxB7zPtGYgynKBLfrEQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFBB51955D5B; Mon, 21 Oct 2024 17:02:41 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6522F1956056; Mon, 21 Oct 2024 17:02:38 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] gitlab: enable afalg tests in fedora system test
+Date: Mon, 21 Oct 2024 18:02:36 +0100
+Message-ID: <20241021170236.1443887-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <68d60abe-32b6-49b3-bc60-6c92909252f0@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,27 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 06:43:13PM +0200, Cédric Le Goater wrote:
-> Hello,
-> 
-> > IIUC the migration thread should always see valid migration object, as it
-> > takes one refcount at the entrance of migration_thread():
-> > 
-> >      object_ref(OBJECT(s));
-> 
-> Could the migration have failed before ? in migrate_fd_connect()
+The AF_ALG crypto integration for Linux is not being tested in
+any CI scenario. It always requires an explicit configure time
+flag to be passed to turn it on. The Fedora system test is
+arbitrarily picked as the place to test it.
 
-I just noticed it's a vm state change notifier..
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ .gitlab-ci.d/buildtest.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If so, maybe VFIO could refer to its internal states showing that it's
-during a migration first (so as to guarantee the migration object is valid;
-e.g., only after save_setup() but before save_cleanup() hooks are invoked).
+This is to detect the situation Markus found here:
 
-Then migration_file_set_error() is only needed when it's during a migration
-already.  Otherwise it's only a vm state change event, so nothing relevant
-to migration.
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg03040.html
 
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 01e8470a69..f0cbdf1992 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -115,7 +115,7 @@ build-system-fedora:
+     job: amd64-fedora-container
+   variables:
+     IMAGE: fedora
+-    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs
++    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg
+     TARGETS: microblaze-softmmu mips-softmmu
+       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
+     MAKE_CHECK_ARGS: check-build
 -- 
-Peter Xu
+2.46.0
 
 
