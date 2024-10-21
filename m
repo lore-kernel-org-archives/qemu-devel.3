@@ -4,93 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C774D1713B
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 20:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028D7D17138
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2zMh-0007Or-6g; Mon, 21 Oct 2024 16:50:59 -0400
+	id 1t2zWY-0001A9-4B; Mon, 21 Oct 2024 17:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1t2zMg-0007Oc-6W
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:50:58 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1t2zMd-00086a-E6
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:50:57 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5c9c28c1ecbso6274091a12.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 13:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1729543854; x=1730148654; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8q2NamfBIbVqpI4ZHSeAC88TgZJI2rdwW4uqz4TtG2Y=;
- b=JgGyBayYe/Phdbj1ZXEK4c9/KjMet7f5riut4Zdxiq7EsUrNEoRm47DwoYO6JgTCfJ
- 9N22quovW8QCqm4XBUDpfgSJl8unsIneWlhOXnoT3F3gN8ad3L4vhcOuJgJ7IFgNl3N2
- B5Rd9bjVzs+O1Mk1AdOA+z4yFUgYviswccDEBvR+M1iwjp9hGGMqVM7NH2WM95gOicuB
- rbE8gqZlnmde+UzVaCAo/5//+V0ihatUwxijSVJex7omIoIaCZIT9ZlidrheXtt9LZWp
- RSXp3yVO2oWBe3hXH4GYs1m98fJJo2S+zVN0LqrojHjXRd2Wb+rgeXnhA8wEqUQAZCpI
- qgdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729543854; x=1730148654;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8q2NamfBIbVqpI4ZHSeAC88TgZJI2rdwW4uqz4TtG2Y=;
- b=mqBdJ1lZKTuwHAh+074bxxwz66MAqqCIptxv9LRMKh1AqZnIUCb3o2JJ+AzGTthGZ5
- 6nnMWBeAnqyP0qMgYb9QHtpYysbj3d3nM8BaXNCc2JrfUnIEyrKuX4cb9Kpvz3G0GPrG
- G0/QOT3JH5+K2b5aRx5yj7II3hgyWoJyLsVlvkcV6AoESP/Y5CgYA5MY5EmE4DwOjd2W
- UaRby4duaDKkK7k73EPZPmxDCulQ8pvMUijbotBSM3EuBL6uwHwsgL3t56iDgqnpvaui
- 8BPsRLln8NJsG191ABfs4/tnViCgF8qQTtgtNTyzCRU6qmronCNrzetijEh9i9/t+VAO
- HVAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVlT2yDCgCPeCSu1mlrdd0kPIe5J3ZquH7R1wNCZ0GSAK8f9ggkNTOngIeQ6unLsczCZuJKc+8ewG1j@nongnu.org
-X-Gm-Message-State: AOJu0YzJQK8PMk/TzWb3CiLKT9WpCSe2WG2HgT0opaqCYXPZ+cLeMhUY
- JJk/RaR1nbhvyGXcb69NMa4Kf6Z0HiKb0yk3qdLjJPqxpLneLuU88vX29qCGrWh0q3aRbRtMEEY
- bZgBJfTF09bvakumxnUgmp1XCI2Znk7vlD7n2Og==
-X-Google-Smtp-Source: AGHT+IHr0iqSqfHEWtpaZvJ30Gd68ushob7e0bCwNr5L1+5A5J9XwHZXGVZl/qpJmmRXGCQkxb7j1+ra/1kQDVUeVu0=
-X-Received: by 2002:a17:907:7b85:b0:a9a:b70:2a7c with SMTP id
- a640c23a62f3a-a9a69a7627fmr1404435766b.25.1729543853516; Mon, 21 Oct 2024
- 13:50:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1t2zWW-00019v-2j
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:01:08 -0400
+Received: from mail-bn8nam11on2046.outbound.protection.outlook.com
+ ([40.107.236.46] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1t2zWT-0000pM-7g
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:01:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SEkHM7vV1YNwyJJ3L2QNhhUqs8y++GVZbZ+oH3aak46sc8Zes+DZoZ7w+r8UjYX0oSyd/272yojyaGogdkzBWjQxtlekrYXasdbHxUQQu/h0FwNVFPfzGVM3sLs+nC9umlmOoQjWSx+u28bciTycL8BWmsp7SgwMUOZ5gKOcDIxukDwVt0ZvjIUGXi79Fzr4tjPrjc7qIqbPLZbSw8ycmn7e7f2JuyRwDJ1Z+N5Bype3uxcFCYdpYqJdxAP5o+mu26seYehknnDAAbRTcNKfycCKPriBf1EJrOucuelyRQ3YyX6EdnxxVHhUZVhmf3+Yj6FhXXCIRUtCYOYJQIhRsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4WSbIQbVmLBugBlh0MGnbh49fvK/BlXxqgaV3mVvLKM=;
+ b=UyBuhVAn1jbS30hCsECaPdLUJ7jBjAUDI4nq7KUtqZrpOQiuyMI4U7PMyxc/UrlTiiBjF6HAKgR3nw9yO7TuTScFuZbeg2/B/c5ha53HuFwvBGIdOXzE9Mortd1DwA9P6SCOSslBnhBu9kdyJ0HNbAMotqj60hoojGnJWKDL1rMo4/ajGajeZpljArL8DXS0fZkXyk7bsfqIYRGugiAZk3tF6lyS+boR1uaRvXmral5XzgcvrP+wg3iIql9nUkgYAeow091HgkIHpjtO3ASTQzhJKhVQa9NewHq9MVpDGTZOTWUXnJjgdf8bqadLusLVDkyCmCvT/O3gtWoFCL9AwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4WSbIQbVmLBugBlh0MGnbh49fvK/BlXxqgaV3mVvLKM=;
+ b=H7nxrLlfDUIVz+L4xlvzrcwzBV/7QTsWVjWJ2i4WtrAKiSTofdYJckfoassbhpZ8EgenlihKsF1UgNcNzIs7zWoTxLXoPE5G9Om4+/pszRB4S609zklk7QvSgyf7zOchGezxVATAjiPp0wPRl3/5wkJS8lCTS81irpejTfYYeaI=
+Received: from CH2PR05CA0031.namprd05.prod.outlook.com (2603:10b6:610::44) by
+ DS7PR12MB8231.namprd12.prod.outlook.com (2603:10b6:8:db::14) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8069.27; Mon, 21 Oct 2024 20:55:56 +0000
+Received: from CH1PEPF0000AD7C.namprd04.prod.outlook.com
+ (2603:10b6:610:0:cafe::6) by CH2PR05CA0031.outlook.office365.com
+ (2603:10b6:610::44) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.16 via Frontend
+ Transport; Mon, 21 Oct 2024 20:55:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ CH1PEPF0000AD7C.mail.protection.outlook.com (10.167.244.84) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8093.14 via Frontend Transport; Mon, 21 Oct 2024 20:55:55 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 21 Oct
+ 2024 15:55:55 -0500
+Received: from [192.168.122.223] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Mon, 21 Oct 2024 15:55:54 -0500
+Message-ID: <83ae0df2-c255-48ca-9f50-d495d1593852@amd.com>
+Date: Mon, 21 Oct 2024 16:55:53 -0400
 MIME-Version: 1.0
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
- <20241014192205.253479-2-salil.mehta@huawei.com>
- <2d4a0d78-f3cc-4644-a9ea-d02114c242b8@linaro.org>
-In-Reply-To: <2d4a0d78-f3cc-4644-a9ea-d02114c242b8@linaro.org>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Mon, 21 Oct 2024 21:50:41 +0100
-Message-ID: <CAJ7pxeZuH+ZDAy09CUCxt3toNKF0z=VW8VZnQNjzDVKXNg1k5Q@mail.gmail.com>
-Subject: Re: [PATCH V1 1/4] hw/acpi: Initialize ACPI Hotplug CPU Status with
- Support for vCPU `Persistence`
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- mst@redhat.com, maz@kernel.org, jean-philippe@linaro.org, 
- jonathan.cameron@huawei.com, lpieralisi@kernel.org, peter.maydell@linaro.org, 
- richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev, 
- david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, 
- ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com, 
- gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com, 
- alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com, 
- linux@armlinux.org.uk, darren@os.amperecomputing.com, 
- ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com, 
- karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com, 
- maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com, 
- zhao1.liu@intel.com, linuxarm@huawei.com
-Content-Type: multipart/alternative; boundary="000000000000034382062502cf65"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [QEMU PATCH v8] xen/passthrough: use gsi to map pirq when dom0 is
+ PVH
+To: Jiqian Chen <Jiqian.Chen@amd.com>, Stefano Stabellini
+ <sstabellini@kernel.org>, Anthony PERARD <anthony@xenproject.org>, "Paul
+ Durrant" <paul@xen.org>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+CC: <qemu-devel@nongnu.org>, <xen-devel@lists.xenproject.org>, Huang Rui
+ <Ray.Huang@amd.com>
+References: <20241016062827.2301004-1-Jiqian.Chen@amd.com>
+Content-Language: en-US
+From: Stewart Hildebrand <stewart.hildebrand@amd.com>
+In-Reply-To: <20241016062827.2301004-1-Jiqian.Chen@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB03.amd.com: stewart.hildebrand@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7C:EE_|DS7PR12MB8231:EE_
+X-MS-Office365-Filtering-Correlation-Id: 783aeebe-2aa1-46b6-6755-08dcf212c20d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|1800799024|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VWFNYk1DL2pSRGovYzA2cWVQZS9QRDE5R0dEN01xdkNMREN2YkdBcElwcUJL?=
+ =?utf-8?B?ZmpHYnFFdENSelFERWZKRHNWbGRCWFRkeU9tRWxVZmZYSXF2VVN0RzAzTVEv?=
+ =?utf-8?B?bHlwM21wZWg3TFdKbU8xUEwwNW10eEc1V0MvZDhLNHBubFdvc05ieE1ZQTFy?=
+ =?utf-8?B?WEh6RllUeUhTdWxPUG5XYTBhTVRwZXZaMFcxMXNrcDZwZmlhNjVIOWU1ZFVF?=
+ =?utf-8?B?cVdld1NJclQ3dU0yVFdzdVhDS3RzeTBER3FRTHhiY3hpc3BpTlRDQzc1Q1pk?=
+ =?utf-8?B?K3hiNFhMQko0WFJhb0Z3aEJXcVBIVU8vMVpFV2R2UFJ6ZGNRVTdtUGVndWZW?=
+ =?utf-8?B?eEwwRytCM3JDVFo4YUdlMndUVTZhVDBNeW9sVVVZNlloYWw4UlFuVnoxZEtW?=
+ =?utf-8?B?TkdaVFFxTVR6eFdoeGV3ZTd2cHRLVDkxZ0pDVlVkNEM2ZjhNaitTbCs4ZjhT?=
+ =?utf-8?B?SFp6cW40ckdOdzR5dEpUVWZCeWw2ZzBWR2xzbU1GaWdhcXlpSW8vUCswL3VT?=
+ =?utf-8?B?SVBYYjFiQUhRaHBhZDZMbGhoZjBNYXQxMlk4Nnd3SHJEVXVnU2lLZWdxdzBH?=
+ =?utf-8?B?RDJodzJTdVp5d2UvaExYRzN3RHF6RXJaVjUzU082TWZ4VnFQOEFIWEdhM0RI?=
+ =?utf-8?B?ejRRWjJIcDNSM2tmcG1uVit4aHlxWGtkTndDWlVqbVNkcmFVcWdxMGhoMVpU?=
+ =?utf-8?B?WWRzQzlDUlphMkpadytUZ2E2aXMzRFV4cFdxRVhjVGhIMGRjblNKT3J5azBx?=
+ =?utf-8?B?bjYxSG16d3A0MkZLQW5zaXA3d05kcHJsVFZXc3RteTUxMUNtODczdXltOGFa?=
+ =?utf-8?B?VXZUalk4Q3BqWHJHWkhRcEFjd0JGUURmZlU2WXdEQXlsWjhPa2IxbGJyY1da?=
+ =?utf-8?B?RGZhMitvallyZ0hLMkFXNFBxS1dESkNiSnlYMUJNK1BBWk5tR1BPNnlZSlZ2?=
+ =?utf-8?B?ZDd6VzZweGxCQTBGNm00NWxQbzE5SFNCQWVQV3F6TmxyR1A5YmRHbGxKTHZm?=
+ =?utf-8?B?M3pCVkdUb09WaU9BbmF1T1Uyby80V1JlM21RK25KK0RheWI3V1VGRW56ZnZI?=
+ =?utf-8?B?eTR5UXIwb0I5ZitRMC8zbmwxSGxJTnRnME1FSUw2QkVuVG1kbi9Wa3dKTnly?=
+ =?utf-8?B?S1dkVkVXV0ZzaVhKQ3pZTHFESHhGRXpWOUxkV2d0RVkxd25MYkxXcTJOYVF6?=
+ =?utf-8?B?eUR1czFuS2FhVXpyQjI0aHlJMXJyMk1wL0h2VUFQTWlReFlUWXpGMG1iS0xq?=
+ =?utf-8?B?UzBuai83TUxlZ3BvMHA0ZHl0U1dTTTVFWGJQYlNtbzd5dVBIbkt5MEdpUFRv?=
+ =?utf-8?B?RTN1RGpzRkNSNGZoQ2EydExGWXV5Zlh5blo0Zjg5MklVcFlIV2F4a0lNYm1z?=
+ =?utf-8?B?ZStVUWpJQ0xtYVpZVnJpeElEbjFwRmdDMU1OazNlOTlmdkx6Q0s3QWxHUGkx?=
+ =?utf-8?B?U21VZFM5cjF6OHNDS1BLRHRtQklVRy9QZW8rc0NUcFZ5YU9XNDlUU1RkTWpG?=
+ =?utf-8?B?WDViSVdORm5sWmhtUkg1YW9BMC9YNFNJRW5CT2NoY1BIcDVPTkZ3cVE3MFpN?=
+ =?utf-8?B?MmZydkRLaXJadnBneU42QWpSNjBaMm1JZEhCMVNBZENkM0RHMDVQem5Kb2FE?=
+ =?utf-8?B?TU9wbzBEMCtaVDVlVks5TEZuaUtZQTRRN2poeGZjWFhaalByd2Rvb0lhWkZJ?=
+ =?utf-8?B?Ty94alI1VjlndG5uemU0ZWhiVllTZlFiQlQ2TkVLTURBQzFmak9sd1JpemdF?=
+ =?utf-8?B?NHNTM1hqVlFXcnZvL1hNbEdPaGVPaUlzRVg3K2RGQ0p0b25VM2FBVzZIQ25o?=
+ =?utf-8?B?ZTNDb2ZON0FZeDIrRE9lbjN4YllEdDJMaFVxbmxHZW43UjAxMEhvQWZaUllL?=
+ =?utf-8?B?bEhUWHhaNzlkWk9JdmVNTXdlMTlRam1XM0ZuVW1OUnBEZ2c9PQ==?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(1800799024)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 20:55:55.7665 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 783aeebe-2aa1-46b6-6755-08dcf212c20d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7C.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8231
+Received-SPF: permerror client-ip=40.107.236.46;
+ envelope-from=Stewart.Hildebrand@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-1.699, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,527 +162,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000034382062502cf65
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/16/24 02:28, Jiqian Chen wrote:
+> In PVH dom0, when passthrough a device to domU, QEMU code
+> xen_pt_realize->xc_physdev_map_pirq wants to use gsi, but in current codes
+> the gsi number is got from file /sys/bus/pci/devices/<sbdf>/irq, that is
+> wrong, because irq is not equal with gsi, they are in different spaces, so
+> pirq mapping fails.
+> 
+> To solve above problem, use new interface of Xen, xc_pcidev_get_gsi to get
+> gsi and use xc_physdev_map_pirq_gsi to map pirq when dom0 is PVH.
+> 
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+> Signed-off-by: Huang Rui <ray.huang@amd.com>
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+> ---
+> Hi All,
+> This is v8 to support passthrough on Xen when dom0 is PVH.
+> v7->v8 change:
+> * Since xc_physdev_gsi_from_dev was renamed to xc_pcidev_get_gsi, changed it.
+> * Added xen_run_qemu_on_hvm to check if Qemu run on PV dom0, if not use xc_physdev_map_pirq_gsi to map pirq.
+> * Used CONFIG_XEN_CTRL_INTERFACE_VERSION to wrap the new part for compatibility.
+> * Added "#define DOMID_RUN_QEMU 0" to represent the id of domain that Qemu run on.
+> 
+> 
+> Best regards,
+> Jiqian Chen
+> 
+> 
+> 
+> v6->v7 changes:
+> * Because the function of obtaining gsi was changed on the kernel and Xen side. Changed to use
+>   xc_physdev_gsi_from_dev, that requires passing in sbdf instead of irq.
+> 
+> v5->v6 changes:
+> * Because the function of obtaining gsi was changed on the kernel and Xen side. Changed to use
+>   xc_physdev_gsi_from_irq, instead of gsi sysfs.
+> * Since function changed, removed the Review-by of Stefano.
+> 
+> v4->v5 changes:
+> * Added Review-by Stefano.
+> 
+> v3->v4 changes:
+> * Added gsi into struct XenHostPCIDevice and used gsi number that read from gsi sysfs
+>   if it exists, if there is no gsi sysfs, still use irq.
+> 
+> v2->v3 changes:
+> * Due to changes in the implementation of the second patch on kernel side(that adds
+>   a new sysfs for gsi instead of a new syscall), so read gsi number from the sysfs of gsi.
+> 
+> v1 and v2:
+> We can record the relation between gsi and irq, then when userspace(qemu) want
+> to use gsi, we can do a translation. The third patch of kernel(xen/privcmd: Add new syscall
+> to get gsi from irq) records all the relations in acpi_register_gsi_xen_pvh() when dom0
+> initialize pci devices, and provide a syscall for userspace to get the gsi from irq. The
+> third patch of xen(tools: Add new function to get gsi from irq) add a new function
+> xc_physdev_gsi_from_irq() to call the new syscall added on kernel side.
+> And then userspace can use that function to get gsi. Then xc_physdev_map_pirq() will success.
+> 
+> Issues we encountered:
+> 1. failed to map pirq for gsi
+> Problem: qemu will call xc_physdev_map_pirq() to map a passthrough device's gsi to pirq in
+> function xen_pt_realize(). But failed.
+> 
+> Reason: According to the implement of xc_physdev_map_pirq(), it needs gsi instead of irq,
+> but qemu pass irq to it and treat irq as gsi, it is got from file
+> /sys/bus/pci/devices/xxxx:xx:xx.x/irq in function xen_host_pci_device_get(). But actually
+> the gsi number is not equal with irq. They are in different space.
+> ---
+>  hw/xen/xen_pt.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  hw/xen/xen_pt.h |  1 +
+>  2 files changed, 45 insertions(+)
+> 
+> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+> index 3635d1b39f79..7f8139d20915 100644
+> --- a/hw/xen/xen_pt.c
+> +++ b/hw/xen/xen_pt.c
+> @@ -766,6 +766,41 @@ static void xen_pt_destroy(PCIDevice *d) {
+>  }
+>  /* init */
+>  
+> +#define PCI_SBDF(seg, bus, dev, func) \
+> +            ((((uint32_t)(seg)) << 16) | \
+> +            (PCI_BUILD_BDF(bus, PCI_DEVFN(dev, func))))
 
-HI Gustavo,
+Nit: This macro looks generic and useful. Would it be better defined in
+include/hw/pci/pci.h?
 
-On Wed, Oct 16, 2024 at 10:01=E2=80=AFPM Gustavo Romero <gustavo.romero@lin=
-aro.org>
-wrote:
+> +
+> +#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
+> +static bool xen_run_qemu_on_hvm(void)
 
-> Hi Salil,
->
-> On 10/14/24 16:22, Salil Mehta wrote:
-> > Certain CPU architecture specifications [1][2][3] prohibit changes to C=
-PU
-> > presence after the kernel has booted. This limitation exists because
-> many system
-> > initializations rely on the exact CPU count at boot time and do not
-> expect it to
-> > change later. For example, components like interrupt controllers, which
-> are
-> > closely tied to CPUs, or various per-CPU features, may not support
-> configuration
-> > changes once the kernel has been initialized. This presents a challenge
-> for
-> > virtualization features such as vCPU hotplug.
-> >
-> > To address this issue, introduce an `is_enabled` state in the
-> `AcpiCpuStatus`,
-> > which reflects whether a vCPU has been hot-plugged or hot-unplugged in
-> QEMU,
-> > marking it as (un)available in the Guest Kernel. The `is_present` state
-> should
-> > be set based on the `acpi_persistent` flag. In cases where unplugged
-> vCPUs need
-> > to be deliberately simulated in the ACPI to maintain a persistent view
-> of vCPUs,
-> > this flag ensures the guest kernel continues to see those vCPUs.
-> >
-> > Additionally, introduce an `acpi_persistent` property that can be used =
-to
-> > initialize the ACPI vCPU presence state accordingly. Architectures
-> requiring
-> > ACPI to expose a persistent view of vCPUs can override its default
-> value. Refer
-> > to the patch-set implelenting vCPU hotplug support for ARM for more
-> details on
->
-> nit: implementation
->
+This function name seems to imply "is qemu running on HVM?", but I think
+the question we're really trying to answer is whether the pcidev needs
+a GSI mapped. How about calling the function "xen_pt_needs_gsi" or
+similar?
 
-Thanks
+> +{
+> +    xc_domaininfo_t info;
+> +
+> +    if (!xc_domain_getinfo_single(xen_xc, DOMID_RUN_QEMU, &info) &&
+> +        (info.flags & XEN_DOMINF_hvm_guest)) {
 
+I think reading /sys/hypervisor/guest_type would allow you to get the
+same information without another hypercall.
 
->
->
-> Cheers,
-> Gustavo
->
-> > its usage.
-> >
-> > References:
-> > [1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Virt
-> CPU Hotplug on
-> >      architectures that don=E2=80=99t Support CPU Hotplug (like ARM64)
-> >      a. Kernel Link:
-> https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf
-> >      b. Qemu Link:
-> https://kvm-forum.qemu.org/2023/Challenges_Revisited_in_Supporting_Virt_C=
-PU_Hotplug_-__ii0iNb3.pdf
-> > [2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU
-> Hotplug on
-> >      SoC Based Systems (like ARM64)
-> >      Link: https://kvmforum2020.sched.com/event/eE4m
-> > [3] Check comment 5 in the bugzilla entry
-> >      Link: https://bugzilla.tianocore.org/show_bug.cgi?id=3D4481#c5
-> >
-> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> > ---
-> >   cpu-target.c          |  1 +
-> >   hw/acpi/cpu.c         | 35 ++++++++++++++++++++++++++++++++++-
-> >   include/hw/acpi/cpu.h | 21 +++++++++++++++++++++
-> >   include/hw/core/cpu.h | 21 +++++++++++++++++++++
-> >   4 files changed, 77 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/cpu-target.c b/cpu-target.c
-> > index 499facf774..c8a29ab495 100644
-> > --- a/cpu-target.c
-> > +++ b/cpu-target.c
-> > @@ -200,6 +200,7 @@ static Property cpu_common_props[] =3D {
-> >        */
-> >       DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
-> >                        MemoryRegion *),
-> > +    DEFINE_PROP_BOOL("acpi-persistent", CPUState, acpi_persistent,
-> false),
-> >   #endif
-> >       DEFINE_PROP_END_OF_LIST(),
-> >   };
-> > diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-> > index 5cb60ca8bc..083c4010c2 100644
-> > --- a/hw/acpi/cpu.c
-> > +++ b/hw/acpi/cpu.c
-> > @@ -225,7 +225,40 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object
-> *owner,
-> >       state->dev_count =3D id_list->len;
-> >       state->devs =3D g_new0(typeof(*state->devs), state->dev_count);
-> >       for (i =3D 0; i < id_list->len; i++) {
-> > -        state->devs[i].cpu =3D  CPU(id_list->cpus[i].cpu);
-> > +        struct CPUState *cpu =3D CPU(id_list->cpus[i].cpu);
-> > +        /*
-> > +         * In most architectures, CPUs that are marked as ACPI
-> 'present' are
-> > +         * also ACPI 'enabled' by default. These states remain
-> consistent at
-> > +         * both the QOM and ACPI levels.
-> > +         */
-> > +        if (cpu) {
-> > +            state->devs[i].is_enabled =3D true;
-> > +            state->devs[i].is_present =3D true;
-> > +            state->devs[i].cpu =3D cpu;
-> > +        } else {
-> > +            state->devs[i].is_enabled =3D false;
-> > +            /*
-> > +             * In some architectures, even 'unplugged' or 'disabled'
-> QOM CPUs
-> > +             * may be exposed as ACPI 'present.' This approach provide=
-s
-> a
-> > +             * persistent view of the vCPUs to the guest kernel. This
-> could be
-> > +             * due to an architectural constraint that requires every
-> per-CPU
-> > +             * component to be present at boot time, meaning the exact
-> count of
-> > +             * vCPUs must be known and cannot be altered after the
-> kernel has
-> > +             * booted. As a result, the vCPU states at the QOM and ACP=
-I
-> levels
-> > +             * might become inconsistent. However, in such cases, the
-> presence
-> > +             * of vCPUs has been deliberately simulated at the ACPI
-> level.
-> > +             */
-> > +            if (acpi_persistent_cpu(first_cpu)) {
-> > +                state->devs[i].is_present =3D true;
-> > +                /*
-> > +                 * `CPUHotplugState::AcpiCpuStatus::cpu` becomes
-> insignificant
-> > +                 * in this case
-> > +                 */
-> > +            } else {
-> > +                state->devs[i].is_present =3D false;
-> > +                state->devs[i].cpu =3D cpu;
-> > +            }
-> > +        }
-> >           state->devs[i].arch_id =3D id_list->cpus[i].arch_id;
-> >       }
-> >       memory_region_init_io(&state->ctrl_reg, owner, &cpu_hotplug_ops,
-> state,
-> > diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-> > index 32654dc274..bd3f9973c9 100644
-> > --- a/include/hw/acpi/cpu.h
-> > +++ b/include/hw/acpi/cpu.h
-> > @@ -26,6 +26,8 @@ typedef struct AcpiCpuStatus {
-> >       uint64_t arch_id;
-> >       bool is_inserting;
-> >       bool is_removing;
-> > +    bool is_present;
-> > +    bool is_enabled;
-> >       bool fw_remove;
-> >       uint32_t ost_event;
-> >       uint32_t ost_status;
-> > @@ -75,4 +77,23 @@ extern const VMStateDescription vmstate_cpu_hotplug;
-> >       VMSTATE_STRUCT(cpuhp, state, 1, \
-> >                      vmstate_cpu_hotplug, CPUHotplugState)
-> >
-> > +/**
-> > + * acpi_persistent_cpu:
-> > + * @cpu: The vCPU to check
-> > + *
-> > + * Checks if the vCPU state should always be reflected as *present* vi=
-a
-> ACPI
-> > + * to the Guest. By default, this is False on all architectures and ha=
-s
-> to be
-> > + * explicity set during initialization.
-> > + *
-> > + * Returns: True if it is ACPI 'persistent' CPU
-> > + *
-> > + */
-> > +static inline bool acpi_persistent_cpu(CPUState *cpu)
-> > +{
-> > +    /*
-> > +     * returns if 'Presence' of the vCPU is persistent and should be
-> simulated
-> > +     * via ACPI even after vCPUs have been unplugged in QOM
-> > +     */
-> > +    return cpu && cpu->acpi_persistent;
-> > +}
-> >   #endif
-> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> > index 04e9ad4996..299e96c45b 100644
-> > --- a/include/hw/core/cpu.h
-> > +++ b/include/hw/core/cpu.h
-> > @@ -542,6 +542,27 @@ struct CPUState {
-> >       CPUPluginState *plugin_state;
-> >   #endif
-> >
-> > +    /*
-> > +     * To implement the vCPU hotplug feature (which simulates CPU
-> hotplug
-> > +     * behavior), we need to dynamically create and destroy QOM vCPU
-> objects,
-> > +     * and (de)associate them with pre-existing KVM vCPUs while
-> (un)parking the
-> > +     * KVM vCPU context. One challenge is ensuring that these
-> dynamically
-> > +     * appearing or disappearing QOM vCPU objects are accurately
-> reflected
-> > +     * through ACPI to the Guest Kernel. Due to architectural
-> constraints,
-> > +     * changing the number of vCPUs after the guest kernel has booted
-> may not
-> > +     * always be possible.
-> > +     *
-> > +     * In certain architectures, to provide the guest kernel with a
-> *persistent*
-> > +     * view of vCPU presence, even when the QOM does not have a
-> corresponding
-> > +     * vCPU object, ACPI may simulate the presence of vCPUs by marking
-> them as
-> > +     * ACPI-disabled. This is achieved by setting `_STA.PRES=3DTrue` a=
-nd
-> > +     * `_STA.Ena=3DFalse` for unplugged vCPUs in QEMU's QOM.
-> > +     *
-> > +     * By default, this flag is set to `FALSE`, and it must be
-> explicitly set
-> > +     * to `TRUE` for architectures like ARM.
-> > +     */
-> > +    bool acpi_persistent;
-> > +
-> >       /* TODO Move common fields from CPUArchState here. */
-> >       int cpu_index;
-> >       int cluster_index;
->
->
+> +        return true;
+> +    }
+> +
+> +    return false;
+> +}
+> +
+> +static int xen_map_pirq_for_gsi(PCIDevice *d, int *pirq)
 
---000000000000034382062502cf65
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Nit: s/xen_/xen_pt_/
 
-<div dir=3D"ltr"><div dir=3D"ltr">HI Gustavo,</div><br><div class=3D"gmail_=
-quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 16, 2024 at 10:01=
-=E2=80=AFPM Gustavo Romero &lt;<a href=3D"mailto:gustavo.romero@linaro.org"=
->gustavo.romero@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">Hi Salil,<br>
-<br>
-On 10/14/24 16:22, Salil Mehta wrote:<br>
-&gt; Certain CPU architecture specifications [1][2][3] prohibit changes to =
-CPU<br>
-&gt; presence after the kernel has booted. This limitation exists because m=
-any system<br>
-&gt; initializations rely on the exact CPU count at boot time and do not ex=
-pect it to<br>
-&gt; change later. For example, components like interrupt controllers, whic=
-h are<br>
-&gt; closely tied to CPUs, or various per-CPU features, may not support con=
-figuration<br>
-&gt; changes once the kernel has been initialized. This presents a challeng=
-e for<br>
-&gt; virtualization features such as vCPU hotplug.<br>
-&gt; <br>
-&gt; To address this issue, introduce an `is_enabled` state in the `AcpiCpu=
-Status`,<br>
-&gt; which reflects whether a vCPU has been hot-plugged or hot-unplugged in=
- QEMU,<br>
-&gt; marking it as (un)available in the Guest Kernel. The `is_present` stat=
-e should<br>
-&gt; be set based on the `acpi_persistent` flag. In cases where unplugged v=
-CPUs need<br>
-&gt; to be deliberately simulated in the ACPI to maintain a persistent view=
- of vCPUs,<br>
-&gt; this flag ensures the guest kernel continues to see those vCPUs.<br>
-&gt; <br>
-&gt; Additionally, introduce an `acpi_persistent` property that can be used=
- to<br>
-&gt; initialize the ACPI vCPU presence state accordingly. Architectures req=
-uiring<br>
-&gt; ACPI to expose a persistent view of vCPUs can override its default val=
-ue. Refer<br>
-&gt; to the patch-set implelenting vCPU hotplug support for ARM for more de=
-tails on<br>
-<br>
-nit: implementation<br></blockquote><div><br></div><div>Thanks</div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-Cheers,<br>
-Gustavo<br>
-<br>
-&gt; its usage.<br>
-&gt; <br>
-&gt; References:<br>
-&gt; [1] KVMForum 2023 Presentation: Challenges Revisited in Supporting Vir=
-t CPU Hotplug on<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 architectures that don=E2=80=99t Support CPU Hotpl=
-ug (like ARM64)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 a. Kernel Link: <a href=3D"https://kvm-forum.qemu.=
-org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf" rel=3D"noreferrer" target=3D"_b=
-lank">https://kvm-forum.qemu.org/2023/KVM-forum-cpu-hotplug_7OJ1YyJ.pdf</a>=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 b. Qemu Link:=C2=A0 <a href=3D"https://kvm-forum.q=
-emu.org/2023/Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3=
-.pdf" rel=3D"noreferrer" target=3D"_blank">https://kvm-forum.qemu.org/2023/=
-Challenges_Revisited_in_Supporting_Virt_CPU_Hotplug_-__ii0iNb3.pdf</a><br>
-&gt; [2] KVMForum 2020 Presentation: Challenges in Supporting Virtual CPU H=
-otplug on<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 SoC Based Systems (like ARM64)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 Link: <a href=3D"https://kvmforum2020.sched.com/ev=
-ent/eE4m" rel=3D"noreferrer" target=3D"_blank">https://kvmforum2020.sched.c=
-om/event/eE4m</a><br>
-&gt; [3] Check comment 5 in the bugzilla entry<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 Link: <a href=3D"https://bugzilla.tianocore.org/sh=
-ow_bug.cgi?id=3D4481#c5" rel=3D"noreferrer" target=3D"_blank">https://bugzi=
-lla.tianocore.org/show_bug.cgi?id=3D4481#c5</a><br>
-&gt; <br>
-&gt; Signed-off-by: Salil Mehta &lt;<a href=3D"mailto:salil.mehta@huawei.co=
-m" target=3D"_blank">salil.mehta@huawei.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0cpu-target.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 +=
-<br>
-&gt;=C2=A0 =C2=A0hw/acpi/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 35 ++++++=
-++++++++++++++++++++++++++++-<br>
-&gt;=C2=A0 =C2=A0include/hw/acpi/cpu.h | 21 +++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0include/hw/core/cpu.h | 21 +++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A04 files changed, 77 insertions(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/cpu-target.c b/cpu-target.c<br>
-&gt; index 499facf774..c8a29ab495 100644<br>
-&gt; --- a/cpu-target.c<br>
-&gt; +++ b/cpu-target.c<br>
-&gt; @@ -200,6 +200,7 @@ static Property cpu_common_props[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_LINK(&quot;memory&quot;, CPUStat=
-e, memory, TYPE_MEMORY_REGION,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 MemoryRegion *),<br>
-&gt; +=C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;acpi-persistent&quot;, CPUState,=
- acpi_persistent, false),<br>
-&gt;=C2=A0 =C2=A0#endif<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_END_OF_LIST(),<br>
-&gt;=C2=A0 =C2=A0};<br>
-&gt; diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c<br>
-&gt; index 5cb60ca8bc..083c4010c2 100644<br>
-&gt; --- a/hw/acpi/cpu.c<br>
-&gt; +++ b/hw/acpi/cpu.c<br>
-&gt; @@ -225,7 +225,40 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object=
- *owner,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;dev_count =3D id_list-&gt;len;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;devs =3D g_new0(typeof(*state-&gt;=
-devs), state-&gt;dev_count);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; id_list-&gt;len; i++) {=
-<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].cpu =3D=C2=A0 CPU(id_li=
-st-&gt;cpus[i].cpu);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct CPUState *cpu =3D CPU(id_list-&gt;=
-cpus[i].cpu);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* In most architectures, CPUs that =
-are marked as ACPI &#39;present&#39; are<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* also ACPI &#39;enabled&#39; by de=
-fault. These states remain consistent at<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* both the QOM and ACPI levels.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].is_enable=
-d =3D true;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].is_presen=
-t =3D true;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].cpu =3D c=
-pu;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].is_enable=
-d =3D false;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* In some architectur=
-es, even &#39;unplugged&#39; or &#39;disabled&#39; QOM CPUs<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* may be exposed as A=
-CPI &#39;present.&#39; This approach provides a<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* persistent view of =
-the vCPUs to the guest kernel. This could be<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* due to an architect=
-ural constraint that requires every per-CPU<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* component to be pre=
-sent at boot time, meaning the exact count of<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* vCPUs must be known=
- and cannot be altered after the kernel has<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* booted. As a result=
-, the vCPU states at the QOM and ACPI levels<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might become incons=
-istent. However, in such cases, the presence<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* of vCPUs has been d=
-eliberately simulated at the ACPI level.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (acpi_persistent_cpu(fir=
-st_cpu)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;dev=
-s[i].is_present =3D true;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* `CPUH=
-otplugState::AcpiCpuStatus::cpu` becomes insignificant<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* in th=
-is case<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;dev=
-s[i].is_present =3D false;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;dev=
-s[i].cpu =3D cpu;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;devs[i].arch_id =3D =
-id_list-&gt;cpus[i].arch_id;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_init_io(&amp;state-&gt;ctrl_re=
-g, owner, &amp;cpu_hotplug_ops, state,<br>
-&gt; diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h<br>
-&gt; index 32654dc274..bd3f9973c9 100644<br>
-&gt; --- a/include/hw/acpi/cpu.h<br>
-&gt; +++ b/include/hw/acpi/cpu.h<br>
-&gt; @@ -26,6 +26,8 @@ typedef struct AcpiCpuStatus {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint64_t arch_id;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool is_inserting;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool is_removing;<br>
-&gt; +=C2=A0 =C2=A0 bool is_present;<br>
-&gt; +=C2=A0 =C2=A0 bool is_enabled;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool fw_remove;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t ost_event;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t ost_status;<br>
-&gt; @@ -75,4 +77,23 @@ extern const VMStateDescription vmstate_cpu_hotplug=
-;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0VMSTATE_STRUCT(cpuhp, state, 1, \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 vmstate_cpu_hotplug, CPUHotplugState)<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +/**<br>
-&gt; + * acpi_persistent_cpu:<br>
-&gt; + * @cpu: The vCPU to check<br>
-&gt; + *<br>
-&gt; + * Checks if the vCPU state should always be reflected as *present* v=
-ia ACPI<br>
-&gt; + * to the Guest. By default, this is False on all architectures and h=
-as to be<br>
-&gt; + * explicity set during initialization.<br>
-&gt; + *<br>
-&gt; + * Returns: True if it is ACPI &#39;persistent&#39; CPU<br>
-&gt; + *<br>
-&gt; + */<br>
-&gt; +static inline bool acpi_persistent_cpu(CPUState *cpu)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* returns if &#39;Presence&#39; of the vCPU is pe=
-rsistent and should be simulated<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* via ACPI even after vCPUs have been unplugged i=
-n QOM<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 return cpu &amp;&amp; cpu-&gt;acpi_persistent;<br>
-&gt; +}<br>
-&gt;=C2=A0 =C2=A0#endif<br>
-&gt; diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h<br>
-&gt; index 04e9ad4996..299e96c45b 100644<br>
-&gt; --- a/include/hw/core/cpu.h<br>
-&gt; +++ b/include/hw/core/cpu.h<br>
-&gt; @@ -542,6 +542,27 @@ struct CPUState {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0CPUPluginState *plugin_state;<br>
-&gt;=C2=A0 =C2=A0#endif<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* To implement the vCPU hotplug feature (which si=
-mulates CPU hotplug<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* behavior), we need to dynamically create and de=
-stroy QOM vCPU objects,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* and (de)associate them with pre-existing KVM vC=
-PUs while (un)parking the<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* KVM vCPU context. One challenge is ensuring tha=
-t these dynamically<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* appearing or disappearing QOM vCPU objects are =
-accurately reflected<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* through ACPI to the Guest Kernel. Due to archit=
-ectural constraints,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* changing the number of vCPUs after the guest ke=
-rnel has booted may not<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* always be possible.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* In certain architectures, to provide the guest =
-kernel with a *persistent*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* view of vCPU presence, even when the QOM does n=
-ot have a corresponding<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* vCPU object, ACPI may simulate the presence of =
-vCPUs by marking them as<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* ACPI-disabled. This is achieved by setting `_ST=
-A.PRES=3DTrue` and<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* `_STA.Ena=3DFalse` for unplugged vCPUs in QEMU&=
-#39;s QOM.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* By default, this flag is set to `FALSE`, and it=
- must be explicitly set<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* to `TRUE` for architectures like ARM.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 bool acpi_persistent;<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* TODO Move common fields from CPUArchState=
- here. */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int cpu_index;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int cluster_index;<br>
-<br>
-</blockquote></div></div>
+> +{
+> +    int gsi;
+> +    XenPCIPassthroughState *s = XEN_PT_DEVICE(d);
+> +
+> +    gsi = xc_pcidev_get_gsi(xen_xc,
+> +                            PCI_SBDF(s->real_device.domain,
+> +                                     s->real_device.bus,
+> +                                     s->real_device.dev,
+> +                                     s->real_device.func));
+> +    if (gsi >= 0) {
+> +        return xc_physdev_map_pirq_gsi(xen_xc, xen_domid, gsi, pirq);
+> +    }
+> +
+> +    return gsi;
+> +}
+> +#endif
+> +
+>  static void xen_pt_realize(PCIDevice *d, Error **errp)
+>  {
+>      ERRP_GUARD();
+> @@ -847,7 +882,16 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
+>          goto out;
+>      }
+>  
+> +#if CONFIG_XEN_CTRL_INTERFACE_VERSION >= 42000
+> +    if (xen_run_qemu_on_hvm()) {
+> +        rc = xen_map_pirq_for_gsi(d, &pirq);
+> +    } else {
+> +        rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
+> +    }
+> +#else
+>      rc = xc_physdev_map_pirq(xen_xc, xen_domid, machine_irq, &pirq);
+> +#endif
+> +
+>      if (rc < 0) {
+>          XEN_PT_ERR(d, "Mapping machine irq %u to pirq %i failed, (err: %d)\n",
+>                     machine_irq, pirq, errno);
+> diff --git a/hw/xen/xen_pt.h b/hw/xen/xen_pt.h
+> index 095a0f0365d4..a08b45b7fbae 100644
+> --- a/hw/xen/xen_pt.h
+> +++ b/hw/xen/xen_pt.h
+> @@ -36,6 +36,7 @@ void xen_pt_log(const PCIDevice *d, const char *f, ...) G_GNUC_PRINTF(2, 3);
+>  #  define XEN_PT_LOG_CONFIG(d, addr, val, len)
+>  #endif
+>  
+> +#define DOMID_RUN_QEMU 0
+>  
+>  /* Helper */
+>  #define XEN_PFN(x) ((x) >> XC_PAGE_SHIFT)
 
---000000000000034382062502cf65--
 
