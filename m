@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FEF5D0E6C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1242BD0E6C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2wPq-0002IW-Ed; Mon, 21 Oct 2024 13:42:05 -0400
+	id 1t2wW3-0004Fz-FK; Mon, 21 Oct 2024 13:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wPc-0002HD-Ga
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:41:51 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <christophe.lyon@linaro.org>)
+ id 1t2wW1-0004AS-4s
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:48:25 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2wPZ-0005aD-Aa
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:41:46 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2e2eb9dde40so3806228a91.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:41:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <christophe.lyon@linaro.org>)
+ id 1t2wVz-0006DP-7L
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:48:24 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-6db20e22c85so40498067b3.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729532503; x=1730137303; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BNXZBs6f6NVmwJIAqcqK7SQ9wLULaON6OpQnkUk7TFo=;
- b=sJ8qd/HYiGdu/fRm2aO5B1FUYg9yFgR5rJndx+XIA71RVDMjdPXlh5q3xGXSfq4oZw
- +VhqgfE9/vCjVipl3ChkNpzmqXk40epXZ4OrgWJ0GFJKrFgodRnFrq3OU/VVB9s/yAhe
- u8FAclHUhY27oM+TV1RHuDTxGhVuqA2Dd4WBhGh+5bsE1B6zv05APfKhw+5OgxZgJPfG
- uIrVCRYRofRJXkiQxqO9uNZG6DCqtsKixO+l5MOJZE/B6e3Iba8b5ebukThHtCcN4KPo
- wHeROVCm26NOqZumF1kt7mWAkVhpxog06Y4C/MEZ8SqJud9DGtpMlEVu5p02dfNbiwRK
- Fq0g==
+ d=linaro.org; s=google; t=1729532901; x=1730137701; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FE3GXLE/lB/LoWlxSBqXd6aROfRo6Djg7BwdUk4j77Q=;
+ b=axMHU7MVTzGnbXBBWUijl3TTkmspFEgujFdz4ovNE7EsxRjmlyxanZMf/9dNdMlkdv
+ GdaQ/DLmnN1AORzBC7gvbNN2pL9cOGY1BO0M9jNgUTypzifibdYZG22Pim/dRO8qsadD
+ oerbvcZlHX8Vh43LDF0nY2oYMeArwd/ravpGMSnJ2oawB3ZEe7zz+UpinZjvJEKjV+Gw
+ PFqllZGmaRarU6ZskpyVrHsYs9GhQNJ/DjDHncB65AZ1nI9HQtWC75MqnHq4Sw4/fDsO
+ MxPHStoNoPGk542ysLS5zVVRgCCRWvDQubOtELCMFeQbKtKLBIeFEmoDI5+fOtvmfpPq
+ J0eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729532503; x=1730137303;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BNXZBs6f6NVmwJIAqcqK7SQ9wLULaON6OpQnkUk7TFo=;
- b=oWGM5CjG6BF6fYeRSs4cSJe/J8Dci21lpdAB3Rza4EPo1dtl2qW+S5JjTelN5XJMXG
- c7gsyj8Rh0e+5KBq52bEEqvg+NIfANYdxFBDn3CLN/d1VOwrtncxSSfRzxBxc5+BOOJx
- sQZjkIUNrzW+7IqkEGq+B5XRi+SZFcqkEfccoDgtWassDL2MccL2M2u6sNtWv0aeOu/q
- V8BtfdeaFtwusop0ZhhUJWdy7nkIdh3Dvaw5FWxWAQ1PbgoIvLV8Lly1BIljxlKD+9Vw
- yNYvSUJS1pgJIfzEv+JKMH8Uif01W7gwQxxGsY5Rv1BkO9OOCp9u6unrmAojckMpXrHG
- 86zQ==
+ d=1e100.net; s=20230601; t=1729532901; x=1730137701;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FE3GXLE/lB/LoWlxSBqXd6aROfRo6Djg7BwdUk4j77Q=;
+ b=QLLp2YbI96ZxN7uJlGKkYC4IzN61y7FZJpzNnZ1Zqy3HlYKgI0CUMOORRjlReLg6ND
+ aMZqODiV3i3vdDCJFjKqtw2N7m5/OXY50tg6HEdm63GzOOQaFpCzqlAMKcONcCm3VYbV
+ aCOH7bZLMJ+ssQ9W9NZUBP+DN0imOZ7MaL7Dv/VEKi+Ak5sniXCgBQwkSEy75gzP7mXr
+ XFrwR0ZO4zE/33BOt1jDVfS6QTr43rbpnjAzKQ81ABkjad5eQ5XNvQV0GMo9ZVTAZzr5
+ ExTSG543xmmNDnfIzJpMvYE1d8T8JGx5JtjCGaHnP9b8cw0b10tMOWzj7JUWSdREibpR
+ 9BRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXR3HeqEKw+mvvaILB1h0hEpShPNvZSoQo/eR90b4BHXk9oDngMlA3De1sN0GfDkAIm2VU0pYf2fGYu@nongnu.org
-X-Gm-Message-State: AOJu0YyxalEFXzzSiG65kxYPHeB8eltAJrICWWmZcQ5lQbm1nPXAlC6N
- oBvWYWrE9ndKCgsSq0ebrn6A0NtmWH9iFwW9NThjZVCQkHelkFGEaHSARnV6gIQ=
-X-Google-Smtp-Source: AGHT+IG4IEJCmRgUvXdqUmsyBs+8DLgV/+madM+ru0mGJpltXcioxiI2sl9EeCqkP4ectf4jyPIFYg==
-X-Received: by 2002:a17:90b:4b0d:b0:2e2:d434:854c with SMTP id
- 98e67ed59e1d1-2e5616e6688mr14817164a91.2.1729532503506; 
- Mon, 21 Oct 2024 10:41:43 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e5ad25cb15sm4146245a91.11.2024.10.21.10.41.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 10:41:43 -0700 (PDT)
-Message-ID: <34df66e6-087d-4e27-9edf-e723db959d43@linaro.org>
-Date: Mon, 21 Oct 2024 10:41:42 -0700
+ AJvYcCVTY1OELCfaVurAxOw9ph7+Zfmdg79J+caRlg/9zrInz5YgZx7M2h+Q2HF+nBSLo5uIVWb1NBBzvGPy@nongnu.org
+X-Gm-Message-State: AOJu0Yz+Ctkemx0uWv6oNM3Dpg9Dh0v3TCJkwxGWky8zP++JaBqKej0J
+ V2IwuD2v1/bwya8kKAfEQhoVamf1HVAa+V1i4VTpndg5R5wrLuL8bsutaBy19/egYsjQ31fLG0r
+ 7sA63QWKCSBKuOaS58paSgmAYNqx1TNsilrHifY+yhO9XKneL
+X-Google-Smtp-Source: AGHT+IEXwRtxQ5FLOThahwuYjMysOrVkZDRk+MG6nvTOMMGYys+retLDNhNL1Xo36U3GV8UdQ/pnMp/vS8Cw0c+4e6k=
+X-Received: by 2002:a05:690c:4c0f:b0:6dd:d119:58dd with SMTP id
+ 00721157ae682-6e5bfc3c1bbmr122256737b3.16.1729532901429; Mon, 21 Oct 2024
+ 10:48:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/14] disas/riscv: Fix vsetivli disassembly
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- zhiwei_liu@linux.alibaba.com
-References: <20241016193140.2206352-1-richard.henderson@linaro.org>
- <20241016193140.2206352-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241016193140.2206352-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+References: <20241018130852.931509-1-peter.maydell@linaro.org>
+ <5135e8bb-945a-4385-88c0-1b79208e8d2b@linaro.org>
+In-Reply-To: <5135e8bb-945a-4385-88c0-1b79208e8d2b@linaro.org>
+From: Christophe Lyon <christophe.lyon@linaro.org>
+Date: Mon, 21 Oct 2024 19:48:09 +0200
+Message-ID: <CAPS5khZRQ+43n-N3iyhCNx+EXovWcFAEXEKVKf0RRcv7w8YAbQ@mail.gmail.com>
+Subject: Re: [PATCH v4] scripts/symlink-install-tree.py: Fix MESONINTROSPECT
+ parsing
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Content-Type: multipart/alternative; boundary="00000000000037ad0a06250042dd"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=christophe.lyon@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,44 +92,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/24 12:31, Richard Henderson wrote:
-> The first immediate field is unsigned, whereas operand_vimm
-> extracts a signed value.  There is no need to mask the result
-> with 'u'; just print the immediate with 'i'.
-> 
-> Fixes: 07f4964d178 ("disas/riscv.c: rvv: Add disas support for vector instructions")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   disas/riscv.h | 2 +-
->   disas/riscv.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/disas/riscv.h b/disas/riscv.h
-> index 16a08e4895..0d1f89ce8a 100644
-> --- a/disas/riscv.h
-> +++ b/disas/riscv.h
-> @@ -290,7 +290,7 @@ enum {
->   #define rv_fmt_fd_vs2                 "O\t3,F"
->   #define rv_fmt_vd_vm                  "O\tDm"
->   #define rv_fmt_vsetvli                "O\t0,1,v"
-> -#define rv_fmt_vsetivli               "O\t0,u,v"
-> +#define rv_fmt_vsetivli               "O\t0,i,v"
->   #define rv_fmt_rs1_rs2_zce_ldst       "O\t2,i(1)"
->   #define rv_fmt_push_rlist             "O\tx,-i"
->   #define rv_fmt_pop_rlist              "O\tx,i"
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 5965574d87..fc0331b90b 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -4808,7 +4808,7 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
->           break;
->       case rv_codec_vsetivli:
->           dec->rd = operand_rd(inst);
-> -        dec->imm = operand_vimm(inst);
-> +        dec->imm = extract32(inst, 15, 5);
->           dec->vzimm = operand_vzimm10(inst);
->           break;
->       case rv_codec_zcb_lb:
+--00000000000037ad0a06250042dd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi,
+
+
+
+Le lun. 21 oct. 2024, 19:27, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+a =C3=A9crit :
+
+> On 10/18/24 06:08, Peter Maydell wrote:
+> > From: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >
+> > The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
+> > must be parsed with shlex.split().  Otherwise the script will fail if
+> > the build directory has a character like "~" in it.
+> >
+> > Note: this fix cannot be backported directly to any stable branch
+> > that doesn't require Meson version 1.4.0 or better; otherwise it will
+> > work OK on Linux but will break on Windows hosts.
+> >
+> > (Unfortunately, Meson prior to version 1.4.0 was inconsistent between
+> > host OSes about how it quoted arguments, and used a different quoting
+> > process on Windows hosts.  Our current git trunk already requires
+> > 1.5.0 as of commit 07f0d32641e ("Require meson version 1.5.0"), but
+> > the stable branches are still on older Meson.)
+> >
+> > Fixes: cf60ccc330 ("cutils: Introduce bundle mechanism")
+> > Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > [PMM: Updated commit message to give all the detail about the
+> > Meson version compability requirements.]
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > This is essentially back to version 1 of Akihiko's patch, now we
+> > have a new enough Meson; I just updated the commit message.
+> >
+> https://patchew.org/QEMU/20230812061540.5398-1-akihiko.odaki@daynix.com/
+> > (I have dropped the various reviewed-by and tested-by headers because
+> > I figured the passage of time was enough to make them moot.)
+> >
+> >   scripts/symlink-install-tree.py | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/scripts/symlink-install-tree.py
+> b/scripts/symlink-install-tree.py
+> > index 8ed97e3c943..b72563895c5 100644
+> > --- a/scripts/symlink-install-tree.py
+> > +++ b/scripts/symlink-install-tree.py
+> > @@ -4,6 +4,7 @@
+> >   import errno
+> >   import json
+> >   import os
+> > +import shlex
+> >   import subprocess
+> >   import sys
+> >
+> > @@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -> str:
+> >       return str(PurePath(d1, *PurePath(d2).parts[1:]))
+> >
+> >   introspect =3D os.environ.get('MESONINTROSPECT')
+> > -out =3D subprocess.run([*introspect.split(' '), '--installed'],
+> > +out =3D subprocess.run([*shlex.split(introspect), '--installed'],
+> >                        stdout=3Dsubprocess.PIPE, check=3DTrue).stdout
+> >   for source, dest in json.loads(out).items():
+> >       bundle_dest =3D destdir_join('qemu-bundle', dest)
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>
+> I confirm this fixes the error when the path to qemu src tree contains '~=
+'.
+>
+
+I confirm this fixes the problem we detected in our CI (where some build
+dirnames have '~'
+
+Thanks
+
+>
+
+--00000000000037ad0a06250042dd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Hi,=C2=A0<div dir=3D"auto"><br></div><br><br><div cl=
+ass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Le lun. 21 oct. 2=
+024, 19:27, Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.=
+org">pierrick.bouvier@linaro.org</a>&gt; a =C3=A9crit=C2=A0:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #cc=
+c solid;padding-left:1ex">On 10/18/24 06:08, Peter Maydell wrote:<br>
+&gt; From: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" ta=
+rget=3D"_blank" rel=3D"noreferrer">akihiko.odaki@daynix.com</a>&gt;<br>
+&gt; <br>
+&gt; The arguments in MESONINTROSPECT are quoted with shlex.quote() so it<b=
+r>
+&gt; must be parsed with shlex.split().=C2=A0 Otherwise the script will fai=
+l if<br>
+&gt; the build directory has a character like &quot;~&quot; in it.<br>
+&gt; <br>
+&gt; Note: this fix cannot be backported directly to any stable branch<br>
+&gt; that doesn&#39;t require Meson version 1.4.0 or better; otherwise it w=
+ill<br>
+&gt; work OK on Linux but will break on Windows hosts.<br>
+&gt; <br>
+&gt; (Unfortunately, Meson prior to version 1.4.0 was inconsistent between<=
+br>
+&gt; host OSes about how it quoted arguments, and used a different quoting<=
+br>
+&gt; process on Windows hosts.=C2=A0 Our current git trunk already requires=
+<br>
+&gt; 1.5.0 as of commit 07f0d32641e (&quot;Require meson version 1.5.0&quot=
+;), but<br>
+&gt; the stable branches are still on older Meson.)<br>
+&gt; <br>
+&gt; Fixes: cf60ccc330 (&quot;cutils: Introduce bundle mechanism&quot;)<br>
+&gt; Reported-by: Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru" tar=
+get=3D"_blank" rel=3D"noreferrer">mjt@tls.msk.ru</a>&gt;<br>
+&gt; Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@dayni=
+x.com" target=3D"_blank" rel=3D"noreferrer">akihiko.odaki@daynix.com</a>&gt=
+;<br>
+&gt; [PMM: Updated commit message to give all the detail about the<br>
+&gt; Meson version compability requirements.]<br>
+&gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
+o.org" target=3D"_blank" rel=3D"noreferrer">peter.maydell@linaro.org</a>&gt=
+;<br>
+&gt; ---<br>
+&gt; This is essentially back to version 1 of Akihiko&#39;s patch, now we<b=
+r>
+&gt; have a new enough Meson; I just updated the commit message.<br>
+&gt;=C2=A0 =C2=A0<a href=3D"https://patchew.org/QEMU/20230812061540.5398-1-=
+akihiko.odaki@daynix.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">=
+https://patchew.org/QEMU/20230812061540.5398-1-akihiko.odaki@daynix.com/</a=
+><br>
+&gt; (I have dropped the various reviewed-by and tested-by headers because<=
+br>
+&gt; I figured the passage of time was enough to make them moot.)<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0scripts/symlink-install-tree.py | 3 ++-<br>
+&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/scripts/symlink-install-tree.py b/scripts/symlink-install=
+-tree.py<br>
+&gt; index 8ed97e3c943..b72563895c5 100644<br>
+&gt; --- a/scripts/symlink-install-tree.py<br>
+&gt; +++ b/scripts/symlink-install-tree.py<br>
+&gt; @@ -4,6 +4,7 @@<br>
+&gt;=C2=A0 =C2=A0import errno<br>
+&gt;=C2=A0 =C2=A0import json<br>
+&gt;=C2=A0 =C2=A0import os<br>
+&gt; +import shlex<br>
+&gt;=C2=A0 =C2=A0import subprocess<br>
+&gt;=C2=A0 =C2=A0import sys<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -&gt; str:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return str(PurePath(d1, *PurePath(d2).parts[=
+1:]))<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0introspect =3D os.environ.get(&#39;MESONINTROSPECT&#39;)<b=
+r>
+&gt; -out =3D subprocess.run([*introspect.split(&#39; &#39;), &#39;--instal=
+led&#39;],<br>
+&gt; +out =3D subprocess.run([*shlex.split(introspect), &#39;--installed&#3=
+9;],<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 stdout=3Dsubprocess.PIPE, check=3DTrue).stdout<br>
+&gt;=C2=A0 =C2=A0for source, dest in json.loads(out).items():<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bundle_dest =3D destdir_join(&#39;qemu-bundl=
+e&#39;, dest)<br>
+<br>
+Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
+.org" target=3D"_blank" rel=3D"noreferrer">pierrick.bouvier@linaro.org</a>&=
+gt;<br>
+Tested-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.o=
+rg" target=3D"_blank" rel=3D"noreferrer">pierrick.bouvier@linaro.org</a>&gt=
+;<br>
+<br>
+I confirm this fixes the error when the path to qemu src tree contains &#39=
+;~&#39;.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">I confirm this fixes the problem we detected in our CI (where som=
+e build dirnames have &#39;~&#39;</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Thanks=C2=A0</div><div dir=3D"auto"><div class=3D"gmail_quote"><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px =
+#ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--00000000000037ad0a06250042dd--
 
