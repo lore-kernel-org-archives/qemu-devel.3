@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F69FD17138
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1461BD1713F
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2zoi-0006Oz-2U; Mon, 21 Oct 2024 17:19:58 -0400
+	id 1t2zrv-0007KQ-SS; Mon, 21 Oct 2024 17:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1t2zoX-0006OE-Dk
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:19:45 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1t2zrt-0007Jo-Mz
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:23:13 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1t2zoT-0002iB-1B
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:19:44 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5cb6b2b7127so873656a12.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 14:19:40 -0700 (PDT)
+ id 1t2zrq-00031t-P8
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:23:13 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a9a628b68a7so637002466b.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 14:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1729545579; x=1730150379; darn=nongnu.org;
+ d=opnsrc.net; s=google; t=1729545789; x=1730150589; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QIMZAb/byfJflibw2Jv3nMWPbWdqrZztGsq+D4F/Hm4=;
- b=DXheh8WLuI0FOWSj3OC+mUA9c/Oi+VJYUZO77F1n9SLrY71/QNidaNAbZKVBOQMXzt
- FqhGFjQp8cSnHNFKcTZmcuXxTrPG1ulqCHVHadnF4yzxsp0Zcia7MtL1eOee7C3HG3Sa
- WPLaEoAxDiklOSSGWYrOiaVwy9NpZme14L3M+KCwb/5dTU25WaXZcWfHdE5GvcCc1AAa
- Dpv5rcsEzcZfvTzecO0uPm8VbAdL9C+YZGhATK9UTkIOairH2OTXQnTU5ln03/7YNehi
- InzDXiIpAG84kqnIplMV1bcHe/W7tDwGztDYQIUBc3dvKmRdEcEnGTl5XKzhNCRrFAhJ
- zufA==
+ bh=x7amA9ew2+3rusmFGLxEDN6vCKGoXNyp/RspW0Q0tfc=;
+ b=Zri+vnyBFQc5HxyyKvhX/F8YfWgAx0FAld7NBclgwdBFtaobh8j9QsI7t+8g/igq5e
+ SndQ6w6C5UH0AxW8619SGDv3Nupb/4CJR7wED2wfzhbc95CaO/jmPzEas0fyCgV6wcSK
+ iaKlhRAx3LKeFBRSucj8aHcpNmuIkrHEAHxsSPWNPAVgb6gXbe2VIs0qY4+6XUjhJy/+
+ JRKUGs2Qcun7uvISQsl79Ztp9+kn4dBt879WvclJGELaJHiuMTt1ihD/pyLPUFgwY69z
+ WIAVQZOj32Xx69D2hTAQ1QUiiPWCDV5VJ3EBockKKafomCOUJ3fjrsLpJZW3S+Wzzkzw
+ 3EJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729545579; x=1730150379;
+ d=1e100.net; s=20230601; t=1729545789; x=1730150589;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QIMZAb/byfJflibw2Jv3nMWPbWdqrZztGsq+D4F/Hm4=;
- b=gAYBmSG3GznZG7+CXB5JtlogCfGePV5rliSwXMsdHDDLeXEsL7kK43QQLrPElenGF7
- wAgqLSrKDJbkKP0/XWessVoEjD6q3A1kzyV5TMvoHMGHtWhcW75fR51/t7QZTUV+Hgz/
- KIIwxoGKKZRv1pfn2wsTBUXkK0fTYYV/JFX5mFXvRBQqy4L8lYWb0ag3fzjj/cPxBFkr
- HeYKIhpjd6Ltc7vdPox7hp6zL8dcl+AqDxdF7RYBL+8vTYvrNCyCk616DTpplIKhg/Km
- NP73ts9TGsCCWJLaqNK8EHEibyeN80nMWqQN21Ges7vo2t2L9T/yxRHG+NNw03C3eDrc
- FMhQ==
+ bh=x7amA9ew2+3rusmFGLxEDN6vCKGoXNyp/RspW0Q0tfc=;
+ b=iCr8rX+mn6gFXXu0FQVC8I0SUgkkivuxKAgXLRWO2gnSfWb5uC080El83808P2W4fn
+ 5EKgEmv2PDVj9rHnYRVN3WO2KMIMkb09t8Sf4OO7hzOHsNw8LppD4A41OFBmmnxLre/W
+ +pVjkNU1hcM65vVZOIoYGeXTuAHPryZ7d1p4wIr+nx1fzu66gW+up7m3jNIXQ4UgSC7z
+ YkA2Ob4VzQV/V5i2LLMc0gg9eRYDTQTRmirvyjKwbSSWXqf2HsuO8asqSAItdaMFBiyF
+ +jXORMNeezbrzf/zjkJV8hg3p8hFHY4YJfGCosQxryJ8RBWhI4fHOlT+fNsWF2PxrmBJ
+ 4JDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXslpw6ifB1gbLBXfkZBKBAZIpc88VuZxPMNlQEudTBn/2/Q/MF9ZSWOdvZI1NPmAdlCk0dhjAVKT6Y@nongnu.org
-X-Gm-Message-State: AOJu0Yx7MXLrvmPO1AeAVM1Mq2u6RLNbI29v1TAmynJ+OU/vjnfMqAPi
- 1RnSLuiQ3KZGlxMD7jwbgOF6oJEvaZ9AipkYOGL/ys380/Tf5qPKOGriRoRP+M/JG+QyvzXhEKk
- ZhmZDN4P595sFVOezvAlJ+jbEBDXUcgoM84RoOg==
-X-Google-Smtp-Source: AGHT+IFY1I3HIpDE1tQJkZlaIVr67YNWpX50gMkb7rkHqCKQWpKscv+JuFiKdjS9pWLMQOvyS5iozagQfUGO3oZFPxQ=
-X-Received: by 2002:a17:906:c151:b0:a9a:5004:cecf with SMTP id
- a640c23a62f3a-a9aace0fa68mr30860966b.9.1729545578527; Mon, 21 Oct 2024
- 14:19:38 -0700 (PDT)
+ AJvYcCVPhgerizlkGm6m/Mw2KHvsjf4bLCvQGpijm/eT6TVcWju2l6NOwnqMp73VfNE020LCXwxPwMKB6izQ@nongnu.org
+X-Gm-Message-State: AOJu0YwSjN2zMgHO9AAS5e0KxsCIeCxdJVKE3d5htuURmkEuZC5W640D
+ xEJlsRKJKazUFBRUL7CgID/JhX2PbuWFpJZiFZhrZ/ChKdLXtQpyXw7qtfJEyWJn0aUMmUx/2jf
+ QEi1toOSJYNjLPZfPwk6x+03JD6VoGy763CvSOQ==
+X-Google-Smtp-Source: AGHT+IGtJvg95mfNJ/Hs3WIW1jcOe1lzTspP9H5MnvUtfIP5iMPvI/rBNONyvEDlBFcotgD4jSb9xhr7XcfLcF8j9aE=
+X-Received: by 2002:a17:907:2d8c:b0:a9a:3c90:60c5 with SMTP id
+ a640c23a62f3a-a9a69a7b217mr1365520866b.28.1729545789125; Mon, 21 Oct 2024
+ 14:23:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241014192205.253479-1-salil.mehta@huawei.com>
  <20241014192205.253479-2-salil.mehta@huawei.com>
- <305d1466-3505-4ef4-ade6-efa30978a477@redhat.com>
-In-Reply-To: <305d1466-3505-4ef4-ade6-efa30978a477@redhat.com>
+ <ebf3ba9c-6891-4fb7-80e4-1169011b2e6d@linaro.org>
+In-Reply-To: <ebf3ba9c-6891-4fb7-80e4-1169011b2e6d@linaro.org>
 From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Mon, 21 Oct 2024 22:19:26 +0100
-Message-ID: <CAJ7pxeYqLfvFUUr_BVNuXF4-i0DrD3xpGTq3ZF-G-62=fupnjQ@mail.gmail.com>
+Date: Mon, 21 Oct 2024 22:22:56 +0100
+Message-ID: <CAJ7pxeYtHTifh=QhfWy9iwH6M=mJSmC1tmySvVjJsRXxaL6h9g@mail.gmail.com>
 Subject: Re: [PATCH V1 1/4] hw/acpi: Initialize ACPI Hotplug CPU Status with
  Support for vCPU `Persistence`
-To: Gavin Shan <gshan@redhat.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>
 Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, 
  mst@redhat.com, maz@kernel.org, jean-philippe@linaro.org, 
@@ -73,24 +73,24 @@ Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
  richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev, 
  david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, 
  ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com, 
- rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org, 
- npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk, 
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com, 
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com, 
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, 
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn, 
- lixianglai@loongson.cn, shahuang@redhat.com, zhao1.liu@intel.com, 
- linuxarm@huawei.com, gustavo.romero@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000d4d91a0625033579"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-ed1-x530.google.com
+ gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com, 
+ alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com, 
+ linux@armlinux.org.uk, darren@os.amperecomputing.com, 
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com, 
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
+ wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com, 
+ maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com, 
+ zhao1.liu@intel.com, linuxarm@huawei.com
+Content-Type: multipart/alternative; boundary="000000000000624f680625034261"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,16 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d4d91a0625033579
+--000000000000624f680625034261
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Gavin,
+Hi Gustavo
 
-On Thu, Oct 17, 2024 at 6:27=E2=80=AFAM Gavin Shan <gshan@redhat.com> wrote=
-:
+On Thu, Oct 17, 2024 at 9:25=E2=80=AFPM Gustavo Romero <gustavo.romero@lina=
+ro.org>
+wrote:
 
-> On 10/15/24 5:22 AM, Salil Mehta wrote:
+> Hi Salil,
+>
+> On 10/14/24 16:22, Salil Mehta wrote:
 > > Certain CPU architecture specifications [1][2][3] prohibit changes to C=
 PU
 > > presence after the kernel has booted. This limitation exists because
@@ -189,49 +192,6 @@ PU_Hotplug_-__ii0iNb3.pdf
 > >   #endif
 > >       DEFINE_PROP_END_OF_LIST(),
 > >   };
->
-> Would the property be consistent on all CPUs? I mean it's invalid for thi=
-s
-> property to be true on the first CPU while it's false on other CPUs. If m=
-y
-> understanding is correct, this property would be part of MachineState
-> instead
-> of CPUState, and it's not configurable. Is there a particular reason why
-> the
-> property should be tied with CPUState and configurable?
->
-
-
-Yes, it might make more sense to keep it at the machine level or configured
-via firmware.
-
-It might not look very obvious but the idea of keeping ACPI persistence at
-CPUState level was to extend this feature and have some group of vCPUs to b=
-e
-hot pluggable while others could be forced to be non-hotpluggable.  This
-could be useful if in future hot pluggability is extended to
-per-die/per-numa
-level. I also removed the 'CPUState::disabled' flag which was more of an
-architecture specific thing.
-
-
-
-> Besides, the property name "acpi-persistent" isn't indicative enough. CPU
-> objects can be described through ACPI table or device tree node. So a mor=
-e
-> generic property name may be needed, for example "always_present"? If we
-> need move this property from CPUState to MachineStaste or MachineClass,
-> the name would be "cpu_always_present" or something like that.
->
-
-This property is more related to the persistence of the vCPU state at
-the ACPI
-level. Therefore, I changed the name from 'always_present' which I used in
-one
-of the preliminary prototype presented at the KVM Forum 2023.
-
-
->
 > > diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
 > > index 5cb60ca8bc..083c4010c2 100644
 > > --- a/hw/acpi/cpu.c
@@ -288,25 +248,56 @@ I
 > > +            } else {
 > > +                state->devs[i].is_present =3D false;
 > > +                state->devs[i].cpu =3D cpu;
+>
+> I think it's better to set cpu here explicitly to NULL in both cases
+> (persistent and non-persistent cases). Also, 'cpu' here is always NULL
+> since it's inside the else block of "if (cpu)" conditional. So how about
+> setting cpu to NULL at the end of the else block:
+>
+
+Good catch. Yes we can. It got under my hood after changes from RFC V4 to
+RFC V5
+
+
+>
+> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+> index d34c1e601e..b830c0e85b 100644
+> --- a/hw/acpi/cpu.c
+> +++ b/hw/acpi/cpu.c
+> @@ -251,14 +251,14 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object
+> *owner,
+>                */
+>               if (acpi_persistent_cpu(first_cpu)) {
+>                   state->devs[i].is_present =3D true;
+> -                /*
+> -                 * `CPUHotplugState::AcpiCpuStatus::cpu` becomes
+> insignificant
+> -                 * in this case
+> -                 */
+>               } else {
+>                   state->devs[i].is_present =3D false;
+> -                state->devs[i].cpu =3D cpu;
+>               }
+> +            /*
+> +             * `CPUHotplugState::AcpiCpuStatus::cpu` becomes insignifica=
+nt
+> +             * in this case
+> +             */
+> +            state->devs[i].cpu =3D NULL;
+>           }
+>           state->devs[i].arch_id =3D id_list->cpus[i].arch_id;
+>       }
+>
+>
+> Cheers,
+> Gustavo
+>
 > > +            }
 > > +        }
 > >           state->devs[i].arch_id =3D id_list->cpus[i].arch_id;
 > >       }
 > >       memory_region_init_io(&state->ctrl_reg, owner, &cpu_hotplug_ops,
 > state,
->
-> The code is already self-explaining and the comments explaining how the
-> property
-> "acpi-persistent" is handled seems a bit duplicate. If you agree, lets
-> make comments
-> short and concise.
->
-
-
-We can definitely make it more succinct
-
-
->
 > > diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
 > > index 32654dc274..bd3f9973c9 100644
 > > --- a/include/hw/acpi/cpu.h
@@ -390,37 +381,24 @@ nd
 > > +     */
 > > +    bool acpi_persistent;
 > > +
->
-> The comments can be short and concise either. Reader can refer to the
-> commit log for all the details.
->
-
-Yes, we can
-
-thanks
-
-
->
 > >       /* TODO Move common fields from CPUArchState here. */
 > >       int cpu_index;
 > >       int cluster_index;
 >
-> Thanks,
-> Gavin
->
 >
 
---000000000000d4d91a0625033579
+--000000000000624f680625034261
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Gavi=
-n,<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_=
-attr">On Thu, Oct 17, 2024 at 6:27=E2=80=AFAM Gavin Shan &lt;<a href=3D"mai=
-lto:gshan@redhat.com">gshan@redhat.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">On 10/15/24 5:22 AM, Salil Mehta wrot=
-e:<br>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Gustavo</div><br><div class=3D"gmail_q=
+uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 17, 2024 at 9:25=E2=
+=80=AFPM Gustavo Romero &lt;<a href=3D"mailto:gustavo.romero@linaro.org">gu=
+stavo.romero@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">Hi Salil,<br>
+<br>
+On 10/14/24 16:22, Salil Mehta wrote:<br>
 &gt; Certain CPU architecture specifications [1][2][3] prohibit changes to =
 CPU<br>
 &gt; presence after the kernel has booted. This limitation exists because m=
@@ -507,43 +485,6 @@ e, memory, TYPE_MEMORY_REGION,<br>
 &gt;=C2=A0 =C2=A0#endif<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_END_OF_LIST(),<br>
 &gt;=C2=A0 =C2=A0};<br>
-<br>
-Would the property be consistent on all CPUs? I mean it&#39;s invalid for t=
-his<br>
-property to be true on the first CPU while it&#39;s false on other CPUs. If=
- my<br>
-understanding is correct, this property would be part of MachineState inste=
-ad<br>
-of CPUState, and it&#39;s not configurable. Is there a particular reason wh=
-y the<br>
-property should be tied with CPUState and configurable?<br></blockquote><di=
-v><br></div><div><br></div><div>Yes, it might make more sense to keep it at=
- the machine level or configured</div><div>via firmware.=C2=A0</div><div><b=
-r></div><div>It might not look very obvious but the idea of keeping ACPI pe=
-rsistence at=C2=A0</div><div>CPUState level was to extend this feature and =
-have some group of vCPUs to be</div><div>hot pluggable=C2=A0while others co=
-uld be forced to be non-hotpluggable.=C2=A0 This</div><div>could be useful =
-if in future hot pluggability=C2=A0is extended to per-die/per-numa</div><di=
-v>level. I also removed the &#39;CPUState::disabled&#39; flag which was mor=
-e of an=C2=A0</div><div>architecture specific thing.</div><div><br></div><d=
-iv><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Besides, the property name &quot;acpi-persistent&quot; isn&#39;t indicative=
- enough. CPU<br>
-objects can be described through ACPI table or device tree node. So a more<=
-br>
-generic property name may be needed, for example &quot;always_present&quot;=
-? If we<br>
-need move this property from CPUState to MachineStaste or MachineClass,<br>
-the name would be &quot;cpu_always_present&quot; or something like that.<br=
-></blockquote><div><br></div><div>This property is more related to the pers=
-istence of the vCPU state at the=C2=A0ACPI</div><div>level. Therefore, I ch=
-anged the name from &#39;always_present&#39; which I used in one</div><div>=
-of the preliminary prototype presented at the KVM Forum 2023.=C2=A0</div><d=
-iv>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
 &gt; diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c<br>
 &gt; index 5cb60ca8bc..083c4010c2 100644<br>
 &gt; --- a/hw/acpi/cpu.c<br>
@@ -611,6 +552,60 @@ is case<br>
 s[i].is_present =3D false;<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;dev=
 s[i].cpu =3D cpu;<br>
+<br>
+I think it&#39;s better to set cpu here explicitly to NULL in both cases<br=
+>
+(persistent and non-persistent cases). Also, &#39;cpu&#39; here is always N=
+ULL<br>
+since it&#39;s inside the else block of &quot;if (cpu)&quot; conditional. S=
+o how about<br>
+setting cpu to NULL at the end of the else block:<br></blockquote><div><br>=
+</div><div>Good catch. Yes we can. It got under my hood after changes from =
+RFC V4 to RFC V5</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">
+<br>
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c<br>
+index d34c1e601e..b830c0e85b 100644<br>
+--- a/hw/acpi/cpu.c<br>
++++ b/hw/acpi/cpu.c<br>
+@@ -251,14 +251,14 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object <br=
+>
+*owner,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (acpi_persistent_cpu(fi=
+rst_cpu)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;de=
+vs[i].is_present =3D true;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* `CPUHotplu=
+gState::AcpiCpuStatus::cpu` becomes <br>
+insignificant<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* in this ca=
+se<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;de=
+vs[i].is_present =3D false;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].=
+cpu =3D cpu;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* `CPUHotplugState::AcpiCp=
+uStatus::cpu` becomes insignificant<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* in this case<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].cpu =3D NULL;<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 state-&gt;devs[i].arch_id =3D id_list-&g=
+t;cpus[i].arch_id;<br>
+=C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+<br>
+Cheers,<br>
+Gustavo<br>
+<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0state-&gt;devs[i].arch_id =3D =
@@ -618,16 +613,6 @@ id_list-&gt;cpus[i].arch_id;<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_init_io(&amp;state-&gt;ctrl_re=
 g, owner, &amp;cpu_hotplug_ops, state,<br>
-<br>
-The code is already self-explaining and the comments explaining how the pro=
-perty<br>
-&quot;acpi-persistent&quot; is handled seems a bit duplicate. If you agree,=
- lets make comments<br>
-short and concise.<br></blockquote><div><br></div><div><br></div><div>We ca=
-n definitely make it more succinct</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-<br>
 &gt; diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h<br>
 &gt; index 32654dc274..bd3f9973c9 100644<br>
 &gt; --- a/include/hw/acpi/cpu.h<br>
@@ -713,22 +698,12 @@ A.PRES=3DTrue` and<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
 &gt; +=C2=A0 =C2=A0 bool acpi_persistent;<br>
 &gt; +<br>
-<br>
-The comments can be short and concise either. Reader can refer to the<br>
-commit log for all the details.<br></blockquote><div><br></div><div>Yes, we=
- can</div><div><br></div><div>thanks</div><div>=C2=A0</div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">
-<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* TODO Move common fields from CPUArchState=
  here. */<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int cpu_index;<br>
 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0int cluster_index;<br>
 <br>
-Thanks,<br>
-Gavin<br>
-<br>
-</blockquote></div></div></div></div>
+</blockquote></div></div>
 
---000000000000d4d91a0625033579--
+--000000000000624f680625034261--
 
