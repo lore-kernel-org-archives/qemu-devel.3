@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0DA9D0E6F1
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791E1D0E6F4
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qNI-0007Oa-E7; Mon, 21 Oct 2024 07:15:00 -0400
+	id 1t2qgx-00025h-Eo; Mon, 21 Oct 2024 07:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t2qNF-0007OC-D6
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:14:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgv-00025C-8J
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1t2qND-00074y-BC
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:14:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgs-0001Uq-9y
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729509292;
+ s=mimecast20190719; t=1729510513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wN7/9PwdN1K876oOX1TIfyRrvxSus3Ode7lg3FyU/Ic=;
- b=VyN1YX5JO3sBkqTsuy5bLMHPwfQWYX7LXKTQs/AuuTxGYymROaN5VNNE8MgZa12S7rqt6A
- xkvnXxmR/6p9lOBXCgkCVrZ7QQypZf1lpWCoiGsN5EGsK67wCspP1cFEBqEJLTytGxt5G8
- uSfEml0CUPK9obF76HPxE9MB7wVYQlU=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-Uf1PXpO2PImV7VjJ2bLE6Q-1; Mon, 21 Oct 2024 07:14:51 -0400
-X-MC-Unique: Uf1PXpO2PImV7VjJ2bLE6Q-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e290947f6f8so7444818276.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 04:14:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729509291; x=1730114091;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wN7/9PwdN1K876oOX1TIfyRrvxSus3Ode7lg3FyU/Ic=;
- b=xC/bp/6KEucV6W9fBmjXm3u2h5WpM6m3dtyhW0mk/JBw7cKmvgdeuVmaK1FHWyRTf8
- pVJ+KQ7e2pGq8q+0zRW5NF9KI0pfkCe6KT7k9dUX0jaEZZmsXu4FzS/m338IWEVcGYbN
- NiAHJZUMRashGQPiM8jepaX8dEfsV/CBVSqMSDN1MXOVUyhs1R6l1oL1oDFeESs7SxNu
- vOFKJukZDJHq/3IXpH6cL4BxmyNE6UhftPj7azKKdVdXmB6V372nisqHvVjzfPXI6FJF
- /ABh9/iEjgOzpYLg7G6uVKDfRKV6MiBfMENW+4ApwNXjeg7lAh6EAYtZbLJDkCwHSip+
- 39ug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQVjf1NcdphZhjnsZ+DlX60d30BMK7iLfigus7UAjgqyxWzVFdVAkmX9PjL/5hGjU+1nXgNLaoofjh@nongnu.org
-X-Gm-Message-State: AOJu0YzQ4ho54xUsGoKlmeZDVJcZ8p6hc9ediHoHMrFxFVhPa4DzW2Yr
- Uzg2ck3q2x4bYlqzHbdudwbWD5AT0RAnkVY3apIURY0/cOpe2jyhW/wPQwXmy+WfoIdyXjPQVWO
- nNSuYPB3/hscYf4kW1I71UExCHYGE8bJZ8ViXoMV3rQxtCRTvZsKaZSwqxL4TTTErwVa4+GVzvn
- +CD7BJYn9z74WCoNi01UY3kGYOtzA=
-X-Received: by 2002:a05:6902:20c6:b0:e28:687e:c151 with SMTP id
- 3f1490d57ef6-e2bb16c33a2mr9429454276.54.1729509291256; 
- Mon, 21 Oct 2024 04:14:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYbck/zun4az+mb4Szi0Cu+LkZxBz5m7pJRgNEX12wqo3QVLJ5fyMd5Fjtk7AhwjmAzhAEylha/fxvRqY0zyQ=
-X-Received: by 2002:a05:6902:20c6:b0:e28:687e:c151 with SMTP id
- 3f1490d57ef6-e2bb16c33a2mr9429432276.54.1729509290848; Mon, 21 Oct 2024
- 04:14:50 -0700 (PDT)
+ bh=6c4zfgPK1uXbCp9TP3YFdnWGgDrkyRl4csOphvPzFG8=;
+ b=KJj4VF75mhIBBCg4qVO8fcL082tu8EU5QkQV6TgNvdUvpRyAS/4Lq4d35teVq08v73fnei
+ mahQkUDVrM+YtWJJYycEpSuoTfi2g89loGn9pBe+nLbe2ZxHRE61DIkgH0ds7d2+Xztt0a
+ Xz9BmRUom6YZl070EJImeSE1i3VP7qw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-5CEe5B-DOQSTK3fjfoLHEQ-1; Mon,
+ 21 Oct 2024 07:35:10 -0400
+X-MC-Unique: 5CEe5B-DOQSTK3fjfoLHEQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2240519560BE; Mon, 21 Oct 2024 11:35:09 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0922619560AA; Mon, 21 Oct 2024 11:35:07 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 02/21] tests/qtest: Raise the ide-test timeout
+Date: Mon, 21 Oct 2024 13:34:39 +0200
+Message-ID: <20241021113500.122500-3-thuth@redhat.com>
+In-Reply-To: <20241021113500.122500-1-thuth@redhat.com>
+References: <20241021113500.122500-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20241017215304.3916866-1-roqueh@google.com>
- <20241017215304.3916866-2-roqueh@google.com>
-In-Reply-To: <20241017215304.3916866-2-roqueh@google.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 21 Oct 2024 15:14:39 +0400
-Message-ID: <CAMxuvax3ZRcGGE7Lyq=j-3pGtJ3jThw+rFyHhdBbhbUCyVs6+g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ui: Allow injection of vnc display name
-To: Roque Arcudia Hernandez <roqueh@google.com>
-Cc: ankeesler@google.com, mst@redhat.com, qemu-devel@nongnu.org, 
- venture@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -101,129 +80,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Roque
+From: Peter Maydell <peter.maydell@linaro.org>
 
-On Fri, Oct 18, 2024 at 1:53=E2=80=AFAM Roque Arcudia Hernandez
-<roqueh@google.com> wrote:
->
-> From: Andrew Keesler <ankeesler@google.com>
->
-> Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display Identifi=
-cation
-> Data) is propagated by QEMU such that a virtual display presents legitima=
-te
-> metadata (e.g., name, serial number, preferred resolutions, etc.) to its
-> connected guest.
->
-> This change propagates an optional user-provided display name to
-> QemuConsole. Future changes will update downstream devices to leverage th=
-is
-> display name for various uses, the primary one being providing a custom E=
-DID
-> name to guests. Future changes will also update other displays (e.g., spi=
-ce)
-> with a similar option to propagate a display name to downstream devices.
->
-> Currently, every virtio-gpu virtual display has the same name: "QEMU
-> Monitor". We hope to be able to inject the EDID name of virtual displays =
-in
-> order to test guest behavior that is specific to display names. We provid=
-e the
-> ability to inject the display name from the display configuration as that=
- most
-> closely resembles how real displays work (hardware displays contain stati=
-c EDID
-> information that is provided to every connected host).
->
-> It should also be noted that EDID names longer than 12 bytes will be trun=
-cated
-> per spec (I think?).
->
-> Signed-off-by: Andrew Keesler <ankeesler@google.com>
-> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-> ---
->  include/ui/console.h | 1 +
->  ui/console-priv.h    | 1 +
->  ui/console.c         | 8 ++++++++
->  ui/vnc.c             | 8 +++++++-
->  4 files changed, 17 insertions(+), 1 deletion(-)
->
-> diff --git a/include/ui/console.h b/include/ui/console.h
-> index 5832d52a8a..74ab03ed72 100644
-> --- a/include/ui/console.h
-> +++ b/include/ui/console.h
-> @@ -408,6 +408,7 @@ int qemu_console_get_index(QemuConsole *con);
->  uint32_t qemu_console_get_head(QemuConsole *con);
->  int qemu_console_get_width(QemuConsole *con, int fallback);
->  int qemu_console_get_height(QemuConsole *con, int fallback);
-> +void qemu_console_set_name(QemuConsole *con, const char *name);
->  /* Return the low-level window id for the console */
->  int qemu_console_get_window_id(QemuConsole *con);
->  /* Set the low-level window id for the console */
-> diff --git a/ui/console-priv.h b/ui/console-priv.h
-> index 43ceb8122f..9f2769843f 100644
-> --- a/ui/console-priv.h
-> +++ b/ui/console-priv.h
-> @@ -18,6 +18,7 @@ struct QemuConsole {
->      Object parent;
->
->      int index;
-> +    const char *name;
->      DisplayState *ds;
->      DisplaySurface *surface;
->      DisplayScanout scanout;
-> diff --git a/ui/console.c b/ui/console.c
-> index 5165f17125..f377fd8417 100644
-> --- a/ui/console.c
-> +++ b/ui/console.c
-> @@ -1452,6 +1452,14 @@ int qemu_console_get_height(QemuConsole *con, int =
-fallback)
->      }
->  }
->
-> +void qemu_console_set_name(QemuConsole *con, const char *name)
-> +{
-> +    if (con =3D=3D NULL) {
-> +        return;
-> +    }
-> +    con->name =3D name;
-> +}
-> +
->  int qemu_invalidate_text_consoles(void)
->  {
->      QemuConsole *s;
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 93a8dbd253..7d6acc5c2e 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3595,6 +3595,9 @@ static QemuOptsList qemu_vnc_opts =3D {
->          },{
->              .name =3D "power-control",
->              .type =3D QEMU_OPT_BOOL,
-> +        },{
-> +            .name =3D "name",
-> +            .type =3D QEMU_OPT_STRING,
->          },
->          { /* end of list */ }
->      },
-> @@ -4016,7 +4019,7 @@ void vnc_display_open(const char *id, Error **errp)
->      QemuOpts *opts =3D qemu_opts_find(&qemu_vnc_opts, id);
->      g_autoptr(SocketAddressList) saddr_list =3D NULL;
->      g_autoptr(SocketAddressList) wsaddr_list =3D NULL;
-> -    const char *share, *device_id;
-> +    const char *share, *device_id, *name;
->      QemuConsole *con;
->      bool password =3D false;
->      bool reverse =3D false;
-> @@ -4217,6 +4220,9 @@ void vnc_display_open(const char *id, Error **errp)
->      }
->      qkbd_state_set_delay(vd->kbd, key_delay_ms);
->
-> +    name =3D qemu_opt_get(opts, "name");
-> +    qemu_console_set_name(vd->dcl.con, name);
+The ide-test occasionally times out: on the system I run
+vm-build-openbsd on, it usually takes about 18 seconds, but
+occasionally hits the 60s timeout, likely when the host machine is
+under heavy load.  I have also seen this test hit its time limit on
+the s390x CI runner.
 
-Why not expose a "head_name" property in QemuGraphicConsole?
+Double the timeout for this test so that it won't hit its timeout
+even when the host is running more slowly than usual.
 
-This way it should be possible to set the name with QMP qom-set.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20241015113705.239067-1-peter.maydell@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qtest/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b207e38696..e8be8b3942 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -4,6 +4,7 @@ slow_qtests = {
+   'bios-tables-test' : 910,
+   'cdrom-test' : 610,
+   'device-introspect-test' : 720,
++  'ide-test' : 120,
+   'migration-test' : 480,
+   'npcm7xx_pwm-test': 300,
+   'npcm7xx_watchdog_timer-test': 120,
+-- 
+2.47.0
 
 
