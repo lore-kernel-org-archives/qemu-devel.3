@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7771AD0E6D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BBED0E6D4
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2oMR-0000t7-7u; Mon, 21 Oct 2024 05:05:59 -0400
+	id 1t2oMm-0000w8-FD; Mon, 21 Oct 2024 05:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t2oMO-0000rY-9C
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:05:56 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
+ id 1t2oMX-0000u7-B2; Mon, 21 Oct 2024 05:06:05 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t2oML-0008PI-QU
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:05:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729501554; x=1761037554;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=fhHLo0nmv4N859MO1xJdC24xJMzxpiiegzXrG4EWaJ8=;
- b=J1LmEllYeGIN/+/45fFbarY7Y0B37nxTMeD1SVliWV7dVp24QrHtb011
- 9AGCXVxh3TwGRHltZa8RznyH9PY+ylSBevszLVpFZe6K284wAToi37chf
- 8C7ym5ShaNSS4YpAm2/sFvdK7N5doMYLxDsYduIEje2a39oExzPJ7JUjj
- bJ9qOVwviW1RloKlWSGVoTTzCCG+IxHLACpomTbS56dzKzDLtXrToyk6f
- mynUleJgOrh2PTIyA4ClskzUaT9iWmUJxkwsRxDp6A0iEnRsjEDWoVSrY
- 6PjOzvaNsT9eSyzEMq6cn6qtLuFCllhBa3BcfluzVZO4cUzpnpzRjg5tm g==;
-X-CSE-ConnectionGUID: ciuOXMPvRGyKPlzONyjLbw==
-X-CSE-MsgGUID: t8UXn0ADSCulBPgL3Ywnug==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="40100279"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="40100279"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Oct 2024 02:05:51 -0700
-X-CSE-ConnectionGUID: G7957S90QQyfdICR+jkbIw==
-X-CSE-MsgGUID: sQLfL1fWRuKBUgF+z+oNww==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="84286290"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 21 Oct 2024 02:05:50 -0700
-Date: Mon, 21 Oct 2024 17:22:05 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Subject: Re: [Question] What is the =?gb2312?Q?defi?=
- =?gb2312?B?bml0aW9uIG9mIKGwcHJpdmF0ZaGx?= fields in QOM?
-Message-ID: <ZxYdPZCc+3wi3f6z@intel.com>
-References: <ZxPZ5oUDRcVroh7o@intel.com>
- <ZxYSSp1wkifLy3tV@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
+ id 1t2oMU-0008Pi-Pc; Mon, 21 Oct 2024 05:06:04 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XX8YF72psz4wxx;
+ Mon, 21 Oct 2024 20:05:53 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XX8Y82gF3z4wb5;
+ Mon, 21 Oct 2024 20:05:48 +1100 (AEDT)
+Message-ID: <7ec6cfa5-fee8-4c2c-8bf8-7fd079867a65@kaod.org>
+Date: Mon, 21 Oct 2024 11:05:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v1 04/16] hw/block/m25p80: Add SFDP table for
+ w25q80bl flash
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
+ <20241018053112.1886173-5-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241018053112.1886173-5-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZxYSSp1wkifLy3tV@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
- DKIMWL_WL_HIGH=-0.527, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=cGEO=RR=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.17, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,83 +74,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On 10/18/24 07:31, Jamin Lin wrote:
+> Add the SFDP table for the Windbond w25q80bl flash.
+>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-On Mon, Oct 21, 2024 at 09:35:22AM +0100, Daniel P. Berrang¨¦ wrote:
-> Date: Mon, 21 Oct 2024 09:35:22 +0100
-> From: "Daniel P. Berrang¨¦" <berrange@redhat.com>
-> Subject: Re: [Question] What is the definition of ¡°private¡± fields in
->  QOM?
-> 
-> On Sun, Oct 20, 2024 at 12:10:14AM +0800, Zhao Liu wrote:
-> > Hi maintainers and list,
-> > 
-> > In the QOM structure, the class and object structs have two members:
-> > parent_class and parent_obj, which are often marked as "< private >" in
-> > the comment.
-> > 
-> > I couldn¡¯t find information on why to define ¡®private¡¯ and ¡®public¡¯,
-> > even in the earliest QOM commits and the patch emails I could find.
-> > 
-> > Does ¡®private¡¯ refer to the internal implementation code of QOM, or does
-> > it refer to the specific code that defines and implements this object
-> > and its class?
-> > 
-> > I understand the original idea of private field indicates it cannot be
-> > accessed directly out of the "private" scope.
-> 
-> I see two scenarios
-> 
->  * Devices where the structs are in the include/..../<blah>.h
-> 
->    The private/public comments are a message to other code in QEMU about
->    which fields are OK to access directly, and which should not be accessed.
-
-Does "other code" refer to the fact that no arbitrary code should
-directly access parent_obj/parent_class, but rather should use an
-explicit cast to convert to the parent class/object?
-
-For example, are the following direct accesses to parent_obj all
-considered illegal?
-
-hw/usb/hcd-ohci-pci.c:58:    pci_set_word(dev->parent_obj.config + PCI_STATUS,
-hw/arm/smmuv3.c:1094:        trace_smmuv3_translate_success(mr->parent_obj.name, sid, addr,
-hw/arm/smmuv3.c:1101:        trace_smmuv3_translate_disable(mr->parent_obj.name, sid, addr,
-hw/arm/smmuv3.c:1107:        trace_smmuv3_translate_bypass(mr->parent_obj.name, sid, addr,
-hw/arm/smmuv3.c:1112:        trace_smmuv3_translate_abort(mr->parent_obj.name, sid, addr,
-hw/arm/smmuv3.c:1119:                      mr->parent_obj.name, addr, smmu_event_string(event.type));
-hw/arm/smmuv3.c:1212:        trace_smmuv3_inv_notifiers_iova(mr->parent_obj.name, asid, vmid,
-hw/arm/smmuv3.c:2033:        trace_smmuv3_notify_flag_add(iommu->parent_obj.name);
-hw/arm/smmuv3.c:2036:        trace_smmuv3_notify_flag_del(iommu->parent_obj.name);
-hw/arm/smmu-common.c:888:    trace_smmu_inv_notifiers_mr(mr->parent_obj.name);
-block/throttle-groups.c:777:    if (!tg->name && tg->parent_obj.parent) {
-iothread.c:173:                               iothread->parent_obj.aio_max_batch);
-iothread.c:359:    info->aio_max_batch = iothread->parent_obj.aio_max_batch;
-target/i386/sev.c:1240:    if (sev_snp->parent_obj.kernel_hashes) {
-target/ppc/kvm.c:2354:    const char *vcpu_str = (cs->parent_obj.hotplugged == true) ?
-target/openrisc/sys_helper.c:289:        return cpu->parent_obj.cpu_index;
-accel/kvm/kvm-all.c:4285:                        cpu->parent_obj.canonical_path,
-accel/kvm/kvm-all.c:4377:            if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
-accel/tcg/translator.c:26:                    offsetof(ArchCPU, parent_obj.neg.can_do_io) -
-accel/tcg/translator.c:50:                       offsetof(ArchCPU, parent_obj.neg.icount_decr.u32)
-accel/tcg/translator.c:80:                         offsetof(ArchCPU, parent_obj.neg.icount_decr.u16.low)
-include/hw/pci-host/dino.h:113:     * PCI_CONFIG_ADDR is parent_obj.config_reg, via pci_host_conf_be_ops,
-...
-
->  * Devices where the structs are in the ../<blah>.c
-> 
->    The private/public comments look entirely pointless, as everything
->    is private to the .c file.
-
-Yes!
-
-> 99% of the time it seems the "parent" / "parent_obj" fields are the only
-> one marked private. There are a handful of classes where other fields are
-> under the private comment, but not many. 
-
-Yes. "parent" / "parent_obj" are the most common cases.
+capabilities exposed to Linux look correct :
+     
+     root@ast2600-default:~# cat  /sys/kernel/debug/spi-nor/spi0.1/*
+     Supported read modes by the flash
+      1S-1S-1S
+       opcode	0x03
+       mode cycles	0
+       dummy cycles	0
+      1S-1S-1S (fast read)
+       opcode	0x0b
+       mode cycles	0
+       dummy cycles	8
+      1S-1S-2S
+       opcode	0x3b
+       mode cycles	0
+       dummy cycles	8
+      1S-2S-2S
+       opcode	0xbb
+       mode cycles	2
+       dummy cycles	2
+      1S-1S-4S
+       opcode	0x6b
+       mode cycles	0
+       dummy cycles	8
+      1S-4S-4S
+       opcode	0xeb
+       mode cycles	2
+       dummy cycles	4
+     
+     Supported page program modes by the flash
+      1S-1S-1S
+       opcode	0x02
+     name		s25fl008k
+     id		ef 40 14 00 00 00
+     size		1.00 MiB
+     write size	1
+     page size	256
+     address nbytes	3
+     flags		HAS_16BIT_SR | NO_READ_CR | SOFT_RESET
+     
+     opcodes
+      read		0x6b
+       dummy cycles	8
+      erase		0xd8
+      program	0x02
+      8D extension	none
+     
+     protocols
+      read		1S-1S-4S
+      write		1S-1S-1S
+      register	1S-1S-1S
+     
+     erase commands
+      20 (4.00 KiB) [1]
+      52 (32.0 KiB) [2]
+      d8 (64.0 KiB) [3]
+      c7 (1.00 MiB)
+     
+     sector map
+      region (in hex)   | erase mask | flags
+      ------------------+------------+----------
+      00000000-000fffff |     [ 123] |
+     
+Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
 
 Thanks,
-Zhao
+
+C.
+
+
+> ---
+>   hw/block/m25p80.c      |  3 ++-
+>   hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
+>   hw/block/m25p80_sfdp.h |  2 +-
+>   3 files changed, 39 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> index 411d810d3b..e2e84f8b5f 100644
+> --- a/hw/block/m25p80.c
+> +++ b/hw/block/m25p80.c
+> @@ -356,7 +356,8 @@ static const FlashPartInfo known_devices[] = {
+>       { INFO("w25x64",      0xef3017,      0,  64 << 10, 128, ER_4K) },
+>       { INFO("w25q64",      0xef4017,      0,  64 << 10, 128, ER_4K) },
+>       { INFO("w25q80",      0xef5014,      0,  64 << 10,  16, ER_4K) },
+> -    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K) },
+> +    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K),
+> +      .sfdp_read = m25p80_sfdp_w25q80bl },
+>       { INFO("w25q256",     0xef4019,      0,  64 << 10, 512, ER_4K),
+>         .sfdp_read = m25p80_sfdp_w25q256 },
+>       { INFO("w25q512jv",   0xef4020,      0,  64 << 10, 1024, ER_4K),
+> diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+> index 82d84cc21f..a03a291a09 100644
+> --- a/hw/block/m25p80_sfdp.c
+> +++ b/hw/block/m25p80_sfdp.c
+> @@ -404,6 +404,42 @@ static const uint8_t sfdp_w25q01jvq[] = {
+>   };
+>   define_sfdp_read(w25q01jvq);
+>   
+> +static const uint8_t sfdp_w25q80bl[] = {
+> +    0x53, 0x46, 0x44, 0x50, 0x05, 0x01, 0x00, 0xff,
+> +    0x00, 0x05, 0x01, 0x10, 0x80, 0x00, 0x00, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0x7f, 0x00,
+> +    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
+> +    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
+> +    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x0f, 0x52,
+> +    0x10, 0xd8, 0x00, 0x00, 0x23, 0x02, 0xa6, 0x00,
+> +    0x81, 0x6c, 0x14, 0xa7, 0xed, 0x61, 0x76, 0x33,
+> +    0x7a, 0x75, 0x7a, 0x75, 0xf7, 0xa2, 0xd5, 0x5c,
+> +    0x00, 0xf7, 0x1d, 0xff, 0xe9, 0x30, 0xc0, 0x80,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +};
+> +define_sfdp_read(w25q80bl);
+> +
+>   /*
+>    * Integrated Silicon Solution (ISSI)
+>    */
+> diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+> index 89c2d8f72d..35785686a0 100644
+> --- a/hw/block/m25p80_sfdp.h
+> +++ b/hw/block/m25p80_sfdp.h
+> @@ -25,7 +25,7 @@ uint8_t m25p80_sfdp_mx66l1g45g(uint32_t addr);
+>   
+>   uint8_t m25p80_sfdp_w25q256(uint32_t addr);
+>   uint8_t m25p80_sfdp_w25q512jv(uint32_t addr);
+> -
+> +uint8_t m25p80_sfdp_w25q80bl(uint32_t addr);
+>   uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
+>   
+>   uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
 
 
