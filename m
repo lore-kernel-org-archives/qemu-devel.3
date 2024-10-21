@@ -4,35 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D1DD17123
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10578D17128
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2xXl-0006TK-Gm; Mon, 21 Oct 2024 14:54:18 -0400
+	id 1t2xif-0008FC-KC; Mon, 21 Oct 2024 15:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t2xXd-0006SX-Fi; Mon, 21 Oct 2024 14:54:09 -0400
+ id 1t2xic-0008Es-Ft; Mon, 21 Oct 2024 15:05:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t2xXb-00054J-5v; Mon, 21 Oct 2024 14:54:09 -0400
+ id 1t2xia-0006CR-He; Mon, 21 Oct 2024 15:05:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5206B9AAD0;
- Mon, 21 Oct 2024 21:53:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9869D9AAD7;
+ Mon, 21 Oct 2024 22:04:56 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B9AA115980C;
- Mon, 21 Oct 2024 21:53:51 +0300 (MSK)
-Message-ID: <7f0561ec-3564-4860-bacf-a98071a5ce52@tls.msk.ru>
-Date: Mon, 21 Oct 2024 21:53:05 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E3DE415981A;
+ Mon, 21 Oct 2024 22:05:23 +0300 (MSK)
+Message-ID: <cd4d904e-82c2-42d0-8aa3-5906f7182024@tls.msk.ru>
+Date: Mon, 21 Oct 2024 22:05:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] KVM: Dynamic sized kvm memslots array
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
+References: <20240917163835.194664-1-peterx@redhat.com>
+ <20240917163835.194664-2-peterx@redhat.com>
+ <52cc6540-b1ff-495e-9b98-98f13ecbf380@tls.msk.ru> <ZxZnLXD4w2HV07gJ@x1n>
 Content-Language: en-US, ru-RU
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: qemu-stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.1.1 Stable released
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,9 +83,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------FVbF0g0FPQlzOX3C8qrBjYAq"
+In-Reply-To: <ZxZnLXD4w2HV07gJ@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -102,145 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------FVbF0g0FPQlzOX3C8qrBjYAq
-Content-Type: multipart/mixed; boundary="------------IC9hWUR6pgdKw6ShHmSiTWnd";
- protected-headers="v1"
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <7f0561ec-3564-4860-bacf-a98071a5ce52@tls.msk.ru>
-Subject: [ANNOUNCE] QEMU 9.1.1 Stable released
+21.10.2024 17:37, Peter Xu wrote:
+> Michael,
+> 
+> On Fri, Oct 18, 2024 at 06:38:53PM +0300, Michael Tokarev wrote:
+>> Looking at this from qemu-stable PoV, I'm not 100% sure this change is good
+>> for stable-7.2 series, because 7.2 lacks v8.1.0-1571-g5b23186a95
+>> "kvm: Return number of free memslots" commit, which was a preparation for
+>> for memory devices that consume multiple memslots.
+>>
+>> I did a backport of this change (currently it is at the tip of staging-7.2
+>> branch of https://gitlab.com/mjt0k/qemu.git) - I had to tweak context and
+>> also to remove now-unused local variable in kvm-all.c.  It builds and the
+>> tests run fine, but I'm not really sure it does what it is intended to do.
+>>
+>> Should anything else be picked up for 7.2 for all this to work, or should
+>> this change not be back-ported to 7.2 ?
+>>
+>> (for more recent releases, everything looks ok).
+> 
+> I don't remember anything this series logically depends on (besides any
+> context-wise change).
 
---------------IC9hWUR6pgdKw6ShHmSiTWnd
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Well, 7.2 is a bit old by now, and the commit I already mentioned above is
+also quite old, - at the time you started working on this series, this
+commit (v8.1.0-1571-g5b23186a95) has been in the tree for a long time
+already.  This change might be relevant here or might be not.
 
-SGkgZXZlcnlvbmUsDQoNClRoZSBRRU1VIHY5LjEuMSBzdGFibGUgcmVsZWFzZSBpcyBub3cg
-YXZhaWxhYmxlLg0KDQpZb3UgY2FuIGdyYWIgdGhlIHRhcmJhbGwgZnJvbSBvdXIgZG93bmxv
-YWQgcGFnZSBoZXJlOg0KDQogICBodHRwczovL3d3dy5xZW11Lm9yZy9kb3dubG9hZC8jc291
-cmNlDQoNCiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjEuMS50YXIueHoN
-CiAgIGh0dHBzOi8vZG93bmxvYWQucWVtdS5vcmcvcWVtdS05LjEuMS50YXIueHouc2lnIChz
-aWduYXR1cmUpDQoNCnY5LjEuMSBpcyBub3cgdGFnZ2VkIGluIHRoZSBvZmZpY2lhbCBxZW11
-LmdpdCByZXBvc2l0b3J5LCBhbmQgdGhlDQpzdGFibGUtOS4xIGJyYW5jaCBoYXMgYmVlbiB1
-cGRhdGVkIGFjY29yZGluZ2x5Og0KDQogICBodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9q
-ZWN0L3FlbXUvLS9jb21taXRzL3N0YWJsZS05LjENCg0KVGhlcmUgYXJlIDQ5IGNoYW5nZXMg
-c2luY2UgdGhlIHByZXZpb3VzIHY5LjEuMCByZWxlYXNlLg0KDQpUaGFuayB5b3UgZXZlcnlv
-bmUgd2hvIGhhcyBiZWVuIGludm9sdmVkIGFuZCBoZWxwZWQgd2l0aCB0aGUgc3RhYmxlIHNl
-cmllcyENCg0KL21qdA0KDQpDaGFuZ2Vsb2cgKHN0YWJsZS05LjEtaGFzaCBtYXN0ZXItaGFz
-aCBBdXRob3IgTmFtZTogQ29tbW1pdC1TdWJqZWN0KToNCg0KMGZmNWFiNmY1NyBNaWNoYWVs
-IFRva2FyZXY6DQogIFVwZGF0ZSB2ZXJzaW9uIGZvciA5LjEuMSByZWxlYXNlDQowMWZmZjUw
-NjI2IGNmNTk4ODk3ODEgTWFyYy1BbmRyw6kgTHVyZWF1Og0KICB1aS9kYnVzOiBmaXggZmls
-dGVyaW5nIGFsbCB1cGRhdGUgbWVzc2FnZXMNCmUxMzI0ZWM5NDYgMzMwZWYzMWRlYiBNYXJj
-LUFuZHLDqSBMdXJlYXU6DQogIHVpL3dpbjMyOiBmaXggcG90ZW50aWFsIHVzZS1hZnRlci1m
-cmVlIHdpdGggZGJ1cyBzaGFyZWQgbWVtb3J5DQo5MzkxZjQxOWM3IDI0NGQ1MmZmNzMgTWFy
-Yy1BbmRyw6kgTHVyZWF1Og0KICB1aS9kYnVzOiBmaXggbGVhayBvbiBtZXNzYWdlIGZpbHRl
-cmluZw0KNmQwMzI0MmE3ZSA2ZDZlMjMzNjFmIE1hcmMtQW5kcsOpIEx1cmVhdToNCiAgaHcv
-YXVkaW8vaGRhOiBmaXggbWVtb3J5IGxlYWsgb24gYXVkaW8gc2V0dXANCjI3ODdjYTBlMGEg
-ZjI3MjA2Y2VlZCBNYXJjLUFuZHLDqSBMdXJlYXU6DQogIGh3L2F1ZGlvL2hkYTogZnJlZSB0
-aW1lciBvbiBleGl0DQoxMGUzZWRkOWIzIGNkMjQ3ZWFlMTYgUGV0ZXIgTWF5ZGVsbDoNCiAg
-aHcvY2hhci9wbDAxMTogVXNlIGNvcnJlY3QgbWFza3MgZm9yIElCUkQgYW5kIEZCUkQNCjQ2
-MGRkZDYyZmEgM2RiNzRhZmVjMyBBbGV4YW5kcmEgRGl1cGluYToNCiAgaHcvaW50Yy9hcm1f
-Z2ljdjNfY3B1aWY6IEFkZCBjYXN0IHRvIG1hdGNoIHRoZSBkb2N1bWVudGF0aW9uDQo2ZmVj
-ZmM1OTc4IDEyZGM4ZjZlY2EgQWxleGFuZHJhIERpdXBpbmE6DQogIGh3L2ludGMvYXJtX2dp
-Y3YzOiBBZGQgY2FzdCB0byBtYXRjaCB0aGUgZG9jdW1lbnRhdGlvbg0KYzVmNjUyYTA1MyBl
-MGMwZWE2ZWNhIEFsZXhhbmRyYSBEaXVwaW5hOg0KICBody9pbnRjL2FybV9naWN2MzogQWRk
-IGNhc3QgdG8gbWF0Y2ggdGhlIGRvY3VtZW50YXRpb24NCjk5N2Y4ZDVjMmIgOGRiNGUwZjky
-ZSBQYW9sbyBCb256aW5pOg0KICBtZXNvbjogZW5zdXJlIC1tY3gxNiBpcyBwYXNzZWQgd2hl
-biBkZXRlY3RpbmcgQVRPTUlDMTI4DQoyMjM1OWUwZTZlIDZhZThjNTM4MmIgUGFvbG8gQm9u
-emluaToNCiAgbWVzb246IGRlZmluZSBxZW11X2lzYV9mbGFncw0KZTg5NGJlOTk4ZCA0NjFh
-OTI1MmUyIFBpZXJyaWNrIEJvdXZpZXI6DQogIG1lc29uOiBmaXggbWFjaGluZSBvcHRpb24g
-Zm9yIHg4Nl92ZXJzaW9uDQphNGY5ZDlhNGIyIDM1MmNjOWYzMDAgUmljaGFyZCBIZW5kZXJz
-b246DQogIHRhcmdldC9tNjhrOiBBbHdheXMgcmV0dXJuIGEgdGVtcG9yYXJ5IGZyb20gZ2Vu
-X2xlYV9tb2RlDQo4ZjU4M2ZkOTlhIDMyMTNkYTdiOTUgUmljaGFyZCBIZW5kZXJzb246DQog
-IHRjZy9wcGM6IFVzZSBUQ0dfUkVHX1RNUDIgZm9yIHNjcmF0Y2ggaW5kZXggaW4gcHJlcGFy
-ZV9ob3N0X2FkZHINCjg1NGEzOGZkOWQgNGNhYmNiODliMSBSaWNoYXJkIEhlbmRlcnNvbjoN
-CiAgdGNnL3BwYzogVXNlIFRDR19SRUdfVE1QMiBmb3Igc2NyYXRjaCB0Y2dfb3V0X3FlbXVf
-c3QNCjE2N2M4ZDM3NGEgMjg4NDU5NmY1ZiBSaWNoYXJkIEhlbmRlcnNvbjoNCiAgbGludXgt
-dXNlcjogRml4IHBhcnNlX2VsZl9wcm9wZXJ0aWVzIEdOVTBfTUFHSUMgY2hlY2sNCjE4MDQ2
-ZmJlYzUgYTllZTY0MWJkNCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqToNCiAgbGludXgtdXNl
-ci9mbGF0bG9hZDogVGFrZSBtbWFwX2xvY2sgaW4gbG9hZF9mbHRfYmluYXJ5KCkNCjU3NjJj
-ZGFmNDUgMGU2MGZjODA5MyBNYXJjLUFuZHLDqSBMdXJlYXU6DQogIHZuYzogZml4IGNyYXNo
-IHdoZW4gbm8gY29uc29sZSBhdHRhY2hlZA0KMDJhYzY3YzQxZiBjNjA0NzNkMjkyIEFsZXgg
-QmVubsOpZToNCiAgdGVzdGluZzogYnVtcCBtaXBzNjRlbCBjcm9zcyB0byBib29rd29ybSBh
-bmQgZml4IHBhY2thZ2UgbGlzdA0KZTMyYWM1NjNiOCA5NjAxMDc2YjNiIEphbiBMdWViYmU6
-DQogIGh3L3NkL3NkY2FyZDogRml4IGhhbmRsaW5nIG9mIGRpc2FibGVkIGJvb3QgcGFydGl0
-aW9ucw0KNzY3ZTdkOGFlMSA2N2Q3NjJlNzE2IEFyZCBCaWVzaGV1dmVsOg0KICB0YXJnZXQv
-YXJtOiBBdm9pZCB0YXJnZXRfdWxvbmcgZm9yIHBoeXNpY2FsIGFkZHJlc3MgbG9va3Vwcw0K
-N2VlZmJmOGJiNyA2NDc1MTU1ZDUxIEZpb25hIEVibmVyOg0KICBibG9jay9yZXFsaXN0OiBh
-bGxvdyBhZGRpbmcgb3ZlcmxhcHBpbmcgcmVxdWVzdHMNCmJiNjMwZDkyNTEgYmMwMmJlNDUw
-OCBBbGV4IEJlbm7DqWU6DQogIHV0aWwvdGltZXI6IGF2b2lkIGRlYWRsb2NrIHdoZW4gc2h1
-dHRpbmcgZG93bg0KOGZjOGRkMmVmZCAyZTRmZGY1NjYwIE1hcmsgQ2F2ZS1BeWxhbmQ6DQog
-IGh3L21pcHMvamF6ejogZml4IHR5cG8gaW4gaW4tYnVpbHQgTklDIGFsaWFzDQpmODI0NGYz
-YjhjIDhiZGVkMmU3M2UgRmFiaWFubyBSb3NhczoNCiAgdGFyZ2V0L3BwYzogRml4IGx4dngv
-c3R4dnggZmFjaWxpdHkgY2hlY2sNCjRjN2MwZDI0NDIgOWQ4ZDVhNWI5MCBUQU5HIFRpYW5j
-aGVuZzoNCiAgdGNnOiBGaXggaXRlcmF0aW9uIHN0ZXAgaW4gMzItYml0IGd2ZWMgb3BlcmF0
-aW9uDQo1MWM5NDM5MzFkIDQyNjViNGYzNTggQmlibyBNYW86DQogIGh3L2xvb25nYXJjaC92
-aXJ0OiBBZGQgZGVzY3JpcHRpb24gZm9yIHZpcnQgbWFjaGluZSB0eXBlDQo5Y2QxZmQ0YjUw
-IDQwNWUzNTJkMjggRmFiaWFubyBSb3NhczoNCiAgbWlncmF0aW9uL211bHRpZmQ6IEZpeCBw
-LT5pb3YgbGVhayBpbiBtdWx0aWZkLXVhZGsuYw0KZjg0Yjc5YThmYyAyMDNiZWI2ZjA0IEFy
-bWFuIE5hYmlldjoNCiAgdGFyZ2V0L3BwYzogRml4IG1pZ3JhdGlvbiBvZiBDUFVzIHdpdGgg
-VExCX0VNQiBUTEIgdHlwZQ0KZWI0MGIxNDc0MCBkMzNkM2FkYjU3IEhlbGdlIERlbGxlcjoN
-CiAgdGFyZ2V0L2hwcGE6IEZpeCByYW5kb20gMzItYml0IGxpbnV4LXVzZXIgY3Jhc2hlcw0K
-MDNlZTVlMGM1MyA4Njc2MDA3ZWZmIFBldGVyIE1heWRlbGw6DQogIHRhcmdldC9hcm06IENv
-cnJlY3QgSURfQUE2NElTQVIxX0VMMSB2YWx1ZSBmb3IgbmVvdmVyc2UtdjENCjFmYWE0Mzdk
-YjkgNmNjZTBkY2M2ZiBKYWNvYiBBYnJhbXM6DQogIGh3L2NoYXIvc3RtMzJsNHg1X3VzYXJ0
-LmM6IEVuYWJsZSBVU0FSVCBBQ0sgYml0IHJlc3BvbnNlDQo5YjQyZTMzYmRhIDRjZTU2MjI5
-MDggRmFiaWFubyBSb3NhczoNCiAgbWlncmF0aW9uL211bHRpZmQ6IEZpeCByYi0+cmVjZWl2
-ZWRtYXAgY2xlYW51cCByYWNlDQo3M2Y1ZDViZmI3IDJkMGEwNzFlNjIgTWF0dGlhcyBOaXNz
-bGVyOg0KICBtYWNfZGJkbWE6IFJlbW92ZSBsZWZ0b3ZlciBgZG1hX21lbW9yeV91bm1hcGAg
-Y2FsbHMNCjk3ZmEzZDdmY2MgZDhkNWNhNDAwNCBGZWEuV2FuZzoNCiAgc29mdG1tdS9waHlz
-bWVtLmM6IEtlZXAgdHJhbnNhY3Rpb24gYXR0cmlidXRlIGluIGFkZHJlc3Nfc3BhY2VfbWFw
-KCkNCjY1OWVlYjE2YjMgYjg0ZjA2YzJiZSBEYXZpZCBIaWxkZW5icmFuZDoNCiAgc29mdG1t
-dS9waHlzbWVtOiBmaXggbWVtb3J5IGxlYWsgaW4gZGlydHlfbWVtb3J5X2V4dGVuZCgpDQow
-ZDg4OWM1Yzg2IDYzN2IwYWExMzkgTWF0dGlhcyBOaXNzbGVyOg0KICBzb2Z0bW11OiBTdXBw
-b3J0IGNvbmN1cnJlbnQgYm91bmNlIGJ1ZmZlcnMNCjAyODMzYjA3YjYgOGQ1YWI3NDZiMSBE
-YW5pZWwgUC4gQmVycmFuZ8OpOg0KICBnaXRsYWI6IGZpeCBsb2dpYyBmb3IgY2hhbmdpbmcg
-ZG9ja2VyIHRhZyBvbiBzdGFibGUgYnJhbmNoZXMNCmI5NTAwMmY0N2EgYWUyM2NkMDAxNyBH
-ZXJ0IFdvbGxueToNCiAgdWkvc2RsMjogc2V0IHN3YXAgaW50ZXJ2YWwgZXhwbGljaXRseSB3
-aGVuIE9wZW5HTCBpcyBlbmFibGVkDQpiZWM5YTk2OTM0IDExMDY4NGM5YTYgSmFuIEtsw7Z0
-emtlOg0KICBody9pbnRjL2FybV9naWM6IGZpeCBzcHVyaW91cyBsZXZlbCB0cmlnZ2VyZWQg
-aW50ZXJydXB0cw0KZGY5YWEzZGQ4YyA3ZmM2NjExY2FkIFZvbGtlciBSw7xtZWxpbjoNCiAg
-aHcvYXVkaW8vdmlydGlvLXNvdW5kOiBmaXggaGVhcCBidWZmZXIgb3ZlcmZsb3cNCmNkMzIw
-YzhhODIgMTIzMWJjN2QxMiBUaG9tYXMgSHV0aDoNCiAgY29udHJpYi9wbHVnaW5zL01ha2Vm
-aWxlOiBBZGQgYSAnZGlzdGNsZWFuJyB0YXJnZXQNCjI3YTE1YTJhMzIgMTlkMjExMTA1OSBB
-bGV4IEJlbm7DqWU6DQogIHRlc3RzL2RvY2tlcjogdXBkYXRlIGRlYmlhbiBpNjg2IGFuZCBt
-aXBzZWwgaW1hZ2VzIHRvIGJvb2t3b3JtDQphMTYwZmEwZmMzIGQwMDY4Yjc0NmEgQWxleCBC
-ZW5uw6llOg0KICB0ZXN0cy9kb2NrZXI6IHJlbW92ZSBkZWJpYW4tYXJtZWwtY3Jvc3MNCjMx
-NDhhMTZiMzAgNTg2YWMyYzY3ZCBEYW5pZWwgUC4gQmVycmFuZ8OpOg0KICBjcnlwdG86IGF2
-b2lkIGxlYWsgb2YgY3R4IHdoZW4gYmFkIGNpcGhlciBtb2RlIGlzIGdpdmVuDQowZThmM2Vi
-NDNmIGU2YzA5ZWE0ZjkgRGFuaWVsIFAuIEJlcnJhbmfDqToNCiAgY3J5cHRvOiBjaGVjayBn
-bnV0bHMgJiBnY3J5cHQgc3VwcG9ydCB0aGUgcmVxdWVzdGVkIHBia2RmIGhhc2gNCmFlMmRj
-MmEyN2EgYzcyY2FiNWFkOSBUaWFnbyBQYXNxdWFsaW5pOg0KICBjcnlwdG86IHJ1biBxY3J5
-cHRvX3Bia2RmMl9jb3VudF9pdGVycyBpbiBhIG5ldyB0aHJlYWQNCmY3NGU1YmQ5YjkgNDhi
-ODU4MzY5OCBEYW5pZWwgUC4gQmVycmFuZ8OpOg0KICBpb3Rlc3RzOiBmaXggZXhwZWN0ZWQg
-b3V0cHV0IGZyb20gZ251dGxzDQoyMGVlZTZjYjNkIGVhZDUwNzhjZjEgSGVsZ2UgRGVsbGVy
-Og0KICB0YXJnZXQvaHBwYTogRml4IFBTVyBWLWJpdCBwYWNrYWdpbmcgaW4gY3B1X2hwcGFf
-Z2V0IGZvciBocHBhNjQNCg==
+> If there's uncertainty / challenge from backporting to some stable branches
+> from your POV, we can still keep things simple and skip the series, as it's
+> only a perf regression and only happens during live migrations (which can
+> enlarge the downtime, for example) but not daily VM use.
 
---------------IC9hWUR6pgdKw6ShHmSiTWnd--
+For this change alone, I did the backport, I just am not sure it makes sense.
 
---------------FVbF0g0FPQlzOX3C8qrBjYAq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+It would be great if you take a look, including the change I mentioned above
+(it isn't in 7.2), there: https://gitlab.com/mjt0k/qemu/-/commits/staging-7.2
+Or we can just drop it for 7.2 per the above.
 
------BEGIN PGP SIGNATURE-----
+Thanks,
 
-iQIzBAEBCgAdFiEEZKoqtTHVaQM2a/75gqpKJDselHgFAmcWoxEACgkQgqpKJDse
-lHjGKRAAnoxyofVhmhniS1qhSECR55YAvIJvJ4eVx5QUDUg9Wi5Y0KSAqFe0sg2+
-uP1AlQRK2eClZmoJy1jTpQqQvGjQRNud8yf0pIZ074OAO8feNiNpU5xMUlrjl2Ay
-DEVZP9Kw39nOgcNCQ4Dq8LiRY0bXvNr+UWzdpilFxQQYuZW01O/hcPN8JpvIb+3J
-W5m7bY93yDldITlAVEqr+2lGI1r2Nx6IzjUU2Luzm7GKWbgdLkZnyOdPmfjF+DYo
-oaH33ZRfeXbOO/VeWKps5TkQVOPzLlqU55Aov5f27akbESJjkI8JZN0ly09xbIXD
-bLBc+cd9K9ezkf6YB8nZN+Dun3L2iOiFBCosb27KGSNykU9BxCBe6zA20I9TPvhR
-nG5lLfHjhXfRooNqr8NCWJ2VeyXLQoSG/WLhFvCh26lYU5Rja2pabDZyzeGpgtIK
-BpTivJQ9nvfcDi+zOaa+4kOszmXchks4a7Sag7z5gCK8SDvY05kMkTyqo2e/9YAm
-HZSTX/HUJuIG+Hckw2+YMxB5E1sc2wpUGzi3JCmIUk+8IW6yQ972xypNDFLCZVo2
-UIPXJTkorJdAM9NqmVEZ9iI3pFJzLvrqKzlqVM0mFAkDvlAYSuotXeGzzigKsDTN
-50O4ya6cu6F51bR9JIaojlu0PqJdnwQKwvdSjN1f4JoYtL+diRk=
-=DgjR
------END PGP SIGNATURE-----
-
---------------FVbF0g0FPQlzOX3C8qrBjYAq--
+/mjt
 
