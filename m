@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89C1D15DBB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96FB5D15DB2
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vZA-00026D-7K; Mon, 21 Oct 2024 12:47:36 -0400
+	id 1t2vf2-0005J0-IW; Mon, 21 Oct 2024 12:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2vZ9-00025f-15
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:47:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2vZ7-0007HC-Ee
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:47:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729529251;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qaTo53KRWa3sKuSRA3LiHBdAiAtL/yKT0cHlEicyTkU=;
- b=U3xR8YzMMiQ56lCJwz8xX9qP0+xrs9HF9wtlJan9rksRqnl2H6Dm3TpN4RpvfsvZtGcSWy
- r7Fr32+1M7wXQp0Mo5ivS+SuMCEStQPLop6ke1bTyMCwdROkZMJ21FS+c8jZNqVKIIRZs3
- 9oG5V0bPmRxxXvr/WE8ci9aYFIxPFl8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-uv23CWwOO3y72d4umtz4ig-1; Mon,
- 21 Oct 2024 12:47:23 -0400
-X-MC-Unique: uv23CWwOO3y72d4umtz4ig-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDEB6196E096; Mon, 21 Oct 2024 16:47:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85CD730001A3; Mon, 21 Oct 2024 16:47:13 +0000 (UTC)
-Date: Mon, 21 Oct 2024 17:47:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dehan Meng <demeng@redhat.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com,
- peter.maydell@linaro.org
-Subject: Re: [PATCH v3 2/4] qemu-ga: Initialize correctly so getline works
- properly
-Message-ID: <ZxaFjYWZ_QjC1JAm@redhat.com>
-References: <20241021132839.463255-1-demeng@redhat.com>
- <20241021132839.463255-8-demeng@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2vf1-0005IG-0D
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:53:39 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2vez-0007p5-8f
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:53:38 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2fb49510250so44201171fa.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:53:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729529615; x=1730134415; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=31j4a4Ov8mIjYCZ+STXjsFrRvIyGd1+WR6sp2ABRv2A=;
+ b=wackGIwPz2W+FN9fd3CNBfVh2xwASdBXPavFfgeNmBZZMq7Ao021bQ4aPZ2pX44yTo
+ ghuUg4BHQuJzzrKhHyiwWxHKMwkEQKIHktQJ2bfcNoNNPwrgRigBLVwquc9mKcpHWNis
+ xqyPOUO/3Q5Rol0U71TK0UBAjU4SETEBNYHf53T/D6d2s6JD3V0FkRHETLFUlk0vUVtR
+ gNDUp/jatxdrrT3/S+zrNf/DVX/9WnpABIWsvsoOsX10JHOMPNeUKrj0QAzOK6K6JSJG
+ UxCe52ae1Y9PORp8GQlSn/7n/SRI9pXkz5C0eOFsyfYKz/zxSpXwczl3EaWBaJW6kI8Y
+ 2r8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729529615; x=1730134415;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=31j4a4Ov8mIjYCZ+STXjsFrRvIyGd1+WR6sp2ABRv2A=;
+ b=EAHuJbI5pFCnaTs9mvwWh7G89sQsE7nTHh4lVoQieb+1+9Yl/LhzCHRWVn61yUurdp
+ SKoM2Cgx8vrf3MtgJ4n8POhQpnJ49I8UVM6vrbUvx4ZY6CEYyL7UK6Rayk5AnlL0WS2m
+ g+TlBdaT3aI0XJBTPmr3ND7eII8ak+iZl2AnF6ZKfI6p18mXhdbsRW4i9rZeRd6Qjg58
+ ButdGmS2kW5hBdFQS/4N1lFLJv8GNFdAdhbyg2ORzGTmm7NLFMHAZmMTdPnaal+A++oB
+ i4rA8EBAOqnv6ashD3PUR7varEOieDxMaZY/OxayiWmS2BvMbgXOL0ERPfr8bfC/p4b0
+ Sjbw==
+X-Gm-Message-State: AOJu0YzsMi8DTL+64cSJ0z/7m2KNRXzBCCvhUs3ExBhAw9N2j8grm3s2
+ EUurh6+5biqm9bc9ICX5DkVXtPAmrOffv7yEEHpu6jzMq5rwfgsPaKG37HoROaQVAAbR037cnBN
+ cpOxuv2FKe+oy8oIWhaqsDdv/eNUmzKoclYUxBw==
+X-Google-Smtp-Source: AGHT+IG4EjxgPJBC4ZaydX/jlVUAM5lD3lmVq8umWoSVwm1Wt0KNSM+bOVo6rjYe41vOph43rrrdgeMDJISYyuovtkc=
+X-Received: by 2002:a05:651c:1508:b0:2fb:6465:3198 with SMTP id
+ 38308e7fff4ca-2fb82e90cf6mr52932891fa.5.1729529615271; Mon, 21 Oct 2024
+ 09:53:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241021132839.463255-8-demeng@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241021145410.1420261-1-berrange@redhat.com>
+In-Reply-To: <20241021145410.1420261-1-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 21 Oct 2024 17:53:17 +0100
+Message-ID: <CAFEAcA9_9jYHHspAbR=3uXLHD=7AcMN3dQubYxsAQgyCyMOFUw@mail.gmail.com>
+Subject: Re: [PATCH] util: don't set SO_REUSEADDR on client sockets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,27 +87,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 09:28:37PM +0800, Dehan Meng wrote:
-> Proper initialization of param 'size_t n' to '0' for
-> getline to function correctly.
-> 
-> Signed-off-by: Dehan Meng <demeng@redhat.com>
-> ---
->  qga/commands-linux.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 21 Oct 2024 at 15:54, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> Setting the SO_REUSEADDR property on a socket allows binding to a port
+> number that is in the TIMED_WAIT state. This is usually done on listener
+> sockets, to enable a server to restart itself without having to wait for
+> the completion of TIMED_WAIT on the port.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[...]
 
+> diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+> index 60c44b2b56..80594ecad5 100644
+> --- a/util/qemu-sockets.c
+> +++ b/util/qemu-sockets.c
+> @@ -367,7 +367,6 @@ static int inet_connect_addr(const InetSocketAddress =
+*saddr,
+>                           addr->ai_family);
+>          return -1;
+>      }
+> -    socket_set_fast_reuse(sock);
+>
+>      /* connect to peer */
+>      do {
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+We definitely want to keep the socket_set_fast_reuse()
+call in create_fast_reuse_socket() as that function is
+used (only) in the "create socket, listen, bind" server
+socket code path. (Arguably create_fast_reuse_socket()
+is a bit unnecessary as it has only one callsite.)
 
+The one in inet_connect_addr() is clearly wrong as that's
+the client end (fixed in this patch).
+
+How about the call in inet_dgram_saddr() ? I'm not sure how
+SO_REUSEADDR interacts with UDP sockets... (I'm assuming
+the answer is "we need it there" so I'm kind of asking for
+the code-review record really.)
+
+In net/socket.c we already set SO_REUSEADDR for dgram
+and for listening sockets but not for client ones, so
+we're now consistent there.
+
+thanks
+-- PMM
 
