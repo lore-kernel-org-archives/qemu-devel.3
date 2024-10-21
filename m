@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F67D15DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 627E9D15DA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2u6w-0000Li-5q; Mon, 21 Oct 2024 11:14:22 -0400
+	id 1t2uB1-0001PV-KD; Mon, 21 Oct 2024 11:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2u6u-0000K9-10
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:14:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2uAs-0001Od-HV
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:18:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2u6r-0004KB-P8
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:14:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t2uAk-0004zb-0v
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:18:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729523655;
+ s=mimecast20190719; t=1729523881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SCSmxnX9WwEfsYfQls0UuEkj65l0gCfWwhBFvLNcK8Q=;
- b=eiVRt2mcDLoe3LsDUsT+vzokMTCXzxmIpmvGoJee4xXL+cxJHYRHSh+TjvMeApurG7RA2O
- SleQKb8Hu3FfJ2J8iJP5pisIrzUbUxleVKIA0ayi5RO8p9/887Eft56zdMmPvp/uWirJak
- pXDXGMfJFeARjmYA4MvR/9dy1/VsFx4=
+ bh=pT0uaM+/Q7qTpKFxnabGSRM38C1hlpj97SLIjgx2q1A=;
+ b=ZJpeiq/VvFoEms2cq2XUs22UbGCxKo1VZvW1QjmyCmfQmOHJxZ4d0zknBEPsTO5ZkTU2qN
+ vSfGN597UqA3X2zogDvhMbIbycNQzPl6x+7oRE3axNQYGt9lRkWBwwNG8pZeJ4WllTxOGm
+ scxkpZhaYYLaiPV6kTgnhuNdpvFc09M=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-On3ixCQVPHqbNN-RWLAPvQ-1; Mon, 21 Oct 2024 11:14:14 -0400
-X-MC-Unique: On3ixCQVPHqbNN-RWLAPvQ-1
+ us-mta-412-nhV9_cu5OtaM8IGyVJhfwQ-1; Mon, 21 Oct 2024 11:17:58 -0400
+X-MC-Unique: nhV9_cu5OtaM8IGyVJhfwQ-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4315f48bd70so27745765e9.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 08:14:14 -0700 (PDT)
+ 5b1f17b1804b1-4316138aff6so27459325e9.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 08:17:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729523653; x=1730128453;
+ d=1e100.net; s=20230601; t=1729523876; x=1730128676;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SCSmxnX9WwEfsYfQls0UuEkj65l0gCfWwhBFvLNcK8Q=;
- b=AiYeaLjFSDyuVT6uZ3NsLLbbqpWaw4LRE3IevcXiO+8QD1H3/vNODbT0pOLV98KbE7
- IH501NaI1YgHTA/TdvoL32yx3E2ycNmB7ht2xVhB1ke7vswRwyJvW2xj7bnN64X2iEkn
- 0huqtA5cA+9JO5gblIRWLVvqAUGM65fU1Liop274J2M/ROxMuw5urrG1zq4QnHKlTneG
- ZaAyHAri/JS393I5wVI4xKwl+NQd8KEs3nqVKvS3zzBLX40aPKa9fJgunf9gEmdRH0Oj
- 5e1SOG3A09SDlheC2EftpurU/3behnZTlXJisy/Qi54sk2qicupdyHtRxqIuQvBpxUu3
- NoWw==
+ bh=pT0uaM+/Q7qTpKFxnabGSRM38C1hlpj97SLIjgx2q1A=;
+ b=ZQQon8vFTIn93NExeX7bupbm61Pj/oaxPsoXisfL7dD8+5NeGw5aaIufPTNxAR2Z7j
+ xRyBwiOKBKrGRGvsibWey+yhf4Qsd6fvOhgn3JkOKQ5d+2Heg86b4YkVfkGjavWbdLj3
+ xdNPrEiZKcxymBuyJR3sQJsO2nX1lNmJch+4VTZmIx70Gzw/7u8FHXbd6uxdk2PvDtNf
+ owGNWb9YZSxGx8Ho8nYNtJhIm/JRo2MLzJ8J193nOl1k1pz2T7l9aOdMcoj0j1AVEkSp
+ af7U/koD/9UtfagSUQwta5hopAM560QByyRXYi+kUvHRZ/4MhzzCrmQmce128DOXuDPy
+ XiIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsRdU7xvICbCyGJbo/NEzIe0erH2nS9zKaSWfmQVRu1KkmiF8Sycm6Grxgqx9z9CX5yCER1uXO+XMa@nongnu.org
-X-Gm-Message-State: AOJu0Yxmf9sLbvHxWVdVlY2EhbDsUmMm4fHQJNoBZl1KqPjojtuw1iWG
- jur4HWRHL9kbic4NaVccMr1ylurp5/C/j4fzQry3917IuVphDPQepRwP7v1yQfBP3YxbI5FZgNm
- W/K4iDhlxVM+3aW4nLifr88EoPR6nE8LjV2BKFL5VkCzP7qKR23mU
-X-Received: by 2002:a05:600c:1988:b0:42c:bd27:4c12 with SMTP id
- 5b1f17b1804b1-4316164642fmr90647965e9.10.1729523653187; 
- Mon, 21 Oct 2024 08:14:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHE9IsPD3UX7IurFG5100CmBKxhUtpGHRsBHNMuy+i1W4oCsjGUXzDnRnipYrEPKD/Rbcf3wA==
-X-Received: by 2002:a05:600c:1988:b0:42c:bd27:4c12 with SMTP id
- 5b1f17b1804b1-4316164642fmr90647735e9.10.1729523652802; 
- Mon, 21 Oct 2024 08:14:12 -0700 (PDT)
+ AJvYcCUsYjxpcZiTE1VCfQ22U3zeWrIq+EvG5lM6eObScznvMOyW8xoyPT/f7/4eTtohvtYBP0FvA1VkJIZ4@nongnu.org
+X-Gm-Message-State: AOJu0YzfDJ2MrKYpoA40780IWnHSYsiaXKlg2H2fZnQVU/8o2N5RD2eU
+ pvEZs0Cx52eHyIRof0jJcfLuVbjTzQFp+g1P+tSr56dlIErzWDZ4iNu3WqoVLjg53HsGjK2KvaV
+ G5qHzTGw53C+dZ4PTEbMzOMCloETVY6cJmiVZCeuic1NKsGiw8lZsSAsvN9N6
+X-Received: by 2002:a05:600c:5489:b0:430:5356:ac8e with SMTP id
+ 5b1f17b1804b1-43161632f4amr102955495e9.5.1729523876126; 
+ Mon, 21 Oct 2024 08:17:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGfaHKwTcSkirIFuP5WM4+LOeUZy3bV5NxlRE1VOTjjuFKoSohqT+dc5hvyY/dxGD3lipJ+A==
+X-Received: by 2002:a05:600c:5489:b0:430:5356:ac8e with SMTP id
+ 5b1f17b1804b1-43161632f4amr102955265e9.5.1729523875763; 
+ Mon, 21 Oct 2024 08:17:55 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
  ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f5cc4dfsm61035835e9.45.2024.10.21.08.14.11
+ ffacd0b85a97d-37ee0a48283sm4551908f8f.36.2024.10.21.08.17.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 08:14:12 -0700 (PDT)
-Message-ID: <cfca06dd-cfd3-4a36-a80f-b8e2ddecbf88@redhat.com>
-Date: Mon, 21 Oct 2024 17:14:11 +0200
+ Mon, 21 Oct 2024 08:17:55 -0700 (PDT)
+Message-ID: <5ba4ac92-909d-46f7-a70a-8b94a6194138@redhat.com>
+Date: Mon, 21 Oct 2024 17:17:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] vfio/migration: Refactor
- vfio_vmstate_change/_prepare() error reporting
+Subject: Re: [PATCH 3/3] vfio/migration: Change trace formats from hex to
+ decimal
 To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
  <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 References: <20241020130108.27148-1-avihaih@nvidia.com>
- <20241020130108.27148-3-avihaih@nvidia.com>
+ <20241020130108.27148-4-avihaih@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -123,17 +123,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241020130108.27148-3-avihaih@nvidia.com>
+In-Reply-To: <20241020130108.27148-4-avihaih@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -151,83 +151,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Avihai,
-
 On 10/20/24 15:01, Avihai Horon wrote:
-> When the VM is shut down vfio_vmstate_change/_prepare() are called to
-> transition the VFIO device state to STOP. They are called after
-> migration_shutdown() and thus, by this time, the migration object is
-> already freed (more specifically, MigrationState->qemu_file_lock is
-> already destroyed).
+> Data sizes in VFIO migration trace events are printed in hex format
+> while in migration core trace events they are printed in decimal format.
 > 
-> In this case, if there is an error in vfio_vmstate_change/_prepare(), it
-> calls migration_file_set_error() which tries to lock the already
-> destroyed MigrationState->qemu_file_lock, leading to the following
-> assert:
+> This inconsistency makes it less readable when using both trace event
+> types. Hence, change the data sizes print format to decimal in VFIO
+> migration trace events.
 > 
->    qemu-system-x86_64: ../util/qemu-thread-posix.c:92: qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
-> 
-> Fix this by not setting migration file error in the shut down flow.
-> 
-> Fixes: 20c64c8a51a4 ("migration: migration_file_set_error")
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->   hw/vfio/migration.c | 31 +++++++++++++++++++++----------
->   1 file changed, 21 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 992dc3b102..1c44b036ea 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -783,6 +783,25 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->   
->   /* ---------------------------------------------------------------------- */
->   
-> +static void vfio_vmstate_change_error_report(int ret, Error *err,
-> +                                             RunState state)
-> +{
-> +    if (state == RUN_STATE_SHUTDOWN) {
-> +        /*
-> +         * If VM is being shut down, migration object might have already been
-> +         * freed, so just report the error.
-> +         */
-> +        error_report_err(err);
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Migration should be aborted in this case, but vm_state_notify()
-> +     * currently does not support reporting failures.
-> +     */
-> +    migration_file_set_error(ret, err);
-> +}
-
-This seems correct, but testing the machine's runtime state to
-work around the fact that 'current_migration' is not safe to
-use reveals a flaw.
-
-In vfio, migration_is_setup_or_active() is unsafe. So are the
-calls to vfio_set_migration_error().
 
 
-This comment seems in contradiction with the migration code :
-
-/* When we add fault tolerance, we could have several
-    migrations at once.  For now we don't need to add
-    dynamic creation of migration */
-
-Why is 'current_migration' allocated and destroyed today ?
-
-Could we replace it with a singleton and switch the state to
-MIGRATION_STATUS_NONE instead of destroying it ?
-
-If not, should 'current_migration' be set to NULL in
-migration_shutdown() and its value tested before accessing
-to any of its fields, in a thread safe manner if necessary.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
+
+> ---
+>   hw/vfio/trace-events | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index c475c273fd..29789e8d27 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -151,7 +151,7 @@ vfio_display_edid_write_error(void) ""
+>   vfio_load_cleanup(const char *name) " (%s)"
+>   vfio_load_device_config_state(const char *name) " (%s)"
+>   vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
+> -vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size 0x%"PRIx64" ret %d"
+> +vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size %"PRIu64" ret %d"
+>   vfio_migration_realize(const char *name) " (%s)"
+>   vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
+>   vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
+> @@ -160,10 +160,10 @@ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+>   vfio_save_cleanup(const char *name) " (%s)"
+>   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
+>   vfio_save_device_config_state(const char *name) " (%s)"
+> -vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
+> -vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size 0x%"PRIx64
+> -vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy 0x%"PRIx64" postcopy 0x%"PRIx64" precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
+> -vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy 0x%"PRIx64" postcopy 0x%"PRIx64" stopcopy size 0x%"PRIx64" precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
+> +vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> +vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
+> +vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+> +vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy %"PRIu64" postcopy %"PRIu64" stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64
+>   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   
 
 
