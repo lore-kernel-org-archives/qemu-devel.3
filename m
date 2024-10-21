@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A774D1712B
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69BEFD17130
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 20:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2yD3-0007Ka-EE; Mon, 21 Oct 2024 15:36:57 -0400
+	id 1t2ydP-0004Zy-H5; Mon, 21 Oct 2024 16:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2yD1-0007KQ-FM
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:36:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2yCz-0000YL-Jl
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:36:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729539411;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hwxpB8V3Gv6KmIaDIq4dlYpo6h6PP464LxV+DTTGiLo=;
- b=cCpTa7/m1FbcIo0D5szyDpThMw7Gjd2BIIC9ikAogoBvBmoMAaJ8HR1wDYJEtEZDosb1Rc
- O/q2E4ypJlXCpZeBuf2XlF+hp+KtXAD6wyM/uQOUCfQIjoUZdLzLTPFOqg4O5ee5mHuEy6
- +YkIQZwzhf54ylKvGar+2B6jnYxJ6Ig=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-OskBkHZ3M0CrDKetQiJFlQ-1; Mon, 21 Oct 2024 15:36:49 -0400
-X-MC-Unique: OskBkHZ3M0CrDKetQiJFlQ-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b15a9d4b7cso373746285a.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 12:36:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2ydN-0004V1-Kr
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:04:09 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2ydM-0003Mk-0g
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 16:04:09 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7ead1edbf1dso1715308a12.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 13:04:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729541046; x=1730145846; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=23VON7e9obGXRFqC4rn3GhRrZeVog9BlvBFL90y4CDw=;
+ b=eHiN3w/s3W2csWnX/uft3v3/v+wxYmKQBE4AmZVYErcxaiiOw8+Ha2TyTQ4hzrnL6n
+ kUlFttElsX9uoa+jytytptPKgvUS2Pw6RmMTmTX75B9Ch/zPo9lWabTB64u9MCtkPNNC
+ 43aeR4fdGggF5MJab62R8NRosUE2ESM4V1FzPy1ANOA8bfj0eM5LFa6ypdJINdJ1jM8z
+ uZKbTZC9YQzHc/ZCBnt+p/K2UGlgvbAYdFF3UKSRoLl9SKD2USvSZlJlFSMnOErN1rzz
+ WL+YZrik+HQvvqRbg1K/A29tNPoeC5pPfFQ28LHjlMpNIX35OyzFoFL/VNF8JI8feIwt
+ 1rBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729539408; x=1730144208;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hwxpB8V3Gv6KmIaDIq4dlYpo6h6PP464LxV+DTTGiLo=;
- b=N+ROwfOflqV4Y9CNHXrFnIclQ81ve0G6ABUgq26lSpmZeG8sSOfbA4J3RbBrPMTM4K
- 0v6kOiez77EfE760MBGtdBIvjjZ1bi7nTMNLn2vy/fxu+O0YW2EooRVDvNn3sU+gYlJE
- OmLr4YfmntAl3q94gGE/S5Gh2CatwoZRQ/gTZ05tcBrqPYgpjOo1D/9bygkJorboTAwV
- zv7EDiXoQMfeYfhSQQUFHZlwaOIhRs8ctruEAp9IlPZW9Zh28b+W1g4gZ3vf7DGbH6Q8
- q0CetVZFFfSLgYVEtxR+FQ9sfwxiLPX9puVR5CBqqloREPlGCKWE73UJeqVpyvm9M4Ol
- GQZw==
-X-Gm-Message-State: AOJu0YypWD2Z8wfWleirfRxScY629uK+JDoZ13YGpBRcf0PoAc8I2c9k
- wSp9IVsTCCWgqXfJ4pF+oeyXMrGiFQZWVh4OPdAsnF9H/r/2gyQwZyG1/XuENdrkUwU0LW3/Qdx
- o7uZtY00wYRDbSkBXfdY4Ehx7+lxF3adzM2kMza1k4/lyRE6x017j
-X-Received: by 2002:a05:620a:1a91:b0:7b1:3b99:de14 with SMTP id
- af79cd13be357-7b157c077c0mr1433961585a.57.1729539408484; 
- Mon, 21 Oct 2024 12:36:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyhGlkmsWUvKpT19sW2G0OICUYtNUFM+w0ueMn50qxYTwtTXYrfg87JRsR+HaqFyahzFs0qg==
-X-Received: by 2002:a05:620a:1a91:b0:7b1:3b99:de14 with SMTP id
- af79cd13be357-7b157c077c0mr1433959285a.57.1729539408156; 
- Mon, 21 Oct 2024 12:36:48 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b165a710b4sm199925985a.104.2024.10.21.12.36.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 12:36:47 -0700 (PDT)
-Date: Mon, 21 Oct 2024 15:36:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC V1 14/14] migration: allow commands during precreate and
- preconfig
-Message-ID: <ZxatTbs30qouLDO8@x1n>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-15-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1729541046; x=1730145846;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=23VON7e9obGXRFqC4rn3GhRrZeVog9BlvBFL90y4CDw=;
+ b=NteadXL09mu0/8NwoJ+pXiPrejlhDbWU6IfrK//ZK/+WMUTBPMhJSUS94fCT3qfr5V
+ SP5VMUmWnpoShzxJRBQ4BsZO7B4/YzI3XAKAbtUHZOf6jLW/Rp0Cm4AOqVNSAuiN+RVD
+ SWFzqM+cRmrZW60SE0M4CU1DiXuWp+mTY8ACeqPVRWK8a4bwUNJAiTARifSAn28eMJXV
+ QZ+r/uNJOD0XSpNpO8PKoSMxgAyY9eoCiK49t+CFWkA9VJPP2Atp3sdNFd+BrkoJ33Hl
+ 6SxL7btyZZZVd4cZ3VCsLW8NhLhxl1FggXh7SqAVFBJVG6GUGPPaoB6S9GvnPrOuPi/b
+ FtFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUE1zAHapLzBKR/E8wNd2I1TvHLk7kMiQpIs/rkAnUy/Vz/g0p/FnuRyLFSioRNAiy/0f1Ssmmybkzl@nongnu.org
+X-Gm-Message-State: AOJu0YzRnHtwtMvASOVMN5ZBEdfPG57zMzXB0emWE6SvXgWh5ZT83Opr
+ 4AKnayJ/p7lidFB9/FxTY21DoPjbLBQVbRDqdSZK8TtDsHApN9iEU99ro1cJbqM=
+X-Google-Smtp-Source: AGHT+IHYNma1Ww9pJvXQtkWm7bwTsoziJVfWwhWKY7QtUCVa/rxCYOp6qaE2Ws8MD7TuHRr2XS9+xQ==
+X-Received: by 2002:a17:90a:2c46:b0:2e2:d859:1603 with SMTP id
+ 98e67ed59e1d1-2e5ddc5c66dmr273775a91.25.1729541046008; 
+ Mon, 21 Oct 2024 13:04:06 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e5df4162ddsm3782a91.0.2024.10.21.13.04.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 13:04:05 -0700 (PDT)
+Message-ID: <ffc7aafc-5dc4-4595-b90b-dab0257c9b6f@linaro.org>
+Date: Mon, 21 Oct 2024 13:04:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1729178055-207271-15-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/mips: Remove unused CPUMIPSState::current_fpu field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241021151253.36443-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241021151253.36443-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,117 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 17, 2024 at 08:14:15AM -0700, Steve Sistare wrote:
-> Allow various migration commands during the precreate and preconfig phases
-> so migration may be set up and initiated at that time.
+On 10/21/24 08:12, Philippe Mathieu-Daudé wrote:
+> The 'current_fpu' field is unused since commit f01be154589
+> ("Move the active FPU registers into env again, and use more
+> TCG registers to access them").
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->  hmp-commands.hx     |  2 ++
->  qapi/migration.json | 16 +++++++++++-----
->  qapi/misc.json      |  3 ++-
->  3 files changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index 06746f0..c0f34e9 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -959,6 +959,7 @@ ERST
->          .params     = "uri",
->          .help       = "Continue an incoming migration from an -incoming defer",
->          .cmd        = hmp_migrate_incoming,
-> +        .flags      = "p",
->      },
->  
->  SRST
-> @@ -1000,6 +1001,7 @@ ERST
->          .help       = "Enable/Disable the usage of a capability for migration",
->          .cmd        = hmp_migrate_set_capability,
->          .command_completion = migrate_set_capability_completion,
-> +        .flags      = "p",
->      },
+>   target/mips/cpu.h            | 1 -
+>   target/mips/sysemu/machine.c | 2 +-
+>   2 files changed, 1 insertion(+), 2 deletions(-)
 
-How about "info migrate_capabilities / migrate_parameters"?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->  
->  SRST
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 3af6aa1..0468c07 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -373,7 +373,8 @@
->  #           }
->  #        }
->  ##
-> -{ 'command': 'query-migrate', 'returns': 'MigrationInfo' }
-> +{ 'command': 'query-migrate', 'returns': 'MigrationInfo',
-> +  'allow-preconfig': true }
->  
->  ##
->  # @MigrationCapability:
-> @@ -527,7 +528,8 @@
->  #     <- { "return": {} }
->  ##
->  { 'command': 'migrate-set-capabilities',
-> -  'data': { 'capabilities': ['MigrationCapabilityStatus'] } }
-> +  'data': { 'capabilities': ['MigrationCapabilityStatus'] },
-> +  'allow-preconfig': true }
-
-migrate-set-parameters?
-
->  
->  ##
->  # @query-migrate-capabilities:
-> @@ -551,7 +553,9 @@
->  #           {"state": false, "capability": "x-colo"}
->  #        ]}
->  ##
-> -{ 'command': 'query-migrate-capabilities', 'returns':   ['MigrationCapabilityStatus']}
-> +{ 'command': 'query-migrate-capabilities',
-> +  'returns':   ['MigrationCapabilityStatus'],
-> +  'allow-preconfig': true }
->  
->  ##
->  # @MultiFDCompression:
-> @@ -1297,7 +1301,8 @@
->  #        }
->  ##
->  { 'command': 'query-migrate-parameters',
-> -  'returns': 'MigrationParameters' }
-> +  'returns': 'MigrationParameters',
-> +  'allow-preconfig': true }
->  
->  ##
->  # @migrate-start-postcopy:
-> @@ -1751,7 +1756,8 @@
->  { 'command': 'migrate-incoming',
->               'data': {'*uri': 'str',
->                        '*channels': [ 'MigrationChannel' ],
-> -                      '*exit-on-error': 'bool' } }
-> +                      '*exit-on-error': 'bool' },
-> +  'allow-preconfig': true }
->  
->  ##
->  # @xen-save-devices-state:
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index 559b66f..ce60493 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -241,7 +241,8 @@
->  { 'command': 'human-monitor-command',
->    'data': {'command-line': 'str', '*cpu-index': 'int'},
->    'returns': 'str',
-> -  'features': [ 'savevm-monitor-nodes' ] }
-> +  'features': [ 'savevm-monitor-nodes' ],
-> +  'allow-preconfig': true }
->  
->  ##
->  # @getfd:
-> -- 
-> 1.8.3.1
-> 
-
--- 
-Peter Xu
-
+r~
 
