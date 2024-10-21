@@ -4,78 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7B9D15D98
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE7AD15D96
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2swW-0003Wy-0t; Mon, 21 Oct 2024 09:59:32 -0400
+	id 1t2szh-0004eS-3J; Mon, 21 Oct 2024 10:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2swU-0003Wk-Ls
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:59:30 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t2sze-0004dc-Gx; Mon, 21 Oct 2024 10:02:46 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2swS-0004d7-P4
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:59:30 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a9a5f555cfbso289593566b.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 06:59:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t2szc-00051T-K4; Mon, 21 Oct 2024 10:02:46 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7eae96e6624so903105a12.2; 
+ Mon, 21 Oct 2024 07:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729519167; x=1730123967; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dWtPQmw5WBzZS/2Bf0jAY3n/IYsBr3y+IVku3BybJR0=;
- b=a33cQZXffAGQZ2lvS7AdVfNxwXGCLOGc/KSKHnopyR7GDo5UlOMvRRJfTTLVQJ5cQ5
- jxI1QBqkG4au4WODfp90tD27Nu2J4f6WyjvGl4vkEK9VSI60V81jgDSaG4znsOtBaVKk
- fEq+E6r2ZIiPTOq/omBIqdsZ5CeuXGehpN8VqPKxONBsqm0rmCxYdVkuiYMx1cc2NCvK
- 2mLtL7WHSGg6YPIZ0BzgTgNDJcy0Ats7/4c7YoqDLp/WhdKSsYroZ04/0E+SwPT/c2sf
- zl+RbL6pNLeGwASJNANpCJkMcV42wQ9d303c+9ZZwWw8V2JD+gOXUiHLwvzzSghgOtes
- 3vog==
+ d=gmail.com; s=20230601; t=1729519363; x=1730124163; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=RG4IemUhwjFijUUM58Rm3MXy4OzzjPVniYRcFoJOMTo=;
+ b=KHO1BVL9JuN8YqdjNFBchFGiuoLfQBvEQ4I9LtrgCM81uMJ8O4nmMCn9Yn7Pf9fhVA
+ 4oVuqwlxj6dyEDwL+Wy6FDL77Zim7c59huIQf/3t82igXqSDWIdcyL/AIx8FHFloDPbP
+ mQGhNufy4a8NBAaemqWgX14b0wbOMJ1ZicxTNpOQDQ1SigdQDp0le2nVCjHm9FNSJVT5
+ naXmvbqEbKp130NwBTjkqrMCvbQhEgYHofY3QKhI/9ofGO82LaODKV9jW8bvCKFodiab
+ rdc2mblFYhjX82GtxS3ovfo/1327LYYsvz1ftLNnHoFmn/eGANGSGov6uBm9dmL/g4mD
+ ivxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729519167; x=1730123967;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dWtPQmw5WBzZS/2Bf0jAY3n/IYsBr3y+IVku3BybJR0=;
- b=FxgvSSE4BNtlrV6S9gnY677oKsiyrHTX6XfIHPLSN9UEIakjjmnFTcc+0HqgUjQIqw
- 3ktT6+a3NEn9uYTHlbEXWn746LiHCpRCTDAWZyJzWkoNYELey6VmyH2S0kA/iJEgeAsD
- CvBtm/fHtkX15DkN/ONAp1Euj7nk8g19qdyeuesPHfVc69PamHwoKany6BGBWjGwCIpl
- VCHBHkOxBOeU3LF51t1TFBi8XY8SHYIu6BdWQ1h3jOBgjWLDYgVHKV0qJ1Vf0r1swWyl
- Dd8m4d0b1Bz+mkJysZyfm78ajjDbbimtHE/j/tGw+LO8eO+Y+ETRvldBYWN/cdWpA+zM
- Sb7g==
-X-Gm-Message-State: AOJu0YwFU4UYmEgP1hoBK8Q33fGwltFrLg5OpFPEIg5oZVBIaXH/QbP7
- ESqepB3lMZsoTx3XCqTgM3MJV3/7t+V4Fs0nbJjtnay68YlTcUHG/8qk8/VR9CqabZueILorURz
- GAq6tKySkOoIK5XTRuw1OnXC6ws/akgArmpkCxw==
-X-Google-Smtp-Source: AGHT+IGp1fjPzPlWyQKIJZL2NWjZkcAcgqDqnAXNcEDCTtTWCL9GEWaZeXU2S8YDaAaYNSSGbUM47xOkm04t9XQJTI0=
-X-Received: by 2002:a05:6402:4301:b0:5c9:1beb:b971 with SMTP id
- 4fb4d7f45d1cf-5ca0ae810e4mr11211391a12.24.1729519166627; Mon, 21 Oct 2024
- 06:59:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729519363; x=1730124163;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RG4IemUhwjFijUUM58Rm3MXy4OzzjPVniYRcFoJOMTo=;
+ b=migGA9o2o8xkMsjtnfegrn0s3FHUTZTGgkjor/8jtd/GwmY2Iti4StngNJSf5+nFoB
+ 3AwNMBlHprU4rND0t7QFFeqwFDGhZl3kc5rw3yEvbDavOU9I9NIQky0q72JKzNlJtXES
+ 7bO67jeQ9M179UwboQf2ncC5I90p6Rv+KqrBjdkY5suixvYC7FVE6LZ4h+YZaHzeezLg
+ hCmW111Vrj87uES4AZ8yIoDCj2zJ62TLEr99ysPI+CTDFPAje9qS1IiDEl19dD41ULCh
+ 0fn1jHPEZk6fY+JmhYN3vxGpSSqheyvY0j1100JkEuDgYFJTjgz9Wvzc8/4SzWqzmss1
+ Beig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnA5zEdk7QYhn/EFB6k4D+/FK1A8wdqLrYDNqRhXQTo7FshAAW5fJd9FnkecgLP783AbcI3hbfjtRj@nongnu.org
+X-Gm-Message-State: AOJu0YzmrmpNZ5ql/MkGSZOs1zZ+XR69YGubuVH7wDNVwmChxADb0ZhE
+ Xbf3veptaKoI/R+Iz6U075TMRvG+OL82uR0mkJKd04nbh5zrSwh5ZxrSUg==
+X-Google-Smtp-Source: AGHT+IFkpZBGEDd/MV4pyCEPVQ800A4oz+I9ThaXJQOFjid6tgFk/3FyjfCWBaV1nXvayJawTYhEAA==
+X-Received: by 2002:a05:6a21:164a:b0:1d6:e6b1:120f with SMTP id
+ adf61e73a8af0-1d92c4dffb5mr16764986637.11.1729519362309; 
+ Mon, 21 Oct 2024 07:02:42 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71ec13334f7sm2890494b3a.77.2024.10.21.07.02.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 07:02:41 -0700 (PDT)
+Message-ID: <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+Date: Mon, 21 Oct 2024 07:02:40 -0700
 MIME-Version: 1.0
-References: <20241021113500.122500-1-thuth@redhat.com>
- <CAFEAcA9VKkjfYgnv=x5kp+KUZ4rC0y9-KiCWBG+F84MBh7rxPw@mail.gmail.com>
- <a8bbb335-55f4-4c34-b56f-76482391c80e@redhat.com>
- <d5db0cb8-0ec3-4f41-a14c-7d07cbe6f4ec@redhat.com>
-In-Reply-To: <d5db0cb8-0ec3-4f41-a14c-7d07cbe6f4ec@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Oct 2024 14:59:15 +0100
-Message-ID: <CAFEAcA8xdxdzXeX7YfZgz45sRqzEsDSWxrhkz11VOSWfVhQ3Dg@mail.gmail.com>
-Subject: Re: [PULL 00/21] Test updates (tuxrun tests, new QTest maintainer,
- ...)
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=groeck7@gmail.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.171, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,79 +144,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 21 Oct 2024 at 14:55, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 21/10/2024 15.18, Thomas Huth wrote:
-> > On 21/10/2024 15.00, Peter Maydell wrote:
-> >> On Mon, 21 Oct 2024 at 12:35, Thomas Huth <thuth@redhat.com> wrote:
-> >>>
-> >>> The following changes since commit f1dd640896ee2b50cb34328f2568aad324702954:
-> >>>
-> >>>    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into
-> >>> staging (2024-10-18 10:42:56 +0100)
-> >>>
-> >>> are available in the Git repository at:
-> >>>
-> >>>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-21
-> >>>
-> >>> for you to fetch changes up to ee772a332af8f23acf604ad0fb5132f886b0eb16:
-> >>>
-> >>>    tests/functional: Convert the Avocado sh4 tuxrun test (2024-10-21
-> >>> 13:25:12 +0200)
-> >>>
-> >>> ----------------------------------------------------------------
-> >>> * Convert the Tuxrun Avocado tests to the new functional framework
-> >>> * Update the OpenBSD CI image to OpenBSD v7.6
-> >>> * Bump timeout of the ide-test
-> >>> * New maintainer for the QTests
-> >>> * Disable the pci-bridge on s390x by default
-> >>>
-> >>> ----------------------------------------------------------------
-> >>
-> >> Couple of failures on the functional-tests:
-> >>
-> >> https://gitlab.com/qemu-project/qemu/-/jobs/8140716604
-> >>
-> >> 7/28 qemu:func-thorough+func-aarch64-thorough+thorough /
-> >> func-aarch64-aarch64_tuxrun TIMEOUT 120.06s killed by signal 15
-> >> SIGTERM
-> >>
-> >> https://gitlab.com/qemu-project/qemu/-/jobs/8140716520
-> >>
-> >> 14/17 qemu:func-thorough+func-loongarch64-thorough+thorough /
-> >> func-loongarch64-loongarch64_virt TIMEOUT 60.09s killed by signal 15
-> >> SIGTERM
-> >>
-> >> I'm retrying to see if these are intermittent, but they
-> >> suggest that we should bump the timeout for these.
-> >
-> > Everything was fine with the gitlab shared runners (https://gitlab.com/
-> > thuth/qemu/-/pipelines/1504882880), but yes, it's likely the private runners
-> > being slow again...
-> >
-> > So please don't merge it yet, I'll go through the jobs of the private
-> > runners and update the timeouts of the failed jobs and the ones where it is
-> > getting close to the limit.
->
-> Actually, looking at it again, the func-loongarch64-loongarch64_virt test is
-> not a new one, this has been merged quite a while ago already. And in
-> previous runs, it only took 6 - 10 seconds:
->
->   https://gitlab.com/qemu-project/qemu/-/jobs/8125336852#L810
->   https://gitlab.com/qemu-project/qemu/-/jobs/8111434905#L740
->
-> So maybe this was just a temporary blip in the test runners indeed? Could
-> you please try to rerun the jobs to see how long they take then?
+On 10/21/24 02:17, Peter Maydell wrote:
+> On Mon, 21 Oct 2024 at 09:01, Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> On 21/10/2024 09.15, Thomas Huth wrote:
+>>> On 17/10/2024 18.32, Peter Maydell wrote:
+>>>> This patchset adds new functional tests for the collie and sx1
+>>>> boards, which are the only remaining ones that survived the
+>>>> culling of the OMAP/PXA2xx/strongarm machines.
+>>>>
+>>>> For these tests I'm indebted to Guenter Roeck, who has kindly
+>>>> built and made available the kernel images, rootfs, etc and
+>>>> documented the commands needed to boot them. All I've done
+>>>> here is wrap those up into test cases in our testcase
+>>>> framework by cribbing from some of our existing test code.
+>>>>
+>>>> Based-on: 20241017162755.710698-1-peter.maydell@linaro.org
+>>>> ("hw/sd/omap_mmc: Don't use sd_cmd_type_t")
+>>>>    -- the sd card test for the sx1 board will not pass without
+>>>>       that bugfix
+>>>>
+>>>> thanks
+>>>> -- PMM
+>>>>
+>>>> Peter Maydell (2):
+>>>>     tests/functional: Add a functional test for the collie board
+>>>>     tests/functional: Add a functional test for the sx1 board
+>>>>
+>>>>    MAINTAINERS                         |  1 +
+>>>>    tests/functional/meson.build        |  3 ++
+>>>>    tests/functional/test_arm_collie.py | 31 +++++++++++++
+>>>>    tests/functional/test_arm_sx1.py    | 72 +++++++++++++++++++++++++++++
+>>>>    4 files changed, 107 insertions(+)
+>>>>    create mode 100755 tests/functional/test_arm_collie.py
+>>>>    create mode 100755 tests/functional/test_arm_sx1.py
+>>>
+>>> Thanks, I'll queue the patches [...]
+>>
+>> Unfortunately, the test_arm_sx1.SX1Test.test_arm_sx1_sd test is not working
+>> for me, it seems to fail the shutdown of the QEMU binary:
+> 
+> The interesting information will be in the guest console
+> log, which seems to not be in this log. But the first
+> question is "did you include the omap_mmc fix that the
+> cover letter and patch description says is a prerequisite"? :-)
+> 
 
-The alpine job passed on the retry:
-https://gitlab.com/qemu-project/qemu/-/jobs/8141648479
-and the func-loongarch64-loongarch64_virt test took 5.08s.
+Unrelated to this, but I found that the sd emulation in 9.1 is also broken
+for loongarch and sifive_u, and partially for ast2600-evb (it has two
+controllers, with one of them no longer working). That is too much for me
+to track down quickly, so this is just a heads-up.
 
-The opensuse job failed again:
-https://gitlab.com/qemu-project/qemu/-/jobs/8141649069
-7/28 qemu:func-thorough+func-aarch64-thorough+thorough /
-func-aarch64-aarch64_tuxrun TIMEOUT 120.04s killed by signal 15
-SIGTERM
+Guenter
 
--- PMM
 
