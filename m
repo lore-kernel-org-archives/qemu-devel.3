@@ -4,111 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A66B4D0E6D8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D31D0E6E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 10:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2pKo-0004ds-VE; Mon, 21 Oct 2024 06:08:22 -0400
+	id 1t2pT6-0006TN-9S; Mon, 21 Oct 2024 06:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2pKn-0004dc-16
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:08:21 -0400
-Received: from mail-sy4aus01olkn20817.outbound.protection.outlook.com
- ([2a01:111:f403:2819::817]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2pKl-00072W-DD
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:08:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VNDwH3s3wzm8uB83aFssz5ARaQId1px9Wv6VkgcYCa/g0dXIroiyL2vBVyl/0AL277bVWAB6h0iawuWOMsK8EuEqd+WcgqRI/VYDRzSZYc7m/hr+YjmnV/yhiN1nUUeUMqo8H/5rRDbTv7NLlg/Ai/BirZ3s+NRgEticaaXN7lz9rOPecQFoUhX2yKdGZ9tOg8/FNKiv4xpbKpV59qjSs03XSfXdqztwbVFf/Co73qCBcAkwmzNXNWQVGh/rGbUDaykn4ROjncT/rzBi1JPvhI90oIou5VjVCnMYTBaMQX8vyCt/y/boedpLWTVq1HMXqAYQbbnYsR1nytRKDHB8Wg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oBvlHKm/uYJM4K281Iyugtfdw+E8MTJ6prSpd0jBcGI=;
- b=X50TSz+m27STpOCu8jh7GrkZqq89qmDGX9fdPvg9r9lIDyknOsHAmzGaSAxWIy/WjaoSVFiMDYX5mos/tIL7lqXvalhH/LFPj5bEbDai/xSTJ9e16K4Ov6N04rof2vChvx2zFCzIRhwlsqAGFEqfKp/kU8Ou17QB1ILA2gc03blPzPHb4TMPCjQqUAgHb4TyI7K0wjkoOnwsp+lpfQStanlDUb2xovrk1YXUFAzV042Oo4Xjn8DatrSkLtpAtmI/UuGvbw0gIekKROpVWriDoLgz3lSwCaYkl+Gonxh0h1lxCZ+TeBHR4CqG6mhUFT3KxW9nxNjS4Mv1xOP58M3heg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oBvlHKm/uYJM4K281Iyugtfdw+E8MTJ6prSpd0jBcGI=;
- b=WtwgN9Dryt+5X42xhUm4RABomU6k6+OdqfYjz71WZGpGssP3rVitE34ZRx63R1ZjBpa1LAxE4RHmUNAu2jhJBmoYQ1zg7TYO5+C6b+au3/4GMhE/g1/28dc1keZt5FH2+qTwQoZTpOe7WZX5scd3p4OkkfPmRfjaQ9GtQ7knje+E4Tlcy62mU1LlCddkfe41qDK42QGuQkrrKjWqQgijmBeGm14+HUZmTnhos8xwEU3V6HmMcEvZCCCgmvdMwTuMonyOeL1G8J8FTTsRCFXSkB7LoFnjW5eKsZqdtsTCYXYFcUWx72KglIKhFAQ0NOxEbZT+kER62efnCVYNQUgCwg==
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by SY8P300MB0693.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:295::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Mon, 21 Oct
- 2024 10:08:12 +0000
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.027; Mon, 21 Oct 2024
- 10:08:12 +0000
-References: <20241018144306.954716-1-pbonzini@redhat.com>
- <20241018144306.954716-6-pbonzini@redhat.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From: Junjie Mao <junjie.mao@hotmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 05/13] rust: remove uses of #[no_mangle]
-Date: Mon, 21 Oct 2024 18:07:21 +0800
-In-reply-to: <20241018144306.954716-6-pbonzini@redhat.com>
-Message-ID: <SY0P300MB1026F135EC012952069BBC4795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR01CA0198.apcprd01.prod.exchangelabs.com
- (2603:1096:4:189::7) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <877ca1u5tp.fsf@hotmail.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1t2pSx-0006Sx-Ku
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:16:51 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1t2pSu-0008J6-TS
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 06:16:47 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a9a0c40849cso668704766b.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 03:16:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1729505801; x=1730110601; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=VojtCDA3h+elD+VdZY6wIx7KFVIdLLDtaeDO6xJsKNQ=;
+ b=YofmIEz5QOGwxgMiaSGEuS0OApObrNnyDRnlqM3IAQu7/o85nQEaRAQOTVt/bmc0V6
+ LkjmAbocb8xa/9/odWoO1MXg92vI5UBYg3ECE2vpkmgOWGBQZdKyteDOjS6F/GAhnWhH
+ ut/7r9/2F8yR2Nt2pHiQcQE0z6BdsiDN/yS+g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729505801; x=1730110601;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VojtCDA3h+elD+VdZY6wIx7KFVIdLLDtaeDO6xJsKNQ=;
+ b=ongNSV3HBLJzr9/ZH064kT9ZVMDxN2W+7x6bfSc5Rhb515HgGqgPMZnTohaMLR69WA
+ tI0OYVYk4eJ+su77hKxcWmuv7QD+TgcrfuYXITlTrVqbHJ2jjzM8SDX5u2ptUyDWI7wS
+ sI+Y8GjM4IQoE6SfWVSSw5Flw1vrZ8TRwzk3MOLwlqVY99iUt5/OqFcEYfxZ3bzNc1Ob
+ vMwE4URqSL4hh43KMLnPAQqlkCLC+qclcMrNFT++D51eibOy6S6mPFCt0TcktZOrO0kx
+ S5ZAxU2HQ43VFWpDzAJjrMWosDYpIlFMIs5EESHgla9nk4JAG+nGm1oTmITVT6+Gmkkk
+ aSoQ==
+X-Gm-Message-State: AOJu0YxlwXw2mr3JQDvWUOHTowM7oYnxM2hW3cq+B3t0XoSukL6rx59j
+ guF+QLoipwUFmY96NRb1VBfBQ0JPWk4MAynx36ProAHIDfDGPDcs98ssi+lv0a1Z6y4Pl+Ae1wJ
+ oMzUfi5Dd/v7NdtEYRMKYLVtVJuu4Jpg/
+X-Google-Smtp-Source: AGHT+IHSSUhTQhRxRVmTtE8qGnGIwEofQZZYMr15asqqkKDU8ELKfKAcw3hzZ97rSflwicpuo7hEy8+VXaEA8W0kDdw=
+X-Received: by 2002:a17:906:c10b:b0:a9a:1792:f05 with SMTP id
+ a640c23a62f3a-a9a69ba907cmr1213288466b.31.1729505801275; Mon, 21 Oct 2024
+ 03:16:41 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|SY8P300MB0693:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7d86444b-091d-4caa-6f1e-08dcf1b8457e
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|5072599009|8060799006|19110799003|15080799006|461199028|7092599003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: KQae0Yfmk7D3IBnJ32xEYyzQqOQAKv3DNnox3N1kP0SrXc3sw69yGzDvrxIvJcX3Ms+jOjZNNDyGX5ulG2SRN8RlBL18NurM90ikiks5nea/1/r4WTkiyEbykVpoz5QpDPXedJjR1K/akj06bwBs62mqqEQ66toKK6s7lgo4QI1QQzYrmfwu6jnMHXPqyCAhgQn/kcuUko93lKmORCemQQew/onh8vhgQKrlXQmE/SRyZlTE7qdgXy9toxglSAaIkfoNDCeEbI6Hi2EB78kyjZPSfxincFOGhIto3o7u2xlDufuP+yM6s5oHFH2dwI50hCBBUvW3+AdVsTkjWGx6ewSe70AbCCBehulVme3nukI2CHrOZnZFO7O/YO5xm4IvWH/dvuIwCtioEyzthGPUR9SiVK3D8rqjfTuKiTDHzQrybwAMjeKHpUYrJptKuDR01sL110lr1GoT21rEbgJTi40GDxco3kSSvlkluHrmXmEfHRQdjJr6fnmz5p/taWklHhO3xFJH/nDwkZ6/2TMZOSjuFutjLvc4ZqePs5A+pp37xxOpnIE39aO/G7dtmTSuBwMoFdtj2lVLsc7oKTctYkeXQvJlk6f2UQFQ/Wm/IdxQPHk3P0NDp4pcDTIIT1vgApZ3lPrzCRWh6TWEnzlaXQAOdClhujgAoMy1xiTAyHTUwF7fK6KJYLVu38ZKLPEbOrP9vVfkL6gtIStZ0eVkyCFVTVtxzpi4jBOk1/3blVQ=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jC2UloVvwbnKPwZUqjrq5a8LzheaegybNg4sdGoDL+H+WjCw4HMlNU8CvBcc?=
- =?us-ascii?Q?csWDEneM3Bo+C0ATFxD4HQINQuAa11rAgXNCTa21fvsIvd4tMG1/i7uPxLsi?=
- =?us-ascii?Q?YqZ1EPShRxPKElGR8bDR5vDYsV3095dq/oojqqRbtboWqmTlguoy7HDIdBXV?=
- =?us-ascii?Q?YT8E1j2adRQOJjoYtUEdTZDiGygfW7sNNoe8LNT8df8+6Dq8OJvUXylrJ4Nh?=
- =?us-ascii?Q?XbmlB2Nfs1DtZA7hAmYVa6tI8vzOZ/Flh9BAYTwx9eOS/ZlIK/s1epiEZcYz?=
- =?us-ascii?Q?xdxuG+IlojBknS8oUaS+6q+5IXfueuQBBFNRChShVaZeM73bu52GPXw7d69/?=
- =?us-ascii?Q?kSUN6KNXwIj8tJhVSRvKoFS053nM4Z8kYT8erqPofNm+nihU7zhG8fMjtNQK?=
- =?us-ascii?Q?qRgULoGo49MtXOFFJ0Vu5C20DAU7EnZl3drnbTPf1iv9iu6M2gs56aMpFEM9?=
- =?us-ascii?Q?7sFjq+dYy3CVVPFfje6aaoJiHyXRVSDKW7pmjDCOWHofgis3e5ElknBqmzeE?=
- =?us-ascii?Q?G3fnKosUzPU2F/8QfASWL4EI60BRAsQ5zsr+lovySLqil/6/iKloe+kcnsR4?=
- =?us-ascii?Q?UDn7ReccM6eYGhNfnk0hOLfv7XP1kfz7Tx0w1z9KioR8sT4YpfMYewGtNrFw?=
- =?us-ascii?Q?EuIdhQz4V49OwnbV0Tx0ymAV0DMA6Wcq1k5DwezOgP1qwJCrSP9Yco/hnw++?=
- =?us-ascii?Q?USdEdrWr65g4ixWplNeiGtmJmTWmSxXRhBCk8NtoTtipqiZ1D6AN9ulEGbC1?=
- =?us-ascii?Q?vJ0s7zY/1jzMt1XMXfNyw7JRi9zZ6jrMpwpe27XQsmRvoVc6SJ6UtlkidWOL?=
- =?us-ascii?Q?uvrouU/CSG15GTRZg+wTcy0+KGYS3p5pu8dAwzXFCJrjDE8SpFuninJ3OTK4?=
- =?us-ascii?Q?pXAubwi2uwsNDKfcBcAACX3QY16KJs9KQ2X7MzGgmm1OYTRFsTRL+Y9vYLmV?=
- =?us-ascii?Q?e1bUjMW9lM+/4VVhjwbDJtvBVMqCa9bxxxM32Mi/T1UDOibWFoIXCE3R6dY6?=
- =?us-ascii?Q?UEc7SW7/Y16xF9hZ+3sl+TH2FPPMr9rZfwNt8vDFM71waubRxZ3oqX8Q2DVu?=
- =?us-ascii?Q?eFM+TloFj6Ajw4UOGCqCWAB4NtJYG2AX+VEwJXDjE+U3ahV6mNXI5WhGBgMz?=
- =?us-ascii?Q?6Sk4l74thGnGIBj+L3AELopabAXE8WzIovnagP8ZksSCjdW/QNtzhlfUj/KZ?=
- =?us-ascii?Q?qN2L64xu5Uzx3faDc8rCnGc2micVhBtLar8iBAUks6MJWpBsyTPOxeVvP00?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7d86444b-091d-4caa-6f1e-08dcf1b8457e
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 10:08:12.5716 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0693
-Received-SPF: pass client-ip=2a01:111:f403:2819::817;
- envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 21 Oct 2024 20:46:01 +1030
+Message-ID: <CACPK8Xc=jsz5iT_WR7s-rcu1cRzryiK+-0o=6vUK_D_qMMrP3A@mail.gmail.com>
+Subject: Missing image on storage.kernelci.org
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=joel.stan@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.17,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,17 +82,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+I was attempting to run some boot tests today and saw this:
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+ (11/39) tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_bpim2u_gmac:
+CANCEL: Missing asset
+http://storage.kernelci.org/images/rootfs/buildroot/buildroot-baseline/20221116.0/armel/rootfs.ext2.xz
+(5.21 s)
 
-> Mangled symbols do not cause any issue; disabling mangling is only useful if
-> C headers reference the Rust function, which is not the case here.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cheers,
 
-Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
-
---
-Best Regards
-Junjie Mao
+Joel
 
