@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D653D17123
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23DCDD17123
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2woQ-0003eK-7g; Mon, 21 Oct 2024 14:07:26 -0400
+	id 1t2wul-00069Y-I9; Mon, 21 Oct 2024 14:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2woN-0003e8-2W
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:07:23 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2woL-0008NJ-8r
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:07:22 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e5a62031aso3295358b3a.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 11:07:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729534040; x=1730138840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JawWysb92gFUwqXce/svGIAl6+lEZQVuCrdGibHz4PM=;
- b=jp7D15+QYj7gvpjfbf6vabrcnVgSAdnY26mDkAZnHlHhrNW+frrOpmQvo/8O2BybtB
- 51Ei1BmWP6xAFPil5GpApjLLfmeHky2Mfp3kk2eiHgvF8OqKhn/M5yqLJBk3uTbMSM2Z
- CR+zad1xFLGrw/2mWLj63/Bvt/LEWOO8nq3Wd2SNqYbZOcBLzxe8PaRIfAA+Zl1HLonY
- M3CgVC/swzej7P0Isv4XvQqkYaeTMgQrCPDMj4ZwlZczXp70NmxHHDbveAsYOTLwXyf0
- a6AySdpR3HcGzUHNaiW2xnZYSzrSxZ7bNVCcAyvW7ZyQvww7Pa0tHx0tISYhJbYAGRxz
- dFBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729534040; x=1730138840;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JawWysb92gFUwqXce/svGIAl6+lEZQVuCrdGibHz4PM=;
- b=Njw7HJq7Zfn8Al/BrpV4/cxDj2lf/X+P9eFdzdIuZvrTm/LakN9pqH1bg3DmX2XjOI
- sEqAxhLZRRFHo1G978z2najzNDJrmir8vgzAChW9DUKoXkI5wf0FS108noiiW3HFUzvo
- MJNZZSiC0ncxjApSKIWasLZGg7YPPTEdlFSGsr/UNStG0cX1YeLoz2lhKCWLtTO+STLu
- uwoyqOi/H/P0NqvxQ0KVxPcuGsncyUFLJowNYDyrzI2ecbkPDxsU1rnAYRDfk4kfDdqG
- equZCp8g63XeHUdsystD/KQ3bFY3rLU+NzWXLLGeAlm+QhypAq5ejm68avF7kKTQoVfy
- 8XuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNnDTocIqTCw7TckNCQ5sCpKr61RSavaLoVtxrY0o/phFyJypyj9RGB9Kus2mI2m3Io35ZqkLcy5Ma@nongnu.org
-X-Gm-Message-State: AOJu0YzsEomeJYWCuzLmR1kvLv/h7b9TJhZTd0a3wC8bSJcJrrolyLOY
- E0muJ1yTQwuUvKz/mIPlOEJpt4I9Co0AY2jOhIYhuflOtQIe4usEjGoUc2m5j6U=
-X-Google-Smtp-Source: AGHT+IHnc/0zM1V/UfqtXESc8ucbzFauWyejMLyBKNH/Obvn7Bhh7ZeQ3Em3HZGz6fzHOfdJBgoIZg==
-X-Received: by 2002:a05:6a00:b4c:b0:71d:f423:e6cc with SMTP id
- d2e1a72fcca58-71ea314be4amr14600140b3a.8.1729534039818; 
- Mon, 21 Oct 2024 11:07:19 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec1338c80sm3187412b3a.48.2024.10.21.11.07.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 11:07:19 -0700 (PDT)
-Message-ID: <97f8c999-c6b1-46d2-aef3-3a81c2156865@linaro.org>
-Date: Mon, 21 Oct 2024 11:07:18 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1t2wuk-00068n-2a
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:13:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1t2wuh-0000QV-6w
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:13:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729534432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=09e+oKX4J9p9oc+3JTGgsrN94apU+rKFWMy73eYLAHo=;
+ b=RQugsPeqs5lxucTM48GTtbjKfBqX3iJs8kPe3LafXef/MWUysxMuvEtFWK37rHiaCx3zrj
+ ynIVAoa35EfBNHnPkQcd5RnEU9HX5imC3KZEUVHm91xXuCEXI6buX8jLBxctZvaUBdA3hb
+ ascDwRSg1xcrf1m5tz48Heh7QeYZhKw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-fI-70tQANdyapfd8t-og-g-1; Mon,
+ 21 Oct 2024 14:13:50 -0400
+X-MC-Unique: fI-70tQANdyapfd8t-og-g-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78125195423A; Mon, 21 Oct 2024 18:13:49 +0000 (UTC)
+Received: from localhost (unknown [10.2.144.110])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B861419560A2; Mon, 21 Oct 2024 18:13:48 +0000 (UTC)
+Date: Mon, 21 Oct 2024 14:13:42 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Damien Le Moal <dlemoal@kernel.org>
+Cc: Kevin Wolf <kwolf@redhat.com>, Sam Li <faithilikerun@gmail.com>,
+ qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ dmitry.fomichev@wdc.com, qemu-block@nongnu.org
+Subject: Re: [PATCH v2] block/file-posix: optimize append write
+Message-ID: <20241021181342.GA293227@fedora.redhat.com>
+References: <20241004104123.236457-1-faithilikerun@gmail.com>
+ <ZxJynt-0ySt3DG7W@redhat.com>
+ <94067926-de2b-41d4-b401-540eb91d887c@kernel.org>
+ <ZxY2JBaJW1FO9tsl@redhat.com>
+ <c9e227e2-8cbe-4504-8271-6934f60be4e3@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 3/7] contrib/plugins: add plugin showcasing new
- trap related API
-Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
- <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="kIoluX7md+q1fd+s"
+Content-Disposition: inline
+In-Reply-To: <c9e227e2-8cbe-4504-8271-6934f60be4e3@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,134 +90,76 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--kIoluX7md+q1fd+s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 10/19/24 09:39, Julian Ganz wrote:
-> We recently introduced new plugin API for registration of trap related
-> callbacks. This change introduces a minimal plugin showcasing the new
-> API. It simply counts the occurances of interrupts, exceptions and
-> semihosting events per CPU and reports the counts when exitting.
-> 
-> Signed-off-by: Julian Ganz <neither@nut.email>
-> ---
->   contrib/plugins/Makefile |  1 +
->   contrib/plugins/traps.c  | 89 ++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 90 insertions(+)
->   create mode 100644 contrib/plugins/traps.c
-> 
-> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-> index bbddd4800f..6085fd701f 100644
-> --- a/contrib/plugins/Makefile
-> +++ b/contrib/plugins/Makefile
-> @@ -31,6 +31,7 @@ NAMES += drcov
->   NAMES += ips
->   NAMES += stoptrigger
->   NAMES += cflow
-> +NAMES += traps
->   
->   ifeq ($(CONFIG_WIN32),y)
->   SO_SUFFIX := .dll
-> diff --git a/contrib/plugins/traps.c b/contrib/plugins/traps.c
-> new file mode 100644
-> index 0000000000..2a38dbb8b3
-> --- /dev/null
-> +++ b/contrib/plugins/traps.c
-> @@ -0,0 +1,89 @@
-> +/*
-> + * Copyright (C) 2024, Julian Ganz <neither@nut.email>
-> + *
-> + * Traps - count traps
-> + *
-> + * License: GNU GPL, version 2 or later.
-> + *   See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include <stdio.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +
-> +typedef struct {
-> +    uint64_t interrupts;
-> +    uint64_t exceptions;
-> +    uint64_t semihosting;
-> +    bool active;
-> +} TrapCounters;
-> +
-> +static TrapCounters *traps;
-> +size_t max_vcpus;
-> +
-> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    traps[vcpu_index].active = true;
-> +}
-> +
-> +static void vcpu_interrupt(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    traps[vcpu_index].interrupts++;
-> +}
-> +
-> +static void vcpu_exception(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    traps[vcpu_index].exceptions++;
-> +}
-> +
-> +static void vcpu_semihosting(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    traps[vcpu_index].semihosting++;
-> +}
-> +
-> +static void plugin_exit(qemu_plugin_id_t id, void *p)
-> +{
-> +    g_autoptr(GString) report;
-> +    report = g_string_new("VCPU, interrupts, exceptions, semihosting\n");
-> +    int vcpu;
-> +
-> +    for (vcpu = 0; vcpu < max_vcpus; vcpu++) {
-> +        TrapCounters *rec = &traps[vcpu];
-> +        if (rec->active) {
-> +            g_string_append_printf(report,
-> +                                   "% 4d, % 10"PRId64", % 10"PRId64", % 10"
-> +                                   PRId64"\n",
-> +                                   vcpu,
-> +                                   rec->interrupts, rec->exceptions,
-> +                                   rec->semihosting);
-> +        }
-> +    }
-> +
-> +    qemu_plugin_outs(report->str);
-> +}
-> +
-> +QEMU_PLUGIN_EXPORT
-> +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-> +                        int argc, char **argv)
-> +{
-> +    if (!info->system_emulation) {
-> +        fputs("trap plugin can only be used in system emulation mode.\n",
-> +              stderr);
-> +        return -1;
-> +    }
-> +
-> +    max_vcpus = info->system.max_vcpus;
-> +    traps = calloc(max_vcpus, sizeof(TrapCounters));
+On Mon, Oct 21, 2024 at 09:32:50PM +0900, Damien Le Moal wrote:
+> On 10/21/24 20:08, Kevin Wolf wrote:
+> > Am 20.10.2024 um 03:03 hat Damien Le Moal geschrieben:
+> >> On 10/18/24 23:37, Kevin Wolf wrote:
+> >>> Am 04.10.2024 um 12:41 hat Sam Li geschrieben:
+> >>>> When the file-posix driver emulates append write, it holds the lock
+> >>>> whenever accessing wp, which limits the IO queue depth to one.
+> >>>>
+> >>>> The write IO flow can be optimized to allow concurrent writes. The l=
+ock
+> >>>> is held in two cases:
+> >>>> 1. Assumed that the write IO succeeds, update the wp before issuing =
+the
+> >>>> write.
+> >>>> 2. If the write IO fails, report that zone and use the reported value
+> >>>> as the current wp.
+> >>>
+> >>> What happens with the concurrent writes that started later and may not
+> >>> have completed yet? Can we really just reset to the reported value
+> >>> before all other requests have completed, too?
+> >>
+> >> Yes, because if one write fails, we know that the following writes
+> >> will fail too as they will not be aligned to the write pointer. These
+> >> subsequent failed writes will again trigger the report zones and
+> >> update, but that is fine. All of them have failed and the report will
+> >> give the same wp again.
+> >>
+> >> This is a typical pattern with zoned block device: if one write fails
+> >> in a zone, the user has to expect failures for all other writes issued
+> >> to the same zone, do a report zone to get the wp and restart writing
+> >> from there.
+> >=20
+> > Ok, that makes sense. Can we be sure that requests are handled in the
+> > order they were submitted, though? That is, if the failed request is
+> > resubmitted, could the already pending next one still succeed if it's
+> > overtaken by the resubmitted request? Not sure if this would even cause
+> > a probem, but is it a case we have to consider?
+>=20
+> A zoned device will always handle writes in the order they were submitted=
+ (per
+> zone) and that is true for emulated devices as well as real ones.
 
-Instead of allocating data for max number of vcpu, you can use a 
-qemu_plugin_scoreboard, which was introduced recently, and covers 
-exactly this need, by providing an array that gets automatically 
-redimensioned when a vcpu is added.
+Is there serialization code in the kernel so that zoned devices behind
+multi-path keep requests ordered?
 
-A simple example using it can be found with bb plugin:
-https://gitlab.com/qemu-project/qemu/-/blob/master/tests/tcg/plugins/bb.c
+Normally I don't assume any ordering between concurrent requests to a
+block device, so I'm surprised that it's safe to submit multiple writes.
 
-> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-> +    qemu_plugin_vcpu_for_each(id, vcpu_init);
-> +
-> +    qemu_plugin_register_vcpu_interrupt_cb(id, vcpu_interrupt);
-> +    qemu_plugin_register_vcpu_exception_cb(id, vcpu_exception);
-> +    qemu_plugin_register_vcpu_semihosting_cb(id, vcpu_semihosting);
-> +
-> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-> +
-> +    return 0;
-> +}
+Stefan
+
+--kIoluX7md+q1fd+s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmcWmdYACgkQnKSrs4Gr
+c8ho9gf/VWxd+0UAwWHQuMk/IRkUJtVgxLduj+RxN6S1OZZ5xo+VUfWVU2yQqxxv
+TCe/tN788Y5i8oqdqefc4k7Bpp14WZjVMecfX3n/n6jLrlwt7qsXES7rSJUsPpXQ
+t45Ty0xuCofi4kAHdDgUKvES+mALyyShdG61cqL+2MC05p7RrpuheiRxl3k9CvnU
+vWXFK1hkoeGuNDefNFATPBLo+Hmu5sRN9CInTNVzTN5Mze23jHP085trYNNM2+dz
+r0WQFPE2TJCDi+0HbdAeJSl1L/0aSV2zKS3f6CZUIN+wpNM9TJzYUE35+486dze9
+nJ3wQmKi5fZSw+fAJB7a+SLixhLXCQ==
+=CuVZ
+-----END PGP SIGNATURE-----
+
+--kIoluX7md+q1fd+s--
+
 
