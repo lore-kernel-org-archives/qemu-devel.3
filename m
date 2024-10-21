@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43AA1D0E6C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6135DD0E6C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vz3-0004Up-7m; Mon, 21 Oct 2024 13:14:21 -0400
+	id 1t2w5w-0005tt-Ca; Mon, 21 Oct 2024 13:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t2vyv-0004SL-Ct
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:14:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t2vyq-00026q-7s
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:14:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729530846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SxvroOBHtwJSU4tFwRZqi/ojarY+NKu1w+Ypnz1XsHc=;
- b=cO6tn8VqpRipaQY359Uq54YvB9AFunsd8Op1bz3MkfohlhH5T/tHjkDwbATo1oBbR5GVPE
- RqgJTC6oq44rLX8y8ZIiqLcPd+5QkMfRxaSTIFB41+CxyJx4ueGTxvyxQ91KZ8Uo3dsgiu
- gbT7k2s2RUaC0LSgqFs3Unz0BLklYj4=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-szDZ76xgNSmlTZvfvfiylA-1; Mon, 21 Oct 2024 13:14:04 -0400
-X-MC-Unique: szDZ76xgNSmlTZvfvfiylA-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6cbd2cb2f78so102868166d6.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:14:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2w5s-0005tS-0L
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:21:24 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2w5p-00039y-6X
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:21:22 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20c6f492d2dso54619225ad.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:21:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729531279; x=1730136079; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RrgCmpZDjIwsYYDFIz17x4PMi1pRAGPEB0zDgNvBUOw=;
+ b=NdJrDWNO5dCBI683Rhfk6Ul9wK2yqyfhrjyb86Lorf6YTVJZSt6Kwr7/bEa1RshaAN
+ Zz3vpI6niWGHFh4LrNxXOVWokFpECKdHzkd3gnk56YpfQiTC9SCzKuYJhYk1nNbuS8qU
+ e4gq9tdP48yjotPa1slI79bpgJ7Doolwgiu99iPF2/OODyFWO38VKnkzW4nYKnfKVRLl
+ 9RqWOcUyj3Vx1rYRzLfgmOWG0fSN+Y2xDSZcXTtHUsev7eBM+IkJfKsg7DNvVG9xdPe9
+ qeDm55aIclPxjyes6vmVCHn7vG9SOH3KBVllsZrjGj0CNVnuQf6h83IWY35FiCVJz8gt
+ nkvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729530844; x=1730135644;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SxvroOBHtwJSU4tFwRZqi/ojarY+NKu1w+Ypnz1XsHc=;
- b=RmJc7Yd8dxBS5tz1MtOJQEa/DPyAdFzOxa0chFbzr9/SSx4UbUfeldxWTlk3T03iFd
- hK84q0dRyExvi3NsC1A59z2Jjjp+O+D9yOxEXh6zt7+0n+7eWIWU6RaP3ob5bECvuoRL
- QV0i8XASuEhZlbxrONg3eWGY2Ech5Cxb9AYTIV/5e/5ncAp0HkDoHtiPfdLLblIVh3Dt
- usCI1mRKB15AXWbWOjeg5VairLNtCijqIccuDZveHt8tft1Ykfanama3GauyqYOUc5wh
- 7VDuG/q7hP2MI3awWWJY2T/4jf3222S56rIxiuH3hiftoDMwX7TffbZ1x2ro0hmz6DL/
- AA0Q==
+ d=1e100.net; s=20230601; t=1729531279; x=1730136079;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RrgCmpZDjIwsYYDFIz17x4PMi1pRAGPEB0zDgNvBUOw=;
+ b=SiLwawJqTF8D774LxZJVOFPypY3emBMs6fRY0f+Ps4wy0c8HTrvZ7qE7AZQJ6AjLOP
+ dfiWxIQZCB636wzrsiLEt1FQ8BJxv1uEAKNmBpJLNqKjukcnofHxAmyPd+dgLkZ0G/iv
+ pnWQI0MNIB3JWsSgZ6HoG26ETZzwxEPuATCEcVuXyMy15nV6S/TVTd9UZyDiPc2FnCX2
+ D259+2x58Ew3JFFW8dXWYJtrMpzjTTnYOHSt9s7cu5n6XjPtXJlUucTXfm1a45cVlNBS
+ njQGePKMI49QT9UERa+gTg5TQg9/IG7h5kmEqzrmUyAMvJqp4hTosyklaDL9S2HL8mDO
+ ixVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtFeXjHpEJjpYmQhpXN6HsuTg8DR4kY/qUw+PD11xHj9rlfmURx5WNfgZxBl1tsohGkVxgOaq/FOMU@nongnu.org
-X-Gm-Message-State: AOJu0YxdHfhY5G+/hvCeKGbFZsxbrsanrJwPQCfToeZXbmy0KSt+F8e/
- xhougIzfXLbbdIzltiRsRrLY1EiNEgs7AUVgj/pptSyF+m+mkA1UhjXiif2JErsvS9Waf5wARZf
- u9u1/YRkDjZtNux6pH3VdA+BRTi6uqDLAyfd/1M7k75rdlm+ZTttKWCmPJSLcqAeuZQnOrt5tOb
- 3OjW5nSnlzKN4kEbfGjzJ86/JR5C0=
-X-Received: by 2002:a05:6214:568b:b0:6cc:255:2038 with SMTP id
- 6a1803df08f44-6ce21892c8dmr6132196d6.4.1729530843959; 
- Mon, 21 Oct 2024 10:14:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgiV51157IZmHUCa4+0y2tU9eRnmleq3cV7TMa7q95cs5VtS1UigQVYP7/8OjjGhSa2Jzr1HeKBTAAVOQdyn8=
-X-Received: by 2002:a05:6214:568b:b0:6cc:255:2038 with SMTP id
- 6a1803df08f44-6ce21892c8dmr6132016d6.4.1729530843643; Mon, 21 Oct 2024
- 10:14:03 -0700 (PDT)
+ AJvYcCVuWqdJwvPFTU6+K94W+BEVitmteUGI919G7xH6qO9+lN+8eF2rOHmnZ48mq9D4w7/5bQKN/K5WrVMe@nongnu.org
+X-Gm-Message-State: AOJu0YyKoFSSu+JNtWoaDkETMrX60XBJq8yMMbtexLIRQPprYb6s9SpT
+ bKkZ6iSqyZgnttlhBkQaJ5dyIh9G2vUUa26gETvL+XOukmAucuyaIu+3TfZSbUg=
+X-Google-Smtp-Source: AGHT+IFitcCMG57mDCC2dFSPCNzYd3LgwtLAnL81/3Vzasa50YzIMibZfK4aQdL+U46pnHGgBd2Hpw==
+X-Received: by 2002:a17:902:d50d:b0:20d:1a47:ecd5 with SMTP id
+ d9443c01a7336-20e5a9530camr130756315ad.61.1729531279390; 
+ Mon, 21 Oct 2024 10:21:19 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7f109d54sm28317165ad.309.2024.10.21.10.21.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 10:21:19 -0700 (PDT)
+Message-ID: <26fa8078-35e1-4c11-ab5c-1c8ae08d296f@linaro.org>
+Date: Mon, 21 Oct 2024 10:21:18 -0700
 MIME-Version: 1.0
-References: <20241021132839.463255-1-demeng@redhat.com>
- <20241021132839.463255-7-demeng@redhat.com>
- <ZxaFOdhqE54A5vWf@redhat.com>
-In-Reply-To: <ZxaFOdhqE54A5vWf@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 21 Oct 2024 20:13:52 +0300
-Message-ID: <CAPMcbCqa-1i6zVwF_YmecbADyVBSzeJCJRF=a7rMXkLRbznvUw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] qemu-ga: 'Null' check for mandatory parameters
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Dehan Meng <demeng@redhat.com>, qemu-devel@nongnu.org, michael.roth@amd.com,
- peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000905c1d0624ffc75b"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: Do not re-compute new pc with CF_PCREL
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, qemu-stable@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+References: <20240101230617.129349-1-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240101230617.129349-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,293 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000905c1d0624ffc75b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 1/1/24 15:06, Richard Henderson wrote:
+> With PCREL, we have a page-relative view of EIP, and an
+> approximation of PC = EIP+CSBASE that is good enough to
+> detect page crossings.  If we try to recompute PC after
+> masking EIP, we will mess up that approximation and write
+> a corrupt value to EIP.
+> 
+> We already handled masking properly for PCREL, so the
+> fix in b5e0d5d2 was only needed for the !PCREL path.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: b5e0d5d22fbf ("target/i386: Fix 32-bit wrapping of pc/eip computation")
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/i386/tcg/translate.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 037bc47e7c..e68375b19d 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -2845,10 +2845,6 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
+>           }
+>       }
+>       new_eip &= mask;
+> -    new_pc = new_eip + s->cs_base;
+> -    if (!CODE64(s)) {
+> -        new_pc = (uint32_t)new_pc;
+> -    }
+>   
+>       gen_update_cc_op(s);
+>       set_cc_op(s, CC_OP_DYNAMIC);
+> @@ -2864,6 +2860,8 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
+>               tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
+>               use_goto_tb = false;
+>           }
+> +    } else if (!CODE64(s)) {
+> +        new_pc = (uint32_t)(new_eip + s->cs_base);
+>       }
+>   
+>       if (use_goto_tb && translator_use_goto_tb(&s->base, new_pc)) {
 
-On Mon, Oct 21, 2024 at 7:45=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
-
-> On Mon, Oct 21, 2024 at 09:28:36PM +0800, Dehan Meng wrote:
-> > sscanf return values are checked and add 'Null' check for
-> > mandatory parameters.
-> >
-> > Signed-off-by: Dehan Meng <demeng@redhat.com>
-> > ---
-> >  qga/commands-linux.c | 12 +++++++++++-
-> >  1 file changed, 11 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> > index 51d5e3d927..f0e9cdd27c 100644
-> > --- a/qga/commands-linux.c
-> > +++ b/qga/commands-linux.c
-> > @@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue,
-> int is_ipv6)
-> >          int i;
-> >
-> >          for (i =3D 0; i < 16; i++) {
-> > -            sscanf(&hexStr[i * 2], "%02hhx", &in6.s6_addr[i]);
-> > +            if (sscanf(&hex_str[i * 2], "%02hhx", &in6.s6_addr[i]) !=
-=3D
-> 1) {
-> > +                return NULL;
-> > +            }
-> >          }
-> >          inet_ntop(AF_INET6, &in6, addr, INET6_ADDRSTRLEN);
-> >
-> > @@ -2164,6 +2166,10 @@ GuestNetworkRouteList
-> *qmp_guest_network_get_route(Error **errp)
-> >                  networkroute =3D route;
-> >                  networkroute->iface =3D g_strdup(Iface);
-> >                  networkroute->destination =3D hexToIPAddress(Destinati=
-on,
-> 1);
-> > +                if (networkroute->destination =3D=3D NULL) {
-> > +                    g_free(route);
-> > +                    continue;
-> > +                }
->
-> This is still leaking the 'networkroute->iface' string.
->
-> The existing code is a bit strange having 'route' and 'networkroute'
-> variables.
->
-> I'd suggest removing the "route" variable entirely.
->
-
-This part was done in patch 4/4
-
-
->
-> Then have a code pattern that relies on g_autoptr to automatically
-> free the struct & all its fields.
->
-
-Agree with this
-
-
->
-> eg something that looks approx like this:
->
->    g_autoptr(GuestNetorkRoute) networkroute =3D NULL;
->
->    ...
->
->    if (is_ipv6) {
->        ...
->        networkroute =3D g_new0(GuestNetorkRoute, 1);
->        networkroute->iface =3D g_strdup(Iface);
->        networkroute->destination =3D hexToIPAddress(Destination, 1);
->        if (networkroute->destination =3D=3D NULL) {
->           continue;
->        }
->        ...
->    } else {
->        ...
->        networkroute =3D g_new0(GuestNetorkRoute, 1);
->        networkroute->iface =3D g_strdup(Iface);
->        networkroute->destination =3D hexToIPAddress(Destination, 1);
->        if (networkroute->destination =3D=3D NULL) {
->           continue;
->        }
->        ...
->    }
->
->    QAPI_LIST_APPEND(tail, g_steal_pointer(&networkroute));
->
->
-> >                  networkroute->metric =3D Metric;
-> >                  networkroute->source =3D hexToIPAddress(Source, 1);
-> >                  networkroute->desprefixlen =3D g_strdup_printf(
-> > @@ -2195,6 +2201,10 @@ GuestNetworkRouteList
-> *qmp_guest_network_get_route(Error **errp)
-> >                  networkroute =3D route;
-> >                  networkroute->iface =3D g_strdup(Iface);
-> >                  networkroute->destination =3D
-> hexToIPAddress(&Destination, 0);
-> > +                if (networkroute->destination =3D=3D NULL) {
-> > +                    g_free(route);
-> > +                    continue;
-> > +                }
-> >                  networkroute->gateway =3D hexToIPAddress(&Gateway, 0);
-> >                  networkroute->mask =3D hexToIPAddress(&Mask, 0);
-> >                  networkroute->metric =3D Metric;
-> > --
-> > 2.40.1
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---000000000000905c1d0624ffc75b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Oct 21, 2024=
- at 7:45=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@=
-redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Oct 21, 2024 at 09=
-:28:36PM +0800, Dehan Meng wrote:<br>
-&gt; sscanf return values are checked and add &#39;Null&#39; check for<br>
-&gt; mandatory parameters.<br>
-&gt; <br>
-&gt; Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" tar=
-get=3D"_blank">demeng@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 qga/commands-linux.c | 12 +++++++++++-<br>
-&gt;=C2=A0 1 file changed, 11 insertions(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-&gt; index 51d5e3d927..f0e9cdd27c 100644<br>
-&gt; --- a/qga/commands-linux.c<br>
-&gt; +++ b/qga/commands-linux.c<br>
-&gt; @@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue=
-, int is_ipv6)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int i;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; 16; i++) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sscanf(&amp;hexStr[i * 2], =
-&quot;%02hhx&quot;, &amp;in6.s6_addr[i]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sscanf(&amp;hex_str[i *=
- 2], &quot;%02hhx&quot;, &amp;in6.s6_addr[i]) !=3D 1) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 inet_ntop(AF_INET6, &amp;in6, addr, =
-INET6_ADDRSTRLEN);<br>
-&gt;=C2=A0 <br>
-&gt; @@ -2164,6 +2166,10 @@ GuestNetworkRouteList *qmp_guest_network_get_ro=
-ute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute =3D route;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;iface =3D g_strdup(Iface);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;destination =3D hexToIPAddress(Destination, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (networkro=
-ute-&gt;destination =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- continue;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-This is still leaking the &#39;networkroute-&gt;iface&#39; string.<br>
-<br>
-The existing code is a bit strange having &#39;route&#39; and &#39;networkr=
-oute&#39;<br>
-variables.<br>
-<br>
-I&#39;d suggest removing the &quot;route&quot; variable entirely.<br></bloc=
-kquote><div><br></div><div>This part was done in patch 4/4<br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Then have a code pattern that relies on g_autoptr to automatically<br>
-free the struct &amp; all its fields.<br></blockquote><div><br></div><div>A=
-gree with this<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-<br>
-eg something that looks approx like this:<br>
-<br>
-=C2=A0 =C2=A0g_autoptr(GuestNetorkRoute) networkroute =3D NULL;<br>
-<br>
-=C2=A0 =C2=A0...<br>
-<br>
-=C2=A0 =C2=A0if (is_ipv6) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute =3D g_new0(GuestNetorkRoute, 1);<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;iface =3D g_strdup(Iface);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;destination =3D hexToIPAddress(=
-Destination, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0if (networkroute-&gt;destination =3D=3D NULL) {<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute =3D g_new0(GuestNetorkRoute, 1);<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;iface =3D g_strdup(Iface);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;destination =3D hexToIPAddress(=
-Destination, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0if (networkroute-&gt;destination =3D=3D NULL) {<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0QAPI_LIST_APPEND(tail, g_steal_pointer(&amp;networkroute));<br=
->
-<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;metric =3D Metric;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;source =3D hexToIPAddress(Source, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;desprefixlen =3D g_strdup_printf(<br>
-&gt; @@ -2195,6 +2201,10 @@ GuestNetworkRouteList *qmp_guest_network_get_ro=
-ute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute =3D route;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;iface =3D g_strdup(Iface);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;destination =3D hexToIPAddress(&amp;Destination, 0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (networkro=
-ute-&gt;destination =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- continue;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;gateway =3D hexToIPAddress(&amp;Gateway, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;mask =3D hexToIPAddress(&amp;Mask, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;metric =3D Metric;<br>
-&gt; -- <br>
-&gt; 2.40.1<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div>
-</div>
-
---000000000000905c1d0624ffc75b--
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
