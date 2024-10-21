@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9E0D0E6C9
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B00D0E6C9
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2nkV-00048i-2Z; Mon, 21 Oct 2024 04:26:47 -0400
+	id 1t2nlD-0004i5-SZ; Mon, 21 Oct 2024 04:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2nkN-000489-2R
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:26:39 -0400
+ id 1t2nlC-0004hU-EN
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:27:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2nkL-0004Rm-AI
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:26:38 -0400
+ id 1t2nlA-0004aM-R3
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:27:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729499194;
+ s=mimecast20190719; t=1729499248;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VXnO8qPQ0KysEX57JNBz+x5jrqJWGLdoa9tIiMO04G0=;
- b=U0tPZqpRG6XDw0WVS3Jb6XE09UP28JW8EKxmDJwpEDqlQgqgF7gJvyo6hVXS9zHX252t4z
- XuPZUb/UGiMRVFmotLZf+TIact77Fo0HL7cfB8vp7LNFSrMigjreI6DYr7cnm2mF8fzbb5
- CyO+OJSUJq687Exa2yWppLCnFnwfydo=
+ bh=cXp0OcMFuLt5eev8vQ1rUvfnWtesgiHuMUGkG+sEkUA=;
+ b=Rqs8nb/YqUeFKHw4qaxM6M0JBs3KejCcdDCs9FwzdLnDmgNdbjKGI/5t2Sd/wFQ9FyHb1D
+ 6EbI1egzRfgqSZNYk0xXadyejADy8yaiUt4Z5CnF1kN4zEVuWE9Z7vmZalQWJ9iRe9ZaOw
+ fWNnjozDZ57+elgcaWku/dYoiWs+n6g=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-zRAJfp8DNcq8Ur6qlYJZ7g-1; Mon,
- 21 Oct 2024 04:26:30 -0400
-X-MC-Unique: zRAJfp8DNcq8Ur6qlYJZ7g-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-OfPYXmsbPPG6QAsfCcqFyA-1; Mon,
+ 21 Oct 2024 04:27:23 -0400
+X-MC-Unique: OfPYXmsbPPG6QAsfCcqFyA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADC9519560AB; Mon, 21 Oct 2024 08:26:28 +0000 (UTC)
+ id 5811B19560A2; Mon, 21 Oct 2024 08:27:22 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA0BE300018D; Mon, 21 Oct 2024 08:26:21 +0000 (UTC)
-Date: Mon, 21 Oct 2024 09:26:18 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE7DF1956088; Mon, 21 Oct 2024 08:27:20 +0000 (UTC)
+Date: Mon, 21 Oct 2024 09:27:17 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Sunil Nimmagadda <sunil@nimmagadda.net>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com
-Subject: Re: [PATCH] qemu-ga: Fix a SIGSEGV on guest-set-time command
-Message-ID: <ZxYQKlkEGhEXY3O6@redhat.com>
-References: <m15xppk9qg.fsf@nimmagadda.net>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] sockets: Remove deadcode
+Message-ID: <ZxYQZUHmTRl-KN0w@redhat.com>
+References: <20240918232633.463861-1-dave@treblig.org>
+ <ZuwVLemC3hVirWGZ@redhat.com> <ZxOfuby9HY_nHqoB@gallifrey>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <m15xppk9qg.fsf@nimmagadda.net>
+In-Reply-To: <ZxOfuby9HY_nHqoB@gallifrey>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -87,111 +88,37 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 18, 2024 at 03:34:39PM +0530, Sunil Nimmagadda wrote:
-> qemu-ga on a NetBSD -current VM terminates with a SIGSEGV upon receiving
-> 'guest-set-time' command...
+On Sat, Oct 19, 2024 at 12:02:01PM +0000, Dr. David Alan Gilbert wrote:
+> * Daniel P. Berrangé (berrange@redhat.com) wrote:
+> > On Thu, Sep 19, 2024 at 12:26:33AM +0100, dave@treblig.org wrote:
+> > > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> > > 
+> > > socket_remote_address hasn't been used since it was added in
+> > >   17c55decec ("sockets: add helpers for creating SocketAddress from a socket")
+> > > 
+> > > inet_connect hasn't been used since 2017's
+> > >   8ecc2f9eab ("sheepdog: Use SocketAddress and socket_connect()")
+> > 
+> > Excellent ! The more of sockets.h we can remove the better.
+> > 
+> > > 
+> > > Remove them.
+> > > 
+> > > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > > ---
+> > >  include/qemu/sockets.h | 16 ----------------
+> > >  util/qemu-sockets.c    | 35 -----------------------------------
+> > >  2 files changed, 51 deletions(-)
+> > 
+> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> > 
+> > and queued.
 > 
-> Core was generated by `qemu-ga'.
-> Program terminated with signal SIGSEGV, Segmentation fault.
-> #0  0x000000000cd37a40 in ga_pipe_read_str (fd=fd@entry=0xffffff922a20, str=str@entry=0xffffff922a18)
->     at ../qga/commands-posix.c:88
-> 88	        *str[len] = '\0';
-> [Current thread is 1 (process 1112)]
-> (gdb) bt
-> #0  0x000000000cd37a40 in ga_pipe_read_str (fd=fd@entry=0xffffff922a20, str=str@entry=0xffffff922a18)
->     at ../qga/commands-posix.c:88
-> #1  0x000000000cd37b60 in ga_run_command (argv=argv@entry=0xffffff922a90, 
->     action=action@entry=0xcda34b8 "set hardware clock to system time", errp=errp@entry=0xffffff922a70, in_str=0x0)
->     at ../qga/commands-posix.c:164
-> #2  0x000000000cd380c4 in qmp_guest_set_time (has_time=<optimized out>, time_ns=<optimized out>, 
->     errp=errp@entry=0xffffff922ad0) at ../qga/commands-posix.c:304
-> #3  0x000000000cd253d8 in qmp_marshal_guest_set_time (args=<optimized out>, ret=<optimized out>, errp=0xffffff922b48)
->     at qga/qga-qapi-commands.c:193
-> #4  0x000000000cd4e71c in qmp_dispatch (cmds=cmds@entry=0xcdf5b18 <ga_commands>, request=request@entry=0xf3c711a4b000, 
->     allow_oob=allow_oob@entry=false, cur_mon=cur_mon@entry=0x0) at ../qapi/qmp-dispatch.c:220
-> #5  0x000000000cd36524 in process_event (opaque=0xf3c711a79000, obj=0xf3c711a4b000, err=0x0) at ../qga/main.c:677
-> #6  0x000000000cd526f0 in json_message_process_token (lexer=lexer@entry=0xf3c711a79018, input=0xf3c712072480, 
->     type=type@entry=JSON_RCURLY, x=28, y=1) at ../qobject/json-streamer.c:99
-> #7  0x000000000cd93860 in json_lexer_feed_char (lexer=lexer@entry=0xf3c711a79018, ch=125 '}', flush=flush@entry=false)
->     at ../qobject/json-lexer.c:313
-> #8  0x000000000cd93a00 in json_lexer_feed (lexer=lexer@entry=0xf3c711a79018, 
->     buffer=buffer@entry=0xffffff922d10 "{\"execute\":\"guest-set-time\"}\n", size=<optimized out>)
->     at ../qobject/json-lexer.c:350
-> #9  0x000000000cd5290c in json_message_parser_feed (parser=parser@entry=0xf3c711a79000, 
->     buffer=buffer@entry=0xffffff922d10 "{\"execute\":\"guest-set-time\"}\n", size=<optimized out>)
->     at ../qobject/json-streamer.c:121
-> #10 0x000000000cd361fc in channel_event_cb (condition=<optimized out>, data=0xf3c711a79000) at ../qga/main.c:703
-> #11 0x000000000cd3710c in ga_channel_client_event (channel=<optimized out>, condition=<optimized out>, data=0xf3c711b2d300)
->     at ../qga/channel-posix.c:94
-> #12 0x0000f3c7120d9bec in g_main_dispatch () from /usr/pkg/lib/libglib-2.0.so.0
-> #13 0x0000f3c7120dd25c in g_main_context_iterate_unlocked.constprop () from /usr/pkg/lib/libglib-2.0.so.0
-> #14 0x0000f3c7120ddbf0 in g_main_loop_run () from /usr/pkg/lib/libglib-2.0.so.0
-> #15 0x000000000cda00d8 in run_agent_once (s=0xf3c711a79000) at ../qga/main.c:1522
-> #16 run_agent (s=0xf3c711a79000) at ../qga/main.c:1559
-> #17 main (argc=<optimized out>, argv=<optimized out>) at ../qga/main.c:1671
-> (gdb) 
-> 
-> The commandline options used on the host machine...
-> qemu-system-aarch64 \
->    -machine type=virt,pflash0=rom \
->    -m 8G \
->    -cpu host \
->    -smp 8 \
->    -accel hvf \
->    -device virtio-net-pci,netdev=unet \
->    -device virtio-blk-pci,drive=hd \
->    -drive file=netbsd.qcow2,if=none,id=hd \
->    -netdev user,id=unet,hostfwd=tcp::2223-:22 \
->    -object rng-random,filename=/dev/urandom,id=viornd0 \
->    -device virtio-rng-pci,rng=viornd0 \
->    -serial mon:stdio \
->    -display none \
->    -blockdev node-name=rom,driver=file,filename=/opt/homebrew/Cellar/qemu/9.0.2/share/qemu/edk2-aarch64-code.fd,read-only=true \
->    -chardev socket,path=/tmp/qga_netbsd.sock,server=on,wait=off,id=qga0 \
->    -device virtio-serial \
->    -device virtconsole,chardev=qga0,name=org.qemu.guest_agent.0
+> Hi Dan,
+>   Just checking, I noticed this one and the crypto patch haven't made
+> it to master yet.
 
-This bug isn't platform specific AFAICT, and will also hit
-other commands.
-
-Was introduced by:
-
-commit c3f32c13a325f1ca9a0b08c19fefe9e5cc04289d
-Author: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date:   Wed Mar 20 18:16:43 2024 +0200
-
-    qga: introduce ga_run_command() helper for guest cmd execution
-
-and then affects multiple commands:
-
-    qga/commands-posix: qmp_guest_set_user_password: use ga_run_command helper
-    qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper
-    qga/commands-posix: qmp_guest_set_time: use ga_run_command helper
-    qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper
-
-IOW, this is a regression in the 9.1.0 release
-
-> 
-> This patch rectifies the operator precedence while assigning the NUL
-> terminator.
-> 
-> Signed-off-by: Sunil Nimmagadda <sunil@nimmagadda.net>
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index c2bd0b4..bb41fa9 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -85,7 +85,7 @@ static ssize_t ga_pipe_read_str(int fd[2], char **str)
->          *str = g_realloc(*str, len + n + 1);
->          memcpy(*str + len, buf, n);
->          len += n;
-> -        *str[len] = '\0';
-> +        (*str)[len] = '\0';
->      }
->      close(fd[0]);
->      fd[0] = -1;
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Yeah, sorry, I still have them in a pending queue.
 
 With regards,
 Daniel
