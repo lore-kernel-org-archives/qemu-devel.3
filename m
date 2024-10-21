@@ -4,118 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9E7D17138
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E48EED17138
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 21:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2zbO-0003bt-Io; Mon, 21 Oct 2024 17:06:12 -0400
+	id 1t2znD-0005eA-EP; Mon, 21 Oct 2024 17:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t2zbI-0003Zd-Dy
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:06:05 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t2zb1-0001R9-Nh
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:05:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D1B7B1F851;
- Mon, 21 Oct 2024 21:05:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729544746; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2znB-0005ds-D0
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:18:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2zn9-0002eD-Gk
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 17:18:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729545498;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=SEcjmthpNr7+iXw4LUpLW4L9dxA3b1IVFWA4PROkrDU=;
- b=UaL/T1+m2XTSyeRS6xJnvj8S3ZrdpCeGt4aZs4uZvkLlmhzvDK98q1hGO6UXpiMduYC5g0
- MgCSeg+VuSG33yXBfiIjBAJN/UfxDNI8HmzSzEP/NT9mifF2+doe8gReyYyEEmOeqHr5qw
- +ZHaM7K3mqc8/RoPaZJW/DxncprE9m8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729544746;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SEcjmthpNr7+iXw4LUpLW4L9dxA3b1IVFWA4PROkrDU=;
- b=UdeBHpAioFSuHLftZQXGKY483ZzwWEt1bCO2p4qz2Z4gVDaEhmTMfmdyptmA4yJ+tSOh8j
- ig+xXx9bzji0JSCQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pUVdOj39;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="PxgK51/J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729544745; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SEcjmthpNr7+iXw4LUpLW4L9dxA3b1IVFWA4PROkrDU=;
- b=pUVdOj39snZ+awh1/f5O/hRJhhYokiPkbQzwAn40w5LXlolO6Ln05F1fJJJVmMzgIwGrBp
- qKxFlMYPydE9n0tnrZiwfPajNW3aGkBlFhzNMQcW5OavK1H3G63zltXHmNLOg4eg6PNaH4
- 9Ur9d/tqA05XCrxaOcNyfphWTURWVjM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729544745;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SEcjmthpNr7+iXw4LUpLW4L9dxA3b1IVFWA4PROkrDU=;
- b=PxgK51/JZMU9ETW9u6fE86sf44ZUFYSwvnVlbHo01YmSeGeNFpInip9AFpxGjEcENlxap1
- TqTIlxFqCyMGCPAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 58BCE136DC;
- Mon, 21 Oct 2024 21:05:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xpghCCnCFmcFTAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 21 Oct 2024 21:05:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Steve Sistare
- <steven.sistare@oracle.com>
-Subject: Re: [RFC V1 05/14] migration: init and listen during precreate
-In-Reply-To: <1729178055-207271-6-git-send-email-steven.sistare@oracle.com>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-6-git-send-email-steven.sistare@oracle.com>
-Date: Mon, 21 Oct 2024 18:05:42 -0300
-Message-ID: <871q09dv4p.fsf@suse.de>
+ bh=N6KOQk46edGaDkUkqBKsjSvUWMbHio0dwFaaVPJeLqA=;
+ b=LNEEwP6nbpN93x167kyLAcyTGfxYkmAaizRM8iMcBO7/ThMPWhihmG5P46kabvYQDBHmDy
+ eFeBrlYg2aWquxh4T2JedNLHNIo7e9zxB/KBtWsTO3/27JO6eQJvWDE+tv2c/zk1q/zZk9
+ ihhUVseMI4Z29b+qs1RxG5UgCfSHc4I=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-IwJPqEanNwCHnqkj5HvE6w-1; Mon, 21 Oct 2024 17:18:17 -0400
+X-MC-Unique: IwJPqEanNwCHnqkj5HvE6w-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-460dd31b4c1so35763231cf.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 14:18:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729545496; x=1730150296;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N6KOQk46edGaDkUkqBKsjSvUWMbHio0dwFaaVPJeLqA=;
+ b=jYgf1/iVpwSa4bBwythAQ9UHqEc0w712fj/b+UyeA8EgoIjiK2Vi1V+chmmum3GZuQ
+ 8Zls3PfbK2VGP6BDNWWctkwv0yPrN0Qxi9Owm+CxiD6MizWAEXjDc72lUTdGxrvz12xJ
+ +Uy029uK3wMtt3ti7Le8TAGzEhtgBGl2T/hPdo1SM+ZjOMkpsz87Xuy+qg/f3QUP0HWS
+ 8CJaq34KxICDF1OmECOv48KWAXdNBjjfdBQ9HITg0GJGxdxKTQRWcz0fg8RqN0q/aTg8
+ YUixjIJBI9XvjCuwFewdCU/6ujVoQSc2QLJ3Bp67IOJG55hm0CrdWCp3UBG7k6hHGTfz
+ 3rgA==
+X-Gm-Message-State: AOJu0YwGGMxytYOi3iASsLB2xTklnf+EGsxhCtfla6GOsHSu8TFpjL8s
+ 4EdX3/lFGQq05ki7lXD7i3XFVeZj2MY6jy6k6JzdlHQ5pszWMsAXuHWKzjdTneCnV0f2fNU7eqj
+ HrmvdNYgsLRL2KTuF3a69R+TcxtWRwgzXr5MGdP0tz1q1n9IA0qus
+X-Received: by 2002:a05:622a:2a05:b0:460:a9ec:b50e with SMTP id
+ d75a77b69052e-460aedf60bemr183703991cf.38.1729545496609; 
+ Mon, 21 Oct 2024 14:18:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+iFcgtJVt5TL2LldSc1JnsvIcY+Ruu2FyCGG/8Lh8zldmK8jM2Noxn9hgRRovGRuuWkV9zQ==
+X-Received: by 2002:a05:622a:2a05:b0:460:a9ec:b50e with SMTP id
+ d75a77b69052e-460aedf60bemr183703751cf.38.1729545496283; 
+ Mon, 21 Oct 2024 14:18:16 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-460d3c3aff7sm22359231cf.12.2024.10.21.14.18.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Oct 2024 14:18:15 -0700 (PDT)
+Date: Mon, 21 Oct 2024 17:18:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
+Subject: Re: [PATCH v4 1/4] KVM: Dynamic sized kvm memslots array
+Message-ID: <ZxbFFenerfWK2MFM@x1n>
+References: <20240917163835.194664-1-peterx@redhat.com>
+ <20240917163835.194664-2-peterx@redhat.com>
+ <52cc6540-b1ff-495e-9b98-98f13ecbf380@tls.msk.ru>
+ <ZxZnLXD4w2HV07gJ@x1n>
+ <cd4d904e-82c2-42d0-8aa3-5906f7182024@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: D1B7B1F851
-X-Spamd-Result: default: False [-2.96 / 50.00]; BAYES_HAM(-2.95)[99.79%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org,oracle.com];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cd4d904e-82c2-42d0-8aa3-5906f7182024@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,96 +106,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+On Mon, Oct 21, 2024 at 10:05:23PM +0300, Michael Tokarev wrote:
+> 21.10.2024 17:37, Peter Xu wrote:
+> > Michael,
+> > 
+> > On Fri, Oct 18, 2024 at 06:38:53PM +0300, Michael Tokarev wrote:
+> > > Looking at this from qemu-stable PoV, I'm not 100% sure this change is good
+> > > for stable-7.2 series, because 7.2 lacks v8.1.0-1571-g5b23186a95
+> > > "kvm: Return number of free memslots" commit, which was a preparation for
+> > > for memory devices that consume multiple memslots.
+> > > 
+> > > I did a backport of this change (currently it is at the tip of staging-7.2
+> > > branch of https://gitlab.com/mjt0k/qemu.git) - I had to tweak context and
+> > > also to remove now-unused local variable in kvm-all.c.  It builds and the
+> > > tests run fine, but I'm not really sure it does what it is intended to do.
+> > > 
+> > > Should anything else be picked up for 7.2 for all this to work, or should
+> > > this change not be back-ported to 7.2 ?
+> > > 
+> > > (for more recent releases, everything looks ok).
+> > 
+> > I don't remember anything this series logically depends on (besides any
+> > context-wise change).
+> 
+> Well, 7.2 is a bit old by now, and the commit I already mentioned above is
+> also quite old, - at the time you started working on this series, this
+> commit (v8.1.0-1571-g5b23186a95) has been in the tree for a long time
+> already.  This change might be relevant here or might be not.
 
-> Initialize the migration object as early as possible so that migration
-> configuration commands may be sent during the precreate phase.  Also,
-> start listening for the incoming migration connection during precreate,
-> so that the listen port number is assigned (if dynamic), and the user
-> can discover it during precreate via query-migrate.  The precreate phase
-> will be delineated in a subsequent patch.
->
-> The code previously called migration_object_init after memory backends
-> were created so that a subsequent migrate-set-capabilities call to set
-> MIGRATION_CAPABILITY_POSTCOPY_RAM would verify all backends support
-> postcopy.  See migrate_caps_check and postcopy_ram_supported_by_host.
-> The new code calls migration_object_init before backends are created.
-> However, migrate-set-capabilities will only be received during the
-> precreate phase for CPR, and CPR does not support postcopy.  If the
-> precreate phase is generalized in the future, then the ram compatibility
-> check must be deferred to the start of migration.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  system/vl.c | 35 +++++++++++++----------------------
->  1 file changed, 13 insertions(+), 22 deletions(-)
->
-> diff --git a/system/vl.c b/system/vl.c
-> index bca2292..d32203c 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2753,17 +2753,7 @@ void qmp_x_exit_preconfig(Error **errp)
->          replay_vmstate_init();
->      }
->  
-> -    if (incoming) {
-> -        Error *local_err = NULL;
-> -        if (strcmp(incoming, "defer") != 0) {
-> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
-> -                                 &local_err);
-> -            if (local_err) {
-> -                error_reportf_err(local_err, "-incoming %s: ", incoming);
-> -                exit(1);
-> -            }
-> -        }
-> -    } else if (autostart) {
-> +    if (!incoming && autostart) {
->          qmp_cont(NULL);
->      }
->  }
-> @@ -3751,6 +3741,18 @@ void qemu_init(int argc, char **argv)
->       * called from do_configure_accelerator().
->       */
->  
-> +    /* Creates a QOM object */
-> +    migration_object_init();
-> +
-> +    if (incoming && !g_str_equal(incoming, "defer")) {
-> +        Error *local_err = NULL;
-> +        qmp_migrate_incoming(incoming, false, NULL, true, true, &local_err);
-> +        if (local_err) {
-> +            error_reportf_err(local_err, "-incoming %s: ", incoming);
-> +            exit(1);
-> +        }
-> +    }
+That specific commit (5b23186a95) shouldn't be relevant.
 
-Doesn't this break preconfig? Now migrate_incoming happens without user
-input so there's no time to set migration options before incoming code
-starts using them.
+> 
+> > If there's uncertainty / challenge from backporting to some stable branches
+> > from your POV, we can still keep things simple and skip the series, as it's
+> > only a perf regression and only happens during live migrations (which can
+> > enlarge the downtime, for example) but not daily VM use.
+> 
+> For this change alone, I did the backport, I just am not sure it makes sense.
+> 
+> It would be great if you take a look, including the change I mentioned above
+> (it isn't in 7.2), there: https://gitlab.com/mjt0k/qemu/-/commits/staging-7.2
+> Or we can just drop it for 7.2 per the above.
 
-> +
->      suspend_mux_open();
->  
->      qemu_disable_default_devices();
-> @@ -3773,20 +3775,9 @@ void qemu_init(int argc, char **argv)
->                       machine_class->name, machine_class->deprecation_reason);
->      }
->  
-> -    /*
-> -     * Create backends before creating migration objects, so that it can
-> -     * check against compatibilities on the backend memories (e.g. postcopy
-> -     * over memory-backend-file objects).
-> -     */
->      qemu_create_late_backends();
->      phase_advance(PHASE_LATE_BACKENDS_CREATED);
->  
-> -    /*
-> -     * Note: creates a QOM object, must run only after global and
-> -     * compat properties have been set up.
-> -     */
-> -    migration_object_init();
-> -
->      /* parse features once if machine provides default cpu_type */
->      current_machine->cpu_type = machine_class_default_cpu_type(machine_class);
->      if (cpu_option) {
+I checked the backport, it looks all good.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
