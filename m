@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7302D3C935
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 00:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD442D3C927
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 00:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2gF0-0001du-7E; Sun, 20 Oct 2024 20:25:46 -0400
+	id 1t2ga0-0004Gl-VG; Sun, 20 Oct 2024 20:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2gEy-0001dO-H1; Sun, 20 Oct 2024 20:25:44 -0400
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ id 1t2gZy-0004GD-Mi; Sun, 20 Oct 2024 20:47:26 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2gEx-0000az-4D; Sun, 20 Oct 2024 20:25:44 -0400
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-4a482407e84so1136719137.0; 
- Sun, 20 Oct 2024 17:25:41 -0700 (PDT)
+ id 1t2gZx-00027Z-7R; Sun, 20 Oct 2024 20:47:26 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-84fed1ff217so2531574241.1; 
+ Sun, 20 Oct 2024 17:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729470341; x=1730075141; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1729471643; x=1730076443; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L4kcMr2tYJi+GCbrUEHltzPeR1Jp+CZjIEfKAMZonAo=;
- b=XX+/9aZijegY/zoBf4pI6k4j2ePg2dZTy8s/gwWFUoSSjWamnDcoIP+njgBMzxNBMn
- HaHxa5ADCH8jC4M4XQ58wljm2aenSI464kh1wdM3xvzHcDjn6Eg/R1DnKkFkXNPxGdhY
- iVrR/ZR5e7jW1Ybe7XteA2/PSqvelqEoloT/TTBIfHOQ6q1ci20JFGZGh7P+JysndNhb
- Q1lb8871CJ2JcBiK+HdmrsDN3Z8evCBPBlqjwrxkTZ4y4RJ2XpQQ+mpNaTcTp0KEVnip
- zsPplrMOpOeT5ANBRzws01+RlShkNaXQPM7TPradu9sGfjkuHZ7lIyQPt+8k6wzgYzkz
- FOmw==
+ bh=zXXnRSgtLkMQFiVQfg7CVOOS/maIR2NpIjhvHp6OS10=;
+ b=mdsr0mR6zeDoLQEpzvac5SA+D50L+MGJnjbFkI6fou4/HbbfxLmH4zj5XoDiLPjO6P
+ e+CMQ7UUmnep+uhGpUvRy0+s7Yo+N+nQnHPYK70KempGs6svH51oqG59ohVuMxS1s8rc
+ gJGxzcuiZcpUGH15uMoOjtx0reEEYtBAmLLxnKsqYFM3cRpDGmWR3PcG7eIxhZ633Q6j
+ qy4InDCxQarwnlghHl2Bp6oCuouj1oemanVB4b7iFV2m0aQduc3hoI8MokR+hqkpAMj0
+ Fhw6y0n8vE+vnaCYCk6b/ZTvmcsO96W071s0v1xOu93YPA1v3KytyJgvLVOFkxesfsjd
+ yVGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729470341; x=1730075141;
+ d=1e100.net; s=20230601; t=1729471643; x=1730076443;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L4kcMr2tYJi+GCbrUEHltzPeR1Jp+CZjIEfKAMZonAo=;
- b=VHD/6BNFfAhP0bHHePWsRmH02SOievMY7fJQQJCPmVWjSo8Zm9XylyxntApjmTLiDu
- 4BbWy0/a5PRdnJCEbkkML18ClzhPnfUVriBWdJ7flogunh2o1ifPoqLCNTx4rjJ+uVAg
- FcP8hOC6rAbX0O7DEpSzPZGDqpPUBGra7X4X67qUjIoVn3rcC4UtY2Wn3xTutS0W3bwh
- X1HPD4mlZ2JnR//uvybK+BNmNZjD5YzziRWMTtC+xcONB1YK9hWcvGu0clZ75JRrcgfX
- TrFt+2swdx0i/Efpw57JbCFW4LIucmsGxXvoJvZNsWw3m9UmLs1s/JDVhzOUBlCws+0D
- 1GOw==
+ bh=zXXnRSgtLkMQFiVQfg7CVOOS/maIR2NpIjhvHp6OS10=;
+ b=kWmABGGieIHXvUYaG2nKoQgc+tlR6bSqVMSvgvIm1AG41GAg9Lbs5x5OowPxun4ONo
+ aBvXLteTAoT43rSYYR/nL+I8/RLktiOyLqZnuu4qvv4KG3Xuhyyl1ZwgpDRat648e3YL
+ QzDv/sI6UPVrc6ZDKLR6vRZnx4nu22Tnf/caX/sbxKwse3N2YZTDEDUqnt6CbkP2PHTp
+ G30+D5kd3CWwIDzmT7u3D9RyBfKj2X3xEWTGR9J/N/vodnDsIbVGDP3q4QoYp0nQx5qL
+ 3qykUKqtsSt6MupQ6PIxZn+q+gkIeIh+p9OD3LGMPirmpnzIb8uTW7wac/0s6hQS3q8D
+ kvRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDseccuxNSWEZFGo1vUFTIPIfxWDd9yTO7HeHQVj8hHp2CKlR83NEBJeeHvLtKhzGA+lltazoB8a7D@nongnu.org
-X-Gm-Message-State: AOJu0Yy/9GkgDne8hcHeyMcGvLAlJ+0RgL38wO0JcynQuQN/z+04XADY
- NrvdMuMPxQMxw8E9N4Xj+hpf0YfupgMWJrs7k44YIDFBfPoM13COzeBWiRXUVWYceJAOPxDoFsf
- xkPb5whk/IzafHG8HZ90/rNaIlJA=
-X-Google-Smtp-Source: AGHT+IF51FSe8gEszLk78SfmP4WTSa7GS9OGLveb3URbmkK1p34DMfn2ibVRTmLDb9CqtHfifgEjl1BHe1PXWNRke7M=
-X-Received: by 2002:a05:6102:3a07:b0:4a4:8d6d:a37d with SMTP id
- ada2fe7eead31-4a5d6bee7d4mr6647088137.28.1729470340820; Sun, 20 Oct 2024
- 17:25:40 -0700 (PDT)
+ AJvYcCXZK4V49iaoMgVMhZ0RFHaAwHKHNWSJ9JeAfpZVLPjr9nnIwVWv4OtnSkfpMmoylcuoJdipB+Av/6G1@nongnu.org
+X-Gm-Message-State: AOJu0YwUF6OtwTqdBBZjBkHCkK8GGX9GScLguzwnVbhuu1Uc1mCvuYbA
+ WzbfC9LX1tzOYzNLgh3qr7MGvFsvFJDiJ8f8GU2nsMDjZ4L0N1XLeoed9Q/w1cWBqyjRRTqr1gw
+ 1Bpuq4fzj4hQCPvhjbaxBH6cf5+kXf1w9Fhw=
+X-Google-Smtp-Source: AGHT+IGXh3sFnT/cnT4+kZSFjrmZR8T6hqq1w+V5pJ8+w1nfT/BoJxHy7u7I8Ew4cASc/U/cmMq/5AUHTSFm8yXbwXo=
+X-Received: by 2002:a05:6102:c8b:b0:4a4:7e84:d654 with SMTP id
+ ada2fe7eead31-4a5c49eb5bbmr9196638137.14.1729471643596; Sun, 20 Oct 2024
+ 17:47:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241018141332.942844-1-peter.maydell@linaro.org>
- <20241018141332.942844-8-peter.maydell@linaro.org>
-In-Reply-To: <20241018141332.942844-8-peter.maydell@linaro.org>
+References: <20241017145226.365825-1-cleger@rivosinc.com>
+ <20241017145226.365825-2-cleger@rivosinc.com>
+In-Reply-To: <20241017145226.365825-2-cleger@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 21 Oct 2024 10:25:14 +1000
-Message-ID: <CAKmqyKMYxMW5KbeJAGyGtUwHS72C7JuGS0-LP7cmZRF7irioag@mail.gmail.com>
-Subject: Re: [PATCH 7/7] docs/system/target-arm.rst: Remove "many boards are
- undocumented" note
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Mon, 21 Oct 2024 10:46:57 +1000
+Message-ID: <CAKmqyKMoDSFaJz7LhX4GMV9AhOQUDLOt79Fctw_k97SazpSjjQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/9] target/riscv: fix henvcfg potentially containing
+ stale bits
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,42 +97,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 19, 2024 at 12:14=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
+On Fri, Oct 18, 2024 at 12:55=E2=80=AFAM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
+vosinc.com> wrote:
 >
-> We now have at least placeholder documentation for every Arm board,
-> so we can remove the apologetic note that says that there are
-> undocumented ones which you can only find out about via the
-> ``--machine help`` option.
+> With the current implementation, if we had the current scenario:
+> - set bit x in menvcfg
+> - set bit x in henvcfg
+> - clear bit x in menvcfg
+> then, the internal variable env->henvcfg would still contain bit x due
+> to both a wrong menvcfg mask used in write_henvcfg() as well as a
+> missing update of henvcfg upon menvcfg update.
+> This can lead to some wrong interpretation of the context. In order to
+> update henvcfg upon menvcfg writing, call write_henvcfg() after writing
+> menvcfg and fix the mask computation used in write_henvcfg() that is
+> used to mesk env->menvcfg value (which could still lead to some stale
+> bits). The same mechanism is also applied for henvcfgh writing.
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
+> ---
+>  target/riscv/csr.c | 17 +++++++++++++----
+>  1 file changed, 13 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index b84b436151..9e832e0b39 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2345,6 +2345,8 @@ static RISCVException read_menvcfg(CPURISCVState *e=
+nv, int csrno,
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+> +                                    target_ulong val);
+>  static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+>                                      target_ulong val)
+>  {
+> @@ -2357,6 +2359,7 @@ static RISCVException write_menvcfg(CPURISCVState *=
+env, int csrno,
+>                  (cfg->ext_svadu ? MENVCFG_ADUE : 0);
+>      }
+>      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
+> +    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+>
+>      return RISCV_EXCP_NONE;
+>  }
+> @@ -2368,6 +2371,8 @@ static RISCVException read_menvcfgh(CPURISCVState *=
+env, int csrno,
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+> +                                    target_ulong val);
+>  static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+>                                       target_ulong val)
+>  {
+> @@ -2378,6 +2383,7 @@ static RISCVException write_menvcfgh(CPURISCVState =
+*env, int csrno,
+>      uint64_t valh =3D (uint64_t)val << 32;
+>
+>      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
+> +    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+>
+>      return RISCV_EXCP_NONE;
+>  }
+> @@ -2435,6 +2441,7 @@ static RISCVException write_henvcfg(CPURISCVState *=
+env, int csrno,
+>                                      target_ulong val)
+>  {
+>      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENV=
+CFG_CBZE;
+> +    uint64_t menvcfg_mask =3D 0;
+>      RISCVException ret;
+>
+>      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> @@ -2443,10 +2450,11 @@ static RISCVException write_henvcfg(CPURISCVState=
+ *env, int csrno,
+>      }
+>
+>      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> -        mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG=
+_ADUE);
+> +        menvcfg_mask =3D HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE;
+> +        mask |=3D env->menvcfg & menvcfg_mask;
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+This doesn't seem right.
+
+Should it be something like
+
+    if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+        mask |=3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_AD=
+UE);
+    }
+
+    mask =3D env->menvcfg & mask;
+
+>      }
+>
+> -    env->henvcfg =3D (env->henvcfg & ~mask) | (val & mask);
+> +    env->henvcfg =3D (env->henvcfg & ~menvcfg_mask) | (val & mask);
+
+Using both menvcfg_mask and mask seems wrong here
 
 Alistair
-
-> ---
->  docs/system/target-arm.rst | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-> index 1f806cf4a46..9aaa9c414c9 100644
-> --- a/docs/system/target-arm.rst
-> +++ b/docs/system/target-arm.rst
-> @@ -63,10 +63,6 @@ large amounts of RAM. It also supports 64-bit CPUs.
->  Board-specific documentation
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
->
-> -Unfortunately many of the Arm boards QEMU supports are currently
-> -undocumented; you can get a complete list by running
-> -``qemu-system-aarch64 --machine help``.
-> -
->  ..
->     This table of contents should be kept sorted alphabetically
->     by the title text of each file, which isn't the same ordering
-> --
-> 2.34.1
->
->
 
