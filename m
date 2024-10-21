@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B40AD17121
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0419FD17122
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 18:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2wkj-0001hS-FU; Mon, 21 Oct 2024 14:03:37 -0400
+	id 1t2wnI-0002jw-JR; Mon, 21 Oct 2024 14:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2wkh-0001h4-Eg
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:03:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2wkf-0007qa-8n
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:03:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729533809;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JIaG+0t6WgZr+q6eV4H4cMLQgs1eCfzYjNY2Sd05FYo=;
- b=WJ4LaOjy38gG3e5PqVxzZHSHJprswGtkeXIkxEVTqfcU9S2eEmV91tZIpwyxV2ooFHlKKz
- b/26ToLmukh4/mYMwdZcm0wvKmxzRxdjdV91plnlydDy9VRKBW2JW8ngrK6juLdeFLgz+S
- 0MHMyPadZKJfsEQ6WqQyRNp+8nMk5xU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-7pJdEizfOo-XEAbHFv_YUQ-1; Mon,
- 21 Oct 2024 14:03:23 -0400
-X-MC-Unique: 7pJdEizfOo-XEAbHFv_YUQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37C78195608C; Mon, 21 Oct 2024 18:03:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3251519560A2; Mon, 21 Oct 2024 18:03:17 +0000 (UTC)
-Date: Mon, 21 Oct 2024 19:03:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] hw/i386: define _AS_LATEST() macros for machine types
-Message-ID: <ZxaXYjG_lMqUuWUy@redhat.com>
-References: <20240910163041.3764176-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2wnC-0002hI-68
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:06:11 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t2wn8-0008E7-Js
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 14:06:08 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-20cf6eea3c0so37360305ad.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 11:06:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729533965; x=1730138765; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=adOVEpwN3SehtM61Yol35EmLzyaay4Z2RtnvTBsdKMc=;
+ b=FKZwBND+oYADHSOVgIeyYFewG4kGkspcimR9neeiaj7iZn86/Suqjxj6jJb3GBEH6b
+ 6UvigGFc2BqonRP26glRxKE0y/fmpyfRa2Q7tLsTwd1bmGDO1IqgxM2hzVeR14BPz2wk
+ 3rrZfWicr98RKCGbtwJ8fOIp3KNhOWwBTUtiR3VbxP5yDiXp5ZnGwjEXGpNGc/diJ0n9
+ XCz4SrbQI8J+cD7wqTCbThBuYCUfnsXNT/IqNVhDkis/mwAUlbvgov8WOpn0yU5ATybm
+ zjZqhJ85SSwlkbRi0NZbbEDMmnqdPUPAT93Z7he9RNBCBeksOwgfr+Ywz8ro2Lo6/Dju
+ 1pkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729533965; x=1730138765;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=adOVEpwN3SehtM61Yol35EmLzyaay4Z2RtnvTBsdKMc=;
+ b=mgykAlac6Z9JUqijXt0Mr7Pz3+dB1WQ9xcWDwZ+KCZTCuKg4cKlf8isgEc1mW13D3F
+ 5WWdOrIivl49FWxAEf2f+fhirtSoVpFlBuRLLPW/GC3/Jlg2T/Iy7EYbqoFSfF8fZXMF
+ masfdX7ZQUZ01rB3uRR3QjdM6sFyja0VkP6tijn6I3tFR0yKZ0WIQLDAJhuRpDTkVUrX
+ xkcrhaY0TrDfY37rOe2Prwlh/yql04vg+rtuiZQQVh9HXApqAc06hXT+DxRi47+C8quj
+ nrWHA7BbcrsMFpnB/ocrubDiU7W2QDa6L6haQDFpM2hKSVztHrzE+h2G4eltMf4W9PeF
+ GORQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSmLBHIs1VFRuHQoADsJR9ubvSCRgzeUAz1lWJQhHTeJSfoEUzJaoqQbwYb0kXhsUKbXABDTfudJSW@nongnu.org
+X-Gm-Message-State: AOJu0YzIcK5JGiTQQR6bWUOuOzwcikdKg3WtPcOLnYO+1A2KiDXijzB5
+ cKShHt1kkTXRF7in74h1Y2SVNq7nxmZopxmwwH+G0ZrgAyBldu9KYZmf01ivpKw=
+X-Google-Smtp-Source: AGHT+IEPkByozEkXdIAoXy7jqtvcI+gtYrHLyveydgTDPjKAWhpN54y/y24c/2idZYuKz3w3L+rkpQ==
+X-Received: by 2002:a17:902:ccc8:b0:20c:c704:629e with SMTP id
+ d9443c01a7336-20e5a93e82amr200824085ad.56.1729533965000; 
+ Mon, 21 Oct 2024 11:06:05 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7f0bd309sm28771385ad.151.2024.10.21.11.06.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 11:06:04 -0700 (PDT)
+Message-ID: <89f9402c-fd7a-476c-96af-ad24dfdc3c00@linaro.org>
+Date: Mon, 21 Oct 2024 11:06:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240910163041.3764176-1-berrange@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 3/7] contrib/plugins: add plugin showcasing new
+ trap related API
+Content-Language: en-US
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
+ <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1a2a379011c3636cfc516a3d246566acf14dd44f.1729355735.git.neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,135 +98,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping: for the x86 maintainers.
-
-On Tue, Sep 10, 2024 at 05:30:41PM +0100, Daniel P. Berrangé wrote:
-> Follow the other architecture targets by adding extra macros for
-> defining a versioned machine type as the latest. This reduces the
-> size of the changes when introducing new machine types at the start
-> of each release cycle.
+On 10/19/24 09:39, Julian Ganz wrote:
+> We recently introduced new plugin API for registration of trap related
+> callbacks. This change introduces a minimal plugin showcasing the new
+> API. It simply counts the occurances of interrupts, exceptions and
+> semihosting events per CPU and reports the counts when exitting.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
+>   contrib/plugins/Makefile |  1 +
+>   contrib/plugins/traps.c  | 89 ++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 90 insertions(+)
+>   create mode 100644 contrib/plugins/traps.c
 > 
-> In v2:
-> 
->  - Rebased on top of new 9.2 machine types
-> 
->  hw/i386/pc_piix.c    | 11 +++++------
->  hw/i386/pc_q35.c     | 11 ++++++-----
->  include/hw/i386/pc.h |  4 +++-
->  3 files changed, 14 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 2bf6865d40..4953676170 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -446,7 +446,10 @@ static void pc_i440fx_init(MachineState *machine)
->  }
->  
->  #define DEFINE_I440FX_MACHINE(major, minor) \
-> -    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, major, minor);
-> +    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, false, NULL, major, minor);
+> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+> index bbddd4800f..6085fd701f 100644
+> --- a/contrib/plugins/Makefile
+> +++ b/contrib/plugins/Makefile
+> @@ -31,6 +31,7 @@ NAMES += drcov
+>   NAMES += ips
+>   NAMES += stoptrigger
+>   NAMES += cflow
+> +NAMES += traps
+>   
+>   ifeq ($(CONFIG_WIN32),y)
+>   SO_SUFFIX := .dll
+> diff --git a/contrib/plugins/traps.c b/contrib/plugins/traps.c
+> new file mode 100644
+> index 0000000000..2a38dbb8b3
+> --- /dev/null
+> +++ b/contrib/plugins/traps.c
+> @@ -0,0 +1,89 @@
+> +/*
+> + * Copyright (C) 2024, Julian Ganz <neither@nut.email>
+> + *
+> + * Traps - count traps
+> + *
+> + * License: GNU GPL, version 2 or later.
+> + *   See the COPYING file in the top-level directory.
+> + */
 > +
-> +#define DEFINE_I440FX_MACHINE_AS_LATEST(major, minor) \
-> +    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, true, "pc", major, minor);
->  
->  static void pc_i440fx_machine_options(MachineClass *m)
->  {
-> @@ -477,17 +480,13 @@ static void pc_i440fx_machine_options(MachineClass *m)
->  static void pc_i440fx_machine_9_2_options(MachineClass *m)
->  {
->      pc_i440fx_machine_options(m);
-> -    m->alias = "pc";
-> -    m->is_default = true;
->  }
->  
-> -DEFINE_I440FX_MACHINE(9, 2);
-> +DEFINE_I440FX_MACHINE_AS_LATEST(9, 2);
->  
->  static void pc_i440fx_machine_9_1_options(MachineClass *m)
->  {
->      pc_i440fx_machine_9_2_options(m);
-> -    m->alias = NULL;
-> -    m->is_default = false;
->      compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
->      compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
->  }
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 8319b6d45e..42bdedbaa4 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -327,10 +327,13 @@ static void pc_q35_init(MachineState *machine)
->  }
->  
->  #define DEFINE_Q35_MACHINE(major, minor) \
-> -    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor);
-> +    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor);
+> +#include <stdio.h>
 > +
-> +#define DEFINE_Q35_MACHINE_AS_LATEST(major, minor) \
-> +    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, "q35", major, minor);
->  
->  #define DEFINE_Q35_MACHINE_BUGFIX(major, minor, micro) \
-> -    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor, micro);
-> +    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor, micro);
->  
->  static void pc_q35_machine_options(MachineClass *m)
->  {
-> @@ -359,15 +362,13 @@ static void pc_q35_machine_options(MachineClass *m)
->  static void pc_q35_machine_9_2_options(MachineClass *m)
->  {
->      pc_q35_machine_options(m);
-> -    m->alias = "q35";
->  }
->  
-> -DEFINE_Q35_MACHINE(9, 2);
-> +DEFINE_Q35_MACHINE_AS_LATEST(9, 2);
->  
->  static void pc_q35_machine_9_1_options(MachineClass *m)
->  {
->      pc_q35_machine_9_2_options(m);
-> -    m->alias = NULL;
->      compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
->      compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
->  }
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 14ee06287d..890427c56e 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -320,7 +320,7 @@ extern const size_t pc_compat_2_3_len;
->      } \
->      type_init(pc_machine_init_##suffix)
->  
-> -#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, ...) \
-> +#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, isdefault, malias, ...) \
->      static void MACHINE_VER_SYM(init, namesym, __VA_ARGS__)( \
->          MachineState *machine) \
->      { \
-> @@ -334,6 +334,8 @@ extern const size_t pc_compat_2_3_len;
->          MACHINE_VER_SYM(options, namesym, __VA_ARGS__)(mc); \
->          mc->init = MACHINE_VER_SYM(init, namesym, __VA_ARGS__); \
->          MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-> +        mc->is_default = isdefault; \
-> +        mc->alias = malias; \
->      } \
->      static const TypeInfo MACHINE_VER_SYM(info, namesym, __VA_ARGS__) = \
->      { \
-> -- 
-> 2.43.0
-> 
+> +#include <qemu-plugin.h>
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> +
+> +typedef struct {
+> +    uint64_t interrupts;
+> +    uint64_t exceptions;
+> +    uint64_t semihosting;
+> +    bool active;
+> +} TrapCounters;
+> +
+> +static TrapCounters *traps;
+> +size_t max_vcpus;
+> +
+> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    traps[vcpu_index].active = true;
+> +}
+> +
+> +static void vcpu_interrupt(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    traps[vcpu_index].interrupts++;
+> +}
+> +
+> +static void vcpu_exception(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    traps[vcpu_index].exceptions++;
+> +}
+> +
+> +static void vcpu_semihosting(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    traps[vcpu_index].semihosting++;
+> +}
+> +
+> +static void plugin_exit(qemu_plugin_id_t id, void *p)
+> +{
+> +    g_autoptr(GString) report;
+> +    report = g_string_new("VCPU, interrupts, exceptions, semihosting\n");
+> +    int vcpu;
+> +
+> +    for (vcpu = 0; vcpu < max_vcpus; vcpu++) {
+> +        TrapCounters *rec = &traps[vcpu];
+> +        if (rec->active) {
+> +            g_string_append_printf(report,
+> +                                   "% 4d, % 10"PRId64", % 10"PRId64", % 10"
+> +                                   PRId64"\n",
+> +                                   vcpu,
+> +                                   rec->interrupts, rec->exceptions,
+> +                                   rec->semihosting);
+> +        }
+> +    }
+> +
+> +    qemu_plugin_outs(report->str);
+> +}
+> +
+> +QEMU_PLUGIN_EXPORT
+> +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> +                        int argc, char **argv)
+> +{
+> +    if (!info->system_emulation) {
+> +        fputs("trap plugin can only be used in system emulation mode.\n",
+> +              stderr);
+> +        return -1;
+> +    }
+> +
+> +    max_vcpus = info->system.max_vcpus;
+> +    traps = calloc(max_vcpus, sizeof(TrapCounters));
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
+> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> +    qemu_plugin_vcpu_for_each(id, vcpu_init);
+> +
+> +    qemu_plugin_register_vcpu_interrupt_cb(id, vcpu_interrupt);
+> +    qemu_plugin_register_vcpu_exception_cb(id, vcpu_exception);
+> +    qemu_plugin_register_vcpu_semihosting_cb(id, vcpu_semihosting);
+> +
+> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> +
+> +    return 0;
+> +
 
