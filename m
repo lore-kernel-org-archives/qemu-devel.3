@@ -4,59 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1113D15D90
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 13:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53792D15D8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 13:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2sTU-0006EW-Jt; Mon, 21 Oct 2024 09:29:33 -0400
+	id 1t2scA-0004gH-Bn; Mon, 21 Oct 2024 09:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t2sTL-0006DI-Hv
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:29:26 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2sc8-0004eF-3S
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:38:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t2sTK-0000iF-64
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:29:23 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2sc4-0002BE-Ie
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:38:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729517361;
+ s=mimecast20190719; t=1729517901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=34PkQkzS2fJKjA97jCvEOEfq09+BKhcwhQ4YHpj/pVU=;
- b=ac2r2mN+8dQo3puxa18fo0ebwj0G3DkTJQ/ctUFERogI2/OtldFNmy0RMnwEKR8Yg179h5
- G+7j/0CWXdP/OcwDC78KJwGwUR0Vijf6ky3TzhMsPwhLsP/sK5HXwRmhhdo8zKi/vgu4gH
- Assqq7MREw86dliAgUoQcYLmQVeTlyg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-YJhCWXwrP5mM0P1ztRFuZw-1; Mon,
- 21 Oct 2024 09:29:20 -0400
-X-MC-Unique: YJhCWXwrP5mM0P1ztRFuZw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F24011955EAD; Mon, 21 Oct 2024 13:29:18 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.72.116.80])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D40719560AA; Mon, 21 Oct 2024 13:29:14 +0000 (UTC)
-From: Dehan Meng <demeng@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: demeng@redhat.com, kkostiuk@redhat.com, michael.roth@amd.com,
- peter.maydell@linaro.org, berrange@redhat.com
-Subject: [PATCH v3 1/4] qemu-ga: 'Null' check for mandatory parameters
-Date: Mon, 21 Oct 2024 21:28:36 +0800
-Message-Id: <20241021132839.463255-7-demeng@redhat.com>
-In-Reply-To: <20241021132839.463255-1-demeng@redhat.com>
-References: <20241021132839.463255-1-demeng@redhat.com>
+ bh=TMM96eFATp/mr3MSLSPxASOoy70jEwJunGSvwrg8+KY=;
+ b=Q8q3QftC4ry83bNxxMxKb5AdBXDxzSeRNNXSGw7OTUqSSvAeQ9uTq480AkgJHuFI+47DAc
+ EcomcmzPkbzFk7OQ9O7tV8tHbI4daeGyWHFE8I2dffqL8f0x9y/74gwOgu7HBi41DfqWVB
+ qoNgmXji0TGP+gqlpkMJ0rCBrIE5nwE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-kthu2pPFMSOCVDJwFAR3iw-1; Mon, 21 Oct 2024 09:38:20 -0400
+X-MC-Unique: kthu2pPFMSOCVDJwFAR3iw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d458087c0so3061036f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 06:38:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729517899; x=1730122699;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TMM96eFATp/mr3MSLSPxASOoy70jEwJunGSvwrg8+KY=;
+ b=JD5pXg0oIlIjJzsnfsiUNqqrLeZJg1xSL1LclEN5teB+9nusbRkV/I2DsTR79Ontrp
+ mj0v+vWVWngF7KLEoSmhoisI/uf9omPxnfihZXgiMZwO00Uyh5h8xgp+1XMdhZ2MnE8A
+ S2SwSqq3eVhqVqvyuGTpjRyxEQMPBEsNrsth/khgsnnM+FwdXOLnW6aYZoUbRxwB6MT+
+ fJLX8KT2Xmm9sZVIRvFNkrI/j1U7ByhbBk3/NQQJhyL6NzMuCVZYCtsbobmAnVqKosM4
+ EFDrDW9i0H/OOtUXTXlGXwXWTBDvHNNlaJXDZbaZpg7ssZUbpMYazM6qeBsJKhNftgU+
+ V5LA==
+X-Gm-Message-State: AOJu0YyLtptX/sIl2SnTy/00G+prcOneqtfnd6jJCZ6tGlCcF0gAOBwm
+ DSpJ4TtGQqWdzSZZSXQzqKt1p7nsGxbf+NWZVJnSft+/+MnxcfoEWj31BG3wp7++xFlldVg5tMj
+ VXfQacx4RY6aUK5C1/9atlCMPxA2R8rhFM/+XhKiblQTGv76bxoH7qwqhBDE9YoSQMTu7En5ZHP
+ 19V++3NDRdxcA8cE+4ZW6+UwXuBcQ=
+X-Received: by 2002:a5d:5d86:0:b0:37e:d92f:c24a with SMTP id
+ ffacd0b85a97d-37ed92fc3e8mr4395196f8f.7.1729517898798; 
+ Mon, 21 Oct 2024 06:38:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGET4WszUqYnzArPpArDcupDhj+L0AaKdY2dhgB/hdP/DqpaR6QGPa5Bg4+FdCgx4GaHKvlSiXT6pSymAKVtyc=
+X-Received: by 2002:a5d:5d86:0:b0:37e:d92f:c24a with SMTP id
+ ffacd0b85a97d-37ed92fc3e8mr4395186f8f.7.1729517898474; Mon, 21 Oct 2024
+ 06:38:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=demeng@redhat.com;
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-4-pbonzini@redhat.com>
+ <ZxX1jSkJ3Muk11zC@intel.com>
+In-Reply-To: <ZxX1jSkJ3Muk11zC@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 21 Oct 2024 15:38:06 +0200
+Message-ID: <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
+Subject: Re: [PATCH 03/16] rust: pass rustc_args when building all crates
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -81,52 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sscanf return values are checked and add 'Null' check for
-mandatory parameters.
+On Mon, Oct 21, 2024 at 8:16=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+> unsafe_op_in_unsafe_fn is allowed in
+> rust/qemu-api/src/lib.rs. So should we wrap the bindings in a separate
+> lib (similar to the rust/bindings in the Linux kernel)?
+>
+> This way, the special lint settings can be applied only to the binding
+> files, while the default lint checks can cover the other user
+> development code.
+>
+> In addition, another thing that confuses me is why bindgen still
+> generates code that does not follow the unsafe_op_in_unsafe_fn
+> requirement. It seems that bindgen has supported unsafe_op_in_unsafe_fn
+> since v0.62 [1, 2], but binding code we generated still violates
+> unsafe_op_in_unsafe_fn. Is this a bug of bindgen?
 
-Signed-off-by: Dehan Meng <demeng@redhat.com>
----
- qga/commands-linux.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+The plan is to support older versions of bindgen (0.60.x) as long as
+Debian has them. One possibility to fix this is, as you said, to use a
+completely separate crate. Another is to add #![allow()] to just the
+bindings module, for example by changing bindgen.rs to
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 51d5e3d927..f0e9cdd27c 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue, int is_ipv6)
-         int i;
- 
-         for (i = 0; i < 16; i++) {
--            sscanf(&hexStr[i * 2], "%02hhx", &in6.s6_addr[i]);
-+            if (sscanf(&hex_str[i * 2], "%02hhx", &in6.s6_addr[i]) != 1) {
-+                return NULL;
-+            }
-         }
-         inet_ntop(AF_INET6, &in6, addr, INET6_ADDRSTRLEN);
- 
-@@ -2164,6 +2166,10 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-                 networkroute = route;
-                 networkroute->iface = g_strdup(Iface);
-                 networkroute->destination = hexToIPAddress(Destination, 1);
-+                if (networkroute->destination == NULL) {
-+                    g_free(route);
-+                    continue;
-+                }
-                 networkroute->metric = Metric;
-                 networkroute->source = hexToIPAddress(Source, 1);
-                 networkroute->desprefixlen = g_strdup_printf(
-@@ -2195,6 +2201,10 @@ GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-                 networkroute = route;
-                 networkroute->iface = g_strdup(Iface);
-                 networkroute->destination = hexToIPAddress(&Destination, 0);
-+                if (networkroute->destination == NULL) {
-+                    g_free(route);
-+                    continue;
-+                }
-                 networkroute->gateway = hexToIPAddress(&Gateway, 0);
-                 networkroute->mask = hexToIPAddress(&Mask, 0);
-                 networkroute->metric = Metric;
--- 
-2.40.1
+#![allow(...)]
+include!("bindgen.rs.inc")
+
+This is related to the fact that we don't have yet a good way to run
+"clippy", because "cargo clippy" needs the bindgen.rs file. So we
+should probably look at these issues at once.
+
+Paolo
 
 
