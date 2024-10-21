@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30157D1712B
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88098D17129
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 19:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2y6q-0005Z9-72; Mon, 21 Oct 2024 15:30:32 -0400
+	id 1t2y8N-0006Pi-1G; Mon, 21 Oct 2024 15:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t2y6c-0005Xp-Q7
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:30:29 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t2y6b-0008Sl-7H
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:30:18 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7db908c9c83so3049152a12.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 12:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1729539015; x=1730143815; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wtFFM01MtMk7bKwjAfnzZ86kCwFKc7QNS/KueXIyn24=;
- b=fkkVMHDoBNxk9zi/y3l8mySsqSLoYvJhxodKYCsvfP54pN7z3AIuB+Ov8jHZD+7OUa
- pj/4LQlybPT3PWOkCsvgonPG4PjwrKXAK0UJ+iN5SkbACLHe3ub2SXJmqZTGdDo48RPN
- 6ctcm2r4hSzN8U2futOSmfhCYCfXWINExIbnHfENreXJ+3vH0a5mX3fThFJye1J/fTxX
- iPy45H07Z3waeFLBIdFPevJlXC/GNFTo7czs9GH40EJN4jD7Gz9vO9aHKfNBl9qKAOeh
- eW39BhaRh7BrKsJka392Hi8G+Wegz9JDBbHJmfClFQ10rKPhqUBT+CKumslHbXHSyFDz
- ZM9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729539015; x=1730143815;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wtFFM01MtMk7bKwjAfnzZ86kCwFKc7QNS/KueXIyn24=;
- b=kjrmX/wcUYr16p7iGvaKVWhbNyxc2SUDRTsh/Ivi5iPr0SPSEddgZRo4GBwmx0my54
- z95bjDaBsJEl84cWfiU2LkIg4uaMjTWfIEYpI1UPAP5SjSh2/ChV1mEVwHsaXfPzfSRD
- PLPtwsu4yG8YokF3sc9jCTIv1WjU/TCarRYjEXT3EHJOI4tjI67Tj8e+EqQIvobz5+/b
- xzRKgwMu8bFTcwDAhDtWUHnGAgJjDErat8qj9MBD9BToUTlMqypk1kqUc5aAjAeeQabG
- E1920oCDp0hIvWdZUHcaaLeKwJBvqQYz2QYpJenQ5GFvL+y7YgDsS52KkzYsycGGcBGw
- pJEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUctciwXtVIxVMbYtZnQy4mcbMcbAeeR61EZGlRtP5xcRo3gFDdfd+c447HrapVDAiyiVVtPb/ZynFa@nongnu.org
-X-Gm-Message-State: AOJu0YxlcRZYVR3gnE95jJodfFw3+q+l8Ko4IlHuJxfGZcl98lneC/PO
- t1p2gasI4hKxwjKytaX7VYS+ZWIAyt67C7AMYVrG8K4Sy1jS/V0r0JjrKHCnkQQ=
-X-Google-Smtp-Source: AGHT+IEkUNzzlVgHu0mQ344HQHz8Mu++7c6xwW5NhPYSujGQN9oo8xcijGXWZtTRdoo9Fv9gsy2bpg==
-X-Received: by 2002:a05:6a20:ba29:b0:1d9:6a6b:f7a4 with SMTP id
- adf61e73a8af0-1d96a6bf9a2mr1425189637.49.1729539015484; 
- Mon, 21 Oct 2024 12:30:15 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:242b:63dc:6000:cdfb:8dda?
- ([2804:7f0:bcc0:242b:63dc:6000:cdfb:8dda])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeaafd36esm3542130a12.6.2024.10.21.12.30.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 12:30:15 -0700 (PDT)
-Message-ID: <25ae806f-38de-425f-8590-1c605d93197d@ventanamicro.com>
-Date: Mon, 21 Oct 2024 16:30:11 -0300
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t2y8K-0006PT-RY
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:32:05 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t2y8I-00008n-J7
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 15:32:04 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LDm3WB002383;
+ Mon, 21 Oct 2024 19:31:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VzFRvg
+ avEHHR/fooFO0yReuqwqVDIULKsuIJJxSXjEo=; b=exWyd8Fsqyx0rsW9ZJTccH
+ FmoFMe4XVoI4dqpixsP7c4TT0esJsjai+CNk1IHfP5FC/oBqwjzjwFuUb+UxSBlp
+ L2i6FoApPENOHcXhK0SYmLYZpdre02KySHW5wVxIWZVxURE6KZSSr8k9xrnC9H6C
+ IIxq/4kew4OqTpMbMAedTijk7G2AxJ0Lft6b8RdnA24a7fraT7KQXo9gF7A79zSY
+ 3y6ND57MZiBlRTQyVxc1+zKWTGodsZl92xxMGY4zCUimFWwFxyRq08lyIh3Znmy/
+ LjP47rDPSaipQJU0Hr9IOjw4OfgkNUJHvmX+hlZRABit3S4tCTxLXPMvW2aPt8vA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5hmb5j9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 19:31:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49LGwfIR023829;
+ Mon, 21 Oct 2024 19:31:56 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42cst0ymsv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 19:31:56 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49LJVtBd53477724
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Oct 2024 19:31:55 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1BFA020043;
+ Mon, 21 Oct 2024 19:31:55 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7EA7820040;
+ Mon, 21 Oct 2024 19:31:54 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Oct 2024 19:31:54 +0000 (GMT)
+Message-ID: <cd561063296a9e42053d7e1c07cf49617938466a.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/tcg: Stop using exit() in the gdbstub testcases
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>
+Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, qemu-devel@nongnu.org
+Date: Mon, 21 Oct 2024 21:31:53 +0200
+In-Reply-To: <e22adb4e-86a2-43aa-a9f4-2e9f40bb4d87@linaro.org>
+References: <20241021150153.487057-1-iii@linux.ibm.com>
+ <CAFEAcA9W6Fb-gvCx268xV+CV7LyWJwCQGqkKFpGQjdT+WiAEUQ@mail.gmail.com>
+ <e22adb4e-86a2-43aa-a9f4-2e9f40bb4d87@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: OxBRv9ex2dguasFK6DyTwXD9Tc1rHbuU
+X-Proofpoint-GUID: OxBRv9ex2dguasFK6DyTwXD9Tc1rHbuU
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/riscv: Support different address-cells for initrd
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Conor Dooley <conor@kernel.org>
-References: <20241021040942.400-1-jim.shu@sifive.com>
- <20241021040942.400-3-jim.shu@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241021040942.400-3-jim.shu@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1011
+ phishscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410210138
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +112,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 2024-10-21 at 16:08 -0300, Gustavo Romero wrote:
+> Hi,
+>=20
+> On 10/21/24 12:08, Peter Maydell wrote:
+> > On Mon, 21 Oct 2024 at 16:02, Ilya Leoshkevich <iii@linux.ibm.com>
+> > wrote:
+> > >=20
+> > > GDB 15 does not like exit() anymore:
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 (gdb) python exit(0)
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 Python Exception <class 'SystemExit'>: 0
+> > > =C2=A0=C2=A0=C2=A0=C2=A0 Error occurred in Python: 0
+> > >=20
+> > > Use the GDB's own exit command, like it's already done in a
+> > > couple
+> > > places, everywhere.
+> >=20
+> > This is the same bug that commit 93a3048dcf4565 is
+> > fixing, but it looks like we didn't catch everywhere.
+>=20
+> Yep.
+>=20
+> So maybe now change in test_gdbstub.py this line:
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 gdb.execute(f"exit {fail_count}")
+>=20
+> to use the new gdb_exit()?
 
+Thanks for taking a look! I think I'm already doing this here?
 
-On 10/21/24 1:09 AM, Jim Shu wrote:
-> The cells of 'initrd-start/end' should follow the '#address-cell'.
-> QEMU API could support 1 and 2 cells.
-> 
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   hw/riscv/boot.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index ad45bd7a6a..76b099c696 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -182,6 +182,7 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
->       void *fdt = machine->fdt;
->       hwaddr start, end;
->       ssize_t size;
-> +    uint32_t acells;
->   
->       g_assert(filename != NULL);
->   
-> @@ -209,9 +210,18 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
->   
->       /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
->       if (fdt) {
-> +        acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
-> +                                       NULL, NULL);
-> +        if (acells == 0) {
-> +            error_report("dtb file invalid (#address-cells 0)");
-> +            exit(1);
-> +        }
-> +
->           end = start + size;
-> -        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-start", start);
-> -        qemu_fdt_setprop_u64(fdt, "/chosen", "linux,initrd-end", end);
-> +        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-start",
-> +                                     acells, start);
-> +        qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-end",
-> +                                     acells, end);
->       }
+@@ -62,4 +68,4 @@ def main(test, expected_arch=3DNone):
+         pass
+=20
+     print("All tests complete: {} failures".format(fail_count))
+-    gdb.execute(f"exit {fail_count}")
++    gdb_exit(fail_count)
 
-Is this a legal format for linux,initrd-start and linux,initrd-end?
+> BTW, last news from this issue is that it seems to be fixed
+> in GDB 15.2 [0] (I haven't tried it). However, the fix using
+> gdb.exit(n) is still correct.
 
-This link:
+Interesting, I didn't realize this was a bug and not a design
+change. Still, given that the buggy GDBs are out there, I'd prefer to
+have this change.
 
-https://www.kernel.org/doc/Documentation/devicetree/bindings/chosen.txt
+> Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+>=20
+>=20
+> Cheers,
+> Gustavo
+>=20
+> [0] https://sourceware.org/bugzilla/show_bug.cgi?id=3D31946
 
-Defines both attributes as:
-
-"These properties hold the physical start and end address of an initrd that's
-loaded by the bootloader."
-
-So I'm not sure if this format you're using here is valid.
-
-
-Conor, care to weight in? Thanks,
-
-Daniel
-
->   }
->   
 
