@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 415F8D0E6D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9690BD0E6D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2oN9-00019D-FN; Mon, 21 Oct 2024 05:06:43 -0400
+	id 1t2oO4-0002sC-9m; Mon, 21 Oct 2024 05:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
- id 1t2oN0-00011F-Tg; Mon, 21 Oct 2024 05:06:34 -0400
+ id 1t2oO1-0002fv-Pr; Mon, 21 Oct 2024 05:07:37 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
- id 1t2oMz-0008RM-5G; Mon, 21 Oct 2024 05:06:34 -0400
+ id 1t2oO0-00006o-3R; Mon, 21 Oct 2024 05:07:37 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4XX8Yx1RkRz4wxx;
- Mon, 21 Oct 2024 20:06:29 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XX8b81jY0z4wxx;
+ Mon, 21 Oct 2024 20:07:32 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4XX8Yq6l0Bz4wb5;
- Mon, 21 Oct 2024 20:06:23 +1100 (AEDT)
-Message-ID: <05d86744-c702-43eb-8d27-164608c6ba22@kaod.org>
-Date: Mon, 21 Oct 2024 11:06:22 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XX8b26cv3z4wb5;
+ Mon, 21 Oct 2024 20:07:26 +1100 (AEDT)
+Message-ID: <32905623-e72b-4c91-bf0b-d41e5725eef2@kaod.org>
+Date: Mon, 21 Oct 2024 11:07:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 05/16] hw/arm/aspeed: Correct spi_model w25q256
- for ast1030-a1 EVB.
+Subject: Re: [SPAM] [PATCH v1 06/16] hw/arm/aspeed: Correct fmc_model w25q80bl
+ for ast1030-a1 EVB
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -45,10 +45,10 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:Block layer core" <qemu-block@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
- <20241018053112.1886173-6-jamin_lin@aspeedtech.com>
+ <20241018053112.1886173-7-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20241018053112.1886173-6-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241018053112.1886173-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -75,12 +75,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/18/24 07:31, Jamin Lin wrote:
-> Currently, the default spi_model was "sst25vf032b" whose size was 4MB for
+> Currently, the default fmc_model was "sst25vf032b" whose size was 4MB for
 > ast1030-a1 EVB. However, according to the schematic of ast1030-a1 EVB,
-> ASPEED shipped default flash of spi1 and spi2 were w25q256 whose size
-> was 32MB.
+> ASPEED shipped default flash of fmc_cs0 and fmc_cs1 were "w25q80bl" and
+> "w25q256", respectively. The size of w25q80bl is 1MB and the size of w25q256
+> is 32MB.
 > 
-> Correct spi_model default flash to w25q256 for ast1030-a1 EVB.
+> The fmc_cs0 was connected to AST1030 A1 internal flash and the fmc_cs1 was
+> connected to external flash. The internal flash could not be changed because
+> it was placed into AST1030 A1 chip. Users only can change fmc_cs1 external
+> flash.
+> 
+> So far, only supports to set the default fmc_model for all chip select pins.
+> In other words, users cannot set the different default flash model for
+> fmc_cs0 and fmc_cs1, respectively.
+> 
+> Correct fmc_model default flash to w25q80bl the same as AST1030 A1
+> internal flash for ast1030-a1 EVB.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -97,17 +108,17 @@ C.
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index cf0c6c580b..bf68224295 100644
+> index bf68224295..b4b1ce9efb 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -1643,7 +1643,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+> @@ -1642,7 +1642,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+>       mc->init = aspeed_minibmc_machine_init;
 >       amc->i2c_init = ast1030_evb_i2c_init;
 >       mc->default_ram_size = 0;
->       amc->fmc_model = "sst25vf032b";
-> -    amc->spi_model = "sst25vf032b";
-> +    amc->spi_model = "w25q256";
+> -    amc->fmc_model = "sst25vf032b";
+> +    amc->fmc_model = "w25q80bl";
+>       amc->spi_model = "w25q256";
 >       amc->num_cs = 2;
 >       amc->macs_mask = 0;
->       aspeed_machine_class_init_cpus_defaults(mc);
 
 
