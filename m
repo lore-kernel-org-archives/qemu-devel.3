@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBF7D15DA0
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EA0D15DA0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2tWg-0005Eu-9c; Mon, 21 Oct 2024 10:36:54 -0400
+	id 1t2tXZ-0006O3-Nz; Mon, 21 Oct 2024 10:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2tWZ-00058d-7j
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:36:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2tXR-0006Im-PC
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:37:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2tWW-00008R-UH
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:36:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t2tXQ-0000BB-3s
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:37:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729521401;
+ s=mimecast20190719; t=1729521458;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Iat23E9BK4y0LDSuZNzsEB6dDPDorXPdTce6kZ++ACw=;
- b=PHHshb1b+Bov6PBb1zFoTswLnaRQM1YKu0mXslHR0QyDU52hg+8+vtLF1ygXgmwbS0MUtF
- yW/C/WCo/BrxxRGrhiizJN7+9dsRmcASC1hMaFvjOsE53wG0MUMUJffQPrm5WAdTdFXB+Q
- Njv7Ffk3nfxBcjZG5NOqQlJteFHwrMQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DGG58MRMoRut+ITE6U9r4TeTOaQN1xJ0tw0yT2adSc8=;
+ b=IqB3Kuil3MDF5aQaoqVClVYaucb6g0YbS2lwkjfTBmDylmrBaCGY8qx4tn3fMfSl0jjZ2J
+ qR9lqHGasBVotqOIKZRRjiYqNdayXjgAAHhRnJx0pyazSJue/9Ht+xn1f/8Qs8+FdtmDKq
+ 7CTwJgIeue6mAWRQgrb3qBViTwhWy1s=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610--ZHyIK6KOCOBqS5M1gQAqQ-1; Mon, 21 Oct 2024 10:36:40 -0400
-X-MC-Unique: -ZHyIK6KOCOBqS5M1gQAqQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d589138a9so2503103f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 07:36:40 -0700 (PDT)
+ us-mta-149-kjdNStApP6mzGtn9tvrkUA-1; Mon, 21 Oct 2024 10:37:37 -0400
+X-MC-Unique: kjdNStApP6mzGtn9tvrkUA-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-460c6731ebeso40333921cf.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 07:37:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729521399; x=1730126199;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Iat23E9BK4y0LDSuZNzsEB6dDPDorXPdTce6kZ++ACw=;
- b=LATs/axZrEwhygr7o+r1zw3nUALUbCPXnOcYem6D92lAVSh4wocXc4kVtfEmz9hmxV
- wNS9K0iU8IbJnSXOsetj8w8UPCqbT14MzYNOyvE4EZlULrDCphAX+WVsYJ1GorT+pMgk
- qu7dtacSrokdqdwaY35ly4ai36AlQx8xdDaTKcwtZopw5Gl3sfSs2WKxENWosRdw3Qa4
- E7UPbuEpN6CEbnIPVG4TWsLvlXAK9nsTdjo8AitJr7QccUsNkr21DI//o0cST5DbdghH
- SK1da8qmHkVDzmbOdrCxY9v/xCKIUy06dNEv1yo/VLZ0HUMSpEyQ9mQo6V9usj8p5OSZ
- /p+Q==
-X-Gm-Message-State: AOJu0Yx39Cxmmh0vbqug3Bq//843AgMCrd9xMkVPLDWon+LWhldnRhqa
- EPt9nTq9+KYRwyLnQlgsWpXuMk5UhejQJinFovZ/BfCAfSOUMYZF1ONFuhQUfv6FtXRBxVnTe0J
- Uadhlwj+DlzBeVqjsR7HRueq5wLmIxeVZBytPyGmaXYEXE+ESXjhbA48czZP/iKgiqkaUOIx1Rc
- JOtSvcovXfo8EWcja/Nq7tIwVu7GbSpsnSJ8et5g==
-X-Received: by 2002:a05:600c:8719:b0:42c:ba83:3f0e with SMTP id
- 5b1f17b1804b1-431616331ddmr86372175e9.7.1729521398936; 
- Mon, 21 Oct 2024 07:36:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGoQmADG2o7JQhKkaiteDt0guFpgEc+sbzhWV+fI2E8+tisbKeti42nsyutKX8nV/+RFFAYE/l8Y1PjuzfKAXo=
-X-Received: by 2002:a05:600c:8719:b0:42c:ba83:3f0e with SMTP id
- 5b1f17b1804b1-431616331ddmr86372045e9.7.1729521398589; Mon, 21 Oct 2024
- 07:36:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729521457; x=1730126257;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DGG58MRMoRut+ITE6U9r4TeTOaQN1xJ0tw0yT2adSc8=;
+ b=rNLkfHdDWO6MA2rUXqzMZ/qbDf+ggDMRn7TBn5Wz0lkztWPnHtObXdAMnMyNpCcCbo
+ BmLN4TL8jRhA9JbLoVgzIS4F27SzS+FMVmsHH1eh74jpVVV8D7p5mVdCuK3VPTwnmP/n
+ GfmVa/6jaE3pY5IfhqkJ9Wy5khFG8M0U2yYlErKPxcs0rlp61DAwy/cGGs1EUzg2Uvyv
+ 6hGjTJtF8i7Tcnxei/cgXu7otvafBcomCiTNelJDoLwOmhtrdihdJvedk9ZdDTsfiWR0
+ lQZCqCOLn8fyZhFYTAIlMVudr8XhkzKzFwqc6qKCIGr1m9sFD5GmHz4Bfzd9k4OcdI4k
+ GfPw==
+X-Gm-Message-State: AOJu0YyphbfdCzvlZODQ2KttfyS+DDissMoxwNrLvmFCoiMZdc/vU/dp
+ 6YscSHOdf6T+IYge9nGNL8LzcKEiTLZaPUIMop7o9YWCD1BgtAhFjHS19nYA9zs9T4vEHEed7u3
+ TCRz2MOixT639TPpXWG2ZV3vGJToPu8B1yqRwLji+3HKUgPVyRmel
+X-Received: by 2002:a05:622a:2cb:b0:460:a928:696f with SMTP id
+ d75a77b69052e-460aed7c445mr174772911cf.29.1729521457017; 
+ Mon, 21 Oct 2024 07:37:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9WA+0P6WjODh6M4w1hwN3w8W/7qKz/1M9xdcMeWi6gqL7odr+Xifxc7nmugg0EkxlAbZnEA==
+X-Received: by 2002:a05:622a:2cb:b0:460:a928:696f with SMTP id
+ d75a77b69052e-460aed7c445mr174772681cf.29.1729521456709; 
+ Mon, 21 Oct 2024 07:37:36 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-460d3c3afcfsm18205001cf.5.2024.10.21.07.37.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Oct 2024 07:37:36 -0700 (PDT)
+Date: Mon, 21 Oct 2024 10:37:33 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Zhiyi Guo <zhguo@redhat.com>
+Subject: Re: [PATCH v4 1/4] KVM: Dynamic sized kvm memslots array
+Message-ID: <ZxZnLXD4w2HV07gJ@x1n>
+References: <20240917163835.194664-1-peterx@redhat.com>
+ <20240917163835.194664-2-peterx@redhat.com>
+ <52cc6540-b1ff-495e-9b98-98f13ecbf380@tls.msk.ru>
 MIME-Version: 1.0
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-9-pbonzini@redhat.com>
- <ZxZqcuYx16BVXMK1@intel.com>
-In-Reply-To: <ZxZqcuYx16BVXMK1@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 21 Oct 2024 16:36:24 +0200
-Message-ID: <CABgObfZzG92rj0vNuQMEKPmxQ+U+Yyuak6gMaNSmf4Jcex6Xug@mail.gmail.com>
-Subject: Re: [PATCH 08/16] rust: build tests for the qemu_api crate
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <52cc6540-b1ff-495e-9b98-98f13ecbf380@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,34 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 4:35=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
->
-> On Tue, Oct 15, 2024 at 03:17:26PM +0200, Paolo Bonzini wrote:
-> > Date: Tue, 15 Oct 2024 15:17:26 +0200
-> > From: Paolo Bonzini <pbonzini@redhat.com>
-> > Subject: [PATCH 08/16] rust: build tests for the qemu_api crate
-> > X-Mailer: git-send-email 2.46.2
-> >
-> > Fix some bitrot in tests.rs, and allow the unit tests to be run via
-> > "meson test".
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  rust/qemu-api/meson.build  | 3 +++
-> >  rust/qemu-api/src/tests.rs | 2 +-
-> >  2 files changed, 4 insertions(+), 1 deletion(-)
-> >
->
-> Codes look good to me,
->
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Michael,
 
-Note that, in the extracted series (to which I am moving your
-Reviewed-by tags, so no need to go through it again), I'm changing
-this to an integration test and making it actually create the object
-it defines.
+On Fri, Oct 18, 2024 at 06:38:53PM +0300, Michael Tokarev wrote:
+> Looking at this from qemu-stable PoV, I'm not 100% sure this change is good
+> for stable-7.2 series, because 7.2 lacks v8.1.0-1571-g5b23186a95
+> "kvm: Return number of free memslots" commit, which was a preparation for
+> for memory devices that consume multiple memslots.
+> 
+> I did a backport of this change (currently it is at the tip of staging-7.2
+> branch of https://gitlab.com/mjt0k/qemu.git) - I had to tweak context and
+> also to remove now-unused local variable in kvm-all.c.  It builds and the
+> tests run fine, but I'm not really sure it does what it is intended to do.
+> 
+> Should anything else be picked up for 7.2 for all this to work, or should
+> this change not be back-ported to 7.2 ?
+> 
+> (for more recent releases, everything looks ok).
 
-Paolo
+I don't remember anything this series logically depends on (besides any
+context-wise change).
+
+If there's uncertainty / challenge from backporting to some stable branches
+from your POV, we can still keep things simple and skip the series, as it's
+only a perf regression and only happens during live migrations (which can
+enlarge the downtime, for example) but not daily VM use.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
