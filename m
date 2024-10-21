@@ -4,132 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C09D15DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D327D15DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 15:03:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2tvJ-0000R0-AC; Mon, 21 Oct 2024 11:02:21 -0400
+	id 1t2tvG-0000QM-SU; Mon, 21 Oct 2024 11:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2tvH-0000Qb-H5
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2tvF-0000Q7-6x
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:02:17 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2tvF-0002ns-An
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:02:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729522935;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Hc2ngVnMdJfOC66m0NYIb0aOMuPwYrCoYUMz2/b3we0=;
- b=d1YLm+n1t3Px8PSTQkcYXWlYFc5BAs8HrM8YHwLwhdLMVTKSafs3o4btrvxRDC0OMyGojC
- QacueTUGZ9df9HLOQFAGX87R/p0qqnvbpw0b2tagsXIni09Q43ZEWcol33RTqgjOrcvtSW
- T32/a1Ktw85oh/5sz5pzPfIn6h9oNV0=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-3FSKNdG_P0yYm6tWo-QPDQ-1; Mon, 21 Oct 2024 11:02:12 -0400
-X-MC-Unique: 3FSKNdG_P0yYm6tWo-QPDQ-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2f75cf9472dso30251321fa.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 08:02:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729522930; x=1730127730;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hc2ngVnMdJfOC66m0NYIb0aOMuPwYrCoYUMz2/b3we0=;
- b=nwvv12dSwILkR5AlLXRqCef7jkEmG3G+n4xeXy4TvQH+tQ03nSyF1Kier7cyqwo+iT
- Bb690vNeM3GbLo+XVnhpjJhWVhZQWFZim+x6ARDFo8aSfywEGezZEwb2363pDGa6qOqF
- y5W8xS5ZoszPcUQgP7rAWmjwJVHmmbbounVOkTxWEKPSkVR9k9Cj+RLcjOygJ72g3dm/
- d0WIYCseXWHPj2ScIxLCBe+HhVe7bYJ8aoSmkFavDbuRd1/S7TjgpEmDpG6Ty0EDoj4t
- 46SAYe6WW8ptjvtqJdskN5fEjpP+mAwknkg14mPalVM55cTOF0//nnKqXzXrwRAs+bLu
- 6qHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIvQ/Q98ZIecMQI5ftI4E4AsIHVU1wK7mKutyiqVb9gS+6z7MIo2FVPsDUOrR83dJqNpm8FN1q7uss@nongnu.org
-X-Gm-Message-State: AOJu0YxYsEgRkbbkFifOVfQSH7um2V4uVH9OaY2TCx55Pl9nS+W1cd/5
- 0bI928sVfDdYjPwLjv0xEgbG6gkBazGlBvdEE2177YKFG04tKE+KI7ZAsqtsWA7nzW/tZGLfKj8
- tULIn7F9H9O1ih4sy9DJH/NeuyiXpqc/SZOlbgGM9CR2i/UONeSyN
-X-Received: by 2002:a05:6512:128d:b0:534:543e:1895 with SMTP id
- 2adb3069b0e04-53a1544aaa4mr5784727e87.39.1729522929685; 
- Mon, 21 Oct 2024 08:02:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/TU77/xHJ388TtkXby+QQ5hK5iX/ey9y+w0IDWKD9L0zSO88YcBCjYyhDXYSJkN6Lp05viA==
-X-Received: by 2002:a05:6512:128d:b0:534:543e:1895 with SMTP id
- 2adb3069b0e04-53a1544aaa4mr5784671e87.39.1729522928698; 
- Mon, 21 Oct 2024 08:02:08 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f5cbe64sm60130415e9.40.2024.10.21.08.02.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 08:02:08 -0700 (PDT)
-Message-ID: <610dc78f-2546-4dd8-95d2-e449c107bb67@redhat.com>
-Date: Mon, 21 Oct 2024 17:02:05 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2tvC-0002na-P5
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 11:02:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729522935; x=1761058935;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=CBmnK50kHKPX2WZ5rEY88VHDRhyNYz2aXRI1lQbPYyA=;
+ b=FrMRC+yrVSZTyLi+jtXU1EDf9s+BkXVc3lVV2T3+Sx6vRM+F6MWEegjh
+ v+/o+czLY2gxwREGrMrza4/oMfNTGt21DGDRzZJDpCc887Uu8r/bNS8uz
+ /mV3MNmg8Q5Iz8oilnKloyuHyU0CpyTZikPhi+3W8OYqGrHILabkdYB2R
+ jaH5gNosdTUjUW7e0/Ikp3lRY+C95LNJlYa1gmd8/MiKXFWmJooAQYaMk
+ yFMwsytwAB4bvJyPS0DVy1/cJy7SaoR1HjukzImYAhMrfpNCB8CD6URQS
+ klXEBhdQ7ROuxRjHBgK0d3OKV7QoGjI4sIlpY8WGz/2eReT8q+fEXQLw1 g==;
+X-CSE-ConnectionGUID: 3a6XFYnNSmyNRja4EAxLrA==
+X-CSE-MsgGUID: x6IY37nlS0G/EUUO/mEUeg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28887276"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="28887276"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2024 08:02:11 -0700
+X-CSE-ConnectionGUID: 6ChuHoqvSMOmOvU+/UoH+w==
+X-CSE-MsgGUID: fxDKoIxrQLGh3yQ5h2M0cA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,221,1725346800"; d="scan'208";a="83558638"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 21 Oct 2024 08:02:09 -0700
+Date: Mon, 21 Oct 2024 23:18:25 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+Subject: Re: [Question] What is the =?gb2312?Q?defi?=
+ =?gb2312?B?bml0aW9uIG9mIKGwcHJpdmF0ZaGx?= fields in QOM?
+Message-ID: <ZxZwwe1ULIUqEdKN@intel.com>
+References: <ZxPZ5oUDRcVroh7o@intel.com>
+ <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
+ <ZxZjqypRL7d2rMuQ@intel.com>
+ <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] test: make cached assets for functional tests read-only
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241021123633.1391911-1-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241021123633.1391911-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
+ DKIMWL_WL_HIGH=-0.421, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -147,23 +89,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/2024 14.36, Daniel P. Berrang√© wrote:
-> This ensures that if a functional test runs QEMU with a writable
-> disk pointing to a cached asset, an error will be reported, rather
-> than silently modifying the cache file.
+On Mon, Oct 21, 2024 at 03:20:39PM +0100, Peter Maydell wrote:
+> Date: Mon, 21 Oct 2024 15:20:39 +0100
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: Re: [Question] What is the definition of °∞private°± fields in
+>  QOM?
 > 
-> As an example, tweaking test_sbsaref.py to set snapshot=off,
-> results in a clear error:
+> On Mon, 21 Oct 2024 at 15:12, Zhao Liu <zhao1.liu@intel.com> wrote:
+> >
+> > Hi Peter,
+> >
+> > On Mon, Oct 21, 2024 at 10:25:07AM +0100, Peter Maydell wrote:
+> > > Date: Mon, 21 Oct 2024 10:25:07 +0100
+> > > From: Peter Maydell <peter.maydell@linaro.org>
+> > > Subject: Re: [Question] What is the definition of °∞private°± fields in
+> > >  QOM?
+> > >
+> > > On Sat, 19 Oct 2024 at 16:54, Zhao Liu <zhao1.liu@intel.com> wrote:
+> > > >
+> > > > Hi maintainers and list,
+> > > >
+> > > > In the QOM structure, the class and object structs have two members:
+> > > > parent_class and parent_obj, which are often marked as "< private >" in
+> > > > the comment.
+> > > >
+> > > > I couldn°Øt find information on why to define °Æprivate°Ø and °Æpublic°Ø,
+> > > > even in the earliest QOM commits and the patch emails I could find.
+> > >
+> > > This is a rather old thing which I think was originally
+> > > borrowed from glib's commenting convention.
+> > >
+> > > I'm fairly sure that we decided a while back that they were entirely
+> > > unnecessary, so you don't need to add them in new code. (I can't
+> > > actually find anything with a quick list search about that though
+> > > so maybe I'm misremembering.)
+> >
+> > Thanks for your explanation! So I understand that directly accessing
+> > parent_obj/parent_class is actually allowed.
 > 
->    Command: ./build/qemu-system-aarch64 ...snip... -drive file=/var/home/berrange/.cache/qemu/download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461,format=raw,snapshot=off -cpu max,pauth=off
->    Output: qemu-system-aarch64: Could not open '/var/home/berrange/.cache/qemu/download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461': Permission denied
-> 
-> Signed-off-by: Daniel P. Berrang√© <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/asset.py | 3 +++
->   1 file changed, 3 insertions(+)
+> No, you shouldn't do that. You can use a QOM cast of the
+> object pointer to the relevant parent class if you need to
+> treat it as an instance of the parent class.
+>
+> What I mean by "the private/public markers are unnecessary" is
+> that they don't tell the reader anything, because all the fields
+> in a QOM device struct are private.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+This time I really understand the question of whether it's okay to
+directly access parent_obj/parent_class. :-)
+
+> If you're not in the implementation of that class, then you shouldn't
+> really be directly touching any of the fields in the state struct.
+> (In some places we take a shortcut and do it. But really it's almost
+> never necessary.)
+
+Thank you for your further explanation! I hadn°Øt noticed that. So, for
+other code (code outside the class/object implementation) to access the
+fields other than parent_obj/parent_class of class/state struct, the
+most ideal way would be to use the set/get property interfaces as
+much as possible instead of accessing them directly, right?
+
+Regards,
+Zhao
 
 
