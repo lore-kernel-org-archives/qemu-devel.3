@@ -4,99 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09561D15D8F
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C057ED15D9E
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2tOt-0002OL-GH; Mon, 21 Oct 2024 10:28:51 -0400
+	id 1t2tSq-0003La-2O; Mon, 21 Oct 2024 10:32:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t2tOo-0002NT-0Y; Mon, 21 Oct 2024 10:28:46 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2tSo-0003LB-GA
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:32:54 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t2tOi-0007n7-U8; Mon, 21 Oct 2024 10:28:44 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49L2KvGW027383;
- Mon, 21 Oct 2024 14:28:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=bqwWZzzMOEI41IeBqZVe8QOOCXoo4V6/c5GMOysKS
- lo=; b=jGaEHGgqR4EEazk8bBAnEdn9b1Ojza1LYlLlk2T10volrXbcH7H6pS95f
- EeZ3NRuTdAr1R7B9i9grCmOLU8GFirXHma+mEA3QQX01hh0qEKGLhWg7eEFqiMiY
- n6Sqmp+DnJjLH2N9lsJlHqaUWqgjFkq9L2rPxQJwh5vey7TCpizSPTCvtGFjMlYx
- pTHrBbu+nN2/oIxpQoSsyJvX7J0u57pig1cWqMWxvumLIHLZW589EF5qWlzR5Fyl
- ypgt4J529wR7qgoulp6Gs1bHJ7Djzz3paObNsYduuy3gXJqWYjaMGq0/W3mg3r5B
- DqRdlFB48k0IAfX4mS6ORvK8j24Vg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eu99h5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Oct 2024 14:28:36 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49LERGH5007071;
- Mon, 21 Oct 2024 14:28:36 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eu99h3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Oct 2024 14:28:36 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49LCBBve029398;
- Mon, 21 Oct 2024 14:28:35 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42crkjxnjw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Oct 2024 14:28:35 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49LESVLu33227354
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Oct 2024 14:28:31 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CEED72004D;
- Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F8C120040;
- Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.27.206])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Kewen Lin <linkw@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] tests/tcg: Replace -mpower8-vector with -mvsx
-Date: Mon, 21 Oct 2024 16:27:48 +0200
-Message-ID: <20241021142830.486149-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: rGFEVGVtUg2cgD4Bl2wtCcLWLnqRy_PL
-X-Proofpoint-ORIG-GUID: fyr50dFUKCs9OkQR_VcYxEJ_wO4i_2sl
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2tSl-0008Ce-8m
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:32:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729521171; x=1761057171;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=7oapRdL6rqiz0SXlEgDq9ctqB6zI/7cB4mtrzTqPhmA=;
+ b=e2AD9Q8r2v3QCG9tbTj1mN3ZFRgCh5E5k/vifLHOYtCaq29d9LZ0slR7
+ wB21kjib9VDOQ3BdA14hr7ZggH5rjMAyYrOOM2pFl4EUKZ/7EXZA5do9W
+ 7oqeD9gZSeK5KjxjW+73CcsAqdC4b+StVierooMaPS7YdANfZx4qLNEdb
+ Z8JULGIwJZS/ioCFAtTk9A/Hv89nA8J3WlW3FeDda3XEbf/G6sVy8Gyew
+ w96NsJKWAyBCfngCCnWFdNqZBWOSf6BkTPkhyAz64vEbk1HCTDKmqJbDU
+ ed3WWRxHfe3mkt7sqe3cc+ANzJ5hWqLAz8kTTDPdHqinQP0yfVKqq1DPt A==;
+X-CSE-ConnectionGUID: Fqp6Jw3XRxqusWZux+Nvkg==
+X-CSE-MsgGUID: 9decDxGIRVKuwazFj3dJfQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11232"; a="28463204"
+X-IronPort-AV: E=Sophos;i="6.11,221,1725346800"; d="scan'208";a="28463204"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2024 07:32:48 -0700
+X-CSE-ConnectionGUID: YscHWyvkQ6S1XtGszIwbrQ==
+X-CSE-MsgGUID: S/2+t2QSQliGF1JQXHMnDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,221,1725346800"; d="scan'208";a="110389078"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 21 Oct 2024 07:32:47 -0700
+Date: Mon, 21 Oct 2024 22:49:03 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 03/16] rust: pass rustc_args when building all crates
+Message-ID: <ZxZp39giE4j/NWzy@intel.com>
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-4-pbonzini@redhat.com>
+ <ZxX1jSkJ3Muk11zC@intel.com>
+ <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
- mlxlogscore=999 mlxscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410210098
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -64
+X-Spam_score: -6.5
+X-Spam_bar: ------
+X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,57 +86,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[1] deprecated -mpower8-vector, resulting in:
+On Mon, Oct 21, 2024 at 03:38:06PM +0200, Paolo Bonzini wrote:
+> Date: Mon, 21 Oct 2024 15:38:06 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 03/16] rust: pass rustc_args when building all crates
+> 
+> On Mon, Oct 21, 2024 at 8:16 AM Zhao Liu <zhao1.liu@intel.com> wrote:
+> > unsafe_op_in_unsafe_fn is allowed in
+> > rust/qemu-api/src/lib.rs. So should we wrap the bindings in a separate
+> > lib (similar to the rust/bindings in the Linux kernel)?
+> >
+> > This way, the special lint settings can be applied only to the binding
+> > files, while the default lint checks can cover the other user
+> > development code.
+> >
+> > In addition, another thing that confuses me is why bindgen still
+> > generates code that does not follow the unsafe_op_in_unsafe_fn
+> > requirement. It seems that bindgen has supported unsafe_op_in_unsafe_fn
+> > since v0.62 [1, 2], but binding code we generated still violates
+> > unsafe_op_in_unsafe_fn. Is this a bug of bindgen?
+> 
+> The plan is to support older versions of bindgen (0.60.x) as long as
+> Debian has them. One possibility to fix this is, as you said, to use a
+> completely separate crate. Another is to add #![allow()] to just the
+> bindings module, for example by changing bindgen.rs to
+> 
+> #![allow(...)]
+> include!("bindgen.rs.inc")
+> 
+> This is related to the fact that we don't have yet a good way to run
+> "clippy", because "cargo clippy" needs the bindgen.rs file. So we
+> should probably look at these issues at once.
 
-    powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no longer supported
-    qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before 'float'
-        4 | typedef vector float vsx_float32_vec_t;
-          |               ^~~~~~
+Thank you. I agree, it's a better way.
 
-Similar to how this was done for the GCC testcases, replace
--mpower8-vector with -mvsx.
-
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109987
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/ppc64/Makefile.target | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
-index 1940886c737..d1b00d2bf09 100644
---- a/tests/tcg/ppc64/Makefile.target
-+++ b/tests/tcg/ppc64/Makefile.target
-@@ -6,7 +6,7 @@ VPATH += $(SRC_PATH)/tests/tcg/ppc64
- 
- config-cc.mak: Makefile
- 	$(quiet-@)( \
--	    $(call cc-option,-mpower8-vector,   CROSS_CC_HAS_POWER8_VECTOR); \
-+	    $(call cc-option,-mvsx,             CROSS_CC_HAS_VSX); \
- 	    $(call cc-option,-mpower10,         CROSS_CC_HAS_POWER10)) 3> config-cc.mak
- 
- -include config-cc.mak
-@@ -23,15 +23,15 @@ run-threadcount: threadcount
- run-plugin-threadcount-with-%:
- 	$(call skip-test, $<, "BROKEN (flaky with clang) ")
- 
--ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
-+ifneq ($(CROSS_CC_HAS_VSX),)
- PPC64_TESTS=bcdsub non_signalling_xscv
- endif
--$(PPC64_TESTS): CFLAGS += -mpower8-vector
-+$(PPC64_TESTS): CFLAGS += -mvsx
- 
--ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
-+ifneq ($(CROSS_CC_HAS_VSX),)
- PPC64_TESTS += vsx_f2i_nan
- endif
--vsx_f2i_nan: CFLAGS += -mpower8-vector -I$(SRC_PATH)/include
-+vsx_f2i_nan: CFLAGS += -mvsx -I$(SRC_PATH)/include
- 
- PPC64_TESTS += mtfsf
- PPC64_TESTS += mffsce
--- 
-2.47.0
+Regards,
+Zhao
 
 
