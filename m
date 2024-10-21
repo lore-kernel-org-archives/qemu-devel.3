@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791E1D0E6F4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFE4D0E6F5
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qgx-00025h-Eo; Mon, 21 Oct 2024 07:35:19 -0400
+	id 1t2qhC-00028B-Cg; Mon, 21 Oct 2024 07:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgv-00025C-8J
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh0-00026D-Eb
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgs-0001Uq-9y
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgy-0001gg-DB
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729510513;
+ s=mimecast20190719; t=1729510518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6c4zfgPK1uXbCp9TP3YFdnWGgDrkyRl4csOphvPzFG8=;
- b=KJj4VF75mhIBBCg4qVO8fcL082tu8EU5QkQV6TgNvdUvpRyAS/4Lq4d35teVq08v73fnei
- mahQkUDVrM+YtWJJYycEpSuoTfi2g89loGn9pBe+nLbe2ZxHRE61DIkgH0ds7d2+Xztt0a
- Xz9BmRUom6YZl070EJImeSE1i3VP7qw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PrlK2hZEBCCrTkovizM4jFgPgyk/oE7aw+Iyqndpn2Y=;
+ b=EMrkdXx73sqlrRH8ayCy7WB/tjaxk5vnp0rObV1jT0cxOtErR7UVDC2cUV0sbrqBOuHfsb
+ h9JjeGAepDy2SHtTnBss0wV+7K4fvdLgkx7UpvN5JXOokkbHwYrS7oGL5Lg8J6OtksZCNQ
+ ZxH+jXkR8By+pZplGoaNoOwFHLSwrkY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-5CEe5B-DOQSTK3fjfoLHEQ-1; Mon,
- 21 Oct 2024 07:35:10 -0400
-X-MC-Unique: 5CEe5B-DOQSTK3fjfoLHEQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-JJUlpszONxebWnGNvu9DvA-1; Mon,
+ 21 Oct 2024 07:35:13 -0400
+X-MC-Unique: JJUlpszONxebWnGNvu9DvA-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2240519560BE; Mon, 21 Oct 2024 11:35:09 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 606AB195608C; Mon, 21 Oct 2024 11:35:12 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0922619560AA; Mon, 21 Oct 2024 11:35:07 +0000 (UTC)
+ id C5ABD1955F42; Mon, 21 Oct 2024 11:35:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 02/21] tests/qtest: Raise the ide-test timeout
-Date: Mon, 21 Oct 2024 13:34:39 +0200
-Message-ID: <20241021113500.122500-3-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 03/21] MAINTAINERS: A new maintainer for the qtests
+Date: Mon, 21 Oct 2024 13:34:40 +0200
+Message-ID: <20241021113500.122500-4-thuth@redhat.com>
 In-Reply-To: <20241021113500.122500-1-thuth@redhat.com>
 References: <20241021113500.122500-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,37 +84,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Since I blundered into becoming the maintainer of the new functional
+test  framework in QEMU (tests/functional/) recently, I need to drop
+some other duties - it's getting too much for me otherwise. Laurent
+is also quite busy with other projects nowadays, so I looked around
+for help.
+Fabiano did quite a lot of work in the qtests in the past already,
+and is also already a maintainer for migration, so I thought he
+would be a very good fit, thus I asked him whether he would be
+interested to help out with the qtests and he agreed.
+Thank you very much, Fabiano!
 
-The ide-test occasionally times out: on the system I run
-vm-build-openbsd on, it usually takes about 18 seconds, but
-occasionally hits the 60s timeout, likely when the host machine is
-under heavy load.  I have also seen this test hit its time limit on
-the s390x CI runner.
-
-Double the timeout for this test so that it won't hit its timeout
-even when the host is running more slowly than usual.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241015113705.239067-1-peter.maydell@linaro.org>
+Message-ID: <20241011141344.379781-1-thuth@redhat.com>
+Acked-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b207e38696..e8be8b3942 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -4,6 +4,7 @@ slow_qtests = {
-   'bios-tables-test' : 910,
-   'cdrom-test' : 610,
-   'device-introspect-test' : 720,
-+  'ide-test' : 120,
-   'migration-test' : 480,
-   'npcm7xx_pwm-test': 300,
-   'npcm7xx_watchdog_timer-test': 120,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c21d6a2f9e..d1a9959031 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3259,7 +3259,7 @@ F: tests/qtest/qmp-cmd-test.c
+ T: git https://repo.or.cz/qemu/armbru.git qapi-next
+ 
+ qtest
+-M: Thomas Huth <thuth@redhat.com>
++M: Fabiano Rosas <farosas@suse.de>
+ M: Laurent Vivier <lvivier@redhat.com>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ S: Maintained
+@@ -3277,7 +3277,7 @@ M: Alexander Bulekov <alxndr@bu.edu>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+ R: Bandan Das <bsd@redhat.com>
+ R: Stefan Hajnoczi <stefanha@redhat.com>
+-R: Thomas Huth <thuth@redhat.com>
++R: Fabiano Rosas <farosas@suse.de>
+ R: Darren Kenny <darren.kenny@oracle.com> 
+ R: Qiuhao Li <Qiuhao.Li@outlook.com>
+ S: Maintained
 -- 
 2.47.0
 
