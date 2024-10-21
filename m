@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFB6D15DB7
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA2BD15DB9
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2v13-00040c-5n; Mon, 21 Oct 2024 12:12:21 -0400
+	id 1t2v1F-00044O-1G; Mon, 21 Oct 2024 12:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0v-0003yt-HM
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v1A-00042g-0w
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v0t-0003Bw-Jm
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2v17-0003D6-5P
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:12:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729527130;
+ s=mimecast20190719; t=1729527143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jKPnelz0WM5Rf9rpq48k1kp1Fidx5JMBWCmlQHIgqno=;
- b=gbfpJ+clD4DMaC6xtlf3owwQ9PzfmXJGZFTNKOo1cLOn5iVi6tb1VbWj/nqoDWoFbfAmxT
- HFJePZpGFA4/DbC/JXKQRamY1TZTeyZiPEWx1wp53Qd7HSzdjIKKl0qQTcfsv6HrKvRaAM
- /NdmRQAYtGsF4DJdo1nzmyx6K3TXHRg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=75heQ1nLomeZi7/Z4nDFOKVgm9AiY4TlyeXK14suY10=;
+ b=ea48XfTH64mu4i4VVA4ydUkvqvkgtbnOXpw3gM2KmnjASjGYI9gpHSI+iLLVLhR3e2JB07
+ wT0jRXgECI1uEvq6Ex+6tldLYq4rCx+ZHW+NI31a2QiM3bvYHf8LXQ+87oaemFjvvqYMxQ
+ pdZFThAvfTo3E/In8rJhGKxVt9y1VDA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-U29FoURNP0mfjDjjfdChog-1; Mon,
- 21 Oct 2024 12:12:08 -0400
-X-MC-Unique: U29FoURNP0mfjDjjfdChog-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-dwhR41ZKOeuTYrCdBSaJ4Q-1; Mon,
+ 21 Oct 2024 12:12:20 -0400
+X-MC-Unique: dwhR41ZKOeuTYrCdBSaJ4Q-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E263C1977039; Mon, 21 Oct 2024 16:12:07 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FCEA1955BCE; Mon, 21 Oct 2024 16:12:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5081A195607C; Mon, 21 Oct 2024 16:12:05 +0000 (UTC)
+ id 198FD1956088; Mon, 21 Oct 2024 16:12:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL v2 14/20] tests/functional: Convert the Avocado mips tuxrun test
-Date: Mon, 21 Oct 2024 18:11:48 +0200
-Message-ID: <20241021161156.176427-5-thuth@redhat.com>
+Subject: [PULL v2 20/20] tests/functional: Convert the Avocado sh4 tuxrun test
+Date: Mon, 21 Oct 2024 18:11:53 +0200
+Message-ID: <20241021161156.176427-10-thuth@redhat.com>
 In-Reply-To: <20241021161156.176427-1-thuth@redhat.com>
 References: <20241021161156.176427-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -82,64 +82,94 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Move the test into a new file so that it can be run via
-qemu-system-mips in the functional framework.
+qemu-system-sh4 in the functional framework.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241011131937.377223-12-thuth@redhat.com>
+Message-ID: <20241011131937.377223-18-thuth@redhat.com>
 ---
- tests/avocado/tuxrun_baselines.py    | 18 --------------
- tests/functional/meson.build         |  1 +
- tests/functional/test_mips_tuxrun.py | 36 ++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 18 deletions(-)
- create mode 100755 tests/functional/test_mips_tuxrun.py
+ MAINTAINERS                         |  1 +
+ tests/avocado/tuxrun_baselines.py   | 35 ------------------
+ tests/functional/meson.build        |  2 +
+ tests/functional/test_sh4_tuxrun.py | 57 +++++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+), 35 deletions(-)
+ create mode 100755 tests/functional/test_sh4_tuxrun.py
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8777e31fd5..c3bfa132fd 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1633,6 +1633,7 @@ F: hw/timer/sh_timer.c
+ F: include/hw/sh4/sh_intc.h
+ F: include/hw/timer/tmu012.h
+ F: tests/functional/test_sh4_r2d.py
++F: tests/functional/test_sh4_tuxrun.py
+ 
+ SPARC Machines
+ --------------
 diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index 55a4a42d77..ed6c2ce0d4 100644
+index 80892a0e17..38064840da 100644
 --- a/tests/avocado/tuxrun_baselines.py
 +++ b/tests/avocado/tuxrun_baselines.py
-@@ -223,24 +223,6 @@ def test_arm64be(self):
+@@ -222,38 +222,3 @@ def test_arm64be(self):
+                  "rootfs.ext4.zst" :
                   "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
          self.common_tuxrun(csums=sums)
- 
--    def test_mips32(self):
+-
+-    # Note: some segfaults caused by unaligned userspace access
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-    def test_sh4(self):
 -        """
--        :avocado: tags=arch:mips
--        :avocado: tags=machine:malta
--        :avocado: tags=cpu:mips32r6-generic
--        :avocado: tags=endian:big
--        :avocado: tags=tuxboot:mips32
--        :avocado: tags=image:vmlinux
+-        :avocado: tags=arch:sh4
+-        :avocado: tags=machine:r2d
+-        :avocado: tags=cpu:sh7785
+-        :avocado: tags=tuxboot:sh4
+-        :avocado: tags=image:zImage
 -        :avocado: tags=root:sda
--        :avocado: tags=shutdown:nowait
+-        :avocado: tags=console:ttySC1
+-        :avocado: tags=flaky
 -        """
 -        sums = { "rootfs.ext4.zst" :
--                 "fc3da0b4c2f38d74c6d705123bb0f633c76ed953128f9d0859378c328a6d11a0",
--                 "vmlinux" :
--                 "bfd2172f8b17fb32970ca0c8c58f59c5a4ca38aa5855d920be3a69b5d16e52f0" }
+-                 "3592a7a3d5a641e8b9821449e77bc43c9904a56c30d45da0694349cfd86743fd",
+-                 "zImage" :
+-                 "29d9b2aba604a0f53a5dc3b5d0f2b8e35d497de1129f8ee5139eb6fdf0db692f" }
 -
--        self.common_tuxrun(csums=sums, drive="driver=ide-hd,bus=ide.0,unit=0")
+-        # The test is currently too unstable to do much in userspace
+-        # so we skip common_tuxrun and do a minimal boot and shutdown.
+-        (kernel, disk, dtb) = self.fetch_tuxrun_assets(csums=sums)
 -
-     def test_mips32el(self):
-         """
-         :avocado: tags=arch:mipsel
+-        # the console comes on the second serial port
+-        self.prepare_run(kernel, disk,
+-                         "driver=ide-hd,bus=ide.0,unit=0",
+-                         console_index=1)
+-        self.vm.launch()
+-
+-        self.wait_for_console_pattern("Welcome to TuxTest")
+-        time.sleep(0.1)
+-        exec_command(self, 'root')
+-        time.sleep(0.1)
+-        exec_command_and_wait_for_pattern(self, 'halt',
+-                                          "reboot: System halted")
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index cbc3b20bd4..00591fbcba 100644
+index 6c62ca2334..5ccc1aa66d 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -90,6 +90,7 @@ tests_microblazeel_system_thorough = [
+@@ -154,8 +154,10 @@ tests_s390x_system_thorough = [
  
- tests_mips_system_thorough = [
-   'mips_malta',
-+  'mips_tuxrun',
+ tests_sh4_system_thorough = [
+   'sh4_r2d',
++  'sh4_tuxrun',
  ]
  
- tests_mipsel_system_thorough = [
-diff --git a/tests/functional/test_mips_tuxrun.py b/tests/functional/test_mips_tuxrun.py
++
+ tests_sparc_system_thorough = [
+   'sparc_sun4m',
+ ]
+diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/test_sh4_tuxrun.py
 new file mode 100755
-index 0000000000..6fec44c2bf
+index 0000000000..352cb360ef
 --- /dev/null
-+++ b/tests/functional/test_mips_tuxrun.py
-@@ -0,0 +1,36 @@
++++ b/tests/functional/test_sh4_tuxrun.py
+@@ -0,0 +1,57 @@
 +#!/usr/bin/env python3
 +#
 +# Functional test that boots known good tuxboot images the same way
@@ -153,26 +183,47 @@ index 0000000000..6fec44c2bf
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+from qemu_test import Asset
++import os
++import time
++
++from unittest import skipUnless
++from qemu_test import Asset, exec_command_and_wait_for_pattern, exec_command
 +from qemu_test.tuxruntest import TuxRunBaselineTest
 +
-+class TuxRunMipsTest(TuxRunBaselineTest):
++class TuxRunSh4Test(TuxRunBaselineTest):
 +
-+    ASSET_MIPS_KERNEL = Asset(
-+        'https://storage.tuxboot.com/20230331/mips32/vmlinux',
-+        'bfd2172f8b17fb32970ca0c8c58f59c5a4ca38aa5855d920be3a69b5d16e52f0')
-+    ASSET_MIPS_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/20230331/mips32/rootfs.ext4.zst',
-+        'fc3da0b4c2f38d74c6d705123bb0f633c76ed953128f9d0859378c328a6d11a0')
++    ASSET_SH4_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/sh4/zImage',
++        '29d9b2aba604a0f53a5dc3b5d0f2b8e35d497de1129f8ee5139eb6fdf0db692f')
++    ASSET_SH4_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/sh4/rootfs.ext4.zst',
++        '3592a7a3d5a641e8b9821449e77bc43c9904a56c30d45da0694349cfd86743fd')
 +
-+    def test_mips32(self):
-+        self.set_machine('malta')
-+        self.cpu="mips32r6-generic"
-+        self.root="sda"
-+        self.wait_for_shutdown=False
-+        self.common_tuxrun(kernel_asset=self.ASSET_MIPS_KERNEL,
-+                           rootfs_asset=self.ASSET_MIPS_ROOTFS,
-+                           drive="driver=ide-hd,bus=ide.0,unit=0")
++    # Note: some segfaults caused by unaligned userspace access
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
++    def test_sh4(self):
++        self.set_machine('r2d')
++        self.cpu='sh7785'
++        self.root='sda'
++        self.console='ttySC1'
++
++        # The test is currently too unstable to do much in userspace
++        # so we skip common_tuxrun and do a minimal boot and shutdown.
++        (kernel, disk, dtb) = self.fetch_tuxrun_assets(self.ASSET_SH4_KERNEL,
++                                                       self.ASSET_SH4_ROOTFS)
++
++        # the console comes on the second serial port
++        self.prepare_run(kernel, disk,
++                         "driver=ide-hd,bus=ide.0,unit=0",
++                         console_index=1)
++        self.vm.launch()
++
++        self.wait_for_console_pattern("Welcome to TuxTest")
++        time.sleep(0.1)
++        exec_command(self, 'root')
++        time.sleep(0.1)
++        exec_command_and_wait_for_pattern(self, 'halt',
++                                          "reboot: System halted")
 +
 +if __name__ == '__main__':
 +    TuxRunBaselineTest.main()
