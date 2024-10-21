@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED533D15D88
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 12:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2025D15D89
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 12:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2reS-0001ey-59; Mon, 21 Oct 2024 08:36:48 -0400
+	id 1t2rhF-0002qx-1f; Mon, 21 Oct 2024 08:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2reP-0001eO-OZ
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:36:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
+ id 1t2rh9-0002oq-B0; Mon, 21 Oct 2024 08:39:35 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2reN-00012o-Il
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:36:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729514202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=++SvW500SGFWsn1sWBh4jLVUUJBC7dHn3VXHDDXIfEE=;
- b=gyYGVM8QEqRSu7sp2tl1+wUnkfQak5qm2TM/sZZzHA/HHZr3rkudSN6sj8+FmCDCjf0giq
- gjOZylMTq5PEdcEAsN/oMTKc3qYy37x5xxaF8vBK8yKrTf4n0i7XOZygdoqg1ovZ/yHtKU
- CMwDv4ZWj8DlEZWWJLT4bP3q3PZqXs0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-00WV_FTfPtG6ZK5BXOIY7g-1; Mon,
- 21 Oct 2024 08:36:38 -0400
-X-MC-Unique: 00WV_FTfPtG6ZK5BXOIY7g-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <SRS0=cGEO=RR=kaod.org=clg@ozlabs.org>)
+ id 1t2rh6-0001Ux-Vd; Mon, 21 Oct 2024 08:39:35 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XXFHf1jCZz4x21;
+ Mon, 21 Oct 2024 23:39:26 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 676D41955EE6; Mon, 21 Oct 2024 12:36:37 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9BBAF300018D; Mon, 21 Oct 2024 12:36:35 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] test: make cached assets for functional tests read-only
-Date: Mon, 21 Oct 2024 13:36:33 +0100
-Message-ID: <20241021123633.1391911-1-berrange@redhat.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XXFHY0WDlz4wyh;
+ Mon, 21 Oct 2024 23:39:20 +1100 (AEDT)
+Message-ID: <777c3650-5e02-4ab0-a900-ecb0e425b935@kaod.org>
+Date: Mon, 21 Oct 2024 14:39:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v1 11/16] test/qtest/aspeed_smc-test: Support to
+ test all flash models
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241018053112.1886173-1-jamin_lin@aspeedtech.com>
+ <20241018053112.1886173-12-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241018053112.1886173-12-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=cGEO=RR=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.171, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,43 +75,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This ensures that if a functional test runs QEMU with a writable
-disk pointing to a cached asset, an error will be reported, rather
-than silently modifying the cache file.
+On 10/18/24 07:31, Jamin Lin wrote:
+> Currently, these test cases used the hardcode offset 0x1400000 (0x14000 * 256)
+> which was beyond the 16MB flash size for flash page read/write command testing.
+> However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" whose size
+> is 1MB. To test all flash models, introduces a new page_addr member in TestData
+> structure, so users can set the offset for flash parge read/write command
+> testing.
 
-As an example, tweaking test_sbsaref.py to set snapshot=off,
-results in a clear error:
+The commit title and description are confusing. By "all flash" models,
+do you mean "all Aspeed SoC" models ?
 
-  Command: ./build/qemu-system-aarch64 ...snip... -drive file=/var/home/berrange/.cache/qemu/download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461,format=raw,snapshot=off -cpu max,pauth=off
-  Output: qemu-system-aarch64: Could not open '/var/home/berrange/.cache/qemu/download/44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461': Permission denied
+Since the change is introducing a 'page_addr' data field. I think
+this should be the title.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/functional/qemu_test/asset.py | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks,
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index e47bfac035..f126cd5863 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -8,6 +8,7 @@
- import hashlib
- import logging
- import os
-+import stat
- import subprocess
- import sys
- import unittest
-@@ -143,6 +144,8 @@ def fetch(self):
-             raise Exception("Hash of %s does not match %s" %
-                             (self.url, self.hash))
-         tmp_cache_file.replace(self.cache_file)
-+        # Remove write perms to stop tests accidentally modifying them
-+        os.chmod(self.cache_file, stat.S_IRUSR | stat.S_IRGRP)
- 
-         self.log.info("Cached %s at %s" % (self.url, self.cache_file))
-         return str(self.cache_file)
--- 
-2.46.0
+C.
+
+
+
+
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/qtest/aspeed_smc-test.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+> index b8ab20b43d..6db18451d2 100644
+> --- a/tests/qtest/aspeed_smc-test.c
+> +++ b/tests/qtest/aspeed_smc-test.c
+> @@ -72,6 +72,7 @@ typedef struct TestData {
+>       char *tmp_path;
+>       uint8_t cs;
+>       const char *node;
+> +    uint32_t page_addr;
+>   } TestData;
+>   
+>   /*
+> @@ -256,7 +257,7 @@ static void assert_page_mem(const TestData *data, uint32_t addr,
+>   static void test_erase_sector(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t some_page_addr = 0x600 * FLASH_PAGE_SIZE;
+> +    uint32_t some_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -308,7 +309,7 @@ static void test_erase_sector(const void *data)
+>   static void test_erase_all(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t some_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -358,8 +359,8 @@ static void test_erase_all(const void *data)
+>   static void test_write_page(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+> +    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -395,8 +396,8 @@ static void test_write_page(const void *data)
+>   static void test_read_page_mem(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+> +    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -438,7 +439,7 @@ static void test_read_page_mem(const void *data)
+>   static void test_write_page_mem(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -679,6 +680,8 @@ static void test_palmetto_bmc(TestData *data)
+>       data->jedec_id = 0x20ba19;
+>       data->cs = 0;
+>       data->node = "/machine/soc/fmc/ssi.0/child[0]";
+> +    /* beyond 16MB */
+> +    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
+>   
+>       qtest_add_data_func("/ast2400/smc/read_jedec", data, test_read_jedec);
+>       qtest_add_data_func("/ast2400/smc/erase_sector", data, test_erase_sector);
 
 
