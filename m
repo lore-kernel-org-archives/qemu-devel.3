@@ -4,68 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCC8D0E6F4
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263B8D0E6FA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qoL-0007c8-EB; Mon, 21 Oct 2024 07:42:57 -0400
+	id 1t2qpC-000104-8m; Mon, 21 Oct 2024 07:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t2qo8-00074n-1S
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:42:46 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2qp9-0000vJ-Tr
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:43:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t2qo6-0002O9-BC
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:42:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t2qp7-0002RJ-Mb
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:43:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729510961;
+ s=mimecast20190719; t=1729511025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iNGMyzjiFGt9fgmqu4qHvlDy1AUtLIDR6d0UlcU7HNA=;
- b=VI/T6LH6/CQYbrtwjPtzQamE5UcXqEV5tfvcUPVgibTaPb6OA1zMUZGTb6tCl4Yd/JtJou
- qCRdBw+Sq6P8v4LDVvAsYPq9W+ySPEpGaU4+C1scPo0RPSpVH6bJfp0gw8B16G60u8ZVxw
- 0+V8is3iissFV4URgDyXmLOo69aiHzM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-1F8shVe3PnyBvrLYbwlcQA-1; Mon,
- 21 Oct 2024 07:42:37 -0400
-X-MC-Unique: 1F8shVe3PnyBvrLYbwlcQA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFA881956088; Mon, 21 Oct 2024 11:42:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.209])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B321300019D; Mon, 21 Oct 2024 11:42:31 +0000 (UTC)
-Date: Mon, 21 Oct 2024 13:42:29 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-block <qemu-block@nongnu.org>, Hanna Reitz <hreitz@redhat.com>,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v2 6/8] Revert use of clock_gettime for benchmarking
-Message-ID: <ZxY-JRCHAZF-qQiW@redhat.com>
-References: <AM9PR09MB485113D76C5AE02516C08E8E84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
- <5ae0d26e-d969-48e3-9bfd-8a07db727620@linaro.org>
+ bh=tvbTdqaEaf4wXZnu3ff1Qc4CfxzGOCroOxwxcythHLo=;
+ b=jWZjVIREEkxDMJzPBDGWoJkbGPn3rAFwKzdQYvpDgug8+Gpw+uSaFpt70KUt6wULxQHlOz
+ FGOVH+VIBKkm84tf++pzcP/f2UUStGiWTUcw4nnwhVXFCwSE8l2YnQhSq+9Wm/CJZv8g/5
+ YwmJnhkNFCzTsWa28GZaKx4e/MKFvSU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-RbeVYON1NZ6uj6V9nG1LkQ-1; Mon, 21 Oct 2024 07:43:41 -0400
+X-MC-Unique: RbeVYON1NZ6uj6V9nG1LkQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43159603c92so30636585e9.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 04:43:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729511020; x=1730115820;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tvbTdqaEaf4wXZnu3ff1Qc4CfxzGOCroOxwxcythHLo=;
+ b=ZItXhRMY5EVNu98ZcEOjjU6V4rz32u6HAIR00w3U/Z+AZ8109hR2EB2C9cQKCXv682
+ DDITWPL+zm2brv0A0ZB3WmGYm7tlLmkYlHxiCQrNieF2KNqlWUPgbiUvfCl+VGboA0Y6
+ jjn4SwgXO/6VyZjzJqVGq6HTiGO3iy7eziDFKtx1yGBDgP9592/y/YAUwvP2cEbT2L3E
+ 5k96SJ6xTFAQcceYZi6iqa/1qr5D2EtNNgZeksPDVszCEfstOpu2TqvNtA3waOegjPur
+ RnE3PVzQhWqEa0gz3cESTgs/LPkAo0GRWBQpVC9lRRYvuWIRz1/vTRPg8uzmCBVFZKBK
+ JyRA==
+X-Gm-Message-State: AOJu0YyZh4J+twxtfbMwMDJIKwQvFP35dPITmuhVtX9hA7ExKcQPo/m1
+ q8hw6IXyBiKMu+CZthLGDCtJ6mnI4GHBpibRtWHlvo9nFHlS7o9qL1PSOtCPWq+QFwkZsAXBX46
+ uAqmURjCJjki5/V6I7IVat71jcyEQkbyYV8fw6+v3SXpLnJHfzoLE1YQUhQu0eKAO9IAPYSHscw
+ L1hHPNsTtQMLn9kyGM600vwepd5uA=
+X-Received: by 2002:a05:600c:4fd4:b0:431:5533:8f0c with SMTP id
+ 5b1f17b1804b1-431616ad341mr88933465e9.29.1729511020400; 
+ Mon, 21 Oct 2024 04:43:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyu/Vx7m7UiGxR4PA7vRoWq4jKJPvHlSpkXesB3kPvcmyzqZaNzJ2rU87emEiUSojHPWdeCBmKV7ojR9PiyGg=
+X-Received: by 2002:a05:600c:4fd4:b0:431:5533:8f0c with SMTP id
+ 5b1f17b1804b1-431616ad341mr88933305e9.29.1729511020055; Mon, 21 Oct 2024
+ 04:43:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5ae0d26e-d969-48e3-9bfd-8a07db727620@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+References: <20241018144306.954716-1-pbonzini@redhat.com>
+ <20241018144306.954716-9-pbonzini@redhat.com>
+ <SY0P300MB10265D6A0FEDF3DE07F2220395432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <SY0P300MB10265D6A0FEDF3DE07F2220395432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 21 Oct 2024 13:43:27 +0200
+Message-ID: <CABgObfbUWFf_Mr+PR5_TZ0A6n29sZwdJ3umJFdTHgPHiVZrU4Q@mail.gmail.com>
+Subject: Re: [PATCH 08/13] rust: build integration test for the qemu_api crate
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -90,58 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19.10.2024 um 21:35 hat Philippe Mathieu-Daudé geschrieben:
-> Hi,
-> 
-> On 18/10/24 10:20, Aleksandar Rakic wrote:
-> > This patch reverts the commit (with SHA
-> > 50290c002c045280f8defad911901e16bfb52884 from
-> > https://github.com/MIPS/gnutools-qemu) that breaks for mingw builds,
-> > where clock_gettime and CLOCK_MONOTONIC are not available.
-
-What does "not available" mean? I'm sure that we have kept building QEMU
-with mingw in the past five years (the commit you want to revert is from
-2019), so they must exist in some form?
-
-> Isn't get_clock() what we want here?
-> 
-> > Cherry-picked d57c735e1af1ca719dbd0c3a904ad70c9c31cbb7
-> > from https://github.com/MIPS/gnutools-qemu
-> > 
-> > Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
-> > Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+On Mon, Oct 21, 2024 at 1:35=E2=80=AFPM Junjie Mao <junjie.mao@hotmail.com>=
+ wrote:
+>
+>
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+>
+> > Adjust the integration test to compile with a subset of QEMU object
+> > files, and make it actually create an object of the class it defines.
+> >
+> > Follow the Rust filesystem conventions, where tests go in tests/ if
+> > they use the library in the same way any other code would.
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > > ---
-> >   qemu-io-cmds.c | 77 +++++++++++++++++++++++++-------------------------
-> >   1 file changed, 39 insertions(+), 38 deletions(-)
-> 
-> Please Cc maintainers (done now):
-> 
-> $ ./scripts/get_maintainer.pl -f qemu-io-cmds.c
-> Kevin Wolf <kwolf@redhat.com> (supporter:Block layer core)
-> Hanna Reitz <hreitz@redhat.com> (supporter:Block layer core)
+> >  meson.build                  | 10 ++++-
+> >  rust/qemu-api/meson.build    | 20 +++++++--
+> >  rust/qemu-api/src/tests.rs   | 49 ----------------------
+> >  rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
+> >  4 files changed, 104 insertions(+), 53 deletions(-)
+> >  delete mode 100644 rust/qemu-api/src/tests.rs
+> >  create mode 100644 rust/qemu-api/tests/tests.rs
+> <snip>
+> > diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+> > index 42ea815fa5a..d24e0c0725e 100644
+> > --- a/rust/qemu-api/meson.build
+> > +++ b/rust/qemu-api/meson.build
+> > @@ -14,11 +14,25 @@ _qemu_api_rs =3D static_library(
+> >      '--cfg', 'MESON',
+> >      # '--cfg', 'feature=3D"allocator"',
+> >    ],
+> > -  dependencies: [
+> > -    qemu_api_macros,
+> > -  ],
+> >  )
+> >
+> >  qemu_api =3D declare_dependency(
+> >    link_with: _qemu_api_rs,
+> > +  dependencies: qemu_api_macros,
+> >  )
+> > +
+> > +# Rust executable do not support objects, so add an intermediate step.
+> > +rust_qemu_api_objs =3D static_library(
+> > +    'rust_qemu_api_objs',
+> > +    objects: [libqom.extract_all_objects(recursive: false),
+> > +              libhwcore.extract_all_objects(recursive: false)])
+> > +
+> > +rust.test('rust-qemu-api-integration',
+> > +     static_library(
+> > +         'rust_qemu_api_integration',
+> > +         'tests/tests.rs',
+> > +         override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'=
+],
+> > +         link_whole: [rust_qemu_api_objs, libqemuutil]),
+> > +
+> > +     dependencies: [qemu_api, qemu_api_macros],
+> > +     suite: ['unit', 'rust'])
+>
+> I met the following error when trying to build the test:
 
-Also Alex (CCed) who is the author of the patch you want to revert.
+It works for me, but I'll switch to your meson.build code just to be safe.
 
-Kevin
+Paolo
 
-> > @@ -904,7 +905,7 @@ static const cmdinfo_t readv_cmd = {
-> >   static int readv_f(BlockBackend *blk, int argc, char **argv)
-> >   {
-> > -    struct timespec t1, t2;
-> > +    struct timeval t1, t2;
-> >       bool Cflag = false, qflag = false, vflag = false;
-> >       int c, cnt, ret;
-> >       char *buf;
-> > @@ -964,9 +965,9 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
-> >           return -EINVAL;
-> >       }
-> > -    clock_gettime(CLOCK_MONOTONIC, &t1);
-> > +    gettimeofday(&t1, NULL);
-> >       ret = do_aio_readv(blk, &qiov, offset, flags, &total);
-> > -    clock_gettime(CLOCK_MONOTONIC, &t2);
-> > +    gettimeofday(&t2, NULL);
-> >       if (ret < 0) {
-> >           printf("readv failed: %s\n", strerror(-ret));
-> 
+> test('rust-qemu-api-integration',
+>     executable(
+>         'rust_qemu_api_integration',
+>         'tests/tests.rs',
+>         override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'],
+>         rust_args: [
+>             '--test',
+>         ],
+>         install: false,
+>         dependencies: [qemu_api, qemu_api_macros],
+>         link_whole: [rust_qemu_api_objs, libqemuutil]),
+>     args: [
+>         '--test',
+>         '--format', 'pretty',
+>     ],
+>     protocol: 'rust',
+>     suite: ['unit', 'rust'])
+>
+> --
+> Best Regards
+> Junjie Mao
+>
 
 
