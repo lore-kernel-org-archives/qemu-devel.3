@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5665AD0E6F4
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADBBAD0E6F4
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qhI-0002B6-HN; Mon, 21 Oct 2024 07:35:40 -0400
+	id 1t2qhL-0002Cs-OC; Mon, 21 Oct 2024 07:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh2-00026w-Fm
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh9-00028S-O9
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh0-0001hI-PP
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qh7-0001iB-Q4
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729510520;
+ s=mimecast20190719; t=1729510529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vgCJa3lRaWKDZ5YQG9hJnsfM4gpPiC8xhT/plBG3xHo=;
- b=Xpo+C8qtecsTsNcnKujM8p4QiXIvcE0J8bLmkiZcXG4x3rJnEN0OB7hzvEZndOdt6QLgiz
- bZHRo9gcAhjwZGNaceKSEKo75Lw5CckX/YB9yaiYBa9bFsM2/YUytonLL6zDghhbHbMJ9r
- 3ulgunIeFZdBodXUmuOfWi2cWvm/03c=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vMAUfatU4v8P6M6l9m7ZlyTq9+P6vVi+BYaO0qNGlTY=;
+ b=bgQw7k4/oIZHNJAerrnpDiYNOtP5KSqo0FJgEpCxoW0f5qz9sE/WAwWRzzDu9+ab96R3Lw
+ kP12jRusI5eQbAvcerq3+ARxO26ZPDITJUHmVhOUwkOpdyfWcDG45OKVg/jV4awsuORNJ6
+ d6R/S5EWvX1u2i3KNPnXEmumKAT/HBg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-aL5D13iwNBa6nr2EtZ2erQ-1; Mon,
- 21 Oct 2024 07:35:19 -0400
-X-MC-Unique: aL5D13iwNBa6nr2EtZ2erQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-XyZNDfV8PmiHH3DA_XU9Uw-1; Mon,
+ 21 Oct 2024 07:35:22 -0400
+X-MC-Unique: XyZNDfV8PmiHH3DA_XU9Uw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47B3519560BC; Mon, 21 Oct 2024 11:35:18 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8CC21955EE9; Mon, 21 Oct 2024 11:35:21 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 720C119560AA; Mon, 21 Oct 2024 11:35:15 +0000 (UTC)
+ id AC27319560AA; Mon, 21 Oct 2024 11:35:20 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 05/21] tests/functional: Add a base class for the TuxRun tests
-Date: Mon, 21 Oct 2024 13:34:42 +0200
-Message-ID: <20241021113500.122500-6-thuth@redhat.com>
+Subject: [PULL 07/21] tests/functional: Convert the Avocado aarch64 tuxrun
+ tests
+Date: Mon, 21 Oct 2024 13:34:44 +0200
+Message-ID: <20241021113500.122500-8-thuth@redhat.com>
 In-Reply-To: <20241021113500.122500-1-thuth@redhat.com>
 References: <20241021113500.122500-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,24 +82,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a base class for the TuxRun tests, based on the code from
-tests/avocado/tuxrun_baselines.py (the test have to be put into
-separate file in the following commits, depending on the target
-architecture that gets tested).
+Move the tests to a new file so that they can be run via
+qemu-system-aarch64 in the functional framework.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241011131937.377223-2-thuth@redhat.com>
+Message-ID: <20241011131937.377223-4-thuth@redhat.com>
 ---
- tests/functional/qemu_test/tuxruntest.py | 158 +++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
- create mode 100644 tests/functional/qemu_test/tuxruntest.py
+ MAINTAINERS                             |  1 +
+ tests/avocado/tuxrun_baselines.py       | 31 ---------------
+ tests/functional/meson.build            |  2 +
+ tests/functional/test_aarch64_tuxrun.py | 50 +++++++++++++++++++++++++
+ 4 files changed, 53 insertions(+), 31 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_tuxrun.py
 
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-new file mode 100644
-index 0000000000..904da6f609
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8f4a58f850..4f4f50711b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -987,6 +987,7 @@ F: hw/arm/virt*
+ F: include/hw/arm/virt.h
+ F: docs/system/arm/virt.rst
+ F: tests/functional/test_aarch64_virt.py
++F: tests/functional/test_aarch64_tuxrun.py
+ 
+ Xilinx Zynq
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 56c8bdb2dc..dffa4f6339 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -192,37 +192,6 @@ def common_tuxrun(self,
+     #        --kernel https://storage.tuxboot.com/{TUXBOOT}/{IMAGE}
+     #
+ 
+-    def test_arm64(self):
+-        """
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=machine:virt
+-        :avocado: tags=tuxboot:arm64
+-        :avocado: tags=console:ttyAMA0
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = {"Image" :
+-                "ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7",
+-                "rootfs.ext4.zst" :
+-                "bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061"}
+-        self.common_tuxrun(csums=sums)
+-
+-    def test_arm64be(self):
+-        """
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=cpu:cortex-a57
+-        :avocado: tags=endian:big
+-        :avocado: tags=machine:virt
+-        :avocado: tags=tuxboot:arm64be
+-        :avocado: tags=console:ttyAMA0
+-        :avocado: tags=shutdown:nowait
+-        """
+-        sums = { "Image" :
+-                 "e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4",
+-                 "rootfs.ext4.zst" :
+-                 "e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7"}
+-        self.common_tuxrun(csums=sums)
+-
+     def test_armv5(self):
+         """
+         :avocado: tags=arch:arm
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index c90c02517a..222bfbcc62 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -13,6 +13,7 @@ endif
+ test_timeouts = {
+   'aarch64_raspi4' : 120,
+   'aarch64_sbsaref' : 600,
++  'aarch64_tuxrun' : 120,
+   'aarch64_virt' : 360,
+   'acpi_bits' : 240,
+   'arm_raspi2' : 120,
+@@ -41,6 +42,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+   'aarch64_sbsaref',
++  'aarch64_tuxrun',
+   'aarch64_virt',
+   'multiprocess',
+ ]
+diff --git a/tests/functional/test_aarch64_tuxrun.py b/tests/functional/test_aarch64_tuxrun.py
+new file mode 100755
+index 0000000000..da56aee4ed
 --- /dev/null
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -0,0 +1,158 @@
++++ b/tests/functional/test_aarch64_tuxrun.py
+@@ -0,0 +1,50 @@
++#!/usr/bin/env python3
++#
 +# Functional test that boots known good tuxboot images the same way
 +# that tuxrun (www.tuxrun.org) does. This tool is used by things like
 +# the LKFT project to run regression tests on kernels.
@@ -110,153 +188,43 @@ index 0000000000..904da6f609
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+import os
-+import time
++from qemu_test import Asset
++from qemu_test.tuxruntest import TuxRunBaselineTest
 +
-+from qemu_test import QemuSystemTest
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import has_cmd, run_cmd, get_qemu_img
++class TuxRunAarch64Test(TuxRunBaselineTest):
 +
-+class TuxRunBaselineTest(QemuSystemTest):
++    ASSET_ARM64_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/arm64/Image',
++        'ce95a7101a5fecebe0fe630deee6bd97b32ba41bc8754090e9ad8961ea8674c7')
++    ASSET_ARM64_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/arm64/rootfs.ext4.zst',
++        'bbd5ed4b9c7d3f4ca19ba71a323a843c6b585e880115df3b7765769dbd9dd061')
 +
-+    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0'
-+    # Tests are ~10-40s, allow for --debug/--enable-gcov overhead
-+    timeout = 100
++    def test_arm64(self):
++        self.set_machine('virt')
++        self.cpu='cortex-a57'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
++                           rootfs_asset=self.ASSET_ARM64_ROOTFS)
 +
-+    def get_tag(self, tagname, default=None):
-+        """
-+        Get the metadata tag or return the default.
-+        """
-+        utag = self._get_unique_tag_val(tagname)
-+        print(f"{tagname}/{default} -> {utag}")
-+        if utag:
-+            return utag
++    ASSET_ARM64BE_KERNEL = Asset(
++        'https://storage.tuxboot.com/20230331/arm64be/Image',
++        'e0df4425eb2cd9ea9a283e808037f805641c65d8fcecc8f6407d8f4f339561b4')
++    ASSET_ARM64BE_ROOTFS = Asset(
++        'https://storage.tuxboot.com/20230331/arm64be/rootfs.ext4.zst',
++        'e6ffd8813c8a335bc15728f2835f90539c84be7f8f5f691a8b01451b47fb4bd7')
 +
-+        return default
++    def test_arm64be(self):
++        self.set_machine('virt')
++        self.cpu='cortex-a57'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_ARM64BE_KERNEL,
++                           rootfs_asset=self.ASSET_ARM64BE_ROOTFS)
 +
-+    def setUp(self):
-+        super().setUp()
-+
-+        # We need zstd for all the tuxrun tests
-+        # See https://github.com/avocado-framework/avocado/issues/5609
-+        (has_zstd, msg) = has_cmd('zstd')
-+        if has_zstd is False:
-+            self.skipTest(msg)
-+        self.zstd = 'zstd'
-+
-+        # Pre-init TuxRun specific settings: Most machines work with
-+        # reasonable defaults but we sometimes need to tweak the
-+        # config. To avoid open coding everything we store all these
-+        # details in the metadata for each test.
-+
-+        # The tuxboot tag matches the root directory
-+        self.tuxboot = self.arch
-+
-+        # Most Linux's use ttyS0 for their serial port
-+        self.console = "ttyS0"
-+
-+        # Does the machine shutdown QEMU nicely on "halt"
-+        self.wait_for_shutdown = True
-+
-+        self.root = "vda"
-+
-+        # Occasionally we need extra devices to hook things up
-+        self.extradev = None
-+
-+        self.qemu_img = get_qemu_img(self)
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message,
-+                                 failure_message='Kernel panic - not syncing',
-+                                 vm=vm)
-+
-+    def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
-+        """
-+        Fetch the TuxBoot assets.
-+        """
-+        kernel_image =  kernel_asset.fetch()
-+        disk_image_zst = rootfs_asset.fetch()
-+
-+        run_cmd([self.zstd, "-f", "-d", disk_image_zst,
-+                 "-o", self.workdir + "/rootfs.ext4"])
-+
-+        dtb = dtb_asset.fetch() if dtb_asset is not None else None
-+
-+        return (kernel_image, self.workdir + "/rootfs.ext4", dtb)
-+
-+    def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
-+        """
-+        Setup to run and add the common parameters to the system
-+        """
-+        self.vm.set_console(console_index=console_index)
-+
-+        # all block devices are raw ext4's
-+        blockdev = "driver=raw,file.driver=file," \
-+            + f"file.filename={disk},node-name=hd0"
-+
-+        kcmd_line = self.KERNEL_COMMON_COMMAND_LINE
-+        kcmd_line += f" root=/dev/{self.root}"
-+        kcmd_line += f" console={self.console}"
-+
-+        self.vm.add_args('-kernel', kernel,
-+                         '-append', kcmd_line,
-+                         '-blockdev', blockdev)
-+
-+        # Sometimes we need extra devices attached
-+        if self.extradev:
-+            self.vm.add_args('-device', self.extradev)
-+
-+        self.vm.add_args('-device',
-+                         f"{drive},drive=hd0")
-+
-+        # Some machines need an explicit DTB
-+        if dtb:
-+            self.vm.add_args('-dtb', dtb)
-+
-+    def run_tuxtest_tests(self, haltmsg):
-+        """
-+        Wait for the system to boot up, wait for the login prompt and
-+        then do a few things on the console. Trigger a shutdown and
-+        wait to exit cleanly.
-+        """
-+        self.wait_for_console_pattern("Welcome to TuxTest")
-+        time.sleep(0.2)
-+        exec_command(self, 'root')
-+        time.sleep(0.2)
-+        exec_command(self, 'cat /proc/interrupts')
-+        time.sleep(0.1)
-+        exec_command(self, 'cat /proc/self/maps')
-+        time.sleep(0.1)
-+        exec_command(self, 'uname -a')
-+        time.sleep(0.1)
-+        exec_command_and_wait_for_pattern(self, 'halt', haltmsg)
-+
-+        # Wait for VM to shut down gracefully if it can
-+        if self.wait_for_shutdown:
-+            self.vm.wait()
-+        else:
-+            self.vm.shutdown()
-+
-+    def common_tuxrun(self,
-+                      kernel_asset,
-+                      rootfs_asset,
-+                      dtb_asset=None,
-+                      drive="virtio-blk-device",
-+                      haltmsg="reboot: System halted",
-+                      console_index=0):
-+        """
-+        Common path for LKFT tests. Unless we need to do something
-+        special with the command line we can process most things using
-+        the tag metadata.
-+        """
-+        (kernel, disk, dtb) = self.fetch_tuxrun_assets(kernel_asset, rootfs_asset,
-+                                                       dtb_asset)
-+
-+        self.prepare_run(kernel, disk, drive, dtb, console_index)
-+        self.vm.launch()
-+        self.run_tuxtest_tests(haltmsg)
-+        os.remove(disk)
++if __name__ == '__main__':
++    TuxRunBaselineTest.main()
 -- 
 2.47.0
 
