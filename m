@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0F3D15DB8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D489DD15DBA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vLP-0003d9-JU; Mon, 21 Oct 2024 12:33:23 -0400
+	id 1t2vM9-0003qg-Ks; Mon, 21 Oct 2024 12:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2vLI-0003ck-BV
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:33:17 -0400
+ id 1t2vM6-0003ls-5h
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:34:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t2vLG-0005sd-7z
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:33:16 -0400
+ id 1t2vM4-0005w9-CF
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:34:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729528390;
+ s=mimecast20190719; t=1729528443;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=czTzyusJhdFbIBOhJ6nk4bk8jyhDfHA49rQZdwW3KIw=;
- b=Iklgl1V9QSQLvW72lk8LTCW++RlyuWt0r8GhDGwA36QRZKxFMNKJt+BOlYfKRTtVyRFT06
- 7aEro/U2lexFGIIOBNHog4zOfZeRxQ79v4ud8MxZHn+SxEzlCYJjdlHHBq8uawIFjIvz9F
- TsQRV+mKSZzCCMee0il9cEoUksXUGZw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kzZmwzaQd04bedMVTIrI5FXhQT55ZcAeMrc7nCoKkJM=;
+ b=EYJWvi0aEjuX1b+ZFSub+GNA53aK5p74cn40G6qcsKxPXhxImtrkGRQ50dZvKfdCca2prp
+ LNfBbTry+7YIdAqVN5tbZhDgzVEMDqKidREYzQxe3Kvv1K4dLT2QuPJl+fJD9aKgiNRiuq
+ bfy2SzChqxsIIQfsTTiLQ0sKCkBqe4w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-in-PLQe6M82t9tZxdrJXwg-1; Mon,
- 21 Oct 2024 12:33:07 -0400
-X-MC-Unique: in-PLQe6M82t9tZxdrJXwg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-k7n0KNz6M4Ct4EUVikydcg-1; Mon,
+ 21 Oct 2024 12:34:01 -0400
+X-MC-Unique: k7n0KNz6M4Ct4EUVikydcg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00CFE19560B5; Mon, 21 Oct 2024 16:33:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BEDED1956046; Mon, 21 Oct 2024 16:34:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31034300019D; Mon, 21 Oct 2024 16:33:03 +0000 (UTC)
-Date: Mon, 21 Oct 2024 17:33:00 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED83C19560AA; Mon, 21 Oct 2024 16:33:58 +0000 (UTC)
+Date: Mon, 21 Oct 2024 17:33:55 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Hyman Huang <yong.huang@smartx.com>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 2/5] tests/migration: Make initrd-stress.img built by
- default
-Message-ID: <ZxaCPPeymA6YfVre@redhat.com>
+Subject: Re: [PATCH v2 1/5] tests/migration: Move the guestperf tool to
+ scripts directory
+Message-ID: <ZxaCczNvLbYiizdJ@redhat.com>
 References: <cover.1729275266.git.yong.huang@smartx.com>
- <777e9f8e3fe4d0e565cf62efbef6cda83a6b06a4.1729275266.git.yong.huang@smartx.com>
+ <52c9b1f94ef5a9451e462a27ca8386190317e22b.1729275266.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <777e9f8e3fe4d0e565cf62efbef6cda83a6b06a4.1729275266.git.yong.huang@smartx.com>
+In-Reply-To: <52c9b1f94ef5a9451e462a27ca8386190317e22b.1729275266.git.yong.huang@smartx.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -90,71 +90,49 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 19, 2024 at 02:25:04AM +0800, Hyman Huang wrote:
-> The initrd-stress.img was compiled by specifying the target,
-> to make it easier for developers to play the guestperf tool,
-> make it built when dependencies suffices.
+On Sat, Oct 19, 2024 at 02:25:03AM +0800, Hyman Huang wrote:
+> Guestperf was designed to test the performance of migration,
+> with a loose connection to the fundamental test cases of QEMU.
+> 
+> To improve the repository's structure, move it to the scripts
+> directory.
+> 
+> Add myself as a maintainer for the guestperf so that I can
+> help to fix bugs.
 > 
 > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->  tests/migration/meson.build | 33 ++++++++++++++++++++-------------
->  1 file changed, 20 insertions(+), 13 deletions(-)
-> 
-> diff --git a/tests/migration/meson.build b/tests/migration/meson.build
-> index a91aa61c65..d9e5b0d241 100644
-> --- a/tests/migration/meson.build
-> +++ b/tests/migration/meson.build
-> @@ -1,18 +1,25 @@
-> +sysprof = not_found
-> +glib_static = not_found
-> +
+>  MAINTAINERS                                          | 5 +++++
+>  {tests => scripts}/migration/guestperf-batch.py      | 0
+>  {tests => scripts}/migration/guestperf-plot.py       | 0
+>  {tests => scripts}/migration/guestperf.py            | 0
+>  {tests => scripts}/migration/guestperf/__init__.py   | 0
+>  {tests => scripts}/migration/guestperf/comparison.py | 0
+>  {tests => scripts}/migration/guestperf/engine.py     | 0
+>  {tests => scripts}/migration/guestperf/hardware.py   | 0
+>  {tests => scripts}/migration/guestperf/plot.py       | 0
+>  {tests => scripts}/migration/guestperf/progress.py   | 0
+>  {tests => scripts}/migration/guestperf/report.py     | 0
+>  {tests => scripts}/migration/guestperf/scenario.py   | 0
+>  {tests => scripts}/migration/guestperf/shell.py      | 0
+>  {tests => scripts}/migration/guestperf/timings.py    | 0
+>  14 files changed, 5 insertions(+)
+>  rename {tests => scripts}/migration/guestperf-batch.py (100%)
+>  rename {tests => scripts}/migration/guestperf-plot.py (100%)
+>  rename {tests => scripts}/migration/guestperf.py (100%)
+>  rename {tests => scripts}/migration/guestperf/__init__.py (100%)
+>  rename {tests => scripts}/migration/guestperf/comparison.py (100%)
+>  rename {tests => scripts}/migration/guestperf/engine.py (100%)
+>  rename {tests => scripts}/migration/guestperf/hardware.py (100%)
+>  rename {tests => scripts}/migration/guestperf/plot.py (100%)
+>  rename {tests => scripts}/migration/guestperf/progress.py (100%)
+>  rename {tests => scripts}/migration/guestperf/report.py (100%)
+>  rename {tests => scripts}/migration/guestperf/scenario.py (100%)
+>  rename {tests => scripts}/migration/guestperf/shell.py (100%)
+>  rename {tests => scripts}/migration/guestperf/timings.py (100%)
 
-These two assignments should be redundant, given that the next two
-line unconditionally overwrite them.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
->  sysprof = dependency('sysprof-capture-4', method: 'pkg-config', required: false)
->  glib_static = dependency('glib-2.0', version: glib_req_ver, required: false,
->                           method: 'pkg-config', static: true)
-
-'dependency()' should already return "not_found" given you have
-'required: false'
-
->  
-> -stress = executable(
-> -  'stress',
-> -  files('stress.c'),
-> -  dependencies: [glib_static, sysprof],
-> -  link_args: ['-static'],
-> -  build_by_default: false,
-> -)
->  
-> -custom_target(
-> -  'initrd-stress.img',
-> -  output: 'initrd-stress.img',
-> -  input: stress,
-> -  command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@']
-> -)
-> +if host_os == 'linux' and sysprof.found() and glib_static.found()
-> +    stress = executable(
-> +      'stress',
-> +      files('stress.c'),
-> +      dependencies: [glib_static, sysprof],
-> +      link_args: ['-static'],
-> +    )
-> +
-> +    custom_target(
-> +      'initrd-stress.img',
-> +      output: 'initrd-stress.img',
-> +      input: stress,
-> +      command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@'],
-> +      build_by_default: true,
-> +      depends: [stress],
-> +    )
-> +endif
-
-Assuming you remove the two redundant assignments at the top, then
-
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 With regards,
 Daniel
