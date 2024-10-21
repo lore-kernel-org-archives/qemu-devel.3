@@ -4,83 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B55D15D96
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09561D15D8F
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 14:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2tHF-00019r-Uz; Mon, 21 Oct 2024 10:20:57 -0400
+	id 1t2tOt-0002OL-GH; Mon, 21 Oct 2024 10:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2tHE-00019Y-IJ
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:20:56 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t2tHB-0007C9-J0
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 10:20:56 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2fb443746b8so46556561fa.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 07:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729520451; x=1730125251; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JXsMc5bPhL0vQu70vsDLYLsIM/mkdMZ+PlLh5x7fuWQ=;
- b=Ys5dRJChcBDMviayPNpa3VjRyjzp4GFHcmdHxX7LyyQXAfqGhGrCx3+IUrQ1ZkqnV9
- rXxGD6ajl4XTVeJNS76cj9PQmrJN4UmZ77xmmsGvImISJrD6C9VzyoWzZ8LbLnykhkp4
- zTOAphJGQ6U+CuJRy797M7oCTJQxsck9Vu89Bb8Eu5etB2awP5Od9Hl4wGU3J2f8GdZo
- mUOtw13TRr0nVHhY/i94fUlCC3AKpq8YGzqHdf0wytVSoP+zRumMtb3HLsow/nC5m82+
- f0tZmA9dw5LOsaQZF3h305ugqPfippXx/WaU788zAs3S4eIIxII7fM4pTvY+Yein1Q5x
- a4wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729520451; x=1730125251;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JXsMc5bPhL0vQu70vsDLYLsIM/mkdMZ+PlLh5x7fuWQ=;
- b=LnpRtY1vUNKvFB0yASn1l1wjOcW82Njh3Xb0hHRrRbxzJIHwZLTEF6ETLovNpqto2S
- zWEUU4RxyBPl4/1a+Tq1/X2j409oXcEKsIxMj06W8+FPdOZTzkSvNiwmqBgUzixS53ny
- a7/bVXlt9qajd28+inwg34gbVPxumeyvbhMfLiLMbVpTZLN1C5Xzqq6OSj3vupIOJfAX
- zm/gW0qehqLaCGBPzdTu5II3PuIl6GvqWqD64rG+wK71lwTDAqaakCyPZYP+VGnYZOSS
- 0WEM8EvQorsv7cHEE3okIpy2mm6T7xAHHPz5U4srUOJa9u9hZ8eSUUcsbULd8zZ54vMg
- gjtA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPIrfRd8ILkhNOqxZn2MV+pDao4Ptq5doTGOHyhnf7rnetRp+RqcBLUK3Q+UIGXb0TpMuvp0Z/L5VF@nongnu.org
-X-Gm-Message-State: AOJu0Yy5XRXBMmL20OOyAyf4guEmeiseGgpGB9+OgJiydvC55m9D8vQa
- vApDTvASC2EZ1tI6IA0diSG7RN1x+cR5GwjwGNfCwuEdVs5EMMjNppu64+VnKxrX/haz3hk+6Zk
- 9l9ENc67UOlhh7KoUikOhCJz8/T/U35NSntJiTQ==
-X-Google-Smtp-Source: AGHT+IGsXMwXqIMDzLZtLnGu5jr+ezgOorFumOrIQbA1+EIlKM06dweAN9zoAqvNGHSWWjqbeIBaA1UQ0JMt1387O7g=
-X-Received: by 2002:a2e:b8d0:0:b0:2f9:cc40:6afe with SMTP id
- 38308e7fff4ca-2fb82ea23f4mr54514751fa.14.1729520450970; Mon, 21 Oct 2024
- 07:20:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1t2tOo-0002NT-0Y; Mon, 21 Oct 2024 10:28:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1t2tOi-0007n7-U8; Mon, 21 Oct 2024 10:28:44 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49L2KvGW027383;
+ Mon, 21 Oct 2024 14:28:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=bqwWZzzMOEI41IeBqZVe8QOOCXoo4V6/c5GMOysKS
+ lo=; b=jGaEHGgqR4EEazk8bBAnEdn9b1Ojza1LYlLlk2T10volrXbcH7H6pS95f
+ EeZ3NRuTdAr1R7B9i9grCmOLU8GFirXHma+mEA3QQX01hh0qEKGLhWg7eEFqiMiY
+ n6Sqmp+DnJjLH2N9lsJlHqaUWqgjFkq9L2rPxQJwh5vey7TCpizSPTCvtGFjMlYx
+ pTHrBbu+nN2/oIxpQoSsyJvX7J0u57pig1cWqMWxvumLIHLZW589EF5qWlzR5Fyl
+ ypgt4J529wR7qgoulp6Gs1bHJ7Djzz3paObNsYduuy3gXJqWYjaMGq0/W3mg3r5B
+ DqRdlFB48k0IAfX4mS6ORvK8j24Vg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eu99h5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 14:28:36 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49LERGH5007071;
+ Mon, 21 Oct 2024 14:28:36 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eu99h3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 14:28:36 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49LCBBve029398;
+ Mon, 21 Oct 2024 14:28:35 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42crkjxnjw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 14:28:35 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49LESVLu33227354
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Oct 2024 14:28:31 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CEED72004D;
+ Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F8C120040;
+ Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.27.206])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Oct 2024 14:28:31 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Kewen Lin <linkw@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] tests/tcg: Replace -mpower8-vector with -mvsx
+Date: Mon, 21 Oct 2024 16:27:48 +0200
+Message-ID: <20241021142830.486149-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: rGFEVGVtUg2cgD4Bl2wtCcLWLnqRy_PL
+X-Proofpoint-ORIG-GUID: fyr50dFUKCs9OkQR_VcYxEJ_wO4i_2sl
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <ZxPZ5oUDRcVroh7o@intel.com>
- <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
- <ZxZjqypRL7d2rMuQ@intel.com>
-In-Reply-To: <ZxZjqypRL7d2rMuQ@intel.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Oct 2024 15:20:39 +0100
-Message-ID: <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BQuestion=5D_What_is_the_definition_of_=E2=80=9Cprivate?=
- =?UTF-8?Q?=E2=80=9D_fields_in_QOM=3F?=
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ adultscore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410210098
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,54 +114,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 21 Oct 2024 at 15:12, Zhao Liu <zhao1.liu@intel.com> wrote:
->
-> Hi Peter,
->
-> On Mon, Oct 21, 2024 at 10:25:07AM +0100, Peter Maydell wrote:
-> > Date: Mon, 21 Oct 2024 10:25:07 +0100
-> > From: Peter Maydell <peter.maydell@linaro.org>
-> > Subject: Re: [Question] What is the definition of =E2=80=9Cprivate=E2=
-=80=9D fields in
-> >  QOM?
-> >
-> > On Sat, 19 Oct 2024 at 16:54, Zhao Liu <zhao1.liu@intel.com> wrote:
-> > >
-> > > Hi maintainers and list,
-> > >
-> > > In the QOM structure, the class and object structs have two members:
-> > > parent_class and parent_obj, which are often marked as "< private >" =
-in
-> > > the comment.
-> > >
-> > > I couldn=E2=80=99t find information on why to define =E2=80=98private=
-=E2=80=99 and =E2=80=98public=E2=80=99,
-> > > even in the earliest QOM commits and the patch emails I could find.
-> >
-> > This is a rather old thing which I think was originally
-> > borrowed from glib's commenting convention.
-> >
-> > I'm fairly sure that we decided a while back that they were entirely
-> > unnecessary, so you don't need to add them in new code. (I can't
-> > actually find anything with a quick list search about that though
-> > so maybe I'm misremembering.)
->
-> Thanks for your explanation! So I understand that directly accessing
-> parent_obj/parent_class is actually allowed.
+[1] deprecated -mpower8-vector, resulting in:
 
-No, you shouldn't do that. You can use a QOM cast of the
-object pointer to the relevant parent class if you need to
-treat it as an instance of the parent class.
+    powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no longer supported
+    qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before 'float'
+        4 | typedef vector float vsx_float32_vec_t;
+          |               ^~~~~~
 
-What I mean by "the private/public markers are unnecessary" is
-that they don't tell the reader anything, because all the fields
-in a QOM device struct are private.
+Similar to how this was done for the GCC testcases, replace
+-mpower8-vector with -mvsx.
 
-If you're not in the implementation of that class, then you shouldn't
-really be directly touching any of the fields in the state struct.
-(In some places we take a shortcut and do it. But really it's almost
-never necessary.)
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109987
 
-thanks
--- PMM
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/ppc64/Makefile.target | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
+index 1940886c737..d1b00d2bf09 100644
+--- a/tests/tcg/ppc64/Makefile.target
++++ b/tests/tcg/ppc64/Makefile.target
+@@ -6,7 +6,7 @@ VPATH += $(SRC_PATH)/tests/tcg/ppc64
+ 
+ config-cc.mak: Makefile
+ 	$(quiet-@)( \
+-	    $(call cc-option,-mpower8-vector,   CROSS_CC_HAS_POWER8_VECTOR); \
++	    $(call cc-option,-mvsx,             CROSS_CC_HAS_VSX); \
+ 	    $(call cc-option,-mpower10,         CROSS_CC_HAS_POWER10)) 3> config-cc.mak
+ 
+ -include config-cc.mak
+@@ -23,15 +23,15 @@ run-threadcount: threadcount
+ run-plugin-threadcount-with-%:
+ 	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+ 
+-ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
++ifneq ($(CROSS_CC_HAS_VSX),)
+ PPC64_TESTS=bcdsub non_signalling_xscv
+ endif
+-$(PPC64_TESTS): CFLAGS += -mpower8-vector
++$(PPC64_TESTS): CFLAGS += -mvsx
+ 
+-ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
++ifneq ($(CROSS_CC_HAS_VSX),)
+ PPC64_TESTS += vsx_f2i_nan
+ endif
+-vsx_f2i_nan: CFLAGS += -mpower8-vector -I$(SRC_PATH)/include
++vsx_f2i_nan: CFLAGS += -mvsx -I$(SRC_PATH)/include
+ 
+ PPC64_TESTS += mtfsf
+ PPC64_TESTS += mffsce
+-- 
+2.47.0
+
 
