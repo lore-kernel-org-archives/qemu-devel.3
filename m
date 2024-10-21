@@ -4,139 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FE2D0E6D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7771AD0E6D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 09:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2oAm-0006uh-OP; Mon, 21 Oct 2024 04:53:56 -0400
+	id 1t2oMR-0000t7-7u; Mon, 21 Oct 2024 05:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2oAl-0006tp-19
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:53:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2oMO-0000rY-9C
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:05:56 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2oAj-000762-N0
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:53:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729500833;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=pSyft37zKTsJu8mIKbb8XVLBAhQ26+vK65BHoG7p/JI=;
- b=DQoS0xISbkxFm2eHIkpFy0MjPzO890j+AgnnNSm4wg3MrCwdUQbY9ZmpZnizwBAVvZu4FI
- w834D5n3t60HWWzvY4uDjPr0XEfm8GnpNoX2MlF+2T1tchtSUbAlUpL1Yxz4ILX5jcWvPP
- jjqjsUrx/9qO7xkIejZ82Q97kBx4tNw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-4USrtljAMXyTNJSxby0edw-1; Mon, 21 Oct 2024 04:53:51 -0400
-X-MC-Unique: 4USrtljAMXyTNJSxby0edw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4316138aff6so24293045e9.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:53:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729500830; x=1730105630;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pSyft37zKTsJu8mIKbb8XVLBAhQ26+vK65BHoG7p/JI=;
- b=n+uuMR86ht8riErJwGMz8HBZU5EYFzILOH2ryDANMbonTxJlev9Twd4T7QJDh4Y5LW
- 4k+OfSLleJaBkYM4vyZ6wt3fmamSEApiIQA/K3MbWanPCodW+XA17KO7Rw4+9lMM4YjS
- XbEr5Rzvyi/EQK4kv1J3WXFI6OmuHMqN+m94uUdBkRsTGGVqkceQS/vfcoWZ08l2jYtF
- QqBy5+1M4T6KNSGiewo/SljCoHYyGRNJEy+LZa2X20U2HEAWE8SHH0KCz+zMSG5g0N3h
- Ey3A79xjaczY3PHH8g64yEO3f77+YRGWuHUcYGPeUqCQ4VC+c1NjBtlY0IdDfope+HZW
- hb0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHQ23P7KFua2E7eAHxZUPeOmeAVGDnVEQ+z+/nSxmkaURrK8dQUVMAMH/96qfYN3XN6PlaBcvj4mOI@nongnu.org
-X-Gm-Message-State: AOJu0YyRlht8upZ/pfM/IDKTi7PMpWiclCgAhh390+EmJuqKBYtpUjcf
- /WGrJInLHkAzZS7MbAtYEO6bB9d8uQdfMYu+oOE4VDh+YM1zIVnK6XvU1J1Qx92LPlEjito2Oxf
- BN2LAwrfpqxjl8kaTiKRKXDjs+Z5DQ2ZRrRNUY8Gmx52+YhjDop1H
-X-Received: by 2002:a05:600c:1d27:b0:431:4e25:fe26 with SMTP id
- 5b1f17b1804b1-4316169742fmr71862355e9.27.1729500830017; 
- Mon, 21 Oct 2024 01:53:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuxUzMlD4tzGykeb7eV5EZfPkf6p4Jc7ZnuGLJrJ3TthUMof1EyUKhdBQlIeZ91huIEvwdNw==
-X-Received: by 2002:a05:600c:1d27:b0:431:4e25:fe26 with SMTP id
- 5b1f17b1804b1-4316169742fmr71862165e9.27.1729500829680; 
- Mon, 21 Oct 2024 01:53:49 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f5cb918sm49624265e9.41.2024.10.21.01.53.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 01:53:49 -0700 (PDT)
-Message-ID: <f1249e0b-290e-4416-a776-3f5d6ada1ece@redhat.com>
-Date: Mon, 21 Oct 2024 10:53:47 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t2oML-0008PI-QU
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 05:05:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729501554; x=1761037554;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=fhHLo0nmv4N859MO1xJdC24xJMzxpiiegzXrG4EWaJ8=;
+ b=J1LmEllYeGIN/+/45fFbarY7Y0B37nxTMeD1SVliWV7dVp24QrHtb011
+ 9AGCXVxh3TwGRHltZa8RznyH9PY+ylSBevszLVpFZe6K284wAToi37chf
+ 8C7ym5ShaNSS4YpAm2/sFvdK7N5doMYLxDsYduIEje2a39oExzPJ7JUjj
+ bJ9qOVwviW1RloKlWSGVoTTzCCG+IxHLACpomTbS56dzKzDLtXrToyk6f
+ mynUleJgOrh2PTIyA4ClskzUaT9iWmUJxkwsRxDp6A0iEnRsjEDWoVSrY
+ 6PjOzvaNsT9eSyzEMq6cn6qtLuFCllhBa3BcfluzVZO4cUzpnpzRjg5tm g==;
+X-CSE-ConnectionGUID: ciuOXMPvRGyKPlzONyjLbw==
+X-CSE-MsgGUID: t8UXn0ADSCulBPgL3Ywnug==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="40100279"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="40100279"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2024 02:05:51 -0700
+X-CSE-ConnectionGUID: G7957S90QQyfdICR+jkbIw==
+X-CSE-MsgGUID: sQLfL1fWRuKBUgF+z+oNww==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="84286290"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 21 Oct 2024 02:05:50 -0700
+Date: Mon, 21 Oct 2024 17:22:05 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+Subject: Re: [Question] What is the =?gb2312?Q?defi?=
+ =?gb2312?B?bml0aW9uIG9mIKGwcHJpdmF0ZaGx?= fields in QOM?
+Message-ID: <ZxYdPZCc+3wi3f6z@intel.com>
+References: <ZxPZ5oUDRcVroh7o@intel.com>
+ <ZxYSSp1wkifLy3tV@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] tests/functional: Convert most Aspeed machine tests
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- berrange@redhat.com
-References: <20241018071726.2723934-1-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241018071726.2723934-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+In-Reply-To: <ZxYSSp1wkifLy3tV@redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
+ DKIMWL_WL_HIGH=-0.527, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,33 +86,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/2024 09.17, CÃ©dric Le Goater wrote:
-> This is a simple conversion of the tests with some cleanups and
-> adjustments to match the new test framework. Replace the zephyr image
-> MD5 hashes with SHA256 hashes while at it.
+Hi Daniel,
+
+On Mon, Oct 21, 2024 at 09:35:22AM +0100, Daniel P. Berrang¨¦ wrote:
+> Date: Mon, 21 Oct 2024 09:35:22 +0100
+> From: "Daniel P. Berrang¨¦" <berrange@redhat.com>
+> Subject: Re: [Question] What is the definition of ¡°private¡± fields in
+>  QOM?
 > 
-> The SDK tests depend on a ssh class from avocado.utils which is
-> difficult to replace. To be addressed separately.
+> On Sun, Oct 20, 2024 at 12:10:14AM +0800, Zhao Liu wrote:
+> > Hi maintainers and list,
+> > 
+> > In the QOM structure, the class and object structs have two members:
+> > parent_class and parent_obj, which are often marked as "< private >" in
+> > the comment.
+> > 
+> > I couldn¡¯t find information on why to define ¡®private¡¯ and ¡®public¡¯,
+> > even in the earliest QOM commits and the patch emails I could find.
+> > 
+> > Does ¡®private¡¯ refer to the internal implementation code of QOM, or does
+> > it refer to the specific code that defines and implements this object
+> > and its class?
+> > 
+> > I understand the original idea of private field indicates it cannot be
+> > accessed directly out of the "private" scope.
 > 
-> Signed-off-by: CÃ©dric Le Goater <clg@redhat.com>
-> ---
+> I see two scenarios
+> 
+>  * Devices where the structs are in the include/..../<blah>.h
+> 
+>    The private/public comments are a message to other code in QEMU about
+>    which fields are OK to access directly, and which should not be accessed.
 
-  Hi CÃ©dric,
+Does "other code" refer to the fact that no arbitrary code should
+directly access parent_obj/parent_class, but rather should use an
+explicit cast to convert to the parent class/object?
 
-I'm seeing errors when I try to run "make check-functional" with this patch 
-multiple times, e.g.:
+For example, are the following direct accesses to parent_obj all
+considered illegal?
 
-   File "/home/thuth/devel/qemu/tests/functional/test_arm_aspeed.py", line 
-111, in test_arm_ast2400_palmetto_openbmc_v2_9_0
-     image_path = self.ASSET_PALMETTO_FLASH.fetch()
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   File "/home/thuth/devel/qemu/tests/functional/qemu_test/asset.py", line 
-104, in fetch
-     raise Exception("Asset cache is invalid and downloads disabled")
-Exception: Asset cache is invalid and downloads disabled
+hw/usb/hcd-ohci-pci.c:58:    pci_set_word(dev->parent_obj.config + PCI_STATUS,
+hw/arm/smmuv3.c:1094:        trace_smmuv3_translate_success(mr->parent_obj.name, sid, addr,
+hw/arm/smmuv3.c:1101:        trace_smmuv3_translate_disable(mr->parent_obj.name, sid, addr,
+hw/arm/smmuv3.c:1107:        trace_smmuv3_translate_bypass(mr->parent_obj.name, sid, addr,
+hw/arm/smmuv3.c:1112:        trace_smmuv3_translate_abort(mr->parent_obj.name, sid, addr,
+hw/arm/smmuv3.c:1119:                      mr->parent_obj.name, addr, smmu_event_string(event.type));
+hw/arm/smmuv3.c:1212:        trace_smmuv3_inv_notifiers_iova(mr->parent_obj.name, asid, vmid,
+hw/arm/smmuv3.c:2033:        trace_smmuv3_notify_flag_add(iommu->parent_obj.name);
+hw/arm/smmuv3.c:2036:        trace_smmuv3_notify_flag_del(iommu->parent_obj.name);
+hw/arm/smmu-common.c:888:    trace_smmu_inv_notifiers_mr(mr->parent_obj.name);
+block/throttle-groups.c:777:    if (!tg->name && tg->parent_obj.parent) {
+iothread.c:173:                               iothread->parent_obj.aio_max_batch);
+iothread.c:359:    info->aio_max_batch = iothread->parent_obj.aio_max_batch;
+target/i386/sev.c:1240:    if (sev_snp->parent_obj.kernel_hashes) {
+target/ppc/kvm.c:2354:    const char *vcpu_str = (cs->parent_obj.hotplugged == true) ?
+target/openrisc/sys_helper.c:289:        return cpu->parent_obj.cpu_index;
+accel/kvm/kvm-all.c:4285:                        cpu->parent_obj.canonical_path,
+accel/kvm/kvm-all.c:4377:            if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
+accel/tcg/translator.c:26:                    offsetof(ArchCPU, parent_obj.neg.can_do_io) -
+accel/tcg/translator.c:50:                       offsetof(ArchCPU, parent_obj.neg.icount_decr.u32)
+accel/tcg/translator.c:80:                         offsetof(ArchCPU, parent_obj.neg.icount_decr.u16.low)
+include/hw/pci-host/dino.h:113:     * PCI_CONFIG_ADDR is parent_obj.config_reg, via pci_host_conf_be_ops,
+...
 
-Could it be that the tests alter the file in the download cache?
+>  * Devices where the structs are in the ../<blah>.c
+> 
+>    The private/public comments look entirely pointless, as everything
+>    is private to the .c file.
 
-  Thomas
+Yes!
+
+> 99% of the time it seems the "parent" / "parent_obj" fields are the only
+> one marked private. There are a handful of classes where other fields are
+> under the private comment, but not many. 
+
+Yes. "parent" / "parent_obj" are the most common cases.
+
+Thanks,
+Zhao
 
 
