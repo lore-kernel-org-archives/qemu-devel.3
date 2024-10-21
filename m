@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CA5D3C927
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC109D3C934
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 01:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2go4-0007ZR-74; Sun, 20 Oct 2024 21:02:00 -0400
+	id 1t2gpB-0000Fn-Bd; Sun, 20 Oct 2024 21:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2go2-0007Yf-7Y; Sun, 20 Oct 2024 21:01:58 -0400
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1t2go0-0003Wk-L6; Sun, 20 Oct 2024 21:01:57 -0400
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-851d2a36e6dso1786765241.0; 
- Sun, 20 Oct 2024 18:01:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729472515; x=1730077315; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Kbl0ttaHl3kiCRHtALDsLaYzPoqfRztwI4CErz18Klo=;
- b=JFCdxA9Umv1NGcx4YyKw+1n+yWFHj1Dyjm2h35VwS8VTww2LIkvRL37cjOAVnvJpT9
- FuKiBbIlHcI1FQj0KbwaJj+j6j9IbGISxIqaL/A364hAEnTAqCsQ7Zx4Pivq3AJLewpZ
- HfBLu7qKSpONlfKqSAka8vCUHJZPCQNCiRQI+T1Fyg6Nwr6oqIFa5Y1z5ILrGXy4sqqL
- OOuh3jNFCvhEbwOyVULvcnPF2p7In2iu/tKkpjwIfo5Ks7mAd7zXekVz43/k80SlMmLm
- 1JWqMLsbzcpOS69FXk1PhCVuTDv3w9JDQCTRVBF8oyat9WHkPpVx3Ct5ExI73Fh7a/O5
- cBxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729472515; x=1730077315;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Kbl0ttaHl3kiCRHtALDsLaYzPoqfRztwI4CErz18Klo=;
- b=K5D5y2gsEiUC0FN4VKmaJmK2HHy4EU7lnDN7ZdBkVPt71aQ2CmTolic9qoDHXhkmi4
- mF3yaWiL0uJCkle29nQuS8MK3JkFw9NxVL7gkJa4dYP6yoh/S+K63mX3M3l+hu6dJ4fp
- S9dSnRXbV1GhAyGaRHkedZlqQwvAhbHly4sDTW5EHeN0dgGV8a/Q+GeL76SmnEe45KzJ
- DVOGjgTuSa89F21TGP+h2hzuoRjNb+//5f3JCKfaR31uoXAV5utw4xy8pLSxOlL4em8G
- swn0q5xYrq7/TkOVXd+Vk78VdkjzOg8VnQBIo+1+jiUjqw7K2DWF8qdeky+J4mmzr7Sr
- DD6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVl3guylZ7tuW3f89VhRJ4wU7fF5KlvtD3HjcjQTN2naWlSJLX+9DENYGRXGbZCeLRDJpUAENZFXEze@nongnu.org
-X-Gm-Message-State: AOJu0Ywq9fCC9rulHlbHpxUewaAWMCGCT+Vxp4y28oTa/8gs2zd05Vq8
- jeMXLbdaJ96at6D4do/mVLPomjb3wmgKrmhIhdHt0Ucauka2b9VinqbzffWDtOlHAq7J4/T4ZqL
- YqMZ0L20PVM2lg3T34BLUlZ8XsAY=
-X-Google-Smtp-Source: AGHT+IGeRhmg2v9zmo7+qJLubO8inGBk4QjUtXrJNq/yYd3xkzbz2KAzZiFWmZ6jaxlHixiXCV4rguQpmHvGn8GkO2M=
-X-Received: by 2002:a05:6122:3d0d:b0:50a:cbdb:b929 with SMTP id
- 71dfb90a1353d-50dd9bf9117mr5933007e0c.2.1729472515244; Sun, 20 Oct 2024
- 18:01:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t2gp9-0000FG-7s
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 21:03:07 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t2gp7-0003cQ-Ns
+ for qemu-devel@nongnu.org; Sun, 20 Oct 2024 21:03:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1729472571; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=WSBl/WR0C7s+t42Mk3RY5EDPR2IekOXvIMyuUmS3UENlMFUsjuK4RW2791ZMIogQocjWIkOoykzI1jJ3HtMLBpKf0mny0zSug9iN+fhDVIhiaLy5pAmJa35GSTfkiLaT9N08iqFT9kgoyapQ6kBeDzkqzIE9OrenUNhxjYk9jrE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1729472571;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ifsn+03v+07VP+YHCiUZA049TCfl8Bf2/0zVES3uf2M=; 
+ b=NCg3n7hMRHG7W5A78ejqtQu9mE6qp6bBNMs0OtXDyzWn04xRldvjjDgZdMwlLCMbTJY6YfFr/pMfZ3MrdPdCw5mQmP08iBXI8XSvKbkbNEOy37TMBBP2B37SR0crfEcgmofo442EboZSXDhQTnp6qG//RXGgzOf8di+jLTxU0rA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729472571; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=ifsn+03v+07VP+YHCiUZA049TCfl8Bf2/0zVES3uf2M=;
+ b=XPcb4XW6h2RJUVx6c+C5ZVeG6m2cftGVB7hgilUICyBdIBJMrJYDTXD9Kl2h33Hu
+ 4TcWAr3TmOJ3CuwaWkmZYSjswgYJzb8P64LEc7OJPllOYPACPk6fPwASau1odblb2Qi
+ DLcgICcMo1Dq0s7UcthKS/unbNb2rvND85TeLSI0=
+Received: by mx.zohomail.com with SMTPS id 1729472569279284.018831665804;
+ Sun, 20 Oct 2024 18:02:49 -0700 (PDT)
+Message-ID: <03d164ac-85d9-459b-b0ed-1d242234479e@collabora.com>
+Date: Mon, 21 Oct 2024 04:02:42 +0300
 MIME-Version: 1.0
-References: <20241017145226.365825-1-cleger@rivosinc.com>
- <20241017145226.365825-6-cleger@rivosinc.com>
-In-Reply-To: <20241017145226.365825-6-cleger@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 21 Oct 2024 11:01:29 +1000
-Message-ID: <CAKmqyKNRrZXCeK6FHmn8ecRGePfyC9SgjD=br1-yK3aOW=eUjA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/9] target/riscv: Add Ssdbltrp ISA extension enable
- switch
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
- Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/6] ui/sdl2: Implement dpy dmabuf functions
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-3-dmitry.osipenko@collabora.com>
+ <e2c0584f-c8da-4cdd-932d-a87ee2cd838f@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <e2c0584f-c8da-4cdd-932d-a87ee2cd838f@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,45 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 18, 2024 at 12:54=E2=80=AFAM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
-vosinc.com> wrote:
->
-> Add the switch to enable the Ssdbltrp ISA extension.
->
-> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
+On 10/18/24 08:22, Akihiko Odaki wrote:
+...
+>> +    EGLDisplay egl_display;
+>> +
+>> +    if (!x_disp) {
+>> +        return;
+>> +    }
+>> +
+>> +    /* Prefer EGL over GLX to get dma-buf support. */
+>> +    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
+>> +> +    if (egl_display != EGL_NO_DISPLAY) {
+>> +        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
+> 
+> SDL may not be going to use X11 but may use e.g., Wayland.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+SDL uses this hint only within the X11 code, i.e. setting the hint
+doesn't make SDL to use X11 instead of Wayland.
 
-Alistair
-
-> ---
->  target/riscv/cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5224eb356d..39555364bf 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -190,6 +190,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
->      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
->      ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
-,
-> +    ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
->      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
->      ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-> @@ -1506,6 +1507,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
->      MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
->      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
->      MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
-> +    MULTI_EXT_CFG_BOOL("ssdbltrp", ext_ssdbltrp, false),
->      MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
->      MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
->      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-> --
-> 2.45.2
->
->
+-- 
+Best regards,
+Dmitry
 
