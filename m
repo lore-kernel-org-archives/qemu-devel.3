@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D81D0E6C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18515D0E6C8
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 08:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2nUo-0004EP-QS; Mon, 21 Oct 2024 04:10:35 -0400
+	id 1t2nfH-0001Vv-He; Mon, 21 Oct 2024 04:21:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t2nUS-0003sN-KY
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:10:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t2nfF-0001VW-KQ
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:21:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1t2nUP-0002NP-5q
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:10:12 -0400
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t2nfD-000429-VV
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 04:21:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729498207;
+ s=mimecast20190719; t=1729498878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gYvuRQLPjF20XX9/qdpe+IyN+DhFfkJ6GYfh3eOA49E=;
- b=aIrPQBvxS6rzXz02RUTWIHFLJ1TuWZy+iXg0YqJ5XhBDzq1zjHrDT1uL30o+HQHxzVF4NZ
- 5ZfE5kGa8r7Mrn/fw57RmzV7PA5HB6MuRmszVmG4SCAhATBMO66Oo3n7VDrhJ9G5CKifZn
- fHFNV2lVojF89CdgrmwJUcrhlgOgmv8=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2fG463XsjR/y1zdPc142o2YqIaQrClk+NkQH8wDiP54=;
+ b=cmj0Bb4LgpfH850hadRsstkwKdBzZaa/3X38B5fUGxZoWTPPYBRsqaLOIs5mAEjuSTkdr6
+ Png/mU8EdKHs+Esw/8Ie+wmmfd8uZHoN+JvCyIrP0JuR/RJHj2NN8StigiMOyWmbTtq0+K
+ xghwKo4MRjtiq442sGpbaHjLuvORfzo=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-133-qWFTArtUOguEjq9Dl4uK6A-1; Mon, 21 Oct 2024 04:10:05 -0400
-X-MC-Unique: qWFTArtUOguEjq9Dl4uK6A-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cbe9885064so73104266d6.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:10:05 -0700 (PDT)
+ us-mta-228-hMeYyzIGNHK_GOuXeiOZxQ-1; Mon, 21 Oct 2024 04:21:16 -0400
+X-MC-Unique: hMeYyzIGNHK_GOuXeiOZxQ-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-71e51a31988so4534718b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 01:21:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729498205; x=1730103005;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gYvuRQLPjF20XX9/qdpe+IyN+DhFfkJ6GYfh3eOA49E=;
- b=Xo41+mY6uQyMQU3d9YklE9N4W8zpA6Zj+WezSne3QJy70dZ16oRxgQBzFGxRdN+CQK
- DkfW0ONoFoI+R5EAHPPDNwnARvkf/K+Hybz2CKWUWCYLbziDLM8f5OBCX6sijokxAnMt
- 5FRHz7+CpAlDJwhOViuS1OBN/AxhxnACQxsr28RK/crfp4iCAYvpynCG1Vj/ptO/dMqo
- 1Ek/BLbzNC8j1wGTxyNnCPvJgRYrZQLNTo0/UEv2oCpOHagNVJ0rMxn2aByNHwee+cYH
- s6HiIVTtu/Ajf1nj92esjVBx0KpgawTcBA0SbuUhTLTXKuoz0JeAlASI3iZrSQs8a4kd
- qbRw==
-X-Gm-Message-State: AOJu0YwQ5COy/delA7bhFeYbho+sRdr/X2myF3hDX3E+RkTruJJi+uUY
- kxCwjWaAn7ii+oKznT7kGngHvdYcD6jFR1ZpuUrNbrVMKMTXY6oFviYzU8GML4PcvBWTRoqXCoj
- QwMms9r10j9DMSszCRkibjITvRTBGXCoYYGuDJ5rujuabexvZnn0alQEsAX2f/2/49EZK2A9aTn
- aREaaZsIHJgqv7NgZsNNfFvg9v9RA=
-X-Received: by 2002:a05:6214:4b0e:b0:6c3:5833:260f with SMTP id
- 6a1803df08f44-6cde15ded9bmr200122726d6.39.1729498204840; 
- Mon, 21 Oct 2024 01:10:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJ965S5TFSpSzHTsvGBL6tT0E+glSCBETArqvQ4T0vY7GBqVm2rvJsjMYDv78mvHJF1iq3mbxRprO4CKATVxs=
-X-Received: by 2002:a05:6214:4b0e:b0:6c3:5833:260f with SMTP id
- 6a1803df08f44-6cde15ded9bmr200122576d6.39.1729498204538; Mon, 21 Oct 2024
- 01:10:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729498875; x=1730103675;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2fG463XsjR/y1zdPc142o2YqIaQrClk+NkQH8wDiP54=;
+ b=bOsvLIwu0MJhVTLrC3koFdWbzjN6hdB/4egSvXbECKpp6mCAHUza4lATg0szx19W5Y
+ ztPAwBnNNWMRe9X7wUbZiWx916UcdktTUAP9FhHnwqMHo0ui8oPdzD8MAQuy38H810MN
+ qa8o7zhUb0nYa6/bHY+V5/DKty9Ok3SWfIuuEQzzDGwP3AGGhFbenw8GsPjsS7S2RvO2
+ gDgAA584Ba7YfxWwZsMwObxu8tvlVUC4e+rj7rNX25aMowpM31NVtwMngDrVL8k9ekDN
+ cCOMS1MWS+vJA0CJQEIt2C9KyrgOqYwCSuZvwqfuHFwqmtrKHHyoPdtjgncOva/BTx26
+ UEAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW981fcRQBzb0hMbsqnwcyM6ahNaCvUDFaVoL+UR35TD+dkpgU48bqDthpfESuxGo6xXnkZOr1FVXLE@nongnu.org
+X-Gm-Message-State: AOJu0YzsK27sGjG2RbIVKMFgabs/3yis1A/NuYe2bDT5Tl8KCYIKhC9W
+ VckKkr5sovGouTFSa+3KCADvSTsKYGAoCrfQAMJlnQxiIGY+H9WEhI0ZaN1UbhvtDQtPGYMhInq
+ l7kYYbiDcmSzLJ1dGM4m0YzRRwuLwbM67+NssRAdJA9ESWfLhobSIHtY4ELwWhKMcPdaie/XXm2
+ hMyhi+LUVJA91RcqEQkySvr7LF1iOqWlNCXWYywZ2LjrY=
+X-Received: by 2002:a05:6a00:4f96:b0:71d:e93e:f542 with SMTP id
+ d2e1a72fcca58-71ea31e4e84mr15587675b3a.21.1729498875019; 
+ Mon, 21 Oct 2024 01:21:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvZCDlwNsFlTbRv83zhtEN4NdbK8f2zRNRPh6/ov3gcqj0bORAxekLMrU9OpPqaDCO5bzPcGFVRXUTzYBlpkg=
+X-Received: by 2002:a05:6a00:4f96:b0:71d:e93e:f542 with SMTP id
+ d2e1a72fcca58-71ea31e4e84mr15587655b3a.21.1729498874512; Mon, 21 Oct 2024
+ 01:21:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <m15xppk9qg.fsf@nimmagadda.net>
-In-Reply-To: <m15xppk9qg.fsf@nimmagadda.net>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 21 Oct 2024 11:09:53 +0300
-Message-ID: <CAPMcbCqhezaxcBmaW5JrvSR50iuD5SiLYAx7M5S=esD9mGuegg@mail.gmail.com>
-Subject: Re: [PATCH] qemu-ga: Fix a SIGSEGV on guest-set-time command
-To: Sunil Nimmagadda <sunil@nimmagadda.net>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="0000000000001f1eaf0624f82e0d"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
+ <20240915-queue-v1-6-b49bd49b926d@daynix.com>
+In-Reply-To: <20240915-queue-v1-6-b49bd49b926d@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 21 Oct 2024 16:21:03 +0800
+Message-ID: <CACGkMEvT0ANv1XY24kQW6urJzA87fQ2DqgPHSUi=r8SREpanxA@mail.gmail.com>
+Subject: Re: [PATCH 6/7] virtio-net: Copy received header to buffer
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,263 +100,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001f1eaf0624f82e0d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-
-On Fri, Oct 18, 2024 at 1:14=E2=80=AFPM Sunil Nimmagadda <sunil@nimmagadda.=
-net>
-wrote:
-
-> qemu-ga on a NetBSD -current VM terminates with a SIGSEGV upon receiving
-> 'guest-set-time' command...
+On Sun, Sep 15, 2024 at 9:07=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
 >
-> Core was generated by `qemu-ga'.
-> Program terminated with signal SIGSEGV, Segmentation fault.
-> #0  0x000000000cd37a40 in ga_pipe_read_str (fd=3Dfd@entry=3D0xffffff922a2=
-0,
-> str=3Dstr@entry=3D0xffffff922a18)
->     at ../qga/commands-posix.c:88
-> 88              *str[len] =3D '\0';
-> [Current thread is 1 (process 1112)]
-> (gdb) bt
-> #0  0x000000000cd37a40 in ga_pipe_read_str (fd=3Dfd@entry=3D0xffffff922a2=
-0,
-> str=3Dstr@entry=3D0xffffff922a18)
->     at ../qga/commands-posix.c:88
-> #1  0x000000000cd37b60 in ga_run_command (argv=3Dargv@entry=3D0xffffff922=
-a90,
->     action=3Daction@entry=3D0xcda34b8 "set hardware clock to system time"=
-,
-> errp=3Derrp@entry=3D0xffffff922a70, in_str=3D0x0)
->     at ../qga/commands-posix.c:164
-> #2  0x000000000cd380c4 in qmp_guest_set_time (has_time=3D<optimized out>,
-> time_ns=3D<optimized out>,
->     errp=3Derrp@entry=3D0xffffff922ad0) at ../qga/commands-posix.c:304
-> #3  0x000000000cd253d8 in qmp_marshal_guest_set_time (args=3D<optimized
-> out>, ret=3D<optimized out>, errp=3D0xffffff922b48)
->     at qga/qga-qapi-commands.c:193
-> #4  0x000000000cd4e71c in qmp_dispatch (cmds=3Dcmds@entry=3D0xcdf5b18
-> <ga_commands>, request=3Drequest@entry=3D0xf3c711a4b000,
->     allow_oob=3Dallow_oob@entry=3Dfalse, cur_mon=3Dcur_mon@entry=3D0x0) a=
-t
-> ../qapi/qmp-dispatch.c:220
-> #5  0x000000000cd36524 in process_event (opaque=3D0xf3c711a79000,
-> obj=3D0xf3c711a4b000, err=3D0x0) at ../qga/main.c:677
-> #6  0x000000000cd526f0 in json_message_process_token (lexer=3Dlexer@entry=
-=3D0xf3c711a79018,
-> input=3D0xf3c712072480,
->     type=3Dtype@entry=3DJSON_RCURLY, x=3D28, y=3D1) at
-> ../qobject/json-streamer.c:99
-> #7  0x000000000cd93860 in json_lexer_feed_char (lexer=3Dlexer@entry=3D0xf=
-3c711a79018,
-> ch=3D125 '}', flush=3Dflush@entry=3Dfalse)
->     at ../qobject/json-lexer.c:313
-> #8  0x000000000cd93a00 in json_lexer_feed (lexer=3Dlexer@entry=3D0xf3c711=
-a79018,
+> receive_header() used to cast the const qualifier of the pointer to the
+> received packet away to modify the header. Avoid this by copying the
+> received header to buffer.
 >
->     buffer=3Dbuffer@entry=3D0xffffff922d10
-> "{\"execute\":\"guest-set-time\"}\n", size=3D<optimized out>)
->     at ../qobject/json-lexer.c:350
-> #9  0x000000000cd5290c in json_message_parser_feed (parser=3Dparser@entry=
-=3D0xf3c711a79000,
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  hw/net/virtio-net.c | 85 +++++++++++++++++++++++++++++------------------=
+------
+>  1 file changed, 46 insertions(+), 39 deletions(-)
 >
->     buffer=3Dbuffer@entry=3D0xffffff922d10
-> "{\"execute\":\"guest-set-time\"}\n", size=3D<optimized out>)
->     at ../qobject/json-streamer.c:121
-> #10 0x000000000cd361fc in channel_event_cb (condition=3D<optimized out>,
-> data=3D0xf3c711a79000) at ../qga/main.c:703
-> #11 0x000000000cd3710c in ga_channel_client_event (channel=3D<optimized
-> out>, condition=3D<optimized out>, data=3D0xf3c711b2d300)
->     at ../qga/channel-posix.c:94
-> #12 0x0000f3c7120d9bec in g_main_dispatch () from
-> /usr/pkg/lib/libglib-2.0.so.0
-> #13 0x0000f3c7120dd25c in g_main_context_iterate_unlocked.constprop ()
-> from /usr/pkg/lib/libglib-2.0.so.0
-> #14 0x0000f3c7120ddbf0 in g_main_loop_run () from
-> /usr/pkg/lib/libglib-2.0.so.0
-> #15 0x000000000cda00d8 in run_agent_once (s=3D0xf3c711a79000) at
-> ../qga/main.c:1522
-> #16 run_agent (s=3D0xf3c711a79000) at ../qga/main.c:1559
-> #17 main (argc=3D<optimized out>, argv=3D<optimized out>) at ../qga/main.=
-c:1671
-> (gdb)
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 3fc1d10cb9e0..ca4e22344f78 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1685,41 +1685,44 @@ static void virtio_net_hdr_swap(VirtIODevice *vde=
+v, struct virtio_net_hdr *hdr)
+>   * cache.
+>   */
+>  static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+> -                                        uint8_t *buf, size_t size)
+> +                                        size_t *hdr_len, const uint8_t *=
+buf,
+> +                                        size_t buf_size, size_t *buf_off=
+set)
+>  {
+>      size_t csum_size =3D ETH_HLEN + sizeof(struct ip_header) +
+>                         sizeof(struct udp_header);
 >
-> The commandline options used on the host machine...
-> qemu-system-aarch64 \
->    -machine type=3Dvirt,pflash0=3Drom \
->    -m 8G \
->    -cpu host \
->    -smp 8 \
->    -accel hvf \
->    -device virtio-net-pci,netdev=3Dunet \
->    -device virtio-blk-pci,drive=3Dhd \
->    -drive file=3Dnetbsd.qcow2,if=3Dnone,id=3Dhd \
->    -netdev user,id=3Dunet,hostfwd=3Dtcp::2223-:22 \
->    -object rng-random,filename=3D/dev/urandom,id=3Dviornd0 \
->    -device virtio-rng-pci,rng=3Dviornd0 \
->    -serial mon:stdio \
->    -display none \
->    -blockdev
-> node-name=3Drom,driver=3Dfile,filename=3D/opt/homebrew/Cellar/qemu/9.0.2/=
-share/qemu/edk2-aarch64-code.fd,read-only=3Dtrue
-> \
->    -chardev socket,path=3D/tmp/qga_netbsd.sock,server=3Don,wait=3Doff,id=
-=3Dqga0 \
->    -device virtio-serial \
->    -device virtconsole,chardev=3Dqga0,name=3Dorg.qemu.guest_agent.0
->
-> This patch rectifies the operator precedence while assigning the NUL
-> terminator.
->
-> Signed-off-by: Sunil Nimmagadda <sunil@nimmagadda.net>
->
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index c2bd0b4..bb41fa9 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -85,7 +85,7 @@ static ssize_t ga_pipe_read_str(int fd[2], char **str)
->          *str =3D g_realloc(*str, len + n + 1);
->          memcpy(*str + len, buf, n);
->          len +=3D n;
-> -        *str[len] =3D '\0';
-> +        (*str)[len] =3D '\0';
+> +    buf +=3D *buf_offset;
+> +    buf_size -=3D *buf_offset;
+> +
+>      if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+> -        (size >=3D csum_size && size < 1500) && /* normal sized MTU */
+> +        (buf_size >=3D csum_size && buf_size < 1500) && /* normal sized =
+MTU */
+>          (buf[12] =3D=3D 0x08 && buf[13] =3D=3D 0x00) && /* ethertype =3D=
+=3D IPv4 */
+>          (buf[23] =3D=3D 17) && /* ip.protocol =3D=3D UDP */
+>          (buf[34] =3D=3D 0 && buf[35] =3D=3D 67)) { /* udp.srcport =3D=3D=
+ bootps */
+> -        net_checksum_calculate(buf, size, CSUM_UDP);
+> +        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
+> +        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size, CSU=
+M_UDP);
+>          hdr->flags &=3D ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
+> +        *hdr_len +=3D csum_size;
+> +        *buf_offset +=3D csum_size;
 >      }
->      close(fd[0]);
->      fd[0] =3D -1;
+>  }
 >
+> -static void receive_header(VirtIONet *n, const struct iovec *iov, int io=
+v_cnt,
+> -                           const void *buf, size_t size)
+> +static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
+> +                             const void *buf, size_t buf_size,
+> +                             size_t *buf_offset)
+>  {
+> -    if (n->has_vnet_hdr) {
+> -        /* FIXME this cast is evil */
+> -        void *wbuf =3D (void *)buf;
+> -        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
+> -                                    size - n->host_hdr_len);
+> +    size_t hdr_len =3D n->guest_hdr_len;
 >
+> -        if (n->needs_vnet_hdr_swap) {
+> -            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
+> -        }
+> -        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr)=
+);
+> -    } else {
+> -        struct virtio_net_hdr hdr =3D {
+> -            .flags =3D 0,
+> -            .gso_type =3D VIRTIO_NET_HDR_GSO_NONE
+> -        };
+> -        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
+> +    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
+> +
+> +    *buf_offset =3D n->host_hdr_len;
+> +    work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_offset=
+);
+> +
+> +    if (n->needs_vnet_hdr_swap) {
+> +        virtio_net_hdr_swap(VIRTIO_DEVICE(n), hdr);
+>      }
+> +
+> +    return hdr_len;
+>  }
+>
+>  static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+> @@ -1887,6 +1890,13 @@ static int virtio_net_process_rss(NetClientState *=
+nc, const uint8_t *buf,
+>      return (index =3D=3D new_index) ? -1 : new_index;
+>  }
+>
+> +typedef struct Header {
+> +    struct virtio_net_hdr_v1_hash virtio_net;
+> +    struct eth_header eth;
+> +    struct ip_header ip;
+> +    struct udp_header udp;
+> +} Header;
 
---0000000000001f1eaf0624f82e0d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I don't see too much value in having this structure especially
+considering eth/ip/udp is not even used.
 
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;<br></div><br=
-><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, O=
-ct 18, 2024 at 1:14=E2=80=AFPM Sunil Nimmagadda &lt;<a href=3D"mailto:sunil=
-@nimmagadda.net">sunil@nimmagadda.net</a>&gt; wrote:<br></div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">qemu-ga on a NetBSD -current VM termin=
-ates with a SIGSEGV upon receiving<br>
-&#39;guest-set-time&#39; command...<br>
-<br>
-Core was generated by `qemu-ga&#39;.<br>
-Program terminated with signal SIGSEGV, Segmentation fault.<br>
-#0=C2=A0 0x000000000cd37a40 in ga_pipe_read_str (fd=3Dfd@entry=3D0xffffff92=
-2a20, str=3Dstr@entry=3D0xffffff922a18)<br>
-=C2=A0 =C2=A0 at ../qga/commands-posix.c:88<br>
-88=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *str[len] =3D &#39;\0&#3=
-9;;<br>
-[Current thread is 1 (process 1112)]<br>
-(gdb) bt<br>
-#0=C2=A0 0x000000000cd37a40 in ga_pipe_read_str (fd=3Dfd@entry=3D0xffffff92=
-2a20, str=3Dstr@entry=3D0xffffff922a18)<br>
-=C2=A0 =C2=A0 at ../qga/commands-posix.c:88<br>
-#1=C2=A0 0x000000000cd37b60 in ga_run_command (argv=3Dargv@entry=3D0xffffff=
-922a90, <br>
-=C2=A0 =C2=A0 action=3Daction@entry=3D0xcda34b8 &quot;set hardware clock to=
- system time&quot;, errp=3Derrp@entry=3D0xffffff922a70, in_str=3D0x0)<br>
-=C2=A0 =C2=A0 at ../qga/commands-posix.c:164<br>
-#2=C2=A0 0x000000000cd380c4 in qmp_guest_set_time (has_time=3D&lt;optimized=
- out&gt;, time_ns=3D&lt;optimized out&gt;, <br>
-=C2=A0 =C2=A0 errp=3Derrp@entry=3D0xffffff922ad0) at ../qga/commands-posix.=
-c:304<br>
-#3=C2=A0 0x000000000cd253d8 in qmp_marshal_guest_set_time (args=3D&lt;optim=
-ized out&gt;, ret=3D&lt;optimized out&gt;, errp=3D0xffffff922b48)<br>
-=C2=A0 =C2=A0 at qga/qga-qapi-commands.c:193<br>
-#4=C2=A0 0x000000000cd4e71c in qmp_dispatch (cmds=3Dcmds@entry=3D0xcdf5b18 =
-&lt;ga_commands&gt;, request=3Drequest@entry=3D0xf3c711a4b000, <br>
-=C2=A0 =C2=A0 allow_oob=3Dallow_oob@entry=3Dfalse, cur_mon=3Dcur_mon@entry=
-=3D0x0) at ../qapi/qmp-dispatch.c:220<br>
-#5=C2=A0 0x000000000cd36524 in process_event (opaque=3D0xf3c711a79000, obj=
-=3D0xf3c711a4b000, err=3D0x0) at ../qga/main.c:677<br>
-#6=C2=A0 0x000000000cd526f0 in json_message_process_token (lexer=3Dlexer@en=
-try=3D0xf3c711a79018, input=3D0xf3c712072480, <br>
-=C2=A0 =C2=A0 type=3Dtype@entry=3DJSON_RCURLY, x=3D28, y=3D1) at ../qobject=
-/json-streamer.c:99<br>
-#7=C2=A0 0x000000000cd93860 in json_lexer_feed_char (lexer=3Dlexer@entry=3D=
-0xf3c711a79018, ch=3D125 &#39;}&#39;, flush=3Dflush@entry=3Dfalse)<br>
-=C2=A0 =C2=A0 at ../qobject/json-lexer.c:313<br>
-#8=C2=A0 0x000000000cd93a00 in json_lexer_feed (lexer=3Dlexer@entry=3D0xf3c=
-711a79018, <br>
-=C2=A0 =C2=A0 buffer=3Dbuffer@entry=3D0xffffff922d10 &quot;{\&quot;execute\=
-&quot;:\&quot;guest-set-time\&quot;}\n&quot;, size=3D&lt;optimized out&gt;)=
-<br>
-=C2=A0 =C2=A0 at ../qobject/json-lexer.c:350<br>
-#9=C2=A0 0x000000000cd5290c in json_message_parser_feed (parser=3Dparser@en=
-try=3D0xf3c711a79000, <br>
-=C2=A0 =C2=A0 buffer=3Dbuffer@entry=3D0xffffff922d10 &quot;{\&quot;execute\=
-&quot;:\&quot;guest-set-time\&quot;}\n&quot;, size=3D&lt;optimized out&gt;)=
-<br>
-=C2=A0 =C2=A0 at ../qobject/json-streamer.c:121<br>
-#10 0x000000000cd361fc in channel_event_cb (condition=3D&lt;optimized out&g=
-t;, data=3D0xf3c711a79000) at ../qga/main.c:703<br>
-#11 0x000000000cd3710c in ga_channel_client_event (channel=3D&lt;optimized =
-out&gt;, condition=3D&lt;optimized out&gt;, data=3D0xf3c711b2d300)<br>
-=C2=A0 =C2=A0 at ../qga/channel-posix.c:94<br>
-#12 0x0000f3c7120d9bec in g_main_dispatch () from /usr/pkg/lib/libglib-2.0.=
-so.0<br>
-#13 0x0000f3c7120dd25c in g_main_context_iterate_unlocked.constprop () from=
- /usr/pkg/lib/libglib-2.0.so.0<br>
-#14 0x0000f3c7120ddbf0 in g_main_loop_run () from /usr/pkg/lib/libglib-2.0.=
-so.0<br>
-#15 0x000000000cda00d8 in run_agent_once (s=3D0xf3c711a79000) at ../qga/mai=
-n.c:1522<br>
-#16 run_agent (s=3D0xf3c711a79000) at ../qga/main.c:1559<br>
-#17 main (argc=3D&lt;optimized out&gt;, argv=3D&lt;optimized out&gt;) at ..=
-/qga/main.c:1671<br>
-(gdb) <br>
-<br>
-The commandline options used on the host machine...<br>
-qemu-system-aarch64 \<br>
-=C2=A0 =C2=A0-machine type=3Dvirt,pflash0=3Drom \<br>
-=C2=A0 =C2=A0-m 8G \<br>
-=C2=A0 =C2=A0-cpu host \<br>
-=C2=A0 =C2=A0-smp 8 \<br>
-=C2=A0 =C2=A0-accel hvf \<br>
-=C2=A0 =C2=A0-device virtio-net-pci,netdev=3Dunet \<br>
-=C2=A0 =C2=A0-device virtio-blk-pci,drive=3Dhd \<br>
-=C2=A0 =C2=A0-drive file=3Dnetbsd.qcow2,if=3Dnone,id=3Dhd \<br>
-=C2=A0 =C2=A0-netdev user,id=3Dunet,hostfwd=3Dtcp::2223-:22 \<br>
-=C2=A0 =C2=A0-object rng-random,filename=3D/dev/urandom,id=3Dviornd0 \<br>
-=C2=A0 =C2=A0-device virtio-rng-pci,rng=3Dviornd0 \<br>
-=C2=A0 =C2=A0-serial mon:stdio \<br>
-=C2=A0 =C2=A0-display none \<br>
-=C2=A0 =C2=A0-blockdev node-name=3Drom,driver=3Dfile,filename=3D/opt/homebr=
-ew/Cellar/qemu/9.0.2/share/qemu/edk2-aarch64-code.fd,read-only=3Dtrue \<br>
-=C2=A0 =C2=A0-chardev socket,path=3D/tmp/qga_netbsd.sock,server=3Don,wait=
-=3Doff,id=3Dqga0 \<br>
-=C2=A0 =C2=A0-device virtio-serial \<br>
-=C2=A0 =C2=A0-device virtconsole,chardev=3Dqga0,name=3Dorg.qemu.guest_agent=
-.0<br>
-<br>
-This patch rectifies the operator precedence while assigning the NUL<br>
-terminator.<br>
-<br>
-Signed-off-by: Sunil Nimmagadda &lt;<a href=3D"mailto:sunil@nimmagadda.net"=
- target=3D"_blank">sunil@nimmagadda.net</a>&gt;<br>
-<br>
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-index c2bd0b4..bb41fa9 100644<br>
---- a/qga/commands-posix.c<br>
-+++ b/qga/commands-posix.c<br>
-@@ -85,7 +85,7 @@ static ssize_t ga_pipe_read_str(int fd[2], char **str)<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*str =3D g_realloc(*str, len + n + 1);<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy(*str + len, buf, n);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0len +=3D n;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 *str[len] =3D &#39;\0&#39;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 (*str)[len] =3D &#39;\0&#39;;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0close(fd[0]);<br>
-=C2=A0 =C2=A0 =C2=A0fd[0] =3D -1;<br>
-<br>
-</blockquote></div>
+Any reason we can simply use an array as a buffer in virtio_net_receive_rcu=
+()?
 
---0000000000001f1eaf0624f82e0d--
+Thanks
 
 
