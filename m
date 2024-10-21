@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA029D0E6C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66874D0E6C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 17:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2w6d-00065P-Ur; Mon, 21 Oct 2024 13:22:11 -0400
+	id 1t2w9J-0007OG-GF; Mon, 21 Oct 2024 13:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2w6c-00064c-KP
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:22:10 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2w9E-0007Ns-3M
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:24:53 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t2w6a-0003E1-PL
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:22:10 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-7ea7ad1e01fso3166045a12.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:22:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t2w9C-0003NR-O2
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 13:24:51 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-20bb39d97d1so43788335ad.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 10:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729531327; x=1730136127; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1729531489; x=1730136289; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5OW56k7KvY/23/GJp3eCSB5coR+Ix4KDvh+wl5fZXnQ=;
- b=gRHfNowDiAfeI6+U/aYdQzzaw2TweOQ0HE6RYlGZXREmpO98Fu2G6nYZ5NqEB6xfz0
- nl65kjYgN07EJzHYkxz9oasVZaW/d1lD+tHxM6GomY1AvV7YjaUa/kGv1klcfi9vr3gY
- 1OWQuHbgsNOiKFj3DPKyrVS0kD7Mvg7VCx38yl3sSgQz+48CEMPREQa5ypn3GUXR3RYJ
- 3zPW5QKBwhO+EPedO3BTouytxbvDxQHN5nGx6HAlMkVVBs1Tdo0Sgir0tM6KIPdNeS3u
- AtBslvww84QhqmRYDlRjbtIYLtppAQsLl/GmflRWfedli1XK0rm05s3Y+CFSdYf3Flxl
- 5HSA==
+ bh=t7Icxzzv87BzYtTsRoj8tqe9WQ7Sq7Ylu5Sa2wNsa7o=;
+ b=NexGQ+e6eykkXkmN4nq7MVN3tjcnHKc/S+kZ5KGEpNk/S4yDSmsKkLDh+spDb39fik
+ nUHJ1fIPodyJRfpdeLem79vZTVWW/1c7dw2/Ja6IC0FNTWo8CV+DS0sl1f5UoRZeaSQZ
+ HHuk7OLv0e+TncBuGTI/nKebq2VMo2CyZWhc2qM34s4VLnJu7XMtlv9FHaedzci7q0cg
+ n5D+7AiulCpcMZCcsdeZIj3PQN5s28+6Wi5fJaMTqR99PFql0QFFb65ONqj9b7yemerY
+ ZeWLWuEyvHmxTjkQr71/GlHEgYxSOSO3CfxAhEuYEhH04Mtn6DPwuZWLJDZ8kIO8XBqw
+ faZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729531327; x=1730136127;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729531489; x=1730136289;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5OW56k7KvY/23/GJp3eCSB5coR+Ix4KDvh+wl5fZXnQ=;
- b=lMdRRZz166NE8XnL0b8ArQJHrgfDsfzIbYhGzSnBX2uBgR7vRzJcjDSQ+JZeGnImv8
- VCv2+tAsOOPUfcSXGNHzeGFhIAHOPXOimm2NhBMzYOelmqa8JwQzx86YcoKFOufnCwzx
- TrozL0KUNFlQ+iFtK+QmxXf7M6AahmqgbmDf1tLn2qVkT4w5oge5Im7Zjp6QrE92HYhx
- NFFheN3suQRToOaTQqt5agAqZLX0rnO4t2IbSEKSju4ZK6VzxrxPBy4ugrDGptbwEaBf
- jBH4oxIZPKDMdtenKqLmg1dghyZV8F/kpy1j+LmVZuaqDiL9x+Wyf/DQ3/t/fgdD91Yx
- ag7A==
+ bh=t7Icxzzv87BzYtTsRoj8tqe9WQ7Sq7Ylu5Sa2wNsa7o=;
+ b=k2XQ6XOMcpivKL0PuAcEZIDKUPbHLanJeWxZi4gYKCg+HFT9Cam4ZmAaG94ptDpy5+
+ 59gYzTyx6NG3JpS7DxFj4OTHdYniupGYLQ0feB9p7isEiFBzJkaVxlFsGptQDA600rhF
+ 1TUPeZdk1F3UFqLMB+K8kvqwRsTNbMZ1Ld7btppXUjmGA67urDkX83bmW77k80DRKxh5
+ ApcDcT7D+de8Z85CmuO5iKW4q/YgNz01Q5d/r3ADMyiDsB1TB3qfX0pqREJYI2Scjt1B
+ yqIlcJY7ZHaQ5PMI+FdEKVB9NlIegvdlPeaVv6o0Pw6bo7PD23jNiOWz3d1if9cVo/Fj
+ uGQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUinDGIBCfjoKxjOExybyhtoq6IBEvsqavFDj1eJo463yFXpr60L6bDO4od41bDJdRh6dYdC1wvtl0T@nongnu.org
-X-Gm-Message-State: AOJu0YxXAz9k52zmb9gaWvWcCToeiobqn0g9HCqIuZyYyQfskFvVW3Jl
- soJUBeX3XgW01f08aEGa+nY6VA87oqWVMNm/T9wZ5KOmeE8Sig+LqcoZpFUY4gA=
-X-Google-Smtp-Source: AGHT+IEMRhrh+pjY96rFHN0sjBXmqmK2rUQtJo1tx3NiX++/H9ga/81BlRofTky1YrNpBI/SFX3M7w==
-X-Received: by 2002:a05:6a21:998d:b0:1d4:e40b:3de6 with SMTP id
- adf61e73a8af0-1d96c437553mr482676637.16.1729531325973; 
- Mon, 21 Oct 2024 10:22:05 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabddfd1sm3341461a12.84.2024.10.21.10.22.05
+ AJvYcCWIDpkNBDi/31OmG2Pas+AnqXg5Wb7aDxN9wYg8YT+tYVVRTuRUpmuhXQsJiaLx3enKLFdOkXMGyKzy@nongnu.org
+X-Gm-Message-State: AOJu0YykCwQGA0QVPqc5l35W2mmn/QDnFpJsz0Cfdrpi1oxI5wGkOw3o
+ 0w1Shd9XkcR8+f5X6DoVFBjw3Qj4ckcJAy1UNXXW4euo2961CQ/CQ7pRSe/4YIo=
+X-Google-Smtp-Source: AGHT+IH/AW4gDEoKfqFoPLCynYf+JMwGgFcBr8Pd50reEWg00AT5Md+8jKxeC6jWxo+IscDTq8BO8A==
+X-Received: by 2002:a17:902:e741:b0:20c:d578:d712 with SMTP id
+ d9443c01a7336-20e94b5fa6amr7881765ad.59.1729531488960; 
+ Mon, 21 Oct 2024 10:24:48 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7eee7116sm28772295ad.36.2024.10.21.10.24.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 10:22:05 -0700 (PDT)
-Message-ID: <1d24b1bd-0272-49d0-a9eb-9179462f22c1@linaro.org>
-Date: Mon, 21 Oct 2024 10:22:04 -0700
+ Mon, 21 Oct 2024 10:24:48 -0700 (PDT)
+Message-ID: <6ee8e20f-a48a-4f4e-a3ea-29bf29a9d630@linaro.org>
+Date: Mon, 21 Oct 2024 10:24:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: Remove unused CPUMIPSState::current_fpu field
-Content-Language: en-US
+Subject: Re: [PATCH] target/mips: Introduce ase_3d_available() helper
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Aleksandar Rikalo
- <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20241021151253.36443-1-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241021151253.36443-1-philmd@linaro.org>
+Cc: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20241021145832.34920-1-philmd@linaro.org>
+ <7eb739af-c39e-4d5d-a439-99abceca7f00@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <7eb739af-c39e-4d5d-a439-99abceca7f00@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +101,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMjEvMjQgMDg6MTIsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBU
-aGUgJ2N1cnJlbnRfZnB1JyBmaWVsZCBpcyB1bnVzZWQgc2luY2UgY29tbWl0IGYwMWJlMTU0
-NTg5DQo+ICgiTW92ZSB0aGUgYWN0aXZlIEZQVSByZWdpc3RlcnMgaW50byBlbnYgYWdhaW4s
-IGFuZCB1c2UgbW9yZQ0KPiBUQ0cgcmVnaXN0ZXJzIHRvIGFjY2VzcyB0aGVtIikuDQo+IA0K
-PiBTaWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFy
-by5vcmc+DQo+IC0tLQ0KPiAgIHRhcmdldC9taXBzL2NwdS5oICAgICAgICAgICAgfCAxIC0N
-Cj4gICB0YXJnZXQvbWlwcy9zeXNlbXUvbWFjaGluZS5jIHwgMiArLQ0KPiAgIDIgZmlsZXMg
-Y2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0t
-Z2l0IGEvdGFyZ2V0L21pcHMvY3B1LmggYi90YXJnZXQvbWlwcy9jcHUuaA0KPiBpbmRleCA2
-YTRjNGVhNjgzYS4uM2MyMzVmMzlmZmMgMTAwNjQ0DQo+IC0tLSBhL3RhcmdldC9taXBzL2Nw
-dS5oDQo+ICsrKyBiL3RhcmdldC9taXBzL2NwdS5oDQo+IEBAIC01MzAsNyArNTMwLDYgQEAg
-dHlwZWRlZiBzdHJ1Y3QgQ1BVQXJjaFN0YXRlIHsNCj4gICAgICAgQ1BVTUlQU0ZQVUNvbnRl
-eHQgYWN0aXZlX2ZwdTsNCj4gICANCj4gICAgICAgdWludDMyX3QgY3VycmVudF90YzsNCj4g
-LSAgICB1aW50MzJfdCBjdXJyZW50X2ZwdTsNCj4gICANCj4gICAgICAgdWludDMyX3QgU0VH
-QklUUzsNCj4gICAgICAgdWludDMyX3QgUEFCSVRTOw0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0
-L21pcHMvc3lzZW11L21hY2hpbmUuYyBiL3RhcmdldC9taXBzL3N5c2VtdS9tYWNoaW5lLmMN
-Cj4gaW5kZXggOTFjZDlmMTkwMDIuLjhhZjExZmQ4OTZiIDEwMDY0NA0KPiAtLS0gYS90YXJn
-ZXQvbWlwcy9zeXNlbXUvbWFjaGluZS5jDQo+ICsrKyBiL3RhcmdldC9taXBzL3N5c2VtdS9t
-YWNoaW5lLmMNCj4gQEAgLTI0Miw3ICsyNDIsNyBAQCBjb25zdCBWTVN0YXRlRGVzY3JpcHRp
-b24gdm1zdGF0ZV9taXBzX2NwdSA9IHsNCj4gICANCj4gICAgICAgICAgIC8qIENQVSBtZXRh
-c3RhdGUgKi8NCj4gICAgICAgICAgIFZNU1RBVEVfVUlOVDMyKGVudi5jdXJyZW50X3RjLCBN
-SVBTQ1BVKSwNCj4gLSAgICAgICAgVk1TVEFURV9VSU5UMzIoZW52LmN1cnJlbnRfZnB1LCBN
-SVBTQ1BVKSwNCj4gKyAgICAgICAgVk1TVEFURV9VTlVTRUQoc2l6ZW9mKHVpbnQzMl90KSks
-IC8qIHdhcyBjdXJyZW50X2ZwdSAqLw0KPiAgICAgICAgICAgVk1TVEFURV9JTlQzMihlbnYu
-ZXJyb3JfY29kZSwgTUlQU0NQVSksDQo+ICAgICAgICAgICBWTVNUQVRFX1VJTlRUTChlbnYu
-YnRhcmdldCwgTUlQU0NQVSksDQo+ICAgICAgICAgICBWTVNUQVRFX1VJTlRUTChlbnYuYmNv
-bmQsIE1JUFNDUFUpLA0KDQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJp
-Y2suYm91dmllckBsaW5hcm8ub3JnPg0K
+On 10/21/24 08:02, Philippe Mathieu-Daudé wrote:
+> On 21/10/24 11:58, Philippe Mathieu-Daudé wrote:
+>> Determine if the MIPS-3D ASE is implemented by checking
+>> the state of the 3D bit in the FIR CP1 control register.
+>> Remove the then unused ASE_MIPS3D definition.
+> 
+> I forgot to mention:
+> 
+>   "Note, this allows using MIPS-3D on the 20Kc model."
+
+Did you mean mips64dspr2?
+The 20Kc model has ASE_MIPS3D.
+
+If so,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
