@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A06D15DB8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D3FCD15DB8
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 16:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2vN2-0004s2-Kb; Mon, 21 Oct 2024 12:35:04 -0400
+	id 1t2vNl-0005oq-Gz; Mon, 21 Oct 2024 12:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2vMz-0004l2-09
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:35:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1t2vNk-0005oX-3x
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:35:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2vMx-00060J-5f
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:35:00 -0400
+ id 1t2vNi-0006Gb-9S
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 12:35:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729528495;
+ s=mimecast20190719; t=1729528545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=gVqNwogg5tFSmWizsqaCav54ufpUC+gxAG29oNKGkjU=;
- b=dAaMViJW2QUSOo8gbfpVLhtRrlN6+KaFxbxN+YQUSh/8QFe/74u1WPo/mOO16p2lWc02SB
- nFp0le1JsSgNpJAefzHQh+vI+rz4y42B8iuAJJ+w3/ZlhM97RwKqeZAT7Pru9U7Vz3PYLB
- zXsOAN/bx38klO7YZ1Sn/svdunAbLUo=
+ bh=Kbdc3VAT1D+/OEu8Uip5bPDqhFZpDVahPI/CobBCyqc=;
+ b=iQaBzae3RKaqe04BE0TO+Dz9msdqVn5bGXHyFVG8XahJoOX7xtfnuSLBONm/7rtHPwynQO
+ 0azl7IOkZHyzCGA+Mx4HRMf/pRUoGAHp19I4oohOkfP2rLxj+W+x2qVRVQOKA0444h4c6d
+ RRa0/MlRwB6KZP2FRNPWWd6V18P9yss=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-bk9mH3QGNOSNsUoP0fDHoA-1; Mon, 21 Oct 2024 12:34:53 -0400
-X-MC-Unique: bk9mH3QGNOSNsUoP0fDHoA-1
+ us-mta-294--BLqOEvBNVCaecBsZhQm1w-1; Mon, 21 Oct 2024 12:35:44 -0400
+X-MC-Unique: -BLqOEvBNVCaecBsZhQm1w-1
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37d67f4bf98so2778096f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:34:53 -0700 (PDT)
+ ffacd0b85a97d-37d537292d7so3311673f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 09:35:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729528492; x=1730133292;
+ d=1e100.net; s=20230601; t=1729528542; x=1730133342;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gVqNwogg5tFSmWizsqaCav54ufpUC+gxAG29oNKGkjU=;
- b=s1U+jYMIvqRCmYUHPKfKd6oHJ2k9Gv/eXvEfxdwG8NsPBs4Ofv+6c3Q7xBgI/SaIx/
- z2oIvQzIgWwaTGoNYJgzPppeFiWagLGB8E4PYVgQ0OgqNdhysmNV14Hrw9IIKTsmr6UG
- 7kEcp40ezyyN+GOj09uZHEJQ9FsG6LlK3EwdzT1IEIUjGsgBKVy9r7smKP4Xs1Bo9NFB
- 6TvimDY+qW4zBt7h5An6IFHUwRQIoF1bu6qa911p7OyaDSO8NlzjYISpKZrxGaERuZAf
- MXM+DcvlmUT2oh3VgInEaUo1A5TpTPEeTsg747az/7WS56zOCgCL9tpfH8NhN9o9w0ee
- L6sQ==
-X-Gm-Message-State: AOJu0YzMaxH9flsbf2XED1rQuAYeRVUfcdfUtjd0BmYm0Ptj2ivYvLVW
- RvmMJuD7Ti+FBOHMPUFKZGJHbRAuok3PGps59izQK5/YxHYanIze2+aL8f0jAQho8csmCT17M2/
- HKAoNqh2E4SYbBYdN2MQPsi1pa/O0gam1ePaBE8Oyjl9tsjgyaEBjl7QJ4B2Mqis7B9i6JIIVA3
- /QnS2LCXG6alRy2/kaOO/g4hgMw6kuqmOPES+os+8=
-X-Received: by 2002:a5d:6d0d:0:b0:37d:4f1b:35b with SMTP id
- ffacd0b85a97d-37eab71038amr8808634f8f.34.1729528491975; 
- Mon, 21 Oct 2024 09:34:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFatUODK92GjcT/vwgjweK+cDMrcIgpDb/vnqqHAAy4SXz+2NCraqvTmugDJrTYY73dhX3/g==
-X-Received: by 2002:a5d:6d0d:0:b0:37d:4f1b:35b with SMTP id
- ffacd0b85a97d-37eab71038amr8808619f8f.34.1729528491576; 
- Mon, 21 Oct 2024 09:34:51 -0700 (PDT)
+ bh=Kbdc3VAT1D+/OEu8Uip5bPDqhFZpDVahPI/CobBCyqc=;
+ b=H8a+Wmiou1VrnxdPedEUdiu4zB7Z4yKRWRwQbEXogYKNiRcjFZqQvqIHhkIfJIR9Vd
+ PFIM0JTW1VFhiqamB5K/NU0AWcinzRQVX20l8hTL4MEcQcVQOqEYnxgI65O4vQvXhWZ1
+ 4EC6dGVKzeLMiM+9RokKbCLXy3IorrI6NoLpxgWEfLuB/n0buNS+dHopVKHDoFNIHlSt
+ M2HPbi2BPSHsSXF51tfB4T8Ur/yebnxHsrDA/Breb6yZoQ5+/lHZjmrGviLQj33WzqUH
+ f0YKUdfSE1tS1/MjuZdiZ9K7s4p4IJi+OfI+URFiLUJTUcOfyH23rnkUxGtV1N+slB9z
+ oVDw==
+X-Gm-Message-State: AOJu0YxVPRGlFTln2c55HfCfpv9Tshc/XE4vankqLd6Pv9nwdeNEf27D
+ glKLUtot2eBLj9eZKcXC7NbUEl4nA0yIFZ9BLVKKE+kF9z0U2Xx1olHYcbHU7s7yI3y80Z88hXu
+ QNEPtRlzhM5EImwZKIVnQKjvg14iENQlIMjSbWeC0dthRVathbSCJo/s0FlWBo+Gqhs5irh3K19
+ YO50X5Nwg/Qv6Vy8C7ofzcuKCEswoGzACn1/1BpZE=
+X-Received: by 2002:a5d:4f84:0:b0:37d:46fa:d1d7 with SMTP id
+ ffacd0b85a97d-37eb486acc3mr10531836f8f.57.1729528542115; 
+ Mon, 21 Oct 2024 09:35:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMp2v75OSX3cbl+BBrzQbMrpDmuXcwAQ6CkhDnLZGOzT8WfogPkPT+nWo8JjXqBlMayIJ2BQ==
+X-Received: by 2002:a5d:4f84:0:b0:37d:46fa:d1d7 with SMTP id
+ ffacd0b85a97d-37eb486acc3mr10531808f8f.57.1729528541637; 
+ Mon, 21 Oct 2024 09:35:41 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0b944fbsm4741732f8f.72.2024.10.21.09.34.50
+ ffacd0b85a97d-37ee0b9bcc8sm4680282f8f.107.2024.10.21.09.35.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 09:34:51 -0700 (PDT)
+ Mon, 21 Oct 2024 09:35:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] stubs: avoid duplicate symbols in libqemuutil.a
-Date: Mon, 21 Oct 2024 18:34:49 +0200
-Message-ID: <20241021163449.136804-1-pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: [PATCH v2 00/13] rust: miscellaneous cleanups + QOM integration tests
+Date: Mon, 21 Oct 2024 18:35:25 +0200
+Message-ID: <20241021163538.136941-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,41 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qapi_event_send_device_deleted is always included (together with the
-rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
-are being built, and in that case the stub causes a duplicate symbol
-to appear in libqemuutil.a.
+This series integrates some of the observations from the MSRV patches at
+https://lore.kernel.org/qemu-devel/20241015131735.518771-1-pbonzini@redhat.com/.
 
-Add the symbol only if events are not being requested.
+The main changes here are two: first, build an integration test that
+actually tries to create a QOM object that is defined by Rust code;
+second, make the properties array immutable so that declare_properties!
+is enforced to use only const-friendly constructs.  These are patches
+6-11; the others consist of small cleanups.
 
-Supersedes: <20241018143334.949045-1-pbonzini@redhat.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-        v1 fails to build with --disable-system --disable-tools, which I
-        have now noticed in CI.
+Hidden in here is actually a C patch (#10) which makes the
+bindgen-generated prototypes use "*const" instead of "*mut".
 
- stubs/meson.build | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Tested with Rust nightly and (together with more patches from the
+RFC), with Rust 1.63.0.
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 772a3e817df..e91614a874d 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -55,7 +55,12 @@ endif
- if have_user
-   # Symbols that are used by hw/core.
-   stub_ss.add(files('cpu-synchronize-state.c'))
--  stub_ss.add(files('qdev.c'))
-+
-+  # Stubs for QAPI events.  Those can always be included in the build, but
-+  # they are not built at all for --disable-system --disable-tools builds.
-+  if not (have_system or have_tools)
-+    stub_ss.add(files('qdev.c'))
-+  endif
- endif
- 
- if have_system
+Unlike the MSRV patches, this should be ready for inclusion; the
+changes should be mostly uncontroversial.
+
+Paolo
+
+Based-on: <20241021163449.136804-1-pbonzini@redhat.com>
+
+
+v1->v2:
+- add comment justifying -D unsafe_op_in_unsafe_fn
+- use module_init! macro from #[derive(Object)]
+- use test() instead of rust.test() for integration test
+- pass rustfmt and clippy
+
+
+Paolo Bonzini (13):
+  meson: import rust module into a global variable
+  meson: remove repeated search for rust_root_crate.sh
+  meson: pass rustc_args when building all crates
+  rust: do not use --no-size_t-is-usize
+  rust: remove uses of #[no_mangle]
+  rust: modernize link_section usage for ELF platforms
+  rust: build integration test for the qemu_api crate
+  rust: cleanup module_init!, use it from #[derive(Object)]
+  rust: clean up define_property macro
+  qdev: make properties array "const"
+  rust: make properties array immutable
+  rust: provide safe wrapper for MaybeUninit::zeroed()
+  rust: do not use TYPE_CHARDEV unnecessarily
+
+ meson.build                            | 33 +++++++---
+ include/hw/qdev-core.h                 |  4 +-
+ include/hw/qdev-properties.h           |  4 +-
+ hw/core/qdev-properties.c              | 26 ++++----
+ system/qdev-monitor.c                  |  2 +-
+ rust/hw/char/pl011/src/device.rs       |  7 +--
+ rust/hw/char/pl011/src/device_class.rs | 10 ++--
+ rust/hw/char/pl011/src/memory_ops.rs   | 13 ++--
+ rust/qemu-api-macros/meson.build       |  2 +-
+ rust/qemu-api-macros/src/lib.rs        | 30 ++--------
+ rust/qemu-api/meson.build              | 29 +++++++--
+ rust/qemu-api/src/definitions.rs       | 67 ++++++++++-----------
+ rust/qemu-api/src/device_class.rs      | 83 +++++++-------------------
+ rust/qemu-api/src/lib.rs               |  4 +-
+ rust/qemu-api/src/tests.rs             | 49 ---------------
+ rust/qemu-api/src/zeroable.rs          | 23 +++++++
+ rust/qemu-api/tests/tests.rs           | 78 ++++++++++++++++++++++++
+ 17 files changed, 240 insertions(+), 224 deletions(-)
+ delete mode 100644 rust/qemu-api/src/tests.rs
+ create mode 100644 rust/qemu-api/src/zeroable.rs
+ create mode 100644 rust/qemu-api/tests/tests.rs
+
 -- 
 2.46.2
 
