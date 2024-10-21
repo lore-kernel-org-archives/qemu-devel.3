@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4086ED15D82
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 12:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA0CD15D85
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 12:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2rMP-0003fE-2Q; Mon, 21 Oct 2024 08:18:09 -0400
+	id 1t2rMq-0003zv-Pr; Mon, 21 Oct 2024 08:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2rMB-0003eA-6l
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:17:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t2rMn-0003rs-TF
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:18:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t2rM8-0006e4-Vu
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:17:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729513071;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=YN+0MLQSSKM3ahe62QfJMBXYHNPJw7Mpc0BqT0MZ8h7b+2cx69YXO5NN8Avu8fdTuldJkb
- edsUEoykI/uxu7wRLD7yDGQSjSWt/9jvcDi9ZIItj4R1TB3CFwjEiBWy5B8Perief/wZfr
- MHex6jFhWqrpyKygCq5MGqXfOuZ5zwE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-e3cUT83ROyWu7bWWLcOC-Q-1; Mon, 21 Oct 2024 08:17:49 -0400
-X-MC-Unique: e3cUT83ROyWu7bWWLcOC-Q-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4316e350d6aso11342145e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 05:17:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729513068; x=1730117868;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=eo+MscQqfjC3bVkKV8+acjg6MLRasRAh740RN3qNlo9TBxdeZ9XKdKkAl/zlV/qzAh
- STUNcIHCMOUKwAADpyOpvZWfZVmW0GhB//iwHwW2bCudsx0Lj7/xn7A7JTgKNdNXcam+
- 1WC/s8E2/9od7pEyn9gaMGs5pcfV/5kj4N7+dG4yTYQXCNU159O8xvTk3ef5TgvK18K8
- YifkEk/Nu6xE/SQp5zr+7yNs1iO+QI06Bh7QSESCeNg+odmMUd7sphFmIKt7Ev6VAaMa
- 3J7IBk4cY2zH9ea3ssTzR/gsf53L+mgbi5aGlH3dbfU8KT6x+mGzn7T+z+JXYMdvYx7D
- geLg==
-X-Gm-Message-State: AOJu0YxU+BLQxx7cxlcbWt1R58Pw+xzF1Awj1STQ4KxK43FtBqs+RhJ4
- CJrMPTRxNjjJSlZ7xbA1DwwLXJjJTUrCGp0bI3zr9FoLpTcv2HAxjdBSQZCiryvnyOdVV8PEu2a
- 62tEyuX7Ue0fgHBuZ4F/3ngGM9s8d7ElL9HldcNvftACvqtX6fpzp
-X-Received: by 2002:a05:600c:190b:b0:431:57e5:b245 with SMTP id
- 5b1f17b1804b1-4316169a587mr90687645e9.23.1729513068537; 
- Mon, 21 Oct 2024 05:17:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEt8kOAbSECHosQYvlfaW7ajtEl9YFIqo/DsD9T1Fss1ehzf+KwZ6KweDs1AYWN57Rd2+Tx/A==
-X-Received: by 2002:a05:600c:190b:b0:431:57e5:b245 with SMTP id
- 5b1f17b1804b1-4316169a587mr90687405e9.23.1729513068155; 
- Mon, 21 Oct 2024 05:17:48 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f57ff39sm56863695e9.19.2024.10.21.05.17.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 05:17:47 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, pbonzini@redhat.com,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH] configure: Replace literally printed '\n' with newline
-Date: Mon, 21 Oct 2024 14:17:45 +0200
-Message-ID: <20241021121745.74014-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241018120557.43586-1-kwolf@redhat.com>
-References: 
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t2rMl-0006hC-5x
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 08:18:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49L2KHEd032538;
+ Mon, 21 Oct 2024 12:18:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=e7eriyND1HxCjqBeCl89HbuWrzqkBW5NqKQv/rU8o
+ 3w=; b=Yz2JQUEtyVPY/BGv/kvymLqFMvZDZ2zK1pcFq/9sdDhS4aMou7Uu1k2Z0
+ MeUQgUjf4/1hYMWqw+fxnl/mxmC4F4oNTM+tFZpeF7upSO1ugXUtVett2svNOUb7
+ Dzn+07Dz8p+3mZ+0/VihOXxEBdez1IjNfQQb/SPO8WW7ogI1stHbK7KjMnx5pQ4T
+ ewUusRj1/Ov0j1STtGkqwCVF7Fr64FkBXg7xBDQuXkrwcoia0iHuI68lDAXrzUui
+ DNndThoJwsGdNTWoMK1aXY5jWVhYAZx1eSoZaEPe5MzauIyLtD3jBw89jfK/Fxil
+ mO9CVtWgU/w8hb/jLUnW1Ps4L7yMw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5hm94tb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 12:18:26 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49L9PxGw018590;
+ Mon, 21 Oct 2024 12:18:25 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42csaj6111-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Oct 2024 12:18:25 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49LCIOAT36110726
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Oct 2024 12:18:24 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E31BE2004B;
+ Mon, 21 Oct 2024 12:18:23 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8959720040;
+ Mon, 21 Oct 2024 12:18:23 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.27.206])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Oct 2024 12:18:23 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
+Date: Mon, 21 Oct 2024 14:17:51 +0200
+Message-ID: <20241021121820.483535-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: vytSpo_TQFChc5SWGWEO7lvDq6FTkIHi
+X-Proofpoint-GUID: vytSpo_TQFChc5SWGWEO7lvDq6FTkIHi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015
+ phishscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410210087
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,8 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Running qemu-i386 on a system running with SELinux in enforcing mode
+fails with:
 
-Paolo
+    qemu-i386: tests/tcg/i386-linux-user/sigreturn-sigmask: Unable to find a guest_base to satisfy all guest address mapping requirements
+      00000000-ffffffff
+
+The reason is that main() determines mmap_min_addr from
+/proc/sys/vm/mmap_min_addr, but SELinux additionally defines
+CONFIG_LSM_MMAP_MIN_ADDR, which is normally larger: 32K or 64K, but,
+in general, can be anything. There is no portable way to query its
+value: /boot/config, /proc/config and /proc/config.gz are distro- and
+environment-specific.
+
+For maximum compatibility, probing is required. Use pgb_find_fallback()
+for this purpose. The downside of this approach is that mmap_min_addr
+remains incorrect, but there don't seem to be any practical
+consequences from this. If a correct mmap_min_addr will be required in
+the future, probing will need to be moved to linux-user main().
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ linux-user/elfload.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 6cef8db3b53..f6fb937d68a 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2968,6 +2968,10 @@ static void pgb_dynamic(const char *image_name, uintptr_t guest_loaddr,
+ 
+         ret = pgb_find_itree(&ga, root, align, brk);
+         free_self_maps(root);
++
++        if (ret == -1) {
++            ret = pgb_find_fallback(&ga, align, brk);
++        }
+     }
+ 
+     if (ret == -1) {
+-- 
+2.47.0
 
 
