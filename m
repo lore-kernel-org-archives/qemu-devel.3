@@ -4,111 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C98D3E1A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 07:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA0FD0E6C1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 07:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2mmo-0001ZZ-FW; Mon, 21 Oct 2024 03:25:06 -0400
+	id 1t2mx9-0004Rr-Iy; Mon, 21 Oct 2024 03:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2mmb-0001Vs-3B
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 03:24:53 -0400
-Received: from mail-sy4aus01olkn20810.outbound.protection.outlook.com
- ([2a01:111:f403:2819::810]
- helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1t2mx8-0004Rh-DX
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 03:35:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t2mmZ-0005cj-Cu
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 03:24:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lS0O36l6r9/xtlIdWIvlQM+8FHjBfk5qZrq0YUTi4XrC3u2mlKTxO0oXi/5/qAvgzls5S89e9bg2H+dVWjnZpoyBj3WNmn7TrEPjjKbdo0uUY7KgniSFDp1p7a5LxtPoDwxilpkyU32bxudLCjui7+rLMyciRwoXBTQgdlkfCtDMZxA+wR2fdAULweVBiU0sjmsLCQ7A5bfbqIIyukClWRIABM4d67wWfd50z8jN7Qo/NxKG1rn07a2A7DD/tP0IVSnL69ByTIXV4ETAut1sp3u1Yldso42/9GNWD0yipmoNuLz8UrVjIwBNxAtG7lJg7qz9OthMlGQ30c2EwjVaNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bqET1D9zWiqEc1awjViuXWWDe4Pe8UGNrpnCIV+CAb8=;
- b=nMlLiCE6OyX5UwMx43ULGkkYNm6ldJn9UAkrRXfibTuo/YvSvfbOcLuH8PfSL528xyfYMVLETIdV2WxxNm/YmhL8+QrOy4bUB9gmbpAlo4R8lOR6iCiMEa4sylLAdUNC2qZd+RModeWar2bdah4rmV5qL2R5iJ94gwtB1POTIUi41bQlDawKHZXFLw59zM2cFcldhYKmihcHasV2EQISEfI6JprrKHLYB1z6QpzwduPERZyqkQ68llA9ScTmdNNoIsU25VTzxfky2SKGIkwTDrVhJuOID45WmksZzQNV4TcMuZEPQ9k0RglP8WCFVznoiVl4FsM/OGN9wgnn6h9t1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bqET1D9zWiqEc1awjViuXWWDe4Pe8UGNrpnCIV+CAb8=;
- b=Nsqmwbnm/zy/6T+H9L4XHLcoGV7vkqMS5Vh1dLEQkrgQO5GxpE7o65m5QkTs3fwzOAA5HLhM7XqFwnvfPfvaHj66fpcfrmmDg5MWwHW4Tz9nMjpnlouQvO9T+jAwiU7wX2MFI22X96lfat068I5GOY1M14II4OACAYsFaLzg8gI5CX41cKgpRel0FNLBvIePuDeRlZiov4R/VPQqEPGHZRoyY3EANIike1dPUQ5Fey/jkQpyXpibZ0CPc1KItLLQ5bPNxluUi3CrxI5d6X6Lhoa3aVMix/evPjh1amP+OqgA0uPKTlu/8nouP6AuEAv1jAry83/1JZV/r873TRezWQ==
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
- by ME0P300MB1357.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:242::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Mon, 21 Oct
- 2024 07:24:44 +0000
-Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8069.027; Mon, 21 Oct 2024
- 07:24:44 +0000
-References: <SY0P300MB10265E25557DB71EE426525795432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
- <5db62c58-b6e3-4f83-9954-ff2bcb1108bc@redhat.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From: Junjie Mao <junjie.mao@hotmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] rust: introduce alternative implementation of offset_of!
-Date: Mon, 21 Oct 2024 14:46:52 +0800
-In-reply-to: <5db62c58-b6e3-4f83-9954-ff2bcb1108bc@redhat.com>
-Message-ID: <SY0P300MB10261816C21DC5FCC6D39F6295432@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain
-X-ClientProxiedBy: KL1PR0401CA0020.apcprd04.prod.outlook.com
- (2603:1096:820:e::7) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:10:282::22)
-X-Microsoft-Original-Message-ID: <87bjzdude6.fsf@hotmail.com>
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1t2mx6-0006ue-NM
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 03:35:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729496141;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=V0Ra0ntiSI6kkUOr7X6kGFb2b/KJFpRzsaEf4zh0j2E=;
+ b=e9J/sgd68Al18gIcVBLOAJGlU0KC+jEV1OnWT0NcwrKlt0zmwxRX8jbhJd6CNM84eWEyd4
+ uTFYp5PHQ6mX9ZKudPYXAjQaNFQPIscxwfQdg8W9JtCODJL9r1CSjT5WYDzbCF2T9VCt5V
+ zsKMDUzvYuV1Ha3M5Xdl/L9/XhZaIOg=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-321-NHU5D2PcNS-nZJhm9lYsTg-1; Mon, 21 Oct 2024 03:35:40 -0400
+X-MC-Unique: NHU5D2PcNS-nZJhm9lYsTg-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-7d1fe1dd173so3301755a12.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 00:35:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729496139; x=1730100939;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V0Ra0ntiSI6kkUOr7X6kGFb2b/KJFpRzsaEf4zh0j2E=;
+ b=VjmGGI51o/EJkDO6O5IURt5fcj4Hu038Lzq5F1ktzMnG8+d4gikjcBy5xKB+mCgPG0
+ P7bD0ddJLA4aXFY3wZV3a8Dc9E3dWaG9wuGqpIHosem8f8zMqW/mPKd2mhhpFy2wUu+O
+ I2NLutE+ERQZ0JcizINLhjWWzblM3otVfn6hv3RXa7V1bn2+ycsHBCDC+tYpCsldQND5
+ V3v16fN+r+AbwxOKRMVHOZfJToA6Xsie6KiKuYo4nTZadxXc+aDKDZw5s8fmW3nZ2lJC
+ bfX6iQZY4grUHtDIS9TaEaXBBOR++GOAbi7uwER1pTT0YtfUW/f8z4NYg/O9affbTK+J
+ yCRw==
+X-Gm-Message-State: AOJu0Yz1mN5XfKPZNdJWFMgxiIXIuTbXJet0hbF5uwRj5xZuhoLdqV57
+ Zg+rFkJSG7b5t1FxSUl00qTUfhVHFt55hHFcIvoGm4vUP6VtNPWZ6bGeDAQhCkvMYAcCdiPZm4m
+ rjN4HI+fuGui+1GIRKBTRYHqlDn0ZU1HyrIkqvqZKbNTdIpCwvCQbrEiYNoquWo0q6sAomlR+tv
+ rgUoAoxLbImx78kLcf4moTpRTw22o2dCNcdx+LNw==
+X-Received: by 2002:a05:6a21:1707:b0:1d9:29c8:2d32 with SMTP id
+ adf61e73a8af0-1d92c4a5339mr15892468637.5.1729496138999; 
+ Mon, 21 Oct 2024 00:35:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGF+Y6JwQOXEfTvKlk6aPVc84ziSVAMlQNY0jhk5K6XqhHPD55rkYuE/G3UuUvEaul/h5OqbLKuvKyqlOFtAfU=
+X-Received: by 2002:a05:6a21:1707:b0:1d9:29c8:2d32 with SMTP id
+ adf61e73a8af0-1d92c4a5339mr15892456637.5.1729496138667; Mon, 21 Oct 2024
+ 00:35:38 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|ME0P300MB1357:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89a7e6ef-ff87-43ba-1331-08dcf1a16f2d
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|15080799006|461199028|7092599003|5072599009|19110799003|8060799006|1602099012|10035399004|440099028|4302099013|3412199025;
-X-Microsoft-Antispam-Message-Info: UB/rTbbVwLInJpGqJMOnDSwZziNKocA7hDv/YvNThnLaO8Ghf4/9QAuXkZwHuouZQ4icfEmsRrFxrvw0wpYmDzfIcdJU2uHaJpthE+mc/GuW5RTYZ/+3sBc6speVSsdKnO1wfBWaNaZ32OlkzjZF6rIBD2cGvhCGdyvXX678XZnks+0Di/j8rcpotBRwn2nJJKZ8PsbNmpkhrMsngq0ETwG2ig1ufthK0dO1NZUuY9zGIJcHhrzU39sk2ZYoh5j9r91BDvftdF0WtIYMC6VtW5EPxwTcZWkOz5IVrmwF9fNpaAsbMBl2BFhxH8/qsjAh85YdeLgzdPRA25xqVhhGJK5fINUXVzfeijviH0lPpt5N61FNTYUAKi+3Gz/hzCRSvYhvHXl/HlMmz3/pVt+5js2Cmj01IlfDkQ2Z+TumZbNEBwE+A57KRQSAscaoLvlBNEkJSgtufJXR9k920w/733LGhaVUSQ34nY2GtXD0eJy6iCBqYyHrgx5Ogz9gtHtNCfPyGtbjI7zBkVqzDhRnJwJ4byOpFD4EajSeJc0LpI69DoEmvervCRCMBE5WI6eMriFpmDqmBTh9IeGn1pCftU8avFmjC68h+ZzFTYNVvPzSzNHHFM/BjXBTYhB6Vuil9FGfUvQNktJ8h2vBCU+jF0ZMc0FuyBdSOnbF7iuFO/wMAkba7FgLtsMADDrO/IQGvPhXKZ0CewFlyzwB0aO6c8bAuyVG/YuxzmWDuuome61Z3PsUVsnU8Kw3PsyXppMOrTbCsDP0JZYAswiW9C+Fm5unzyV/ZM+tQHKpJSjr2IcUU7OxYJY7yYaPs9q27JW6KRWNzuYfznNxQzsBDBR+KZIyduxKUS6gSizjKaHtvEh+qKVuXslSXjauH+G5VrfTLPwfZRWd5nzK4KwqWgt5MNDCEom05unwAHEGdkwPDPY=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8KHUvDl6D7qIiAXk0Hvv9OpLkVDo1e/g7Jj/l7cLo9eIw114H3oxHvnGOd/4?=
- =?us-ascii?Q?biEKx68JWJyMmZ02QVoxD3TFTh6LmYMQkpTTQ02HLpyks39M9dTd/rOT/vUx?=
- =?us-ascii?Q?kv+EuJVzNA2DQZ420m6gpLXdUNctfk2MPFoF/XFuNS5gtbHxYajBF6pmYMFL?=
- =?us-ascii?Q?o/t8wPWJAyIe09Z2Qf25TNBg6Ok3odCHLVDNIGbIjfm3KK/I8W1HuLah5bLj?=
- =?us-ascii?Q?uSb2j5frl4xr95m0jRasEqF3u01EnC9+6DM0Y7he23d9Apury1UzNfRW8y0l?=
- =?us-ascii?Q?xfi5NERp4bCIBj5bqDr1o6vTY+R5vEL30lF56MrB6fCQKtkBhrf0nGGdP/7b?=
- =?us-ascii?Q?0FnH1sVMAWnS7NxQS0P3UMnyhCzuKc+iAE6K4Qb4c1NKcawlo3sIV+dAXC75?=
- =?us-ascii?Q?/xpOouYyUVt3lj3Lp7PbY/7wKHzDB2Ka4lVPczg19xqavGI1Y1CDO9P8my9L?=
- =?us-ascii?Q?lQQE9+w6cEGtIIYfEDm3LjibOK2rKsl0T1JmpzSU6zB2Jan5jbaN5bKZ7oRz?=
- =?us-ascii?Q?kHxRwecVG2G/UzXTpJXessRD3n4csCoC2kkwEXA9cm6AY0RlHfIXzzn6UsFn?=
- =?us-ascii?Q?Tgrsi/6BS2msvCuOvaHT98hm6xOP0eMhv5NetqXlG0vGWRA34A9jDOeBWLKP?=
- =?us-ascii?Q?U2ZVUnWsi1DSaT3jEv1psGfP8onSp3XgKa/7fjrsFDDLpHwUfioYc2l1bYRN?=
- =?us-ascii?Q?nfEd+Q1D6FhxthgcqrOddduRvLOOOprAZAnl43mHxF5s93MzK/mVO732cKsM?=
- =?us-ascii?Q?M9d5LOVbv9tujej0rN6VEUybrt53w/iIsBAc0RFKCCe7H3hsr1rlCC0bedz4?=
- =?us-ascii?Q?wi735aijq4KlB05YPjWql0UTlKbujpOyQ/XystECdmSKQw4n8bImvas+M0XI?=
- =?us-ascii?Q?wTR09SE8R4sx5JGumei1NbRAL2YddwsInfn/aaMV4tUm1+wtlLOesmKUYi6g?=
- =?us-ascii?Q?8alVN0uHtGuD7GPATMwZe1gzDw0TZraxb8AGeivDeVO8Sdb/PtH90omTxPRL?=
- =?us-ascii?Q?jjESB/Y31wFLMmaHdBrtgLBkf68EAhL5ZF1WIuqbl0Ej2Xg2w0vIomokZ0y1?=
- =?us-ascii?Q?je/EmQKUyRKLx/bsgjOiez7Zt8EutPswxxLX7bL+bQhLPLFj7DlGgZrOBVF5?=
- =?us-ascii?Q?xF4443BPHJ6bDDv+t2m2QIaAvqIh/RSOhuvEO7ttOOgZ034jNKKdSjWjm8Ay?=
- =?us-ascii?Q?hstJV5TFSH4rUTBOy9ZtaVgRrIruD9UGv1/UVgEw7c+wQRO+BbeMsGKrwX8?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89a7e6ef-ff87-43ba-1331-08dcf1a16f2d
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 07:24:43.9519 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB1357
-Received-SPF: pass client-ip=2a01:111:f403:2819::810;
- envelope-from=junjie.mao@hotmail.com;
- helo=AUS01-SY4-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241016090606.2358056-1-aesteve@redhat.com>
+ <vmtm4zz6pkfcxr64wixa2wdjb7ujn2vaiapmziaqciiytcwe5v@7fh6zlfyf67l>
+ <CADSE00+UFCHOLQHndGThOmXt3eXo4RsJZKC+FyXOuaiPwJbBmQ@mail.gmail.com>
+ <cyf4qzsx56lwi6zbwlclzbhgg3xqhi3btrfwinfx7h6gn4equh@3vigo2wevqug>
+In-Reply-To: <cyf4qzsx56lwi6zbwlclzbhgg3xqhi3btrfwinfx7h6gn4equh@3vigo2wevqug>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 21 Oct 2024 09:35:27 +0200
+Message-ID: <CADSE00Li9Zz8qJn=0WggbHVJ2ET0fDeB9TKCFVSFLKB3M8ah+A@mail.gmail.com>
+Subject: Re: [PATCH] vhost-user: fix shared object return values
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, dbassey@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.527,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,79 +101,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> On 10/21/24 07:40, Junjie Mao wrote:
->> offset_of! was stabilized in Rust 1.77.0. Use an alternative implemenation
->> that was found on the Rust forums, and whose author agreed to license as
->> MIT for use in QEMU.
->> The alternative allows only one level of field access, but apart from this
->> can be used just by replacing core::mem::offset_of! with
->> qemu_api::offset_of!.
->> Using offset_of! prior Rust 1.77.0 requires the structure to have the
->> derive(qemu_api_macros::Offsets) attribute.
->> Apply as a replacement of 10/16 of Paolo's RFC series [1].
->> Also remove subprojects/syn-2.0.66 if there is an existing build. An
->> additional
->> feature cfg is added to packagefiles/syn-2-rs/meson.build, which requires meson
->> to re-checkout the subproject.
->> [1]
->> https://lore.kernel.org/qemu-devel/20241015131735.518771-1-pbonzini@redhat.com
->> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
+On Thu, Oct 17, 2024 at 11:38=E2=80=AFAM Stefano Garzarella <sgarzare@redha=
+t.com> wrote:
 >
-> Thanks.  I still prefer to keep the procedural macro code minimal, and have the
-> code generation in a separate macro, but this is a nice start!
+> On Thu, Oct 17, 2024 at 10:27:30AM +0200, Albert Esteve wrote:
+> >Albert Esteve
+> >
+> >Senior Software Engineer
+> >
+> >Red Hat
+> >
+> >aesteve@redhat.com
+> >
+> >
+> >
+> >On Thu, Oct 17, 2024 at 9:38=E2=80=AFAM Stefano Garzarella <sgarzare@red=
+hat.com> wrote:
+> >>
+> >> On Wed, Oct 16, 2024 at 11:06:06AM +0200, Albert Esteve wrote:
+> >> >VHOST_USER_BACKEND_SHARED_OBJECT_ADD and
+> >> >VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE state
+> >> >in the spec that they return 0 for successful
+> >> >operations, non-zero otherwise. However,
+> >> >implementation relies on the return types
+> >> >of the virtio-dmabuf library, with opposite
+> >> >semantics (true if everything is correct,
+> >> >false otherwise). Therefore, current implementaion
+> >>
+> >> s/implementaion/implementation
+> >>
+> >> I hadn't seen it ;-P found with:
+> >> ./scripts/checkpatch.pl --strict --branch master..HEAD --codespell
+> >
+> >Never used the checkpatch script for spelling. Thanks!
+> >
+> >>
+> >> >violates the specification.
+> >> >
+> >> >Revert the logic so that the implementation
+> >> >of the vhost-user handling methods matches
+> >> >the specification.
+> >> >
+> >> >Fixes: 043e127a126bb3ceb5fc753deee27d261fd0c5ce
+> >>
+> >> This is in from 9.0 ...
+> >>
+> >> >Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+> >>
+> >> ... and this from 8.2, so should we consider stable branches?
+> >
+> >You mean in addition to the commits already reflected here?
 >
+> Nope, I just mean if we need to cc qemu-stable@nongnu.org in order to
+> backport this patch on stable branches.
+> See docs/devel/stable-process.rst
 
-I'm not sure if I get your point right.
-
-My understanding is that preferring minimizing proc macros is because
-they generate a big, arbitrary block of code that is hard to read and
-debug directly (which requires cargo expand the whole crate). That is
-thus more error-prone and makes maintenance harder.
-
-As for having "the code generation in a separate macro", are you
-referring to `macro_rules!`?
-
->> +fn is_c_repr(input: &DeriveInput) -> Result<(), proc_macro2::TokenStream> {
->> +    let expected = parse_quote! { #[repr(C)] };
->> +
->> +    for attr in &input.attrs {
->> +        if attr == &expected {
->> +            return Ok(());
->> +        }
->> +    }
->> +
->> +    Err(quote! { "Can only generate offsets for structs with a C representation." })
->> +}
->
-> Probably can use any() here.
->
-
-Sure.
-
->> +/// A derive macro that generate field offsets for using `offset_of!` in
->> +/// versions of Rust prior to 1.77
->> +#[proc_macro_derive(Offsets)]
->> +pub fn derive_offsets(input: TokenStream) -> TokenStream {
->> +    let input = parse_macro_input!(input as DeriveInput);
->> +
->> +    let expanded = match derive_offsets_or_error(input) {
->> +        Ok(ts) => ts,
->> +        Err(msg) => quote! { compile_error!(#msg); },
->
-> It should use quote_spanned! here.
-
-Sure. Will use quote_spanned! here and make reported errors being a
-tuple of error msg and span to use.
+Got it, thanks!
 
 >
-> Paolo
+> >
+> >>
+> >> I think it depends if the backends are checking that return value.
+> >
+> >The return value is optional (requires VHOST_USER_NEED_REPLY),
+> >and I am not aware of any backend using this feature so far,
+> >in general. So iiuc, that'd mean no need to include stable, right?
+>
+> Yep, if no one uses it, we can avoid it for now. On the other hand if
+> the patch is simple, perhaps it might make sense to avoid future issues.
 
---
-Best Regards
-Junjie Mao
+I will wait until tomorrow and post a new version of the patch fixing the t=
+ypo
+and changing the return as suggested by Daniel.
+The patch is simple, so it could make sense to include stable. But in princ=
+iple,
+I understood that I can avoid stable for now. If we decide otherwise and I
+have already sent v2, we can add them a posteriori I guess.
+
+BR,
+Albert.
+
+>
+> Michael WDYT?
+>
+> Thanks
+> Stefano
+>
+> >
+> >Best,
+> >Albert.
+> >
+> >>
+> >> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> >> >---
+> >> > hw/virtio/vhost-user.c | 8 ++++----
+> >> > 1 file changed, 4 insertions(+), 4 deletions(-)
+> >>
+> >> Thanks for the fix!
+> >>
+> >> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> >>
+> >> >
+> >> >diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> >> >index 00561daa06..90917352a4 100644
+> >> >--- a/hw/virtio/vhost-user.c
+> >> >+++ b/hw/virtio/vhost-user.c
+> >> >@@ -1607,7 +1607,7 @@ vhost_user_backend_handle_shared_object_add(str=
+uct vhost_dev *dev,
+> >> >     QemuUUID uuid;
+> >> >
+> >> >     memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> >> >-    return virtio_add_vhost_device(&uuid, dev);
+> >> >+    return !virtio_add_vhost_device(&uuid, dev);
+> >> > }
+> >> >
+> >> > static int
+> >> >@@ -1623,16 +1623,16 @@ vhost_user_backend_handle_shared_object_remov=
+e(struct vhost_dev *dev,
+> >> >         struct vhost_dev *owner =3D virtio_lookup_vhost_device(&uuid=
+);
+> >> >         if (dev !=3D owner) {
+> >> >             /* Not allowed to remove non-owned entries */
+> >> >-            return 0;
+> >> >+            return -EPERM;
+> >> >         }
+> >> >         break;
+> >> >     }
+> >> >     default:
+> >> >         /* Not allowed to remove non-owned entries */
+> >> >-        return 0;
+> >> >+        return -EPERM;
+> >> >     }
+> >> >
+> >> >-    return virtio_remove_resource(&uuid);
+> >> >+    return !virtio_remove_resource(&uuid);
+> >> > }
+> >> >
+> >> > static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *h=
+dr,
+> >> >--
+> >> >2.46.1
+> >> >
+> >>
+> >
+>
+
 
