@@ -4,72 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EB7D15D95
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 13:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582E7D15D93
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 13:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2siv-0007Xv-Pw; Mon, 21 Oct 2024 09:45:29 -0400
+	id 1t2ssb-0001cS-1z; Mon, 21 Oct 2024 09:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1t2sin-0007X0-CE; Mon, 21 Oct 2024 09:45:22 -0400
-Received: from mta-03.yadro.com ([89.207.88.253])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2ssZ-0001ba-5Z
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:55:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1t2sid-0002xp-PS; Mon, 21 Oct 2024 09:45:19 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-03.yadro.com DF35BE001C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1729518301;
- bh=tBX5ec73e5MHzQfX6Yy9HVxhOwBUdy1VGBTCJcOxUA0=;
- h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
- b=VFzq/MHPVTb29jwSQ2maxO5keKrCxEEKi5vDz5H+JEYepSlzqbwRyLN3zsPSKuvqV
- kigvIWsa0g4/xhA5NdV8fuEShyRORJqDfKClVYpKVbJkl5lzxmvZOMKoLTuB14VI5d
- 0FIBdHiT6DWVuolBvrj7uW5rJN0+m6v54YAfowSuoVOoRdeaZg8kNWSrE5pkz5603F
- w7SI2fKxt5uA0od61rNNH7j6Hy1qRqGmGGTQRXUphjx/JGC6/o+INOVylmIfAOlsU8
- IzykKySHG66CzazS8GqF7w2diBR2Lu7jxfNPlgIgFdTq0PuF6dcfCHCLHxyw+e1vns
- 7WQvza1nQ9zLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1729518301;
- bh=tBX5ec73e5MHzQfX6Yy9HVxhOwBUdy1VGBTCJcOxUA0=;
- h=Content-Type:MIME-Version:Subject:From:Date:Message-ID:To:From;
- b=qGTOqDuBzB1i6gP0E1mcsomSv3dJqgzRxWsxtj0Yd2S0eQ1wrQlHfYIavAfQFPzk+
- MutOBx8K1ocb2cj3djqYMten+QiPSVZwpsgDcNXuCBzGPlPP+dY7XF0J7IDt1zs6wB
- D3bnU9lzeZ2q59FNfpOip5OAz5dHuYv24UGhP73/S2EZRRj+12HQwJQcmjy+n2CBkN
- +qtuZv/G5PNrsPH7wmrobiEeRbQOCT1rDWiwb6ek4mGC0pgfDlZiWYlkHN/DZRP47b
- r+SBVMUc8+I1/v2/v5js5O5iOOh6HmJj+gSTUzF9APqTcnFecJUAIQd+T9N9AdOJC6
- NJKdOJ2gvo9sg==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: [PATCH RFC 06/10] target/riscv: Define PMU event related
- structures
-From: Aleksei Filippov <alexei.filippov@syntacore.com>
-In-Reply-To: <CAHBxVyE2C3sRJNbLOwhOZCnXAUTsEdh-mCewVAEJDDAURL10ug@mail.gmail.com>
-Date: Mon, 21 Oct 2024 16:44:39 +0300
-CC: Aleksei Filippov <alexei.filippov@syntacore.com>, Alexei Filippov
- <alexei.filippov@yadro.com>, <qemu-riscv@nongnu.org>,
- <qemu-devel@nongnu.org>, <palmer@dabbelt.com>, <liwei1518@gmail.com>,
- <zhiwei_liu@linux.alibaba.com>, <bin.meng@windriver.com>,
- <dbarboza@ventanamicro.com>, <alistair.francis@wdc.com>
-Content-Transfer-Encoding: quoted-printable
-Message-ID: <3B504AA0-06F9-4316-9B10-ED46B1B271A4@syntacore.com>
-References: <20241009-pmu_event_machine-v1-0-dcbd7a60e3ba@rivosinc.com>
- <20241009-pmu_event_machine-v1-6-dcbd7a60e3ba@rivosinc.com>
- <fd89dafa-279d-436c-9569-f2fdc289bac9@yadro.com>
- <CAHBxVyE2C3sRJNbLOwhOZCnXAUTsEdh-mCewVAEJDDAURL10ug@mail.gmail.com>
-To: Atish Kumar Patra <atishp@rivosinc.com>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.253;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-03.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2ssX-0004OI-2S
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 09:55:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729518923;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=n+Z/+fJqw/R9O11gMBH7oHIZKDIeMIhEs2mZgc+3QvE=;
+ b=SWIhQ8uPkRLZ+9o7owaE6XGpjHYkGMO7FWS63nNS6IZdfjTUJSL09iqLuwW/zJNeja793o
+ lGC8wPn5mScJFr0nioejRmlcxdc9ECey7t5z3b10h1q/a5A07pPzfPJAv6keabXLwoT/Ti
+ w/YMwPM/Pd3GestXpxS3l+0RASj5SEc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-658-nkay4-HmP16NH2OEX4hgaA-1; Mon, 21 Oct 2024 09:55:22 -0400
+X-MC-Unique: nkay4-HmP16NH2OEX4hgaA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d45de8bbfso3178678f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 06:55:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729518921; x=1730123721;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n+Z/+fJqw/R9O11gMBH7oHIZKDIeMIhEs2mZgc+3QvE=;
+ b=VMQsVMYTlmG105Oh0f/7o3ZGUyWaTelBMAZL3s9ykvDBegrSQVo/iLXZPmYJMzKQ0b
+ 8O5Tzy1MWuag33KDRN6W7P9wg8knMoLec5j8Al2YHc3PoGCjYlQMjS1nhJbMBcyBAxGk
+ KP53E9pKNwDEu5JTThMb7gpD2Edjji+N8fsixCkPNTNT8kREmzKxS4BqpILKkRnVFn7k
+ j3EbT0/bkVOoA2MfsRFOByy7tINHvrvIppgBRzbTUpEbZul7rQg7EaJuFjcEky+jQe2X
+ R/lgtmBRYQ9+OjBYEM/ObGKORLKoqZb7XvIWWlPZY79T3cdYByhUjmMl5J2HvmUq6sZO
+ Y63A==
+X-Gm-Message-State: AOJu0YyDc2k/e8UiVp4P6f8nNkeZ625Z5TkhRSCmmHHzvQ35UrJvaXYE
+ EHQjqZPPXqQW6O7ZC3PJTwdkMAMTq64Ghqclb6pMC3PXGdwwsRAO/JoNW0+Wk0ogcXQ76hosIRw
+ zF6VVfou/Ixr3mCUUouB9sx77UNF8m4oW2gHlkEFAQogzafOcXRFUU2n6oyKJ5+A=
+X-Received: by 2002:a5d:4dce:0:b0:37c:d1fb:82f4 with SMTP id
+ ffacd0b85a97d-37eab75583amr9394020f8f.36.1729518921128; 
+ Mon, 21 Oct 2024 06:55:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWfxHt7H5rP3kZ50CLgzMsT45LDEFALpQVY914OMVAN4hXk0elawlJFOyk5XzReGQaerv5lA==
+X-Received: by 2002:a5d:4dce:0:b0:37c:d1fb:82f4 with SMTP id
+ ffacd0b85a97d-37eab75583amr9393996f8f.36.1729518920757; 
+ Mon, 21 Oct 2024 06:55:20 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-50-24.web.vodafone.de. [109.42.50.24])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0b9bb66sm4365364f8f.95.2024.10.21.06.55.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Oct 2024 06:55:20 -0700 (PDT)
+Message-ID: <d5db0cb8-0ec3-4f41-a14c-7d07cbe6f4ec@redhat.com>
+Date: Mon, 21 Oct 2024 15:55:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/21] Test updates (tuxrun tests, new QTest maintainer,
+ ...)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20241021113500.122500-1-thuth@redhat.com>
+ <CAFEAcA9VKkjfYgnv=x5kp+KUZ4rC0y9-KiCWBG+F84MBh7rxPw@mail.gmail.com>
+ <a8bbb335-55f4-4c34-b56f-76482391c80e@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <a8bbb335-55f4-4c34-b56f-76482391c80e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,108 +147,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/10/2024 15.18, Thomas Huth wrote:
+> On 21/10/2024 15.00, Peter Maydell wrote:
+>> On Mon, 21 Oct 2024 at 12:35, Thomas Huth <thuth@redhat.com> wrote:
+>>>
+>>> The following changes since commit f1dd640896ee2b50cb34328f2568aad324702954:
+>>>
+>>>    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into 
+>>> staging (2024-10-18 10:42:56 +0100)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-21
+>>>
+>>> for you to fetch changes up to ee772a332af8f23acf604ad0fb5132f886b0eb16:
+>>>
+>>>    tests/functional: Convert the Avocado sh4 tuxrun test (2024-10-21 
+>>> 13:25:12 +0200)
+>>>
+>>> ----------------------------------------------------------------
+>>> * Convert the Tuxrun Avocado tests to the new functional framework
+>>> * Update the OpenBSD CI image to OpenBSD v7.6
+>>> * Bump timeout of the ide-test
+>>> * New maintainer for the QTests
+>>> * Disable the pci-bridge on s390x by default
+>>>
+>>> ----------------------------------------------------------------
+>>
+>> Couple of failures on the functional-tests:
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/8140716604
+>>
+>> 7/28 qemu:func-thorough+func-aarch64-thorough+thorough /
+>> func-aarch64-aarch64_tuxrun TIMEOUT 120.06s killed by signal 15
+>> SIGTERM
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/8140716520
+>>
+>> 14/17 qemu:func-thorough+func-loongarch64-thorough+thorough /
+>> func-loongarch64-loongarch64_virt TIMEOUT 60.09s killed by signal 15
+>> SIGTERM
+>>
+>> I'm retrying to see if these are intermittent, but they
+>> suggest that we should bump the timeout for these.
+> 
+> Everything was fine with the gitlab shared runners (https://gitlab.com/ 
+> thuth/qemu/-/pipelines/1504882880), but yes, it's likely the private runners 
+> being slow again...
+> 
+> So please don't merge it yet, I'll go through the jobs of the private 
+> runners and update the timeouts of the failed jobs and the ones where it is 
+> getting close to the limit.
 
+Actually, looking at it again, the func-loongarch64-loongarch64_virt test is 
+not a new one, this has been merged quite a while ago already. And in 
+previous runs, it only took 6 - 10 seconds:
 
-> On 11 Oct 2024, at 23:45, Atish Kumar Patra <atishp@rivosinc.com> =
-wrote:
->=20
-> On Thu, Oct 10, 2024 at 5:44=E2=80=AFAM Alexei Filippov
-> <alexei.filippov@yadro.com> wrote:
->>=20
->>=20
->>=20
->> On 10.10.2024 02:09, Atish Patra wrote:
->>> Signed-off-by: Atish Patra <atishp@rivosinc.com>
->>> ---
->>>  target/riscv/cpu.h | 25 +++++++++++++++++++++++++
->>>  1 file changed, 25 insertions(+)
->>>=20
->>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->>> index 2ac391a7cf74..53426710f73e 100644
->>> --- a/target/riscv/cpu.h
->>> +++ b/target/riscv/cpu.h
->>> @@ -189,6 +189,28 @@ typedef struct PMUFixedCtrState {
->>>          uint64_t counter_virt_prev[2];
->>>  } PMUFixedCtrState;
->>>=20
->>> +typedef uint64_t (*PMU_EVENT_CYCLE_FUNC)(RISCVCPU *);
->>> +typedef uint64_t (*PMU_EVENT_INSTRET_FUNC)(RISCVCPU *);
->>> +typedef uint64_t (*PMU_EVENT_TLB_FUNC)(RISCVCPU *, MMUAccessType =
-access_type);
->>> +
->>> +typedef struct PMUEventInfo {
->>> +    /* Event ID (BIT [0:55] valid) */
->>> +    uint64_t event_id;
->>> +    /* Supported hpmcounters for this event */
->>> +    uint32_t counter_mask;
->>> +    /* Bitmask of valid event bits */
->>> +    uint64_t event_mask;
->>> +} PMUEventInfo;
->>> +
->>> +typedef struct PMUEventFunc {
->>> +    /* Get the ID of the event that can monitor cycles */
->>> +    PMU_EVENT_CYCLE_FUNC get_cycle_id;
->>> +    /* Get the ID of the event that can monitor cycles */
->>> +    PMU_EVENT_INSTRET_FUNC get_intstret_id;
->>> +    /* Get the ID of the event that can monitor TLB events*/
->>> +    PMU_EVENT_TLB_FUNC get_tlb_access_id;
->> Ok, this is kinda interesting decision, but it's not scalable. AFAIU
->=20
-> Yes it is not scalable if there is a need to scale as mentioned =
-earlier.
-> Do you have any other events that can be emulated in Qemu ?
->=20
-> Having said that, I am okay with single call back though but not too =
-sure
-> about read/write callback unless there is a use case to support those.
->=20
->> none spec provide us full enum of existing events. So anytime when
->> somebody will try to implement their own pmu events they would have =
-to
->> add additional callbacks, and this structure never will be fulled
->> properly. And then we ended up with structure 1000+ callback with =
-only 5
->> machines wich supports pmu events. I suggest my approach with only
->> read/write callbacks, where machine can decide by itself how to =
-handle
->> any of machine specific events.
->=20
-> Lot of these events are microarchitectural events which can't be
-> supported in Qemu.
-> I don't think it's a good idea at all to add dummy values for all the
-> events defined in a platform
-> which is harder to debug for a user.
+  https://gitlab.com/qemu-project/qemu/-/jobs/8125336852#L810
+  https://gitlab.com/qemu-project/qemu/-/jobs/8111434905#L740
 
-Yes, you're right that the rest of the events are microarchitectural and =
-that they can't be properly simulated in QEMU at the moment, but it =
-seems to me that's not really the point here. The point is how elastic =
-this solution can be - that is, whether to do any events or not and how =
-exactly they should be counted should be decided by the vendor of a =
-particular machine, and not by the simulator in general. Plus, I have a =
-very real use case where it will come in handy - debugging perf. Support =
-the possibility of simulating events on QEMU side will make the life of =
-t perf folks much easier. I do not insist specifically on my =
-implementation of this solution, but I think that the solution with the =
-creation of a callback for each of the events will significantly =
-complicate the porting of the PMU for machine vendors.
->=20
->=20
->>> +} PMUEventFunc;
->>> +
->>>  struct CPUArchState {
->>>      target_ulong gpr[32];
->>>      target_ulong gprh[32]; /* 64 top bits of the 128-bit registers =
-*/
->>> @@ -386,6 +408,9 @@ struct CPUArchState {
->>>      target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
->>>=20
->>>      PMUFixedCtrState pmu_fixed_ctrs[2];
->>> +    PMUEventInfo *pmu_events;
->>> +    PMUEventFunc pmu_efuncs;
->>> +    int num_pmu_events;
->>>=20
->>>      target_ulong sscratch;
->>>      target_ulong mscratch;
+So maybe this was just a temporary blip in the test runners indeed? Could 
+you please try to rerun the jobs to see how long they take then?
 
+  Thanks
+   Thomas
 
 
