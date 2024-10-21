@@ -4,65 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47657D0E6F8
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDD3D0E6F5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Oct 2024 11:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t2qgs-00024a-D7; Mon, 21 Oct 2024 07:35:14 -0400
+	id 1t2qi3-0003Ga-21; Mon, 21 Oct 2024 07:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgq-00024N-RE
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t2qgo-0001UP-7j
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:35:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729510507;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=xtu5AWyMDAVfx5qyqU6z5XB+Wpdg8aUJIo2FrG88Rlc=;
- b=R3keqBFfM9ftdUvR0hxPAFh/PHKG6f2Io7DDae82iFpTFQxqKRsj/ljVZw9LANjbVYGbH1
- MXg/U+10FJR+TBqvhrNafpPAg9ZsUvNr7J6yIAf2e+ciRoS6tEzEia9Tk05K8MY8AQUyVt
- f12ds17zk0y/OxPQx5P4PjM2e1N9/oI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-K6r9MN0iOi6EFav5i6MrXA-1; Mon,
- 21 Oct 2024 07:35:05 -0400
-X-MC-Unique: K6r9MN0iOi6EFav5i6MrXA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74C22195608C; Mon, 21 Oct 2024 11:35:04 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2355C19560AA; Mon, 21 Oct 2024 11:35:02 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/21] Test updates (tuxrun tests, new QTest maintainer, ...)
-Date: Mon, 21 Oct 2024 13:34:37 +0200
-Message-ID: <20241021113500.122500-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2qhu-0003Bn-5p
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:36:18 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t2qhs-0001nQ-CF
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 07:36:17 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9c28c1ecbso5539354a12.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 04:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729510575; x=1730115375; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uxtaWv6u/HvymZS8etCMb6RC5ms11Z/1DsPQMlxfEfs=;
+ b=L5p8XRMAMDKtYSuwCGk0bH/2Rb6RHNiimCMKx5hF3W5G8Iz+0pUSkAmkW1WVv2lDsN
+ gqN7VcdFAxHn5MbRwHF6i0Pr0H0sOuVl9vmV/2iXfK+4z6jR2uvuxETQ9/mLYheUCkEg
+ QEfbERsRUTtfky3djMpNS/D3OzU6CmdQ9b96dsGUIS8E/kwwYX7PO4MfKF4V61Gb5CdA
+ QWcTUXfmsNqw30fIalmMoBPLnuplF5/YdrsTfOsZmyy2cxcey34tDj9oo+tXnpMSq7MZ
+ 2dr/zzcs+12WDa8v94OtosowU0osC5NL/p47Fq67nr8bVppbfEn+XSre16dybKeXrh9p
+ qUNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729510575; x=1730115375;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uxtaWv6u/HvymZS8etCMb6RC5ms11Z/1DsPQMlxfEfs=;
+ b=WG9c71pTepRdKwjJzp9WJNS7EyHGPtPMJqmRHsjdxh7zZnThrOXlUgnpSs/nDALVi7
+ XvEyBpM7PHSC48Cv5kpRHAqoFCxE7mgvLNIVULaf1zwoeUANcsOVR2YN0fP9xqc4PeYW
+ IbF8ay/4YMQ6g1FgwgSgUvtkBHmFT0+C+moPCgSJ61pgy7mXhF2q+VWHu7XjrxxUP1b0
+ Wgky03NBQgDZ68aBcaTpps2Cx69J5gsc/dKvwqtfXKfB962YH5Qny5WLgY1Oq/DW/sGI
+ XmdVmOaDh88DyNa5EDpqz4pEgMEVptAKoaerzV/fRqFACX/OV9rhVBezHvC9FXOJS4ca
+ zfPg==
+X-Gm-Message-State: AOJu0YzVVXfDPdwGtR/9Kz0Fn6gcIKYua6rvOiY3+myoKvhcn7y0cVMv
+ tZ7wN0xzMpXKgZjYrMxUPZoDhrhUjC9GBfeF9DldZQ8jlaPBcupA3okxeYDKz2YbNiAfliZ2pYc
+ /iTwrXQIc4dMWnFnon2fPzLOr4YjaT1guY/xE8w==
+X-Google-Smtp-Source: AGHT+IEMDabWuEvyVInUFcJ93m5cRSBw2o7rz+UzgpFW3spHLGpBj/oBk/xoVFitoNDPU/izbHNL2jcYIE11tP+kOCI=
+X-Received: by 2002:a05:6402:26c1:b0:5c9:8ab0:2975 with SMTP id
+ 4fb4d7f45d1cf-5ca0ac79006mr7035016a12.6.1729510574646; Mon, 21 Oct 2024
+ 04:36:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241018132824.3379780-1-armbru@redhat.com>
+In-Reply-To: <20241018132824.3379780-1-armbru@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 21 Oct 2024 12:36:03 +0100
+Message-ID: <CAFEAcA_FMqYZpPuK7HHX_su_CVb-9=DovB5D0nYdLysYGc7pdg@mail.gmail.com>
+Subject: Re: [PULL 0/9] Error reporting patches for 2024-10-18
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,94 +87,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f1dd640896ee2b50cb34328f2568aad324702954:
+On Fri, 18 Oct 2024 at 14:28, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> The following changes since commit 95a16ee753d6da651fce8df876333bf7fcf134d9:
+>
+>   Merge tag 'pull-loongarch-20241016' of https://gitlab.com/gaosong/qemu into staging (2024-10-17 12:42:23 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://repo.or.cz/qemu/armbru.git tags/pull-error-2024-10-18
+>
+> for you to fetch changes up to 1824e9fc646c68e42e3f823b208382563ce5dc83:
+>
+>   qerror: QERR_PROPERTY_VALUE_OUT_OF_RANGE is no longer used, drop (2024-10-18 15:03:35 +0200)
+>
+> ----------------------------------------------------------------
+> Error reporting patches for 2024-10-18
+>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-10-18 10:42:56 +0100)
 
-are available in the Git repository at:
+Applied, thanks.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-21
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.2
+for any user-visible changes.
 
-for you to fetch changes up to ee772a332af8f23acf604ad0fb5132f886b0eb16:
-
-  tests/functional: Convert the Avocado sh4 tuxrun test (2024-10-21 13:25:12 +0200)
-
-----------------------------------------------------------------
-* Convert the Tuxrun Avocado tests to the new functional framework
-* Update the OpenBSD CI image to OpenBSD v7.6
-* Bump timeout of the ide-test
-* New maintainer for the QTests
-* Disable the pci-bridge on s390x by default
-
-----------------------------------------------------------------
-Brad Smith (1):
-      tests/vm: update openbsd image to 7.6
-
-Peter Maydell (1):
-      tests/qtest: Raise the ide-test timeout
-
-Thomas Huth (19):
-      MAINTAINERS: A new maintainer for the qtests
-      hw/pci-bridge: Add a Kconfig switch for the normal PCI bridge
-      tests/functional: Add a base class for the TuxRun tests
-      tests/functional: Convert the Avocado ppc64 tuxrun tests
-      tests/functional: Convert the Avocado aarch64 tuxrun tests
-      tests/functional: Convert the Avocado sparc64 tuxrun test
-      tests/functional: Convert the Avocado s390x tuxrun test
-      tests/functional: Convert the Avocado arm tuxrun tests
-      tests/functional: Convert the Avocado riscv32 tuxrun tests
-      tests/functional: Convert the Avocado riscv64 tuxrun tests
-      tests/functional: Convert the Avocado i386 tuxrun test
-      tests/functional: Convert the Avocado x86_64 tuxrun test
-      tests/functional: Convert the Avocado mips tuxrun test
-      tests/functional: Convert the Avocado mipsel tuxrun test
-      tests/functional: Convert the Avocado mips64 tuxrun test
-      tests/functional: Convert the Avocado mips64el tuxrun test
-      tests/functional: Convert the Avocado ppc32 tuxrun test
-      Revert "hw/sh4/r2d: Realize IDE controller before accessing it"
-      tests/functional: Convert the Avocado sh4 tuxrun test
-
- MAINTAINERS                              |  22 +-
- hw/sh4/r2d.c                             |   2 +-
- hw/pci-bridge/Kconfig                    |   5 +
- hw/pci-bridge/meson.build                |   2 +-
- tests/avocado/tuxrun_baselines.py        | 620 -------------------------------
- tests/functional/meson.build             |  28 ++
- tests/functional/qemu_test/tuxruntest.py | 158 ++++++++
- tests/functional/test_aarch64_tuxrun.py  |  50 +++
- tests/functional/test_arm_tuxrun.py      |  70 ++++
- tests/functional/test_i386_tuxrun.py     |  35 ++
- tests/functional/test_mips64_tuxrun.py   |  35 ++
- tests/functional/test_mips64el_tuxrun.py |  35 ++
- tests/functional/test_mips_tuxrun.py     |  36 ++
- tests/functional/test_mipsel_tuxrun.py   |  36 ++
- tests/functional/test_ppc64_tuxrun.py    | 110 ++++++
- tests/functional/test_ppc_tuxrun.py      |  35 ++
- tests/functional/test_riscv32_tuxrun.py  |  38 ++
- tests/functional/test_riscv64_tuxrun.py  |  38 ++
- tests/functional/test_s390x_tuxrun.py    |  34 ++
- tests/functional/test_sh4_tuxrun.py      |  57 +++
- tests/functional/test_sparc64_tuxrun.py  |  34 ++
- tests/functional/test_x86_64_tuxrun.py   |  36 ++
- tests/qtest/meson.build                  |   1 +
- tests/vm/openbsd                         |   6 +-
- 24 files changed, 891 insertions(+), 632 deletions(-)
- delete mode 100644 tests/avocado/tuxrun_baselines.py
- create mode 100644 tests/functional/qemu_test/tuxruntest.py
- create mode 100755 tests/functional/test_aarch64_tuxrun.py
- create mode 100755 tests/functional/test_arm_tuxrun.py
- create mode 100755 tests/functional/test_i386_tuxrun.py
- create mode 100755 tests/functional/test_mips64_tuxrun.py
- create mode 100755 tests/functional/test_mips64el_tuxrun.py
- create mode 100755 tests/functional/test_mips_tuxrun.py
- create mode 100755 tests/functional/test_mipsel_tuxrun.py
- create mode 100755 tests/functional/test_ppc64_tuxrun.py
- create mode 100755 tests/functional/test_ppc_tuxrun.py
- create mode 100755 tests/functional/test_riscv32_tuxrun.py
- create mode 100755 tests/functional/test_riscv64_tuxrun.py
- create mode 100755 tests/functional/test_s390x_tuxrun.py
- create mode 100755 tests/functional/test_sh4_tuxrun.py
- create mode 100755 tests/functional/test_sparc64_tuxrun.py
- create mode 100755 tests/functional/test_x86_64_tuxrun.py
-
+-- PMM
 
