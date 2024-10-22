@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AFAD1CDDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E64ED1CDDC
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CYu-0001kn-9P; Tue, 22 Oct 2024 06:56:28 -0400
+	id 1t3CYs-0001jK-9m; Tue, 22 Oct 2024 06:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYo-0001i9-5H
+ id 1t3CYo-0001i7-3c
  for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:22 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYl-0001yI-C6
+ id 1t3CYl-0001y7-5G
  for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:21 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-539fb49c64aso7695062e87.0
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a9932aa108cso812827466b.2
  for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594577; x=1730199377; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/9/+YXB0yFn3lOXE+wDfnOMUk7oakkE6QbrJ6dxZQ+4=;
- b=s7vdUzlfuVxb0zWoPc6QWYx/UlE+nzMgZ2nY79QhTSmHo1OwU0+c21kAQVuV7uSDOg
- +mJlyO9wUuZpn0LnXTW4qV7/+wI343kIlNDkWE2D0GNvTJ6aK7e0sD6Nkd3NPhEG8VUi
- sgHECExozmSPj3q4HW+hzXmz2qwSpQhsLeKTCSX0hDOWE7iFE3wVsA6wJfU3wgiKdVJC
- TKLriK0afYizXDUQG0XJ/Hv9V3qIPS67RsGnt/OOUpPR23lFZNTXK8uwE4oNGIfMuB7/
- kloE+hKfouXW2H8n0DT7ab4Ipg9yMx4bvsnG0rOc5pIDRs4/NWyluQeTdGB7z6GvtiMW
- MovQ==
+ d=linaro.org; s=google; t=1729594576; x=1730199376; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=COpfR9RLf2CLdazvbIhqB2YmojRnRaS7PX4PKuRZwh4=;
+ b=a/r+TFJeohAszKlrJAQYJQIca0/J4Jx9WRu/poB0S996Jc+T358xq0O910gFkJSDj9
+ svyqfRQgupCOy9JBhYyC/kAmKedkWDdvfro+ek1AFGjIRWE7vzWo6WnkRuYBHxHvUD5o
+ 7RE8XOh8H6CLYtnE/93msiAVOL89W0cy0xrbYCfznMHOUJle621Ad1dhBm3OI98mI7Ak
+ RZvCOoakctgrl+BF9yb5DxFW1LtKGvnnmAn/vltS/3A1Bn0mMNVsrEgnj5sxlNaT/oXq
+ V042NOoJVvtNOzxfaffAY5nPU2KknwtrplFAHgNQ5gc4UQv4ay7WRuTKyS6wpP3ttXG4
+ 2sVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594577; x=1730199377;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/9/+YXB0yFn3lOXE+wDfnOMUk7oakkE6QbrJ6dxZQ+4=;
- b=JOIYeSKOWYZHzUMxttdFxY4OPL4bmrbdJ4aPCYQDeQ3qLGeuVW9voLAVCIh3RhqqUQ
- 5xmD9q2xs10F94Rg9zJbmk1yfSsmOUdRxscSFvjK1KXdKJc1+raqOgum6E/vYQcQPgPc
- SmKNazjVwABYdPD9+gbxEEEyJJ8GeJVA4QR4HGZv/2Z0zc1An6zpgbUmzgrDBZ5bEqqR
- gnqmmDW+wJcN8Go2HSWftqeZnUk6D9YfRhBfZTORxzIQSUWPhZXAB4UPg3eRYxDUvk3I
- 3Ew5m74QEncU3iATZ8aaCgVESBZRf7ko6I745UAtMDW/T9dEKnxZuXc+78xXY9TDhuMT
- XMIw==
-X-Gm-Message-State: AOJu0Yy88xERedqYcJsAcwRWemua0a4qBGtOPPjtqMZarXwRGQvKc89G
- 6s7+3MJRTIvHq2YdxuuVCnkCvmA+DGZZ/Wji+ln3bpOb8rwg5T6VXW/33gCddeg=
-X-Google-Smtp-Source: AGHT+IGyaTZRzVDmFkdPhfv0rvAvIdjH0I+E59F1p2dZtHMO7E+32HML2OhzkPGNPbWtrxG3At+wRA==
-X-Received: by 2002:a05:6512:2388:b0:539:9767:903d with SMTP id
- 2adb3069b0e04-53a154eb91emr9004463e87.60.1729594577248; 
- Tue, 22 Oct 2024 03:56:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729594576; x=1730199376;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=COpfR9RLf2CLdazvbIhqB2YmojRnRaS7PX4PKuRZwh4=;
+ b=CnvxcXlXc/i6D0Tg5BwwsvByKGUtyFuEiIztswNpH8N2K1iz7d2bsNwx/2p5/1ykyK
+ lPk8RkCCBjQV7SZwMXahBV1lVEDKfMejewmgar6EhT/EJ72ANXoSvxUqhskENLwuNfQa
+ yUl8GH8W8h+htpCwSTPF/AZZea12nxo9JwewJ/Qg0+YXY/a30J+52kV577nY8K60O3HW
+ nKLr8dD8+MD928oQygy9r6LksEpPiQ7ToNWo3uvfmM23i3Bny+48EqSX+GEw6ZMXt6AD
+ WwBrKryrS4DtPakNkTIAsJ2yrVN0MyRnkP71OCz3lCQkdaNLMWFy0+iYti15jlIkpi53
+ rDgQ==
+X-Gm-Message-State: AOJu0YzuqkT36Abn63Pn3G8cx3R/u5vXatsbIHUBwb4bchE3pf4j1geK
+ hyU/okpKpvvwzj/T0FYIzZnbMdqL2Av0n1UN9OP5DBHzSpnuNEU6qkM1nj+xlJw=
+X-Google-Smtp-Source: AGHT+IFvyKkyeRPJrAKRyY3MStdAXndUKfD+I3lEe2ovrB6KLCkuexA+w8IhgFRYygmb+9drojBW0Q==
+X-Received: by 2002:a17:906:c150:b0:a9a:47a:8908 with SMTP id
+ a640c23a62f3a-a9aace2551cmr208312266b.9.1729594576427; 
+ Tue, 22 Oct 2024 03:56:16 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912d62e4sm321153666b.7.2024.10.22.03.56.15
+ a640c23a62f3a-a9a912edc33sm321447866b.58.2024.10.22.03.56.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 22 Oct 2024 03:56:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0741C5F913;
- Tue, 22 Oct 2024 11:56:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A8D0D5F89C;
+ Tue, 22 Oct 2024 11:56:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -84,17 +83,15 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 04/20] meson: hide tsan related warnings
-Date: Tue, 22 Oct 2024 11:55:58 +0100
-Message-Id: <20241022105614.839199-5-alex.bennee@linaro.org>
+Subject: [PATCH v2 00/20] maintainer updates (testing, gdbstub, plugins)
+Date: Tue, 22 Oct 2024 11:55:54 +0100
+Message-Id: <20241022105614.839199-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
-References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,45 +114,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This is an aggregation of three of my maintainer trees which you can
+also get from their respective branches (testing/next, gdbstub/next
+and plugins/next). I didn't include the plugins on the last post as I
+hadn't had a chance to do my sweep through patches before travelling.
+I've also updated MAINTAINERS to point at my next trees.
 
-When building with gcc-12 -fsanitize=thread, gcc reports some
-constructions not supported with tsan.
-Found on debian stable.
+For testing we have mostly tweaks and cleanups. I've included some
+tracepoints tweaks for cpu_loop_exit_atomic purely as there was no
+where else to but it. There are also some cleanups to the tsan support
+from Pierrick. The mipsel tweaks have already been applied directly to
+the tree.
 
-qemu/include/qemu/atomic.h:36:52: error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’ [-Werror=tsan]
-   36 | #define smp_mb()                     ({ barrier(); __atomic_thread_fence(__ATOMIC_SEQ_CST); })
-      |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For gdbstub more cleanups as well as fixing some gdbstub breakage of
+the untested aarch64-be linux-user target. I've added a very basic
+some test to prevent silly regressions in the future.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240910174013.1433331-2-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- meson.build | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+For plugins again more cleanups. The GDB trigger patch will probably
+not get merged and should be considered an experimental hack for now.
 
-diff --git a/meson.build b/meson.build
-index d26690ce20..bdd67a2d6d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -538,7 +538,15 @@ if get_option('tsan')
-                          prefix: '#include <sanitizer/tsan_interface.h>')
-     error('Cannot enable TSAN due to missing fiber annotation interface')
-   endif
--  qemu_cflags = ['-fsanitize=thread'] + qemu_cflags
-+  tsan_warn_suppress = []
-+  # gcc (>=11) will report constructions not supported by tsan:
-+  # "error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’"
-+  # https://gcc.gnu.org/gcc-11/changes.html
-+  # However, clang does not support this warning and this triggers an error.
-+  if cc.has_argument('-Wno-tsan')
-+    tsan_warn_suppress = ['-Wno-tsan']
-+  endif
-+  qemu_cflags = ['-fsanitize=thread'] + tsan_warn_suppress + qemu_cflags
-   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
- endif
- 
+The following still need review:
+
+  plugins: add ability to register a GDB triggered callback
+  tests/tcg: enable basic testing for aarch64_be-linux-user
+  config/targets: update aarch64_be-linux-user gdb XML list
+  MAINTAINERS: mention my gdbstub/next tree
+  gitlab: make check-[dco|patch] a little more verbose
+  scripts/ci: remove architecture checks for build-environment updates
+  MAINTAINERS: mention my testing/next tree
+  tests/docker: add NOFETCH env variable for testing
+  MAINTAINERS: mention my plugins/next tree
+
+Alex Bennée (10):
+  tests/docker: add NOFETCH env variable for testing
+  MAINTAINERS: mention my testing/next tree
+  scripts/ci: remove architecture checks for build-environment updates
+  accel/tcg: add tracepoints for cpu_loop_exit_atomic
+  gitlab: make check-[dco|patch] a little more verbose
+  MAINTAINERS: mention my gdbstub/next tree
+  config/targets: update aarch64_be-linux-user gdb XML list
+  tests/tcg: enable basic testing for aarch64_be-linux-user
+  MAINTAINERS: mention my plugins/next tree
+  plugins: add ability to register a GDB triggered callback
+
+Gustavo Romero (2):
+  tests/tcg/aarch64: Use raw strings for regexes in test-mte.py
+  testing: Enhance gdb probe script
+
+Ilya Leoshkevich (2):
+  tests/docker: Fix microblaze atomics
+  tests/tcg/x86_64: Add cross-modifying code test
+
+Pierrick Bouvier (6):
+  meson: hide tsan related warnings
+  docs/devel: update tsan build documentation
+  dockerfiles: fix default targets for debian-loongarch-cross
+  meson: build contrib/plugins with meson
+  contrib/plugins: remove Makefile for contrib/plugins
+  plugins: fix qemu_plugin_reset
+
+ MAINTAINERS                                   |  3 +
+ docs/devel/testing/main.rst                   | 26 +++++-
+ configure                                     | 23 ++---
+ Makefile                                      | 10 ---
+ configs/targets/aarch64_be-linux-user.mak     |  2 +-
+ meson.build                                   | 14 ++-
+ include/qemu/plugin-event.h                   |  1 +
+ include/qemu/qemu-plugin.h                    | 16 ++++
+ plugins/plugin.h                              |  9 ++
+ accel/tcg/plugin-gen.c                        |  4 +
+ accel/tcg/user-exec.c                         |  2 +-
+ plugins/api.c                                 | 18 ++++
+ plugins/core.c                                | 37 ++++++++
+ tests/tcg/aarch64_be/hello.c                  | 35 ++++++++
+ tests/tcg/plugins/mem.c                       | 11 ++-
+ tests/tcg/x86_64/cross-modifying-code.c       | 80 +++++++++++++++++
+ accel/tcg/ldst_atomicity.c.inc                |  9 ++
+ .gitlab-ci.d/check-dco.py                     |  9 +-
+ .gitlab-ci.d/check-patch.py                   |  9 +-
+ accel/tcg/trace-events                        | 12 +++
+ contrib/plugins/Makefile                      | 87 -------------------
+ contrib/plugins/meson.build                   | 23 +++++
+ plugins/qemu-plugins.symbols                  |  1 +
+ scripts/ci/setup/ubuntu/build-environment.yml |  2 -
+ scripts/probe-gdb-support.py                  | 75 ++++++++--------
+ tests/docker/Makefile.include                 |  5 +-
+ .../dockerfiles/debian-loongarch-cross.docker |  4 +-
+ .../build-toolchain.sh                        |  8 ++
+ .../dockerfiles/debian-toolchain.docker       |  7 ++
+ tests/tcg/Makefile.target                     |  7 +-
+ tests/tcg/aarch64/gdbstub/test-mte.py         |  4 +-
+ tests/tcg/aarch64_be/Makefile.target          | 17 ++++
+ tests/tcg/x86_64/Makefile.target              |  4 +
+ 33 files changed, 397 insertions(+), 177 deletions(-)
+ create mode 100644 tests/tcg/aarch64_be/hello.c
+ create mode 100644 tests/tcg/x86_64/cross-modifying-code.c
+ delete mode 100644 contrib/plugins/Makefile
+ create mode 100644 contrib/plugins/meson.build
+ create mode 100644 tests/tcg/aarch64_be/Makefile.target
+
 -- 
 2.39.5
 
