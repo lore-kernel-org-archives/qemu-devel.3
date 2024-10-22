@@ -4,148 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 964FFD1CDB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97585D1CDB7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3AIR-000841-4f; Tue, 22 Oct 2024 04:31:19 -0400
+	id 1t3ANP-00018K-9U; Tue, 22 Oct 2024 04:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t3AIN-00083O-6Z
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:31:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1t3AIK-0000lP-9o
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:31:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729585860;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XJfwdl2AkT0xYuNVXfqCOD5fJF9PQv5py/IElw6HQ3c=;
- b=MPyB6ASqUyKr43kO10pb0oCylTKiR2eEkH8BUHX6r7TmFYF5tQtLxxPVq7wwMHQMdZrEIl
- +WoldFeDMstCd3lBcYHv+EZoELI5/D9BZAUaUtHwGyA8MfZDuomYDinqlBY36XGHg22VHH
- VJ9oWA72WTqOzl/5KRPcTZ2cAJPb+kg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-xfSVO5f4Mb6I_4Fq7X_VSQ-1; Tue, 22 Oct 2024 04:30:57 -0400
-X-MC-Unique: xfSVO5f4Mb6I_4Fq7X_VSQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-37d52ccc50eso2696020f8f.3
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:30:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t3ANL-00017L-Te
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:36:25 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1t3ANI-0001Le-KC
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:36:23 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e290554afb4so5138416276.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729586179; x=1730190979; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ct5h5sJ3+A+xGt9bh3WBS0emkAOPMzaGvt//muLyxCs=;
+ b=J7KI1zFqFqL2PELc7b1OsGn4zIbVHtsTko4Qzj7w0wT3rgL9posshkbo1AlurS2crh
+ t7hr6DviaWEXAckqc5IF2znKTItzJJEJhmAkvw8mVPlLWLedZnKkvQeZ6QuqMKKBa2jx
+ ih63nkpQA2W8zs6PnX1QG5avJBs0yd257zVQsBn2FN09KCPO0eSd3wOtSucsxkx9ogje
+ 8KEyo0gylI0Q3rJih0rx8KYDrXxg8noOADykzh5SYNqygQNkMupZctD2JzmL451K3z0L
+ Po9zLUZCTpEySJQjDq8Z7gDfIJcWNXsUvPiFIwipJgboTZ+v6UHYAa6cpOSlKaoqbNRS
+ PuwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729585856; x=1730190656;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=XJfwdl2AkT0xYuNVXfqCOD5fJF9PQv5py/IElw6HQ3c=;
- b=bmupPhI1O5A8J9bjn+cywht+XZd60H53gbea5AMul3Jz0rvlPS1ac4hCjdV9vaUXKG
- Oz2Q+q91HsL0arJUgHJmCFMCpDI37i+Dq9ykqG9dXHPb23q0czxLlO/QTdrxJuZ3HXad
- j2hq24n3cb5CfAhh05HAvhilYchxMg+OJwPJsupgePG30zgBVwdtIm1iv2AWPxfBTC3S
- Hqpa5ra7iHK4qcL33HhJwmqQNfjuSzv4KqhuHC7wK4pV/5MLb4oRfxc2lFchyjeHWqRm
- snP5h8s54VaRskD9/RLJFiu4vvAbNgKe6saScW/l+FXpCl9XJKWNz4xb3wYbq6oj9Dlr
- J3Zg==
+ d=1e100.net; s=20230601; t=1729586179; x=1730190979;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ct5h5sJ3+A+xGt9bh3WBS0emkAOPMzaGvt//muLyxCs=;
+ b=v7OM5GahT3LEsUlNlLfPfHdtDZOKrh7gW31EcBHoYYLnV1PbWdkYfwqANdsuNNzBES
+ 47yvWEi4yD4jfhaS5i230YcpqWPy9FeGC/1lnObqcOhLn8YHcoWLleJ9mr9xrR0qPUw5
+ YSCte+KxqNsjhUHnic33iSn/DNeOMlyD1+JesK0OJSW3aCEMdwg2h9u0J7waOACNKojk
+ J2+CRG6vrbwng+NTxnfnLZWfcQ9Zl5GJ6/rXXEtMdiRHEtKUCeWa4ospJwS1iyjnw67C
+ a6KOHqnY5+rJiXWTCDVKJHX+T8oWqpKgkychAKZxfdkHOUoE21s+U91o4+vLNtDSlRBi
+ 6ZFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxwEWHG7ov7a4WTYP8ikyfx9RR6eTEKNkGn3/XonMzm5a/z4EZv0ntbzHukK9+nXvht6whqsK25lHr@nongnu.org
-X-Gm-Message-State: AOJu0YxNXiQ87CePhEIP01eIy8UTyOcSLInElUnNm4r04w16TZev4uOG
- DQ2dAQHKChZ1TGNS0IgrgvKGc/zcKDDa6LkcUY30270e98ts7xqaFLemZfh5c1osIuux91A0vhw
- 60CmYJX4adjNtYfBb+BQlqDyncEFWl3Sj1fIpPX1NOZp6ERWAJxiq
-X-Received: by 2002:a5d:6751:0:b0:37d:480f:9a6c with SMTP id
- ffacd0b85a97d-37eb4863233mr11235235f8f.25.1729585856107; 
- Tue, 22 Oct 2024 01:30:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5fQIcEShUuEBUpj+0wHKlGc4KsvVqoVzfXcCLVpFrUWEUJPmEZazrpfFmUaMHBe3djUKgoA==
-X-Received: by 2002:a5d:6751:0:b0:37d:480f:9a6c with SMTP id
- ffacd0b85a97d-37eb4863233mr11235207f8f.25.1729585855671; 
- Tue, 22 Oct 2024 01:30:55 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c705:f700:352b:d857:b95d:9072?
- (p200300cbc705f700352bd857b95d9072.dip0.t-ipconnect.de.
- [2003:cb:c705:f700:352b:d857:b95d:9072])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0a3650esm6139882f8f.4.2024.10.22.01.30.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 01:30:54 -0700 (PDT)
-Message-ID: <ce3c0f72-0442-4519-9c0e-bbd67d25730a@redhat.com>
-Date: Tue, 22 Oct 2024 10:30:53 +0200
+ AJvYcCXkhB/aA+MxT9MmiOa+dzKXaSmmn0K8lWqC7L79sSVi+KTs9V0Pgl97FEtDXr6mZQOOf0Bo6csfYXYb@nongnu.org
+X-Gm-Message-State: AOJu0YzFOXO3EYMrYLyE63XOfyoR8t8At/f2z1OYrOVQ3z5XpxoRP34m
+ Q73EdT0VIaqVElkptO/TWVC5yEPOs+18me+j2sBboeq5xT10CSZR2ox2Bhk41p8y+PAFSDuo9t5
+ 8+CxllnUO+/xGGOnHvCVofvWQch8=
+X-Google-Smtp-Source: AGHT+IEqyYwaoQ7g9MxltztdqhGTkSJmUQ4BLttg7XMq2Djx0PJY4YAjwLhlN9zdtuRUR3R1aPQBk3dAV+9IbCza30s=
+X-Received: by 2002:a05:6902:1244:b0:e2b:d075:5b4f with SMTP id
+ 3f1490d57ef6-e2e2715b7c2mr1523040276.3.1729586179354; Tue, 22 Oct 2024
+ 01:36:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V1 04/14] accel: set accelerator and machine props earlier
-To: Steven Sistare <steven.sistare@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-5-git-send-email-steven.sistare@oracle.com>
- <87ldyl1mah.fsf@suse.de> <628ceba7-9cf4-4ad2-b3e5-6af4037a0bc1@oracle.com>
- <4c0645c9-a38b-4399-ba30-cf2ced63fc5e@oracle.com>
- <3da9ec87-3466-4fad-b4c0-2bcfe3853b5a@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <3da9ec87-3466-4fad-b4c0-2bcfe3853b5a@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20241017215304.3916866-1-roqueh@google.com>
+ <20241017215304.3916866-2-roqueh@google.com>
+ <CAMxuvax3ZRcGGE7Lyq=j-3pGtJ3jThw+rFyHhdBbhbUCyVs6+g@mail.gmail.com>
+ <ZxdaAtp6QlpqRSDs@redhat.com>
+ <CAJ+F1CL003+CBNQmnD_pwx+TyvNDR75GnL-j7o+dXzkHbxYOuw@mail.gmail.com>
+ <Zxdd2UUtvSqBap9D@redhat.com>
+In-Reply-To: <Zxdd2UUtvSqBap9D@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 22 Oct 2024 12:36:07 +0400
+Message-ID: <CAJ+F1CK2oRvsh=+NQKTfUgkbt9XOvn141wodH-w2Zrne7g=SpQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ui: Allow injection of vnc display name
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Roque Arcudia Hernandez <roqueh@google.com>, ankeesler@google.com,
+ mst@redhat.com, qemu-devel@nongnu.org, venture@google.com
+Content-Type: multipart/alternative; boundary="000000000000d4446f06250ca98a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yb1-xb2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,144 +95,496 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.10.24 21:15, Steven Sistare wrote:
-> On 10/18/2024 11:40 AM, Steven Sistare wrote:
->> On 10/18/2024 11:32 AM, Steven Sistare wrote:
->>> On 10/18/2024 11:08 AM, Fabiano Rosas wrote:
->>>> Steve Sistare <steven.sistare@oracle.com> writes:
->>>>
->>>>> Make all global and compat properties available before the first objects
->>>>> are created.  Set accelerator compatibility properties in
->>>>> configure_accelerators, when the accelerator is chosen, and call
->>>>> configure_accelerators earlier.  Set machine options earlier.
->>>>>
->>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>>> ---
->>>>>    accel/accel-system.c |  2 --
->>>>>    system/vl.c          | 34 ++++++++++++++++++----------------
->>>>>    2 files changed, 18 insertions(+), 18 deletions(-)
->>>>>
->>>>> diff --git a/accel/accel-system.c b/accel/accel-system.c
->>>>> index f6c947d..c8aeae4 100644
->>>>> --- a/accel/accel-system.c
->>>>> +++ b/accel/accel-system.c
->>>>> @@ -41,8 +41,6 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
->>>>>            ms->accelerator = NULL;
->>>>>            *(acc->allowed) = false;
->>>>>            object_unref(OBJECT(accel));
->>>>> -    } else {
->>>>> -        object_set_accelerator_compat_props(acc->compat_props);
->>>>>        }
->>>>>        return ret;
->>>>>    }
->>>>> diff --git a/system/vl.c b/system/vl.c
->>>>> index b94a6b9..bca2292 100644
->>>>> --- a/system/vl.c
->>>>> +++ b/system/vl.c
->>>>> @@ -2346,6 +2346,7 @@ static int do_configure_accelerator(void *opaque, QemuOpts *opts, Error **errp)
->>>>>            goto bad;
->>>>>        }
->>>>> +    object_set_accelerator_compat_props(ac->compat_props);
->>>>>        acs->accel = accel;
->>>>>        return 1;
->>>>> @@ -3728,29 +3729,14 @@ void qemu_init(int argc, char **argv)
->>>>>        parse_memory_options();
->>>>>        qemu_create_machine(machine_opts_dict);
->>>>> -
->>>>> -    suspend_mux_open();
->>>>> -
->>>>> -    qemu_disable_default_devices();
->>>>> -    qemu_setup_display();
->>>>> -    qemu_create_default_devices();
->>>>> -    qemu_create_early_backends();
->>>>> -
->>>>>        qemu_apply_legacy_machine_options(machine_opts_dict);
->>>>>        qemu_apply_machine_options(machine_opts_dict);
->>>>>        qobject_unref(machine_opts_dict);
->>>>> -    phase_advance(PHASE_MACHINE_CREATED);
->>>>> -    /*
->>>>> -     * Note: uses machine properties such as kernel-irqchip, must run
->>>>> -     * after qemu_apply_machine_options.
->>>>> -     */
->>>>>        accel = configure_accelerators(argv[0]);
->>>>> -    create_accelerator(accel);
->>>>> -    phase_advance(PHASE_ACCEL_CREATED);
->>>>>        /*
->>>>> -     * Beware, QOM objects created before this point miss global and
->>>>> +     * QOM objects created after this point see all global and
->>>>>         * compat properties.
->>>>>         *
->>>>>         * Global properties get set up by qdev_prop_register_global(),
->>>>> @@ -3765,6 +3751,22 @@ void qemu_init(int argc, char **argv)
->>>>>         * called from do_configure_accelerator().
->>>>>         */
->>>>> +    suspend_mux_open();
->>>>> +
->>>>> +    qemu_disable_default_devices();
->>>>> +    qemu_setup_display();
->>>>> +    qemu_create_default_devices();
->>>>> +    qemu_create_early_backends();
->>>>> +
->>>>> +    phase_advance(PHASE_MACHINE_CREATED);
->>>>> +
->>>>> +    /*
->>>>> +     * Note: uses machine properties such as kernel-irqchip, must run
->>>>> +     * after qemu_apply_machine_options.
->>>>> +     */
->>>>> +    create_accelerator(accel);
->>>>> +    phase_advance(PHASE_ACCEL_CREATED);
->>>>> +
->>>>>        machine_class = MACHINE_GET_CLASS(current_machine);
->>>>>        if (!qtest_enabled() && machine_class->deprecation_reason) {
->>>>>            warn_report("Machine type '%s' is deprecated: %s",
->>>>
->>>> Hi Steve,
->>>>
->>>> after this commit:
->>>>
->>>> $ QTEST_QEMU_BINARY=./qemu-system-aarch64 ./tests/qtest/xlnx-can-test
->>>> # random seed: R02Saf9b44f2d88dd417052905692ee79981
->>>> 1..5
->>>> # Start of aarch64 tests
->>>> # Start of net tests
->>>> # Start of can tests
->>>> # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-2396.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-2396.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine xlnx-zcu102 -object can-bus,id=canbus -machine canbus0=canbus -machine canbus1=canbus -accel qtest
->>>> qemu-system-aarch64: Device 'canbus' not found
->>>>
->>>> I tried briefly to figure out what the issue is, but I don't really
->>>> understand the dependencies involved. Hope you can tell us.
->>>
->>> Thanks! I forgot to define the preinit method for the qtest accelerator in patch 1.
->>> I'll verify that fixes the problem and send you a one-off patch if you want to continue
->>> testing.
->>
->> Actually that is not a problem.  qtest qtest_init_accel does nothing, so preinit will do
->> nothing, so it is OK to not define preinit.
->>
->> Still looking.
-> 
-> I understand this now.  The old code worked in this order:
-> 
->     qemu_create_early_backends()
->       ... creates "-object can-bus,id=canbus"
->     qemu_create_machine()
->     qemu_apply_machine_options()
->       applies link property "canbus0" with value canbus, finds canbus object
+--000000000000d4446f06250ca98a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Now I am confused.
+Hi
 
-I think the current code does:
+On Tue, Oct 22, 2024 at 12:10=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
 
-qemu_create_machine(machine_opts_dict);
-qemu_create_early_backends();
-qemu_apply_machine_options(machine_opts_dict);
+> On Tue, Oct 22, 2024 at 12:04:29PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Tue, Oct 22, 2024 at 11:54=E2=80=AFAM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com
+> >
+> > wrote:
+> >
+> > > On Mon, Oct 21, 2024 at 03:14:39PM +0400, Marc-Andr=C3=A9 Lureau wrot=
+e:
+> > > > Hi Roque
+> > > >
+> > > > On Fri, Oct 18, 2024 at 1:53=E2=80=AFAM Roque Arcudia Hernandez
+> > > > <roqueh@google.com> wrote:
+> > > > >
+> > > > > From: Andrew Keesler <ankeesler@google.com>
+> > > > >
+> > > > > Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
+> > > Identification
+> > > > > Data) is propagated by QEMU such that a virtual display presents
+> > > legitimate
+> > > > > metadata (e.g., name, serial number, preferred resolutions, etc.)
+> to
+> > > its
+> > > > > connected guest.
+> > > > >
+> > > > > This change propagates an optional user-provided display name to
+> > > > > QemuConsole. Future changes will update downstream devices to
+> leverage
+> > > this
+> > > > > display name for various uses, the primary one being providing a
+> > > custom EDID
+> > > > > name to guests. Future changes will also update other displays
+> (e.g.,
+> > > spice)
+> > > > > with a similar option to propagate a display name to downstream
+> > > devices.
+> > > > >
+> > > > > Currently, every virtio-gpu virtual display has the same name:
+> "QEMU
+> > > > > Monitor". We hope to be able to inject the EDID name of virtual
+> > > displays in
+> > > > > order to test guest behavior that is specific to display names. W=
+e
+> > > provide the
+> > > > > ability to inject the display name from the display configuration
+> as
+> > > that most
+> > > > > closely resembles how real displays work (hardware displays conta=
+in
+> > > static EDID
+> > > > > information that is provided to every connected host).
+> > > > >
+> > > > > It should also be noted that EDID names longer than 12 bytes will
+> be
+> > > truncated
+> > > > > per spec (I think?).
+> > > > >
+> > > > > Signed-off-by: Andrew Keesler <ankeesler@google.com>
+> > > > > Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+> > > > > ---
+> > > > >  include/ui/console.h | 1 +
+> > > > >  ui/console-priv.h    | 1 +
+> > > > >  ui/console.c         | 8 ++++++++
+> > > > >  ui/vnc.c             | 8 +++++++-
+> > > > >  4 files changed, 17 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/include/ui/console.h b/include/ui/console.h
+> > > > > index 5832d52a8a..74ab03ed72 100644
+> > > > > --- a/include/ui/console.h
+> > > > > +++ b/include/ui/console.h
+> > > > > @@ -408,6 +408,7 @@ int qemu_console_get_index(QemuConsole *con);
+> > > > >  uint32_t qemu_console_get_head(QemuConsole *con);
+> > > > >  int qemu_console_get_width(QemuConsole *con, int fallback);
+> > > > >  int qemu_console_get_height(QemuConsole *con, int fallback);
+> > > > > +void qemu_console_set_name(QemuConsole *con, const char *name);
+> > > > >  /* Return the low-level window id for the console */
+> > > > >  int qemu_console_get_window_id(QemuConsole *con);
+> > > > >  /* Set the low-level window id for the console */
+> > > > > diff --git a/ui/console-priv.h b/ui/console-priv.h
+> > > > > index 43ceb8122f..9f2769843f 100644
+> > > > > --- a/ui/console-priv.h
+> > > > > +++ b/ui/console-priv.h
+> > > > > @@ -18,6 +18,7 @@ struct QemuConsole {
+> > > > >      Object parent;
+> > > > >
+> > > > >      int index;
+> > > > > +    const char *name;
+> > > > >      DisplayState *ds;
+> > > > >      DisplaySurface *surface;
+> > > > >      DisplayScanout scanout;
+> > > > > diff --git a/ui/console.c b/ui/console.c
+> > > > > index 5165f17125..f377fd8417 100644
+> > > > > --- a/ui/console.c
+> > > > > +++ b/ui/console.c
+> > > > > @@ -1452,6 +1452,14 @@ int qemu_console_get_height(QemuConsole
+> *con,
+> > > int fallback)
+> > > > >      }
+> > > > >  }
+> > > > >
+> > > > > +void qemu_console_set_name(QemuConsole *con, const char *name)
+> > > > > +{
+> > > > > +    if (con =3D=3D NULL) {
+> > > > > +        return;
+> > > > > +    }
+> > > > > +    con->name =3D name;
+> > > > > +}
+> > > > > +
+> > > > >  int qemu_invalidate_text_consoles(void)
+> > > > >  {
+> > > > >      QemuConsole *s;
+> > > > > diff --git a/ui/vnc.c b/ui/vnc.c
+> > > > > index 93a8dbd253..7d6acc5c2e 100644
+> > > > > --- a/ui/vnc.c
+> > > > > +++ b/ui/vnc.c
+> > > > > @@ -3595,6 +3595,9 @@ static QemuOptsList qemu_vnc_opts =3D {
+> > > > >          },{
+> > > > >              .name =3D "power-control",
+> > > > >              .type =3D QEMU_OPT_BOOL,
+> > > > > +        },{
+> > > > > +            .name =3D "name",
+> > > > > +            .type =3D QEMU_OPT_STRING,
+> > > > >          },
+> > > > >          { /* end of list */ }
+> > > > >      },
+> > > > > @@ -4016,7 +4019,7 @@ void vnc_display_open(const char *id, Error
+> > > **errp)
+> > > > >      QemuOpts *opts =3D qemu_opts_find(&qemu_vnc_opts, id);
+> > > > >      g_autoptr(SocketAddressList) saddr_list =3D NULL;
+> > > > >      g_autoptr(SocketAddressList) wsaddr_list =3D NULL;
+> > > > > -    const char *share, *device_id;
+> > > > > +    const char *share, *device_id, *name;
+> > > > >      QemuConsole *con;
+> > > > >      bool password =3D false;
+> > > > >      bool reverse =3D false;
+> > > > > @@ -4217,6 +4220,9 @@ void vnc_display_open(const char *id, Error
+> > > **errp)
+> > > > >      }
+> > > > >      qkbd_state_set_delay(vd->kbd, key_delay_ms);
+> > > > >
+> > > > > +    name =3D qemu_opt_get(opts, "name");
+> > > > > +    qemu_console_set_name(vd->dcl.con, name);
+> > > >
+> > > > Why not expose a "head_name" property in QemuGraphicConsole?
+> > >
+> > > QemuGraphicConsole isn't mapped to any CLI though, is it ?
+> > >
+> > >
+> > No, it would be a bit tedious to do so with multi-head -devices.
+> >
+> >
+> > > In QAPI we have DisplayOptions union  for all the local displays,
+> > > and as a user I think I'd expect 'name' to be settable from
+> > > those.
+> > >
+> > >
+> > DisplayOptions is meant for the UI display.. Here, the intent is really
+> to
+> > set the HW EDID name field.
+>
+> But it is also applicable to the backend, all of which have a
+> name for the display set in the window titlebar. We should
+> be looking at both sides IMHO.
+>
 
-Isn't the relevant part that we may only apply the machine options after 
-creating the early backends?
+Ok, if we consider both should be treated similarly / reflect each other.
 
--- 
-Cheers,
 
-David / dhildenb
+>
+> > Also DisplayOptions doesn't map to a specific console.
+>
+> It could be made to contain per-head information if we desired
+> though, and would be more useful than just the name. There were
+> some patches a while ago trying to express per-console placement
+> of windows onto host monitor outputs, for example.
+>
 
+[RFC PATCH v2 0/2] ui/gtk: Introduce new param - Connectors
+https://patchew.org/QEMU/20240531185804.119557-1-dongwon.kim@intel.com/
+
+>
+> > > own CLI options we can expose.
+> > >
+> > > For runtime setting, we have a QMP  "display-update" command, that
+> > > currently just lets you change VNC listening address, but was intende=
+d
+> > > to allow for any runtime display changes.
+> > >
+> > > > This way it should be possible to set the name with QMP qom-set.
+> > >
+> > > qom-set isn't a particularly nice interface, as things you can set
+> > > from that are not introspectable and have no type information that
+> > > can be queried.
+> > >
+> >
+> > fwiw, it could be easily exposed to D-Bus, for ex:
+> >
+> > busctl --user set-property org.qemu /org/qemu/Display1/Console_1
+> > org.qemu.Display1.Console HeadName s "First Monitor"
+>
+> That could be mapped to whatever interface we expose on the QEMU side,
+> it doesn't have to be qom-set.
+>
+
+It seems to me the main problem is that consoles are dynamically created by
+devices, and it's hard for the ui/display to map options to a specific
+console.
+
+The other issue is handling arrays with CLI in general...
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000d4446f06250ca98a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 22, 20=
+24 at 12:10=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berran=
+ge@redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt; wrote:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Oct 22, 2024 at=
+ 12:04:29PM +0400, Marc-Andr=C3=A9 Lureau wrote:<br>
+&gt; Hi<br>
+&gt; <br>
+&gt; On Tue, Oct 22, 2024 at 11:54=E2=80=AFAM Daniel P. Berrang=C3=A9 &lt;<=
+a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com=
+</a>&gt;<br>
+&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; On Mon, Oct 21, 2024 at 03:14:39PM +0400, Marc-Andr=C3=A9 Lureau =
+wrote:<br>
+&gt; &gt; &gt; Hi Roque<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; On Fri, Oct 18, 2024 at 1:53=E2=80=AFAM Roque Arcudia Hernan=
+dez<br>
+&gt; &gt; &gt; &lt;<a href=3D"mailto:roqueh@google.com" target=3D"_blank">r=
+oqueh@google.com</a>&gt; wrote:<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; From: Andrew Keesler &lt;<a href=3D"mailto:ankeesler@go=
+ogle.com" target=3D"_blank">ankeesler@google.com</a>&gt;<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extende=
+d Display<br>
+&gt; &gt; Identification<br>
+&gt; &gt; &gt; &gt; Data) is propagated by QEMU such that a virtual display=
+ presents<br>
+&gt; &gt; legitimate<br>
+&gt; &gt; &gt; &gt; metadata (e.g., name, serial number, preferred resoluti=
+ons, etc.) to<br>
+&gt; &gt; its<br>
+&gt; &gt; &gt; &gt; connected guest.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; This change propagates an optional user-provided displa=
+y name to<br>
+&gt; &gt; &gt; &gt; QemuConsole. Future changes will update downstream devi=
+ces to leverage<br>
+&gt; &gt; this<br>
+&gt; &gt; &gt; &gt; display name for various uses, the primary one being pr=
+oviding a<br>
+&gt; &gt; custom EDID<br>
+&gt; &gt; &gt; &gt; name to guests. Future changes will also update other d=
+isplays (e.g.,<br>
+&gt; &gt; spice)<br>
+&gt; &gt; &gt; &gt; with a similar option to propagate a display name to do=
+wnstream<br>
+&gt; &gt; devices.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Currently, every virtio-gpu virtual display has the sam=
+e name: &quot;QEMU<br>
+&gt; &gt; &gt; &gt; Monitor&quot;. We hope to be able to inject the EDID na=
+me of virtual<br>
+&gt; &gt; displays in<br>
+&gt; &gt; &gt; &gt; order to test guest behavior that is specific to displa=
+y names. We<br>
+&gt; &gt; provide the<br>
+&gt; &gt; &gt; &gt; ability to inject the display name from the display con=
+figuration as<br>
+&gt; &gt; that most<br>
+&gt; &gt; &gt; &gt; closely resembles how real displays work (hardware disp=
+lays contain<br>
+&gt; &gt; static EDID<br>
+&gt; &gt; &gt; &gt; information that is provided to every connected host).<=
+br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; It should also be noted that EDID names longer than 12 =
+bytes will be<br>
+&gt; &gt; truncated<br>
+&gt; &gt; &gt; &gt; per spec (I think?).<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Signed-off-by: Andrew Keesler &lt;<a href=3D"mailto:ank=
+eesler@google.com" target=3D"_blank">ankeesler@google.com</a>&gt;<br>
+&gt; &gt; &gt; &gt; Signed-off-by: Roque Arcudia Hernandez &lt;<a href=3D"m=
+ailto:roqueh@google.com" target=3D"_blank">roqueh@google.com</a>&gt;<br>
+&gt; &gt; &gt; &gt; ---<br>
+&gt; &gt; &gt; &gt;=C2=A0 include/ui/console.h | 1 +<br>
+&gt; &gt; &gt; &gt;=C2=A0 ui/console-priv.h=C2=A0 =C2=A0 | 1 +<br>
+&gt; &gt; &gt; &gt;=C2=A0 ui/console.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 8=
+ ++++++++<br>
+&gt; &gt; &gt; &gt;=C2=A0 ui/vnc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0| 8 +++++++-<br>
+&gt; &gt; &gt; &gt;=C2=A0 4 files changed, 17 insertions(+), 1 deletion(-)<=
+br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; diff --git a/include/ui/console.h b/include/ui/console.=
+h<br>
+&gt; &gt; &gt; &gt; index 5832d52a8a..74ab03ed72 100644<br>
+&gt; &gt; &gt; &gt; --- a/include/ui/console.h<br>
+&gt; &gt; &gt; &gt; +++ b/include/ui/console.h<br>
+&gt; &gt; &gt; &gt; @@ -408,6 +408,7 @@ int qemu_console_get_index(QemuCons=
+ole *con);<br>
+&gt; &gt; &gt; &gt;=C2=A0 uint32_t qemu_console_get_head(QemuConsole *con);=
+<br>
+&gt; &gt; &gt; &gt;=C2=A0 int qemu_console_get_width(QemuConsole *con, int =
+fallback);<br>
+&gt; &gt; &gt; &gt;=C2=A0 int qemu_console_get_height(QemuConsole *con, int=
+ fallback);<br>
+&gt; &gt; &gt; &gt; +void qemu_console_set_name(QemuConsole *con, const cha=
+r *name);<br>
+&gt; &gt; &gt; &gt;=C2=A0 /* Return the low-level window id for the console=
+ */<br>
+&gt; &gt; &gt; &gt;=C2=A0 int qemu_console_get_window_id(QemuConsole *con);=
+<br>
+&gt; &gt; &gt; &gt;=C2=A0 /* Set the low-level window id for the console */=
+<br>
+&gt; &gt; &gt; &gt; diff --git a/ui/console-priv.h b/ui/console-priv.h<br>
+&gt; &gt; &gt; &gt; index 43ceb8122f..9f2769843f 100644<br>
+&gt; &gt; &gt; &gt; --- a/ui/console-priv.h<br>
+&gt; &gt; &gt; &gt; +++ b/ui/console-priv.h<br>
+&gt; &gt; &gt; &gt; @@ -18,6 +18,7 @@ struct QemuConsole {<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 Object parent;<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 int index;<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 const char *name;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 DisplayState *ds;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 DisplaySurface *surface;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 DisplayScanout scanout;<br>
+&gt; &gt; &gt; &gt; diff --git a/ui/console.c b/ui/console.c<br>
+&gt; &gt; &gt; &gt; index 5165f17125..f377fd8417 100644<br>
+&gt; &gt; &gt; &gt; --- a/ui/console.c<br>
+&gt; &gt; &gt; &gt; +++ b/ui/console.c<br>
+&gt; &gt; &gt; &gt; @@ -1452,6 +1452,14 @@ int qemu_console_get_height(Qemu=
+Console *con,<br>
+&gt; &gt; int fallback)<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt; &gt; &gt;=C2=A0 }<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; +void qemu_console_set_name(QemuConsole *con, const cha=
+r *name)<br>
+&gt; &gt; &gt; &gt; +{<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (con =3D=3D NULL) {<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 con-&gt;name =3D name;<br>
+&gt; &gt; &gt; &gt; +}<br>
+&gt; &gt; &gt; &gt; +<br>
+&gt; &gt; &gt; &gt;=C2=A0 int qemu_invalidate_text_consoles(void)<br>
+&gt; &gt; &gt; &gt;=C2=A0 {<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 QemuConsole *s;<br>
+&gt; &gt; &gt; &gt; diff --git a/ui/vnc.c b/ui/vnc.c<br>
+&gt; &gt; &gt; &gt; index 93a8dbd253..7d6acc5c2e 100644<br>
+&gt; &gt; &gt; &gt; --- a/ui/vnc.c<br>
+&gt; &gt; &gt; &gt; +++ b/ui/vnc.c<br>
+&gt; &gt; &gt; &gt; @@ -3595,6 +3595,9 @@ static QemuOptsList qemu_vnc_opts=
+ =3D {<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },{<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .name =
+=3D &quot;power-control&quot;,<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .type =
+=3D QEMU_OPT_BOOL,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 },{<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .name =3D &q=
+uot;name&quot;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .type =3D QE=
+MU_OPT_STRING,<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 { /* end of list */ }=
+<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 },<br>
+&gt; &gt; &gt; &gt; @@ -4016,7 +4019,7 @@ void vnc_display_open(const char =
+*id, Error<br>
+&gt; &gt; **errp)<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 QemuOpts *opts =3D qemu_opts_find(&=
+amp;qemu_vnc_opts, id);<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 g_autoptr(SocketAddressList) saddr_=
+list =3D NULL;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 g_autoptr(SocketAddressList) wsaddr=
+_list =3D NULL;<br>
+&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 const char *share, *device_id;<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 const char *share, *device_id, *name;<br=
+>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 QemuConsole *con;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 bool password =3D false;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 bool reverse =3D false;<br>
+&gt; &gt; &gt; &gt; @@ -4217,6 +4220,9 @@ void vnc_display_open(const char =
+*id, Error<br>
+&gt; &gt; **errp)<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 qkbd_state_set_delay(vd-&gt;kbd, ke=
+y_delay_ms);<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 name =3D qemu_opt_get(opts, &quot;name&q=
+uot;);<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 qemu_console_set_name(vd-&gt;dcl.con, na=
+me);<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Why not expose a &quot;head_name&quot; property in QemuGraph=
+icConsole?<br>
+&gt; &gt;<br>
+&gt; &gt; QemuGraphicConsole isn&#39;t mapped to any CLI though, is it ?<br=
+>
+&gt; &gt;<br>
+&gt; &gt;<br>
+&gt; No, it would be a bit tedious to do so with multi-head -devices.<br>
+&gt; <br>
+&gt; <br>
+&gt; &gt; In QAPI we have DisplayOptions union=C2=A0 for all the local disp=
+lays,<br>
+&gt; &gt; and as a user I think I&#39;d expect &#39;name&#39; to be settabl=
+e from<br>
+&gt; &gt; those.<br>
+&gt; &gt;<br>
+&gt; &gt;<br>
+&gt; DisplayOptions is meant for the UI display.. Here, the intent is reall=
+y to<br>
+&gt; set the HW EDID name field.<br>
+<br>
+But it is also applicable to the backend, all of which have a<br>
+name for the display set in the window titlebar. We should<br>
+be looking at both sides IMHO.<br></blockquote><div><br></div><div>Ok, if w=
+e consider both should be treated similarly / reflect each other.</div><div=
+>=C2=A0<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; Also DisplayOptions doesn&#39;t map to a specific console.<br>
+<br>
+It could be made to contain per-head information if we desired<br>
+though, and would be more useful than just the name. There were<br>
+some patches a while ago trying to express per-console placement<br>
+of windows onto host monitor outputs, for example.<br></blockquote><div><br=
+></div><div>[RFC PATCH v2 0/2] ui/gtk: Introduce new param - Connectors</di=
+v><div><a href=3D"https://patchew.org/QEMU/20240531185804.119557-1-dongwon.=
+kim@intel.com/">https://patchew.org/QEMU/20240531185804.119557-1-dongwon.ki=
+m@intel.com/</a></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; &gt; own CLI options we can expose.<br>
+&gt; &gt;<br>
+&gt; &gt; For runtime setting, we have a QMP=C2=A0 &quot;display-update&quo=
+t; command, that<br>
+&gt; &gt; currently just lets you change VNC listening address, but was int=
+ended<br>
+&gt; &gt; to allow for any runtime display changes.<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; This way it should be possible to set the name with QMP qom-=
+set.<br>
+&gt; &gt;<br>
+&gt; &gt; qom-set isn&#39;t a particularly nice interface, as things you ca=
+n set<br>
+&gt; &gt; from that are not introspectable and have no type information tha=
+t<br>
+&gt; &gt; can be queried.<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; fwiw, it could be easily exposed to D-Bus, for ex:<br>
+&gt; <br>
+&gt; busctl --user set-property org.qemu /org/qemu/Display1/Console_1<br>
+&gt; org.qemu.Display1.Console HeadName s &quot;First Monitor&quot;<br>
+<br>
+That could be mapped to whatever interface we expose on the QEMU side,<br>
+it doesn&#39;t have to be qom-set.<br clear=3D"all"></blockquote><div><br><=
+/div><div>It seems to me the main problem is that consoles are dynamically =
+created by devices, and it&#39;s hard for the ui/display to map options to =
+a specific console.</div><div><br></div><div>The other issue is handling ar=
+rays with CLI in general...<br></div></div><br><span class=3D"gmail_signatu=
+re_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-An=
+dr=C3=A9 Lureau<br></div></div>
+</div>
+
+--000000000000d4446f06250ca98a--
 
