@@ -4,67 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCE5D2C560
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 14:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39383D2C561
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 14:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3G7q-0005nT-KJ; Tue, 22 Oct 2024 10:44:46 -0400
+	id 1t3G8T-00077w-2X; Tue, 22 Oct 2024 10:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t3G7o-0005kf-1H; Tue, 22 Oct 2024 10:44:44 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t3G8N-00073p-Th
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 10:45:20 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t3G7m-0000U9-Jb; Tue, 22 Oct 2024 10:44:43 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XXw0b2ftvz6JBBn;
- Tue, 22 Oct 2024 22:43:43 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id BD65B1400DB;
- Tue, 22 Oct 2024 22:44:38 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 22 Oct
- 2024 16:44:37 +0200
-Date: Tue, 22 Oct 2024 15:44:36 +0100
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: "Daniel P . =?ISO-8859-1?Q?Berrang=E9?=" <berrange@redhat.com>, "Igor
- Mammedov" <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Ma?=
- =?ISO-8859-1?Q?thieu-Daud=E9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, "Michael S.Tsirkin " <mst@redhat.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eric Blake <eblake@redhat.com>, "Markus
- Armbruster" <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Alex
- =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Peter Maydell
- <peter.maydell@linaro.org>, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, <qemu-devel@nongnu.org>,
- <kvm@vger.kernel.org>, <qemu-riscv@nongnu.org>, <qemu-arm@nongnu.org>,
- "Zhenyu Wang" <zhenyu.z.wang@intel.com>, Dapeng Mi
- <dapeng1.mi@linux.intel.com>
-Subject: Re: [PATCH v4 5/9] hw/core: Add a helper to check the cache
- topology level
-Message-ID: <20241022154436.000028af@Huawei.com>
-In-Reply-To: <20241022135151.2052198-6-zhao1.liu@intel.com>
-References: <20241022135151.2052198-1-zhao1.liu@intel.com>
- <20241022135151.2052198-6-zhao1.liu@intel.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1t3G8K-0000iU-TR
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 10:45:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1729608317; x=1761144317;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=S6MBMjJ2N2EXgvrAo/JrbK5lxLqIJx4tC3P69bnXXww=;
+ b=ZFglwkv+MrWFRhYQLmlds4xG4YC2go9JjGgFLVHk0X1wsc44kgSZ9IqO
+ n2alMrxWcrLHUnGBh1swPD9sFdARXBYIrP05LMFUz7qh1TUBzfDzGsOBw
+ hiDaKofCgFRUDVv8xopRqZkWqiG0fJKilITlNFgT2tSjmUyCrYbqYvvZu
+ xKpCf0haAvB2VpnOmPLLQ9GYn9Ss6rGJhbHHHQObejUSVB3HYhz1dEEEG
+ UEPhiRzIxQn/iAmnC/c8xc8pqkwHVCmfZamc25yea6f0pyskxs/WIiRPD
+ psQdrhJjOruYpDC1PO3vDavN2wrYc25qOzSeMXUUcoV4MHAR3Cl28/LCU w==;
+X-CSE-ConnectionGUID: 3Fe5M/5qRqKc4TGKfyvLbQ==
+X-CSE-MsgGUID: sdZKwAFNQUS3F6ARl59vRA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11233"; a="16775126"
+X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; d="scan'208";a="16775126"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Oct 2024 07:45:14 -0700
+X-CSE-ConnectionGUID: hfsQmgbHRveLzsq30iZLTQ==
+X-CSE-MsgGUID: JS2GXUg8RE2so2ytPavvIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="84710655"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 22 Oct 2024 07:45:12 -0700
+Date: Tue, 22 Oct 2024 23:01:29 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [Question] What is the =?gb2312?Q?defi?=
+ =?gb2312?B?bml0aW9uIG9mIKGwcHJpdmF0ZaGx?= fields in QOM?
+Message-ID: <Zxe+SZmtJ7XJ49IY@intel.com>
+References: <ZxPZ5oUDRcVroh7o@intel.com>
+ <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
+ <ZxZjqypRL7d2rMuQ@intel.com>
+ <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
+ <ZxZwwe1ULIUqEdKN@intel.com>
+ <CAFEAcA9E_-J3EJ+izeErnHDAwaP1LoctRaihu=5xTYrMSnqVig@mail.gmail.com>
+ <ZxZ2KS6hi3Y2HdtC@intel.com>
+ <CAFEAcA9V0yUCOkAWGumoOD_SMk-saS4OU5gL67gj7SRT0v4cPg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9V0yUCOkAWGumoOD_SMk-saS4OU5gL67gj7SRT0v4cPg@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
+ DKIMWL_WL_HIGH=-0.519, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -79,34 +91,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Resend. Claws-mail is still chewing up the to list for unknown reasons
-and I forgot to fix it by hand.
-
-On Tue, 22 Oct 2024 21:51:47 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
-
-> Currently, we have no way to expose the arch-specific default cache
-> model because the cache model is sometimes related to the CPU model
-> (e.g., i386).
+On Mon, Oct 21, 2024 at 05:47:05PM +0100, Peter Maydell wrote:
+> Date: Mon, 21 Oct 2024 17:47:05 +0100
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: Re: [Question] What is the definition of ¡°private¡± fields in
+>  QOM?
 > 
-> Since the user might configure "default" level, any comparison with
-> "default" is meaningless before the machine knows the specific level
-> that "default" refers to.
+> On Mon, 21 Oct 2024 at 16:25, Zhao Liu <zhao1.liu@intel.com> wrote:
+> > My initial confusion stemmed from seeing the private comment and
+> > noticing that there are many direct accesses to parent_obj/parent_class
+> > in QEMU (which I could list in my reply to Daniel). Now I understand
+> > that these examples are only valid within the class/object
+> > implementation or in QOM code.
+> >
+> > For instance, an example in KVM is a misuse:
+> >
+> > accel/kvm/kvm-all.c:4285:                        cpu->parent_obj.canonical_path,
+> > accel/kvm/kvm-all.c:4377:            if (!apply_str_list_filter(cpu->parent_obj.canonical_path, targets)) {
+> >
+> >
+> > At the same time, I¡¯ve been thinking that the current C implementation
+> > seems to have no way to prevent such misuse.
 > 
-> We can only check the correctness of the cache topology after the arch
-> loads the user-configured cache model from MachineState.smp_cache and
-> consumes the special "default" level by replacing it with the specific
-> level.
+> Mmm. We rely on code review to catch major misuses (and let
+> some minor misuses slide because we don't care enough to put
+> in the effort to provide a proper API to access the information
+> or because we don't want the performance overhead of a QOM cast).
 > 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Looks like useful sanity check code to me.
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> In a previous iteration of QEMU's design the device's state
+> struct was purely private to the implementation source file,
+> and code that used the device always did so via a pointer.
+> But at some point we decided we wanted to allow users to
+> embed the device struct inside their own device struct, which
+> needs them to have access to the struct definition (though
+> strictly they only need to know the size and alignment
+> requirements of it).
 
+Thank you for taking me through this history, I see the intent of
+designing the embedded device structure in this way!
 
+> I did a decade ago write a proof-of-concept for marking
+> fields in the C struct as "private" such that you could get
+> a compile error for touching them:
+> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg01846.html
+> which (mis?)uses GCC's __attribute__((deprecated("reason")))
+> to arrange that touching the struct field from outside the
+> implementation is a compile error. But we never took up the idea.
+
+Very cool! May I ask a few more questions? :-) The feedback on this
+series looks very positive, and it seems you were almost close to merge
+it at the time. What ultimately led you to decide against it? If we
+revisit the issue of Rust's private/pub visibility, I'm curious if we
+would face the same dilemma again.
+
+Regards,
+Zhao
 
 
