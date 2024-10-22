@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E37D1CDCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B840BD1CDCC
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3BOk-0002uc-8G; Tue, 22 Oct 2024 05:41:54 -0400
+	id 1t3BOk-0002un-BH; Tue, 22 Oct 2024 05:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BOW-0002pT-Hc; Tue, 22 Oct 2024 05:41:43 -0400
+ id 1t3BOg-0002s2-3x; Tue, 22 Oct 2024 05:41:50 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BOU-00015E-V5; Tue, 22 Oct 2024 05:41:40 -0400
+ id 1t3BOe-00015E-8i; Tue, 22 Oct 2024 05:41:49 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 22 Oct
- 2024 17:41:12 +0800
+ 2024 17:41:13 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 22 Oct 2024 17:41:12 +0800
+ Transport; Tue, 22 Oct 2024 17:41:13 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -35,17 +35,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:All patches CC here" <qemu-devel@nongnu.org>, "open list:Block layer
  core" <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v2 04/18] hw/block/m25p80: Add SFDP table for w25q80bl flash
-Date: Tue, 22 Oct 2024 17:40:56 +0800
-Message-ID: <20241022094110.1574011-5-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v2 07/18] aspeed: Fix hardcode attach flash model of spi
+ controllers
+Date: Tue, 22 Oct 2024 17:40:59 +0800
+Message-ID: <20241022094110.1574011-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
 References: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -71,90 +71,77 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the SFDP table for the Windbond w25q80bl flash.
+It only attached flash model of fmc and spi[0] in aspeed_machine_init function.
+However, AST2500 and AST2600 have one fmc and two spi(spi1 and spi2)
+controllers; AST2700 have one fmc and 3 spi(spi0, spi1 and spi2) controllers.
+
+Besides, it used hardcode to attach flash model of fmc, spi[0] and spi[1] in
+aspeed_minibmc_machine_init for AST1030.
+
+To make both functions more flexible and support all ASPEED SOCs spi
+controllers, adds a for loop with sc->spis_num to attach flash model of
+all supported spi controllers. The sc->spis_num is from AspeedSoCClass.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/block/m25p80.c      |  3 ++-
- hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
- hw/block/m25p80_sfdp.h |  2 +-
- 3 files changed, 39 insertions(+), 2 deletions(-)
+ hw/arm/aspeed.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 411d810d3b..e2e84f8b5f 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -356,7 +356,8 @@ static const FlashPartInfo known_devices[] = {
-     { INFO("w25x64",      0xef3017,      0,  64 << 10, 128, ER_4K) },
-     { INFO("w25q64",      0xef4017,      0,  64 << 10, 128, ER_4K) },
-     { INFO("w25q80",      0xef5014,      0,  64 << 10,  16, ER_4K) },
--    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K) },
-+    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K),
-+      .sfdp_read = m25p80_sfdp_w25q80bl },
-     { INFO("w25q256",     0xef4019,      0,  64 << 10, 512, ER_4K),
-       .sfdp_read = m25p80_sfdp_w25q256 },
-     { INFO("w25q512jv",   0xef4020,      0,  64 << 10, 1024, ER_4K),
-diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
-index 82d84cc21f..a03a291a09 100644
---- a/hw/block/m25p80_sfdp.c
-+++ b/hw/block/m25p80_sfdp.c
-@@ -404,6 +404,42 @@ static const uint8_t sfdp_w25q01jvq[] = {
- };
- define_sfdp_read(w25q01jvq);
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index b4b1ce9efb..7ac01a3562 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -419,9 +419,11 @@ static void aspeed_machine_init(MachineState *machine)
+         aspeed_board_init_flashes(&bmc->soc->fmc,
+                               bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
+                               amc->num_cs, 0);
+-        aspeed_board_init_flashes(&bmc->soc->spi[0],
+-                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                              1, amc->num_cs);
++        for (i = 0; i < sc->spis_num; i++) {
++            aspeed_board_init_flashes(&bmc->soc->spi[i],
++                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
++                            amc->num_cs, amc->num_cs + (amc->num_cs * i));
++        }
+     }
  
-+static const uint8_t sfdp_w25q80bl[] = {
-+    0x53, 0x46, 0x44, 0x50, 0x05, 0x01, 0x00, 0xff,
-+    0x00, 0x05, 0x01, 0x10, 0x80, 0x00, 0x00, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0x7f, 0x00,
-+    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
-+    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
-+    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x0f, 0x52,
-+    0x10, 0xd8, 0x00, 0x00, 0x23, 0x02, 0xa6, 0x00,
-+    0x81, 0x6c, 0x14, 0xa7, 0xed, 0x61, 0x76, 0x33,
-+    0x7a, 0x75, 0x7a, 0x75, 0xf7, 0xa2, 0xd5, 0x5c,
-+    0x00, 0xf7, 0x1d, 0xff, 0xe9, 0x30, 0xc0, 0x80,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+};
-+define_sfdp_read(w25q80bl);
-+
- /*
-  * Integrated Silicon Solution (ISSI)
-  */
-diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
-index 89c2d8f72d..35785686a0 100644
---- a/hw/block/m25p80_sfdp.h
-+++ b/hw/block/m25p80_sfdp.h
-@@ -25,7 +25,7 @@ uint8_t m25p80_sfdp_mx66l1g45g(uint32_t addr);
+     if (machine->kernel_filename && sc->num_cpus > 1) {
+@@ -1579,7 +1581,9 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+ {
+     AspeedMachineState *bmc = ASPEED_MACHINE(machine);
+     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
++    AspeedSoCClass *sc;
+     Clock *sysclk;
++    int i;
  
- uint8_t m25p80_sfdp_w25q256(uint32_t addr);
- uint8_t m25p80_sfdp_w25q512jv(uint32_t addr);
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+     clock_set_hz(sysclk, SYSCLK_FRQ);
+@@ -1587,6 +1591,7 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+     object_unref(OBJECT(bmc->soc));
++    sc = ASPEED_SOC_GET_CLASS(bmc->soc);
+     qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
+ 
+     object_property_set_link(OBJECT(bmc->soc), "memory",
+@@ -1599,13 +1604,11 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+                               amc->num_cs,
+                               0);
+ 
+-    aspeed_board_init_flashes(&bmc->soc->spi[0],
+-                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                              amc->num_cs, amc->num_cs);
 -
-+uint8_t m25p80_sfdp_w25q80bl(uint32_t addr);
- uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
+-    aspeed_board_init_flashes(&bmc->soc->spi[1],
++    for (i = 0; i < sc->spis_num; i++) {
++        aspeed_board_init_flashes(&bmc->soc->spi[i],
+                               bmc->spi_model ? bmc->spi_model : amc->spi_model,
+-                              amc->num_cs, (amc->num_cs * 2));
++                              amc->num_cs, amc->num_cs + (amc->num_cs * i));
++    }
  
- uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
+     if (amc->i2c_init) {
+         amc->i2c_init(bmc);
 -- 
 2.34.1
 
