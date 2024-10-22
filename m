@@ -4,102 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27E6D1715C
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 03:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CC3D1715D
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t35XX-0005MT-0e; Mon, 21 Oct 2024 23:26:35 -0400
+	id 1t363w-0000N6-5E; Tue, 22 Oct 2024 00:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1t35XU-0005M5-Rk
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 23:26:32 -0400
-Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t363u-0000Mj-HA
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:00:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1t35XT-0007yP-4W
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 23:26:32 -0400
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 0E1F68A4DB0;
- Tue, 22 Oct 2024 03:26:27 +0000 (UTC)
-Received: from pdx1-sub0-mail-a259.dreamhost.com
- (trex-1.trex.outbound.svc.cluster.local [100.102.182.244])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 8CEAE8A52EA;
- Tue, 22 Oct 2024 03:26:26 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1729567586; a=rsa-sha256;
- cv=none;
- b=p47+uSZr5OnEYhqfslUIj8u1LSgh0lC0zpSSLhihUqDY3FZShlsCG+kmgnFMwf9VV1EJ7c
- VAgm9hdoRIkyQyEYSx1Uyd0nJbQwl/TNkfzXlwc0oTnjZv2Q2Q74GyBD1aw3Mjv9Q4zuAC
- zfObrmjc+Z7hH8/wRolv6tUXx744M08UafXUIIY9bbgPF+J/nZ5q9od0nRjEYR8zOhWgTo
- n1qwDt07ratVSpCzaGSsYi9qnfJfZwfcli+ztTdh+sVwuHj1OyFphCGz+NEYIC1ARKwRvF
- BhKVc8suxO7j1H/rYdFsAjIqHuGTUtiCESg1/bm+Txl4ITOdp2BMy2pqEKW62w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1729567586;
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t363r-0002zz-DC
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:00:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729569592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=lH0MQXykfOQt1lUch/UPd3kSWdAlSp9z3M7wrBCgsKA=;
- b=4COUlfFMfz8BDmOoNe82lq/nOrSbuIWkxWoEuhaTZPwxNuRLgc3wPoi6r2aj4xb2ZhWfCs
- 3exm1cHkMqE2HaRuAkBe69sGaHUXjCZ5+ZzLbc1sC4T44YXYN2pVUtaksxp/w0+ubBtQ1Y
- MKCDM2pMX6wHcJRcvQpY1f8QjbbblvbwSWRH02wqCJCenJPSuHftuJaIlTLPquIHpgdID2
- vtpberV7tMGRUwG9fCngSzefEqd4P+bo8hQGghVzBWKGlCUO1xGtM/c9GSDERIRHlwAaNb
- aKmsLkpRYYz59HjHqWaNZAw9uFwBQPTEYeCCCV4UkxtJpnDZT7luBzgvnehCjg==
-ARC-Authentication-Results: i=1; rspamd-6bcbdd57f8-cgzfq;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Lettuce-Invention: 1b5f166378ae4e5c_1729567586868_4284065658
-X-MC-Loop-Signature: 1729567586868:1895697523
-X-MC-Ingress-Time: 1729567586868
-Received: from pdx1-sub0-mail-a259.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.102.182.244 (trex/7.0.2); Tue, 22 Oct 2024 03:26:26 +0000
-Received: from offworld (ip72-199-50-187.sd.sd.cox.net [72.199.50.187])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a259.dreamhost.com (Postfix) with ESMTPSA id 4XXcz550lmz1p; 
- Mon, 21 Oct 2024 20:26:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1729567586;
- bh=lH0MQXykfOQt1lUch/UPd3kSWdAlSp9z3M7wrBCgsKA=;
- h=Date:From:To:Cc:Subject:Content-Type;
- b=opkHkLsC0YFqllBezWtlCa0SToTjzP3LCiG1MxP+fZE3lfG+LKIGHzTOp4Miu1ypL
- +7FJ1mfRHGUyIZEs1zW+hbDyo/2gDcKRYo1YPqI/1XE7IgX6YuGeCABaZBUhPvgZSJ
- wdGs0cSmp40qPANv3OHYKvbCKmxucfjx0ZfcEtiVQqzLxotxIQQUni6K9BSm2ZSeuU
- bmCuaAISNkmE6FDeOYUqf6udJlGJXs3AIQNkCV5kMfEtzColHfWzcQKffv6yaVaGoF
- 89eeyAg0lg39YessKltYEB2W8t6VTJmPSpdPV1bdewbi4Ou1FtZ/6pSnuh338fwMq2
- d3rZqCt4GJKWQ==
-Date: Mon, 21 Oct 2024 20:23:46 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: ajay.opensrc@micron.com, fan.ni@samsung.com, john@jagalactic.com, 
- emirakhur@micron.com, ajayjoshi@micron.com, sthanneeru@micron.com, 
- ravis.opensrc@micron.com, arramesh@micron.com, tmmulgund@micron.com, 
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/cxl: Support aborting background commands
-Message-ID: <jdipjanthgt6atlksngodxjevfb5d43d5rshtxqxxwruszqa3e@vctljs77lg4e>
-References: <20240813221255.179200-1-dave@stgolabs.net>
- <20240827163357.0000228e@Huawei.com>
+ in-reply-to:in-reply-to:references:references;
+ bh=KqwQ8K5nr+5/4hLsGkp1lksLREgqh4Qx9XjG8XBHcTI=;
+ b=EqgV0kV/jDZHiQxeMgEuiPa1HiL/q0CuqStMlaMSnAwHeHodSD+/4deSpbSF2QHEUnaxXx
+ ujW77NkywsH0G/xJV4ytmc1op1oy52Nyoz+y78TouAWnqw+k2I5Mruz0+6UPGWYgvvXZsT
+ Y+1qnki1/UIrk0tmOf6VhX4UG3ahipY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-328-V1r91DhXMYaSHT_G35aicw-1; Mon, 21 Oct 2024 23:59:49 -0400
+X-MC-Unique: V1r91DhXMYaSHT_G35aicw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-37d47127e69so2248219f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 20:59:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729569586; x=1730174386;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KqwQ8K5nr+5/4hLsGkp1lksLREgqh4Qx9XjG8XBHcTI=;
+ b=THSyKDxufr9eBI0GzrOZBKRbyrPRcq/q9FfVDxbRLmFc9WDNKeFMAmH8yt1FHdQfPv
+ qWJMAtp4y2DIzb+wZf6mWqjrhpPOlPy4uRa8Jb5oyYEffu05KeGq0pnGNYNDop526r/X
+ +nLNvTs6b7XQYg8ZbkT/rzhOyoG3WXitlP20W2Nm4zw3Y10BsQDTyg4qlLoml0msNRhU
+ ZTpXj8Uv86TV7g0XqhmlfktSKoYmrZC3gvgw+4DzPGcO6q3xZ/r3D7dP3oJgtZBgpQA2
+ DqVqpNCCT67Hs629a+3hr5A3GNjZFLvSiP4sFOfkjSRB0nyfpYkj4YT+zFcBSOA3SBEC
+ MDzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYnwZr0ZKL3G31JkcmtuhhAbwqFBauWg2PH2I9hfIE1cwl7gwBwuQt7yXpT4XlDcK/2EbD3+vkd5Zc@nongnu.org
+X-Gm-Message-State: AOJu0YxYGsi43EHBSRJ8j3bDSTn8K8eQxQFvVvhtFquw/GAgsgIvU+At
+ MR/rbYJTjlbFAh9d4hr09UNEWwPSEGZFzHE7EX2AeCuuODWP9AfqxW6mchq44luTje4+KD+MDIs
+ 2JA5BmTVX/KT8KujLhrsfJRMaOJ+mLWS4bi8kZrjRyFCMBZkEtep0Sbqt96q5vrDfaNPrULZrq4
+ tVh7mN9KEzbvOvLKshJnfyFtx5LJI=
+X-Received: by 2002:a05:6000:100d:b0:37d:4f1b:359 with SMTP id
+ ffacd0b85a97d-37eb48a0f28mr8425625f8f.53.1729569586086; 
+ Mon, 21 Oct 2024 20:59:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoHBwD1eBGvVDwEpmOOHbydv6BQXRrW9nlVLYQRYuPC0a2avJq/Api+VUqS7TM6n4ddj22CGmIayZKWxjuKNw=
+X-Received: by 2002:a05:6000:100d:b0:37d:4f1b:359 with SMTP id
+ ffacd0b85a97d-37eb48a0f28mr8425612f8f.53.1729569585620; Mon, 21 Oct 2024
+ 20:59:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240827163357.0000228e@Huawei.com>
-User-Agent: NeoMutt/20240425
-Received-SPF: pass client-ip=23.83.222.61; envelope-from=dave@stgolabs.net;
- helo=fly.ash.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241015131735.518771-1-pbonzini@redhat.com>
+ <20241015131735.518771-4-pbonzini@redhat.com>
+ <ZxX1jSkJ3Muk11zC@intel.com>
+ <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
+ <ME0P300MB10407A693663615D8AD3F507954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <ME0P300MB10407A693663615D8AD3F507954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 22 Oct 2024 05:59:34 +0200
+Message-ID: <CABgObfZtY7yd4WtBcSNB8VhtZcEgLqsYFQ0fE_90oeRRryBbNA@mail.gmail.com>
+Subject: Re: [PATCH 03/16] rust: pass rustc_args when building all crates
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000c401ac062508cc00"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,58 +102,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Aug 2024, Jonathan Cameron wrote:\n
->No comments inline and LGTM. I'll queue it on my tree and push
->that out on gitlab sometime soonish.
+--000000000000c401ac062508cc00
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I don't see this picked up, which is a good thing atm. While testing
-the kernel side, I noticed the following is needed, will send a v2
-with it folded in.
+Il mar 22 ott 2024, 04:35 Junjie Mao <junjie.mao@hotmail.com> ha scritto:
 
-diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-index 1a9779ed8201..0d429b59aafc 100644
---- a/hw/cxl/cxl-device-utils.c
-+++ b/hw/cxl/cxl-device-utils.c
-@@ -94,14 +94,15 @@ static uint64_t mailbox_reg_read(void *opaque, hwaddr offset, unsigned size)
-	     cxl_dstate->mbox_reg_state64[offset / size] = bg_status_reg;
-	 }
-	 if (offset == A_CXL_DEV_MAILBOX_STS) {
-+            int bgop;
-	     uint64_t status_reg = cxl_dstate->mbox_reg_state64[offset / size];
+>
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+>
+> > On Mon, Oct 21, 2024 at 8:16=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> =
+wrote:
+> >> unsafe_op_in_unsafe_fn is allowed in
+> >> rust/qemu-api/src/lib.rs. So should we wrap the bindings in a separate
+> >> lib (similar to the rust/bindings in the Linux kernel)?
+> >>
+> >> This way, the special lint settings can be applied only to the binding
+> >> files, while the default lint checks can cover the other user
+> >> development code.
+> >>
+> >> In addition, another thing that confuses me is why bindgen still
+> >> generates code that does not follow the unsafe_op_in_unsafe_fn
+> >> requirement. It seems that bindgen has supported unsafe_op_in_unsafe_f=
+n
+> >> since v0.62 [1, 2], but binding code we generated still violates
+> >> unsafe_op_in_unsafe_fn. Is this a bug of bindgen?
+> >
+> > The plan is to support older versions of bindgen (0.60.x) as long as
+> > Debian has them. One possibility to fix this is, as you said, to use a
+> > completely separate crate. Another is to add #![allow()] to just the
+> > bindings module, for example by changing bindgen.rs to
+> >
+> > #![allow(...)]
+> > include!("bindgen.rs.inc")
+> >
+> > This is related to the fact that we don't have yet a good way to run
+> > "clippy", because "cargo clippy" needs the bindgen.rs file. So we
+> > should probably look at these issues at once.
+> >
+> > Paolo
+>
+> Since meson 0.6.0 clippy-driver can be used as a wrapper of rustc. So we
+> can run clippy by:
+>
+>    mkdir build.clippy && cd build.clippy
+>    RUSTC=3Dclippy-driver ../configure --enable-rust ...
+>    ninja librust_x86_64_softmmu.a
+>
 
-	     qemu_mutex_lock(&cci->bg.lock);
--            if (cci->bg.complete_pct == 100 || cci->bg.aborted) {
--                status_reg = FIELD_DP64(status_reg, CXL_DEV_MAILBOX_STS, BG_OP,
--                                        0);
--                cxl_dstate->mbox_reg_state64[offset / size] = status_reg;
--            }
-+            bgop = !(cci->bg.complete_pct == 100 || cci->bg.aborted);
-+
-+            status_reg = FIELD_DP64(status_reg, CXL_DEV_MAILBOX_STS, BG_OP,
-+                                    bgop);
-+            cxl_dstate->mbox_reg_state64[offset / size] = status_reg;
-	     qemu_mutex_unlock(&cci->bg.lock);
-	 }
-	 return cxl_dstate->mbox_reg_state64[offset / size];
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index d5b084388288..760a8571fda6 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2731,9 +2731,11 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-      [FIRMWARE_UPDATE][GET_INFO] = { "FIRMWARE_UPDATE_GET_INFO",
-	 cmd_firmware_update_get_info, 0, 0 },
-      [FIRMWARE_UPDATE][TRANSFER] = { "FIRMWARE_UPDATE_TRANSFER",
--        cmd_firmware_update_transfer, ~0, CXL_MBOX_BACKGROUND_OPERATION },
-+        cmd_firmware_update_transfer, ~0,
-+        CXL_MBOX_BACKGROUND_OPERATION | CXL_MBOX_BACKGROUND_OPERATION_ABORT },
-      [FIRMWARE_UPDATE][ACTIVATE] = { "FIRMWARE_UPDATE_ACTIVATE",
--        cmd_firmware_update_activate, 2, CXL_MBOX_BACKGROUND_OPERATION },
-+        cmd_firmware_update_activate, 2,
-+        CXL_MBOX_BACKGROUND_OPERATION | CXL_MBOX_BACKGROUND_OPERATION_ABORT },
-      [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
-      [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set,
-			  8, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
+True but it's less handy to have a separately-configured tree instead of
+just "make clippy". Also the same is true of rustfmt and rustdoc (which
+ideally would be part of the build so that doctests are also run by make
+check-unit). So the question of how to emulate these other cargo tools is
+open.
 
-Thanks,
-Davidlohr
+Paolo
+
+
+> --
+> Best Regards
+> Junjie Mao
+>
+>
+
+--000000000000c401ac062508cc00
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mar 22 ott 2024, 04:35 Junjie Mao &lt;<a href=3D"ma=
+ilto:junjie.mao@hotmail.com">junjie.mao@hotmail.com</a>&gt; ha scritto:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" =
+rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; On Mon, Oct 21, 2024 at 8:16=E2=80=AFAM Zhao Liu &lt;<a href=3D"mailto=
+:zhao1.liu@intel.com" target=3D"_blank" rel=3D"noreferrer">zhao1.liu@intel.=
+com</a>&gt; wrote:<br>
+&gt;&gt; unsafe_op_in_unsafe_fn is allowed in<br>
+&gt;&gt; rust/qemu-api/src/<a href=3D"http://lib.rs" rel=3D"noreferrer nore=
+ferrer" target=3D"_blank">lib.rs</a>. So should we wrap the bindings in a s=
+eparate<br>
+&gt;&gt; lib (similar to the rust/bindings in the Linux kernel)?<br>
+&gt;&gt;<br>
+&gt;&gt; This way, the special lint settings can be applied only to the bin=
+ding<br>
+&gt;&gt; files, while the default lint checks can cover the other user<br>
+&gt;&gt; development code.<br>
+&gt;&gt;<br>
+&gt;&gt; In addition, another thing that confuses me is why bindgen still<b=
+r>
+&gt;&gt; generates code that does not follow the unsafe_op_in_unsafe_fn<br>
+&gt;&gt; requirement. It seems that bindgen has supported unsafe_op_in_unsa=
+fe_fn<br>
+&gt;&gt; since v0.62 [1, 2], but binding code we generated still violates<b=
+r>
+&gt;&gt; unsafe_op_in_unsafe_fn. Is this a bug of bindgen?<br>
+&gt;<br>
+&gt; The plan is to support older versions of bindgen (0.60.x) as long as<b=
+r>
+&gt; Debian has them. One possibility to fix this is, as you said, to use a=
+<br>
+&gt; completely separate crate. Another is to add #![allow()] to just the<b=
+r>
+&gt; bindings module, for example by changing <a href=3D"http://bindgen.rs"=
+ rel=3D"noreferrer noreferrer" target=3D"_blank">bindgen.rs</a> to<br>
+&gt;<br>
+&gt; #![allow(...)]<br>
+&gt; include!(&quot;bindgen.rs.inc&quot;)<br>
+&gt;<br>
+&gt; This is related to the fact that we don&#39;t have yet a good way to r=
+un<br>
+&gt; &quot;clippy&quot;, because &quot;cargo clippy&quot; needs the <a href=
+=3D"http://bindgen.rs" rel=3D"noreferrer noreferrer" target=3D"_blank">bind=
+gen.rs</a> file. So we<br>
+&gt; should probably look at these issues at once.<br>
+&gt;<br>
+&gt; Paolo<br>
+<br>
+Since meson 0.6.0 clippy-driver can be used as a wrapper of rustc. So we<br=
+>
+can run clippy by:<br>
+<br>
+=C2=A0 =C2=A0mkdir build.clippy &amp;&amp; cd build.clippy<br>
+=C2=A0 =C2=A0RUSTC=3Dclippy-driver ../configure --enable-rust ...<br>
+=C2=A0 =C2=A0ninja librust_x86_64_softmmu.a<br></blockquote></div></div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">True but it&#39;s less handy to =
+have a separately-configured tree instead of just &quot;make clippy&quot;. =
+Also the same is true of rustfmt and rustdoc (which ideally would be part o=
+f the build so that doctests are also run by make check-unit). So the quest=
+ion of how to emulate these other cargo tools is open.=C2=A0</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">
+<br>
+--<br>
+Best Regards<br>
+Junjie Mao<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000c401ac062508cc00--
+
 
