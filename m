@@ -4,68 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8839DD1CDAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD18D1CDAD
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t39y8-00043C-45; Tue, 22 Oct 2024 04:10:20 -0400
+	id 1t39zt-0004jn-3q; Tue, 22 Oct 2024 04:12:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t39y6-000433-6p
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:10:18 -0400
+ id 1t39zr-0004jY-Lc
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:12:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t39y2-000783-Tn
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:10:17 -0400
+ id 1t39zp-0007EN-TA
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:12:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729584613;
+ s=mimecast20190719; t=1729584724;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HDM2FlhfCKKSY9yCg4S9S7Ywe4XWSqZTJ/VX1RQNadQ=;
- b=DOv46NtZrs1pA7RhmqHGGaZp8AH8zgZvmgBVaXWqCKp81j0HV6lzbgp66z5lDGqG+DJfek
- xVmKB+tBXpWu71TW5NNHdZYuUeXnh0I5uB+3x8xYMDfDdIUEqDANOxmrrxAkrh0T7gfyoW
- Z57MZJuSWtwLlkIAv3eev7VnMd7BCi4=
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=fySNDdCh8RQMEO52NkPsNjIBdoZcxAtVIG8rYTJigRg=;
+ b=LpTm6Jx21USrY40FXh933lfgtWqqdf2N53udCfH62iEsYjZ/AB/nQWjvbov4EpA8MgJy5L
+ n+iBvVhLtqd4Q3RQigAW4m3bCv0BRqVfwGxdNVqPJvOMnSHJGyqoosyU5SoNFz1c+Fp8f4
+ 2m12z/l9ZjSJkM597aP+LBe3STqSp7I=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-3BHyw9v6ObKf_zDHZZiSjA-1; Tue,
- 22 Oct 2024 04:10:09 -0400
-X-MC-Unique: 3BHyw9v6ObKf_zDHZZiSjA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-7ElL9kacMtC5OkhwiAsdgQ-1; Tue,
+ 22 Oct 2024 04:12:01 -0400
+X-MC-Unique: 7ElL9kacMtC5OkhwiAsdgQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69E0A1955D5D; Tue, 22 Oct 2024 08:10:08 +0000 (UTC)
+ id 7338419560B0; Tue, 22 Oct 2024 08:12:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.59])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF498195607C; Tue, 22 Oct 2024 08:10:05 +0000 (UTC)
-Date: Tue, 22 Oct 2024 09:10:01 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECBAF30001AA; Tue, 22 Oct 2024 08:11:55 +0000 (UTC)
+Date: Tue, 22 Oct 2024 09:11:52 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: Roque Arcudia Hernandez <roqueh@google.com>, ankeesler@google.com,
- mst@redhat.com, qemu-devel@nongnu.org, venture@google.com
-Subject: Re: [PATCH 1/2] ui: Allow injection of vnc display name
-Message-ID: <Zxdd2UUtvSqBap9D@redhat.com>
-References: <20241017215304.3916866-1-roqueh@google.com>
- <20241017215304.3916866-2-roqueh@google.com>
- <CAMxuvax3ZRcGGE7Lyq=j-3pGtJ3jThw+rFyHhdBbhbUCyVs6+g@mail.gmail.com>
- <ZxdaAtp6QlpqRSDs@redhat.com>
- <CAJ+F1CL003+CBNQmnD_pwx+TyvNDR75GnL-j7o+dXzkHbxYOuw@mail.gmail.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
+Message-ID: <ZxdeSKAQJYaoGvtT@redhat.com>
+References: <20241021215220.982325-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CL003+CBNQmnD_pwx+TyvNDR75GnL-j7o+dXzkHbxYOuw@mail.gmail.com>
+In-Reply-To: <20241021215220.982325-1-peterx@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
@@ -92,185 +87,71 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 22, 2024 at 12:04:29PM +0400, Marc-André Lureau wrote:
-> Hi
+On Mon, Oct 21, 2024 at 05:52:20PM -0400, Peter Xu wrote:
+> Per previous discussion [1,2], this patch deprecates query-migrationthreads
+> command.
 > 
-> On Tue, Oct 22, 2024 at 11:54 AM Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
+> To summarize, the major reason of the deprecation is due to no sensible way
+> to consume the API properly:
 > 
-> > On Mon, Oct 21, 2024 at 03:14:39PM +0400, Marc-André Lureau wrote:
-> > > Hi Roque
-> > >
-> > > On Fri, Oct 18, 2024 at 1:53 AM Roque Arcudia Hernandez
-> > > <roqueh@google.com> wrote:
-> > > >
-> > > > From: Andrew Keesler <ankeesler@google.com>
-> > > >
-> > > > Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
-> > Identification
-> > > > Data) is propagated by QEMU such that a virtual display presents
-> > legitimate
-> > > > metadata (e.g., name, serial number, preferred resolutions, etc.) to
-> > its
-> > > > connected guest.
-> > > >
-> > > > This change propagates an optional user-provided display name to
-> > > > QemuConsole. Future changes will update downstream devices to leverage
-> > this
-> > > > display name for various uses, the primary one being providing a
-> > custom EDID
-> > > > name to guests. Future changes will also update other displays (e.g.,
-> > spice)
-> > > > with a similar option to propagate a display name to downstream
-> > devices.
-> > > >
-> > > > Currently, every virtio-gpu virtual display has the same name: "QEMU
-> > > > Monitor". We hope to be able to inject the EDID name of virtual
-> > displays in
-> > > > order to test guest behavior that is specific to display names. We
-> > provide the
-> > > > ability to inject the display name from the display configuration as
-> > that most
-> > > > closely resembles how real displays work (hardware displays contain
-> > static EDID
-> > > > information that is provided to every connected host).
-> > > >
-> > > > It should also be noted that EDID names longer than 12 bytes will be
-> > truncated
-> > > > per spec (I think?).
-> > > >
-> > > > Signed-off-by: Andrew Keesler <ankeesler@google.com>
-> > > > Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-> > > > ---
-> > > >  include/ui/console.h | 1 +
-> > > >  ui/console-priv.h    | 1 +
-> > > >  ui/console.c         | 8 ++++++++
-> > > >  ui/vnc.c             | 8 +++++++-
-> > > >  4 files changed, 17 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/include/ui/console.h b/include/ui/console.h
-> > > > index 5832d52a8a..74ab03ed72 100644
-> > > > --- a/include/ui/console.h
-> > > > +++ b/include/ui/console.h
-> > > > @@ -408,6 +408,7 @@ int qemu_console_get_index(QemuConsole *con);
-> > > >  uint32_t qemu_console_get_head(QemuConsole *con);
-> > > >  int qemu_console_get_width(QemuConsole *con, int fallback);
-> > > >  int qemu_console_get_height(QemuConsole *con, int fallback);
-> > > > +void qemu_console_set_name(QemuConsole *con, const char *name);
-> > > >  /* Return the low-level window id for the console */
-> > > >  int qemu_console_get_window_id(QemuConsole *con);
-> > > >  /* Set the low-level window id for the console */
-> > > > diff --git a/ui/console-priv.h b/ui/console-priv.h
-> > > > index 43ceb8122f..9f2769843f 100644
-> > > > --- a/ui/console-priv.h
-> > > > +++ b/ui/console-priv.h
-> > > > @@ -18,6 +18,7 @@ struct QemuConsole {
-> > > >      Object parent;
-> > > >
-> > > >      int index;
-> > > > +    const char *name;
-> > > >      DisplayState *ds;
-> > > >      DisplaySurface *surface;
-> > > >      DisplayScanout scanout;
-> > > > diff --git a/ui/console.c b/ui/console.c
-> > > > index 5165f17125..f377fd8417 100644
-> > > > --- a/ui/console.c
-> > > > +++ b/ui/console.c
-> > > > @@ -1452,6 +1452,14 @@ int qemu_console_get_height(QemuConsole *con,
-> > int fallback)
-> > > >      }
-> > > >  }
-> > > >
-> > > > +void qemu_console_set_name(QemuConsole *con, const char *name)
-> > > > +{
-> > > > +    if (con == NULL) {
-> > > > +        return;
-> > > > +    }
-> > > > +    con->name = name;
-> > > > +}
-> > > > +
-> > > >  int qemu_invalidate_text_consoles(void)
-> > > >  {
-> > > >      QemuConsole *s;
-> > > > diff --git a/ui/vnc.c b/ui/vnc.c
-> > > > index 93a8dbd253..7d6acc5c2e 100644
-> > > > --- a/ui/vnc.c
-> > > > +++ b/ui/vnc.c
-> > > > @@ -3595,6 +3595,9 @@ static QemuOptsList qemu_vnc_opts = {
-> > > >          },{
-> > > >              .name = "power-control",
-> > > >              .type = QEMU_OPT_BOOL,
-> > > > +        },{
-> > > > +            .name = "name",
-> > > > +            .type = QEMU_OPT_STRING,
-> > > >          },
-> > > >          { /* end of list */ }
-> > > >      },
-> > > > @@ -4016,7 +4019,7 @@ void vnc_display_open(const char *id, Error
-> > **errp)
-> > > >      QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, id);
-> > > >      g_autoptr(SocketAddressList) saddr_list = NULL;
-> > > >      g_autoptr(SocketAddressList) wsaddr_list = NULL;
-> > > > -    const char *share, *device_id;
-> > > > +    const char *share, *device_id, *name;
-> > > >      QemuConsole *con;
-> > > >      bool password = false;
-> > > >      bool reverse = false;
-> > > > @@ -4217,6 +4220,9 @@ void vnc_display_open(const char *id, Error
-> > **errp)
-> > > >      }
-> > > >      qkbd_state_set_delay(vd->kbd, key_delay_ms);
-> > > >
-> > > > +    name = qemu_opt_get(opts, "name");
-> > > > +    qemu_console_set_name(vd->dcl.con, name);
-> > >
-> > > Why not expose a "head_name" property in QemuGraphicConsole?
-> >
-> > QemuGraphicConsole isn't mapped to any CLI though, is it ?
-> >
-> >
-> No, it would be a bit tedious to do so with multi-head -devices.
+>   (1) The reported list of threads are incomplete (ignoring destination
+>       threads and non-multifd threads).
 > 
+>   (2) For CPU pinning, there's no way to properly pin the threads with
+>       the API if the threads will start running right away after migration
+>       threads can be queried, so the threads will always run on the default
+>       cores for a short window.
 > 
-> > In QAPI we have DisplayOptions union  for all the local displays,
-> > and as a user I think I'd expect 'name' to be settable from
-> > those.
-> >
-> >
-> DisplayOptions is meant for the UI display.. Here, the intent is really to
-> set the HW EDID name field.
+>   (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
+>       which will provide proper names for all migration threads.
+> 
+> [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
+> [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  docs/about/deprecated.rst | 8 ++++++++
+>  qapi/migration.json       | 6 +++++-
+>  migration/threadinfo.c    | 4 ++++
+>  3 files changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index ce38a3d0cf..ffb147e896 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -147,6 +147,14 @@ options are removed in favor of using explicit ``blockdev-create`` and
+>  ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
+>  details.
+>  
+> +``query-migrationthreads`` (since 9.2)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-But it is also applicable to the backend, all of which have a
-name for the display set in the window titlebar. We should
-be looking at both sides IMHO.
+The title underline should be truncated at the ')'
 
-> Also DisplayOptions doesn't map to a specific console.
+> +
+> +To be removed with no replacement, as it reports only a limited set of
+> +threads (for example, it only reports source side of multifd threads,
+> +without reporting any destination threads, or non-multifd source threads).
+> +For debugging purpose, please use ``-name $VM,debug-threads=on`` instead.
+> +
+>  Incorrectly typed ``device_add`` arguments (since 6.2)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-It could be made to contain per-head information if we desired
-though, and would be more useful than just the name. There were
-some patches a while ago trying to express per-console placement
-of windows onto host monitor outputs, for example.
+>  QemuMutex migration_threads_lock;
+> @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
+>      MigrationThread *thread = NULL;
+>  
+>      QEMU_LOCK_GUARD(&migration_threads_lock);
+> +
+> +    warn_report("Command 'query-migrationthreads' is deprecated");
 
-> > own CLI options we can expose.
-> >
-> > For runtime setting, we have a QMP  "display-update" command, that
-> > currently just lets you change VNC listening address, but was intended
-> > to allow for any runtime display changes.
-> >
-> > > This way it should be possible to set the name with QMP qom-set.
-> >
-> > qom-set isn't a particularly nice interface, as things you can set
-> > from that are not introspectable and have no type information that
-> > can be queried.
-> >
-> 
-> fwiw, it could be easily exposed to D-Bus, for ex:
-> 
-> busctl --user set-property org.qemu /org/qemu/Display1/Console_1
-> org.qemu.Display1.Console HeadName s "First Monitor"
+This needs to be warn_report_once, since it is in a codepath that can be
+called repeated at runtime.
 
-That could be mapped to whatever interface we expose on the QEMU side,
-it doesn't have to be qom-set.
+> +
+>      QLIST_FOREACH(thread, &migration_threads, node) {
+>          MigrationThreadInfo *info = g_new0(MigrationThreadInfo, 1);
+>          info->name = g_strdup(thread->name);
 
 With regards,
 Daniel
