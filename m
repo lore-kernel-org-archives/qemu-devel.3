@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C47A6D17157
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 02:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094EBD17159
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 02:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t34Q4-0005w8-9L; Mon, 21 Oct 2024 22:14:48 -0400
+	id 1t34Q7-0005xC-5M; Mon, 21 Oct 2024 22:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t34Q2-0005vO-Nn
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:14:46 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1t34Q4-0005wO-Lg
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:14:48 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t34Q1-0001Wq-49
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:14:46 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7eb0bc007edso30099a12.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 19:14:44 -0700 (PDT)
+ id 1t34Q3-0001XX-0Q
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:14:48 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-20bb39d97d1so47257575ad.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 19:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729563283; x=1730168083;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729563285; x=1730168085;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W5MvZfZJ1w+4jWoKSy1g+C8Ivvk/AddqkyL7u9uzph4=;
- b=lPU5yoeQOO6zwtnLcmgOv6RGaNAHh0BrgtmkN3qJoKFw060w2rr12Nnlz2iNJebhFD
- 6MKcEud4OgRtFZf24cwHSyor/7cAU57MOl48T2KTOigZidnCp4RmDSncRMXM9N3YFsSH
- jR1dO7goELGgB/KgCJ5GJPnCojdq/EPZtIAqK/zZo6pUvbFI5nauIX+2zc57nABtVKUK
- Wbnm0o+pRnKEFpj13AaT0pMicHnihoKCclMOM71WTGy/P4QlrtNQtzNNBXC0Eg2zt+8d
- sQ8HFrTJCdyt+Bnv4ixxDj4WA5ZTReWGmuypLe9qQ1uQlIOsVgTuMzNl783bb8kSlzIW
- n6ZQ==
+ bh=Zj16xsP69yRm8kfvS7x0oc4hUe/30vMQW6eBXthukQ8=;
+ b=hI8cFTLwjn5w6OPv5tBwgHoQP1makOHAVFMJ9aYQe4kW74jDxZWxuq4DPyncqZnvTa
+ KFgGmT/XNKS3juWkfDGgUzbvo7mQT/kfcPuv79YkYjEdm0SLN5srzB87BqBz5r3p6AJ9
+ +lF4QDf1LMaQvj98BjM8tg7SK56d9qBu4C95fiy8M0V3xc6VHVC07yusFuXgBbS8gknv
+ uWNZAIrEbitlPPotuHRdKnMqI77lrQXce65CFiD8V+QAsiqG+PIOA7YBRVFG2cyyHKfx
+ kPQD4/fbJq9F0tSJaaHcF8n2LcQOnDj7PaApnxXXBbqkD5q5itQQBFq0DKshjQgA28lP
+ bNFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729563283; x=1730168083;
+ d=1e100.net; s=20230601; t=1729563285; x=1730168085;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W5MvZfZJ1w+4jWoKSy1g+C8Ivvk/AddqkyL7u9uzph4=;
- b=gEF5wky7X+l+b1GRS3obCtElceOS5FHk+lmEUBIB1jU73ariOSI+I57yXS+1npDUGB
- ne8YxzayQikbI/fY+7b923BK58ovCwh7DQQ+j2LvkKDSzeAHNbl2gVgdJi7D/Yc4Q1u+
- 1/lvDjRKzqlitZWHyA5LdmPWhVQTvzi7HKb1Xfw3uQTijp1nYqxB1cnLllM12sZBRyVH
- sGXDVaBOvjoPj2GYfUejGYyUyvntn2HMz8hhjGjNmsNDcmTXIdOzkMWcpXgzBXDVFZBr
- xcW3316WJdVUzvv3MT87Yidz+Z+AIcdU849CIDH0IQegz6alzGePITWoFvjDkaZEkMGX
- kCLg==
-X-Gm-Message-State: AOJu0YzLLLSmnQPxi9BzSL9D93WLitC7NXfuWQBC/ARxDIUFPLS2fI//
- nkcJAIQu8h1T/mimxOJI7XRqtfAWr9hq4TaqXewo9fFNNeEZuct9gWEQ8khd2fo5jP0PlI7Dvif
- FuMkTSA==
-X-Google-Smtp-Source: AGHT+IENuVTNXjHICjhlAVrfJZrJ6dYjOmJ/DjzyWdC0koxZVln6NeZFXsl3SeQE82G6xu8LLtkFXw==
-X-Received: by 2002:a05:6a20:d795:b0:1d9:252f:a063 with SMTP id
- adf61e73a8af0-1d96dece061mr1204868637.25.1729563282891; 
- Mon, 21 Oct 2024 19:14:42 -0700 (PDT)
+ bh=Zj16xsP69yRm8kfvS7x0oc4hUe/30vMQW6eBXthukQ8=;
+ b=LaU1xlBwfLL3zmvBl+5ynprVujfTOIkH54EVaW0FAiG/XR0jy/c2TZ8m9Lzi6Ansx8
+ YUmIxmJPPKsYzBKzDUsVTBcgjYXEoS5cdDJPY576bp/7OPQOgbDvbhm3jyPY8Brc38+o
+ H3tDM3nmGIdne74d3mTdYvfpMPnikJ0tpRHVhDevB0fcj1MfMJLRdoGjtoNJiA4QplUQ
+ 9ZgLIyPpvvfEn/Fs1P1WTtd11xKAUOnpd0Gyi6kfU1RlSuJKSo3+thFVm+bTqMUKxM6u
+ wFEyHCgy0svVm7tk+rL515gskaPnwnaNYlK1sC3l2A513tgrdWjkdcRad9Q6C+3l9asA
+ 6JTw==
+X-Gm-Message-State: AOJu0YweOjoFYo00snbTtitHFC9bOo+CkAh2iV9mNND4QEwBfLtQGVfz
+ MfIrkN2FrNXI5bB0NReS+eAkJ1FCg18r5qTlsZ+QhW5v3Y0YssAEO+VBKOg9vhxa4/dN1FzbtIk
+ nuOU+oA==
+X-Google-Smtp-Source: AGHT+IE2JzQP3YDsudqrkKBKctPz5ZJzYYsslGXvmJnnuJTqMHDtLOINXJBhEC09M53+vWt3lvOVdA==
+X-Received: by 2002:a17:903:2451:b0:20c:5cdd:a91 with SMTP id
+ d9443c01a7336-20e9492f9damr24506215ad.41.1729563284775; 
+ Mon, 21 Oct 2024 19:14:44 -0700 (PDT)
 Received: from Hyman-Dev-Euler.zelin.local ([103.172.41.198])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0bd63fsm32726545ad.173.2024.10.21.19.14.41
+ d9443c01a7336-20e7f0bd63fsm32726545ad.173.2024.10.21.19.14.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Oct 2024 19:14:42 -0700 (PDT)
+ Mon, 21 Oct 2024 19:14:44 -0700 (PDT)
 From: yong.huang@smartx.com
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  yong.huang@smartx.com
-Subject: [PATCH v3 2/5] tests/migration: Make initrd-stress.img built by
- default
-Date: Tue, 22 Oct 2024 10:14:23 +0800
-Message-Id: <712b58440ee6a2cfae925978276171553dbae1eb.1729562974.git.yong.huang@smartx.com>
+Subject: [PATCH v3 3/5] guestperf: Support deferred migration for multifd
+Date: Tue, 22 Oct 2024 10:14:24 +0800
+Message-Id: <62b27597177e6c756475bcb95a5e1bc35a998cd3.1729562974.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <cover.1729562974.git.yong.huang@smartx.com>
 References: <cover.1729562974.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,55 +99,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hyman Huang <yong.huang@smartx.com>
 
-The initrd-stress.img was compiled by specifying the target,
-to make it easier for developers to play the guestperf tool,
-make it built when dependencies suffices.
+The way to enable multifd migration has been changed by commit,
+82137e6c8c (migration: enforce multifd and postcopy preempt to
+be set before incoming), and guestperf has not made the
+necessary changes. If multifd migration had been enabled in the
+previous manner, the following error would have occurred:
+Multifd must be set before incoming starts
+
+Supporting deferred migration will fix it.
 
 Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/migration/meson.build | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ scripts/migration/guestperf/engine.py | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/tests/migration/meson.build b/tests/migration/meson.build
-index a91aa61c65..e10acbe317 100644
---- a/tests/migration/meson.build
-+++ b/tests/migration/meson.build
-@@ -2,17 +2,21 @@ sysprof = dependency('sysprof-capture-4', method: 'pkg-config', required: false)
- glib_static = dependency('glib-2.0', version: glib_req_ver, required: false,
-                          method: 'pkg-config', static: true)
+diff --git a/scripts/migration/guestperf/engine.py b/scripts/migration/guestperf/engine.py
+index 608d7270f6..4b15322e8d 100644
+--- a/scripts/migration/guestperf/engine.py
++++ b/scripts/migration/guestperf/engine.py
+@@ -106,7 +106,8 @@ def _migrate_progress(self, vm):
+             info.get("dirty-limit-ring-full-time", 0),
+         )
  
--stress = executable(
--  'stress',
--  files('stress.c'),
--  dependencies: [glib_static, sysprof],
--  link_args: ['-static'],
--  build_by_default: false,
--)
+-    def _migrate(self, hardware, scenario, src, dst, connect_uri):
++    def _migrate(self, hardware, scenario, src,
++                 dst, connect_uri, defer_migrate):
+         src_qemu_time = []
+         src_vcpu_time = []
+         src_pid = src.get_pid()
+@@ -220,6 +221,8 @@ def _migrate(self, hardware, scenario, src, dst, connect_uri):
+             resp = src.cmd("migrate-set-parameters",
+                            vcpu_dirty_limit=scenario._vcpu_dirty_limit)
  
--custom_target(
--  'initrd-stress.img',
--  output: 'initrd-stress.img',
--  input: stress,
--  command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@']
--)
-+if host_os == 'linux' and sysprof.found() and glib_static.found()
-+    stress = executable(
-+      'stress',
-+      files('stress.c'),
-+      dependencies: [glib_static, sysprof],
-+      link_args: ['-static'],
-+    )
++        if defer_migrate:
++            resp = dst.cmd("migrate-incoming", uri=connect_uri)
+         resp = src.cmd("migrate", uri=connect_uri)
+ 
+         post_copy = False
+@@ -373,11 +376,14 @@ def _get_common_args(self, hardware, tunnelled=False):
+     def _get_src_args(self, hardware):
+         return self._get_common_args(hardware)
+ 
+-    def _get_dst_args(self, hardware, uri):
++    def _get_dst_args(self, hardware, uri, defer_migrate):
+         tunnelled = False
+         if self._dst_host != "localhost":
+             tunnelled = True
+         argv = self._get_common_args(hardware, tunnelled)
 +
-+    custom_target(
-+      'initrd-stress.img',
-+      output: 'initrd-stress.img',
-+      input: stress,
-+      command: [find_program('initrd-stress.sh'), '@OUTPUT@', '@INPUT@'],
-+      build_by_default: true,
-+      depends: [stress],
-+    )
-+endif
++        if defer_migrate:
++            return argv + ["-incoming", "defer"]
+         return argv + ["-incoming", uri]
+ 
+     @staticmethod
+@@ -424,6 +430,7 @@ def _get_timings(self, vm):
+ 
+     def run(self, hardware, scenario, result_dir=os.getcwd()):
+         abs_result_dir = os.path.join(result_dir, scenario._name)
++        defer_migrate = False
+ 
+         if self._transport == "tcp":
+             uri = "tcp:%s:9000" % self._dst_host
+@@ -439,6 +446,9 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             except:
+                 pass
+ 
++        if scenario._multifd:
++            defer_migrate = True
++
+         if self._dst_host != "localhost":
+             dstmonaddr = ("localhost", 9001)
+         else:
+@@ -452,7 +462,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           monitor_address=srcmonaddr)
+ 
+         dst = QEMUMachine(self._binary,
+-                          args=self._get_dst_args(hardware, uri),
++                          args=self._get_dst_args(hardware, uri, defer_migrate),
+                           wrapper=self._get_dst_wrapper(hardware),
+                           name="qemu-dst-%d" % os.getpid(),
+                           monitor_address=dstmonaddr)
+@@ -461,7 +471,8 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             src.launch()
+             dst.launch()
+ 
+-            ret = self._migrate(hardware, scenario, src, dst, uri)
++            ret = self._migrate(hardware, scenario, src,
++                                dst, uri, defer_migrate)
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
 -- 
 2.27.0
 
