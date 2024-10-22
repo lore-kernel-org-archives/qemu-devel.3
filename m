@@ -4,55 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55CDED1CDA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BD3D1CDA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t38RK-0004Bd-Ae; Tue, 22 Oct 2024 02:32:22 -0400
+	id 1t38TM-0004sv-46; Tue, 22 Oct 2024 02:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1t38RF-0004BP-DS; Tue, 22 Oct 2024 02:32:17 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t38TC-0004sQ-Ld
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:34:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1t38RB-0004BA-MN; Tue, 22 Oct 2024 02:32:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1729578721; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=xFTHWmABz7tTVY3vzZrSJi7pXmKj27C/4N/K+UFrAoo=;
- b=TFkjoL3ccZX2BM8/WjmBOMXz8dFDnTgAhW9uXhfrfsWuQFnyaSYZHjVbDyDfsPYLMzhsXcTgKHGy8kR2T1fidA6G0CRpWH/FlW7PRUuVKikzeOMop9uMLJiI8LaWp+W9q74h0BT31vsvlQ/1OFzFP1GiJzhrsBoR6qWR+kSm8qQ=
-Received: from 30.166.64.99(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WHgxZCG_1729578719 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 22 Oct 2024 14:32:00 +0800
-Message-ID: <2fb117f7-55ca-4b07-838e-3ba629605e2b@linux.alibaba.com>
-Date: Tue, 22 Oct 2024 14:31:59 +0800
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t38T9-0004Sd-A3
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:34:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729578853;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tkkizOFNkGqNBWxkxM6UYEFFHHmKTfk4nImh4QleBvc=;
+ b=SChOh6y9BxZRVkILTxRKB1Ql68ktk7VpEdkLCkaR8gnMBXQVIDlXMyFuqoy6/29gqPCW7l
+ OhUUKqb1eaIy+5tEZLEgGRCo/wLCu4YRSCwpQCVNhNk5X4WW7dbSdhcsHdYkrer+PEr5+K
+ qz3q+KBGhPa0aerG34yFtcIWmna7I6Q=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-A6RFK0RIO-yUBGOI0tZB3A-1; Tue,
+ 22 Oct 2024 02:34:09 -0400
+X-MC-Unique: A6RFK0RIO-yUBGOI0tZB3A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44F3F1955F41; Tue, 22 Oct 2024 06:34:08 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.95])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BD67C1956056; Tue, 22 Oct 2024 06:34:04 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Hyman Huang <yong.huang@smartx.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2] migration/dirtyrate: Silence warning about strcpy() on
+ OpenBSD
+Date: Tue, 22 Oct 2024 08:34:02 +0200
+Message-ID: <20241022063402.184213-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 09/14] tcg/riscv: Accept constant first argument to
- sub_vec
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com
-References: <20241016193140.2206352-1-richard.henderson@linaro.org>
- <20241016193140.2206352-10-richard.henderson@linaro.org>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20241016193140.2206352-10-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,57 +79,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The linker on OpenBSD complains:
 
-On 2024/10/17 03:31, Richard Henderson wrote:
-> Use vrsub.vi to subtract from a constant.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/riscv/tcg-target-con-set.h | 1 +
->   tcg/riscv/tcg-target.c.inc     | 8 ++++++--
->   2 files changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv/tcg-target-con-set.h
-> index 97e6ecdb0f..d8ce5414f5 100644
-> --- a/tcg/riscv/tcg-target-con-set.h
-> +++ b/tcg/riscv/tcg-target-con-set.h
-> @@ -25,6 +25,7 @@ C_O0_I2(v, r)
->   C_O1_I1(v, r)
->   C_O1_I1(v, v)
->   C_O1_I2(v, v, v)
-> +C_O1_I2(v, vK, v)
->   C_O1_I2(v, v, vK)
->   C_O1_I2(v, v, vL)
->   C_O1_I4(v, v, vL, vK, vK)
-> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-> index ce8d6d0293..1ce2f291d3 100644
-> --- a/tcg/riscv/tcg-target.c.inc
-> +++ b/tcg/riscv/tcg-target.c.inc
-> @@ -2350,7 +2350,11 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->           break;
->       case INDEX_op_sub_vec:
->           set_vtype_len_sew(s, type, vece);
-> -        tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2);
-> +        if (const_args[1]) {
-> +            tcg_out_opc_vi(s, OPC_VRSUB_VI, a0, a2, a1);
-> +        } else {
-> +            tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2);
-> +        }
->           break;
->       case INDEX_op_and_vec:
->           set_vtype_len(s, type);
-> @@ -2565,7 +2569,7 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
->       case INDEX_op_xor_vec:
->           return C_O1_I2(v, v, vK);
->       case INDEX_op_sub_vec:
-> -        return C_O1_I2(v, v, v);
-> +        return C_O1_I2(v, vK, v);
+ ld: warning: dirtyrate.c:447 (../src/migration/dirtyrate.c:447)(...):
+ warning: strcpy() is almost always misused, please use strlcpy()
 
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+It's currently not a real problem in this case since both arrays
+have the same size (256 bytes). But just in case somebody changes
+the size of the source array in the future, let's better play safe
+and use g_strlcpy() here instead, with an additional check that the
+string has been copied as a whole.
 
-Zhiwei
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Check the return value of g_strlcpy to avoid truncation of the string
 
->       case INDEX_op_cmp_vec:
->           return C_O1_I2(v, v, vL);
->       case INDEX_op_cmpsel_vec:
+ migration/dirtyrate.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 233acb0855..0f941024be 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -436,6 +436,7 @@ static void get_ramblock_dirty_info(RAMBlock *block,
+                                     struct DirtyRateConfig *config)
+ {
+     uint64_t sample_pages_per_gigabytes = config->sample_pages_per_gigabytes;
++    gsize len;
+ 
+     /* Right shift 30 bits to calc ramblock size in GB */
+     info->sample_pages_count = (qemu_ram_get_used_length(block) *
+@@ -444,7 +445,8 @@ static void get_ramblock_dirty_info(RAMBlock *block,
+     info->ramblock_pages = qemu_ram_get_used_length(block) >>
+                            qemu_target_page_bits();
+     info->ramblock_addr = qemu_ram_get_host_addr(block);
+-    strcpy(info->idstr, qemu_ram_get_idstr(block));
++    len = g_strlcpy(info->idstr, qemu_ram_get_idstr(block), sizeof(info->idstr));
++    g_assert(len < sizeof(info->idstr));
+ }
+ 
+ static void free_ramblock_dirty_info(struct RamblockDirtyInfo *infos, int count)
+-- 
+2.47.0
+
 
