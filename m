@@ -4,67 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47CD7D2CE01
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7597D2CE02
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3I4k-0000aX-Lp; Tue, 22 Oct 2024 12:49:42 -0400
+	id 1t3I4f-0000Vb-OE; Tue, 22 Oct 2024 12:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4f-0000VP-Kr
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4X-0000GD-GL
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4e-00068h-3G
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:37 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4K-00063x-PX
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729615775;
+ s=mimecast20190719; t=1729615755;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=coP4cMorzzuJPcHDWFKzvM8HkyCGleUbY6fulomVjoI=;
- b=eepO61JYahkoC75BgQ226K6FN3GPg7IT6d09nm5ChTrFOh3634/t5yPU2pZ0+814iUDAMm
- MQGeov5ti3K/hgSJU5NwdbzwI878G8/vIINKE+G0bYT7zKOd/fYNZwr/2PK/V1ghP0UWt9
- DkoVTeDBWpeDwP/LqmXt02bGZwmADIY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+6RKmCXEOw0VB8nIPP1b8VbzxGXdQrcrSKrzHEUxgkE=;
+ b=cVl8cG5n3ujVkNvnqPLIovuItKFJbrfLK71rAaQMXS5Q9aSKLZGQI10VHH7wDx1C2m1lx1
+ mWdPjrj31gPTS0a8TWlnlHeypQR/1nF/ZGvTQ6A9B9fahzEjMP3kDNaHQ0VOBRX5TLmPpV
+ ubKcoJK20NuSXBLZfGdEtRRmp6HHfpQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-t70UviaAO6eUjgRy_pLZnA-1; Tue,
- 22 Oct 2024 12:49:34 -0400
-X-MC-Unique: t70UviaAO6eUjgRy_pLZnA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-WRoiZ-XEM3ayCSzo8-lyyw-1; Tue,
+ 22 Oct 2024 12:49:13 -0400
+X-MC-Unique: WRoiZ-XEM3ayCSzo8-lyyw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5038A1955F57; Tue, 22 Oct 2024 16:49:33 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A39C1955F3C; Tue, 22 Oct 2024 16:49:12 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.194.70])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DBA11955EA3; Tue, 22 Oct 2024 16:49:31 +0000 (UTC)
+ id 853A81956056; Tue, 22 Oct 2024 16:49:09 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 8/9] block-backend: per-device throttling of BLOCK_IO_ERROR
- reports
-Date: Tue, 22 Oct 2024 18:49:02 +0200
-Message-ID: <20241022164903.282174-9-kwolf@redhat.com>
-In-Reply-To: <20241022164903.282174-1-kwolf@redhat.com>
-References: <20241022164903.282174-1-kwolf@redhat.com>
+Subject: [PULL 0/9] Block layer patches
+Date: Tue, 22 Oct 2024 18:48:54 +0200
+Message-ID: <20241022164903.282174-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,67 +79,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Leonid Kaplan <xeor@yandex-team.ru>
+The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
 
-BLOCK_IO_ERROR events comes from guest, so we must throttle them.
-We still want per-device throttling, so let's use device id as a key.
+  Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu into staging (2024-10-21 17:12:59 +0100)
 
-Signed-off-by: Leonid Kaplan <xeor@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20241002151806.592469-3-vsementsov@yandex-team.ru>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qapi/block-core.json | 2 ++
- monitor/monitor.c    | 7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+are available in the Git repository at:
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index fe63ba6cbf..fd3bcc1c17 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -5611,6 +5611,8 @@
- # .. note:: If action is "stop", a STOP event will eventually follow
- #    the BLOCK_IO_ERROR event.
- #
-+# .. note:: This event is rate-limited.
-+#
- # Since: 0.13
- #
- # .. qmp-example::
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index db52a9c7ef..56786c0ccc 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -308,6 +308,7 @@ int error_printf_unless_qmp(const char *fmt, ...)
- static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     /* Limit guest-triggerable events to 1 per second */
-     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-+    [QAPI_EVENT_BLOCK_IO_ERROR]    = { 1000 * SCALE_MS },
-     [QAPI_EVENT_WATCHDOG]          = { 1000 * SCALE_MS },
-     [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
-     [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
-@@ -493,7 +494,8 @@ static unsigned int qapi_event_throttle_hash(const void *key)
-         hash += g_str_hash(qdict_get_str(evstate->data, "node-name"));
-     }
- 
--    if (evstate->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE) {
-+    if (evstate->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE ||
-+        evstate->event == QAPI_EVENT_BLOCK_IO_ERROR) {
-         hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
-     }
- 
-@@ -519,7 +521,8 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
-                        qdict_get_str(evb->data, "node-name"));
-     }
- 
--    if (eva->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE) {
-+    if (eva->event == QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE ||
-+        eva->event == QAPI_EVENT_BLOCK_IO_ERROR) {
-         return !strcmp(qdict_get_str(eva->data, "qom-path"),
-                        qdict_get_str(evb->data, "qom-path"));
-     }
--- 
-2.47.0
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
+
+for you to fetch changes up to 04bbc3ee52b32ac465547bb40c1f090a1b8f315a:
+
+  raw-format: Fix error message for invalid offset/size (2024-10-22 17:52:49 +0200)
+
+----------------------------------------------------------------
+Block layer patches
+
+- Event throttling for BLOCK_IO_ERROR
+- iotests: Fix backup-discard-source test for XFS
+- Coverity fixes
+- raw-format: Fix error message for invalid offset/size
+
+----------------------------------------------------------------
+Kevin Wolf (1):
+      raw-format: Fix error message for invalid offset/size
+
+Leonid Kaplan (1):
+      block-backend: per-device throttling of BLOCK_IO_ERROR reports
+
+Peter Maydell (4):
+      block/gluster: Use g_autofree for string in qemu_gluster_parse_json()
+      block/ssh.c: Don't double-check that characters are hex digits
+      tests/qemu-iotests/211.out: Update to expect MapEntry 'compressed' field
+      block/vdi.c: Make SECTOR_SIZE constant 64-bits
+
+Vladimir Sementsov-Ogievskiy (3):
+      iotests/backup-discard-source: convert size variable to be int
+      iotests/backup-discard-source: don't use actual-size
+      qapi: add qom-path to BLOCK_IO_ERROR event
+
+ qapi/block-core.json                           |  9 ++++--
+ block/block-backend.c                          | 21 +++++++++++---
+ block/gluster.c                                |  7 ++---
+ block/raw-format.c                             |  4 +--
+ block/ssh.c                                    | 12 ++++----
+ block/vdi.c                                    |  4 +--
+ monitor/monitor.c                              |  7 +++--
+ tests/qemu-iotests/211.out                     |  6 ++--
+ tests/qemu-iotests/tests/backup-discard-source | 39 +++++++++++++++++---------
+ 9 files changed, 70 insertions(+), 39 deletions(-)
 
 
