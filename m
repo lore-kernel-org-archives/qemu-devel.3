@@ -4,96 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC8E2D1CDCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02988D1CDCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:42:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3BO9-0002m2-JQ; Tue, 22 Oct 2024 05:41:17 -0400
+	id 1t3BOR-0002nv-Bg; Tue, 22 Oct 2024 05:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3BO8-0002ls-2e
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:41:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t3BOE-0002mi-Sw; Tue, 22 Oct 2024 05:41:24 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3BO6-00015G-6o
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:41:15 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M2HAK6005260;
- Tue, 22 Oct 2024 09:41:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FxQfAN
- 7ODFpA7Szsy86wjEmvoGMp2LGyrrkmMyB/cYM=; b=CoQD1aGlsq0wOm8FZqhWmY
- 0f7rzGIWRNYfoP5hRB6kUWNcW75tySN2bDtRkJzIbTiRK9x58a4uVjUqkIS42HpW
- cGzBt4dl5rOVyDyKHhGlSP9h5cTA+7KmuwJ+hM6Wc57Mnx0Vt7IxXgAFG6kuUkbz
- 5aLNUfLkzlUV9oHVZ7vyDcTNzUvGV2/HOFtPpqvSWQGOPH2NhshdC+OPYvSDVfkd
- uCDRpuPydHa1qySmqr22c4x0YGHPjVEB2kUFbD41Qt56K5kXj+NlKOBS+fSbtjVT
- u/3nTCTHdHt5oOD2aHkgGCIEE6x/kP3MmPnEQHr03LwaHWLS6l5SmfoLqkuzH+Cg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5fcn5yq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Oct 2024 09:41:11 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49M8atUP028907;
- Tue, 22 Oct 2024 09:41:11 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42cqfxjpxm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Oct 2024 09:41:11 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49M9f9rg53805472
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Oct 2024 09:41:09 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A6DE20043;
- Tue, 22 Oct 2024 09:41:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE4CF2004B;
- Tue, 22 Oct 2024 09:41:08 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Oct 2024 09:41:08 +0000 (GMT)
-Message-ID: <4cc78de8a3fde301774f1ce2e2f41876b60e2996.camel@linux.ibm.com>
-Subject: Re: [PATCH] linux-user: Trace rt_sigprocmask's sigsets
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, Laurent Vivier
- <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Date: Tue, 22 Oct 2024 11:41:08 +0200
-In-Reply-To: <94e56b07-1f4d-4c43-9239-795ed060016d@linaro.org>
-References: <20241017091449.443799-1-iii@linux.ibm.com>
- <94e56b07-1f4d-4c43-9239-795ed060016d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1t3BOC-00015E-4V; Tue, 22 Oct 2024 05:41:22 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 22 Oct
+ 2024 17:41:11 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 22 Oct 2024 17:41:10 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "Kevin
+ Wolf" <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>, "open list:Block layer
+ core" <qemu-block@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v2 00/18] Fix write incorrect data into flash in user mode
+Date: Tue, 22 Oct 2024 17:40:52 +0800
+Message-ID: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -HVvlKA0dZvu68qUpl7t3diiZ4Yr9f-D
-X-Proofpoint-GUID: -HVvlKA0dZvu68qUpl7t3diiZ4Yr9f-D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 mlxscore=0 clxscore=1015 mlxlogscore=887 phishscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220061
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,35 +63,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gTW9uLCAyMDI0LTEwLTIxIGF0IDE4OjUwIC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiBPbiAxMC8xNy8yNCAwMjoxNCwgSWx5YSBMZW9zaGtldmljaCB3cm90ZToKPiA+IEBAIC0z
-MzEyLDEwICszMzU4LDI2IEBAIHByaW50X3J0X3NpZ3Byb2NtYXNrKENQVUFyY2hTdGF0ZSAqY3B1
-X2VudiwKPiA+IGNvbnN0IHN0cnVjdCBzeXNjYWxsbmFtZSAqbmFtZSwKPiA+IMKgwqDCoMKgwqAg
-Y2FzZSBUQVJHRVRfU0lHX1NFVE1BU0s6IGhvdyA9ICJTSUdfU0VUTUFTSyI7IGJyZWFrOwo+ID4g
-wqDCoMKgwqDCoCB9Cj4gPiDCoMKgwqDCoMKgIHFlbXVfbG9nKCIlcywiLCBob3cpOwo+ID4gLcKg
-wqDCoCBwcmludF9wb2ludGVyKGFyZzEsIDApOwo+ID4gLcKgwqDCoCBwcmludF9wb2ludGVyKGFy
-ZzIsIDApOwo+ID4gK8KgwqDCoCBwcmludF90YXJnZXRfc2lnc2V0X3QoYXJnMSwgYXJnMywgMCk7
-Cj4gPiArfQo+ID4gKwo+ID4gK3N0YXRpYyB2b2lkCj4gPiArcHJpbnRfcnRfc2lncHJvY21hc2tf
-cmV0KENQVUFyY2hTdGF0ZSAqY3B1X2VudiwgY29uc3Qgc3RydWN0Cj4gPiBzeXNjYWxsbmFtZSAq
-bmFtZSwKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgYWJpX2xvbmcgcmV0LCBhYmlfbG9uZyBhcmcwLCBhYmlfbG9uZwo+ID4gYXJnMSwKPiA+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYWJpX2xvbmcg
-YXJnMiwgYWJpX2xvbmcgYXJnMywgYWJpX2xvbmcKPiA+IGFyZzQsCj4gPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFiaV9sb25nIGFyZzUpCj4gPiAr
-ewo+ID4gK8KgwqDCoCBpZiAoaXNfZXJyb3IocmV0KSkgewo+ID4gK8KgwqDCoMKgwqDCoMKgIHBy
-aW50X3BvaW50ZXIoYXJnMiwgMCk7Cj4gPiArwqDCoMKgIH0gZWxzZSB7Cj4gPiArwqDCoMKgwqDC
-oMKgwqAgcHJpbnRfdGFyZ2V0X3NpZ3NldF90KGFyZzIsIGFyZzMsIDApOwo+ID4gK8KgwqDCoCB9
-Cj4gPiDCoMKgwqDCoMKgIHByaW50X3Jhd19wYXJhbSgiJXUiLCBhcmczLCAxKTsKPiA+IMKgwqDC
-oMKgwqAgcHJpbnRfc3lzY2FsbF9lcGlsb2d1ZShuYW1lKTsKPiAKPiBJJ20gbm90IGtlZW4gb24g
-c3BsaXR0aW5nIG9wZXJhbmRzIGFjcm9zcyBzeXNjYWxsIGNvbXBsZXRpb24uCj4gVGhlcmUgYXJl
-IGEgZmV3IGV4aXN0aW5nIHN5c2NhbGxzIGZvciB3aGljaCB3ZSBwcmludCBzdWNoIHJlc3VsdHMK
-PiBhZnRlcndhcmQ6Cj4gCj4gwqDCoCBjbG9ja19nZXR0aW1lCj4gwqDCoCBjbG9ja19nZXRyZXMK
-PiDCoMKgIHdhaXQ0Cj4gwqDCoCB3YWl0cGlkCj4gCj4gYnV0IHdlJ3JlIGNlcnRhaW5seSBub3Qg
-Y29uc2lzdGVudCBhYm91dCBpdC4KPiAKPiAKPiByfgoKSSB3YW50ZWQgdG8gc3RheSBhcyBjbG9z
-ZSBhcyBwb3NzaWJsZSB0byBzdHJhY2UgaGVyZSwgYnV0IEkgZG9uJ3QKcmVhbGx5IGhhdmUgYSBz
-dHJvbmcgcHJlZmVyZW5jZS4gSSB3aWxsIHNlbmQgYSB2Mi4K
+change from v1:
+ 1. Fix write incorrect data into flash in user mode.
+ 2. Refactor aspeed smc qtest testcases to support AST2600, AST2500 and
+AST1030.
+ 3. Add ast2700 smc qtest testcase to support AST2700.
+
+change from v2:
+1. Introduce a new aspeed-smc-utils.c to place common testcases.
+2. Fix hardcode attach flash model of spi controllers
+3. Add reviewers suggestion and fix review issue.
+
+QEMU version: https://github.com/qemu/qemu/commit/95a16ee753d6da651fce8df876333bf7fcf134d9
+Depend patch series:
+To successfully apply this patch series, it is required to apply this
+patch series first, https://patchwork.kernel.org/project/qemu-devel/list/?series=894520
+
+Jamin Lin (18):
+  aspeed/smc: Fix write incorrect data into flash in user mode
+  hw/block:m25p80: Fix coding style
+  hw/block:m25p80: Support write status register 2 command (0x31) for
+    w25q01jvq
+  hw/block/m25p80: Add SFDP table for w25q80bl flash
+  hw/arm/aspeed: Correct spi_model w25q256 for ast1030-a1 EVB.
+  hw/arm/aspeed: Correct fmc_model w25q80bl for ast1030-a1 EVB
+  aspeed: Fix hardcode attach flash model of spi controllers
+  test/qtest/aspeed_smc-test: Fix coding style
+  test/qtest/aspeed_smc-test: Move testcases to test_palmetto_bmc
+    function
+  test/qtest/aspeed_smc-test: Introduce a new TestData to test different
+    BMC SOCs
+  test/qtest/aspeed_smc-test: Support to test all CE pins
+  test/qtest/aspeed_smc-test: Introducing a "page_addr" data field
+  test/qtest/aspeed_smc-test: Support to test AST2500
+  test/qtest/aspeed_smc-test: Support to test AST2600
+  test/qtest/aspeed_smc-test: Support to test AST1030
+  test/qtest/aspeed_smc-test: Support write page command with QPI mode
+  test/qtest: Introduce a new aspeed-smc-utils.c to place common
+    testcases
+  test/qtest/ast2700-smc-test: Support to test AST2700
+
+ hw/arm/aspeed.c                |  25 +-
+ hw/block/m25p80.c              |  63 ++-
+ hw/block/m25p80_sfdp.c         |  36 ++
+ hw/block/m25p80_sfdp.h         |   2 +-
+ hw/ssi/aspeed_smc.c            |  40 +-
+ include/hw/ssi/aspeed_smc.h    |   1 +
+ tests/qtest/aspeed-smc-utils.c | 681 +++++++++++++++++++++++++++++
+ tests/qtest/aspeed-smc-utils.h |  95 +++++
+ tests/qtest/aspeed_smc-test.c  | 757 +++++++--------------------------
+ tests/qtest/ast2700-smc-test.c |  67 +++
+ tests/qtest/meson.build        |   5 +-
+ 11 files changed, 1143 insertions(+), 629 deletions(-)
+ create mode 100644 tests/qtest/aspeed-smc-utils.c
+ create mode 100644 tests/qtest/aspeed-smc-utils.h
+ create mode 100644 tests/qtest/ast2700-smc-test.c
+
+-- 
+2.34.1
 
 
