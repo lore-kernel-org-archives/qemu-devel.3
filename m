@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FAA1CDD0EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 21:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F85CDD0FB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 21:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3MZv-0000s3-Ji; Tue, 22 Oct 2024 17:38:11 -0400
+	id 1t3MfR-0003DJ-Vw; Tue, 22 Oct 2024 17:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3MZn-0000mU-ED
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:38:03 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3MfP-0003D6-Sa
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:43:52 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3MZk-0006qk-Mx
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:38:02 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-20cceb8d8b4so1780855ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 14:38:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3MfO-0007SP-56
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:43:51 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2e2ed2230d8so4567337a91.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 14:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729633079; x=1730237879; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729633428; x=1730238228; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VUKVknCSlFqFsBqoQ9goFiTR4ArnZOnvNU99XEHFp3w=;
- b=P0QNVUhf0PFCt8jEEek52mSK3dzn4SX2ZhU+SOHBfLeswiL+Ll0zhv6fh0ktYGkRry
- gtGYj0oYkexQxsEpHc/Vh9CufPjsiZfGVIz3FWzbk17jvsf1Rm4pnDQjig+3WQRycBG9
- rLnumcLdhWJcWcVea2pGlFzQV6v9g9ZY3xRVcYkMdACvGrOQnUCXvGtTt1NR/wVNLaE6
- ktA+Rf5J1JmX90REXj8H/FaGHT8sQSCfNTloh5FuMjCH0uNPuGpwfqFR4YucpVrOgXRQ
- yatHi6vFsRg/94NeDAd+uL6HQE9QhGxRrpcmRgsX4hIpOElEFjCg0dZ6qj6C+s12GSFv
- klng==
+ bh=gaWiwYZzM+BMPGemUJNfcnHcAG6OLblZCKP/lgCXBdA=;
+ b=mbzY6TD7eqBugFQ0caUUdidA/sfNVNHlVYq8wJAAZ/D2H9AM4FxRHT2K5Qy+IpHl5/
+ SxvJ1iarG1qdf3iWJ+/0cD7DJbAmxSICcTuqWe7lNYzIO5by5SXWAAjsuczDJ2eJO8bg
+ wCoVr7WBa9HMEqq2QFZ5tE9Zwu2N6sR0pc31ELqt8Wj2sH7FIQO3qubMOC7y+klENA2p
+ 7btivnzczXsCg+WzSNBMf5pr/TXuvi7u12RmAr71r/5YXDCO8iXzuxskeaAL8qHesnfr
+ xhp5jXVCIrgTiEZM/FhJ40DCoYC2GU27nXjsW1L5HRE9fHyYEcSH2N4LGypjU3jWR+ll
+ x4pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729633079; x=1730237879;
+ d=1e100.net; s=20230601; t=1729633428; x=1730238228;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VUKVknCSlFqFsBqoQ9goFiTR4ArnZOnvNU99XEHFp3w=;
- b=EkSIDdF8TsF9+BOqinXvBBM6u7iZ3YuyY00uU8TFhnG0beTOWNc1a9HhlJK4q2Urw8
- 4mIy3LOKOvpdjGylxECwAPWTvL9snd+9/BZ7KioI7a1flKT0FD8dApVtwygOQKH7I6R7
- VyelqpLlMh3MFiR3rK7+UxBngsdrfZLpzE9OM/nGQQbYdKy/xyNIGaCnYEq8D0EwYBLJ
- e8127g8iNX5l9lqO+sOvhyof7WU7OGDyVyT9x1/gQ+mzDYjv4cSzUlO7hr+rF1EYg3Ry
- AG/QT4Q7wWrm46S+R5PnYJG60JqaPEEGbmhSLvLFb5nbCyDBCrRgHwSIs1XEYXlMY6ta
- vIiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVskjiPhgSF0sPTCNtXO0HWLYTD4ZEHSY1Vl9EcQtsr1qlYaV1rxy4Bqa5vIvI5zHFLa3UXRM6RBVS+@nongnu.org
-X-Gm-Message-State: AOJu0Yz7Puop2UXzVykEJlWu/4WuhpD1DRhm5TGHFr6XxVhQNRvIdlBN
- tl3qAZ9NayApHTzeNWKZo4/aYGM/Fy1BG94Bi1Vr61+tb4JE43A/29QZNtZ9mPE=
-X-Google-Smtp-Source: AGHT+IHlm9BqHLU0sWEdynV1vM6Mhq6aFCZddq4VYJowPs+Wt47y1RjJ8GqOZOi7QgCpTbYANdT30w==
-X-Received: by 2002:a17:903:40c8:b0:20c:62af:a0f0 with SMTP id
- d9443c01a7336-20e96ebc90emr70643225ad.7.1729633079139; 
- Tue, 22 Oct 2024 14:37:59 -0700 (PDT)
+ bh=gaWiwYZzM+BMPGemUJNfcnHcAG6OLblZCKP/lgCXBdA=;
+ b=b54z4OE/x6gfXT/8ieWutFUkZ3bMEsiZVwtfFdl7R3MMVuGgfwAftmY6k7iq6evp5L
+ h4pOi98Hs/Q7KC+WbQTn3zPn3uQXuXZzJguVtl38UO7YXygFoEYCuTmzZJsrU4ZAaJw2
+ /RpHf2I9P39jLVBFdfx3X4na1wzNPr7fkLSMf0Bg9HE8IZzxxrBKA555sM8I+JyIwAqR
+ ac8WFfs0+YGhAPyYypceK2zRZAe3/BJGZvSNnMP/CSx7e9xwWRFGrFwGB7szrgFl+Trn
+ 8q4NR7iwTf1jbUARrOtRUKU4HM7duiUfSGvpI6m2EOyEpsVBvSaZq4iFhS47+h2CugLM
+ mktA==
+X-Gm-Message-State: AOJu0YxGDF/Q0gdO/ZMr4yG8b4xwpdPRJAPkFLu7zMTY0phpwQjahmgY
+ 1hWT4hGujPupI7SiHLb85Y5KcUIMoo+N6YFUluodPw+jEhJryapdxOIxo8tlAdg=
+X-Google-Smtp-Source: AGHT+IHREMp0Q0cEVbNtLkdE+szChAE3iRhgRnXnSNrtzzRZ//Gpxq+fcA02bLZr2tP4j2rPxEpFBg==
+X-Received: by 2002:a17:90b:30c3:b0:2e2:bd32:f60 with SMTP id
+ 98e67ed59e1d1-2e76b6e14f0mr444399a91.32.1729633428554; 
+ Tue, 22 Oct 2024 14:43:48 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7ef152d3sm46951595ad.117.2024.10.22.14.37.52
+ d9443c01a7336-20e7f0f368asm46884575ad.268.2024.10.22.14.43.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 14:37:58 -0700 (PDT)
-Message-ID: <79577df9-fe51-46e6-9b70-01ae03ef4dae@linaro.org>
-Date: Tue, 22 Oct 2024 18:37:51 -0300
+ Tue, 22 Oct 2024 14:43:48 -0700 (PDT)
+Message-ID: <ab4af84d-a518-406b-8dbb-513d41aa4d61@linaro.org>
+Date: Tue, 22 Oct 2024 18:43:44 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/20] tests/tcg: enable basic testing for
- aarch64_be-linux-user
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- devel@lists.libvirt.org, Cleber Rosa <crosa@redhat.com>,
- kvm@vger.kernel.org, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241022105614.839199-1-alex.bennee@linaro.org>
- <20241022105614.839199-14-alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 10/13] qdev: make properties array "const"
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20241021163538.136941-1-pbonzini@redhat.com>
+ <20241021163538.136941-11-pbonzini@redhat.com>
+ <12b03ebb-6bc2-4ffe-99cc-4818b5d992ee@linaro.org>
+ <CABgObfawNPijVE7FqdGpnpAZ2JM9puY6=PSivFR4GgbHTKE2Fg@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241022105614.839199-14-alex.bennee@linaro.org>
+In-Reply-To: <CABgObfawNPijVE7FqdGpnpAZ2JM9puY6=PSivFR4GgbHTKE2Fg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,49 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/10/24 07:56, Alex Bennée wrote:
-> We didn't notice breakage of aarch64_be because we don't have any TCG
-> tests for it. However while the existing aarch64 compiler can target
-> big-endian builds no one packages a BE libc. Instead we bang some
-> rocks together to do the most basic of hello world with a nostdlib
-> syscall test.
+On 22/10/24 02:23, Paolo Bonzini wrote:
+> On Tue, Oct 22, 2024 at 6:31 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>> -void qdev_property_add_static(DeviceState *dev, Property *prop)
+>>> +void qdev_property_add_static(DeviceState *dev, const Property *prop)
+>>>    {
+>>>        Object *obj = OBJECT(dev);
+>>>        ObjectProperty *op;
+>>> @@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
+>>>                                 field_prop_getter(prop->info),
+>>>                                 field_prop_setter(prop->info),
+>>>                                 prop->info->release,
+>>> -                             prop);
+>>> +                             (Property *)prop);
+>>
+>> I like the overall patch idea, but I'm not keen on casting
+>> const to non-const. Should we adapt the callee -- here
+>> object_property_add() -- to also take a const argument?
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> This argument goes into prop->opaque and is passed to all
+> accessor/resolver/finalizers functions. So it would be a much larger
+> change because it needs to change all those functions from "void
+> *opaque" to "const void *opaque".
 > 
-> ---
-> v2
->    - fix checkpatch complaints
-> ---
->   configure                            |  5 ++++
->   tests/tcg/aarch64_be/hello.c         | 35 ++++++++++++++++++++++++++++
->   tests/tcg/Makefile.target            |  7 +++++-
->   tests/tcg/aarch64_be/Makefile.target | 17 ++++++++++++++
->   4 files changed, 63 insertions(+), 1 deletion(-)
->   create mode 100644 tests/tcg/aarch64_be/hello.c
->   create mode 100644 tests/tcg/aarch64_be/Makefile.target
+> It would also be an issue because some finalizers write to the opaque
+> for good reason:
+> 
+> static void object_finalize_child_property(
+>      Object *obj, const char *name, void *opaque)
+> {
+>      Object *child = opaque;
+> 
+>      if (child->class->unparent) {
+>          (child->class->unparent)(child);
+>      }
+>      child->parent = NULL; // <--- here
+>      object_unref(child);
+> }
+> 
+> So, it's not great but it seems necessary. At least keeping the const
+> within qdev properties makes things "safer" within that realm.
 
+Since it is only within qdev-properties.c, it is indeed reasonable to
+accept. Maybe make it explicit via a well-named macro to do the cast?
 
-> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-> index 2da70b2fcf..9722145b97 100644
-> --- a/tests/tcg/Makefile.target
-> +++ b/tests/tcg/Makefile.target
-> @@ -103,9 +103,14 @@ ifeq ($(filter %-softmmu, $(TARGET)),)
->   # then the target. If there are common tests shared between
->   # sub-targets (e.g. ARM & AArch64) then it is up to
->   # $(TARGET_NAME)/Makefile.target to include the common parent
-> -# architecture in its VPATH.
-> +# architecture in its VPATH. However some targets are so minimal we
-> +# can't even build the multiarch tests.
-> +ifneq ($(filter $(TARGET_NAME),aarch64_be),)
-> +-include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
+   /* NON_CONST_PROP: Specific macro to this file because ... */
+   #define NON_CONST_PROP(prop) (Property *)(prop)
 
-ifeq and include once? Anyhow,
+Regards,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +else
->   -include $(SRC_PATH)/tests/tcg/multiarch/Makefile.target
->   -include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
-> +endif
-
+Phil.
 
