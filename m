@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 228D2D2CDFF
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECAFFD2CE01
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3I4l-0000bt-7C; Tue, 22 Oct 2024 12:49:43 -0400
+	id 1t3I4a-0000Hx-B9; Tue, 22 Oct 2024 12:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4j-0000a1-CI
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:41 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4X-0000GF-IF
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4h-00069z-RC
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:40 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4R-00064Y-B4
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729615779;
+ s=mimecast20190719; t=1729615758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gBA4X86K7vUY/KWF2IhMYfGN+XFtUzGOJg9HFppn5eo=;
- b=EOO0GS/8oP6QxN1Y3gQEKIPYNp56HtMGc3x6ouP5CC0a8msYXQx1g0DRVn+xNTV3zNXt5W
- LHliwa9EyoMU4+Ts/0u8oTUo/wkJfmpWTZJxqo3Ldy6wo1WBWeySyzHTVGRZGmPpuVSEoR
- H/mN4HMh7g0tffT5REssI+HKBlySmJ0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VDoKVxzboEyOZx7JDyIdlXgX6eUiunNnXmtg/ZwTIlk=;
+ b=f13coFq2pK+lN51b2J3str8kjypkK+h4JwQPM03ZVlDyDh9B6h6f7xuV0drKAvU9asRfQ1
+ IYLzml8rxhyzrrRegNfSTPulKcbeAg08mdVpDjC2EZhCWISs9bzaPETeKMg25AiF45dN6E
+ gK+t0qpjYzlywBGawCkyKa8dUlo/8js=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-f8T9LYDGMqOMSt0i1JB9cw-1; Tue,
- 22 Oct 2024 12:49:35 -0400
-X-MC-Unique: f8T9LYDGMqOMSt0i1JB9cw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-jp-gYhGgONWmZrwZfF9gGQ-1; Tue,
+ 22 Oct 2024 12:49:17 -0400
+X-MC-Unique: jp-gYhGgONWmZrwZfF9gGQ-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D980C1955EE6; Tue, 22 Oct 2024 16:49:34 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A59E7195608C; Tue, 22 Oct 2024 16:49:16 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.194.70])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B851F1956056; Tue, 22 Oct 2024 16:49:33 +0000 (UTC)
+ id 745541956056; Tue, 22 Oct 2024 16:49:15 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 9/9] raw-format: Fix error message for invalid offset/size
-Date: Tue, 22 Oct 2024 18:49:03 +0200
-Message-ID: <20241022164903.282174-10-kwolf@redhat.com>
+Subject: [PULL 2/9] block/ssh.c: Don't double-check that characters are hex
+ digits
+Date: Tue, 22 Oct 2024 18:48:56 +0200
+Message-ID: <20241022164903.282174-3-kwolf@redhat.com>
 In-Reply-To: <20241022164903.282174-1-kwolf@redhat.com>
 References: <20241022164903.282174-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
@@ -66,7 +66,7 @@ X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,42 +82,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s->offset and s->size are only set at the end of the function and still
-contain the old values when formatting the error message. Print the
-parameters with the new values that we actually checked instead.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Fixes: 500e2434207d ('raw-format: Split raw_read_options()')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240829185527.47152-1-kwolf@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+In compare_fingerprint() we effectively check whether the characters
+in the fingerprint are valid hex digits twice: first we do so with
+qemu_isxdigit(), but then the hex2decimal() function also has a code
+path where it effectively detects an invalid digit and returns -1.
+This causes Coverity to complain because it thinks that we might use
+that -1 value in an expression where it would be an integer overflow.
+
+Avoid the double-check of hex digit validity by testing the return
+values from hex2decimal() rather than doing separate calls to
+qemu_isxdigit().
+
+Since this means we now use the illegal-character return value
+from hex2decimal(), rewrite it from "-1" to "UINT_MAX", which
+has the same effect since the return type is "unsigned" but
+looks less confusing at the callsites when we detect it with
+"c0 > 0xf".
+
+Resolves: Coverity CID 1547813
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20241008164708.2966400-3-peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/raw-format.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/ssh.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/block/raw-format.c b/block/raw-format.c
-index ac7e8495f6..e08526e2ec 100644
---- a/block/raw-format.c
-+++ b/block/raw-format.c
-@@ -111,7 +111,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
-     if (offset > real_size) {
-         error_setg(errp, "Offset (%" PRIu64 ") cannot be greater than "
-                    "size of the containing file (%" PRId64 ")",
--                   s->offset, real_size);
-+                   offset, real_size);
-         return -EINVAL;
+diff --git a/block/ssh.c b/block/ssh.c
+index 871e1d4753..9f8140bcb6 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -364,7 +364,7 @@ static unsigned hex2decimal(char ch)
+         return 10 + (ch - 'A');
      }
  
-@@ -119,7 +119,7 @@ raw_apply_options(BlockDriverState *bs, BDRVRawState *s, uint64_t offset,
-         error_setg(errp, "The sum of offset (%" PRIu64 ") and size "
-                    "(%" PRIu64 ") has to be smaller or equal to the "
-                    " actual size of the containing file (%" PRId64 ")",
--                   s->offset, s->size, real_size);
-+                   offset, size, real_size);
-         return -EINVAL;
-     }
+-    return -1;
++    return UINT_MAX;
+ }
  
+ /* Compare the binary fingerprint (hash of host key) with the
+@@ -376,13 +376,15 @@ static int compare_fingerprint(const unsigned char *fingerprint, size_t len,
+     unsigned c;
+ 
+     while (len > 0) {
++        unsigned c0, c1;
+         while (*host_key_check == ':')
+             host_key_check++;
+-        if (!qemu_isxdigit(host_key_check[0]) ||
+-            !qemu_isxdigit(host_key_check[1]))
++        c0 = hex2decimal(host_key_check[0]);
++        c1 = hex2decimal(host_key_check[1]);
++        if (c0 > 0xf || c1 > 0xf) {
+             return 1;
+-        c = hex2decimal(host_key_check[0]) * 16 +
+-            hex2decimal(host_key_check[1]);
++        }
++        c = c0 * 16 + c1;
+         if (c - *fingerprint != 0)
+             return c - *fingerprint;
+         fingerprint++;
 -- 
 2.47.0
 
