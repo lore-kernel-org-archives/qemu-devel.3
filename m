@@ -4,111 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23ABED1712C
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 02:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B652ED1712C
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 02:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t34jv-0003Yl-Ed; Mon, 21 Oct 2024 22:35:19 -0400
+	id 1t34lp-0004Z9-B2; Mon, 21 Oct 2024 22:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t34jt-0003Wo-PK
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:35:17 -0400
-Received: from mail-me3aus01olkn20826.outbound.protection.outlook.com
- ([2a01:111:f403:2818::826]
+ id 1t34ln-0004Yo-7x
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:37:15 -0400
+Received: from mail-me3aus01olkn20805.outbound.protection.outlook.com
+ ([2a01:111:f403:2818::805]
  helo=AUS01-ME3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
- id 1t34jr-0003ZK-LK
- for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:35:17 -0400
+ id 1t34lm-0003kd-0k
+ for qemu-devel@nongnu.org; Mon, 21 Oct 2024 22:37:15 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=btX58B4TArmb3Qqk5LrDROhixllKFNVOKhJvQamAaJyxOjvzOnmMSVuiLmdm/7g2/u8Yk0cxKAHibp6jah9yFQvkRehx61ibBrFxvW8NEIDe7xOoPw6hb+tt9D0Rdd5QaMbiTSsmNgksnZNQ/zQwQ1BNCYfCt3BEa6FCAJXxH/tLW3PEUemIuBHwY0xgs/0Wmg9yUOT4vATFaxmcn0FgChhBShB1V8ngX82BaI/DfW3ns3OPy+OIWKyGaJpsidJzo/V30nIymcm4OdrEXQnPCACZBHdEmdlf+d41FnI7ZiklmRmu9sCX4ZWiHi+E4uv62BnxxS1uqzQo4ABW+/ImVg==
+ b=DGkygEd0qTfuZhQN6ejWX3J9ELUDUzp1FCNawsjGvIG3FDb4h054OlFDjSrA/Tbm2iRr6PbP0SQHnlM+qqzHG872kzEEJA01m46Nq5DrKcDqE4ZM6PFhx/U+/ei3sbQQQ0la4F1FJPbVPZfSf55IDi4jfYxfb6HjDbsXU2Atgqpo0da0+vlYhv/IJjmN7RwghJiL856QERxTqZCGyWVeIcPjGsAOZ2MpJsQJtJsC4lTV8RGKc9B4BHvK6Sjruql+MHdBlAEKHZp/9JbcMEajSfPQe8uty3/tlTZLtejGmSI6ZZdFgfDMLbcQop8ieagC4QDFt/b1YV6WvqJXD4g1nw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=923smgUT/IEfUWG+hWsgvsV756q9rLZHIZbiCr2ccM4=;
- b=oYok3ckO8QkwBOP2JX8Nm0mqCKILEcLPNmREmMKJzt8Z45CegaZtu9xIVEi3ujveJeMCX0a0RcOoRBcWOESauglvxt3gPdPWxAeFYvMaaATuAsiR7U9G/vvUt3w9Nue7ni9Pz0qA+BzN4Nqb7Is8Z0TlRZ9rnD2z96P5M3ChoNpJ8ghf71GP0fQP+dI40jwZpXK+hLGRB/cbndFziNKpWZqmF6M28FX0Myck3NiE0zKhoYjE3gzbktlADPaJGV+bQZuknBtox+msXMOTw8qDnDi2kLVfW7mRsQLD2hT7tq5BJhnK1Jl6ICEXBzgaM9TKD12ghVR++8DAuC4ev8yohg==
+ bh=RpP4HYAN0HjtWUYcYFBCfApKZxpC1I/YWuPbgmdR+0o=;
+ b=yyuwFEcaZQnRcnIaEwjD4DAzrki22on8sh+PiBUG5V84AifuVq9M6wlWdPC/NtlZq1XV1wjOYG33DVUI9odavuB+NYFeXW1JS9UXGTPZs9kdxxuuiMJdaQnrVTWSBbUG+6Bb288CQ/bi5ybg9fCAOHO3RygBPHBBTrVHJG+ReauWdRgytc3h/EjYH6H7SaECdJbGOhCYihc5F++YM9vhKtqEIprAqziqC65F1DyK6yB+jWOPFRmEdaIOhbhkdQO6mBVjqaNH4mpcTij0IQtA2Qu4Xr2urOIG2mTugEx9Yhp8LPoKTKQphsWLmuLGTzEVL3JF/6Yzc7E6DapYHgesmg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=923smgUT/IEfUWG+hWsgvsV756q9rLZHIZbiCr2ccM4=;
- b=j8g12IGQDvorAsLbAjUKyRpMkiWLreEQ/KrzNNORYSqtAQon915BO5d9kmQFmoh3zLDcV0ybLmBot7jHDPjDVabS5gyFf0oczm+d2qfWYugDNpo67qQLJh0SpTGSisP1/+H9QsUrQnWzrjY8J6qku8XSHJkR6CcP+DwL5qxWxUk36fnFY1FPRola9a6l4G2kmvGyWyXaFtFGEqnQoz7ui3R/VAs0WFW4o0iwlsJDftsngnaAup8rTTq6gDUEte8X6qQoZGge/8UZI5CmByt6iqC2uqNYa8dzIjMA62TmMZCFD1U0aydWhd+658zyTjCLAs2R4xHWQucVCs2stLhiQw==
+ bh=RpP4HYAN0HjtWUYcYFBCfApKZxpC1I/YWuPbgmdR+0o=;
+ b=I8RsPqXfZnDbtG4pamCgb0gyFcfZ3sTDwJL5ihbCSTPB+2zeqjaEEhrD5oMaME0v3Phws9Sex+qxM6rh9MLN5dFRBjdaeFkBNsyjMou8wdM2Uot7yL71YdE/5qskLqZLqAeoxa+X8BjkRGu6MfXJncCfROfsnDUjlge7qErqvnitfrAgIeJIHAJvl7CMyGZr7B/n4WnGhZqLxIAGTGoRu10TrXma0hZEqXGKD7WRsTznpvGjgPAc6FI8dGP7sMrNokQG4r5a97FkwDZABvl2v1GAoxqy4PB2vtjF253W88gDacKQMtUOpCoRaecFjXFVRiEB72cE5ELUlJssL0omuw==
 Received: from ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:231::14)
- by SY2PPF1D93025A7.AUSP300.PROD.OUTLOOK.COM (2603:10c6:18::389) with
+ by SY3PPF947566139.AUSP300.PROD.OUTLOOK.COM (2603:10c6:18::4a0) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.26; Tue, 22 Oct
- 2024 02:35:08 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.23; Tue, 22 Oct
+ 2024 02:37:02 +0000
 Received: from ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  ([fe80::f32e:6e2b:b854:7166]) by ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  ([fe80::f32e:6e2b:b854:7166%6]) with mapi id 15.20.8069.027; Tue, 22 Oct 2024
- 02:35:08 +0000
-References: <20241015131735.518771-1-pbonzini@redhat.com>
- <20241015131735.518771-4-pbonzini@redhat.com> <ZxX1jSkJ3Muk11zC@intel.com>
- <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
+ 02:37:02 +0000
+References: <20241021163538.136941-1-pbonzini@redhat.com>
+ <20241021163538.136941-4-pbonzini@redhat.com>
 User-agent: mu4e 1.6.10; emacs 27.1
 From: Junjie Mao <junjie.mao@hotmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 03/16] rust: pass rustc_args when building all crates
-Date: Tue, 22 Oct 2024 10:22:51 +0800
-In-reply-to: <CABgObfa6G0Seobc5jLsxEFSRXu4qf-1U7vEEix6pCX=wfsjsPw@mail.gmail.com>
-Message-ID: <ME0P300MB10407A693663615D8AD3F507954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: SG2PR02CA0028.apcprd02.prod.outlook.com
- (2603:1096:3:18::16) To ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
+Cc: qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v2 03/13] meson: pass rustc_args when building all crates
+Date: Tue, 22 Oct 2024 10:35:32 +0800
+In-reply-to: <20241021163538.136941-4-pbonzini@redhat.com>
+Message-ID: <ME0P300MB104040B27788B33C0ECE60F3954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: SI2PR01CA0037.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::9) To ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
  (2603:10c6:220:231::14)
-X-Microsoft-Original-Message-ID: <87iktksw4t.fsf@hotmail.com>
+X-Microsoft-Original-Message-ID: <87bjzcsw1p.fsf@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ME0P300MB1040:EE_|SY2PPF1D93025A7:EE_
-X-MS-Office365-Filtering-Correlation-Id: 80613e7e-2ea0-48a6-b92b-08dcf2422521
+X-MS-TrafficTypeDiagnostic: ME0P300MB1040:EE_|SY3PPF947566139:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97279746-6619-469d-512d-08dcf24268d9
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|15080799006|7092599003|5072599009|19110799003|6090799003|8060799006|461199028|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info: jzc+l/2XBzUMoh0vmRIbMpkCcxC/PIK4oedITXuBBmBHtzfUryvsWkP/+7FCV4gnxcsSzo5Yzv3Ru75erT0bB/4ze5WN0Q1EqtLgScgkM7yXGp9XBR96EJaDtPraogXn1m1z/wevgYZCC3iRtv1O8rx8gbW5pM6u8iptdCDok52H4vl2wZ683ZmiIFPsfNDX374NfcENgHHHjEBqhHJKQDoFTL1hE0Le7k2UI5eVhmrEfNlmoQPyE0SlN8VODGXDvhJwHGRnxmj1w/JVgpOIixHLcgQ4Xo8TSuFNOvu1yFZhdxzvsqMO3jLrriUY8b+np9gm2w7UwekS6P2d1vps9tDRvz49/liQeWBDzbp6zb+/mn4Pd+595RvU6biSCt2A5ofpZWDrRBbH/MB7gylCZSmsg2jLO5sxW/eYLpgdk45Jgwa+ZrcUW8XypnGkP/yL1QuW5H73F7l0E0xkmTmo6PaL/MgxmBhmsztzQASW2U4+4CfFC4j4sGABwpD1+tK0X0/I8tNYSX+IiYwUCAElM8dg1ZSd4JyYXie3b2GeZmzyooCQq0PgWtUDQE3KMSU8smt3jO80zdy+S8Ao54OnC+C2h+qDsBaW3Ir0v45A6dtBqdXfYvFmB250QTCKJJ6sm7T2ntuqAvNRyvUfKpSNuG2psjFKhwVrmxIbGHn4rw6RCKcysD2GR1Ueu+WUkIk4mU18jujAyCDxfPPHIWcT0kTGPGY+bnGED2Jo0vcewQ4bxwZqiCLbtlPkBfgQ2Ztau+ph4rCoGNWtoMFL17Q3dA==
+ ARA:14566002|19110799003|5072599009|8060799006|461199028|15080799006|7092599003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: m1NPcdKW1pGxb+QDEwgMM3Cs6LHHJgbBY7ivYzaRqVbr534sFBA21Qdl56yGAxigFYZn/7cDHxkDGlQ0w3iH80B71OxNGnSH5iOcZb6palAe7NzFMU9jJsSjNFmj9wgZroKEWQz/Trj5x+Y+G6Oz7AiFY3kfE/nVfEtcYatbOOQek33hJQmHxSVLajeCTKmC4Qkj1MPg4U1hqLbWUYhGQ66/o4jp87o3jMi5moNqgBoczIIadcuUx/vPV1yQwvW8rw5tJV8rRAnlwLjSAvG7u4xoxphp1v6XZKHBSXIp5jyg/GNDskDyonqJ/vlEY65JdzSLlo9N6bsd1IZ4DEzsoZWYoEM7X0tWUD7I1/57p9EmznnoKiA9LnJBwuoxkAHOoAm1r/J/UZh+Qnn7rj6QRV9mmLqq/d2lHUCBhqfC9kzz+gn2J4gm5VCcxEMk/RrkN+ltAX1Sgve5J15S5G7ATFtBny0Ig+N8O6uB0UeCNGWce9xIXc9f5BpkHc3PS3GGtD8PnPLOU95BylM/aVlu4haGcghfoIDrsKxUTBDWOu/jERzw7spMJz6cN93U0x6Y5e8tpCAHlErEQ1AxEfY6yA5n7Oik/neF3dA2dNB1B4tgSbVFuwdu7wxGT/xgJ5P6Nt1Trk3QS6oEnwCqegLMNGzOBxc7vFGuy+zVAFijBRtyfGRAZr5GQ1W/v3qVjI+nLFv0aXAPyaTcIZyrjiSr97NLnQBpk9dYIov5VwyrN5k=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cndTdDg1VS9lTTNZbmdzVWhPSWZkTkdPU2p3ME5SZGU3cHJBM0kvUk9HZnJ6?=
- =?utf-8?B?WmNTMGhzMDB6aXlOUlJTSm93aWh2U2I2Q3dUK2dlUC9UdFZnZFh6Mks0bXFq?=
- =?utf-8?B?Z0tXYVR4Rzlvcjc0bmtrZDZ4eit3YnY4eWtmbFZ2dUw0VEltSDY2aEpUL1hO?=
- =?utf-8?B?SFc0cWhwZ2ZtTlZuZE5KSVo2Z0F3RFEvWDNKUnQ4dkhXMThpMVlJTDFNUEEw?=
- =?utf-8?B?d1podWhUaVNNTDA4bVBuZGtMVkkrbkNlOWNJN2JJdmNzRHl4NHNhVEhBSW95?=
- =?utf-8?B?V2NuTTYrMnBQVmhjb21adGk3SjJQanVSWm9YREFwWWg2Uk1INmk1VlNkRHJX?=
- =?utf-8?B?d0ZJUVRKOG9xTCs5WnNkTEpWZFY3ajhOM05KR2VtRUNRaFRyR1hlY1lGb242?=
- =?utf-8?B?cXNRdzk0V2w1MytwU0pnMElacUlGMWxjTWdXSEtpZGNtZEtIcDhXRXhPNUxY?=
- =?utf-8?B?TnlYTGgvVFdIUy9zQjN2b0lNd0pOSUlZdnA5THAxNURlTTRBZ3dMTmU5RVEx?=
- =?utf-8?B?UFRad2srUFUwTE42K3c3VjYzZ3k2Q0FiMVFkMWtTTkJrQXU1MWtvditNSWMy?=
- =?utf-8?B?Q2U0c1o5aWdCdndEQVdjQXgwdkhQeWZCZzF2VVl3WjZTUFlxSWg1eHl5UXYv?=
- =?utf-8?B?L1ZSMGkybWVPNzFmNnp3dzcvQjhLbTFIeTlvemh2d0dHL3lzVVJwdEsyWksx?=
- =?utf-8?B?UmJKenFnN3YzRDRzcEdCNVZmeTdSeHpnblZ0TVVpUXExcERaT3Npem1MS0Q2?=
- =?utf-8?B?ZDJySjBNMTQ0UEZtSUFTWGZzOHF0N0tRTEhLWFBwZEpTV1hyOHlxdTlpaW51?=
- =?utf-8?B?aWVBQURRRFl2U3pjMEdBYmo5cVRoT3MxL3VLM1VzeHBiaG5NVHVBZVJoYkxy?=
- =?utf-8?B?NlcydGMxblB2c0EvMWN6dWZSVVQxUEVQMXFSV1FtOThjMDJHUzdkWlB2WUM0?=
- =?utf-8?B?TUtybmJ1aFF3SGMvNXRpTHZlY3BTQXA4eUxOMUJ5OWMzeVNwU3FSWHFKc1lR?=
- =?utf-8?B?ZE5ESEtQbmZZL3hscVo4N1VlbEVqVysyaFd4aUxyS3hGYmJXS0hiZXVwa0tQ?=
- =?utf-8?B?dUt5Z0FQbjh5V1A2aXl3U0FUUEVPZFVlc2p4WDl0dXNrSHMyOTk4R29wczJp?=
- =?utf-8?B?RXMwc3AxNzV2cUZUR1ozSlkzUVRkaWY3bytUM0JPT2YySlBCVCt5eDJ3bms5?=
- =?utf-8?B?TVZ6aXkxS3BjWFNGL3UxVW42VUczNmZIaWZqSms4a3R6QXUyZGQvL0tRN2JC?=
- =?utf-8?B?d25MUnE2a3ZMNFV3cGNvaHRsTno2NDdhNkZyWWFKRWQzZW5DeWszazZ0QnFx?=
- =?utf-8?B?ME91dEhzd2ZOVGZ2M2plSi9qU29FSVRmTHdlWnJjRnlkOHkwWFI4TDJ1cU9Y?=
- =?utf-8?B?RDVRK3JSalVJZUt0RVlnQUhkS1RNZmcrSEpWcHFOV0hSbGpIZGtyWTVicmxt?=
- =?utf-8?B?TzV4NmdoTWFwejVlSXRZVnJBMlpaNzN3TG91SENUY1hqWmNzSlFDaEpkaUph?=
- =?utf-8?B?czNZQTNIZnhxZWkyU0VVMStoVnJUZ1RINkZTUUIwT09uRHBRemg3NmxrK1ZK?=
- =?utf-8?B?cHlPZzI4aUlrVmw3MlBQV2Q3SXl3UStxL2c1N1F5QXQ1Mnd6ZlVFNDk5azNN?=
- =?utf-8?Q?8FQfYRF6l+vMqZ47JgS0TCxw7Po9oBkMFtYDtnOxrrw0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?JJhjkPaqbMQCvfgz9Ys7c2CVq3qumGlhU5GLHkSUjiP39NMGAa7PHsCLDOvL?=
+ =?us-ascii?Q?+nKv3jNHUx+nxeddKZX2T7nfPG7ue3xMzwKSD7wgMLPzU1LgxPE0VLKtbLWN?=
+ =?us-ascii?Q?lSzfqb0U6W14sBQ/6PU+f79pzhwMxZaUdNLxemNJuj9aEJ/ulxaYykp/FPn7?=
+ =?us-ascii?Q?6cQfiAguOsrKVQ2kx2V01DUAzhJAxM2Xgji59MH1BRFEa2MHy55sEGLZYrYr?=
+ =?us-ascii?Q?iTROhxPyaQ4KwJvwOimX0J6moFvAlO2hhO/eg/FcTzZhZPUfj9qGBXXIm492?=
+ =?us-ascii?Q?2zYdU5JfMUVwdMgXetxHmQeiv+S/x27OeyYEHgDGSlOAe9pjcX6W0iYjrbye?=
+ =?us-ascii?Q?5ivHipMg3HtLzB+fhbb6n4CJlXjkIWiMjGXcUEDnmd4EOfSc29oIgrsk6aLV?=
+ =?us-ascii?Q?abZFvqZIGeu5YC0HX68AcZKnq5iB7xFfeTDOwWAl1F66KhCKpD3FA+uDKuLZ?=
+ =?us-ascii?Q?FRkJNweN73fehYNIchF2Rg7tMrT/AvARSXdkro+08AZP+tYeyFuMxW2THdjv?=
+ =?us-ascii?Q?nXZBslGnoz2dS+mKfrpTdlP1WZNFIZbeQ2B/yIz06xhWfkm9RCemM0Lw5+/X?=
+ =?us-ascii?Q?09d7XfyQEyv0u3B7Z7cvoNhgHSA8aDmfgA1aoI5q/xhuLoQajDU2FUwrbQBd?=
+ =?us-ascii?Q?1LdM8x7XDgM9nCsY5jL2XwSBq5ryeEPuGhWn9acrwNfVu69V7gLO9gC+84J/?=
+ =?us-ascii?Q?rJl7j0bgUVeWS33LUv5kEInN0bFGIxiRdFC9q8cxO2SQH38gl4C+kPupaoRy?=
+ =?us-ascii?Q?EUCl3WpSHOd4ACtL+vaCLG2jSccaZraaMqtOYSmiiOJ17LeIRKxR9Qnce8tO?=
+ =?us-ascii?Q?ZOxrvk8ZNF3it5ZdrcmVQf3JwLQTZ8S+7kiXLSIxGHvcM0dCf36QeNjr+GH+?=
+ =?us-ascii?Q?o7agYgn5ZRho7twiPpkhJy464+M/sJnp1TNXd1sGF9Ee3GT+r+1jKWVozj10?=
+ =?us-ascii?Q?CUwL/tAl/uOQRB7SWMDN26VWraiHtu6z7REiq//kf4d2Z4t3C4g92qKbSxVo?=
+ =?us-ascii?Q?Tj5Jzzau0z7szx5dl9UN7SmE8zhxa3KAac2c3bfiQ59C3AAcyPOpcEqZolaL?=
+ =?us-ascii?Q?LT4RpLo0hE2QVtXFLiFRMLYpgLcyN3MZTDA7jPw0tZUHcvKUgJvGmxL2JNeE?=
+ =?us-ascii?Q?QjCTnZLE1uwHXNvRPBSl9dxGIdHWiG9B0vAEUWN3aCl/Y8SOdI1ph1YO+DGR?=
+ =?us-ascii?Q?+X68w3qh97e496juaD+HBflq4ZI+e/SMcsoJnJlAsePWFAkBxFgoImeb3/k?=
+ =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 80613e7e-2ea0-48a6-b92b-08dcf2422521
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97279746-6619-469d-512d-08dcf24268d9
 X-MS-Exchange-CrossTenant-AuthSource: ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2024 02:35:08.7588 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2024 02:37:02.2473 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY2PPF1D93025A7
-Received-SPF: pass client-ip=2a01:111:f403:2818::826;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY3PPF947566139
+Received-SPF: pass client-ip=2a01:111:f403:2818::805;
  envelope-from=junjie.mao@hotmail.com;
  helo=AUS01-ME3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
@@ -135,42 +127,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> On Mon, Oct 21, 2024 at 8:16=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wr=
-ote:
->> unsafe_op_in_unsafe_fn is allowed in
->> rust/qemu-api/src/lib.rs. So should we wrap the bindings in a separate
->> lib (similar to the rust/bindings in the Linux kernel)?
->>
->> This way, the special lint settings can be applied only to the binding
->> files, while the default lint checks can cover the other user
->> development code.
->>
->> In addition, another thing that confuses me is why bindgen still
->> generates code that does not follow the unsafe_op_in_unsafe_fn
->> requirement. It seems that bindgen has supported unsafe_op_in_unsafe_fn
->> since v0.62 [1, 2], but binding code we generated still violates
->> unsafe_op_in_unsafe_fn. Is this a bug of bindgen?
+> rustc_args is needed to smooth the difference in warnings between the various
+> versions of rustc.  Always include those arguments.
 >
-> The plan is to support older versions of bindgen (0.60.x) as long as
-> Debian has them. One possibility to fix this is, as you said, to use a
-> completely separate crate. Another is to add #![allow()] to just the
-> bindings module, for example by changing bindgen.rs to
->
-> #![allow(...)]
-> include!("bindgen.rs.inc")
->
-> This is related to the fact that we don't have yet a good way to run
-> "clippy", because "cargo clippy" needs the bindgen.rs file. So we
-> should probably look at these issues at once.
->
-> Paolo
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Since meson 0.6.0 clippy-driver can be used as a wrapper of rustc. So we
-can run clippy by:
-
-   mkdir build.clippy && cd build.clippy
-   RUSTC=3Dclippy-driver ../configure --enable-rust ...
-   ninja librust_x86_64_softmmu.a
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 
 --
 Best Regards
