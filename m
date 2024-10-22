@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AE2D1715D
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EF6D1715E
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t36Op-000584-0G; Tue, 22 Oct 2024 00:21:40 -0400
+	id 1t36RJ-0005ql-5W; Tue, 22 Oct 2024 00:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Om-00057i-JG
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:21:36 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36RG-0005qR-OS
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:24:10 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Ok-0005Tc-KA
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:21:36 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-20c7ee8fe6bso49253565ad.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:21:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36RF-0005db-A2
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:24:10 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2e56750bb0dso2406911a91.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729570893; x=1730175693; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729571048; x=1730175848; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=U6TA+dfpJRL2alQYF+sK8n7yKe+rntMD1q1SiavzAdw=;
- b=sFQ4W1FiVF6t9ty5h9rzqRlctTwaYDKW7tMrIG7hpmklTJ7tRbbIynovMx4iY73eaO
- xU3DZS3uewMmjmQvJLULl/MUca9w6vNNClFBn71w6LYjKdQRI1KjW8IM9ZhS7RI/39do
- SXSUas2K14BgZhil4B6DvFxlZbMMdxUgFpNHcH+lOygZKB33mFB51El1LRgE24OTHKgH
- +8U/W1ywyFMwuXoI48aOeAwWLwy5TSZ+5mT5Neh7IOMcvtwR2oj3AB2nX08GcZpxZ2KA
- 5rbphRZj7DLig8xGlZXh+X4xPTxmmT9QqujFcfQT1Gm8912kl9ws7WVE2jvDvTNy1Krd
- F6Pw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=udF0ztqIpxPzSV/EnWwWwqcBYJUx9H9orbqpOAQzft0=;
+ b=g0j1ErpRYNPuOpImRavYWRVA19mOSEtdf7VJ2q0RvGU2vJK7lJsgeEwqZTaXnWOuwt
+ DyEW+Qf6+1glTTO5VOZjuJ+HPXXdpyrAY8nGJ9YkOyR/k75PQLNp0v2qKSBBJRpugeGB
+ r6eG+xRH+tQW3nk+t7LEBNctMqfGy18GwlTMJ1AHY+4tePKstk/IC5A0Qf2sO33EsrGH
+ HwCjqUPoPmx+Z9cNCgMmwMcutg9FZeDaR+xbqx772bVQEGvsVk52j2P4jIR3jE7a2ZrP
+ O/EDG3wz9J8ZJC7ig6lKCaAmF4ZmLDH4srHrPjm/Lp3mB8wDG9eE3JN/3FOV1wtBDU6V
+ wq4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729570893; x=1730175693;
+ d=1e100.net; s=20230601; t=1729571048; x=1730175848;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U6TA+dfpJRL2alQYF+sK8n7yKe+rntMD1q1SiavzAdw=;
- b=FIso9cA4jrLhTPwnDlA+NQMNKX/8zdokT+tbRWBco9SQl6cjo0lw/xaZCgqE3XhKSK
- yca5EnhSdtoYfrv3btUIApEpiBTTdNF6S+E4O4vLXAxN022WaRGr7GdWEkwvgDj4Pjdf
- U7DCS12/kk76YB+oB5w88jvkNYwJOKOUdCIBFtgikm759jFe8O1uFEUvSKsu/8e7182G
- 86CubPmBr1gyr5Z2AS9jEdfLgPbeAqx3Oc55T2++q4D+u7cC+qRdVnuZRkw58f+E6llO
- k657ApWG5jSBhcr4dUlc5gi4NNEXe3ioys6nvD9/DFIn7Kbxh90BE1fjfYj6w6hE8rPw
- AlRg==
+ bh=udF0ztqIpxPzSV/EnWwWwqcBYJUx9H9orbqpOAQzft0=;
+ b=TTOGKsRP8lwBa3vV/Tr4hiJE0Wt8jXSWSAAHl+cp0rJRDagyhih8XGHtQQoI6ykg5d
+ fhTj6ik7NJDlgZSFH5Wv/dlW+i8mZRHSPGyknBBfKW7yYG3phHLoWChBInV8x8ZAm9KJ
+ 6m8CCFM+GRtxHsdaoAgdwiaXzPe6spd8K+E/7QVq6MDFdUjTCnxUgvRd+xBAn0YYZB/F
+ xSxT6wFSI1Mk6N1UCkpUu348uCetK2J9wiBY72ow41zvZrBlqbwma6wBAOsAW5BpxWkI
+ 0ritLvar/KRYFdtHNtuwNg7IFF0RCcdT6UdpV7ottgbBjSZPDR/qXkIhXyiPhOg5D4TZ
+ x9Sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIYvvY5dJuV6zTwOmTwA5qGpRZWDOb/keJe6c/6JNR+Pu6H7hLw+uq1L29HOAbeTYfb9+guwNTIfXW@nongnu.org
-X-Gm-Message-State: AOJu0YyPuJf7CDPEs4YB9FWz0NZfbV9r4+24dbz1Z14tYUNqjxWPhUaO
- qcqZ6RU3xdBWn8V5UXiPIpHIAcIQeufUdFNy0Y0RDXQbn+JmloXqUrj1CaFwLZsAktkAg7MG0kR
- H
-X-Google-Smtp-Source: AGHT+IG8HAGB/M6ItFDHqP/zrrIU+7MNDUoytlmgEko0q8TGgnL+5nroZCrjMMLJzaJxAzc7L1+2Tw==
-X-Received: by 2002:a17:902:db0e:b0:20d:1866:ed6f with SMTP id
- d9443c01a7336-20e5a71eef2mr51145695ad.4.1729570892704; 
- Mon, 21 Oct 2024 21:21:32 -0700 (PDT)
+ AJvYcCV9XJZ2XypGf56t7FZnEm92jLWKQXWF+aogkxEbSGpQZyKMHu459jfNvbfUsmeTW7Opx5K2czryEdbb@nongnu.org
+X-Gm-Message-State: AOJu0Yw39+fLpkweF5+yi9eFS1rY+JSLUyxskIZMQ8nl5CrvEQDbFNN/
+ yZoC6pLoP0Y+rE+ls1zFqCIZoP5VX7wtVLSOy5F4UcxL/atSXIlCio3eG0cyNK0=
+X-Google-Smtp-Source: AGHT+IHJ6HIIVYO8+qNGH0NvP38SUOy65xHa5xDo9Ws2pP/rOiWDX6yMl22wPzvzDUAWnkoSvQNH/g==
+X-Received: by 2002:a17:90a:9c8:b0:2d3:c9bb:9cd7 with SMTP id
+ 98e67ed59e1d1-2e5619f6ca6mr16553657a91.36.1729571047875; 
+ Mon, 21 Oct 2024 21:24:07 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7ef08c4asm33851885ad.80.2024.10.21.21.21.31
+ 98e67ed59e1d1-2e5ad4ed83dsm4870093a91.35.2024.10.21.21.24.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 21:21:32 -0700 (PDT)
-Message-ID: <e013ddeb-185a-48d6-86a7-4a5697f7a3fd@linaro.org>
-Date: Tue, 22 Oct 2024 01:21:30 -0300
+ Mon, 21 Oct 2024 21:24:07 -0700 (PDT)
+Message-ID: <d20e3944-7ba4-4b7b-a14d-d4135ed413af@linaro.org>
+Date: Tue, 22 Oct 2024 01:24:04 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: explicitly permit a "commonly known identity" with
- SoB
+Subject: Re: [PATCH] gitlab: enable afalg tests in fedora system test
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-References: <20241021190939.1482466-1-berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20241021170236.1443887-1-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241021190939.1482466-1-berrange@redhat.com>
+In-Reply-To: <20241021170236.1443887-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,64 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/24 16:09, Daniel P. Berrangé wrote:
-> The docs for submitting a patch describe using your "Real Name" with
-> the Signed-off-by line. Although somewhat ambiguous, this has often
-> been interpreted to mean someone's legal name.
-> 
-> In recent times, there's been a general push back[1] against the notion
-> that use of Signed-off-by in a project automatically requires / implies
-> the use of legal ("real") names and greater awareness of the downsides.
-> 
-> Full discussion of the problems of such policies is beyond the scope of
-> this commit message, but at a high level they are liable to marginalize,
-> disadvantage, and potentially result in harm, to contributors.
-> 
-> TL;DR: there are compelling reasons for a person to choose distinct
-> identities in different contexts & a decision to override that choice
-> should not be taken lightly.
-> 
-> A number of key projects have responded to the issues raised by making
-> it clear that a contributor is free to determine the identity used in
-> SoB lines:
-> 
->   * Linux has clarified[2] that they merely expect use of the
->     contributor's "known identity", removing the previous explicit
->     rejection of pseudonyms.
-> 
->   * CNCF has clarified[3] that the real name is simply the identity
->     the contributor chooses to use in the context of the community
->     and does not have to be a legal name, nor birth name, nor appear
->     on any government ID.
-> 
-> Since we have no intention of ever routinely checking any form of ID
-> documents for contributors[4], realistically we have no way of knowing
-> anything about the name they are using, except through chance, or
-> through the contributor volunteering the information. IOW, we almost
-> certainly already have people using pseudonyms for contributions.
-> 
-> This proposes to accept that reality and eliminate unnecessary friction,
-> by following Linux & the CNCF in merely asking that a contributors'
-> commonly known identity, of their choosing, be used with the SoB line.
-> 
-> [1] Raised in many contexts at many times, but a decent overall summary
->      can be read at https://drewdevault.com/2023/10/31/On-real-names.html
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d4563201f33a022fc0353033d9dfeb1606a88330
-> [3] https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
-> [4] Excluding the rare GPG key signing parties for regular maintainers
+On 21/10/24 14:02, Daniel P. Berrangé wrote:
+> The AF_ALG crypto integration for Linux is not being tested in
+> any CI scenario. It always requires an explicit configure time
+> flag to be passed to turn it on. The Fedora system test is
+> arbitrarily picked as the place to test it.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   .gitlab-ci.d/check-dco.py         | 5 ++++-
->   docs/devel/submitting-a-patch.rst | 7 ++++++-
->   2 files changed, 10 insertions(+), 2 deletions(-)
-
-
-> +The name used with "Signed-off-by" does not need to be your legal name,
-> +nor birth name, nor appear on any government ID. It is the identity you
-> +choose to be known by in the community, but should not be anonymous,
-> +nor misrepresent whom you are.
+>   .gitlab-ci.d/buildtest.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
