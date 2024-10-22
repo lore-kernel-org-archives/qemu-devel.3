@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40C6D2C57C
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 00:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18682D2CDF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 00:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3OpO-0004jX-Ia; Tue, 22 Oct 2024 20:02:18 -0400
+	id 1t3OpN-0004jR-Vo; Tue, 22 Oct 2024 20:02:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t3OpL-0004i8-3Z; Tue, 22 Oct 2024 20:02:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1t3OpK-0004hk-GL; Tue, 22 Oct 2024 20:02:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t3OpH-0004Qf-Qf; Tue, 22 Oct 2024 20:02:14 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLoRB2007731;
- Wed, 23 Oct 2024 00:01:55 GMT
+ id 1t3OpH-0004QK-2A; Tue, 22 Oct 2024 20:02:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLoAxF029973;
+ Wed, 23 Oct 2024 00:01:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=AoXtEQCk+Yi2AwNhr
- D+UgZmfp1emmOPrZ8YbLtpdo9A=; b=pv/aYtcNXdapWgkQDset2vq2T4Cw1e4VJ
- YgjNDQfcJeb3bMH2lktyNQQE5IaGWghE/Q2k0axo2LNdhEsAGKMfc1yQwOagy0Eo
- HWz4V1LvLqMMzVWTR3pZrcaadQjvEGCDz2pENxQC/V+S5qAaynyQu34qvkhbtRCh
- zt4rRABgZ9eXE2Ln7V/eWqRD3NhTxg2WbCZEFj2pUBA2Bc1FnDuquvYlPzyAucV1
- RMtxnWXYYJukN/awRXDRYhpdpxcqG/ddBKyZq0p3Ooml6Aiaknnibi7GtSwKYe78
- ytDP3ldRVP/CkmL3HlvS37hnzQmIkp81U/cdeJOTYC6euX91Bj7nA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emafrchb-1
+ :mime-version:references:subject:to; s=pp1; bh=DE9fEl2MbyBjyVKLI
+ LKN31Xn9Ht7J9RVPieuaoHEzW8=; b=GYIEj75HiJt2DO1zLNbavefSruAxxUlQT
+ uPQ52fgtcS/hfsSaZlXivXs5561x8CUFy2IyPd+qrVxOsQ4RXSSmjGBrvtpzRm4k
+ Jv3QUh/TzbZZDoIqJss5bJ+Ts4jWswa9dNrdEtIhTTmshH0tetqWGA78JAUMZTXO
+ GTLnv2l/uRsfQEEkkoOtRbtn4xMTdvLSb1rISvlZksnLzCmt1Ev8DK/lGb0u5ywR
+ myebGPY5iWYXaMykdeI118ud1924BV9q6qyx6d5KGD0oVI2oHtCqFDpb2UGjL/9c
+ shwjttxX36Lod3JdN4OIzOLjZBp2sWS3l32MrJIS2wCnvqiNnLY+Q==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emafgcqj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Oct 2024 00:01:55 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49MM6qN6006876;
- Wed, 23 Oct 2024 00:01:54 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42emjcrayd-1
+ Wed, 23 Oct 2024 00:01:53 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49MM4mGU012603;
+ Wed, 23 Oct 2024 00:01:52 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42emhf8bje-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Oct 2024 00:01:54 +0000
+ Wed, 23 Oct 2024 00:01:52 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49N01qL421758580
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49N01pot54133056
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Oct 2024 00:01:53 GMT
+ Wed, 23 Oct 2024 00:01:51 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C5B6D20043;
- Wed, 23 Oct 2024 00:01:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3188F2004B;
+ Wed, 23 Oct 2024 00:01:51 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57B0B20040;
- Wed, 23 Oct 2024 00:01:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C2D3720040;
+ Wed, 23 Oct 2024 00:01:50 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.26.72])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Oct 2024 00:01:52 +0000 (GMT)
+ Wed, 23 Oct 2024 00:01:50 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Aurelien Jarno <aurelien@aurel32.net>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -65,29 +65,29 @@ To: Aurelien Jarno <aurelien@aurel32.net>,
  David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 2/2] tests/tcg/s390x: Add the floating-point multiply-and-add
- test
-Date: Wed, 23 Oct 2024 01:59:19 +0200
-Message-ID: <20241023000147.34035-3-iii@linux.ibm.com>
+Subject: [PATCH 1/2] target/s390x: Fix the floating-point multiply-and-add NaN
+ rules
+Date: Wed, 23 Oct 2024 01:59:18 +0200
+Message-ID: <20241023000147.34035-2-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241023000147.34035-1-iii@linux.ibm.com>
 References: <20241023000147.34035-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pL-ZM2IPZNpcaoQs1_eIvaa2iLYTl-Jd
-X-Proofpoint-ORIG-GUID: pL-ZM2IPZNpcaoQs1_eIvaa2iLYTl-Jd
+X-Proofpoint-ORIG-GUID: w3SJlgp944AJTwX0UJ1o7nvO48_mO1nC
+X-Proofpoint-GUID: w3SJlgp944AJTwX0UJ1o7nvO48_mO1nC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 phishscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220154
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ clxscore=1015 suspectscore=0
+ mlxscore=0 mlxlogscore=999 adultscore=0 lowpriorityscore=0 malwarescore=0
+ spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410220154
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -111,673 +111,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test to prevent regressions.
-Share some useful pieces with the vfminmax test.
-Remove the duplicates from the floating point class values.
+Order the helper arguments to match the Principles of Operation.
+Implement the "Results: MULTIPLY AND ADD" table in pickNaNMulAdd().
 
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- tests/tcg/s390x/Makefile.target |   5 +-
- tests/tcg/s390x/float.h         | 104 ++++++++++++++
- tests/tcg/s390x/fma.c           | 233 ++++++++++++++++++++++++++++++++
- tests/tcg/s390x/vfminmax.c      | 223 +++++++++++-------------------
- 4 files changed, 420 insertions(+), 145 deletions(-)
- create mode 100644 tests/tcg/s390x/float.h
- create mode 100644 tests/tcg/s390x/fma.c
+ fpu/softfloat-specialize.c.inc    | 19 +++++++++++++++++++
+ target/s390x/tcg/fpu_helper.c     |  8 ++++----
+ target/s390x/tcg/vec_fpu_helper.c | 12 ++++++------
+ 3 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 2dab4f45822..da5fe71a407 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -74,8 +74,11 @@ $(Z13_TESTS): CFLAGS+=-march=z13 -O2
- TESTS+=$(Z13_TESTS)
- 
- ifneq ($(CROSS_CC_HAS_Z14),)
--Z14_TESTS=vfminmax
-+Z14_TESTS=fma vfminmax
-+fma: float.h
-+fma: LDFLAGS+=-lm
- vfminmax: LDFLAGS+=-lm
-+vfminmax: float.h
- $(Z14_TESTS): CFLAGS+=-march=z14 -O2
- TESTS+=$(Z14_TESTS)
- endif
-diff --git a/tests/tcg/s390x/float.h b/tests/tcg/s390x/float.h
-new file mode 100644
-index 00000000000..9d1682b8fc5
---- /dev/null
-+++ b/tests/tcg/s390x/float.h
-@@ -0,0 +1,104 @@
-+/*
-+ * Helpers for floating-point tests.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef FLOAT_H
-+#define FLOAT_H
-+
-+/*
-+ * Floating-point value classes.
-+ */
-+#define N_FORMATS 3
-+#define CLASS_MINUS_INF 0
-+#define CLASS_MINUS_FN 1
-+#define CLASS_MINUS_ZERO 2
-+#define CLASS_PLUS_ZERO 3
-+#define CLASS_PLUS_FN 4
-+#define CLASS_PLUS_INF 5
-+#define CLASS_QNAN 6
-+#define CLASS_SNAN 7
-+#define N_SIGNED_CLASSES 8
-+static const size_t float_sizes[N_FORMATS] = {
-+    /* M4 == 2: short    */ 4,
-+    /* M4 == 3: long     */ 8,
-+    /* M4 == 4: extended */ 16,
-+};
-+static const size_t e_bits[N_FORMATS] = {
-+    /* M4 == 2: short    */ 8,
-+    /* M4 == 3: long     */ 11,
-+    /* M4 == 4: extended */ 15,
-+};
-+struct float_class {
-+    size_t n;
-+    unsigned char v[2][16];
-+};
-+static const struct float_class signed_floats[N_FORMATS][N_SIGNED_CLASSES] = {
-+    /* M4 == 2: short */
-+    {
-+        /* -inf */ {1, {{0xff, 0x80, 0x00, 0x00}}},
-+        /* -Fn */  {2, {{0xc2, 0x28, 0x00, 0x00},
-+                        {0xc2, 0x29, 0x00, 0x00}}},
-+        /* -0 */   {1, {{0x80, 0x00, 0x00, 0x00}}},
-+        /* +0 */   {1, {{0x00, 0x00, 0x00, 0x00}}},
-+        /* +Fn */  {2, {{0x42, 0x28, 0x00, 0x00},
-+                        {0x42, 0x2a, 0x00, 0x00}}},
-+        /* +inf */ {1, {{0x7f, 0x80, 0x00, 0x00}}},
-+        /* QNaN */ {2, {{0x7f, 0xff, 0xff, 0xff},
-+                        {0x7f, 0xff, 0xff, 0xfe}}},
-+        /* SNaN */ {2, {{0x7f, 0xbf, 0xff, 0xff},
-+                        {0x7f, 0xbf, 0xff, 0xfd}}},
-+    },
-+
-+    /* M4 == 3: long */
-+    {
-+        /* -inf */ {1, {{0xff, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* -Fn */  {2, {{0xc0, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+                        {0xc0, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* -0 */   {1, {{0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +0 */   {1, {{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +Fn */  {2, {{0x40, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+                        {0x40, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +inf */ {1, {{0x7f, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* QNaN */ {2, {{0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
-+                        {0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe}}},
-+        /* SNaN */ {2, {{0x7f, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
-+                        {0x7f, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfd}}},
-+    },
-+
-+    /* M4 == 4: extended */
-+    {
-+        /* -inf */ {1, {{0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* -Fn */  {2, {{0xc0, 0x04, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+                        {0xc0, 0x04, 0x51, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* -0 */   {1, {{0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +0 */   {1, {{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +Fn */  {2, {{0x40, 0x04, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+                        {0x40, 0x04, 0x52, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* +inf */ {1, {{0x7f, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}}},
-+        /* QNaN */ {2, {{0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
-+                        {0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe}}},
-+        /* SNaN */ {2, {{0x7f, 0xff, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
-+                        {0x7f, 0xff, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfd}}},
-+    },
-+};
-+static const unsigned char default_nans[N_FORMATS][16] = {
-+    /* M4 == 2: short    */ {0x7f, 0xc0, 0x00, 0x00},
-+    /* M4 == 3: long     */ {0x7f, 0xf8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+    /* M4 == 4: extended */ {0x7f, 0xff, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-+};
-+
-+static void dump_v(FILE *f, const void *v, size_t n)
-+{
-+    for (int i = 0; i < n; i++) {
-+        fprintf(f, "%02x", ((const unsigned char *)v)[i]);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 4e279b9bc40..62197373c93 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -635,6 +635,25 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         float_raise(float_flag_invalid | float_flag_invalid_imz, status);
+     }
+     return 3; /* default NaN */
++#elif defined(TARGET_S390X)
++    if (infzero) {
++        float_raise(float_flag_invalid | float_flag_invalid_imz, status);
++        return 3;
 +    }
-+}
 +
-+static void snan_to_qnan(char *v, int fmt)
-+{
-+    size_t bit = 1 + e_bits[fmt];
-+    v[bit / 8] |= 1 << (7 - (bit % 8));
-+}
-+
-+#endif
-diff --git a/tests/tcg/s390x/fma.c b/tests/tcg/s390x/fma.c
-new file mode 100644
-index 00000000000..6872f59a7a6
---- /dev/null
-+++ b/tests/tcg/s390x/fma.c
-@@ -0,0 +1,233 @@
-+/*
-+ * Test floating-point multiply-and-add instructions.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <fenv.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include "float.h"
-+
-+union val {
-+    float e;
-+    double d;
-+    long double x;
-+    char buf[16];
-+};
-+
-+/*
-+ * PoP tables as close to the original as possible.
-+ */
-+static const char *table1[N_SIGNED_CLASSES][N_SIGNED_CLASSES] = {
-+     /*         -inf           -Fn          -0             +0             +Fn          +inf           QNaN         SNaN     */
-+    {/* -inf */ "P(+inf)",     "P(+inf)",   "Xi: T(dNaN)", "Xi: T(dNaN)", "P(-inf)",   "P(-inf)",     "P(b)",      "Xi: T(b*)"},
-+    {/* -Fn  */ "P(+inf)",     "P(a*b)",    "P(+0)",       "P(-0)",       "P(a*b)",    "P(-inf)",     "P(b)",      "Xi: T(b*)"},
-+    {/* -0   */ "Xi: T(dNaN)", "P(+0)",     "P(+0)",       "P(-0)",       "P(-0)",     "Xi: T(dNaN)", "P(b)",      "Xi: T(b*)"},
-+    {/* +0   */ "Xi: T(dNaN)", "P(-0)",     "P(-0)",       "P(+0)",       "P(+0)",     "Xi: T(dNaN)", "P(b)",      "Xi: T(b*)"},
-+    {/* +Fn  */ "P(-inf)",     "P(a*b)",    "P(-0)",       "P(+0)",       "P(a*b)",    "P(+inf)",     "P(b)",      "Xi: T(b*)"},
-+    {/* +inf */ "P(-inf)",     "P(-inf)",   "Xi: T(dNaN)", "Xi: T(dNaN)", "P(+inf)",   "P(+inf)",     "P(b)",      "Xi: T(b*)"},
-+    {/* QNaN */ "P(a)",        "P(a)",      "P(a)",        "P(a)",        "P(a)",      "P(a)",        "P(a)",      "Xi: T(b*)"},
-+    {/* SNaN */ "Xi: T(a*)",   "Xi: T(a*)", "Xi: T(a*)",   "Xi: T(a*)",   "Xi: T(a*)", "Xi: T(a*)",   "Xi: T(a*)", "Xi: T(a*)"},
-+};
-+
-+static const char *table2[N_SIGNED_CLASSES][N_SIGNED_CLASSES] = {
-+     /*         -inf           -Fn        -0         +0         +Fn        +inf           QNaN    SNaN     */
-+    {/* -inf */ "T(-inf)",     "T(-inf)", "T(-inf)", "T(-inf)", "T(-inf)", "Xi: T(dNaN)", "T(c)", "Xi: T(c*)"},
-+    {/* -Fn  */ "T(-inf)",     "R(p+c)",  "R(p)",    "R(p)",    "R(p+c)",  "T(+inf)",     "T(c)", "Xi: T(c*)"},
-+    {/* -0   */ "T(-inf)",     "R(c)",    "T(-0)",   "Rezd",    "R(c)",    "T(+inf)",     "T(c)", "Xi: T(c*)"},
-+    {/* +0   */ "T(-inf)",     "R(c)",    "Rezd",    "T(+0)",   "R(c)",    "T(+inf)",     "T(c)", "Xi: T(c*)"},
-+    {/* +Fn  */ "T(-inf)",     "R(p+c)",  "R(p)",    "R(p)",    "R(p+c)",  "T(+inf)",     "T(c)", "Xi: T(c*)"},
-+    {/* +inf */ "Xi: T(dNaN)", "T(+inf)", "T(+inf)", "T(+inf)", "T(+inf)", "T(+inf)",     "T(c)", "Xi: T(c*)"},
-+    {/* QNaN */ "T(p)",        "T(p)",    "T(p)",    "T(p)",    "T(p)",    "T(p)",        "T(p)", "Xi: T(c*)"},
-+     /* SNaN: can't happen */
-+};
-+
-+static void interpret_tables(union val *r, bool *xi, int fmt,
-+                             int cls_a, const union val *a,
-+                             int cls_b, const union val *b,
-+                             int cls_c, const union val *c)
-+{
-+    const char *spec1 = table1[cls_a][cls_b];
-+    const char *spec2;
-+    union val p;
-+    int cls_p;
-+
-+    *xi = false;
-+
-+    if (strcmp(spec1, "P(-inf)") == 0) {
-+        cls_p = CLASS_MINUS_INF;
-+    } else if (strcmp(spec1, "P(+inf)") == 0) {
-+        cls_p = CLASS_PLUS_INF;
-+    } else if (strcmp(spec1, "P(-0)") == 0) {
-+        cls_p = CLASS_MINUS_ZERO;
-+    } else if (strcmp(spec1, "P(+0)") == 0) {
-+        cls_p = CLASS_PLUS_ZERO;
-+    } else if (strcmp(spec1, "P(a)") == 0) {
-+        cls_p = cls_a;
-+        memcpy(&p, a, sizeof(p));
-+    } else if (strcmp(spec1, "P(b)") == 0) {
-+        cls_p = cls_b;
-+        memcpy(&p, b, sizeof(p));
-+    } else if (strcmp(spec1, "P(a*b)") == 0) {
-+        /*
-+         * In the general case splitting fma into multiplication and addition
-+         * doesn't work, but this is the case with our test inputs.
-+         */
-+        cls_p = cls_a == cls_b ? CLASS_PLUS_FN : CLASS_MINUS_FN;
-+        switch (fmt) {
-+        case 0:
-+            p.e = a->e * b->e;
-+            break;
-+        case 1:
-+            p.d = a->d * b->d;
-+            break;
-+        case 2:
-+            p.x = a->x * b->x;
-+            break;
-+        default:
-+            fprintf(stderr, "Unsupported fmt: %d\n", fmt);
-+            exit(1);
-+        }
-+    } else if (strcmp(spec1, "Xi: T(dNaN)") == 0) {
-+        memcpy(r, default_nans[fmt], sizeof(*r));
-+        *xi = true;
-+        return;
-+    } else if (strcmp(spec1, "Xi: T(a*)") == 0) {
-+        memcpy(r, a, sizeof(*r));
-+        snan_to_qnan(r->buf, fmt);
-+        *xi = true;
-+        return;
-+    } else if (strcmp(spec1, "Xi: T(b*)") == 0) {
-+        memcpy(r, b, sizeof(*r));
-+        snan_to_qnan(r->buf, fmt);
-+        *xi = true;
-+        return;
++    if (is_snan(a_cls)) {
++        return 0;
++    } else if (is_snan(b_cls)) {
++        return 1;
++    } else if (is_snan(c_cls)) {
++        return 2;
++    } else if (is_qnan(a_cls)) {
++        return 0;
++    } else if (is_qnan(b_cls)) {
++        return 1;
 +    } else {
-+        fprintf(stderr, "Unsupported spec1: %s\n", spec1);
-+        exit(1);
++        return 2;
 +    }
-+
-+    spec2 = table2[cls_p][cls_c];
-+    if (strcmp(spec2, "T(-inf)") == 0) {
-+        memcpy(r, signed_floats[fmt][CLASS_MINUS_INF].v[0], sizeof(*r));
-+    } else if (strcmp(spec2, "T(+inf)") == 0) {
-+        memcpy(r, signed_floats[fmt][CLASS_PLUS_INF].v[0], sizeof(*r));
-+    } else if (strcmp(spec2, "T(-0)") == 0) {
-+        memcpy(r, signed_floats[fmt][CLASS_MINUS_ZERO].v[0], sizeof(*r));
-+    } else if (strcmp(spec2, "T(+0)") == 0 || strcmp(spec2, "Rezd") == 0) {
-+        memcpy(r, signed_floats[fmt][CLASS_PLUS_ZERO].v[0], sizeof(*r));
-+    } else if (strcmp(spec2, "R(c)") == 0 || strcmp(spec2, "T(c)") == 0) {
-+        memcpy(r, c, sizeof(*r));
-+    } else if (strcmp(spec2, "R(p)") == 0 || strcmp(spec2, "T(p)") == 0) {
-+        memcpy(r, &p, sizeof(*r));
-+    } else if (strcmp(spec2, "R(p+c)") == 0 || strcmp(spec2, "T(p+c)") == 0) {
-+        switch (fmt) {
-+        case 0:
-+            r->e = p.e + c->e;
-+            break;
-+        case 1:
-+            r->d = p.d + c->d;
-+            break;
-+        case 2:
-+            r->x = p.x + c->x;
-+            break;
-+        default:
-+            fprintf(stderr, "Unsupported fmt: %d\n", fmt);
-+            exit(1);
-+        }
-+    } else if (strcmp(spec2, "Xi: T(dNaN)") == 0) {
-+        memcpy(r, default_nans[fmt], sizeof(*r));
-+        *xi = true;
-+    } else if (strcmp(spec2, "Xi: T(c*)") == 0) {
-+        memcpy(r, c, sizeof(*r));
-+        snan_to_qnan(r->buf, fmt);
-+        *xi = true;
-+    } else {
-+        fprintf(stderr, "Unsupported spec2: %s\n", spec2);
-+        exit(1);
-+    }
-+}
-+
-+struct iter {
-+    int fmt;
-+    int cls[3];
-+    int val[3];
-+};
-+
-+static bool iter_next(struct iter *it)
-+{
-+    int i;
-+
-+    for (i = 2; i >= 0; i--) {
-+        if (++it->val[i] != signed_floats[it->fmt][it->cls[i]].n) {
-+            return true;
-+        }
-+        it->val[i] = 0;
-+
-+        if (++it->cls[i] != N_SIGNED_CLASSES) {
-+            return true;
-+        }
-+        it->cls[i] = 0;
-+    }
-+
-+    return ++it->fmt != N_FORMATS;
-+}
-+
-+int main(void)
-+{
-+    int ret = EXIT_SUCCESS;
-+    struct iter it = {};
-+
-+    do {
-+        size_t n = float_sizes[it.fmt];
-+        union val a, b, c, exp, res;
-+        bool xi_exp, xi;
-+
-+        memcpy(&a, signed_floats[it.fmt][it.cls[0]].v[it.val[0]], sizeof(a));
-+        memcpy(&b, signed_floats[it.fmt][it.cls[1]].v[it.val[1]], sizeof(b));
-+        memcpy(&c, signed_floats[it.fmt][it.cls[2]].v[it.val[2]], sizeof(c));
-+
-+        interpret_tables(&exp, &xi_exp, it.fmt,
-+                         it.cls[1], &b, it.cls[2], &c, it.cls[0], &a);
-+
-+        memcpy(&res, &a, sizeof(res));
-+        feclearexcept(FE_ALL_EXCEPT);
-+        switch (it.fmt) {
-+        case 0:
-+            asm("maebr %[a],%[b],%[c]"
-+                : [a] "+f" (res.e) : [b] "f" (b.e), [c] "f" (c.e));
-+            break;
-+        case 1:
-+            asm("madbr %[a],%[b],%[c]"
-+                : [a] "+f" (res.d) : [b] "f" (b.d), [c] "f" (c.d));
-+            break;
-+        case 2:
-+            asm("wfmaxb %[a],%[c],%[b],%[a]"
-+                : [a] "+v" (res.x) : [b] "v" (b.x), [c] "v" (c.x));
-+            break;
-+        default:
-+            fprintf(stderr, "Unsupported fmt: %d\n", it.fmt);
-+            exit(1);
-+        }
-+        xi = fetestexcept(FE_ALL_EXCEPT) == FE_INVALID;
-+
-+        if (memcmp(&res, &exp, n) != 0 || xi != xi_exp) {
-+            fprintf(stderr, "[  FAILED  ] ");
-+            dump_v(stderr, &b, n);
-+            fprintf(stderr, " * ");
-+            dump_v(stderr, &c, n);
-+            fprintf(stderr, " + ");
-+            dump_v(stderr, &a, n);
-+            fprintf(stderr, ": actual=");
-+            dump_v(stderr, &res, n);
-+            fprintf(stderr, "/%d, expected=", (int)xi);
-+            dump_v(stderr, &exp, n);
-+            fprintf(stderr, "/%d\n", (int)xi_exp);
-+            ret = EXIT_FAILURE;
-+        }
-+    } while (iter_next(&it));
-+
-+    return ret;
-+}
-diff --git a/tests/tcg/s390x/vfminmax.c b/tests/tcg/s390x/vfminmax.c
-index 22629df160e..e66285f7625 100644
---- a/tests/tcg/s390x/vfminmax.c
-+++ b/tests/tcg/s390x/vfminmax.c
-@@ -4,6 +4,8 @@
- #include <stdio.h>
- #include <string.h>
- 
-+#include "float.h"
-+
- /*
-  * vfmin/vfmax instruction execution.
-  */
-@@ -21,98 +23,21 @@ static void vfminmax(unsigned int op,
-                      unsigned int m4, unsigned int m5, unsigned int m6,
-                      void *v1, const void *v2, const void *v3)
+ #elif defined(TARGET_SPARC)
+     /* For (inf,0,nan) return c. */
+     if (infzero) {
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index d8bd5748faf..5041c139627 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -780,7 +780,7 @@ uint32_t HELPER(kxb)(CPUS390XState *env, Int128 a, Int128 b)
+ uint64_t HELPER(maeb)(CPUS390XState *env, uint64_t f1,
+                       uint64_t f2, uint64_t f3)
  {
--   insn[3] = (m6 << 4) | m5;
--   insn[4] = (m4 << 4) | 0x0e;
--   insn[5] = op;
-+    insn[3] = (m6 << 4) | m5;
-+    insn[4] = (m4 << 4) | 0x0e;
-+    insn[5] = op;
- 
-     asm("vl %%v25,%[v2]\n"
-         "vl %%v26,%[v3]\n"
-         "ex 0,%[insn]\n"
-         "vst %%v24,%[v1]\n"
-         : [v1] "=m" (*(char (*)[16])v1)
--        : [v2] "m" (*(char (*)[16])v2)
--        , [v3] "m" (*(char (*)[16])v3)
--        , [insn] "m"(insn)
-+        : [v2] "m" (*(const char (*)[16])v2)
-+        , [v3] "m" (*(const char (*)[16])v3)
-+        , [insn] "m" (insn)
-         : "v24", "v25", "v26");
+-    float32 ret = float32_muladd(f2, f3, f1, 0, &env->fpu_status);
++    float32 ret = float32_muladd(f3, f2, f1, 0, &env->fpu_status);
+     handle_exceptions(env, false, GETPC());
+     return ret;
  }
- 
--/*
-- * Floating-point value classes.
-- */
--#define N_FORMATS 3
--#define N_SIGNED_CLASSES 8
--static const size_t float_sizes[N_FORMATS] = {
--    /* M4 == 2: short    */ 4,
--    /* M4 == 3: long     */ 8,
--    /* M4 == 4: extended */ 16,
--};
--static const size_t e_bits[N_FORMATS] = {
--    /* M4 == 2: short    */ 8,
--    /* M4 == 3: long     */ 11,
--    /* M4 == 4: extended */ 15,
--};
--static const unsigned char signed_floats[N_FORMATS][N_SIGNED_CLASSES][2][16] = {
--    /* M4 == 2: short */
--    {
--        /* -inf */ {{0xff, 0x80, 0x00, 0x00},
--                    {0xff, 0x80, 0x00, 0x00}},
--        /* -Fn */  {{0xc2, 0x28, 0x00, 0x00},
--                    {0xc2, 0x29, 0x00, 0x00}},
--        /* -0 */   {{0x80, 0x00, 0x00, 0x00},
--                    {0x80, 0x00, 0x00, 0x00}},
--        /* +0 */   {{0x00, 0x00, 0x00, 0x00},
--                    {0x00, 0x00, 0x00, 0x00}},
--        /* +Fn */  {{0x42, 0x28, 0x00, 0x00},
--                    {0x42, 0x2a, 0x00, 0x00}},
--        /* +inf */ {{0x7f, 0x80, 0x00, 0x00},
--                    {0x7f, 0x80, 0x00, 0x00}},
--        /* QNaN */ {{0x7f, 0xff, 0xff, 0xff},
--                    {0x7f, 0xff, 0xff, 0xfe}},
--        /* SNaN */ {{0x7f, 0xbf, 0xff, 0xff},
--                    {0x7f, 0xbf, 0xff, 0xfd}},
--    },
--
--    /* M4 == 3: long */
--    {
--        /* -inf */ {{0xff, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0xff, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* -Fn */  {{0xc0, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0xc0, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* -0 */   {{0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +0 */   {{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +Fn */  {{0x40, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x40, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +inf */ {{0x7f, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x7f, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* QNaN */ {{0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
--                    {0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe}},
--        /* SNaN */ {{0x7f, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
--                    {0x7f, 0xf7, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfd}},
--    },
--
--    /* M4 == 4: extended */
--    {
--        /* -inf */ {{0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* -Fn */  {{0xc0, 0x04, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0xc0, 0x04, 0x51, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* -0 */   {{0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +0 */   {{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +Fn */  {{0x40, 0x04, 0x50, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x40, 0x04, 0x52, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* +inf */ {{0x7f, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
--                    {0x7f, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}},
--        /* QNaN */ {{0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
--                    {0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe}},
--        /* SNaN */ {{0x7f, 0xff, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
--                    {0x7f, 0xff, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfd}},
--    },
--};
--
- /*
-  * PoP tables as close to the original as possible.
-  */
-@@ -285,13 +210,6 @@ struct signed_test {
-     },
- };
- 
--static void dump_v(FILE *f, const void *v, size_t n)
--{
--    for (int i = 0; i < n; i++) {
--        fprintf(f, "%02x", ((const unsigned char *)v)[i]);
--    }
--}
--
- static int signed_test(struct signed_test *test, int m4, int m5,
-                        const void *v1_exp, bool xi_exp,
-                        const void *v2, const void *v3)
-@@ -320,10 +238,28 @@ static int signed_test(struct signed_test *test, int m4, int m5,
-     return 0;
- }
- 
--static void snan_to_qnan(char *v, int m4)
-+struct iter {
-+    int cls[2];
-+    int val[2];
-+};
-+
-+static bool iter_next(struct iter *it, int fmt)
+@@ -789,7 +789,7 @@ uint64_t HELPER(maeb)(CPUS390XState *env, uint64_t f1,
+ uint64_t HELPER(madb)(CPUS390XState *env, uint64_t f1,
+                       uint64_t f2, uint64_t f3)
  {
--    size_t bit = 1 + e_bits[m4 - 2];
--    v[bit / 8] |= 1 << (7 - (bit % 8));
-+    int i;
-+
-+    for (i = 1; i >= 0; i--) {
-+        if (++it->val[i] != signed_floats[fmt][it->cls[i]].n) {
-+            return true;
-+        }
-+        it->val[i] = 0;
-+
-+        if (++it->cls[i] != N_SIGNED_CLASSES) {
-+            return true;
-+        }
-+        it->cls[i] = 0;
-+    }
-+
-+    return false;
+-    float64 ret = float64_muladd(f2, f3, f1, 0, &env->fpu_status);
++    float64 ret = float64_muladd(f3, f2, f1, 0, &env->fpu_status);
+     handle_exceptions(env, false, GETPC());
+     return ret;
  }
+@@ -798,7 +798,7 @@ uint64_t HELPER(madb)(CPUS390XState *env, uint64_t f1,
+ uint64_t HELPER(mseb)(CPUS390XState *env, uint64_t f1,
+                       uint64_t f2, uint64_t f3)
+ {
+-    float32 ret = float32_muladd(f2, f3, f1, float_muladd_negate_c,
++    float32 ret = float32_muladd(f3, f2, f1, float_muladd_negate_c,
+                                  &env->fpu_status);
+     handle_exceptions(env, false, GETPC());
+     return ret;
+@@ -808,7 +808,7 @@ uint64_t HELPER(mseb)(CPUS390XState *env, uint64_t f1,
+ uint64_t HELPER(msdb)(CPUS390XState *env, uint64_t f1,
+                       uint64_t f2, uint64_t f3)
+ {
+-    float64 ret = float64_muladd(f2, f3, f1, float_muladd_negate_c,
++    float64 ret = float64_muladd(f3, f2, f1, float_muladd_negate_c,
+                                  &env->fpu_status);
+     handle_exceptions(env, false, GETPC());
+     return ret;
+diff --git a/target/s390x/tcg/vec_fpu_helper.c b/target/s390x/tcg/vec_fpu_helper.c
+index 75cf605b9f4..1bbaa82fe8a 100644
+--- a/target/s390x/tcg/vec_fpu_helper.c
++++ b/target/s390x/tcg/vec_fpu_helper.c
+@@ -621,8 +621,8 @@ static void vfma32(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
+     int i;
  
- int main(void)
-@@ -333,72 +269,71 @@ int main(void)
+     for (i = 0; i < 4; i++) {
+-        const float32 a = s390_vec_read_float32(v2, i);
+-        const float32 b = s390_vec_read_float32(v3, i);
++        const float32 a = s390_vec_read_float32(v3, i);
++        const float32 b = s390_vec_read_float32(v2, i);
+         const float32 c = s390_vec_read_float32(v4, i);
+         float32 ret = float32_muladd(a, b, c, flags, &env->fpu_status);
  
-     for (i = 0; i < sizeof(signed_tests) / sizeof(signed_tests[0]); i++) {
-         struct signed_test *test = &signed_tests[i];
--        int m4;
-+        int fmt;
+@@ -645,8 +645,8 @@ static void vfma64(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
+     int i;
  
--        for (m4 = 2; m4 <= 4; m4++) {
--            const unsigned char (*floats)[2][16] = signed_floats[m4 - 2];
--            size_t float_size = float_sizes[m4 - 2];
-+        for (fmt = 0; fmt < N_FORMATS; fmt++) {
-+            size_t float_size = float_sizes[fmt];
-+            int m4 = fmt + 2;
-             int m5;
+     for (i = 0; i < 2; i++) {
+-        const float64 a = s390_vec_read_float64(v2, i);
+-        const float64 b = s390_vec_read_float64(v3, i);
++        const float64 a = s390_vec_read_float64(v3, i);
++        const float64 b = s390_vec_read_float64(v2, i);
+         const float64 c = s390_vec_read_float64(v4, i);
+         const float64 ret = float64_muladd(a, b, c, flags, &env->fpu_status);
  
-             for (m5 = 0; m5 <= 8; m5 += 8) {
-                 char v1_exp[16], v2[16], v3[16];
-                 bool xi_exp = false;
-+                struct iter it = {};
-                 int pos = 0;
--                int i2;
- 
--                for (i2 = 0; i2 < N_SIGNED_CLASSES * 2; i2++) {
--                    int i3;
-+                do {
-+                    const char *spec = test->table[it.cls[0]][it.cls[1]];
- 
--                    for (i3 = 0; i3 < N_SIGNED_CLASSES * 2; i3++) {
--                        const char *spec = test->table[i2 / 2][i3 / 2];
-+                    memcpy(&v2[pos],
-+                           signed_floats[fmt][it.cls[0]].v[it.val[0]],
-+                           float_size);
-+                    memcpy(&v3[pos],
-+                           signed_floats[fmt][it.cls[1]].v[it.val[1]],
-+                           float_size);
-+                    if (strcmp(spec, "T(a)") == 0 ||
-+                        strcmp(spec, "Xi: T(a)") == 0) {
-+                        memcpy(&v1_exp[pos], &v2[pos], float_size);
-+                    } else if (strcmp(spec, "T(b)") == 0 ||
-+                               strcmp(spec, "Xi: T(b)") == 0) {
-+                        memcpy(&v1_exp[pos], &v3[pos], float_size);
-+                    } else if (strcmp(spec, "Xi: T(a*)") == 0) {
-+                        memcpy(&v1_exp[pos], &v2[pos], float_size);
-+                        snan_to_qnan(&v1_exp[pos], fmt);
-+                    } else if (strcmp(spec, "Xi: T(b*)") == 0) {
-+                        memcpy(&v1_exp[pos], &v3[pos], float_size);
-+                        snan_to_qnan(&v1_exp[pos], fmt);
-+                    } else if (strcmp(spec, "T(M(a,b))") == 0) {
-+                        /*
-+                         * Comparing floats is risky, since the compiler might
-+                         * generate the same instruction that we are testing.
-+                         * Compare ints instead. This works, because we get
-+                         * here only for +-Fn, and the corresponding test
-+                         * values have identical exponents.
-+                         */
-+                        int v2_int = *(int *)&v2[pos];
-+                        int v3_int = *(int *)&v3[pos];
- 
--                        memcpy(&v2[pos], floats[i2 / 2][i2 % 2], float_size);
--                        memcpy(&v3[pos], floats[i3 / 2][i3 % 2], float_size);
--                        if (strcmp(spec, "T(a)") == 0 ||
--                            strcmp(spec, "Xi: T(a)") == 0) {
-+                        if ((v2_int < v3_int) ==
-+                            ((test->op == VFMIN) != (v2_int < 0))) {
-                             memcpy(&v1_exp[pos], &v2[pos], float_size);
--                        } else if (strcmp(spec, "T(b)") == 0 ||
--                                   strcmp(spec, "Xi: T(b)") == 0) {
--                            memcpy(&v1_exp[pos], &v3[pos], float_size);
--                        } else if (strcmp(spec, "Xi: T(a*)") == 0) {
--                            memcpy(&v1_exp[pos], &v2[pos], float_size);
--                            snan_to_qnan(&v1_exp[pos], m4);
--                        } else if (strcmp(spec, "Xi: T(b*)") == 0) {
--                            memcpy(&v1_exp[pos], &v3[pos], float_size);
--                            snan_to_qnan(&v1_exp[pos], m4);
--                        } else if (strcmp(spec, "T(M(a,b))") == 0) {
--                            /*
--                             * Comparing floats is risky, since the compiler
--                             * might generate the same instruction that we are
--                             * testing. Compare ints instead. This works,
--                             * because we get here only for +-Fn, and the
--                             * corresponding test values have identical
--                             * exponents.
--                             */
--                            int v2_int = *(int *)&v2[pos];
--                            int v3_int = *(int *)&v3[pos];
--
--                            if ((v2_int < v3_int) ==
--                                ((test->op == VFMIN) != (v2_int < 0))) {
--                                memcpy(&v1_exp[pos], &v2[pos], float_size);
--                            } else {
--                                memcpy(&v1_exp[pos], &v3[pos], float_size);
--                            }
-                         } else {
--                            fprintf(stderr, "Unexpected spec: %s\n", spec);
--                            return 1;
-+                            memcpy(&v1_exp[pos], &v3[pos], float_size);
-                         }
--                        xi_exp |= spec[0] == 'X';
--                        pos += float_size;
-+                    } else {
-+                        fprintf(stderr, "Unexpected spec: %s\n", spec);
-+                        return 1;
-+                    }
-+                    xi_exp |= spec[0] == 'X';
-+                    pos += float_size;
- 
--                        if ((m5 & 8) || pos == 16) {
--                            ret |= signed_test(test, m4, m5,
--                                               v1_exp, xi_exp, v2, v3);
--                            pos = 0;
--                            xi_exp = false;
--                        }
-+                    if ((m5 & 8) || pos == 16) {
-+                        ret |= signed_test(test, m4, m5,
-+                                           v1_exp, xi_exp, v2, v3);
-+                        pos = 0;
-+                        xi_exp = false;
-                     }
--                }
-+                } while (iter_next(&it, fmt));
- 
-                 if (pos != 0) {
-                     ret |= signed_test(test, m4, m5, v1_exp, xi_exp, v2, v3);
+@@ -664,8 +664,8 @@ static void vfma128(S390Vector *v1, const S390Vector *v2, const S390Vector *v3,
+                     const S390Vector *v4, CPUS390XState *env, bool s, int flags,
+                     uintptr_t retaddr)
+ {
+-    const float128 a = s390_vec_read_float128(v2);
+-    const float128 b = s390_vec_read_float128(v3);
++    const float128 a = s390_vec_read_float128(v3);
++    const float128 b = s390_vec_read_float128(v2);
+     const float128 c = s390_vec_read_float128(v4);
+     uint8_t vxc, vec_exc = 0;
+     float128 ret;
 -- 
 2.47.0
 
