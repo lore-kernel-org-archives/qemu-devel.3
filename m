@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5124FD2CDF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C1AD2CDFD
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3HW1-0003YD-Hw; Tue, 22 Oct 2024 12:13:49 -0400
+	id 1t3Hiu-0005NH-7C; Tue, 22 Oct 2024 12:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3HW0-0003Y4-Pl
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:13:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3Hit-0005N7-0W
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:27:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3HVx-0001yX-Uo
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:13:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3Hiq-0003VI-MB
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:27:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729613625;
+ s=mimecast20190719; t=1729614422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=L9QYmTS+Ln1jp+A4fzI8kexisUAKery8D79VBrsWvnw=;
- b=WyGP8r1HgodZv+URBook6iHoEB6ucx937TR8KGgm16ds6shaSqh5FByvh+UZLVrd9v0i+x
- NXFF6g6nQ7ZZNEj5me+tGhiLLeJP5nR79JFdVgvb9bc/3fR5OdcdJSeWHfpU90dWBEyZWB
- 2wp90xJfAyayX63Na5Zjq2c36qWFW60=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xdrUGl/YHOX30zWr6Sd4wKF5SZzalOG1e9FhVV2pcj0=;
+ b=LtPded/PrHUmc/zOqe1kg1EOCoMqH0oFwQcyHykbWoHLEXs58mYiiVqgZERzOEwtCuxOLi
+ ze2eQKJZpjsSWSkTvBsy0eZxvbH0w4a3F98IikMH1PwamuOiOc+AgCjxwOiZMPz5kOITQy
+ J4+i2ellEXbsWtn7weasD4e91b6fays=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-Us1UVHvVPrumeG3yjoyrJw-1; Tue, 22 Oct 2024 12:13:43 -0400
-X-MC-Unique: Us1UVHvVPrumeG3yjoyrJw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4315e8e9b1cso30104655e9.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 09:13:43 -0700 (PDT)
+ us-mta-340-hCI_d0oOPDms2K8aOdCJEA-1; Tue, 22 Oct 2024 12:27:00 -0400
+X-MC-Unique: hCI_d0oOPDms2K8aOdCJEA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d458087c0so3862793f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 09:27:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729613622; x=1730218422;
+ d=1e100.net; s=20230601; t=1729614419; x=1730219219;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L9QYmTS+Ln1jp+A4fzI8kexisUAKery8D79VBrsWvnw=;
- b=PAhezCvgrPamhqcSoUrMtdJOLJsOM6Iv2QfHQB9x7zXatu8BnoXm+8pnLTFERn0BkR
- PliF5TiAyDro4R32rL2MY1CIhelC+V3WG6hs7RoTqiiETNzTCptKCG7T3oSP6/hc058b
- zIekfkJhFKKCLPpAVs93S7j43S2O3y0nZqvRKjLiLxzfUkUi4rqqnmoeh010B7TLgsMD
- bcsfLY6jotvJOseDbird5vlILC5te0X5ijJ+t+MNuoMFqDgB8uREgwWUGBCwmmvbK/Ik
- cAC+mKLdQAOoomdOqYS5+Mi9bbAcxWzgibOYmWy9MHBplojupwI4W31KKodiiASWhXj9
- l4WA==
+ bh=xdrUGl/YHOX30zWr6Sd4wKF5SZzalOG1e9FhVV2pcj0=;
+ b=ngIADNMMWTgTr7cC1GxtSzX/+IkzlYXFbr/ch7UCuUOjnPxkScFrdEXjDg9i0wpIiE
+ aaMD4zN7jk2/OLiMSaVs/iN0Xw/STar7qeGypBiFJO4VVt5oR/BGZUsrKA2MgD4MHv8C
+ V3pLQJA6f5w3z9ILlXz+TdEn0yVf5WdhKrH/vtYN7Dyv5myo21owTpqwUTXTKIDfGk2R
+ DyZkxzkn13F6uWjYitPhjgJxqE4BcDtcVTTuxH588SqJ94Yco1flG13d4DwUGBu/DQsB
+ 7eoLBWvh6axcU77t1fVqsY0Ayq9Lr2FwRECftNMQKaUTr/0CaWiFAFKHAmu8AJKs+LNb
+ 3rNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNw3LK+7yaMfnQSe5g0ChMOvmHryv2Dn8/YTZfiDZwQYQ97H8ZgY7gbzUdFxRq2uJHfg2deBYVxb1L@nongnu.org
-X-Gm-Message-State: AOJu0Yw+0Dwv1lfbZFhniqZt57BiPHRHIfacct1k6MKEShjI1LNQp+2W
- 6wqbh0G9tFV6X6Tnu3Hw4wlrXsGLSpjfstbJMcldSFDy4qUmBOEfO1OOG18RQ98Bzw5dVn5YAcv
- ltnnwYDbSV6lo7X48LO2a3v43QQ+rYb3B6XRzgBwcF84ZDnaPxc+t
-X-Received: by 2002:a05:600c:3590:b0:431:4a82:97f2 with SMTP id
- 5b1f17b1804b1-4317bd7f68fmr25812615e9.6.1729613622292; 
- Tue, 22 Oct 2024 09:13:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZuzvDOjK+XoUaw4Qc5xxAAe43+lg6r6CgCVYRVt1YLVmmvtSnjZPPNzBsHveGnDLhBJR+4Q==
-X-Received: by 2002:a05:600c:3590:b0:431:4a82:97f2 with SMTP id
- 5b1f17b1804b1-4317bd7f68fmr25812415e9.6.1729613621897; 
- Tue, 22 Oct 2024 09:13:41 -0700 (PDT)
+ AJvYcCWMlngs9RR402KQG2XO1AecuHW2WgmIMMnzcsF84y+mYJQSYjHsWW/1kNwOsRBDQrY0HJFO0OqLYYu0@nongnu.org
+X-Gm-Message-State: AOJu0YxDTVt+QmtZPZQDePRvcpHivULJiXMgdC3F9jvm/fHkARL2h3N8
+ AfmGDnyRwao6NxSYb62NR74UaL7S0uju3v/ANveNFDcffJDj8LZmpb6RCxgVdpUNW1rHP/vQuRJ
+ ItNZgXA6QHe/RxoU1K1J6is1q0oy366+g45YgRAf3d+RNgfr3PlQPnamFYCNQ
+X-Received: by 2002:adf:e746:0:b0:37e:c4e3:f14b with SMTP id
+ ffacd0b85a97d-37ef12c2ec2mr2546389f8f.23.1729614418732; 
+ Tue, 22 Oct 2024 09:26:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyYhZIKOrdJNqSh4JIZKOTTEOAL4ye2s3CYOldg6WHJ3DOmX6LFZ7f8pCwX1WV5rzRYR8TMw==
+X-Received: by 2002:adf:e746:0:b0:37e:c4e3:f14b with SMTP id
+ ffacd0b85a97d-37ef12c2ec2mr2546374f8f.23.1729614418310; 
+ Tue, 22 Oct 2024 09:26:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
  ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f570d86sm94139225e9.8.2024.10.22.09.13.40
+ ffacd0b85a97d-37ee0a49180sm6963615f8f.39.2024.10.22.09.26.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 09:13:41 -0700 (PDT)
-Message-ID: <a737618d-c02e-4cf1-b980-bb6b4a516c15@redhat.com>
-Date: Tue, 22 Oct 2024 18:13:40 +0200
+ Tue, 22 Oct 2024 09:26:57 -0700 (PDT)
+Message-ID: <0c6ea33b-12ce-4abd-8f0c-42bf1680400d@redhat.com>
+Date: Tue, 22 Oct 2024 18:26:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] migration: Unexport dirty_bitmap_mig_init() in misc.h
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>,
- Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20241022160720.1013543-1-peterx@redhat.com>
- <20241022160720.1013543-3-peterx@redhat.com>
+Subject: Re: [PATCH] gitlab: enable afalg tests in fedora system test
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <20241021170236.1443887-1-berrange@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -122,7 +125,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241022160720.1013543-3-peterx@redhat.com>
+In-Reply-To: <20241021170236.1443887-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -150,10 +153,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/24 18:07, Peter Xu wrote:
-> It's only used within migration/, so it shouldn't be exported.
+On 10/21/24 19:02, Daniel P. Berrangé wrote:
+> The AF_ALG crypto integration for Linux is not being tested in
+> any CI scenario. It always requires an explicit configure time
+> flag to be passed to turn it on. The Fedora system test is
+> arbitrarily picked as the place to test it.
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -164,34 +170,25 @@ C.
 
 
 > ---
->   include/migration/misc.h | 3 ---
->   migration/migration.h    | 4 ++++
->   2 files changed, 4 insertions(+), 3 deletions(-)
+>   .gitlab-ci.d/buildtest.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 8d6812b8c7..e0e88b1c0c 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -131,7 +131,4 @@ bool migration_incoming_postcopy_advised(void);
->   /* True if background snapshot is active */
->   bool migration_in_bg_snapshot(void);
->   
-> -/* migration/block-dirty-bitmap.c */
-> -void dirty_bitmap_mig_init(void);
-> -
->   #endif
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 7dc59c5e8d..0956e9274b 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -552,4 +552,8 @@ int migration_rp_wait(MigrationState *s);
->   void migration_rp_kick(MigrationState *s);
->   
->   void migration_bitmap_sync_precopy(bool last_stage);
-> +
-> +/* migration/block-dirty-bitmap.c */
-> +void dirty_bitmap_mig_init(void);
-> +
->   #endif
+> This is to detect the situation Markus found here:
+> 
+>    https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg03040.html
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index 01e8470a69..f0cbdf1992 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -115,7 +115,7 @@ build-system-fedora:
+>       job: amd64-fedora-container
+>     variables:
+>       IMAGE: fedora
+> -    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs
+> +    CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg
+>       TARGETS: microblaze-softmmu mips-softmmu
+>         xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
+>       MAKE_CHECK_ARGS: check-build
 
 
