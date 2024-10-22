@@ -4,102 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D62CDD0E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB55CCDD0E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3LYq-0005gR-5a; Tue, 22 Oct 2024 16:33:00 -0400
+	id 1t3Lag-0007rN-VF; Tue, 22 Oct 2024 16:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3LYn-0005fw-Bz
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:32:57 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3LYl-0007pX-9I
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:32:56 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20ca388d242so43334875ad.2
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 13:32:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729629174; x=1730233974; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=22iDYg801c8q/L8h63/ZCoe5iOUGaky+8DT+5jhBm58=;
- b=DAkurtSTngZ91jtkTNHI2+fugtSj+kiEmSUbFhwYJcEgK866ups/B9gHXlqccc1H/S
- Qo32AjAExDm/9eFmicbdhOffKdDIUVLNCNeceja7/a52fbfuWMufy/DXKNxXCd9NR3Y7
- nRlh5aKV0w2kYxxRWWZyVa/aIweI17oCzKo+K3QUfxLIurzDTJHLIXOE/Lm5v//c8HNR
- ZBAk6z8q6txdOcz5gC2DeEa6f1vzoEhrS9aA5mFqn7mMibqv/o2Gv5FD3lCKNOh+QE3c
- H4IlkwPu5G2F2x0cwx0PkZQHs9nexMoLVronrxlBeZ0vbAdf76l+1MWF7kDmdmN4yuFD
- Dtxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729629174; x=1730233974;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=22iDYg801c8q/L8h63/ZCoe5iOUGaky+8DT+5jhBm58=;
- b=th6KEmGcYe8ALnkq1yEZY/t6q3pJIupSTEVZyHFPjeeEGo9THhOnLbjtAZFwAfQf+L
- FqD0xEw/9/yQD78LrurYR492RwoyEtvh+lSymYAWb+62w62/Nh/gDJpLoIxSwq537/or
- Df8jkD2RywT/oqb+64eoRyB75Mo9gQcS97CtCBUcn+eGnPtyC2f3aLETPBj6BtwNzmVd
- iIUJDvLSThnoYjdZK2yPW2THXX8oQoZbfZiJogQsjF+1TVUgt11jiz3wz0Vz8i7cZj39
- BXvInGJCW4t8NHIZVbxeQW2I4nMcLyriaoHYnq0tyVKDOW7OQl2egkaEvozbyppvSVeO
- wTaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUu1nsHkbyur3WZujNep2a2Yj+x5FVrVyBRIxPACsTndNFNlwv5ZXN6vRF0pnWiu/jGnvZQch7/OLuH@nongnu.org
-X-Gm-Message-State: AOJu0YwgXdlwGApihRjpjFFpSapJRLDBrvOvlmI/GBHBna+MXZ7wmlZq
- ZQfAUfEPFlU1p84/bo5QCYAntYjrfY96wVIYtt1n66++AW590hr7rKeZupGvD+Y=
-X-Google-Smtp-Source: AGHT+IFaD76bQqjYlx7C1qxfp6VbhP5GE48tnyBe+LWy7d4tLOyRp3pZwxtrqk+0RelB7tsR0TfiQA==
-X-Received: by 2002:a17:902:d2c6:b0:20b:6f04:486a with SMTP id
- d9443c01a7336-20fa9e785a8mr5423175ad.35.1729629173598; 
- Tue, 22 Oct 2024 13:32:53 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0bd42asm46422095ad.165.2024.10.22.13.32.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 13:32:53 -0700 (PDT)
-Message-ID: <fdea845b-d38a-4cd8-b87f-098dd7a7adbb@linaro.org>
-Date: Tue, 22 Oct 2024 13:32:52 -0700
+ (Exim 4.90_1) (envelope-from <castet.matthieu@free.fr>)
+ id 1t3Lab-0007mZ-6o
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:34:52 -0400
+Received: from smtp5-g21.free.fr ([2a01:e0c:1:1599::14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <castet.matthieu@free.fr>)
+ id 1t3LaZ-0007vT-FM
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:34:48 -0400
+Received: from debtag.home (unknown
+ [IPv6:2a01:cb00:13da:d200:7cf5:aa34:e526:681b])
+ (Authenticated sender: castet.matthieu@free.fr)
+ by smtp5-g21.free.fr (Postfix) with ESMTPSA id DB9DC5FFB4;
+ Tue, 22 Oct 2024 22:34:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+ s=smtp-20201208; t=1729629284;
+ bh=mso0cJ5JiUfMphl4ElGBNEud7b0Z3n3PIJytDKEgUl0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=q13bAXDga9ThuZ+HFs61z/DF1hYEUXXvCD10UWszfIE+PV2HqJeQ0gh9Qzgm6lXxH
+ 4u01kttrfW7NbAyrU2189EGJ5ucIPKvBpEHhz1ngQaZ6Bq0hUeQixXt20ugN0VRAXO
+ N4CSbfGUa/6RuyerN7mQ6wgwL5yAx5PczYPK0sI+Ro9PypuTc5YhIfTupFBNhQFfR4
+ Zt+fiRHlsZlf3gORkNhKi7K3t5OIh8SZBevafhlaRgcNWJ5kiEAS/S03lOnfz07hcD
+ zd5LPFgNFqUFfIaoA3XffQxPdIBqGo0CxuVwf1INFqPnEL3pfPyPECURTxMMDwwGtL
+ ER6VxogzLRXEA==
+From: Matthieu Castet <castet.matthieu@free.fr>
+To: qemu-devel@nongnu.org
+Cc: Matthieu Castet <castet.matthieu@free.fr>
+Subject: [PATCH 0/1] Add cortex-m0+ support
+Date: Tue, 22 Oct 2024 22:34:34 +0200
+Message-Id: <20241022203435.181452-1-castet.matthieu@free.fr>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/20] scripts/ci: remove architecture checks for
- build-environment updates
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- devel@lists.libvirt.org, Cleber Rosa <crosa@redhat.com>,
- kvm@vger.kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241022105614.839199-1-alex.bennee@linaro.org>
- <20241022105614.839199-7-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241022105614.839199-7-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a01:e0c:1:1599::14;
+ envelope-from=castet.matthieu@free.fr; helo=smtp5-g21.free.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,31 +68,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMjIvMjQgMDM6NTYsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gV2Ugd2VyZSBtaXNz
-aW5nIHMzOTB4IGhlcmUuIFRoZXJlIGlzbid0IG11Y2ggcG9pbnQgdGVzdGluZyBmb3IgdGhl
-DQo+IGFyY2hpdGVjdHVyZSBoZXJlIGFzIHdlIHdpbGwgZmFpbCBhbnl3YXkgaWYgdGhlIGFw
-cHJvcHJpYXRlIHBhY2thZ2UNCj4gbGlzdCBpcyBtaXNzaW5nLg0KPiANCj4gU2lnbmVkLW9m
-Zi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPiAtLS0NCj4g
-ICBzY3JpcHRzL2NpL3NldHVwL3VidW50dS9idWlsZC1lbnZpcm9ubWVudC55bWwgfCAyIC0t
-DQo+ICAgMSBmaWxlIGNoYW5nZWQsIDIgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0
-IGEvc2NyaXB0cy9jaS9zZXR1cC91YnVudHUvYnVpbGQtZW52aXJvbm1lbnQueW1sIGIvc2Ny
-aXB0cy9jaS9zZXR1cC91YnVudHUvYnVpbGQtZW52aXJvbm1lbnQueW1sDQo+IGluZGV4IGVk
-ZjE5MDBiM2UuLjU2YjUxNjA5ZTMgMTAwNjQ0DQo+IC0tLSBhL3NjcmlwdHMvY2kvc2V0dXAv
-dWJ1bnR1L2J1aWxkLWVudmlyb25tZW50LnltbA0KPiArKysgYi9zY3JpcHRzL2NpL3NldHVw
-L3VidW50dS9idWlsZC1lbnZpcm9ubWVudC55bWwNCj4gQEAgLTM5LDcgKzM5LDYgQEANCj4g
-ICAgICAgICB3aGVuOg0KPiAgICAgICAgICAgLSBhbnNpYmxlX2ZhY3RzWydkaXN0cmlidXRp
-b24nXSA9PSAnVWJ1bnR1Jw0KPiAgICAgICAgICAgLSBhbnNpYmxlX2ZhY3RzWydkaXN0cmli
-dXRpb25fdmVyc2lvbiddID09ICcyMi4wNCcNCj4gLSAgICAgICAgLSBhbnNpYmxlX2ZhY3Rz
-WydhcmNoaXRlY3R1cmUnXSA9PSAnYWFyY2g2NCcgb3IgYW5zaWJsZV9mYWN0c1snYXJjaGl0
-ZWN0dXJlJ10gPT0gJ3g4Nl82NCcNCj4gICANCj4gICAgICAgLSBuYW1lOiBJbnN0YWxsIHBh
-Y2thZ2VzIGZvciBRRU1VIG9uIFVidW50dSAyMi4wNA0KPiAgICAgICAgIHBhY2thZ2U6DQo+
-IEBAIC00Nyw3ICs0Niw2IEBADQo+ICAgICAgICAgd2hlbjoNCj4gICAgICAgICAgIC0gYW5z
-aWJsZV9mYWN0c1snZGlzdHJpYnV0aW9uJ10gPT0gJ1VidW50dScNCj4gICAgICAgICAgIC0g
-YW5zaWJsZV9mYWN0c1snZGlzdHJpYnV0aW9uX3ZlcnNpb24nXSA9PSAnMjIuMDQnDQo+IC0g
-ICAgICAgIC0gYW5zaWJsZV9mYWN0c1snYXJjaGl0ZWN0dXJlJ10gPT0gJ2FhcmNoNjQnIG9y
-IGFuc2libGVfZmFjdHNbJ2FyY2hpdGVjdHVyZSddID09ICd4ODZfNjQnDQo+ICAgDQo+ICAg
-ICAgIC0gbmFtZTogSW5zdGFsbCBhcm1oZiBjcm9zcy1jb21waWxlIHBhY2thZ2VzIHRvIGJ1
-aWxkIFFFTVUgb24gQUFyY2g2NCBVYnVudHUgMjIuMDQNCj4gICAgICAgICBwYWNrYWdlOg0K
-DQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5h
-cm8ub3JnPg0K
+Hello,
+
+I have a patch that should allow to support cortex-m0+.
+I used it in a special arm virtual machine that is still in progress (and not submitted).
+I think this can be usefull.
+
+Matthieu Castet (1):
+  target/arm: Add cortex-m0+ support
+
+ hw/intc/armv7m_nvic.c    | 38 +++++++++++++++++++++++++++++++++-----
+ target/arm/cpu.c         |  4 ++--
+ target/arm/ptw.c         | 23 +++++++++++++++++++----
+ target/arm/tcg/cpu-v7m.c | 21 ++++++++++++++++++++-
+ 4 files changed, 74 insertions(+), 12 deletions(-)
+
+-- 
+2.39.5
+
 
