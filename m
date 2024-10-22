@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB22D1CDD7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A55CD1CDD5
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CHG-0002F8-PR; Tue, 22 Oct 2024 06:38:14 -0400
+	id 1t3CMH-0004GB-Pw; Tue, 22 Oct 2024 06:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t3CH8-0002Dr-Nl
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:38:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3CMG-0004Fi-9J
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:43:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1t3CH6-00086f-Qp
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:38:06 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3CME-0000E8-1A
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:43:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729593483;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729593799;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DYys+vRWOMnIu7PgKi0m5o10tmKC8NFFYb/cgfdQ9oE=;
- b=cotgUiDKH22r3JydzIP64rku926N8weFyFilmKyJRSoKPYyr4iw8pEhD21UziA4eQYSihP
- WlPJD0GQ6xB4+kvaBlmhL2IrKTt0Oq1DU8GzbQ3DmQQUMuWL8UsJFCaWTYX6P4sM8ukx1c
- qycfKeYJZ6mYR6g4E+h+AELakmHvZm8=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-Yrp_lgJiMNGsXOhIO-_mBw-1; Tue, 22 Oct 2024 06:38:01 -0400
-X-MC-Unique: Yrp_lgJiMNGsXOhIO-_mBw-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a9a0c259715so373035566b.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:38:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729593480; x=1730198280;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DYys+vRWOMnIu7PgKi0m5o10tmKC8NFFYb/cgfdQ9oE=;
- b=N+xxlz/r3Mq5XCxElEEfVQF+2//yoamPVWfsK10l8tdgUHvP1qmwUcSp4iPW7MZj2I
- 3ZdM83JxDqfvXbhJ5SeyLcvnLy+jZAnoTJYuA3rRpfKjOFqwPQYzpFRcyfqQnc8v3mB1
- 3ELWbH3F/vFaBosqWQF6JngkY5CYRYkO7JZg7WZOJCgAe0iSc1CLlF39PScIfa2AFWQo
- RR4Y0X99Ug0hn2ppbpDuMyOM55hvlGE/nEEShsE3vq3mPTN5H5aKGIF9fjYpZ9Kb6IFO
- kXipStj4ItTpSdtQyNuoU+5p5GSiUx5pZbZhfh5mgrzc2c2bQFhXCaH2dQFuAdKZbwuh
- F33g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmVMP1HFfl3myfCPytn/IzdEEtxnXKatsHgtYWQsfx5qNJTej2/YajHdbpN9cmdAt5fkcsVFD5n6s4@nongnu.org
-X-Gm-Message-State: AOJu0Yz5OpFIyN0X61H0vGlxUywKDI9BNroFhCmJB8vB8rwfRvwMZAVX
- f61ATwAYecRUz+JSR8g0s9kPsf6krujwpehfn7NJlkyzgCktZduEZOQg6re7Qb8+/c3MRos75Lx
- 3J1+8psgc/ZzmkdAI+IgZ2Tpw5OJu3t8WFziAPj6vD61upiU/QhdxPXSifA1cQc+ZOukU8QVjz8
- C0w4prDLCbpNGQf2xKVh9zAhYW/94=
-X-Received: by 2002:a17:907:d2a:b0:a9a:5e3a:641d with SMTP id
- a640c23a62f3a-a9aad376421mr149250666b.59.1729593479987; 
- Tue, 22 Oct 2024 03:37:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEejQiBOVZrZpYvrzd1GUFZ0j8/uWNjhjqSdHZRyzXE+SaArKMz6OhV6oEP3eyNvXVbFbeLqR4tqhy1Sr6rF6M=
-X-Received: by 2002:a17:907:d2a:b0:a9a:5e3a:641d with SMTP id
- a640c23a62f3a-a9aad376421mr149249166b.59.1729593479583; Tue, 22 Oct 2024
- 03:37:59 -0700 (PDT)
+ bh=QzmFgnfcJCKD/QUjCpKPKqWn7TfqTfDgVOKPyUIAqTI=;
+ b=guZOAhJM3yYy3kMt+e5pGCmDcmDtRqzqsYoAauueF4/Urk1x0WwDEau5UCCGYnZNX3qnrA
+ 8sdN//9GFEtR7nGkMQE1bnk4VGYCLo61uWtGeGVcmxAVKwbThzqlffijPQtHjrY75GDdfX
+ 8afh3PZnGIeVcUQeQO8g2vACOvjP36o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-kr0HzEp6O0CbgfwM22T7Zw-1; Tue,
+ 22 Oct 2024 06:43:13 -0400
+X-MC-Unique: kr0HzEp6O0CbgfwM22T7Zw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BA111955F3F; Tue, 22 Oct 2024 10:43:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.59])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3108A30001A3; Tue, 22 Oct 2024 10:43:08 +0000 (UTC)
+Date: Tue, 22 Oct 2024 11:43:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
+Message-ID: <ZxeBuXQB3hd2avUh@redhat.com>
+References: <20241021215220.982325-1-peterx@redhat.com>
+ <87froo34xy.fsf@pond.sub.org> <ZxdujhRo_kSkdkbX@redhat.com>
+ <87jze01kzp.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20241021132839.463255-1-demeng@redhat.com>
- <20241021132839.463255-7-demeng@redhat.com>
- <ZxaFOdhqE54A5vWf@redhat.com>
- <CAPMcbCqa-1i6zVwF_YmecbADyVBSzeJCJRF=a7rMXkLRbznvUw@mail.gmail.com>
-In-Reply-To: <CAPMcbCqa-1i6zVwF_YmecbADyVBSzeJCJRF=a7rMXkLRbznvUw@mail.gmail.com>
-From: Dehan Meng <demeng@redhat.com>
-Date: Tue, 22 Oct 2024 18:37:48 +0800
-Message-ID: <CA+kPPJxfLM3oKvSSr=rKipjpQJMrjCW_VB-kCmFv8LvfJA98ZA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] qemu-ga: 'Null' check for mandatory parameters
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, michael.roth@amd.com, peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000f4f8af06250e5cf0"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=demeng@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jze01kzp.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,314 +88,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f4f8af06250e5cf0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Oct 22, 2024 at 12:37:46PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Tue, Oct 22, 2024 at 10:41:29AM +0200, Markus Armbruster wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > Per previous discussion [1,2], this patch deprecates query-migrationthreads
+> >> > command.
+> >> >
+> >> > To summarize, the major reason of the deprecation is due to no sensible way
+> >> > to consume the API properly:
+> >> >
+> >> >   (1) The reported list of threads are incomplete (ignoring destination
+> >> >       threads and non-multifd threads).
+> >> >
+> >> >   (2) For CPU pinning, there's no way to properly pin the threads with
+> >> >       the API if the threads will start running right away after migration
+> >> >       threads can be queried, so the threads will always run on the default
+> >> >       cores for a short window.
+> >> >
+> >> >   (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
+> >> >       which will provide proper names for all migration threads.
+> >> >
+> >> > [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
+> >> > [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
+> >> >
+> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> 
+> [...]
+> 
+> >> > diff --git a/migration/threadinfo.c b/migration/threadinfo.c
+> >> > index 262990dd75..2867413420 100644
+> >> > --- a/migration/threadinfo.c
+> >> > +++ b/migration/threadinfo.c
+> >> > @@ -13,6 +13,7 @@
+> >> >  #include "qemu/osdep.h"
+> >> >  #include "qemu/queue.h"
+> >> >  #include "qemu/lockable.h"
+> >> > +#include "qemu/error-report.h"
+> >> >  #include "threadinfo.h"
+> >> >  
+> >> >  QemuMutex migration_threads_lock;
+> >> > @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
+> >> >      MigrationThread *thread = NULL;
+> >> >  
+> >> >      QEMU_LOCK_GUARD(&migration_threads_lock);
+> >> > +
+> >> > +    warn_report("Command 'query-migrationthreads' is deprecated");
+> >> 
+> >> We don't normally do this for QMP commands.
+> >> 
+> >> Management applications can use -compat deprecated-input=reject to check
+> >> they're not sending deprecated commands or arguments.
+> >> 
+> >> Suggest to drop.
+> >
+> > They could, but in practice I don't believe anything is doing this, so
+> > the warning message is a practical way to alert people to the usage.
+> 
+> Again, we not normally do this.  What makes this one different?
 
-okay, thanks all for the suggestions, I'll make changes to a new commit, so
-that you can review the commit5 later.
+Do we not ? My expectation is that everything we record in deprecated.rst
+also has a corresponding warn_report / warn_report_once in the code.
+We know users may not read the docs, so we have a multi-pronged approach
+to alerting them.
 
-On Tue, Oct 22, 2024 at 1:14=E2=80=AFAM Konstantin Kostiuk <kkostiuk@redhat=
-.com>
-wrote:
+> Stepping onto my soapbox: if stuff going away surprisingly would cause
+> you enough inconvenience to make early warning desirable, testing with
+> suitable -compat is a lot more reliable than relying on warnings.
+> *Especially* when your automated testing files warnings unexamined
+> together with any other crap that may go to stderr, so your best chance
+> to notice the warning is in ad hoc manual testing of QEMU.  Nobody does
+> that until after things broke.
 
->
->
-> On Mon, Oct 21, 2024 at 7:45=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange=
-@redhat.com>
-> wrote:
->
->> On Mon, Oct 21, 2024 at 09:28:36PM +0800, Dehan Meng wrote:
->> > sscanf return values are checked and add 'Null' check for
->> > mandatory parameters.
->> >
->> > Signed-off-by: Dehan Meng <demeng@redhat.com>
->> > ---
->> >  qga/commands-linux.c | 12 +++++++++++-
->> >  1 file changed, 11 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/qga/commands-linux.c b/qga/commands-linux.c
->> > index 51d5e3d927..f0e9cdd27c 100644
->> > --- a/qga/commands-linux.c
->> > +++ b/qga/commands-linux.c
->> > @@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue=
-,
->> int is_ipv6)
->> >          int i;
->> >
->> >          for (i =3D 0; i < 16; i++) {
->> > -            sscanf(&hexStr[i * 2], "%02hhx", &in6.s6_addr[i]);
->> > +            if (sscanf(&hex_str[i * 2], "%02hhx", &in6.s6_addr[i]) !=
-=3D
->> 1) {
->> > +                return NULL;
->> > +            }
->> >          }
->> >          inet_ntop(AF_INET6, &in6, addr, INET6_ADDRSTRLEN);
->> >
->> > @@ -2164,6 +2166,10 @@ GuestNetworkRouteList
->> *qmp_guest_network_get_route(Error **errp)
->> >                  networkroute =3D route;
->> >                  networkroute->iface =3D g_strdup(Iface);
->> >                  networkroute->destination =3D
->> hexToIPAddress(Destination, 1);
->> > +                if (networkroute->destination =3D=3D NULL) {
->> > +                    g_free(route);
->> > +                    continue;
->> > +                }
->>
->> This is still leaking the 'networkroute->iface' string.
->>
->> The existing code is a bit strange having 'route' and 'networkroute'
->> variables.
->>
->> I'd suggest removing the "route" variable entirely.
->>
->
-> This part was done in patch 4/4
->
->
->>
->> Then have a code pattern that relies on g_autoptr to automatically
->> free the struct & all its fields.
->>
->
-> Agree with this
->
->
->>
->> eg something that looks approx like this:
->>
->>    g_autoptr(GuestNetorkRoute) networkroute =3D NULL;
->>
->>    ...
->>
->>    if (is_ipv6) {
->>        ...
->>        networkroute =3D g_new0(GuestNetorkRoute, 1);
->>        networkroute->iface =3D g_strdup(Iface);
->>        networkroute->destination =3D hexToIPAddress(Destination, 1);
->>        if (networkroute->destination =3D=3D NULL) {
->>           continue;
->>        }
->>        ...
->>    } else {
->>        ...
->>        networkroute =3D g_new0(GuestNetorkRoute, 1);
->>        networkroute->iface =3D g_strdup(Iface);
->>        networkroute->destination =3D hexToIPAddress(Destination, 1);
->>        if (networkroute->destination =3D=3D NULL) {
->>           continue;
->>        }
->>        ...
->>    }
->>
->>    QAPI_LIST_APPEND(tail, g_steal_pointer(&networkroute));
->>
->>
->> >                  networkroute->metric =3D Metric;
->> >                  networkroute->source =3D hexToIPAddress(Source, 1);
->> >                  networkroute->desprefixlen =3D g_strdup_printf(
->> > @@ -2195,6 +2201,10 @@ GuestNetworkRouteList
->> *qmp_guest_network_get_route(Error **errp)
->> >                  networkroute =3D route;
->> >                  networkroute->iface =3D g_strdup(Iface);
->> >                  networkroute->destination =3D
->> hexToIPAddress(&Destination, 0);
->> > +                if (networkroute->destination =3D=3D NULL) {
->> > +                    g_free(route);
->> > +                    continue;
->> > +                }
->> >                  networkroute->gateway =3D hexToIPAddress(&Gateway, 0)=
-;
->> >                  networkroute->mask =3D hexToIPAddress(&Mask, 0);
->> >                  networkroute->metric =3D Metric;
->> > --
->> > 2.40.1
->> >
->>
->> With regards,
->> Daniel
->> --
->> |: https://berrange.com      -o-
->> https://www.flickr.com/photos/dberrange :|
->> |: https://libvirt.org         -o-
->> https://fstop138.berrange.com :|
->> |: https://entangle-photo.org    -o-
->> https://www.instagram.com/dberrange :|
->>
->>
+I don't see it as an either or choice. We try to surface the deprecation
+info in as many different ways as is practical, as no single approach is
+going to hit all bases.
 
---000000000000f4f8af06250e5cf0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ * Document it (deprecated.rst)
+ * Warn on QEMU stderr if used at runtime (warn_report)
+ * Enable apps to validate their usage in tests (-compat)
+ * Mark guests as tainted (libvirt API & VM log file, for certain asepts)
 
-<div dir=3D"ltr">okay, thanks all for the=C2=A0suggestions, I&#39;ll make c=
-hanges to a new commit, so that you can review the commit5 later.=C2=A0</di=
-v><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On T=
-ue, Oct 22, 2024 at 1:14=E2=80=AFAM Konstantin Kostiuk &lt;<a href=3D"mailt=
-o:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"=
-><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
- class=3D"gmail_attr">On Mon, Oct 21, 2024 at 7:45=E2=80=AFPM Daniel P. Ber=
-rang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank">ber=
-range@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">On Mon, Oct 21, 2024 at 09:28:36PM +0800, Dehan Meng wrote:=
-<br>
-&gt; sscanf return values are checked and add &#39;Null&#39; check for<br>
-&gt; mandatory parameters.<br>
-&gt; <br>
-&gt; Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" tar=
-get=3D"_blank">demeng@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 qga/commands-linux.c | 12 +++++++++++-<br>
-&gt;=C2=A0 1 file changed, 11 insertions(+), 1 deletion(-)<br>
-&gt; <br>
-&gt; diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-&gt; index 51d5e3d927..f0e9cdd27c 100644<br>
-&gt; --- a/qga/commands-linux.c<br>
-&gt; +++ b/qga/commands-linux.c<br>
-&gt; @@ -2103,7 +2103,9 @@ static char *hexToIPAddress(const void *hexValue=
-, int is_ipv6)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int i;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; 16; i++) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sscanf(&amp;hexStr[i * 2], =
-&quot;%02hhx&quot;, &amp;in6.s6_addr[i]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sscanf(&amp;hex_str[i *=
- 2], &quot;%02hhx&quot;, &amp;in6.s6_addr[i]) !=3D 1) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 inet_ntop(AF_INET6, &amp;in6, addr, =
-INET6_ADDRSTRLEN);<br>
-&gt;=C2=A0 <br>
-&gt; @@ -2164,6 +2166,10 @@ GuestNetworkRouteList *qmp_guest_network_get_ro=
-ute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute =3D route;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;iface =3D g_strdup(Iface);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;destination =3D hexToIPAddress(Destination, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (networkro=
-ute-&gt;destination =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- continue;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-This is still leaking the &#39;networkroute-&gt;iface&#39; string.<br>
-<br>
-The existing code is a bit strange having &#39;route&#39; and &#39;networkr=
-oute&#39;<br>
-variables.<br>
-<br>
-I&#39;d suggest removing the &quot;route&quot; variable entirely.<br></bloc=
-kquote><div><br></div><div>This part was done in patch 4/4<br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Then have a code pattern that relies on g_autoptr to automatically<br>
-free the struct &amp; all its fields.<br></blockquote><div><br></div><div>A=
-gree with this<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-<br>
-eg something that looks approx like this:<br>
-<br>
-=C2=A0 =C2=A0g_autoptr(GuestNetorkRoute) networkroute =3D NULL;<br>
-<br>
-=C2=A0 =C2=A0...<br>
-<br>
-=C2=A0 =C2=A0if (is_ipv6) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute =3D g_new0(GuestNetorkRoute, 1);<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;iface =3D g_strdup(Iface);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;destination =3D hexToIPAddress(=
-Destination, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0if (networkroute-&gt;destination =3D=3D NULL) {<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute =3D g_new0(GuestNetorkRoute, 1);<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;iface =3D g_strdup(Iface);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0networkroute-&gt;destination =3D hexToIPAddress(=
-Destination, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0if (networkroute-&gt;destination =3D=3D NULL) {<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0...<br>
-=C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0QAPI_LIST_APPEND(tail, g_steal_pointer(&amp;networkroute));<br=
->
-<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;metric =3D Metric;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;source =3D hexToIPAddress(Source, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;desprefixlen =3D g_strdup_printf(<br>
-&gt; @@ -2195,6 +2201,10 @@ GuestNetworkRouteList *qmp_guest_network_get_ro=
-ute(Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute =3D route;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;iface =3D g_strdup(Iface);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;destination =3D hexToIPAddress(&amp;Destination, 0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (networkro=
-ute-&gt;destination =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- g_free(route);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- continue;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;gateway =3D hexToIPAddress(&amp;Gateway, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;mask =3D hexToIPAddress(&amp;Mask, 0);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 networkr=
-oute-&gt;metric =3D Metric;<br>
-&gt; -- <br>
-&gt; 2.40.1<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div>
-</div>
-</blockquote></div>
-
---000000000000f4f8af06250e5cf0--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
