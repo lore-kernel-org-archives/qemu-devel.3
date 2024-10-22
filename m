@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA92CDD0C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 18:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5226CDD0CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 18:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Jzd-0006Qw-I7; Tue, 22 Oct 2024 14:52:34 -0400
+	id 1t3K1S-0007h1-EF; Tue, 22 Oct 2024 14:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t3JzO-0006Nu-Up; Tue, 22 Oct 2024 14:52:23 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3K1O-0007gI-Sq
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 14:54:23 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1t3JzJ-0004MA-Ak; Tue, 22 Oct 2024 14:52:16 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-431695fa98bso35031405e9.3; 
- Tue, 22 Oct 2024 11:52:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3K1M-0004Uy-G4
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 14:54:22 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7eab7622b61so4181719a12.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 11:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1729623130; x=1730227930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xzzMQMjRFCYjiBrnmFMRm+W9uYRGY50F1KRBtXnoh9Q=;
- b=bY/ZUIzmLfrJG6l5TlvpSXOjqL2TUq8yZ7dkxvFkBm2AZovgm9+JxTuH/SbKoEgq6Q
- CR4oY03avaIfAEKbpOWfZRtxxVOkxakVFXBnrtLRG9xkVMYARD0E6qwOTXy7ix5xni4/
- Gm4TasW32h+/A3jngPs9OLa502nb1F6US47m45yoiw9upcqmDBbYIyJHl4kOEQ8NvmS7
- tVE0aOvXRIatSX1aAAhlKDJ5cpwPtQdEwUy3ZI+MhuH9+B0nISoaRdaunTakqfwuvtO6
- 6tSZ7EyRLTbw5zJIbPST+h2Y5tjMpilwHo9AL0yl27vvxj9g9TD2WTrWhjnN9TagfNZh
- ZtzA==
+ d=linaro.org; s=google; t=1729623258; x=1730228058; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jRPX6N1Lr33v+7DIkV3DeyxdurCpElPS6NcFAh/nlfo=;
+ b=k+sMkZ7/Ci8ZP9zfPV8vVK0keQ/eGV2mMluzmzU7M+PBQuglNAM3YNMcG+5SJyDvBG
+ uP38IYAP5lfnBjDuwh424ZHuqI529ONYgmaaNfXAApkiYc1Hpu9G1y+1q/W4nBRxuT4U
+ XGXBHQlS/iiUoc6yl0RTUHUrG7XhhqdxqFKOEgW54mnZaLDMkhclyOWdbRm2N2I35Y6F
+ 61uVzW2IIapw/zPRNH4LRPODuWkvrA1j/ElRyDNBSEJNhSy1JiiUznu14iHyZVxaoYZD
+ k8qmsQ0E/yCgNWEswyK7TzG1dALO74Ni9Vh8flKiwrjZh3CFxcCoITzcjJWWv1WMVzD8
+ fANg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729623130; x=1730227930;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xzzMQMjRFCYjiBrnmFMRm+W9uYRGY50F1KRBtXnoh9Q=;
- b=fJkEDxnIp0fBbPi0hInqjcMVVuSTmFOnlEBrBiE5Ms+ZvogwEgEo5CEENF6wdHN5ME
- F3+MLgw2K//Po06vYgtBVV2ZuTLP4C+DN4M6XDVa9gPtp3W0n26Q0q7JBuYPuaSNupfw
- DWL30YmvXMFOYxRBk9P1/RPS72K9QDKmxYQhhV7UEddPQQaSNY3HnV19JuTapjP0Wbqa
- myM1hdbGCLOgD400vK1sysZrhkE3rXkbcrgULnN0IHU3JrpDFt8QuAdpApKHKc5QDrqD
- JWzC+y3MQYoRASyGg+TwXVq5JhXnc6eUF5DRj1x7bJFmdQe7iYLHXjHfRUSSgLnvB+to
- w09w==
+ d=1e100.net; s=20230601; t=1729623258; x=1730228058;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jRPX6N1Lr33v+7DIkV3DeyxdurCpElPS6NcFAh/nlfo=;
+ b=SzAEX7/kUkbPISasgeq646VPB89aqmoFBo8ZUEypJWMn4U10inlXSvz0/7FOflY/P+
+ 5c3pDFjdU5rE4GoF77YQfByGPE6ppAUJ1LVJ5JTYxifFZI/ucRPU9cHNaCghPOaBf/zG
+ 3Y9fxetykcNQ9jGNjAx2G6xq0/x8XPNqBR/ie8pkQ+rAHvlIg3KcGTrg2aL4Rg/oLCZM
+ IzkbgbQxatU5YcO2flLWohmBo2yn6gIHWNiozc9HCsCfncMBSgTLsyytJGXj4VwZDho+
+ ZyNCYJOdDiy1R9L+dmltuXLtvyWdpA/dNy7kKQMzomcl7RZxvU9z1nYPfbfdKRZ20wqU
+ FObQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURuYqGqz3WOqfzDHiYGdYyCEKBuFc1HAj9uuyzZVY6n/WhKbxd/LLXFqMYhpiY2d6rUcrQqz5NJyFJfwI=@nongnu.org,
- AJvYcCUWyG3BfblnVbv8weSsM2/+TH+BI0NNn18GPlPphcMnWcwDpok8Lcu2ytiG8v/vCuc4WvikW7HlrBh6@nongnu.org,
- AJvYcCUfd3FPBhskrC/7N0RURjipuBNF5LrzGRGQnuSDkTqSzm159jskaO9GKOiI/IKoi7buMalYWpkV2us=@nongnu.org,
- AJvYcCUrf+ZI0YVb2X3r7xwN3EId12FafLPZ5wUo8BAym6hjmMmscxIMoLBPTS7rkk0TbYKAcQeXnNXL/qhUyw==@nongnu.org
-X-Gm-Message-State: AOJu0Yyue6sZ4FkbfFR7jJXlzmnWHV87+ynij4p6ERLAbK41AeusEVDl
- jtMaJah0rXAW+ozK6zYo0vvPSEigZojqq5jW0s7bso9pZeHGD5RQ
-X-Google-Smtp-Source: AGHT+IEdWg0zYcRDr+tM0ZiqLFU9/RXyjSFD6tVOU27vUK0sVhE4gjIzMgCThBQlTp5rsbPCbB3LJg==
-X-Received: by 2002:a05:600c:46c7:b0:431:50fa:89c4 with SMTP id
- 5b1f17b1804b1-4318412acc0mr1723295e9.3.1729623129645; 
- Tue, 22 Oct 2024 11:52:09 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-183-109-172.77.183.pool.telefonica.de.
- [77.183.109.172]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0a4b26dsm7202527f8f.45.2024.10.22.11.52.08
+ AJvYcCV4fIRNVEHmaP+Zc9YSh+WtL3K+mx8XBzyvP1OSrGDIFz24E2UrTcG7J0zFHJSrUl6NcjnRrGuJ/RIG@nongnu.org
+X-Gm-Message-State: AOJu0YwgUup1iFUn6Wg1njlJBcZi3CFM4nxGmPQ7EIYnrqN6tBeCKYUO
+ cDqP+PNMphHh86xPmgJ8mKbfn7uTtiHJHftKJtWE40RK3hdxRTnwfxcXJmOKwNZ3K2tB3FXtS52
+ 5
+X-Google-Smtp-Source: AGHT+IFeRdTQA64mQGSXf8anUVF0o+s/m8eWY+sT/XqxVeW73xE9fTRTYpKupg63fMqboVSkAr+uSg==
+X-Received: by 2002:a05:6a21:1304:b0:1d7:3d:6008 with SMTP id
+ adf61e73a8af0-1d978b12ed4mr4695637.13.1729623258335; 
+ Tue, 22 Oct 2024 11:54:18 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71ec132fef0sm5091456b3a.63.2024.10.22.11.54.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 11:52:09 -0700 (PDT)
-Date: Tue, 22 Oct 2024 18:52:06 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_07/12=5D_hw/sh4/r2d=3A_Real?=
- =?US-ASCII?Q?ize_IDE_controller_before_accessing_it?=
-In-Reply-To: <2b180c87-fd5f-4c54-bc5d-757a45eb9285@tls.msk.ru>
-References: <20240213130341.1793-1-philmd@linaro.org>
- <20240213130341.1793-8-philmd@linaro.org>
- <2b180c87-fd5f-4c54-bc5d-757a45eb9285@tls.msk.ru>
-Message-ID: <DD4A9B72-6369-4DFA-BE17-1B26E1B4E374@gmail.com>
+ Tue, 22 Oct 2024 11:54:18 -0700 (PDT)
+Message-ID: <51c9f589-5ceb-42c0-8d02-b1a838141f55@linaro.org>
+Date: Tue, 22 Oct 2024 11:54:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: Use physical cpu id about CSR CPUID for
+ sysemu
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20241022124247.873232-1-maobibo@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241022124247.873232-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,45 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/22/24 05:42, Bibo Mao wrote:
+> For user tcg, there is no physical cpu id provided and logic cpuid
+> is used. For system emulation, physical cpu id is provided, initial
+> value of register CSR CPUID can be set from physical cpu id.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/intc/loongarch_ipi.c           | 3 ++-
+>   target/loongarch/cpu.c            | 7 ++++++-
+>   target/loongarch/tcg/csr_helper.c | 4 ----
+>   3 files changed, 8 insertions(+), 6 deletions(-)
+
+Since cpu_index is arbitrary and assigned by hw/loongarch/virt.c anyway, why do these two 
+values differ?  Surely arch_id is already unique per cpu?
 
 
-Am 22=2E Oktober 2024 14:53:31 UTC schrieb Michael Tokarev <mjt@tls=2Emsk=
-=2Eru>:
->On 13=2E02=2E2024 16:03, Philippe Mathieu-Daud=C3=A9 wrote:
->> We should not wire IRQs on unrealized device=2E
->>=20
->> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->> Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->> Reviewed-by: Yoshinori Sato <ysato@users=2Esourceforge=2Ejp>
->> ---
->>   hw/sh4/r2d=2Ec | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/hw/sh4/r2d=2Ec b/hw/sh4/r2d=2Ec
->> index e9f316a6ce=2E=2Ec73e8f49b8 100644
->> --- a/hw/sh4/r2d=2Ec
->> +++ b/hw/sh4/r2d=2Ec
->> @@ -285,9 +285,9 @@ static void r2d_init(MachineState *machine)
->>       dinfo =3D drive_get(IF_IDE, 0, 0);
->>       dev =3D qdev_new("mmio-ide");
->>       busdev =3D SYS_BUS_DEVICE(dev);
->> -    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
->>       qdev_prop_set_uint32(dev, "shift", 1);
->>       sysbus_realize_and_unref(busdev, &error_fatal);
->> +    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
->>       sysbus_mmio_map(busdev, 0, 0x14001000);
->>       sysbus_mmio_map(busdev, 1, 0x1400080c);
->>       mmio_ide_init_drives(dev, dinfo, NULL);
->
->Should we pick this up for stable-9=2E0 & -9=2E1 series?
+r~
 
-IMO yes, because it fixes a regression=2E
 
-Best regards,
-Bernhard
+> 
+> diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
+> index 2ae1a42c46..78b6fce81b 100644
+> --- a/hw/intc/loongarch_ipi.c
+> +++ b/hw/intc/loongarch_ipi.c
+> @@ -42,7 +42,8 @@ static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
+>       CPUArchId *archid;
+>   
+>       archid = find_cpu_by_archid(machine, arch_id);
+> -    if (archid) {
+> +    /* For offlined cpus, archid->cpu may be NULL */
+> +    if (archid && archid->cpu) {
+>           return CPU(archid->cpu);
+>       }
+>   
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 7212fb5f8f..d4659e8d45 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -510,8 +510,10 @@ static void loongarch_max_initfn(Object *obj)
+>   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   {
+>       CPUState *cs = CPU(obj);
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
+>       CPULoongArchState *env = cpu_env(cs);
+> +    int n;
+>   
+>       if (lacc->parent_phases.hold) {
+>           lacc->parent_phases.hold(obj, type);
+> @@ -522,7 +524,6 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   #endif
+>       env->fcsr0 = 0x0;
+>   
+> -    int n;
+>       /* Set csr registers value after reset, see the manual 6.4. */
+>       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
+>       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
+> @@ -543,7 +544,11 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   
+>       env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+>       env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+> +#ifndef CONFIG_USER_ONLY
+> +    env->CSR_CPUID = cpu->phy_id;
+> +#else
+>       env->CSR_CPUID = cs->cpu_index;
+> +#endif
+>       env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
+>       env->CSR_LLBCTL = FIELD_DP64(env->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
+>       env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 15f94caefa..2aeca2343d 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -37,10 +37,6 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+>   
+>   target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+>   {
+> -    LoongArchCPU *lac = env_archcpu(env);
+> -
+> -    env->CSR_CPUID = CPU(lac)->cpu_index;
+> -
+>       return env->CSR_CPUID;
+>   }
+>   
+> 
+> base-commit: cc5adbbd50d81555b8eb73602ec16fde40b55be4
 
->
->Thanks,
->
->/mjt
 
