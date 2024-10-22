@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB55CCDD0E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1FFCDD0E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Lag-0007rN-VF; Tue, 22 Oct 2024 16:34:54 -0400
+	id 1t3Lao-00080s-Ng; Tue, 22 Oct 2024 16:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <castet.matthieu@free.fr>)
- id 1t3Lab-0007mZ-6o
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:34:52 -0400
+ id 1t3Lag-0007qr-RX; Tue, 22 Oct 2024 16:34:54 -0400
 Received: from smtp5-g21.free.fr ([2a01:e0c:1:1599::14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <castet.matthieu@free.fr>)
- id 1t3LaZ-0007vT-FM
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:34:48 -0400
+ id 1t3Lae-0007vr-TE; Tue, 22 Oct 2024 16:34:54 -0400
 Received: from debtag.home (unknown
  [IPv6:2a01:cb00:13da:d200:7cf5:aa34:e526:681b])
  (Authenticated sender: castet.matthieu@free.fr)
- by smtp5-g21.free.fr (Postfix) with ESMTPSA id DB9DC5FFB4;
- Tue, 22 Oct 2024 22:34:42 +0200 (CEST)
+ by smtp5-g21.free.fr (Postfix) with ESMTPSA id B3C8960129;
+ Tue, 22 Oct 2024 22:34:45 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1729629284;
- bh=mso0cJ5JiUfMphl4ElGBNEud7b0Z3n3PIJytDKEgUl0=;
- h=From:To:Cc:Subject:Date:From;
- b=q13bAXDga9ThuZ+HFs61z/DF1hYEUXXvCD10UWszfIE+PV2HqJeQ0gh9Qzgm6lXxH
- 4u01kttrfW7NbAyrU2189EGJ5ucIPKvBpEHhz1ngQaZ6Bq0hUeQixXt20ugN0VRAXO
- N4CSbfGUa/6RuyerN7mQ6wgwL5yAx5PczYPK0sI+Ro9PypuTc5YhIfTupFBNhQFfR4
- Zt+fiRHlsZlf3gORkNhKi7K3t5OIh8SZBevafhlaRgcNWJ5kiEAS/S03lOnfz07hcD
- zd5LPFgNFqUFfIaoA3XffQxPdIBqGo0CxuVwf1INFqPnEL3pfPyPECURTxMMDwwGtL
- ER6VxogzLRXEA==
+ s=smtp-20201208; t=1729629290;
+ bh=Y1XczkptPUaL5JqERs0e5MtTVPI+G3JTY7wWyUZHLys=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=FKTUyUU5MaO7eNWsUGyRT6W82aduS0lwe3+72YeXMJhpwGBrQr/eFGSRZM7ZN0Sql
+ +1TDfbD2lN2F/o2DsEn64iI7Jtlnix7iPLh7xj+hwINdqK197is35qMmAADj1H+WXG
+ BO/iqQLtu0+lU7ASUvtwNaH+qgu5978TRBZA9XPuI5Ff3fLSGWBZkcdUZvBvq3vUdq
+ z2Lti9BiCr0YUeP5llx3ZiQBSZzLUV5oAIflt+UnPY7ESSBT2SDNKHJwyeB3YeNX+N
+ 2X5nxbRXCYUasfq+qHwNUE/poT8Ak2LmvYD6ExXeTeq2dSB9GIZ+tB9SX4dNTmv5Zu
+ oG4KiiAGdifgQ==
 From: Matthieu Castet <castet.matthieu@free.fr>
 To: qemu-devel@nongnu.org
-Cc: Matthieu Castet <castet.matthieu@free.fr>
-Subject: [PATCH 0/1] Add cortex-m0+ support
-Date: Tue, 22 Oct 2024 22:34:34 +0200
-Message-Id: <20241022203435.181452-1-castet.matthieu@free.fr>
+Cc: Matthieu Castet <castet.matthieu@free.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM cores)
+Subject: [PATCH 1/1] target/arm: Add cortex-m0+ support
+Date: Tue, 22 Oct 2024 22:34:35 +0200
+Message-Id: <20241022203435.181452-2-castet.matthieu@free.fr>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241022203435.181452-1-castet.matthieu@free.fr>
+References: <20241022203435.181452-1-castet.matthieu@free.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a01:e0c:1:1599::14;
@@ -68,21 +70,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
-
-I have a patch that should allow to support cortex-m0+.
-I used it in a special arm virtual machine that is still in progress (and not submitted).
-I think this can be usefull.
-
-Matthieu Castet (1):
-  target/arm: Add cortex-m0+ support
-
+Signed-off-by: Matthieu Castet<castet.matthieu@free.fr>
+---
  hw/intc/armv7m_nvic.c    | 38 +++++++++++++++++++++++++++++++++-----
  target/arm/cpu.c         |  4 ++--
  target/arm/ptw.c         | 23 +++++++++++++++++++----
  target/arm/tcg/cpu-v7m.c | 21 ++++++++++++++++++++-
  4 files changed, 74 insertions(+), 12 deletions(-)
 
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index 98f3cf59bc..ed084e9db3 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -1386,7 +1386,7 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+         }
+         return (cpu->env.pmsav7.drbar[region] & ~0x1f) | (region & 0xf);
+     }
+-    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
++    case 0xda0: /* MPU_RASR (v6M/v7M), MPU_RLAR (v8M) */
+     case 0xda8: /* MPU_RASR_A1 (v7M), MPU_RLAR_A1 (v8M) */
+     case 0xdb0: /* MPU_RASR_A2 (v7M), MPU_RLAR_A2 (v8M) */
+     case 0xdb8: /* MPU_RASR_A3 (v7M), MPU_RLAR_A3 (v8M) */
+@@ -1876,6 +1876,14 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+             return;
+         }
+ 
++        if (!arm_feature(&s->cpu->env, ARM_FEATURE_V7)) {
++                if (offset != 0xd9c)
++                        goto bad_offset;
++
++                /* do not support size less than 256 */
++                value &= ~0xe0;
++        }
++
+         if (value & (1 << 4)) {
+             /* VALID bit means use the region number specified in this
+              * value and also update MPU_RNR.REGION with that value.
+@@ -1900,12 +1908,13 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+         tlb_flush(CPU(cpu));
+         break;
+     }
+-    case 0xda0: /* MPU_RASR (v7M), MPU_RLAR (v8M) */
+-    case 0xda8: /* MPU_RASR_A1 (v7M), MPU_RLAR_A1 (v8M) */
+-    case 0xdb0: /* MPU_RASR_A2 (v7M), MPU_RLAR_A2 (v8M) */
+-    case 0xdb8: /* MPU_RASR_A3 (v7M), MPU_RLAR_A3 (v8M) */
++    case 0xda0: /* MPU_RASR (v6M/v7M), MPU_RLAR (v8M) */
++    case 0xda8: /* MPU_RASR_A1 (v6M/v7M), MPU_RLAR_A1 (v8M) */
++    case 0xdb0: /* MPU_RASR_A2 (v6M/v7M), MPU_RLAR_A2 (v8M) */
++    case 0xdb8: /* MPU_RASR_A3 (v6M/v7M), MPU_RLAR_A3 (v8M) */
+     {
+         int region = cpu->env.pmsav7.rnr[attrs.secure];
++        int rsize;
+ 
+         if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
+             /* PMSAv8M handling of the aliases is different from v7M:
+@@ -1926,6 +1935,25 @@ static void nvic_writel(NVICState *s, uint32_t offset, uint32_t value,
+             return;
+         }
+ 
++        rsize = extract32(value, 1, 5);
++        if (!arm_feature(&s->cpu->env, ARM_FEATURE_V7)) {
++            if (offset != 0xda0)
++                goto bad_offset;
++            /* for armv6-m rsize >= 7 (min 256) */
++            if (rsize < 7) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                        "MPU region size too small %d\n", rsize);
++                return;
++            }
++        }
++
++        /* for armv7-m rsize >= 4 (min 32) */
++        if (rsize < 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                    "MPU region size too small %d\n", rsize);
++            return;
++        }
++
+         if (region >= cpu->pmsav7_dregion) {
+             return;
+         }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 1320fd8c8f..875e3aab69 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -508,7 +508,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+                            sizeof(*env->pmsav8.rlar[M_REG_S])
+                            * cpu->pmsav7_dregion);
+                 }
+-            } else if (arm_feature(env, ARM_FEATURE_V7)) {
++            } else if (arm_feature(env, ARM_FEATURE_M)) {
+                 memset(env->pmsav7.drbar, 0,
+                        sizeof(*env->pmsav7.drbar) * cpu->pmsav7_dregion);
+                 memset(env->pmsav7.drsr, 0,
+@@ -2454,7 +2454,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     if (arm_feature(env, ARM_FEATURE_PMSA) &&
+-        arm_feature(env, ARM_FEATURE_V7)) {
++        arm_feature(env, ARM_FEATURE_M)) {
+         uint32_t nr = cpu->pmsav7_dregion;
+ 
+         if (nr > 0xff) {
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index dd40268397..fa771907e3 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2383,6 +2383,13 @@ static bool pmsav7_use_background_region(ARMCPU *cpu, ARMMMUIdx mmu_idx,
+     return regime_sctlr(env, mmu_idx) & SCTLR_BR;
+ }
+ 
++/* armv6m PMSAv6 is mostly compatible with PMSAv7,
++ * main difference :
++ * - min region size is 256 instead of 32
++ * - TEX can be only 0 (Tex not used by qemu)
++ * - no alias register
++ * - HardFault instead of MemManage
++ */
+ static bool get_phys_addr_pmsav7(CPUARMState *env,
+                                  S1Translate *ptw,
+                                  uint32_t address,
+@@ -2423,11 +2430,19 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+                 continue;
+             }
+ 
+-            if (!rsize) {
++            /* Issue warning for invalid values
++             * for armv7-m rsize >= 4 (min 32)
++             * for armv6-m rsize >= 7 (min 256)
++             */
++            if (!rsize ||
++                (arm_feature(env, ARM_FEATURE_M) && (
++                       rsize < 7 ||
++                       (rsize < 4 && !arm_feature(env, ARM_FEATURE_V7))))) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+-                              "DRSR[%d]: Rsize field cannot be 0\n", n);
++                              "DRSR[%d]: Rsize field cannot be %d\n", n, rsize);
+                 continue;
+             }
++
+             rsize++;
+             rmask = (1ull << rsize) - 1;
+ 
+@@ -3515,8 +3530,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+             /* PMSAv8 */
+             ret = get_phys_addr_pmsav8(env, ptw, address, access_type,
+                                        result, fi);
+-        } else if (arm_feature(env, ARM_FEATURE_V7)) {
+-            /* PMSAv7 */
++        } else if (arm_feature(env, ARM_FEATURE_V7) || arm_feature(env, ARM_FEATURE_M)) {
++            /* PMSAv7 or PMSAv6 */
+             ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
+                                        result, fi);
+         } else {
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 58e54578d6..01bc5d4375 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -76,6 +76,20 @@ static void cortex_m0_initfn(Object *obj)
+     cpu->isar.id_isar6 = 0x00000000;
+ }
+ 
++static void cortex_m0p_initfn(Object *obj)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++
++    /* cortex-m0p is a cortex-m0 with
++     * vtor and mpu extension
++     */
++    cortex_m0_initfn(obj);
++
++    cpu->midr = 0x410cc601;
++    cpu->pmsav7_dregion = 8;
++}
++
++
+ static void cortex_m3_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -111,6 +125,7 @@ static void cortex_m4_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_THUMB_DSP);
+     cpu->midr = 0x410fc240; /* r0p0 */
+     cpu->pmsav7_dregion = 8;
++    /* VFPv4-SP */
+     cpu->isar.mvfr0 = 0x10110021;
+     cpu->isar.mvfr1 = 0x11000011;
+     cpu->isar.mvfr2 = 0x00000000;
+@@ -141,6 +156,7 @@ static void cortex_m7_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_THUMB_DSP);
+     cpu->midr = 0x411fc272; /* r1p2 */
+     cpu->pmsav7_dregion = 8;
++    /* VFPv5 DP */
+     cpu->isar.mvfr0 = 0x10110221;
+     cpu->isar.mvfr1 = 0x12000011;
+     cpu->isar.mvfr2 = 0x00000040;
+@@ -173,6 +189,7 @@ static void cortex_m33_initfn(Object *obj)
+     cpu->midr = 0x410fd213; /* r0p3 */
+     cpu->pmsav7_dregion = 16;
+     cpu->sau_sregion = 8;
++    /* VFPv5 DP */
+     cpu->isar.mvfr0 = 0x10110021;
+     cpu->isar.mvfr1 = 0x11000011;
+     cpu->isar.mvfr2 = 0x00000040;
+@@ -209,7 +226,7 @@ static void cortex_m55_initfn(Object *obj)
+     cpu->revidr = 0;
+     cpu->pmsav7_dregion = 16;
+     cpu->sau_sregion = 8;
+-    /* These are the MVFR* values for the FPU + full MVE configuration */
++    /* These are the MVFR* values for the FPv5-D16-M + full MVE configuration */
+     cpu->isar.mvfr0 = 0x10110221;
+     cpu->isar.mvfr1 = 0x12100211;
+     cpu->isar.mvfr2 = 0x00000040;
+@@ -267,6 +284,8 @@ static void arm_v7m_class_init(ObjectClass *oc, void *data)
+ static const ARMCPUInfo arm_v7m_cpus[] = {
+     { .name = "cortex-m0",   .initfn = cortex_m0_initfn,
+                              .class_init = arm_v7m_class_init },
++    { .name = "cortex-m0p",  .initfn = cortex_m0p_initfn,
++                             .class_init = arm_v7m_class_init },
+     { .name = "cortex-m3",   .initfn = cortex_m3_initfn,
+                              .class_init = arm_v7m_class_init },
+     { .name = "cortex-m4",   .initfn = cortex_m4_initfn,
 -- 
 2.39.5
 
