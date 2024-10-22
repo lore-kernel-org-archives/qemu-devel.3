@@ -4,91 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E73CDD0FF
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 23:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C897BCDD0FB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 23:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Nu2-0000Uj-Ep; Tue, 22 Oct 2024 19:03:03 -0400
+	id 1t3Nz2-00022M-PB; Tue, 22 Oct 2024 19:08:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t3Nu0-0000UE-EO; Tue, 22 Oct 2024 19:03:00 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1t3Nz0-000226-Ru
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 19:08:11 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1t3Ntx-0006t9-IK; Tue, 22 Oct 2024 19:02:59 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XY6yw4m7pz6LD9d;
- Wed, 23 Oct 2024 06:58:00 +0800 (CST)
-Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
- by mail.maildlp.com (Postfix) with ESMTPS id 2E7E01400F4;
- Wed, 23 Oct 2024 07:02:40 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (7.182.85.172) by
- frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 23 Oct 2024 01:02:39 +0200
-Received: from frapeml500007.china.huawei.com ([7.182.85.172]) by
- frapeml500007.china.huawei.com ([7.182.85.172]) with mapi id 15.01.2507.039;
- Wed, 23 Oct 2024 01:02:39 +0200
-To: Igor Mammedov <imammedo@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org"
- <maz@kernel.org>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
- <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
- <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "ardb@kernel.org" <ardb@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
- <rafael@kernel.org>, "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>, 
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "npiggin@gmail.com"
- <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>, "zhao1.liu@intel.com"
- <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>,
- "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>
-Subject: RE: [PATCH V1 2/4] hw/acpi: Update ACPI CPU Status `is_{present,
- enabled}` during vCPU hot(un)plug
-Thread-Topic: [PATCH V1 2/4] hw/acpi: Update ACPI CPU Status `is_{present,
- enabled}` during vCPU hot(un)plug
-Thread-Index: AQHbHm6LVfm++ex4ak2XyzXHJrqBZLKMcruAgAb57AA=
-Date: Tue, 22 Oct 2024 23:02:39 +0000
-Message-ID: <b31151bc8f4e48ccafb9707543363db3@huawei.com>
-References: <20241014192205.253479-1-salil.mehta@huawei.com>
- <20241014192205.253479-3-salil.mehta@huawei.com>
- <20241018161811.4a88c7b7@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241018161811.4a88c7b7@imammedo.users.ipa.redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.148.112]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1t3Nyz-0007TJ-2z
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 19:08:10 -0400
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal
+ [10.202.2.51])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 332C811400A8;
+ Tue, 22 Oct 2024 19:08:05 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-11.internal (MEProxy); Tue, 22 Oct 2024 19:08:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ invisiblethingslab.com; h=cc:cc:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1729638485;
+ x=1729724885; bh=gLWyeo27jt32SwSzz1pf6JLWX5ghm4vG19DKUkdvu4s=; b=
+ fZc6nkFMHOZNaHL/YPfkDrtr+5CccLoPqXEhDlSugLzgf+QkQoMSk4JO4iTeTDMk
+ G8E5pCVXetRQogHTfjrhThP9VuRI0nSeyMfQo5zn7lXRVkAHQ/1EU3cFfOi0/hba
+ IJVMAX2FxmWRhToz7JQU2KXbobGvctdejRZ7CBqYH9c2OUX6eSyvCQXKy/IPwRrZ
+ toIwZc+I/Q8ITysk6s4BxNq8jqeZCGIQM99n2lfl1Q8BLhLsOiPJ9ZY7Cjt6hHFp
+ JFS5JlQjZM0WwMLSkusPxD/HnTo8ORAclbis+mbg5GbKQV/ao6jsIx5oJdgdV5FC
+ aOOdvkv/WEAjeLY+TtcI1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1729638485; x=1729724885; bh=gLWyeo27jt32SwSzz1pf6JLWX5gh
+ m4vG19DKUkdvu4s=; b=gYEHqVpQp6VRHnXRl6d/VVRHFuq2xElKprhzpuURT7vg
+ 4e3JPp0/abERTz56DH9ILe4DmJg7wfBzJRhSiv5/1yn00iBMvdTd6ugS9Cst1M/H
+ 2b6IAyUA3HvYh+V29hRfboNYWyGl64ZRWdVDEA1e09YGLafEu7hOCZTjDDOq01LS
+ DLZACHYSxuwBV9qeh8JOFW/uW7LIBjf2CccaDmfphsst06xhp/XWnUPvNjmEMRZW
+ QtX5IGrCBcSNCKiEq6aY6zcj7w2qe/AuXZgumZq3NMrWbvF+9QqgSV5h0XaubixS
+ mGE8hBycfZecmyCJ3ujzto4krRsV4iju63xjhPDE3w==
+X-ME-Sender: <xms:VDAYZ0ORFsmZS3oUHia_DBgNIUIJgsyc0xRCAK3BbyFgGajGXh2OVg>
+ <xme:VDAYZ68n2DADqKMFxS--YK25vPiVRnjuKPMB6iR9s22B2TkhrS_jjiAwIZcp7dGaL
+ dgiP4ERp5LQGg>
+X-ME-Received: <xmr:VDAYZ7R3ZE58GPGHJjFZF2EOBNezujTFXbXZSW9pm06nD99sUNQwe3e05HMAHb8CpC_N57mbQY2IefpTgogSVPiwgf9laow_OA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeiiedgudelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+ ucfhrhhomhepofgrrhgvkhcuofgrrhgtiiihkhhofihskhhiqdfikphrvggtkhhiuceomh
+ grrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggft
+ rfgrthhtvghrnhepgfduleetfeevhfefheeiteeliefhjefhleduveetteekveettddvge
+ euteefjedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+ mhepmhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomhdpnh
+ gspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhiqhhi
+ rghnrdgthhgvnhesrghmugdrtghomhdprhgtphhtthhopehsshhtrggsvghllhhinhhise
+ hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhhthhhonhihseigvghnphhrohhjvggt
+ thdrohhrghdprhgtphhtthhopehprghulhesgigvnhdrohhrghdprhgtphhtthhopegvug
+ hgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtthhopehqvghmuhdq
+ uggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepgigvnhdquggvvhgvlheslh
+ hishhtshdrgigvnhhprhhojhgvtghtrdhorhhgpdhrtghpthhtoheprhgrhidrhhhurghn
+ ghesrghmugdrtghomh
+X-ME-Proxy: <xmx:VDAYZ8sbJls7UmFmGjBY8wwnqIG_kc2QFUDujBzOFA4ymG0SLuUtRA>
+ <xmx:VDAYZ8f7mfGghvNx4zXrTBWksMh6t9hP8VkfW39qzsaTCVvhRs2ziw>
+ <xmx:VDAYZw2aH2VomF9pLbflbR4bzCU1Xy6Prfy8vl4Vin8TdQwqZ5TelA>
+ <xmx:VDAYZw_XdS-GFpNDfEDvX5bjZgSe_TnQVvD3U_sbR17HOF5R8DCcpg>
+ <xmx:VTAYZ6v75qRKf96NS14TSoKohg4irk9FlfPIPToQpThYNu3a34QufZXz>
+Feedback-ID: i1568416f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Oct 2024 19:08:03 -0400 (EDT)
+Date: Wed, 23 Oct 2024 01:07:58 +0200
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+To: Jiqian Chen <Jiqian.Chen@amd.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ qemu-devel@nongnu.org, xen-devel@lists.xenproject.org,
+ Huang Rui <Ray.Huang@amd.com>
+Subject: Re: [QEMU PATCH v8] xen/passthrough: use gsi to map pirq when dom0
+ is PVH
+Message-ID: <ZxgwUd3riLmFzFC4@mail-itl>
+References: <20241016062827.2301004-1-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="SkGEWvdQLHgEL56A"
+Content-Disposition: inline
+In-Reply-To: <20241016062827.2301004-1-Jiqian.Chen@amd.com>
+Received-SPF: none client-ip=103.168.172.156;
+ envelope-from=marmarek@invisiblethingslab.com;
+ helo=fhigh-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,80 +119,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
 
->  From: Igor Mammedov <imammedo@redhat.com>
->  Sent: Friday, October 18, 2024 3:18 PM
->  To: Salil Mehta <salil.mehta@huawei.com>
-> =20
->  On Mon, 14 Oct 2024 20:22:03 +0100
->  Salil Mehta <salil.mehta@huawei.com> wrote:
-> =20
->  > Update the `AcpiCpuStatus` for `is_enabled` and `is_present`
->  > accordingly when vCPUs are hot-plugged or hot-unplugged, taking into
->  > account the *persistence* of the vCPUs.
->  >
->  > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->  > ---
->  >  hw/acpi/cpu.c | 7 +++++++
->  >  1 file changed, 7 insertions(+)
->  >
->  > diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c index
->  > 083c4010c2..700aa855e9 100644
->  > --- a/hw/acpi/cpu.c
->  > +++ b/hw/acpi/cpu.c
->  > @@ -291,6 +291,8 @@ void acpi_cpu_plug_cb(HotplugHandler
->  *hotplug_dev,
->  >      }
->  >
->  >      cdev->cpu =3D CPU(dev);
->  > +    cdev->is_present =3D true;
->  > +    cdev->is_enabled =3D true;
-> =20
->  hmm, if cpu is always present, then these fields are redundant since
->    (!cdev->cpu) =3D=3D present
->  and
->    then is_enabled could be fetched from cdev->cpu directly
+--SkGEWvdQLHgEL56A
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Oct 2024 01:07:58 +0200
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
+To: Jiqian Chen <Jiqian.Chen@amd.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+	Anthony PERARD <anthony@xenproject.org>,
+	Paul Durrant <paul@xen.org>,
+	"Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+	qemu-devel@nongnu.org, xen-devel@lists.xenproject.org,
+	Huang Rui <Ray.Huang@amd.com>
+Subject: Re: [QEMU PATCH v8] xen/passthrough: use gsi to map pirq when dom0
+ is PVH
 
+On Wed, Oct 16, 2024 at 02:28:27PM +0800, Jiqian Chen wrote:
+> --- a/hw/xen/xen_pt.h
+> +++ b/hw/xen/xen_pt.h
+> @@ -36,6 +36,7 @@ void xen_pt_log(const PCIDevice *d, const char *f, ...)=
+ G_GNUC_PRINTF(2, 3);
+>  #  define XEN_PT_LOG_CONFIG(d, addr, val, len)
+>  #endif
+> =20
+> +#define DOMID_RUN_QEMU 0
 
-I believe you are assuming, that all the QOM possible vCPUs objects will
-exists (and hence realized) for the entire life time of the VM? If yes, the=
-n
-we need to first debate on that as we cannot let presence of all the possib=
-le
-vCPUs affect  the boot time. This is one of the key requirement from this
-feature.
+Please, don't hardcode dom0 here, QEMU can be running in a stubdomain
+too (in which case, this will hilariously explode, as it will check what
+dom0 is, instead of where QEMU is running).=20
+Stewart already provided an alternative.
 
+--=20
+Best Regards,
+Marek Marczykowski-G=C3=B3recki
+Invisible Things Lab
 
-> =20
->  >      if (dev->hotplugged) {
->  >          cdev->is_inserting =3D true;
->  >          acpi_send_event(DEVICE(hotplug_dev),
->  > ACPI_CPU_HOTPLUG_STATUS); @@ -322,6 +324,11 @@ void
->  acpi_cpu_unplug_cb(CPUHotplugState *cpu_st,
->  >          return;
->  >      }
->  >
->  > +    cdev->is_enabled =3D false;
->  > +    if (!acpi_persistent_cpu(CPU(dev))) {
->  > +        cdev->is_present =3D false;
->  > +    }
-> =20
->  and other way around works as well.
-> =20
->  then we don't have to carry around extra state and making sure that it's=
- in
->  sync/migrated.
-> =20
->  > +
->  >      cdev->cpu =3D NULL;
->  >  }
->  >
-> =20
+--SkGEWvdQLHgEL56A
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmcYMFEACgkQ24/THMrX
+1yzrtgf/RxY7ihUCUzl90Phvk7LA0aAjTgAlXY4tEH52qQTnO/A+Z2NDm4oSLjbH
+GPiSPBEgeoFQCaRhSNA+jim37EFaYU70jK0KX6cLH8F47iZwmTYGvkGDRoTuEaQo
+Fn/aiU8AbdMBhoW5gQMlQCr5xlHpyOwBoK7ewQXxJnQLGbGYBMNCm1HXd9SUTfTW
+4PL1dFsnDuFHkYDvyoOYYlCTVa3tkI0jvROYPZknizN0LUU9FaUfNQI4jORR3x4z
+2u9NJ5geSTvcU6qWFjAGUAQFC6D3R4S9VEYKxGf8AtGq1vn2S6+l6n6tXA4N7xAd
+dzP9KRD7WxFiJBSLISLGfJUA7XDX8A==
+=EME9
+-----END PGP SIGNATURE-----
+
+--SkGEWvdQLHgEL56A--
 
