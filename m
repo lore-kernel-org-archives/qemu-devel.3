@@ -4,60 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935B7CDD0E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A5A5CDD0E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3LEx-0001o4-Gp; Tue, 22 Oct 2024 16:12:27 -0400
+	id 1t3LFT-00026P-RA; Tue, 22 Oct 2024 16:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
- id 1t3LEv-0001nu-82
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:12:25 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
- id 1t3LEr-0005RI-0p
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:12:23 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id ECDCD1813C0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 22:12:11 +0200 (CEST)
-Received: (qmail 2084 invoked by uid 990); 22 Oct 2024 20:12:11 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Tue, 22 Oct 2024 22:12:11 +0200
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t3LFQ-000254-Nt; Tue, 22 Oct 2024 16:12:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1t3LFO-0005Tg-N6; Tue, 22 Oct 2024 16:12:56 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MF71L2018948;
+ Tue, 22 Oct 2024 20:12:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=iXneiI
+ prc9SnqNeGdizFLWF+gQ3dTMYu+PquZTj2mA4=; b=SidsTp1mnadi0TWXg5OdSV
+ 1dvoj/H7W1uwruNBqaLxx0D7umpScnv3K4OUyE5fRed0h8/QHiHRTXSR1G1sVS3Y
+ h0BnmfLVjQq+s6k46UNFGOyQmEtPdbQSI7VQkXf+5FntL+YB8uR3gkYjQwS9W3Wk
+ AcKzAOqtKwmpK2xHKKFAkAteTdYtxsXm7GEmXXa9Dq17lddpbAm4An1eFiAhkfY4
+ RO2pM25RgwMrpe3DuuLBu0cNUEk9UaCHVt6pyhV3IZMiwwjffHfsfuGjMADIrHlM
+ 5Y9H4iCP4txAFtgX5xYSitjfvLJV6ekwCCQTlM8Mz1YyE+t4oUryp5BFvmC9bvjg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5gcrnk1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 20:12:51 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49MIa1ub029161;
+ Tue, 22 Oct 2024 20:12:50 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42crkk4u1n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 20:12:50 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49MKCnUA52167086
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Oct 2024 20:12:49 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4472D5803F;
+ Tue, 22 Oct 2024 20:12:49 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B84185804E;
+ Tue, 22 Oct 2024 20:12:48 +0000 (GMT)
+Received: from [9.61.103.50] (unknown [9.61.103.50])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 22 Oct 2024 20:12:48 +0000 (GMT)
+Message-ID: <39ac6705-8787-4a00-a825-934d4897fdf4@linux.ibm.com>
+Date: Tue, 22 Oct 2024 16:12:47 -0400
 MIME-Version: 1.0
-Date: Tue, 22 Oct 2024 20:12:11 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <nenut@skiff.uberspace.de>
-Message-ID: <7199e215469e3916f1d08351b3a8febffcc21d8b@skiff.uberspace.de>
-TLS-Required: No
-Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
- exceptions and traps
-To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
-Cc: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Julian Ganz"
- <neither@nut.email>, qemu-devel@nongnu.org
-In-Reply-To: <87wmi0ms45.fsf@draig.linaro.org>
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
- <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
- <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
- <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
- <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
- <87wmi0ms45.fsf@draig.linaro.org>
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.00088) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.10088
-Received-SPF: pass client-ip=185.26.156.114;
- envelope-from=nenut@skiff.uberspace.de; helo=mailgate02.uberspace.is
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/19] pc-bios/s390-ccw: Use the libc from SLOF and
+ remove sclp prints
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com
+References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
+ <20241020012953.1380075-3-jrossi@linux.ibm.com>
+ <7bf513ce-a4e6-47a9-8c56-6cc835cb4d17@redhat.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <7bf513ce-a4e6-47a9-8c56-6cc835cb4d17@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Iqyux1mRGoBbi5gGcDPeUidHjGaPIVOe
+X-Proofpoint-ORIG-GUID: Iqyux1mRGoBbi5gGcDPeUidHjGaPIVOe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ mlxlogscore=999 clxscore=1015 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220131
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -75,74 +112,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Alex,
 
-October 22, 2024 at 10:58 AM, "Alex Benn=C3=A9e" wrote:
-> How easy would it be to expose a Rust API? I'm curious because now we
-> are looking to integrate Rust into QEMU we could consider transitioning
-> to a Rust API for plugins. It has been done before:
->=20
->=20 https://github.com/novafacing/qemu-rs/tree/main/qemu-plugin-sys
->=20
->=20and
->=20
->=20 https://github.com/novafacing/qemu-rs/tree/main/qemu-plugin
->=20
->=20I'm curious as to what it would look like. I don't know how tenable i=
-t
-> would be to run 2 plugin APIs side-by-side long term though. We would
-> probably want to make a choice. Also how would that affect other C like
-> APIs like python?
 
-I'm maybe not an expert w.r.t. plugins with Rust, but here are my
-thoughts:
+On 10/22/24 1:36 PM, Thomas Huth wrote:
+> On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> We are already using the libc from SLOF for the s390-netboot.img, and
+>> this libc implementation is way more complete and accurate than the
+>> simple implementation that we currently use for the s390-ccw.img binary.
+>> Since we are now always assuming that the SLOF submodule is available
+>> when building the s390-ccw bios (see commit bf6903f6944f), we can drop
+>> the simple implementation and use the SLOF libc for the s390-ccw.img
+>> binary, too.
+>>
+>> Additionally replace sclp_print calls with puts/printf now that it is 
+>> avaliable.
+>>
+>> Co-authored by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   pc-bios/s390-ccw/netboot.mak     |  3 --
+>>   pc-bios/s390-ccw/bootmap.h       |  4 +-
+>>   pc-bios/s390-ccw/libc.h          | 89 --------------------------------
+>
+> I just had to discover that the removal of the old libc breaks "make 
+> check-tcg" since it uses the sclp.c from the firmware for printing.
+>
+> I'll squash this patch to fix it:
+>
+> diff --git a/tests/tcg/s390x/console.c b/tests/tcg/s390x/console.c
+> --- a/tests/tcg/s390x/console.c
+> +++ b/tests/tcg/s390x/console.c
+> @@ -4,7 +4,10 @@
+>   *
+>   * SPDX-License-Identifier: GPL-2.0-or-later
+>   */
+> +
+>  #include "../../../pc-bios/s390-ccw/sclp.c"
+> +#include "../../../roms/SLOF/lib/libc/string/memset.c"
+> +#include "../../../roms/SLOF/lib/libc/string/memcpy.c"
+>
+>  void __sys_outc(char c)
+>  {
+> diff --git a/tests/tcg/s390x/Makefile.softmmu-target 
+> b/tests/tcg/s390x/Makefile.softmmu-target
+> --- a/tests/tcg/s390x/Makefile.softmmu-target
+> +++ b/tests/tcg/s390x/Makefile.softmmu-target
+> @@ -3,7 +3,9 @@ VPATH+=$(S390X_SRC)
+>  # EXTFLAGS can be passed by the user, e.g. to override the --accel
+>  QEMU_OPTS+=-action panic=exit-failure -nographic -serial 
+> chardev:output $(EXTFLAGS) -kernel
+>  LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
+> -CFLAGS+=-ggdb -O0
+> +CFLAGS+=-ggdb -O0 \
+> +    -I$(SRC_PATH)/roms/SLOF/lib/libc/include/ \
 
-Calling C code from Rust is obviously not an issue. For ideomatic Rust
-(not littered with "unsafe") you want an abstraction over that, but as
-Qemu is C you need that somewhere anyway.
+I'm not sure if it is just a problem with my setup, but with this patch 
+applied I hit an error when running "make check-tcg --always-make"
 
-Things that are generally easy to handle are opaque types behind
-pointers (this is probably true for most language binding) and C
-strings, as long as you can figure out who owns them and how long they
-live. Things in the current API which make things a bit awkward are
-(probably) unions and Glib-types such as the GArray returned by
-qemu_plugin_get_registers. Also, you can use Rust functions for
-callbacks, but ideally you want to allow using all types implementing
-the Fn trait, e.g. closures carrying some context. For that, you need to
-transport that context from the point of registration to the callback,
-i.e. you need some udata. Not all callbacks have udata, but looking
-closer the ones lacking it are those you register only once, which means
-we could have some "static" storage for those context. It's not ideal,
-but not a show-stopper either. I didn't check how the qemu-plugin crate
-handles that situation.
+         In file included from 
+/root/staging/qemu/tests/tcg/multiarch/system/memory.c:17:
+         /usr/include/inttypes.h:351:8: error: unknown type name ‘intmax_t’
+           351 | extern intmax_t imaxabs (intmax_t __n) __THROW 
+__attribute__ ((__const__));
 
-With a native Rust interface, you would not have those problems.
-However, for plugins you would need a dylib interface, which comes with
-restrictions. In particular, you cannot use generics in the interface.
-To allow for the very extension we want the interface would make heavy
-use of Box<dyn SomeTrait>, in particular Box<dyn Fn(...) -> ...>.
+It seems to be cause by including the SLOF libc, because it works for me 
+without that.
 
-The awkward thing about those is that you cannot simply convert them
-into a void pointer because the "dyn" means fat pointers are involved:
-unlike in C++, the vtable is embedded in the "pointer". Since we want to
-invoke those from the C side, we need another level of indirection which
-lets us operate on an opaque Rust type through non-generic functions
-that then does the thing we want to the boxed thing. Ironically, you
-don't have the same problem with a Rust plugin developed against a C
-interface because you can just use a generic function unpacking (i.e.
-casting) the context and throw its instantiation's pointer over the
-fence.
+For what it's worth, it worked until used I "--always-make", so if you 
+aren't building all targets some change might not be picked up here.
 
-So... I'm not sure about the benefits of a native Rust plugin API
-compared to the qemu-plugin crate or something similar. Especially
-considering that we would want to use the very same callback registry in
-the back, anyway. That is, if you want feature parity between the
-different plugin APIs.
-
-There are some things that would make language bindings easier in
-general, but some of those would involve breaking changes and may not
-be worth it.
-
-Regards,
-Julian
+> + -I$(SRC_PATH)/include/hw/s390x/ipl/
+>  LDFLAGS=-nostdlib -static
+>
+>  %.o: %.S
+>
 
