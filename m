@@ -4,78 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A55CD1CDD5
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91346D1CDDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CMH-0004GB-Pw; Tue, 22 Oct 2024 06:43:25 -0400
+	id 1t3CRm-000652-Vo; Tue, 22 Oct 2024 06:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3CMG-0004Fi-9J
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:43:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=pGrG=RS=kaod.org=clg@ozlabs.org>)
+ id 1t3CRi-00063o-NB; Tue, 22 Oct 2024 06:49:02 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3CME-0000E8-1A
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:43:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729593799;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QzmFgnfcJCKD/QUjCpKPKqWn7TfqTfDgVOKPyUIAqTI=;
- b=guZOAhJM3yYy3kMt+e5pGCmDcmDtRqzqsYoAauueF4/Urk1x0WwDEau5UCCGYnZNX3qnrA
- 8sdN//9GFEtR7nGkMQE1bnk4VGYCLo61uWtGeGVcmxAVKwbThzqlffijPQtHjrY75GDdfX
- 8afh3PZnGIeVcUQeQO8g2vACOvjP36o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-kr0HzEp6O0CbgfwM22T7Zw-1; Tue,
- 22 Oct 2024 06:43:13 -0400
-X-MC-Unique: kr0HzEp6O0CbgfwM22T7Zw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <SRS0=pGrG=RS=kaod.org=clg@ozlabs.org>)
+ id 1t3CRY-0000i0-5w; Tue, 22 Oct 2024 06:49:02 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XXpnT2V9Wz4wbr;
+ Tue, 22 Oct 2024 21:48:45 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BA111955F3F; Tue, 22 Oct 2024 10:43:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.59])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3108A30001A3; Tue, 22 Oct 2024 10:43:08 +0000 (UTC)
-Date: Tue, 22 Oct 2024 11:43:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
-Message-ID: <ZxeBuXQB3hd2avUh@redhat.com>
-References: <20241021215220.982325-1-peterx@redhat.com>
- <87froo34xy.fsf@pond.sub.org> <ZxdujhRo_kSkdkbX@redhat.com>
- <87jze01kzp.fsf@pond.sub.org>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XXpnM6mSCz4wb7;
+ Tue, 22 Oct 2024 21:48:39 +1100 (AEDT)
+Message-ID: <e1803cd1-f4fd-4d1a-a8e9-5a5ed86c59e7@kaod.org>
+Date: Tue, 22 Oct 2024 12:48:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/18] aspeed: Fix hardcode attach flash model of spi
+ controllers
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
+ <20241022094110.1574011-8-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241022094110.1574011-8-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jze01kzp.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=pGrG=RS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.171, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,98 +72,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 22, 2024 at 12:37:46PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 10/22/24 11:40, Jamin Lin wrote:
+> It only attached flash model of fmc and spi[0] in aspeed_machine_init function.
+> However, AST2500 and AST2600 have one fmc and two spi(spi1 and spi2)
+> controllers; AST2700 have one fmc and 3 spi(spi0, spi1 and spi2) controllers.
 > 
-> > On Tue, Oct 22, 2024 at 10:41:29AM +0200, Markus Armbruster wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > Per previous discussion [1,2], this patch deprecates query-migrationthreads
-> >> > command.
-> >> >
-> >> > To summarize, the major reason of the deprecation is due to no sensible way
-> >> > to consume the API properly:
-> >> >
-> >> >   (1) The reported list of threads are incomplete (ignoring destination
-> >> >       threads and non-multifd threads).
-> >> >
-> >> >   (2) For CPU pinning, there's no way to properly pin the threads with
-> >> >       the API if the threads will start running right away after migration
-> >> >       threads can be queried, so the threads will always run on the default
-> >> >       cores for a short window.
-> >> >
-> >> >   (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
-> >> >       which will provide proper names for all migration threads.
-> >> >
-> >> > [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
-> >> > [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
-> >> >
-> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> Besides, it used hardcode to attach flash model of fmc, spi[0] and spi[1] in
+> aspeed_minibmc_machine_init for AST1030.
 > 
-> [...]
+> To make both functions more flexible and support all ASPEED SOCs spi
+> controllers, adds a for loop with sc->spis_num to attach flash model of
+> all supported spi controllers. The sc->spis_num is from AspeedSoCClass.
 > 
-> >> > diff --git a/migration/threadinfo.c b/migration/threadinfo.c
-> >> > index 262990dd75..2867413420 100644
-> >> > --- a/migration/threadinfo.c
-> >> > +++ b/migration/threadinfo.c
-> >> > @@ -13,6 +13,7 @@
-> >> >  #include "qemu/osdep.h"
-> >> >  #include "qemu/queue.h"
-> >> >  #include "qemu/lockable.h"
-> >> > +#include "qemu/error-report.h"
-> >> >  #include "threadinfo.h"
-> >> >  
-> >> >  QemuMutex migration_threads_lock;
-> >> > @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
-> >> >      MigrationThread *thread = NULL;
-> >> >  
-> >> >      QEMU_LOCK_GUARD(&migration_threads_lock);
-> >> > +
-> >> > +    warn_report("Command 'query-migrationthreads' is deprecated");
-> >> 
-> >> We don't normally do this for QMP commands.
-> >> 
-> >> Management applications can use -compat deprecated-input=reject to check
-> >> they're not sending deprecated commands or arguments.
-> >> 
-> >> Suggest to drop.
-> >
-> > They could, but in practice I don't believe anything is doing this, so
-> > the warning message is a practical way to alert people to the usage.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/arm/aspeed.c | 21 ++++++++++++---------
+>   1 file changed, 12 insertions(+), 9 deletions(-)
 > 
-> Again, we not normally do this.  What makes this one different?
-
-Do we not ? My expectation is that everything we record in deprecated.rst
-also has a corresponding warn_report / warn_report_once in the code.
-We know users may not read the docs, so we have a multi-pronged approach
-to alerting them.
-
-> Stepping onto my soapbox: if stuff going away surprisingly would cause
-> you enough inconvenience to make early warning desirable, testing with
-> suitable -compat is a lot more reliable than relying on warnings.
-> *Especially* when your automated testing files warnings unexamined
-> together with any other crap that may go to stderr, so your best chance
-> to notice the warning is in ad hoc manual testing of QEMU.  Nobody does
-> that until after things broke.
-
-I don't see it as an either or choice. We try to surface the deprecation
-info in as many different ways as is practical, as no single approach is
-going to hit all bases.
-
- * Document it (deprecated.rst)
- * Warn on QEMU stderr if used at runtime (warn_report)
- * Enable apps to validate their usage in tests (-compat)
- * Mark guests as tainted (libvirt API & VM log file, for certain asepts)
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index b4b1ce9efb..7ac01a3562 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -419,9 +419,11 @@ static void aspeed_machine_init(MachineState *machine)
+>           aspeed_board_init_flashes(&bmc->soc->fmc,
+>                                 bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
+>                                 amc->num_cs, 0);
+> -        aspeed_board_init_flashes(&bmc->soc->spi[0],
+> -                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+> -                              1, amc->num_cs);
+> +        for (i = 0; i < sc->spis_num; i++) {
+> +            aspeed_board_init_flashes(&bmc->soc->spi[i],
+> +                            bmc->spi_model ? bmc->spi_model : amc->spi_model,
+> +                            amc->num_cs, amc->num_cs + (amc->num_cs * i));
+> +        }
+>       }
+>   
+>       if (machine->kernel_filename && sc->num_cpus > 1) {
+> @@ -1579,7 +1581,9 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+>   {
+>       AspeedMachineState *bmc = ASPEED_MACHINE(machine);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
+> +    AspeedSoCClass *sc;
+>       Clock *sysclk;
+> +    int i;
+>   
+>       sysclk = clock_new(OBJECT(machine), "SYSCLK");
+>       clock_set_hz(sysclk, SYSCLK_FRQ);
+> @@ -1587,6 +1591,7 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+>       bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+>       object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+>       object_unref(OBJECT(bmc->soc));
+> +    sc = ASPEED_SOC_GET_CLASS(bmc->soc);
+>       qdev_connect_clock_in(DEVICE(bmc->soc), "sysclk", sysclk);
+>   
+>       object_property_set_link(OBJECT(bmc->soc), "memory",
+> @@ -1599,13 +1604,11 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+>                                 amc->num_cs,
+>                                 0);
+>   
+> -    aspeed_board_init_flashes(&bmc->soc->spi[0],
+> -                              bmc->spi_model ? bmc->spi_model : amc->spi_model,
+> -                              amc->num_cs, amc->num_cs);
+> -
+> -    aspeed_board_init_flashes(&bmc->soc->spi[1],
+> +    for (i = 0; i < sc->spis_num; i++) {
+> +        aspeed_board_init_flashes(&bmc->soc->spi[i],
+>                                 bmc->spi_model ? bmc->spi_model : amc->spi_model,
+> -                              amc->num_cs, (amc->num_cs * 2));
+> +                              amc->num_cs, amc->num_cs + (amc->num_cs * i));
+> +    }
+>   
+>       if (amc->i2c_init) {
+>           amc->i2c_init(bmc);
 
 
