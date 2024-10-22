@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5B5D1CDDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552CBD1CDDC
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CZi-0002dQ-7j; Tue, 22 Oct 2024 06:57:18 -0400
+	id 1t3CYx-0001np-TI; Tue, 22 Oct 2024 06:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ1-0001p2-17
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1t3CYr-0001iv-A2
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:26 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYy-00024d-Is
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:34 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a99eb8b607aso588256466b.2
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:32 -0700 (PDT)
+ id 1t3CYn-0001yq-BY
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:23 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-539f4d8ef66so7276125e87.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594591; x=1730199391; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729594579; x=1730199379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p2jXJE3FbWlzhHC2JLNXh46hRwsq96dE8ivUr/Ry4PY=;
- b=itvKW5FyYgWnPx6VY1MhYfAcczcT2WZGWcPHTBM/4/I+0zdtsgRW84Kao7sBue26CF
- G/EsiBvcm7YkrxSN23L33NIM6M5Wsp1zMuBuHjr+rmorWjk+Q19Jdv8QfHhDJsCrhI27
- EpT5nSEHUG+9vyNfwEZ5DEJEzxJp+fvmi/dzmI6iGDMJEfMZ/6pgPTa8ZwOqUKfSRsbM
- cKTNNGbD1SLmxN92m6c+rCvze3wDfmN1b7Q1hhvJDcUCnQOowQMbVjtJMwTNU68AzgQr
- ohfsOxexNXTEm76CzJgf1TRlUyQDCiebJqNj24LfooC5x8VwXUWiGWrMBklb00I5/UMc
- EZyQ==
+ bh=FXjwiUjPDmRUKmjejukivCx1FVXlutJ/frWtXF30WgI=;
+ b=Ukl5X34AE0gzAUhgp1B//k5X41uY02S27X8r0PsRHvIe5OSia7lBWBl6jSEPojhe/a
+ qwAxlFPgSdDzrGXtAejuyLnnI4XdnDSpfPbFb5oEGiRj0haH2pSJZSj8lBoKRxDKt+Q4
+ UzGAALsYdiL9KHRHLeQ/nsZPLMywDL1hF1/OwB5fJjDfjdShvdWo+ftMJNW3MrORqnze
+ WB/m5QJt6YgC6bzva6XPxTQrwvuN7LTpZ1zxiHysF5df9WjXVOsXISBZqmc/I5vkRBTZ
+ LQxkMR+7esXPkoqt1va+pNcYlDxIPHdcVbVJ43UgPfRhNVu9ZYwZMxG5h66tlRekVEGd
+ jvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594591; x=1730199391;
+ d=1e100.net; s=20230601; t=1729594579; x=1730199379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p2jXJE3FbWlzhHC2JLNXh46hRwsq96dE8ivUr/Ry4PY=;
- b=QLO7tJm1pTJss1p3jErNm4J0ir30oI5acoKwE1V0LZfleESxEiIAOjKxV8iFZ1vnkK
- 1J8pVyQ9U2wYHbRg/xQSnwS7LYJ34OLzCcPDMpAY69CiSvOacsbsQGNcpbHWeUGAoWuC
- PS13ZYj5EdVG7f1Py6+c544ziL4SwXe/PaZBdXe8v3DMgL8pffNRqUcswGTMWDsgKtQl
- n5LiuLL5JoxYgzAUCpIQitJLkb2WA+74rgcGcB+W7qN9uSnZQyixR4KD4lgoPXWn1y05
- IguixgI0/ECatagFfjplkqAWonpgLBWKBuK4KRJHChS+renIo3msTM5teQlzPuxJk79o
- 0+ew==
-X-Gm-Message-State: AOJu0YwBoBuivX0eurMbxf25bMivhn5QfTIrgQ711JwjENDKtIFL01+3
- HyrQ9NsUvJaHQVXpe1AmyxL8U2iSWj2/DdC/DyQWDTWIweKlIYDLFtn1yS9tDg0=
-X-Google-Smtp-Source: AGHT+IGUejPeSVv+t0DCi7SW64a6BptBW33UQRq4rjvBjk+8TQgWaYTlBD5pezBspgvI4FXlscux/w==
-X-Received: by 2002:a17:907:7da5:b0:a99:4aa7:4d6f with SMTP id
- a640c23a62f3a-a9a6995d6f8mr1533790966b.12.1729594590554; 
- Tue, 22 Oct 2024 03:56:30 -0700 (PDT)
+ bh=FXjwiUjPDmRUKmjejukivCx1FVXlutJ/frWtXF30WgI=;
+ b=s+ZP//WpNYXyRJZOo0BOXSwHfXes1wR2qh8xMyZOV01pFTeKNHAjcG+Rbd97tI0WGO
+ 0cqQeh/yjW4ylPEMR9aXc+qRqczXJoicTFbUIN0rKqHD1PNhaOHI5Jwv+HFJNyI2Oxct
+ Sr8K/0m8OvaDzEb0MORl7gN1RqSDPaUjv6BdzKRK6MdK4LYr8Eeshj4VN4hGYUn95vob
+ ludFQpXbmKBWna2fiwAD/m4U4YLF+52efROzeOWkMxgeHM3yRajIcBf2QXtuDCKBfj/F
+ tHzj1Doguw6V5mjU0vwk4KSQ8siYE6iRX9sVoOF42evQ2swU8SHWQNXTEQiGA/y0Wpve
+ 0X5g==
+X-Gm-Message-State: AOJu0YyYGWVnFZQ7vT7ciTMJxLS8acAX2fObKQZGIoouEjHR53qI2Cc8
+ deVtx3ODlSqfQY0Glaa6kI80R6GBHcgNSuUux+QhJysqMSsXhPLyxCLAYwOFoZU=
+X-Google-Smtp-Source: AGHT+IFnyQzZQ7bHbDbOpYPXpjtSnilsQDL7HRDM+s0y4d6oS+Xo96+ra1aRtC+YDcuLeBLbm75Uyw==
+X-Received: by 2002:a05:6512:108f:b0:536:9ef0:d829 with SMTP id
+ 2adb3069b0e04-53a1544afc8mr7923850e87.44.1729594579206; 
+ Tue, 22 Oct 2024 03:56:19 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912edc33sm321455366b.58.2024.10.22.03.56.19
+ 4fb4d7f45d1cf-5cb675eb1bdsm2947453a12.10.2024.10.22.03.56.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:28 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 99FE35FA0B;
- Tue, 22 Oct 2024 11:56:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BF0265F8A6;
+ Tue, 22 Oct 2024 11:56:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -83,25 +83,25 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 11/20] MAINTAINERS: mention my gdbstub/next tree
-Date: Tue, 22 Oct 2024 11:56:05 +0100
-Message-Id: <20241022105614.839199-12-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 01/20] tests/docker: Fix microblaze atomics
+Date: Tue, 22 Oct 2024 11:55:55 +0100
+Message-Id: <20241022105614.839199-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
 References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,25 +117,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make it easy for people to see what is already queued.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
+GCC produces invalid code for microblaze atomics.
+
+The fix is unfortunately not upstream, so fetch it from an external
+location and apply it locally.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240919152308.10440-1-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ .../debian-microblaze-cross.d/build-toolchain.sh          | 8 ++++++++
+ tests/docker/dockerfiles/debian-toolchain.docker          | 7 +++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b84787ae1b..81396c9f15 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2978,6 +2978,7 @@ F: gdb-xml/
- F: tests/tcg/multiarch/gdbstub/*
- F: scripts/feature_to_c.py
- F: scripts/probe-gdb-support.py
-+T: git https://gitlab.com/stsquad/qemu gdbstub/next
+diff --git a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
+index 23ec0aa9a7..c5cd0aa931 100755
+--- a/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
++++ b/tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
+@@ -10,6 +10,8 @@ TOOLCHAIN_INSTALL=/usr/local
+ TOOLCHAIN_BIN=${TOOLCHAIN_INSTALL}/bin
+ CROSS_SYSROOT=${TOOLCHAIN_INSTALL}/$TARGET/sys-root
  
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
++GCC_PATCH0_URL=https://raw.githubusercontent.com/Xilinx/meta-xilinx/refs/tags/xlnx-rel-v2024.1/meta-microblaze/recipes-devtools/gcc/gcc-12/0009-Patch-microblaze-Fix-atomic-boolean-return-value.patch
++
+ export PATH=${TOOLCHAIN_BIN}:$PATH
+ 
+ #
+@@ -31,6 +33,12 @@ mv gcc-11.2.0 src-gcc
+ mv musl-1.2.2 src-musl
+ mv linux-5.10.70 src-linux
+ 
++#
++# Patch gcc
++#
++
++wget -O - ${GCC_PATCH0_URL} | patch -d src-gcc -p1
++
+ mkdir -p bld-hdr bld-binu bld-gcc bld-musl
+ mkdir -p ${CROSS_SYSROOT}/usr/include
+ 
+diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/docker/dockerfiles/debian-toolchain.docker
+index 687a97fec4..ab4ce29533 100644
+--- a/tests/docker/dockerfiles/debian-toolchain.docker
++++ b/tests/docker/dockerfiles/debian-toolchain.docker
+@@ -10,6 +10,8 @@ FROM docker.io/library/debian:11-slim
+ # ??? The build-dep isn't working, missing a number of
+ # minimal build dependiencies, e.g. libmpc.
+ 
++RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.list.d/deb-src.list
++
+ RUN apt update && \
+     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
+     DEBIAN_FRONTEND=noninteractive eatmydata \
+@@ -33,6 +35,11 @@ RUN cd /root && ./build-toolchain.sh
+ # and the build trees by restoring the original image,
+ # then copying the built toolchain from stage 0.
+ FROM docker.io/library/debian:11-slim
++RUN apt update && \
++    DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
++    DEBIAN_FRONTEND=noninteractive eatmydata \
++    apt install -y --no-install-recommends \
++        libmpc3
+ COPY --from=0 /usr/local /usr/local
+ # As a final step configure the user (if env is defined)
+ ARG USER
 -- 
 2.39.5
 
