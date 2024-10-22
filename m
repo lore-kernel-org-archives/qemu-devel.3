@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582E4CDD0D1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 19:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4744CCDD0DB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 19:45:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3KIu-0004hf-Mo; Tue, 22 Oct 2024 15:12:28 -0400
+	id 1t3Koa-00024l-BW; Tue, 22 Oct 2024 15:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3KIg-0004fX-UN
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:12:16 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3KIf-0006wQ-HI
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:12:14 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20ceb8bd22fso51430855ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 12:12:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729624329; x=1730229129; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=quLyhwwo6E+Bjcz8IHh3usljCZF4Cq6Ar1RLd4c5guc=;
- b=eNfihbbzYdB0xI30boCblVvXId6zbbmhtsWID9EDXA7pwKuz7Dmh+E6YXs2mjmszYt
- b2f816rEniiA1s0ijdObYOBPePgGiLRSctYdgLTEunrVGi6gfS0lFbDhILL/4DweMjso
- RhRLYa2l9YRFma3/PLYMjC1+nhkSlElfWeztiCMQ06njVQ2rUEqkZRloGfBycHsGTZ8k
- jv4DCLhvWqbxDyFvlXCHY2B8qDB+eHxUQZVf4dog+f0srtfEvjmTxJsHHnGEwVXsMsWK
- x9IgIZzwMq80XuaFQr/inHYuBXPp5kq6BQNLfR0x8qmydwSPDIPV0AfaWFPKW59i8q5h
- kW3g==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3KoY-00024L-QN
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:45:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3KoW-0002Bf-Dr
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:45:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729626306;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CJmKddciWG00mUHJFoanaktpZdMQA9WdYHQvruA+mVs=;
+ b=hBBC/zFTL1yMQsGFMH0PZrvj3Pq+ZRrAgQ0BBO02371XjWMTHRqIHb2y0ybN+7nLv4V96T
+ NFTNjuskPuxzPqqSQIR+ztMzr3wJSxlTg7R8iCq3FQR6fCW0bXWH23RXOGS5uDd0bUng4a
+ KGI/7MVOK7Mv0dDLCu5j7JHO9QK0/nM=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-5IyAE3obPdK0dK4QmYgXLA-1; Tue, 22 Oct 2024 15:45:04 -0400
+X-MC-Unique: 5IyAE3obPdK0dK4QmYgXLA-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b16c9a84efso399959585a.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 12:45:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729624329; x=1730229129;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=quLyhwwo6E+Bjcz8IHh3usljCZF4Cq6Ar1RLd4c5guc=;
- b=uKAmMSI7r2dLGWRhTTDmvVcKYI2QY2HM8I2xfXzFRR8ScPWXG0QWyJTPzG5Tj/a8Mw
- +OIi6665WHH35tE/RTQzcd2MhQaNKrNTWzyTNuPMtJCB+S71wRFz1Vxc3GDrzEnzoyZ9
- On7q5tGHu9iAS65n2rWyv5Yv1kH3SnFSj7IBY2hVs/larzNPrKBzTduv8Jdoo9xhMdOj
- hqLPvmF63s5tz6cVK88leORC9w5iYxlfw9fE8Q0CdtDawKr/8zLKejC9J2Mz+tmJxUQK
- eQhDBhoAuFE8wu6oXlkCC30tOZCX4JFM7Y/oR5xdPb3sP2kjmlT/RT2jq7HfheT8rlCK
- OV+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6l75FoHUAVPqVqVCszwhGyaMoyK189ByghwvVdKOyGWIeW1u/13KvT4KBlXEWrGa3dBeP5QK6nhRu@nongnu.org
-X-Gm-Message-State: AOJu0YyrzgTL6b7XCppXTD+KDZ6qRMOTmGL11P9maW+KXCsMpCHOumU2
- xQhPGlr0whhLlQaeOyX5soZ19gSez0JCAogm9rg6K5ZobhsaxLd/UJaA+A8IgJY=
-X-Google-Smtp-Source: AGHT+IEc6suyUsmVQTbgo41KMiH78zINdLFMlN/I1oG4E1zwFfr9pNDqIWGHUyNmuTesyD7q67grTw==
-X-Received: by 2002:a17:902:e5ce:b0:20c:6392:1a7b with SMTP id
- d9443c01a7336-20fa9e46837mr2393585ad.2.1729624329452; 
- Tue, 22 Oct 2024 12:12:09 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7ef0c42esm46155525ad.100.2024.10.22.12.12.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 12:12:09 -0700 (PDT)
-Message-ID: <8d8b1da2-fd21-419d-8ffa-f9be29076d1b@linaro.org>
-Date: Tue, 22 Oct 2024 12:12:07 -0700
+ d=1e100.net; s=20230601; t=1729626304; x=1730231104;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CJmKddciWG00mUHJFoanaktpZdMQA9WdYHQvruA+mVs=;
+ b=R0vQP+RH2JmZg/pflZmpVSeZChh8VbfSNCNogZIJIm9LvqPJbW2Dv/qwPI49NzgoCr
+ LqT10ksigQAUfe5io7kb6wgIK0ADOUHGF847JsDq8LGJjcCXNarco/7Ha8SLoTzHzxFR
+ 8P7omJtW25rRrifVQfaUk88FkamSPv6cEVYEgma6bnnZ7M4Z5RAm0MpZ8q0YR6cfAoOu
+ H5IsYM8e+8KBZWNLmkUl8RPMc5t9p2ECYNxYkem4TdTEB0s4h6+7QAT94QQOSFU2166Y
+ f/pHrbx0LyQuWef8R3L9Wx/1Hgfhjh18JPlnyGA1f0d4SimQOaewITatMzWbcV9fNRjP
+ PcOw==
+X-Gm-Message-State: AOJu0YyJ++U0Wwonif55Jz3O/UYySubrAPllPCklKxAzVJ569D6/P/mA
+ CMmmP+dvuS9L1UyTTgojVJ9fkVcpYJ2Mng2CYawblChJLeQM9glKg6soOcu8x/Fj6Caj0cCco0W
+ BkYna7JO6qnFmQaB/RlVIrTgMHTl9eJiyFJNxyUCqr7R15y8lQo5Xr+K7sOn9T/5a/sUwuq+H2b
+ W/Wnilc5PL6G8wBQcjKPGeay90b9m93mi/3A==
+X-Received: by 2002:a05:620a:371a:b0:7b1:5763:4ba5 with SMTP id
+ af79cd13be357-7b17e5acc2emr19642985a.51.1729626303999; 
+ Tue, 22 Oct 2024 12:45:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEA5Lf0H3NqTvJnhRRT9jFjcMueKi+5rBglJMUe/kiIVj+dpLvQ4emCXo+D/HTorGXZowdpuA==
+X-Received: by 2002:a05:620a:371a:b0:7b1:5763:4ba5 with SMTP id
+ af79cd13be357-7b17e5acc2emr19639785a.51.1729626303636; 
+ Tue, 22 Oct 2024 12:45:03 -0700 (PDT)
+Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b1659bb8besm314663185a.13.2024.10.22.12.45.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Oct 2024 12:45:03 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Julia Suvorova <jusual@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, peterx@redhat.com,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v2] migration: Deprecate query-migrationthreads command
+Date: Tue, 22 Oct 2024 15:45:01 -0400
+Message-ID: <20241022194501.1022443-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.45.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/20] tests/tcg: enable basic testing for
- aarch64_be-linux-user
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20241022105614.839199-1-alex.bennee@linaro.org>
- <20241022105614.839199-14-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241022105614.839199-14-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,28 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/24 03:56, Alex Bennée wrote:
-> We didn't notice breakage of aarch64_be because we don't have any TCG
-> tests for it. However while the existing aarch64 compiler can target
-> big-endian builds no one packages a BE libc. Instead we bang some
-> rocks together to do the most basic of hello world with a nostdlib
-> syscall test.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> 
-> ---
-> v2
->    - fix checkpatch complaints
-> ---
->   configure                            |  5 ++++
->   tests/tcg/aarch64_be/hello.c         | 35 ++++++++++++++++++++++++++++
->   tests/tcg/Makefile.target            |  7 +++++-
->   tests/tcg/aarch64_be/Makefile.target | 17 ++++++++++++++
->   4 files changed, 63 insertions(+), 1 deletion(-)
->   create mode 100644 tests/tcg/aarch64_be/hello.c
->   create mode 100644 tests/tcg/aarch64_be/Makefile.target
+Per previous discussion [1,2], this patch deprecates query-migrationthreads
+command.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+To summarize, the major reason of the deprecation is due to no sensible way
+to consume the API properly:
 
-r~
+  (1) The reported list of threads are incomplete (ignoring destination
+      threads and non-multifd threads).
+
+  (2) For CPU pinning, there's no way to properly pin the threads with
+      the API if the threads will start running right away after migration
+      threads can be queried, so the threads will always run on the default
+      cores for a short window.
+
+  (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
+      which will provide proper names for all migration threads.
+
+[1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
+[2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+v2:
+- truncate long '-' line [Dan]
+- Remove warn_report() [Markus]
+- Proper spacing in qapi/ after "Features:" [Markus]
+---
+ docs/about/deprecated.rst | 8 ++++++++
+ qapi/migration.json       | 7 ++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ce38a3d0cf..100ba66fe1 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -147,6 +147,14 @@ options are removed in favor of using explicit ``blockdev-create`` and
+ ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
+ details.
+ 
++``query-migrationthreads`` (since 9.2)
++''''''''''''''''''''''''''''''''''''''
++
++To be removed with no replacement, as it reports only a limited set of
++threads (for example, it only reports source side of multifd threads,
++without reporting any destination threads, or non-multifd source threads).
++For debugging purpose, please use ``-name $VM,debug-threads=on`` instead.
++
+ Incorrectly typed ``device_add`` arguments (since 6.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 3af6aa1740..a605dc26db 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -2284,12 +2284,17 @@
+ #
+ # Returns information of migration threads
+ #
++# Features:
++#
++# @deprecated: This command is deprecated with no replacement yet.
++#
+ # Returns: @MigrationThreadInfo
+ #
+ # Since: 7.2
+ ##
+ { 'command': 'query-migrationthreads',
+-  'returns': ['MigrationThreadInfo'] }
++  'returns': ['MigrationThreadInfo'],
++  'features': ['deprecated'] }
+ 
+ ##
+ # @snapshot-save:
+-- 
+2.45.0
+
 
