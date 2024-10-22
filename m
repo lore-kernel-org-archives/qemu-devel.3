@@ -4,87 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235EED1CDA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E1DD1CDA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t38WG-0005dt-JJ; Tue, 22 Oct 2024 02:37:30 -0400
+	id 1t38aj-0006Tj-6I; Tue, 22 Oct 2024 02:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t38WD-0005dh-1w
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:37:25 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t38WA-0004re-Ml
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:37:24 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-71e49ef3b2bso3738626b3a.2
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 23:37:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t38af-0006TS-TR; Tue, 22 Oct 2024 02:42:02 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t38ab-0005Pz-SB; Tue, 22 Oct 2024 02:42:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729579041; x=1730183841;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4ZBllQQjWewARvqcRBKXGhR3bpw21WmTU9puF7K8wBA=;
- b=Y6SRUaM3NYg2/UvZGh15q/ZktTvEkDNZaYeBoAQQC7afFiVEKT2iQhpTy9vj342XcJ
- qpBWRI+VbOMzXhM3XBDUcb/59MnvN2FAHZfSEq2ic1HmUahLa/c3aAabxWQEh+bqxv0t
- WUXYRo2kM/lER15H909mHU7CXAYMXOmNvWzvCpdTpIWawuDKVsuiqkWlpOQ3ryZ2x41N
- bdSVLOrbw3CE8DxtiV2leFO7qWete6CIMevN+HLlPrZ/K5qCVzbQK8Fm/DsL7m6nBOVG
- o8rHr37/zZrw0xxQlZSQoSO4PEEpAg4muuNasvCQO/qNP3+D1+jieYYJb1uk8u+M00TX
- 7w8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729579041; x=1730183841;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4ZBllQQjWewARvqcRBKXGhR3bpw21WmTU9puF7K8wBA=;
- b=hcS/SYKqux/+bwJzgW2pMIMrkE8QA5wZaNwcI/H3dR5fsykWnqsiOLL7YYhiaAB+X4
- giXomMyc4bbA8FeQg4QEvavf91raQGq+BCMDBg2pxLvqKvzo3gTwnCHslaTUIKbJaSjs
- Ny1NKyKj5Py7eiNeNGeRVlOF68QddfxtoGlwxmzlQhga/5d3Gc6DqAiv5nJMDBVlACf7
- 75hOEVQ0KngjWZz9cpvZaw8ulrpq8uU0vE6iFG4y1LyEEOZgWElJQ/wy1qeReWcO1WMu
- mClNjwlZaDs5gAX/WdvXkKdO3x+AdE8WZlvtSKmHsFScqU7RNYpw2ce8PWmNN2HW8Ka+
- xAow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWj7QfbrcNGiuZYcq/chtvnCSGzg/ZSHGveGipRjXPBMDUq6F/nupxdGWNsZJlJteCGhgZJ8VRmowB1@nongnu.org
-X-Gm-Message-State: AOJu0YzCCriPrXLknD4C0Us+jDE2J8KNb4ovnlRR5uE48ZQMSQI8u6IF
- uwEHv+CEKAdeVjM4VAANa2/aRAr4PmNaLw0YwIG62Au4mhM7F3IeqjullVBYyrI=
-X-Google-Smtp-Source: AGHT+IHxs05Ak44PRzp3fYeS8sobAITmBwdCJZMWN4xEkajQcFrDXoOXyf/NmHfyi1PGZXcF66prrA==
-X-Received: by 2002:a05:6a20:2d27:b0:1d9:1af2:9697 with SMTP id
- adf61e73a8af0-1d96b89a174mr3160200637.47.1729579041111; 
- Mon, 21 Oct 2024 23:37:21 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e5e225eb4asm651025a91.19.2024.10.21.23.37.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 23:37:20 -0700 (PDT)
-Message-ID: <e5d99f4c-f2d7-42bd-be8d-4cf611c3f425@daynix.com>
-Date: Tue, 22 Oct 2024 15:37:18 +0900
+ d=linux.alibaba.com; s=default;
+ t=1729579305; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=K/uvGRqdT7FAusgXf+8QpWx2mnlhjQNy7/OmGjfwFs0=;
+ b=TJdYkhQBFRiiZx4RPORmM9b1A3fDxBFNkViL74/nr88y6h/lwI041XqnePAum7HJVXkc+6/Uj9j1kHSRpKdZ2f9hzj+pxoNubFB+MJZ2B0ceC9K6sQJWHPIxllnbpAB0bzJm9Mod5phN9hrfb07peSOgPsTsnM5qY10oqZhC7vE=
+Received: from 30.166.64.99(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WHgporu_1729579303 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 22 Oct 2024 14:41:44 +0800
+Content-Type: multipart/alternative;
+ boundary="------------GODWbUaWPlMh9BRHokX0t0LF"
+Message-ID: <38ac3502-e5fa-427f-87b2-30fa8f02a306@linux.alibaba.com>
+Date: Tue, 22 Oct 2024 14:41:42 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] virtio-net: Copy received header to buffer
-To: Jason Wang <jasowang@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-References: <20240915-queue-v1-0-b49bd49b926d@daynix.com>
- <20240915-queue-v1-6-b49bd49b926d@daynix.com>
- <CACGkMEvT0ANv1XY24kQW6urJzA87fQ2DqgPHSUi=r8SREpanxA@mail.gmail.com>
- <CACGkMEvtNPQk9gU7KPsTN=4ghdiZWyV2feYpEj+_1uAGvrMvKw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/7] target/riscv: Support SXL32 on RV64 CPU
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com,
+ bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20241007033400.50163-1-zhiwei_liu@linux.alibaba.com>
+ <CAKmqyKMZUwpvE0DkA4RNE1X15ndGh3eJzpVxgBzOKVzut_u7wA@mail.gmail.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEvtNPQk9gU7KPsTN=4ghdiZWyV2feYpEj+_1uAGvrMvKw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <CAKmqyKMZUwpvE0DkA4RNE1X15ndGh3eJzpVxgBzOKVzut_u7wA@mail.gmail.com>
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,121 +70,485 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/21 17:22, Jason Wang wrote:
-> On Mon, Oct 21, 2024 at 4:21 PM Jason Wang <jasowang@redhat.com> wrote:
+This is a multi-part message in MIME format.
+--------------GODWbUaWPlMh9BRHokX0t0LF
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+On 2024/10/11 11:55, Alistair Francis wrote:
+> On Mon, Oct 7, 2024 at 1:35 PM LIU Zhiwei<zhiwei_liu@linux.alibaba.com> wrote:
+>> From: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
 >>
->> On Sun, Sep 15, 2024 at 9:07 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>
->>> receive_header() used to cast the const qualifier of the pointer to the
->>> received packet away to modify the header. Avoid this by copying the
->>> received header to buffer.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   hw/net/virtio-net.c | 85 +++++++++++++++++++++++++++++------------------------
->>>   1 file changed, 46 insertions(+), 39 deletions(-)
->>>
->>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>> index 3fc1d10cb9e0..ca4e22344f78 100644
->>> --- a/hw/net/virtio-net.c
->>> +++ b/hw/net/virtio-net.c
->>> @@ -1685,41 +1685,44 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
->>>    * cache.
->>>    */
->>>   static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
->>> -                                        uint8_t *buf, size_t size)
->>> +                                        size_t *hdr_len, const uint8_t *buf,
->>> +                                        size_t buf_size, size_t *buf_offset)
->>>   {
->>>       size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
->>>                          sizeof(struct udp_header);
->>>
->>> +    buf += *buf_offset;
->>> +    buf_size -= *buf_offset;
->>> +
->>>       if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
->>> -        (size >= csum_size && size < 1500) && /* normal sized MTU */
->>> +        (buf_size >= csum_size && buf_size < 1500) && /* normal sized MTU */
->>>           (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
->>>           (buf[23] == 17) && /* ip.protocol == UDP */
->>>           (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
->>> -        net_checksum_calculate(buf, size, CSUM_UDP);
->>> +        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
->>> +        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size, CSUM_UDP);
->>>           hdr->flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
->>> +        *hdr_len += csum_size;
->>> +        *buf_offset += csum_size;
->>>       }
->>>   }
->>>
->>> -static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
->>> -                           const void *buf, size_t size)
->>> +static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
->>> +                             const void *buf, size_t buf_size,
->>> +                             size_t *buf_offset)
->>>   {
->>> -    if (n->has_vnet_hdr) {
->>> -        /* FIXME this cast is evil */
->>> -        void *wbuf = (void *)buf;
->>> -        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
->>> -                                    size - n->host_hdr_len);
->>> +    size_t hdr_len = n->guest_hdr_len;
->>>
->>> -        if (n->needs_vnet_hdr_swap) {
->>> -            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
->>> -        }
->>> -        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
->>> -    } else {
->>> -        struct virtio_net_hdr hdr = {
->>> -            .flags = 0,
->>> -            .gso_type = VIRTIO_NET_HDR_GSO_NONE
->>> -        };
->>> -        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
->>> +    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
->>> +
->>> +    *buf_offset = n->host_hdr_len;
->>> +    work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_offset);
->>> +
->>> +    if (n->needs_vnet_hdr_swap) {
->>> +        virtio_net_hdr_swap(VIRTIO_DEVICE(n), hdr);
->>>       }
->>> +
->>> +    return hdr_len;
->>>   }
->>>
->>>   static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
->>> @@ -1887,6 +1890,13 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
->>>       return (index == new_index) ? -1 : new_index;
->>>   }
->>>
->>> +typedef struct Header {
->>> +    struct virtio_net_hdr_v1_hash virtio_net;
->>> +    struct eth_header eth;
->>> +    struct ip_header ip;
->>> +    struct udp_header udp;
->>> +} Header;
+>> We have implemented UXL32 on QEMU already. It enables us to run RV32
+>> applications on RV64 Linux on QEMU. Similarly, RISCV specification
+>> doesn't limit the SXLEN to be the same with MXLEN. In this patch set,
+>> we will go forward to implement SXL32 on RV64 CPU.
 >>
->> I don't see too much value in having this structure especially
->> considering eth/ip/udp is not even used.
+>> SXL is one filed in mstatus. It defines the SXLEN. After CPU reset,
+>> SXL will be same with MXL in misa.
 >>
->> Any reason we can simply use an array as a buffer in virtio_net_receive_rcu()?
+>> According to the RISC-V privilege specification, Smode CSR with SXLEN
+>> length will usually be read and written in an SXLEN view, no matter
+>> current XLEN is 32bit or 64bit. Thus if MXLEN=64 and SXLEN=32, M mode
+>> register will read or write them in the same way under RV32 layout.
+>>
+>> In this patch set, we carefully process the Smode CSR write and read
+>> for SXL32. This includes explicitly CSR write/read, and implicitly
+>> CSR read such as satp read in PTW(page table walk).
+>>
+>> Another thing we do in this patch set is that we introduce a property
+>> of CPU, named sxl32. It provides us a way to override the default sxl64
+>> for RV64 cpu after cpu reset. The reason is OpenSBI currently doesn't
+>> dynamically probe or configure SXLEN. When we want to run RV64 OpenSBI
+>> in M mode and RV32 Linux in S mode, OpenSBI will not prepare the SXL32
+>> environment for RV32 Linux. sxl32 property will also forbidden writing SXL
+>> field in mstatus, which means QEMU can ensure an SXL32 environment for Linux.
+> This should be fixed in OpenSBI then. We don't really want a property
+> in QEMU to do something that the guest should be setting.
 
-We still need to access virtio_net and it needs to be properly aligned. 
-We can still make the latter part an array, but it does not look nicer:
+Agree. I will remove sxl32 property next version.
 
-typedef struct Header {
-     struct virtio_net_hdr_v1_hash virtio_net;
-     uint8_t eth[sizeof(struct eth_header) + sizeof(struct ip_header) + 
-sizeof(struct udp_header)];
-} Header;
+Thanks for review.
 
-> 
-> Btw, since the code was for ancient guests and userspace, I wonder how
-> it is tested.
+Zhiwei
 
-I didn't test with dhclient, but I tested with UDP packets synthesized 
-with iperf.
+>
+> I guess the spec doesn't mandate what this is on reset though... So in
+> theory a 64-bit hart could have a SXLEN reset value of 32-bits, which
+> is what this property allows modelling. That does seem pretty odd
+> though and I think it makes more sense to just defer this to OpenSBI
+> to handle.
+> Alistair
+>
+>> We've successfully booted 64-bit OpenSBI and 32-bit Linux system on
+>> RV64 CPU, with a minor fix of Linux.
+>>
+>> Tested by follow steps:
+>>
+>>   - Prepare Linux rv32 Image && rv64 Image
+>>    Please apply the patch of linux before test. You can get the patch in
+>> https://github.com/romanheros/linux/commit/8444fb3c913d64c20b1e5334a29a66061eb3f5fe.
+>>
+>>          $ cd linux
+>>          $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../linux-rv32 defconfig
+>>          $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../build-rv32 32-bit.config
+>>          $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../linux-rv32/ -j $(nproc)
+>>          $ make ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- O=../linux-rv64 defconfig
+>>          $ make ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- O=../linux-rv64/ -j $(nproc)
+>>          (Get Image in ../linux-rv32/arch/riscv/boot)
+>>
+>>   - Prepare QEMU
+>>          $ git clonehttps://github.com/romanheros/qemu.git -b riscv-upstream-sxl32-v1
+>>          $ cd qemu
+>>          $ ./configure --target-list="riscv64-softmmu" --enable-slirp
+>>          $ cd build; ninja
+>>
+>> - Run 32-bit Linux boot on 64-bit RISC-V with Opensbi 64 :
+>>          $ ./build/qemu-system-riscv64 -cpu rv64,sxl32=on -M virt -nographic \
+>>                  -bios opensbi/build/platform/generic/firmware/fw_dynamic.bin \
+>>                  -kernel linux-rv32/arch/riscv/boot/Image \
+>>                  -append "root=/dev/vda ro console=ttyS0" \
+>>                  -drive file=qemu_riscv32_virt_defconfig/images/rootfs.ext2,format=raw,id=hd0 \
+>>                  -netdev user,id=net0 -device virtio-net-device,netdev=net0
+>> ```
+>> OpenSBI v1.4-112-g7b4bc9d
+>> Build time: 2024-06-17 06:57:42 +0000
+>> Build compiler: gcc version 13.2.0 (gc891d8dc23e-dirty)
+>>     ____                    _____ ____ _____
+>>    / __ \                  / ____|  _ \_   _|
+>>   | |  | |_ __   ___ _ __ | (___ | |_) || |
+>>   | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+>>   | |__| | |_) |  __/ | | |____) | |_) || |_
+>>    \____/| .__/ \___|_| |_|_____/|____/_____|
+>>          | |
+>>          |_|
+>>
+>> Platform Name             : riscv-virtio,qemu
+>> Platform Features         : medeleg
+>> Platform HART Count       : 1
+>> Platform IPI Device       : aclint-mswi
+>> Platform Timer Device     : aclint-mtimer @ 10000000Hz
+>> Platform Console Device   : uart8250
+>> Platform HSM Device       : ---
+>> Platform PMU Device       : ---
+>> Platform Reboot Device    : syscon-reboot
+>> Platform Shutdown Device  : syscon-poweroff
+>> Platform Suspend Device   : ---
+>> Platform CPPC Device      : ---
+>> Firmware Base             : 0x80000000
+>> Firmware Size             : 583 KB
+>> Firmware RW Offset        : 0x80000
+>> Firmware RW Size          : 71 KB
+>> Firmware Heap Offset      : 0x89000
+>> Firmware Heap Size        : 35 KB (total), 2 KB (reserved), 11 KB (used), 21 KB (free)
+>> Firmware Scratch Size     : 4096 B (total), 400 B (used), 3696 B (free)
+>> Runtime SBI Version       : 2.0
+>>
+>> Domain0 Name              : root
+>> Domain0 Boot HART         : 0
+>> Domain0 HARTs             : 0*
+>> Domain0 Region00          : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+>> Domain0 Region01          : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+>> Domain0 Region02          : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+>> Domain0 Region03          : 0x0000000080080000-0x000000008009ffff M: (R,W) S/U: ()
+>> Domain0 Region04          : 0x0000000080000000-0x000000008007ffff M: (R,X) S/U: ()
+>> Domain0 Region05          : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+>> Domain0 Region06          : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+>> Domain0 Region07          : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+>> Domain0 Next Address      : 0x0000000080200000
+>> Domain0 Next Arg1         : 0x0000000087e00000
+>> Domain0 Next Mode         : S-mode
+>> Domain0 SysReset          : yes
+>> Domain0 SysSuspend        : yes
+>>
+>> Boot HART ID              : 0
+>> Boot HART Domain          : root
+>> Boot HART Priv Version    : v1.12
+>> Boot HART Base ISA        : rv64imafdch
+>> Boot HART ISA Extensions  : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig
+>> Boot HART PMP Count       : 16
+>> Boot HART PMP Granularity : 2 bits
+>> Boot HART PMP Address Bits: 54
+>> Boot HART MHPM Info       : 16 (0x0007fff8)
+>> Boot HART Debug Triggers  : 2 triggers
+>> Boot HART MIDELEG         : 0x0000000000001666
+>> Boot HART MEDELEG         : 0x0000000000f0b509
+>> [    0.000000] Linux version 6.10.0-rc3-00100-gec0abe37042f (developer@95e6e39b54aa) (riscv32-unknown-linux-gnu-gcc (gc891d8dc23e-dirty) 13.2.0, GNU ld (GNU Binutils) 2.42) #1 SMP Sat Jun 15 13:01:52 UTC 2024
+>> [    0.000000] random: crng init done
+>> [    0.000000] Machine model: riscv-virtio,qemu
+>> [    0.000000] SBI specification v2.0 detected
+>> [    0.000000] SBI implementation ID=0x1 Version=0x10004
+>> [    0.000000] SBI TIME extension detected
+>> [    0.000000] SBI IPI extension detected
+>> [    0.000000] SBI RFENCE extension detected
+>> [    0.000000] SBI SRST extension detected
+>> [    0.000000] SBI DBCN extension detected
+>> [    0.000000] efi: UEFI not found.
+>> [    0.000000] OF: reserved mem: 0x0000000080000000..0x000000008007ffff (512 KiB) nomap non-reusable mmode_resv1@80000000
+>> [    0.000000] OF: reserved mem: 0x0000000080080000..0x000000008009ffff (128 KiB) nomap non-reusable mmode_resv0@80080000
+>> [    0.000000] Zone ranges:
+>> [    0.000000]   DMA32    [mem 0x0000000080000000-0x0000000087ffffff]
+>> [    0.000000]   Normal   empty
+>> [    0.000000] Movable zone start for each node
+>> [    0.000000] Early memory node ranges
+>> [    0.000000]   node   0: [mem 0x0000000080000000-0x000000008009ffff]
+>> [    0.000000]   node   0: [mem 0x00000000800a0000-0x0000000087ffffff]
+>> [    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x0000000087ffffff]
+>> [    0.000000] SBI HSM extension detected
+>> [    0.000000] riscv: base ISA extensions acdfhim
+>> [    0.000000] riscv: ELF capabilities acdfim
+>> ......
+>> Starting network: udhcpc: started, v1.36.1
+>> udhcpc: broadcasting discover
+>> udhcpc: broadcasting select for 10.0.2.15, server 10.0.2.2
+>> udhcpc: lease of 10.0.2.15 obtained from 10.0.2.2, lease time 86400
+>> deleting routers
+>> adding dns 10.0.2.3
+>> OK
+>>
+>> Welcome to Buildroot
+>> buildroot login: root
+>> # cat /proc/cpuinfo
+>> processor       : 0
+>> hart            : 0
+>> isa             : rv64imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+>> mmu             : sv57
+>> mvendorid       : 0x0
+>> marchid         : 0x0
+>> mimpid          : 0x0
+>> hart isa        : rv64imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+>> ```
+>>
+>> This doesn't mean we have addressed all the challenges for this problem. The to do list is here:
+>> 1. OpenSBI need accept a parameter from firmware the next boot level is SXL32 instead of only S mode.
+>> 2. OpenSBI should dynamically configure the SXL32 environment for next boot.
+>> 3. OpenSBI should ensure SBI calls for RV32 are right implemented even M mode is RV64.
+>> 4. OpenSBI should override details of machine configuration for RV32 Linux, such as rv64i ISA description in DTB.
+>>
+>> Having all of them been addressed, we can allow the SXL write in mstatus. But this todo list depends on
+>> a runnable environment, which is provided by this patch set.
+>>
+>> This patch set is based on the patch set[1] under review. You can also fetch the branch from my repo[2].
+>>
+>> [1]:https://mail.gnu.org/archive/html/qemu-riscv/2024-09/msg00501.html
+>> [2]:https://github.com/romanheros/qemu/tree/riscv-upstream-sxl32-v1
+>>
+>> TANG Tiancheng (7):
+>>    target/riscv: Fix sstatus read and write
+>>    target/riscv: Fix satp read and write implicitly or explicitly.
+>>    target/riscv: Read pte and satp based on SXL in PTW
+>>    hw/riscv: Align kernel to 4MB when sxl32 is on.
+>>    target/riscv: Enable 32-bit only registers for RV64 with sxl32
+>>    target/riscv: Reset SXL and UXL according to sxl32
+>>    target/riscv: Expose sxl32 configuration in RISC-V CPU
+>>
+>>   hw/riscv/boot.c           |  3 ++-
+>>   target/riscv/cpu.c        | 14 ++++++++++++--
+>>   target/riscv/cpu_cfg.h    |  4 ++++
+>>   target/riscv/cpu_helper.c |  4 ++--
+>>   target/riscv/csr.c        | 38 +++++++++++++++++++++++++-------------
+>>   5 files changed, 45 insertions(+), 18 deletions(-)
+>>
+>> --
+>> 2.43.0
+>>
+>>
+--------------GODWbUaWPlMh9BRHokX0t0LF
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Regards,
-Akihiko Odaki
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 2024/10/11 11:55, Alistair Francis
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAKmqyKMZUwpvE0DkA4RNE1X15ndGh3eJzpVxgBzOKVzut_u7wA@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">On Mon, Oct 7, 2024 at 1:35 PM LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a> wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">
+From: TANG Tiancheng <a class="moz-txt-link-rfc2396E" href="mailto:tangtiancheng.ttc@alibaba-inc.com">&lt;tangtiancheng.ttc@alibaba-inc.com&gt;</a>
+
+We have implemented UXL32 on QEMU already. It enables us to run RV32
+applications on RV64 Linux on QEMU. Similarly, RISCV specification
+doesn't limit the SXLEN to be the same with MXLEN. In this patch set,
+we will go forward to implement SXL32 on RV64 CPU.
+
+SXL is one filed in mstatus. It defines the SXLEN. After CPU reset,
+SXL will be same with MXL in misa.
+
+According to the RISC-V privilege specification, Smode CSR with SXLEN
+length will usually be read and written in an SXLEN view, no matter
+current XLEN is 32bit or 64bit. Thus if MXLEN=64 and SXLEN=32, M mode
+register will read or write them in the same way under RV32 layout.
+
+In this patch set, we carefully process the Smode CSR write and read
+for SXL32. This includes explicitly CSR write/read, and implicitly
+CSR read such as satp read in PTW(page table walk).
+
+Another thing we do in this patch set is that we introduce a property
+of CPU, named sxl32. It provides us a way to override the default sxl64
+for RV64 cpu after cpu reset. The reason is OpenSBI currently doesn't
+dynamically probe or configure SXLEN. When we want to run RV64 OpenSBI
+in M mode and RV32 Linux in S mode, OpenSBI will not prepare the SXL32
+environment for RV32 Linux. sxl32 property will also forbidden writing SXL
+field in mstatus, which means QEMU can ensure an SXL32 environment for Linux.
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This should be fixed in OpenSBI then. We don't really want a property
+in QEMU to do something that the guest should be setting.</pre>
+    </blockquote>
+    <p>Agree. I will remove sxl32 property next version.</p>
+    <p>Thanks for review.</p>
+    <p>Zhiwei<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:CAKmqyKMZUwpvE0DkA4RNE1X15ndGh3eJzpVxgBzOKVzut_u7wA@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">
+
+I guess the spec doesn't mandate what this is on reset though... So in
+theory a 64-bit hart could have a SXLEN reset value of 32-bits, which
+is what this property allows modelling. That does seem pretty odd
+though and I think it makes more sense to just defer this to OpenSBI
+to handle.</pre>
+    </blockquote>
+    <span style="white-space: pre-wrap">
+</span><span style="white-space: pre-wrap">
+</span>
+    <blockquote type="cite"
+cite="mid:CAKmqyKMZUwpvE0DkA4RNE1X15ndGh3eJzpVxgBzOKVzut_u7wA@mail.gmail.com">
+      <pre wrap="" class="moz-quote-pre">Alistair
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">
+We've successfully booted 64-bit OpenSBI and 32-bit Linux system on
+RV64 CPU, with a minor fix of Linux.
+
+Tested by follow steps:
+
+ - Prepare Linux rv32 Image &amp;&amp; rv64 Image
+  Please apply the patch of linux before test. You can get the patch in
+<a class="moz-txt-link-freetext" href="https://github.com/romanheros/linux/commit/8444fb3c913d64c20b1e5334a29a66061eb3f5fe">https://github.com/romanheros/linux/commit/8444fb3c913d64c20b1e5334a29a66061eb3f5fe</a>.
+
+        $ cd linux
+        $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../linux-rv32 defconfig
+        $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../build-rv32 32-bit.config
+        $ make ARCH=riscv CROSS_COMPILE=riscv32-unknown-linux-gnu- O=../linux-rv32/ -j $(nproc)
+        $ make ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- O=../linux-rv64 defconfig
+        $ make ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- O=../linux-rv64/ -j $(nproc)
+        (Get Image in ../linux-rv32/arch/riscv/boot)
+
+ - Prepare QEMU
+        $ git clone <a class="moz-txt-link-freetext" href="https://github.com/romanheros/qemu.git">https://github.com/romanheros/qemu.git</a> -b riscv-upstream-sxl32-v1
+        $ cd qemu
+        $ ./configure --target-list="riscv64-softmmu" --enable-slirp
+        $ cd build; ninja
+
+- Run 32-bit Linux boot on 64-bit RISC-V with Opensbi 64 :
+        $ ./build/qemu-system-riscv64 -cpu rv64,sxl32=on -M virt -nographic \
+                -bios opensbi/build/platform/generic/firmware/fw_dynamic.bin \
+                -kernel linux-rv32/arch/riscv/boot/Image \
+                -append "root=/dev/vda ro console=ttyS0" \
+                -drive file=qemu_riscv32_virt_defconfig/images/rootfs.ext2,format=raw,id=hd0 \
+                -netdev user,id=net0 -device virtio-net-device,netdev=net0
+```
+OpenSBI v1.4-112-g7b4bc9d
+Build time: 2024-06-17 06:57:42 +0000
+Build compiler: gcc version 13.2.0 (gc891d8dc23e-dirty)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ &lt; | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name             : riscv-virtio,qemu
+Platform Features         : medeleg
+Platform HART Count       : 1
+Platform IPI Device       : aclint-mswi
+Platform Timer Device     : aclint-mtimer @ 10000000Hz
+Platform Console Device   : uart8250
+Platform HSM Device       : ---
+Platform PMU Device       : ---
+Platform Reboot Device    : syscon-reboot
+Platform Shutdown Device  : syscon-poweroff
+Platform Suspend Device   : ---
+Platform CPPC Device      : ---
+Firmware Base             : 0x80000000
+Firmware Size             : 583 KB
+Firmware RW Offset        : 0x80000
+Firmware RW Size          : 71 KB
+Firmware Heap Offset      : 0x89000
+Firmware Heap Size        : 35 KB (total), 2 KB (reserved), 11 KB (used), 21 KB (free)
+Firmware Scratch Size     : 4096 B (total), 400 B (used), 3696 B (free)
+Runtime SBI Version       : 2.0
+
+Domain0 Name              : root
+Domain0 Boot HART         : 0
+Domain0 HARTs             : 0*
+Domain0 Region00          : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+Domain0 Region01          : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+Domain0 Region02          : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+Domain0 Region03          : 0x0000000080080000-0x000000008009ffff M: (R,W) S/U: ()
+Domain0 Region04          : 0x0000000080000000-0x000000008007ffff M: (R,X) S/U: ()
+Domain0 Region05          : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region06          : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region07          : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+Domain0 Next Address      : 0x0000000080200000
+Domain0 Next Arg1         : 0x0000000087e00000
+Domain0 Next Mode         : S-mode
+Domain0 SysReset          : yes
+Domain0 SysSuspend        : yes
+
+Boot HART ID              : 0
+Boot HART Domain          : root
+Boot HART Priv Version    : v1.12
+Boot HART Base ISA        : rv64imafdch
+Boot HART ISA Extensions  : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig
+Boot HART PMP Count       : 16
+Boot HART PMP Granularity : 2 bits
+Boot HART PMP Address Bits: 54
+Boot HART MHPM Info       : 16 (0x0007fff8)
+Boot HART Debug Triggers  : 2 triggers
+Boot HART MIDELEG         : 0x0000000000001666
+Boot HART MEDELEG         : 0x0000000000f0b509
+[    0.000000] Linux version 6.10.0-rc3-00100-gec0abe37042f (developer@95e6e39b54aa) (riscv32-unknown-linux-gnu-gcc (gc891d8dc23e-dirty) 13.2.0, GNU ld (GNU Binutils) 2.42) #1 SMP Sat Jun 15 13:01:52 UTC 2024
+[    0.000000] random: crng init done
+[    0.000000] Machine model: riscv-virtio,qemu
+[    0.000000] SBI specification v2.0 detected
+[    0.000000] SBI implementation ID=0x1 Version=0x10004
+[    0.000000] SBI TIME extension detected
+[    0.000000] SBI IPI extension detected
+[    0.000000] SBI RFENCE extension detected
+[    0.000000] SBI SRST extension detected
+[    0.000000] SBI DBCN extension detected
+[    0.000000] efi: UEFI not found.
+[    0.000000] OF: reserved mem: 0x0000000080000000..0x000000008007ffff (512 KiB) nomap non-reusable mmode_resv1@80000000
+[    0.000000] OF: reserved mem: 0x0000000080080000..0x000000008009ffff (128 KiB) nomap non-reusable mmode_resv0@80080000
+[    0.000000] Zone ranges:
+[    0.000000]   DMA32    [mem 0x0000000080000000-0x0000000087ffffff]
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000080000000-0x000000008009ffff]
+[    0.000000]   node   0: [mem 0x00000000800a0000-0x0000000087ffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x0000000087ffffff]
+[    0.000000] SBI HSM extension detected
+[    0.000000] riscv: base ISA extensions acdfhim
+[    0.000000] riscv: ELF capabilities acdfim
+......
+Starting network: udhcpc: started, v1.36.1
+udhcpc: broadcasting discover
+udhcpc: broadcasting select for 10.0.2.15, server 10.0.2.2
+udhcpc: lease of 10.0.2.15 obtained from 10.0.2.2, lease time 86400
+deleting routers
+adding dns 10.0.2.3
+OK
+
+Welcome to Buildroot
+buildroot login: root
+# cat /proc/cpuinfo
+processor       : 0
+hart            : 0
+isa             : rv64imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+mmu             : sv57
+mvendorid       : 0x0
+marchid         : 0x0
+mimpid          : 0x0
+hart isa        : rv64imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+```
+
+This doesn't mean we have addressed all the challenges for this problem. The to do list is here:
+1. OpenSBI need accept a parameter from firmware the next boot level is SXL32 instead of only S mode.
+2. OpenSBI should dynamically configure the SXL32 environment for next boot.
+3. OpenSBI should ensure SBI calls for RV32 are right implemented even M mode is RV64.
+4. OpenSBI should override details of machine configuration for RV32 Linux, such as rv64i ISA description in DTB.
+
+Having all of them been addressed, we can allow the SXL write in mstatus. But this todo list depends on
+a runnable environment, which is provided by this patch set.
+
+This patch set is based on the patch set[1] under review. You can also fetch the branch from my repo[2].
+
+[1]: <a class="moz-txt-link-freetext" href="https://mail.gnu.org/archive/html/qemu-riscv/2024-09/msg00501.html">https://mail.gnu.org/archive/html/qemu-riscv/2024-09/msg00501.html</a>
+[2]: <a class="moz-txt-link-freetext" href="https://github.com/romanheros/qemu/tree/riscv-upstream-sxl32-v1">https://github.com/romanheros/qemu/tree/riscv-upstream-sxl32-v1</a>
+
+TANG Tiancheng (7):
+  target/riscv: Fix sstatus read and write
+  target/riscv: Fix satp read and write implicitly or explicitly.
+  target/riscv: Read pte and satp based on SXL in PTW
+  hw/riscv: Align kernel to 4MB when sxl32 is on.
+  target/riscv: Enable 32-bit only registers for RV64 with sxl32
+  target/riscv: Reset SXL and UXL according to sxl32
+  target/riscv: Expose sxl32 configuration in RISC-V CPU
+
+ hw/riscv/boot.c           |  3 ++-
+ target/riscv/cpu.c        | 14 ++++++++++++--
+ target/riscv/cpu_cfg.h    |  4 ++++
+ target/riscv/cpu_helper.c |  4 ++--
+ target/riscv/csr.c        | 38 +++++++++++++++++++++++++-------------
+ 5 files changed, 45 insertions(+), 18 deletions(-)
+
+--
+2.43.0
+
+
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------GODWbUaWPlMh9BRHokX0t0LF--
 
