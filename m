@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D1BCCFA0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D7AD1715E
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t36F9-0003FA-QZ; Tue, 22 Oct 2024 00:11:39 -0400
+	id 1t36IB-00046o-3s; Tue, 22 Oct 2024 00:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36F7-0003Ep-FB
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:11:37 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36I9-00046X-C1
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:14:45 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36F5-0004Of-QU
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:11:37 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3a3b98d8a7eso17984385ab.3
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:11:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36I7-0004lB-No
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:14:45 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2e2e88cb0bbso3784118a91.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729570294; x=1730175094; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729570482; x=1730175282; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aXIzRKITiu+bTV7skCLUHNsao7Mmm2V92UHYDAAGaHY=;
- b=iIA6bMCrnVkJS1hOyMCqNTVg29+cHGWrRNJKPzxuj6koncPjoqnCKqHWdkBUHmq0YX
- DZpe7uNFRHcWX9cVPRaxZxhHwGydSWjuAg2FKFCpY6JQI04F5ctC5pNdIUNySExo8FpB
- 8G02rbd9LedEJP+4GTAX8hvn6PaFU8uhN/t2F8E916AAxFsicbhCus+EpI5knM1VSc2S
- BrgmsN/AANJBrF1gkiktBRJi7XoreT/NoBN9DjQdtQKaoGLtYeHy/KRgKPOg1x8wR6xW
- rhvHJTGmw+Uhe1jnYRQM5Y19If2114or9nHSfu3t0HGDLzFh68LtcucEshQfkIdg/Wl8
- wCWQ==
+ bh=AstIRiyH5rf0gbmmJ/VewQ6+5e+RTLDUASJu7xbFM8A=;
+ b=qJ/hL/VxR1WmJeLOLj0eE0dh7AEC4kfIViag05QQMyAMakXYBV3ieNJmPZJlTm1y2C
+ DBOxRJ+GMCLuCkTVWcVn3xnO4JML4G6/ReHJXhRfVK57V9USNTQDCTS03goBY2GpMJ8T
+ ypbc3dusmCNMfJ9z7MImuZZpjcXwqmxPFrv2D9lZawnv0jOTkJ2P3IRgGgLVijB2tL/0
+ WTay04MPwxt9s/MvptGmQlU1DC+oNYIczGtjr8NEiz66OScPM/Qij3N/RU1FST+O31DV
+ VDjwpU8ZVvxAEp2Q22w8npHhgAi/mU2p9pueMvwLpJH/ds0N8Xb8wuobLVKDApCXP1PL
+ K2KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729570294; x=1730175094;
+ d=1e100.net; s=20230601; t=1729570482; x=1730175282;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aXIzRKITiu+bTV7skCLUHNsao7Mmm2V92UHYDAAGaHY=;
- b=VFTDGjZAlSy33IYf9ACtQXXOKX10FwUthXS2k2GEoZooaU6tptRiDYcJzMutxud+8D
- y8BK+iaJcOG7GFVvdjORnZi/qrKp3SAnyiMwX6TtTkBgiB17Uvk7HftVEFDkZ6JIouA2
- JTdL7KslCWRsygdw7iSAiXC/mHn+O4aYh9JOJDtT8YSpYlKgu7QnldwyUjNJvHWFOFvw
- uTKeDYmsT0XUiP3VCPVDlrSTKGn55wQzGaIDoGanknVtJtOj8TT+C6zF111O61CUYhWi
- dK0AL68najsKICV5uDFgMkrB1/FcyGPwDamkRW+1vUdVTV8WCFRGDVdFtV6PVyDB9wB3
- DCsg==
+ bh=AstIRiyH5rf0gbmmJ/VewQ6+5e+RTLDUASJu7xbFM8A=;
+ b=qQbRxaXk+1mQ5ETBGwol6y07UJcwYgd8O1Pjfr+UXUXIWXRUClWrFxp8L4iesHRAUV
+ 4wDNHWjK8HbCvaamQlmb6Y9JU7GsZ6dIOqgPv7zUPqXgHUB3ZXAbc6SB+XfSi/pSB6X+
+ a0ABPXzCa9DOR5NLngDQCK4DKNDY40/HdTwu4ZtbXwi5weC4e+Dhfzeynlaw1FCUuVd5
+ UqIwz/f6ty+VeGp9rJVH8E1Z1EWk3+ZzztGKtK8ckwFr0rgJkOSlckScp0OjCz3EsA+5
+ 81V95fWMtF+p4W2BuXuYPu1yo1BPNnqcu0UEML5194nuizcsXB+RRFJG5a+nYAfFKA1v
+ X7Og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0gL0s/7DV5DH54PBR/3FFFcqOLM7M4QlQNcgCEk5AzTrY3YYU3mvFL07AVfyS5npMNsuNLTRs/YmG@nongnu.org
-X-Gm-Message-State: AOJu0YwjThrfQ/9kvHcUTovPza/t/YnqY37f0TS4e9R+vWlPV7ezH9eC
- pDAurRQkHn+pC//nqiASvSs3tElEIMjO5KaCLxa0PBo0sPnF629+u63Qtzyz0TM=
-X-Google-Smtp-Source: AGHT+IFvs1DI0gHIW25LBWYu16LCJ8Bx792dOSaBF5c5yajACLzU75pkcnEYMX2EQCyre1KxjtkNHQ==
-X-Received: by 2002:a05:6e02:1885:b0:3a1:a163:ba58 with SMTP id
- e9e14a558f8ab-3a4cd80da09mr10934285ab.26.1729570294148; 
- Mon, 21 Oct 2024 21:11:34 -0700 (PDT)
+ AJvYcCUivpFkhzVNGRSUKnLoYNqgXJ2CpXYyWm3OlyHukegyR30U7Ou2RvP2TdUbd45OwCUSvx4PpjURYOIz@nongnu.org
+X-Gm-Message-State: AOJu0YzGXQRvDM2GL52a/X1i3iA3fkskJpNM4PtkyxP2ROR4cuS2c3pr
+ gvgsiVe9Bgoaz+qkclJLnX2sinZ+15c8zMmGn9F9JtBdCp7Kkxiajv2Y/o9NUf/vh7VMPnqeRhz
+ N
+X-Google-Smtp-Source: AGHT+IHYZm2QQiHHFW1u3XAqTSI+Oyx0oWX/5/Z/bi/uOkSkZXXHkeXq0OOhPqVtfkpwHpkSbKiEzg==
+X-Received: by 2002:a17:90b:f87:b0:2e2:d821:1b77 with SMTP id
+ 98e67ed59e1d1-2e5616509b4mr15802958a91.24.1729570482171; 
+ Mon, 21 Oct 2024 21:14:42 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabc115dsm4009419a12.74.2024.10.21.21.11.32
+ 98e67ed59e1d1-2e5ad3677efsm4935687a91.17.2024.10.21.21.14.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 21:11:33 -0700 (PDT)
-Message-ID: <977b5038-fa06-46d4-946d-f60135ecf106@linaro.org>
-Date: Tue, 22 Oct 2024 01:11:31 -0300
+ Mon, 21 Oct 2024 21:14:41 -0700 (PDT)
+Message-ID: <4faa9e31-7bb5-4486-a56e-cedaf7a13371@linaro.org>
+Date: Tue, 22 Oct 2024 01:14:38 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: Add a functional test for the
- collie board
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH] tests/tcg: Stop using exit() in the gdbstub testcases
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>, Thomas Huth <thuth@redhat.com>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <20241017163247.711244-2-peter.maydell@linaro.org>
+References: <20241021150153.487057-1-iii@linux.ibm.com>
+ <CAFEAcA9W6Fb-gvCx268xV+CV7LyWJwCQGqkKFpGQjdT+WiAEUQ@mail.gmail.com>
+ <e22adb4e-86a2-43aa-a9f4-2e9f40bb4d87@linaro.org>
+ <cd561063296a9e42053d7e1c07cf49617938466a.camel@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241017163247.711244-2-peter.maydell@linaro.org>
+In-Reply-To: <cd561063296a9e42053d7e1c07cf49617938466a.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/24 13:32, Peter Maydell wrote:
-> Add a functional test for the collie board that uses the kernel and
-> rootfs provided by Guenter Roeck in the linux-test-downloads repo:
->   https://github.com/groeck/linux-test-downloads/
+On 21/10/24 16:31, Ilya Leoshkevich wrote:
+> On Mon, 2024-10-21 at 16:08 -0300, Gustavo Romero wrote:
+>> Hi,
+>>
+>> On 10/21/24 12:08, Peter Maydell wrote:
+>>> On Mon, 21 Oct 2024 at 16:02, Ilya Leoshkevich <iii@linux.ibm.com>
+>>> wrote:
+>>>>
+>>>> GDB 15 does not like exit() anymore:
+>>>>
+>>>>       (gdb) python exit(0)
+>>>>       Python Exception <class 'SystemExit'>: 0
+>>>>       Error occurred in Python: 0
+>>>>
+>>>> Use the GDB's own exit command, like it's already done in a
+>>>> couple
+>>>> places, everywhere.
+>>>
+>>> This is the same bug that commit 93a3048dcf4565 is
+>>> fixing, but it looks like we didn't catch everywhere.
+>>
+>> Yep.
+>>
+>> So maybe now change in test_gdbstub.py this line:
+>>
+>>       gdb.execute(f"exit {fail_count}")
+>>
+>> to use the new gdb_exit()?
 > 
-> This just boots Linux with a userspace that immediately reboots
-> the board, so we wait for the reboot log line.
+> Thanks for taking a look! I think I'm already doing this here?
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                         |  1 +
->   tests/functional/meson.build        |  1 +
->   tests/functional/test_arm_collie.py | 31 +++++++++++++++++++++++++++++
->   3 files changed, 33 insertions(+)
->   create mode 100755 tests/functional/test_arm_collie.py
+> @@ -62,4 +68,4 @@ def main(test, expected_arch=None):
+>           pass
+>   
+>       print("All tests complete: {} failures".format(fail_count))
+> -    gdb.execute(f"exit {fail_count}")
+> +    gdb_exit(fail_count)
+> 
+>> BTW, last news from this issue is that it seems to be fixed
+>> in GDB 15.2 [0] (I haven't tried it). However, the fix using
+>> gdb.exit(n) is still correct.
+> 
+> Interesting, I didn't realize this was a bug and not a design
+> change. Still, given that the buggy GDBs are out there, I'd prefer to
+> have this change.
 
-
-> +class CollieTest(LinuxKernelTest):
-> +
-> +    ASSET_ZIMAGE = Asset(
-> +        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/collie/zImage',
-> +        '10ace8abf9e0875ef8a83b8829cc3b5b50bc6d7bc3ca29f19f49f5673a43c13b')
-> +
-> +    ASSET_ROOTFS = Asset(
-> +        'https://github.com/groeck/linux-test-downloads/raw/225223f2ad7d637b34426810bf6c3b727b76a718/collie/rootfs-sa110.cpio',
-> +        '89ccaaa5c6b33331887047e1618ffe81b0f55909173944347d5d2426f3bcc1f2')
-
-Should we wrap these lines to comply with checkpatch.pl?
-
-Otherwise,
+Preferably mentioning commit 93a3048dcf4565,
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> 
+>> Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>
+>>
+>> Cheers,
+>> Gustavo
+>>
+>> [0] https://sourceware.org/bugzilla/show_bug.cgi?id=31946
+> 
 
 
