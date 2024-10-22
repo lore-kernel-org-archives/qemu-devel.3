@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EF6D1715E
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C743D1715E
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t36RJ-0005ql-5W; Tue, 22 Oct 2024 00:24:13 -0400
+	id 1t36Yt-0007Hr-O2; Tue, 22 Oct 2024 00:32:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36RG-0005qR-OS
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:24:10 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Ys-0007HU-Fk
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:32:02 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36RF-0005db-A2
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:24:10 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e56750bb0dso2406911a91.0
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:24:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Yl-0006cN-3T
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:31:58 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3e5fee32e76so1840613b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729571048; x=1730175848; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729571510; x=1730176310; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=udF0ztqIpxPzSV/EnWwWwqcBYJUx9H9orbqpOAQzft0=;
- b=g0j1ErpRYNPuOpImRavYWRVA19mOSEtdf7VJ2q0RvGU2vJK7lJsgeEwqZTaXnWOuwt
- DyEW+Qf6+1glTTO5VOZjuJ+HPXXdpyrAY8nGJ9YkOyR/k75PQLNp0v2qKSBBJRpugeGB
- r6eG+xRH+tQW3nk+t7LEBNctMqfGy18GwlTMJ1AHY+4tePKstk/IC5A0Qf2sO33EsrGH
- HwCjqUPoPmx+Z9cNCgMmwMcutg9FZeDaR+xbqx772bVQEGvsVk52j2P4jIR3jE7a2ZrP
- O/EDG3wz9J8ZJC7ig6lKCaAmF4ZmLDH4srHrPjm/Lp3mB8wDG9eE3JN/3FOV1wtBDU6V
- wq4g==
+ bh=W38HLrDjvHS1Bya//zl/DbBG9mrU++l95Uy9irJfwNc=;
+ b=sH/5TNyszRhxaQXYG70VhVbM5QmcRgTQR72QG4jTFK6PuMZ5l/QlvRhzhxnbbmWP23
+ VZj/ZcueZwqU+WwEq6A5ZNaM/vLe9RkZBm5YGxeG/YgnjeZzDJYZBvwqXYVVnTAEdaQb
+ mZ8tsaYM11tOHcqvlUdsEFkeQKcUZshYAb2XDWZd9cPDIxNArCCLW3DQ91FERRVfWVhH
+ ylaGBsNwKeTw87k82e45U36LfFn8mv3uQwkZ/+QUIaYh9tgrswDKZwWKIZXTZ6fB/11E
+ 4zHkpU7bsjFCxuaAAuPHQ+qrlt+9Z+BaR4dkebOQzj0l7zXSdgjk64b9lI+Wka14h9tD
+ t8Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729571048; x=1730175848;
+ d=1e100.net; s=20230601; t=1729571510; x=1730176310;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=udF0ztqIpxPzSV/EnWwWwqcBYJUx9H9orbqpOAQzft0=;
- b=TTOGKsRP8lwBa3vV/Tr4hiJE0Wt8jXSWSAAHl+cp0rJRDagyhih8XGHtQQoI6ykg5d
- fhTj6ik7NJDlgZSFH5Wv/dlW+i8mZRHSPGyknBBfKW7yYG3phHLoWChBInV8x8ZAm9KJ
- 6m8CCFM+GRtxHsdaoAgdwiaXzPe6spd8K+E/7QVq6MDFdUjTCnxUgvRd+xBAn0YYZB/F
- xSxT6wFSI1Mk6N1UCkpUu348uCetK2J9wiBY72ow41zvZrBlqbwma6wBAOsAW5BpxWkI
- 0ritLvar/KRYFdtHNtuwNg7IFF0RCcdT6UdpV7ottgbBjSZPDR/qXkIhXyiPhOg5D4TZ
- x9Sg==
+ bh=W38HLrDjvHS1Bya//zl/DbBG9mrU++l95Uy9irJfwNc=;
+ b=SEYPjUzBjtSCR0gbCp3GUEpMQXN2EM6RH7B1WDSVeYJ+gC/9MGXqCeiUODIV6qK5eO
+ a1L8jLZFIz5NKSGpyKcYuDtOs+EQvhj+NITouUMX0RcbjmI2PWwWUeK8Pny5jbHWgQl/
+ L+XqQuloVHLXtoWKWDLf5VYZ56FXIPMBPnCNK3dyWO9NaififkdqGsGiuI644F4pfg+T
+ 474X+63HbakccjMZ3kwfn7ubphyVP3o1+vmYLSr284TkzcjGPuReHD2DsE81Ysa4VuOV
+ jiGiQFTBWfsHx2SGzINogmD1HVgHmSJjrwpLeBHUCrP/PD07okBVfKERPwqM40wtWCXW
+ G8gQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9XJZ2XypGf56t7FZnEm92jLWKQXWF+aogkxEbSGpQZyKMHu459jfNvbfUsmeTW7Opx5K2czryEdbb@nongnu.org
-X-Gm-Message-State: AOJu0Yw39+fLpkweF5+yi9eFS1rY+JSLUyxskIZMQ8nl5CrvEQDbFNN/
- yZoC6pLoP0Y+rE+ls1zFqCIZoP5VX7wtVLSOy5F4UcxL/atSXIlCio3eG0cyNK0=
-X-Google-Smtp-Source: AGHT+IHJ6HIIVYO8+qNGH0NvP38SUOy65xHa5xDo9Ws2pP/rOiWDX6yMl22wPzvzDUAWnkoSvQNH/g==
-X-Received: by 2002:a17:90a:9c8:b0:2d3:c9bb:9cd7 with SMTP id
- 98e67ed59e1d1-2e5619f6ca6mr16553657a91.36.1729571047875; 
- Mon, 21 Oct 2024 21:24:07 -0700 (PDT)
+ AJvYcCVthggnKV596xzOB2zGQtA/Mj6IdqfAEJansS4Yd6UJg6SXDrgNgWX5FUGzH29qj0dRyJVD65r+whRe@nongnu.org
+X-Gm-Message-State: AOJu0YztOxW2LOPD2i+wIV+NX/LCbvY98/HN26yzj4GZ4YGUs2WXk5K3
+ y8T6uQ8//+8dPSY1Wfx9METfUNCcGWmds4gTr4HytXDcjwj5QvdUc+AdK8/iQxA=
+X-Google-Smtp-Source: AGHT+IG+khaOytjn1j32a5Nk6fRnSl5hW4UiEMCsjHK0f7ToM4tzmyu4Y0zDGwiudkoaecPXjvbL6Q==
+X-Received: by 2002:a05:6870:440c:b0:277:fdb5:9ce5 with SMTP id
+ 586e51a60fabf-2892c331c8cmr12015861fac.27.1729571509764; 
+ Mon, 21 Oct 2024 21:31:49 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e5ad4ed83dsm4870093a91.35.2024.10.21.21.24.05
+ 41be03b00d2f7-7eaeabd8955sm4034128a12.78.2024.10.21.21.31.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 21:24:07 -0700 (PDT)
-Message-ID: <d20e3944-7ba4-4b7b-a14d-d4135ed413af@linaro.org>
-Date: Tue, 22 Oct 2024 01:24:04 -0300
+ Mon, 21 Oct 2024 21:31:49 -0700 (PDT)
+Message-ID: <12b03ebb-6bc2-4ffe-99cc-4818b5d992ee@linaro.org>
+Date: Tue, 22 Oct 2024 01:31:45 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab: enable afalg tests in fedora system test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20241021170236.1443887-1-berrange@redhat.com>
+Subject: Re: [PATCH v2 10/13] qdev: make properties array "const"
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20241021163538.136941-1-pbonzini@redhat.com>
+ <20241021163538.136941-11-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241021170236.1443887-1-berrange@redhat.com>
+In-Reply-To: <20241021163538.136941-11-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1033.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=philmd@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,18 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/24 14:02, Daniel P. Berrangé wrote:
-> The AF_ALG crypto integration for Linux is not being tested in
-> any CI scenario. It always requires an explicit configure time
-> flag to be passed to turn it on. The Fedora system test is
-> arbitrarily picked as the place to test it.
+Hi,
+
+On 21/10/24 13:35, Paolo Bonzini wrote:
+> Constify all accesses to qdev properties, except for the
+> ObjectPropertyAccessor itself.  This makes it possible to place them in
+> read-only memory, and also lets Rust bindings switch from "static mut"
+> arrays to "static"; which is advantageous, because mutable statics are
+> highly discouraged.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   .gitlab-ci.d/buildtest.yml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/hw/qdev-core.h       |  4 ++--
+>   include/hw/qdev-properties.h |  4 ++--
+>   hw/core/qdev-properties.c    | 26 +++++++++++++-------------
+>   system/qdev-monitor.c        |  2 +-
+>   4 files changed, 18 insertions(+), 18 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+> -void qdev_property_add_static(DeviceState *dev, Property *prop)
+> +void qdev_property_add_static(DeviceState *dev, const Property *prop)
+>   {
+>       Object *obj = OBJECT(dev);
+>       ObjectProperty *op;
+> @@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
+>                                field_prop_getter(prop->info),
+>                                field_prop_setter(prop->info),
+>                                prop->info->release,
+> -                             prop);
+> +                             (Property *)prop);
 
+I like the overall patch idea, but I'm not keep on casting
+const to non-const. Should we adapt the callee -- here
+object_property_add() -- to also take a const argument?
+
+>   
+>       object_property_set_description(obj, prop->name,
+>                                       prop->info->description);
+> @@ -994,7 +994,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
+>   }
+>   
+>   static void qdev_class_add_property(DeviceClass *klass, const char *name,
+> -                                    Property *prop)
+> +                                    const Property *prop)
+>   {
+>       ObjectClass *oc = OBJECT_CLASS(klass);
+>       ObjectProperty *op;
+> @@ -1007,7 +1007,7 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+>                                          field_prop_getter(prop->info),
+>                                          field_prop_setter(prop->info),
+>                                          prop->info->release,
+> -                                       prop);
+> +                                       (Property *)prop);
+>       }
+>       if (prop->set_default) {
+>           prop->info->set_default_value(op, prop);
+> @@ -1046,7 +1046,7 @@ static void qdev_get_legacy_property(Object *obj, Visitor *v,
+>    * Do not use this in new code!  QOM Properties added through this interface
+>    * will be given names in the "legacy" namespace.
+>    */
+> -static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
+> +static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop)
+>   {
+>       g_autofree char *name = NULL;
+>   
+> @@ -1058,12 +1058,12 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
+>       name = g_strdup_printf("legacy-%s", prop->name);
+>       object_class_property_add(OBJECT_CLASS(dc), name, "str",
+>           prop->info->print ? qdev_get_legacy_property : prop->info->get,
+> -        NULL, NULL, prop);
+> +        NULL, NULL, (Property *)prop);
+>   }
 
