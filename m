@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010CDD1CDCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2826D1CDCB
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Br1-0005OD-5H; Tue, 22 Oct 2024 06:11:08 -0400
+	id 1t3Bqk-00055e-8H; Tue, 22 Oct 2024 06:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3Bqs-0005Cs-AB
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:59 -0400
+ id 1t3Bqh-00053E-28
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3Bqp-0004Qm-Cv
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:58 -0400
+ id 1t3Bqf-0004Pl-0Y
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729591854;
+ s=mimecast20190719; t=1729591844;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wXYKPERsSFUrXojLdSDlVUPkke/4VTh6P6Z9bxQslRA=;
- b=elAXQ18ZwuIfvB2TVzP0sig8naWomxGy75rXUnWxzNeuIPZiQP+loeZm2Rdg3s2xoLdrDU
- PM2v5ymFxhkxbGy668yBElFX2cVho0+4KlhBqAtL2OoClP7eXOEClygqT8XmXEYKKMhAqI
- +8riB22x/raC7XWtDb1skgsYxguTjQM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=biLPxyuTmYjTQwz6O/sjJWtUJX+CBzOfsRAa2TZ+E2U=;
+ b=Rbk4qHFsRDolWbEeF5kirzGT5VZIe484WSWZYTO/9stZbF8B0taCGT+syesrWrdVT5I0k9
+ 9a1VwC1CF19L9GB9MuPa8Di0bRbnchpJi7L+hixXIMHnqm35eAT/Lui4jvOfXr1LW4Q/jW
+ lKgp9qlqmMJnGC7rlhHCHEgpf8cexzU=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-2A9CNMs7MRCVXTfxV9fs1w-1; Tue, 22 Oct 2024 06:10:53 -0400
-X-MC-Unique: 2A9CNMs7MRCVXTfxV9fs1w-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-431518e6d8fso38190125e9.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:10:53 -0700 (PDT)
+ us-mta-356-zgRU7B9SNaC5VoTaDkKawA-1; Tue, 22 Oct 2024 06:10:42 -0400
+X-MC-Unique: zgRU7B9SNaC5VoTaDkKawA-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-539ed93e08aso4018331e87.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:10:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729591851; x=1730196651;
+ d=1e100.net; s=20230601; t=1729591840; x=1730196640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wXYKPERsSFUrXojLdSDlVUPkke/4VTh6P6Z9bxQslRA=;
- b=ISdxMFoP64otk+aSCW0grWyYdISTw57svAHJOR++pWBa1NigT0qnDeVwT2OsMR9J5y
- tTRw15nJMfquJyw19GB50BJSdniDEaJWEbD8EkhEcXZ/ruq0/8Dj1HZ120mq/SoJRZ3r
- 3NdxCzf5gUmRWAuNYEj0HO7hKTSWIowvYt/tTAbPzG+zUzo2/bX2hmWK3tIQVKRlniti
- svpVbrSHnmpd2gvEuLCU/bSxcOcWieZluNQ/pUUQwfnh+5mjQblzrC9CQb4gjYhpiMS+
- bX7w/G931V01zlS5ojC2br64KA7/iJhhGKoVck5tul7Pk4ftVBTVXTcNJKX9dhxCY8I6
- 6fyQ==
-X-Gm-Message-State: AOJu0YwlmnK+k1q4mvVeOXURjWeqhZIsTJlAwtGXuzkaXIdUJtwxfB2x
- SwnbmoB2ZRmX9eY2LsBM8fnMKoD7Pca+x6IW2NBBUNwPAixbfMOlYPDQwo46Q5/WX6g9XXJr/2I
- 1jOR3ap0C5l4o3zAAUWTbcKViDUfQbGN5X43sVIFvWCjDlsi+E0gB5/2oO2KFv4ZqPU9MT+gxRE
- 4TApTX2XXMoebRhb9sg6z1Uc/jemaIHmW5FsDdk8c=
-X-Received: by 2002:a05:600c:4ed2:b0:426:64a2:5362 with SMTP id
- 5b1f17b1804b1-4316163b8bbmr111004625e9.8.1729591851217; 
- Tue, 22 Oct 2024 03:10:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENasJYl91Hg+yP66jIknw/gTZ0EeU7r9BvhomsSRp60/DrKVFy7AG/42ZwzSIhw7PyIV6ePQ==
-X-Received: by 2002:a05:600c:4ed2:b0:426:64a2:5362 with SMTP id
- 5b1f17b1804b1-4316163b8bbmr111004345e9.8.1729591850739; 
- Tue, 22 Oct 2024 03:10:50 -0700 (PDT)
+ bh=biLPxyuTmYjTQwz6O/sjJWtUJX+CBzOfsRAa2TZ+E2U=;
+ b=ke5+UTcSW3H66cfdLX7H3ja1yW3HCBbtoF6RfoHVw9MJYM1DAGkqhEUgtea2h6ZGWX
+ tcT4xIO3WEuPElMDaE3j0LYGryu/sVWZcpK7Ol8KTuYryCDwK0La0bXDFMD4mM4P0Tjn
+ ifYDICXesbJ3O6DpSqjUvQKvhmSITEPqnoJSWSIpRyCOybucGiXjBb1NCaFiOQsuq9TU
+ kT0Al5NFM0q8AN0c3W+d9lfmjwTKncNzdFUmsqEgklJvtL0/UVQOOL+Kclw0UGyvmolS
+ gsbxxTWsFzwyIXv87G1BZzkQWEo7ITNYMo4OCIKlO03eJfHLmGV+Oz3+T28hw1fktRas
+ uROg==
+X-Gm-Message-State: AOJu0YxKdAPtz7Xj6o0dDfandLTl5U4pzkwY0m/e63HVKoCjFspmZ4xY
+ Y8ZfPIvIu9u8NiZEMdNsCACDUUlDfJvigZIzZnfS5T2LAcvsPSRmkQwb1THgmRpqnXux88Tt/BW
+ EijOhDDMT5HRWUO/Zsz+rZG9+j3sYckdlycLdRo9d04Ob04CbggwQ1IZee0TZZWcAvig3MMUhXy
+ AWyt4end9EyJX/NuBcTfQD08W75/77tWh8PDL11jg=
+X-Received: by 2002:a05:6512:2207:b0:539:f699:4954 with SMTP id
+ 2adb3069b0e04-53b12c42f7emr1743110e87.58.1729591840250; 
+ Tue, 22 Oct 2024 03:10:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrpdzMEtP8GCRmiUdFQ5jGMhUMEzMd9aQF/jUXNzE+TGciLXFKA5p3pvKX+bCR0aSoJfrHPQ==
+X-Received: by 2002:a05:6512:2207:b0:539:f699:4954 with SMTP id
+ 2adb3069b0e04-53b12c42f7emr1743077e87.58.1729591839635; 
+ Tue, 22 Oct 2024 03:10:39 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f57fc36sm83998985e9.18.2024.10.22.03.10.48
+ 5b1f17b1804b1-4316f5cc563sm83567805e9.44.2024.10.22.03.10.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:10:49 -0700 (PDT)
+ Tue, 22 Oct 2024 03:10:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, kwolf@redhat.com, junjie.mao@hotmail.com,
  manos.pitsidianakis@linaro.org
-Subject: [PATCH v2 14/14] dockerfiles: install bindgen from cargo on Ubuntu
- 22.04
-Date: Tue, 22 Oct 2024 12:09:55 +0200
-Message-ID: <20241022100956.196657-15-pbonzini@redhat.com>
+Subject: [PATCH v2 11/14] rust: do not use --generate-cstr
+Date: Tue, 22 Oct 2024 12:09:52 +0200
+Message-ID: <20241022100956.196657-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241022100956.196657-1-pbonzini@redhat.com>
 References: <20241022100956.196657-1-pbonzini@redhat.com>
@@ -104,79 +103,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because Ubuntu 22.04 has a very old version of bindgen, that
-does not have the important option --allowlist-file, it will
-not be able to use --enable-rust out of the box.  Instead,
-install the latest version of bindgen-cli via "cargo install"
-in the container, following the documentation.
+--generate-cstr is a good idea and generally the right thing to do,
+but it is not available in Debian 12 and Ubuntu 22.04.  Work around
+the absence.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/docker/dockerfiles/ubuntu2204.docker |  5 +++++
- tests/lcitool/mappings.yml                 |  4 ++++
- tests/lcitool/refresh                      | 11 ++++++++++-
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ meson.build                       |  4 +++-
+ rust/hw/char/pl011/src/device.rs  |  1 +
+ rust/qemu-api/src/device_class.rs | 10 ++++++++++
+ rust/qemu-api/tests/tests.rs      |  4 ++--
+ 4 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dock=
-erfiles/ubuntu2204.docker
-index ce3aa39d4f3..245ac879622 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -149,6 +149,11 @@ ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
- ENV NINJA "/usr/bin/ninja"
- ENV PYTHON "/usr/bin/python3"
-+ENV CARGO_HOME=3D/usr/local/cargo
-+ENV PATH=3D$CARGO_HOME/bin:$PATH
-+RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-+  apt install -y --no-install-recommends cargo
-+RUN cargo install bindgen-cli
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index 9c5ac87c1c2..c90b23a00f1 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -1,4 +1,8 @@
- mappings:
-+  # Too old on Ubuntu 22.04; we install it from cargo instead
-+  bindgen:
-+    Ubuntu2204:
+diff --git a/meson.build b/meson.build
+index 9c57d7e5c6d..a083e3434b3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3941,13 +3941,15 @@ common_all =3D static_library('common',
+                             dependencies: common_ss.all_dependencies())
+=20
+ if have_rust
++  # We would like to use --generate-cstr, but it is only available
++  # starting with bindgen 0.66.0.  The oldest supported versions
++  # are in Ubuntu 22.04 (0.59.1) and Debian 12 (0.60.1).
+   bindgen_args =3D [
+     '--disable-header-comment',
+     '--raw-line', '// @generated',
+     '--ctypes-prefix', 'std::os::raw',
+     '--formatter', 'rustfmt',
+     '--generate-block',
+-    '--generate-cstr',
+     '--impl-debug',
+     '--merge-extern-blocks',
+     '--no-doc-comments',
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/devi=
+ce.rs
+index c26d21e079d..1bcb6a0fba8 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -13,6 +13,7 @@
+     bindings::{self, *},
+     c_str,
+     definitions::ObjectImpl,
++    device_class::TYPE_SYS_BUS_DEVICE,
+ };
+=20
+ use crate::{
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_c=
+lass.rs
+index ce3d5f50507..995267dd715 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -2,6 +2,10 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+=20
++use std::ffi::CStr;
 +
-   flake8:
-     OpenSUSELeap15:
-=20
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 0f16f4d525c..a46cbbdca41 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -137,6 +137,14 @@ fedora_rustup_nightly_extras =3D [
-     'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli=
-\n',
- ]
-=20
-+ubuntu2204_bindgen_extras =3D [
-+    "ENV CARGO_HOME=3D/usr/local/cargo\n",
-+    'ENV PATH=3D$CARGO_HOME/bin:$PATH\n',
-+    "RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \\\n",
-+    "  apt install -y --no-install-recommends cargo\n",
-+    'RUN cargo install bindgen-cli\n',
-+]
++use crate::bindings;
 +
- def cross_build(prefix, targets):
-     conf =3D "ENV QEMU_CONFIGURE_OPTS --cross-prefix=3D%s\n" % (prefix)
-     targets =3D "ENV DEF_TARGET_LIST %s\n" % (targets)
-@@ -157,7 +165,8 @@ try:
-                         trailer=3D"".join(debian12_extras))
-     generate_dockerfile("fedora", "fedora-40")
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
--    generate_dockerfile("ubuntu2204", "ubuntu-2204")
-+    generate_dockerfile("ubuntu2204", "ubuntu-2204",
-+                        trailer=3D"".join(ubuntu2204_bindgen_extras))
+ #[macro_export]
+ macro_rules! device_class_init {
+     ($func:ident, props =3D> $props:ident, realize_fn =3D> $realize_fn:exp=
+r, legacy_reset_fn =3D> $legacy_reset_fn:expr, vmsd =3D> $vmsd:ident$(,)*) =
+=3D> {
+@@ -83,3 +87,9 @@ macro_rules! vm_state_description {
+         };
+     }
+ }
++
++// workaround until we can use --generate-cstr in bindgen.
++pub const TYPE_DEVICE: &CStr =3D
++    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
++pub const TYPE_SYS_BUS_DEVICE: &CStr =3D
++    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DE=
+VICE) };
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 96e413b75ee..f932acd5c10 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -8,7 +8,7 @@
+     bindings::*,
+     c_str, declare_properties, define_property,
+     definitions::{Class, ObjectImpl},
+-    device_class_init, vm_state_description,
++    device_class, device_class_init, vm_state_description,
+ };
 =20
-     #
-     # Non-fatal Rust-enabled build
+ #[test]
+@@ -56,7 +56,7 @@ impl ObjectImpl for DummyState {
+         type Class =3D DummyClass;
+         const TYPE_INFO: qemu_api::bindings::TypeInfo =3D qemu_api::type_i=
+nfo! { Self };
+         const TYPE_NAME: &'static CStr =3D c_str!("dummy");
+-        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(TYPE_DEVICE=
+);
++        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(device_clas=
+s::TYPE_DEVICE);
+         const ABSTRACT: bool =3D false;
+         const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)=
+> =3D None;
+         const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Ob=
+ject)> =3D None;
 --=20
 2.46.2
 
