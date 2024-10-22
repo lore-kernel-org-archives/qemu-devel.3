@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C53D1CDA0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C791D1CDA3
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t38BC-0005jf-6y; Tue, 22 Oct 2024 02:15:42 -0400
+	id 1t38BF-0005mT-Lw; Tue, 22 Oct 2024 02:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t38BA-0005ii-9k; Tue, 22 Oct 2024 02:15:40 -0400
+ id 1t38BD-0005l8-F3; Tue, 22 Oct 2024 02:15:43 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1t38B8-0001tR-Cw; Tue, 22 Oct 2024 02:15:40 -0400
+ id 1t38BB-0001u2-O8; Tue, 22 Oct 2024 02:15:43 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BAE09ACA0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 88D049ACA1;
  Tue, 22 Oct 2024 09:15:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9A7E6159B62;
+ by tsrv.corpit.ru (Postfix) with SMTP id A7958159B63;
  Tue, 22 Oct 2024 09:15:33 +0300 (MSK)
-Received: (nullmailer pid 1304521 invoked by uid 1000);
+Received: (nullmailer pid 1304524 invoked by uid 1000);
  Tue, 22 Oct 2024 06:15:33 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-trivial@nongnu.org,
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 1/5] linux-user: Clean up unused header
-Date: Tue, 22 Oct 2024 09:15:29 +0300
-Message-Id: <20241022061533.1304493-2-mjt@tls.msk.ru>
+Subject: [PULL 2/5] ui/console-vc: Silence warning about sprintf() on OpenBSD
+Date: Tue, 22 Oct 2024 09:15:30 +0300
+Message-Id: <20241022061533.1304493-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022061533.1304493-1-mjt@tls.msk.ru>
 References: <20241022061533.1304493-1-mjt@tls.msk.ru>
@@ -62,31 +62,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-Clean up unused (already commented-out) header from syscall.c.
+The linker on OpenBSD complains:
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+ ld: warning: console-vc.c:824 (../src/ui/console-vc.c:824)([...]):
+ warning: sprintf() is often misused, please use snprintf()
+
+Using g_strdup_printf() is certainly better here, so let's switch
+to that function instead.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- linux-user/syscall.c | 1 -
- 1 file changed, 1 deletion(-)
+ ui/console-vc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1354e75694..d1b0f7c5bb 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -54,7 +54,6 @@
- #include <utime.h>
- #include <sys/sysinfo.h>
- #include <sys/signalfd.h>
--//#include <sys/user.h>
- #include <netinet/in.h>
- #include <netinet/ip.h>
- #include <netinet/tcp.h>
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 8393d532e7..53fcee88f4 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -648,7 +648,7 @@ static void vc_putchar(VCChardev *vc, int ch)
+     QemuTextConsole *s = vc->console;
+     int i;
+     int x, y;
+-    char response[40];
++    g_autofree char *response = NULL;
+ 
+     switch(vc->state) {
+     case TTY_STATE_NORM:
+@@ -821,7 +821,7 @@ static void vc_putchar(VCChardev *vc, int ch)
+                     break;
+                 case 6:
+                     /* report cursor position */
+-                    sprintf(response, "\033[%d;%dR",
++                    response = g_strdup_printf("\033[%d;%dR",
+                            (s->y_base + s->y) % s->total_height + 1,
+                             s->x + 1);
+                     vc_respond_str(vc, response);
 -- 
 2.39.5
 
