@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E64ED1CDDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93F9D1CDD5
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CYs-0001jK-9m; Tue, 22 Oct 2024 06:56:26 -0400
+	id 1t3CZi-0002cK-6w; Tue, 22 Oct 2024 06:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYo-0001i7-3c
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:22 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1t3CZ2-0001p8-Hm
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYl-0001y7-5G
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:21 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a9932aa108cso812827466b.2
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:18 -0700 (PDT)
+ id 1t3CZ0-000257-O1
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c941623a5aso10852828a12.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594576; x=1730199376; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=COpfR9RLf2CLdazvbIhqB2YmojRnRaS7PX4PKuRZwh4=;
- b=a/r+TFJeohAszKlrJAQYJQIca0/J4Jx9WRu/poB0S996Jc+T358xq0O910gFkJSDj9
- svyqfRQgupCOy9JBhYyC/kAmKedkWDdvfro+ek1AFGjIRWE7vzWo6WnkRuYBHxHvUD5o
- 7RE8XOh8H6CLYtnE/93msiAVOL89W0cy0xrbYCfznMHOUJle621Ad1dhBm3OI98mI7Ak
- RZvCOoakctgrl+BF9yb5DxFW1LtKGvnnmAn/vltS/3A1Bn0mMNVsrEgnj5sxlNaT/oXq
- V042NOoJVvtNOzxfaffAY5nPU2KknwtrplFAHgNQ5gc4UQv4ay7WRuTKyS6wpP3ttXG4
- 2sVg==
+ d=linaro.org; s=google; t=1729594592; x=1730199392; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pf3uq1o/PXtMWzbvWkPU0TjSlCT93/aG9VyjOMqKoJo=;
+ b=SrLSuTCGrnU2yecchuPfJahtlADKRbnkyk0UZHBIlvm4AWbVsc6HUJvxBwHhRvFfv/
+ FkSXuwhrfbssP6VN6Gz8WLfP33mw0yyzPfMlXteyUlzgxwXVb+j+Z97WPXp6C7sVC9rK
+ r5AhPYP6yzGwbYFTG4Czfa7wGGIX7R5dCghKvUd17aqC/rM4qSDLz1DJfabXMfraHdwG
+ KyTDBNb+fbi7nP8D/96/Ya3irymygw7jA58X+17u08LF6SbVWk+maEoUK7I1yqGSC6Lz
+ SVptKbE8YYbN2kJxnPcYgqSpkFy2gZMPqSZVJGGo8e71FCkjKnNIjssERA0cJ8pyrINS
+ XRRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594576; x=1730199376;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=COpfR9RLf2CLdazvbIhqB2YmojRnRaS7PX4PKuRZwh4=;
- b=CnvxcXlXc/i6D0Tg5BwwsvByKGUtyFuEiIztswNpH8N2K1iz7d2bsNwx/2p5/1ykyK
- lPk8RkCCBjQV7SZwMXahBV1lVEDKfMejewmgar6EhT/EJ72ANXoSvxUqhskENLwuNfQa
- yUl8GH8W8h+htpCwSTPF/AZZea12nxo9JwewJ/Qg0+YXY/a30J+52kV577nY8K60O3HW
- nKLr8dD8+MD928oQygy9r6LksEpPiQ7ToNWo3uvfmM23i3Bny+48EqSX+GEw6ZMXt6AD
- WwBrKryrS4DtPakNkTIAsJ2yrVN0MyRnkP71OCz3lCQkdaNLMWFy0+iYti15jlIkpi53
- rDgQ==
-X-Gm-Message-State: AOJu0YzuqkT36Abn63Pn3G8cx3R/u5vXatsbIHUBwb4bchE3pf4j1geK
- hyU/okpKpvvwzj/T0FYIzZnbMdqL2Av0n1UN9OP5DBHzSpnuNEU6qkM1nj+xlJw=
-X-Google-Smtp-Source: AGHT+IFvyKkyeRPJrAKRyY3MStdAXndUKfD+I3lEe2ovrB6KLCkuexA+w8IhgFRYygmb+9drojBW0Q==
-X-Received: by 2002:a17:906:c150:b0:a9a:47a:8908 with SMTP id
- a640c23a62f3a-a9aace2551cmr208312266b.9.1729594576427; 
- Tue, 22 Oct 2024 03:56:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729594592; x=1730199392;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pf3uq1o/PXtMWzbvWkPU0TjSlCT93/aG9VyjOMqKoJo=;
+ b=mSSUILpojNz7U8/cY07phLHKBopj5xTQQva0iS4Me46m8z3R1KWJQxRW1EIcYhBPlb
+ bckrdw4Ndy97RAho8J/foE8AblRx3YyXDhKix5VUgY6HFn5lBDpA0mevGuZwoz4Gu7Fn
+ nHtd/SRmU+kZ3HEIZ1JJ6tc1pKMViNnvfBH3vZcMJH5J5kXSKmI7KV4Ft5rWsaTi8kZI
+ tg3yUOSbpdaBYQdrlc8UMwHJOIaY8u9FWcE6Jts9a4q2RbuYhiaQ5czU9XnvSGgJ4uvN
+ Qtf8MopDapLPASpZmzkXHeywLDWsHMEK47iYhSh7GNObci3KOxiTa6Rq9TxfMQxaPAYk
+ 8K3A==
+X-Gm-Message-State: AOJu0YzszIXRb6k4vO4Jcw0bU4cbLnHF0bn9P5LT06OKxlIbfF9q/B14
+ qLDB8yCugW5+O1oNNSlaOMIG1hNTmKBPvyfaJsidRKK2cZFzgk/yv6G4ZPwGKdg=
+X-Google-Smtp-Source: AGHT+IFr+0mLMKe2JQJOUJSSxtHXWPXM2EDoaQ4nyTBJKccw5XUwjD1MaeL5ICuPvGV4e9NH5KWjRQ==
+X-Received: by 2002:a17:906:c116:b0:a9a:1575:23e3 with SMTP id
+ a640c23a62f3a-a9aaa5428e4mr236057266b.19.1729594592209; 
+ Tue, 22 Oct 2024 03:56:32 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912edc33sm321447866b.58.2024.10.22.03.56.15
+ a640c23a62f3a-a9a9155a1c9sm323018666b.129.2024.10.22.03.56.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:15 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A8D0D5F89C;
- Tue, 22 Oct 2024 11:56:14 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id C52CB5FBDC;
+ Tue, 22 Oct 2024 11:56:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -83,22 +84,25 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 00/20] maintainer updates (testing, gdbstub, plugins)
-Date: Tue, 22 Oct 2024 11:55:54 +0100
-Message-Id: <20241022105614.839199-1-alex.bennee@linaro.org>
+Subject: [PATCH v2 13/20] tests/tcg: enable basic testing for
+ aarch64_be-linux-user
+Date: Tue, 22 Oct 2024 11:56:07 +0100
+Message-Id: <20241022105614.839199-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
+References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,105 +118,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an aggregation of three of my maintainer trees which you can
-also get from their respective branches (testing/next, gdbstub/next
-and plugins/next). I didn't include the plugins on the last post as I
-hadn't had a chance to do my sweep through patches before travelling.
-I've also updated MAINTAINERS to point at my next trees.
+We didn't notice breakage of aarch64_be because we don't have any TCG
+tests for it. However while the existing aarch64 compiler can target
+big-endian builds no one packages a BE libc. Instead we bang some
+rocks together to do the most basic of hello world with a nostdlib
+syscall test.
 
-For testing we have mostly tweaks and cleanups. I've included some
-tracepoints tweaks for cpu_loop_exit_atomic purely as there was no
-where else to but it. There are also some cleanups to the tsan support
-from Pierrick. The mipsel tweaks have already been applied directly to
-the tree.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-For gdbstub more cleanups as well as fixing some gdbstub breakage of
-the untested aarch64-be linux-user target. I've added a very basic
-some test to prevent silly regressions in the future.
-
-For plugins again more cleanups. The GDB trigger patch will probably
-not get merged and should be considered an experimental hack for now.
-
-The following still need review:
-
-  plugins: add ability to register a GDB triggered callback
-  tests/tcg: enable basic testing for aarch64_be-linux-user
-  config/targets: update aarch64_be-linux-user gdb XML list
-  MAINTAINERS: mention my gdbstub/next tree
-  gitlab: make check-[dco|patch] a little more verbose
-  scripts/ci: remove architecture checks for build-environment updates
-  MAINTAINERS: mention my testing/next tree
-  tests/docker: add NOFETCH env variable for testing
-  MAINTAINERS: mention my plugins/next tree
-
-Alex Bennée (10):
-  tests/docker: add NOFETCH env variable for testing
-  MAINTAINERS: mention my testing/next tree
-  scripts/ci: remove architecture checks for build-environment updates
-  accel/tcg: add tracepoints for cpu_loop_exit_atomic
-  gitlab: make check-[dco|patch] a little more verbose
-  MAINTAINERS: mention my gdbstub/next tree
-  config/targets: update aarch64_be-linux-user gdb XML list
-  tests/tcg: enable basic testing for aarch64_be-linux-user
-  MAINTAINERS: mention my plugins/next tree
-  plugins: add ability to register a GDB triggered callback
-
-Gustavo Romero (2):
-  tests/tcg/aarch64: Use raw strings for regexes in test-mte.py
-  testing: Enhance gdb probe script
-
-Ilya Leoshkevich (2):
-  tests/docker: Fix microblaze atomics
-  tests/tcg/x86_64: Add cross-modifying code test
-
-Pierrick Bouvier (6):
-  meson: hide tsan related warnings
-  docs/devel: update tsan build documentation
-  dockerfiles: fix default targets for debian-loongarch-cross
-  meson: build contrib/plugins with meson
-  contrib/plugins: remove Makefile for contrib/plugins
-  plugins: fix qemu_plugin_reset
-
- MAINTAINERS                                   |  3 +
- docs/devel/testing/main.rst                   | 26 +++++-
- configure                                     | 23 ++---
- Makefile                                      | 10 ---
- configs/targets/aarch64_be-linux-user.mak     |  2 +-
- meson.build                                   | 14 ++-
- include/qemu/plugin-event.h                   |  1 +
- include/qemu/qemu-plugin.h                    | 16 ++++
- plugins/plugin.h                              |  9 ++
- accel/tcg/plugin-gen.c                        |  4 +
- accel/tcg/user-exec.c                         |  2 +-
- plugins/api.c                                 | 18 ++++
- plugins/core.c                                | 37 ++++++++
- tests/tcg/aarch64_be/hello.c                  | 35 ++++++++
- tests/tcg/plugins/mem.c                       | 11 ++-
- tests/tcg/x86_64/cross-modifying-code.c       | 80 +++++++++++++++++
- accel/tcg/ldst_atomicity.c.inc                |  9 ++
- .gitlab-ci.d/check-dco.py                     |  9 +-
- .gitlab-ci.d/check-patch.py                   |  9 +-
- accel/tcg/trace-events                        | 12 +++
- contrib/plugins/Makefile                      | 87 -------------------
- contrib/plugins/meson.build                   | 23 +++++
- plugins/qemu-plugins.symbols                  |  1 +
- scripts/ci/setup/ubuntu/build-environment.yml |  2 -
- scripts/probe-gdb-support.py                  | 75 ++++++++--------
- tests/docker/Makefile.include                 |  5 +-
- .../dockerfiles/debian-loongarch-cross.docker |  4 +-
- .../build-toolchain.sh                        |  8 ++
- .../dockerfiles/debian-toolchain.docker       |  7 ++
- tests/tcg/Makefile.target                     |  7 +-
- tests/tcg/aarch64/gdbstub/test-mte.py         |  4 +-
- tests/tcg/aarch64_be/Makefile.target          | 17 ++++
- tests/tcg/x86_64/Makefile.target              |  4 +
- 33 files changed, 397 insertions(+), 177 deletions(-)
+---
+v2
+  - fix checkpatch complaints
+---
+ configure                            |  5 ++++
+ tests/tcg/aarch64_be/hello.c         | 35 ++++++++++++++++++++++++++++
+ tests/tcg/Makefile.target            |  7 +++++-
+ tests/tcg/aarch64_be/Makefile.target | 17 ++++++++++++++
+ 4 files changed, 63 insertions(+), 1 deletion(-)
  create mode 100644 tests/tcg/aarch64_be/hello.c
- create mode 100644 tests/tcg/x86_64/cross-modifying-code.c
- delete mode 100644 contrib/plugins/Makefile
- create mode 100644 contrib/plugins/meson.build
  create mode 100644 tests/tcg/aarch64_be/Makefile.target
 
+diff --git a/configure b/configure
+index 72d1a94225..7dd3400ccb 100755
+--- a/configure
++++ b/configure
+@@ -1418,6 +1418,7 @@ probe_target_compiler() {
+   target_arch=${1%%-*}
+   case $target_arch in
+     aarch64) container_hosts="x86_64 aarch64" ;;
++    aarch64_be) container_hosts="x86_64 aarch64" ;;
+     alpha) container_hosts=x86_64 ;;
+     arm) container_hosts="x86_64 aarch64" ;;
+     hexagon) container_hosts=x86_64 ;;
+@@ -1447,6 +1448,10 @@ probe_target_compiler() {
+     case $target_arch in
+       # debian-all-test-cross architectures
+ 
++      aarch64_be)
++        container_image=debian-all-test-cross
++        container_cross_prefix=aarch64-linux-gnu-
++        ;;
+       hppa|m68k|mips|riscv64|sparc64)
+         container_image=debian-all-test-cross
+         ;;
+diff --git a/tests/tcg/aarch64_be/hello.c b/tests/tcg/aarch64_be/hello.c
+new file mode 100644
+index 0000000000..a9b2ab45de
+--- /dev/null
++++ b/tests/tcg/aarch64_be/hello.c
+@@ -0,0 +1,35 @@
++/*
++ * Non-libc syscall hello world for Aarch64 BE
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define __NR_write 64
++#define __NR_exit 93
++
++int write(int fd, char *buf, int len)
++{
++    register int x0 __asm__("x0") = fd;
++    register char *x1 __asm__("x1") = buf;
++    register int x2 __asm__("x2") = len;
++    register int x8 __asm__("x8") = __NR_write;
++
++    asm volatile("svc #0" : : "r"(x0), "r"(x1), "r"(x2), "r"(x8));
++
++    return len;
++}
++
++void exit(int ret)
++{
++    register int x0 __asm__("x0") = ret;
++    register int x8 __asm__("x8") = __NR_exit;
++
++    asm volatile("svc #0" : : "r"(x0), "r"(x8));
++    __builtin_unreachable();
++}
++
++void _start(void)
++{
++    write(1, "Hello World\n", 12);
++    exit(0);
++}
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 2da70b2fcf..9722145b97 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -103,9 +103,14 @@ ifeq ($(filter %-softmmu, $(TARGET)),)
+ # then the target. If there are common tests shared between
+ # sub-targets (e.g. ARM & AArch64) then it is up to
+ # $(TARGET_NAME)/Makefile.target to include the common parent
+-# architecture in its VPATH.
++# architecture in its VPATH. However some targets are so minimal we
++# can't even build the multiarch tests.
++ifneq ($(filter $(TARGET_NAME),aarch64_be),)
++-include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
++else
+ -include $(SRC_PATH)/tests/tcg/multiarch/Makefile.target
+ -include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
++endif
+ 
+ # Add the common build options
+ CFLAGS+=-Wall -Werror -O0 -g -fno-strict-aliasing
+diff --git a/tests/tcg/aarch64_be/Makefile.target b/tests/tcg/aarch64_be/Makefile.target
+new file mode 100644
+index 0000000000..297d2cf71c
+--- /dev/null
++++ b/tests/tcg/aarch64_be/Makefile.target
+@@ -0,0 +1,17 @@
++# -*- Mode: makefile -*-
++#
++# A super basic AArch64 BE makefile. As we don't have any big-endian
++#l ibc available the best we can do is a basic Hello World.
++
++AARCH64BE_SRC=$(SRC_PATH)/tests/tcg/aarch64_be
++VPATH += $(AARCH64BE_SRC)
++
++AARCH64BE_TEST_SRCS=$(notdir $(wildcard $(AARCH64BE_SRC)/*.c))
++AARCH64BE_TESTS=$(AARCH64BE_TEST_SRCS:.c=)
++#MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
++
++# We need to specify big-endian cflags
++CFLAGS +=-mbig-endian -ffreestanding
++LDFLAGS +=-nostdlib
++
++TESTS += $(AARCH64BE_TESTS)
 -- 
 2.39.5
 
