@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62E0D15DBB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDB6D1713D
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3D9U-0000XI-3Y; Tue, 22 Oct 2024 07:34:16 -0400
+	id 1t3DFA-0005LI-Uy; Tue, 22 Oct 2024 07:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t3D9Q-0000Vl-Tf
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:34:13 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1t3D9O-0008G2-U7
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:34:12 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2e2e6a1042dso4356792a91.2
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 04:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1729596849; x=1730201649; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uatBwRbZdUuRH9JbxOfOc5YcVZt42QS2AMZQu5Q7kOg=;
- b=IZJR/i9IS34Am6j6MPuvjcBwNqgnvqLJ69Dx88n5dySe+L0kXfNiTG95tXpZaj08wl
- JQ9fP1yZRpVVZXDHSixECY4HZ5V8Pw1jU7k+OK0WHitFk7Xt+jUjAlm2MskZbgWhGUxu
- vLpIZgyOnb87OWqv9zFDvDi5YJKqJLpwDrttG8fdQGU57hF42r+haMikrFwqwOsB7oW1
- EWkn9LrjMcVLOR9r5lr/IXZIrLd1kP4wY5jLIj9TrSMDO4JZGJaJe/F+eisNfXf3WBlx
- bPsL4+EOqxgyuZOl69evRJKzfMZI5j0qIPmId4Hg5Yl+QjbZFn1/KuzXoMIjl+t05LBs
- xZEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729596849; x=1730201649;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uatBwRbZdUuRH9JbxOfOc5YcVZt42QS2AMZQu5Q7kOg=;
- b=F8O7jo/U8ypstr004MgVsDWU37ddN06+jCzavrAspKLzzySqeK4M6wJwy5hN3KkcWT
- Ke2nW2DFcCsK43+Yd63jZnhtmX5du4REv+2e3VlcleKYxZ98k5mE9NaFYDADBijscneb
- bv5oewF+0BSCY20s20q5LQ4i3C4+BipepOxKnZyltP4DmdM71jkTaafSOba+JPkIGAOV
- cINDzbvZhLYcIfqXPUME97to66kMZIJRa3kjFGwatHeHrFRnboFOLu9OP3iZ4L9APlyV
- cc+YRzbMn8kzbAu6R5LH+cGIWFpbvCA109qqGJVZ+/S+ZEmzbjL5e2VBwl1Q+zzY2B6V
- ervg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeCISU9vKWw2SKKaDdX/YzreilnSwnKKck1NdxQhMm91MnzzcYTf/8Y7mWCyvJhSFd7/FzFIiQBWnr@nongnu.org
-X-Gm-Message-State: AOJu0YzRaEHBk3NqxBtjFIBjja2EmyF8fuPhgqUBByHdPottgl5+0kZy
- v3gHCNrwD9Q20vet1jBQ4unkuyAt72DKK1eXZSlPWKijdvzif/EjUm5gmH4zF4Q=
-X-Google-Smtp-Source: AGHT+IGSsYhaExA4FWSgMzywDZ5OLf6M4lMBkZMdkVijY+l4tdp0C+1HIbBzArOH0ZMdwSBpy6/YHA==
-X-Received: by 2002:a17:90b:1650:b0:2e3:191e:7ef7 with SMTP id
- 98e67ed59e1d1-2e5616e8b0amr17044339a91.12.1729596848936; 
- Tue, 22 Oct 2024 04:34:08 -0700 (PDT)
-Received: from [192.168.68.110] ([177.188.133.9])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e5e2691e4csm1385304a91.23.2024.10.22.04.34.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 04:34:08 -0700 (PDT)
-Message-ID: <4a7075e0-f6a6-42bf-b0ce-5f217f98423e@ventanamicro.com>
-Date: Tue, 22 Oct 2024 08:34:03 -0300
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3DEw-0005Km-Sj
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:39:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3DEu-00014R-2O
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:39:54 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M2HEA1018378;
+ Tue, 22 Oct 2024 11:39:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=DrJYM7OmrEChNecpP4cBzc7hafsi
+ kJHo6jqqXcsVJhA=; b=aqv1rTPis+i5uroI5DeTdM24prPWnYDI3ZDTNAz9gmDq
+ GYmK1HjZqlcnDUizIrxAA0BIqH45kyx78r3Y1J7uXv+YkRlBo1IJ2O8clxtXJxlR
+ 4CrAZrktTagRUm7rYLWxkvKNwasoUrTcKH4G/b32Cih3AQROxHI10rm2Lh5IV/u6
+ Wr+iLnnWd+vqYBNP5i71yIlyM03HkbTEoLrENqzqtgW2LN+Zt3zmhx9QIyiUTdAS
+ 8IXvth7Yjm0KpaTtpztmWrr8mF1+nULl97ruZWWL0I6nKqZK8Sje22SdVct4pw6F
+ Rl7MaGEajeRIy96SThb0Hm3QK+Y2J/AffrhAFhQEEQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5gcpack-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 11:39:48 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49M82Fd4026471;
+ Tue, 22 Oct 2024 11:39:47 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42cq3sb6m0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 11:39:47 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49MBdeqn50987510
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Oct 2024 11:39:40 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 94BE520043;
+ Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3BECA20040;
+ Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.26.72])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2] tests/tcg: Stop using exit() in the gdbstub testcases
+Date: Tue, 22 Oct 2024 13:37:11 +0200
+Message-ID: <20241022113939.19989-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+Content-Type: text/plain; charset=UTF-8
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6WViykz38n35A2yWy4hBzN1FxVOjnb5R
+X-Proofpoint-ORIG-GUID: 6WViykz38n35A2yWy4hBzN1FxVOjnb5R
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 03/14] util: Add RISC-V vector extension probe in
- cpuinfo
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair23@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20241022001134.828724-1-richard.henderson@linaro.org>
- <20241022001134.828724-4-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20241022001134.828724-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ mlxlogscore=999 clxscore=1015 suspectscore=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,138 +108,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+GDB 15 does not like exit() anymore:
 
+    (gdb) python exit(0)
+    Python Exception <class 'SystemExit'>: 0
+    Error occurred in Python: 0
 
-On 10/21/24 9:11 PM, Richard Henderson wrote:
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> 
-> Add support for probing RISC-V vector extension availability in
-> the backend. This information will be used when deciding whether
-> to use vector instructions in code generation.
-> 
-> Cache lg2(vlenb) for the backend. The storing of lg2(vlenb) means
-> we can convert all of the division into subtraction.
-> 
-> While the compiler doesn't support RISCV_HWPROBE_EXT_ZVE64X,
-> we use RISCV_HWPROBE_IMA_V instead. RISCV_HWPROBE_IMA_V is more
-> strictly constrainted than RISCV_HWPROBE_EXT_ZVE64X. At least in
-> current QEMU implemenation, the V vector extension depends on the
-> zve64d extension.
-> 
-> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Message-ID: <20241007025700.47259-2-zhiwei_liu@linux.alibaba.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+Use the GDB's own exit command, like it's already done in a couple
+places, everywhere. This is the same fix as commit 93a3048dcf45
+("tests: Gently exit from GDB when tests complete"), but applied to
+more places.
 
-Tested with a KVM guest running in an emulated RV host.
+Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+v1: https://lore.kernel.org/qemu-devel/20241021150153.487057-1-iii@linux.ibm.com/
+v1 -> v2: Mention 93a3048dcf45 (Peter, Gustavo, Philippe).
+          Collect A-b and R-b.
 
+ tests/guest-debug/test_gdbstub.py                 | 14 ++++++++++----
+ tests/tcg/multiarch/gdbstub/interrupt.py          |  4 ++--
+ tests/tcg/multiarch/gdbstub/prot-none.py          |  4 ++--
+ tests/tcg/multiarch/gdbstub/test-proc-mappings.py |  4 ++--
+ 4 files changed, 16 insertions(+), 10 deletions(-)
 
-Tested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
+index a715c0e3f5e..4f08089e6a9 100644
+--- a/tests/guest-debug/test_gdbstub.py
++++ b/tests/guest-debug/test_gdbstub.py
+@@ -10,10 +10,16 @@
+ 
+ fail_count = 0
+ 
++
++def gdb_exit(status):
++    gdb.execute(f"exit {status}")
++
++
+ class arg_parser(argparse.ArgumentParser):
+     def exit(self, status=None, message=""):
+         print("Wrong GDB script test argument! " + message)
+-        gdb.execute("exit 1")
++        gdb_exit(1)
++
+ 
+ def report(cond, msg):
+     """Report success/fail of a test"""
+@@ -38,11 +44,11 @@ def main(test, expected_arch=None):
+                    "connected to {}".format(expected_arch))
+     except (gdb.error, AttributeError):
+         print("SKIP: not connected")
+-        exit(0)
++        gdb_exit(0)
+ 
+     if gdb.parse_and_eval("$pc") == 0:
+         print("SKIP: PC not set")
+-        exit(0)
++        gdb_exit(0)
+ 
+     try:
+         test()
+@@ -62,4 +68,4 @@ def main(test, expected_arch=None):
+         pass
+ 
+     print("All tests complete: {} failures".format(fail_count))
+-    gdb.execute(f"exit {fail_count}")
++    gdb_exit(fail_count)
+diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiarch/gdbstub/interrupt.py
+index 90a45b5140a..2d5654d1540 100644
+--- a/tests/tcg/multiarch/gdbstub/interrupt.py
++++ b/tests/tcg/multiarch/gdbstub/interrupt.py
+@@ -8,7 +8,7 @@
+ #
+ 
+ import gdb
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def check_interrupt(thread):
+@@ -49,7 +49,7 @@ def run_test():
+     """
+     if len(gdb.selected_inferior().threads()) == 1:
+         print("SKIP: set to run on a single thread")
+-        exit(0)
++        gdb_exit(0)
+ 
+     gdb.execute("set scheduler-locking on")
+     for thread in gdb.selected_inferior().threads():
+diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
+index 7e264589cb8..51082a30e40 100644
+--- a/tests/tcg/multiarch/gdbstub/prot-none.py
++++ b/tests/tcg/multiarch/gdbstub/prot-none.py
+@@ -5,7 +5,7 @@
+ SPDX-License-Identifier: GPL-2.0-or-later
+ """
+ import ctypes
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def probe_proc_self_mem():
+@@ -22,7 +22,7 @@ def run_test():
+     """Run through the tests one by one"""
+     if not probe_proc_self_mem():
+         print("SKIP: /proc/self/mem is not usable")
+-        exit(0)
++        gdb_exit(0)
+     gdb.Breakpoint("break_here")
+     gdb.execute("continue")
+     val = gdb.parse_and_eval("*(char[2] *)q").string()
+diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+index 0f687f3284a..6eb6ebf7b17 100644
+--- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
++++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+@@ -3,7 +3,7 @@
+ This runs as a sourced script (via -x, via run-test.py)."""
+ from __future__ import print_function
+ import gdb
+-from test_gdbstub import main, report
++from test_gdbstub import gdb_exit, main, report
+ 
+ 
+ def run_test():
+@@ -12,7 +12,7 @@ def run_test():
+         # m68k GDB supports only GDB_OSABI_SVR4, but GDB_OSABI_LINUX is
+         # required for the info proc support (see set_gdbarch_info_proc()).
+         print("SKIP: m68k GDB does not support GDB_OSABI_LINUX")
+-        exit(0)
++        gdb_exit(0)
+     mappings = gdb.execute("info proc mappings", False, True)
+     report(isinstance(mappings, str), "Fetched the mappings from the inferior")
+     # Broken with host page size > guest page size
+-- 
+2.47.0
 
->   host/include/riscv/host/cpuinfo.h |  2 ++
->   util/cpuinfo-riscv.c              | 34 ++++++++++++++++++++++++++++++-
->   2 files changed, 35 insertions(+), 1 deletion(-)
-> 
-> diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv/host/cpuinfo.h
-> index 2b00660e36..cdc784e7b6 100644
-> --- a/host/include/riscv/host/cpuinfo.h
-> +++ b/host/include/riscv/host/cpuinfo.h
-> @@ -10,9 +10,11 @@
->   #define CPUINFO_ZBA             (1u << 1)
->   #define CPUINFO_ZBB             (1u << 2)
->   #define CPUINFO_ZICOND          (1u << 3)
-> +#define CPUINFO_ZVE64X          (1u << 4)
->   
->   /* Initialized with a constructor. */
->   extern unsigned cpuinfo;
-> +extern unsigned riscv_lg2_vlenb;
->   
->   /*
->    * We cannot rely on constructor ordering, so other constructors must
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 8cacc67645..971c924012 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -4,6 +4,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/host-utils.h"
->   #include "host/cpuinfo.h"
->   
->   #ifdef CONFIG_ASM_HWPROBE_H
-> @@ -13,6 +14,7 @@
->   #endif
->   
->   unsigned cpuinfo;
-> +unsigned riscv_lg2_vlenb;
->   static volatile sig_atomic_t got_sigill;
->   
->   static void sigill_handler(int signo, siginfo_t *si, void *data)
-> @@ -34,7 +36,7 @@ static void sigill_handler(int signo, siginfo_t *si, void *data)
->   /* Called both as constructor and (possibly) via other constructors. */
->   unsigned __attribute__((constructor)) cpuinfo_init(void)
->   {
-> -    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND;
-> +    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND | CPUINFO_ZVE64X;
->       unsigned info = cpuinfo;
->   
->       if (info) {
-> @@ -50,6 +52,10 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
->   #endif
->   #if defined(__riscv_arch_test) && defined(__riscv_zicond)
->       info |= CPUINFO_ZICOND;
-> +#endif
-> +#if defined(__riscv_arch_test) && \
-> +    (defined(__riscv_vector) || defined(__riscv_zve64x))
-> +    info |= CPUINFO_ZVE64X;
->   #endif
->       left &= ~info;
->   
-> @@ -69,11 +75,22 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
->   #ifdef RISCV_HWPROBE_EXT_ZICOND
->               info |= pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZICOND : 0;
->               left &= ~CPUINFO_ZICOND;
-> +#endif
-> +            /* For rv64, V is Zve64d, a superset of Zve64x. */
-> +            info |= pair.value & RISCV_HWPROBE_IMA_V ? CPUINFO_ZVE64X : 0;
-> +#ifdef RISCV_HWPROBE_EXT_ZVE64X
-> +            info |= pair.value & RISCV_HWPROBE_EXT_ZVE64X ? CPUINFO_ZVE64X : 0;
->   #endif
->           }
->       }
->   #endif /* CONFIG_ASM_HWPROBE_H */
->   
-> +    /*
-> +     * We only detect support for vectors with hwprobe.  All kernels with
-> +     * support for vectors in userspace also support the hwprobe syscall.
-> +     */
-> +    left &= ~CPUINFO_ZVE64X;
-> +
->       if (left) {
->           struct sigaction sa_old, sa_new;
->   
-> @@ -113,6 +130,21 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
->           assert(left == 0);
->       }
->   
-> +    if (info & CPUINFO_ZVE64X) {
-> +        /*
-> +         * We are guaranteed by RVV-1.0 that VLEN is a power of 2.
-> +         * We are guaranteed by Zve64x that VLEN >= 64, and that
-> +         * EEW of {8,16,32,64} are supported.
-> +         */
-> +        unsigned long vlenb;
-> +        /* csrr %0, vlenb */
-> +        asm volatile(".insn i 0x73, 0x2, %0, zero, -990" : "=r"(vlenb));
-> +        assert(vlenb >= 8);
-> +        assert(is_power_of_2(vlenb));
-> +        /* Cache VLEN in a convenient form. */
-> +        riscv_lg2_vlenb = ctz32(vlenb);
-> +    }
-> +
->       info |= CPUINFO_ALWAYS;
->       cpuinfo = info;
->       return info;
 
