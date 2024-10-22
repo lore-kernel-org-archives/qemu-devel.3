@@ -4,86 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5226CDD0CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 18:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E60BDCDD0D1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 19:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3K1S-0007h1-EF; Tue, 22 Oct 2024 14:54:26 -0400
+	id 1t3KHX-0004KO-4Y; Tue, 22 Oct 2024 15:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3K1O-0007gI-Sq
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 14:54:23 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3K1M-0004Uy-G4
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 14:54:22 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-7eab7622b61so4181719a12.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 11:54:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729623258; x=1730228058; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jRPX6N1Lr33v+7DIkV3DeyxdurCpElPS6NcFAh/nlfo=;
- b=k+sMkZ7/Ci8ZP9zfPV8vVK0keQ/eGV2mMluzmzU7M+PBQuglNAM3YNMcG+5SJyDvBG
- uP38IYAP5lfnBjDuwh424ZHuqI529ONYgmaaNfXAApkiYc1Hpu9G1y+1q/W4nBRxuT4U
- XGXBHQlS/iiUoc6yl0RTUHUrG7XhhqdxqFKOEgW54mnZaLDMkhclyOWdbRm2N2I35Y6F
- 61uVzW2IIapw/zPRNH4LRPODuWkvrA1j/ElRyDNBSEJNhSy1JiiUznu14iHyZVxaoYZD
- k8qmsQ0E/yCgNWEswyK7TzG1dALO74Ni9Vh8flKiwrjZh3CFxcCoITzcjJWWv1WMVzD8
- fANg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3KHV-0004Jr-EK
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:11:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3KHT-0006kl-IE
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 15:11:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729624256;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wzU1OjjL+rBsUWzsdfeVoUpGiqB9h6nIlRDvW9bCFLA=;
+ b=MqGnJnVnly9Jybb4iCz0lKkc52vw4ZkjC3qr4W4+l3Ydxu2cxjkOdMvRVxWyAv+co6Mbiv
+ 63iWCF1nLV0LMUrpkDsE83kSmrg8igpPpAlVRYRX0KILBjFNpk0K9JqndPoZfIVy8n3z5Z
+ G+Nmvc/byJjlM1vtFKQSyEF2Zrfgz7c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-247-YI1grskhMBijPVWZUJUHDw-1; Tue, 22 Oct 2024 15:10:54 -0400
+X-MC-Unique: YI1grskhMBijPVWZUJUHDw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4316e350d6aso22937195e9.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 12:10:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729623258; x=1730228058;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jRPX6N1Lr33v+7DIkV3DeyxdurCpElPS6NcFAh/nlfo=;
- b=SzAEX7/kUkbPISasgeq646VPB89aqmoFBo8ZUEypJWMn4U10inlXSvz0/7FOflY/P+
- 5c3pDFjdU5rE4GoF77YQfByGPE6ppAUJ1LVJ5JTYxifFZI/ucRPU9cHNaCghPOaBf/zG
- 3Y9fxetykcNQ9jGNjAx2G6xq0/x8XPNqBR/ie8pkQ+rAHvlIg3KcGTrg2aL4Rg/oLCZM
- IzkbgbQxatU5YcO2flLWohmBo2yn6gIHWNiozc9HCsCfncMBSgTLsyytJGXj4VwZDho+
- ZyNCYJOdDiy1R9L+dmltuXLtvyWdpA/dNy7kKQMzomcl7RZxvU9z1nYPfbfdKRZ20wqU
- FObQ==
+ d=1e100.net; s=20230601; t=1729624253; x=1730229053;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wzU1OjjL+rBsUWzsdfeVoUpGiqB9h6nIlRDvW9bCFLA=;
+ b=H/agErYc+OnSKZARhXbQ+kLjxUq3bxACQqWGG8jJPCRQf9rtd8Zz4fJ0TUpF6/pcHE
+ eI/vid2d0Gz6RnGlak5iTv/cN+qiypPXSrbfp+NYOfuK83cZ57g5vfFQRpzn7aJypDiP
+ JqqU0siMffi6XQylekBFbs9uLi1xZHlvrEISBjmLue3Nl0P+HlPxt15iiZ+WMeL8Y+ia
+ zJfZ+SlNyia9NuibuT3uu51gsUOJ0Fmj5odldWAuh8MoMSU6Kt1rAyCtbdsPCnVWlpVk
+ HGAwBjOOVWDjpD1a5e3WG2ux7To7aJW2gD5yq9M15nfawZlyPPlJFCDMxVfJt2Qts1tZ
+ QrQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4fIRNVEHmaP+Zc9YSh+WtL3K+mx8XBzyvP1OSrGDIFz24E2UrTcG7J0zFHJSrUl6NcjnRrGuJ/RIG@nongnu.org
-X-Gm-Message-State: AOJu0YwgUup1iFUn6Wg1njlJBcZi3CFM4nxGmPQ7EIYnrqN6tBeCKYUO
- cDqP+PNMphHh86xPmgJ8mKbfn7uTtiHJHftKJtWE40RK3hdxRTnwfxcXJmOKwNZ3K2tB3FXtS52
- 5
-X-Google-Smtp-Source: AGHT+IFeRdTQA64mQGSXf8anUVF0o+s/m8eWY+sT/XqxVeW73xE9fTRTYpKupg63fMqboVSkAr+uSg==
-X-Received: by 2002:a05:6a21:1304:b0:1d7:3d:6008 with SMTP id
- adf61e73a8af0-1d978b12ed4mr4695637.13.1729623258335; 
- Tue, 22 Oct 2024 11:54:18 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec132fef0sm5091456b3a.63.2024.10.22.11.54.17
+ AJvYcCVW7+5lq0QhYzcd5CTq5h9zGqM2+jZlz06zGqfADavZi+ct5V50mQO9tYJi/oGeSyPTwSZ+ozR/tzDY@nongnu.org
+X-Gm-Message-State: AOJu0YzX+RFrxVZEt3Jqu5xipLv/ZOIyUlDRlQDQZ7ynNXHx9avuFnIS
+ fbXmtWaZjD6A9bsEKrULIpJeQihsgtYh4kWzYr/emjGacTE6EbgCPRYfOq0prf5K3r7PAfk83Zf
+ B7T6vENM+88bZdsOkwJHrvzIUK1fWggrkE1Uah8QwfwVWYPdgVbf+
+X-Received: by 2002:a05:600c:3b90:b0:431:5ba1:a513 with SMTP id
+ 5b1f17b1804b1-431841fdca7mr1794495e9.10.1729624253280; 
+ Tue, 22 Oct 2024 12:10:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVcQ0sm5S0wOZoCZ4pFAWnxA8V8WJ69PnF49S6fSyBvCUKXvdJhoJl2oHIIrNCdHvPIo+22A==
+X-Received: by 2002:a05:600c:3b90:b0:431:5ba1:a513 with SMTP id
+ 5b1f17b1804b1-431841fdca7mr1794375e9.10.1729624252925; 
+ Tue, 22 Oct 2024 12:10:52 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-40-241-30.web.vodafone.de.
+ [109.40.241.30]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4316f5cc53fsm95075085e9.47.2024.10.22.12.10.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 11:54:18 -0700 (PDT)
-Message-ID: <51c9f589-5ceb-42c0-8d02-b1a838141f55@linaro.org>
-Date: Tue, 22 Oct 2024 11:54:16 -0700
+ Tue, 22 Oct 2024 12:10:52 -0700 (PDT)
+Message-ID: <cae8193d-6693-45d7-959f-eef536ec4589@redhat.com>
+Date: Tue, 22 Oct 2024 21:10:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: Use physical cpu id about CSR CPUID for
- sysemu
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20241022124247.873232-1-maobibo@loongson.cn>
+Subject: Re: [PULL 08/17] crypto/hash: Implement and use new hash API
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Alejandro Zeise <alejandro.zeise@seagate.com>
+Cc: Kunwu <chentao@kylinos.cn>
+References: <20241010162024.988284-1-berrange@redhat.com>
+ <20241010162024.988284-9-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241022124247.873232-1-maobibo@loongson.cn>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241010162024.988284-9-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,91 +149,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/24 05:42, Bibo Mao wrote:
-> For user tcg, there is no physical cpu id provided and logic cpuid
-> is used. For system emulation, physical cpu id is provided, initial
-> value of register CSR CPUID can be set from physical cpu id.
+On 10/10/2024 18.20, Daniel P. Berrangé wrote:
+> From: Alejandro Zeise <alejandro.zeise@seagate.com>
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> Changes the public hash API implementation to support accumulative hashing.
+> 
+> Implementations for the public functions are added to call the new
+> driver functions that implement context creation, updating,
+> finalization, and destruction.
+> 
+> Additionally changes the "shortcut" functions to use these 4 new core
+> functions.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> [ clg: - Reworked qcrypto_hash_bytesv() error handling
+>         - Used hash->driver int qcrypto_hash_new(), qcrypto_hash_free()
+>           qcrypto_hash_updatev()
+>         - Introduced qcrypto_hash_supports() check in
+>           qcrypto_hash_new()
+>         - Introduced g_autofree variables in qcrypto_hash_finalize_digest()
+>           and qcrypto_hash_finalize_base64()
+>         - Re-arrranged code in qcrypto_hash_digestv() and
+>           qcrypto_hash_digest()
+>         - Checkpatch fixes ]
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/intc/loongarch_ipi.c           | 3 ++-
->   target/loongarch/cpu.c            | 7 ++++++-
->   target/loongarch/tcg/csr_helper.c | 4 ----
->   3 files changed, 8 insertions(+), 6 deletions(-)
+>   crypto/hash.c | 161 ++++++++++++++++++++++++++++++++++++++++----------
+>   1 file changed, 131 insertions(+), 30 deletions(-)
 
-Since cpu_index is arbitrary and assigned by hw/loongarch/virt.c anyway, why do these two 
-values differ?  Surely arch_id is already unique per cpu?
+  Hi,
 
+something recently broke qemu-iotest 081 in raw mode and bisecting it 
+pointed me to this commit here.
 
-r~
+cd tests/qemu-iotests/ ; ./check -raw 081 ; cd ../../
+[...]
+081   fail       [21:07:40] [21:07:42]   1.4s   (last: 1.4s)  output 
+mismatch (see 
+/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/raw-file-081/081.out.bad)
+--- /home/thuth/devel/qemu/tests/qemu-iotests/081.out
++++ 
+/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/raw-file-081/081.out.bad
+@@ -31,7 +31,6 @@
+  {"return": {}}
+  {"return": {}}
+  {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": 
+"QUORUM_REPORT_BAD", "data": {"node-name": "drive2", "sectors-count": 20480, 
+"sector-num": 0, "type": "read"}}
+  read 10485760/10485760 bytes at offset 0
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+  {"return": ""}
+@@ -44,6 +43,7 @@
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
 
+  == checking that quorum has corrected the corrupted file ==
++Pattern verification failed at offset 0, 10485760 bytes
+  read 10485760/10485760 bytes at offset 0
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
 
-> 
-> diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-> index 2ae1a42c46..78b6fce81b 100644
-> --- a/hw/intc/loongarch_ipi.c
-> +++ b/hw/intc/loongarch_ipi.c
-> @@ -42,7 +42,8 @@ static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
->       CPUArchId *archid;
->   
->       archid = find_cpu_by_archid(machine, arch_id);
-> -    if (archid) {
-> +    /* For offlined cpus, archid->cpu may be NULL */
-> +    if (archid && archid->cpu) {
->           return CPU(archid->cpu);
->       }
->   
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 7212fb5f8f..d4659e8d45 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -510,8 +510,10 @@ static void loongarch_max_initfn(Object *obj)
->   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->   {
->       CPUState *cs = CPU(obj);
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
->       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
->       CPULoongArchState *env = cpu_env(cs);
-> +    int n;
->   
->       if (lacc->parent_phases.hold) {
->           lacc->parent_phases.hold(obj, type);
-> @@ -522,7 +524,6 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->   #endif
->       env->fcsr0 = 0x0;
->   
-> -    int n;
->       /* Set csr registers value after reset, see the manual 6.4. */
->       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
->       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
-> @@ -543,7 +544,11 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->   
->       env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
->       env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
-> +#ifndef CONFIG_USER_ONLY
-> +    env->CSR_CPUID = cpu->phy_id;
-> +#else
->       env->CSR_CPUID = cs->cpu_index;
-> +#endif
->       env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
->       env->CSR_LLBCTL = FIELD_DP64(env->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
->       env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-> index 15f94caefa..2aeca2343d 100644
-> --- a/target/loongarch/tcg/csr_helper.c
-> +++ b/target/loongarch/tcg/csr_helper.c
-> @@ -37,10 +37,6 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
->   
->   target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
->   {
-> -    LoongArchCPU *lac = env_archcpu(env);
-> -
-> -    env->CSR_CPUID = CPU(lac)->cpu_index;
-> -
->       return env->CSR_CPUID;
->   }
->   
-> 
-> base-commit: cc5adbbd50d81555b8eb73602ec16fde40b55be4
+@@ -63,7 +63,6 @@
+      } -device virtio-scsi,id=scsi -device 
+scsi-hd,id=quorum-drive,bus=scsi.0,drive=quorum
+  QMP_VERSION
+  {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": 
+"QUORUM_REPORT_BAD", "data": {"node-name": "file2", "sectors-count": 20480, 
+"sector-num": 0, "type": "read"}}
+  read 10485760/10485760 bytes at offset 0
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+  {"return": ""}
+@@ -71,6 +70,7 @@
+  {"return": {}}
+
+  -- checking that the image has been corrected --
++Pattern verification failed at offset 0, 10485760 bytes
+  read 10485760/10485760 bytes at offset 0
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+
+@@ -81,7 +81,9 @@
+  10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+
+  == checking that quorum is broken ==
+-read failed: Input/output error
++Pattern verification failed at offset 0, 10485760 bytes
++read 10485760/10485760 bytes at offset 0
++10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+
+  == checking the blkverify mode with broken content ==
+  quorum: offset=0 bytes=10485760 contents mismatch at offset 0
+Failures: 081
+Failed 1 of 1 iotests
+
+Could you please have a look?
+
+  Thanks,
+   Thomas
 
 
