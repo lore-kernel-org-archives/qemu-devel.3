@@ -4,104 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C1FCDD0EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 319D3CDD0EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 20:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3LXj-0004Vr-Ub; Tue, 22 Oct 2024 16:31:52 -0400
+	id 1t3LYe-0005ep-BT; Tue, 22 Oct 2024 16:32:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3LXh-0004Sz-FV
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:31:49 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3LXf-0007lN-SC
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:31:49 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2e2bd0e2c4fso4626758a91.3
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 13:31:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729629106; x=1730233906; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oB483hQexTEaOWDvU61A56qrwM7YWeWBfyueGHYezvc=;
- b=VauaU2Jc5WhMz70VRLZXzzMbA/lopPmdnkmGUBR+f6DNLPevrWb64ugzWAEzyzAEWj
- ZEvWpPkJxwMpMbuWdgIOIJ5afVKZM1hu2aYPfC1JWBxbw5ObkOnZxYemgvHjsN4NVGvN
- 8KIbh233ijGD6fJQV/0fEodZOUREEsUIcIOKjHYcd7PoQ2GCexzsMLXbElnH+YTvHHFB
- Zk8CBFbpY6Rt/vd3gmmPZZpYNR/RUM0Q1LTSSFdtejNrAhOT4alAt1/nwBfWGweCecbu
- yuaANMbpy8KMD15GCCNg0NC7bD9UEX6l8zFTnFBu5+yNX2DexX2aLt2GZIsEpvaqoS5H
- O8ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729629106; x=1730233906;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oB483hQexTEaOWDvU61A56qrwM7YWeWBfyueGHYezvc=;
- b=YRUdy0Pndnb1OtUiLxIR3F+9zn9Qo7JL3zl+dyUwXohaCDDLGYu5STW6SOgQlrFRS2
- 2PnDHWn6UZ99q9ZFS/13I0XbyCQdwcBkeT50VDB8KNSuLIUUXlxdzd1LpLkes1dPlL+7
- B4CpFtqyjpe09OMiNT3dEUaIPUsNywahF9TYmKmAKVWkR8GmfmIHungbDfl/qMh+2vHL
- ZhWgmAtStAFN1IMkerNAn6mCtDE+lFKVYosijt+4atZyAoNSu+VNtw44rGhAXLF6H4Bp
- h7XoaxVh8uRS7fu4P6c9xUervvF7sZSkohEBDlUxdAcsgUjthZGLeWDDQ8WijRd+FEUM
- VKhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXv2N8jGV5QAkDBOTpTJeWnXY4O/lvVD5oAQJEIJj/e+iKgrrHBH31/+/9zsV+WayD7DFOPtCCacfqQ@nongnu.org
-X-Gm-Message-State: AOJu0YywyMX8enasy+YTgkt8twCNlqbbZqsuXUFT4VPtM6hU7UwQGlAS
- ao1FHVOwmif/wyhI4FIK2E+di+8YGJuQbkEJXp4TF70cCA8clJmfYQ3GQzy6bRo=
-X-Google-Smtp-Source: AGHT+IHOfhvheXJxw9in5Rg8Qqoc4W+j3iF1Z8mFQAoMgSmn+ZFqHHEv4hP0+Rc5vNRAQag4kQezkA==
-X-Received: by 2002:a17:90b:4c4b:b0:2e2:d15c:1a24 with SMTP id
- 98e67ed59e1d1-2e76b618c40mr223184a91.23.1729629105804; 
- Tue, 22 Oct 2024 13:31:45 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e5ad388ea9sm6722471a91.29.2024.10.22.13.31.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 13:31:45 -0700 (PDT)
-Message-ID: <20d8ac14-d920-4a21-a5cc-432acc7d582f@linaro.org>
-Date: Tue, 22 Oct 2024 13:31:44 -0700
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3LYc-0005eM-3g
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:32:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3LYa-0007o4-3P
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 16:32:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729629162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PT7eZYxt1FuUHmcpeD52AmtCZP1VQksIdo9GswzjOQU=;
+ b=O2F7G90RVlE8kgBRpoCMPqFfoaUC0oF/kaoxhw7uDQzOr3m4Hr7F667QC3OiTO8KKMkgZ1
+ yGIz2HHUb7/uJw0MIUdc9UUgFv19YoAibNnC67RvwzN0yJkuQjO/CLdObhS91KIGc8UE0u
+ jJVua9XDEzgmM7jITxgadppreltjXsQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-5i8jKdQMNLWJ6dXj0IdDmQ-1; Tue,
+ 22 Oct 2024 16:32:38 -0400
+X-MC-Unique: 5i8jKdQMNLWJ6dXj0IdDmQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD89219560A5; Tue, 22 Oct 2024 20:32:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.70])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73A811956088; Tue, 22 Oct 2024 20:32:36 +0000 (UTC)
+Date: Tue, 22 Oct 2024 22:32:34 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v2 08/13] rust: cleanup module_init!, use it from
+ #[derive(Object)]
+Message-ID: <ZxgL4l-itd8GjhnB@redhat.com>
+References: <20241021163538.136941-1-pbonzini@redhat.com>
+ <20241021163538.136941-9-pbonzini@redhat.com>
+ <ME0P300MB1040AEF7807BCED2866FA5F6954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+ <CABgObfZ95u+3CG92Zoobju=Sg19W4P2Dzb2YAGms=nwoydaknQ@mail.gmail.com>
+ <ME0P300MB1040458035970DCE9B84D6A3954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/20] tests/docker: add NOFETCH env variable for
- testing
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- devel@lists.libvirt.org, Cleber Rosa <crosa@redhat.com>,
- kvm@vger.kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241022105614.839199-1-alex.bennee@linaro.org>
- <20241022105614.839199-3-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241022105614.839199-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ME0P300MB1040458035970DCE9B84D6A3954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,38 +88,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMjIvMjQgMDM6NTUsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gVGVzdGluZyBub24t
-YXV0byBidWlsdCBkb2NrZXIgY29udGFpbmVycyAoaS5lLiBjdXN0b20gYnVpbHQgY29tcGls
-ZXJzKQ0KPiBpcyBhIGJpdCBmaWRkbHkgYXMgeW91IGNvdWxkbid0IGNvbnRpbnVlIGEgYnVp
-bGQgd2l0aCBhIHByZXZpb3VzbHkNCj4gbG9jYWxseSBidWlsdCBjb250YWluZXIuIFdoaWxl
-IHlvdSBjYW4gcGxheSBnYW1lcyB3aXRoIFJFR0lTVFJZIGl0cw0KPiBzaW1wbGVyIHRvIGFs
-bG93IGEgTk9GRVRDSCB0aGF0IHdpbGwgZ28gdGhyb3VnaCB0aGUgY2FjaGVkIGJ1aWxkDQo+
-IHByb2Nlc3Mgd2hlbiB5b3UgcnVuIHRoZSB0ZXN0cy4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6
-IEFsZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICAgdGVz
-dHMvZG9ja2VyL01ha2VmaWxlLmluY2x1ZGUgfCA1ICsrKy0tDQo+ICAgMSBmaWxlIGNoYW5n
-ZWQsIDMgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQg
-YS90ZXN0cy9kb2NrZXIvTWFrZWZpbGUuaW5jbHVkZSBiL3Rlc3RzL2RvY2tlci9NYWtlZmls
-ZS5pbmNsdWRlDQo+IGluZGV4IDY4MWZlYWU3NDQuLmZlYWQ3ZDNhYmUgMTAwNjQ0DQo+IC0t
-LSBhL3Rlc3RzL2RvY2tlci9NYWtlZmlsZS5pbmNsdWRlDQo+ICsrKyBiL3Rlc3RzL2RvY2tl
-ci9NYWtlZmlsZS5pbmNsdWRlDQo+IEBAIC05MiwxMCArOTIsMTAgQEAgZW5kaWYNCj4gICBk
-b2NrZXItaW1hZ2UtYWxwaW5lOiBOT1VTRVI9MQ0KPiAgIA0KPiAgIGRlYmlhbi10b29sY2hh
-aW4tcnVuID0gXA0KPiAtCSQoaWYgJChOT0NBQ0hFKSwgCQkJCQkJXA0KPiArCSQoaWYgJChO
-T0NBQ0hFKSQoTk9GRVRDSCksCQkJCQlcDQo+ICAgCQkkKGNhbGwgcXVpZXQtY29tbWFuZCwJ
-CQkJCVwNCj4gICAJCQkkKERPQ0tFUl9TQ1JJUFQpIGJ1aWxkIC10IHFlbXUvJDEgLWYgJDwg
-CVwNCj4gLQkJCSQoaWYgJFYsLC0tcXVpZXQpIC0tbm8tY2FjaGUgCQkJXA0KPiArCQkJJChp
-ZiAkViwsLS1xdWlldCkgJChpZiAkKE5PQ0FDSEUpLC0tbm8tY2FjaGUpCVwNCj4gICAJCQkt
-LXJlZ2lzdHJ5ICQoRE9DS0VSX1JFR0lTVFJZKSAtLWV4dHJhLWZpbGVzCVwNCj4gICAJCQkk
-KERPQ0tFUl9GSUxFU19ESVIpLyQxLmQvYnVpbGQtdG9vbGNoYWluLnNoLAlcDQo+ICAgCQkJ
-IkJVSUxEIiwgJDEpLAkJCQkgICAgICAgIFwNCj4gQEAgLTE3Nyw2ICsxNzcsNyBAQCBkb2Nr
-ZXI6DQo+ICAgCUBlY2hvICcgICAgTkVUV09SSz0kJEJBQ0tFTkQgICAgIEVuYWJsZSB2aXJ0
-dWFsIG5ldHdvcmsgaW50ZXJmYWNlIHdpdGggJCRCQUNLRU5ELicNCj4gICAJQGVjaG8gJyAg
-ICBOT1VTRVI9MSAgICAgICAgICAgICBEZWZpbmUgdG8gZGlzYWJsZSBhZGRpbmcgY3VycmVu
-dCB1c2VyIHRvIGNvbnRhaW5lcnMgcGFzc3dkLicNCj4gICAJQGVjaG8gJyAgICBOT0NBQ0hF
-PTEgICAgICAgICAgICBJZ25vcmUgY2FjaGUgd2hlbiBidWlsZCBpbWFnZXMuJw0KPiArCUBl
-Y2hvICcgICAgTk9GRVRDSD0xICAgICAgICAgICAgRG8gbm90IGZldGNoIGZyb20gdGhlIHJl
-Z2lzdHJ5LicNCj4gICAJQGVjaG8gJyAgICBFWEVDVVRBQkxFPTxwYXRoPiAgICBJbmNsdWRl
-IGV4ZWN1dGFibGUgaW4gaW1hZ2UuJw0KPiAgIAlAZWNobyAnICAgIEVYVFJBX0ZJTEVTPSI8
-cGF0aD4gWy4uLiA8cGF0aD5dIicNCj4gICAJQGVjaG8gJyAgICAgICAgICAgICAgICAgICAg
-ICAgICBJbmNsdWRlIGV4dHJhIGZpbGVzIGluIGltYWdlLicNCg0KUmV2aWV3ZWQtYnk6IFBp
-ZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg==
+Am 22.10.2024 um 08:00 hat Junjie Mao geschrieben:
+> 
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+> 
+> > On Tue, Oct 22, 2024 at 4:12 AM Junjie Mao <junjie.mao@hotmail.com> wrote:
+> >> > +    ($type:ident => $body:block) => {
+> >> > +        const _: () = {
+> >> > +            #[used]
+> >> > +            #[cfg_attr(
+> >> > +                not(any(target_vendor = "apple", target_os = "windows")),
+> >> > +                link_section = ".init_array"
+> >> > +            )]
+> >> > +            #[cfg_attr(target_vendor = "apple", link_section = "__DATA,__mod_init_func")]
+> >> > +            #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
+> >> > +            pub static LOAD_MODULE: extern "C" fn() = {
+> >> > +                extern "C" fn init_fn() {
+> >>
+> >> init_fn() should be unsafe fn according to the signature of
+> >> register_module_init.
+> >
+> > I think it *can* be unsafe (which bindgen does by default). It's
+> > always okay to pass a non-unsafe function as unsafe function pointer:
+> >
+> > fn f() {
+> >     println!("abc");
+> > }
+> >
+> > fn g(pf: unsafe fn()) {
+> >     unsafe {
+> >         pf();
+> >     }
+> > }
+> >
+> > fn main() {
+> >     g(f);
+> > }
+> >
+> >> Being unsafe fn also makes sense here because it
+> >> is the caller, not init_fn() itself, that is responsible for the safety of
+> >> the unsafe code in the body.
+> >
+> > Isn't it the opposite? Since the caller of module_init! is responsible
+> > for the safety, init_fn() itself can be safe.
+> 
+> My understanding is that:
+> 
+>   1. init_fn() is called by QEMU QOM subsystem with certain timing
+>      (e.g., called after main()) and concurrency (e.g., all init_fn()
+>      are called sequentially) preconditions.
+
+Though these conditions are not a matter of safety, but of correctness.
+
+>   2. The caller of module_init! is responsible for justifying the safety
+>      of their $body under the preconditions established in #1.
+> 
+> "unsafe fn" in Rust is designed to mark functions with safety
+> preconditions so that the compiler can raise an error if the caller
+> forgets that it has those preconditions to uphold [1].
+
+I don't think we expect to have preconditions here that are required for
+safety (in the sense with which the term is used in Rust).
+
+But safe code is not automatically correct.
+
+If you added "unsafe" for every function that requires some
+preconditions to be met so that it functions correctly (instead of only
+so that it doesn't have undefined behaviour on the language level), then
+you would annotate almost every function as "unsafe".
+
+I think the rule of thumb for marking a function unsafe is when you have
+unsafe code inside of it whose safety (not correctness!) depends on a
+condition that the caller must reason about because you can't guarantee
+it in the function itself.
+
+This macro should probably only be used with code that can guarantee the
+safety of its unsafe blocks in itself. The C side of constructors can't
+make many guarantees anyway, and there is nobody who would reason about
+them.
+
+Kevin
+
 
