@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89117D2CDFF
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236E9D2CDFF
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 16:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3I4e-0000QX-01; Tue, 22 Oct 2024 12:49:36 -0400
+	id 1t3I4e-0000S9-E8; Tue, 22 Oct 2024 12:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4b-0000KE-5t
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4b-0000L5-EE
  for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4X-00065n-9M
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:32 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1t3I4Y-00066W-Li
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 12:49:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729615767;
+ s=mimecast20190719; t=1729615770;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0s2NzQAkVXUXjzpQCMdLxQHeBTEoVVx/FCeKoPNe9Qw=;
- b=a8qJcXMcpAlFAhYrlqQ+y9xFRfghZuI2tOtFdlxsjuUkVDG7Q3nLX490RJXttpTnh8BKjd
- JWHMgioEeXa3DuNuGeM2GdiZPnRgzKnA+mhc9O5QbU7xGVrJX4VLfUdmolfesA4A84w2Dy
- 5M8B5yANXX27YOpTYNudFlflPM/Buck=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=pWd8qSFRMUXHBUD1J9oD9i5oR04LJMY81kwu8tgABa4=;
+ b=NV6d7iEcRBCRSzSxYPjv4oIlL5p6Lkma2QYGVZ6nYomAVwC+GDtYT+d37Zl4VS42uOT+Z4
+ ytKIzVdJFENAXAe4rsn2gUnCis5IXQfbhib/ZVl/5u5fYahu2Wd7dV7wN0qzAVG6SWH9i7
+ vh/zFaEMJo2n6irFwar4lx1YCxTHZak=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-X46m07fuMb-7huM5XCIdmg-1; Tue,
- 22 Oct 2024 12:49:23 -0400
-X-MC-Unique: X46m07fuMb-7huM5XCIdmg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-32XfN1m5NDGFWcI3zK7F4g-1; Tue,
+ 22 Oct 2024 12:49:26 -0400
+X-MC-Unique: 32XfN1m5NDGFWcI3zK7F4g-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 011A419560BA; Tue, 22 Oct 2024 16:49:22 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C2F419560BF; Tue, 22 Oct 2024 16:49:23 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.194.70])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D463A1955EA3; Tue, 22 Oct 2024 16:49:19 +0000 (UTC)
+ id 699B21955EA5; Tue, 22 Oct 2024 16:49:22 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 4/9] block/vdi.c: Make SECTOR_SIZE constant 64-bits
-Date: Tue, 22 Oct 2024 18:48:58 +0200
-Message-ID: <20241022164903.282174-5-kwolf@redhat.com>
+Subject: [PULL 5/9] iotests/backup-discard-source: convert size variable to be
+ int
+Date: Tue, 22 Oct 2024 18:48:59 +0200
+Message-ID: <20241022164903.282174-6-kwolf@redhat.com>
 In-Reply-To: <20241022164903.282174-1-kwolf@redhat.com>
 References: <20241022164903.282174-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -81,57 +82,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Make the VDI SECTOR_SIZE define be a 64-bit constant; this matches
-how we define BDRV_SECTOR_SIZE.  The benefit is that it means that we
-don't need to carefully cast to 64-bits when doing operations like
-"n_sectors * SECTOR_SIZE" to avoid doing a 32x32->32 multiply, which
-might overflow, and which Coverity and other static analysers tend to
-warn about.
+Make variable reusable in code for checks. Don't care to change "512 *
+1024" invocations as they will be dropped in the next commit.
 
-The specific potential overflow Coverity is highlighting is the one
-at the end of vdi_co_pwritev() where we write out n_sectors sectors
-to the block map.  This is very unlikely to actually overflow, since
-the block map has 4 bytes per block and the maximum number of blocks
-in the image must fit into a 32-bit integer.  So this commit is not
-fixing a real-world bug.
-
-An inspection of all the places currently using SECTOR_SIZE in the
-file shows none which care about the change in its type, except for
-one call to error_setg() which needs the format string adjusting.
-
-Resolves: Coverity CID 1508076
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20241008164708.2966400-5-peter.maydell@linaro.org>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <20240620144402.65896-2-vsementsov@yandex-team.ru>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/vdi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qemu-iotests/tests/backup-discard-source | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/block/vdi.c b/block/vdi.c
-index 149e15c831..26f7638f1f 100644
---- a/block/vdi.c
-+++ b/block/vdi.c
-@@ -87,7 +87,7 @@
- /* Command line option for static images. */
- #define BLOCK_OPT_STATIC "static"
+diff --git a/tests/qemu-iotests/tests/backup-discard-source b/tests/qemu-iotests/tests/backup-discard-source
+index 2391b12acd..05fbe5d26b 100755
+--- a/tests/qemu-iotests/tests/backup-discard-source
++++ b/tests/qemu-iotests/tests/backup-discard-source
+@@ -28,7 +28,7 @@ from iotests import qemu_img_create, qemu_img_map, qemu_io
+ temp_img = os.path.join(iotests.test_dir, 'temp')
+ source_img = os.path.join(iotests.test_dir, 'source')
+ target_img = os.path.join(iotests.test_dir, 'target')
+-size = '1M'
++size = 1024 * 1024
  
--#define SECTOR_SIZE 512
-+#define SECTOR_SIZE 512ULL
- #define DEFAULT_CLUSTER_SIZE 1048576
- /* Note: can't use 1 * MiB, because it's passed to stringify() */
  
-@@ -442,7 +442,7 @@ static int vdi_open(BlockDriverState *bs, QDict *options, int flags,
-         goto fail;
-     } else if (header.sector_size != SECTOR_SIZE) {
-         error_setg(errp, "unsupported VDI image (sector size %" PRIu32
--                   " is not %u)", header.sector_size, SECTOR_SIZE);
-+                   " is not %llu)", header.sector_size, SECTOR_SIZE);
-         ret = -ENOTSUP;
-         goto fail;
-     } else if (header.block_size != DEFAULT_CLUSTER_SIZE) {
+ def get_actual_size(vm, node_name):
+@@ -39,9 +39,9 @@ def get_actual_size(vm, node_name):
+ 
+ class TestBackup(iotests.QMPTestCase):
+     def setUp(self):
+-        qemu_img_create('-f', iotests.imgfmt, source_img, size)
+-        qemu_img_create('-f', iotests.imgfmt, temp_img, size)
+-        qemu_img_create('-f', iotests.imgfmt, target_img, size)
++        qemu_img_create('-f', iotests.imgfmt, source_img, str(size))
++        qemu_img_create('-f', iotests.imgfmt, temp_img, str(size))
++        qemu_img_create('-f', iotests.imgfmt, target_img, str(size))
+         qemu_io('-c', 'write 0 1M', source_img)
+ 
+         self.vm = iotests.VM()
+@@ -98,7 +98,7 @@ class TestBackup(iotests.QMPTestCase):
+         mapping = qemu_img_map(temp_img)
+         self.assertEqual(len(mapping), 1)
+         self.assertEqual(mapping[0]['start'], 0)
+-        self.assertEqual(mapping[0]['length'], 1024 * 1024)
++        self.assertEqual(mapping[0]['length'], size)
+         self.assertEqual(mapping[0]['data'], False)
+ 
+         os.remove(temp_img)
+@@ -125,7 +125,7 @@ class TestBackup(iotests.QMPTestCase):
+         self.assert_qmp(result, 'return', '')
+ 
+         # Check that data is written to temporary image
+-        self.assertGreater(get_actual_size(self.vm, 'temp'), 1024 * 1024)
++        self.assertGreater(get_actual_size(self.vm, 'temp'), size)
+ 
+         self.do_backup()
+ 
 -- 
 2.47.0
 
