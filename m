@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146CCD1CDD5
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AFAD1CDDC
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CZJ-0001w1-Mn; Tue, 22 Oct 2024 06:56:56 -0400
+	id 1t3CYu-0001kn-9P; Tue, 22 Oct 2024 06:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ1-0001p1-0u
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1t3CYo-0001i9-5H
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:22 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYx-00023z-Df
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:32 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5c937b5169cso1155614a12.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:30 -0700 (PDT)
+ id 1t3CYl-0001yI-C6
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:21 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-539fb49c64aso7695062e87.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594590; x=1730199390; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729594577; x=1730199377; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nuVL16OURPo6SfQxD2PzScmfjsPxu4HizBAVk8u7e/E=;
- b=yEgmR/iucv08DNiZ7m008A6CAAh3GaZt5k0f/0SCmq6RK3bXS27FBvrPerjCf387AW
- WQnJLAB5boaVNUizxzqMfclYYhIrDpJvh3FlW4yqJop0THj6ZfFxdJDPfyBxmolAcPF+
- Gb/wNUNpnzPctM+mvYL7M/mxLScxLmEfUMNfPJAG4C9gBy8grZTG85zm+uD3L37TLBUw
- CjQNCSiRKXY17nY7WemyUd2R97/sYuQsGCpqQdDSi/r78p1plUQCeilcLR2qjijmjLng
- 9s2nWZxo0kq9IkgNPXSPNJRiGTtNxsKRXOLLPwaIHnVCOsgGlIibMjv5h3B2kBBFyXR/
- wnpw==
+ bh=/9/+YXB0yFn3lOXE+wDfnOMUk7oakkE6QbrJ6dxZQ+4=;
+ b=s7vdUzlfuVxb0zWoPc6QWYx/UlE+nzMgZ2nY79QhTSmHo1OwU0+c21kAQVuV7uSDOg
+ +mJlyO9wUuZpn0LnXTW4qV7/+wI343kIlNDkWE2D0GNvTJ6aK7e0sD6Nkd3NPhEG8VUi
+ sgHECExozmSPj3q4HW+hzXmz2qwSpQhsLeKTCSX0hDOWE7iFE3wVsA6wJfU3wgiKdVJC
+ TKLriK0afYizXDUQG0XJ/Hv9V3qIPS67RsGnt/OOUpPR23lFZNTXK8uwE4oNGIfMuB7/
+ kloE+hKfouXW2H8n0DT7ab4Ipg9yMx4bvsnG0rOc5pIDRs4/NWyluQeTdGB7z6GvtiMW
+ MovQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594590; x=1730199390;
+ d=1e100.net; s=20230601; t=1729594577; x=1730199377;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nuVL16OURPo6SfQxD2PzScmfjsPxu4HizBAVk8u7e/E=;
- b=WgY3qv4NiDGRCHJzB6WZr2mGT2uoRRu6z1bp3TfGGwLXg8+21KYYuR4tSZkLVHaP14
- YlF/yselihVUQzTHWWOXlBNiP3VVX1WkxxGeGoIRGbWrjmxYxv9oe7beJf3lYMTuDUju
- 0mU0glJtrBc7OdGIIoMgGzTV1z+8dkmI+EPWq+Is2E+C7FpBq82b58DRU35Kl/+E7Gk/
- BwyG/TEcMkJMmwpVptpuDHorvaVfqreWQ5WWVVFI4TsLZ0Z5vr/HLHiI+b/z1K0LnLC8
- JCkOzYS5kzB/nW08vNoPUT57Lz9rdWPhpcIBqCWA1dGOw4QRTBCHQy1E5hloKd+axu04
- x22Q==
-X-Gm-Message-State: AOJu0Ywj9tJoBaxwpJyTZc4a9pxOQrq5mt0tzmiqQnCkanbSYrZkJqSN
- 8bxa/5A4pbZNIPC5WHOuXZT3LkrcsIgus/92LaBP9Tqj/pNCKuhxRNJUYt/rqKg=
-X-Google-Smtp-Source: AGHT+IHwi1+vxmbQ3YLA9r6WePtD03FZyJBvumSeivnyntfSu8jv5XX9sGc6cj7ZvugURHt1idsIcQ==
-X-Received: by 2002:a05:6402:35c2:b0:5c9:3070:701e with SMTP id
- 4fb4d7f45d1cf-5cb794670eemr2833546a12.9.1729594589755; 
- Tue, 22 Oct 2024 03:56:29 -0700 (PDT)
+ bh=/9/+YXB0yFn3lOXE+wDfnOMUk7oakkE6QbrJ6dxZQ+4=;
+ b=JOIYeSKOWYZHzUMxttdFxY4OPL4bmrbdJ4aPCYQDeQ3qLGeuVW9voLAVCIh3RhqqUQ
+ 5xmD9q2xs10F94Rg9zJbmk1yfSsmOUdRxscSFvjK1KXdKJc1+raqOgum6E/vYQcQPgPc
+ SmKNazjVwABYdPD9+gbxEEEyJJ8GeJVA4QR4HGZv/2Z0zc1An6zpgbUmzgrDBZ5bEqqR
+ gnqmmDW+wJcN8Go2HSWftqeZnUk6D9YfRhBfZTORxzIQSUWPhZXAB4UPg3eRYxDUvk3I
+ 3Ew5m74QEncU3iATZ8aaCgVESBZRf7ko6I745UAtMDW/T9dEKnxZuXc+78xXY9TDhuMT
+ XMIw==
+X-Gm-Message-State: AOJu0Yy88xERedqYcJsAcwRWemua0a4qBGtOPPjtqMZarXwRGQvKc89G
+ 6s7+3MJRTIvHq2YdxuuVCnkCvmA+DGZZ/Wji+ln3bpOb8rwg5T6VXW/33gCddeg=
+X-Google-Smtp-Source: AGHT+IGyaTZRzVDmFkdPhfv0rvAvIdjH0I+E59F1p2dZtHMO7E+32HML2OhzkPGNPbWtrxG3At+wRA==
+X-Received: by 2002:a05:6512:2388:b0:539:9767:903d with SMTP id
+ 2adb3069b0e04-53a154eb91emr9004463e87.60.1729594577248; 
+ Tue, 22 Oct 2024 03:56:17 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cb66c7255esm3123937a12.80.2024.10.22.03.56.19
+ a640c23a62f3a-a9a912d62e4sm321153666b.7.2024.10.22.03.56.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:28 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id ADE0A5FABE;
+ by draig.lan (Postfix) with ESMTP id 0741C5F913;
  Tue, 22 Oct 2024 11:56:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,25 +84,24 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 12/20] config/targets: update aarch64_be-linux-user gdb XML
- list
-Date: Tue, 22 Oct 2024 11:56:06 +0100
-Message-Id: <20241022105614.839199-13-alex.bennee@linaro.org>
+Subject: [PATCH v2 04/20] meson: hide tsan related warnings
+Date: Tue, 22 Oct 2024 11:55:58 +0100
+Message-Id: <20241022105614.839199-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
 References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,28 +117,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Attempting to run the binary asserts when it can't find the XML entry.
-We can fix it so we don't although I suspect other stuff is broken.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2580
+When building with gcc-12 -fsanitize=thread, gcc reports some
+constructions not supported with tsan.
+Found on debian stable.
+
+qemu/include/qemu/atomic.h:36:52: error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’ [-Werror=tsan]
+   36 | #define smp_mb()                     ({ barrier(); __atomic_thread_fence(__ATOMIC_SEQ_CST); })
+      |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240910174013.1433331-2-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- configs/targets/aarch64_be-linux-user.mak | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ meson.build | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/configs/targets/aarch64_be-linux-user.mak b/configs/targets/aarch64_be-linux-user.mak
-index 778d22b2a9..dcef597a80 100644
---- a/configs/targets/aarch64_be-linux-user.mak
-+++ b/configs/targets/aarch64_be-linux-user.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml
-+TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml
- TARGET_HAS_BFLT=y
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+diff --git a/meson.build b/meson.build
+index d26690ce20..bdd67a2d6d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -538,7 +538,15 @@ if get_option('tsan')
+                          prefix: '#include <sanitizer/tsan_interface.h>')
+     error('Cannot enable TSAN due to missing fiber annotation interface')
+   endif
+-  qemu_cflags = ['-fsanitize=thread'] + qemu_cflags
++  tsan_warn_suppress = []
++  # gcc (>=11) will report constructions not supported by tsan:
++  # "error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’"
++  # https://gcc.gnu.org/gcc-11/changes.html
++  # However, clang does not support this warning and this triggers an error.
++  if cc.has_argument('-Wno-tsan')
++    tsan_warn_suppress = ['-Wno-tsan']
++  endif
++  qemu_cflags = ['-fsanitize=thread'] + tsan_warn_suppress + qemu_cflags
+   qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
+ endif
+ 
 -- 
 2.39.5
 
