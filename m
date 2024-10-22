@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 473DCD2C56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAF6D2C56C
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3GkL-0007bq-Qf; Tue, 22 Oct 2024 11:24:33 -0400
+	id 1t3GkJ-0007Uh-9b; Tue, 22 Oct 2024 11:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkI-0007SA-G8
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:30 -0400
+ id 1t3GkH-0007OZ-Gp
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkG-0004xe-U2
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:30 -0400
+ id 1t3GkF-0004xZ-IG
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729610667;
+ s=mimecast20190719; t=1729610666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bupRsxA4PxPcQKR0C/4MvsGIj4c44qcPAmQ0QpoES/c=;
- b=ccyrwUMo/T3C497oLZC1Qg+rRwwSEn6yJjFaZFT4eMl+8DApT7gsH0euqIOQohnGi43ixG
- 2NyaHtyCXVCsPEG09YQ63GuM7fcJaIKPDZLfJ0CTwnKBKlg2M1/lq56/LC1HcsRXxfdh87
- Y8h83lPa3QQH0kPHz/pcjTVHEiPeT24=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=miGZxaqpYfvW8TcLkvAr+PfNZXKXq672MhLU1UAajrc=;
+ b=FwMOR2pLNekB5/sjdewaeoh0909c02TAn4dDVGSHDIDVdyQq1IMi7i8U5rrnyRy7R19B/f
+ mGBAyrHAbL7b03qM+1Q055iwiVtBuG+LJC1H+kWthQlmAWYojFlbjb8CgAy+WQxVx94aIg
+ YW9fyramsF9V32fgI63VdqJZWgBJPRQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-DwLAbmNBOX6FwWkaBsaq5g-1; Tue,
- 22 Oct 2024 11:24:24 -0400
-X-MC-Unique: DwLAbmNBOX6FwWkaBsaq5g-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-cQ9NZC_pMCy31q7YamD_1g-1; Tue,
+ 22 Oct 2024 11:24:21 -0400
+X-MC-Unique: cQ9NZC_pMCy31q7YamD_1g-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11D4E195422E; Tue, 22 Oct 2024 15:24:22 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DC4C1944B3E; Tue, 22 Oct 2024 15:24:19 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.59])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AF78E1956046; Tue, 22 Oct 2024 15:24:19 +0000 (UTC)
+ id BDD601955DC6; Tue, 22 Oct 2024 15:24:16 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -53,15 +52,12 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 01/14] crypto: Remove unused DER string functions
-Date: Tue, 22 Oct 2024 16:24:02 +0100
-Message-ID: <20241022152415.1632556-2-berrange@redhat.com>
-In-Reply-To: <20241022152415.1632556-1-berrange@redhat.com>
-References: <20241022152415.1632556-1-berrange@redhat.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/14] Misc fixes patches
+Date: Tue, 22 Oct 2024 16:24:01 +0100
+Message-ID: <20241022152415.1632556-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -89,79 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+The following changes since commit cc5adbbd50d81555b8eb73602ec16fde40b55be4:
 
-qcrypto_der_encode_octet_str_begin and _end have been unused
-since they were added in
-  3b34ccad66 ("crypto: Support DER encodings")
+  Merge tag 'pull-tpm-2024-10-18-1' of https://github.com/stefanberger/qemu-tpm into staging (2024-10-18 15:45:02 +0100)
 
-Remove them.
+are available in the Git repository at:
 
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/der.c | 13 -------------
- crypto/der.h | 22 ----------------------
- 2 files changed, 35 deletions(-)
+  https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
 
-diff --git a/crypto/der.c b/crypto/der.c
-index ebbecfc3fe..81367524c3 100644
---- a/crypto/der.c
-+++ b/crypto/der.c
-@@ -408,19 +408,6 @@ void qcrypto_der_encode_octet_str(QCryptoEncodeContext *ctx,
-     qcrypto_der_encode_prim(ctx, tag, src, src_len);
- }
- 
--void qcrypto_der_encode_octet_str_begin(QCryptoEncodeContext *ctx)
--{
--    uint8_t tag = QCRYPTO_DER_TAG(QCRYPTO_DER_TAG_CLASS_UNIV,
--                                  QCRYPTO_DER_TAG_ENC_PRIM,
--                                  QCRYPTO_DER_TYPE_TAG_OCT_STR);
--    qcrypto_der_encode_cons_begin(ctx, tag);
--}
--
--void qcrypto_der_encode_octet_str_end(QCryptoEncodeContext *ctx)
--{
--    qcrypto_der_encode_cons_end(ctx);
--}
--
- size_t qcrypto_der_encode_ctx_buffer_len(QCryptoEncodeContext *ctx)
- {
-     return ctx->root.dlen;
-diff --git a/crypto/der.h b/crypto/der.h
-index f4ba6da28a..bcfa4a2495 100644
---- a/crypto/der.h
-+++ b/crypto/der.h
-@@ -242,28 +242,6 @@ void qcrypto_der_encode_null(QCryptoEncodeContext *ctx);
- void qcrypto_der_encode_octet_str(QCryptoEncodeContext *ctx,
-                                   const uint8_t *src, size_t src_len);
- 
--/**
-- * qcrypto_der_encode_octet_str_begin:
-- * @ctx: the encode context.
-- *
-- * Start encoding a octet string, All fields between
-- * qcrypto_der_encode_octet_str_begin and qcrypto_der_encode_octet_str_end
-- * are encoded as an octet string. This is useful when we need to encode a
-- * encoded SEQUENCE as OCTET STRING.
-- */
--void qcrypto_der_encode_octet_str_begin(QCryptoEncodeContext *ctx);
--
--/**
-- * qcrypto_der_encode_octet_str_end:
-- * @ctx: the encode context.
-- *
-- * Finish encoding a octet string, All fields between
-- * qcrypto_der_encode_octet_str_begin and qcrypto_der_encode_octet_str_end
-- * are encoded as an octet string. This is useful when we need to encode a
-- * encoded SEQUENCE as OCTET STRING.
-- */
--void qcrypto_der_encode_octet_str_end(QCryptoEncodeContext *ctx);
--
- /**
-  * qcrypto_der_encode_ctx_buffer_len:
-  * @ctx: the encode context.
+for you to fetch changes up to c64df333f92798823c4897ae6d4bd7f49d060225:
+
+  gitlab: enable afalg tests in fedora system test (2024-10-22 13:02:33 +0100)
+
+----------------------------------------------------------------
+Misc sockets, crypto and VNC fixes
+
+* Fix rare EADDRINUSE failures on OpenBSD platforms seen
+  with migration
+* Fix & test overwriting of hash output buffer
+* Close connection instead of returning empty SASL mechlist to
+  VNC clients
+* Fix handling of SASL SSF on VNC server UNIX sockets
+* Fix handling of NULL SASL server data in VNC server
+* Validate trailing NUL padding byte from SASL client
+* Fix & test AF_ALG crypto backend build
+* Remove unused code in sockets and crypto subsystems
+
+----------------------------------------------------------------
+
+Daniel P. Berrangé (11):
+  util: don't set SO_REUSEADDR on client sockets
+  crypto/hash: avoid overwriting user supplied result pointer
+  tests: correctly validate result buffer in hash/hmac tests
+  include/crypto: clarify @result/@result_len for hash/hmac APIs
+  ui/vnc: don't return an empty SASL mechlist to the client
+  ui/vnc: don't raise error formatting socket address for non-inet
+  ui/vnc: fix skipping SASL SSF on UNIX sockets
+  ui/vnc: don't check for SSF after SASL authentication on UNIX sockets
+  ui: fix handling of NULL SASL server data
+  ui: validate NUL byte padding in SASL client data more strictly
+  gitlab: enable afalg tests in fedora system test
+
+Dr. David Alan Gilbert (2):
+  crypto: Remove unused DER string functions
+  sockets: Remove deadcode
+
+Markus Armbruster (1):
+  crypto/hash-afalg: Fix broken build
+
+ .gitlab-ci.d/buildtest.yml    |  2 +-
+ crypto/der.c                  | 13 ------
+ crypto/der.h                  | 22 ----------
+ crypto/hash-afalg.c           | 10 ++---
+ crypto/hash-gcrypt.c          | 15 +++++--
+ crypto/hash-glib.c            | 11 ++++-
+ crypto/hash-gnutls.c          | 16 ++++++--
+ crypto/hash-nettle.c          | 14 +++++--
+ include/crypto/hash.h         | 47 ++++++++++++++++------
+ include/crypto/hmac.h         | 34 +++++++++++-----
+ include/qemu/sockets.h        | 16 --------
+ tests/unit/test-crypto-hash.c |  7 ++--
+ tests/unit/test-crypto-hmac.c |  6 ++-
+ ui/vnc-auth-sasl.c            | 75 ++++++++++++++++++++++++-----------
+ ui/vnc.c                      |  3 --
+ ui/vnc.h                      |  1 -
+ util/qemu-sockets.c           | 36 -----------------
+ 17 files changed, 170 insertions(+), 158 deletions(-)
+
 -- 
 2.46.0
 
