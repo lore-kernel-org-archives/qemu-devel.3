@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C743D1715E
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C984D0E6FC
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 04:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t36Yt-0007Hr-O2; Tue, 22 Oct 2024 00:32:03 -0400
+	id 1t36qL-0001jy-Gd; Tue, 22 Oct 2024 00:50:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Ys-0007HU-Fk
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:32:02 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36qB-0001jb-SO
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:49:56 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36Yl-0006cN-3T
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:31:58 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3e5fee32e76so1840613b6e.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t36qA-0008CY-8d
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 00:49:55 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7ea6a4f287bso3298796a12.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 21:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729571510; x=1730176310; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729572592; x=1730177392; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=W38HLrDjvHS1Bya//zl/DbBG9mrU++l95Uy9irJfwNc=;
- b=sH/5TNyszRhxaQXYG70VhVbM5QmcRgTQR72QG4jTFK6PuMZ5l/QlvRhzhxnbbmWP23
- VZj/ZcueZwqU+WwEq6A5ZNaM/vLe9RkZBm5YGxeG/YgnjeZzDJYZBvwqXYVVnTAEdaQb
- mZ8tsaYM11tOHcqvlUdsEFkeQKcUZshYAb2XDWZd9cPDIxNArCCLW3DQ91FERRVfWVhH
- ylaGBsNwKeTw87k82e45U36LfFn8mv3uQwkZ/+QUIaYh9tgrswDKZwWKIZXTZ6fB/11E
- 4zHkpU7bsjFCxuaAAuPHQ+qrlt+9Z+BaR4dkebOQzj0l7zXSdgjk64b9lI+Wka14h9tD
- t8Yw==
+ bh=h13gnWU1+xNVssAjcbpmvAMWAo0JGnfR+xFZ4VhYqdI=;
+ b=Qo+kmqX85hp9QztezDESzQZR6ixkMSInzQ1Y2gJnrpho1WLqhdks2gGcqiphQnaI1T
+ fVAq088qBMuKVKT2GIwUH7+Ter/so8BU8EZJjrHbvFs5wQ9nV2phTlf4MAF9OUUB8cre
+ ZtLQUfLRKJdG8qgkEaXvn66wzhw0xYuQVD/5TM/Qt3KOlwJqHkRDJX/zdS6r95QSJ0RH
+ oPGB1aeRF5plcTnoEvhDt59jV2pkmFt1NjeGNnsgTlDIVMRRp7/bsN5X0ZH8aQOGvxbG
+ W8Rf4ODh5JpFAEUQf+tQlJxbgD9DVMZliFSpKSSa19NskbhMv3TgaWhW0ITkaPybWIO9
+ cLjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729571510; x=1730176310;
+ d=1e100.net; s=20230601; t=1729572592; x=1730177392;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W38HLrDjvHS1Bya//zl/DbBG9mrU++l95Uy9irJfwNc=;
- b=SEYPjUzBjtSCR0gbCp3GUEpMQXN2EM6RH7B1WDSVeYJ+gC/9MGXqCeiUODIV6qK5eO
- a1L8jLZFIz5NKSGpyKcYuDtOs+EQvhj+NITouUMX0RcbjmI2PWwWUeK8Pny5jbHWgQl/
- L+XqQuloVHLXtoWKWDLf5VYZ56FXIPMBPnCNK3dyWO9NaififkdqGsGiuI644F4pfg+T
- 474X+63HbakccjMZ3kwfn7ubphyVP3o1+vmYLSr284TkzcjGPuReHD2DsE81Ysa4VuOV
- jiGiQFTBWfsHx2SGzINogmD1HVgHmSJjrwpLeBHUCrP/PD07okBVfKERPwqM40wtWCXW
- G8gQ==
+ bh=h13gnWU1+xNVssAjcbpmvAMWAo0JGnfR+xFZ4VhYqdI=;
+ b=rn4ML93wp7/U3MpTGBblS7dWfqwriL9WM0LGW9jgA9/9ReJv6rMUS6br1OubJB9Ubj
+ yr5ENBv3mD3fx6MeeaRKnFu/DxYsweVBoJsJIuFFByQ1hHi3SxMsId012tnvaQRFPOvx
+ JW1Cc0JINFZ+/GxWobZ4H2SEEd+C3muNCbVDUMN79Tgc6jI/TriUgXV+ZA9/lpYcDDfv
+ TTX9Zz7i3zLKL49gRJSaxcyELMeJBEeb1eem3ztk3i7Tg9jpusIvQPgWDFSCXJHkpQJ7
+ uaptfg01GVRnP29Veg1tQ5+hZcd18X1WIgvh0OktrEN8eARPrHJNPTQXu7s3Gdor3zpV
+ 9fyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVthggnKV596xzOB2zGQtA/Mj6IdqfAEJansS4Yd6UJg6SXDrgNgWX5FUGzH29qj0dRyJVD65r+whRe@nongnu.org
-X-Gm-Message-State: AOJu0YztOxW2LOPD2i+wIV+NX/LCbvY98/HN26yzj4GZ4YGUs2WXk5K3
- y8T6uQ8//+8dPSY1Wfx9METfUNCcGWmds4gTr4HytXDcjwj5QvdUc+AdK8/iQxA=
-X-Google-Smtp-Source: AGHT+IG+khaOytjn1j32a5Nk6fRnSl5hW4UiEMCsjHK0f7ToM4tzmyu4Y0zDGwiudkoaecPXjvbL6Q==
-X-Received: by 2002:a05:6870:440c:b0:277:fdb5:9ce5 with SMTP id
- 586e51a60fabf-2892c331c8cmr12015861fac.27.1729571509764; 
- Mon, 21 Oct 2024 21:31:49 -0700 (PDT)
+ AJvYcCWlj38Ywy9v44ZuX1RRemmwjMK3kUw+9DA+RRh3J2Nhlavo5zG4Cw9Fz/PNTwS0qLCZyJOFQUDuAoXD@nongnu.org
+X-Gm-Message-State: AOJu0YwI6NYjlybfwemEP58isLqQ4OAawB78AwTJLqLiT63XkOpqS5YP
+ Jh88nzqlYu/C18YVYAr+CHP7/KviWr56nB7yivP2tSEO0k9iSyPNIzLelpLJi7U=
+X-Google-Smtp-Source: AGHT+IHQRkhutlPEjoz99WB1W2mBHZPA6SQ66XqulNdyEBU0dSt/Er8KgFKbPOZla8W0Lzxtsqxwjw==
+X-Received: by 2002:a05:6a20:ac43:b0:1d9:9c6:5e7f with SMTP id
+ adf61e73a8af0-1d92c49fa1fmr18880294637.4.1729572591756; 
+ Mon, 21 Oct 2024 21:49:51 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabd8955sm4034128a12.78.2024.10.21.21.31.47
+ d2e1a72fcca58-71ec13d774fsm3796536b3a.106.2024.10.21.21.49.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 21:31:49 -0700 (PDT)
-Message-ID: <12b03ebb-6bc2-4ffe-99cc-4818b5d992ee@linaro.org>
-Date: Tue, 22 Oct 2024 01:31:45 -0300
+ Mon, 21 Oct 2024 21:49:51 -0700 (PDT)
+Message-ID: <90213550-d745-4e53-b68d-6b4ec5084a87@linaro.org>
+Date: Tue, 22 Oct 2024 01:49:47 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/13] qdev: make properties array "const"
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20241021163538.136941-1-pbonzini@redhat.com>
- <20241021163538.136941-11-pbonzini@redhat.com>
+Subject: Re: [PATCH v2 0/8] Introduce MIPS64r6 target
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ "cfu@mips.com" <cfu@mips.com>, "arikalo@gmail.com" <arikalo@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+References: <AM9PR09MB48517A4B3BE0FDC18920247884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241021163538.136941-11-pbonzini@redhat.com>
+In-Reply-To: <AM9PR09MB48517A4B3BE0FDC18920247884402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,75 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Aleksandar,
 
-On 21/10/24 13:35, Paolo Bonzini wrote:
-> Constify all accesses to qdev properties, except for the
-> ObjectPropertyAccessor itself.  This makes it possible to place them in
-> read-only memory, and also lets Rust bindings switch from "static mut"
-> arrays to "static"; which is advantageous, because mutable statics are
-> highly discouraged.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   include/hw/qdev-core.h       |  4 ++--
->   include/hw/qdev-properties.h |  4 ++--
->   hw/core/qdev-properties.c    | 26 +++++++++++++-------------
->   system/qdev-monitor.c        |  2 +-
->   4 files changed, 18 insertions(+), 18 deletions(-)
+On 18/10/24 10:18, Aleksandar Rakic wrote:
+> This patch series introduces support for the MIPS64r6 target in QEMU,
 
+QEMU supports the MIPS64r6 since 10 years... See commit a773cc79704
+("target-mips: define a new generic CPU supporting MIPS64 Release 6
+ISA"). This CPU then became the I6400 in commit 8f95ad1c79b. The I6500
+was added in commit ca1ffd14ed8.
 
-> -void qdev_property_add_static(DeviceState *dev, Property *prop)
-> +void qdev_property_add_static(DeviceState *dev, const Property *prop)
->   {
->       Object *obj = OBJECT(dev);
->       ObjectProperty *op;
-> @@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
->                                field_prop_getter(prop->info),
->                                field_prop_setter(prop->info),
->                                prop->info->release,
-> -                             prop);
-> +                             (Property *)prop);
+> bringing the latest architecture features and improvements to the MIPS
+> target. In addition to the new target, this series also includes
+> several bug fixes that have been in use internally for years within
+> the MIPS ecosystem.
 
-I like the overall patch idea, but I'm not keep on casting
-const to non-const. Should we adapt the callee -- here
-object_property_add() -- to also take a const argument?
+What features / improvements are missing in the mainstream repository?
+Do you have tests for them?
 
->   
->       object_property_set_description(obj, prop->name,
->                                       prop->info->description);
-> @@ -994,7 +994,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
->   }
->   
->   static void qdev_class_add_property(DeviceClass *klass, const char *name,
-> -                                    Property *prop)
-> +                                    const Property *prop)
->   {
->       ObjectClass *oc = OBJECT_CLASS(klass);
->       ObjectProperty *op;
-> @@ -1007,7 +1007,7 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
->                                          field_prop_getter(prop->info),
->                                          field_prop_setter(prop->info),
->                                          prop->info->release,
-> -                                       prop);
-> +                                       (Property *)prop);
->       }
->       if (prop->set_default) {
->           prop->info->set_default_value(op, prop);
-> @@ -1046,7 +1046,7 @@ static void qdev_get_legacy_property(Object *obj, Visitor *v,
->    * Do not use this in new code!  QOM Properties added through this interface
->    * will be given names in the "legacy" namespace.
->    */
-> -static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
-> +static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop)
->   {
->       g_autofree char *name = NULL;
->   
-> @@ -1058,12 +1058,12 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
->       name = g_strdup_printf("legacy-%s", prop->name);
->       object_class_property_add(OBJECT_CLASS(dc), name, "str",
->           prop->info->print ? qdev_get_legacy_property : prop->info->get,
-> -        NULL, NULL, prop);
-> +        NULL, NULL, (Property *)prop);
->   }
+The I6500 lacks the DSPRAM. Last contribution was incomplete, see:
+https://lore.kernel.org/qemu-devel/07b3eb94-30a5-910b-760a-0058e52d23b3@redhat.com/
+
+> These patches are cherry-picked from the branch mips_rel/4_1_0/master on
+> the MIPS' repository: https://github.com/MIPS/gnutools-qemu/
+> Further details on individual changes are included in the respective
+> patches. An instance of a pipeline of QEMU CI jobs run with input
+> variable QEMU_CI=1 for this patch series is available here:
+> https://gitlab.com/rakicaleksandar1999/qemu/-/pipelines/1470628690
+> and for the master branch is available here:
+> https://gitlab.com/rakicaleksandar1999/qemu/-/pipelines/1462140373
+
+Something is wrong with your series, as each patch is sent
+separately. Could you fix that please, since it makes it hard to
+apply your patches.
+
+Thanks,
+
+Phil.
 
