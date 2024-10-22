@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4622D1CDCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65057D1CDD3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Bq8-0004qY-LR; Tue, 22 Oct 2024 06:10:12 -0400
+	id 1t3C72-0008H8-GW; Tue, 22 Oct 2024 06:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3Bq6-0004pK-Hs
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3C6z-0008Gq-Gc
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:27:37 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3Bq4-0004Mh-R9
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729591807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wbBj01caC6lJt2jK3U2GIrbaj1k0y4qahoaWSgkgdlg=;
- b=PUHrMeskO0+SWuOZFxhz1iXYaqKyfcJvKrxwx+9PEPkR/Ye6vNcAjP3/oq/dnUTyQx6qG5
- /dbCpnWi38AHbr5TVZCiDcCYA2XNcanEye4dRkavrtM9TlBcnoLaik+deOmUFXA8xnmkvg
- MU53fq4pNti1ThSmzJ/AdFd5KbfH5kU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-pztrLJLRPbm3S_bPACgvYw-1; Tue, 22 Oct 2024 06:10:05 -0400
-X-MC-Unique: pztrLJLRPbm3S_bPACgvYw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4316e350d6aso19324655e9.3
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:10:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729591804; x=1730196604;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wbBj01caC6lJt2jK3U2GIrbaj1k0y4qahoaWSgkgdlg=;
- b=Ffk1JYO+dRtnj7Dzv9/X2KhkdtzlrDk+MTjNmbCY8Yv/VFuzUHn5GfTB5vCvx8KqZP
- CiXKAvzkpV2pEIORXR7FxWxG1VDA0gut5M7O3PrCWJ+PYq8ve1d6mZA7aVkaRIZt+ruB
- 2FHoJCPz6pC8zWBEz43NYjcMKSXFtJgy3M6GlyTSikX2yJeq18qBSOiWr+dTPIBlZro2
- cUna4bhLDBIbqetJMiGS7llwLglfkuIlPBB4vKnTv7TfZ/4VuIsscfeVSPf9sl9IZ1t+
- fdkkkEQ7rNntIdlLpoPoB/LJE71BA01f41Jo/I+4hj88mZynAGmKbkS8b8qEZ+tuJJww
- J81g==
-X-Gm-Message-State: AOJu0Yw1lITSWVqf+inamYTzd3XkQvjAj3B/xVuisFlCPzy5KVQPSrSY
- +/IckGmsvMXNsNgrO9OV5iYwNQdvciaNaNs/x4Cs6+sxw/ECrfHJCo/yN59gGYh7J8d7c/9zG4t
- q6udUUcq8KiZeqAnut0MuM7dxQhZMFN6Wy69xr//oWR+zziPwQ/S/JBpqsrPwkGbR4mOm7fBn2A
- DbR0VC4dbUfLLIXLfc86Jw65p5yucJf/HLqIck/3Q=
-X-Received: by 2002:a7b:ce07:0:b0:431:251a:9dc9 with SMTP id
- 5b1f17b1804b1-4317ed25874mr11360845e9.25.1729591803826; 
- Tue, 22 Oct 2024 03:10:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDj51YiXUYWxiG6Ym1Hu15udjnbMb0pqij8oKFiKRX2OJ1LRaQYKCnThPzMhv/tJL+PiO5gw==
-X-Received: by 2002:a7b:ce07:0:b0:431:251a:9dc9 with SMTP id
- 5b1f17b1804b1-4317ed25874mr11360535e9.25.1729591803366; 
- Tue, 22 Oct 2024 03:10:03 -0700 (PDT)
-Received: from avogadro.local ([151.95.144.54])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4316f57fdb2sm82969035e9.20.2024.10.22.03.10.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:10:00 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, kwolf@redhat.com, junjie.mao@hotmail.com,
- manos.pitsidianakis@linaro.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 01/14] rust: patch bilge-impl to allow compilation with
- 1.63.0
-Date: Tue, 22 Oct 2024 12:09:42 +0200
-Message-ID: <20241022100956.196657-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <20241022100956.196657-1-pbonzini@redhat.com>
-References: <20241022100956.196657-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3C6w-0006eS-WD
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:27:37 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M2HCxW029426;
+ Tue, 22 Oct 2024 10:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=OnXltcwd6GY/AfP9Q8gyGrOU2p52EP3GAvvZfLoEi
+ +c=; b=I3pjNbdW1TqJWxU2HdOx1XUGNNhFgo70k+FVvdmCuSNqitNRpIRJoQNSU
+ b1xAvXCUV3VlqYZaPDC8HV2TjMXEbqKMTHSxSoh4DWr4Jc76D2TICX18XUr5ohtr
+ PmdFNML/hfvmwGwYZ8kTddeNIBafbT+zVqLXhwOoudvBz1F8cMUQC/nbmEnLGWem
+ PTz8vvAwxpCZRLW+GUOO1Qv1lK/+qtUSSTXyh2djfvGC30kkEdssPbX86KeS061s
+ pY58//zrx1KwAAuGn61xf4S/ywy+0aZYnvOa65F2liL4xG2biGm+FHBpqLynm0Mw
+ UmSb2qkGdBQw+zg6lcSKROPTvc1fg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5eudd9f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 10:27:32 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49M6q5O5023927;
+ Tue, 22 Oct 2024 10:27:32 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42cst12eta-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 10:27:32 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49MARTAZ31392478
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Oct 2024 10:27:29 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23B432006A;
+ Tue, 22 Oct 2024 10:27:29 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC8D120069;
+ Tue, 22 Oct 2024 10:27:28 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.26.72])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Oct 2024 10:27:28 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2] linux-user: Trace rt_sigprocmask's sigsets
+Date: Tue, 22 Oct 2024 12:26:16 +0200
+Message-ID: <20241022102726.18520-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.47.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GgYhd0pPy5tXZmLdJ9SxOahm6S6QyXkA
+X-Proofpoint-ORIG-GUID: GgYhd0pPy5tXZmLdJ9SxOahm6S6QyXkA
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ adultscore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220067
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,114 +105,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apply a patch that removes "let ... else" constructs, replacing them with
-"if let ... else" or "let ... =3D match ...".  "let ... else" was stabilize=
-d in
-Rust 1.65.0.
+Add a function for formatting target sigsets. It can be useful for
+other syscalls in the future, so put it into the beginning of strace.c.
+For simplicity, do not implement the strace's ~[] output syntax.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Add a rt_sigprocmask return handler.
+
+Example outputs:
+
+    753914 rt_sigprocmask(SIG_BLOCK,[SIGCHLD SIGTSTP SIGTTIN SIGTTOU],0x00007f80fddfe380,8) = 0 (oldset=[SIGTTOU])
+    753914 rt_sigprocmask(SIG_SETMASK,[SIGCHLD],NULL,8) = 0
+    753914 rt_sigprocmask(SIG_BLOCK,NULL,0x00007f80fddff3c0,8) = 0 (oldset=[])
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- .gitattributes                                |  2 +
- subprojects/bilge-impl-0.2-rs.wrap            |  1 +
- subprojects/packagefiles/.gitattributes       |  1 +
- .../packagefiles/bilge-impl-1.63.0.patch      | 45 +++++++++++++++++++
- 4 files changed, 49 insertions(+)
- create mode 100644 subprojects/packagefiles/.gitattributes
- create mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+v1: https://lore.kernel.org/qemu-devel/20241017091449.443799-1-iii@linux.ibm.com/
+v1 -> v2: Do not split operands across syscall completion (Richard).
 
-diff --git a/.gitattributes b/.gitattributes
-index 6dc6383d3d1..9ce7a19581a 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -5,3 +5,5 @@
- *.rs            diff=3Drust
- *.rs.inc        diff=3Drust
- Cargo.lock      diff=3Dtoml merge=3Dbinary
-+
-+*.patch         -text -whitespace
-diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.=
-2-rs.wrap
-index eefb10c36c2..b24c34a9043 100644
---- a/subprojects/bilge-impl-0.2-rs.wrap
-+++ b/subprojects/bilge-impl-0.2-rs.wrap
-@@ -5,3 +5,4 @@ source_filename =3D bilge-impl-0.2.0.tar.gz
- source_hash =3D feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000=
-adb2d8
- #method =3D cargo
- patch_directory =3D bilge-impl-0.2-rs
-+diff_files =3D bilge-impl-1.63.0.patch
-diff --git a/subprojects/packagefiles/.gitattributes b/subprojects/packagef=
-iles/.gitattributes
-new file mode 100644
-index 00000000000..bf5b766d75d
---- /dev/null
-+++ b/subprojects/packagefiles/.gitattributes
-@@ -0,0 +1 @@
-+/*.patch     -text
-diff --git a/subprojects/packagefiles/bilge-impl-1.63.0.patch b/subprojects=
-/packagefiles/bilge-impl-1.63.0.patch
-new file mode 100644
-index 00000000000..987428a6d65
---- /dev/null
-+++ b/subprojects/packagefiles/bilge-impl-1.63.0.patch
-@@ -0,0 +1,45 @@
-+--- a/src/shared/discriminant_assigner.rs
-++++ b/src/shared/discriminant_assigner.rs
-+@@ -26,20 +26,20 @@
-+         let discriminant_expr =3D &discriminant.1;
-+         let variant_name =3D &variant.ident;
-+=20
-+-        let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) =3D discriminan=
-t_expr else {
-++        if let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) =3D discrimi=
-nant_expr {
-++            let discriminant_value: u128 =3D int.base10_parse().unwrap_or=
-_else(unreachable);
-++            if discriminant_value > self.max_value() {
-++                abort!(variant, "Value of variant exceeds the given numbe=
-r of bits")
-++            }
-++
-++            Some(discriminant_value)
-++        } else {
-+             abort!(
-+                 discriminant_expr,
-+                 "variant `{}` is not a number", variant_name;
-+                 help =3D "only literal integers currently supported"
-+             )
-+-        };
-+-
-+-        let discriminant_value: u128 =3D int.base10_parse().unwrap_or_els=
-e(unreachable);
-+-        if discriminant_value > self.max_value() {
-+-            abort!(variant, "Value of variant exceeds the given number of=
- bits")
-+         }
-+-
-+-        Some(discriminant_value)
-+     }
-+=20
-+     fn assign(&mut self, variant: &Variant) -> u128 {
-+--- a/src/shared/fallback.rs
-++++ b/src/shared/fallback.rs
-+@@ -22,8 +22,9 @@
-+             }
-+             Unnamed(fields) =3D> {
-+                 let variant_fields =3D fields.unnamed.iter();
-+-                let Ok(fallback_value) =3D variant_fields.exactly_one() e=
-lse {
-+-                    abort!(variant, "fallback variant must have exactly o=
-ne field"; help =3D "use only one field or change to a unit variant")
-++                let fallback_value =3D match variant_fields.exactly_one()=
+ linux-user/strace.c    | 84 +++++++++++++++++++++++++++++++++++++-----
+ linux-user/strace.list |  3 +-
+ 2 files changed, 76 insertions(+), 11 deletions(-)
+
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index c3eb3a2706a..b70eadc19ef 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -161,19 +161,20 @@ static const char * const target_signal_name[] = {
+ };
+ 
+ static void
+-print_signal(abi_ulong arg, int last)
++print_signal_1(abi_ulong arg)
  {
-++                    Ok(ok) =3D> ok,
-++                    _ =3D> abort!(variant, "fallback variant must have ex=
-actly one field"; help =3D "use only one field or change to a unit variant")
-+                 };
-+=20
-+                 if !is_last_variant {
---=20
-2.46.2
+-    const char *signal_name = NULL;
+-
+     if (arg < ARRAY_SIZE(target_signal_name)) {
+-        signal_name = target_signal_name[arg];
++        qemu_log("%s", target_signal_name[arg]);
++    } else {
++        qemu_log(TARGET_ABI_FMT_lu, arg);
+     }
++}
+ 
+-    if (signal_name == NULL) {
+-        print_raw_param("%ld", arg, last);
+-        return;
+-    }
+-    qemu_log("%s%s", signal_name, get_comma(last));
++static void
++print_signal(abi_ulong arg, int last)
++{
++    print_signal_1(arg);
++    qemu_log("%s", get_comma(last));
+ }
+ 
+ static void print_si_code(int arg)
+@@ -718,6 +719,51 @@ print_ipc(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
+ 
++#ifdef TARGET_NR_rt_sigprocmask
++static void print_target_sigset_t_1(target_sigset_t *set, int last)
++{
++    bool first = true;
++    int i, sig = 1;
++
++    qemu_log("[");
++    for (i = 0; i < TARGET_NSIG_WORDS; i++) {
++        abi_ulong bits = 0;
++        int j;
++
++        __get_user(bits, &set->sig[i]);
++        for (j = 0; j < sizeof(bits) * 8; j++) {
++            if (bits & ((abi_ulong)1 << j)) {
++                if (first) {
++                    first = false;
++                } else {
++                    qemu_log(" ");
++                }
++                print_signal_1(sig);
++            }
++            sig++;
++        }
++    }
++    qemu_log("]%s", get_comma(last));
++}
++
++static void print_target_sigset_t(abi_ulong addr, abi_ulong size, int last)
++{
++    if (addr && size == sizeof(target_sigset_t)) {
++        target_sigset_t *set;
++
++        set = lock_user(VERIFY_READ, addr, sizeof(target_sigset_t), 1);
++        if (set) {
++            print_target_sigset_t_1(set, last);
++            unlock_user(set, addr, 0);
++        } else {
++            print_pointer(addr, last);
++        }
++    } else {
++        print_pointer(addr, last);
++    }
++}
++#endif
++
+ /*
+  * Variants for the return value output function
+  */
+@@ -3312,11 +3358,29 @@ print_rt_sigprocmask(CPUArchState *cpu_env, const struct syscallname *name,
+     case TARGET_SIG_SETMASK: how = "SIG_SETMASK"; break;
+     }
+     qemu_log("%s,", how);
+-    print_pointer(arg1, 0);
++    print_target_sigset_t(arg1, arg3, 0);
+     print_pointer(arg2, 0);
+     print_raw_param("%u", arg3, 1);
+     print_syscall_epilogue(name);
+ }
++
++static void
++print_rt_sigprocmask_ret(CPUArchState *cpu_env, const struct syscallname *name,
++                         abi_long ret, abi_long arg0, abi_long arg1,
++                         abi_long arg2, abi_long arg3, abi_long arg4,
++                         abi_long arg5)
++{
++    if (!print_syscall_err(ret)) {
++        qemu_log(TARGET_ABI_FMT_ld, ret);
++        if (arg2) {
++            qemu_log(" (oldset=");
++            print_target_sigset_t(arg2, arg3, 1);
++            qemu_log(")");
++        }
++    }
++
++    qemu_log("\n");
++}
+ #endif
+ 
+ #ifdef TARGET_NR_rt_sigqueueinfo
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 0d69fb3150d..fdf94ef32ad 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1189,7 +1189,8 @@
+ { TARGET_NR_rt_sigpending, "rt_sigpending" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_rt_sigprocmask
+-{ TARGET_NR_rt_sigprocmask, "rt_sigprocmask" , NULL, print_rt_sigprocmask, NULL },
++{ TARGET_NR_rt_sigprocmask, "rt_sigprocmask" , NULL, print_rt_sigprocmask,
++                            print_rt_sigprocmask_ret },
+ #endif
+ #ifdef TARGET_NR_rt_sigqueueinfo
+ { TARGET_NR_rt_sigqueueinfo, "rt_sigqueueinfo" , NULL, print_rt_sigqueueinfo, NULL },
+-- 
+2.47.0
 
 
