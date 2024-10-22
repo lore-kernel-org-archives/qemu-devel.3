@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5737DD1CDD0
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0562D1CDCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Bqb-0004uv-3h; Tue, 22 Oct 2024 06:10:41 -0400
+	id 1t3BqU-0004sX-2N; Tue, 22 Oct 2024 06:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3BqZ-0004uT-0W
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:39 -0400
+ id 1t3BqM-0004sD-F4
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3BqX-0004P4-8p
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:38 -0400
+ id 1t3BqJ-0004O1-GK
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:10:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729591836;
+ s=mimecast20190719; t=1729591822;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8J+8xZYPHbr72c/IJr5xzYf68Dz55JZJUDo+rchRnfs=;
- b=BWafTN9ooCu3Q8HwEY3llSWVzmktRORBy9JuRoQG5KsX6vNVasabn+GSplXi4nazB/vOWz
- Ryp1KgecSWRdF2IX1CeWu268eFmyJ7DQNapqD+hbeF/lqdMZfdSgyLAVYeQTCgUkdQ+tUZ
- RzNXNc4I2QMmPHNL08d8Rc7/WKY3IVo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FhAct4q18ImXFIsWNk2smwgX1VzeDjNJvhYscWcGBhY=;
+ b=ehLKCrcbpel7YcafEFxnSPUOA+mezi2WVvU2zO3YTGbdQSEGbe+2VxZ3Ryw8aFo+9lmgyE
+ Ae/NlA2Nl6fBS1JIwQqriYdmYDkIQNismsBEUv9mrMlvzi7M3KjwQslVlYncvhFJnhFt9f
+ qQ8HR010vDP/KkJNRKAsbFqQ/GBZRPE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-fSTsnomuNvqtEb2DW1GSZA-1; Tue, 22 Oct 2024 06:10:35 -0400
-X-MC-Unique: fSTsnomuNvqtEb2DW1GSZA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d49887a2cso3024973f8f.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:10:35 -0700 (PDT)
+ us-mta-209-HSM7FzGbMFWdl4WtJo0cuw-1; Tue, 22 Oct 2024 06:10:21 -0400
+X-MC-Unique: HSM7FzGbMFWdl4WtJo0cuw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4315d98a873so36909055e9.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:10:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729591833; x=1730196633;
+ d=1e100.net; s=20230601; t=1729591819; x=1730196619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8J+8xZYPHbr72c/IJr5xzYf68Dz55JZJUDo+rchRnfs=;
- b=Xqo7lzCHwB8R8I4Qwnp60oeIaUbOfaWjTv9iJOXNyywushUHvKpZBMrNLi3V0X5ne/
- 6eqctI+qYOWQzCqv7sTTWOAC6hTd/rqOIKP+6m5q/GW6b58tWaOk7g9rGmq783PDfCRA
- uYwRhoD0p+VpXHGMVHkwTBNnpVudfS14EWzf4vguZwm7A/TfMxBe3Lkr9ianbTLAKB0D
- 9aEooh8YcAg/Xz8vjf4LZL/+1FoGPAx/QiWaQWQBiihzbJ8zT2V+jFMyH4q8F9JcMGMD
- DKjgA6z/NEKNLzYN+nj1Ta6c9blzuEXK5Nek5PpQ/tUP1i7e8Vxa+wvvi7XUG9c4kx1v
- mrcw==
-X-Gm-Message-State: AOJu0YzYpFEugLIFLLz73OQCoHyxSHa+YhYVUQCYyC/KDlrd9EQz7mka
- AzRhxCraQqLlkOW9ss5AZjsACJKoDAjnvKOM42IZXluTsPK8W9bh34JJXNKF3+KCm5PkblsQhgA
- e2IPJLsIKi524j+nYrSD9BgStI7AwvW8/yLEkF+M+OZlCxyF6xt/NWA8OjbEJKjceyvlGqmrICs
- DejmFVV4LyOFSothBYIC4GDt9laD1RkygUqnpyprc=
-X-Received: by 2002:a05:6000:4388:b0:378:8b56:4665 with SMTP id
- ffacd0b85a97d-37ef12c8531mr1556434f8f.24.1729591833455; 
- Tue, 22 Oct 2024 03:10:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCu/q/XeHdz46UNT7zYQqEGMXcEYMCfCQgwfVFqVhd8DBg290J5LEF3gXAVmH5PiePmhyung==
-X-Received: by 2002:a05:6000:4388:b0:378:8b56:4665 with SMTP id
- ffacd0b85a97d-37ef12c8531mr1556406f8f.24.1729591832855; 
- Tue, 22 Oct 2024 03:10:32 -0700 (PDT)
+ bh=FhAct4q18ImXFIsWNk2smwgX1VzeDjNJvhYscWcGBhY=;
+ b=geNrDPU8nL25EgmZM/nS4JdfBg7Ea5Qho9oHU3n4Ld7h7TBLR8ouoE0HJ0zQqk8gO2
+ /XxBq1jrxNGaB/pACLyqKs8SW35+1HyzW26jrl/cjPpK169EnJ4MKs5QcfV+moP61DcE
+ 00zGaKGGlrjZMnIy8m0TWqNhYJGXYTm0/QD1ypttuOPc7PknDeD9Xb7aDz8t/+vst/zM
+ 2gYhGA1trDbGqbi1O2vs8JfuFhL5lRc+NwGFWJVgCj0pjX9hM5s0cEjgi4fgSTuqPNBp
+ o3wCTe8Ri6x1OvSmsVAz11rxf2lKIrV5Sv5br8GwZLH7AjDljb75eijrENh8BsArBYSD
+ lhNQ==
+X-Gm-Message-State: AOJu0Yyf3/unVNI/uH80Zi724cT9kVDJ2usBSVuPJx0frXOVChOzpch8
+ u4oENVxeMHVwJWJvBbp+dwCSQDOfGw1ndJllMcWcuo2INwsfP+sPGzn1+x7K+/y+OeppFE9V716
+ OWKPK1hfyh/AXVgvyRz0H/ofsbJxn9zFlUgU+HgQD/i5+lbez+i76N/01iE9Ns8obFShICMLwUY
+ yfuBvYnu6mq+CHqXh28zIMpKBLGdnIy6GvbL5KSUE=
+X-Received: by 2002:adf:cb09:0:b0:37c:d179:2f73 with SMTP id
+ ffacd0b85a97d-37ef0b7c8a5mr1907599f8f.13.1729591819405; 
+ Tue, 22 Oct 2024 03:10:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQHeGfJVT36YqLn+DMDNjjXcUGuP1hlqTqi7nBib4PHBCTALP7lJMDW5934aNhKUagchCtcg==
+X-Received: by 2002:adf:cb09:0:b0:37c:d179:2f73 with SMTP id
+ ffacd0b85a97d-37ef0b7c8a5mr1907579f8f.13.1729591818925; 
+ Tue, 22 Oct 2024 03:10:18 -0700 (PDT)
 Received: from avogadro.local ([151.95.144.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37ee0a4ac2esm6272449f8f.44.2024.10.22.03.10.31
+ ffacd0b85a97d-37ee0a48882sm6257283f8f.30.2024.10.22.03.10.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:10:31 -0700 (PDT)
+ Tue, 22 Oct 2024 03:10:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, kwolf@redhat.com, junjie.mao@hotmail.com,
  manos.pitsidianakis@linaro.org
-Subject: [PATCH v2 09/14] rust: clean up detection of the language
-Date: Tue, 22 Oct 2024 12:09:50 +0200
-Message-ID: <20241022100956.196657-10-pbonzini@redhat.com>
+Subject: [PATCH v2 05/14] rust: silence unknown warnings for the sake of old
+ compilers
+Date: Tue, 22 Oct 2024 12:09:46 +0200
+Message-ID: <20241022100956.196657-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241022100956.196657-1-pbonzini@redhat.com>
 References: <20241022100956.196657-1-pbonzini@redhat.com>
@@ -103,116 +104,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Disable the detection code altogether if have_system =3D=3D false.
+Occasionally, we may need to silence warnings and clippy lints that
+were only introduced in newer Rust compiler versions.  However, this
+would fail when compiling with an older rustc:
+
+error: unknown lint: `non_local_definitions`
+   --> rust/qemu-api/rust-qemu-api-tests.p/structured/offset_of.rs:79:17
+
+So by default we need to block the unknown_lints warning.  To avoid
+misspelled lints or other similar issues, re-enable it in the CI job
+that uses nightly rust.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 42 ++++++++++++++++++++++--------------------
- 1 file changed, 22 insertions(+), 20 deletions(-)
+ meson.build                   | 8 ++++++++
+ .gitlab-ci.d/buildtest.yml    | 2 +-
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 4 ++++
+ 4 files changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index fe72f9951ca..e411a8ae567 100644
+index 94f30033f68..fe72f9951ca 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -53,6 +53,17 @@ cpu =3D host_machine.cpu_family()
+@@ -3327,6 +3327,14 @@ if have_rust and have_system
+   # Prohibit code that is forbidden in Rust 2024
+   rustc_args +=3D ['-D', 'unsafe_op_in_unsafe_fn']
 =20
- target_dirs =3D config_host['TARGET_DIRS'].split()
-=20
-+# type of binaries to build
-+have_linux_user =3D false
-+have_bsd_user =3D false
-+have_system =3D false
-+foreach target : target_dirs
-+  have_linux_user =3D have_linux_user or target.endswith('linux-user')
-+  have_bsd_user =3D have_bsd_user or target.endswith('bsd-user')
-+  have_system =3D have_system or target.endswith('-softmmu')
-+endforeach
-+have_user =3D have_linux_user or have_bsd_user
++  # Occasionally, we may need to silence warnings and clippy lints that
++  # were only introduced in newer Rust compiler versions.  Do not croak
++  # in that case; a CI job with rust_strict_lints =3D=3D true ensures that
++  # we do not have misspelled allow() attributes.
++  if not get_option('strict_rust_lints')
++    rustc_args +=3D ['-A', 'unknown_lints']
++  endif
 +
- ############
- # Programs #
- ############
-@@ -71,11 +82,13 @@ if host_os =3D=3D 'darwin' and \
-   all_languages +=3D ['objc']
-   objc =3D meson.get_compiler('objc')
- endif
--have_rust =3D false
--if not get_option('rust').disabled() and add_languages('rust', required: g=
-et_option('rust'), native: false) \
--    and add_languages('rust', required: get_option('rust'), native: true)
-+
-+have_rust =3D add_languages('rust', native: false,
-+    required: get_option('rust').disable_auto_if(not have_system))
-+have_rust =3D have_rust and add_languages('rust', native: true,
-+    required: get_option('rust').disable_auto_if(not have_system))
-+if have_rust
-   rustc =3D meson.get_compiler('rust')
--  have_rust =3D true
-   if rustc.version().version_compare('<1.80.0')
-     if get_option('rust').enabled()
-       error('rustc version ' + rustc.version() + ' is unsupported: Please =
-upgrade to at least 1.80.0')
-@@ -186,17 +199,6 @@ have_vhost_net_vdpa =3D have_vhost_vdpa and get_option=
-('vhost_net').allowed()
- have_vhost_net_kernel =3D have_vhost_kernel and get_option('vhost_net').al=
-lowed()
- have_vhost_net =3D have_vhost_net_kernel or have_vhost_net_user or have_vh=
-ost_net_vdpa
+   # Apart from procedural macros, our Rust executables will often link
+   # with C code, so include all the libraries that C code needs.  This
+   # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 7705000e3cc..4c87f8788d5 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -128,7 +128,7 @@ build-system-fedora-rust-nightly:
+     job: amd64-fedora-rust-nightly-container
+   variables:
+     IMAGE: fedora-rust-nightly
+-    CONFIGURE_ARGS: --disable-docs --enable-rust
++    CONFIGURE_ARGS: --disable-docs --enable-rust --enable-strict-rust-lints
+     TARGETS: aarch64-softmmu
+     MAKE_CHECK_ARGS: check-build
+   allow_failure: true
+diff --git a/meson_options.txt b/meson_options.txt
+index 0ee4d7bb86b..e46199a3232 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -376,3 +376,5 @@ option('x86_version', type : 'combo', choices : ['0', '=
+1', '2', '3', '4'], value
 =20
--# type of binaries to build
--have_linux_user =3D false
--have_bsd_user =3D false
--have_system =3D false
--foreach target : target_dirs
--  have_linux_user =3D have_linux_user or target.endswith('linux-user')
--  have_bsd_user =3D have_bsd_user or target.endswith('bsd-user')
--  have_system =3D have_system or target.endswith('-softmmu')
--endforeach
--have_user =3D have_linux_user or have_bsd_user
--
- have_tools =3D get_option('tools') \
-   .disable_auto_if(not have_system) \
-   .allowed()
-@@ -3317,7 +3319,7 @@ endif
-=20
- genh +=3D configure_file(output: 'config-host.h', configuration: config_ho=
-st_data)
-=20
--if have_rust and have_system
-+if have_rust
-   rustc_args =3D run_command(
-     find_program('scripts/rust/rustc_args.py'),
-     '--config-headers', meson.project_build_root() / 'config-host.h',
-@@ -3937,7 +3939,7 @@ common_all =3D static_library('common',
-                             implicit_include_directories: false,
-                             dependencies: common_ss.all_dependencies())
-=20
--if have_rust and have_system
-+if have_rust
-   bindgen_args =3D [
-     '--disable-header-comment',
-     '--raw-line', '// @generated',
-@@ -4091,7 +4093,7 @@ foreach target : target_dirs
-   arch_srcs +=3D target_specific.sources()
-   arch_deps +=3D target_specific.dependencies()
-=20
--  if have_rust and have_system
-+  if have_rust and target_type =3D=3D 'system'
-     target_rust =3D rust_devices_ss.apply(config_target, strict: false)
-     crates =3D []
-     foreach dep : target_rust.dependencies()
-@@ -4453,9 +4455,9 @@ else
- endif
- summary_info +=3D {'Rust support':      have_rust}
- if have_rust
--  summary_info +=3D {'rustc version':   rustc.version()}
--  summary_info +=3D {'rustc':           ' '.join(rustc.cmd_array())}
-   summary_info +=3D {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-+  summary_info +=3D {'rustc':           ' '.join(rustc.cmd_array())}
-+  summary_info +=3D {'rustc version':   rustc.version()}
- endif
- option_cflags =3D (get_option('debug') ? ['-g'] : [])
- if get_option('optimization') !=3D 'plain'
+ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
++option('strict_rust_lints', type: 'boolean', value: false,
++       description: 'Enable stricter set of Rust warnings')
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 6d08605b771..e898b20307d 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -47,6 +47,8 @@ meson_options_help() {
+   printf "%s\n" '                           getrandom()'
+   printf "%s\n" '  --enable-safe-stack      SafeStack Stack Smash Protecti=
+on (requires'
+   printf "%s\n" '                           clang/llvm and coroutine backe=
+nd ucontext)'
++  printf "%s\n" '  --enable-strict-rust-lints'
++  printf "%s\n" '                           Enable stricter set of Rust wa=
+rnings'
+   printf "%s\n" '  --enable-strip           Strip targets on install'
+   printf "%s\n" '  --enable-tcg-interpreter TCG with bytecode interpreter =
+(slow)'
+   printf "%s\n" '  --enable-trace-backends=3DCHOICES'
+@@ -490,6 +492,8 @@ _meson_option_parse() {
+     --disable-spice-protocol) printf "%s" -Dspice_protocol=3Ddisabled ;;
+     --enable-stack-protector) printf "%s" -Dstack_protector=3Denabled ;;
+     --disable-stack-protector) printf "%s" -Dstack_protector=3Ddisabled ;;
++    --enable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dtrue ;;
++    --disable-strict-rust-lints) printf "%s" -Dstrict_rust_lints=3Dfalse ;;
+     --enable-strip) printf "%s" -Dstrip=3Dtrue ;;
+     --disable-strip) printf "%s" -Dstrip=3Dfalse ;;
+     --sysconfdir=3D*) quote_sh "-Dsysconfdir=3D$2" ;;
 --=20
 2.46.2
 
