@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17E1D2C556
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB898D2C556
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3FJo-00055G-A4; Tue, 22 Oct 2024 09:53:04 -0400
+	id 1t3FK3-00059D-BI; Tue, 22 Oct 2024 09:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3FJm-00054m-Rd
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:53:02 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1t3FK0-00056M-PJ
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:53:16 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3FJk-0002AK-TT
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:53:02 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5c9709c9b0cso7437079a12.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 06:53:00 -0700 (PDT)
+ id 1t3FJz-0002BF-Ad
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:53:16 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c96b2a10e1so7058574a12.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 06:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729605179; x=1730209979; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729605193; x=1730209993; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uSklaj1Iow3OC/fgWLoyafNoKV4KALgVR05ccdjFQ5Y=;
- b=elEe//BIYje8MW23o3obiesNpeODQYSBnw53RGkK68z/z6hhVep6rQFGL3QbldakJV
- dikfnu25/BPBQLzCTQC1oaI/YQQsKWQ9WKgwHdLoYQCY11nfAaqAm05Z6Hd7oJAts7Wk
- sr99ckkfGZEXzM6coa2+R8/olPJoeT0unUYiWMLMMK2LAzeoaXCwIolOuO6cjWUYbPBk
- mB0iqRgOdZ/lz05V+mWSuWsFBRTGI9UItuG6Q3km40QW4luaZgZIs2xiVhQpNiGQCDol
- XsAX8Vvrzc4+/Sqsk+Trl9SHN6XRT/XasqNzR6DHqTX1F8ySs6qSQMEOXutqr/P0reSR
- GMJQ==
+ bh=QsMx4QOo4Wm+97sGBJ1SuDd//1IZcQPDGt3SBXm63Qs=;
+ b=GOWQSaU5J0p3KQpsdDyxPTp/NQXF0YuH7CYWf5XzLS4vXuRJDqZqJEFQLbuMZsykrD
+ zgmMkE0cwZ8sDmiR1k6ULdn7a5nS+USMPrM1cMN1QtbI6CEiXHeR9TX9Mg6H3C9ToY0H
+ 27bPsl8xkOY3v30+8rtuylHtXbA/2OfLANGx8S+ckC8HAp9PTbh/iVASnvpTqzMr++hN
+ Bejx8Szh+02s3Jk91Q4ixXG006qvbhiBPtY27EecoCmutCU88x6Kh5BFv5KfyYkcWyeO
+ qSdQzcug8QZINE9VrHu+F5wlQdNScdbcdkGPgKubilQv2KEgFq7qq3xvwcoUIZpdC1BM
+ xcnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729605179; x=1730209979;
+ d=1e100.net; s=20230601; t=1729605193; x=1730209993;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uSklaj1Iow3OC/fgWLoyafNoKV4KALgVR05ccdjFQ5Y=;
- b=Fw/RLMAj2hb3d30j35OkqK/4tvbBPUYAJ7uJuqqAK5GWID4ckV5DdRx87vTbx4xD4Z
- X05OcX9vO3ouGir4Pjuht77mKp09PyaT8Nm1VSEoJmhKTdXZPJG1h0ZF6a+TQHgcCOev
- FL7a5WjgjhxigeC3YKgDCPP41D5KTO4wbqKhga7wYaoWb8vhxvAxpse0p+Q4sLimA13Y
- eiI3dZM2b1uurIl1uimFMtcmawlTkIS9GZD5zryybXBExOQn5Q6uzo7fsGDvHUKMIvX4
- 90ntUAKRioPUMtgemBfURwgjM7ZfKame8WP/YYOYMK4NO6eAWZUQDC6+9rNmQsTXKSGW
- DJhg==
-X-Gm-Message-State: AOJu0YzePcby7nv3aEq692Mm2J6F/qS2ZuDisD3p8NChgHx5ryp+JhBs
- pilKsnkmlFHsGPhkNUQxLokUPVcM2p/cDFNtpwRQh0Gu5FmhPTgSZ9El7tH+FFOfJCcEUTCuoXj
- xlT/6ldWsj7NKqeBlSzvfR7Hf/qdHUvyfRLU3Gw==
-X-Google-Smtp-Source: AGHT+IE5idqcDxn3wPR9rUM7wB07gzbhBWxNVeTb6QnYbSe3NEms4jgZVc6CzAlgkUpwqfNlfo1Al3BdpWyeSBwHypc=
-X-Received: by 2002:a05:6402:210d:b0:5cb:78b8:7056 with SMTP id
- 4fb4d7f45d1cf-5cb78b87ad7mr2740671a12.33.1729605178869; Tue, 22 Oct 2024
- 06:52:58 -0700 (PDT)
+ bh=QsMx4QOo4Wm+97sGBJ1SuDd//1IZcQPDGt3SBXm63Qs=;
+ b=L4NlYkSBqWPIODZeiZ3YM6+3+OIeoOoZd3z6bLpljpshkvo30cjaI0rD0hdPoJopCM
+ lgM4tVw58g66FZBpVX1pxXPDHUp5FSC3pdEZzfBE8LAQCr78xQICGf1Jl1NeJYlK8COH
+ C8lPYMAIZXJgUy+KKlJ0+XoP+R567tsnNFxEI2ATxFW2SAMnnKBmvY/oti37jL1eHpnt
+ dQiqRVWJRHHvpJN4YnBORRj8i8jpXrs3dEvhh5U+44fIYKNeQyIP+/NC28nchKeLsK3U
+ 3dVdGJQFPPE5ymXiqiqfZIT3unpEFmsXj7RxvO33dJgHwYba6FzOCOWvCae5ZwGNueLe
+ CW5w==
+X-Gm-Message-State: AOJu0Yx/HeqG1umVTb6ZPkH5N6A+6BLSsdZjxaSDsFkb9DDCvvvp+E0z
+ Q9cZlG8s1mIwz13tk+N7cxb5bdxU6LOZiKIY6++oRgyZwPgm6/k8mPuMfSYEKCX7jSYmiWd7txw
+ o5f3b0JuE+McmWfdX3uoU9230/uNjxyZMHfyjTg==
+X-Google-Smtp-Source: AGHT+IEjGAMKq7QhmA97PLJHSAOAckV4V0OdTnwwdVS1GuK6mpB1ke6REnbeYtF17JCCvr3dvNzVdnxRctiOJe6jxts=
+X-Received: by 2002:a05:6402:348a:b0:5c8:acf3:12c6 with SMTP id
+ 4fb4d7f45d1cf-5ca0ac443c4mr12420123a12.6.1729605192974; Tue, 22 Oct 2024
+ 06:53:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241021073957.1851500-1-edgar.iglesias@gmail.com>
-In-Reply-To: <20241021073957.1851500-1-edgar.iglesias@gmail.com>
+References: <20241021161156.176427-1-thuth@redhat.com>
+In-Reply-To: <20241021161156.176427-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 22 Oct 2024 14:52:47 +0100
-Message-ID: <CAFEAcA_M2HsgKM2idG4030JTZWEUFfm_2Ae980zyh0DGhe-p=Q@mail.gmail.com>
-Subject: Re: [PULL v1 0/1] Xen Queue
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
- paul@xen.org, edgar.iglesias@amd.com, xen-devel@lists.xenproject.org
+Date: Tue, 22 Oct 2024 14:53:02 +0100
+Message-ID: <CAFEAcA8EL7S0uBDy9rM_i5h1o8G0ER=93CBOrNZ6n1mpF0pdAQ@mail.gmail.com>
+Subject: Re: [PULL v2 00/20] Test updates (tuxrun tests, new QTest maintainer,
+ ...)
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,10 +88,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 21 Oct 2024 at 08:40, Edgar E. Iglesias
-<edgar.iglesias@gmail.com> wrote:
->
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On Mon, 21 Oct 2024 at 17:12, Thomas Huth <thuth@redhat.com> wrote:
 >
 > The following changes since commit f1dd640896ee2b50cb34328f2568aad324702954:
 >
@@ -99,15 +96,21 @@ On Mon, 21 Oct 2024 at 08:40, Edgar E. Iglesias
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xen-queue-2024-10-21.for-upstream
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-10-21
 >
-> for you to fetch changes up to 676a68fd4850924db73548c9cb20ea484709708c:
+> for you to fetch changes up to c592ff35110a5f7e247d3933871d5aca74fc9288:
 >
->   hw/xen: Avoid use of uninitialized bufioreq_evtchn (2024-10-21 07:53:21 +0200)
+>   tests/functional: Convert the Avocado sh4 tuxrun test (2024-10-21 16:41:39 +0200)
 >
 > ----------------------------------------------------------------
-> Edgars Xen queue.
+> * Convert most Tuxrun Avocado tests to the new functional framework
+> * Update the OpenBSD CI image to OpenBSD v7.6
+> * Bump timeout of the ide-test
+> * New maintainer for the QTests
+> * Disable the pci-bridge on s390x by default
 >
+> v2: Drop the troubled aarch64 tuxrun test (and modify the last patch
+>     to not remove the avocado test)
 
 
 Applied, thanks.
