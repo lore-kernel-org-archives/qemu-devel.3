@@ -4,56 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAEED1CDCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C48D1CDCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3BOz-0003Rv-4G; Tue, 22 Oct 2024 05:42:09 -0400
+	id 1t3BXN-0001Si-C1; Tue, 22 Oct 2024 05:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BOw-0003Ph-KI; Tue, 22 Oct 2024 05:42:06 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3BXI-0001Rq-3R
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:50:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BOu-00019W-UW; Tue, 22 Oct 2024 05:42:06 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 22 Oct
- 2024 17:41:15 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 22 Oct 2024 17:41:15 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "Kevin
- Wolf" <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Thomas Huth
- <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
- list:All patches CC here" <qemu-devel@nongnu.org>, "open list:Block layer
- core" <qemu-block@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 12/18] test/qtest/aspeed_smc-test: Introducing a
- "page_addr" data field
-Date: Tue, 22 Oct 2024 17:41:04 +0800
-Message-ID: <20241022094110.1574011-13-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
-References: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3BXC-0002Df-D3
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:50:41 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M3RAsf011316;
+ Tue, 22 Oct 2024 09:50:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=IcHUH9
+ +lJ2EfdsZiMckmhPu3yv95Y4YaLONLhVrAPlw=; b=V2zf/9xUxU50MowHSJtsQB
+ 3MiIKhWcVgSULMyfqVV2TiGA6rwlEvCBXOW8FRk7Gn1nxQCm9tDbu7Fd3mkuwUom
+ H29rcEBxSf3ArNz5dSmBH19hjtk848cTVL8o33yAQJtrgmUqlpYEP6DVDpLvYNE5
+ 3vHCOgKZ8arja0iaeT+mp2VHRdbsHbG7WAGm+KK0+KpwLVqvPGLDdvVFbXtPzfD1
+ X1BIxgVTjQAtslntm6xwEDy4LpDmEa7MRH8KbCwArMH1B/E0MkRtVH1exSS0Zo1K
+ 7mmeklRaA2toEnEQm55T8J8NLC6ZS3IOVd9s9yrJ2+3PRQIg/qOHwiQLJSb+NnHw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5hmdx9m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 09:50:34 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49M5KRiW029439;
+ Tue, 22 Oct 2024 09:50:33 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42crkk2g26-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Oct 2024 09:50:32 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49M9oVtS18022728
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Oct 2024 09:50:31 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E991E20043;
+ Tue, 22 Oct 2024 09:50:30 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9766120040;
+ Tue, 22 Oct 2024 09:50:30 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Oct 2024 09:50:30 +0000 (GMT)
+Message-ID: <5a6ec294c6da14a2a65d3669ac4dcdc79934c452.camel@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Tolerate CONFIG_LSM_MMAP_MIN_ADDR
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org
+Date: Tue, 22 Oct 2024 11:50:30 +0200
+In-Reply-To: <38ff2ca7-7156-4ad8-b777-dab689043ecc@linaro.org>
+References: <20241021121820.483535-1-iii@linux.ibm.com>
+ <38ff2ca7-7156-4ad8-b777-dab689043ecc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: QdFBlXjNNs6V3mQITNwEoaQVj1ytnNHj
+X-Proofpoint-GUID: QdFBlXjNNs6V3mQITNwEoaQVj1ytnNHj
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1011
+ phishscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220061
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,94 +107,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, these test cases used the hardcode offset 0x1400000 (0x14000 * 256)
-which was beyond the 16MB flash size for flash page read/write command testing.
-However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" whose size
-is 1MB. To test all flash models, introduces a new page_addr member in TestData
-structure, so users can set the offset for flash parge read/write command
-testing.
+On Mon, 2024-10-21 at 19:34 -0700, Richard Henderson wrote:
+> On 10/21/24 05:17, Ilya Leoshkevich wrote:
+> > Running qemu-i386 on a system running with SELinux in enforcing
+> > mode
+> > fails with:
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 qemu-i386: tests/tcg/i386-linux-user/sigreturn=
+-sigmask: Unable
+> > to find a guest_base to satisfy all guest address mapping
+> > requirements
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 00000000-ffffffff
+> >=20
+> > The reason is that main() determines mmap_min_addr from
+> > /proc/sys/vm/mmap_min_addr, but SELinux additionally defines
+> > CONFIG_LSM_MMAP_MIN_ADDR, which is normally larger: 32K or 64K,
+> > but,
+> > in general, can be anything. There is no portable way to query its
+> > value: /boot/config, /proc/config and /proc/config.gz are distro-
+> > and
+> > environment-specific.
+> >=20
+> > For maximum compatibility, probing is required. Use
+> > pgb_find_fallback()
+> > for this purpose. The downside of this approach is that
+> > mmap_min_addr
+> > remains incorrect, but there don't seem to be any practical
+> > consequences from this. If a correct mmap_min_addr will be required
+> > in
+> > the future, probing will need to be moved to linux-user main().
+> >=20
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0 linux-user/elfload.c | 4 ++++
+> > =C2=A0 1 file changed, 4 insertions(+)
+>=20
+> This is
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0 https://gitlab.com/qemu-project/qemu/-/issues/25=
+98
+>=20
+> which we closed as a system configuration / kernel bug.
+>=20
+> I'm open to working around the issue, because I can see it coming up
+> again and again.
+>=20
+> In pgb_find_fallback, we use a skip value of 4M or 4G, using that
+> skip as the base at=20
+> which to begin the search.=C2=A0 I think it might be better to use this as
+> the initial start=20
+> point in pgb_find_itree as well, rather than mmap_min_addr.
+>=20
+> Since I never had a setup in which this triggered, would you be
+> willing to test such a change?
+>=20
+>=20
+> r~
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- tests/qtest/aspeed_smc-test.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+The environment is a trixie container running on Fedora 40.
 
-diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
-index b8ab20b43d..6db18451d2 100644
---- a/tests/qtest/aspeed_smc-test.c
-+++ b/tests/qtest/aspeed_smc-test.c
-@@ -72,6 +72,7 @@ typedef struct TestData {
-     char *tmp_path;
-     uint8_t cs;
-     const char *node;
-+    uint32_t page_addr;
- } TestData;
- 
- /*
-@@ -256,7 +257,7 @@ static void assert_page_mem(const TestData *data, uint32_t addr,
- static void test_erase_sector(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t some_page_addr = 0x600 * FLASH_PAGE_SIZE;
-+    uint32_t some_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -308,7 +309,7 @@ static void test_erase_sector(const void *data)
- static void test_erase_all(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t some_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -358,8 +359,8 @@ static void test_erase_all(const void *data)
- static void test_write_page(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-+    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -395,8 +396,8 @@ static void test_write_page(const void *data)
- static void test_read_page_mem(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
--    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-+    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -438,7 +439,7 @@ static void test_read_page_mem(const void *data)
- static void test_write_page_mem(const void *data)
- {
-     const TestData *test_data = (const TestData *)data;
--    uint32_t my_page_addr = 0x15000 * FLASH_PAGE_SIZE;
-+    uint32_t my_page_addr = test_data->page_addr;
-     uint32_t page[FLASH_PAGE_SIZE / 4];
-     int i;
- 
-@@ -679,6 +680,8 @@ static void test_palmetto_bmc(TestData *data)
-     data->jedec_id = 0x20ba19;
-     data->cs = 0;
-     data->node = "/machine/soc/fmc/ssi.0/child[0]";
-+    /* beyond 16MB */
-+    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
- 
-     qtest_add_data_func("/ast2400/smc/read_jedec", data, test_read_jedec);
-     qtest_add_data_func("/ast2400/smc/erase_sector", data, test_erase_sector);
--- 
-2.34.1
+The following works, I can send a v2 if that's the preferred way to go:
 
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2898,7 +2898,7 @@ static uintptr_t pgb_try_itree(const PGBAddrs
+*ga, uintptr_t base,
+ static uintptr_t pgb_find_itree(const PGBAddrs *ga, IntervalTreeRoot
+*root,
+                                 uintptr_t align, uintptr_t brk)
+ {
+-    uintptr_t last =3D mmap_min_addr;
++    uintptr_t last =3D sizeof(uintptr_t) =3D=3D 4 ? MiB : GiB;
+     uintptr_t base, skip;
+=20
+     while (true) {
+
+But just for my understanding, what is wrong with the current approach?
+The intention here is to fix the weird case without affecting the happy
+path. It also looks natural to try the fallback once the normal
+handling fails.
 
