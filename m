@@ -4,125 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD893D2C54E
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB73BD2C54B
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Ehs-0000T2-RF; Tue, 22 Oct 2024 09:13:52 -0400
+	id 1t3Ejz-0001SX-L0; Tue, 22 Oct 2024 09:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3Ehp-0000Se-7s
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:13:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3Ejv-0001Rl-7j
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:16:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3Ehl-00064p-VS
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:13:48 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3Ejs-0006Qh-W4
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:15:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729602823;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1729602955;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7FUiy2SOO4Qvkcg20FmEbndUxjqJdQWEOR65bLnLnGY=;
- b=EEqQSO1m8GFBwDIgToB/aMYqG0GQGZL/enzPHVDxzbqSzLnSDFNKD2EpeKKIvAT2B9QVCJ
- +cq3ghSiuVW8dB8C7jQB8NhPNCe2UOj4pSqF5LD51VCXtrDx5rH0CqnjRfnqPLQXS0swPk
- u4NogIfe+eKtxy+ory9S/XmIjFz3NzI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-abnbsJJCMpanOf-67wNrSQ-1; Tue, 22 Oct 2024 09:13:41 -0400
-X-MC-Unique: abnbsJJCMpanOf-67wNrSQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4315cefda02so41531245e9.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 06:13:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729602820; x=1730207620;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7FUiy2SOO4Qvkcg20FmEbndUxjqJdQWEOR65bLnLnGY=;
- b=otB2A37jOGSdD86KoNlu057poQPIG+883CSkLoDF/RfetbSuROQ63mQ47QsF3FmOcb
- ZLJ7467AKLDnCRsP/7r1uaG13zbYZTUBQQgztMahoAFSpcRff0dJ/zkjUn+WbP95uRl/
- 9QdOwM7jvpxkD4WQsFgjGSYlb3psjSRh+yZ0BfFVV9E4fGyJ/GXHxe4IsOLHQCsHVstm
- yyZj18MsVxqS/o4e54V4ToTlII3CYFyMNX19CYz542QN+mEDjrrIX9IV0c8LcnruPBmG
- UWCMXyJsjMCn4YZnlvNUa76n1TgAkS+ttIDurXQJUh/DewsqIWcnYz40fgqvKTC+hzql
- GcDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQJJRkXIEkiKLPzkq+PDuG4uLTpQpjgveRdqVVeVQp8juTznm4LTMGr8CtvBpozvnfpLgG0hpk7TWW@nongnu.org
-X-Gm-Message-State: AOJu0YzlwMY+loZMAaIqmB4ICqY/Gsxct1zDh4dksY7PSXJXDKAe9If5
- yqowB1fLtBwgfiC+yKc5PL7KnbN6tTu+AXPemg1F8Jro1iymRza4ivJsXEh6MguNWBEMEmJDLcm
- AM+xiOyemA+DEYqbUZDXIZjJmCIZDcrJVBrfCceXIUV0TwxphQwsS
-X-Received: by 2002:a05:600c:1d9b:b0:431:7c78:b885 with SMTP id
- 5b1f17b1804b1-4317ca9809bmr17382585e9.4.1729602820393; 
- Tue, 22 Oct 2024 06:13:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCfigvsEowrajaH7z5ZRiC4JRWkvYYHmko0X1rt1vY/Y0i/NyVTHX/HeAVWxJiu/HiC009/Q==
-X-Received: by 2002:a05:600c:1d9b:b0:431:7c78:b885 with SMTP id
- 5b1f17b1804b1-4317ca9809bmr17382345e9.4.1729602819861; 
- Tue, 22 Oct 2024 06:13:39 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-40-241-30.web.vodafone.de.
- [109.40.241.30]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4317dde77a5sm11845625e9.1.2024.10.22.06.13.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 06:13:39 -0700 (PDT)
-Message-ID: <9891e2f8-c5b9-4bc6-84a3-dd0b49920cc6@redhat.com>
-Date: Tue, 22 Oct 2024 15:13:38 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=W4GTO7085v2TIPI4FXf0ih1lKiDeK6IWhXYTPmsSmqw=;
+ b=hXl3YK/HopUEDCP41UZ9djQDeHzEXwMhIdRl39iRShFBk79zj57AYLyibSsXuRtUBsAKT/
+ 0UsW5pqXWwjiP3ZASlwLdKWOmxPafWZfS2U24Cxmfbr870R1AsyispbjdzafDuQ7l+z0Om
+ w2kdm/m8RKAk7qUvB+fuelVc4EFb+nc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-nXWwGzj9MJizXkKa06nA8A-1; Tue,
+ 22 Oct 2024 09:15:53 -0400
+X-MC-Unique: nXWwGzj9MJizXkKa06nA8A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BDAD1955F45
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 13:15:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.59])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 176251956056; Tue, 22 Oct 2024 13:15:47 +0000 (UTC)
+Date: Tue, 22 Oct 2024 14:15:44 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Anthony Harivel <aharivel@redhat.com>, pbonzini@redhat.com,
+ mtosatti@redhat.com, qemu-devel@nongnu.org, vchundur@redhat.com,
+ rjarry@redhat.com
+Subject: Re: [PATCH v6 0/3] Add support for the RAPL MSRs series
+Message-ID: <ZxelgDeuZaia-Vqf@redhat.com>
+References: <20240522153453.1230389-1-aharivel@redhat.com>
+ <20241016135259.49021bca@imammedo.users.ipa.redhat.com>
+ <D4X8WRR5F2GP.2MCBI9HDM3UHM@redhat.com>
+ <20241018142526.34a2de0a@imammedo.users.ipa.redhat.com>
+ <ZxJbtkMO1QcoiqVn@redhat.com>
+ <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/19] hw/s390x: Build an IPLB for each boot device
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com
-References: <20241020012953.1380075-1-jrossi@linux.ibm.com>
- <20241020012953.1380075-16-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241020012953.1380075-16-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241022144615.203cf0da@imammedo.users.ipa.redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -144,227 +91,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/2024 03.29, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On Tue, Oct 22, 2024 at 02:46:15PM +0200, Igor Mammedov wrote:
+> On Fri, 18 Oct 2024 13:59:34 +0100
+> Daniel P. Berrangé <berrange@redhat.com> wrote:
 > 
-> Build an IPLB for any device with a bootindex (up to a maximum of 8 devices).
+> > On Fri, Oct 18, 2024 at 02:25:26PM +0200, Igor Mammedov wrote:
+> > > On Wed, 16 Oct 2024 14:56:39 +0200
+> > > "Anthony Harivel" <aharivel@redhat.com> wrote:
+> [...]
 > 
-> The IPLB chain is placed immediately before the BIOS in memory. Because this
-> is not a fixed address, the location of the next IPLB and number of remaining
-> boot devices is stored in the QIPL global variable for possible later access by
-> the guest during IPL.
+> > > 
+> > > This also leads to a question, if we should account for
+> > > not VCPU threads at all. Looking at real hardware, those
+> > > MSRs return power usage of CPUs only, and they do not
+> > > return consumption from auxiliary system components
+> > > (io/memory/...). One can consider non VCPU threads in QEMU
+> > > as auxiliary components, so we probably should not to
+> > > account for them at all when modeling the same hw feature.
+> > > (aka be consistent with what real hw does).  
+> > 
+> > I understand your POV, but I think that would be a mistake,
+> > and would undermine the usefulness of the feature.
+> > 
+> > The deployment model has a cluster of hosts and guests, all
+> > belonging to the same user. The user goal is to measure host
+> > power consumption imposed by the guest, and dynamically adjust
+> > guest workloads in order to minimize power consumption of the
+> > host.
 > 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
-...
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 656996b500..ed152a9dd2 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -56,6 +56,13 @@ static bool iplb_extended_needed(void *opaque)
->       return ipl->iplbext_migration;
->   }
->   
-> +/* Place the IPLB chain immediately before the BIOS in memory */
-> +static uint64_t find_iplb_chain_addr(uint64_t bios_addr, uint16_t count)
-> +{
-> +    return (bios_addr & TARGET_PAGE_MASK)
-> +            - (count * sizeof(IplParameterBlock));
-> +}
-> +
->   static const VMStateDescription vmstate_iplb_extended = {
->       .name = "ipl/iplb_extended",
->       .version_id = 0,
-> @@ -398,6 +405,17 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
->       return ccw_dev;
->   }
->   
-> +static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
-> +{
-> +    S390IPLState *ipl = get_ipl_device();
-> +    uint16_t count = ipl->qipl.chain_len;
+> For cloud use-case, host side is likely in a better position
+> to accomplish the task of saving power by migrating VM to
+> another socket/host to compact idle load. (I've found at least 1
+> kubernetis tool[1], which does energy monitoring). Perhaps there
+> are schedulers out there that do that using its data.
 
-I ran into problems when running the cdrom-test on my x86 laptop.
+The host admin can merely shuffle workloads around, hoping that
+a different packing of workloads onto machines, will reduce power
+in some aount. You might win a few %, or low 10s of % with this
+if you're good at it.
 
-I think the above line needs to be changed into this to get it working on 
-little endian hosts:
+The guest admin can change the way their workload operates to
+reduce its inherant power consumption baseline. You could easily
+come across ways to win high 10s of % with this. That's why it
+is interesting to expose power consumption info to the guest
+admin.
 
-     uint16_t count = be16_to_cpu(ipl->qipl.chain_len)
+IOW, neither makes the other obsolete, both approaches are
+desirable.
 
+> > The guest workloads can impose non-negligble power consumption
+> > loads on non-vCPU threads in QEMU. Without that accounted for,
+> > any adjustments will be working from (sometimes very) inaccurate
+> > data.
+> 
+> Perhaps adding one or several energy sensors (ex: some i2c ones),
+> would let us provide auxiliary threads consumption to guest, and
+> even make it more granular if necessary (incl. vhost user/out of
+> process device models or pass-through devices if they have PMU).
+> It would be better than further muddling vCPUs consumption
+> estimates with something that doesn't belong there.
 
-> +    uint64_t len = sizeof(IplParameterBlock) * count;
-> +    uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
-> +
-> +    cpu_physical_memory_write(chain_addr, iplb_chain, len);
-> +    return chain_addr;
-> +}
-> +
->   void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp)
->   {
->       int i;
-> @@ -428,54 +446,51 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
->       }
->   }
->   
-> -static bool s390_gen_initial_iplb(S390IPLState *ipl)
-> +static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->   {
-> -    DeviceState *dev_st;
-> +    S390IPLState *ipl = get_ipl_device();
->       CcwDevice *ccw_dev = NULL;
->       SCSIDevice *sd;
->       int devtype;
->       uint8_t *lp;
->   
-> -    dev_st = get_boot_device(0);
-> -    if (dev_st) {
-> -        ccw_dev = s390_get_ccw_device(dev_st, &devtype);
-> -    }
-> -
->       /*
->        * Currently allow IPL only from CCW devices.
->        */
-> +    ccw_dev = s390_get_ccw_device(dev_st, &devtype);
->       if (ccw_dev) {
->           lp = ccw_dev->loadparm;
->   
->           switch (devtype) {
->           case CCW_DEVTYPE_SCSI:
->               sd = SCSI_DEVICE(dev_st);
-> -            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-> -            ipl->iplb.blk0_len =
-> +            iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-> +            iplb->blk0_len =
->                   cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
-> -            ipl->iplb.pbt = S390_IPL_TYPE_QEMU_SCSI;
-> -            ipl->iplb.scsi.lun = cpu_to_be32(sd->lun);
-> -            ipl->iplb.scsi.target = cpu_to_be16(sd->id);
-> -            ipl->iplb.scsi.channel = cpu_to_be16(sd->channel);
-> -            ipl->iplb.scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
-> -            ipl->iplb.scsi.ssid = ccw_dev->sch->ssid & 3;
-> +            iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-> +            iplb->scsi.lun = cpu_to_be32(sd->lun);
-> +            iplb->scsi.target = cpu_to_be16(sd->id);
-> +            iplb->scsi.channel = cpu_to_be16(sd->channel);
-> +            iplb->scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
-> +            iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
->               break;
->           case CCW_DEVTYPE_VFIO:
-> -            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> -            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
-> -            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-> -            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-> +            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> +            iplb->pbt = S390_IPL_TYPE_CCW;
-> +            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-> +            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
->               break;
->           case CCW_DEVTYPE_VIRTIO_NET:
-> +            /* The S390IPLState netboot is true if ANY IPLB may use netboot */
->               ipl->netboot = true;
->               /* Fall through to CCW_DEVTYPE_VIRTIO case */
->           case CCW_DEVTYPE_VIRTIO:
-> -            ipl->iplb.len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> -            ipl->iplb.blk0_len =
-> +            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> +            iplb->blk0_len =
->                   cpu_to_be32(S390_IPLB_MIN_CCW_LEN - S390_IPLB_HEADER_LEN);
-> -            ipl->iplb.pbt = S390_IPL_TYPE_CCW;
-> -            ipl->iplb.ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-> -            ipl->iplb.ccw.ssid = ccw_dev->sch->ssid & 3;
-> +            iplb->pbt = S390_IPL_TYPE_CCW;
-> +            iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
-> +            iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
->               break;
->           }
->   
-> @@ -484,8 +499,8 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
->               lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
->           }
->   
-> -        s390_ipl_convert_loadparm((char *)lp, ipl->iplb.loadparm);
-> -        ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
-> +        s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-> +        iplb->flags |= DIAG308_FLAGS_LP_VALID;
->   
->           return true;
->       }
-> @@ -493,6 +508,62 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
->       return false;
->   }
->   
-> +static bool s390_init_all_iplbs(S390IPLState *ipl)
-> +{
-> +    int iplb_num = 0;
-> +    IplParameterBlock iplb_chain[7];
-> +    DeviceState *dev_st = get_boot_device(0);
-> +    Object *machine = qdev_get_machine();
-> +
-> +    /*
-> +     * Parse the boot devices.  Generate an IPLB for only the first boot device
-> +     * which will later be set with DIAG308.
-> +     */
-> +    if (!dev_st) {
-> +        ipl->qipl.chain_len = 0;
-> +        return false;
-> +    }
-> +
-> +    /* If no machine loadparm was defined fill it with spaces */
-> +    if (memcmp(S390_CCW_MACHINE(machine)->loadparm, NO_LOADPARM, 8) == 0) {
-> +        object_property_set_str(machine, "loadparm", "        ", NULL);
-> +    }
-> +
-> +    iplb_num = 1;
-> +    s390_build_iplb(dev_st, &ipl->iplb);
-> +
-> +    /*  Index any fallback boot devices */
-> +    while (get_boot_device(iplb_num)) {
-> +        iplb_num++;
-> +    }
-> +
-> +    if (iplb_num > MAX_BOOT_DEVS) {
-> +        warn_report("Excess boot devices defined! %d boot devices found, "
-> +                    "but only the first %d will be considered.",
-> +                    iplb_num, MAX_BOOT_DEVS);
-> +
-> +        iplb_num = MAX_BOOT_DEVS;
-> +    }
-> +
-> +    ipl->qipl.chain_len = iplb_num - 1;
+There's a tradeoff here in that info directly associated with
+backends threads, is effectively exposing private QEMU impl
+details as public ABI. IOW, we don't want too fine granularity
+here, we need it abstracted sufficiently, that different
+backend choices for a given don't change what sensors are
+exposed.
 
-... and this needs to be changed into:
+I also wonder how existing power monitoring applications
+would consume such custom sensors - is there sufficient
+standardization in this are that we're not inventing
+something totally QEMU specific ?
 
-     ipl->qipl.chain_len = cpu_to_be16(iplb_num - 1);
+> > IOW, I think it is right to include non-vCPU threads usage in
+> > the reported info, as it is still fundamentally part of the
+> > load that the guest imposes on host pCPUs it is permitted to
+> > run on.
+> 
+> 
+> From what I've read, process energy usage done via RAPL is not
+> exactly accurate. But there are monitoring tools out there that
+> use RAPL and other sources to make energy consumption monitoring
+> more reliable.
+> 
+> Reinventing that wheel and pulling all of the nuances of process
+> power monitoring inside of QEMU process, needlessly complicates it.
+> Maybe we should reuse one of existing tools and channel its data
+> through appropriate QEMU channels (RAPL/emulated PMU counters/...).
 
-> +    /*
-> +     * Build fallback IPLBs for any boot devices above index 0, up to a
-> +     * maximum amount as defined in ipl.h
-> +     */
-> +    if (iplb_num > 1) {
-> +        /* Start at 1 because the IPLB for boot index 0 is not chained */
-> +        for (int i = 1; i < iplb_num; i++) {
-> +            dev_st = get_boot_device(i);
-> +            s390_build_iplb(dev_st, &iplb_chain[i - 1]);
-> +        }
-> +
-> +        ipl->qipl.next_iplb = s390_ipl_map_iplb_chain(iplb_chain);
+Note, this feature is already released in QEMU 9.1.0.
 
-And this needs to be change into:
+> Implementing RAPL in pure form though looks fine to me,
+> so the same tools could use it the same way as on the host
+> if needed without VM specific quirks.
 
-     ipl->qipl.next_iplb = cpu_to_be64(s390_ipl_map_iplb_chain(iplb_chain));
+IMHO the so called "pure" form is misleading to applications, unless
+we first provided  some other pratical way to expose the data that
+we would be throwing away from RAPL.
 
-I am already in progress of picking up your patches, so if you agree with my 
-suggestions, I can fix it on my side, too.
-
-  Thomas
-
-
-> +    }
-> +
-> +    return iplb_num;
-> +}
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
