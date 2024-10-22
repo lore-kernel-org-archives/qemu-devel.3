@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CFFD2C546
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 12:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2813BD2C547
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 12:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3E8q-00030a-0l; Tue, 22 Oct 2024 08:37:41 -0400
+	id 1t3E9a-0003cQ-NE; Tue, 22 Oct 2024 08:38:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1t3E8b-0002yn-Qn
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 08:37:27 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1t3E8X-0001G7-OM
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 08:37:23 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8DxGeB+nBdnJTMFAA--.12545S3;
- Tue, 22 Oct 2024 20:37:18 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMDx2OJ+nBdnt88HAA--.46405S3;
- Tue, 22 Oct 2024 20:37:18 +0800 (CST)
-Subject: Re: [PATCH v5 0/2] target/loongarch: Add loongson binary translation
- feature
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>, qemu-devel@nongnu.org
-References: <20240929070405.235200-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <88b6f12f-96fe-7794-040a-3525988de286@loongson.cn>
-Date: Tue, 22 Oct 2024 20:38:15 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t3E9Z-0003ZG-0z
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 08:38:25 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1t3E9W-0001Nm-J9
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 08:38:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1729600683; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=edv8dkEYoFmUwh85Ydt3zRWqTRr/Ip9tVCycFRKeB/A7AMNW6Jc4nPJbIUeliH5NFOd8kztNgeJ0bkctBWD5gtHHzsZa22E1Ls57v+YirOabqJfijCSlSknTpnB/hrWzAxeGLVpp81hBhEAQAf6QsRtqKF6np+G16pzAXP1ocpc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1729600683;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=6J50PJOZIPGSLdFd8IWuD2qqZS6vhXHQAG3o2pInTvU=; 
+ b=Fxywr0rBMuAuvu3GBrkkENGGrMIcHhEW6oWgJM8Yl40yIPfY3bOnnWqLy5hVcaOIhTruZKotZHUGDTwiAMC0/noedOBNyrCUBlxOR5pUHnAh9PUPmYj3sOpKaR2IlqVvYkscRxt89VVZllrg9S/Ij/OXHibK+StsOxFi9GgbMgw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729600683; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=6J50PJOZIPGSLdFd8IWuD2qqZS6vhXHQAG3o2pInTvU=;
+ b=Hi6Za+psp6hu6FZ+LkszFsWzz6rldZWvwI40p8PKyhTNduXS14Ohg1GG8QhjzPEW
+ +6kbQ34fn4NUBsGa/6PB0DnrZrXfaXhQyNk8EFFBneWquuKyL9j/+9wPg3U6Nbd/YXI
+ mnriaPn5awtHzWkAVCgSCzCXFGmw0oagqn7R9C0w=
+Received: by mx.zohomail.com with SMTPS id 1729600677103775.0694160909555;
+ Tue, 22 Oct 2024 05:37:57 -0700 (PDT)
+Message-ID: <44929f04-f45f-45ff-bd0b-e1a955fad34a@collabora.com>
+Date: Tue, 22 Oct 2024 15:37:49 +0300
 MIME-Version: 1.0
-In-Reply-To: <20240929070405.235200-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-6-dmitry.osipenko@collabora.com>
+ <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
+ <f79ebab7-fe1c-419d-89d5-6238b0b36ba5@collabora.com>
+ <c02c2bb3-c5fe-4675-bfc5-2b99fbf78f42@daynix.com>
 Content-Language: en-US
-X-CM-TRANSID: qMiowMDx2OJ+nBdnt88HAA--.46405S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJr4UuFy5tr1DurWrZr4UJrc_yoW8Zr48pa
- y7AF1FyFWkJrZ7Aa1fZrW5Wr4Sqr4xGrW2q3W3A34rGF4Yk3s2vr40yasaqFyDJ34xWryI
- ga1qkw1UuFn0ywbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7XTm
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.475, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <c02c2bb3-c5fe-4675-bfc5-2b99fbf78f42@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,56 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-�� 2024/9/29 ����3:04, Bibo Mao д��:
-> Loongson Binary Translation (LBT) is used to accelerate binary
-> translation. LBT feature is added in kvm mode, not supported in TCG
-> mode since it is not emulated.
->
-> Here lbt=on/off property is added to parse command line to
-> enable/disable lbt feature. Also fix registers relative lbt are saved
-> and restored during migration.
->
-> ---
-> v4 ... v5:
->    1. Define structure element eflags in structure LoongArchBT as
->       uint32_t; in kernel eflags is defined as u64, however with
->       ptrace and gdb interface it is defined u32, here defined as
->       uint32_t to keep consistent from user view.
->    2. sync patch with latest qemu version.
->
-> v3 ... v4:
->    1. Verify and enable LBT feature in function kvm_arch_init_vcpu()
->       rather than loongarch_cpu_post_init(), since LBT feature is only
->       effective in kvm mode and function kvm_feature_supported() can be
->       defined as static.
->    2. Define structure element ftop in structure LoongArchBT as uint32_t
->       to keep consist with kernel and real HW.
->
-> v2 ... v3:
->    1. Property lbt is added only if kvm is enabled
->    2. Use feature variable lbt with OnOffAuto type, rather than feature
->       bitmap flags default_features and forced_features
->
-> v1 ... v2:
->    1. Add LBT register saving and restoring in vmstate
->    2. Add two pseudo feature flags: default_features and forced_features
-> ---
-> Bibo Mao (2):
->    target/loongarch: Add loongson binary translation feature
->    target/loongarch: Implement lbt registers save/restore function
->
->   target/loongarch/cpu.c                |  24 ++++++
->   target/loongarch/cpu.h                |  18 ++++
->   target/loongarch/kvm/kvm.c            | 119 +++++++++++++++++++++++++-
->   target/loongarch/loongarch-qmp-cmds.c |   2 +-
->   target/loongarch/machine.c            |  24 ++++++
->   5 files changed, 185 insertions(+), 2 deletions(-)
->
->
-> base-commit: 3b14a767eaca3df5534a162851f04787b363670e
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+On 10/22/24 08:11, Akihiko Odaki wrote:
+> On 2024/10/19 6:31, Dmitry Osipenko wrote:
+>> On 10/18/24 08:28, Akihiko Odaki wrote:
+>>>> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+>>>> +                                      uint32_t ring_idx, uint64_t
+>>>> fence)
+>>>> +{
+>>>> +    VirtIOGPU *g = opaque;
+>>>
+>>> What about taking the BQL here instead of having a QEMUBH?
+>>
+>> That will block virglrenderer thread writing the fence, which in turns
+>> might block other virglrenderer threads.
+> 
+> Looking at virglrenderer's source code, the thread writing the fence is
+> the only thread it creates. Otherwise virglrenderer's code should be
+> executed only in the QEMU thread calling virglrenderer's functions,
+> which always holds the BQL. So taking the BQL here will not interfere
+> with another thread.
 
-Thanks.
-Song Gao
+There are other problems with that BQL approach:
 
+1. virgl_renderer_context_destroy() is executed from QEMU's main-loop
+and it will terminate the virglrenderer's fence-sync threads which at
+the same time will take the same BQL if fence fires while VM is shutting
+down and then this condition will result in a deadlock.
+
+2. In a case of vrend, the fence-sync thread uses a different GL context
+than the QEMU's main-loop vrend thread. Feels like too much potential
+problems with GL context switching here. We shouldn't be able to jump
+into QEMU's GL code from a non-vrend GL thread.
+
+Too many complications with the BQL approach for a little benefit, IMO.
+
+-- 
+Best regards,
+Dmitry
 
