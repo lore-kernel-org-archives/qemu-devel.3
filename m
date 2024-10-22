@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDB6D1713D
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA41D1715A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3DFA-0005LI-Uy; Tue, 22 Oct 2024 07:40:08 -0400
+	id 1t3DG1-0005Vf-QF; Tue, 22 Oct 2024 07:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3DEw-0005Km-Sj
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:39:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t3DFp-0005V6-AJ
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:40:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3DEu-00014R-2O
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:39:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M2HEA1018378;
- Tue, 22 Oct 2024 11:39:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=DrJYM7OmrEChNecpP4cBzc7hafsi
- kJHo6jqqXcsVJhA=; b=aqv1rTPis+i5uroI5DeTdM24prPWnYDI3ZDTNAz9gmDq
- GYmK1HjZqlcnDUizIrxAA0BIqH45kyx78r3Y1J7uXv+YkRlBo1IJ2O8clxtXJxlR
- 4CrAZrktTagRUm7rYLWxkvKNwasoUrTcKH4G/b32Cih3AQROxHI10rm2Lh5IV/u6
- Wr+iLnnWd+vqYBNP5i71yIlyM03HkbTEoLrENqzqtgW2LN+Zt3zmhx9QIyiUTdAS
- 8IXvth7Yjm0KpaTtpztmWrr8mF1+nULl97ruZWWL0I6nKqZK8Sje22SdVct4pw6F
- Rl7MaGEajeRIy96SThb0Hm3QK+Y2J/AffrhAFhQEEQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42c5gcpack-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Oct 2024 11:39:48 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49M82Fd4026471;
- Tue, 22 Oct 2024 11:39:47 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42cq3sb6m0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Oct 2024 11:39:47 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49MBdeqn50987510
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Oct 2024 11:39:40 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94BE520043;
- Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3BECA20040;
- Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.26.72])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Oct 2024 11:39:40 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2] tests/tcg: Stop using exit() in the gdbstub testcases
-Date: Tue, 22 Oct 2024 13:37:11 +0200
-Message-ID: <20241022113939.19989-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 6WViykz38n35A2yWy4hBzN1FxVOjnb5R
-X-Proofpoint-ORIG-GUID: 6WViykz38n35A2yWy4hBzN1FxVOjnb5R
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t3DFm-0001MI-4e
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:40:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729597242;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yad+DJ0KMg1UVDaPOPSn50ccXv492VIADa7NYMqPs1I=;
+ b=Jwk3g/1PMVRI+qt9+VkNUgLS/cFXzqi05cMgmUWYoD22DqTavhsG4K1Ss+Wq5ouIfH7NxO
+ hVZFHSWteJWuJuiUM2QPoOtfPSr/R8vuuQzNysl7U+qQ4a7+psa3n6s5yGrP1CfzeG/90G
+ 7+BIkSzgX/BOD1oOxMKZdCwqFo9/nEs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-DHOrHpXbPTiaKRbDHFl3RQ-1; Tue,
+ 22 Oct 2024 07:40:41 -0400
+X-MC-Unique: DHOrHpXbPTiaKRbDHFl3RQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07595195608D; Tue, 22 Oct 2024 11:40:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B3B619560AE; Tue, 22 Oct 2024 11:40:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1209D21E6A28; Tue, 22 Oct 2024 13:40:37 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,  "Dr . David Alan
+ Gilbert" <dave@treblig.org>,  Juraj Marcin <jmarcin@redhat.com>,  Prasad
+ Pandit <ppandit@redhat.com>,  Julia Suvorova <jusual@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
+In-Reply-To: <ZxeBuXQB3hd2avUh@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 22 Oct 2024 11:43:05 +0100")
+References: <20241021215220.982325-1-peterx@redhat.com>
+ <87froo34xy.fsf@pond.sub.org> <ZxdujhRo_kSkdkbX@redhat.com>
+ <87jze01kzp.fsf@pond.sub.org> <ZxeBuXQB3hd2avUh@redhat.com>
+Date: Tue, 22 Oct 2024 13:40:37 +0200
+Message-ID: <87plnsz7pm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 lowpriorityscore=0 mlxscore=0
- impostorscore=0 spamscore=0 phishscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220074
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,140 +91,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GDB 15 does not like exit() anymore:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-    (gdb) python exit(0)
-    Python Exception <class 'SystemExit'>: 0
-    Error occurred in Python: 0
+> On Tue, Oct 22, 2024 at 12:37:46PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Tue, Oct 22, 2024 at 10:41:29AM +0200, Markus Armbruster wrote:
+>> >> Peter Xu <peterx@redhat.com> writes:
+>> >>=20
+>> >> > Per previous discussion [1,2], this patch deprecates query-migratio=
+nthreads
+>> >> > command.
+>> >> >
+>> >> > To summarize, the major reason of the deprecation is due to no sens=
+ible way
+>> >> > to consume the API properly:
+>> >> >
+>> >> >   (1) The reported list of threads are incomplete (ignoring destina=
+tion
+>> >> >       threads and non-multifd threads).
+>> >> >
+>> >> >   (2) For CPU pinning, there's no way to properly pin the threads w=
+ith
+>> >> >       the API if the threads will start running right away after mi=
+gration
+>> >> >       threads can be queried, so the threads will always run on the=
+ default
+>> >> >       cores for a short window.
+>> >> >
+>> >> >   (3) For VM debugging, one can use "-name $VM,debug-threads=3Don" =
+instead,
+>> >> >       which will provide proper names for all migration threads.
+>> >> >
+>> >> > [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat=
+.com
+>> >> > [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat=
+.com
+>> >> >
+>> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>>=20
+>> [...]
+>>=20
+>> >> > diff --git a/migration/threadinfo.c b/migration/threadinfo.c
+>> >> > index 262990dd75..2867413420 100644
+>> >> > --- a/migration/threadinfo.c
+>> >> > +++ b/migration/threadinfo.c
+>> >> > @@ -13,6 +13,7 @@
+>> >> >  #include "qemu/osdep.h"
+>> >> >  #include "qemu/queue.h"
+>> >> >  #include "qemu/lockable.h"
+>> >> > +#include "qemu/error-report.h"
+>> >> >  #include "threadinfo.h"
+>> >> >=20=20
+>> >> >  QemuMutex migration_threads_lock;
+>> >> > @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthrea=
+ds(Error **errp)
+>> >> >      MigrationThread *thread =3D NULL;
+>> >> >=20=20
+>> >> >      QEMU_LOCK_GUARD(&migration_threads_lock);
+>> >> > +
+>> >> > +    warn_report("Command 'query-migrationthreads' is deprecated");
+>> >>=20
+>> >> We don't normally do this for QMP commands.
+>> >>=20
+>> >> Management applications can use -compat deprecated-input=3Dreject to =
+check
+>> >> they're not sending deprecated commands or arguments.
+>> >>=20
+>> >> Suggest to drop.
+>> >
+>> > They could, but in practice I don't believe anything is doing this, so
+>> > the warning message is a practical way to alert people to the usage.
+>>=20
+>> Again, we not normally do this.  What makes this one different?
+>
+> Do we not ? My expectation is that everything we record in deprecated.rst
+> also has a corresponding warn_report / warn_report_once in the code.
+> We know users may not read the docs, so we have a multi-pronged approach
+> to alerting them.
 
-Use the GDB's own exit command, like it's already done in a couple
-places, everywhere. This is the same fix as commit 93a3048dcf45
-("tests: Gently exit from GDB when tests complete"), but applied to
-more places.
+We definitely do not.
 
-Acked-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
-v1: https://lore.kernel.org/qemu-devel/20241021150153.487057-1-iii@linux.ibm.com/
-v1 -> v2: Mention 93a3048dcf45 (Peter, Gustavo, Philippe).
-          Collect A-b and R-b.
+>> Stepping onto my soapbox: if stuff going away surprisingly would cause
+>> you enough inconvenience to make early warning desirable, testing with
+>> suitable -compat is a lot more reliable than relying on warnings.
+>> *Especially* when your automated testing files warnings unexamined
+>> together with any other crap that may go to stderr, so your best chance
+>> to notice the warning is in ad hoc manual testing of QEMU.  Nobody does
+>> that until after things broke.
+>
+> I don't see it as an either or choice. We try to surface the deprecation
+> info in as many different ways as is practical, as no single approach is
+> going to hit all bases.
+>
+>  * Document it (deprecated.rst)
+>  * Warn on QEMU stderr if used at runtime (warn_report)
+>  * Enable apps to validate their usage in tests (-compat)
+>  * Mark guests as tainted (libvirt API & VM log file, for certain asepts)
 
- tests/guest-debug/test_gdbstub.py                 | 14 ++++++++++----
- tests/tcg/multiarch/gdbstub/interrupt.py          |  4 ++--
- tests/tcg/multiarch/gdbstub/prot-none.py          |  4 ++--
- tests/tcg/multiarch/gdbstub/test-proc-mappings.py |  4 ++--
- 4 files changed, 16 insertions(+), 10 deletions(-)
+To deprecate a QMP command, event, argument or result, we add the
+feature flag.  One-liner, basically impossible to screw up.
 
-diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
-index a715c0e3f5e..4f08089e6a9 100644
---- a/tests/guest-debug/test_gdbstub.py
-+++ b/tests/guest-debug/test_gdbstub.py
-@@ -10,10 +10,16 @@
- 
- fail_count = 0
- 
-+
-+def gdb_exit(status):
-+    gdb.execute(f"exit {status}")
-+
-+
- class arg_parser(argparse.ArgumentParser):
-     def exit(self, status=None, message=""):
-         print("Wrong GDB script test argument! " + message)
--        gdb.execute("exit 1")
-+        gdb_exit(1)
-+
- 
- def report(cond, msg):
-     """Report success/fail of a test"""
-@@ -38,11 +44,11 @@ def main(test, expected_arch=None):
-                    "connected to {}".format(expected_arch))
-     except (gdb.error, AttributeError):
-         print("SKIP: not connected")
--        exit(0)
-+        gdb_exit(0)
- 
-     if gdb.parse_and_eval("$pc") == 0:
-         print("SKIP: PC not set")
--        exit(0)
-+        gdb_exit(0)
- 
-     try:
-         test()
-@@ -62,4 +68,4 @@ def main(test, expected_arch=None):
-         pass
- 
-     print("All tests complete: {} failures".format(fail_count))
--    gdb.execute(f"exit {fail_count}")
-+    gdb_exit(fail_count)
-diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiarch/gdbstub/interrupt.py
-index 90a45b5140a..2d5654d1540 100644
---- a/tests/tcg/multiarch/gdbstub/interrupt.py
-+++ b/tests/tcg/multiarch/gdbstub/interrupt.py
-@@ -8,7 +8,7 @@
- #
- 
- import gdb
--from test_gdbstub import main, report
-+from test_gdbstub import gdb_exit, main, report
- 
- 
- def check_interrupt(thread):
-@@ -49,7 +49,7 @@ def run_test():
-     """
-     if len(gdb.selected_inferior().threads()) == 1:
-         print("SKIP: set to run on a single thread")
--        exit(0)
-+        gdb_exit(0)
- 
-     gdb.execute("set scheduler-locking on")
-     for thread in gdb.selected_inferior().threads():
-diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
-index 7e264589cb8..51082a30e40 100644
---- a/tests/tcg/multiarch/gdbstub/prot-none.py
-+++ b/tests/tcg/multiarch/gdbstub/prot-none.py
-@@ -5,7 +5,7 @@
- SPDX-License-Identifier: GPL-2.0-or-later
- """
- import ctypes
--from test_gdbstub import main, report
-+from test_gdbstub import gdb_exit, main, report
- 
- 
- def probe_proc_self_mem():
-@@ -22,7 +22,7 @@ def run_test():
-     """Run through the tests one by one"""
-     if not probe_proc_self_mem():
-         print("SKIP: /proc/self/mem is not usable")
--        exit(0)
-+        gdb_exit(0)
-     gdb.Breakpoint("break_here")
-     gdb.execute("continue")
-     val = gdb.parse_and_eval("*(char[2] *)q").string()
-diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-index 0f687f3284a..6eb6ebf7b17 100644
---- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-+++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-@@ -3,7 +3,7 @@
- This runs as a sourced script (via -x, via run-test.py)."""
- from __future__ import print_function
- import gdb
--from test_gdbstub import main, report
-+from test_gdbstub import gdb_exit, main, report
- 
- 
- def run_test():
-@@ -12,7 +12,7 @@ def run_test():
-         # m68k GDB supports only GDB_OSABI_SVR4, but GDB_OSABI_LINUX is
-         # required for the info proc support (see set_gdbarch_info_proc()).
-         print("SKIP: m68k GDB does not support GDB_OSABI_LINUX")
--        exit(0)
-+        gdb_exit(0)
-     mappings = gdb.execute("info proc mappings", False, True)
-     report(isinstance(mappings, str), "Fetched the mappings from the inferior")
-     # Broken with host page size > guest page size
--- 
-2.47.0
+Review should then catch a missing update to deprecated.rst.
+
+Same for un-deprecating something.
+
+So far, this is as simple as it could possibly be.  That's a feature.
+
+A warning requires additional handwritten code.  Which *can* be screwed
+up.  Moreover, missing warning (add or delete) is easy to miss in
+review.
+
+If we want such warnings for QMP, they should be automated just like the
+-compat actions.  Any existing warnings rendered redundant should then
+be taken out.  I considered that when I did -compat, and rejected it as
+not worth the effort.
 
 
