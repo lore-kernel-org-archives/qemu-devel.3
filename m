@@ -4,104 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C016FD2C555
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 262ADD2C555
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3FEc-0002CR-VY; Tue, 22 Oct 2024 09:47:43 -0400
+	id 1t3FGC-0002ov-VS; Tue, 22 Oct 2024 09:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1t3FEW-0002C1-IJ
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:47:37 -0400
-Received: from mout.kundenserver.de ([212.227.126.187])
+ (Exim 4.90_1) (envelope-from <SRS0=pGrG=RS=kaod.org=clg@ozlabs.org>)
+ id 1t3FG2-0002kE-Dz; Tue, 22 Oct 2024 09:49:10 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1t3FEQ-0001Yh-LP
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 09:47:32 -0400
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue009 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1M2OEw-1t3men1Diw-00E76j; Tue, 22 Oct 2024 15:47:03 +0200
-Message-ID: <6f3b2cd0-2cef-4278-9b73-ade3d81f00ef@vivier.eu>
-Date: Tue, 22 Oct 2024 15:47:02 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=pGrG=RS=kaod.org=clg@ozlabs.org>)
+ id 1t3FG0-0001cf-2V; Tue, 22 Oct 2024 09:49:10 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4XXtnT2lczz4wbr;
+ Wed, 23 Oct 2024 00:49:01 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4XXtnM6WRQz4wb1;
+ Wed, 23 Oct 2024 00:48:55 +1100 (AEDT)
+Message-ID: <ead07059-5ec5-4674-a25b-2afbd4a8dba9@kaod.org>
+Date: Tue, 22 Oct 2024 15:48:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix build failure caused by missing __u64 on
- musl
-To: Yao Zi <ziyao@disroot.org>, qemu-devel@nongnu.org
-Cc: Michael Vogt <mvogt@redhat.com>
-References: <20241022122929.17465-2-ziyao@disroot.org>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20241022122929.17465-2-ziyao@disroot.org>
+Subject: Re: [PATCH v2 12/18] test/qtest/aspeed_smc-test: Introducing a
+ "page_addr" data field
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
+ <20241022094110.1574011-13-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20241022094110.1574011-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:7yAvcqpFwprieI0bKWqUmylVqVgnblO8aKLOSzbSbPJh7IToXCg
- dUishMQM5FLC93gE1kd70Od/lpRXvoXwAL2RpSmKuvI3kY8yjUpmMip1UmWZUuAH4h6R06t
- ST6lSExNzjbdRtWurji5fPB43MTbW9GsgmDqejwRkxRTXpz1ZldFQ4Nmne4OmyTVTXZ2ZbK
- DrypuuS2LYOldRe4kATmA==
-UI-OutboundReport: notjunk:1;M01:P0:+zR3Zi1aEng=;/ZBoPfJCSm9WyMM8g8BAO9125uN
- abH8oCyJRxT0QFYHCk3sZHDy2wLbvyIGZ/yEG7eq69kT5F9DQaexAo6wfaaIwPTSmEByjWDyA
- jgyeKgjhD4dj54m9IyglxcdGjI3yVwjIkJofkHALS6UWmCNODz2sfylo7FIoPLSmJTmJkRN3X
- 6TaSya7GXgVJNvsVwuCdyW1UApNUBoJuKdVKHuIkisQebDv21qcl3N5ivKk8R0Fxk2823uT8z
- X46tvo5BvneNh0nfjm33ZqLZvOLRBKWZbGE6d21Hl6geqsBxgTxxpKadKG9Sd78joFbID3ASw
- IWzoYEVNdXWj2CdeGyGd/hIIdI8TRdRyj81AJiCqsltnRsdr1PD+4Ak7hb5IB017CbkrQthLU
- ZED60PbufIKXP5BVFmQu2pH24/7Fr+WU0u6L98j/jm+SpJVrt70DrJCVQjErDh49kCvrcF+sL
- n0nIz6LJy1zyJMSm7uxQJZvLYAUxSteZ2Ph/EFCidCEjtAwMk+W3k27kb+lCmEjD2MQUgyI2V
- 3hPZ/bbRBo10NSZ8xnUnXMpNLiRSlJX/LsbDKqJLZUK3r+ggCuk5CQDAvLkwOJEpm5XaLU/lC
- FIDvM6ABgPC8ZZu7SoSfeEqyOLY31DPrz0GumHTdmOJD5rlQR1tBKnctTFUXWhkrV8QbZMCrV
- xzthHhmPjMwMeQL6dSX0pYSII/EzDCJG3obTwyNDCt3kIZdFXSUZsv/pxypzqhc82hg8+t0fx
- xG0uNbF+3hQa9zTj73xar/40CwpwMV86w==
-Received-SPF: pass client-ip=212.227.126.187; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-1.697, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=pGrG=RS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.169, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,35 +75,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 22/10/2024 à 14:29, Yao Zi a écrit :
-> Commit 9651cead2f ("linux-user: add openat2 support in linux-user")
-> ships a definition of struct open_how_ver0 while assuming type __u64 is
-> available in code, which is not the case when building QEMU on musl.
-> Let's replaces __u64 with uint64_t.
-> 
-> Fixes: 9651cead2f ("linux-user: add openat2 support in linux-user")
-> Signed-off-by: Yao Zi <ziyao@disroot.org>
-> ---
->   linux-user/syscall_defs.h | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-> index 0ade83745e..0e08dfae3e 100644
-> --- a/linux-user/syscall_defs.h
-> +++ b/linux-user/syscall_defs.h
-> @@ -2750,9 +2750,9 @@ struct target_sched_param {
->   
->   /* from kernel's include/uapi/linux/openat2.h */
->   struct open_how_ver0 {
-> -    __u64 flags;
-> -    __u64 mode;
-> -    __u64 resolve;
-> +    uint64_t flags;
-> +    uint64_t mode;
-> +    uint64_t resolve;
->   };
->   struct target_open_how_ver0 {
->       abi_ullong flags;
+On 10/22/24 11:41, Jamin Lin wrote:
+> Currently, these test cases used the hardcode offset 0x1400000 (0x14000 * 256)
+> which was beyond the 16MB flash size for flash page read/write command testing.
+> However, the default fmc flash model of ast1030-a1 EVB is "w25q80bl" whose size
+> is 1MB. To test all flash models, introduces a new page_addr member in TestData
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+I will change : s/all/SoC/
+
+> structure, so users can set the offset for flash parge read/write command
+> testing.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+with that,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   tests/qtest/aspeed_smc-test.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+> index b8ab20b43d..6db18451d2 100644
+> --- a/tests/qtest/aspeed_smc-test.c
+> +++ b/tests/qtest/aspeed_smc-test.c
+> @@ -72,6 +72,7 @@ typedef struct TestData {
+>       char *tmp_path;
+>       uint8_t cs;
+>       const char *node;
+> +    uint32_t page_addr;
+>   } TestData;
+>   
+>   /*
+> @@ -256,7 +257,7 @@ static void assert_page_mem(const TestData *data, uint32_t addr,
+>   static void test_erase_sector(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t some_page_addr = 0x600 * FLASH_PAGE_SIZE;
+> +    uint32_t some_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -308,7 +309,7 @@ static void test_erase_sector(const void *data)
+>   static void test_erase_all(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t some_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -358,8 +359,8 @@ static void test_erase_all(const void *data)
+>   static void test_write_page(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+> +    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -395,8 +396,8 @@ static void test_write_page(const void *data)
+>   static void test_read_page_mem(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x14000 * FLASH_PAGE_SIZE; /* beyond 16MB */
+> -    uint32_t some_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+> +    uint32_t some_page_addr = my_page_addr + FLASH_PAGE_SIZE;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -438,7 +439,7 @@ static void test_read_page_mem(const void *data)
+>   static void test_write_page_mem(const void *data)
+>   {
+>       const TestData *test_data = (const TestData *)data;
+> -    uint32_t my_page_addr = 0x15000 * FLASH_PAGE_SIZE;
+> +    uint32_t my_page_addr = test_data->page_addr;
+>       uint32_t page[FLASH_PAGE_SIZE / 4];
+>       int i;
+>   
+> @@ -679,6 +680,8 @@ static void test_palmetto_bmc(TestData *data)
+>       data->jedec_id = 0x20ba19;
+>       data->cs = 0;
+>       data->node = "/machine/soc/fmc/ssi.0/child[0]";
+> +    /* beyond 16MB */
+> +    data->page_addr = 0x14000 * FLASH_PAGE_SIZE;
+>   
+>       qtest_add_data_func("/ast2400/smc/read_jedec", data, test_read_jedec);
+>       qtest_add_data_func("/ast2400/smc/erase_sector", data, test_erase_sector);
+
 
