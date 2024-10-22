@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861A4D1CDBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1930BD1CDBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Aij-0007r4-0Y; Tue, 22 Oct 2024 04:58:29 -0400
+	id 1t3Amd-0000uw-N8; Tue, 22 Oct 2024 05:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Aid-0007qg-T9
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:58:23 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t3Ama-0000uI-DO
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:02:29 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Aib-00041b-Qa
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:58:23 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a99c0beaaa2so888044166b.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:58:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1t3AmY-0004TZ-12
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 05:02:28 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9c28c1ecbso6927925a12.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 02:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729587499; x=1730192299; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1729587744; x=1730192544; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Hbii3qoqshHnZmu2mOvTiKwFvNvhl1mTvsi8OlfoJ8=;
- b=D4E/DP3Bur1mq/rl5bwb9I+Udq3a3UPH+wz0YDdPj4jf0BiedpNUlcreuXa6VfuESP
- c2fXQiDgIP/rqbFV5tjZRjcQYr0INC2ty6uPlI5oeGTjzdZ1FUI0xCbTFoWDTNx9VkGz
- Qxv6QcqZjCD0XxJK209B6KUBTuwPl78VSx3FDQu2rC1VvvAi077TSXjmgznJ9CJr5suO
- /PZoqPru6M7bXIFTqZv+WGSD+Fy/kJ6XNG+9HvpMg3nzvhTErLdddmYESI7WolQzhbJf
- UVAqCo0OY3ijmK1YjeCwlUbhK55ib0ayw/UQGnrOgcTA3YQF7cJtcXf73wDmZjx/KzRL
- HaIg==
+ bh=7tTWx9ugJgzJqnwAtz8LpY+0OW2pWh6nV1QiYhM+dF8=;
+ b=IQVltUgv6WyQC7OBYryuwXWK1ssB6C/uxUIs1DJ1KWxS2HPVJ6BLiVaO8jILhtO2Sx
+ zmQWUZlEE9SRtWjpkpbkvsT3CIcvVPcPIHcqczv1U2bN+I3LiNQmMiz/IDEsvt3HnrEd
+ p7w/hKWG9yj5vZ/7lxyZGU+xMjeWlaQTL7kTZmRWGs+OnoQSoK/JnE/twwhyIImdLGFS
+ WOKJjTqW7YSIqe6PLciJHdJky/mVPB/cNgXE+Kkk3BiO/8SC7E2LzkjV8w1eg2XEO9p3
+ +Cj7rL0uEKpEzp/ujdyCuE6KloiAnTthw1YoxK5SQQwtbrD72565KJHZTLXzrsCDRJMS
+ fufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729587499; x=1730192299;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9Hbii3qoqshHnZmu2mOvTiKwFvNvhl1mTvsi8OlfoJ8=;
- b=CFMTsa/LOdrjxe+H039WgSlph8j8inber4df3c/IQMh0Yny5msVzqobdF2WiHJtR0D
- FIlYrDFBg0By/cLL9LdYoWGu1KLcYj+JUdpcHUoEgTMmwwkdd1gYQpzsuhyCl0kWFkqC
- oEv2sutJi3/uqAEcsXD4ysSL2uZohmVwWg6Oolnle2BiGE45MrFJblP9p01NJDZRsl8F
- 017qGVguJiadEFn5PIw8C7o4AEEV+OD/h+RLKqJgJi3+zeQLeuPhQ0EagXeLMGvfl0qM
- 8AXYE/w/C+xSNMWLunw6nlqqpa+d+larjtaDqz5M0izXX/dwJRsqCcV157rbmzw6TnBn
- GLqg==
+ d=1e100.net; s=20230601; t=1729587744; x=1730192544;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7tTWx9ugJgzJqnwAtz8LpY+0OW2pWh6nV1QiYhM+dF8=;
+ b=jp438jx8/R+1+IhMUvjQQkZofN7kwWYZrCtmbh8RmsIpLDDqN1cG60A6U5LZL8ECxl
+ P4UQzbY1QAzZ2vq8G5zQWU4omPOZCDndbI0ymX5O6cbjjwcqm4jO1gDQtKJ4IRcxWE08
+ xlFqDRF5HeBfypVLO4dHPkANkkADjVYnru0PaLwoojmgxgSdDVidfYrtJRXYj7k8fua6
+ rVH19vutwENSvwIdTh4d/1wG9LomO9JRYhhgIVKf7OEB5pxen62VaNlthTrGvKqNEWAa
+ eT99zhqtxcUL+oVG/SRwjT9N5zLy164OdnGDHphd9YRhtRgiJxc/MrHtp0xxak2mKdue
+ 6F0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGE+IEwIM15FrC5q0e/O9Psaw9Lp+Q+QZD2818W1esxLouaIV6Pr64OoQYFQU8382JgYzitinf00z1@nongnu.org
-X-Gm-Message-State: AOJu0YwKU/itZf0T6KTLfztftlkeN7k6Obnyisdt9hE4XOOsLJoh9l12
- 0LxP/oKBB3yiia3ukodlZb2vgBYGemhavy9pXCHkviFRoet0HBtCJPOWaPYAezxt4r5+RDCZFm9
- J
-X-Google-Smtp-Source: AGHT+IFzVDNmeDW3vB14l5ZCsMRlaVcVcHCRuVymUVPtu/sQxB8sk882AXwHbvfx5GtQDoVgRb3esg==
-X-Received: by 2002:a17:907:7f23:b0:a9a:2afc:e4cc with SMTP id
- a640c23a62f3a-a9a69cdf994mr1434468466b.58.1729587499421; 
- Tue, 22 Oct 2024 01:58:19 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91370e91sm306801766b.123.2024.10.22.01.58.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 01:58:18 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 207F35F893;
- Tue, 22 Oct 2024 09:58:18 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Julian Ganz" <nenut@skiff.uberspace.de>
-Cc: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,  "Julian Ganz"
- <neither@nut.email>,  qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
- exceptions and traps
-In-Reply-To: <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
- (Julian Ganz's message of "Tue, 22 Oct 2024 08:21:22 +0000")
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
- <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
- <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
- <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
- <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Tue, 22 Oct 2024 09:58:18 +0100
-Message-ID: <87wmi0ms45.fsf@draig.linaro.org>
+ AJvYcCXgA1cOotV+i1DcsnXh/Uaus7HsjtvSlMRHXNnKKiRlcMWLe4yNrf+GtwnHMtcN0QU4DRM/fxXVl2a3@nongnu.org
+X-Gm-Message-State: AOJu0YwvlwZvjbQfSNEipTdBRdQV0JjRkJ2uLj4BKspaudu7rUzQNmep
+ xYf8doii/9jMGGgvCVyl5nffhY+YNhwpXwKgcxeifM3uzxOXntiZPHLxamnHSnp3wMmBgW/v7kp
+ lJgXQR2LdkD2wLNM69RdHcGl42MUYWpjhqUw6BQ==
+X-Google-Smtp-Source: AGHT+IES8eV0YS8BaftoAU3kXbcBTgs/naqMEm69e3ud86+pmIqgBLx3o2sDwvRoNFrQWjnhRhjh8ZkWq1H2VDVxP9s=
+X-Received: by 2002:a05:6402:27cf:b0:5c2:6311:8478 with SMTP id
+ 4fb4d7f45d1cf-5ca0af92c5dmr10618583a12.25.1729587744456; Tue, 22 Oct 2024
+ 02:02:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <20241017163247.711244-2-peter.maydell@linaro.org>
+ <977b5038-fa06-46d4-946d-f60135ecf106@linaro.org>
+ <ZxdO57heifGyI4lw@redhat.com>
+In-Reply-To: <ZxdO57heifGyI4lw@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 22 Oct 2024 10:02:12 +0100
+Message-ID: <CAFEAcA9G_VjeUSgGW4b_WihkJ18JtO=a=VFYsrhgL=FYxd4dpg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] tests/functional: Add a functional test for the
+ collie board
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Guenter Roeck <linux@roeck-us.net>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,73 +97,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Julian Ganz" <nenut@skiff.uberspace.de> writes:
-
-> Hi, Pierrick,
+On Tue, 22 Oct 2024 at 08:09, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> October 21, 2024 at 11:59 PM, "Pierrick Bouvier" wrote:
->> On 10/21/24 14:02, Julian Ganz wrote:
->> >  The motivation for this API is a plugin that simulates a RISC-V traci=
-ng
->> >  unit (and produces a trace). For that we actually also needed to
->> >  track the "regular" control flow, i.e. find out whether a branch was
->> >  taken or where a jump went. That wasn't hard, especially considering
->> >  that the TCG API already gives you (more or less) basic blocks. Still,
->> >  we ended up tracing every instruction because that made some of the l=
-ogic
->> >  much simpler and easier to reason about.
->> >  We realized that we need a trap API because they:
->> >  * can occur at any time/point of execusion
->> >  * usually come with additional effects such as mode changes.
->> >=20
->> Thanks for sharing your insights.
->> I think there is definitely value in what you offer, and I'm trying
->> to think how we could extend it in the future easily, without having
->> another callback when a new event appear. In my experience on
->> plugins, the least callbacks we have, and the simpler they are, the
->> better it is.
->>=20
->> Maybe we could have a single API like:
->>=20
-<snip>
+> On Tue, Oct 22, 2024 at 01:11:31AM -0300, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+> > On 17/10/24 13:32, Peter Maydell wrote:
+> > > Add a functional test for the collie board that uses the kernel and
+> > > rootfs provided by Guenter Roeck in the linux-test-downloads repo:
+> > >   https://github.com/groeck/linux-test-downloads/
+> > >
+> > > This just boots Linux with a userspace that immediately reboots
+> > > the board, so we wait for the reboot log line.
+> > >
+> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > > ---
+> > >   MAINTAINERS                         |  1 +
+> > >   tests/functional/meson.build        |  1 +
+> > >   tests/functional/test_arm_collie.py | 31 ++++++++++++++++++++++++++=
++++
+> > >   3 files changed, 33 insertions(+)
+> > >   create mode 100755 tests/functional/test_arm_collie.py
+> >
+> >
+> > > +class CollieTest(LinuxKernelTest):
+> > > +
+> > > +    ASSET_ZIMAGE =3D Asset(
+> > > +        'https://github.com/groeck/linux-test-downloads/raw/225223f2=
+ad7d637b34426810bf6c3b727b76a718/collie/zImage',
+> > > +        '10ace8abf9e0875ef8a83b8829cc3b5b50bc6d7bc3ca29f19f49f5673a4=
+3c13b')
+> > > +
+> > > +    ASSET_ROOTFS =3D Asset(
+> > > +        'https://github.com/groeck/linux-test-downloads/raw/225223f2=
+ad7d637b34426810bf6c3b727b76a718/collie/rootfs-sa110.cpio',
+> > > +        '89ccaaa5c6b33331887047e1618ffe81b0f55909173944347d5d2426f3b=
+cc1f2')
+> >
+> > Should we wrap these lines to comply with checkpatch.pl?
 >
-> Traps are just too diverse, imo there is too little overlap between
-> different architectures, with the sole exception maybe being the PC
-> prior to the trap. "Interrupt id" sounds like a reasonably common
-> concept, but then you would need to define a mapping for each and every
-> architecture. What integer type do you use? In RISC-V, for example,
-> exceptions and interrupt "ids" are differentiated via the most
-> significant bit. Dou keep that or do you zero it? And then there's
-> ring/privilage mode, cause (sometimes for each mode), ...
->
-> It would also complicate call sites for hooks in target code. You'd
-> either need awkwardly long function signitures or setup code for that
-> struct. Both are things you don't want, as a hook call site should
-> never distract from the actual logic surrounding them. You could
-> probably have something reasonable in Rust, using a builder/command
-> pattern. But in C this would require too much boiler plate code than
-> I'd be comfortable with.
+> While we have some line wrapped URLs in the tests already, IMHO they are
+> pretty awful to look at. I think we should make URLs be an exception to
+> line wrapping rules, provided the URL is the /only/ thing on the line.
 
-How easy would it be to expose a Rust API? I'm curious because now we
-are looking to integrate Rust into QEMU we could consider transitioning
-to a Rust API for plugins. It has been done before:
+Our style guide already says
+"If wrapping the line at 80 columns is obviously less readable and more
+ awkward, prefer not to wrap it"
+and that's the principle under which I chose not to wrap these.
 
-  https://github.com/novafacing/qemu-rs/tree/main/qemu-plugin-sys
+(I think of this as analogous to George Orwell's "Break any
+of these rules sooner than say anything outright barbarous"
+rule for writing English...)
 
-and
-
-  https://github.com/novafacing/qemu-rs/tree/main/qemu-plugin
-
-I'm curious as to what it would look like. I don't know how tenable it
-would be to run 2 plugin APIs side-by-side long term though. We would
-probably want to make a choice. Also how would that affect other C like
-APIs like python?
-
->
-> Regards,
-> Julian
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- PMM
 
