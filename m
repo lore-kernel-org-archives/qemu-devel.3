@@ -4,85 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAD8D3C935
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26798D3C932
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 11:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3DTS-0000Ab-R1; Tue, 22 Oct 2024 07:54:55 -0400
+	id 1t3DU4-0000MG-2w; Tue, 22 Oct 2024 07:55:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1t3DTP-0000AF-1N
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:54:51 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1t3DTE-0003CW-KI
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:54:50 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a9a850270e2so512946866b.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 04:54:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1729598079; x=1730202879; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=O2axmDtZTaEE5CDh36x0Rh8mcoGAeF10A4q/Fe88qCk=;
- b=RYUzwlbPiASoZXT273VPxT1hsOUYJ+jY+nbnqo59EW8TU5BR/DmFBgKlgReHBC4ty8
- 5kO2n8NQfUj2Mb2nrY1kxryeeavj1IBhNGa9zCy9ZCVVvQzWlL7MmqY0dvUNyN1w7AGR
- 8JOGa1BmGNa+oiBs1SildWOdcMGhHx6MpSD/w=
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3DU2-0000Lc-RT
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:55:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3DU0-0003SB-P9
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 07:55:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729598126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MT9LPovizU10DrLUw31ld4DXRW76G/cS+vGzmnbr6Ec=;
+ b=GUZzH6vEdJlNTrTvRcu0PUnv78MxVSjPjUKKpPuHGnVWhY07Sak0ndUMzRDbBVjUb2gOgV
+ lPrhSe5Tl4v/KDtvvNXWfaSAy6mwdTL2iymynaep36OVYVdzoC04gj5YD+lUXD5n2DvOen
+ l38t5xei4qeCavm8HB0zSDW7Yx8poiA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-354-eGrCMOMvNhe8vukuS0lI6A-1; Tue, 22 Oct 2024 07:55:24 -0400
+X-MC-Unique: eGrCMOMvNhe8vukuS0lI6A-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d432f9f5eso2691403f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 04:55:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729598079; x=1730202879;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1729598123; x=1730202923;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=O2axmDtZTaEE5CDh36x0Rh8mcoGAeF10A4q/Fe88qCk=;
- b=wIEyLuBugoyZoqQG/IHLWlrWFsLRwtC6fb2csEdZvvsgRUjWCpP3L+E8kcqIEhnNpt
- rKapDH4GCH9DWY9U6cFrDXipXg8q/pD41MkufIm/J9z9fUH328OQ2Hoph+sMcwZGSQxj
- hODdaIhwlIEh/wd/gEDvWhbx4sNUqJ4x7B8mjm1qiC6d3ZZ2P7hX+fYsUiz33gbgw0SW
- g2vfcYkV9pOMaJMRFS/eRd+kUeFXvjGlyGsfqivhrDToY3IsfHkWYNl8N1vC/12apnan
- V7HO0AwPMNkEk4xobnKoO8QiyEhpWHjLlg5WP3UtvYXWRE9qgfFC/bILxlq4JwvFVqGR
- x2Kw==
+ bh=MT9LPovizU10DrLUw31ld4DXRW76G/cS+vGzmnbr6Ec=;
+ b=eXMC4h/TRj5M1idZD0D4CtYN0B3wdYQLEvMBjA+QwRh71HgQQAJNaabwnsTGtRdL+b
+ L+PNs155V1vsv9jveil9mDw951Iz/2+bc0/c6GqX5Isl8KcIpOca3hDhinS6lel3khCJ
+ J3LqBFczgTqfnG5LhSKIIM5FLSwFRbpkKRiS/y2sUbHJM/xIeDZy/IYgIfL9xRqEmpsu
+ ddAWIJnpfYp8x4dBKG6NOj/RYZSbR2zsq9y9ZZuDyC2+bL7P1/IK5jYa6NUQlQpxaqnI
+ 81AnRqTDOqFUtmaBInp7GK4Msu/RuOXzzhjw2kxkZoBilhneQRtt2Cb9/vtwCN+kVUlI
+ M8Cw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3siwlLNDmtBmZ4qDr8fXn5k8vpLlqgQ8xZKFo/RW9s08OCV90P7mhH7bglTeOkWMM/nACuW0y33qJ@nongnu.org
-X-Gm-Message-State: AOJu0Yzx1QdCfhiFMaD/AlbUwqg3L5AsXIUrgwcoazT0eMNCWtsO8P2K
- KmwdebW0asxuJVxZ7Rbd8+LNeCf6IP2xOJdpzdNaBPar1leXwk3qHG7jOKypVE022T4Cn7UyUSS
- 3SH4VW6aDwSj0hTim1t2JVdhWL+s=
-X-Google-Smtp-Source: AGHT+IH8x5y0KRNMGddsIDlya/exEKpLCppLCkEQDXyIfo+wfZQ/0qlAVXvjOATb9LtcmRsweC+2O6EgKlh/IwPuNpA=
-X-Received: by 2002:a17:907:3f1a:b0:a99:4ebc:82d4 with SMTP id
- a640c23a62f3a-a9a69de4cccmr1215643666b.55.1729598078317; Tue, 22 Oct 2024
- 04:54:38 -0700 (PDT)
+ AJvYcCXjjFeVad+HulTLUSqkzTSSZBsll0CKVAC7ZyexmTnD7q23pGrKCec6t9X2kGgrl85H2zl6bwhV5wpU@nongnu.org
+X-Gm-Message-State: AOJu0Yxq6a4B9ptpZ9VRJde4Ok1o+RoLK7VUmZse91DWoFCqgzdnwPIJ
+ AM0FiCv/zOje95ez1Ko3BMW0TKtbsBllM2uQkcGTbwMeD2c+N2aS4zkYn1HYCHxe7ckQm3c7giC
+ sj7UHAQLMU74ur3LD5iDjrzyOWQLYwFTL92in+YewFoIbRL2Cw0GN
+X-Received: by 2002:a5d:4e52:0:b0:37d:39aa:b9f4 with SMTP id
+ ffacd0b85a97d-37ef0b8fc82mr2082903f8f.26.1729598123577; 
+ Tue, 22 Oct 2024 04:55:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESeQAx483sZTvokSR0ueXEWhW5TSxAzVUEOFP0JKmCX1jXJVd3kDIs5gliH5Uz/PQ2exgyBg==
+X-Received: by 2002:a5d:4e52:0:b0:37d:39aa:b9f4 with SMTP id
+ ffacd0b85a97d-37ef0b8fc82mr2082879f8f.26.1729598123179; 
+ Tue, 22 Oct 2024 04:55:23 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.144.54])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0a48882sm6448725f8f.30.2024.10.22.04.55.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Oct 2024 04:55:22 -0700 (PDT)
+Message-ID: <8972a17e-6a21-4480-9848-44b384672186@redhat.com>
+Date: Tue, 22 Oct 2024 13:55:20 +0200
 MIME-Version: 1.0
-References: <20241011053825.361544-1-clg@redhat.com>
- <eff3385f-6d43-42e7-8b36-7225e2fee7df@redhat.com>
- <SI2PR06MB50412DF87611BDBC21003BF6FC452@SI2PR06MB5041.apcprd06.prod.outlook.com>
-In-Reply-To: <SI2PR06MB50412DF87611BDBC21003BF6FC452@SI2PR06MB5041.apcprd06.prod.outlook.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 22 Oct 2024 22:24:25 +1030
-Message-ID: <CACPK8XfB=tfSBnPVUjJgAR23W3GXS_hxMiamPJT=7qL5Pgw8zQ@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/aspeed_hace: Fix SG Accumulative hashing
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "berrange@redhat.com" <berrange@redhat.com>, 
- "kris.conklin@seagate.com" <kris.conklin@seagate.com>, 
- "jonathan.henze@seagate.com" <jonathan.henze@seagate.com>, 
- "evan.burgess@seagate.com" <evan.burgess@seagate.com>, 
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Alejandro Zeise <alejandro.zeise@seagate.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=joel.stan@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.169,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Rust BoF and maintainer minutes and planning the roadmap to Rust
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ pkg-qemu-devel@lists.alioth.debian.org, Michael Tokarev <mjt@tls.msk.ru>,
+ ncopa@alpinelinux.org, bofh@freebsd.org, emulation@freebsd.org,
+ virtualization@gentoo.org, dilfridge@gentoo.org, hi@alyssa.is,
+ edolstra+nixpkgs@gmail.com, brad@comstyle.com, Thomas Huth
+ <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ dvzrv@archlinux.org, anatol.pomozov@gmail.com,
+ Miroslav Rezanina <mrezanin@redhat.com>
+References: <871q16fq9c.fsf@draig.linaro.org> <ZvWPH1f6ZnvH1iYZ@redhat.com>
+ <875xqh4kt0.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <875xqh4kt0.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +153,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Oct 2024 at 01:23, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+On 9/27/24 09:28, Markus Armbruster wrote:
+> A deliberate approach to explore some before we go all in could mitigate
+> the risk of taking on too much technical debt.
+> 
+> We obviously need to write instances of each interesting class of things
+> to ferret out the problems, and design good interfaces.  I'd recommend
+> to write few instances, ideally one, then let them mature some before we
+> create many more of them.  Prioritize gaining experience over quantity.
+The "first" device to be written in Rust, pl011, will already require 
+developing C<->Rust interoperability for QOM, device properties, 
+character devices and memory region operations.  The first two are there 
+only in an embryonic state (the bare minimum required to create a QOM 
+class in Rust) and the other two don't exist at all.
 
-> 3. Test HACE model with u-boot hash command
-> a. load test file to address 83000000 via tftp
-> ast# tftp 83000000 jamin_lin/32MB
-> b. get sha256
-> ast# hash sha256 83000000 2000000
-> sha256 for 83000000 ... 84ffffff ==> 1ddcccdba742d762e2b8da0bceaf4778727c5eba54a24d7ae0c573c65414f736
-> c. get sha384
-> ast# hash sha384 83000000 2000000
-> sha384 for 83000000 ... 84ffffff ==> 825d9b24bb797695545b3cbd2f373b9738627c7a1878e620415570a57c7faed77916d47084c954254f101fc0f10c0591
-> d. get sha512
-> ast# hash sha512 83000000 2000000
-> sha512 for 83000000 ... 84ffffff ==> b5ae725b2dc1e521f48eae37dd82c3d5fc94f7acb5fff3dabf1caa4bb4b5bcfb498e7cc1fbaa97dda2664bff99f9f8e778f823e95afaf76fbf0985181522e478
+I agree with you we should prioritize gaining experience in those four 
+areas, over writing many more Rust devices.
 
-I attempted this same test and noticed that the 'hash' command was not
-using the hardware. You can see this by putting some printf or
-breakpoint in eg hw/misc/aspeed_hace.c do_hash_operation. There's some
-missing work on the u-boot side to move the "hash" command over to the
-hash uclass, so it can be used to test this code path (or add support
-for the old API to the hace driver).
+Paolo
 
-Separately, I attempted to test with u-boot by enabling hash
-verification of the FIT image, and it fails to calculate the correct
-SHA.
-
-I think to have any confidence that this model works, we need to add
-some testing to qemu. I did this for the initial version of the model
-in tests/qtest/aspeed_hace-test.c.
-
-The upstream u-boot situation is a mess, and cannot be used to
-exercise the qemu model at this stage.
-
-Cheers,
-
-Joel
 
