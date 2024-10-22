@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAF6D2C56C
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54967D2C56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3GkJ-0007Uh-9b; Tue, 22 Oct 2024 11:24:31 -0400
+	id 1t3Gkk-00089s-GJ; Tue, 22 Oct 2024 11:24:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkH-0007OZ-Gp
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t3Gki-000840-HO
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkF-0004xZ-IG
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:28 -0400
+ id 1t3Gkg-00051o-Sh
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729610666;
+ s=mimecast20190719; t=1729610694;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=miGZxaqpYfvW8TcLkvAr+PfNZXKXq672MhLU1UAajrc=;
- b=FwMOR2pLNekB5/sjdewaeoh0909c02TAn4dDVGSHDIDVdyQq1IMi7i8U5rrnyRy7R19B/f
- mGBAyrHAbL7b03qM+1Q055iwiVtBuG+LJC1H+kWthQlmAWYojFlbjb8CgAy+WQxVx94aIg
- YW9fyramsF9V32fgI63VdqJZWgBJPRQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OsVg9LKAx4ynICHdhBCnNQId5jUOMnNKGUPWtgNz6/Q=;
+ b=HABNq4uGo/VJMDbiGR2NNPGlAMoVfdW7rziCwT4Kl08ndo2ImaatEP5mQArWgxfYTpAnr1
+ dKdRcp1f0mLq7pNsNtCynpqLMtmwbSQAYIJgDGEVHENW8nmByvJ0fa0PMiDxRjw0WYaDE2
+ bR4JTfHEFHH6nBeaUVdh4RpBlCPrG3g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-cQ9NZC_pMCy31q7YamD_1g-1; Tue,
- 22 Oct 2024 11:24:21 -0400
-X-MC-Unique: cQ9NZC_pMCy31q7YamD_1g-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-CXrmnBCaNeW1lhg5fLeJJA-1; Tue,
+ 22 Oct 2024 11:24:48 -0400
+X-MC-Unique: CXrmnBCaNeW1lhg5fLeJJA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DC4C1944B3E; Tue, 22 Oct 2024 15:24:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5EAD195421E; Tue, 22 Oct 2024 15:24:47 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.59])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDD601955DC6; Tue, 22 Oct 2024 15:24:16 +0000 (UTC)
+ id CA3C51955F39; Tue, 22 Oct 2024 15:24:45 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -53,21 +54,23 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 00/14] Misc fixes patches
-Date: Tue, 22 Oct 2024 16:24:01 +0100
-Message-ID: <20241022152415.1632556-1-berrange@redhat.com>
+Subject: [PULL 10/14] ui/vnc: fix skipping SASL SSF on UNIX sockets
+Date: Tue, 22 Oct 2024 16:24:11 +0100
+Message-ID: <20241022152415.1632556-11-berrange@redhat.com>
+In-Reply-To: <20241022152415.1632556-1-berrange@redhat.com>
+References: <20241022152415.1632556-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,73 +88,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit cc5adbbd50d81555b8eb73602ec16fde40b55be4:
+The 'is_unix' flag is set on the VNC server during startup, however,
+a regression in:
 
-  Merge tag 'pull-tpm-2024-10-18-1' of https://github.com/stefanberger/qemu-tpm into staging (2024-10-18 15:45:02 +0100)
+  commit 8bd22f477f68bbd7a9c88e926e7a58bf65605e39
+  Author: Daniel P. Berrangé <berrange@redhat.com>
+  Date:   Fri Feb 3 12:06:46 2017 +0000
 
-are available in the Git repository at:
+    ui: extract code to connect/listen from vnc_display_open
 
-  https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
+meant we stopped setting the 'is_unix' flag when QEMU listens for
+VNC sockets, only setting when QEMU does a reverse VNC connection.
 
-for you to fetch changes up to c64df333f92798823c4897ae6d4bd7f49d060225:
+Rather than fixing setting of the 'is_unix' flag, remove it, and
+directly check the live client socket address. This is more robust
+to a possible situation where the VNC server was listening on a
+mixture of INET and UNIX sockets.
 
-  gitlab: enable afalg tests in fedora system test (2024-10-22 13:02:33 +0100)
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ ui/vnc-auth-sasl.c | 14 +++++++++++---
+ ui/vnc.c           |  3 ---
+ ui/vnc.h           |  1 -
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-----------------------------------------------------------------
-Misc sockets, crypto and VNC fixes
-
-* Fix rare EADDRINUSE failures on OpenBSD platforms seen
-  with migration
-* Fix & test overwriting of hash output buffer
-* Close connection instead of returning empty SASL mechlist to
-  VNC clients
-* Fix handling of SASL SSF on VNC server UNIX sockets
-* Fix handling of NULL SASL server data in VNC server
-* Validate trailing NUL padding byte from SASL client
-* Fix & test AF_ALG crypto backend build
-* Remove unused code in sockets and crypto subsystems
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (11):
-  util: don't set SO_REUSEADDR on client sockets
-  crypto/hash: avoid overwriting user supplied result pointer
-  tests: correctly validate result buffer in hash/hmac tests
-  include/crypto: clarify @result/@result_len for hash/hmac APIs
-  ui/vnc: don't return an empty SASL mechlist to the client
-  ui/vnc: don't raise error formatting socket address for non-inet
-  ui/vnc: fix skipping SASL SSF on UNIX sockets
-  ui/vnc: don't check for SSF after SASL authentication on UNIX sockets
-  ui: fix handling of NULL SASL server data
-  ui: validate NUL byte padding in SASL client data more strictly
-  gitlab: enable afalg tests in fedora system test
-
-Dr. David Alan Gilbert (2):
-  crypto: Remove unused DER string functions
-  sockets: Remove deadcode
-
-Markus Armbruster (1):
-  crypto/hash-afalg: Fix broken build
-
- .gitlab-ci.d/buildtest.yml    |  2 +-
- crypto/der.c                  | 13 ------
- crypto/der.h                  | 22 ----------
- crypto/hash-afalg.c           | 10 ++---
- crypto/hash-gcrypt.c          | 15 +++++--
- crypto/hash-glib.c            | 11 ++++-
- crypto/hash-gnutls.c          | 16 ++++++--
- crypto/hash-nettle.c          | 14 +++++--
- include/crypto/hash.h         | 47 ++++++++++++++++------
- include/crypto/hmac.h         | 34 +++++++++++-----
- include/qemu/sockets.h        | 16 --------
- tests/unit/test-crypto-hash.c |  7 ++--
- tests/unit/test-crypto-hmac.c |  6 ++-
- ui/vnc-auth-sasl.c            | 75 ++++++++++++++++++++++++-----------
- ui/vnc.c                      |  3 --
- ui/vnc.h                      |  1 -
- util/qemu-sockets.c           | 36 -----------------
- 17 files changed, 170 insertions(+), 158 deletions(-)
-
+diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
+index edf19deb3b..43515447fb 100644
+--- a/ui/vnc-auth-sasl.c
++++ b/ui/vnc-auth-sasl.c
+@@ -551,6 +551,13 @@ vnc_socket_ip_addr_string(QIOChannelSocket *ioc,
+     return 0;
+ }
+ 
++static bool
++vnc_socket_is_unix(QIOChannelSocket *ioc)
++{
++    SocketAddress *addr = qio_channel_socket_get_local_address(ioc, NULL);
++    return addr && addr->type == SOCKET_ADDRESS_TYPE_UNIX;
++}
++
+ void start_auth_sasl(VncState *vs)
+ {
+     const char *mechlist = NULL;
+@@ -627,10 +634,11 @@ void start_auth_sasl(VncState *vs)
+     memset (&secprops, 0, sizeof secprops);
+     /* Inform SASL that we've got an external SSF layer from TLS.
+      *
+-     * Disable SSF, if using TLS+x509+SASL only. TLS without x509
+-     * is not sufficiently strong
++     * Disable SSF, if using TLS+x509+SASL only, or UNIX sockets.
++     * TLS without x509 is not sufficiently strong, nor is plain
++     * TCP
+      */
+-    if (vs->vd->is_unix ||
++    if (vnc_socket_is_unix(vs->sioc) ||
+         (vs->auth == VNC_AUTH_VENCRYPT &&
+          vs->subauth == VNC_AUTH_VENCRYPT_X509SASL)) {
+         /* If we've got TLS or UNIX domain sock, we don't care about SSF */
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 93a8dbd253..5fcb35bf25 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3430,7 +3430,6 @@ static void vnc_display_close(VncDisplay *vd)
+     if (!vd) {
+         return;
+     }
+-    vd->is_unix = false;
+ 
+     if (vd->listener) {
+         qio_net_listener_disconnect(vd->listener);
+@@ -3932,8 +3931,6 @@ static int vnc_display_connect(VncDisplay *vd,
+         error_setg(errp, "Expected a single address in reverse mode");
+         return -1;
+     }
+-    /* TODO SOCKET_ADDRESS_TYPE_FD when fd has AF_UNIX */
+-    vd->is_unix = saddr_list->value->type == SOCKET_ADDRESS_TYPE_UNIX;
+     sioc = qio_channel_socket_new();
+     qio_channel_set_name(QIO_CHANNEL(sioc), "vnc-reverse");
+     if (qio_channel_socket_connect_sync(sioc, saddr_list->value, errp) < 0) {
+diff --git a/ui/vnc.h b/ui/vnc.h
+index e5fa2efa3e..acc53a2cc1 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -168,7 +168,6 @@ struct VncDisplay
+ 
+     const char *id;
+     QTAILQ_ENTRY(VncDisplay) next;
+-    bool is_unix;
+     char *password;
+     time_t expires;
+     int auth;
 -- 
 2.46.0
 
