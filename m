@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0A6D1CDB7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A08AD1CDB8
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3ATC-0003PJ-Nq; Tue, 22 Oct 2024 04:42:26 -0400
+	id 1t3Aeb-00060l-KE; Tue, 22 Oct 2024 04:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3AT4-0003Jx-6a
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:42:21 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3AT2-0002BJ-ES
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:42:17 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c9709c9b0cso7040760a12.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:42:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729586534; x=1730191334; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Uh7j+EizbCP0JHjQXeocUObfK4lkOlcXe69CFo/+4TA=;
- b=DTqWwqi4DMCS0R463RJbFRG5g2IXF09veQ9AbN/jMULM4R1WhPZ/ny1llfqcEy0aDh
- oEJpDfLm9GOJYh+1LIj+CpfSlva/QWZEuG7hP3AwV2/W12h9xxL2/cXMlOABB/LGRaDs
- QYWskrziZywixsuJLQ63b1nSoSF/tNc32lTmRadWYlXCaMQ8dzb5JnoonoxS9PheS8wN
- WYz0Eb+krtEnnPUCp+Y7PHqqWDglpZdqcyXd95xEqu81reEbb+p8m/tw92975NeZQTzp
- py5R1mF14TzKS47803oi8Hxvi45m9FLI692e24zdb06W2cjVoqXrmOL0fpSQm3yY1IH6
- o0MA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3AeX-000608-Gl
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:54:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3AeV-0003VN-Op
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:54:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729587245;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=m9jaaMZV2jCLMhr7hyIfgarHDbfhaJSn2IeUobUjr+4=;
+ b=Kq2plsXO9t93AV+lCr35sh6chQNhDL7hWvdtWho60asUnaGQCufDHGoedFxzYUxot5NmDn
+ P3jvVE4dbWPNa8yVwyeGTfBTBOQ9ZpLXTuZC2JptJgiRz/nyh4oIybHz85yKIoD1HuzA3Y
+ wmMySInHkVGiLJrHDVTtmEoaOzARhcU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-414-777whuuTPI2EyBZMMQ6kqw-1; Tue, 22 Oct 2024 04:54:03 -0400
+X-MC-Unique: 777whuuTPI2EyBZMMQ6kqw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-37d52ca258eso2642304f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:54:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729586534; x=1730191334;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1729587242; x=1730192042;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Uh7j+EizbCP0JHjQXeocUObfK4lkOlcXe69CFo/+4TA=;
- b=G/6cLaKBZf5uKP/9TG6G2v2vECZS15R7OTMQ2qEX8+8HwePRchMrJRWwu75XiT+RED
- fSc0AJu+UVhILTQH6dRyeiqCguvpIRoMYrg8cveIW/yP5e9ZlZprV4cpMuQQ+JHxOAHi
- qdvx4zQoxe6qVRRH/oHpjBKjxQEg0XxwUvPziR0ghtjEifwOvnwAa7uXW4ez8cDUWk+j
- du2AohFzOmoU/vr3JDSASSwxmw1mB4e7VogLWMpGI0+kXYawXEEjebXAyFonnW4p7uSS
- qMZqg+r6fs/lUbMbHmliDGxw8cxbMs33KBQkiZqy2q/UPvqURhxhoRqEiCGfSxn5YJ8H
- pYYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZm6EVgZfYwN1kRxbGfTLV7wVAeYoqZtTl9qMO5/CxWm2cI6rZUVB3zNxMiJNZ8U3uMul/Gh84UTAr@nongnu.org
-X-Gm-Message-State: AOJu0YzjvB1fb0BFXAYJkgM/y4ddWNfGRwEUUN7xlGX8NDEUZH0WqIYT
- zRxmay3jlKrIZ5HrxGHoNHPfBiQlT8f4hbhlnCyvMCAcZAXhVxyRlsh6miKelQD2BT2gMeoueiB
- 5RbFMHStIdaz/KkJFCGxySZyYmq2elu+Urt8JKA==
-X-Google-Smtp-Source: AGHT+IGh2y2uVGL9swPmjgZSxgFyOqF+nmgLP9rHt6Tnhg9raPD2Cf2dNg8AvgxHEzFpUpS1HOjco4AGOY/Y7aZSQOk=
-X-Received: by 2002:a05:6402:3511:b0:5c9:709c:247f with SMTP id
- 4fb4d7f45d1cf-5cb782b13fcmr2537355a12.2.1729586534602; Tue, 22 Oct 2024
- 01:42:14 -0700 (PDT)
+ bh=m9jaaMZV2jCLMhr7hyIfgarHDbfhaJSn2IeUobUjr+4=;
+ b=Xy6NsT1wtgiik0kGEk49sv/PPR2YzJ1uF1wm8/t5F3SmlRTrJOx2aPibBcQS1MiBMq
+ lQNzKLOo+qlVv8UZyxx4POuNMgtdAOdOn4qmfYKRFMssQqsBfcn5tUG8sOvYdN8L0YMh
+ gvJT2FopTQgdGSX1uPzrrv7KQ91zK/LFys4bRHI3LKV25S5o6ueel8fXDMec1cKbZaY0
+ sn7rTv8PuzMHIiyOisJ97wBJpbGGB1lN9Mm1WMm7PdpR/kYtAKxfHs0y7DFZMo0x0iX8
+ BWSZ9bmmr4WolUgiN+jtnpjcCg+NchqAs0JETBlHQ7LmgMNFsiK6Pb3PDY8h8URC9VKh
+ v/tg==
+X-Gm-Message-State: AOJu0Yx6jCRJ1DnXdNxuaRyUwrwxQ4wlgduoGNqKs3ZL6Z3HcMljHgLA
+ EClbCtsdvwFwWB5ZKUbqhzTon6oQ6vaBzGSPxW8D6n49LzIoiGO/kfyHmoc0ooRWEb1qwQkkVbe
+ /RfoQBg8x+LrtxV88O9ryzaKpCC3TMtHd5HTkR/sONjslyJ7YFXkLyPa9viiG53/cF1DC7LNHLo
+ U8E2NZ2YYWrRo+yD7jmTqgRDNN/trBHLII76PfnNY=
+X-Received: by 2002:a05:6000:a:b0:37e:d965:4e04 with SMTP id
+ ffacd0b85a97d-37ef0bf7463mr1728191f8f.36.1729587241938; 
+ Tue, 22 Oct 2024 01:54:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSBbDCV0IPiJQL1Cpw6RsXYbLQytjfAu7mViVjvSS71jVeAY55pJG6hvJuh/tf9ls79XsBLQ==
+X-Received: by 2002:a05:6000:a:b0:37e:d965:4e04 with SMTP id
+ ffacd0b85a97d-37ef0bf7463mr1728170f8f.36.1729587241534; 
+ Tue, 22 Oct 2024 01:54:01 -0700 (PDT)
+Received: from avogadro.local ([151.95.144.54])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0a5b630sm6142829f8f.60.2024.10.22.01.54.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Oct 2024 01:54:01 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org, peter.maydell@linaro.org,
+ berrange@redhat.com
+Subject: [PATCH] arm: Kconfig: disable stellaris if Rust is enabled
+Date: Tue, 22 Oct 2024 10:53:59 +0200
+Message-ID: <20241022085359.186470-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.2
 MIME-Version: 1.0
-References: <ZxPZ5oUDRcVroh7o@intel.com>
- <CAFEAcA8m4OeDHopFxCL3MP-cmu-PO5=2+MjNBG7YCudpKdoqDA@mail.gmail.com>
- <ZxZjqypRL7d2rMuQ@intel.com>
- <CAFEAcA-imJJQO=WAmCAHBY1MtszuPyyaD9OHWMRx88h-fjVvsw@mail.gmail.com>
- <ZxZwwe1ULIUqEdKN@intel.com>
- <CAFEAcA9E_-J3EJ+izeErnHDAwaP1LoctRaihu=5xTYrMSnqVig@mail.gmail.com>
- <ZxZ2KS6hi3Y2HdtC@intel.com>
- <CAFEAcA9V0yUCOkAWGumoOD_SMk-saS4OU5gL67gj7SRT0v4cPg@mail.gmail.com>
- <ME0P300MB10401C7825D982CE03574134954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <ME0P300MB10401C7825D982CE03574134954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 22 Oct 2024 09:42:03 +0100
-Message-ID: <CAFEAcA9m=zy3MMcE+tZwpms36BUx+DsGvt7h1jSuqidFOx0aeA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BQuestion=5D_What_is_the_definition_of_=E2=80=9Cprivate?=
- =?UTF-8?Q?=E2=80=9D_fields_in_QOM=3F?=
-To: Junjie Mao <junjie.mao@hotmail.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,33 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 22 Oct 2024 at 04:24, Junjie Mao <junjie.mao@hotmail.com> wrote:
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> > For Rust we get to make a fresh start on these things. If
-> > we do mark all these fields not public, what would break?
-> >
->
-> The only thing that breaks today is std::mem::offset_of! which respects
-> field visibility. Defining a Property const structure requires getting
-> the field offset outside of the state context.
->
-> To me properties are still private to the device state and must be
-> accessed via their getters & setters. A solution to that is to keep
-> properties private but make their offsets public in our alternative to
-> offset_of!.
+The stellaris board requires the pl011-luminary variant of pl011,
+which is not supported by the Rust implementation.
 
-Yes, conceptually I agree that the fields underlying a
-property are private and the public interface is the
-prop get/set API. (In C the prop/get set can if it
-likes do things like enforcing value limits, so looking
-directly at the underlying field would bypass that.)
+There are at least three possibilities: 1) implement the subclass
+(a bit harder in Rust since the language does not have subclasses)
+2) change the ID to a property 3) split pl011-luminary to a separate
+Kconfig symbol and leave the subclass as C code.
 
-At any rate it sounds like it would be a good idea to
-at least mark as not-public all the fields we can do that
-way, and have a comment
-  /* pub only because they are properties */
-for the fields used by the Property structs, even if we
-don't yet have a better way to deal with the latter.
+Just for the sake of starting the discussion, this RFC patch uses
+the big axe and disables stellaris.
 
--- PMM
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/arm/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index e7fd9338d11..d5ade150d23 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -219,12 +219,12 @@ config STELLARIS
+     bool
+     default y
+     depends on TCG && ARM
++    depends on !HAVE_RUST # Rust does not implement pl011-luminary
+     imply I2C_DEVICES
+     select ARM_V7M
+     select CMSDK_APB_WATCHDOG
+     select I2C
+-    select PL011 if !HAVE_RUST # UART
+-    select X_PL011_RUST if HAVE_RUST # UART
++    select PL011 # UART
+     select PL022 # SPI
+     select PL061 # GPIO
+     select SSD0303 # OLED display
+-- 
+2.46.2
+
 
