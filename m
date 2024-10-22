@@ -4,73 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD18D1CDAD
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F3CD1CDB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t39zt-0004jn-3q; Tue, 22 Oct 2024 04:12:09 -0400
+	id 1t3A8x-0005sN-P7; Tue, 22 Oct 2024 04:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t39zr-0004jY-Lc
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:12:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t39zp-0007EN-TA
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:12:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729584724;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fySNDdCh8RQMEO52NkPsNjIBdoZcxAtVIG8rYTJigRg=;
- b=LpTm6Jx21USrY40FXh933lfgtWqqdf2N53udCfH62iEsYjZ/AB/nQWjvbov4EpA8MgJy5L
- n+iBvVhLtqd4Q3RQigAW4m3bCv0BRqVfwGxdNVqPJvOMnSHJGyqoosyU5SoNFz1c+Fp8f4
- 2m12z/l9ZjSJkM597aP+LBe3STqSp7I=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-7ElL9kacMtC5OkhwiAsdgQ-1; Tue,
- 22 Oct 2024 04:12:01 -0400
-X-MC-Unique: 7ElL9kacMtC5OkhwiAsdgQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7338419560B0; Tue, 22 Oct 2024 08:12:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.59])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECBAF30001AA; Tue, 22 Oct 2024 08:11:55 +0000 (UTC)
-Date: Tue, 22 Oct 2024 09:11:52 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Juraj Marcin <jmarcin@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
-Message-ID: <ZxdeSKAQJYaoGvtT@redhat.com>
-References: <20241021215220.982325-1-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
+ id 1t3A8v-0005sC-UH
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:21:29 -0400
+Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nenut@skiff.uberspace.de>)
+ id 1t3A8t-00087u-Rb
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:21:29 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 4563B18047B
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 10:21:23 +0200 (CEST)
+Received: (qmail 31328 invoked by uid 990); 22 Oct 2024 08:21:23 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Tue, 22 Oct 2024 10:21:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241021215220.982325-1-peterx@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Tue, 22 Oct 2024 08:21:22 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <nenut@skiff.uberspace.de>
+Message-ID: <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
+TLS-Required: No
+Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
+ exceptions and traps
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Julian Ganz"
+ <neither@nut.email>, qemu-devel@nongnu.org
+In-Reply-To: <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
+References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
+ <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
+ <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
+ <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-3) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.1
+Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
+ envelope-from=nenut@skiff.uberspace.de; helo=mailgate02.uberspace.is
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,81 +68,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 21, 2024 at 05:52:20PM -0400, Peter Xu wrote:
-> Per previous discussion [1,2], this patch deprecates query-migrationthreads
-> command.
-> 
-> To summarize, the major reason of the deprecation is due to no sensible way
-> to consume the API properly:
-> 
->   (1) The reported list of threads are incomplete (ignoring destination
->       threads and non-multifd threads).
-> 
->   (2) For CPU pinning, there's no way to properly pin the threads with
->       the API if the threads will start running right away after migration
->       threads can be queried, so the threads will always run on the default
->       cores for a short window.
-> 
->   (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
->       which will provide proper names for all migration threads.
-> 
-> [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
-> [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  docs/about/deprecated.rst | 8 ++++++++
->  qapi/migration.json       | 6 +++++-
->  migration/threadinfo.c    | 4 ++++
->  3 files changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index ce38a3d0cf..ffb147e896 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -147,6 +147,14 @@ options are removed in favor of using explicit ``blockdev-create`` and
->  ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
->  details.
->  
-> +``query-migrationthreads`` (since 9.2)
-> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Hi, Pierrick,
 
-The title underline should be truncated at the ')'
+October 21, 2024 at 11:59 PM, "Pierrick Bouvier" wrote:
+> On 10/21/24 14:02, Julian Ganz wrote:
+> >  The motivation for this API is a plugin that simulates a RISC-V trac=
+ing
+> >  unit (and produces a trace). For that we actually also needed to
+> >  track the "regular" control flow, i.e. find out whether a branch was
+> >  taken or where a jump went. That wasn't hard, especially considering
+> >  that the TCG API already gives you (more or less) basic blocks. Stil=
+l,
+> >  we ended up tracing every instruction because that made some of the =
+logic
+> >  much simpler and easier to reason about.
+> >  We realized that we need a trap API because they:
+> >  * can occur at any time/point of execusion
+> >  * usually come with additional effects such as mode changes.
+> >=20
+>=20Thanks for sharing your insights.
+> I think there is definitely value in what you offer, and I'm trying to =
+think how we could extend it in the future easily, without having another=
+ callback when a new event appear. In my experience on plugins, the least=
+ callbacks we have, and the simpler they are, the better it is.
+>=20
+>=20Maybe we could have a single API like:
+>=20
+>=20enum qemu_plugin_cf_event_type {
+>  QEMU_PLUGIN_CF_INTERRUPT;
+>  QEMU_PLUGIN_CF_TRAP;
+>  QEMU_PLUGIN_CF_SEMIHOSTING;
+> };
 
-> +
-> +To be removed with no replacement, as it reports only a limited set of
-> +threads (for example, it only reports source side of multifd threads,
-> +without reporting any destination threads, or non-multifd source threads).
-> +For debugging purpose, please use ``-name $VM,debug-threads=on`` instead.
-> +
->  Incorrectly typed ``device_add`` arguments (since 6.2)
->  ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+I have considered such an enum, as an input for the callback, as a
+parameter of the registration function, and both. Of course, if you were
+to add a selection parameter for the registration function, you likely
+want OR-able flags.
 
->  QemuMutex migration_threads_lock;
-> @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
->      MigrationThread *thread = NULL;
->  
->      QEMU_LOCK_GUARD(&migration_threads_lock);
-> +
-> +    warn_report("Command 'query-migrationthreads' is deprecated");
+An additional input for the callback type would obviously require a new
+function type just for that callback. Since the callbacks are somewhat
+similar to the VCPU init, exit, resume, ... ones it felt appropriate
+to use the same function type for all of them.
 
-This needs to be warn_report_once, since it is in a codepath that can be
-called repeated at runtime.
+As for the registration, it may make the registration a bit more
+convenient and maybe keep the API clutter a bit lower, but not by that
+much.
 
-> +
->      QLIST_FOREACH(thread, &migration_threads, node) {
->          MigrationThreadInfo *info = g_new0(MigrationThreadInfo, 1);
->          info->name = g_strdup(thread->name);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> /* Sum type, a.k.a. "Rust-like" enum */
+> typedef struct {
+>  enum qemu_plugin_cf_event_type ev;
+>  union {
+>  data_for_interrupt interrupt;
+>  data_for_trap trap;
+>  data_for_semihosting semihosting;
+> } qemu_plugin_cf_event;
+> /* data_for_... could contain things like from/to addresses, interrupt =
+id, ... */
 
+I don't think this is a good idea.
+
+Traps are just too diverse, imo there is too little overlap between
+different architectures, with the sole exception maybe being the PC
+prior to the trap. "Interrupt id" sounds like a reasonably common
+concept, but then you would need to define a mapping for each and every
+architecture. What integer type do you use? In RISC-V, for example,
+exceptions and interrupt "ids" are differentiated via the most
+significant bit. Dou keep that or do you zero it? And then there's
+ring/privilage mode, cause (sometimes for each mode), ...
+
+It would also complicate call sites for hooks in target code. You'd
+either need awkwardly long function signitures or setup code for that
+struct. Both are things you don't want, as a hook call site should
+never distract from the actual logic surrounding them. You could
+probably have something reasonable in Rust, using a builder/command
+pattern. But in C this would require too much boiler plate code than
+I'd be comfortable with.
+
+Regards,
+Julian
 
