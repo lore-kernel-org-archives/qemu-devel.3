@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B40CDD0FB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 21:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFA2CDD0FF
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 21:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3MmX-0006ch-NC; Tue, 22 Oct 2024 17:51:13 -0400
+	id 1t3Mni-0007DR-Ei; Tue, 22 Oct 2024 17:52:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3MmW-0006cQ-A2
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:51:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3Mng-0007DH-Ib
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:52:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3MmU-00089n-KW
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:51:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3Mnd-0008EX-9I
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 17:52:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729633866;
+ s=mimecast20190719; t=1729633937;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=98HpJC+X3EFeyyy8qtsQz9wcyAPQb1RPTiUvpIJu30c=;
- b=AjSTW6NWOXgCzJHW+pwSlo2mxA09nklWAJ/+mxkARrcdBgXNbTtY+OtB765uv3o07ynTwa
- D1lV71Cou/TaqEyV06FURptT21xfYs7erlT8Wrr3ZB6IbbAnuAQIqFvfkGCfq9bet1hrjw
- N+Ch87JSTVkH/R4facHfDUQiyGxaBGc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yyP9+IVxR1Np4raQjpPN/l1gzBsuFk3luMtBV1OZW1A=;
+ b=W5F5vJ1YeF0ry5euISdOA5U138clHnQMlErXWCPBaefxdm3wqgUzqxO2G5ZNRJi+qJPZKY
+ LverGXJezaI4QbdyozwDt3W5MMHg7HFqCXYGMcY0K0bFYpDGVWabNO3g3PbPbmGR6gaacS
+ pSo1uZ93BKx4afvgbK2IsxWR4rpF6PQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-i30gPHYpPDKzYCdKu-oVbA-1; Tue, 22 Oct 2024 17:51:04 -0400
-X-MC-Unique: i30gPHYpPDKzYCdKu-oVbA-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b1473a4640so60010685a.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 14:51:04 -0700 (PDT)
+ us-mta-327-gcgKP_TmNTOCo3uVf9_rMw-1; Tue, 22 Oct 2024 17:52:11 -0400
+X-MC-Unique: gcgKP_TmNTOCo3uVf9_rMw-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4608a1a8d3eso7900521cf.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 14:52:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729633863; x=1730238663;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=98HpJC+X3EFeyyy8qtsQz9wcyAPQb1RPTiUvpIJu30c=;
- b=sZxzHdWlnW07dohwwB/SpuGzdZV7bo2LXuuaWNjuamRVWtQzUFLSlrQcUkSMRqNuvU
- P3Hvs9iuW/175DJPUZBI6uSmoM9rWcv9ymxyy6GWTXVv58EmQoRVnZThUv2uwZXIYuEa
- RWEbRjhNi3vAvoFHWF/VGEsL/9Gi1p7ONUgJUNtZje2OVYQjYhkmzTXckemsPhFWT9Yq
- SNnLd7jcEzDUvKR15+MMugaaleHQxtvDmazYTpodKyW6DRQy90MUzrzfNNtBMXItTDxk
- jvLHILJ+QhXg58fp1E/zNPrUd9kgZCwkDBGsrO8k7O9tgZ9e/H91k9vW/1a0XUKsoKwo
- 7U6w==
-X-Gm-Message-State: AOJu0YwjiYKOYsUvfU0FBClFsxxRQn6RMq+UZSKxdfmsr/mTY9h13mgB
- FAeJHcoQl08P1pMmeEpXsEcbiCTvbESml/T6h2a42dwG7vrq1bRzsPcJgkLqYNyyPNct7jFOsmd
- XlGUq8zqww4NhUTdn3dFEa8UYqeqG9QIwONU43b3Jp7ZmHrYkckbr
-X-Received: by 2002:a05:620a:2491:b0:7ac:b197:4037 with SMTP id
- af79cd13be357-7b17e1c5578mr104066585a.18.1729633862644; 
- Tue, 22 Oct 2024 14:51:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9N3PebbAtfnVR3KG+8sV8QsgrKXwF5eoiwN0prjYUfXwJQafM54cTIHXKJM9wxUNOrrXKbg==
-X-Received: by 2002:a05:620a:2491:b0:7ac:b197:4037 with SMTP id
- af79cd13be357-7b17e1c5578mr104063685a.18.1729633862246; 
- Tue, 22 Oct 2024 14:51:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729633931; x=1730238731;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yyP9+IVxR1Np4raQjpPN/l1gzBsuFk3luMtBV1OZW1A=;
+ b=tgAwptz/kJjb4me65lzA59mTWe9K5EU+BV1FnpxhR7KDL6C2+AFzUiKvhOb0Lz8OT0
+ 2O3uqBm2hsxmtREJ5k2E87GDN3z9PZkBJI+67x5xoA4rt2xP7t7ynw/YlpriyBfBMBJ2
+ cQt/yx7zP5Y5ipwaGFOlgrmOiiqSunP2vFFmLp9hdqXSFXIsmaWaj30BuPoU+FDBtQZz
+ d6PO4TFE1lIemX9JGVFdUu5ozH/o0316eMIZYu6xctMs7iuJx1v8gF5YLIKQn4IxLMO7
+ FX8CBFDY1Q2taxrJ+sBbEiyd7nnRUo/RRb/1wZADq8z2hgqTsFcd2S/A+B5bW+0jLFip
+ 1wMg==
+X-Gm-Message-State: AOJu0YyCoLQNW3KL/yfXm8Dj7DRhwJSDCJ32yJznFpgYoyTaal9wYAtg
+ wUVBSHMSsv83UaJry2fkPCWeTEFT3Df8ouDeCBH2t2hMAQU6Trc2rkl9S3hMTby2qH+Qgy9TpJj
+ 6Wt6dTyJTgBTThhOUdK6Tj/iZ1TPaFBch/QpPP0KBlTUHqKB9smn3
+X-Received: by 2002:a05:622a:1b0a:b0:45f:560:86de with SMTP id
+ d75a77b69052e-461140847ffmr10840081cf.7.1729633930752; 
+ Tue, 22 Oct 2024 14:52:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs1mHHEojnRscJKzCu+GrhhPqKPxsbfvOT+9TyNa4uuDzPWG5mOiZrnBUkzLKAQFiK+pAl3A==
+X-Received: by 2002:a05:622a:1b0a:b0:45f:560:86de with SMTP id
+ d75a77b69052e-461140847ffmr10839841cf.7.1729633930469; 
+ Tue, 22 Oct 2024 14:52:10 -0700 (PDT)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b1659b9415sm322933885a.3.2024.10.22.14.51.00
+ d75a77b69052e-460d3cbb777sm34128921cf.51.2024.10.22.14.52.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 14:51:01 -0700 (PDT)
-Date: Tue, 22 Oct 2024 17:50:59 -0400
+ Tue, 22 Oct 2024 14:52:09 -0700 (PDT)
+Date: Tue, 22 Oct 2024 17:52:07 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, clg@redhat.com
-Subject: Re: [PATCH 2/2] vfio/helpers: Align mmaps
-Message-ID: <ZxgeQwpCPAjBlE8T@x1n>
-References: <20241022200830.4129598-1-alex.williamson@redhat.com>
- <20241022200830.4129598-3-alex.williamson@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 1/2] migration: Make all helpers in misc.h safe to use
+ without migration
+Message-ID: <Zxgehz7gsKP5i8vF@x1n>
+References: <20241022160720.1013543-1-peterx@redhat.com>
+ <20241022160720.1013543-2-peterx@redhat.com>
+ <519f0ed8-5346-463b-979a-a4c6f4c38a8b@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241022200830.4129598-3-alex.williamson@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <519f0ed8-5346-463b-979a-a4c6f4c38a8b@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -99,96 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 22, 2024 at 02:08:29PM -0600, Alex Williamson wrote:
-> Thanks to work by Peter Xu, support is introduced in Linux v6.12 to
-> allow pfnmap insertions at PMD and PUD levels of the page table.  This
-> means that provided a properly aligned mmap, the vfio driver is able
-> to map MMIO at significantly larger intervals than PAGE_SIZE.  For
-> example on x86_64 (the only architecture currently supporting huge
-> pfnmaps for PUD), rather than 4KiB mappings, we can map device MMIO
-> using 2MiB and even 1GiB page table entries.
+On Tue, Oct 22, 2024 at 06:11:19PM +0200, Cédric Le Goater wrote:
+> On 10/22/24 18:07, Peter Xu wrote:
+> > Migration object can be freed before some other device codes run, while we
+> > do have a bunch of migration helpers exported in migration/misc.h that
+> > logically can be invoked at any time of QEMU, even during destruction of a
+> > VM.
+> > 
+> > Make all these functions safe to be called, especially, not crashing after
+> > the migration object is freed.
+> > 
+> > Add a rich comment in the header explaining how to guarantee thread safe on
+> > using these functions, and we choose BQL because fundamentally that's how
+> > it's working now.  We can move to other things (e.g. RCU) whenever
+> > necessary in the future but it's an overkill if we have BQL anyway in
+> > most/all existing callers.
+> > 
+> > When at it, update some comments, e.g. migrate_announce_params() is
 > 
-> Typically mmap will already provide PMD aligned mappings, so devices
-> with moderately sized MMIO ranges, even GPUs with standard 256MiB BARs,
-> will already take advantage of this support.  However in order to better
-> support devices exposing multi-GiB MMIO, such as 3D accelerators or GPUs
-> with resizable BARs enabled, we need to manually align the mmap.
-> 
-> There doesn't seem to be a way for userspace to easily learn about PMD
-> and PUD mapping level sizes, therefore this takes the simple approach
-> to align the mapping to the power-of-two size of the region, up to 1GiB,
-> which is currently the maximum alignment we care about.
-> 
-> Cc: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+> While ?
 
-For the longer term, maybe QEMU can provide a function to reserve a range
-of mmap with some specific alignment requirement.  For example, currently
-qemu_ram_mmap() does mostly the same thing (and it hides a hugetlb fix on
-ppc only with 7197fb4058, which isn't a concern here).  Then the complexity
-can hide in that function.  Kind of a comment for the future only.
+Will fix.  I'll wait for a while, and see whether I should repost or just
+fix it up when queue.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> > exported from options.c now.
+> > 
+> > Cc: Cédric Le Goater <clg@redhat.com>
+> > Cc: Avihai Horon <avihaih@nvidia.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> 
+> 
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks!
-
-> ---
->  hw/vfio/helpers.c | 32 ++++++++++++++++++++++++++++++--
->  1 file changed, 30 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index b9e606e364a2..913796f437f8 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -27,6 +27,7 @@
->  #include "trace.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/units.h"
->  #include "monitor/monitor.h"
->  
->  /*
-> @@ -406,8 +407,35 @@ int vfio_region_mmap(VFIORegion *region)
->      prot |= region->flags & VFIO_REGION_INFO_FLAG_WRITE ? PROT_WRITE : 0;
->  
->      for (i = 0; i < region->nr_mmaps; i++) {
-> -        region->mmaps[i].mmap = mmap(NULL, region->mmaps[i].size, prot,
-> -                                     MAP_SHARED, region->vbasedev->fd,
-> +        size_t align = MIN(1ULL << ctz64(region->mmaps[i].size), 1 * GiB);
-> +        void *map_base, *map_align;
-> +
-> +        /*
-> +         * Align the mmap for more efficient mapping in the kernel.  Ideally
-> +         * we'd know the PMD and PUD mapping sizes to use as discrete alignment
-> +         * intervals, but we don't.  As of Linux v6.12, the largest PUD size
-> +         * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
-> +         * on x86_64).  Align by power-of-two size, capped at 1GiB.
-> +         *
-> +         * NB. qemu_memalign() and friends actually allocate memory, whereas
-> +         * the region size here can exceed host memory, therefore we manually
-> +         * create an oversized anonymous mapping and clean it up for alignment.
-> +         */
-> +        map_base = mmap(0, region->mmaps[i].size + align, PROT_NONE,
-> +                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-> +        if (map_base == MAP_FAILED) {
-> +            ret = -errno;
-> +            goto no_mmap;
-> +        }
-> +
-> +        map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
-> +        munmap(map_base, map_align - map_base);
-> +        munmap(map_align + region->mmaps[i].size,
-> +               align - (map_align - map_base));
-> +
-> +        region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
-> +                                     MAP_SHARED | MAP_FIXED,
-> +                                     region->vbasedev->fd,
->                                       region->fd_offset +
->                                       region->mmaps[i].offset);
->          if (region->mmaps[i].mmap == MAP_FAILED) {
-> -- 
-> 2.46.2
-> 
 
 -- 
 Peter Xu
