@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6195CD2C56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68419D2C56E
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 15:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3GkK-0007Ze-Sw; Tue, 22 Oct 2024 11:24:32 -0400
+	id 1t3Gkg-0007ww-FL; Tue, 22 Oct 2024 11:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkJ-0007Vp-Pn
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:31 -0400
+ id 1t3Gke-0007wa-OF
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3GkI-0004xv-0X
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:31 -0400
+ id 1t3Gkd-000515-Cz
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 11:24:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729610669;
+ s=mimecast20190719; t=1729610690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OTQ6oHWtR4o7XzRFPiGtn1wRQxJXoWFgPGHC0CJImaQ=;
- b=Tc9xo9MvmVks/RtyNPwe0kZM41OKLOtEG+Ai8j5cTK91zbhSFaohoQmJs/5Yuy/vRrMUl1
- VUnemcrr+JbP7Hqez6anddVWEv2z0C7B/1RjwDwHxj/UQku1ZMk89n43Kgq1s3c3g9o+im
- k7l/K89AaStUcWoomBchJ+XFtCN9Z9Q=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oGXtD59Wdl4rms+4dg7aanApiesZPcqhLbJOgYZq2lc=;
+ b=VO98N8vD4Yg+RoBs/CJDjYH+T6I3OixCTJ9jifDognDa9s55kmXKg34jw4S2KsRQEi70K8
+ fwpDQthXwkQkULy6dIXD6bzmO6z8wZIRzKljVQn2/LMyh78xqlpMTha0vi94+Z1eK+cdl7
+ 1tK4JuhOT5nCts/yMn7vdyrorLbqjVg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-NFQG_pXTPy2svcrGqJ4_8A-1; Tue,
- 22 Oct 2024 11:24:26 -0400
-X-MC-Unique: NFQG_pXTPy2svcrGqJ4_8A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-Nb49rNgQNbudWibbO21aTQ-1; Tue,
+ 22 Oct 2024 11:24:46 -0400
+X-MC-Unique: Nb49rNgQNbudWibbO21aTQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 208A91955D4C; Tue, 22 Oct 2024 15:24:25 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 698011977323; Tue, 22 Oct 2024 15:24:45 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.59])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75B2319560B2; Tue, 22 Oct 2024 15:24:22 +0000 (UTC)
+ id 3EDED1956046; Tue, 22 Oct 2024 15:24:43 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -53,11 +53,11 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 02/14] sockets: Remove deadcode
-Date: Tue, 22 Oct 2024 16:24:03 +0100
-Message-ID: <20241022152415.1632556-3-berrange@redhat.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 09/14] ui/vnc: don't raise error formatting socket address for
+ non-inet
+Date: Tue, 22 Oct 2024 16:24:10 +0100
+Message-ID: <20241022152415.1632556-10-berrange@redhat.com>
 In-Reply-To: <20241022152415.1632556-1-berrange@redhat.com>
 References: <20241022152415.1632556-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,111 +89,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+The SASL library requires the connection's local & remote IP address to
+be passed in, since some mechanism may use this information. Currently
+QEMU raises an error for non-inet sockets, but it is valid to pass NULL
+to the SASL library. Doing so makes SASL work on UNIX sockets.
 
-socket_remote_address hasn't been used since it was added in
-  17c55decec ("sockets: add helpers for creating SocketAddress from a socket")
-
-inet_connect hasn't been used since 2017's
-  8ecc2f9eab ("sheepdog: Use SocketAddress and socket_connect()")
-
-Remove them.
-
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/sockets.h | 16 ----------------
- util/qemu-sockets.c    | 35 -----------------------------------
- 2 files changed, 51 deletions(-)
+ ui/vnc-auth-sasl.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
-index d935fd80da..c562690d89 100644
---- a/include/qemu/sockets.h
-+++ b/include/qemu/sockets.h
-@@ -61,7 +61,6 @@ int socket_set_fast_reuse(int fd);
- int inet_ai_family_from_address(InetSocketAddress *addr,
-                                 Error **errp);
- int inet_parse(InetSocketAddress *addr, const char *str, Error **errp);
--int inet_connect(const char *str, Error **errp);
- int inet_connect_saddr(InetSocketAddress *saddr, Error **errp);
- 
- NetworkAddressFamily inet_netfamily(int family);
-@@ -117,21 +116,6 @@ socket_sockaddr_to_address(struct sockaddr_storage *sa,
-  */
- SocketAddress *socket_local_address(int fd, Error **errp);
- 
--/**
-- * socket_remote_address:
-- * @fd: the socket file handle
-- * @errp: pointer to uninitialized error object
-- *
-- * Get the string representation of the remote socket
-- * address. A pointer to the allocated address information
-- * struct will be returned, which the caller is required to
-- * release with a call qapi_free_SocketAddress() when no
-- * longer required.
-- *
-- * Returns: the socket address struct, or NULL on error
-- */
--SocketAddress *socket_remote_address(int fd, Error **errp);
--
- /**
-  * socket_address_flatten:
-  * @addr: the socket address to flatten
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 60c44b2b56..c1b162b056 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -707,26 +707,6 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
+index 7d9ca9e8ac..edf19deb3b 100644
+--- a/ui/vnc-auth-sasl.c
++++ b/ui/vnc-auth-sasl.c
+@@ -524,13 +524,13 @@ static int protocol_client_auth_sasl_mechname_len(VncState *vs, uint8_t *data, s
+     return 0;
  }
  
- 
--/**
-- * Create a blocking socket and connect it to an address.
-- *
-- * @str: address string
-- * @errp: set in case of an error
-- *
-- * Returns -1 in case of error, file descriptor on success
-- **/
--int inet_connect(const char *str, Error **errp)
--{
--    int sock = -1;
--    InetSocketAddress *addr = g_new(InetSocketAddress, 1);
--
--    if (!inet_parse(addr, str, errp)) {
--        sock = inet_connect_saddr(addr, errp);
--    }
--    qapi_free_InetSocketAddress(addr);
--    return sock;
--}
--
- #ifdef CONFIG_AF_VSOCK
- static bool vsock_parse_vaddr_to_sockaddr(const VsockSocketAddress *vaddr,
-                                           struct sockaddr_vm *svm,
-@@ -1421,21 +1401,6 @@ SocketAddress *socket_local_address(int fd, Error **errp)
- }
- 
- 
--SocketAddress *socket_remote_address(int fd, Error **errp)
--{
--    struct sockaddr_storage ss;
--    socklen_t sslen = sizeof(ss);
--
--    if (getpeername(fd, (struct sockaddr *)&ss, &sslen) < 0) {
--        error_setg_errno(errp, errno, "%s",
--                         "Unable to query remote socket address");
--        return NULL;
--    }
--
--    return socket_sockaddr_to_address(&ss, sslen, errp);
--}
--
--
- SocketAddress *socket_address_flatten(SocketAddressLegacy *addr_legacy)
+-static char *
++static int
+ vnc_socket_ip_addr_string(QIOChannelSocket *ioc,
+                           bool local,
++                          char **addrstr,
+                           Error **errp)
  {
      SocketAddress *addr;
+-    char *ret;
+ 
+     if (local) {
+         addr = qio_channel_socket_get_local_address(ioc, errp);
+@@ -538,17 +538,17 @@ vnc_socket_ip_addr_string(QIOChannelSocket *ioc,
+         addr = qio_channel_socket_get_remote_address(ioc, errp);
+     }
+     if (!addr) {
+-        return NULL;
++        return -1;
+     }
+ 
+     if (addr->type != SOCKET_ADDRESS_TYPE_INET) {
+-        error_setg(errp, "Not an inet socket type");
++        *addrstr = NULL;
+         qapi_free_SocketAddress(addr);
+-        return NULL;
++        return 0;
+     }
+-    ret = g_strdup_printf("%s;%s", addr->u.inet.host, addr->u.inet.port);
++    *addrstr = g_strdup_printf("%s;%s", addr->u.inet.host, addr->u.inet.port);
+     qapi_free_SocketAddress(addr);
+-    return ret;
++    return 0;
+ }
+ 
+ void start_auth_sasl(VncState *vs)
+@@ -561,15 +561,15 @@ void start_auth_sasl(VncState *vs)
+     int mechlistlen;
+ 
+     /* Get local & remote client addresses in form  IPADDR;PORT */
+-    localAddr = vnc_socket_ip_addr_string(vs->sioc, true, &local_err);
+-    if (!localAddr) {
++    if (vnc_socket_ip_addr_string(vs->sioc, true,
++                                  &localAddr, &local_err) < 0) {
+         trace_vnc_auth_fail(vs, vs->auth, "Cannot format local IP",
+                             error_get_pretty(local_err));
+         goto authabort;
+     }
+ 
+-    remoteAddr = vnc_socket_ip_addr_string(vs->sioc, false, &local_err);
+-    if (!remoteAddr) {
++    if (vnc_socket_ip_addr_string(vs->sioc, false,
++                                  &remoteAddr, &local_err) < 0) {
+         trace_vnc_auth_fail(vs, vs->auth, "Cannot format remote IP",
+                             error_get_pretty(local_err));
+         g_free(localAddr);
 -- 
 2.46.0
 
