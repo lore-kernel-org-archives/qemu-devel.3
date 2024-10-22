@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BD6D1715D
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 05:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A59ED1CDA0
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 05:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t37Be-0007cg-Jv; Tue, 22 Oct 2024 01:12:06 -0400
+	id 1t37G0-0000NI-LQ; Tue, 22 Oct 2024 01:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t37Bd-0007cV-7V
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 01:12:05 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t37Bb-0002n0-42
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 01:12:04 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e585ef0b3so3977446b3a.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 22:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729573922; x=1730178722;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dHPvtn0Ny0oILoTP4tn8hwP7lxZ5imNUOr81aHRq0qE=;
- b=k1/QriOLw3rIyy5TbNJiQL13rnJ/mlVxv4PzO+MYVWA3PYaMlrMGpczYncZjUv8z+J
- TR/7F0fpfyf9ej1tjAu95TJzIjcYm3PFw1/dw19qKPkWpMDQH/0dAcOt4IDQ47eKm4d6
- 2ABh+JbQLq+sd9GspI5a3ojiHYus8o7TGBrj758VMzALfRyH5zgzsyZeIl/JkgVchxZt
- CXnib25h1f4aCI6zFg2JXGD1Jn1yc+dzZt3gZz2Uhoi5TS744SQl8iRc+44nasrl7PLf
- UXAsEYprb7s3Wria0mTXo0YiL7qQHpXaYBIgX0AvaaR394jngAE0yOpwOobLIQYYbh3A
- Pnjg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t37Fy-0000Mx-Pu
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 01:16:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t37Fw-0003J7-Cy
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 01:16:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729574190;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mfVL7RpZauNCOcXaXc3evqKRARVQMOaGg7gt7Ve5nA8=;
+ b=Ishrsfm2ntbt4YWrfHvuil5IBRVz9oc8wSxGk9CqBRbmzFiBrcnArQhamwhsAEg/3Y6xtN
+ KV0ag/4H/fIMHC0ZiDigK8IZcP91yCygU7m+a/L0FNgGkEqxq+uKWbnmPmT0R+h6Mbvm3z
+ uJjm21SDgmp4KP+j/pbX/01+0kNwODE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-456-OqvbSSJUN1KlHBE8x0K3BA-1; Tue, 22 Oct 2024 01:16:28 -0400
+X-MC-Unique: OqvbSSJUN1KlHBE8x0K3BA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4314f1e0f2bso36168185e9.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 22:16:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729573922; x=1730178722;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dHPvtn0Ny0oILoTP4tn8hwP7lxZ5imNUOr81aHRq0qE=;
- b=BuGLA67eFb+cmhetKI/o5F9IIGaA5YH4J6C4AE1wkZsQfGwzHS7sC3ZhDtoMWmr5ci
- wsdSPAthMU+efmb0ZHcAr7gqEHftXsb4fQ+xeDdKnEOLMqeQiwpzXO5iYjHG6ndsGW7h
- ffZPSODFWmDAYmFfEDKteRaoKaebVrEyyx85PooR3Wlba38OZHzHlNQWF0dxSFkckQ/x
- g0QBy51U1k+A1FZfE3t3vB5ISEwFnu+QFIn3bEZ7hlrZqeH3DknhCXRV3AD6HKkZF1XS
- KjaJ1unmveADGrOTvICATZCfmAXnlyw37JN5TrvWRdSFBWOM+gnr6oIAWvLp7Yvhck7M
- wRCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+dt99+s+LG3QlJ4H7SM45DYZiyVik3GjEsNWKncuJtdkj/7d/OpC04N4svznYcSROe84hwS7BE+zH@nongnu.org
-X-Gm-Message-State: AOJu0Yx7eeZmtuo2poBZUBUqMLnfl3Wbdyb2bglDhU2S8Jd4KuABsf+8
- yF5pGrZoX1OeLgoBiO+4Qm+DOlBrFRSCBHJwbktIkBeCRDpNGcgwYV1kqK6pWtQ=
-X-Google-Smtp-Source: AGHT+IH8GxfANozYLbbafR9gTAH5Wct4ci8/z6cb0IgwUNEo63vbl3GEt5+lln/iDlBlq8CZWH7vMw==
-X-Received: by 2002:a05:6a00:3e01:b0:71e:6919:f295 with SMTP id
- d2e1a72fcca58-71ee5afed7dmr1866352b3a.28.1729573921598; 
- Mon, 21 Oct 2024 22:12:01 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec1332f3dsm3836720b3a.53.2024.10.21.22.11.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 22:12:01 -0700 (PDT)
-Message-ID: <c02c2bb3-c5fe-4675-bfc5-2b99fbf78f42@daynix.com>
-Date: Tue, 22 Oct 2024 14:11:56 +0900
+ d=1e100.net; s=20230601; t=1729574187; x=1730178987;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mfVL7RpZauNCOcXaXc3evqKRARVQMOaGg7gt7Ve5nA8=;
+ b=Tlx1jqyoLF9snBTUmwDyNy8HJRaJlBssvdjuVZ5KdZPBIa0joJSblXFgshEwd1bGl5
+ naqUSFSqA9tsvg7e15Wl1CO7+kvs3pIu07Nryl6W6su1ugtQzNm6wHmW8TfQSH/txaxv
+ fqohl8w5NNEQ1Jj1ocenFpaxQj+mOJutEY2mPkE3t03RSF0KpabHy6x4r6rD306Ebfbn
+ OKwDLo4ZtY3vUh0jshJ8DNTzb0ke2M47KTGkEVdhn7uCBKkJrRs60T7Z4M4D6szKwA1o
+ VU8Qhyp7AYCnwx9mNEK/d1d6sdu1xN9vrYD7IlP7fUes/d5xH4frH8JwD7lGKPpMVzTC
+ MyWA==
+X-Gm-Message-State: AOJu0YxQge1MFzIf0K/DE+vuMOmnakw3Q0KfEKs03mZLW7IXH59QBz/o
+ gioPVBhsbgXxZjlne8yvsdmf+cALir7SNl8M1vOOQXx/rCpkr9KqKtb6lI1kjMvUKxTE1Ms/rp2
+ 4ETZmFZ4QPIqLdO2eD/FJHDbBE/ngMDucTwztDJMhbgbhqpnkzB3GOcCmyRzWCm7Ogc5Vz6Auqe
+ DMMSaqAGMQkCOT8IcSghpUqah8BV0O/7llGYNF5j2x
+X-Received: by 2002:a05:600c:3b9b:b0:42c:bae0:f065 with SMTP id
+ 5b1f17b1804b1-431616332c3mr122099855e9.5.1729574186705; 
+ Mon, 21 Oct 2024 22:16:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2dUagaEpfyUdbta79F7mI1CnKLl2JMmgeWH9llBCGekeDJQqurulS4MhU3wdA5IX+RnTBTFCxNQQYcQHW9wY=
+X-Received: by 2002:a05:600c:3b9b:b0:42c:bae0:f065 with SMTP id
+ 5b1f17b1804b1-431616332c3mr122099685e9.5.1729574186280; Mon, 21 Oct 2024
+ 22:16:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
- <20241015043238.114034-6-dmitry.osipenko@collabora.com>
- <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
- <f79ebab7-fe1c-419d-89d5-6238b0b36ba5@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <f79ebab7-fe1c-419d-89d5-6238b0b36ba5@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20241021163538.136941-1-pbonzini@redhat.com>
+ <20241021163538.136941-9-pbonzini@redhat.com>
+ <ME0P300MB1040AEF7807BCED2866FA5F6954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+In-Reply-To: <ME0P300MB1040AEF7807BCED2866FA5F6954C2@ME0P300MB1040.AUSP300.PROD.OUTLOOK.COM>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 22 Oct 2024 07:16:13 +0200
+Message-ID: <CABgObfZ95u+3CG92Zoobju=Sg19W4P2Dzb2YAGms=nwoydaknQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/13] rust: cleanup module_init!,
+ use it from #[derive(Object)]
+To: Junjie Mao <junjie.mao@hotmail.com>
+Cc: qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,21 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/10/19 6:31, Dmitry Osipenko wrote:
-> On 10/18/24 08:28, Akihiko Odaki wrote:
->>> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
->>> +                                      uint32_t ring_idx, uint64_t fence)
->>> +{
->>> +    VirtIOGPU *g = opaque;
->>
->> What about taking the BQL here instead of having a QEMUBH?
-> 
-> That will block virglrenderer thread writing the fence, which in turns
-> might block other virglrenderer threads.
+On Tue, Oct 22, 2024 at 4:12=E2=80=AFAM Junjie Mao <junjie.mao@hotmail.com>=
+ wrote:
+>
+>
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+>
+> > Remove the duplicate code by using the module_init! macro; at the same =
+time,
+> > simplify how module_init! is used, by taking inspiration from the imple=
+mentation
+> > of #[derive(Object)].
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>
+> Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+>
+> One minor comment below.
+>
+> > ---
+> >  rust/qemu-api-macros/src/lib.rs  | 33 +++-------------
+> >  rust/qemu-api/src/definitions.rs | 66 ++++++++++++++------------------
+> >  2 files changed, 33 insertions(+), 66 deletions(-)
+> >
+> <snip>
+> > diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/defin=
+itions.rs
+> > index 3323a665d92..f180c38bfb2 100644
+> > --- a/rust/qemu-api/src/definitions.rs
+> > +++ b/rust/qemu-api/src/definitions.rs
+> > @@ -29,51 +29,40 @@ pub trait Class {
+> >
+> >  #[macro_export]
+> >  macro_rules! module_init {
+> <snip>
+> > +    ($type:ident =3D> $body:block) =3D> {
+> > +        const _: () =3D {
+> > +            #[used]
+> > +            #[cfg_attr(
+> > +                not(any(target_vendor =3D "apple", target_os =3D "wind=
+ows")),
+> > +                link_section =3D ".init_array"
+> > +            )]
+> > +            #[cfg_attr(target_vendor =3D "apple", link_section =3D "__=
+DATA,__mod_init_func")]
+> > +            #[cfg_attr(target_os =3D "windows", link_section =3D ".CRT=
+$XCU")]
+> > +            pub static LOAD_MODULE: extern "C" fn() =3D {
+> > +                extern "C" fn init_fn() {
+>
+> init_fn() should be unsafe fn according to the signature of
+> register_module_init.
 
-Looking at virglrenderer's source code, the thread writing the fence is 
-the only thread it creates. Otherwise virglrenderer's code should be 
-executed only in the QEMU thread calling virglrenderer's functions, 
-which always holds the BQL. So taking the BQL here will not interfere 
-with another thread.
+I think it *can* be unsafe (which bindgen does by default). It's
+always okay to pass a non-unsafe function as unsafe function pointer:
+
+fn f() {
+    println!("abc");
+}
+
+fn g(pf: unsafe fn()) {
+    unsafe {
+        pf();
+    }
+}
+
+fn main() {
+    g(f);
+}
+
+> Being unsafe fn also makes sense here because it
+> is the caller, not init_fn() itself, that is responsible for the safety o=
+f
+> the unsafe code in the body.
+
+Isn't it the opposite? Since the caller of module_init! is responsible
+for the safety, init_fn() itself can be safe. With
+unsafe_op_in_unsafe_fn it's not a big deal; but without it, an unsafe
+init_fn would hide what is safe and what is not in the argument of
+module_init!.
+
+It's also relevant in this respect that init_fn is called *after*
+main(), only ctor_fn() is called before main.
+
+Thanks,
+
+Paolo
+
 
