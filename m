@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93F9D1CDD5
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82872D1CDD5
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CZi-0002cK-6w; Tue, 22 Oct 2024 06:57:18 -0400
+	id 1t3CZ2-0001on-Io; Tue, 22 Oct 2024 06:56:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ2-0001p8-Hm
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1t3CYw-0001mE-Oh
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:30 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ0-000257-O1
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5c941623a5aso10852828a12.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:33 -0700 (PDT)
+ id 1t3CYu-000237-2k
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:30 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c96df52c52so7122067a12.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594592; x=1730199392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729594586; x=1730199386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pf3uq1o/PXtMWzbvWkPU0TjSlCT93/aG9VyjOMqKoJo=;
- b=SrLSuTCGrnU2yecchuPfJahtlADKRbnkyk0UZHBIlvm4AWbVsc6HUJvxBwHhRvFfv/
- FkSXuwhrfbssP6VN6Gz8WLfP33mw0yyzPfMlXteyUlzgxwXVb+j+Z97WPXp6C7sVC9rK
- r5AhPYP6yzGwbYFTG4Czfa7wGGIX7R5dCghKvUd17aqC/rM4qSDLz1DJfabXMfraHdwG
- KyTDBNb+fbi7nP8D/96/Ya3irymygw7jA58X+17u08LF6SbVWk+maEoUK7I1yqGSC6Lz
- SVptKbE8YYbN2kJxnPcYgqSpkFy2gZMPqSZVJGGo8e71FCkjKnNIjssERA0cJ8pyrINS
- XRRg==
+ bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
+ b=IsYcSQnH04/k5U5ppbVY/Skpb3KOJDJjqmYBnE0oGENHXNon0fldCHHGfqQ7F/sPs6
+ eWyQfY+etfDJmXBcCdmPPKKsnlEs9oDS1z2ctQjWu6IfLab7Q3ijslS17Ru3kWCPfeJ3
+ JtANSAJUpmtAsSp9cx1Cqq6k9fhJVP+LD0yywzgmrqmFmnF5iUv1IxXkCYG3BP2N2CGM
+ K5mDLcWDYkSOUcRxMGHVS8gtfoxZjAZIS06WAKYdTBaZS5r4riOBov3eqzWCyeUtEpF8
+ nSUPmGJ051Pa+r16K2bREGuAf05ZbXKtNquh4pkHEIMKGBWzyM4JewzdQ2SDTuQ3MMIr
+ ZmQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594592; x=1730199392;
+ d=1e100.net; s=20230601; t=1729594586; x=1730199386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pf3uq1o/PXtMWzbvWkPU0TjSlCT93/aG9VyjOMqKoJo=;
- b=mSSUILpojNz7U8/cY07phLHKBopj5xTQQva0iS4Me46m8z3R1KWJQxRW1EIcYhBPlb
- bckrdw4Ndy97RAho8J/foE8AblRx3YyXDhKix5VUgY6HFn5lBDpA0mevGuZwoz4Gu7Fn
- nHtd/SRmU+kZ3HEIZ1JJ6tc1pKMViNnvfBH3vZcMJH5J5kXSKmI7KV4Ft5rWsaTi8kZI
- tg3yUOSbpdaBYQdrlc8UMwHJOIaY8u9FWcE6Jts9a4q2RbuYhiaQ5czU9XnvSGgJ4uvN
- Qtf8MopDapLPASpZmzkXHeywLDWsHMEK47iYhSh7GNObci3KOxiTa6Rq9TxfMQxaPAYk
- 8K3A==
-X-Gm-Message-State: AOJu0YzszIXRb6k4vO4Jcw0bU4cbLnHF0bn9P5LT06OKxlIbfF9q/B14
- qLDB8yCugW5+O1oNNSlaOMIG1hNTmKBPvyfaJsidRKK2cZFzgk/yv6G4ZPwGKdg=
-X-Google-Smtp-Source: AGHT+IFr+0mLMKe2JQJOUJSSxtHXWPXM2EDoaQ4nyTBJKccw5XUwjD1MaeL5ICuPvGV4e9NH5KWjRQ==
-X-Received: by 2002:a17:906:c116:b0:a9a:1575:23e3 with SMTP id
- a640c23a62f3a-a9aaa5428e4mr236057266b.19.1729594592209; 
- Tue, 22 Oct 2024 03:56:32 -0700 (PDT)
+ bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
+ b=qXP2l6rFbv5M5CJqRYSpK+VUONH0FfdRP+Vo31sJtvRHhj4eIJNqSqTGdlr8g5mmDx
+ bpSZvzfQzCPdRfhdy+u89qedKgaKq/I3QldS1ODpL7eD8mE2q4sT0zwGyb5xCP4xFXaB
+ z1MM5ZpR8PajuWYWeH7ViwX33rE8Ijd5CRszqIiQSoLDoqnOUwZQgUE4y+YgOCUMNlo0
+ SMou4PUEFftjBQ8A0Ti0OfpGpS90dXo2yCbaTczCo5Bq5pWm+1yn/iSYxMpdjbTqm3Bh
+ lHfm9jVmY/1hiH3tjgWWM40EwjY+0PKQDqWKPLN5Xym3P2H4TMJOutiqL6awyY7dBOOJ
+ A7lg==
+X-Gm-Message-State: AOJu0YzrJbeQPxWMQK7CTk7A49Nn2pxXPCAOQd4tne8hCeMmv7yTO2VZ
+ UqyRVB04age5uWLW7cxLJ7fmyQcIe4GpUpZxXwv4znPsqiqqAn5znW8AHSFCbIE=
+X-Google-Smtp-Source: AGHT+IGl+hAC7xKg+0Mp16pdpeeXIDIYDU6WjhEFWtxxGSyLoudl/zJKvx6zmb4I/Li5Y9q95p5HIQ==
+X-Received: by 2002:a05:6402:358a:b0:5c9:85dc:5b9f with SMTP id
+ 4fb4d7f45d1cf-5ca0ac43593mr11802716a12.2.1729594586471; 
+ Tue, 22 Oct 2024 03:56:26 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a9155a1c9sm323018666b.129.2024.10.22.03.56.20
+ 4fb4d7f45d1cf-5cb66c737c4sm2963632a12.96.2024.10.22.03.56.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:28 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C52CB5FBDC;
+ by draig.lan (Postfix) with ESMTP id 711A35F9DD;
  Tue, 22 Oct 2024 11:56:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,18 +84,18 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 13/20] tests/tcg: enable basic testing for
- aarch64_be-linux-user
-Date: Tue, 22 Oct 2024 11:56:07 +0100
-Message-Id: <20241022105614.839199-14-alex.bennee@linaro.org>
+Subject: [PATCH v2 09/20] dockerfiles: fix default targets for
+ debian-loongarch-cross
+Date: Tue, 22 Oct 2024 11:56:03 +0100
+Message-Id: <20241022105614.839199-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
 References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,133 +118,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We didn't notice breakage of aarch64_be because we don't have any TCG
-tests for it. However while the existing aarch64 compiler can target
-big-endian builds no one packages a BE libc. Instead we bang some
-rocks together to do the most basic of hello world with a nostdlib
-syscall test.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+fix system target name, and remove --disable-system (which deactivates
+system target).
+
+Found using: make docker-test-build@debian-loongarch-cross V=1
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - fix checkpatch complaints
----
- configure                            |  5 ++++
- tests/tcg/aarch64_be/hello.c         | 35 ++++++++++++++++++++++++++++
- tests/tcg/Makefile.target            |  7 +++++-
- tests/tcg/aarch64_be/Makefile.target | 17 ++++++++++++++
- 4 files changed, 63 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/aarch64_be/hello.c
- create mode 100644 tests/tcg/aarch64_be/Makefile.target
+ tests/docker/dockerfiles/debian-loongarch-cross.docker | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/configure b/configure
-index 72d1a94225..7dd3400ccb 100755
---- a/configure
-+++ b/configure
-@@ -1418,6 +1418,7 @@ probe_target_compiler() {
-   target_arch=${1%%-*}
-   case $target_arch in
-     aarch64) container_hosts="x86_64 aarch64" ;;
-+    aarch64_be) container_hosts="x86_64 aarch64" ;;
-     alpha) container_hosts=x86_64 ;;
-     arm) container_hosts="x86_64 aarch64" ;;
-     hexagon) container_hosts=x86_64 ;;
-@@ -1447,6 +1448,10 @@ probe_target_compiler() {
-     case $target_arch in
-       # debian-all-test-cross architectures
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 79eab5621e..538ab53490 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -43,8 +43,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
+ ENV PATH $PATH:/opt/cross-tools/bin
+ ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
  
-+      aarch64_be)
-+        container_image=debian-all-test-cross
-+        container_cross_prefix=aarch64-linux-gnu-
-+        ;;
-       hppa|m68k|mips|riscv64|sparc64)
-         container_image=debian-all-test-cross
-         ;;
-diff --git a/tests/tcg/aarch64_be/hello.c b/tests/tcg/aarch64_be/hello.c
-new file mode 100644
-index 0000000000..a9b2ab45de
---- /dev/null
-+++ b/tests/tcg/aarch64_be/hello.c
-@@ -0,0 +1,35 @@
-+/*
-+ * Non-libc syscall hello world for Aarch64 BE
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#define __NR_write 64
-+#define __NR_exit 93
-+
-+int write(int fd, char *buf, int len)
-+{
-+    register int x0 __asm__("x0") = fd;
-+    register char *x1 __asm__("x1") = buf;
-+    register int x2 __asm__("x2") = len;
-+    register int x8 __asm__("x8") = __NR_write;
-+
-+    asm volatile("svc #0" : : "r"(x0), "r"(x1), "r"(x2), "r"(x8));
-+
-+    return len;
-+}
-+
-+void exit(int ret)
-+{
-+    register int x0 __asm__("x0") = ret;
-+    register int x8 __asm__("x8") = __NR_exit;
-+
-+    asm volatile("svc #0" : : "r"(x0), "r"(x8));
-+    __builtin_unreachable();
-+}
-+
-+void _start(void)
-+{
-+    write(1, "Hello World\n", 12);
-+    exit(0);
-+}
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 2da70b2fcf..9722145b97 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -103,9 +103,14 @@ ifeq ($(filter %-softmmu, $(TARGET)),)
- # then the target. If there are common tests shared between
- # sub-targets (e.g. ARM & AArch64) then it is up to
- # $(TARGET_NAME)/Makefile.target to include the common parent
--# architecture in its VPATH.
-+# architecture in its VPATH. However some targets are so minimal we
-+# can't even build the multiarch tests.
-+ifneq ($(filter $(TARGET_NAME),aarch64_be),)
-+-include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
-+else
- -include $(SRC_PATH)/tests/tcg/multiarch/Makefile.target
- -include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
-+endif
+-ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+-ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
++ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
++ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
+ ENV MAKE /usr/bin/make
  
- # Add the common build options
- CFLAGS+=-Wall -Werror -O0 -g -fno-strict-aliasing
-diff --git a/tests/tcg/aarch64_be/Makefile.target b/tests/tcg/aarch64_be/Makefile.target
-new file mode 100644
-index 0000000000..297d2cf71c
---- /dev/null
-+++ b/tests/tcg/aarch64_be/Makefile.target
-@@ -0,0 +1,17 @@
-+# -*- Mode: makefile -*-
-+#
-+# A super basic AArch64 BE makefile. As we don't have any big-endian
-+#l ibc available the best we can do is a basic Hello World.
-+
-+AARCH64BE_SRC=$(SRC_PATH)/tests/tcg/aarch64_be
-+VPATH += $(AARCH64BE_SRC)
-+
-+AARCH64BE_TEST_SRCS=$(notdir $(wildcard $(AARCH64BE_SRC)/*.c))
-+AARCH64BE_TESTS=$(AARCH64BE_TEST_SRCS:.c=)
-+#MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
-+
-+# We need to specify big-endian cflags
-+CFLAGS +=-mbig-endian -ffreestanding
-+LDFLAGS +=-nostdlib
-+
-+TESTS += $(AARCH64BE_TESTS)
+ # As a final step configure the user (if env is defined)
 -- 
 2.39.5
 
