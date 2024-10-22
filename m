@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1678D1CDDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146CCD1CDD5
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CYu-0001ko-AZ; Tue, 22 Oct 2024 06:56:28 -0400
+	id 1t3CZJ-0001w1-Mn; Tue, 22 Oct 2024 06:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYr-0001iu-9x
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:26 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1t3CZ1-0001p1-0u
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:36 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CYn-0001zD-Mp
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:23 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-37d4ac91d97so5282435f8f.2
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:21 -0700 (PDT)
+ id 1t3CYx-00023z-Df
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:32 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5c937b5169cso1155614a12.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594580; x=1730199380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729594590; x=1730199390; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=COTB8IX9EL+KvqwMSRlZ5WoxH3jy7uQtMVM8wKCP4/g=;
- b=p5QDVz2phnPTmjsR8vP3N8UTNsE13QMvswISY9BpX1bQaDAblHt4BCdZtT6Cv2WQ7A
- oTPI8I01negcTy0m+2Tc1qsp4LRw5vRYMutdmZWaTtoA8KpSJV1ccdG/xx2nXvjY8MQ8
- mn23sgJtJO+VNEhTp3927ksS0ecs2Fw7ZXCKJh88KYFWfm3iaGHAJVC6n3GAFAWCufVc
- LDqOMeo5Rd64qynMPDK1xVf8sHQpA9xy5VOUVhoXvLZeBcckOPfiPLqX5qXKcudkGpkS
- Ib1IFjJngGgK7uixVsVeFfVz28t+xNmealp9UyzdiqyooljmXx+ZKjaeUuhKPPIDbpFK
- zP+Q==
+ bh=nuVL16OURPo6SfQxD2PzScmfjsPxu4HizBAVk8u7e/E=;
+ b=yEgmR/iucv08DNiZ7m008A6CAAh3GaZt5k0f/0SCmq6RK3bXS27FBvrPerjCf387AW
+ WQnJLAB5boaVNUizxzqMfclYYhIrDpJvh3FlW4yqJop0THj6ZfFxdJDPfyBxmolAcPF+
+ Gb/wNUNpnzPctM+mvYL7M/mxLScxLmEfUMNfPJAG4C9gBy8grZTG85zm+uD3L37TLBUw
+ CjQNCSiRKXY17nY7WemyUd2R97/sYuQsGCpqQdDSi/r78p1plUQCeilcLR2qjijmjLng
+ 9s2nWZxo0kq9IkgNPXSPNJRiGTtNxsKRXOLLPwaIHnVCOsgGlIibMjv5h3B2kBBFyXR/
+ wnpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594580; x=1730199380;
+ d=1e100.net; s=20230601; t=1729594590; x=1730199390;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=COTB8IX9EL+KvqwMSRlZ5WoxH3jy7uQtMVM8wKCP4/g=;
- b=QetDPlQXhfNs7S6O4CaR8azXG0eT0WjbfbUrF45j0avnJH8RaoTV8uT7g50b94gRpj
- rMvWorJm+nO9IPVlvGE+sOKfC7jtYGlMPIBkjHDfwStxtMdvoWf3ZQvChfGK5IygoD57
- 3R3xG03nmxVjTC+HI76H5j5WAe2Leh804l1Q5g954MuyQ2/cJ9yH38XbGDlfElKNMO7G
- PUgZPQ9dpJJVCX4Jfv9y8VYBHKT6GekfU4HqSg/mr3fBmjethU3eDFB1PB3hZOWIozwa
- aOzABYwAqbO+nisCJgB8r7MqqBrv1lYp5qYclQaNyFdpMjJ+q9zvGw6k14AFlLR03YSh
- DsUQ==
-X-Gm-Message-State: AOJu0YwPR/2txG3QkdQWRnSvN63LGOchU/tdNAPurh+BOCelPD6R9rus
- yS5KNfLBWOSEFBRP80DUf6mgrUysKxMQTja6BEHzSr7ibw74Hxo0MV4AZH2PgX8=
-X-Google-Smtp-Source: AGHT+IF8gTYNUNEInBLeGzU/PWN6iK1a20tMenTDraAJtih3b9OaMANLgGCpLzqKTnRdNaK+s8hEig==
-X-Received: by 2002:a5d:424c:0:b0:37d:51b7:5e08 with SMTP id
- ffacd0b85a97d-37ea21d8fbdmr11273338f8f.18.1729594580178; 
- Tue, 22 Oct 2024 03:56:20 -0700 (PDT)
+ bh=nuVL16OURPo6SfQxD2PzScmfjsPxu4HizBAVk8u7e/E=;
+ b=WgY3qv4NiDGRCHJzB6WZr2mGT2uoRRu6z1bp3TfGGwLXg8+21KYYuR4tSZkLVHaP14
+ YlF/yselihVUQzTHWWOXlBNiP3VVX1WkxxGeGoIRGbWrjmxYxv9oe7beJf3lYMTuDUju
+ 0mU0glJtrBc7OdGIIoMgGzTV1z+8dkmI+EPWq+Is2E+C7FpBq82b58DRU35Kl/+E7Gk/
+ BwyG/TEcMkJMmwpVptpuDHorvaVfqreWQ5WWVVFI4TsLZ0Z5vr/HLHiI+b/z1K0LnLC8
+ JCkOzYS5kzB/nW08vNoPUT57Lz9rdWPhpcIBqCWA1dGOw4QRTBCHQy1E5hloKd+axu04
+ x22Q==
+X-Gm-Message-State: AOJu0Ywj9tJoBaxwpJyTZc4a9pxOQrq5mt0tzmiqQnCkanbSYrZkJqSN
+ 8bxa/5A4pbZNIPC5WHOuXZT3LkrcsIgus/92LaBP9Tqj/pNCKuhxRNJUYt/rqKg=
+X-Google-Smtp-Source: AGHT+IHwi1+vxmbQ3YLA9r6WePtD03FZyJBvumSeivnyntfSu8jv5XX9sGc6cj7ZvugURHt1idsIcQ==
+X-Received: by 2002:a05:6402:35c2:b0:5c9:3070:701e with SMTP id
+ 4fb4d7f45d1cf-5cb794670eemr2833546a12.9.1729594589755; 
+ Tue, 22 Oct 2024 03:56:29 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91307874sm323980966b.94.2024.10.22.03.56.17
+ 4fb4d7f45d1cf-5cb66c7255esm3123937a12.80.2024.10.22.03.56.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:19 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2F1E35F92E;
+ by draig.lan (Postfix) with ESMTP id ADE0A5FABE;
  Tue, 22 Oct 2024 11:56:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -84,18 +84,18 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 06/20] scripts/ci: remove architecture checks for
- build-environment updates
-Date: Tue, 22 Oct 2024 11:56:00 +0100
-Message-Id: <20241022105614.839199-7-alex.bennee@linaro.org>
+Subject: [PATCH v2 12/20] config/targets: update aarch64_be-linux-user gdb XML
+ list
+Date: Tue, 22 Oct 2024 11:56:06 +0100
+Message-Id: <20241022105614.839199-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
 References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,35 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We were missing s390x here. There isn't much point testing for the
-architecture here as we will fail anyway if the appropriate package
-list is missing.
+Attempting to run the binary asserts when it can't find the XML entry.
+We can fix it so we don't although I suspect other stuff is broken.
 
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2580
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/ci/setup/ubuntu/build-environment.yml | 2 --
- 1 file changed, 2 deletions(-)
+ configs/targets/aarch64_be-linux-user.mak | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
-index edf1900b3e..56b51609e3 100644
---- a/scripts/ci/setup/ubuntu/build-environment.yml
-+++ b/scripts/ci/setup/ubuntu/build-environment.yml
-@@ -39,7 +39,6 @@
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
-         - ansible_facts['distribution_version'] == '22.04'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
- 
-     - name: Install packages for QEMU on Ubuntu 22.04
-       package:
-@@ -47,7 +46,6 @@
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
-         - ansible_facts['distribution_version'] == '22.04'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
- 
-     - name: Install armhf cross-compile packages to build QEMU on AArch64 Ubuntu 22.04
-       package:
+diff --git a/configs/targets/aarch64_be-linux-user.mak b/configs/targets/aarch64_be-linux-user.mak
+index 778d22b2a9..dcef597a80 100644
+--- a/configs/targets/aarch64_be-linux-user.mak
++++ b/configs/targets/aarch64_be-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml
++TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml
+ TARGET_HAS_BFLT=y
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
 -- 
 2.39.5
 
