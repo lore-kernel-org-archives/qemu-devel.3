@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D93D2C561
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 14:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCE5D2C560
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 14:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3G7P-0005iQ-9L; Tue, 22 Oct 2024 10:44:19 -0400
+	id 1t3G7q-0005nT-KJ; Tue, 22 Oct 2024 10:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t3G7D-0005hS-MT; Tue, 22 Oct 2024 10:44:08 -0400
+ id 1t3G7o-0005kf-1H; Tue, 22 Oct 2024 10:44:44 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1t3G75-0000QV-5k; Tue, 22 Oct 2024 10:44:03 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XXvzl2XJ9z6JB90;
- Tue, 22 Oct 2024 22:42:59 +0800 (CST)
+ id 1t3G7m-0000U9-Jb; Tue, 22 Oct 2024 10:44:43 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XXw0b2ftvz6JBBn;
+ Tue, 22 Oct 2024 22:43:43 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id B9FC714039E;
- Tue, 22 Oct 2024 22:43:54 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id BD65B1400DB;
+ Tue, 22 Oct 2024 22:44:38 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 22 Oct
- 2024 16:43:53 +0200
-Date: Tue, 22 Oct 2024 15:43:52 +0100
+ 2024 16:44:37 +0200
+Date: Tue, 22 Oct 2024 15:44:36 +0100
 To: Zhao Liu <zhao1.liu@intel.com>
 CC: "Daniel P . =?ISO-8859-1?Q?Berrang=E9?=" <berrange@redhat.com>, "Igor
  Mammedov" <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -44,12 +44,12 @@ CC: "Daniel P . =?ISO-8859-1?Q?Berrang=E9?=" <berrange@redhat.com>, "Igor
  <kvm@vger.kernel.org>, <qemu-riscv@nongnu.org>, <qemu-arm@nongnu.org>,
  "Zhenyu Wang" <zhenyu.z.wang@intel.com>, Dapeng Mi
  <dapeng1.mi@linux.intel.com>
-Subject: Re: [PATCH v4 1/9] i386/cpu: Don't enumerate the "invalid" CPU
+Subject: Re: [PATCH v4 5/9] hw/core: Add a helper to check the cache
  topology level
-Message-ID: <20241022154352.00001a4e@Huawei.com>
-In-Reply-To: <20241022135151.2052198-2-zhao1.liu@intel.com>
+Message-ID: <20241022154436.000028af@Huawei.com>
+In-Reply-To: <20241022135151.2052198-6-zhao1.liu@intel.com>
 References: <20241022135151.2052198-1-zhao1.liu@intel.com>
- <20241022135151.2052198-2-zhao1.liu@intel.com>
+ <20241022135151.2052198-6-zhao1.liu@intel.com>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -87,22 +87,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Resend. Claws-mail is still chewing up the to list for unknown reasons
 and I forgot to fix it by hand.
 
-On Tue, 22 Oct 2024 21:51:43 +0800
+On Tue, 22 Oct 2024 21:51:47 +0800
 Zhao Liu <zhao1.liu@intel.com> wrote:
 
-> In the follow-up change, the CPU topology enumeration will be moved to
-> QAPI. And considerring "invalid" should not be exposed to QAPI as an
-> unsettable item, so, as a preparation for future changes, remove
-> "invalid" level from the current CPU topology enumeration structure
-> and define it by a macro instead.
+> Currently, we have no way to expose the arch-specific default cache
+> model because the cache model is sometimes related to the CPU model
+> (e.g., i386).
 > 
-> Due to the removal of the enumeration of "invalid", bit 0 of
-> CPUX86State.avail_cpu_topo bitmap will no longer correspond to "invalid"
-> level, but will start at the SMT level. Therefore, to honor this change,
-> update the encoding rule for CPUID[0x1F].
+> Since the user might configure "default" level, any comparison with
+> "default" is meaningless before the machine knows the specific level
+> that "default" refers to.
+> 
+> We can only check the correctness of the cache topology after the arch
+> loads the user-configured cache model from MachineState.smp_cache and
+> consumes the special "default" level by replacing it with the specific
+> level.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-
-The drop of the invalid level == 0 seems reasonable to me
+Looks like useful sanity check code to me.
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+
+
 
