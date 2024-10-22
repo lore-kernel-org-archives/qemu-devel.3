@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4EB1D2C551
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E32D2C550
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 13:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3F44-00064r-R5; Tue, 22 Oct 2024 09:36:48 -0400
+	id 1t3F3w-0005yj-07; Tue, 22 Oct 2024 09:36:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t3F42-000630-5c; Tue, 22 Oct 2024 09:36:46 -0400
+ id 1t3F3t-0005xb-RG; Tue, 22 Oct 2024 09:36:37 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1t3F3y-0000FX-Sy; Tue, 22 Oct 2024 09:36:45 -0400
+ id 1t3F3s-0000DU-41; Tue, 22 Oct 2024 09:36:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1729604203; x=1761140203;
+ t=1729604196; x=1761140196;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=QiNSK6DAQM/vMK0hhZySRePzcs3gJqhWvw2eEAcE7DQ=;
- b=gXsTAqc6gqvrgeoXxnSOiKJ8txJw+l5iSSu0MRYctv2EwFCFMgI6a0nD
- 1M0CSk/cQTGxUW+O04xP3IQz2H9c9q+Slf/ddz6T0TDUfTSS4rfd3JCCz
- Muqg6dWkJn+HuDGvJ8z2CJfvxsMxoOkrnJ8li0wHb9OWbUhF/B2axc6G0
- DymIl2AAhckNikCbnFhmGvH9RxGLCAHeZiulnA+reEPYSf7G/wXMMfIxz
- MU/jj0yNfTKPw4uFuv7eo3iUNP7IHJTPINBT8Vu7LJ7aPVGJ6i8uNIo5e
- ysN4qGj7jQmE0LJbkz4S5c5nl75e/EUv4oiGxZN2Mqkh4cDgz+cBMfyw4 w==;
-X-CSE-ConnectionGUID: ttxQ19exQ1CfpEUkMsxTgA==
-X-CSE-MsgGUID: 1cntQm+NQ4uxM+hjq5HY5A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="46603727"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="46603727"
+ bh=Git+7j02oNMDGgTgXnT+j1SOHf1VUhf6k7CHTi5Pq3w=;
+ b=V6WLrK2XKIAVA0s04/0e0WRSIiNTwIIaKA0iw6jWEbEbtZ6prbtxUpE1
+ CosUCWNB61KcGy+Yu3QjRHsREisn2S296wLqw9YFdwdcyK8WAJjMhjWYG
+ a6A7qQ7e2My3/o43ecka76mg08NIyHZ4iDt7mwWkxYD1IgZ7N0W109w/v
+ G7b8pLtkaK/E0TqtoVjI9djTkPsPuzAW/pTTM668owdNCDPPtCLMidPib
+ 2ZUMjCzf9mrDLGwLMzPqwfUBLIAutz7LGUg8Sd6aeUmMneWQXSmN0GKA2
+ ZCBYCA4i/utOT8k5MrwL302dBGBmjXTDM6t42hJZA4nZJMF84041cOoQC w==;
+X-CSE-ConnectionGUID: YLEM/NDIRuuiEIz524sObA==
+X-CSE-MsgGUID: Hf839jFKTKORqHLg0e5n3A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="46603704"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="46603704"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Oct 2024 06:36:40 -0700
-X-CSE-ConnectionGUID: PDm5F9Q+Rs6pChB6l5swYQ==
-X-CSE-MsgGUID: opfRim5ZRSuIaDccgRUNrA==
+ 22 Oct 2024 06:36:34 -0700
+X-CSE-ConnectionGUID: Zu/J4WhNRKCC4Y6LAfIRJg==
+X-CSE-MsgGUID: Ih/MATrcSBepcRjmz4lYDg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; d="scan'208";a="79782413"
+X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; d="scan'208";a="79782388"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 22 Oct 2024 06:36:35 -0700
+ by orviesa009.jf.intel.com with ESMTP; 22 Oct 2024 06:36:29 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -61,12 +61,10 @@ To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Alireza Sanaee <alireza.sanaee@huawei.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PATCH v4 6/9] i386/cpu: Support thread and module level cache
- topology
-Date: Tue, 22 Oct 2024 21:51:48 +0800
-Message-Id: <20241022135151.2052198-7-zhao1.liu@intel.com>
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v4 5/9] hw/core: Add a helper to check the cache topology level
+Date: Tue, 22 Oct 2024 21:51:47 +0800
+Message-Id: <20241022135151.2052198-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241022135151.2052198-1-zhao1.liu@intel.com>
 References: <20241022135151.2052198-1-zhao1.liu@intel.com>
@@ -97,47 +95,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow cache to be defined at the thread and module level. This
-increases flexibility for x86 users to customize their cache topology.
+Currently, we have no way to expose the arch-specific default cache
+model because the cache model is sometimes related to the CPU model
+(e.g., i386).
+
+Since the user might configure "default" level, any comparison with
+"default" is meaningless before the machine knows the specific level
+that "default" refers to.
+
+We can only check the correctness of the cache topology after the arch
+loads the user-configured cache model from MachineState.smp_cache and
+consumes the special "default" level by replacing it with the specific
+level.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- target/i386/cpu.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+Changes since Patch v3:
+ * New commit to make cache topology check as a separate helper, so that
+   arch-specific code could use this helper to check cache topology.
+---
+ hw/core/machine-smp.c | 48 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/boards.h   |  1 +
+ 2 files changed, 49 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f1cbcaf9f4ad..3a5b5557f74b 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -240,9 +240,15 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
-     uint32_t num_ids = 0;
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index ebb7a134a7be..640b2114b429 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -348,3 +348,51 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+ {
+     ms->smp_cache.props[cache].topology = level;
+ }
++
++/*
++ * When both cache1 and cache2 are configured with specific topology levels
++ * (not default level), is cache1's topology level higher than cache2?
++ */
++static bool smp_cache_topo_cmp(const SmpCache *smp_cache,
++                               CacheLevelAndType cache1,
++                               CacheLevelAndType cache2)
++{
++    /*
++     * Before comparing, the "default" topology level should be replaced
++     * with the specific level.
++     */
++    assert(smp_cache->props[cache1].topology != CPU_TOPOLOGY_LEVEL_DEFAULT);
++
++    return smp_cache->props[cache1].topology > smp_cache->props[cache2].topology;
++}
++
++/*
++ * Currently, we have no way to expose the arch-specific default cache model
++ * because the cache model is sometimes related to the CPU model (e.g., i386).
++ *
++ * We can only check the correctness of the cache topology after the arch loads
++ * the user-configured cache model from MachineState and consumes the special
++ * "default" level by replacing it with the specific level.
++ */
++bool machine_check_smp_cache(const MachineState *ms, Error **errp)
++{
++    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1D,
++                           CACHE_LEVEL_AND_TYPE_L2) ||
++        smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L1I,
++                           CACHE_LEVEL_AND_TYPE_L2)) {
++        error_setg(errp,
++                   "Invalid smp cache topology. "
++                   "L2 cache topology level shouldn't be lower than L1 cache");
++        return false;
++    }
++
++    if (smp_cache_topo_cmp(&ms->smp_cache, CACHE_LEVEL_AND_TYPE_L2,
++                           CACHE_LEVEL_AND_TYPE_L3)) {
++        error_setg(errp,
++                   "Invalid smp cache topology. "
++                   "L3 cache topology level shouldn't be lower than L2 cache");
++        return false;
++    }
++
++    return true;
++}
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 3d6cb5acd6c7..192f78539a6e 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -53,6 +53,7 @@ CpuTopologyLevel machine_get_cache_topo_level(const MachineState *ms,
+                                               CacheLevelAndType cache);
+ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+                                   CpuTopologyLevel level);
++bool machine_check_smp_cache(const MachineState *ms, Error **errp);
+ void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
  
-     switch (share_level) {
-+    case CPU_TOPOLOGY_LEVEL_THREAD:
-+        num_ids = 1;
-+        break;
-     case CPU_TOPOLOGY_LEVEL_CORE:
-         num_ids = 1 << apicid_core_offset(topo_info);
-         break;
-+    case CPU_TOPOLOGY_LEVEL_MODULE:
-+        num_ids = 1 << apicid_module_offset(topo_info);
-+        break;
-     case CPU_TOPOLOGY_LEVEL_DIE:
-         num_ids = 1 << apicid_die_offset(topo_info);
-         break;
-@@ -250,10 +256,6 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
-         num_ids = 1 << apicid_pkg_offset(topo_info);
-         break;
-     default:
--        /*
--         * Currently there is no use case for THREAD and MODULE, so use
--         * assert directly to facilitate debugging.
--         */
-         g_assert_not_reached();
-     }
- 
+ /**
 -- 
 2.34.1
 
