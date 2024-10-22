@@ -4,83 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19C2D1CDA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 06:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D61D1CDAB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 07:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t38i1-0008RA-Qj; Tue, 22 Oct 2024 02:49:37 -0400
+	id 1t38rs-0001jh-T6; Tue, 22 Oct 2024 02:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t38hw-0008QO-41
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:49:32 -0400
-Received: from mail-il1-x129.google.com ([2607:f8b0:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t38hu-0006C9-AD
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 02:49:31 -0400
-Received: by mail-il1-x129.google.com with SMTP id
- e9e14a558f8ab-3a39cabb9b8so18002945ab.1
- for <qemu-devel@nongnu.org>; Mon, 21 Oct 2024 23:49:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t38rr-0001jV-Dc; Tue, 22 Oct 2024 02:59:47 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1t38ro-0007JW-5v; Tue, 22 Oct 2024 02:59:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729579767; x=1730184567;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xtxi+373Xn3WrnjU6r1osJNLDcoJXZeTp5+73x6cVVA=;
- b=0Xc5Thq585tt9n+RY0HZtT57NbssBIGxPwuvfZeQiZk7TfvlkCqul+mm3hmjfkdq3s
- rur0iTCX39wnFtJp2CLpgcG0yrresmuK/ci5GTlJ4jdEwlPprS/9K7EPykF6PEDFJHW6
- Zy/xWOjlyMcBnMOvEGhKgW2NSEW7uzQp0O3KByIQyCe60ZoIK6ytRGcHGsw7TZDyOs3X
- 2VWdEfOHZD2SH0hqN1MiuOsckhMfYlD7d5uFnXtWilrRG2AKf5g8JBuxAT3l/OKL8lMJ
- ISsUfaEkAGTyQgKLIqdBKkkEDtaHnul3Q3clxjqgGZzUHLrZiGo1OnZkpYbtrafB8Apb
- g9gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729579767; x=1730184567;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xtxi+373Xn3WrnjU6r1osJNLDcoJXZeTp5+73x6cVVA=;
- b=rviqTVKH0jXWJlwcJ+J+Gy6fFQ6cxJ6gkJx+0wnHwRySdNOTtPaPFoXod6b5fLuNKs
- P+d7if74u3uJsP2QpDsrQoY2dsQzdj0jQxRmzpywMx9zIU4BREak1KwSYiEBUrGYX4vk
- dfbK89EhQLqwkfmIZOQs5H0skg/Ab+OM0EtoG97Oy5FwCPKUZ0hhMTg1RUO2sRvUMw/O
- +rq1+Lssgp/JBadzvvTTsjE1kRPTnMHwZn3wvHm8ZMQa6jmYHi7EBqw4I0uPSdPZqJAn
- kOnKy27OevvGvdaTEW0Pcdj2r7cxezKYCpiiNl2igjp1zUOCS74dgA93xbU2NZ17aekG
- WfAA==
-X-Gm-Message-State: AOJu0Yz7jHUzUxh3pvOBQT8jz70paM7nioZa5ejtHaVzbd+p8SAHY316
- kYd7wDj/YYJJq4kVxlEqH3ErsqWOQVoZnk52CEDkQG835SdYlQ62+oN+e9TACLA=
-X-Google-Smtp-Source: AGHT+IFrYXzQNWryjLpxGyOPNSeWfZjxLFnqAicOdLbTowAN6ez9UJlcnTQ8cHCshpAVxRSvZ/wJMg==
-X-Received: by 2002:a92:cda4:0:b0:3a3:b4ec:b3f1 with SMTP id
- e9e14a558f8ab-3a3f40ab54cmr125363275ab.17.1729579767447; 
- Mon, 21 Oct 2024 23:49:27 -0700 (PDT)
-Received: from localhost ([157.82.202.230])
- by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-7eaeabb8ff3sm4211541a12.69.2024.10.21.23.49.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Oct 2024 23:49:27 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 22 Oct 2024 15:49:01 +0900
-Subject: [PATCH] virtio-net: Add queues before loading them
+ d=linux.alibaba.com; s=default;
+ t=1729580374; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=4P8/jW3SmUCITBWuBmIjQDpHdv8x+04EpjpL0HeYeGI=;
+ b=kfbf5rTCG6cn8QVB/TwHvbTM9lqfY9SI03uboIDbeYms2Y35ngKMt5u4mLtYIrwOovbVBN6NB6pNP4HO+BidsybpcYdqj0rQ6om9qOeSrLX4010EDVcCGRe8AZf7RGJu/50bcQOdYIZv0WCHc8yxALqe7VIZ58hexqj5NhmL2Cg=
+Received: from 30.166.64.99(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WHgrigO_1729580373 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 22 Oct 2024 14:59:34 +0800
+Message-ID: <8a35ee80-f1b1-49e7-95d6-0daa14ef49e7@linux.alibaba.com>
+Date: Tue, 22 Oct 2024 14:59:33 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241022-load-v1-1-99df0bff7939@daynix.com>
-X-B4-Tracking: v=1; b=H4sIANxKF2cC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxNDA0Nz3Zz8xBTdtCRTUxMTE1OzFCMLJaDSgqLUtMwKsDHRsbW1AL4jcrt
- WAAAA
-To: Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::129;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-il1-x129.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 00/14] tcg/riscv: Add support for vector
+To: Alistair Francis <alistair23@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com
+References: <20241016193140.2206352-1-richard.henderson@linaro.org>
+ <CAKmqyKOVZ36gHjk=oMQMB77Lmv=iuwSWvQogzNbUOe04ZwY7Rw@mail.gmail.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <CAKmqyKOVZ36gHjk=oMQMB77Lmv=iuwSWvQogzNbUOe04ZwY7Rw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,86 +68,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call virtio_net_set_multiqueue() to add queues before loading their
-states. Otherwise the loaded queues will not have handlers and elements
-in them will not be processed.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
-Reported-by: Laurent Vivier <lvivier@redhat.com>
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/hw/virtio/virtio.h |  2 ++
- hw/net/virtio-net.c        | 10 ++++++++++
- hw/virtio/virtio.c         |  7 +++++++
- 3 files changed, 19 insertions(+)
+On 2024/10/21 09:42, Alistair Francis wrote:
+> On Thu, Oct 17, 2024 at 5:33 AM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>> Introduce support for the RISC-V vector extension in the TCG backend.
+>>
+>> v5: https://lore.kernel.org/qemu-devel/20241007025700.47259-1-zhiwei_liu@linux.alibaba.com/
+>>
+>> Changes for v6:
+>>    - Fix problem with TB overflow restart wrt the constant pool.
+>>    - Fix vsetivli disassembly.
+>>    - Change set_vtype to precompute all instructions.
+>>    - Extract one element before comparison in tcg_out_dupi_vec.
+>>    - Extract one element before comparison in tcg_target_const_match.
+>>    - Drop 'vm' parameter from most tcg_out_opc_* functions.
+>>    - Add tcg_out_opc_vv_vi and accept K constants for operations
+>>      which have .v.i instructions.
+>>    - Do not expand cmp_vec early.
+>>    - Fix expansion of rotls_vec.
+>>
+>> I've tested this on cfarm95, a banana pi bpi-f3 with 256-bit rvv-1.0,
+>> with qemu-aarch64 and some vectorized test cases.
+>>
+>> Barring further comment, I plan to include this in a PR at the
+>> end of the week.
+>>
+>>
+>> r~
+>>
+>>
+>> Huang Shiyuan (1):
+>>    tcg/riscv: Add basic support for vector
+>>
+>> Richard Henderson (3):
+>>    tcg: Reset data_gen_ptr correctly
+>>    disas/riscv: Fix vsetivli disassembly
+>>    tcg/riscv: Accept constant first argument to sub_vec
+>>
+>> TANG Tiancheng (10):
+>>    util: Add RISC-V vector extension probe in cpuinfo
+>>    tcg/riscv: Implement vector mov/dup{m/i}
+>>    tcg/riscv: Add support for basic vector opcodes
+>>    tcg/riscv: Implement vector cmp/cmpsel ops
+>>    tcg/riscv: Implement vector neg ops
+>>    tcg/riscv: Implement vector sat/mul ops
+>>    tcg/riscv: Implement vector min/max ops
+>>    tcg/riscv: Implement vector shi/s/v ops
+>>    tcg/riscv: Implement vector roti/v/x ops
+>>    tcg/riscv: Enable native vector support for TCG host
+> Thanks!
+>
+> Applied to riscv-to-apply.next
+>
+> I have removed the Swung0x48 Signed-off-by line.
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index f526ecc8fcc0..638691028050 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -210,6 +210,8 @@ struct VirtioDeviceClass {
-     void (*guest_notifier_mask)(VirtIODevice *vdev, int n, bool mask);
-     int (*start_ioeventfd)(VirtIODevice *vdev);
-     void (*stop_ioeventfd)(VirtIODevice *vdev);
-+    /* Called before loading queues. Useful to add queues before loading. */
-+    int (*pre_load_queues)(VirtIODevice *vdev);
-     /* Saving and loading of a device; trying to deprecate save/load
-      * use vmsd for new devices.
-      */
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index fb84d142ee29..c467ef130016 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3032,6 +3032,15 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     virtio_net_set_queue_pairs(n);
- }
- 
-+static int virtio_net_pre_load_queues(VirtIODevice *vdev)
-+{
-+    virtio_net_set_multiqueue(VIRTIO_NET(vdev),
-+                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_RSS) ||
-+                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_MQ));
-+
-+    return 0;
-+}
-+
- static int virtio_net_post_load_device(void *opaque, int version_id)
- {
-     VirtIONet *n = opaque;
-@@ -4025,6 +4034,7 @@ static void virtio_net_class_init(ObjectClass *klass, void *data)
-     vdc->guest_notifier_mask = virtio_net_guest_notifier_mask;
-     vdc->guest_notifier_pending = virtio_net_guest_notifier_pending;
-     vdc->legacy_features |= (0x1 << VIRTIO_NET_F_GSO);
-+    vdc->pre_load_queues = virtio_net_pre_load_queues;
-     vdc->post_load = virtio_net_post_load_virtio;
-     vdc->vmsd = &vmstate_virtio_net_device;
-     vdc->primary_unplug_pending = primary_unplug_pending;
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index a26f18908ea5..f12c4aa81eb5 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3255,6 +3255,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         config_len--;
-     }
- 
-+    if (vdc->pre_load_queues) {
-+        ret = vdc->pre_load_queues(vdev);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-     num = qemu_get_be32(f);
- 
-     if (num > VIRTIO_QUEUE_MAX) {
+I think we should use this tag as pointed here[1]:
 
----
-base-commit: 7e3b6d8063f245d27eecce5aabe624b5785f2a77
-change-id: 20241017-load-fb5544456d28
+Signed-off-by: Huang Shiyuan <swung0x48@outlook.com>
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+[1]: https://mail.gnu.org/archive/html/qemu-riscv/2024-09/msg00526.html
 
+Thanks,
+Zhiwei
+
+>
+> Alistair
+>
+>>   disas/riscv.h                     |   2 +-
+>>   host/include/riscv/host/cpuinfo.h |   2 +
+>>   include/tcg/tcg.h                 |   6 +
+>>   tcg/riscv/tcg-target-con-set.h    |   9 +
+>>   tcg/riscv/tcg-target-con-str.h    |   3 +
+>>   tcg/riscv/tcg-target.h            |  78 ++-
+>>   tcg/riscv/tcg-target.opc.h        |  12 +
+>>   disas/riscv.c                     |   2 +-
+>>   tcg/tcg.c                         |   2 +-
+>>   util/cpuinfo-riscv.c              |  24 +-
+>>   tcg/riscv/tcg-target.c.inc        | 994 +++++++++++++++++++++++++++---
+>>   11 files changed, 1011 insertions(+), 123 deletions(-)
+>>   create mode 100644 tcg/riscv/tcg-target.opc.h
+>>
+>> --
+>> 2.43.0
+>>
+>>
 
