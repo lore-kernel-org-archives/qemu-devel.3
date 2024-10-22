@@ -4,94 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5EFD1CDBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F7FD1CDB7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 08:41:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3APX-0004fX-2H; Tue, 22 Oct 2024 04:38:39 -0400
+	id 1t3ASX-0002tz-SJ; Tue, 22 Oct 2024 04:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t3APD-00041b-7r
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:38:22 -0400
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1t3APA-0001bI-N7
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:38:18 -0400
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3e602994635so2145589b6e.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 01:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729586295; x=1730191095;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gER0tR9dEh3Z2GZldoLikvaiG5ouEBTAsFs/3NvKbxU=;
- b=o1eOlVIasoJBBTJjByOH1qNwIimOlIwLAopdP3hqaoqILm9P7/paHpy9LfrSeXovEl
- C8gCvg4kncknOU39NMydgflM7oXAY20AwZw+u2b6ZJH+CJl+046PhXRhTGWXQOu30TSf
- 4zOenXgIKojYoguiRn1LA7dxd2hYL5e3aQSBZcIjzhabBXEBdxBBZO0bjdjtULIYy6jB
- gvlPaTPqac3CtH2YMrgZ1MsMcXSNzbrzbyD2hPwlXT0r7o53YlWbIM8wN4Xff9l99sa1
- 3pt/cPQadTz9W0LgRwaQ9mOb1wzfhlipzrHmBmPLSjf3aShnF1yIlGkE6Q7TZwOdHwVL
- nRpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729586295; x=1730191095;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gER0tR9dEh3Z2GZldoLikvaiG5ouEBTAsFs/3NvKbxU=;
- b=GGuwb8bVMmeLSRbXE543nxMfNxQw+8aFtZAaKL4SuU8Ka8f/K1g3Z6pEurBL17nIkD
- nAj9PGGSTECs7XhiQ4rLnHiW5ymbSGNGLwGoAkwHTsQGiceTJtmqUTfNU4+Zi8iBpmSL
- LDd9c5Q8DsEPq2lTHL2ADyxzxlSKEnCQI+/zDLweb6p+dEejYRYkAyqo0Zyaqhh6ULcA
- X6l6aJuU9GN+S4+/mpjQ6zmWI9GRIM/arxg4dek7gsBWHXQnOmEc4Y6HINxG2avym5wK
- 8DLU24HAQV72MYkLiP4ieCY7AlzsnDztJPCiDdvfOsrLIZLNv33w90qCizbG4OTVYuJc
- fhkA==
-X-Gm-Message-State: AOJu0Yyf9Oj3u3RDbqNDyw+Ug6znZZ+do0ls8x38AqilSbuMRadWl4W+
- m4/G8PDG1hkSlsUTwYavZdPSUgUOB9mrMe5Vau5/Vtmg4Pmrycz8R68EnWqEOF4=
-X-Google-Smtp-Source: AGHT+IHHPKPrzyv+Zt2GIvbs5UnZiVbjvU19Vj/bBurbLiUl1FEajLJ+dELHKowkucwzKcQNJ0Julg==
-X-Received: by 2002:a05:6808:3998:b0:3e2:a1f3:efa4 with SMTP id
- 5614622812f47-3e61cfe7364mr2460650b6e.1.1729586295261; 
- Tue, 22 Oct 2024 01:38:15 -0700 (PDT)
-Received: from localhost ([157.82.202.230])
- by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-7eaeaafbd49sm4438387a12.11.2024.10.22.01.38.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 01:38:14 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 22 Oct 2024 17:36:50 +0900
-Subject: [PATCH v17 13/14] hw/pci: Use -1 as the default value for rombar
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t3ASR-0002t6-J8
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:41:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t3ASP-000295-4F
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 04:41:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729586495;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CVcULGItE9cy1iwiiBsfRE6we4SnmlmC4IqTL/+FIUE=;
+ b=S6NM7DDqWvYW8GKv4IOBfwjHSNIvJjDHSCY3et3Jkqw18vcZCw5vuVg/xNvZjN4a9HCn/X
+ vFyC5IOHR4GQz70m9QCutayC1syvbvox6sG0Kr5mjkP2WxsYNAI79OyXR74hocsWb1z8A9
+ rHRo3Nqm3IScwkG2JAkvA840pIfXEVg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-izzC86mRNuK4psXt4jPH4g-1; Tue,
+ 22 Oct 2024 04:41:34 -0400
+X-MC-Unique: izzC86mRNuK4psXt4jPH4g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 830A81955F33; Tue, 22 Oct 2024 08:41:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1308719560AE; Tue, 22 Oct 2024 08:41:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A7B3821E6A28; Tue, 22 Oct 2024 10:41:29 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Juraj Marcin <jmarcin@redhat.com>,  Prasad Pandit <ppandit@redhat.com>,
+ Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Julia Suvorova
+ <jusual@redhat.com>,  Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Deprecate query-migrationthreads command
+In-Reply-To: <20241021215220.982325-1-peterx@redhat.com> (Peter Xu's message
+ of "Mon, 21 Oct 2024 17:52:20 -0400")
+References: <20241021215220.982325-1-peterx@redhat.com>
+Date: Tue, 22 Oct 2024 10:41:29 +0200
+Message-ID: <87froo34xy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241022-reuse-v17-13-bd7c133237e4@daynix.com>
-References: <20241022-reuse-v17-0-bd7c133237e4@daynix.com>
-In-Reply-To: <20241022-reuse-v17-0-bd7c133237e4@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::229;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x229.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.421,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.699,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,79 +86,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_pci_size_rom() distinguishes whether rombar is explicitly set to 1
-by checking dev->opts, bypassing the QOM property infrastructure.
+Peter Xu <peterx@redhat.com> writes:
 
-Use -1 as the default value for rombar to tell if the user explicitly
-set it to 1. The property is also converted from unsigned to signed.
--1 is signed so it is safe to give it a new meaning. The values in
-[2 ^ 31, 2 ^ 32) become invalid, but nobody should have typed these
-values by chance.
+> Per previous discussion [1,2], this patch deprecates query-migrationthreads
+> command.
+>
+> To summarize, the major reason of the deprecation is due to no sensible way
+> to consume the API properly:
+>
+>   (1) The reported list of threads are incomplete (ignoring destination
+>       threads and non-multifd threads).
+>
+>   (2) For CPU pinning, there's no way to properly pin the threads with
+>       the API if the threads will start running right away after migration
+>       threads can be queried, so the threads will always run on the default
+>       cores for a short window.
+>
+>   (3) For VM debugging, one can use "-name $VM,debug-threads=on" instead,
+>       which will provide proper names for all migration threads.
+>
+> [1] https://lore.kernel.org/r/20240930195837.825728-1-peterx@redhat.com
+> [2] https://lore.kernel.org/r/20241011153417.516715-1-peterx@redhat.com
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  docs/about/deprecated.rst | 8 ++++++++
+>  qapi/migration.json       | 6 +++++-
+>  migration/threadinfo.c    | 4 ++++
+>  3 files changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index ce38a3d0cf..ffb147e896 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -147,6 +147,14 @@ options are removed in favor of using explicit ``blockdev-create`` and
+>  ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
+>  details.
+>  
+> +``query-migrationthreads`` (since 9.2)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +To be removed with no replacement, as it reports only a limited set of
+> +threads (for example, it only reports source side of multifd threads,
+> +without reporting any destination threads, or non-multifd source threads).
+> +For debugging purpose, please use ``-name $VM,debug-threads=on`` instead.
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
----
- include/hw/pci/pci_device.h | 2 +-
- hw/pci/pci.c                | 2 +-
- hw/vfio/pci.c               | 5 ++---
- 3 files changed, 4 insertions(+), 5 deletions(-)
+This covers commit message items (1) and (3), but not (2).  Observation,
+not objection.
 
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 5dcabb94d679..c9d4a347cdfe 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -148,7 +148,7 @@ struct PCIDevice {
-     uint32_t romsize;
-     bool has_rom;
-     MemoryRegion rom;
--    uint32_t rom_bar;
-+    int32_t rom_bar;
- 
-     /* INTx routing notifier */
-     PCIINTxRoutingNotifier intx_routing_notifier;
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 8120d7c4c5a3..f31a6ae804f2 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -71,7 +71,7 @@ static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_INT32("rombar",  PCIDevice, rom_bar, -1),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 14bcc725c301..76a150fa2a2b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1012,7 +1012,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
- {
-     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
-     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
--    DeviceState *dev = DEVICE(vdev);
-     char *name;
-     int fd = vdev->vbasedev.fd;
- 
-@@ -1046,12 +1045,12 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
-     }
- 
-     if (vfio_opt_rom_in_denylist(vdev)) {
--        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
-+        if (vdev->pdev.rom_bar > 0) {
-             warn_report("Device at %s is known to cause system instability"
-                         " issues during option rom execution",
-                         vdev->vbasedev.name);
-             error_printf("Proceeding anyway since user specified"
--                         " non zero value for rombar\n");
-+                         " positive value for rombar\n");
-         } else {
-             warn_report("Rom loading for device at %s has been disabled"
-                         " due to system instability issues",
+> +
+>  Incorrectly typed ``device_add`` arguments (since 6.2)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>  
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 3af6aa1740..a71a9f0cd3 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -2284,12 +2284,16 @@
+>  #
+>  # Returns information of migration threads
+>  #
+> +# Features:
 
--- 
-2.47.0
+Blank line, please.
+
+> +# @deprecated: This command is deprecated with no replacement yet.
+> +#
+>  # Returns: @MigrationThreadInfo
+>  #
+>  # Since: 7.2
+>  ##
+>  { 'command': 'query-migrationthreads',
+> -  'returns': ['MigrationThreadInfo'] }
+> +  'returns': ['MigrationThreadInfo'],
+> +  'features': ['deprecated'] }
+>  
+>  ##
+>  # @snapshot-save:
+> diff --git a/migration/threadinfo.c b/migration/threadinfo.c
+> index 262990dd75..2867413420 100644
+> --- a/migration/threadinfo.c
+> +++ b/migration/threadinfo.c
+> @@ -13,6 +13,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/queue.h"
+>  #include "qemu/lockable.h"
+> +#include "qemu/error-report.h"
+>  #include "threadinfo.h"
+>  
+>  QemuMutex migration_threads_lock;
+> @@ -52,6 +53,9 @@ MigrationThreadInfoList *qmp_query_migrationthreads(Error **errp)
+>      MigrationThread *thread = NULL;
+>  
+>      QEMU_LOCK_GUARD(&migration_threads_lock);
+> +
+> +    warn_report("Command 'query-migrationthreads' is deprecated");
+
+We don't normally do this for QMP commands.
+
+Management applications can use -compat deprecated-input=reject to check
+they're not sending deprecated commands or arguments.
+
+Suggest to drop.
+
+> +
+>      QLIST_FOREACH(thread, &migration_threads, node) {
+>          MigrationThreadInfo *info = g_new0(MigrationThreadInfo, 1);
+>          info->name = g_strdup(thread->name);
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
