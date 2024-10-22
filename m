@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED3DD1CDDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95988D1CDDC
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 10:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3CZJ-0001vR-DX; Tue, 22 Oct 2024 06:56:53 -0400
+	id 1t3CZH-0001sb-P6; Tue, 22 Oct 2024 06:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ6-0001rs-KQ
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:40 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1t3CYw-0001mJ-QL
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:30 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3CZ4-000267-D2
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:40 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5cb74434bc5so1915194a12.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:36 -0700 (PDT)
+ id 1t3CYt-00022y-Lm
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 06:56:30 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5c941623a5aso10852690a12.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 03:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729594595; x=1730199395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729594586; x=1730199386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A1RT2huJ5JZoTziBJ4jD+CCwuEKWgio+GHjHj5uuvtc=;
- b=eRRTui8dFElUKek1bC7zmLjWjpyj4q9Hj2EmMXoEoCslOwqIfrWCqKXabpg+zsJzs3
- RaMyciYR2Fzu1vjKAjDMJ08bg2xa0cYlqiWDlWmx2VMXDvrfbHN8WS7OTcujImDJHCeL
- 228hzPaaTTIn+WyeUohGQS6kWwpHjU3FjE2WjfO3YC/tQ0LXy5ssP8Tw6mCxNZouGk3C
- 0MgjDXkfibWvRqxrzE4jfIE3ZM7/xbFyo2O0nWi9Toz73Yl1IWgcqR+KFOLNU8oy0CWy
- Fz4yzvbRVco3YO0uP7vWTYYNutL8cyzbRSHn7ojBfE0SJlNUUj56Pm2gR0Dm0oBoERjC
- Xnfg==
+ bh=CnSO5MY5LW+ONfwtsvf8QoavFQHBZ1D8g95DfEWZbMI=;
+ b=krAPCbK6vVfqJ+3Gw5QmJdK5a3cuR7ymepFMHdmSvDd87gWOG11GGntTF0LdknzLKa
+ sJnDV/7xiwJq794JCHFE9xLNeXCetelYhyC92rfmI4MpZ/bbLhx9tmITFxI4sj4ELCxQ
+ QvDajzUwZUsTR/vKHukSyyRz17v2j+igPzjf5b+dnZZiHC4oq7NT4fVSPX9A9B8TODzZ
+ 4OGbBzQqRLPFjQ2jLvrukIEaaZ2qQxJdSj06xGSC/EvWkYOi1lqzfbjnofC1mD8zKrp+
+ eVH3sDcdDHvXZrBSu1hBqVAdrUjv0o6nZ3XP457CzK9EwzjVZ5b1RzAMRiR0CBzMHYQW
+ In+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729594595; x=1730199395;
+ d=1e100.net; s=20230601; t=1729594586; x=1730199386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A1RT2huJ5JZoTziBJ4jD+CCwuEKWgio+GHjHj5uuvtc=;
- b=cmOJTJ8799d4Z5InAGQgkDEwVYRg1PkN43viL9x/FvUgPoS0Qa6920wUjuQheEBooF
- wsTMYueCLxzaKw17OUa62khtJxMv1Rs/04KzrNIW8Fh/mBByhyp34dQvFVUS441SHMmK
- HwoXlmBIUiOyMPFpymivMNlYmtoVGVYQSCJf6zsqqZuGZXPVU1DJC9kcogYbxIAj9qZq
- /kztssd/SUjA6PqoiJaq8+PA0VHpog7JEiQo++zuVkKDu8ChIJjKhPQTYKlqV1HgwJqS
- OXpC5tZgtvKAbUwWtrCwj2UCHc8t1Un36kBiM4RXodaELb0W68LYnaXrtJDmaG22sp1i
- WG4Q==
-X-Gm-Message-State: AOJu0YwCnyOgvKFVqR4u8jodXGfvGU06neOmDOoNhNVMNeWPauUmeBig
- NwcQI8b4h/gn/c0ZyB4Jx6wYpqu5C6+LAS4bNAF2BJGj5aPf9G7skXpSFgxoagc=
-X-Google-Smtp-Source: AGHT+IH8FwAH1RdgvHht2IWETizlhtV8RNte8pvJdWVu1cT97HP0xl8CflJaCO4tn8KeVgLbDH6oBA==
-X-Received: by 2002:a17:907:6d0b:b0:a77:c30c:341 with SMTP id
- a640c23a62f3a-a9a694c71b9mr1507028066b.0.1729594595306; 
- Tue, 22 Oct 2024 03:56:35 -0700 (PDT)
+ bh=CnSO5MY5LW+ONfwtsvf8QoavFQHBZ1D8g95DfEWZbMI=;
+ b=T8OvHCpmPQOnhnOaWiVu3IthQHfykI/9CnLawlLrZthRM2AM2TIO7rwZWtByjRz7Xu
+ 7xI3Hdb/vM2KaXvx1FioXNhyNOYcIPMoA8YthWXcLIGqgHre2dZ6IC7lW9HvW4mMSemU
+ paFFU+YNBAIzDGpTkHc+MTlOhv7cNHG8NOMsVYJPe9KmEN3t0kqBwdQwWyvD5vJIKUn6
+ kGkGY7rLe9aj52NDK2Ri1Xtau/8LAuEZEjUfhNF3cRsV4CC88OGwcqoanmv1/D7YOqQX
+ vagqB1nCvQaHsyNjHtz/SSLOwEtbKkwfAB0lgppicF0zaJDrUhtWYGy5loCCIQzNbho5
+ ducA==
+X-Gm-Message-State: AOJu0YzjugMZ1/36gwso922yw93J88lvbPvaJ2bvnofjqtrzpIwdx87r
+ +xxnUtNPhEQWeeJ4yjcs+orY8R/AvhrvvtWBlS1syP3wsfRZnAYzR0VqKWkI6Oo=
+X-Google-Smtp-Source: AGHT+IE/K5pr2g0U8BMqLhyIWw7NwWY4cgjvbPeZV6ZYZQj/JnrnlV+snPJRyVIL9w1vqQwf5cuM+A==
+X-Received: by 2002:a17:907:944e:b0:a9a:3f9c:f89d with SMTP id
+ a640c23a62f3a-a9aaa5ee850mr282522466b.34.1729594586066; 
+ Tue, 22 Oct 2024 03:56:26 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912ee04asm324230166b.61.2024.10.22.03.56.26
+ a640c23a62f3a-a9a91559c06sm324381166b.138.2024.10.22.03.56.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 03:56:30 -0700 (PDT)
+ Tue, 22 Oct 2024 03:56:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4FCF95FC47;
- Tue, 22 Oct 2024 11:56:16 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5CB715F9D0;
+ Tue, 22 Oct 2024 11:56:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -84,17 +84,17 @@ Cc: Beraldo Leal <bleal@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 19/20] contrib/plugins: remove Makefile for contrib/plugins
-Date: Tue, 22 Oct 2024 11:56:13 +0100
-Message-Id: <20241022105614.839199-20-alex.bennee@linaro.org>
+Subject: [PATCH v2 08/20] accel/tcg: add tracepoints for cpu_loop_exit_atomic
+Date: Tue, 22 Oct 2024 11:56:02 +0100
+Message-Id: <20241022105614.839199-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241022105614.839199-1-alex.bennee@linaro.org>
 References: <20241022105614.839199-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,184 +117,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We try to avoid using cpu_loop_exit_atomic as it brings in an all-core
+sync point. However on some cpu/kernel/benchmark combinations it is
+starting to show up in the performance profile. To make it easier to
+see whats going on add tracepoints for the slow path so we can see
+what is triggering the wait.
 
-Now replaced by meson build.
+It seems for a modern CPU it can be quite a bit, for example:
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240925204845.390689-3-pierrick.bouvier@linaro.org>
+./qemu-system-aarch64 \
+           -machine type=virt,virtualization=on,pflash0=rom,pflash1=efivars,gic-version=max \
+           -smp 4 \
+           -accel tcg \
+           -device virtio-net-pci,netdev=unet \
+           -device virtio-scsi-pci \
+           -device scsi-hd,drive=hd \
+           -netdev user,id=unet,hostfwd=tcp::2222-:22 \
+           -blockdev driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap \
+           -serial mon:stdio \
+           -blockdev node-name=rom,driver=file,filename=(pwd)/pc-bios/edk2-aarch64-code.fd,read-only=true \
+           -blockdev node-name=efivars,driver=file,filename=$HOME/images/qemu-arm64-efivars \
+           -m 8192 \
+           -object memory-backend-memfd,id=mem,size=8G,share=on \
+           -kernel /home/alex/lsrc/linux.git/builds/arm64/arch/arm64/boot/Image -append "root=/dev/sda2 console=ttyAMA0 systemd.unit=benchmark-stress-ng.service" \
+           -display none -d trace:load_atom\*_fallback,trace:store_atom\*_fallback
+
+With:
+
+  -cpu neoverse-v1,pauth-impdef=on => 2203343
+
+With:
+
+  -cpu cortex-a76 => 0
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- configure                | 18 ---------
- Makefile                 | 10 -----
- contrib/plugins/Makefile | 87 ----------------------------------------
- 3 files changed, 115 deletions(-)
- delete mode 100644 contrib/plugins/Makefile
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-diff --git a/configure b/configure
-index 7dd3400ccb..101ca9ace9 100755
---- a/configure
-+++ b/configure
-@@ -1073,7 +1073,6 @@ if test "$plugins" != "no" && test $host_bits -eq 64; then
-         plugins="no"
-     else
-         plugins=yes
--        subdirs="$subdirs contrib/plugins"
-     fi
- fi
+---
+v2
+  - 0x prefixes for ra as per checkpatch
+---
+ accel/tcg/user-exec.c          |  2 +-
+ accel/tcg/ldst_atomicity.c.inc |  9 +++++++++
+ accel/tcg/trace-events         | 12 ++++++++++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 51b2c16dbe..aa8af52cc3 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -29,7 +29,7 @@
+ #include "exec/page-protection.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/atomic128.h"
+-#include "trace/trace-root.h"
++#include "trace.h"
+ #include "tcg/tcg-ldst.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
+diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
+index 134da3c1da..c735add261 100644
+--- a/accel/tcg/ldst_atomicity.c.inc
++++ b/accel/tcg/ldst_atomicity.c.inc
+@@ -168,6 +168,7 @@ static uint64_t load_atomic8_or_exit(CPUState *cpu, uintptr_t ra, void *pv)
+ #endif
  
-@@ -1704,7 +1703,6 @@ LINKS="$LINKS .gdbinit scripts" # scripts needed by relative path in .gdbinit
- LINKS="$LINKS tests/avocado tests/data"
- LINKS="$LINKS tests/qemu-iotests/check tests/qemu-iotests/Makefile"
- LINKS="$LINKS python"
--LINKS="$LINKS contrib/plugins/Makefile "
- for f in $LINKS ; do
-     if [ -e "$source_path/$f" ]; then
-         symlink "$source_path/$f" "$f"
-@@ -1790,22 +1788,6 @@ if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
+     /* Ultimate fallback: re-execute in serial context. */
++    trace_load_atom8_or_exit_fallback(ra);
+     cpu_loop_exit_atomic(cpu, ra);
+ }
  
--# contrib/plugins configuration
--echo "# Automatically generated by configure - do not modify" > contrib/plugins/$config_host_mak
--echo "SRC_PATH=$source_path/contrib/plugins" >> contrib/plugins/$config_host_mak
--echo "PKG_CONFIG=${pkg_config}" >> contrib/plugins/$config_host_mak
--echo "CC=$cc $CPU_CFLAGS" >> contrib/plugins/$config_host_mak
--echo "CFLAGS=${CFLAGS-$default_cflags} $EXTRA_CFLAGS" >> contrib/plugins/$config_host_mak
--if test "$host_os" = windows; then
--  echo "DLLTOOL=$dlltool" >> contrib/plugins/$config_host_mak
--fi
--if test "$host_os" = darwin; then
--  echo "CONFIG_DARWIN=y" >> contrib/plugins/$config_host_mak
--fi
--if test "$host_os" = windows; then
--  echo "CONFIG_WIN32=y" >> contrib/plugins/$config_host_mak
--fi
--
- # tests/tcg configuration
- mkdir -p tests/tcg
- echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
-diff --git a/Makefile b/Makefile
-index 917c9a34d1..b65b0bd41a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -187,11 +187,6 @@ SUBDIR_RULES=$(foreach t, all clean distclean, $(addsuffix /$(t), $(SUBDIRS)))
- $(SUBDIR_RULES):
- 	$(call quiet-command,$(MAKE) $(SUBDIR_MAKEFLAGS) -C $(dir $@) V="$(V)" TARGET_DIR="$(dir $@)" $(notdir $@),)
+@@ -212,6 +213,7 @@ static Int128 load_atomic16_or_exit(CPUState *cpu, uintptr_t ra, void *pv)
+     }
  
--ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
--.PHONY: plugins
--plugins: contrib/plugins/all
--endif
--
- .PHONY: recurse-all recurse-clean
- recurse-all: $(addsuffix /all, $(SUBDIRS))
- recurse-clean: $(addsuffix /clean, $(SUBDIRS))
-@@ -307,11 +302,6 @@ help:
- 	$(call print-help,cscope,Generate cscope index)
- 	$(call print-help,sparse,Run sparse on the QEMU source)
- 	@echo  ''
--ifneq ($(filter contrib/plugins, $(SUBDIRS)),)
--	@echo  'Plugin targets:'
--	$(call print-help,plugins,Build the example TCG plugins)
--	@echo  ''
--endif
- 	@echo  'Cleaning targets:'
- 	$(call print-help,clean,Remove most generated files but keep the config)
- 	$(call print-help,distclean,Remove all generated files)
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-deleted file mode 100644
-index bbddd4800f..0000000000
---- a/contrib/plugins/Makefile
-+++ /dev/null
-@@ -1,87 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# This Makefile example is fairly independent from the main makefile
--# so users can take and adapt it for their build. We only really
--# include config-host.mak so we don't have to repeat probing for
--# programs that the main configure has already done for us.
--#
--
--include config-host.mak
--
--TOP_SRC_PATH = $(SRC_PATH)/../..
--
--VPATH += $(SRC_PATH)
--
--NAMES :=
--NAMES += bbv
--NAMES += execlog
--NAMES += hotblocks
--NAMES += hotpages
--NAMES += howvec
--
--# The lockstep example communicates using unix sockets,
--# and can't be easily made to work on windows.
--ifneq ($(CONFIG_WIN32),y)
--NAMES += lockstep
--endif
--
--NAMES += hwprofile
--NAMES += cache
--NAMES += drcov
--NAMES += ips
--NAMES += stoptrigger
--NAMES += cflow
--
--ifeq ($(CONFIG_WIN32),y)
--SO_SUFFIX := .dll
--LDLIBS += $(shell $(PKG_CONFIG) --libs glib-2.0)
--else
--SO_SUFFIX := .so
--endif
--
--SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
--
--# The main QEMU uses Glib extensively so it is perfectly fine to use it
--# in plugins (which many example do).
--PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
--PLUGIN_CFLAGS += -fPIC -Wall
--PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
--
--# Helper that honours V=1 so we get some output when compiling
--quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
--quiet-command = $(call quiet-@,$2,$3)$1
--
--# for including , in command strings
--COMMA := ,
--
--all: $(SONAMES)
--
--%.o: %.c
--	$(call quiet-command, \
--		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
--	        BUILD, plugin $@)
--
--ifeq ($(CONFIG_WIN32),y)
--lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
--	$(call quiet-command, \
--		$(CC) -shared -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--else ifeq ($(CONFIG_DARWIN),y)
--lib%$(SO_SUFFIX): %.o
--	$(call quiet-command, \
--		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--else
--lib%$(SO_SUFFIX): %.o
--	$(call quiet-command, \
--		$(CC) -shared -o $@ $^ $(LDLIBS), \
--		LINK, plugin $@)
--endif
--
--
--clean distclean:
--	rm -f *.o *$(SO_SUFFIX) *.d
--	rm -Rf .libs
--
--.PHONY: all clean
--.SECONDARY:
+     /* Ultimate fallback: re-execute in serial context. */
++    trace_load_atom16_or_exit_fallback(ra);
+     cpu_loop_exit_atomic(cpu, ra);
+ }
+ 
+@@ -519,6 +521,7 @@ static uint64_t load_atom_8(CPUState *cpu, uintptr_t ra,
+         if (HAVE_al8) {
+             return load_atom_extract_al8x2(pv);
+         }
++        trace_load_atom8_fallback(memop, ra);
+         cpu_loop_exit_atomic(cpu, ra);
+     default:
+         g_assert_not_reached();
+@@ -563,6 +566,7 @@ static Int128 load_atom_16(CPUState *cpu, uintptr_t ra,
+         break;
+     case MO_64:
+         if (!HAVE_al8) {
++            trace_load_atom16_fallback(memop, ra);
+             cpu_loop_exit_atomic(cpu, ra);
+         }
+         a = load_atomic8(pv);
+@@ -570,6 +574,7 @@ static Int128 load_atom_16(CPUState *cpu, uintptr_t ra,
+         break;
+     case -MO_64:
+         if (!HAVE_al8) {
++            trace_load_atom16_fallback(memop, ra);
+             cpu_loop_exit_atomic(cpu, ra);
+         }
+         a = load_atom_extract_al8x2(pv);
+@@ -897,6 +902,7 @@ static void store_atom_2(CPUState *cpu, uintptr_t ra,
+         g_assert_not_reached();
+     }
+ 
++    trace_store_atom2_fallback(memop, ra);
+     cpu_loop_exit_atomic(cpu, ra);
+ }
+ 
+@@ -961,6 +967,7 @@ static void store_atom_4(CPUState *cpu, uintptr_t ra,
+                 return;
+             }
+         }
++        trace_store_atom4_fallback(memop, ra);
+         cpu_loop_exit_atomic(cpu, ra);
+     default:
+         g_assert_not_reached();
+@@ -1029,6 +1036,7 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,
+     default:
+         g_assert_not_reached();
+     }
++    trace_store_atom8_fallback(memop, ra);
+     cpu_loop_exit_atomic(cpu, ra);
+ }
+ 
+@@ -1107,5 +1115,6 @@ static void store_atom_16(CPUState *cpu, uintptr_t ra,
+     default:
+         g_assert_not_reached();
+     }
++    trace_store_atom16_fallback(memop, ra);
+     cpu_loop_exit_atomic(cpu, ra);
+ }
+diff --git a/accel/tcg/trace-events b/accel/tcg/trace-events
+index 4e9b450520..14f638810c 100644
+--- a/accel/tcg/trace-events
++++ b/accel/tcg/trace-events
+@@ -12,3 +12,15 @@ memory_notdirty_set_dirty(uint64_t vaddr) "0x%" PRIx64
+ 
+ # translate-all.c
+ translate_block(void *tb, uintptr_t pc, const void *tb_code) "tb:%p, pc:0x%"PRIxPTR", tb_code:%p"
++
++# ldst_atomicity
++load_atom2_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++load_atom4_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++load_atom8_or_exit_fallback(uintptr_t ra) "ra:0x%"PRIxPTR""
++load_atom8_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++load_atom16_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++load_atom16_or_exit_fallback(uintptr_t ra) "ra:0x%"PRIxPTR""
++store_atom2_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++store_atom4_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++store_atom8_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
++store_atom16_fallback(uint32_t memop, uintptr_t ra) "mop:0x%"PRIx32", ra:0x%"PRIxPTR""
 -- 
 2.39.5
 
