@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86DAAD1CDCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB9BD1CDCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Oct 2024 09:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3BOj-0002tS-5E; Tue, 22 Oct 2024 05:41:53 -0400
+	id 1t3BOm-0002wu-BH; Tue, 22 Oct 2024 05:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BOO-0002o4-M1; Tue, 22 Oct 2024 05:41:33 -0400
+ id 1t3BOi-0002t3-OS; Tue, 22 Oct 2024 05:41:52 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1t3BON-00015E-3J; Tue, 22 Oct 2024 05:41:32 -0400
+ id 1t3BOh-00015E-Dt; Tue, 22 Oct 2024 05:41:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 22 Oct
- 2024 17:41:11 +0800
+ 2024 17:41:14 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 22 Oct 2024 17:41:11 +0800
+ Transport; Tue, 22 Oct 2024 17:41:14 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -37,9 +37,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v2 02/18] hw/block:m25p80: Fix coding style
-Date: Tue, 22 Oct 2024 17:40:54 +0800
-Message-ID: <20241022094110.1574011-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 08/18] test/qtest/aspeed_smc-test: Fix coding style
+Date: Tue, 22 Oct 2024 17:41:00 +0800
+Message-ID: <20241022094110.1574011-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
 References: <20241022094110.1574011-1-jamin_lin@aspeedtech.com>
@@ -74,80 +74,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Fix coding style issues from checkpatch.pl
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/block/m25p80.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ tests/qtest/aspeed_smc-test.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index f7123f9e68..3f55b8f385 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -61,7 +61,8 @@ typedef struct FlashPartInfo {
-      */
-     uint8_t id[SPI_NOR_MAX_ID_LEN];
-     uint8_t id_len;
--    /* there is confusion between manufacturers as to what a sector is. In this
+diff --git a/tests/qtest/aspeed_smc-test.c b/tests/qtest/aspeed_smc-test.c
+index c713a3700b..4673371d95 100644
+--- a/tests/qtest/aspeed_smc-test.c
++++ b/tests/qtest/aspeed_smc-test.c
+@@ -353,7 +353,8 @@ static void test_read_page_mem(void)
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
+ 
+-    /* Enable 4BYTE mode for controller. This is should be strapped by
 +    /*
-+     * there is confusion between manufacturers as to what a sector is. In this
-      * device model, a "sector" is the size that is erased by the ERASE_SECTOR
-      * command (opcode 0xd8).
++     * Enable 4BYTE mode for controller. This is should be strapped by
+      * HW for CE0 anyhow.
       */
-@@ -168,7 +169,7 @@ typedef struct FlashPartInfo {
- /*
-  * Spansion read mode command length in bytes,
-  * the mode is currently not supported.
--*/
-+ */
+     spi_ce_ctrl(1 << CRTL_EXTENDED0);
+@@ -394,7 +395,8 @@ static void test_write_page_mem(void)
+     uint32_t page[FLASH_PAGE_SIZE / 4];
+     int i;
  
- #define SPANSION_CONTINUOUS_READ_MODE_CMD_LEN 1
- #define WINBOND_CONTINUOUS_READ_MODE_CMD_LEN 1
-@@ -189,7 +190,8 @@ static const FlashPartInfo known_devices[] = {
- 
-     { INFO("at45db081d",  0x1f2500,      0,  64 << 10,  16, ER_4K) },
- 
--    /* Atmel EEPROMS - it is assumed, that don't care bit in command
+-    /* Enable 4BYTE mode for controller. This is should be strapped by
 +    /*
-+     * Atmel EEPROMS - it is assumed, that don't care bit in command
-      * is set to 0. Block protection is not supported.
++     * Enable 4BYTE mode for controller. This is should be strapped by
+      * HW for CE0 anyhow.
       */
-     { INFO("at25128a-nonjedec", 0x0,     0,         1, 131072, EEPROM) },
-@@ -275,10 +277,13 @@ static const FlashPartInfo known_devices[] = {
-     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
-     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
-     { INFO_STACKED("mt25qu01g", 0x20bb21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
--    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
--    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
-+    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096,
-+                   ER_4K | ER_32K, 2) },
-+    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096,
-+                   ER_4K | ER_32K, 2) },
- 
--    /* Spansion -- single (large) sector size only, at least
-+    /*
-+     * Spansion -- single (large) sector size only, at least
-      * for the chips listed here (without boot sectors).
-      */
-     { INFO("s25sl032p",   0x010215, 0x4d00,  64 << 10,  64, ER_4K) },
-@@ -549,7 +554,8 @@ static void blk_sync_complete(void *opaque, int ret)
-     qemu_iovec_destroy(iov);
-     g_free(iov);
- 
--    /* do nothing. Masters do not directly interact with the backing store,
-+    /*
-+     * do nothing. Masters do not directly interact with the backing store,
-      * only the working copy so no mutexing required.
-      */
- }
-@@ -1843,7 +1849,7 @@ static void m25p80_register_types(void)
- 
-     type_register_static(&m25p80_info);
-     for (i = 0; i < ARRAY_SIZE(known_devices); ++i) {
--        TypeInfo ti = {
-+        const TypeInfo ti = {
-             .name       = known_devices[i].part_name,
-             .parent     = TYPE_M25P80,
-             .class_init = m25p80_class_init,
+     spi_ce_ctrl(1 << CRTL_EXTENDED0);
 -- 
 2.34.1
 
