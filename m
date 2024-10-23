@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 676ADD2E027
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72798D2E029
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3XDb-0000cI-86; Wed, 23 Oct 2024 04:59:51 -0400
+	id 1t3XD0-0007nw-J7; Wed, 23 Oct 2024 04:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XDZ-0000Vr-4B
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:49 -0400
+ id 1t3XCy-0007nc-Ex
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:12 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XDX-0000MN-Q1
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:48 -0400
+ id 1t3XCw-0000Im-U1
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=EoTiya6VZ0j7GKq46XagFLfXrslNtHrc3JXeyQosHJA=; b=KJ1vGpKCpYJHIm+Mdo3zoV8WRi
- vRG+ByWUyBTBdv3XATlgjdm97d8Fjoge0B75PnLRdf8DbrrdLiNdfwmJMo7rei7fs7iCwtuHdKZat
- +/T6cF60/SRE6Y2ANM73C5BYbtENO/a7zNOzV/M7mESeu+scCuG9koDKFaKnllX4UD1Am7myVOZwx
- mTeotEIw7E0N+Cqn5F61NJKUfXSsS6ME8PkmIemrokYwE1jzY7CXvyYJSdLjjeivviLvZgiXJTKtC
- H730V8k1AEGs21FM+FNMcAURj5fOGXIOQBpne2+VHXwXEhIyN4Z3odJlpK6WMEHAoRaoBcTCTwk0T
- wrznrU2cJXqjcHzQyGlv5ck28f+/7GSibG9hTnhGX/D8rstpzFsJD+VnzYZjUHGFzugve+SW7Ph9J
- SlLlGZipxtgX0Qaxrp6q3ahmTtJKZ2ysTNBaTi+TAGC60tDMJoeH+jrvsRhCQUgg2t61fwRV0TY3O
- isBQw4GDiwIWopBBMZoLPc0CtLpurzXquPpJLGqiR60Er5aiKlKwCCVsh/BFtieNLd22WCPasRQ6i
- Xngp8DhVAN2fyaoskBIsvvRGRuZXs65fTzinOi0H2iFiQIKlfbHiig1VP1Ac1iE0NLQoJjDHx0psw
- ch8+zy0Ie6EJDtAwbmavceRdWCBKPj13vtEgHcOSE=;
+ bh=KnhLnvuPCfcreyL9kUT0InkhJuyZNVMwBARkk6t8FjM=; b=mEQUI6QjxlUoNHoV1TwOxWRlg0
+ U/A819GGKPYsI1hS9YxMalOR3fQ1YOh7VcP9pUgrNcTYybsNmmNZ7DivkyNwN9Im+Tqg0iDojv+Wr
+ 0hjmYApe41miGIxYS8O1E1AmhanZW527aZnGszB4uTkK3NOBbOES21YQVxMXVHYsrzuFL6RQXja+b
+ YDM07eFEix6J29QBh7sx8fe2V17QCyZ5iqq90AjXAuImctHViuVrHwhURlJlkt4o2KRBzI9QxrDGp
+ XOBixn7sz+spF9n/IeuL/w23CZCFWlrN454e3kCQ1zssMqMvOO11xhInegDRnl2KcwPnOXxqp9t33
+ eiG6s4vYPLvNsQRmQ754AD4eyaewytVDVefwC3Zv5YwXYdAas8DalmBzOEVdOpcg4AgJLfKTRf54N
+ s0xNtDvEN2dqN2Dp2YfrOHdmSoFRUADeQ+NYgBqv09m2tOcNPPjsBp8k8oBHNymHEyTbnv0aaDu0F
+ YXifu2OGCKrxQfSIUPANgrPsRayrs2gUKab7yiuYMx3p25XwI0Xr5vjx/6HvpUDjByn49Smrl+XrA
+ rrYKMJdiDW6j9tIGFOnaZ7qdE0njowH7WN4luLX9aD1tMgyVS8GDNWMndBVxE4gUlI6KDlHRLc1Bf
+ 0TUjTeILsntdiEZaggANRxadE0cyhuMLkkgFU0KuY=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XDD-0008EL-Lg; Wed, 23 Oct 2024 09:59:31 +0100
+ id 1t3XCb-0008EL-Ru; Wed, 23 Oct 2024 09:58:54 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Wed, 23 Oct 2024 09:58:28 +0100
-Message-Id: <20241023085852.1061031-13-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 23 Oct 2024 09:58:17 +0100
+Message-Id: <20241023085852.1061031-2-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
@@ -52,8 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 12/36] next-cube: map ESCC registers as a subregion of the
- next.scr memory region
+Subject: [PATCH 01/36] next-cube: fix up compilation when DEBUG_NEXT is enabled
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -79,38 +78,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the ESCC device exists within the memory range of the next.scr memory region, map
-the ESCC device registers as a subregion of the next.scr memory region instead of
-directly to the system address space.
+These were accidentally introduced by my last series.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/m68k/next-cube.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/m68k/next-cube.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index f1a50ec737..7f714640da 100644
+index 9832213e7e..7a503e0707 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -980,6 +980,7 @@ static const MemoryRegionOps next_floppy_ops = {
+@@ -404,7 +404,7 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
  
- static void next_escc_init(DeviceState *pcdev)
- {
-+    NeXTPC *next_pc = NEXT_PC(pcdev);
-     DeviceState *dev;
-     SysBusDevice *s;
+     switch (addr) {
+     case 0x14108:
+-        DPRINTF("FDCSR Write: %x\n", value);
++        DPRINTF("FDCSR Write: %"PRIx64 "\n", val);
+         if (val == 0x0) {
+             /* qemu_irq_raise(s->fd_irq[0]); */
+         }
+@@ -468,15 +468,15 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+             /* int_mask |= 0x1000; */
+             /* s->scsi_csr_1 |= 0x80; */
+         }
+-        DPRINTF("SCSICSR Write: %x\n", val);
++        DPRINTF("SCSICSR Write: %"PRIx64 "\n", val);
+         /* s->scsi_csr_1 = val; */
+         break;
  
-@@ -997,7 +998,9 @@ static void next_escc_init(DeviceState *pcdev)
-     sysbus_realize_and_unref(s, &error_fatal);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
-     sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
--    sysbus_mmio_map(s, 0, 0x2118000);
-+
-+    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
-+                                sysbus_mmio_get_region(s, 0));
+     /* Hardware timer latch - not implemented yet */
+     case 0x1a000:
+     default:
+-        DPRINTF("BMAP Write @ 0x%x with 0x%x size %u\n", (unsigned int)addr,
+-                val, size);
++        DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
++                (unsigned int)addr, val, size);
+     }
  }
  
- static void next_pc_reset(DeviceState *dev)
+@@ -585,7 +585,7 @@ static void next_dma_write(void *opaque, hwaddr addr, uint64_t val,
+         break;
+ 
+     default:
+-        DPRINTF("DMA write @ %x w/ %x\n", (unsigned)addr, (unsigned)value);
++        DPRINTF("DMA write @ %x w/ %x\n", (unsigned)addr, (unsigned)val);
+     }
+ }
+ 
 -- 
 2.39.5
 
