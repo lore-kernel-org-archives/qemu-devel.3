@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1424CFA47E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74FC7CFA478
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3iu3-0000nd-E3; Wed, 23 Oct 2024 17:28:27 -0400
+	id 1t3iwW-0003A6-Kd; Wed, 23 Oct 2024 17:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3itz-0000me-GA
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:23 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3iwV-00039t-TP
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:30:59 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3itx-0007ci-Nr
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:23 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7163489149eso159761a12.1
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:28:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3iwR-0007yv-C0
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:30:59 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-20e6981ca77so1838975ad.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729718900; x=1730323700; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yh1w5tbQ3FNJQ+qQrBU+8HWVpwNff9U55VwWmmd3WgA=;
- b=fg7QZh/jxKfA8VF5e9/9atR00Zv+ntiViGif8zTPYtuXiAGEahb0FgDS9xfOK5V8vK
- ghAqx9kVLNuATVvqt+2HBUYSFyHYNEjqfKJOapXHoWlcZWigfBuyy5fMlIdBOkBmbKdU
- 1/tvhxh4sMn0gMWKdUXS3x3oylGbeJn/qX8YZKe3rLhKk0a34qM2gpcJWytT9WXIabf3
- NnWd4G1j0lZ8U2dQcubMajqDJsKkRT/vd905OrkjZ38gV1auniwxfhuXJ9j1eXYnKi1V
- I34uLPcFMGnFJngCJCy8wNU4AHTXxo1EcbbEWSEKBklPlx/xts2eiYAJqw4IjZ8HzeOt
- 23iw==
+ d=linaro.org; s=google; t=1729719054; x=1730323854; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U7SUzEd/ydNz4alr1dGxzqjamOGOLZayKNOj7UKibqI=;
+ b=OvbZR6BkxESf5Z1+AthxxWOfOaCKyMBIwnXT41jln20/AYC7GzW5cic5PrbLXYPnBP
+ HM4Vr5RqJDLiOjXrICrts9dLQ3Wc13vjZem7jQIDg1nUMOXai2IgcF9CT6AM0FUnyU9d
+ acZqa2VyWT8UzNyxxc/17mrGmyKqPesQjwmHKfQ8ksF4ODUA5gBlU/WtojCpiqVKqPzG
+ JXANyHug+zVil3Y0RXGCUebQSXF4CdY5yNFQ0ERQnrkohaF+nQADsbzu3fhTfU/SpB7I
+ 0EXc+epCu8krx12L7c5VBbq89uhETrTUs7Q8pHflo+2Ei5ewpSjaJFsfmcRdF+MzSWTI
+ uZoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729718900; x=1730323700;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yh1w5tbQ3FNJQ+qQrBU+8HWVpwNff9U55VwWmmd3WgA=;
- b=aiB+F8X9DX7Laq3oeNSkxT8UGxzzo+X5mBknVCLKoIBQ6mLSv9gAqnd3+z725PjVLY
- NOsbZ3EGpvlKdsqv3zn+5jv05rZekTdUV2Yh0YWP63HO2MWGow1Mis77YNKccOGTpRW3
- V4ngbewh+DuT0dCJjh9cZslE2zxYt0MGYCH+I6Zl0lo0lHndHPYvwHmsIMfe/OQ4dkQR
- /24Xh5BHwRSTE+5AldcrvjzRZRcj03RaHCDdINev6VW8rYVoLUaPtQbv3fNVNbSOwozO
- 7GWb9UgG35PQotvHVdg5OOsRVm3h+gSrKkf4+B3YHYv1ombwFf0j0fAUmJG74cjKUKMm
- XSWQ==
-X-Gm-Message-State: AOJu0Yx+9v4Jy+v93qfBPf8MHpS4NEEHntckYVCtXfCmPbroLoE9i6TX
- O69FsYfCu+Hw0pLQkrMqgucRKRxiPFRviUFS/DVd+MW1/S8zFH7MgN4dDZKArApk7TIVyiZ7Ydx
- bz+FwPQ==
-X-Google-Smtp-Source: AGHT+IHPrjfyabtkjj9M/SNSF7ELMiTqfnTxP2eBBzoM1ZRcw3ymDO0CIoUYvq8verzQinORpkqQMQ==
-X-Received: by 2002:a05:6a20:9d8f:b0:1d9:762a:ca5f with SMTP id
- adf61e73a8af0-1d978ad719emr4583312637.8.1729718899952; 
- Wed, 23 Oct 2024 14:28:19 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ d=1e100.net; s=20230601; t=1729719054; x=1730323854;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U7SUzEd/ydNz4alr1dGxzqjamOGOLZayKNOj7UKibqI=;
+ b=NPHjYBeZ7KhX92HS+mEKjWRCujfEPsiAuWFsfphzrhR0sdFYsexpk22YXjMBR60U75
+ /lC7d4V9ACoS1tlCW2trcpzd7LWmBL1o3GgsqF7bQiTar83AaOlBJdPi3/B6tfKk+JI+
+ MldXxaE+33iDpsfsJU9RhFNNJB2WF9GJp2kgYF5oGXWwQrDGWSnR1SKDbczoXD5zdzd5
+ c3/vDUz98GZ0Xw/SUh5YJBA+0Gf+HekAocM3QAQvnot5u0M/355aAuLCoBk3oDpIj6lg
+ cDor1cJcgYZyZ8CNLq8xfzLgoW9rCgKanonAwcY9bPEn6d/u4xnBbmOVeUafyrZo+OBW
+ 5Kbg==
+X-Gm-Message-State: AOJu0YzpmMqPersyF8rmbi7FHdVL/fOO7py7zlYh4nOs3v1wcR+JVYGC
+ gKmHr4GigeJ1z13O+UxTiZfBAG4cw0EyjJpgRhHpjqtk5aD67RHeoV3WS6u6TWg=
+X-Google-Smtp-Source: AGHT+IE+gLc7zI3kkHZvSUNZEZ3gOmgOS5vERMyAjKlfEd5vfpBbSsq0vScd3j+qi6F4TmdmJlQ59A==
+X-Received: by 2002:a17:903:1d2:b0:20b:bac2:88f3 with SMTP id
+ d9443c01a7336-20fab2da50amr56007535ad.53.1729719053640; 
+ Wed, 23 Oct 2024 14:30:53 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeaafab5esm7228137a12.17.2024.10.23.14.28.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 14:28:19 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v3 0/3] build contrib/plugins using meson
-Date: Wed, 23 Oct 2024 14:28:09 -0700
-Message-Id: <20241023212812.1376972-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d9443c01a7336-20e7ef0ad34sm61853995ad.68.2024.10.23.14.30.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Oct 2024 14:30:53 -0700 (PDT)
+Message-ID: <2816a9e4-1cb0-476d-b0b1-8040086f0d3a@linaro.org>
+Date: Wed, 23 Oct 2024 14:30:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tap-win32: fix format-truncation warning
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+References: <20241023183009.1041419-1-pierrick.bouvier@linaro.org>
+ <875xpilhu6.fsf@draig.linaro.org>
+ <0ec19690-760a-4726-baa9-6073c193dc3c@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <0ec19690-760a-4726-baa9-6073c193dc3c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Contrib plugins have been built out of tree so far, thanks to a Makefile.
-However, it is quite inconvenient for maintenance, as we may break them,
-especially for specific architectures.
+On 10/23/24 13:15, Pierrick Bouvier wrote:
+> On 10/23/24 12:50, Alex Bennée wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>
+>>> Simply increase destination buffer size so truncation can't happen.
+>>>
+>>> "cc" "-m64" "-Ilibcommon.a.p" "-Isubprojects/dtc/libfdt"
+>>> "-I../subprojects/dtc/libfdt"
+>>> "-ID:/a/_temp/msys64/mingw64/include/pixman-1"
+>>> "-ID:/a/_temp/msys64/mingw64/include/glib-2.0"
+>>> "-ID:/a/_temp/msys64/mingw64/lib/glib-2.0/include"
+>>> "-ID:/a/_temp/msys64/mingw64/include/ncursesw"
+>>> "-fdiagnostics-color=auto" "-Wall" "-Winvalid-pch" "-Werror"
+>>> "-std=gnu11" "-O2" "-g" "-fstack-protector-strong" "-Wempty-body"
+>>> "-Wendif-labels" "-Wexpansion-to-defined" "-Wformat-security"
+>>> "-Wformat-y2k" "-Wignored-qualifiers" "-Wimplicit-fallthrough=2"
+>>> "-Winit-self" "-Wmissing-format-attribute" "-Wmissing-prototypes"
+>>> "-Wnested-externs" "-Wold-style-declaration" "-Wold-style-definition"
+>>> "-Wredundant-decls" "-Wshadow=local" "-Wstrict-prototypes"
+>>> "-Wtype-limits" "-Wundef" "-Wvla" "-Wwrite-strings"
+>>> "-Wno-missing-include-dirs" "-Wno-psabi" "-Wno-shift-negative-value"
+>>> "-iquote" "." "-iquote" "D:/a/qemu/qemu" "-iquote"
+>>> "D:/a/qemu/qemu/include" "-iquote"
+>>> "D:/a/qemu/qemu/host/include/x86_64" "-iquote"
+>>> "D:/a/qemu/qemu/host/include/generic" "-iq
+>>> ../net/tap-win32.c: In function 'tap_win32_open':
+>>> ../net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 
+>>> 255 bytes into a region of size 176 [-Werror=format-truncation=]
+>>>    343 |              "%s\\%s\\Connection",
+>>>        |                   ^~
+>>>    344 |              NETWORK_CONNECTIONS_KEY, enum_name);
+>>>        |                                       ~~~~~~~~~
+>>> In function 'get_device_guid',
+>>>      inlined from 'tap_win32_open' at ../net/tap-win32.c:616:10:
+>>> ../net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347
+>>> bytes into a destination of size 256
+>>
+>> Is the compiler min/max maxing what UCS-16 or UTF-8 might pack into that string?
+>>>
+> 
+> Yes, enum_name (used to compose final string) is already sized 256, so result *may* be 
+> bigger. I'm not sure it would happen in the real world though.
 
-First patches are fixing warnings for existing plugins, then we add meson
-support, and finally, we remove Makefile for contrib/plugins.
+There are several patches for this, most recently:
 
-Based on the proposal of Anton Kochkov on associated gitlab issue.
-Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
+https://lore.kernel.org/qemu-devel/20241008202842.4478-1-shentey@gmail.com/
 
-Plugins are now deactivated by default on 32-bits hosts (since cf2a78), so we
-can enable with meson without worrying of warnings when building plugins for 32
-bits.
 
-Removed patches for individual plugins.
-
-v2:
-- removed warnings fix for 32 bits as they were incorrect. They are not needed
-  anymore as plugins are deprecated for 32 bits hosts.
-
-v3:
-- do not build lockstep on windows (it uses sys/socket.h)
-- build new plugins recently added
-- fix warning in cflow plugin
-- tested it builds correctly on windows/macos/linux
-
-Pierrick Bouvier (3):
-  contrib/plugins/cflow: fix warning
-  meson: build contrib/plugins with meson
-  contrib/plugins: remove Makefile for contrib/plugins
-
- configure                   | 18 --------
- Makefile                    | 10 -----
- meson.build                 |  4 ++
- contrib/plugins/cflow.c     |  6 +--
- contrib/plugins/Makefile    | 87 -------------------------------------
- contrib/plugins/meson.build | 28 ++++++++++++
- 6 files changed, 35 insertions(+), 118 deletions(-)
- delete mode 100644 contrib/plugins/Makefile
- create mode 100644 contrib/plugins/meson.build
-
--- 
-2.39.5
-
+r~
 
