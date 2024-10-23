@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B7ACF538A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631AECF538B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3bFR-0006Sk-Mq; Wed, 23 Oct 2024 09:18:01 -0400
+	id 1t3bFO-0006LJ-9x; Wed, 23 Oct 2024 09:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFF-0006Cm-2z
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bF5-00067T-2O
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFD-0002BV-98
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bF3-0002AD-3Q
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729689466;
+ s=mimecast20190719; t=1729689456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4c2+dcvwTw8EOqSLkKmGvOUFCxwmSLHABvCXafJ4CH0=;
- b=dHF8Zo8IGRbpLCMkZ9BiFZDOrIPCM+xID54xbFY5i6czAE6yR0jPcWExwmCHFj3+C2mPuI
- 3/quek7FK1pAu9TWWfQjyP9ZMgLoyvYLrj1fylDHWdGs4Et46mtEQ7zGYBF3Q1bKy8oYwP
- BmAfStW2ra7gkIG2VO38dhRMhqoHMHg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=97S4qqt/tBOMDzdXmG/IY6UTHoZ7pB4u43qJXWNnO0U=;
+ b=VF8ioXC+n55QuI074mzGwSdZ3pMqGzXhJ1A6c5OdA13b85Inaq2frgFB/YisreIH2edBS9
+ axdd+Pgr44OAr5o0Bx0gvgIf3z1KwosBlgnFDs2usn39A9Ba2h0RwwocpY9REMCEgBjP8H
+ rYEVc6ghihjKi39sMw4xzsL+gyWPN7Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-QyX1nlqCPpeyPzXgIWkQsg-1; Wed,
- 23 Oct 2024 09:17:42 -0400
-X-MC-Unique: QyX1nlqCPpeyPzXgIWkQsg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-iQ3m6xgCOyCSXn960YTRXA-1; Wed,
+ 23 Oct 2024 09:17:33 -0400
+X-MC-Unique: iQ3m6xgCOyCSXn960YTRXA-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67500195423D; Wed, 23 Oct 2024 13:17:41 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 343E11964CE7; Wed, 23 Oct 2024 13:17:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.43])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3D2719560AE; Wed, 23 Oct 2024 13:17:39 +0000 (UTC)
+ id A5FB419560AE; Wed, 23 Oct 2024 13:17:30 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 11/23] pc-bios/s390-ccw: Remove panics from Netboot IPL path
-Date: Wed, 23 Oct 2024 15:16:58 +0200
-Message-ID: <20241023131710.906748-12-thuth@redhat.com>
+Subject: [PULL 07/23] pc-bios/s390-ccw: Remove panics from ISO IPL path
+Date: Wed, 23 Oct 2024 15:16:54 +0200
+Message-ID: <20241023131710.906748-8-thuth@redhat.com>
 In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
 References: <20241023131710.906748-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,117 +83,256 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Remove panic-on-error from Netboot specific functions so that error recovery
-may be possible in the future.
+Remove panic-on-error from IPL ISO El Torito specific functions so that error
+recovery may be possible in the future.
 
 Functions that would previously panic now provide a return code.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241020012953.1380075-12-jrossi@linux.ibm.com>
+Message-ID: <20241020012953.1380075-8-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pc-bios/s390-ccw/s390-ccw.h   |  2 +-
- pc-bios/s390-ccw/bootmap.c    |  1 +
- pc-bios/s390-ccw/netmain.c    | 17 +++++++++++------
- pc-bios/s390-ccw/virtio-net.c |  7 +++++--
- 4 files changed, 18 insertions(+), 9 deletions(-)
+ pc-bios/s390-ccw/bootmap.h  | 15 +++----
+ pc-bios/s390-ccw/s390-ccw.h |  1 +
+ pc-bios/s390-ccw/bootmap.c  | 87 ++++++++++++++++++++++++-------------
+ 3 files changed, 65 insertions(+), 38 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 3e844abd71..344ad15655 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -57,7 +57,7 @@ unsigned int get_loadparm_index(void);
- void main(void);
+diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+index 4a7d8a91f1..3cb573b86b 100644
+--- a/pc-bios/s390-ccw/bootmap.h
++++ b/pc-bios/s390-ccw/bootmap.h
+@@ -385,17 +385,14 @@ static inline uint32_t iso_733_to_u32(uint64_t x)
  
- /* netmain.c */
--void netmain(void);
-+int netmain(void);
+ #define ISO_PRIMARY_VD_SECTOR 16
  
- /* sclp.c */
- void sclp_print(const char *string);
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 652807a16a..95ef9104d0 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -1072,6 +1072,7 @@ void zipl_load(void)
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
-         netmain();
-+        panic("\n! Cannot IPL from this network !\n");
-     }
- 
-     if (ipl_scsi()) {
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index bc6ad8695f..d1a6c9a91c 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -464,7 +464,7 @@ static bool find_net_dev(Schib *schib, int dev_no)
-     return false;
+-static inline void read_iso_sector(uint32_t block_offset, void *buf,
+-                                   const char *errmsg)
+-{
+-    IPL_assert(virtio_read_many(block_offset, buf, 1) == 0, errmsg);
+-}
+-
+-static inline void read_iso_boot_image(uint32_t block_offset, void *load_addr,
++static inline int read_iso_boot_image(uint32_t block_offset, void *load_addr,
+                                        uint32_t blks_to_load)
+ {
+-    IPL_assert(virtio_read_many(block_offset, load_addr, blks_to_load) == 0,
+-               "Failed to read boot image!");
++    if (virtio_read_many(block_offset, load_addr, blks_to_load)) {
++        puts("Failed to read boot image!");
++        return -1;
++    }
++    return 0;
  }
  
--static void virtio_setup(void)
-+static bool virtio_setup(void)
+ #define ISO9660_MAX_DIR_DEPTH 8
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 6abb34e563..3e844abd71 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -30,6 +30,7 @@ typedef unsigned long long u64;
+ #define EIO     1
+ #define EBUSY   2
+ #define ENODEV  3
++#define EINVAL  4
+ 
+ #ifndef MIN
+ #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 414c3f1b47..af73254acb 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -678,8 +678,10 @@ static bool is_iso_bc_entry_compatible(IsoBcSection *s)
+     if (s->unused || !s->sector_count) {
+         return false;
+     }
+-    read_iso_sector(bswap32(s->load_rba), magic_sec,
+-                    "Failed to read image sector 0");
++    if (virtio_read(bswap32(s->load_rba), magic_sec)) {
++        puts("Failed to read image sector 0");
++        return false;
++    }
+ 
+     /* Checking bytes 8 - 32 for S390 Linux magic */
+     return !memcmp(magic_sec + 8, linux_s390_magic, 24);
+@@ -692,28 +694,35 @@ static uint32_t sec_offset[ISO9660_MAX_DIR_DEPTH];
+ /* Remained directory space in bytes */
+ static uint32_t dir_rem[ISO9660_MAX_DIR_DEPTH];
+ 
+-static inline uint32_t iso_get_file_size(uint32_t load_rba)
++static inline long iso_get_file_size(uint32_t load_rba)
  {
-     Schib schib;
-     int ssid;
-@@ -495,10 +495,10 @@ static void virtio_setup(void)
+     IsoVolDesc *vd = (IsoVolDesc *)sec;
+     IsoDirHdr *cur_record = &vd->vd.primary.rootdir;
+     uint8_t *temp = sec + ISO_SECTOR_SIZE;
+     int level = 0;
+ 
+-    read_iso_sector(ISO_PRIMARY_VD_SECTOR, sec,
+-                    "Failed to read ISO primary descriptor");
++    if (virtio_read(ISO_PRIMARY_VD_SECTOR, sec)) {
++        puts("Failed to read ISO primary descriptor");
++        return -EIO;
++    }
++
+     sec_loc[0] = iso_733_to_u32(cur_record->ext_loc);
+     dir_rem[0] = 0;
+     sec_offset[0] = 0;
+ 
+     while (level >= 0) {
+-        IPL_assert(sec_offset[level] <= ISO_SECTOR_SIZE,
+-                   "Directory tree structure violation");
++        if (sec_offset[level] > ISO_SECTOR_SIZE) {
++            puts("Directory tree structure violation");
++            return -EIO;
++        }
+ 
+         cur_record = (IsoDirHdr *)(temp + sec_offset[level]);
+ 
+         if (sec_offset[level] == 0) {
+-            read_iso_sector(sec_loc[level], temp,
+-                            "Failed to read ISO directory");
++            if (virtio_read(sec_loc[level], temp)) {
++                puts("Failed to read ISO directory");
++                return -EIO;
++            }
+             if (dir_rem[level] == 0) {
+                 /* Skip self and parent records */
+                 dir_rem[level] = iso_733_to_u32(cur_record->data_len) -
+@@ -758,8 +767,10 @@ static inline uint32_t iso_get_file_size(uint32_t load_rba)
+         if (dir_rem[level] == 0) {
+             /* Nothing remaining */
+             level--;
+-            read_iso_sector(sec_loc[level], temp,
+-                            "Failed to read ISO directory");
++            if (virtio_read(sec_loc[level], temp)) {
++                puts("Failed to read ISO directory");
++                return -EIO;
++            }
          }
      }
  
--    IPL_assert(found, "No virtio net device found");
-+    return found;
- }
+@@ -774,19 +785,24 @@ static void load_iso_bc_entry(IsoBcSection *load)
+      * is padded and ISO_SECTOR_SIZE bytes aligned
+      */
+     uint32_t blks_to_load = bswap16(s.sector_count) >> ET_SECTOR_SHIFT;
+-    uint32_t real_size = iso_get_file_size(bswap32(s.load_rba));
++    long real_size = iso_get_file_size(bswap32(s.load_rba));
  
--void netmain(void)
-+int netmain(void)
- {
-     filename_ip_t fn_ip;
-     int rc, fnlen;
-@@ -506,11 +506,15 @@ void netmain(void)
-     sclp_setup();
-     puts("Network boot starting...");
+-    if (real_size) {
++    if (real_size > 0) {
+         /* Round up blocks to load */
+         blks_to_load = (real_size + ISO_SECTOR_SIZE - 1) / ISO_SECTOR_SIZE;
+         puts("ISO boot image size verified");
+     } else {
+         puts("ISO boot image size could not be verified");
++        if (real_size < 0) {
++            return;
++        }
+     }
  
--    virtio_setup();
-+    if (!virtio_setup()) {
-+        puts("No virtio net device found.");
-+        return -1;
+-    read_iso_boot_image(bswap32(s.load_rba),
++    if (read_iso_boot_image(bswap32(s.load_rba),
+                         (void *)((uint64_t)bswap16(s.load_segment)),
+-                        blks_to_load);
++                        blks_to_load)) {
++        return;
 +    }
  
-     rc = net_init(&fn_ip);
-     if (rc) {
--        panic("Network initialization failed. Halting.");
-+        puts("Network initialization failed.");
-+        return -1;
-     }
- 
-     fnlen = strlen(fn_ip.filename);
-@@ -528,5 +532,6 @@ void netmain(void)
-         jump_to_low_kernel();
-     }
- 
--    panic("Failed to load OS from network.");
-+    puts("Failed to load OS from network.");
-+    return -1;
+     jump_to_low_kernel();
  }
-diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-index 2fcb0a58c5..f9854a22c3 100644
---- a/pc-bios/s390-ccw/virtio-net.c
-+++ b/pc-bios/s390-ccw/virtio-net.c
-@@ -54,8 +54,11 @@ int virtio_net_init(void *mac_addr)
-     vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
-     virtio_setup_ccw(vdev);
+@@ -809,17 +825,18 @@ static uint32_t find_iso_bc(void)
+                 return bswap32(et->bc_offset);
+             }
+         }
+-        read_iso_sector(block_num++, sec,
+-                        "Failed to read ISO volume descriptor");
++        if (virtio_read(block_num++, sec)) {
++            puts("Failed to read ISO volume descriptor");
++            return 0;
++        }
+     }
  
--    IPL_assert(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT,
--               "virtio-net device does not support the MAC address feature");
-+    if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
-+        puts("virtio-net device does not support the MAC address feature");
-+        return -1;
+     return 0;
+ }
+ 
+-static IsoBcSection *find_iso_bc_entry(void)
++static IsoBcSection *find_iso_bc_entry(uint32_t offset)
+ {
+     IsoBcEntry *e = (IsoBcEntry *)sec;
+-    uint32_t offset = find_iso_bc();
+     int i;
+     unsigned int loadparm = get_loadparm_index();
+ 
+@@ -827,11 +844,13 @@ static IsoBcSection *find_iso_bc_entry(void)
+         return NULL;
+     }
+ 
+-    read_iso_sector(offset, sec, "Failed to read El Torito boot catalog");
++    if (virtio_read(offset, sec)) {
++        puts("Failed to read El Torito boot catalog");
++        return NULL;
++    }
+ 
+     if (!is_iso_bc_valid(e)) {
+         /* The validation entry is mandatory */
+-        panic("No valid boot catalog found!\n");
+         return NULL;
+     }
+ 
+@@ -851,19 +870,25 @@ static IsoBcSection *find_iso_bc_entry(void)
+         }
+     }
+ 
+-    panic("No suitable boot entry found on ISO-9660 media!\n");
+-
+     return NULL;
+ }
+ 
+-static void ipl_iso_el_torito(void)
++static int ipl_iso_el_torito(void)
+ {
+-    IsoBcSection *s = find_iso_bc_entry();
++    uint32_t offset = find_iso_bc();
++    if (!offset) {
++        return 0;
 +    }
 +
-     memcpy(mac_addr, vdev->config.net.mac, ETH_ALEN);
++    IsoBcSection *s = find_iso_bc_entry(offset);
  
-     for (i = 0; i < 64; i++) {
+     if (s) {
+-        load_iso_bc_entry(s);
+-        /* no return */
++        load_iso_bc_entry(s); /* only return in error */
++        return -1;
+     }
++
++    puts("No suitable boot entry found on ISO-9660 media!");
++    return -EIO;
+ }
+ 
+ /**
+@@ -893,7 +918,9 @@ static void zipl_load_vblk(void)
+         if (blksize != VIRTIO_ISO_BLOCK_SIZE) {
+             virtio_assume_iso9660();
+         }
+-        ipl_iso_el_torito();
++        if (ipl_iso_el_torito()) {
++            return;
++        }
+     }
+ 
+     if (blksize != VIRTIO_DASD_DEFAULT_BLOCK_SIZE) {
+@@ -907,7 +934,9 @@ static void zipl_load_vscsi(void)
+ {
+     if (virtio_get_block_size() == VIRTIO_ISO_BLOCK_SIZE) {
+         /* Is it an ISO image in non-CD drive? */
+-        ipl_iso_el_torito();
++        if (ipl_iso_el_torito()) {
++            return;
++        }
+     }
+ 
+     puts("Using guessed DASD geometry.");
 -- 
 2.47.0
 
