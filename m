@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A835CF539F
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 15:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526BCCDDE7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 15:09:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3cy9-00069m-Qi; Wed, 23 Oct 2024 11:08:17 -0400
+	id 1t3cyw-0006kL-H1; Wed, 23 Oct 2024 11:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3cy8-00069I-9k
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:08:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3cyu-0006e4-3c
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:09:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3cy6-0002V9-Kb
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:08:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3cys-0002bZ-Nu
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:09:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729696089;
+ s=mimecast20190719; t=1729696142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Zp4Qk4y/maPVUTg2PeEiCQo7nki6Upi1fZuC3a5Y+Cg=;
- b=LbFWzrWnxKNkoIXlfqKtXBiThpLwnhzOhCF4c1mkEJdxownv/gq+dNZzHo4n7GVB0oveY2
- Z7/YWLWR0S7ysVN4ondqQWKCR4MaHlTZ0aQJcvxfF4NWtGjYooy6/PY4Dd2fYgvt8t/uLt
- XtD6rYJ1P8p6+RrPT3KpwmbYrf75LXg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=t0KfrKZRgo4H8w2xNybSOozL3+7lDVD1nHGkCTWBdE4=;
+ b=WNr4Z5Ke78d86XzEKQLIP23Fzxn9GQTm//Fk+84QY1rxGT4GBruQ2GsKjR6la3ZnUJPfdK
+ T4XBZVBI0rN2Rbh8+f1cwu8zr2HCEJTzPV7yVOeYFVZwGPPSanRnfoQx6YlFjDaH6vKNJM
+ zerYUPEw07CmR3mtoWNJQjmTLK/ZowU=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-EDiCmC5vNl6eq6KoqUweEg-1; Wed, 23 Oct 2024 11:08:07 -0400
-X-MC-Unique: EDiCmC5vNl6eq6KoqUweEg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6ce2d91fa3bso18366556d6.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 08:08:07 -0700 (PDT)
+ us-mta-100-OfH-ehbpOCq7DCYXlf7lgw-1; Wed, 23 Oct 2024 11:08:58 -0400
+X-MC-Unique: OfH-ehbpOCq7DCYXlf7lgw-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b141ea40dcso1114522985a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 08:08:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729696086; x=1730300886;
+ d=1e100.net; s=20230601; t=1729696138; x=1730300938;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zp4Qk4y/maPVUTg2PeEiCQo7nki6Upi1fZuC3a5Y+Cg=;
- b=EgvAYVrFoI02MjlAnU9ckQOGZFonx0H36NQl/fQzmIzN+M2SSUXf2bq++P9qlDwZGe
- 8AVYG89m1li1N8bPnPVgNWkFrnIm3++vm+2+6OfV1L4hUTZu8R1pTlLjpwvKKa63dXgL
- qgGM3AtpbZYNvj4gjnOIUNOXr1XyYLrUi+RONsnyx5H7qxrYNXU4jPZvCrW7kSBNAQDC
- K2xuhwdIcCjHPjL5qljwmIw8RX59s3wWaiBS0o0rcrAtJZ2yLBuFST+7zpTxh1shOhtG
- QJxqS2fkXhziE2EnsxZY8K8e/QgjE85k87wwjDxfa83khcohU0AbttHA8tCzgdXfQIxb
- amOA==
+ bh=t0KfrKZRgo4H8w2xNybSOozL3+7lDVD1nHGkCTWBdE4=;
+ b=jT+Bv9LR7+jAku4aYfpkLPRE8DJu4uRs5GF2CpFuGTfRjyJAarGgaMb3b5TxSLEOlY
+ yL30r8YjPYoJ/VeYImtHs10J/fPe2gz1XHhjhaCANvHiaMe1TIClf6Ueqsg/z+wBaC6k
+ oNVr8F3s3j1N1JyLkeJfbAdlP64JarDJ6HrpEJChsWqKMKtT+SOVHxuXVPVGTAOHaIzo
+ ghm3bSBZH+KU2U8X3iUZj/Gh/xPl61nLCN3D1IzG7R3KHXHgH4CdJVgXWRNAmYWhRNJz
+ MdK4Zq7cia++mQh0HL1DNF2HqM/3n2G+uW5Y33xW+WlLBI1Afrg1zpDN7VTZM3XrsRod
+ xQLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuw7K5rT9lDpPtz/q1+Imk7QtyM/t6/ZXcyGhYFOCDY4KDfg8XpOPnaCKlFrzbKwrh8ZogUS2g4sWK@nongnu.org
-X-Gm-Message-State: AOJu0YyY9DxpTQNkZL3duAAgB5kpYPb6Qoycd4rLrVcK1nu+hfR2F2g6
- //XO0yREWw/ML9y+lmzTrbj9ZlCPKUtNVXwwweNmY8u9YIKkegziA7cisKf5zlgcSnhiPwp5vED
- 5g3UHVRWeLFvV2zxyG7HZVvSomVwPGmkUkTMZR/VxeS0DmO1IdUmB
-X-Received: by 2002:a05:6214:4589:b0:6cb:e53d:dd7 with SMTP id
- 6a1803df08f44-6ce34256af0mr40678636d6.19.1729696086085; 
- Wed, 23 Oct 2024 08:08:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBZGMgWSfV7m9CaTZuyasQrXcIEhJS2w85Yzx8/R/4VLL5I7+vVaasoAQR55xZwY0XSCRqtA==
-X-Received: by 2002:a05:6214:4589:b0:6cb:e53d:dd7 with SMTP id
- 6a1803df08f44-6ce34256af0mr40678316d6.19.1729696085716; 
- Wed, 23 Oct 2024 08:08:05 -0700 (PDT)
+ AJvYcCXNX8iLm+UXKKxvMg1Q38rG4sofFIPYTs4L0J+wS6+KGE4V3m6r7tYWl6jYHa7Sdm0XB2BBn/TQ5+ZH@nongnu.org
+X-Gm-Message-State: AOJu0YyN8n+R8o6s7+DJS/JidvRIKcu7yzInPpSyueOgj112Lr8u2A3M
+ V4xx0+RgUL3BMCkAS0inBQDUYWRW3DAMIxooBeAOk5euhno1FhMieD/liBNih40H+pt1OFZBCXB
+ nW4xEiua1Vzdj3NKUj2VGoEuK1StpEcjGxugJ8whQRixqf+++FtyN
+X-Received: by 2002:a05:6214:3a8c:b0:6cb:5f28:6b73 with SMTP id
+ 6a1803df08f44-6ce3413c3e8mr32816176d6.9.1729696138164; 
+ Wed, 23 Oct 2024 08:08:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxM15+x8VAixnoSMY2/s9E9SIfNoF2TYBelUVOTwnZo/W1x9YvDrYZEcuymozP71Ry7jTBeQ==
+X-Received: by 2002:a05:6214:3a8c:b0:6cb:5f28:6b73 with SMTP id
+ 6a1803df08f44-6ce3413c3e8mr32815916d6.9.1729696137814; 
+ Wed, 23 Oct 2024 08:08:57 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
  ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ce008b915bsm40495776d6.1.2024.10.23.08.08.04
+ 6a1803df08f44-6ce008b2505sm40103366d6.3.2024.10.23.08.08.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 08:08:05 -0700 (PDT)
-Message-ID: <a16f9ad5-26e6-4dd6-b3dc-24dc7b1a21d2@redhat.com>
-Date: Wed, 23 Oct 2024 17:08:03 +0200
+ Wed, 23 Oct 2024 08:08:57 -0700 (PDT)
+Message-ID: <1e378ace-ab4c-47eb-82fb-70a2c2abbe20@redhat.com>
+Date: Wed, 23 Oct 2024 17:08:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] vfio/migration: Some bug fixes and cleanups
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20241020130108.27148-1-avihaih@nvidia.com>
+Subject: Re: [PATCH 0/2] vfio: Align mmaps
+To: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com
+References: <20241022200830.4129598-1-alex.williamson@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -121,7 +120,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241020130108.27148-1-avihaih@nvidia.com>
+In-Reply-To: <20241022200830.4129598-1-alex.williamson@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -149,30 +148,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/20/24 15:01, Avihai Horon wrote:
-> This small series contains some bug fixes and cleanups.
-> Reviews are welcome.
+On 10/22/24 22:08, Alex Williamson wrote:
+> As described in patch /2, newer kernels may support pfnmap with PMD or
+> PUD sized mappings.  Mappings must be aligned in order to see the full
+> benefit of this support.  We're largely able to get PMD alignment for
+> free from mmap, but PUD alignment requires some effort.  Further, we
+> don't actually have an easy way to determine PMD or PUD alignment,
+> therefore we align all mmaps to the nearest power-of-two relative to the
+> region size, up to the maximum PUD size known the be currently available.
 > 
-> Thanks.
+> Enabling debug prints in the kernel shows that this exclusively enables
+> 1GiB mappings for a GPU with a multi-gigabyte BAR whereas previously the
+> BAR is mapped with a combination of 2MiB and 1GiB mappings, only using
+> 1GiB when opportunistically crossing an alignment boundary.
 > 
-> Avihai Horon (3):
->    vfio/migration: Report only stop-copy size in
->      vfio_state_pending_exact()
->    vfio/migration: Refactor vfio_vmstate_change/_prepare() error
->      reporting
->    vfio/migration: Change trace formats from hex to decimal
+> If there are ways to determine discrete alignment intervals or better
+> ways to generate a properly aligned address value for mmap, please share.
+> Thanks,
 > 
->   hw/vfio/migration.c  | 34 +++++++++++++++++++++-------------
->   hw/vfio/trace-events | 10 +++++-----
->   2 files changed, 26 insertions(+), 18 deletions(-)
+> Alex
+> 
+> Alex Williamson (2):
+>    vfio/helpers: Refactor vfio_region_mmap() error handling
+>    vfio/helpers: Align mmaps
+> 
+>   hw/vfio/helpers.c | 66 +++++++++++++++++++++++++++++++++--------------
+>   1 file changed, 47 insertions(+), 19 deletions(-)
 > 
 
 
-Applied 1 and 3 to vfio-next. Patch 2 is being addressed in another series.
+Applied to vfio-next.
 
 Thanks,
 
 C.
+
 
 
 
