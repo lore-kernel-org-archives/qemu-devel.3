@@ -4,134 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B770CFA44E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 16:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B83CFA44E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 16:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3eHD-0001uu-Vp; Wed, 23 Oct 2024 12:32:04 -0400
+	id 1t3eOE-0003Kt-65; Wed, 23 Oct 2024 12:39:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3eGz-0001ts-J4
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:32:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3eGx-0007Yk-Hj
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:31:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729701105;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nuvNCQcNrF3eTs0ls4fjtXiQkkF3W3daXvRmW7kt4O8=;
- b=cch7YXmWuR35cQbtD4XdyzOVotc4AgUng0JCXk67OzJd3clo+tUkzIYda+/1HZqJ6eThAE
- SPGCyi+EWKyUfM2G9/C1rooSOWbWK9PakJ0ip1En6qxcbcSEDCVT1XB7wnKchGYzKIj/s2
- xnCJxn8l5IEjoDLWo5s1IVODEKJZ2WU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-GRuU1e5OMc2MkKmzJ5q51Q-1; Wed, 23 Oct 2024 12:31:42 -0400
-X-MC-Unique: GRuU1e5OMc2MkKmzJ5q51Q-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d504759d0so4499884f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 09:31:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t3eOB-0003Kh-0P
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:39:15 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t3eO8-0008M2-DX
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:39:14 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-71e5a62031aso15272b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 09:39:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729701551; x=1730306351; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qVSz9wNSysxrD7d7eBiooDLhZIsVmuTftLpM/dBL4CE=;
+ b=GguS3gezgNs+186tJ9pOlHf8UD0Q5vLFc2FGMIlxtOy2eb5sE7G4Zq0YwyUDbyGgzC
+ c4OXtZOore1DSVszGe9Yhmy3nckxDuMfUNZLcip8sLtA/YHHn7BROQon95iU4hw6burx
+ ujMa/6wLJ0gs68BtO366aHCFdaQYV3AzxbjQ08AAeMTx1Piphbkby+50KQED2pVtySVZ
+ vKqxiKK5adII/LAAmXeYYyC4PfqpYrNfxI6xprm4SurJ2ujbTrHadNr7MSLV5Ksqwsdg
+ kMqrTqJ4przzouccR1gaakeIAbYcOPZJVf9hgNv4c91YnemIPO6b54EINsOXKQv/bOf/
+ nE3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729701101; x=1730305901;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nuvNCQcNrF3eTs0ls4fjtXiQkkF3W3daXvRmW7kt4O8=;
- b=h1bbevkkoxcrswhJzBYxUEIXtSlXbaxZ6tzn1fbXFhR+gwTnOLGTJuEqzFpKoFn0uD
- ISOE8whQOm0eKeerZAtN3qpkl14TMysCjJi3cRsY714d8kXbom3fl5fPgx/6tf9fTWER
- 9hvgfPNMQqc4BjCoCDYs9j7SKWHq77BCuzrKmthsUkbcsmBFwq2baRBVS3Q6LD9OAmFw
- AL06UZU7wRO3xmOm55aBUdfub/bEjACDOze76psj0/mtlraLqOW++op4eBOCZFY7Q7Zi
- ZbqJW4mZG7lU7YwGYinZd3xdm+jgM4xsJ898OlsMEaGjGjXzzwuAWiZzxnsASVminCng
- EzVg==
+ d=1e100.net; s=20230601; t=1729701551; x=1730306351;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qVSz9wNSysxrD7d7eBiooDLhZIsVmuTftLpM/dBL4CE=;
+ b=dfecLzD6Ld5F0+6IMcyGLUW+rXzZOEzb+UHQ1Bpr9pegxrQBCeuPlDKdjV8A0Bv4Q2
+ RBHY8dOiVI4LfO0xirGk1MTdsJOJcGyq9Rxpw6M+Yo88+PZqOQSJwBJ4vb2AVvDSk8Tw
+ K3ElL85F34rmkV+EzjB+nLeI3obnK0K/N4d76Mh5QQEkShwXmaVDdeVXbB2LJosWl5FC
+ yrF4pidlp/rj5tpIWcQ1VnmnDhBicUAQeOJZ+9Agc6AC307orgMqvaGadwa9y9YX6Gju
+ 57gA8+OenktxMn+EVX4OVQbefsGfHVZlDYIqiN/yb1aLuAvds1ZT5FnCzr3mpornV01B
+ EK1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/G/qDYE9Xlcll5cmHdXEMX09/OsjOc/8yBFiqVeO+yi/HO4+HKFGYDeNqyi6nYVDs7DhUti5FM1cc@nongnu.org
-X-Gm-Message-State: AOJu0YyeMrCNb32/xvF3ukEwUMNpdLNY5OWEiO3lXzfUhh7yei0FCPj2
- 1zcgWJuDf0WmhIKdWBRut4XUyKUes7JOWuA27i0ntrp5JeLrciw22n4qIAN2PQs+G7NTy4LJ213
- VpTO4buQ7oLDygzf0BAiMrT8rpDOQ6LrOqdCub5+UneArzftzzf2p
-X-Received: by 2002:adf:8bdd:0:b0:37c:cdbf:2cc0 with SMTP id
- ffacd0b85a97d-37efcf8d06cmr2455242f8f.53.1729701101451; 
- Wed, 23 Oct 2024 09:31:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGC7s8h0w4j8Rl7taz28pzD1AZaChilFK8QeTaEPQwLzyuXVKCxHfFTCfVI19N9JVpZo1tzww==
-X-Received: by 2002:adf:8bdd:0:b0:37c:cdbf:2cc0 with SMTP id
- ffacd0b85a97d-37efcf8d06cmr2455213f8f.53.1729701100951; 
- Wed, 23 Oct 2024 09:31:40 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.144.54])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-37ee0b9bac3sm9226050f8f.94.2024.10.23.09.31.39
+ AJvYcCX7AJ1vXKF6s1uncfFe0uN2hV+VHlnfznwTmFGH/w2gwoG+mrjFVu6oHxJJE2OA8MIhe2AUGVt/9QX6@nongnu.org
+X-Gm-Message-State: AOJu0Ywf6tDW9HsrnDX6IQa+EsI7tmw5fGDIEu//oa/vvPKsJ6WyUt0F
+ TGdKvDk56DER9YQkPfV23XQrvMm0RUfsW5Lt++7BsB5WQwRxaZxSXJlecjGsOkGzwRo8HTbyg53
+ v1qFvdQ==
+X-Google-Smtp-Source: AGHT+IHGZdxj/Be+4mCUkUdv/FwyQEeqCpvBhXrUNYoINikB/rfxTvsQ+AFtGtRr8t4gua5OcZx+2A==
+X-Received: by 2002:a05:6a00:a95:b0:718:ea3c:35c3 with SMTP id
+ d2e1a72fcca58-72030c10961mr4633057b3a.15.1729701550751; 
+ Wed, 23 Oct 2024 09:39:10 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-71ec1407f4asm6486715b3a.207.2024.10.23.09.39.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 09:31:40 -0700 (PDT)
-Message-ID: <b36283ff-2e14-4ee0-a64e-a5c4f9e86534@redhat.com>
-Date: Wed, 23 Oct 2024 18:31:39 +0200
+ Wed, 23 Oct 2024 09:39:10 -0700 (PDT)
+Message-ID: <31c78f6d-7154-41c5-be46-3ca4974fc6f4@linaro.org>
+Date: Wed, 23 Oct 2024 09:39:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V1 00/14] precreate phase
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
+ exceptions and traps
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
+To: Julian Ganz <nenut@skiff.uberspace.de>, Julian Ganz <neither@nut.email>,
+ qemu-devel@nongnu.org
+References: <20231021122502.26746-1-neither@nut.email>
+ <cover.1729355735.git.neither@nut.email>
+ <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
+ <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
+ <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
+ <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
+ <2419ec6e-3d4e-4d6d-a738-7615c99ed60c@linaro.org>
+ <0696c7fc52d1d58002f0a8be7e7502f57fd61d24@skiff.uberspace.de>
+ <28f647ca-0b88-4a01-90d3-4cc4450e0d1d@linaro.org>
+ <fd9c687a05ccdcdf5a589a15fcecb38074da7c1d@skiff.uberspace.de>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fd9c687a05ccdcdf5a589a15fcecb38074da7c1d@skiff.uberspace.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,63 +108,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/24 17:14, Steve Sistare wrote:
-> Define a new qemu initialization phase called 'precreate' which occurs
-> before most backends or devices have been created.  The only exception
-> is monitor and qtest devices and their associated chardevs.
+On 10/23/24 09:12, Julian Ganz wrote:
+> Hi, Pierrick,
 > 
-> QEMU runs in the main loop during this phase.  Monitor connections are
-> active and can receive migration configuration commands.  QEMU starts
-> listening on the normal migration URI during this phase, which can come
-> from either the QEMU command line or from a migrate_incoming command.
-> Thus the user can issue query-migrate to get the socket-address for
-> dynamically allocated port numbers during precreate.
+> October 23, 2024 at 5:16 PM, "Pierrick Bouvier" wrote:
+>>
+>> Hi Julian,
+>>
+>> On 10/23/24 05:56, Julian Ganz wrote:
+>>
+>>>   October 22, 2024 at 11:15 PM, "Pierrick Bouvier" wrote:
+>>>
+>>>>
+>>>> On 10/22/24 01:21, Julian Ganz wrote:
+>>>>
+>>>
+>>>   Ok, I'll introduce an enum and combine the three callbacks in the next
+>>>   iteration then.
+>>>   typedef struct {
+>>>   enum qemu_plugin_cf_event_type ev;
+>>>   union {
+>>>   data_for_interrupt interrupt;
+>>>   data_for_trap trap;
+>>>   data_for_semihosting semihosting;
+>>>   } qemu_plugin_cf_event;
+>>>   /* data_for_... could contain things like from/to addresses, interrupt id, ... */
+>>>
+>>>   I don't think this is a good idea.
+>>>   Traps are just too diverse, imo there is too little overlap between
+>>>   different architectures, with the sole exception maybe being the PC
+>>>   prior to the trap. "Interrupt id" sounds like a reasonably common
+>>>   concept, but then you would need to define a mapping for each and every
+>>>   architecture. What integer type do you use? In RISC-V, for example,
+>>>   exceptions and interrupt "ids" are differentiated via the most
+>>>   significant bit. Dou keep that or do you zero it? And then there's
+>>>   ring/privilage mode, cause (sometimes for each mode), ...
+>>>
+>>>>
+>>>> I didn't want to open the per architecture pandora box :).
+>>>>   I don't think the plugin API itself should deal with per architecture
+>>>>   details like meaning of a given id. I was just thinking to push this "raw" information to the plugin, that may/may not use architecture specific knowledge to do its work. We already have plugins that have similar per architecture knowledge (contrib/plugins/howvec.c) and it's ok in some specific cases.
+>>>>
+>>>   But how would such an interface look? The last PC aside, what would you
+>>>   include, and how? A GArray with named items that are itself just opaque
+>>>   blobs?
+>>>
+>> I was not thinking about a new interface for this. Having the "raw" interrupt id is enough for a plugin to do useful things, by having knowledge of which architecture it's instrumenting.
 > 
-> In this series QEMU passes through and does not linger in the precreate
-> phase, and the user sees no change in behavior.  The cpr-transfer series
-> will linger in the phase for an incoming CPR operation, and exit the phase
-> when the migrate command is send to source QEMU and causes destination QEMU
-> to read CPR state.
+> But what is would the "raw" interrupt id even be for a given
+> architecture? I don't think you can answer this question with "obviously
+> this _one_ integer" for all of them.
+>
+
+Choosing interrupt id as an example of what we want to include was 
+confusing, and brought more conversation than I expected.
+
+I wanted to point that we may want different data per event, instead of 
+talking specifically of interrupt or per architecture specific data.
+To still answer you, I was thinking sharing interrupt number for x86_64, 
+or interrupt id for aarch64. It's probably too naive, so let's drop this 
+and move on :).
+
+>>>
+>>> And what would be the benefit compared to just querying the respective
+>>>   target specific registers through qemu_plugin_read_register? Which btw.
+>>>   is what we were going to do for our use-case. Even the example you
+>>>   brought up (howvec) uses querying functions and doesn't expect to get
+>>>   all the info via parameters.
+>>>
+>> You're right, but it's because it's querying instruction data.
+>> I may be wrong on that, but at translation time, we may or may not be interested in accessing tb/insn data.
+>>
+>> However, for control flow analysis, beyond a simple counting plugin, we probably want to access further data almost everytime.
+>>
+>> I see it closer from syscall instrumentation, which pushes the syscall id, and all register values, instead of letting the user poke it. Makes more sense compared to that?
 > 
-> A future series may wish to add a command-line argument and monitor
-> command that enters and exits the precreate phase for general purpose use.
-> That would enable the user to issue monitor commands that specify backend
-> creation parameters.
+> Yes, but then you are in "GArray of named, potentially complex value"
+> terretory again. And the comparison with syscalls also falls apart when
+> you consider that, for syscalls, they are well defined and enumerated
+> identically for at least a variety of targets, while the same kind of
+> "enumeration", if it even exists, is in completely different order for
+> every architecture.
+> 
 
-I have a problem with the concept, which is that the split between 
-command line and monitor is much harder to understand.
+We can restrict to having from/to PCs for now. Mentioning interrupt id 
+as example was a mistake.
 
-Ideally, one would come entirely before the other; preconfig is already 
-ugly in how -device is processed later than everything else[1].  This 
-series makes this much more complex.
+>>>
+>>>>
+>>>> But having something like from/to address seems useful to start. Even if we don't provide it for all events yet, it's ok.
+>>>>
+>>>   Yes, I certainly see the advantages of having either the last PC or the
+>>>   would-be-next PC as they are sufficiently universal. You can usually
+>>>   retrieve them from target-specific registers, but that may be more
+>>>   complicated in practice. In the case of RISC-V for example, the value
+>>>   of the EPC differs between interrupts and exceptions.
+>>>
+>> To the opposite of interrupt id, a PC is something universal by definition, and with a single meaning across architecture. However, accessing it by name varies per architecture, and even per sub events, as you are stating for RISC-V.
+> 
+> Yes. And for that very reason I would not pass "the EPC" to a callback
+> but a clearly, target agnostic, defined value such as:
+> 
+> | The PC of the instruction that would have been executed next, were it
+> | not for that event
+> 
+> or
+> 
+> | The PC of the instruction that was executed befroe the event occurred
+> 
+> And unlike interrupt ids, the plugin API already has a precedent for
+> what type to use: uint64_t
+>
 
-If I understand correctly, what you want is effectively to execute 
-monitor commands from the migration stream.  If you want to do that, we 
-need to take more qemu_init code and turn it into QMP commands, so that 
-precreate can exit qemu_init very early and the "after precreate" 
-command line options can be replaced by interactions on the monitor.
+Looks good. As said in previous message, we can drop the complex data 
+type idea.
 
-This is the idea that drove the creation of -M smp.xxx, -M boot.xxx, -M 
-memory.xxx, etc. (see for example commit 8c4da4b5218, "machine: add boot 
-compound property", 2022-05-12).  For example -semihosting-config, 
--acpitable, -smbios, -fw_cfg, -option-rom, -rtc could all become -M 
-properties and handled by a single monitor command machine-set.
+So we could have something like:
 
-Of all the other options, -accel, -cpu and -display are the main missing 
-ones (-cpu is the very hard one); a full list is at 
-https://wiki.qemu.org/User:Paolo_Bonzini/Machine_init_sequence#QMP_configuration_flow.
+/* plugin side */
+void on_cf_event(qemu_plugin_cf_event_type, uint64_t from, uint64_t to) {
+    ...
+}
 
-Anyhow, at this point all that's needed is a -chardev/-mon pair (and I 
-guess -incoming defer) in order to bootstrap the monitor in precreate mode.
+/* API side */
+void qemu_plugin_register_vcpu_syscall_cb(
+qemu_plugin_id_t id, qemu_plugin_cf_event_type type, 
+qemu_plugin_register_vcpu_cf_cb);
 
-It's okay to prototype without full support for the options I've listed, 
-but if we want to go with precreate we should make most command line 
-options entirely incompatible with it, and also make it imply -nodefaults.
+We thus would have a new callback type qemu_plugin_vcpu_cf_cb_t added.
 
-Paolo
+For registering several events, we might define enum values for types 
+indexed on every bit, so we can directly xor the enum to register 
+several types. (same idea than existing qemu_plugin_mem_rw, but for more 
+values, with a specific ALL value covering all possibilities).
 
-[1] -loadvm and -incoming too; but for those two we could make their 
-monitor commands exit preconfig mode automatically, and invoke them from 
-the monitor instead of specifying them on the command line.
+Does that match what you were thinking?
 
+> Regards,
+> Julian
 
