@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54CCCFA45C
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 18:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB28CFA45D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 18:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3fgj-0002LU-Vg; Wed, 23 Oct 2024 14:02:29 -0400
+	id 1t3fgo-0002Lk-DM; Wed, 23 Oct 2024 14:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3fgh-0002Kx-MP
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 14:02:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3fgi-0002L6-3H
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 14:02:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3fgf-000402-Dv
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3fgf-00040G-Ig
  for qemu-devel@nongnu.org; Wed, 23 Oct 2024 14:02:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729706540;
+ s=mimecast20190719; t=1729706544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=aqZ/Ijhs/hI2p5Nae02aaMBoerDF2C7PiBNtjCESoWo=;
- b=F0IP63+QGOCsPyaxKyYHHSPmKXGh44/xc4R6I3EKxRPQS5eqCN9h+ZUYhKUWOTxTWM4GxB
- UXl2Hj2fYn6pIUfao3FqcipNAN7ellUBnc3YlPjA8djCKXb1lgtYKQZff+zbfkWb4936ao
- +ANs5kKp6ycfqQFVldoWpA7jpakxHZ0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ffbOb1zLkckP3Rme6JyfNXdz8ft6fnCYj3dIDD3fnGQ=;
+ b=BVFI++px5zwMedn1RMmvtJHBGHegzyMygP424DfOs2SL398mmh7ZIYiLDBWY7jCPU7RwEJ
+ ou8a7NPEIR0L/MkWBe3gHz6uoMKvkJ8wYNggKd30rVv71xmyjWOfyPXDi+o5luC0rWHSx+
+ Sl/mD81LRxoeJPsV6xJ/gnU+3B7++1w=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-IssDSp9BPLCEEFeYLJR_HQ-1; Wed, 23 Oct 2024 14:02:19 -0400
-X-MC-Unique: IssDSp9BPLCEEFeYLJR_HQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6ce2d91fa3bso1470826d6.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 11:02:19 -0700 (PDT)
+ us-mta-418-HM65LBG8M_WVl8TJBID7ww-1; Wed, 23 Oct 2024 14:02:23 -0400
+X-MC-Unique: HM65LBG8M_WVl8TJBID7ww-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6cc32a0b26bso1497326d6.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 11:02:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729706539; x=1730311339;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aqZ/Ijhs/hI2p5Nae02aaMBoerDF2C7PiBNtjCESoWo=;
- b=fmCEKdsFkUrIyYPmtLCYX28DnoCgp62RRVEfzvYBei6T316m4bYtnQtgVKDKTVB6U/
- IR3ypJqBUCAPdx4QGY8CeNyuStcmrJLbB/DpRp4MwHFXjWp9iOLfYlW1QS+8Ayr3Hg1e
- a2y09XpghEH15IOeox3YQ6yYjKxNiWQ08Mbpcx14pii12WCrp78c7gPyxsI+Fs1PWnNL
- dDY6H+4jZni02N6gsCF/9vkSGPrZJn53iAaJijYFz2AWbm+u6K2kHmeq2n9uj1oLHgYM
- lrHeIi4Qr3ia4WuRF0wNhXs3QL7hpjNwpeoComtA7s/Dvrn1QNtLgzyb8e4VB3Pk/bLH
- JY1A==
-X-Gm-Message-State: AOJu0Yy9Yxp2Cf3i6Vnf/rlZ8w9DvDgPjejXmZ44BvOox0avMeaj2ACi
- QB1wGzCAwoyIToUFNBp0fEZNu8HQK/h3JEI17mcgCVeGXinN3VZth2JWK31OlVtktm2kqJR9h8u
- Gv40AaiTsqBm2tFMPDHFsS8CqQWVBUULH1mqzo7bKLaP94EcuwLJoC+YRmNt8xI0Zv8HoiamUYh
- hHOsTEWVy4PayfN9A4OFtcmE0baSxUtGp9Gw==
-X-Received: by 2002:a05:6214:4904:b0:6cb:fa07:fcd7 with SMTP id
- 6a1803df08f44-6ce342048e2mr46539266d6.5.1729706538562; 
- Wed, 23 Oct 2024 11:02:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHI8QghgAdXuN4ScXb/VaWOsmgn99QLTKiGP8tndPk23Mdzc3HPydAg9KLO3xLfewJWeBL39A==
-X-Received: by 2002:a05:6214:4904:b0:6cb:fa07:fcd7 with SMTP id
- 6a1803df08f44-6ce342048e2mr46538876d6.5.1729706538156; 
- Wed, 23 Oct 2024 11:02:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729706542; x=1730311342;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ffbOb1zLkckP3Rme6JyfNXdz8ft6fnCYj3dIDD3fnGQ=;
+ b=mzonZRs9R1w+HLy2N/fZ9cO3zP5WCoURWaBwY7/KJ9K8Uy1Jl53lpkRcUAQJ5NrMMz
+ Jeqd6SMyV1iWTsGFqgG//XOb82kQ1HxpAbKiizHki/B476EOykaKsAxY+yNoOhI47tjv
+ ovzIp9h7QyWrU+N8hkskpU7CEkxBMmeH1txhF18MmsDB0EjIwtDuc3HOiWCQ+cvmUsiB
+ OKpHw5qZt27gIehwxnlZmsH2NKLn2jlzOu+yC4g+I6jMstbVHOYB4LF5cBRZisvbN2L3
+ LgvbZBmygXTXLU9jQkglpeORKLs0upNvubRiZoyihNXGPR/KlyZrqEXDkfqyEy44yxzw
+ GSmA==
+X-Gm-Message-State: AOJu0YwIPHQqPf17H264glIP+rZeJ853mFOw8wKkw6917Z/lv6qZcwmj
+ cY/sAFMQv5cFCrIqaffLpohf5dd9e/PsbxfEN8j4moSLgPsNQZ4lYhOvjMh30ERXDnHunjEqhba
+ hXknk7hzrklp1mbKwiLuiQUe3/ocRfFYlQFRViad08P42fh2Bp6mt+KLi+QLCrxXNhR5G3lmEM2
+ o+o+flGAJZBo5QSIERIOSTPPY0aLaZtMen/w==
+X-Received: by 2002:a05:6214:390d:b0:6cb:e9a5:acfb with SMTP id
+ 6a1803df08f44-6ce34259feemr39838446d6.38.1729706541633; 
+ Wed, 23 Oct 2024 11:02:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxKojU9TywE/snPaG/+JCr7UIS85Mv5QmXatQKlX6i1h4/7Doyl2/UvMXhyeOSHY/gkW0b1w==
+X-Received: by 2002:a05:6214:390d:b0:6cb:e9a5:acfb with SMTP id
+ 6a1803df08f44-6ce34259feemr39838076d6.38.1729706541202; 
+ Wed, 23 Oct 2024 11:02:21 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ce009fcd0esm41746716d6.132.2024.10.23.11.02.17
+ 6a1803df08f44-6ce009fcd0esm41746716d6.132.2024.10.23.11.02.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 11:02:17 -0700 (PDT)
+ Wed, 23 Oct 2024 11:02:20 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Alex Williamson <alex.williamson@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 0/4] Migration: Make misc.h helpers available for whole VM
- lifecycle
-Date: Wed, 23 Oct 2024 14:02:12 -0400
-Message-ID: <20241023180216.1072575-1-peterx@redhat.com>
+Subject: [PATCH v2 2/4] migration: Reset current_migration properly
+Date: Wed, 23 Oct 2024 14:02:14 -0400
+Message-ID: <20241023180216.1072575-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20241023180216.1072575-1-peterx@redhat.com>
+References: <20241023180216.1072575-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,64 +102,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a follow up of below patch from Avihai as a replacement:
+current_migration is never reset, even if the migration object is freed
+already.  It means anyone references that can trigger UAF and it'll be hard
+to debug.
 
-https://lore.kernel.org/qemu-devel/20241020130108.27148-3-avihaih@nvidia.com/
+Properly clear the pointer now, so far by doing it in the finalize() (as we
+know there's only one instance of it).
 
-This is v2 of the series, and it became a more generic rework on how we do
-migration object refcounts, so I skipped a changelog because most of this
-is new things.
+Add a TODO entry for it showing that we can do better in the future.
 
-To put it simple, now I introduced another pointer to migration object, and
-here's a simple explanation for both after all change applied (copy-paste
-from one of the patch):
+To make it clear, also initialize the variable in the instance_init() so
+it's very well paired at least.
 
-/*
- * We have two pointers for the global migration objects.  Both of them are
- * initialized early during QEMU starts, but they have different lifecycles.
- *
- * - current_migration
- *
- *   This variable reflects the whole lifecycle of the migration object
- *   (which each QEMU can only have one).  It is valid until the migration
- *   object is destroyed.
- *
- *   This is the object that internal migration so far use.  For example,
- *   internal helper migrate_get_current() references it.
- *
- *   When all migration code can always pass over a MigrationState* around,
- *   this variable can logically be dropped.  But we're not yet there.
- *
- * - global_migration
- *
- *   This is valid only until the migration object is still valid to the
- *   outside-migration world (until migration_shutdown()).
- *
- *   This should normally be always set, cleared or accessed by the main
- *   thread only, rather than the migration thread.
- *
- *   All the exported functions (in include/migration) should reference the
- *   exported migration object only to avoid race conditions, as
- *   current_migration can be freed concurrently by migration thread when
- *   the migration thread holds the last refcount.
- */
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-It allows all misc.h exported helpers to be used for the whole VM
-lifecycle, so as to never crash QEMU with freed migration objects.
-
-Thanks,
-
-Peter Xu (4):
-  migration: Unexport dirty_bitmap_mig_init() in misc.h
-  migration: Reset current_migration properly
-  migration: Add global_migration
-  migration: Make all helpers in misc.h safe to use without migration
-
- include/migration/misc.h | 29 ++++++++----
- migration/migration.h    |  4 ++
- migration/migration.c    | 99 +++++++++++++++++++++++++++++++++++-----
- 3 files changed, 113 insertions(+), 19 deletions(-)
-
+diff --git a/migration/migration.c b/migration/migration.c
+index bcb735869b..a82297db0f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -232,9 +232,9 @@ static int migration_stop_vm(MigrationState *s, RunState state)
+ 
+ void migration_object_init(void)
+ {
+-    /* This can only be called once. */
+-    assert(!current_migration);
+-    current_migration = MIGRATION_OBJ(object_new(TYPE_MIGRATION));
++    MIGRATION_OBJ(object_new(TYPE_MIGRATION));
++    /* This should be set when initialize the object */
++    assert(current_migration);
+ 
+     /*
+      * Init the migrate incoming object as well no matter whether
+@@ -3877,12 +3877,31 @@ static void migration_instance_finalize(Object *obj)
+     qemu_sem_destroy(&ms->rp_state.rp_pong_acks);
+     qemu_sem_destroy(&ms->postcopy_qemufile_src_sem);
+     error_free(ms->error);
++
++    /*
++     * We know we only have one intance of migration, and when reaching
++     * here it means migration object is gone.  Clear the global reference
++     * to reflect that.
++     */
++    current_migration = NULL;
+ }
+ 
+ static void migration_instance_init(Object *obj)
+ {
+     MigrationState *ms = MIGRATION_OBJ(obj);
+ 
++    /*
++     * There can only be one migration object globally. Keep a record of
++     * the pointer in current_migration, which will be reset after the
++     * object finalize().
++     *
++     * TODO: after migration/ code can always take a MigrationObject*
++     * pointer all over the place, logically we can drop current_migration
++     * variable.
++     */
++    assert(!current_migration);
++    current_migration = ms;
++
+     ms->state = MIGRATION_STATUS_NONE;
+     ms->mbps = -1;
+     ms->pages_per_second = -1;
 -- 
 2.45.0
 
