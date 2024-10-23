@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D64CDDE7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 15:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6601CCDDE7D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 15:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3dAi-0003Fl-CE; Wed, 23 Oct 2024 11:21:16 -0400
+	id 1t3dFD-0004aD-AU; Wed, 23 Oct 2024 11:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3dAg-0003FO-Sm
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:21:14 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3dAf-0004Lp-2E
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:21:14 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2e18293a5efso4650310a91.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 08:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729696871; x=1730301671; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pma820h/udrnuyqL42rfM5cse48rj0H2UR3XlJNJfiA=;
- b=eob2OV2kra97qTX9RYnjCpYApHvR7WmqnuH0ixr6NkQDAaHd30sMFnXOtRPHhx1ZRs
- PkXnXveSbDs2awLPajpX41aS3bUHC86BYINKXKW7pSgIOpo5+3534BbOYyMBgKvAxxno
- nBSXGOkHzcnLQEE6E2d+8/sF8YG5YoQjqGAVD0XWh0SL7DtJIWA0TWPAD+FBoBPh8kPh
- S7+Xi2RHCN1MzlfS1m9v1HTIN1VvtktC7jTnosLo95hskWepR2kSrfCLlFvB1ba9zEk9
- VeTEscJVL6m+wIIaYF2t9eUyZAWXfiUbEGF6D0s2HWWvlUc78mKS8puQA+x7iQbTSt3H
- RB6Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3dFB-0004a1-KO
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:25:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3dF9-00050K-1E
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:25:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729697149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1/J9J/1fkxBxTIlmR7uB0SgkY56/84OFPU1dS8a/rbY=;
+ b=dnSvpO/oC+qT/vrNTkB97FnGG6CymFKz8zbb0M7xhqn+AYiDF/Rj4bmdUjSt24yVNcng8l
+ q3GJG5vKwOGKD7NwjCAA0vIHMwqXjYI0zbn64uBUhccwe6n1iLWi+Y4FK9UJ26dZ6TmA3T
+ MwAGbJldDnw/36RiPVzUtQLemjcAeIM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-478-CZEVfwHlPP-8VnyD3tw0JA-1; Wed, 23 Oct 2024 11:25:48 -0400
+X-MC-Unique: CZEVfwHlPP-8VnyD3tw0JA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-460d8f8f5d4so52890961cf.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 08:25:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729696871; x=1730301671;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729697148; x=1730301948;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pma820h/udrnuyqL42rfM5cse48rj0H2UR3XlJNJfiA=;
- b=DzeHb2Qk1OkJKtOuHvEUoQbvfJnBkbvgVeQG1fJAHC+2SXehDxRcvmJZPl1n2lWTwh
- ZJzyT2t6G3Bf37+1FlO0r3zD+gfNZ6i95brZFzi9OI5J/RmqAoWMgHqtq2ErBLOotBRm
- AFYFzt4SrSN9Ap4qkTfkbmxaIQ7kFnOh+kKsXCGF4BPe+KKCmET2tQhnB89Oer1LLqrx
- BIi7DHJsG90AF6OLwYg6orhfg/3m6t5iKgq21TGTcnbE5aApPEZnpUcH02N2edv7oQtD
- DNnig4+rhhnwYCj/d7hm08lhjWmzapblgkZaMV9FhdFiSLUg+KRN1rD+3WVgpbRp35VP
- gEPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUbs4ab1WMojfNrh/ObL8bS739Q+Vf9E0c/uni/qZOdROWQ2qNA28cjyREr9lvBuMhzo8n3ekngPVGv@nongnu.org
-X-Gm-Message-State: AOJu0Yz1AzwrtRwbmjJzPKsdMabZQtyFygNAMzvOhrOXM2wBemVEC+UI
- Q/QcBlqNWkuFotM3TBeXCwxGcn/VUpCxPU7Kcbi9itG47Y09bo0q6XyaRWayvSw=
-X-Google-Smtp-Source: AGHT+IGYqO63cB9dIrjqcU0XSFhfEWqMsvM8/NRh9DhJXo8zYZAN/0KQh0e5PCfmPrgZ/N64y5qi/A==
-X-Received: by 2002:a17:90b:3c47:b0:2e2:cef9:8f68 with SMTP id
- 98e67ed59e1d1-2e76b5b9470mr2955462a91.4.1729696871164; 
- Wed, 23 Oct 2024 08:21:11 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e76e088f1fsm1538341a91.56.2024.10.23.08.21.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 08:21:10 -0700 (PDT)
-Message-ID: <55418913-8504-494a-8448-5230c4740181@linaro.org>
-Date: Wed, 23 Oct 2024 08:21:10 -0700
+ bh=1/J9J/1fkxBxTIlmR7uB0SgkY56/84OFPU1dS8a/rbY=;
+ b=k/kkAn+jpUG/P5718fZqgNCHm94mpjwWbi8fLwYaJ8DaHLKmnhiN0Zia1EvRyqhyHo
+ XbleHgWSAY07y1EDKfTgih4qx76g0Ci4aChzeIOimxqNanKhFv0khI9gFd4QszXi4Q0t
+ VsDfC2PbiXYN5VfwxYb7v4XtF7xRGLYY9tlVnp7vRIr5O6LSYeOMln2UTCh+UHdlNL3L
+ 4yyAfURgjCXSthyyVHRkLU8W9JtGqTYHqzdrGAxBOO/aTnFpiCxoE2FM2VXPCvCi+Z2c
+ pYIjYMmqQI+Iq5d8ak/2FhiGJW1FN63L8DvsHWp8k43+1dGJZDANwSvtFWA/ELwrbI6n
+ yZag==
+X-Gm-Message-State: AOJu0YywS/JnCeGs5CJnF/Rn5If83zUSDitKS0QGx0keJrxCdCh5OhPv
+ mFHLlFKSRBgkDH9xS5Rp5mndHT8W/YMzwnF0GHhV5ojho2AqKFo8PW0bwUg2jKV4hMNS/xIwEzC
+ xZAR5O4YJFdpVra4NbwJrxBMTq/vFtuN6rj6gQD3CMRCZrwIRHTRM
+X-Received: by 2002:ac8:5904:0:b0:458:2e48:b5ec with SMTP id
+ d75a77b69052e-461147065dcmr46728841cf.45.1729697147901; 
+ Wed, 23 Oct 2024 08:25:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqwqOwM4XqKbM/dJ9g9zF52S5V1JTuePeGB4E9N0BinJ/ZvuSHKYJcwruunMvYjYlReH7y5g==
+X-Received: by 2002:ac8:5904:0:b0:458:2e48:b5ec with SMTP id
+ d75a77b69052e-461147065dcmr46728431cf.45.1729697147512; 
+ Wed, 23 Oct 2024 08:25:47 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-460d39d54f5sm41956821cf.0.2024.10.23.08.25.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Oct 2024 08:25:47 -0700 (PDT)
+Date: Wed, 23 Oct 2024 11:25:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 1/2] migration: Make all helpers in misc.h safe to use
+ without migration
+Message-ID: <ZxkVeMCac87w2jR_@x1n>
+References: <20241022160720.1013543-1-peterx@redhat.com>
+ <20241022160720.1013543-2-peterx@redhat.com>
+ <0540c704-c2ce-41fc-bbb3-a2d84f0f2fc7@nvidia.com>
+ <ZxkS0GCmPrOHN1_V@x1n>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/7] tcg-plugins: add hooks for interrupts,
- exceptions and traps
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Julian Ganz <nenut@skiff.uberspace.de>
-Cc: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-References: <20231021122502.26746-1-neither@nut.email>
- <cover.1729355735.git.neither@nut.email>
- <fad67d3f-5b8d-45f6-a1aa-666852a0dad4@linaro.org>
- <8929cd79ce653b55e7cb166300782cb13727da3b@skiff.uberspace.de>
- <f7e574bb-a780-4f5b-a511-ab9f0aa86f31@linaro.org>
- <ab29d100610abcc59ce2305a1ace1ac0b53340a3@skiff.uberspace.de>
- <2419ec6e-3d4e-4d6d-a738-7615c99ed60c@linaro.org>
- <0696c7fc52d1d58002f0a8be7e7502f57fd61d24@skiff.uberspace.de>
- <87h692ly55.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87h692ly55.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZxkS0GCmPrOHN1_V@x1n>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,100 +107,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTAvMjMvMjQgMDY6NTcsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gIkp1bGlhbiBHYW56
-IiA8bmVudXRAc2tpZmYudWJlcnNwYWNlLmRlPiB3cml0ZXM6DQo+IA0KPj4gSGksIFBpZXJy
-aWNrLA0KPj4NCj4+IHJlc2VudCBhcyBJIHdhcyB0b28gc3R1cGlkIHRvIGhpdCByZXBseSBp
-bnN0ZWFkIG9mIHJlcGx5LWFsbC4NCj4+DQo+PiBPY3RvYmVyIDIyLCAyMDI0IGF0IDExOjE1
-IFBNLCAiUGllcnJpY2sgQm91dmllciIgd3JvdGU6DQo+Pj4NCj4+PiBPbiAxMC8yMi8yNCAw
-MToyMSwgSnVsaWFuIEdhbnogd3JvdGU6DQo+Pj4NCj4+Pj4NCj4+Pj4gSGksIFBpZXJyaWNr
-LA0KPj4+PiAgIE9jdG9iZXIgMjEsIDIwMjQgYXQgMTE6NTkgUE0sICJQaWVycmljayBCb3V2
-aWVyIiB3cm90ZToNCj4+Pj4NCj4gPHNuaXA+DQo+Pj4+ICAgSSBkb24ndCB0aGluayB0aGlz
-IGlzIGEgZ29vZCBpZGVhLg0KPj4+PiAgIFRyYXBzIGFyZSBqdXN0IHRvbyBkaXZlcnNlLCBp
-bW8gdGhlcmUgaXMgdG9vIGxpdHRsZSBvdmVybGFwIGJldHdlZW4NCj4+Pj4gICBkaWZmZXJl
-bnQgYXJjaGl0ZWN0dXJlcywgd2l0aCB0aGUgc29sZSBleGNlcHRpb24gbWF5YmUgYmVpbmcg
-dGhlIFBDDQo+Pj4+ICAgcHJpb3IgdG8gdGhlIHRyYXAuICJJbnRlcnJ1cHQgaWQiIHNvdW5k
-cyBsaWtlIGEgcmVhc29uYWJseSBjb21tb24NCj4+Pj4gICBjb25jZXB0LCBidXQgdGhlbiB5
-b3Ugd291bGQgbmVlZCB0byBkZWZpbmUgYSBtYXBwaW5nIGZvciBlYWNoIGFuZCBldmVyeQ0K
-Pj4+PiAgIGFyY2hpdGVjdHVyZS4gV2hhdCBpbnRlZ2VyIHR5cGUgZG8geW91IHVzZT8gSW4g
-UklTQy1WLCBmb3IgZXhhbXBsZSwNCj4+Pj4gICBleGNlcHRpb25zIGFuZCBpbnRlcnJ1cHQg
-ImlkcyIgYXJlIGRpZmZlcmVudGlhdGVkIHZpYSB0aGUgbW9zdA0KPj4+PiAgIHNpZ25pZmlj
-YW50IGJpdC4gRG91IGtlZXAgdGhhdCBvciBkbyB5b3UgemVybyBpdD8gQW5kIHRoZW4gdGhl
-cmUncw0KPj4+PiAgIHJpbmcvcHJpdmlsYWdlIG1vZGUsIGNhdXNlIChzb21ldGltZXMgZm9y
-IGVhY2ggbW9kZSksIC4uLg0KPj4+Pg0KPj4+IEkgZGlkbid0IHdhbnQgdG8gb3BlbiB0aGUg
-cGVyIGFyY2hpdGVjdHVyZSBwYW5kb3JhIGJveCA6KS4NCj4+PiBJIGRvbid0IHRoaW5rIHRo
-ZSBwbHVnaW4gQVBJIGl0c2VsZiBzaG91bGQgZGVhbCB3aXRoIHBlciBhcmNoaXRlY3R1cmUN
-Cj4+PiBkZXRhaWxzIGxpa2UgbWVhbmluZyBvZiBhIGdpdmVuIGlkLiBJIHdhcyBqdXN0IHRo
-aW5raW5nIHRvIHB1c2ggdGhpcw0KPj4+ICJyYXciIGluZm9ybWF0aW9uIHRvIHRoZSBwbHVn
-aW4sIHRoYXQgbWF5L21heSBub3QgdXNlIGFyY2hpdGVjdHVyZQ0KPj4+IHNwZWNpZmljIGtu
-b3dsZWRnZSB0byBkbyBpdHMgd29yay4gV2UgYWxyZWFkeSBoYXZlIHBsdWdpbnMgdGhhdCBo
-YXZlDQo+Pj4gc2ltaWxhciBwZXIgYXJjaGl0ZWN0dXJlIGtub3dsZWRnZSAoY29udHJpYi9w
-bHVnaW5zL2hvd3ZlYy5jKSBhbmQNCj4+PiBpdCdzIG9rIGluIHNvbWUgc3BlY2lmaWMgY2Fz
-ZXMuDQo+Pg0KPj4gQnV0IGhvdyB3b3VsZCBzdWNoIGFuIGludGVyZmFjZSBsb29rPyBUaGUg
-bGFzdCBQQyBhc2lkZSwgd2hhdCB3b3VsZCB5b3UNCj4+IGluY2x1ZGUsIGFuZCBob3c/IEEg
-R0FycmF5IHdpdGggbmFtZWQgaXRlbXMgdGhhdCBhcmUgaXRzZWxmIGp1c3Qgb3BhcXVlDQo+
-PiBibG9icz8NCj4+DQo+PiBBbmQgd2hhdCB3b3VsZCBiZSB0aGUgYmVuZWZpdCBjb21wYXJl
-ZCB0byBqdXN0IHF1ZXJ5aW5nIHRoZSByZXNwZWN0aXZlDQo+PiB0YXJnZXQgc3BlY2lmaWMg
-cmVnaXN0ZXJzIHRocm91Z2ggcWVtdV9wbHVnaW5fcmVhZF9yZWdpc3Rlcj8gV2hpY2ggYnR3
-Lg0KPj4gaXMgd2hhdCB3ZSB3ZXJlIGdvaW5nIHRvIGRvIGZvciBvdXIgdXNlLWNhc2UuIEV2
-ZW4gdGhlIGV4YW1wbGUgeW91DQo+PiBicm91Z2h0IHVwIChob3d2ZWMpIHVzZXMgcXVlcnlp
-bmcgZnVuY3Rpb25zIGFuZCBkb2Vzbid0IGV4cGVjdCB0byBnZXQNCj4+IGFsbCB0aGUgaW5m
-byB2aWEgcGFyYW1ldGVycy4NCj4gDQo+IEkgdGhpbmsgdGhlIHJlZ2lzdGVyIGFjY2VzcyBw
-cm9iYWJseSBwcm92aWRlcyBldmVyeXRoaW5nIHlvdSBuZWVkLiBTb21lDQo+IHRhcmdldHMg
-cHJvdmlkZSBhIHdpZGVyIGFjY2VzcyB0aGFuIG90aGVyIHRob3VnaC4gSSBoYXZlbid0IGxv
-b2tlZCBhdA0KPiB0aGUgUmlzYyBWIGNvZGUgYnV0IGNlcnRhaW5seSB0aGUgQXJtIGNvZGUg
-ZXhwb3NlcyBwcmV0dHkgbXVjaCBhbGwNCj4gc3lzdGVtIHJlZ2lzdGVycyB0byB0aGUgZ2Ri
-c3R1YiAoYW5kIGhlbmNlIHRoZSBwbHVnaW4gaW50ZXJmYWNlKS4NCj4gDQo+IElmIHRoZXJl
-IGlzIGV4YW1wbGUgb2Ygc3RhdGUgdGhhdCBpc24ndCBhY2Nlc3NpYmxlIHRoaXMgd2F5IHRo
-ZW4gSSdkDQo+IGxpa2UgdG8ga25vdyBpdC4NCj4gDQo+Pj4gQnV0IGhhdmluZyBzb21ldGhp
-bmcgbGlrZSBmcm9tL3RvIGFkZHJlc3Mgc2VlbXMgdXNlZnVsIHRvIHN0YXJ0LiBFdmVuIGlm
-IHdlIGRvbid0IHByb3ZpZGUgaXQgZm9yIGFsbCBldmVudHMgeWV0LCBpdCdzIG9rLg0KPj4N
-Cj4+IFllcywgSSBjZXJ0YWlubHkgc2VlIHRoZSBhZHZhbnRhZ2VzIG9mIGhhdmluZyBlaXRo
-ZXIgdGhlIGxhc3QgUEMgb3IgdGhlDQo+PiB3b3VsZC1iZS1uZXh0IFBDIGFzIHRoZXkgYXJl
-IHN1ZmZpY2llbnRseSB1bml2ZXJzYWwuIFlvdSBjYW4gdXN1YWxseQ0KPj4gcmV0cmlldmUg
-dGhlbSBmcm9tIHRhcmdldC1zcGVjaWZpYyByZWdpc3RlcnMsIGJ1dCB0aGF0IG1heSBiZSBt
-b3JlDQo+PiBjb21wbGljYXRlZCBpbiBwcmFjdGljZS4gSW4gdGhlIGNhc2Ugb2YgUklTQy1W
-IGZvciBleGFtcGxlLCB0aGUgdmFsdWUNCj4+IG9mIHRoZSBFUEMgZGlmZmVycyBiZXR3ZWVu
-IGludGVycnVwdHMgYW5kIGV4Y2VwdGlvbnMuDQo+Pg0KPj4gVGhhdCBQQyB2YWx1ZSBzaG91
-bGQgYWxzbyBiZSBlYXN5IGVub3VnaCB0byBvYnRhaW4gYXQgdGhlIGhvb2sgY2FsbA0KPj4g
-c2l0ZXMuIFdlIG9ubHkgbmVlZCB0byBzdG9yZSB0aGUgKG9sZCkgUEMgYmVmb3JlIGRvaW5n
-IHRoZSBzZXR1cC4gVGhlDQo+PiAidG8tYWRkcmVzcyIgaXMgdGhlIGN1cnJlbnQgUEMgYXQg
-dGhlIHRpbWUgdGhlIGNhbGxiYWNrIGlzIGludm9rZWQuDQo+PiBBbnl0aGluZyBlbHNlIHdv
-dWxkIGJlIGEgYnVnLiBJIHdhcyBnb2luZyB0byB3cml0ZSB0aGF0IHlvdSBjYW4NCj4+IGFs
-cmVhZHkgcXVlcnkgdGhhdCBpbiBhIHBsdWdpbiB0aHJvdWdoIGEgZGVkaWNhdGVkIGhlbHBl
-ciBmdW5jdGlvbg0KPj4gYnV0IGFwcGFyZW50bHkgSSBtaXNyZW1lbWJlcmVkLg0KPj4NCj4+
-IEknbGwgaW5jbHVkZSB0aGlzIGluIHRoZSBuZXh0IGl0ZXJhdGlvbi4NCj4gDQo+IFRoZXJl
-IGFyZSBzb21lIGRyYWdvbnMgd2l0aCBwYy9ucGMgYXMgZWFjaCBmcm9udC1lbmQgZGVhbHMg
-d2l0aCBpdCBpdHMNCj4gb3duIHdheSBhbmQgc29tZSB0YXJnZXRzIGhhdmUgZGVsYXkgc2xv
-dHMgd2hpY2ggbWFrZXMgdGhpbmdzIGV2ZW4NCj4gbWVzc2llci4NCj4gDQoNClllcywgaWYg
-aXQgZ2V0cyB0b28gY29tcGxpY2F0ZWQgZm9yIGN1cnJlbnQgc2VyaWVzLCB3ZSBjYW4ganVz
-dCBoYXZlIHRoZSANCmV2ZW50IHBhc3NlZCB0byB0aGUgY2FsbGJhY2ssIGFuZCBubyBtb3Jl
-IGluZm9ybWF0aW9uLg0KQXMgcG9pbnRlZCBpbiBteSBwcmV2aW91cyBtZXNzYWdlLCBJIGp1
-c3Qgd2FudCB0byBhdm9pZCB0aGUgbXVsdGlwbGUgDQpjYWxsYmFja3Mgcm91dGUgZm9yIHRo
-aXMgc3BlY2lmaWMgYXJlYS4gSXQncyBmaW5lIGlmIHdlIGRvbid0IGhhdmUgYW55IA0KYXR0
-YWNoZWQgZGF0YSBmb3Igbm93Lg0KDQo+Pg0KPj4+PiBJdCB3b3VsZCBhbHNvIGNvbXBsaWNh
-dGUgY2FsbCBzaXRlcyBmb3IgaG9va3MgaW4gdGFyZ2V0IGNvZGUuIFlvdSdkDQo+Pj4+ICAg
-ZWl0aGVyIG5lZWQgYXdrd2FyZGx5IGxvbmcgZnVuY3Rpb24gc2lnbml0dXJlcyBvciBzZXR1
-cCBjb2RlIGZvciB0aGF0DQo+Pj4+ICAgc3RydWN0LiBCb3RoIGFyZSB0aGluZ3MgeW91IGRv
-bid0IHdhbnQsIGFzIGEgaG9vayBjYWxsIHNpdGUgc2hvdWxkDQo+Pj4+ICAgbmV2ZXIgZGlz
-dHJhY3QgZnJvbSB0aGUgYWN0dWFsIGxvZ2ljIHN1cnJvdW5kaW5nIHRoZW0uIFlvdSBjb3Vs
-ZA0KPj4+PiAgIHByb2JhYmx5IGhhdmUgc29tZXRoaW5nIHJlYXNvbmFibGUgaW4gUnVzdCwg
-dXNpbmcgYSBidWlsZGVyL2NvbW1hbmQNCj4+Pj4gICBwYXR0ZXJuLiBCdXQgaW4gQyB0aGlz
-IHdvdWxkIHJlcXVpcmUgdG9vIG11Y2ggYm9pbGVyIHBsYXRlIGNvZGUgdGhhbg0KPj4+PiAg
-IEknZCBiZSBjb21mb3J0YWJsZSB3aXRoLg0KPj4+Pg0KPj4+IFdlIGNhbiBoYXZlIG9uZSAi
-YnVpbGRlciIgZnVuY3Rpb24gcGVyIGRhdGEgdHlwZSwgd2l0aCBmaXhlZCBwYXJhbWV0ZXJz
-IChubyB2YXJhcmdzKSwgaXQncyByZWFzb25hYmxlIGFuZCB3b3VsZCBzY2FsZSB3ZWxsIHdp
-dGggbmV3IGVudHJpZXMvZGF0YSBpbmZvcm1hdGlvbi4NCj4+DQo+PiBJJ20gc3RpbGwgbm90
-IG9uIGJvYXJkIG9uIHByZXBhcmluZyBhIG1vcmUgY29tcGxleCBkYXRhIHR5cGUuIEZvciB0
-aGUNCj4+IG5leHQgaXRlcmF0aW9uIEknZCByYXRoZXIgc3RpY2sgdG8gYSBzaW1wbGUgZnVu
-Y3Rpb24gcmVjZWl2aW5nIHRoZQ0KPj4gInR5cGUiIG9mIGV2ZW50IGFuZCB0aGUgUENzLiBU
-aGF0IG1heSBub3QgYmUgZXh0ZW5zaWJsZSwgYnV0IEkgZG9uJ3Qgc2VlDQo+PiBhbnkgYmVu
-ZWZpdCBpbiBzaG9laG9ybmluZyBpbmhlcml0ZWxudGx5IHRhcmdldC1zcGVjaWZjIGluZm9y
-bWF0aW9uIGludG8NCj4+IGEgY29tcGxleCBzdHJ1Y3QuDQo+Pg0KPj4gSWYgdGhpcyBpcyBh
-IGhhcmQgcmVxdWlyZW1lbnQsIEknbGwgb2YgY291cnNlIHN0aWxsIGRvIHNvLg0KPiANCj4g
-Tm8gbGV0cyBrZWVwIGl0IHNpbXBsZSBmb3IgdGhlIGZpcnN0IGl0ZXJhdGlvbi4gV2UgY2Fu
-IGFsc28gZXhwYW5kIHRoZQ0KPiBBUEkgbGF0ZXIgYW5kIGJ1bXAgdGhlIEFQSSB2ZXJzaW9u
-cyBhcyBhcHByb3ByaWF0ZS4NCj4NCg0KVGhlIHR5cGUgb2YgZXZlbnQsIGV2ZW50dWFsbHkg
-d2l0aCBwY3MgaWYgeW91IGNhbiBnZXQgdGhlbSBpcyBhbHJlYWR5IA0Kc2F0aXNmeWluZywg
-YW5kIHNpbXBsZSBlbm91Z2guDQoNCj4+DQo+PiBSZWdhcmRzLA0KPj4gSnVsaWFuDQo+IA0K
+On Wed, Oct 23, 2024 at 11:14:24AM -0400, Peter Xu wrote:
+> On Wed, Oct 23, 2024 at 11:30:14AM +0300, Avihai Horon wrote:
+> > 
+> > On 22/10/2024 19:07, Peter Xu wrote:
+> > > External email: Use caution opening links or attachments
+> > > 
+> > > 
+> > > Migration object can be freed before some other device codes run, while we
+> > > do have a bunch of migration helpers exported in migration/misc.h that
+> > > logically can be invoked at any time of QEMU, even during destruction of a
+> > > VM.
+> > > 
+> > > Make all these functions safe to be called, especially, not crashing after
+> > > the migration object is freed.
+> > > 
+> > > Add a rich comment in the header explaining how to guarantee thread safe on
+> > > using these functions, and we choose BQL because fundamentally that's how
+> > > it's working now.  We can move to other things (e.g. RCU) whenever
+> > > necessary in the future but it's an overkill if we have BQL anyway in
+> > > most/all existing callers.
+> > > 
+> > > When at it, update some comments, e.g. migrate_announce_params() is
+> > > exported from options.c now.
+> > > 
+> > > Cc: Cédric Le Goater <clg@redhat.com>
+> > > Cc: Avihai Horon <avihaih@nvidia.com>
+> > > Cc: Fabiano Rosas <farosas@suse.de>
+> > > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > ---
+> > >   include/migration/misc.h | 33 ++++++++++++++++++++++++++++-----
+> > >   migration/migration.c    | 22 +++++++++++++++++++++-
+> > >   2 files changed, 49 insertions(+), 6 deletions(-)
+> > > 
+> > > diff --git a/include/migration/misc.h b/include/migration/misc.h
+> > > index bfadc5613b..8d6812b8c7 100644
+> > > --- a/include/migration/misc.h
+> > > +++ b/include/migration/misc.h
+> > > @@ -19,8 +19,26 @@
+> > >   #include "qapi/qapi-types-net.h"
+> > >   #include "migration/client-options.h"
+> > > 
+> > > -/* migration/ram.c */
+> > > +/*
+> > > + * Misc migration functions exported to be used in QEMU generic system
+> > > + * code outside migration/.
+> > > + *
+> > > + * By default, BQL is required to use below functions to avoid race
+> > > + * conditions (e.g. concurrent free of the migration object).  It's
+> > > + * caller's responsibility to make sure it's thread safe otherwise when
+> > > + * below helpers are used without BQL held.
+> > > + *
+> > > + * One example of the special case is migration_thread(), who will take a
+> > > + * refcount of the migration object.  The refcount will make sure the
+> > > + * migration object will not be freed concurrently when accessing through
+> > > + * below helpers.
+> > > + *
+> > > + * When unsure, always take BQL first before using the helpers.
+> > > + */
+> > > 
+> > > +/*
+> > > + * migration/ram.c
+> > > + */
+> > >   typedef enum PrecopyNotifyReason {
+> > >       PRECOPY_NOTIFY_SETUP = 0,
+> > >       PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC = 1,
+> > > @@ -43,14 +61,19 @@ void ram_mig_init(void);
+> > >   void qemu_guest_free_page_hint(void *addr, size_t len);
+> > >   bool migrate_ram_is_ignored(RAMBlock *block);
+> > > 
+> > > -/* migration/block.c */
+> > > -
+> > > +/*
+> > > + * migration/options.c
+> > > + */
+> > >   AnnounceParameters *migrate_announce_params(void);
+> > > -/* migration/savevm.c */
+> > > 
+> > > +/*
+> > > + * migration/savevm.c
+> > > + */
+> > >   void dump_vmstate_json_to_file(FILE *out_fp);
+> > > 
+> > > -/* migration/migration.c */
+> > > +/*
+> > > + * migration/migration.c
+> > > + */
+> > >   void migration_object_init(void);
+> > >   void migration_shutdown(void);
+> > >   bool migration_is_idle(void);
+> > > diff --git a/migration/migration.c b/migration/migration.c
+> > > index bcb735869b..27341eed50 100644
+> > > --- a/migration/migration.c
+> > > +++ b/migration/migration.c
+> > > @@ -1121,6 +1121,10 @@ bool migration_is_setup_or_active(void)
+> > >   {
+> > >       MigrationState *s = current_migration;
+> > > 
+> > > +    if (!s) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       switch (s->state) {
+> > >       case MIGRATION_STATUS_ACTIVE:
+> > >       case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+> > > @@ -1136,7 +1140,6 @@ bool migration_is_setup_or_active(void)
+> > > 
+> > >       default:
+> > >           return false;
+> > > -
+> > >       }
+> > >   }
+> > > 
+> > > @@ -1685,6 +1688,10 @@ bool migration_is_active(void)
+> > >   {
+> > >       MigrationState *s = current_migration;
+> > > 
+> > > +    if (!s) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       return (s->state == MIGRATION_STATUS_ACTIVE ||
+> > >               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> > >   }
+> > > @@ -1693,6 +1700,10 @@ bool migration_is_device(void)
+> > >   {
+> > >       MigrationState *s = current_migration;
+> > > 
+> > > +    if (!s) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       return s->state == MIGRATION_STATUS_DEVICE;
+> > >   }
+> > > 
+> > > @@ -1700,6 +1711,11 @@ bool migration_thread_is_self(void)
+> > >   {
+> > >       MigrationState *s = current_migration;
+> > > 
+> > > +    /* If no migration object, must not be the migration thread */
+> > > +    if (!s) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > >       return qemu_thread_is_self(&s->thread);
+> > >   }
+> > > 
+> > > @@ -3077,6 +3093,10 @@ void migration_file_set_error(int ret, Error *err)
+> > >   {
+> > >       MigrationState *s = current_migration;
+> > > 
+> > > +    if (!s) {
+> > > +        return;
+> > > +    }
+> > > +
+> > 
+> > I think this is not enough because current_migration is never set to NULL
+> > after it's destroyed.
+> > 
+> > Can we add "current_migration = NULL;" to migration_instance_finalize()?
+> 
+> Good point..
+> 
+> I thought it was cleared already in migration_shutdown(), but now I just
+> noticed why it can't - we have too many dangling references in migration/
+> so that it needs to be there even if migration threads holds one refcount.
+> 
+> I'll add one more patch as you suggested as of now and repost soon.  It's
+> not the cleanest that we clear that global pointer in a finalize(), but
+> looks like that's the only simple way forward.
+
+After a 2nd thought, it might not work.  The issue is when the last
+refcount is held by migration_thread, I _think_ it means the migration
+thread will invoke this finalize(), reset current_migration, and then it
+can race with a main thread calling any of the exported helpers again..
+
+I'll think about it and prepare something else.  Probably we'll need two
+variables for now holding the object, while the exported functions should
+only reference the global one.  Then the global one can be reset in the
+main thread always with no race possible when exit.
+
+-- 
+Peter Xu
 
 
