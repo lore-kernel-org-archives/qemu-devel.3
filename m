@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC29D2E02A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 08:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933E2D2E029
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3XD8-0007sc-M3; Wed, 23 Oct 2024 04:59:22 -0400
+	id 1t3XDr-0001St-VS; Wed, 23 Oct 2024 05:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XD6-0007pM-Sw
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:20 -0400
+ id 1t3XDp-0001Lb-1f
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:00:05 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XD5-0000Jz-JL
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:20 -0400
+ id 1t3XDn-0000Mo-9o
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:00:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=9m9pzuk+kU/pCkEvHTiuX7N97trMmOECKRPZTVqE0YU=; b=KA8aKAENO0UyPlXF6H/UqDu62u
- Nd5GbqD/KoQA0IPd4EkzgZ5hJuoQYzVEo37bsgiEWcBZF35k2y2n2J2zP1FZCfpRhe2Ynf0RUHkfP
- 8I29vcsJFGVf3ahc3DcemSXLFzQG2qidJl4Ib0yovAClALrh1vucE/yktPt98Y0kb0mSDexov64eH
- JrpM0kl2ojcYywIo/+aDCyCy0W1dmg+mxpsFAkZmiQ5PmvlevvoT/Hr2Yzvo7kD+rmRyOEmfAMjdT
- ABu00U3mXNQCphAUYfQRaoNALO2uYaDoe+bJ7WWu+ru6b12KffzMx531gZTNDS6OCi02t1tzT2yzs
- wjeD7w1ZDOSUNAcDyj7193HLYHdGUW2E3zsolEz7kownc7zIgZbCDUtcXCqG37oX6Zocsz3oq4Ioe
- g7Wts6Ga6lDr41woDMTLcKCqeu9eibKh1JXMfy/EJVTYmnCtZHVnmP/JNOPIpTclQzG/9rfFdm7Lj
- yOJFqERRYKZW6Cv6CxPqBbayIZixDQHkZQFrR5LaZxPe1ul0vK0Hmgw4vs5KXdyGAnsq1gYZ3lhgf
- VyocaT2BdepjgaWCt0Y2zhxuUgUsrhnVQu6ZersETNNnAsKhlAJqhKkiV6OK9TJo2sIBS1mIYiLRI
- cAd8q5MptwZ6mLvcYSrAi2x9BR9qnvE55VdDmlXtA=;
+ bh=wuCOgIx0u8iDtUKAWpWde2SdyjsVJfxwT4NhDTiKqMg=; b=pjahXJthNWOfYVTZEhCy5MLuty
+ n+EBWuNcW5oFmEn2thOULGdR0PZLnUv1XH/uyGb1jrK9Pe3RqXG82Ic5394WML1D27h3Z5GmSnC7Q
+ EeOL8HHwv8MHilxGhio5v5Q2Vy1aI09HazNRB70FFSJz7JnB9lyUV5XmhmQK5R01igXcXo0djNe62
+ AQIQhAbZtnVk2u7xfpHJJxbkUDX/CDWyKxpU3e9TMi+aGL87BRxPf+uWiyYDdD4WPNbMudgD2MiGB
+ ZeT3stk2Uo2QTe6BBYbVXv95StLHF/XbUF2//uQyCn2fMCcrcKddpFf0jOxxLF9RzLfyaqzi7sSe3
+ dv6igQUd/nzlY4Mx6Rai2BvLmSie03r/kL+M3k/AFLRXAqa+I1aV11o+/wKPsaadBzVErN0EgLd83
+ Y79t7KierUAgxgPJkpfokRUyMieTIUOvjaCf2SsJaOYXnKt7iNf2hASGxc1xvzmjzbt1H78cFVEAg
+ NVnlbCmQsTePe9aDz2w+2mp165m2ZoLHgrVd41k2UOuAgLJlLAeTMSzdkrQhaGvnyrmfnfFfK+Hd2
+ KWKK+0YX/Qab0oEQDm9YXb4XNJwbMT6OtWp0Bvnd2z919TMoHuhE481fRmPqXVc4vPjJB1/hFYT1G
+ 0wO67QWPcP2oMzL26vxwD5GoFyJkTDTfpQ4dV8YbA=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XCl-0008EL-CV; Wed, 23 Oct 2024 09:59:03 +0100
+ id 1t3XDI-0008EL-Sl; Wed, 23 Oct 2024 09:59:37 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Wed, 23 Oct 2024 09:58:20 +0100
-Message-Id: <20241023085852.1061031-5-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 23 Oct 2024 09:58:30 +0100
+Message-Id: <20241023085852.1061031-15-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 04/36] next-cube: remove cpu parameter from next_scsi_init()
+Subject: [PATCH 14/36] next-cube: move timer MMIO to separate memory region on
+ next-pc device
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,35 +79,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The parameter is not used.
+Move the timer MMIO accesses to a separate memory region on the next-pc device
+instead of being part of the next.scr MMIO memory region.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/m68k/next-cube.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index e1d94c1ce0..6bdd91c9c6 100644
+index 915dd80f6f..402aa7ea8e 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -824,7 +824,7 @@ static void nextscsi_write(void *opaque, uint8_t *buf, int size)
-     nextdma_write(opaque, buf, size, NEXTDMA_SCSI);
+@@ -109,6 +109,7 @@ struct NeXTPC {
+     M68kCPU *cpu;
+ 
+     MemoryRegion floppy_mem;
++    MemoryRegion timer_mem;
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
+ 
+@@ -371,17 +372,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
+     uint64_t val;
+ 
+     switch (addr) {
+-    /*
+-     * These 4 registers are the hardware timer, not sure which register
+-     * is the latch instead of data, but no problems so far.
+-     *
+-     * Hack: We need to have the LSB change consistently to make it work
+-     */
+-    case 0x1a000 ... 0x1a003:
+-        val = extract32(clock(), (4 - (addr - 0x1a000) - size) << 3,
+-                        size << 3);
+-        break;
+-
+     /* For now return dummy byte to allow the Ethernet test to timeout */
+     case 0x6000:
+         val = 0xff;
+@@ -400,8 +390,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
+                              unsigned size)
+ {
+     switch (addr) {
+-    /* Hardware timer latch - not implemented yet */
+-    case 0x1a000:
+     default:
+         DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
+                 (unsigned int)addr, val, size);
+@@ -980,6 +968,50 @@ static const MemoryRegionOps next_floppy_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
++static void next_timer_write(void *opaque, hwaddr addr, uint64_t val,
++                              unsigned size)
++{
++    switch (addr) {
++    case 0 ... 3:
++        /* Hardware timer latch - not implemented yet */
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++
++    switch (addr) {
++    case 0 ... 3:
++        /*
++         * These 4 registers are the hardware timer, not sure which register
++         * is the latch instead of data, but no problems so far.
++         *
++         * Hack: We need to have the LSB change consistently to make it work
++         */
++        val = extract32(clock(), (4 - addr - size) << 3,
++                        size << 3);
++        break;
++
++    default:
++        g_assert_not_reached();
++    }
++
++    return val;
++}
++
++static const MemoryRegionOps next_timer_ops = {
++    .read = next_timer_read,
++    .write = next_timer_write,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
+ static void next_pc_reset(DeviceState *dev)
+ {
+     NeXTPC *s = NEXT_PC(dev);
+@@ -1042,6 +1074,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&s->scrmem, 0x18000,
+                                 sysbus_mmio_get_region(sbd, 0));
+ 
++    /* Timer */
++    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
  }
  
--static void next_scsi_init(DeviceState *pcdev, M68kCPU *cpu)
-+static void next_scsi_init(DeviceState *pcdev)
- {
-     struct NeXTPC *next_pc = NEXT_PC(pcdev);
-     DeviceState *dev;
-@@ -1046,7 +1046,7 @@ static void next_cube_init(MachineState *machine)
-     /* TODO: */
-     /* Network */
-     /* SCSI */
--    next_scsi_init(pcdev, cpu);
-+    next_scsi_init(pcdev);
+ static void next_pc_init(Object *obj)
+@@ -1065,6 +1099,9 @@ static void next_pc_init(Object *obj)
+                           "next.floppy", 4);
  
-     /* DMA */
-     memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
+     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
++
++    memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
++                          "next.timer", 4);
+ }
+ 
+ /*
 -- 
 2.39.5
 
