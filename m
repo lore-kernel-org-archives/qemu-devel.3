@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9152D2E00A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D34BD2E010
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3S9M-00077o-5t; Tue, 22 Oct 2024 23:35:08 -0400
+	id 1t3S9V-0007PE-TH; Tue, 22 Oct 2024 23:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3S94-0006zd-DT
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:50 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1t3S95-0006zp-O5
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:52 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3S8v-0008Kc-OT
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:50 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71e4c2e36daso321752b3a.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:34:34 -0700 (PDT)
+ id 1t3S92-0008MY-JE
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:51 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7ea68af2f62so4874617a12.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729654474; x=1730259274; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dGHEwIIzB23tpzx5mvuqbcFlOnyFHekDP8qTyxIn24Y=;
- b=r080wC7s7UH+MKfuJMNAslwPRj9J6MIoAxi16YpJYZwHfegRNDq2cmez73lPOMkkd8
- l6DWXDjB8/WNirUVBBn/cl+4lOSlwM+ERnt4c9sju5Wi2bcsOCloI7JA3UFblP5yBs4X
- M21SBr8UbczUuForG5dyKlgI74sWuPNMNtprZZ5+RUuIKAfhDEHtw2+V1SA0nY6lodM3
- 9JNgKqgCdy0ws5yBAdt50qolHlyORuHux5Q2HInbAN98rSlzT5HWd77qAGmPJpjor4Hw
- 53fnlMP704fk1rlz2vFXaWv/MXLzkRRDeCY31MmSw7ZpLdeL6rLPpjQCRVtBmBya5wKF
- SOTQ==
+ d=linaro.org; s=google; t=1729654486; x=1730259286; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E9BZ1D2dqbD5itfvWww7sIn9+uEnlW5x+Ejm53Jry8E=;
+ b=IkRIFIesPfdi+wUdXS20D6AKTUCXhaRJDaUPU57HaAjQb95//d0wjFK+GNMZFSp8Pp
+ lfzaW3wDjk5Cd9lowBbBBTakbsN/WuxjOtBtlW0LHqruYsW+t0fEBu9KnUYWVwudCEPN
+ Xlg5RhoEyVubxX9LzSxCwBHeWhvItlONF6zEcSs2+mYCrf4O3c7EXbaLuLWJvRLNNLUf
+ Wd8NVLUc06EpcczL8GdC8/M5rUQL1ym2lcKvnWWQcFlicRUU7x+24OxNSXl3FqCnhHC9
+ LhvsgWmzdNtrkNTfrN7XdwiGQdebYO8aCPiQvThEVKBBOC3wMKknV/stIFbVMnbKATqQ
+ t75w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729654474; x=1730259274;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dGHEwIIzB23tpzx5mvuqbcFlOnyFHekDP8qTyxIn24Y=;
- b=ZNITWrWpU0y06TSjYXfsVLuz5vif0BMJ7NZ+7sOThB8W32x5XJkIn7lkQEP00MBANc
- 1JawOdDTSpT3CNKxKgYMQLxpmgas89SJR8g+4am2vkn+4j9yN7Fu6GNpnsZ3807tFbYq
- spXxkw50gciwQYk26uneedHz0V3ROWJQDL+gq80GJCnxYPs+nE/VgSrJNr9wWfaxO5Z5
- fY6I6jdbg24UBVVrIpoFGbVlBocCShJNYIAiTty5g2K/k5JvTowAvHsB5KUs/VGZn/5e
- iRfHz5C2r2Qm6w82ckgMKEYlzn9FRT0Xe8wuG7XU77SBmtHM5NBLIQsOM5CZ4ypttf0Y
- bjHg==
-X-Gm-Message-State: AOJu0YxZ0mCn+9ZzgAV/n9XC9kedfN50ANcLQgr4TZAd1dY8UfZtKssT
- KVu5XQI3QZSWS6c6Y/HwVz5DlWiyrd9Zjv11VsbFxJNVwwdu+Wt3pOK5m/JXRr9ea3oJ/+4oIrs
- O
-X-Google-Smtp-Source: AGHT+IGt6ugYxhAORmhOmPY6URDJLkHhpHhJzOmu1bck0sOhzJ7sVTdfKJWybDqv+yfwWnIOd2fBew==
-X-Received: by 2002:aa7:8d9a:0:b0:71e:7258:c69b with SMTP id
- d2e1a72fcca58-71edc1f79e1mr7408117b3a.14.1729654473532; 
- Tue, 22 Oct 2024 20:34:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729654486; x=1730259286;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E9BZ1D2dqbD5itfvWww7sIn9+uEnlW5x+Ejm53Jry8E=;
+ b=YR4/k5PqBrfhfD3HczoW/55o5Uq5mLib7+R/8tab91rdM05sCHiTIdNTQrbutgZMYl
+ QPAyCMySJEGXIKwhwRzKIMR40ODyyxAbt5keVtkmGMR9pNSKhT6Ozb5Fa0hbjhqMNSKH
+ HybG5Mqm+/9XHSUV8ddpdsSEhg01xnmACE44HQ919SJUYTxT8gIEuipFV6qvc/dqWPhq
+ 9W1jVQuixEstfvhODDuERzyyB5V22TlxYOBIDwgY1CuH1fa1INqjDU//IFzbNucw8rpK
+ C0LmjC2vlQM6G4nRbPXeeK0QnUmbVMBsv87Px7NFTg17JkbnO+04L8igzf3MG6DUYlXf
+ XR+w==
+X-Gm-Message-State: AOJu0YxkcFizdY8CusCZz1JqzwN9kf9Dsy3VKw+8+TMQhyUf9gMkyd9f
+ ZQgGosWKkiQHas4zodPDEc7bFWY9sEg8b+EcpUGYZ/WxsjL3WjBgAqZbqlpMTtUUNK3ZpMwAqQU
+ J
+X-Google-Smtp-Source: AGHT+IHzI4jDJAu5EumahZPEIqhIs+WHTEWc45oXxE4fEK0yknjTKWrGqWpyacy6p3VGpXmrp+wIxg==
+X-Received: by 2002:a05:6a21:6e41:b0:1d9:1fac:7256 with SMTP id
+ adf61e73a8af0-1d978b358abmr1359260637.30.1729654486607; 
+ Tue, 22 Oct 2024 20:34:46 -0700 (PDT)
 Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec13d73b1sm5438338b3a.105.2024.10.22.20.34.32
+ d2e1a72fcca58-71ec13d73b1sm5438338b3a.105.2024.10.22.20.34.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 20:34:33 -0700 (PDT)
+ Tue, 22 Oct 2024 20:34:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 00/24] tcg + linux-user patch queue
-Date: Tue, 22 Oct 2024 20:34:08 -0700
-Message-ID: <20241023033432.1353830-1-richard.henderson@linaro.org>
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 16/24] include/exec: Improve probe_access_full{,
+ _mmu} documentation
+Date: Tue, 22 Oct 2024 20:34:24 -0700
+Message-ID: <20241023033432.1353830-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241023033432.1353830-1-richard.henderson@linaro.org>
+References: <20241023033432.1353830-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,87 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241013184733.1423747-2-richard.henderson@linaro.org>
+---
+ include/exec/exec-all.h | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-  Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu into staging (2024-10-21 17:12:59 +0100)
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 72240ef426..2e4c4cc4b4 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -368,6 +368,13 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+  * The CPUTLBEntryFull structure returned via @pfull is transient
+  * and must be consumed or copied immediately, before any further
+  * access or changes to TLB @mmu_idx.
++ *
++ * This function will not fault if @nonfault is set, but will
++ * return TLB_INVALID_MASK if the page is not mapped, or is not
++ * accessible with @access_type.
++ *
++ * This function will return TLB_MMIO in order to force the access
++ * to be handled out-of-line if plugins wish to instrument the access.
+  */
+ int probe_access_full(CPUArchState *env, vaddr addr, int size,
+                       MMUAccessType access_type, int mmu_idx,
+@@ -375,22 +382,14 @@ int probe_access_full(CPUArchState *env, vaddr addr, int size,
+                       CPUTLBEntryFull **pfull, uintptr_t retaddr);
+ 
+ /**
+- * probe_access_mmu() - Like probe_access_full except cannot fault and
+- * doesn't trigger instrumentation.
++ * probe_access_full_mmu:
++ * Like probe_access_full, except:
+  *
+- * @env: CPUArchState
+- * @vaddr: virtual address to probe
+- * @size: size of the probe
+- * @access_type: read, write or execute permission
+- * @mmu_idx: softmmu index
+- * @phost: ptr to return value host address or NULL
+- * @pfull: ptr to return value CPUTLBEntryFull structure or NULL
+- *
+- * The CPUTLBEntryFull structure returned via @pfull is transient
+- * and must be consumed or copied immediately, before any further
+- * access or changes to TLB @mmu_idx.
+- *
+- * Returns: TLB flags as per probe_access_flags()
++ * This function is intended to be used for page table accesses by
++ * the target mmu itself.  Since such page walking happens while
++ * handling another potential mmu fault, this function never raises
++ * exceptions (akin to @nonfault true for probe_access_full).
++ * Likewise this function does not trigger plugin instrumentation.
+  */
+ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+                           MMUAccessType access_type, int mmu_idx,
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20241022
-
-for you to fetch changes up to 310df7a9fe400f32cde8a7edf80daad12cd9cf02:
-
-  linux-user/riscv: Fix definition of RISCV_HWPROBE_EXT_ZVFHMIN (2024-10-22 13:45:03 -0700)
-
-----------------------------------------------------------------
-tcg: Reset data_gen_ptr correctly
-tcg/riscv: Implement host vector support
-tcg/ppc: Fix tcg_out_rlw_rc
-target/i386: Walk NPT in guest real mode
-target/i386: Use probe_access_full_mmu in ptw_translate
-linux-user: Fix build failure caused by missing __u64 on musl
-linux-user: Emulate /proc/self/maps under mmap_lock
-linux-user/riscv: Fix definition of RISCV_HWPROBE_EXT_ZVFHMIN
-linux-user/ppc: Fix sigmask endianness issue in sigreturn
-
-----------------------------------------------------------------
-Alexander Graf (1):
-      target/i386: Walk NPT in guest real mode
-
-Dani Szebenyi (1):
-      tcg/ppc: Fix tcg_out_rlw_rc
-
-Huang Shiyuan (1):
-      tcg/riscv: Add basic support for vector
-
-Ilya Leoshkevich (3):
-      linux-user: Emulate /proc/self/maps under mmap_lock
-      linux-user/ppc: Fix sigmask endianness issue in sigreturn
-      linux-user: Trace rt_sigprocmask's sigsets
-
-Richard Henderson (6):
-      tcg: Reset data_gen_ptr correctly
-      disas/riscv: Fix vsetivli disassembly
-      tcg/riscv: Accept constant first argument to sub_vec
-      include/exec: Improve probe_access_full{, _mmu} documentation
-      target/i386: Use probe_access_full_mmu in ptw_translate
-      target/i386: Remove ra parameter from ptw_translate
-
-TANG Tiancheng (10):
-      util: Add RISC-V vector extension probe in cpuinfo
-      tcg/riscv: Implement vector mov/dup{m/i}
-      tcg/riscv: Add support for basic vector opcodes
-      tcg/riscv: Implement vector cmp/cmpsel ops
-      tcg/riscv: Implement vector neg ops
-      tcg/riscv: Implement vector sat/mul ops
-      tcg/riscv: Implement vector min/max ops
-      tcg/riscv: Implement vector shi/s/v ops
-      tcg/riscv: Implement vector roti/v/x ops
-      tcg/riscv: Enable native vector support for TCG host
-
-Yao Zi (2):
-      linux-user: Fix build failure caused by missing __u64 on musl
-      linux-user/riscv: Fix definition of RISCV_HWPROBE_EXT_ZVFHMIN
-
- disas/riscv.h                        |   2 +-
- host/include/riscv/host/cpuinfo.h    |   2 +
- include/exec/exec-all.h              |  29 +-
- include/tcg/tcg.h                    |   6 +
- linux-user/syscall_defs.h            |   6 +-
- tcg/riscv/tcg-target-con-set.h       |   9 +
- tcg/riscv/tcg-target-con-str.h       |   3 +
- tcg/riscv/tcg-target.h               |  78 +--
- tcg/riscv/tcg-target.opc.h           |  12 +
- disas/riscv.c                        |   2 +-
- linux-user/ppc/signal.c              |   2 +-
- linux-user/strace.c                  |  88 +++-
- linux-user/syscall.c                 |   6 +-
- target/i386/tcg/sysemu/excp_helper.c |  45 +-
- tcg/tcg.c                            |   2 +-
- util/cpuinfo-riscv.c                 |  34 +-
- linux-user/strace.list               |   3 +-
- tcg/ppc/tcg-target.c.inc             |   4 +-
- tcg/riscv/tcg-target.c.inc           | 994 ++++++++++++++++++++++++++++++++---
- 19 files changed, 1152 insertions(+), 175 deletions(-)
- create mode 100644 tcg/riscv/tcg-target.opc.h
 
