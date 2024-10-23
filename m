@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113B5CFA462
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCCFBCFA462
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3hPo-0003mv-G0; Wed, 23 Oct 2024 15:53:08 -0400
+	id 1t3hSe-0004Zr-OF; Wed, 23 Oct 2024 15:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3hPm-0003ma-CB
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:53:06 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1t3hSe-0004ZZ-0x
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:56:04 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3hPk-0003RG-Ms
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:53:06 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5c96936065dso146137a12.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 12:53:04 -0700 (PDT)
+ id 1t3hSc-0003oo-Ba
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:56:03 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a9a1b71d7ffso12995366b.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 12:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729713183; x=1730317983; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729713360; x=1730318160; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QT0fsmeUUu55WfC8QvMKGZaDpBsFX4XCwi0kKbXfBWg=;
- b=QvBinTK2U6j0QJUPsm/dHBP8VjnI3g09HPulsgZK76Fa8W9ZE4dRY41l8ODfavLBIu
- Ej64gcmVfQ1Kc7SBwM+13Qwb4P7occeXkgEjsiLGHf/f2pyNByWbxxmuWygECRvJnqeC
- sw+dDmjTPM/imT52Q4Vz3ska04auFkvzveWc1K/mGxJvrVRr+owtuWPkhvqK1QYdxiAs
- VxpFIiRuW1dgCEYPOJP36bzLJTZn/YFfGoqY9GRrIuAjYWmyl/5QNICWYnLEt6rElGfj
- 6OnUcOBm5HF8kpjZiqsFUUOBWJYmq/GRXoefE77owKkZJnsT6evm9LnPbLiRHXiCEw6+
- 3b2Q==
+ bh=l2VeZfk5RhUV4m/3QRWtunltjmFsa5OFmqGhIhq+qkA=;
+ b=PLl0XgiPCY8t2kpMXafI2g63LnJmOFbOA8LO0dCNYbKgoF7GkNDZShvEsy50PJC+PS
+ SkjyuL+93SkKAKf1lbULXQxfd7gXD6fM00A1c1KdwP5qkdiDwaHI10Qslg+zYGLfVaws
+ lJ2Fw5vPv9WosDHSQBHH1Q4bNeNObBcKYA9RNXgkCZfCcJM74wVriKeDqcXlMBzHvW5O
+ 0c5eqsL13GDMQEj8w8BrJwfEmsn1/gFEC08JYbPcW+5AOk8f62ckRR4rxshR0MfTeofI
+ BBpwp0mjb74VgKguasU1pEjWgzAeOqctX6BWYpCmSx2Tt/0lDpKJ9cmcWi9SHdMT3UjT
+ KAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729713183; x=1730317983;
+ d=1e100.net; s=20230601; t=1729713360; x=1730318160;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QT0fsmeUUu55WfC8QvMKGZaDpBsFX4XCwi0kKbXfBWg=;
- b=fLPT6R7K/rMTEk/DOgRELtHsK8EZXSOChk4M8k29coVeWpchmGGpP9EQZhVEtuS5VW
- Z67pXPRDI4BV7/8YKVc/t6/rOSYFOPDXq2xUX/Kd61eJh5xNSZQKk5U+96efC3qlaRNF
- o9gyxFwNFtEAlrYmF88m3uVI3+kaXcQmudKkM9FmJ1yZZKnbsRggUKTUQAEZKMRDf135
- Uks3gJiViYnbYARFc0h2eVnfuBZTwIILjlDqb0sXAV1XN4GnuRXn4qnfimWyvHtnID0u
- 9oJTkTdYNddNE9YF0yi2U7j0X1l8323F6HTe+ImG8+jmGko0+vJ6fu1fA5dGcYgiTQFz
- 9Ldg==
-X-Gm-Message-State: AOJu0YynP+hZuAk4otDiysd3I6abe/3gaq2DfXDtu4Y3I9lZDrXdWxff
- 7Y3NSyOmP4uSNSVSemcvlz6yr6DNh7U3ocfwbFI1LFPtSmJkd8HZTaQSp4UZtLw=
-X-Google-Smtp-Source: AGHT+IFdcrHmqD9fNUlvupmugonhdeOCD6uYFsd/3JVqrXmNmPFd8SYhePk4PeM841jeXm46M9/MGQ==
-X-Received: by 2002:a05:6402:34cc:b0:5c8:8bde:a1d3 with SMTP id
- 4fb4d7f45d1cf-5cb8af8e752mr3874776a12.22.1729713182838; 
- Wed, 23 Oct 2024 12:53:02 -0700 (PDT)
+ bh=l2VeZfk5RhUV4m/3QRWtunltjmFsa5OFmqGhIhq+qkA=;
+ b=eA+1Aiib4UsuBsKd5uXzXKCzZ40+9+IqfM6vCIPsvu12R7XxL9z5Jp7MPjZZvkUMWH
+ +XsHgbB8mWRRAltiSK9owtxnfbap7xmckcD0UlY7KG6EngA+KzlN/T9kE8VuCRMc6NS0
+ RGkS/FVuwMSf94R9wuXmprbDAH4nYobnG4zCzsaS34xth/EbqxXdU7T1Q7JZNg0ngrDO
+ X/PUL8rYmi4tRq+VpmLR53iDSNW6Kx/CoFIJTpozS1/0rU64FRTNSuhVXHRoCQRnMcDK
+ SZdI0oKk0iHkYdIQ0Zp9379qakaD0fkq4bJGO7NdK4JZhlvdAsA/t6rLfF2qcb2yZdcx
+ 2VAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUL6uqtrlHvc4p348z6p5oPSjmjp54yxP3a/daliXaAbEV3CDdzGfmRd4KxZ1jrLBm66GOWjy4vvPJ5@nongnu.org
+X-Gm-Message-State: AOJu0Yypr2rTFjZj9DazpIHBlrlE+/BLYjLbkowk2wC2qsxa/VYpKdWH
+ U6kUMenWwphDyAJYafujlzWzpEBObewtmc7eB9td4tMnuVgo56BeIl0+tc9Y7Bo=
+X-Google-Smtp-Source: AGHT+IFg+o/t3R9ud6hJg9jQUspWFCR/JaFye8S8cIXVSE/IiZRl5fWlHNThCXVcAe3D13kDQEzcVw==
+X-Received: by 2002:a17:907:60d6:b0:a99:89e9:a43d with SMTP id
+ a640c23a62f3a-a9abf8ac3a2mr337451466b.39.1729713359807; 
+ Wed, 23 Oct 2024 12:55:59 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5cb6696b4dcsm5043038a12.4.2024.10.23.12.53.02
+ a640c23a62f3a-a9a9159a265sm515355066b.212.2024.10.23.12.55.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 12:53:02 -0700 (PDT)
+ Wed, 23 Oct 2024 12:55:59 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8AAD15F897;
- Wed, 23 Oct 2024 20:53:01 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A6BF95F897;
+ Wed, 23 Oct 2024 20:55:58 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,  Cameron Esfahani <dirty@apple.com>
-Subject: Re: [PATCH] hvf: remove unused but set variable
-In-Reply-To: <20241023182922.1040964-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Wed, 23 Oct 2024 11:29:22 -0700")
-References: <20241023182922.1040964-1-pierrick.bouvier@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,  Daniel Henrique Barboza
+ <danielhb413@gmail.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Kewen Lin <linkw@linux.ibm.com>,
+ qemu-devel@nongnu.org,  qemu-ppc@nongnu.org,  John Platts
+ <john_platts@hotmail.com>,  Fabiano Rosas <farosas@linux.ibm.com>
+Subject: Re: [PATCH v2] tests/tcg: Replace -mpower8-vector with -mcpu=power8
+In-Reply-To: <20241023131250.48510-1-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Wed, 23 Oct 2024 15:12:03 +0200")
+References: <20241023131250.48510-1-iii@linux.ibm.com>
 User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Wed, 23 Oct 2024 20:53:01 +0100
-Message-ID: <87zfmuk34y.fsf@draig.linaro.org>
+Date: Wed, 23 Oct 2024 20:55:58 +0100
+Message-ID: <87ttd2k301.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,65 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-> fixes associated warning when building on MacOS.
+> [1] deprecated -mpower8-vector, resulting in:
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  target/i386/hvf/x86_task.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>     powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no long=
+er supported
+>     qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before '=
+float'
+>         4 | typedef vector float vsx_float32_vec_t;
+>           |               ^~~~~~
 >
-> diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
-> index f09bfbdda5b..cdea2ea69d9 100644
-> --- a/target/i386/hvf/x86_task.c
-> +++ b/target/i386/hvf/x86_task.c
-> @@ -122,7 +122,6 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segmen=
-t_selector tss_sel, int rea
->      load_regs(cpu);
->=20=20
->      struct x86_segment_descriptor curr_tss_desc, next_tss_desc;
-> -    int ret;
->      x68_segment_selector old_tss_sel =3D vmx_read_segment_selector(cpu, =
-R_TR);
->      uint64_t old_tss_base =3D vmx_read_segment_base(cpu, R_TR);
->      uint32_t desc_limit;
-> @@ -138,7 +137,7 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segmen=
-t_selector tss_sel, int rea
->      if (reason =3D=3D TSR_IDT_GATE && gate_valid) {
->          int dpl;
->=20=20
-> -        ret =3D x86_read_call_gate(cpu, &task_gate_desc, gate);
-> +        x86_read_call_gate(cpu, &task_gate_desc, gate);
+> Use -mcpu=3Dpower8 instead. In order to properly verify that this works,
+> one needs a big-endian (the minimum supported CPU for 64-bit
+> little-endian is power8 anyway) GCC configured with --enable-checking
+> (see GCC commit e154242724b0 ("[RS6000] Don't pass -many to the
+> assembler").
+>
+> [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D109987
+>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-If we don't care and this is the only caller we fix up
-x86_read_call_gate not to return a value. It looks like it fails safe
-with an empty entry (but also the function x86_read_call_gate needs the
-printf removing).
-
->=20=20
->          dpl =3D task_gate_desc.dpl;
->          x68_segment_selector cs =3D vmx_read_segment_selector(cpu, R_CS);
-> @@ -167,11 +166,12 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segm=
-ent_selector tss_sel, int rea
->          x86_write_segment_descriptor(cpu, &next_tss_desc, tss_sel);
->      }
->=20=20
-> -    if (next_tss_desc.type & 8)
-> -        ret =3D task_switch_32(cpu, tss_sel, old_tss_sel, old_tss_base, =
-&next_tss_desc);
-> -    else
-> +    if (next_tss_desc.type & 8) {
-> +        task_switch_32(cpu, tss_sel, old_tss_sel, old_tss_base, &next_ts=
-s_desc);
-> +    } else {
->          //ret =3D task_switch_16(cpu, tss_sel, old_tss_sel, old_tss_base=
-, &next_tss_desc);
->          VM_PANIC("task_switch_16");
-> +    }
->=20=20
->      macvm_set_cr0(cpu->accel->fd, rvmcs(cpu->accel->fd, VMCS_GUEST_CR0) |
->                                  CR0_TS_MASK);
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
