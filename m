@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B500D2E00A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6518DD2E00A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 04:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3STe-0008Hd-Ec; Tue, 22 Oct 2024 23:56:06 -0400
+	id 1t3Sbu-0001Pm-O1; Wed, 23 Oct 2024 00:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t3STc-0008HS-Mm
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:56:04 -0400
+ id 1t3Sbt-0001PR-4z
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 00:04:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1t3STa-00024q-2I
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:56:04 -0400
+ id 1t3Sbr-0002dX-C4
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 00:04:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729655757;
+ s=mimecast20190719; t=1729656273;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aEyrePI2wgzJ3ffsJVfpfOAkUtteh+ZkhsYIVY1UxvY=;
- b=EdmXlQf5pploXkBFU2N3un2sh7HLLMrIqCSTLQyJc49zbGkmt+YxLVTMAFM5dpU7N6hCYO
- k3/GNkp7TNPGi9s66CHsACaUtRoo7f9ha5yGPtmRBDvXkA+OYY57J4ckcDbZqi5bdnpBSd
- wBnl8y4ZXH9uNJM44wBgW/4x7InPL38=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=B5WToq7NzHoocaRgTK4x1OCK76bJCyL7ULtF+WQMY0k=;
+ b=VvJw/p5e+2yd8phgMycxCuiT1Qr0/4LQq4J28HOWsyksLXY9BQ54D/OoY7sPGpnPoV+aGX
+ NAd9umm43XW17o8EkhTwrdlBgbulcfKqbfZVTQlQQQpxku5+YBkxsHrO0GdAaDg768wVZH
+ kL17YMxkfmAg+hxL9dXHwHo0e/SEtC4=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-7BHQshOfMqSFxZAHDOSdvg-1; Tue, 22 Oct 2024 23:55:55 -0400
-X-MC-Unique: 7BHQshOfMqSFxZAHDOSdvg-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-7eb07db7812so405103a12.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:55:55 -0700 (PDT)
+ us-mta-618-u17sjZezPpWhFUbvXznV3w-1; Wed, 23 Oct 2024 00:04:31 -0400
+X-MC-Unique: u17sjZezPpWhFUbvXznV3w-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2e2ca403f5dso6012358a91.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 21:04:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729655754; x=1730260554;
+ d=1e100.net; s=20230601; t=1729656269; x=1730261069;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aEyrePI2wgzJ3ffsJVfpfOAkUtteh+ZkhsYIVY1UxvY=;
- b=cpxlWAWss/i4ftV3fEmJLlUrSdnJCdWO6+Wbq39XWXLVs7gpagi4X34cat5Qmu/SK1
- 0S9EmUeClC4Yf1Zr3MRE7rN5fdfLJ1zYyR11PNMIGs4PTaX6XRezN2EfUo5EVBaF94e7
- ZFRTDfIXYZKckPi7Jizajr385Dw1POKMhV/b3FCtSj1VI5vkYaqs/boL7rJsX64ZZNrE
- McXh/uv6aWIBnfnWsgYD5fHD2VnuOpvnT2BzON8316Zul/7avJ+lxrF3Ut9/4lW9+ujS
- Dk66RAn9gg6xzwRR2qNU4epxMw6NlquIiiDQw4JSAJW9ELlyT0oqSXqR04iurvgSo/7Z
- 6QMg==
-X-Gm-Message-State: AOJu0YycMddXPkMzi7qlsYsvuEvefUYWr7bXgLAU/QKPAbTauesZP8c6
- Pn6lN5cMIWx6c8HeNXOhJfqg1CDDPNfBBk/UsjgcOu0iSEbB+Mh1vGzumO3lM1atv0tplxU6QDm
- NAoHlI0vkTmzD/2Cwy9K1CAZ+UZGVd8bP2zMIpGOMxF6OlGjbinhWhyPtNmc1NluxAVqSSGWB2j
- 8opwuYOxJ0S5tfrvpS3qxVycbKcdbqxe8k74RfeUiawdM=
-X-Received: by 2002:a05:6a20:12cb:b0:1cc:e71d:ea10 with SMTP id
- adf61e73a8af0-1d96c3cb139mr7486185637.14.1729655754171; 
- Tue, 22 Oct 2024 20:55:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkBbyoKcrxbWtUS3sBytsnNr/j8QRaabqre+qLePLmG/+9izsg5ZxyWAzfbjBDYiqXNcb5Q8wccpz0YPaT5gM=
-X-Received: by 2002:a05:6a20:12cb:b0:1cc:e71d:ea10 with SMTP id
- adf61e73a8af0-1d96c3cb139mr7486161637.14.1729655753685; Tue, 22 Oct 2024
- 20:55:53 -0700 (PDT)
+ bh=B5WToq7NzHoocaRgTK4x1OCK76bJCyL7ULtF+WQMY0k=;
+ b=AnrTW5ZHzNsjMiDK7SSY1TrgOvKWuxnXjjPyemj6Bv/a7PUatFHpqq+Tto+7GfS3oN
+ cGJvBZiMhF2s7zY3Ui//6Q+sk77It3Psk4Qdxjvvw4GsRSLGEG6o7QiyWbOSKhtQwT+N
+ jQVKETdpMV6qJ3HcebOF2bp+seoNLphBvs3zqpcn99SQWg6J5LOOEW6J2G7olXoOUXey
+ 6sok5kebUO/zRvHCcbbxez9AEiBZtQ4vLbrPLXNzGSyHJ9I8wZx3IX7+HjaDGpL13iAD
+ eeueYoSnKWbVOTgezRQuDOREQCQlzJ+lP50IHrmP5GMOdOcspprs2g9DSWaEkmf4Mjzp
+ KKAA==
+X-Gm-Message-State: AOJu0Yy/BPEOWiIDRYRzRlcmmFNRAy9AwX7p0Y5WElzGTNlKsQp9qpuG
+ cppeOXTFyWE7gUuF2UXOAFvkWYDwfENeB5CZRwgZ1C4ml8tzI+UqaXm0UEz1B9AKujrMya2Yrjl
+ 0xIUfvx420ChXWhrRAQWb5RCSo0ePfVNEYuBd3U3gyxxnESuVG7YETX1mHengFLypfZYarkdKr5
+ DbJ92bbKSt7nXz6VI0WbAnOy5j0Mwks2zUCsnu1zNXq9E=
+X-Received: by 2002:a17:90a:ce83:b0:2cc:ef14:89e3 with SMTP id
+ 98e67ed59e1d1-2e76b5e63d1mr1215566a91.15.1729656268783; 
+ Tue, 22 Oct 2024 21:04:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbd0be6WfLipSQMJSS5gsphqgtnh4Uli4LxWXVzSao5/8uX5Cop+lA9RgYbAh/rAFOK0e+TyJIIQletyefdA8=
+X-Received: by 2002:a17:90a:ce83:b0:2cc:ef14:89e3 with SMTP id
+ 98e67ed59e1d1-2e76b5e63d1mr1215547a91.15.1729656268324; Tue, 22 Oct 2024
+ 21:04:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240905181330.3657590-1-berrange@redhat.com>
- <20240905181330.3657590-5-berrange@redhat.com>
-In-Reply-To: <20240905181330.3657590-5-berrange@redhat.com>
+References: <20240912165408.234447-1-eperezma@redhat.com>
+ <20240912165408.234447-3-eperezma@redhat.com>
+In-Reply-To: <20240912165408.234447-3-eperezma@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 23 Oct 2024 11:55:42 +0800
-Message-ID: <CACGkMEv5DJ=6eH65UE9qjbUt9KWrMnqg1TJKU-d1SBodhLsbRg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] ebpf: add formal error reporting to all APIs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
+Date: Wed, 23 Oct 2024 12:04:17 +0800
+Message-ID: <CACGkMEviROuas_MT-tT+PMw0PCJa9Ossu1a-oKHpgt_TAiZxhg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] net: move backend cleanup to NIC cleanup
+To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, dtatulea@nvidia.com, mcoqueli@redhat.com, 
+ mst@redhat.com, si-wei.liu@oracle.com, qemu-stable@nongnu.org, 
+ leiyang@redhat.com, Ani Sinha <anisinha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -99,94 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 6, 2024 at 2:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
+On Fri, Sep 13, 2024 at 12:54=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@redha=
+t.com> wrote:
 >
-> The eBPF code is currently reporting error messages through trace
-> events. Trace events are fine for debugging, but they are not to be
-> considered the primary error reporting mechanism, as their output
-> is inaccessible to callers.
+> Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
+> structures if peer nic is present") effectively delayed the backend
+> cleanup, allowing the frontend or the guest to access it resources as
+> long as the frontend is still visible to the guest.
 >
-> This adds an "Error **errp" parameter to all methods which have
-> important error scenarios to report to the caller.
+> However it does not clean up the resources until the qemu process is
+> over.  This causes an effective leak if the device is deleted with
+> device_del, as there is no way to close the vdpa device.  This makes
+> impossible to re-add that device to this or other QEMU instances until
+> the first instance of QEMU is finished.
 >
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Move the cleanup from qemu_cleanup to the NIC deletion and to
+> net_cleanup.
+>
+> Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net structu=
+res if peer nic is present")
+> Reported-by: Lei Yang <leiyang@redhat.com>
+> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> ---
+> v2: Remove NIC peer also at net_cleanup. vhost-user trust all the
+> backends are clean before qemu removes char devices.
+>
+> This is not a requisite introduced by this commit as
+> system/runstate.c:qemu_cleanup shows.
+> ---
 
-This doesn't compile:
+Unfortunately, this fails the build:
 
-[3/84] Compiling C object libcommon.a.p/ebpf_ebpf_rss-stub.c.o
-FAILED: libcommon.a.p/ebpf_ebpf_rss-stub.c.o
-cc -m64 -Ilibcommon.a.p -Isubprojects/dtc/libfdt
--I../subprojects/dtc/libfdt -Isubprojects/slirp -I../subprojects/slirp
--I../subprojects/slirp/src -Isubprojects/libvduse
--I../subprojects/libvduse -I/usr/include/pixman-1
--I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
--I/usr/include/sysprof-4 -I/usr/include/libmount -I/usr/include/blkid
--I/usr/include/gio-unix-2.0 -fdiagnostics-color=3Dauto -Wall
--Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-strong
--Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security
--Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
--Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
--Wold-style-declaration -Wold-style-definition -Wredundant-decls
--Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
--Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
--Wno-shift-negative-value -isystem /home/devel/git/qemu/linux-headers
--isystem linux-headers -iquote . -iquote /home/devel/git/qemu -iquote
-/home/devel/git/qemu/include -iquote
-/home/devel/git/qemu/host/include/x86_64 -iquote
-/home/devel/git/qemu/host/include/generic -iquote
-/home/devel/git/qemu/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_SOURCE
--D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing
--fno-common -fwrapv -fzero-call-used-regs=3Dused-gpr -fPIE
--D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -MD -MQ
-libcommon.a.p/ebpf_ebpf_rss-stub.c.o -MF
-libcommon.a.p/ebpf_ebpf_rss-stub.c.o.d -o
-libcommon.a.p/ebpf_ebpf_rss-stub.c.o -c ../ebpf/ebpf_rss-stub.c
-../ebpf/ebpf_rss-stub.c:26:6: error: conflicting types for
-=E2=80=98ebpf_rss_load=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSContext =
-*)=E2=80=99
-   26 | bool ebpf_rss_load(struct EBPFRSSContext *ctx)
-      |      ^~~~~~~~~~~~~
-In file included from ../ebpf/ebpf_rss-stub.c:14:
-/home/devel/git/qemu/ebpf/ebpf_rss.h:46:6: note: previous declaration
-of =E2=80=98ebpf_rss_load=E2=80=99 with type =E2=80=98_Bool(struct EBPFRSSC=
-ontext *, Error
-**)=E2=80=99
-   46 | bool ebpf_rss_load(struct EBPFRSSContext *ctx, Error **errp);
-      |      ^~~~~~~~~~~~~
-../ebpf/ebpf_rss-stub.c:31:6: error: conflicting types for
-=E2=80=98ebpf_rss_load_fds=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSCont=
-ext *, int,  int,
-int,  int)=E2=80=99
-   31 | bool ebpf_rss_load_fds(struct EBPFRSSContext *ctx, int program_fd,
-      |      ^~~~~~~~~~~~~~~~~
-In file included from ../ebpf/ebpf_rss-stub.c:14:
-/home/devel/git/qemu/ebpf/ebpf_rss.h:48:6: note: previous declaration
-of =E2=80=98ebpf_rss_load_fds=E2=80=99 with type =E2=80=98_Bool(struct EBPF=
-RSSContext *, int,
-int,  int,  int,  Error **)=E2=80=99
-   48 | bool ebpf_rss_load_fds(struct EBPFRSSContext *ctx, int program_fd,
-      |      ^~~~~~~~~~~~~~~~~
-../ebpf/ebpf_rss-stub.c:37:6: error: conflicting types for
-=E2=80=98ebpf_rss_set_all=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSConte=
-xt *, struct
-EBPFRSSConfig *, uint16_t *, uint8_t *)=E2=80=99 {aka =E2=80=98_Bool(struct
-EBPFRSSContext *, struct EBPFRSSConfig *, short unsigned int *,
-unsigned char *)=E2=80=99}
-   37 | bool ebpf_rss_set_all(struct EBPFRSSContext *ctx, struct
-EBPFRSSConfig *config,
-      |      ^~~~~~~~~~~~~~~~
-In file included from ../ebpf/ebpf_rss-stub.c:14:
-/home/devel/git/qemu/ebpf/ebpf_rss.h:52:6: note: previous declaration
-of =E2=80=98ebpf_rss_set_all=E2=80=99 with type =E2=80=98_Bool(struct EBPFR=
-SSContext *, struct
-EBPFRSSConfig *, uint16_t *, uint8_t *, Error **)=E2=80=99 {aka =E2=80=98_B=
-ool(struct
-EBPFRSSContext *, struct EBPFRSSConfig *, short unsigned int *,
-unsigned char *, Error **)=E2=80=99}
-   52 | bool ebpf_rss_set_all(struct EBPFRSSContext *ctx, struct
-EBPFRSSConfig *config,
-      |      ^~~~~~~~~~~~~~~~
+https://gitlab.com/jasowang/qemu/-/jobs/8138832559
 
 Thanks
 
