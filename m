@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF614CFA448
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 15:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 476C2CFA44C
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 16:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3dgW-0004d9-HQ; Wed, 23 Oct 2024 11:54:08 -0400
+	id 1t3dnV-0006GE-6G; Wed, 23 Oct 2024 12:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3dgV-0004ct-BN
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:54:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1t3dml-00065m-6v
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:00:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3dgQ-0001Pr-4f
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 11:54:07 -0400
+ id 1t3dmi-0002VX-Sy
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:00:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729698840;
+ s=mimecast20190719; t=1729699231;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Sr5t7lsjkcWNRLov3A3pP2OIbRHk2T+oMAmSoPPsNQM=;
- b=UHIAjdh0hSAC+e8SZZUkIERJ24W5AaMLOhkkUhimLYU9DBWJViy0co2S+oUoK7m1fxTNUB
- rzofM4T3S5Mb4tEfYV19uGYI1lqfkchi7bjfFiIFxS8hXhi5NdycDumu6Bo1/OOvAQEI+9
- axd5z5nXdQHL/kTpr6AadtqkEyK8Sv0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TJCmLK5c12grqiJU4zgqydS0dDdKnDkrJK7DyJdEWXk=;
+ b=ixuB1lZdW9LWEDa0LCInRtkArjJCYHIqawIqAACVlegK2/dsm0//7DVmLTZ3TKLGOo05Pb
+ UW9LGt0ZtzWAnXeBvrdv536j9fYMl7lSTO0gvqcP43YDZKe1m3ZhSg64xA0jXxpAK4/NQZ
+ vDO0H4N2TebVJaHnQqE+b9WXnz6M0MQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-vB5MDI2mPDaU0_fZAB-KdA-1; Wed, 23 Oct 2024 11:53:58 -0400
-X-MC-Unique: vB5MDI2mPDaU0_fZAB-KdA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d432f9f5eso3522296f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 08:53:58 -0700 (PDT)
+ us-mta-161-aURBvQhXOKObgz9abx6ekg-1; Wed, 23 Oct 2024 12:00:30 -0400
+X-MC-Unique: aURBvQhXOKObgz9abx6ekg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d56061a4cso3660390f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 09:00:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729698837; x=1730303637;
+ d=1e100.net; s=20230601; t=1729699229; x=1730304029;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Sr5t7lsjkcWNRLov3A3pP2OIbRHk2T+oMAmSoPPsNQM=;
- b=OX5w/bkC30hnCTxeRLyjyLik+iMYxfdtaFtaohd91x4v5404fHKkYwwG88P/+T3KFV
- 05Z4lB+LJAo/c4UR26FHM42j1uJifMElwSufr4dA0nfoCRq9FMa/TyCsuBmmVhPPMCpi
- T386CDGOY3foEYhxa7u3SkeZ054Y4sAZtClgrs1MNJiPkomtMKu2qNPA/eE8LNah1kbV
- waym1xtdnB9jrf6COuOxu4W6YtinYR75gSowhkxTkOzJ04BIhR33jStwUdtZVqp3GlQX
- jFNpQ9c3GykTXfFzEiD5MUrGv0kDLT0FIipRiAPRlPfSE8+YsSdrOt2Zt3+yCMWEtq4k
- oiMg==
+ bh=TJCmLK5c12grqiJU4zgqydS0dDdKnDkrJK7DyJdEWXk=;
+ b=jYALhCE5nko6PhDTNtpBXP8QuG+7Z01WgCj4zQnfIfeSHa/VLwgU99PdorlLpevY8S
+ O7LhDTOLmfbObLvsFaFqk7bihm8M7cy0dkspzHQAYKlmoTDNyhVcKJ5s1S9sxbxg6OPL
+ kr4fagO3bcx+TvIKwFS4+c2O2KsgwUiO8o19n7n3nQ5kocSM6fx2dtcMNdSzihY4yPLl
+ ONkPWaENqJFZ1XLjeuVsIylNY8GlMXg+3x3b9XYez45Q+OlRP+bMXWzstCi6gJsHF8E1
+ gtsUoKUxCYpvdBVieP4nkebAPkB9pAXozEfRO4YAeg+FHcee7NoFIcKoq0wyT54Vtzyw
+ Zj+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWw5ciLLifgqn7BpqEvkEqwPgyUA5zMFXVWy0LKzUlYnowtktSgr/eEtc3dzU1376YFILMP8PPLWHTm@nongnu.org
-X-Gm-Message-State: AOJu0Yxu5bfCwTohX0Ju7ytJgH//leYo4h2pEq6jelNdoU2PloIPwGM3
- pQ6FdDstojJCEUAGVUjOeR9oY9tKnW7f+Mpzp6UeM+CxnqK5VWISzs5Q1+udVdib6sAf1u6tyWX
- TqBRarijb4bG7qZGgTjxrpDgQtU/tqmxkdbHfAWgjGeN2mbiIzhX3
-X-Received: by 2002:a05:6000:1183:b0:37d:3735:8fe9 with SMTP id
- ffacd0b85a97d-37efcf1a9b6mr2219234f8f.27.1729698837435; 
- Wed, 23 Oct 2024 08:53:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7gFeGxmJfLxwUwx7GN5jPeAahT4wbK/u25uwkdL4UBo6zMZZb3HUUrwA6kCzNKJi0U4X1nA==
-X-Received: by 2002:a05:6000:1183:b0:37d:3735:8fe9 with SMTP id
- ffacd0b85a97d-37efcf1a9b6mr2219215f8f.27.1729698836984; 
- Wed, 23 Oct 2024 08:53:56 -0700 (PDT)
+ AJvYcCUCv0Ad6Q9nTXzfsdUXxXHUdanP5Eb65ebVj8KJ6YEQ65ish8NSJbRvjOhFyk/hQyP/t0pEvV0RxLfw@nongnu.org
+X-Gm-Message-State: AOJu0Yzl0916YntmnN0zXjH2BUtU6IxCDJAWbEUKCdl6FDxMbF0gxnx/
+ VvRqnzUjOBj3vwUOPql/o7GsfESOcxSKFb3QFBp/HSrwdBLA83LkZeJQagMViz+0tl2babfmmby
+ dQmHF+RVlFPYeeYAkTzEgIh7m6Nl6kgyobYheu+UMOarjXWIaxImu
+X-Received: by 2002:a05:6000:502:b0:374:c4c2:fc23 with SMTP id
+ ffacd0b85a97d-37efcf93218mr2001835f8f.56.1729699228647; 
+ Wed, 23 Oct 2024 09:00:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZMEqQmj1QqEKtlrdOxgU288EXHQoQDaAjrpHwM9VFYVtN6lTXs1uycwofToJf7+XlQCVAXA==
+X-Received: by 2002:a05:6000:502:b0:374:c4c2:fc23 with SMTP id
+ ffacd0b85a97d-37efcf93218mr2001806f8f.56.1729699228145; 
+ Wed, 23 Oct 2024 09:00:28 -0700 (PDT)
 Received: from [192.168.10.3] ([151.95.144.54])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-37ee0b93d53sm9280975f8f.70.2024.10.23.08.53.55
+ ffacd0b85a97d-37ee0b93e9asm9216322f8f.68.2024.10.23.09.00.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 08:53:56 -0700 (PDT)
-Message-ID: <82f35464-0f7c-4678-aa74-1865cf3d89dd@redhat.com>
-Date: Wed, 23 Oct 2024 17:53:54 +0200
+ Wed, 23 Oct 2024 09:00:27 -0700 (PDT)
+Message-ID: <c4ce511b-bdc2-466f-85e6-2495c0bd2f08@redhat.com>
+Date: Wed, 23 Oct 2024 18:00:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V1 02/14] accel: accel preinit function
+Subject: Re: [RFC V1 04/14] accel: set accelerator and machine props earlier
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
@@ -82,7 +82,7 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 References: <1729178055-207271-1-git-send-email-steven.sistare@oracle.com>
- <1729178055-207271-3-git-send-email-steven.sistare@oracle.com>
+ <1729178055-207271-5-git-send-email-steven.sistare@oracle.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -120,17 +120,17 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <1729178055-207271-3-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1729178055-207271-5-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -149,257 +149,106 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/17/24 17:14, Steve Sistare wrote:
-> Extract the first part of the AccelState init_machine function into
-> a new function preinit, which can be called without knowing any
-> machine properties.  For now call preinit and init_machine at the
-> same place, so no functional change.
-
-For KVM I would also include
-
-     missing_cap = kvm_check_extension_list(s, kvm_required_capabilites);
-     if (!missing_cap) {
-         missing_cap =
-             kvm_check_extension_list(s, kvm_arch_required_capabilities);
-     }
-
-With this change, patches 1-3 are okay as a separate submission.
-
-Paolo
-
+> Make all global and compat properties available before the first objects
+> are created.  Set accelerator compatibility properties in
+> configure_accelerators, when the accelerator is chosen, and call
+> configure_accelerators earlier.  Set machine options earlier.
+> 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   accel/accel-system.c        |  6 +++++
->   accel/kvm/kvm-all.c         | 58 +++++++++++++++++++++++++++++----------------
->   accel/xen/xen-all.c         | 11 ++++++---
->   include/qemu/accel.h        |  1 +
->   target/i386/nvmm/nvmm-all.c | 10 +++++++-
->   target/i386/whpx/whpx-all.c | 14 +++++++----
->   6 files changed, 70 insertions(+), 30 deletions(-)
+>   accel/accel-system.c |  2 --
+>   system/vl.c          | 34 ++++++++++++++++++----------------
+>   2 files changed, 18 insertions(+), 18 deletions(-)
 > 
 > diff --git a/accel/accel-system.c b/accel/accel-system.c
-> index f6c947d..fef6625 100644
+> index f6c947d..c8aeae4 100644
 > --- a/accel/accel-system.c
 > +++ b/accel/accel-system.c
-> @@ -36,8 +36,14 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
->       int ret;
->       ms->accelerator = accel;
->       *(acc->allowed) = true;
-> +    ret = acc->preinit(accel);
-> +    if (ret < 0) {
-> +        goto fail;
-> +    }
-> +
->       ret = acc->init_machine(ms);
->       if (ret < 0) {
-> +fail:
+> @@ -41,8 +41,6 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
 >           ms->accelerator = NULL;
 >           *(acc->allowed) = false;
 >           object_unref(OBJECT(accel));
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 905fb84..c7c6001 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2484,6 +2484,42 @@ static int kvm_setup_dirty_ring(KVMState *s)
->       return 0;
->   }
->   
-> +static int kvm_preinit(AccelState *accel)
-> +{
-> +    int ret;
-> +    KVMState *s = KVM_STATE(accel);
-> +
-> +    s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
-> +    if (s->fd == -1) {
-> +        error_report("Could not access KVM kernel module: %m");
-> +        ret = -errno;
-> +        goto err;
-> +    }
-> +
-> +    ret = kvm_ioctl(s, KVM_GET_API_VERSION, 0);
-> +    if (ret < KVM_API_VERSION) {
-> +        if (ret >= 0) {
-> +            ret = -EINVAL;
-> +        }
-> +        fprintf(stderr, "kvm version too old\n");
-> +        goto err;
-> +    }
-> +
-> +    if (ret > KVM_API_VERSION) {
-> +        ret = -EINVAL;
-> +        error_report("kvm version not supported");
-> +        goto err;
-> +    }
-> +    return 0;
-> +
-> +err:
-> +    assert(ret < 0);
-> +    if (s->fd != -1) {
-> +        close(s->fd);
-> +    }
-> +    return ret;
-> +}
-> +
->   static int kvm_init(MachineState *ms)
->   {
->       MachineClass *mc = MACHINE_GET_CLASS(ms);
-> @@ -2523,27 +2559,6 @@ static int kvm_init(MachineState *ms)
->       QTAILQ_INIT(&s->kvm_sw_breakpoints);
->   #endif
->       QLIST_INIT(&s->kvm_parked_vcpus);
-> -    s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
-> -    if (s->fd == -1) {
-> -        error_report("Could not access KVM kernel module: %m");
-> -        ret = -errno;
-> -        goto err;
-> -    }
-> -
-> -    ret = kvm_ioctl(s, KVM_GET_API_VERSION, 0);
-> -    if (ret < KVM_API_VERSION) {
-> -        if (ret >= 0) {
-> -            ret = -EINVAL;
-> -        }
-> -        error_report("kvm version too old");
-> -        goto err;
-> -    }
-> -
-> -    if (ret > KVM_API_VERSION) {
-> -        ret = -EINVAL;
-> -        error_report("kvm version not supported");
-> -        goto err;
-> -    }
->   
->       kvm_supported_memory_attributes = kvm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
->       kvm_guest_memfd_supported =
-> @@ -3891,6 +3906,7 @@ static void kvm_accel_class_init(ObjectClass *oc, void *data)
->   {
->       AccelClass *ac = ACCEL_CLASS(oc);
->       ac->name = "KVM";
-> +    ac->preinit = kvm_preinit;
->       ac->init_machine = kvm_init;
->       ac->has_memory = kvm_accel_has_memory;
->       ac->allowed = &kvm_allowed;
-> diff --git a/accel/xen/xen-all.c b/accel/xen/xen-all.c
-> index 0bdefce..dfcb90c 100644
-> --- a/accel/xen/xen-all.c
-> +++ b/accel/xen/xen-all.c
-> @@ -75,10 +75,8 @@ static void xen_setup_post(MachineState *ms, AccelState *accel)
+> -    } else {
+> -        object_set_accelerator_compat_props(acc->compat_props);
 >       }
+>       return ret;
 >   }
->   
-> -static int xen_init(MachineState *ms)
-> +static int xen_preinit(AccelState *accel)
->   {
-> -    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> -
->       xen_xc = xc_interface_open(0, 0, 0);
->       if (xen_xc == NULL) {
->           xen_pv_printf(NULL, 0, "can't open xen interface\n");
-> @@ -97,6 +95,12 @@ static int xen_init(MachineState *ms)
->           xc_interface_close(xen_xc);
->           return -1;
+> diff --git a/system/vl.c b/system/vl.c
+> index b94a6b9..bca2292 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -2346,6 +2346,7 @@ static int do_configure_accelerator(void *opaque, QemuOpts *opts, Error **errp)
+>           goto bad;
 >       }
-> +    return 0;
-> +}
-> +
-> +static int xen_init(MachineState *ms)
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>   
+> +    object_set_accelerator_compat_props(ac->compat_props);
+>       acs->accel = accel;
+>       return 1;
+>   
+> @@ -3728,29 +3729,14 @@ void qemu_init(int argc, char **argv)
+>       parse_memory_options();
+>   
+>       qemu_create_machine(machine_opts_dict);
+> -
+> -    suspend_mux_open();
+> -
+> -    qemu_disable_default_devices();
+> -    qemu_setup_display();
+> -    qemu_create_default_devices();
+> -    qemu_create_early_backends();
+> -
+>       qemu_apply_legacy_machine_options(machine_opts_dict);
+>       qemu_apply_machine_options(machine_opts_dict);
+
+This makes it impossible to refer to a backend in a machine option from 
+the command line.  While this is not done for now, it is not a 
+limitation I'd like to introduce.
+
+Could qemu_apply_machine_options() be moved after 
+configure_accelerators(), and phase_advance(PHASE_MACHINE_CREATED) with it?
+
+Paolo
+
+
+>       qobject_unref(machine_opts_dict);
+> -    phase_advance(PHASE_MACHINE_CREATED);
+>   
+> -    /*
+> -     * Note: uses machine properties such as kernel-irqchip, must run
+> -     * after qemu_apply_machine_options.
+> -     */
+>       accel = configure_accelerators(argv[0]);
+> -    create_accelerator(accel);
+> -    phase_advance(PHASE_ACCEL_CREATED);
 >   
 >       /*
->        * The XenStore write would fail when running restricted so don't attempt
-> @@ -125,6 +129,7 @@ static void xen_accel_class_init(ObjectClass *oc, void *data)
->       };
+> -     * Beware, QOM objects created before this point miss global and
+> +     * QOM objects created after this point see all global and
+>        * compat properties.
+>        *
+>        * Global properties get set up by qdev_prop_register_global(),
+> @@ -3765,6 +3751,22 @@ void qemu_init(int argc, char **argv)
+>        * called from do_configure_accelerator().
+>        */
 >   
->       ac->name = "Xen";
-> +    ac->preinit = xen_preinit;
->       ac->init_machine = xen_init;
->       ac->setup_post = xen_setup_post;
->       ac->allowed = &xen_allowed;
-> diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-> index 972a849..6b3b1cf 100644
-> --- a/include/qemu/accel.h
-> +++ b/include/qemu/accel.h
-> @@ -37,6 +37,7 @@ typedef struct AccelClass {
->       /*< public >*/
->   
->       const char *name;
-> +    int (*preinit)(AccelState *accel);
->       int (*init_machine)(MachineState *ms);
->   #ifndef CONFIG_USER_ONLY
->       void (*setup_post)(MachineState *ms, AccelState *accel);
-> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-> index 65768ac..ce858a0 100644
-> --- a/target/i386/nvmm/nvmm-all.c
-> +++ b/target/i386/nvmm/nvmm-all.c
-> @@ -1153,7 +1153,7 @@ static struct RAMBlockNotifier nvmm_ram_notifier = {
->   /* -------------------------------------------------------------------------- */
->   
->   static int
-> -nvmm_accel_init(MachineState *ms)
-> +nvmm_accel_preinit(MachineState *ms)
->   {
->       int ret, err;
->   
-> @@ -1178,6 +1178,13 @@ nvmm_accel_init(MachineState *ms)
->           error_report("NVMM: Wrong state size %u", qemu_mach.cap.state_size);
->           return -EPROGMISMATCH;
->       }
-> +    return 0;
-> +}
+> +    suspend_mux_open();
 > +
-> +static int
-> +nvmm_accel_init(MachineState *ms)
-> +{
-> +    int ret, err;
->   
->       ret = nvmm_machine_create(&qemu_mach.mach);
->       if (ret == -1) {
-> @@ -1204,6 +1211,7 @@ nvmm_accel_class_init(ObjectClass *oc, void *data)
->   {
->       AccelClass *ac = ACCEL_CLASS(oc);
->       ac->name = "NVMM";
-> +    ac->preinit = nvmm_accel_preinit;
->       ac->init_machine = nvmm_accel_init;
->       ac->allowed = &nvmm_allowed;
->   }
-> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-> index a6674a8..50bfc19 100644
-> --- a/target/i386/whpx/whpx-all.c
-> +++ b/target/i386/whpx/whpx-all.c
-> @@ -2516,6 +2516,14 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
->    * Partition support
->    */
->   
-> +static int whpx_accel_preinit(AccelState *accel)
-> +{
-> +    if (!init_whp_dispatch()) {
-> +        return -ENOSYS;
-> +    }
-> +    return 0;
-> +}
+> +    qemu_disable_default_devices();
+> +    qemu_setup_display();
+> +    qemu_create_default_devices();
+> +    qemu_create_early_backends();
 > +
->   static int whpx_accel_init(MachineState *ms)
->   {
->       struct whpx_state *whpx;
-> @@ -2529,11 +2537,6 @@ static int whpx_accel_init(MachineState *ms)
->   
->       whpx = &whpx_global;
->   
-> -    if (!init_whp_dispatch()) {
-> -        ret = -ENOSYS;
-> -        goto error;
-> -    }
-> -
->       whpx->mem_quota = ms->ram_size;
->   
->       hr = whp_dispatch.WHvGetCapability(
-> @@ -2713,6 +2716,7 @@ static void whpx_accel_class_init(ObjectClass *oc, void *data)
->   {
->       AccelClass *ac = ACCEL_CLASS(oc);
->       ac->name = "WHPX";
-> +    ac->preinit = whpx_accel_preinit;
->       ac->init_machine = whpx_accel_init;
->       ac->allowed = &whpx_allowed;
->   
+> +    phase_advance(PHASE_MACHINE_CREATED);
+> +
+> +    /*
+> +     * Note: uses machine properties such as kernel-irqchip, must run
+> +     * after qemu_apply_machine_options.
+> +     */
+> +    create_accelerator(accel);
+> +    phase_advance(PHASE_ACCEL_CREATED);
+> +
+>       machine_class = MACHINE_GET_CLASS(current_machine);
+>       if (!qtest_enabled() && machine_class->deprecation_reason) {
+>           warn_report("Machine type '%s' is deprecated: %s",
 
 
