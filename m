@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9598ED2E011
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECF2D2E010
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3S9T-0007Oq-Mz; Tue, 22 Oct 2024 23:35:15 -0400
+	id 1t3SDf-0005bo-0g; Tue, 22 Oct 2024 23:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3S9C-00071u-2V
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:58 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3SDd-0005bf-Hz
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:39:33 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3S97-0008OB-5h
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:34:57 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-71e592d7f6eso4141072b3a.3
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:34:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3SDb-0000Oy-Jb
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:39:33 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-539e63c8678so7666463e87.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729654492; x=1730259292; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2OngEdDcxXClzCGFGbODXTalLFHBoaUhdi3GauHxJbA=;
- b=YAYiyTjBzQLRfqYoHhvh63fzEYc4/sOSBS/U9Rg6JdDoPLQzl0VzYbtJWLYsXfT+Dg
- 0M/X1JD7Ar2hS6BTZ0D061M8VGlRCuhEVR3uFKMWZj2w7IWbbHs3CuIytpoYq5z78uE7
- Ll3dykqAxLdJlapMDhn2IbnQixQJ2XXwHK0BVolOrc/neHM6qQ+MkdKBQM1GTuU40v8c
- fX/rbWU0C+9Y5dMUwCOin5uphlmDrL5qqq5rXgw0H3Z1FtHQzAQVOtMxrWJsgvD1wWVp
- 2QDw//q6qMZgFz1elu6ddn9YphYKt/7gnFWqGnETl2PJDEjPChnb4L9nPjj6u2KkUpAR
- nmmw==
+ d=linaro.org; s=google; t=1729654769; x=1730259569; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=coxadzSGY7dDOklSM2+vwyj+QajFVN0GwZwnAfDskDg=;
+ b=bkQJWjW6KwUvrrBSD8n4qhuV/vkqupPns5Z7kew+H7nqQmXMFAnXS+OWCcmiZiJESb
+ 1EkMJlc9KkaH/s8L/B0oaQsGEB0Atfn1PSbGNNRf+zZByWAcjB59x6TUc9sD+5XK1uGO
+ j6vbzYHCUe6itPwRlqUNdHWVjrOmfYOrA1H912Euk6iu2VJavaY8CoCst4WanPcz3Unh
+ FKcprYqGRMcbuDcWYQjh0a2+a9HtO6rbrlDPy5bCaAijdwExnU29PShlz6TUvFdWaII7
+ WR0b6seXX4e580iPhg+T2+I4rVZ0239JTjpXTpis95/uu+hzMIzU1lcMBdg5N53/nO3n
+ whbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729654492; x=1730259292;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2OngEdDcxXClzCGFGbODXTalLFHBoaUhdi3GauHxJbA=;
- b=f2tQqQ3qQrMk3VTM6k1zHxdostoy+hf7zd45Z+D1Gri1uXzyRrpUJqfcASL6Ag69q9
- e5FXGGnGKQQs+L33Dcc/PoZNYEKfSVtxxKUjvaZyvp4Rhk4d1h2HPEyJc8mNj44VIIcI
- mwMrMmcw0R7qVUwHHWbgeTLJcN3qSl7axHjSQB2JejAVFVBMi0xXXtSTm4GBK2tg9O5H
- Gc5AyBcEid8iYAb8X5ole+ioKTo65/eWkaVAe85US6+GiTYFzGsQc5vZfz4aOOFOpP3D
- woYNbuOGcGDl3Obqjma9DwCFxPTQh7hUqoU+4dm/dMiVAfV1/TrAkRq1M8ClEcTjMVMF
- SL/w==
-X-Gm-Message-State: AOJu0YwGIisElb3i7+uEHGpef/BZNxEUVzCwAZMzAhO4JkZP6uGZS9GD
- lcSlzeKl5QAFLoN53vwleGFQ56jNHhUxA1UXQoDLykVEyCLBHaSSzxzZdmrDxIBNLNxf52/Ckcn
- 4
-X-Google-Smtp-Source: AGHT+IFF1y93URtQcNRgQYIzb4tLqZJv+PZylfOsMB8ykPfHQL8ymNodzlDtSQ6uP/33xaF0FerWag==
-X-Received: by 2002:a05:6a00:4b56:b0:71d:f15e:d023 with SMTP id
- d2e1a72fcca58-72030bcbb6fmr1981515b3a.11.1729654491648; 
- Tue, 22 Oct 2024 20:34:51 -0700 (PDT)
-Received: from stoup.. (174-21-81-121.tukw.qwest.net. [174.21.81.121])
+ d=1e100.net; s=20230601; t=1729654769; x=1730259569;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=coxadzSGY7dDOklSM2+vwyj+QajFVN0GwZwnAfDskDg=;
+ b=pqBsGDzSxcI+4HChcJHkASW87C05R0Fj1ClTd0ehPJg9mfCEcB6V3xMP6QpwlMEwBv
+ pENVe1HZ2CXZsSBT3Rc0AhxMompQIdyza92rkGIHsKcQ8wCV/+sgrLuYEGRxUbgq0l2I
+ tuoT2ieFFDAfJE1a0zEnCqlGc1TDUhYp6nXhVhMskKofi2WAeDiKTxCn4+BCUCKk7S0l
+ 9DuT4cZw9p3mUboJcd910/TrS8TSWsTSo6JRBr/p3Idz2pt/3tuQNF5++9acfC5brW0b
+ q/9RFOzlaotLfMBCRzM8KUb/uygSc5fmowOwQM7kHmznS34JCZEEAuOLgmNjGjf3AE0f
+ hsCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTwwLDONTFZ+nwijnijIE43rCnJ2rjJRDIV16IVwrzIFIJxqNNm079T1X7uAzu2gr7T3B1YMIRRIwW@nongnu.org
+X-Gm-Message-State: AOJu0YyCwA11MNjRJDbwcaHPu2y0jkAwdxXSmfOmj8g0W7GglEYyGTmP
+ SRAIuCZsyshx0OoldrhCzcvSpNh+vOXuPR6pPhxAI2ISjZ1pZijT4kNmvh+SX+0=
+X-Google-Smtp-Source: AGHT+IG4b5ksSyhE4pjO4vxB51vos9/KuELx10DCOW9+1Nh8PR5goQ97WDDUiic8qo/e2ezIuGkEYw==
+X-Received: by 2002:a05:6512:1583:b0:52e:9762:2ba4 with SMTP id
+ 2adb3069b0e04-53b1a315eeemr358488e87.25.1729654769070; 
+ Tue, 22 Oct 2024 20:39:29 -0700 (PDT)
+Received: from [192.168.122.226] ([91.223.100.209])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec13d73b1sm5438338b3a.105.2024.10.22.20.34.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 20:34:51 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Yao Zi <ziyao@disroot.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 23/24] linux-user: Fix build failure caused by missing __u64 on
- musl
-Date: Tue, 22 Oct 2024 20:34:31 -0700
-Message-ID: <20241023033432.1353830-24-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241023033432.1353830-1-richard.henderson@linaro.org>
-References: <20241023033432.1353830-1-richard.henderson@linaro.org>
+ 2adb3069b0e04-53a22431c1bsm949404e87.221.2024.10.22.20.39.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Oct 2024 20:39:27 -0700 (PDT)
+Message-ID: <f011fa40-7d81-4eea-98a7-6546b9155ac2@linaro.org>
+Date: Wed, 23 Oct 2024 00:39:10 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 20/24] audio: Add sndio backend
+To: Alexandre Ratchov <alex@caoua.org>, Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>, Bandan Das <bsd@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Akihiko Odaki <akihiko.odaki@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Brad Smith <brad@comstyle.com>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+References: <20220927081912.180983-1-kraxel@redhat.com>
+ <20220927081912.180983-21-kraxel@redhat.com>
+ <fc493743-5ab0-49eb-98ed-dd260f0f60d6@linaro.org>
+ <ZuBXqSoohgbS-rF6@redhat.com> <ZuBeYjju389c8MoI@vm1.arverb.com>
+ <87frq42d4i.fsf@pond.sub.org> <ZxdrH5Prk2bC2fw5@vm1.arverb.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZxdrH5Prk2bC2fw5@vm1.arverb.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,41 +108,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Zi <ziyao@disroot.org>
+Hi Alexandre,
 
-Commit 9651cead2f ("linux-user: add openat2 support in linux-user")
-ships a definition of struct open_how_ver0 while assuming type __u64 is
-available in code, which is not the case when building QEMU on musl.
-Let's replaces __u64 with uint64_t.
+On 22/10/24 06:06, Alexandre Ratchov wrote:
+> On Fri, Sep 13, 2024 at 10:04:29AM +0200, Markus Armbruster wrote:
+>> Alexandre Ratchov <alex@caoua.org> writes:
+>>
+>>> On Tue, Sep 10, 2024 at 03:28:57PM +0100, Daniel P. Berrangé wrote:
+>>>>>
+>>>>> This is the single use of the ISC license in the more than 10k
+>>>>> files in the repository. Just checking IIUC this document:
+>>>>> https://www.gnu.org/licenses/quick-guide-gplv3.en.html
+>>>>>
+>>>>> ISC -> LGPLv2.1 -> GPLv2 -> GPLv3
+>>>>>
+>>>>> So ISC is compatible with GPLv2-or-later. Is that correct?
+>>>>
+>>>> ISC is a permissive license that's semantically pretty much equivalent
+>>>> to either MIT or BSD 2 clause licenses and thus is broadly compatible
+>>>> with most other licenses, including the various GPL variants/versions.
+>>>>
+>>>> None the less, since sndioaudio.c was a new file, it should have been
+>>>> submitted using the GPLv2+, unless there was a reason it needed to
+>>>> diverge and use ISC.
+>>>>
+>>>> An example justification for divering is if the new code is derived
+>>>> from some non-QEMU source that was already ISC.
+>>>>
+>>>
+>>> The ISC license is more permissive than GPLv2+ and compatible with it.
+>>> The file uses this license for history reasons: initial versions of it
+>>> used to be part of the OpenBSD ports repository, which uses ISC.
+>>>
+>>> If ISC is not appropriate for qemu, I agree to use GPLv2+ instead (I'm
+>>> the author this file).
+>>
+>> Let's adjust the license then.  Alexandre, care to post the patch?
+>>
+> 
+> Almost all audio backends (in the audio/ directory) have the same
+> header with a copy of the MIT license. So here's a patch to make
+> audiosndio.c also use this header. The "QEMU <insert_api_here> audio
+> driver" comment was also missing, so I've added it as well.
+> 
+> OK? better suggestions?
+> 
+> diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+> index 8eb35e1e53..3922b73045 100644
+> --- a/audio/sndioaudio.c
+> +++ b/audio/sndioaudio.c
+> @@ -1,7 +1,25 @@
+>   /*
+> - * SPDX-License-Identifier: ISC
+> + * QEMU sndio audio driver
+>    *
+>    * Copyright (c) 2019 Alexandre Ratchov <alex@caoua.org>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
 
-Fixes: 9651cead2f ("linux-user: add openat2 support in linux-user")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Message-ID: <20241022122929.17465-2-ziyao@disroot.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/syscall_defs.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Thanks! We'll soon require a SPDX tag, see:
+https://lore.kernel.org/qemu-devel/20241007154548.1144961-1-berrange@redhat.com/
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 0ade83745e..0e08dfae3e 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2750,9 +2750,9 @@ struct target_sched_param {
- 
- /* from kernel's include/uapi/linux/openat2.h */
- struct open_how_ver0 {
--    __u64 flags;
--    __u64 mode;
--    __u64 resolve;
-+    uint64_t flags;
-+    uint64_t mode;
-+    uint64_t resolve;
- };
- struct target_open_how_ver0 {
-     abi_ullong flags;
--- 
-2.43.0
+The boilerplate license you used can be simplified as:
+
+   SPDX-License-Identifier: MIT
+
+Otherwise the change you suggested LGTM!
+
+Regards,
+
+Phil.
+
+>    */
+>   
+>   /*
 
 
