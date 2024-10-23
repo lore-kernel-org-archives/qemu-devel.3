@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776EBCFA45C
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 18:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89511CFA45E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3g7i-0001ja-QN; Wed, 23 Oct 2024 14:30:22 -0400
+	id 1t3gdX-0007Ji-Hp; Wed, 23 Oct 2024 15:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3g7f-0001iz-Gg
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 14:30:19 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3gdU-0007JY-HA
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:03:13 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3g7d-0008RO-AK
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 14:30:18 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-20caccadbeeso320955ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 11:30:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1t3gdT-0004af-44
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:03:12 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2e59746062fso145221a91.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 12:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729708214; x=1730313014; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JOUjdxu6ULRCkZ7RZmLpgQ6XNl+9tI81JQfXhSF/yew=;
- b=KjugOZLnOu362S//PFDHIG3MyowBy1coy+FLdjmrEeFlnkSTP4X3S5rmP05U3j0jVP
- vfHlaBfQbg02php4XAwoTRd3XDFlUmJ5sKHDgS3MwmvaWoKEgewduNjEnWCyY8/s2zlS
- 9gTmQRdgjdlkecu+lumAN72MgPE6NTnQmRp9Flx82EAhWNO/m88K9tvqqs82Y9l/qKuC
- iXDybMvlqBZRNn1by7T7Im4WIwRFIZ1qi96NT2JJkcxh4QXl+Q9reJplY9pMR9+awZIr
- ohv3nF0sp4i+p6v+xbZpiIuviRvwQTa4ygEDAHqjxh26OJULLcJu9q5O/A03Hst+dxvX
- eHvg==
+ d=linaro.org; s=google; t=1729710188; x=1730314988; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kEpN/4zfdTQwHoXRqldW+t4Oh438O829Ujo2/9g336w=;
+ b=Pv83ghsxifBRXueFvi+hqxAwy7DWgieXTOEbWDLxhwsWbkIXqVrDFSTIMAem5sNQnl
+ U1opJsqyg5kD6aR7pUzQiNNATFPYBOSQ8S6nVPoNVoaVGQCJOeKy8Uz4DKGdXyWXwl5n
+ 8aq9/Ry/irkmTIeI4tFC5sZlGaZNU4ODe02yjznPxy5o2sR/2sH5/scmQeb4i8sy+p5+
+ 8HmPGzTRqt+zcnxG8ZcrNc4Pfvmlhpj+MtEsc7KQy2bmqTLJRcFKe3QG5VgFOg1IHPfC
+ 5gQG9CPZUD/69S4K+NeoQ5/0jM2ZBwKlWg7/NA69Zg522JwChPxiKf0yOrXpoYE+5uzO
+ JM6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729708214; x=1730313014;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JOUjdxu6ULRCkZ7RZmLpgQ6XNl+9tI81JQfXhSF/yew=;
- b=bPn4ajtgzMQ/vPXFSCaAlkrbfgmLr7fyce13SZhQyFqjpnjSNNoXIfma7NPiGLiPVe
- LhgHpPdIwQ4NA623CV43YSSRrwFKjzbzTxJI6jHB79dXvCmIET5UCUzyBtiwfbzV8eCX
- DEn1SyDCqu9sGcviJYsgS8S+3DGz56cgRKt8LzvjxrUKYsEXiCBVnojVBMV24vAOqpMB
- SGRmIkeqz/P00iPG7ZnjygMhIbeB5b5pJkRLsJEAob/1yphQafZOVWNfbLfIQj+uPZnp
- rAVEkzMkJzC0UrSk1piqd1Oyo0BSSaj3fA7oEcVNndWuVHVtJhRUoym+5MC0gOSUwKiC
- Lzqw==
-X-Gm-Message-State: AOJu0YxFONG+qD0jSb6/uft7TooQAyDfafS6C3sNwL4yGfbby7GqfWyY
- npOMLptRlyvgEs2kxy9w6W5Ftn0VrAFg7NdLcsKhmSPJEa0FxHglBc2HclHE6nFb8yZSoF9/j7G
- /Jrh6CQ==
-X-Google-Smtp-Source: AGHT+IE7UW8t0iJm0seXU/7ZAip4RxZjVvqR6PrW6H9Wmvo+cMueS8MxSgnxGfJoPJ/ZSUchxtVOWg==
-X-Received: by 2002:a17:902:c409:b0:20c:bcf1:c70e with SMTP id
- d9443c01a7336-20fa9df99f8mr43981265ad.13.1729708213909; 
- Wed, 23 Oct 2024 11:30:13 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ d=1e100.net; s=20230601; t=1729710188; x=1730314988;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kEpN/4zfdTQwHoXRqldW+t4Oh438O829Ujo2/9g336w=;
+ b=RzSs5Jyp/LF31gsnx0xYVnY9ZZ5Al7FTHksD/2smjjI6FwyhESpLa4MDkSaugwX0KM
+ HmuqcVJDFnV3M/fU+hh92S9Jao7n1LP2mL4N2zf0G7soFgUjtea9b7rWE2LaPqK6QWbd
+ YvaiMGCd4lUd5zXfoW/233Y6ej/OrRfYkL4qbytRdPqHTo4ZdM4IHJd7TZMbp6xNSqul
+ 2XRPbtO4HeUmauyFongk7eNNMdo/ke775ieT2ek5Xosz2xf1IJANJZhE3wNxdJoMKkFm
+ uXAFQMWueylSaNlTaBpBDqP6qCeg56v2SICpaVPtB7LtUgZE3lMaC5B5eT5r0G6yBjrG
+ U4HQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrehMkeDL8njsHecpdtIXshqb5LkjDdxIYTRDXBj+IXj7KveHErcCZaXP7xWRFzEHrQOWw9vay5tdz@nongnu.org
+X-Gm-Message-State: AOJu0YyZBu6pnK4liXax/Hj80PVh8e6CDCEeAe2IbodJrn8xKoq7AE8N
+ R0SgUE5VFkrzMarD1vZDay9cw/QRd23uHGlWXZjrMdxo04xiQtFLdf/LbIKk0wo=
+X-Google-Smtp-Source: AGHT+IElSaKHt1UnaaUf8Jrk0gRP9i9km+Bq6lVL7JYk/yzdvW0IDKeWCRkIPtK57rUS4o3PeCWetA==
+X-Received: by 2002:a17:90a:1bc6:b0:2e2:bb02:4668 with SMTP id
+ 98e67ed59e1d1-2e76b722988mr2985951a91.40.1729710188258; 
+ Wed, 23 Oct 2024 12:03:08 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0db2bcsm60436985ad.191.2024.10.23.11.30.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 11:30:13 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>, alex.bennee@linaro.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] tap-win32: fix format-truncation warning
-Date: Wed, 23 Oct 2024 11:30:09 -0700
-Message-Id: <20241023183009.1041419-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ 98e67ed59e1d1-2e76dfbc842sm1809030a91.31.2024.10.23.12.03.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Oct 2024 12:03:07 -0700 (PDT)
+Message-ID: <d847f246-1772-4c9a-97f7-05118a311286@linaro.org>
+Date: Wed, 23 Oct 2024 12:03:06 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Fix GDB complaining about system-supplied DSO
+ string table index
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20241023144744.50440-1-iii@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241023144744.50440-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,117 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simply increase destination buffer size so truncation can't happen.
+On 10/23/24 07:46, Ilya Leoshkevich wrote:
+> When debugging qemu-user processes using gdbstub, the following warning
+> appears every time:
+> 
+>      warning: BFD: warning: system-supplied DSO at 0x7f8253cc3000 has a corrupt string table index
+> 
+> The reason is that QEMU does not map the VDSO's section headers. The
+> VDSO's ELF header's e_shoff points to zeros, which GDB fails to parse.
 
-"cc" "-m64" "-Ilibcommon.a.p" "-Isubprojects/dtc/libfdt" "-I../subprojects/=
-dtc/libfdt" "-ID:/a/_temp/msys64/mingw64/include/pixman-1" "-ID:/a/_temp/ms=
-ys64/mingw64/include/glib-2.0" "-ID:/a/_temp/msys64/mingw64/lib/glib-2.0/in=
-clude" "-ID:/a/_temp/msys64/mingw64/include/ncursesw" "-fdiagnostics-color=
-=3Dauto" "-Wall" "-Winvalid-pch" "-Werror" "-std=3Dgnu11" "-O2" "-g" "-fsta=
-ck-protector-strong" "-Wempty-body" "-Wendif-labels" "-Wexpansion-to-define=
-d" "-Wformat-security" "-Wformat-y2k" "-Wignored-qualifiers" "-Wimplicit-fa=
-llthrough=3D2" "-Winit-self" "-Wmissing-format-attribute" "-Wmissing-protot=
-ypes" "-Wnested-externs" "-Wold-style-declaration" "-Wold-style-definition"=
- "-Wredundant-decls" "-Wshadow=3Dlocal" "-Wstrict-prototypes" "-Wtype-limit=
-s" "-Wundef" "-Wvla" "-Wwrite-strings" "-Wno-missing-include-dirs" "-Wno-ps=
-abi" "-Wno-shift-negative-value" "-iquote" "." "-iquote" "D:/a/qemu/qemu" "=
--iquote" "D:/a/qemu/qemu/include" "-iquote" "D:/a/qemu/qemu/host/include/x8=
-6_64" "-iquote" "D:/a/qemu/qemu/host/include/generic" "-iq
-../net/tap-win32.c: In function 'tap_win32_open':
-../net/tap-win32.c:343:19: error: '%s' directive output may be truncated wr=
-iting up to 255 bytes into a region of size 176 [-Werror=3Dformat-truncatio=
-n=3D]
-  343 |              "%s\\%s\\Connection",
-      |                   ^~
-  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
-      |                                       ~~~~~~~~~
-In function 'get_device_guid',
-    inlined from 'tap_win32_open' at ../net/tap-win32.c:616:10:
-../net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes =
-into a destination of size 256
-  341 |         snprintf(connection_string,
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  342 |              sizeof(connection_string),
-      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
-  343 |              "%s\\%s\\Connection",
-      |              ~~~~~~~~~~~~~~~~~~~~~
-  344 |              NETWORK_CONNECTIONS_KEY, enum_name);
-      |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../net/tap-win32.c: In function 'tap_win32_open':
-../net/tap-win32.c:242:58: error: '%s' directive output may be truncated wr=
-iting up to 255 bytes into a region of size 178 [-Werror=3Dformat-truncatio=
-n=3D]
-  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
-      |                                                          ^~
-  243 |                   ADAPTER_KEY, enum_name);
-      |                                ~~~~~~~~~
-In function 'is_tap_win32_dev',
-    inlined from 'get_device_guid' at ../net/tap-win32.c:368:21,
-    inlined from 'tap_win32_open' at ../net/tap-win32.c:616:10:
-../net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes =
-into a destination of size 256
-  242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  243 |                   ADAPTER_KEY, enum_name);
-      |                   ~~~~~~~~~~~~~~~~~~~~~~~
-../net/tap-win32.c: In function 'tap_win32_open':
-../net/tap-win32.c:620:52: error: '%s' directive output may be truncated wr=
-iting up to 255 bytes into a region of size 245 [-Werror=3Dformat-truncatio=
-n=3D]
-  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
-      |                                                    ^~
-  621 |               USERMODEDEVICEDIR,
-  622 |               device_guid,
-      |               ~~~~~~~~~~~
-../net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes =
-into a destination of size 256
-  620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  621 |               USERMODEDEVICEDIR,
-      |               ~~~~~~~~~~~~~~~~~~
-  622 |               device_guid,
-      |               ~~~~~~~~~~~~
-  623 |               TAPSUFFIX);
-      |               ~~~~~~~~~~
+Interesting.  I had wondered where this came from, but never looked.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- net/tap-win32.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/tap-win32.c b/net/tap-win32.c
-index 7edbd716337..4a4625af2b2 100644
---- a/net/tap-win32.c
-+++ b/net/tap-win32.c
-@@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
-=20
-     for (;;) {
-         char enum_name[256];
--        char unit_string[256];
-+        char unit_string[512];
-         HKEY unit_key;
-         char component_id_string[] =3D "ComponentId";
-         char component_id[256];
-@@ -315,7 +315,7 @@ static int get_device_guid(
-     while (!stop)
-     {
-         char enum_name[256];
--        char connection_string[256];
-+        char connection_string[512];
-         HKEY connection_key;
-         char name_data[256];
-         DWORD name_type;
-@@ -595,7 +595,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_=
-t *overlapped,
- static int tap_win32_open(tap_win32_overlapped_t **phandle,
-                           const char *preferred_name)
- {
--    char device_path[256];
-+    char device_path[512];
-     char device_guid[0x100];
-     int rc;
-     HANDLE handle;
---=20
-2.39.5
+> - Fix up VDSO's PHDR size in gen-vdso. This is the simplest solution,
+>    so do it. The only tricky part is byte-swaps: they need to be either
+>    done on local copies or in-place, and then reverted in the end. To
+>    preserve the existing code structure, do the former for Sym and Dyn,
+>    and the latter for Ehdr, Phdr, and Shdr.
 
+Or adjust the linker script, to mark those sections loaded.
+This may or may not be easier, considering the rest of the changes.
+
+
+> @@ -154,6 +161,16 @@ static void elfN(process)(FILE *outf, void *buf, bool need_bswap)
+>               fprintf(stderr, "LOAD segment not loaded at address 0\n");
+>               errors++;
+>           }
+> +        /*
+> +         * Extend the program header to cover the entire VDSO, so that
+> +         * load_elf_vdso() loads everything, including section headers.
+> +         */
+> +        if (len > phdr[i].p_filesz) {
+> +            phdr[i].p_filesz = len;
+> +        }
+> +        if (len > phdr[i].p_memsz) {
+> +            phdr[i].p_memsz = len;
+> +        }
+
+There should be no .bss, so these two numbers had better be identical.  Certainly this 
+adjustment *requires* that there be no .bss.  I think we should error out if the two 
+numbers differ.
+
+
+r~
 
