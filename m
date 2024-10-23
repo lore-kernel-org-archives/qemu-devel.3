@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B551CDDE71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA9ACDDE70
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 11:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3ZdJ-0007Od-ID; Wed, 23 Oct 2024 07:34:33 -0400
+	id 1t3Zd5-0007Ei-RO; Wed, 23 Oct 2024 07:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Zd4-0007EY-Il
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:19 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1t3Zd2-0007DH-Os
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:16 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Zd0-000369-Ot
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:17 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a9a0f198d38so927033966b.1
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 04:34:13 -0700 (PDT)
+ id 1t3Zcy-00033p-2n
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:15 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a9a0ec0a94fso804911866b.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 04:34:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729683252; x=1730288052; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
- b=Nn+9GcmntLkV26cfpF+y789AyNHXHDlFjCaH6lTW4w2n8nyVAVXdtPIBnIoJZq9PhC
- emHNqP3Z6edRclJnB0pyEfrS/bLduuQCOaQIU8VHbXJAcDRLheARjjeMbYN1bnhFNiW3
- +fyC6rQWUdVGAG8fYOZvvTc+0qrETpRBesclKyxtkP7V8lYVv6UbIoU/Dre58RZKFoSm
- IwclX9iqzqP6BmqGjPYImcKFAqc47Ii45j02BZhV61L9ZLsmTDH6NzEKZqDgOs+aalAY
- 7iGTgJPqLIBTowv5lDuwpNK3vJdBvO1c5T0wHFdIdv5Tb6W798XQnc28Oy88xwqi33P4
- nrPA==
+ d=linaro.org; s=google; t=1729683248; x=1730288048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pQbsv9+HLFwPElqDt1cQPCWQiM+jUl6LhMnJxHgBrO8=;
+ b=M62/Y7ybq2ZI4ywKvui+R0gWITubXpKKhbjezMkxjdMtE59sbzfh6kOIAUplCMCpxn
+ /j+LeeLAmU2b8w2K2x5xOGr+n4ahiidFdnzUYeeB1BTd04ixAa/Jh2CPPGevadVxU0ta
+ cZ9s5zqs7jcCjsQp1AREvK6a5gtGBct1xw/8n1vU4TRZ5h7SKiK7Vxc9kVwcjlNioM5+
+ 3pSf/L+H7lbYTqgch3zFdctwU8oa0xe7ISxcFfv3AMbJI73clcJ+KRiCLb/TxwvcYK61
+ N9M8V+FrWx0Y6kMunYGrX2IkzDgNlHwuefTUJXqmjKbAYxQsWvC5y9PwljTX6smKkUrI
+ 3VuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729683252; x=1730288052;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
- b=NzZToxPHrurlLBXt+Y8VtXFz+/giHrF7hnnFrrkkDqpMUMdv6xIjDXCVDod+Hgk8n7
- ElRbOK8kIHW4mzzDyokuYUud9xl3ofxc1Ph3MUHAKQ4FS+7L+vO7Gn8poqYCP/Xw9PZO
- oEtwwNYFp9+GXUP41lJSj+O3Ca6gQUPqZb4d9DNvf3VFVjbA5nSEujU/2xjPWtlqcsoC
- WYGFcQcuwgwAb6K0H6tdsH/hq9C6Li2nVhzxQ6bCBE0f/SYsVcnK/8rBQJ9GTOymlpBx
- lt+8p6ndlQwXOMZYahM5SkDsa+wqY+MNP8m0tXkCR4YaHLpGSFznbcjNIblQzlvIbqOC
- qpVQ==
-X-Gm-Message-State: AOJu0YxzYGD2PcHOdkh9lLNtXhybsCeokrS8pNUu9PZ2eLSTO9RmkzxU
- UfQcz06uzl6dmfSzvezP2d7WhD4kXXs9ZNA+udzjM7q04dLs4MoDd9o6WuUv0M4=
-X-Google-Smtp-Source: AGHT+IGX9kLBYLMntAv2Zyd9NwAZDoBf7ZcI7j6Q9Uo1J6BYAqdZAtewejuvnJX4RHJtRVe8E9G1qg==
-X-Received: by 2002:a17:907:3f98:b0:a99:ebbb:12fd with SMTP id
- a640c23a62f3a-a9abf96f557mr195597966b.65.1729683252535; 
- Wed, 23 Oct 2024 04:34:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729683248; x=1730288048;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pQbsv9+HLFwPElqDt1cQPCWQiM+jUl6LhMnJxHgBrO8=;
+ b=ffGgKh4fS3cNhOJ83B8RmjO/jypEy9FuqaHGUU88s0uUTx+lCqEl3wMb6AnSLfooM8
+ BTCeYz+nZCmNogaZdQBQ5Zmguat0ymu5/Y66ma3QgB3Fg3mwTmxrpXqaLAQig6LGFr42
+ 74xqf0pXR4mjGD78L0FMCiQUIzaguerUtl+DJCNF4ySF3OMvSqYgN45F3koSyTM6M8LM
+ nKsjEBbmCHTEO82TnNBVdjbjOAsBaMP46+s3y993vsVXtIvUvPlauToKgkr1CQs0FSAR
+ zw8HOvwsT0H3uueXCtfEKEwM2wm39XjizVVU+muaFDhI8zuPNainlqZni4+FZunvdLZ1
+ ajKA==
+X-Gm-Message-State: AOJu0Yw0B0Bj2SqatTTch7/1JxUbimZUxdTV+EU7bFrbEjn1z9uZiHjX
+ hdwTUVr6tkE1WAe+sgOuZ/gRYlGQCUX/i5XFdu7lAjc74duI4YyAtaYdfiqZ0VE=
+X-Google-Smtp-Source: AGHT+IGBTwMIHG5DvbrIefLKC+mBtckDycU3fjYg+qjkN6Z/s4jljjceL04+bmzPzYTy+RSRXwQpbw==
+X-Received: by 2002:a17:907:940b:b0:a9a:1739:91e9 with SMTP id
+ a640c23a62f3a-a9abf86af8emr196140166b.24.1729683248352; 
+ Wed, 23 Oct 2024 04:34:08 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912ee125sm463814566b.75.2024.10.23.04.34.09
+ a640c23a62f3a-a9a912f6520sm467109066b.73.2024.10.23.04.34.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 04:34:10 -0700 (PDT)
+ Wed, 23 Oct 2024 04:34:07 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CBBA05F9D0;
- Wed, 23 Oct 2024 12:34:07 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id EB4FE5F897;
+ Wed, 23 Oct 2024 12:34:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -82,25 +81,22 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  Cleber Rosa <crosa@redhat.com>, kvm@vger.kernel.org,
  Beraldo Leal <bleal@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 09/18] dockerfiles: fix default targets for
- debian-loongarch-cross
-Date: Wed, 23 Oct 2024 12:33:57 +0100
-Message-Id: <20241023113406.1284676-10-alex.bennee@linaro.org>
+Subject: [PATCH v3 00/18] maintainer updates (testing, gdbstub, plugins) pre-PR
+Date: Wed, 23 Oct 2024 12:33:48 +0100
+Message-Id: <20241023113406.1284676-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241023113406.1284676-1-alex.bennee@linaro.org>
-References: <20241023113406.1284676-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,37 +112,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This is an aggregation of three of my maintainer trees which you can
+also get from their respective branches (testing/next, gdbstub/next
+and plugins/next). It is now ready for a pull request.
 
-fix system target name, and remove --disable-system (which deactivates
-system target).
+Since last post:
 
-Found using: make docker-test-build@debian-loongarch-cross V=1
+  - added r-b tags
+  - some minor typo fixes
+  - dropped meson plugin contrib build and gdb hook changes
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/docker/dockerfiles/debian-loongarch-cross.docker | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The last thing that still needs review:
 
-diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-index 79eab5621e..538ab53490 100644
---- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
-+++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -43,8 +43,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
- ENV PATH $PATH:/opt/cross-tools/bin
- ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
- 
--ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
--ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
-+ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
-+ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
- ENV MAKE /usr/bin/make
- 
- # As a final step configure the user (if env is defined)
+  gitlab: make check-[dco|patch] a little more verbose
+
+Alex Bennée (9):
+  tests/docker: add NOFETCH env variable for testing
+  MAINTAINERS: mention my testing/next tree
+  scripts/ci: remove architecture checks for build-environment updates
+  accel/tcg: add tracepoints for cpu_loop_exit_atomic
+  gitlab: make check-[dco|patch] a little more verbose
+  MAINTAINERS: mention my gdbstub/next tree
+  config/targets: update aarch64_be-linux-user gdb XML list
+  tests/tcg: enable basic testing for aarch64_be-linux-user
+  MAINTAINERS: mention my plugins/next tree
+
+Gustavo Romero (2):
+  tests/tcg/aarch64: Use raw strings for regexes in test-mte.py
+  testing: Enhance gdb probe script
+
+Ilya Leoshkevich (2):
+  tests/docker: Fix microblaze atomics
+  tests/tcg/x86_64: Add cross-modifying code test
+
+Pierrick Bouvier (5):
+  meson: hide tsan related warnings
+  docs/devel: update tsan build documentation
+  dockerfiles: fix default targets for debian-loongarch-cross
+  contrib/plugins: remove Makefile for contrib/plugins
+  plugins: fix qemu_plugin_reset
+
+ MAINTAINERS                                   |  3 +
+ docs/devel/testing/main.rst                   | 26 +++++-
+ configure                                     | 23 ++---
+ Makefile                                      | 10 ---
+ configs/targets/aarch64_be-linux-user.mak     |  2 +-
+ meson.build                                   | 10 ++-
+ accel/tcg/plugin-gen.c                        |  4 +
+ accel/tcg/user-exec.c                         |  2 +-
+ tests/tcg/aarch64_be/hello.c                  | 35 ++++++++
+ tests/tcg/x86_64/cross-modifying-code.c       | 80 +++++++++++++++++
+ accel/tcg/ldst_atomicity.c.inc                |  9 ++
+ .gitlab-ci.d/check-dco.py                     |  5 +-
+ .gitlab-ci.d/check-patch.py                   |  5 +-
+ accel/tcg/trace-events                        | 12 +++
+ contrib/plugins/Makefile                      | 87 -------------------
+ scripts/ci/setup/ubuntu/build-environment.yml |  2 -
+ scripts/probe-gdb-support.py                  | 75 ++++++++--------
+ tests/docker/Makefile.include                 |  5 +-
+ .../dockerfiles/debian-loongarch-cross.docker |  4 +-
+ .../build-toolchain.sh                        |  8 ++
+ .../dockerfiles/debian-toolchain.docker       |  7 ++
+ tests/tcg/Makefile.target                     |  7 +-
+ tests/tcg/aarch64/gdbstub/test-mte.py         |  4 +-
+ tests/tcg/aarch64_be/Makefile.target          | 17 ++++
+ tests/tcg/x86_64/Makefile.target              |  4 +
+ 25 files changed, 273 insertions(+), 173 deletions(-)
+ create mode 100644 tests/tcg/aarch64_be/hello.c
+ create mode 100644 tests/tcg/x86_64/cross-modifying-code.c
+ delete mode 100644 contrib/plugins/Makefile
+ create mode 100644 tests/tcg/aarch64_be/Makefile.target
+
 -- 
 2.39.5
 
