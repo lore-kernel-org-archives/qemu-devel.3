@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECF5D2E01B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBC9D2E01C
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Vj6-0002M8-5C; Wed, 23 Oct 2024 03:24:16 -0400
+	id 1t3VjH-0002N1-By; Wed, 23 Oct 2024 03:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3Vj4-0002Lt-5S
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:24:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3VjG-0002Ml-0Z
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:24:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3Vj1-0006SI-R2
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:24:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3VjE-0006Ta-Jb
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:24:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729668250;
+ s=mimecast20190719; t=1729668263;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
  bh=Lg1cK11UyUr2YjlwC5rqSgQC0PQiCQPtbQFrNWRQdHo=;
- b=QI+4oy2JoqhEQPg/xBD99g6jwl3ixEZS4hx9KrpxfFFBqP3NbNMOL5HIB7etb59X+GEBF5
- ULJBB/BI0HUW4TMQqrHqbTgD7vTTtt51kX2gatsaNlYQve9LtTtZWH7BxTbR0OVYKijZEG
- JpfwSaterlYdU/1+HPu1bT3SrD93gDA=
+ b=IQR4EctQoANJUWHxq8cHNWRnkIsn9Uj3PSd/EQ34qZPboxtSJe3/8OOMUlr/bEhBj88tzJ
+ /pTYXdwu3NeMd4nRkmuXmiwOw60NAs0QGoci38u0n1VSUUqzFAegbx53/MpGV3vp8uVy68
+ xJhUa8mJTzXvGISzHcJF3VuZncNj3wM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-JuMxaNotNj-PIeG9szFzEA-1; Wed,
- 23 Oct 2024 03:24:04 -0400
-X-MC-Unique: JuMxaNotNj-PIeG9szFzEA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-EgNlxUWrMM-rWFisf34CGg-1; Wed,
+ 23 Oct 2024 03:24:22 -0400
+X-MC-Unique: EgNlxUWrMM-rWFisf34CGg-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 293511955E9D; Wed, 23 Oct 2024 07:24:03 +0000 (UTC)
+ id 0E6D0195608D; Wed, 23 Oct 2024 07:24:21 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.43])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED8CA1956088; Wed, 23 Oct 2024 07:24:00 +0000 (UTC)
+ id 9DAD31956088; Wed, 23 Oct 2024 07:24:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Brad Smith <brad@comstyle.com>,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Subject: [PATCH] tests/vm/openbsd: Remove the "Time appears wrong" workaround
-Date: Wed, 23 Oct 2024 09:23:58 +0200
-Message-ID: <20241023072358.827714-1-thuth@redhat.com>
+Date: Wed, 23 Oct 2024 09:24:14 +0200
+Message-ID: <20241023072414.827732-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
