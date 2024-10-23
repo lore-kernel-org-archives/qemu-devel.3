@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECF2D2E010
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B500D2E00A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 03:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3SDf-0005bo-0g; Tue, 22 Oct 2024 23:39:35 -0400
+	id 1t3STe-0008Hd-Ec; Tue, 22 Oct 2024 23:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3SDd-0005bf-Hz
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:39:33 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t3SDb-0000Oy-Jb
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:39:33 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-539e63c8678so7666463e87.0
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729654769; x=1730259569; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=coxadzSGY7dDOklSM2+vwyj+QajFVN0GwZwnAfDskDg=;
- b=bkQJWjW6KwUvrrBSD8n4qhuV/vkqupPns5Z7kew+H7nqQmXMFAnXS+OWCcmiZiJESb
- 1EkMJlc9KkaH/s8L/B0oaQsGEB0Atfn1PSbGNNRf+zZByWAcjB59x6TUc9sD+5XK1uGO
- j6vbzYHCUe6itPwRlqUNdHWVjrOmfYOrA1H912Euk6iu2VJavaY8CoCst4WanPcz3Unh
- FKcprYqGRMcbuDcWYQjh0a2+a9HtO6rbrlDPy5bCaAijdwExnU29PShlz6TUvFdWaII7
- WR0b6seXX4e580iPhg+T2+I4rVZ0239JTjpXTpis95/uu+hzMIzU1lcMBdg5N53/nO3n
- whbw==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t3STc-0008HS-Mm
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:56:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1t3STa-00024q-2I
+ for qemu-devel@nongnu.org; Tue, 22 Oct 2024 23:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729655757;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aEyrePI2wgzJ3ffsJVfpfOAkUtteh+ZkhsYIVY1UxvY=;
+ b=EdmXlQf5pploXkBFU2N3un2sh7HLLMrIqCSTLQyJc49zbGkmt+YxLVTMAFM5dpU7N6hCYO
+ k3/GNkp7TNPGi9s66CHsACaUtRoo7f9ha5yGPtmRBDvXkA+OYY57J4ckcDbZqi5bdnpBSd
+ wBnl8y4ZXH9uNJM44wBgW/4x7InPL38=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-8-7BHQshOfMqSFxZAHDOSdvg-1; Tue, 22 Oct 2024 23:55:55 -0400
+X-MC-Unique: 7BHQshOfMqSFxZAHDOSdvg-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-7eb07db7812so405103a12.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 20:55:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729654769; x=1730259569;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=coxadzSGY7dDOklSM2+vwyj+QajFVN0GwZwnAfDskDg=;
- b=pqBsGDzSxcI+4HChcJHkASW87C05R0Fj1ClTd0ehPJg9mfCEcB6V3xMP6QpwlMEwBv
- pENVe1HZ2CXZsSBT3Rc0AhxMompQIdyza92rkGIHsKcQ8wCV/+sgrLuYEGRxUbgq0l2I
- tuoT2ieFFDAfJE1a0zEnCqlGc1TDUhYp6nXhVhMskKofi2WAeDiKTxCn4+BCUCKk7S0l
- 9DuT4cZw9p3mUboJcd910/TrS8TSWsTSo6JRBr/p3Idz2pt/3tuQNF5++9acfC5brW0b
- q/9RFOzlaotLfMBCRzM8KUb/uygSc5fmowOwQM7kHmznS34JCZEEAuOLgmNjGjf3AE0f
- hsCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTwwLDONTFZ+nwijnijIE43rCnJ2rjJRDIV16IVwrzIFIJxqNNm079T1X7uAzu2gr7T3B1YMIRRIwW@nongnu.org
-X-Gm-Message-State: AOJu0YyCwA11MNjRJDbwcaHPu2y0jkAwdxXSmfOmj8g0W7GglEYyGTmP
- SRAIuCZsyshx0OoldrhCzcvSpNh+vOXuPR6pPhxAI2ISjZ1pZijT4kNmvh+SX+0=
-X-Google-Smtp-Source: AGHT+IG4b5ksSyhE4pjO4vxB51vos9/KuELx10DCOW9+1Nh8PR5goQ97WDDUiic8qo/e2ezIuGkEYw==
-X-Received: by 2002:a05:6512:1583:b0:52e:9762:2ba4 with SMTP id
- 2adb3069b0e04-53b1a315eeemr358488e87.25.1729654769070; 
- Tue, 22 Oct 2024 20:39:29 -0700 (PDT)
-Received: from [192.168.122.226] ([91.223.100.209])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53a22431c1bsm949404e87.221.2024.10.22.20.39.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2024 20:39:27 -0700 (PDT)
-Message-ID: <f011fa40-7d81-4eea-98a7-6546b9155ac2@linaro.org>
-Date: Wed, 23 Oct 2024 00:39:10 -0300
+ d=1e100.net; s=20230601; t=1729655754; x=1730260554;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aEyrePI2wgzJ3ffsJVfpfOAkUtteh+ZkhsYIVY1UxvY=;
+ b=cpxlWAWss/i4ftV3fEmJLlUrSdnJCdWO6+Wbq39XWXLVs7gpagi4X34cat5Qmu/SK1
+ 0S9EmUeClC4Yf1Zr3MRE7rN5fdfLJ1zYyR11PNMIGs4PTaX6XRezN2EfUo5EVBaF94e7
+ ZFRTDfIXYZKckPi7Jizajr385Dw1POKMhV/b3FCtSj1VI5vkYaqs/boL7rJsX64ZZNrE
+ McXh/uv6aWIBnfnWsgYD5fHD2VnuOpvnT2BzON8316Zul/7avJ+lxrF3Ut9/4lW9+ujS
+ Dk66RAn9gg6xzwRR2qNU4epxMw6NlquIiiDQw4JSAJW9ELlyT0oqSXqR04iurvgSo/7Z
+ 6QMg==
+X-Gm-Message-State: AOJu0YycMddXPkMzi7qlsYsvuEvefUYWr7bXgLAU/QKPAbTauesZP8c6
+ Pn6lN5cMIWx6c8HeNXOhJfqg1CDDPNfBBk/UsjgcOu0iSEbB+Mh1vGzumO3lM1atv0tplxU6QDm
+ NAoHlI0vkTmzD/2Cwy9K1CAZ+UZGVd8bP2zMIpGOMxF6OlGjbinhWhyPtNmc1NluxAVqSSGWB2j
+ 8opwuYOxJ0S5tfrvpS3qxVycbKcdbqxe8k74RfeUiawdM=
+X-Received: by 2002:a05:6a20:12cb:b0:1cc:e71d:ea10 with SMTP id
+ adf61e73a8af0-1d96c3cb139mr7486185637.14.1729655754171; 
+ Tue, 22 Oct 2024 20:55:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkBbyoKcrxbWtUS3sBytsnNr/j8QRaabqre+qLePLmG/+9izsg5ZxyWAzfbjBDYiqXNcb5Q8wccpz0YPaT5gM=
+X-Received: by 2002:a05:6a20:12cb:b0:1cc:e71d:ea10 with SMTP id
+ adf61e73a8af0-1d96c3cb139mr7486161637.14.1729655753685; Tue, 22 Oct 2024
+ 20:55:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 20/24] audio: Add sndio backend
-To: Alexandre Ratchov <alex@caoua.org>, Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Bandan Das <bsd@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, Akihiko Odaki <akihiko.odaki@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Brad Smith <brad@comstyle.com>,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-References: <20220927081912.180983-1-kraxel@redhat.com>
- <20220927081912.180983-21-kraxel@redhat.com>
- <fc493743-5ab0-49eb-98ed-dd260f0f60d6@linaro.org>
- <ZuBXqSoohgbS-rF6@redhat.com> <ZuBeYjju389c8MoI@vm1.arverb.com>
- <87frq42d4i.fsf@pond.sub.org> <ZxdrH5Prk2bC2fw5@vm1.arverb.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZxdrH5Prk2bC2fw5@vm1.arverb.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240905181330.3657590-1-berrange@redhat.com>
+ <20240905181330.3657590-5-berrange@redhat.com>
+In-Reply-To: <20240905181330.3657590-5-berrange@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 23 Oct 2024 11:55:42 +0800
+Message-ID: <CACGkMEv5DJ=6eH65UE9qjbUt9KWrMnqg1TJKU-d1SBodhLsbRg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] ebpf: add formal error reporting to all APIs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.519,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,95 +99,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alexandre,
+On Fri, Sep 6, 2024 at 2:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> The eBPF code is currently reporting error messages through trace
+> events. Trace events are fine for debugging, but they are not to be
+> considered the primary error reporting mechanism, as their output
+> is inaccessible to callers.
+>
+> This adds an "Error **errp" parameter to all methods which have
+> important error scenarios to report to the caller.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-On 22/10/24 06:06, Alexandre Ratchov wrote:
-> On Fri, Sep 13, 2024 at 10:04:29AM +0200, Markus Armbruster wrote:
->> Alexandre Ratchov <alex@caoua.org> writes:
->>
->>> On Tue, Sep 10, 2024 at 03:28:57PM +0100, Daniel P. Berrangé wrote:
->>>>>
->>>>> This is the single use of the ISC license in the more than 10k
->>>>> files in the repository. Just checking IIUC this document:
->>>>> https://www.gnu.org/licenses/quick-guide-gplv3.en.html
->>>>>
->>>>> ISC -> LGPLv2.1 -> GPLv2 -> GPLv3
->>>>>
->>>>> So ISC is compatible with GPLv2-or-later. Is that correct?
->>>>
->>>> ISC is a permissive license that's semantically pretty much equivalent
->>>> to either MIT or BSD 2 clause licenses and thus is broadly compatible
->>>> with most other licenses, including the various GPL variants/versions.
->>>>
->>>> None the less, since sndioaudio.c was a new file, it should have been
->>>> submitted using the GPLv2+, unless there was a reason it needed to
->>>> diverge and use ISC.
->>>>
->>>> An example justification for divering is if the new code is derived
->>>> from some non-QEMU source that was already ISC.
->>>>
->>>
->>> The ISC license is more permissive than GPLv2+ and compatible with it.
->>> The file uses this license for history reasons: initial versions of it
->>> used to be part of the OpenBSD ports repository, which uses ISC.
->>>
->>> If ISC is not appropriate for qemu, I agree to use GPLv2+ instead (I'm
->>> the author this file).
->>
->> Let's adjust the license then.  Alexandre, care to post the patch?
->>
-> 
-> Almost all audio backends (in the audio/ directory) have the same
-> header with a copy of the MIT license. So here's a patch to make
-> audiosndio.c also use this header. The "QEMU <insert_api_here> audio
-> driver" comment was also missing, so I've added it as well.
-> 
-> OK? better suggestions?
-> 
-> diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-> index 8eb35e1e53..3922b73045 100644
-> --- a/audio/sndioaudio.c
-> +++ b/audio/sndioaudio.c
-> @@ -1,7 +1,25 @@
->   /*
-> - * SPDX-License-Identifier: ISC
-> + * QEMU sndio audio driver
->    *
->    * Copyright (c) 2019 Alexandre Ratchov <alex@caoua.org>
-> + *
-> + * Permission is hereby granted, free of charge, to any person obtaining a copy
-> + * of this software and associated documentation files (the "Software"), to deal
-> + * in the Software without restriction, including without limitation the rights
-> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-> + * copies of the Software, and to permit persons to whom the Software is
-> + * furnished to do so, subject to the following conditions:
-> + *
-> + * The above copyright notice and this permission notice shall be included in
-> + * all copies or substantial portions of the Software.
-> + *
-> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-> + * THE SOFTWARE.
+This doesn't compile:
 
-Thanks! We'll soon require a SPDX tag, see:
-https://lore.kernel.org/qemu-devel/20241007154548.1144961-1-berrange@redhat.com/
+[3/84] Compiling C object libcommon.a.p/ebpf_ebpf_rss-stub.c.o
+FAILED: libcommon.a.p/ebpf_ebpf_rss-stub.c.o
+cc -m64 -Ilibcommon.a.p -Isubprojects/dtc/libfdt
+-I../subprojects/dtc/libfdt -Isubprojects/slirp -I../subprojects/slirp
+-I../subprojects/slirp/src -Isubprojects/libvduse
+-I../subprojects/libvduse -I/usr/include/pixman-1
+-I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
+-I/usr/include/sysprof-4 -I/usr/include/libmount -I/usr/include/blkid
+-I/usr/include/gio-unix-2.0 -fdiagnostics-color=3Dauto -Wall
+-Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-strong
+-Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security
+-Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
+-Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
+-Wold-style-declaration -Wold-style-definition -Wredundant-decls
+-Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
+-Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
+-Wno-shift-negative-value -isystem /home/devel/git/qemu/linux-headers
+-isystem linux-headers -iquote . -iquote /home/devel/git/qemu -iquote
+/home/devel/git/qemu/include -iquote
+/home/devel/git/qemu/host/include/x86_64 -iquote
+/home/devel/git/qemu/host/include/generic -iquote
+/home/devel/git/qemu/tcg/i386 -pthread -mcx16 -msse2 -D_GNU_SOURCE
+-D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing
+-fno-common -fwrapv -fzero-call-used-regs=3Dused-gpr -fPIE
+-D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600 -DNCURSES_WIDECHAR=3D1 -MD -MQ
+libcommon.a.p/ebpf_ebpf_rss-stub.c.o -MF
+libcommon.a.p/ebpf_ebpf_rss-stub.c.o.d -o
+libcommon.a.p/ebpf_ebpf_rss-stub.c.o -c ../ebpf/ebpf_rss-stub.c
+../ebpf/ebpf_rss-stub.c:26:6: error: conflicting types for
+=E2=80=98ebpf_rss_load=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSContext =
+*)=E2=80=99
+   26 | bool ebpf_rss_load(struct EBPFRSSContext *ctx)
+      |      ^~~~~~~~~~~~~
+In file included from ../ebpf/ebpf_rss-stub.c:14:
+/home/devel/git/qemu/ebpf/ebpf_rss.h:46:6: note: previous declaration
+of =E2=80=98ebpf_rss_load=E2=80=99 with type =E2=80=98_Bool(struct EBPFRSSC=
+ontext *, Error
+**)=E2=80=99
+   46 | bool ebpf_rss_load(struct EBPFRSSContext *ctx, Error **errp);
+      |      ^~~~~~~~~~~~~
+../ebpf/ebpf_rss-stub.c:31:6: error: conflicting types for
+=E2=80=98ebpf_rss_load_fds=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSCont=
+ext *, int,  int,
+int,  int)=E2=80=99
+   31 | bool ebpf_rss_load_fds(struct EBPFRSSContext *ctx, int program_fd,
+      |      ^~~~~~~~~~~~~~~~~
+In file included from ../ebpf/ebpf_rss-stub.c:14:
+/home/devel/git/qemu/ebpf/ebpf_rss.h:48:6: note: previous declaration
+of =E2=80=98ebpf_rss_load_fds=E2=80=99 with type =E2=80=98_Bool(struct EBPF=
+RSSContext *, int,
+int,  int,  int,  Error **)=E2=80=99
+   48 | bool ebpf_rss_load_fds(struct EBPFRSSContext *ctx, int program_fd,
+      |      ^~~~~~~~~~~~~~~~~
+../ebpf/ebpf_rss-stub.c:37:6: error: conflicting types for
+=E2=80=98ebpf_rss_set_all=E2=80=99; have =E2=80=98_Bool(struct EBPFRSSConte=
+xt *, struct
+EBPFRSSConfig *, uint16_t *, uint8_t *)=E2=80=99 {aka =E2=80=98_Bool(struct
+EBPFRSSContext *, struct EBPFRSSConfig *, short unsigned int *,
+unsigned char *)=E2=80=99}
+   37 | bool ebpf_rss_set_all(struct EBPFRSSContext *ctx, struct
+EBPFRSSConfig *config,
+      |      ^~~~~~~~~~~~~~~~
+In file included from ../ebpf/ebpf_rss-stub.c:14:
+/home/devel/git/qemu/ebpf/ebpf_rss.h:52:6: note: previous declaration
+of =E2=80=98ebpf_rss_set_all=E2=80=99 with type =E2=80=98_Bool(struct EBPFR=
+SSContext *, struct
+EBPFRSSConfig *, uint16_t *, uint8_t *, Error **)=E2=80=99 {aka =E2=80=98_B=
+ool(struct
+EBPFRSSContext *, struct EBPFRSSConfig *, short unsigned int *,
+unsigned char *, Error **)=E2=80=99}
+   52 | bool ebpf_rss_set_all(struct EBPFRSSContext *ctx, struct
+EBPFRSSConfig *config,
+      |      ^~~~~~~~~~~~~~~~
 
-The boilerplate license you used can be simplified as:
-
-   SPDX-License-Identifier: MIT
-
-Otherwise the change you suggested LGTM!
-
-Regards,
-
-Phil.
-
->    */
->   
->   /*
+Thanks
 
 
