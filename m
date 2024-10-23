@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879C8D2E01B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FF8D2E018
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3VSN-0002wZ-BF; Wed, 23 Oct 2024 03:06:59 -0400
+	id 1t3VVx-0003oJ-6Y; Wed, 23 Oct 2024 03:10:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3VSK-0002wH-Qh
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:06:57 -0400
+ id 1t3VVv-0003nv-6m
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:10:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3VSI-0004Vy-Me
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:06:56 -0400
+ id 1t3VVt-00054x-G4
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:10:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729667210;
+ s=mimecast20190719; t=1729667435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RmAD8GQ5sS1D0XzHU8O15rbEZi8tTVhReFawoM1NxhE=;
- b=eAH8G8LOaPeJhgmt4G5i21fS2Y+8LhShVWEYoQnRn4CrnGmQlsRvLj0APU6In9ZPl0ZeCz
- kfUpYI+N6wBOal/F3fnEywXffVpCRgiVgXsiDEXOl9DkzIyCYWGvzDcNeSq/tjkj/owfuh
- wZLovNX7ZQU/y5GeEp/njF8KWW9tzMc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r0NgO6ANTLJGE9Z+TVkXaSWuuQVuRfOtgNLH581pRNM=;
+ b=TX6KQrAY1iYnGaqEQtzzTbKEj9mXB9sQd2GJeSMxEUAGLGM+ZM9GvM4tbvU6LQwODDENp4
+ pWyuPJ1FebiHMYPH3DtvlsuEyBWFer7UarwHfkbdTugqhreDA+Rep2IbVx694YxWJmU0io
+ cslBohjS0Bv2IXfjMBejebWftX3n/7o=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-SALUnQr_ORKc7px2TnW_Tw-1; Wed, 23 Oct 2024 03:06:48 -0400
-X-MC-Unique: SALUnQr_ORKc7px2TnW_Tw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-37d49887a2cso272564f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 00:06:48 -0700 (PDT)
+ us-mta-341-4WWMj0rrN-20Vfm-S4yKhw-1; Wed, 23 Oct 2024 03:10:33 -0400
+X-MC-Unique: 4WWMj0rrN-20Vfm-S4yKhw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37d47fdbbd6so3753522f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 00:10:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729667207; x=1730272007;
+ d=1e100.net; s=20230601; t=1729667432; x=1730272232;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RmAD8GQ5sS1D0XzHU8O15rbEZi8tTVhReFawoM1NxhE=;
- b=bbQ2kMB6bCiWeZXzgaPGmwYCjENtNbq3Tm3+ZWk1Gz480BUPQA+3ozk7iAutjEZz90
- k90uM+kzyl5c6jdgcjtMckYsFAiOYOH+S8yBGN52ueLIgjamhZYs2rkCaI0Ypvg3PnRe
- bD87OjpOtmMfK3Xl6vBLX6pLaX7wPxPhXY2G2CdOy7hQWQ5CDjWjH1DaO+y8Dvt8309v
- dShe5WaDe/wkeXkGovDcQWjxe76P+nKA7iiqCW6cN7EpYCd1agx6J9SIeZkFDB1iRekz
- tIrm8BRMxlEFN4gx03K0S6wr4U+YXBKuYX6lBd+dZygSV5HXaif/OTcK+sqA3fJkwD8F
- 5dKQ==
-X-Gm-Message-State: AOJu0YzUSvPFQe4vv3jsQLPrc6NYtwBhbCFy3Y/AtfGkyCFW7kcruly/
- L/IbyJ+W2uN6oJCzj2F/WKQv5kSxgxuFGNvD3V6s/++QDmiDE12AaSchMpJ4LqwgNMtGxEg2vw/
- LIR7LOaAaRh1KPuGpQjcq6LUuasgvv5QtLW1B2GKwLMJVzc6GcLi6+3Y4jFhVPgMNPoqgQhqHvt
- z8iHXBKQwZcRdCJclrTvRZ44Cq8fs=
-X-Received: by 2002:adf:a45b:0:b0:37c:ce3c:e15d with SMTP id
- ffacd0b85a97d-37efc5df5bcmr791239f8f.14.1729667207168; 
- Wed, 23 Oct 2024 00:06:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMADtdM8m3MpN9M0akGXJdIck2aIQ03n3o5GxUYqOaxcxENgTDzuYRqGScLQd83cEfd7y4ENysE9Hs47b7nSU=
-X-Received: by 2002:adf:a45b:0:b0:37c:ce3c:e15d with SMTP id
- ffacd0b85a97d-37efc5df5bcmr791220f8f.14.1729667206766; Wed, 23 Oct 2024
- 00:06:46 -0700 (PDT)
+ bh=r0NgO6ANTLJGE9Z+TVkXaSWuuQVuRfOtgNLH581pRNM=;
+ b=mgjVHc6ZapmjvGAjnpE+XiC+/l+X8SuAKf0zedTAC3Tr8akCgTGyPDNIJZjxa+znlr
+ V6qJDMK9wT04uMYIyX40FJz0BeVJr1iQn7HNh7uCLad73OS9qYbYnMabX/OWS0885qP5
+ PLW6J6aM9mTadwFMS7YUb1HREwxPCC0kNgyFY7fDP3g9rCskDrTrhF6xBl78EZG5HyDg
+ hy+/G6cVSqL/ooSE/Tv8ijRdHgOr0ZuceM4mdTY68jet+o9uadWWfeijLwWoYpGKyoEa
+ nSi1lLUpZY5RXcpSvWoRqPHHeysRZtSdKdLA34uiEK317jKM88rsjHwdY06rdH7p8hR3
+ 0xzA==
+X-Gm-Message-State: AOJu0YwHlbiG8+z33gzMT7rdWbo9+KtYSrZ3RykEnkmhDSUE98P4uGaI
+ ZS7ttWBsdXpY2t2lTOwwMSNty6eJHoiauvOOnPWvToephqLUyXpmluqo3a1ivrJstMpI7VZOmLt
+ nyGhXk8XzCZXlFz2apMlVy4Gwo2tvvmxnh4a3qQoDjPD4OyVyTfZ4L9nSNFzV3BQ9TXAqgOJTjV
+ YU0xcOpN6GAV1GVnph+BqaVp0ySPw=
+X-Received: by 2002:a5d:5590:0:b0:37c:d2f3:b3b0 with SMTP id
+ ffacd0b85a97d-37efcf0d877mr1008936f8f.23.1729667432324; 
+ Wed, 23 Oct 2024 00:10:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxFq1VChuEYmvA0y+U2Ee0hbWt5v7FV98Q+jmTvP8OnQOpBHYQ6Sb739yvlXOibFlCQpAp3lm6klPgFe5dd6g=
+X-Received: by 2002:a5d:5590:0:b0:37c:d2f3:b3b0 with SMTP id
+ ffacd0b85a97d-37efcf0d877mr1008919f8f.23.1729667431915; Wed, 23 Oct 2024
+ 00:10:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20241021163538.136941-1-pbonzini@redhat.com>
- <20241021163538.136941-11-pbonzini@redhat.com>
- <12b03ebb-6bc2-4ffe-99cc-4818b5d992ee@linaro.org>
- <CABgObfawNPijVE7FqdGpnpAZ2JM9puY6=PSivFR4GgbHTKE2Fg@mail.gmail.com>
- <ab4af84d-a518-406b-8dbb-513d41aa4d61@linaro.org>
-In-Reply-To: <ab4af84d-a518-406b-8dbb-513d41aa4d61@linaro.org>
+ <20241021163538.136941-10-pbonzini@redhat.com>
+ <ZxgBDQ0fgwRr7D9P@redhat.com>
+In-Reply-To: <ZxgBDQ0fgwRr7D9P@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 23 Oct 2024 09:06:34 +0200
-Message-ID: <CABgObfb2yX28P7wawmekjj_bkkD0_G-cELYGR2veWYdFAV5OAA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/13] qdev: make properties array "const"
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Wed, 23 Oct 2024 09:10:18 +0200
+Message-ID: <CABgObfb=Ty6zbWt1C8xNAgzow=V60cX0K-5rhdoS6WiQEXjP9A@mail.gmail.com>
+Subject: Re: [PATCH v2 09/13] rust: clean up define_property macro
+To: Kevin Wolf <kwolf@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: multipart/alternative; boundary="000000000000708b6306251f87cb"
+ Junjie Mao <junjie.mao@hotmail.com>
+Content-Type: multipart/alternative; boundary="000000000000dc06b406251f94d1"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -105,70 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000708b6306251f87cb
+--000000000000dc06b406251f94d1
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Il mar 22 ott 2024, 23:43 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
-a
-scritto:
+Il mar 22 ott 2024, 21:46 Kevin Wolf <kwolf@redhat.com> ha scritto:
 
-> On 22/10/24 02:23, Paolo Bonzini wrote:
-> > At least keeping the const
-> > within qdev properties makes things "safer" within that realm.
+> >              info: $prop,
+> >              offset: ::core::mem::offset_of!($state, $field)
+> >                  .try_into()
+> >                  .expect("Could not fit offset value to type"),
+> > -            bitnr: 0,
+> > -            bitmask: 0,
+> >              set_default: true,
+> >              defval: $crate::bindings::Property__bindgen_ty_1 { u:
+> $defval.into() },
+> > -            arrayoffset: 0,
+> > -            arrayinfo: ::core::ptr::null(),
+> > -            arrayfieldsize: 0,
+> > -            link_type: ::core::ptr::null(),
+> > +            ..unsafe {
+> ::core::mem::MaybeUninit::<$crate::bindings::Property>::zeroed().assume_init()
+> }
 >
-> Since it is only within qdev-properties.c, it is indeed reasonable to
-> accept. Maybe make it explicit via a well-named macro to do the cast?
->
->    /* NON_CONST_PROP: Specific macro to this file because ... */
->    #define NON_CONST_PROP(prop) (Property *)(prop)
+> But is it really worth introducing unsafe code just for a more compact
+> notation? If the compiler doesn't actually understand the pattern, it
+> might even be less efficient than what we had (i.e. if it really creates
+> the zeroed object and copies stuff over).
 >
 
-The name of the macro suggests the opposite, i.e. that you'd use it to cast
-const void* to Property* in the callbacks. I would leave it as it is.
+It goes away later in the series (patch 11 replaces it with a more
+manageable "Zeroable::ZERO"), but I wanted to split the patches in "parts
+that change existing code" and "parts that introduce new concepts".
+
+I agree that it's not optimal either way, I went like this because at this
+point this "unsafe { zeroed() }" idiom is present several times in the code
+and one more doesn't really change much.
 
 Paolo
 
->
-> Regards,
->
-> Phil.
+
+> Kevin
 >
 >
 
---000000000000708b6306251f87cb
+--000000000000dc06b406251f94d1
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mar 22 ott 2024, 23:43 Philippe Mathieu-Daud=C3=A9 =
-&lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; ha scrit=
-to:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 22/10/24 =
-02:23, Paolo Bonzini wrote:<br>
-&gt; At least keeping the const<br>
-&gt; within qdev properties makes things &quot;safer&quot; within that real=
-m.<br>
+class=3D"gmail_attr">Il mar 22 ott 2024, 21:46 Kevin Wolf &lt;<a href=3D"ma=
+ilto:kwolf@redhat.com">kwolf@redhat.com</a>&gt; ha scritto:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 info: $prop,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 offset: ::core::mem::o=
+ffset_of!($state, $field)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .try_int=
+o()<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .expect(=
+&quot;Could not fit offset value to type&quot;),<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitnr: 0,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bitmask: 0,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set_default: true,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 defval: $crate::bindin=
+gs::Property__bindgen_ty_1 { u: $defval.into() },<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayoffset: 0,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayinfo: ::core::ptr::nul=
+l(),<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arrayfieldsize: 0,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 link_type: ::core::ptr::nul=
+l(),<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ..unsafe { ::core::mem::May=
+beUninit::&lt;$crate::bindings::Property&gt;::zeroed().assume_init() }<br>
 <br>
-Since it is only within qdev-properties.c, it is indeed reasonable to<br>
-accept. Maybe make it explicit via a well-named macro to do the cast?<br>
+But is it really worth introducing unsafe code just for a more compact<br>
+notation? If the compiler doesn&#39;t actually understand the pattern, it<b=
+r>
+might even be less efficient than what we had (i.e. if it really creates<br=
+>
+the zeroed object and copies stuff over).<br></blockquote></div></div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">It goes away later in the series (=
+patch 11 replaces it with a more manageable &quot;Zeroable::ZERO&quot;), bu=
+t I wanted to split the patches in &quot;parts that change existing code&qu=
+ot; and &quot;parts that introduce new concepts&quot;.</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">I agree that it&#39;s not optimal either way=
+, I went like this because at this point this &quot;unsafe { zeroed() }&quo=
+t; idiom is present several times in the code and one more doesn&#39;t real=
+ly change much.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=
+=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
+quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex">
 <br>
-=C2=A0 =C2=A0/* NON_CONST_PROP: Specific macro to this file because ... */<=
-br>
-=C2=A0 =C2=A0#define NON_CONST_PROP(prop) (Property *)(prop)<br></blockquot=
-e></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">The name of the=
- macro suggests the opposite, i.e. that you&#39;d use it to cast const void=
-* to Property* in the callbacks. I would leave it as it is.=C2=A0</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><div=
- class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Regards,<br>
-<br>
-Phil.<br>
+Kevin<br>
 <br>
 </blockquote></div></div></div>
 
---000000000000708b6306251f87cb--
+--000000000000dc06b406251f94d1--
 
 
