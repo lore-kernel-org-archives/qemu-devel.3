@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41419CFA45F
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01AECCFA45F
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3hK6-0008Su-HE; Wed, 23 Oct 2024 15:47:14 -0400
+	id 1t3hKu-0000H1-7I; Wed, 23 Oct 2024 15:48:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3hK1-0008SN-Mg
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:47:10 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3hJz-0002SD-Ex
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:47:08 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a9a26a5d6bfso11203266b.1
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 12:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729712826; x=1730317626; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cjeWek960NcUIgiohtPXB+Vg0rJ92eP6xQNpgT2ubOU=;
- b=zU99zd3tiJg6haeDQlVXtBgDIkV5hMk8VELHFdyHsh3FA6tIjQ60pQam/VXPRaHovl
- d+mP6oeZQhWiw9gnm/7d8Gmn+yQaI3lVr6tonLcsDbAqvtwSmUEuRBi6cn4N4cAaikMY
- x+PZTorh0s0b9xuVUu3WAJidn9z1qkUPnxbzbahx/x0BLFDPIEmIkNFI9szpUshccCaZ
- S5TqO9jqRt616JkR9jCuPV3iEke5ZImwOyVftpJIG8I02cHCOtdDOCJlkXzLXVQxZ0Dd
- hAi0/0uGClGgHMZJ++k8UwpgY9eMfzpJxmn+CNTSPMDC0cIU365YdvI2ifJ+fIubVGP5
- n07w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729712826; x=1730317626;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cjeWek960NcUIgiohtPXB+Vg0rJ92eP6xQNpgT2ubOU=;
- b=rnrLVmdQLcSqKVgT/tMvWOCCNct+K3Lb4k5RTP39qYWsLdZXNJnnruCl2FLhQfOWIF
- VKwMR25TtNXdWtoVeIxFDstB7DFZrF9BwPDqUQMNGZq3VEkqt1dBSSH0BNtwI3F1h7aU
- NTuDnJ3gWAsNvArkSRnFTVyXzLIlBT5Fani2yvwNNbxJzG41Bysneb75i5PkaydEXBx0
- 8LYtTxwqNekITKGp/nv5v0QGuc0ZpWkQgwzrKKIHFLXkf9FtMdG30bWh+clyq3PBV/8L
- yR8YKXccm82SQe49qeNAcVbWBOW9VcHUg5y5juij+ztd9zsizkfRVEnxsLPNF37+7y7Q
- SPaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXWUsEKp5nwfihkjhO9cx+lA5InD8Ixq+OYOkBjX1emjBw5PkGdribbsqq2ixYZjKZku31LcnjzlqD@nongnu.org
-X-Gm-Message-State: AOJu0YwCoFI6evhZhgXncJWP5eq7AEcB31lK6R1ZFRDn0ez7kAGPS4kz
- vtZYrZ77zpiE9BeoPwB4g710XktnUrrM5MZu8ZIH1ApSlA+J0LBcp6/5/YOEuY0=
-X-Google-Smtp-Source: AGHT+IEIA9rIJ04+Qcp3TzNgVJAqmBz3KuIj/pMJ7zakUwT1dcG/rm3pZHFabLhpGBrqDgGq03uVBQ==
-X-Received: by 2002:a17:907:980c:b0:a99:a9b6:2eb6 with SMTP id
- a640c23a62f3a-a9abf53587cmr351767466b.0.1729712825573; 
- Wed, 23 Oct 2024 12:47:05 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912d62efsm513496766b.44.2024.10.23.12.47.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 12:47:05 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 082235F897;
- Wed, 23 Oct 2024 20:47:04 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Arnd Bergmann" <arnd@arndb.de>
-Cc: "Naresh Kamboju" <naresh.kamboju@linaro.org>,  "open list"
- <linux-kernel@vger.kernel.org>,  "Linux ARM"
- <linux-arm-kernel@lists.infradead.org>,  lkft-triage@lists.linaro.org,
- "Linux Regressions" <regressions@lists.linux.dev>,
- qemu-devel@nongnu.org,  "Mark Brown" <broonie@kernel.org>,  "Catalin
- Marinas" <catalin.marinas@arm.com>,  "Aishwarya TCV"
- <Aishwarya.TCV@arm.com>,  "Peter Maydell" <peter.maydell@linaro.org>,
- "Anders Roxell" <anders.roxell@linaro.org>,  "Vincenzo Frascino"
- <vincenzo.frascino@arm.com>,  "Thomas Gleixner" <tglx@linutronix.de>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>
-Subject: Re: Qemu v9.0.2: Boot failed qemu-arm with Linux next-20241017 tag.
-In-Reply-To: <4730e562-7d14-4f12-897a-e23783d094af@app.fastmail.com> (Arnd
- Bergmann's message of "Wed, 23 Oct 2024 16:24:43 +0000")
-References: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
- <CA+G9fYsMg0fA-jraEvC==0a-22J97o-uBmbLJt16_ZKBpOT8EQ@mail.gmail.com>
- <4730e562-7d14-4f12-897a-e23783d094af@app.fastmail.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Wed, 23 Oct 2024 20:47:03 +0100
-Message-ID: <87bjzalhzc.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3hKs-0000G8-2i
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:48:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t3hKp-0002VV-S4
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:48:01 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49NE1IDE014753;
+ Wed, 23 Oct 2024 19:47:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4L513a
+ BJ3wJ4Hjjo3qAoV3wYzkDJ5ny9xKM92Xqz0N8=; b=qcUO+3yuSmg9n/au+5myGo
+ 6L9lfh8OJlpu3EeO4Ie0hbcAb7rQigtbg09qzslcovHgvqF/WYIBqHq8tcRLMMY8
+ ypLt3hTx4Zef1IcppWx7y6m3ZJXRObwg1TGkTGljXG/rkpe55DzD9Ufviy7TMzxe
+ d1qUUhzZr13LHcmOd9gd5RQmXGNdQ7+AHse9bkNUyF619lGzhml1+GCivewt//4U
+ f3kkpk0NgCrF3X0ETpA82HCCmnSg0CBO7BejBnOne1w9HEZ7hdDMbfF8vygru9HR
+ O0sOdnnrNtdx3n91Uu3x2E6Qh/j4Mi6UTIj0x/J/ZjSMeyZ0Ackok0mCOTdzcRDg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emadvwa6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2024 19:47:56 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49NIbshW012599;
+ Wed, 23 Oct 2024 19:47:53 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 42emhfcnqk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2024 19:47:53 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49NJlpXM48300468
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Oct 2024 19:47:51 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 979982004D;
+ Wed, 23 Oct 2024 19:47:51 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0348820040;
+ Wed, 23 Oct 2024 19:47:51 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 23 Oct 2024 19:47:50 +0000 (GMT)
+Message-ID: <063c0c70df2d1a4b2c209bdf9fa8c451dfa7693a.camel@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Fix GDB complaining about system-supplied
+ DSO string table index
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Laurent Vivier
+ <laurent@vivier.eu>
+Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Date: Wed, 23 Oct 2024 21:47:50 +0200
+In-Reply-To: <d847f246-1772-4c9a-97f7-05118a311286@linaro.org>
+References: <20241023144744.50440-1-iii@linux.ibm.com>
+ <d847f246-1772-4c9a-97f7-05118a311286@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: E41jNCycku4_S5T881wgWGdVi5eDXRQ8
+X-Proofpoint-GUID: E41jNCycku4_S5T881wgWGdVi5eDXRQ8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410230127
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,92 +111,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Arnd Bergmann" <arnd@arndb.de> writes:
+On Wed, 2024-10-23 at 12:03 -0700, Richard Henderson wrote:
+> On 10/23/24 07:46, Ilya Leoshkevich wrote:
+> >=20
+[...]
 
-> On Sun, Oct 20, 2024, at 17:39, Naresh Kamboju wrote:
->> On Fri, 18 Oct 2024 at 12:35, Naresh Kamboju <naresh.kamboju@linaro.org>=
- wrote:
->>>
->>> The QEMU-ARMv7 boot has failed with the Linux next-20241017 tag.
->>> The boot log is incomplete, and no kernel crash was detected.
->>> However, the system did not proceed far enough to reach the login promp=
-t.
->>>
->
->> Anders bisected this boot regressions and found,
->> # first bad commit:
->>   [efe8419ae78d65e83edc31aad74b605c12e7d60c]
->>     vdso: Introduce vdso/page.h
->>
->> We are investigating the reason for boot failure due to this commit.
->
-> Anders and I did the analysis on this, the problem turned out
-> to be the early_init_dt_add_memory_arch() function in
-> drivers/of/fdt.c, which does bitwise operations on PAGE_MASK
-> with a 'u64' instead of phys_addr_t:
->
-> void __init __weak early_init_dt_add_memory_arch(u64 base, u64 size)
-> {
->         const u64 phys_offset =3D MIN_MEMBLOCK_ADDR;
->=20=20
->         if (size < PAGE_SIZE - (base & ~PAGE_MASK)) {
->                 pr_warn("Ignoring memory block 0x%llx - 0x%llx\n",
->                         base, base + size);
->                 return;
->         }
->
->         if (!PAGE_ALIGNED(base)) {
->                 size -=3D PAGE_SIZE - (base & ~PAGE_MASK);
->                 base =3D PAGE_ALIGN(base);
->         }
->
-> On non-LPAE arm32, this broke the existing behavior for
-> large 32-bit memory sizes. The obvious fix is to change
-> back the PAGE_MASK definition for 32-bit arm to a signed
-> number.
+>=20
+> > - Fix up VDSO's PHDR size in gen-vdso. This is the simplest
+> > solution,
+> > =C2=A0=C2=A0 so do it. The only tricky part is byte-swaps: they need to=
+ be
+> > either
+> > =C2=A0=C2=A0 done on local copies or in-place, and then reverted in the=
+ end.
+> > To
+> > =C2=A0=C2=A0 preserve the existing code structure, do the former for Sy=
+m and
+> > Dyn,
+> > =C2=A0=C2=A0 and the latter for Ehdr, Phdr, and Shdr.
+>=20
+> Or adjust the linker script, to mark those sections loaded.
+> This may or may not be easier, considering the rest of the changes.
 
-Agreed. However I think we were masking a calling issue that:
+I forgot to mention that I investigated this too. The problem, as I see
+it, is that there appears to be no way to place section headers inside
+a section, and, therefore, no way to refer to them in a linker
+script. I guess someone could add the ability to do this by defining
+SHDRS keyword in addition to the existing FILEHDR and PHDRS. Also, ld
+hardcodes section headers to be non-loadable:
 
-    /* Actual RAM size depends on initial RAM and device memory settings */
-    [VIRT_MEM] =3D                { GiB, LEGACY_RAMLIMIT_BYTES },
+static bool
+_bfd_elf_assign_file_positions_for_non_load (bfd *abfd)
+{
+[...]
+  /* Place the section headers.  */
+  i_ehdrp =3D elf_elfheader (abfd);
+  off =3D BFD_ALIGN (off, 1u << bed->s->log_file_align);
+  i_ehdrp->e_shoff =3D off;
+  off +=3D i_ehdrp->e_shnum * i_ehdrp->e_shentsize;
+  elf_next_file_pos (abfd) =3D off;
 
-And:
+So I figured it would be better to stay as close as possible to what
+the kernel is doing without changing the existing loader design too
+much.
 
-  -m 4G
+> > @@ -154,6 +161,16 @@ static void elfN(process)(FILE *outf, void
+> > *buf, bool need_bswap)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 fprintf(stderr, "LOAD segment not loaded at address
+> > 0\n");
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 errors++;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Extend the program =
+header to cover the entire VDSO, so
+> > that
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * load_elf_vdso() loa=
+ds everything, including section
+> > headers.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (len > phdr[i].p_filesz)=
+ {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 phd=
+r[i].p_filesz =3D len;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (len > phdr[i].p_memsz) =
+{
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 phd=
+r[i].p_memsz =3D len;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>=20
+> There should be no .bss, so these two numbers had better be
+> identical.=C2=A0 Certainly this=20
+> adjustment *requires* that there be no .bss.=C2=A0 I think we should erro=
+r
+> out if the two=20
+> numbers differ.
 
-make no sense with no ARM_LPAE (which the kernel didn't have) but if you
-pass -machine virt,gic-version=3D3,highmem=3Doff (the default changed awhile
-back) you will get a warning:
+Sounds reasonable, I'll send a v2 with the check.
 
-  qemu-system-arm: Addressing limited to 32 bits, but memory exceeds it by =
-1073741824 bytes
-
-but I guess that didn't trigger for some reason before this patch?
-
-> mips32, ppc32 and hexagon had the same definition as
-> well, so I think we should change at least those in order
-> to restore the previous behavior in case they are affected
-> by the same bug (or a different one).
->
-> x86-32 and arc git flipped the other way by the patch,
-> from unsigned to signed, when CONFIG_ARC_HAS_PAE40
-> or CONFIG_X86_PAE are set. I think we should keep
-> the 'signed' behavior as this was a bugfix by itself,
-> but we may want to change arc and x86-32 with short
-> phys_addr_t the same way for consistency.
->
-> On csky, m68k, microblaze, nios2, openrisc, parisc32,
-> riscv32, sh, sparc32, um and xtensa, we've always used
-> the 'unsigned' PAGE_MASK, and there is no 64-bit
-> phys_addr_t, so I would lean towards staying with
-> 'unsigned' in order to not introduce a regression.
-> Alternatively we could choose to go with the 'signed'
-> version on all 32-bit architectures unconditionally
-> for consistency. Any preferences?
->
->       Arnd
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+[...]
 
