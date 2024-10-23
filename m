@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B973BCDDE70
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 11:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5566CF5361
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 12:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Zme-0001wr-8q; Wed, 23 Oct 2024 07:44:12 -0400
+	id 1t3aJE-0002M8-QN; Wed, 23 Oct 2024 08:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Zmb-0001vZ-Ry
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:44:09 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3ZmY-0004Ye-PC
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:44:09 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-539eb97f26aso7634143e87.2
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 04:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729683845; x=1730288645; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=goM9TWkvUJk023ZZ8+wq0WOvMkki4+LOppFI2tLZ0P4=;
- b=fxCSCLeJTdxr+MilDGuNdey1g8TG2L1+fIRl/YZ5uB5yISFNrwSsl0kKGfyB/lDh3S
- yFPvWbUIYEfZyT80XXsxitFSUvyHp7DIb2GzbBzIxp/HH+A+ScDAnztlj4MR7363SoQz
- Hs14NpKA5LdQIDudNRZzJ8j7sZmSB6sUSdGR8y1wmZB+tB+YD8gKkISSg/Osl9kqQyuU
- BgIJ8kKVP414i59rkmewJvfhvERdZovzn1aYYKaxJojpUmGkPy6dUF0WKjLh+uMz3VV2
- kuk5X6ZSeXbR4FPYlJg00mkxlb9SOpWzMxKw2JCkw4EPLc387cFmKGa8ekRR2aGW4Lht
- 15JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729683845; x=1730288645;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=goM9TWkvUJk023ZZ8+wq0WOvMkki4+LOppFI2tLZ0P4=;
- b=BxTZBzBe1ehO+uUnhoG3lggKwnW6V3pc/EG7lD/c8TqcLF8ul3fqAz4NvfowmCWxzD
- xBKXABewG8RZ7DLUD1PXu3+AkHDK20TfGGZNAYLZngFGhz/Ub1RTJyqh+Snt6KdcTJKZ
- A+zJkiGkz+mXMbLEWAnChDmM0Em85po6ym0Fwsi8N2FPBtAo1LmDARxg1LPP37hP7kgH
- QVE7eBVqXN4GCbIFDUSZbD/cHjJHIhGcSwvWA+1teLEsuUQnqmU0hyBecHwx1zUmsgel
- e9lXlu+KGjg1PIzfuzff9hHBBggEL02IsYn0we7wSJYvk4xw6CzMLjKqP7pQlfKcOGd6
- d2fA==
-X-Gm-Message-State: AOJu0YxsO0ZRYXeo9ESeZlCrRxzXAN5Q5iJtnL1u14jR9ALX04oo41R3
- I6N4fZv7RwyCMERUAOENfqeoIZs1WS7BE/inoD50RUeXYC5xLMHJcNa1oMlTKBo=
-X-Google-Smtp-Source: AGHT+IHDtHU0ccJr5rc5xz8My9arnYk+SlnudjoCir3kQRdzjKiDoRSU1ko8s5OGs4YQqLHIEVXPxQ==
-X-Received: by 2002:a05:6512:398a:b0:539:f2f6:c70f with SMTP id
- 2adb3069b0e04-53b1a2fed80mr1092099e87.8.1729683844676; 
- Wed, 23 Oct 2024 04:44:04 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91370e54sm462834566b.102.2024.10.23.04.44.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 04:44:03 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6AE8B5FC0F;
- Wed, 23 Oct 2024 12:34:08 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- devel@lists.libvirt.org, Marcelo Tosatti <mtosatti@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, kvm@vger.kernel.org,
- Beraldo Leal <bleal@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v3 15/18] testing: Enhance gdb probe script
-Date: Wed, 23 Oct 2024 12:34:03 +0100
-Message-Id: <20241023113406.1284676-16-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241023113406.1284676-1-alex.bennee@linaro.org>
-References: <20241023113406.1284676-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1t3aJ8-0002Lg-4c; Wed, 23 Oct 2024 08:17:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1t3aIy-0001ED-VN; Wed, 23 Oct 2024 08:17:45 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N0O2Qk018182;
+ Wed, 23 Oct 2024 12:17:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2oYIub
+ je1s/WIebtYf+zDCBbLYyNNOGCIJaFvIBrxyE=; b=n2loIoLo7zCrJJv/kop4fs
+ Jv6yrNs+63aEzn6owe1nxIJ/8R1FS0tNusQ0accJFrcuWJuOnP4/EHImE2PZzz7n
+ EmSSRkY2M/J71mSzrg4Yl0qmoSO69RsGBS2/wHKhoQJRmKaPpUswMuJIuCvCasKG
+ +XdfljHGXnFe8Fh6tDUzg6+z0WP6tCp3vxJCjg0q+S2FwyH6d1eb93uFon5P2apt
+ JrP+UhhnV+vGCBk4ghfXqej8+mmcC/r68xcJtyNxiufMnYB08NNyVnpuxJAhQdmS
+ u7qnIwGpFsCBQidjP+y3aNjb4fQn56/Zr0uxILHWtxU4Fq4FbJvatIxwWB6yI+2A
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emajjvt7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2024 12:17:22 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49NCEAoJ030959;
+ Wed, 23 Oct 2024 12:17:21 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emajjvt3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2024 12:17:21 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49NBXp8A014286;
+ Wed, 23 Oct 2024 12:17:20 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42emhfjs53-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2024 12:17:20 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49NCHI3G27525778
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Oct 2024 12:17:18 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD16B2004B;
+ Wed, 23 Oct 2024 12:17:18 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 12ED020040;
+ Wed, 23 Oct 2024 12:17:18 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 23 Oct 2024 12:17:17 +0000 (GMT)
+Message-ID: <935ba5fe7f761e641e9bcdd2e000c6e6c0c12fba.camel@linux.ibm.com>
+Subject: Re: [PATCH] tests/tcg: Replace -mpower8-vector with -mvsx
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, Nicholas Piggin
+ <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Kewen Lin <linkw@linux.ibm.com>, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Date: Wed, 23 Oct 2024 14:17:17 +0200
+In-Reply-To: <56b09f33-d176-4489-989a-ddf02329636f@linaro.org>
+References: <20241021142830.486149-1-iii@linux.ibm.com>
+ <56b09f33-d176-4489-989a-ddf02329636f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: RBK3qo4xVbVycV3-0LjAy-syZmu2D7yZ
+X-Proofpoint-GUID: Tc-Xr5rHZPn4H3UJbx5nVs1PfBDyWOZL
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0
+ mlxscore=0 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410230072
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,123 +117,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+On Mon, 2024-10-21 at 19:59 -0700, Richard Henderson wrote:
+> On 10/21/24 07:27, Ilya Leoshkevich wrote:
+> > [1] deprecated -mpower8-vector, resulting in:
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 powerpc64-linux-gnu-gcc: warning: switch '-mpo=
+wer8-vector' is
+> > no longer supported
+> > =C2=A0=C2=A0=C2=A0=C2=A0 qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error=
+: expected ';'
+> > before 'float'
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 4 | typedef vector flo=
+at vsx_float32_vec_t;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ ^~~~~~
+> >=20
+> > Similar to how this was done for the GCC testcases, replace
+> > -mpower8-vector with -mvsx.
+> >=20
+> > [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D109987
+> >=20
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0 tests/tcg/ppc64/Makefile.target | 10 +++++-----
+> > =C2=A0 1 file changed, 5 insertions(+), 5 deletions(-)
+> >=20
+> > diff --git a/tests/tcg/ppc64/Makefile.target
+> > b/tests/tcg/ppc64/Makefile.target
+> > index 1940886c737..d1b00d2bf09 100644
+> > --- a/tests/tcg/ppc64/Makefile.target
+> > +++ b/tests/tcg/ppc64/Makefile.target
+> > @@ -6,7 +6,7 @@ VPATH +=3D $(SRC_PATH)/tests/tcg/ppc64
+> > =C2=A0=20
+> > =C2=A0 config-cc.mak: Makefile
+> > =C2=A0=C2=A0	$(quiet-@)( \
+> > -	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mpower8-vector,=C2=A0=C2=A0
+> > CROSS_CC_HAS_POWER8_VECTOR); \
+> > +	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mvsx,=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CROSS_CC_HAS_VSX);
+> > \
+> > =C2=A0=C2=A0	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mpower10,=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> > CROSS_CC_HAS_POWER10)) 3> config-cc.mak
+>=20
+> I don't think this is quite right.
+> I think you need -mpower8 to get OPTION_MASK_P8_VECTOR set.
 
-Use list and set comprehension to simplify code. Also, gently handle
-invalid gdb filenames.
+Do you mean -mcpu=3Dpower8? -mpower8 is a GAS option.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20241022105614.839199-16-alex.bennee@linaro.org>
-Message-Id: <20241015145848.387281-1-gustavo.romero@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- scripts/probe-gdb-support.py | 75 +++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 36 deletions(-)
+>=20
+> > +ifneq ($(CROSS_CC_HAS_VSX),)
+> > =C2=A0 PPC64_TESTS=3Dbcdsub non_signalling_xscv
+>=20
+> bcdsub is not in the base VSX instruction set, for instance.
+>=20
+>=20
+> r~
 
-diff --git a/scripts/probe-gdb-support.py b/scripts/probe-gdb-support.py
-index 6dc58d06c7..6bcadce150 100644
---- a/scripts/probe-gdb-support.py
-+++ b/scripts/probe-gdb-support.py
-@@ -19,58 +19,61 @@
- 
- import argparse
- import re
--from subprocess import check_output, STDOUT
-+from subprocess import check_output, STDOUT, CalledProcessError
-+import sys
- 
--# mappings from gdb arch to QEMU target
--mappings = {
--    "alpha" : "alpha",
-+# Mappings from gdb arch to QEMU target
-+MAP = {
-+    "alpha" : ["alpha"],
-     "aarch64" : ["aarch64", "aarch64_be"],
--    "armv7": "arm",
-+    "armv7": ["arm"],
-     "armv8-a" : ["aarch64", "aarch64_be"],
--    "avr" : "avr",
-+    "avr" : ["avr"],
-     # no hexagon in upstream gdb
--    "hppa1.0" : "hppa",
--    "i386" : "i386",
--    "i386:x86-64" : "x86_64",
--    "Loongarch64" : "loongarch64",
--    "m68k" : "m68k",
--    "MicroBlaze" : "microblaze",
-+    "hppa1.0" : ["hppa"],
-+    "i386" : ["i386"],
-+    "i386:x86-64" : ["x86_64"],
-+    "Loongarch64" : ["loongarch64"],
-+    "m68k" : ["m68k"],
-+    "MicroBlaze" : ["microblaze"],
-     "mips:isa64" : ["mips64", "mips64el"],
--    "or1k" : "or1k",
--    "powerpc:common" : "ppc",
-+    "or1k" : ["or1k"],
-+    "powerpc:common" : ["ppc"],
-     "powerpc:common64" : ["ppc64", "ppc64le"],
--    "riscv:rv32" : "riscv32",
--    "riscv:rv64" : "riscv64",
--    "s390:64-bit" : "s390x",
-+    "riscv:rv32" : ["riscv32"],
-+    "riscv:rv64" : ["riscv64"],
-+    "s390:64-bit" : ["s390x"],
-     "sh4" : ["sh4", "sh4eb"],
--    "sparc": "sparc",
--    "sparc:v8plus": "sparc32plus",
--    "sparc:v9a" : "sparc64",
-+    "sparc": ["sparc"],
-+    "sparc:v8plus": ["sparc32plus"],
-+    "sparc:v9a" : ["sparc64"],
-     # no tricore in upstream gdb
-     "xtensa" : ["xtensa", "xtensaeb"]
- }
- 
-+
- def do_probe(gdb):
--    gdb_out = check_output([gdb,
--                            "-ex", "set architecture",
--                            "-ex", "quit"], stderr=STDOUT)
-+    try:
-+        gdb_out = check_output([gdb,
-+                               "-ex", "set architecture",
-+                               "-ex", "quit"], stderr=STDOUT, encoding="utf-8")
-+    except (OSError) as e:
-+        sys.exit(e)
-+    except CalledProcessError as e:
-+        sys.exit(f'{e}. Output:\n\n{e.output}')
-+
-+    found_gdb_archs = re.search(r'Valid arguments are (.*)', gdb_out)
- 
--    m = re.search(r"Valid arguments are (.*)",
--                  gdb_out.decode("utf-8"))
-+    targets = set()
-+    if found_gdb_archs:
-+        gdb_archs = found_gdb_archs.group(1).split(", ")
-+        mapped_gdb_archs = [arch for arch in gdb_archs if arch in MAP]
- 
--    valid_arches = set()
-+        targets = {target for arch in mapped_gdb_archs for target in MAP[arch]}
- 
--    if m.group(1):
--        for arch in m.group(1).split(", "):
--            if arch in mappings:
--                mapping = mappings[arch]
--                if isinstance(mapping, str):
--                    valid_arches.add(mapping)
--                else:
--                    for entry in mapping:
--                        valid_arches.add(entry)
-+    # QEMU targets
-+    return targets
- 
--    return valid_arches
- 
- def main() -> None:
-     parser = argparse.ArgumentParser(description='Probe GDB Architectures')
--- 
-2.39.5
+I was confused why -mvsx works in practice, so I spent some time and
+managed to create a "hostile" gcc build, in which this is now a
+problem, using:
 
+    ./configure --target=3Dpowerpc64-linux-gnu --enable-checking \
+                --disable-bootstrap \
+                --with-as=3D"$(which powerpc64-linux-gnu-as)"
+
+The issue is masked by two things:
+
+- GCC passes "-many" to GAS. GCC commit e154242724b0 ("[RS6000] Don't
+  pass -many to the assembler") stops --enable-checking builds from
+  doing this.
+
+- binutils has the following line:
+
+  /* The minimum supported cpu for 64-bit little-endian is power8.  */
+  ppc_cpu |=3D ppc_parse_cpu (ppc_cpu, &sticky, "power8");
+
+  so one needs to use the big-endian toolchain to see the problem.
+
+
+I'll send a v2.
 
