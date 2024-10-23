@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F90CCF5389
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E29EDCF5389
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3bC7-0004d3-BV; Wed, 23 Oct 2024 09:14:35 -0400
+	id 1t3bEx-00064n-CV; Wed, 23 Oct 2024 09:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3bC3-0004XE-Hh
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:14:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bEu-0005y2-Sb
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1t3bC1-0001fU-I2
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:14:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bEq-00028L-85
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729689267;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1729689441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+b3DDwCyM3dIDJrog05I+Xx0Ggfa5QHIq1W48Um5CTU=;
- b=IUDvXMzLNlrQeY2GdSzifX/argW8vlrJUjNt1iA4fmGHSVanCDevL0c7rFKPTfBQNnq7Qw
- 2lNXDEZdfcl8bOOtKbXIED5QMqd7pvB6JOhslC1GYUDsmjDy5AvbLfI+dqmPjXwUQ6SovA
- hF6jz8J1Ik1uwusSil1ipItTmF6y3WY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=nMdZnBrKkWFvnvehawgN3qYw3SvqcC5NKcOrdw9qwcU=;
+ b=HmuZ9/MwhFp0MWhYSCZqcD3gUZS0IYan3KQiqeGNvIPercDGBlh5uh5LX3A1KhF7hBErPI
+ beWs0Ja9X39e+fihcVv1VypLkcXm4RMwAxC73wrxV+hYovYGdmyB7ssSz1hn71pDZWDUzo
+ zyxV71ZHE5l/psDeOTvYPg+KJfDB73o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-sADDw2CRP-KNiv6bR-Payw-1; Wed,
- 23 Oct 2024 09:14:23 -0400
-X-MC-Unique: sADDw2CRP-KNiv6bR-Payw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-pZHT8jlJNnWT7fLOHYmefA-1; Wed,
+ 23 Oct 2024 09:17:17 -0400
+X-MC-Unique: pZHT8jlJNnWT7fLOHYmefA-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E6A11964CC1; Wed, 23 Oct 2024 13:14:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.19])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE38119560AE; Wed, 23 Oct 2024 13:14:10 +0000 (UTC)
-Date: Wed, 23 Oct 2024 14:14:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- devel@lists.libvirt.org, Marcelo Tosatti <mtosatti@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, kvm@vger.kernel.org,
- Beraldo Leal <bleal@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 10/18] gitlab: make check-[dco|patch] a little more
- verbose
-Message-ID: <Zxj2n0kxAtnIAd9A@redhat.com>
-References: <20241023113406.1284676-1-alex.bennee@linaro.org>
- <20241023113406.1284676-11-alex.bennee@linaro.org>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52D7D1955D42; Wed, 23 Oct 2024 13:17:16 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.43])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 363961956054; Wed, 23 Oct 2024 13:17:14 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 01/23] hw/s390x/ipl: Provide more memory to the s390-ccw.img
+ firmware
+Date: Wed, 23 Oct 2024 15:16:48 +0200
+Message-ID: <20241023131710.906748-2-thuth@redhat.com>
+In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
+References: <20241023131710.906748-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241023113406.1284676-11-alex.bennee@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -40
 X-Spam_score: -4.1
@@ -103,34 +78,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 23, 2024 at 12:33:58PM +0100, Alex Bennée wrote:
-> When git fails the rather terse backtrace only indicates it failed
-> without some useful context. Add some to make the log a little more
-> useful.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> v2
->   - keep check_call, just don't redirect stdout/err
-> ---
->  .gitlab-ci.d/check-dco.py   | 5 ++---
->  .gitlab-ci.d/check-patch.py | 5 ++---
->  2 files changed, 4 insertions(+), 6 deletions(-)
+We are going to link the SLOF libc into the s390-ccw.img, and this
+libc needs more memory for providing space for malloc() and friends.
+Thus bump the memory size that we reserve for the bios to 3 MiB
+instead of only 2 MiB. While we're at it, add a proper check that
+there is really enough memory assigned to the machine before blindly
+using it.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240621082422.136217-3-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/ipl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-> 
-
-With regards,
-Daniel
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 5ab7433908..5f60977ceb 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -45,6 +45,7 @@
+ #define INITRD_PARM_START               0x010408UL
+ #define PARMFILE_START                  0x001000UL
+ #define ZIPL_IMAGE_START                0x009000UL
++#define BIOS_MAX_SIZE                   0x300000UL
+ #define IPL_PSW_MASK                    (PSW_MASK_32 | PSW_MASK_64)
+ 
+ static bool iplb_extended_needed(void *opaque)
+@@ -144,7 +145,14 @@ static void s390_ipl_realize(DeviceState *dev, Error **errp)
+      * even if an external kernel has been defined.
+      */
+     if (!ipl->kernel || ipl->enforce_bios) {
+-        uint64_t fwbase = (MIN(ms->ram_size, 0x80000000U) - 0x200000) & ~0xffffUL;
++        uint64_t fwbase;
++
++        if (ms->ram_size < BIOS_MAX_SIZE) {
++            error_setg(errp, "not enough RAM to load the BIOS file");
++            return;
++        }
++
++        fwbase = (MIN(ms->ram_size, 0x80000000U) - BIOS_MAX_SIZE) & ~0xffffUL;
+ 
+         bios_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, ipl->firmware);
+         if (bios_filename == NULL) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.0
 
 
