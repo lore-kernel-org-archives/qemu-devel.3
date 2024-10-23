@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACA0CFA47E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1424CFA47E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3iu3-0000np-OE; Wed, 23 Oct 2024 17:28:31 -0400
+	id 1t3iu3-0000nd-E3; Wed, 23 Oct 2024 17:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3iu0-0000n1-Mz
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:24 -0400
-Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
+ id 1t3itz-0000me-GA
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:23 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3ity-0007cv-Sg
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:24 -0400
-Received: by mail-il1-x12a.google.com with SMTP id
- e9e14a558f8ab-3a4dacfda3eso1083595ab.2
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:28:22 -0700 (PDT)
+ id 1t3itx-0007ci-Nr
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:28:23 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7163489149eso159761a12.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729718902; x=1730323702; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AlBPxw/KrsdqzVVePdKmZM4R4b6YL6msvYP62z27iUY=;
- b=xNqVJKpE1VuyB82Pw0udfAJbbS+CTUHPsVJdnkXRv38sbx/XnWpUVi68a6G/bkLgLp
- fToE6HGmD+KT53f3OVUdctobGIRYpVF76ZMLudqjyy4SHtuqCXSQ4c80PLdtLGgaA9x1
- nvu82y/E/2t1PiXfyYJYyO5M3G8HAqEpqk/Awlw06zC8cv0y1SLFisSfsKJ5Sywrdgjy
- IC/W9Mo0NCPeMziq9XQ7mDtUN1LeRQlW/xs7eOZl+zbduoKZjw9CudKjVruWoDkoeOUO
- CQCGUApS9kQbz9a/MSexvzhboQcktpHevd+FOiaDoTsA2/tHuTxs+DZOMpHyUbSnkIH0
- mACw==
+ d=linaro.org; s=google; t=1729718900; x=1730323700; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yh1w5tbQ3FNJQ+qQrBU+8HWVpwNff9U55VwWmmd3WgA=;
+ b=fg7QZh/jxKfA8VF5e9/9atR00Zv+ntiViGif8zTPYtuXiAGEahb0FgDS9xfOK5V8vK
+ ghAqx9kVLNuATVvqt+2HBUYSFyHYNEjqfKJOapXHoWlcZWigfBuyy5fMlIdBOkBmbKdU
+ 1/tvhxh4sMn0gMWKdUXS3x3oylGbeJn/qX8YZKe3rLhKk0a34qM2gpcJWytT9WXIabf3
+ NnWd4G1j0lZ8U2dQcubMajqDJsKkRT/vd905OrkjZ38gV1auniwxfhuXJ9j1eXYnKi1V
+ I34uLPcFMGnFJngCJCy8wNU4AHTXxo1EcbbEWSEKBklPlx/xts2eiYAJqw4IjZ8HzeOt
+ 23iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729718902; x=1730323702;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AlBPxw/KrsdqzVVePdKmZM4R4b6YL6msvYP62z27iUY=;
- b=SQVWmQBqE4rsqiDdN4lxm5A/a65wxXei5XdW+4NRkvxK6loEJQWEpxdfk3Edn0vvbx
- I5GX1oK2af6RCoFnEUl9/OXd5CPK5baxzwKUrrN85WsJLo/jpYHWOo9eGRlSCwPy8c7B
- erLwdoFSEAKqeYEoocVLwCHZh3i5Qqjg6C1uuAe/tDqje41ULvsCnCz47Q9gjlHmlHlD
- R2N5zb2LnjaCMKqwRBHHc/oFrUZfTi006gncEKUgkh2osog9mfZyDULR0ztPOev+ILTY
- g+5hwjyFrd6gtyFs5CrZgyK384+wZiBtZE5ueJUVRsM8Ze/3T77GmQ2CeIr7uGyl7fQY
- pKPQ==
-X-Gm-Message-State: AOJu0YyIEk41V1dBhH/ebcw7eoGnckxE+iJJEb0fZ3fbE9KW6+5y1sMD
- 1aVDIHTleknmR48SC7KfuN/tllkcXqXwZ/J1NAwlB8TV+Tb+AXw5IGTiTb/40ZiP//LOPV2a8Tg
- 6bcSs2A==
-X-Google-Smtp-Source: AGHT+IFtStuVyRB27pK5J0eIsrodHevjtPaNOZ57Ia9cOZ8iSHPb9DUTY3eiP/pN7RRVfekVLuEQeA==
-X-Received: by 2002:a05:6e02:164d:b0:3a0:9238:d38 with SMTP id
- e9e14a558f8ab-3a4d5961cccmr42474985ab.10.1729718901676; 
- Wed, 23 Oct 2024 14:28:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729718900; x=1730323700;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yh1w5tbQ3FNJQ+qQrBU+8HWVpwNff9U55VwWmmd3WgA=;
+ b=aiB+F8X9DX7Laq3oeNSkxT8UGxzzo+X5mBknVCLKoIBQ6mLSv9gAqnd3+z725PjVLY
+ NOsbZ3EGpvlKdsqv3zn+5jv05rZekTdUV2Yh0YWP63HO2MWGow1Mis77YNKccOGTpRW3
+ V4ngbewh+DuT0dCJjh9cZslE2zxYt0MGYCH+I6Zl0lo0lHndHPYvwHmsIMfe/OQ4dkQR
+ /24Xh5BHwRSTE+5AldcrvjzRZRcj03RaHCDdINev6VW8rYVoLUaPtQbv3fNVNbSOwozO
+ 7GWb9UgG35PQotvHVdg5OOsRVm3h+gSrKkf4+B3YHYv1ombwFf0j0fAUmJG74cjKUKMm
+ XSWQ==
+X-Gm-Message-State: AOJu0Yx+9v4Jy+v93qfBPf8MHpS4NEEHntckYVCtXfCmPbroLoE9i6TX
+ O69FsYfCu+Hw0pLQkrMqgucRKRxiPFRviUFS/DVd+MW1/S8zFH7MgN4dDZKArApk7TIVyiZ7Ydx
+ bz+FwPQ==
+X-Google-Smtp-Source: AGHT+IHPrjfyabtkjj9M/SNSF7ELMiTqfnTxP2eBBzoM1ZRcw3ymDO0CIoUYvq8verzQinORpkqQMQ==
+X-Received: by 2002:a05:6a20:9d8f:b0:1d9:762a:ca5f with SMTP id
+ adf61e73a8af0-1d978ad719emr4583312637.8.1729718899952; 
+ Wed, 23 Oct 2024 14:28:19 -0700 (PDT)
 Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeaafab5esm7228137a12.17.2024.10.23.14.28.20
+ 41be03b00d2f7-7eaeaafab5esm7228137a12.17.2024.10.23.14.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 14:28:21 -0700 (PDT)
+ Wed, 23 Oct 2024 14:28:19 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -69,16 +68,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v3 2/3] meson: build contrib/plugins with meson
-Date: Wed, 23 Oct 2024 14:28:11 -0700
-Message-Id: <20241023212812.1376972-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 0/3] build contrib/plugins using meson
+Date: Wed, 23 Oct 2024 14:28:09 -0700
+Message-Id: <20241023212812.1376972-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241023212812.1376972-1-pierrick.bouvier@linaro.org>
-References: <20241023212812.1376972-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-il1-x12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,68 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tried to unify this meson.build with tests/tcg/plugins/meson.build but
-the resulting modules are not output in the right directory.
+Contrib plugins have been built out of tree so far, thanks to a Makefile.
+However, it is quite inconvenient for maintenance, as we may break them,
+especially for specific architectures.
 
-Originally proposed by Anton Kochkov, thank you!
+First patches are fixing warnings for existing plugins, then we add meson
+support, and finally, we remove Makefile for contrib/plugins.
 
+Based on the proposal of Anton Kochkov on associated gitlab issue.
 Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- meson.build                 |  4 ++++
- contrib/plugins/meson.build | 28 ++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+
+Plugins are now deactivated by default on 32-bits hosts (since cf2a78), so we
+can enable with meson without worrying of warnings when building plugins for 32
+bits.
+
+Removed patches for individual plugins.
+
+v2:
+- removed warnings fix for 32 bits as they were incorrect. They are not needed
+  anymore as plugins are deprecated for 32 bits hosts.
+
+v3:
+- do not build lockstep on windows (it uses sys/socket.h)
+- build new plugins recently added
+- fix warning in cflow plugin
+- tested it builds correctly on windows/macos/linux
+
+Pierrick Bouvier (3):
+  contrib/plugins/cflow: fix warning
+  meson: build contrib/plugins with meson
+  contrib/plugins: remove Makefile for contrib/plugins
+
+ configure                   | 18 --------
+ Makefile                    | 10 -----
+ meson.build                 |  4 ++
+ contrib/plugins/cflow.c     |  6 +--
+ contrib/plugins/Makefile    | 87 -------------------------------------
+ contrib/plugins/meson.build | 28 ++++++++++++
+ 6 files changed, 35 insertions(+), 118 deletions(-)
+ delete mode 100644 contrib/plugins/Makefile
  create mode 100644 contrib/plugins/meson.build
 
-diff --git a/meson.build b/meson.build
-index bdd67a2d6d1..3ea03c451ba 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3678,6 +3678,10 @@ subdir('accel')
- subdir('plugins')
- subdir('ebpf')
- 
-+if 'CONFIG_TCG' in config_all_accel
-+  subdir('contrib/plugins')
-+endif
-+
- common_user_inc = []
- 
- subdir('common-user')
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-new file mode 100644
-index 00000000000..63a32c2b4f0
---- /dev/null
-+++ b/contrib/plugins/meson.build
-@@ -0,0 +1,28 @@
-+contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
-+                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
-+if host_os != 'windows'
-+  # lockstep uses socket.h
-+  contrib_plugins += 'lockstep'
-+endif
-+
-+t = []
-+if get_option('plugins')
-+  foreach i : contrib_plugins
-+    if host_os == 'windows'
-+      t += shared_module(i, files(i + '.c') + 'win32_linker.c',
-+                        include_directories: '../../include/qemu',
-+                        link_depends: [win32_qemu_plugin_api_lib],
-+                        link_args: ['-Lplugins', '-lqemu_plugin_api'],
-+                        dependencies: glib)
-+    else
-+      t += shared_module(i, files(i + '.c'),
-+                        include_directories: '../../include/qemu',
-+                        dependencies: glib)
-+    endif
-+  endforeach
-+endif
-+if t.length() > 0
-+  alias_target('contrib-plugins', t)
-+else
-+  run_target('contrib-plugins', command: find_program('true'))
-+endif
 -- 
 2.39.5
 
