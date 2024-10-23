@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74FC7CFA478
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A390DCFA47E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:32:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3iwW-0003A6-Kd; Wed, 23 Oct 2024 17:31:00 -0400
+	id 1t3ixR-0003lf-9U; Wed, 23 Oct 2024 17:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3iwV-00039t-TP
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:30:59 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t3ixK-0003kU-JN
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:31:54 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3iwR-0007yv-C0
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:30:59 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-20e6981ca77so1838975ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:30:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1t3ixI-00082U-6L
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:31:49 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7e6cbf6cd1dso144061a12.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729719054; x=1730323854; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1729719107; x=1730323907; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=U7SUzEd/ydNz4alr1dGxzqjamOGOLZayKNOj7UKibqI=;
- b=OvbZR6BkxESf5Z1+AthxxWOfOaCKyMBIwnXT41jln20/AYC7GzW5cic5PrbLXYPnBP
- HM4Vr5RqJDLiOjXrICrts9dLQ3Wc13vjZem7jQIDg1nUMOXai2IgcF9CT6AM0FUnyU9d
- acZqa2VyWT8UzNyxxc/17mrGmyKqPesQjwmHKfQ8ksF4ODUA5gBlU/WtojCpiqVKqPzG
- JXANyHug+zVil3Y0RXGCUebQSXF4CdY5yNFQ0ERQnrkohaF+nQADsbzu3fhTfU/SpB7I
- 0EXc+epCu8krx12L7c5VBbq89uhETrTUs7Q8pHflo+2Ei5ewpSjaJFsfmcRdF+MzSWTI
- uZoA==
+ bh=XMV66Tma+m+DyNkwDKnD2R7rJWyhw+6KbQDPG90Lh9o=;
+ b=WhYJLhI7NkvYbyIPAu9rUF9zpw6GNz0rTIg5gKiSKnQNmwQgto2hn0vG1xbJCdzi2Q
+ 6+crZMKcEvbpq+QiqXUw7quxq3nSPGYMK+tz164XGLAVxCPNVPty9WGCeBIL6JfBVNJ0
+ C5jxlUqZ2D1EM62Eo5Z/suZnDgE+pFgo279c0AZuU2u/AG4g7xmqN3mHcBhZeI5gQ2Yu
+ WFIV0qKDvEx+e2BgtRfm31ubxPDR9lXQOSBaQ3jLi7fvcRuFG/mHhiAo2yR7nwi8BL0m
+ lRxuoDNEU91vXFU5lZhFEhukG80XJre+fGhAMl5aUnLHHL0dV6lAkeZdgxDOUY6rEZZA
+ d6oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729719054; x=1730323854;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729719107; x=1730323907;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U7SUzEd/ydNz4alr1dGxzqjamOGOLZayKNOj7UKibqI=;
- b=NPHjYBeZ7KhX92HS+mEKjWRCujfEPsiAuWFsfphzrhR0sdFYsexpk22YXjMBR60U75
- /lC7d4V9ACoS1tlCW2trcpzd7LWmBL1o3GgsqF7bQiTar83AaOlBJdPi3/B6tfKk+JI+
- MldXxaE+33iDpsfsJU9RhFNNJB2WF9GJp2kgYF5oGXWwQrDGWSnR1SKDbczoXD5zdzd5
- c3/vDUz98GZ0Xw/SUh5YJBA+0Gf+HekAocM3QAQvnot5u0M/355aAuLCoBk3oDpIj6lg
- cDor1cJcgYZyZ8CNLq8xfzLgoW9rCgKanonAwcY9bPEn6d/u4xnBbmOVeUafyrZo+OBW
- 5Kbg==
-X-Gm-Message-State: AOJu0YzpmMqPersyF8rmbi7FHdVL/fOO7py7zlYh4nOs3v1wcR+JVYGC
- gKmHr4GigeJ1z13O+UxTiZfBAG4cw0EyjJpgRhHpjqtk5aD67RHeoV3WS6u6TWg=
-X-Google-Smtp-Source: AGHT+IE+gLc7zI3kkHZvSUNZEZ3gOmgOS5vERMyAjKlfEd5vfpBbSsq0vScd3j+qi6F4TmdmJlQ59A==
-X-Received: by 2002:a17:903:1d2:b0:20b:bac2:88f3 with SMTP id
- d9443c01a7336-20fab2da50amr56007535ad.53.1729719053640; 
- Wed, 23 Oct 2024 14:30:53 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7ef0ad34sm61853995ad.68.2024.10.23.14.30.53
+ bh=XMV66Tma+m+DyNkwDKnD2R7rJWyhw+6KbQDPG90Lh9o=;
+ b=GuLZJuLObFMNxlZNLzH0pU/2KdSehZZ5cvUoft4vloqcQ0z3sXq5WqJtCULIHltuF+
+ ISAKPqcqwg9WbLFru7rPxmm9KwFJCHDNX0T3j+iewknBHAblZtB36RzDR5/a/D4VMEU7
+ AOgmuDO4G1F/Yo0Xbx9P//h0LcUSj1PHKIXEBIeW/mvneC2HFvV+9FFOE1ATe/HWigv/
+ jCpAJ+bH4jGNggCRFCxHKZjHyXMzeQL0+8wn4p9rJHPIgXaYxBN2g846aw+CFXGV3jBw
+ gG/hqF8MGk35vuqKYLtv45LVNtAPusT81fY2I281aSBoTQCOZ1uc1S1JCIvwmLmFRfHD
+ XVew==
+X-Gm-Message-State: AOJu0YyVyriPyaGakZKKEBy1eva6P3VBh7B1meMT5wVIwDrWdFuvVPjp
+ 7OPuYBejjwTjlEo9NxMlWdgsIR9FMccSgBfHaFxxoXALp7Mpzr6GJboa3omr6Ww=
+X-Google-Smtp-Source: AGHT+IECIPlif+Tu0yu3XBicCEMHLEOzNPxUBgiSXihwbTu2CDR+24J+6/0XGCXXFNeLSWMcYXUV8g==
+X-Received: by 2002:a05:6a21:6b0c:b0:1d9:78c:dcf2 with SMTP id
+ adf61e73a8af0-1d978bd32cdmr5191354637.43.1729719106774; 
+ Wed, 23 Oct 2024 14:31:46 -0700 (PDT)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7eaec52dd6csm6230401a12.4.2024.10.23.14.31.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 14:30:53 -0700 (PDT)
-Message-ID: <2816a9e4-1cb0-476d-b0b1-8040086f0d3a@linaro.org>
-Date: Wed, 23 Oct 2024 14:30:51 -0700
+ Wed, 23 Oct 2024 14:31:46 -0700 (PDT)
+Message-ID: <202cd5e2-3732-479d-ab02-67061e2114cc@linaro.org>
+Date: Wed, 23 Oct 2024 14:31:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tap-win32: fix format-truncation warning
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-References: <20241023183009.1041419-1-pierrick.bouvier@linaro.org>
- <875xpilhu6.fsf@draig.linaro.org>
- <0ec19690-760a-4726-baa9-6073c193dc3c@linaro.org>
+Subject: Re: [PATCH v2 18/20] meson: build contrib/plugins with meson
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <0ec19690-760a-4726-baa9-6073c193dc3c@linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Beraldo Leal <bleal@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ devel@lists.libvirt.org, Cleber Rosa <crosa@redhat.com>,
+ kvm@vger.kernel.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20241022105614.839199-1-alex.bennee@linaro.org>
+ <20241022105614.839199-19-alex.bennee@linaro.org>
+ <fe33c996-3241-4706-9ac1-85f00cb8f388@linaro.org>
+ <87sesnkxhm.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87sesnkxhm.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,53 +116,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/24 13:15, Pierrick Bouvier wrote:
-> On 10/23/24 12:50, Alex Bennée wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>
->>> Simply increase destination buffer size so truncation can't happen.
->>>
->>> "cc" "-m64" "-Ilibcommon.a.p" "-Isubprojects/dtc/libfdt"
->>> "-I../subprojects/dtc/libfdt"
->>> "-ID:/a/_temp/msys64/mingw64/include/pixman-1"
->>> "-ID:/a/_temp/msys64/mingw64/include/glib-2.0"
->>> "-ID:/a/_temp/msys64/mingw64/lib/glib-2.0/include"
->>> "-ID:/a/_temp/msys64/mingw64/include/ncursesw"
->>> "-fdiagnostics-color=auto" "-Wall" "-Winvalid-pch" "-Werror"
->>> "-std=gnu11" "-O2" "-g" "-fstack-protector-strong" "-Wempty-body"
->>> "-Wendif-labels" "-Wexpansion-to-defined" "-Wformat-security"
->>> "-Wformat-y2k" "-Wignored-qualifiers" "-Wimplicit-fallthrough=2"
->>> "-Winit-self" "-Wmissing-format-attribute" "-Wmissing-prototypes"
->>> "-Wnested-externs" "-Wold-style-declaration" "-Wold-style-definition"
->>> "-Wredundant-decls" "-Wshadow=local" "-Wstrict-prototypes"
->>> "-Wtype-limits" "-Wundef" "-Wvla" "-Wwrite-strings"
->>> "-Wno-missing-include-dirs" "-Wno-psabi" "-Wno-shift-negative-value"
->>> "-iquote" "." "-iquote" "D:/a/qemu/qemu" "-iquote"
->>> "D:/a/qemu/qemu/include" "-iquote"
->>> "D:/a/qemu/qemu/host/include/x86_64" "-iquote"
->>> "D:/a/qemu/qemu/host/include/generic" "-iq
->>> ../net/tap-win32.c: In function 'tap_win32_open':
->>> ../net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 
->>> 255 bytes into a region of size 176 [-Werror=format-truncation=]
->>>    343 |              "%s\\%s\\Connection",
->>>        |                   ^~
->>>    344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->>>        |                                       ~~~~~~~~~
->>> In function 'get_device_guid',
->>>      inlined from 'tap_win32_open' at ../net/tap-win32.c:616:10:
->>> ../net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347
->>> bytes into a destination of size 256
->>
->> Is the compiler min/max maxing what UCS-16 or UTF-8 might pack into that string?
->>>
-> 
-> Yes, enum_name (used to compose final string) is already sized 256, so result *may* be 
-> bigger. I'm not sure it would happen in the real world though.
-
-There are several patches for this, most recently:
-
-https://lore.kernel.org/qemu-devel/20241008202842.4478-1-shentey@gmail.com/
-
-
-r~
+T24gMTAvMjMvMjQgMDE6NTcsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gUGllcnJpY2sgQm91
+dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPiB3cml0ZXM6DQo+IA0KPj4gT24g
+MTAvMjIvMjQgMDM6NTYsIEFsZXggQmVubsOpZSB3cm90ZToNCj4+PiBGcm9tOiBQaWVycmlj
+ayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+Pj4gVHJpZWQgdG8g
+dW5pZnkgdGhpcyBtZXNvbi5idWlsZCB3aXRoIHRlc3RzL3RjZy9wbHVnaW5zL21lc29uLmJ1
+aWxkDQo+Pj4gYnV0DQo+Pj4gdGhlIHJlc3VsdGluZyBtb2R1bGVzIGFyZSBub3Qgb3V0cHV0
+IGluIHRoZSByaWdodCBkaXJlY3RvcnkuDQo+Pj4gT3JpZ2luYWxseSBwcm9wb3NlZCBieSBB
+bnRvbiBLb2Noa292LCB0aGFuayB5b3UhDQo+Pj4gU29sdmVzOiBodHRwczovL2dpdGxhYi5j
+b20vcWVtdS1wcm9qZWN0L3FlbXUvLS9pc3N1ZXMvMTcxMA0KPj4+IFNpZ25lZC1vZmYtYnk6
+IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+PiBN
+ZXNzYWdlLUlkOiA8MjAyNDA5MjUyMDQ4NDUuMzkwNjg5LTItcGllcnJpY2suYm91dmllckBs
+aW5hcm8ub3JnPg0KPj4+IFNpZ25lZC1vZmYtYnk6IEFsZXggQmVubsOpZSA8YWxleC5iZW5u
+ZWVAbGluYXJvLm9yZz4NCj4+PiAtLS0NCj4+PiAgICBtZXNvbi5idWlsZCAgICAgICAgICAg
+ICAgICAgfCAgNCArKysrDQo+Pj4gICAgY29udHJpYi9wbHVnaW5zL21lc29uLmJ1aWxkIHwg
+MjMgKysrKysrKysrKysrKysrKysrKysrKysNCj4+PiAgICAyIGZpbGVzIGNoYW5nZWQsIDI3
+IGluc2VydGlvbnMoKykNCj4+PiAgICBjcmVhdGUgbW9kZSAxMDA2NDQgY29udHJpYi9wbHVn
+aW5zL21lc29uLmJ1aWxkDQo+Pj4gZGlmZiAtLWdpdCBhL21lc29uLmJ1aWxkIGIvbWVzb24u
+YnVpbGQNCj4+PiBpbmRleCBiZGQ2N2EyZDZkLi4zZWEwM2M0NTFiIDEwMDY0NA0KPj4+IC0t
+LSBhL21lc29uLmJ1aWxkDQo+Pj4gKysrIGIvbWVzb24uYnVpbGQNCj4+PiBAQCAtMzY3OCw2
+ICszNjc4LDEwIEBAIHN1YmRpcignYWNjZWwnKQ0KPj4+ICAgIHN1YmRpcigncGx1Z2lucycp
+DQo+Pj4gICAgc3ViZGlyKCdlYnBmJykNCj4+PiAgICAraWYgJ0NPTkZJR19UQ0cnIGluIGNv
+bmZpZ19hbGxfYWNjZWwNCj4+PiArICBzdWJkaXIoJ2NvbnRyaWIvcGx1Z2lucycpDQo+Pj4g
+K2VuZGlmDQo+Pj4gKw0KPj4+ICAgIGNvbW1vbl91c2VyX2luYyA9IFtdDQo+Pj4gICAgICBz
+dWJkaXIoJ2NvbW1vbi11c2VyJykNCj4+PiBkaWZmIC0tZ2l0IGEvY29udHJpYi9wbHVnaW5z
+L21lc29uLmJ1aWxkIGIvY29udHJpYi9wbHVnaW5zL21lc29uLmJ1aWxkDQo+Pj4gbmV3IGZp
+bGUgbW9kZSAxMDA2NDQNCj4+PiBpbmRleCAwMDAwMDAwMDAwLi5hMGUwMjZkMjVlDQo+Pj4g
+LS0tIC9kZXYvbnVsbA0KPj4+ICsrKyBiL2NvbnRyaWIvcGx1Z2lucy9tZXNvbi5idWlsZA0K
+Pj4+IEBAIC0wLDAgKzEsMjMgQEANCj4+PiArdCA9IFtdDQo+Pj4gK2lmIGdldF9vcHRpb24o
+J3BsdWdpbnMnKQ0KPj4+ICsgIGZvcmVhY2ggaSA6IFsnY2FjaGUnLCAnZHJjb3YnLCAnZXhl
+Y2xvZycsICdob3RibG9ja3MnLCAnaG90cGFnZXMnLCAnaG93dmVjJywNCj4+PiArICAgICAg
+ICAgICAgICAgJ2h3cHJvZmlsZScsICdpcHMnLCAnbG9ja3N0ZXAnLCAnc3RvcHRyaWdnZXIn
+XQ0KPj4NCj4+IGxvY2tzdGVwIGRvZXMgbm90IGJ1aWxkIHVuZGVyIFdpbmRvd3MgKGl0IHVz
+ZXMgc29ja2V0cyksIHNvIGl0IHNob3VsZA0KPj4gYmUgY29uZGl0aW9ubmFsbHkgbm90IGJ1
+aWx0IG9uIHRoaXMgcGxhdGZvcm0uDQo+PiBAQWxleCwgaWYgeW91IGZlZWwgbGlrZSBtb2Rp
+ZnlpbmcgdGhpcywgeW91IGNhbi4gSWYgbm90LCB5b3UgY2FuIGRyb3ANCj4+IHRoZSBtZXNv
+biBidWlsZCBwYXRjaGVzIGZyb20gdGhpcyBzZXJpZXMgdG8gbm90IGJsb2NrIGl0Lg0KPiAN
+Cj4gSSdsbCBkcm9wIGZyb20gdGhlIFBSIGFuZCBsZXQgeW91IHJlLXN1Ym1pdC4NCj4gDQoN
+ClNlbnQgYSB2MyB3aXRoIHdpbmRvd3MgZml4Og0KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcv
+cWVtdS1kZXZlbC8yMDI0MTAyMzIxMjgxMi4xMzc2OTcyLTEtcGllcnJpY2suYm91dmllckBs
+aW5hcm8ub3JnL1QvI3QNCg0KVGhhbmtzLA0KUGllcnJpY2sNCg==
 
