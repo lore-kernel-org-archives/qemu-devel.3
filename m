@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971FCD2E00B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 02:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0564DD2E008
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 02:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3QpF-0001XZ-AM; Tue, 22 Oct 2024 22:10:17 -0400
+	id 1t3RDT-00052x-Mo; Tue, 22 Oct 2024 22:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t3QpB-0001XG-Lg
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 22:10:13 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t3RDE-00050v-CS; Tue, 22 Oct 2024 22:35:04 -0400
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t3Qp7-0007dZ-Ln
- for qemu-devel@nongnu.org; Tue, 22 Oct 2024 22:10:11 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7180f2f5fb0so3201065a34.1
- for <qemu-devel@nongnu.org>; Tue, 22 Oct 2024 19:10:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1t3RDC-0001qE-4e; Tue, 22 Oct 2024 22:35:04 -0400
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-50d431b0ae2so237389e0c.1; 
+ Tue, 22 Oct 2024 19:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729649408; x=1730254208;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1729650899; x=1730255699; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BcW/CUwOVFNCzVyQxL/mv8bi+/kDzT9IfUfKurNJVmk=;
- b=PDxssTyIJMCTHY0jdEVQqAHdM9yPviC0XTL5O5LMoybET2Lcbg48Pt2Ao3RL3yBD9G
- 5bFk3Fb3gA9bO05UpqJu5Qj/jDjjyUxOejvgVkOfwHOdJSbgi+lSt46t/8a5ZCj8j+tc
- pDJJ79BjPtbPeWmCQcmbyllk+GC9svj16xVm/XvKiBaYDomjLDxkF1DHUFaY4V6n7mgX
- TMuF/PZScOVTFqL3eedwfYm5i6vDxLXKoLb8v9cFCtn9QA3Tcsjh6ArJjMTGJ050S+85
- Ri42eiljyVnpkj3M2FMzw73CNkdb6eFI3QgQYzerZYHGq4gBxGsany27ZcGjgdJ92os7
- uoNw==
+ bh=VJLZu3wfzWsMU2KyeCkcJ12E76myWXaAn0vOgGxkH10=;
+ b=gJgimGyZ3xTOVwa3b+XGsitIxHF7wVK9ZBNcy6WcMWsY69hDRscnRtc8CuGyFo2G48
+ 2lV8wnvE1fTZOi+M+/lxI7VOFiS7Yc1ypPUKRe9GN73SEn/5yFauONiUaCN3ovG4QJ2V
+ kiK0pVmE6k8Nevlsr/ReAesOCqGyKxzqGOTOtY2IQ8SQid/YRV1i+Ei3p3RQzwM+g4ls
+ ydCdHN432pvFQArzMHzzFPZmxIlxDSwZ0OVKOqYFenIXXBRJJpBFitRHBOcvO7XdJ0lT
+ tI1kmn/Av9UkwOPaJ+GVX75Zfdi3sLna0vskR42joWbiT+lVUSkBq+dQ84N9nasNkorA
+ 1cNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729649408; x=1730254208;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1729650899; x=1730255699;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BcW/CUwOVFNCzVyQxL/mv8bi+/kDzT9IfUfKurNJVmk=;
- b=HvOLs0oaFPplKvulAqZnj05fpWK3C95imsvIsxtUQtVqkq+Z5HZfAA3V85ystlMuV5
- zlDDBW2PPJDVs6MHKiQ8kDCimw8O2yKfhESFGZXltg2+tWEb0ikYGhMm1MqvFN82o7z7
- hUIIMcYyLF1mx236wf9HUJEDmhls83lPoEhQ14+1vzsK56kdx9qfacQaNk7JnxmWhdBG
- 7Sio3LTPcmbCVWwM4K8LasnsELo7Al0qkZdrZ0pWp03iBBGEKffnrO3T/3pp2pd6Sai/
- huw3jrXbDbmmMcHbBQkJwnoLa4cUP1g/upkV4FXogWKox8sx87yh3L2TDXKT/M3/789o
- jXYA==
-X-Gm-Message-State: AOJu0YwrGVMarFvfODdhEBT9pcxW4PX4rp5M+UBm4DtcmHyGPQBmWY++
- qoX0D8wxRCY5+FnDDJE1nRdDufQCD6UFPMIZjx2X79FjX8+QhkF9662ZtNnWUUCFkp3yWM/DhgZ
- LiPF3iQ==
-X-Google-Smtp-Source: AGHT+IGKHxHiu3vXEONduE4iDUz/KshhtlVz+8STFHvcTODS+BeaeV8m0FKdtbEtHp3x8AST6iWxdA==
-X-Received: by 2002:a05:6830:628d:b0:718:1235:8b8a with SMTP id
- 46e09a7af769-7184b330c4fmr1381320a34.21.1729649407475; 
- Tue, 22 Oct 2024 19:10:07 -0700 (PDT)
-Received: from Hyman-Dev-Euler.zelin.local ([103.172.41.198])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeab5839dsm5861849a12.47.2024.10.22.19.10.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2024 19:10:07 -0700 (PDT)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH RFC 1/2] accel/kvm: Introduce kvm_dirty_log_manual_enabled
-Date: Wed, 23 Oct 2024 10:09:50 +0800
-Message-Id: <6df7d9ca9c90cf021857ef4f06b7f59c3664441b.1729648695.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1729648695.git.yong.huang@smartx.com>
-References: <cover.1729648695.git.yong.huang@smartx.com>
+ bh=VJLZu3wfzWsMU2KyeCkcJ12E76myWXaAn0vOgGxkH10=;
+ b=S0nxiYNsqViinlY5ZDQJYVhrxwuu8p7UblrzXtP9kmaLrfICkRFbvEOGlk01z3BiWa
+ v13AYH0H76MQueVISKZ/y0ZmTDlFP4/yzLDaEEnH6LSL6r5LATCkKFeYInFoHRT6ISXc
+ 5UELWHYtgX9tkdDKuNN2JslDI6y72Xig3fpQlI08UhRs/OasAMA1MdKThQx5R0b+We1f
+ r0/ITx+dZh7QfQMmkiVhINxLjXLSbnb4K5eT5Pd3lzMGsyj5end72xciUFC06gSQ1AxL
+ okHE5ewOnWOWJO80SSSs0TKPQNCDk9MbVU7eogWYoiX3D07xokTbg+pNG8l1jqdk64VK
+ ToUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWq4/mCi/pus/orrxPTj5US0fssWJXy23kSi76xVurJ12eeXEDYk21nEe25EmED3aIc/+0DV0xzVskL@nongnu.org
+X-Gm-Message-State: AOJu0YxWJRimVSI6KUIrlEgmiQ3AAnaovUKpUJ64jU8/ctIZLo05s3iv
+ LnbWaxgWlJbNIqq8Fx/NVshXRn91tQh93+p67zGxfe/+K5Yf50aqSiiiIjrXOG0BnPhrlCUOvAG
+ ulyu/4OPo5vG47j4gIP9LNHmmuZs=
+X-Google-Smtp-Source: AGHT+IHf2vyEuQdzcJnt8LRAiH7NqF7MfE9waoSMNDg1s5spV7NK+SQ5ILEgXmMKNtyVsJ3F9kYZ3YVlDTILBfK/hvA=
+X-Received: by 2002:a05:6122:3221:b0:50d:45e1:f32c with SMTP id
+ 71dfb90a1353d-50fb2ef568amr5152540e0c.2.1729650899259; Tue, 22 Oct 2024
+ 19:34:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=yong.huang@smartx.com; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20241022001134.828724-1-richard.henderson@linaro.org>
+ <20241022001134.828724-10-richard.henderson@linaro.org>
+In-Reply-To: <20241022001134.828724-10-richard.henderson@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 23 Oct 2024 12:34:33 +1000
+Message-ID: <CAKmqyKOMZQsy333uGYquoBA9SHep8yHaCFmxHH_3n42OrxHDtg@mail.gmail.com>
+Subject: Re: [PATCH v7 09/14] tcg/riscv: Accept constant first argument to
+ sub_vec
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, dbarboza@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,73 +92,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+On Tue, Oct 22, 2024 at 10:11=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Use vrsub.vi to subtract from a constant.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Introudce kvm_dirty_log_manual_enabled to indicate if dirty
-logging manually was enabled in KVM.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-The kvm_dirty_log_manual_enabled will be used in the next commit.
+Alistair
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- accel/kvm/kvm-all.c  | 2 ++
- include/sysemu/kvm.h | 8 ++++++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 801cff16a5..a0f3e6e493 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -93,6 +93,7 @@ bool kvm_allowed;
- bool kvm_readonly_mem_allowed;
- bool kvm_vm_attributes_allowed;
- bool kvm_msi_use_devid;
-+bool kvm_dirty_log_manual;
- static bool kvm_has_guest_debug;
- static int kvm_sstep_flags;
- static bool kvm_immediate_exit;
-@@ -2537,6 +2538,7 @@ static int kvm_setup_dirty_ring(KVMState *s)
-                             dirty_log_manual_caps);
-                 s->manual_dirty_log_protect = 0;
-             }
-+            kvm_dirty_log_manual = true;
-         }
-     }
- 
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index c3a60b2890..f38f2818e1 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -42,6 +42,7 @@ extern bool kvm_gsi_routing_allowed;
- extern bool kvm_gsi_direct_mapping;
- extern bool kvm_readonly_mem_allowed;
- extern bool kvm_msi_use_devid;
-+extern bool kvm_dirty_log_manual;
- 
- #define kvm_enabled()           (kvm_allowed)
- /**
-@@ -143,6 +144,12 @@ extern bool kvm_msi_use_devid;
-  */
- #define kvm_msi_devid_required() (kvm_msi_use_devid)
- 
-+/**
-+ * kvm_dirty_log_manual_enabled:
-+ * Returns: true if dirty logging manually was enabled.
-+ */
-+#define kvm_dirty_log_manual_enabled() (kvm_dirty_log_manual)
-+
- #else
- 
- #define kvm_enabled()           (0)
-@@ -157,6 +164,7 @@ extern bool kvm_msi_use_devid;
- #define kvm_gsi_direct_mapping() (false)
- #define kvm_readonly_mem_enabled() (false)
- #define kvm_msi_devid_required() (false)
-+#define kvm_dirty_log_manual_enabled() (false)
- 
- #endif  /* CONFIG_KVM_IS_POSSIBLE */
- 
--- 
-2.27.0
-
+> ---
+>  tcg/riscv/tcg-target-con-set.h | 1 +
+>  tcg/riscv/tcg-target.c.inc     | 8 ++++++--
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv/tcg-target-con-se=
+t.h
+> index 97e6ecdb0f..d8ce5414f5 100644
+> --- a/tcg/riscv/tcg-target-con-set.h
+> +++ b/tcg/riscv/tcg-target-con-set.h
+> @@ -25,6 +25,7 @@ C_O0_I2(v, r)
+>  C_O1_I1(v, r)
+>  C_O1_I1(v, v)
+>  C_O1_I2(v, v, v)
+> +C_O1_I2(v, vK, v)
+>  C_O1_I2(v, v, vK)
+>  C_O1_I2(v, v, vL)
+>  C_O1_I4(v, v, vL, vK, vK)
+> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+> index ce8d6d0293..1ce2f291d3 100644
+> --- a/tcg/riscv/tcg-target.c.inc
+> +++ b/tcg/riscv/tcg-target.c.inc
+> @@ -2350,7 +2350,11 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcod=
+e opc,
+>          break;
+>      case INDEX_op_sub_vec:
+>          set_vtype_len_sew(s, type, vece);
+> -        tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2);
+> +        if (const_args[1]) {
+> +            tcg_out_opc_vi(s, OPC_VRSUB_VI, a0, a2, a1);
+> +        } else {
+> +            tcg_out_opc_vv(s, OPC_VSUB_VV, a0, a1, a2);
+> +        }
+>          break;
+>      case INDEX_op_and_vec:
+>          set_vtype_len(s, type);
+> @@ -2565,7 +2569,7 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGO=
+pcode op)
+>      case INDEX_op_xor_vec:
+>          return C_O1_I2(v, v, vK);
+>      case INDEX_op_sub_vec:
+> -        return C_O1_I2(v, v, v);
+> +        return C_O1_I2(v, vK, v);
+>      case INDEX_op_cmp_vec:
+>          return C_O1_I2(v, v, vL);
+>      case INDEX_op_cmpsel_vec:
+> --
+> 2.43.0
+>
 
