@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB6CCF5389
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BEDCF5389
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3bFF-0006BJ-9l; Wed, 23 Oct 2024 09:17:51 -0400
+	id 1t3bG1-0007hm-CR; Wed, 23 Oct 2024 09:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bF1-00066n-6V
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFm-0007Sd-NS
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:18:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bEz-00029l-JO
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFj-0002HL-RU
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:18:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729689452;
+ s=mimecast20190719; t=1729689499;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BKKZvQoxBTf2nP8eOaLQhf6dLkYbpE4nVdKlvjdImHU=;
- b=cDr8tB0WHyEsF3c0uYy+6OnVmo/8FYO8pSw+FtD0Cek/lN9NMbMsVr3jyAjGTKg0AzbzoM
- vFkn8BIVVlOZnebiYgfrohYecrMHHPqb/KPMCS4St/dgzoeJ7eXmINg/0zPCO8f9pW6t4N
- ul/tVuOgzRXLT+Mvsv6Hx2kdL8MK2mw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jZAgKjHoIK0f2Ml/A35Lz7dZewwqe78HY+smjQkjoSs=;
+ b=OtT5i4c2jsrZUrEHg2aMG/lDnSgXJQdVWYOnPRtCWQ7t1/1IyqQjr3QhxMpHhYfWT29Fh2
+ UT2KE3Qo7laSj5FA+GqkXz9jaZdXOeX3MJjvSBkLgp4eemWPont3MYcyZB2Q7J2PiKPkdM
+ LLQlhOkksfAnyAs8MOZ+JvTm5YQT0VA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-_o9ZNhijOBSVUPxFb--b5A-1; Wed,
- 23 Oct 2024 09:17:31 -0400
-X-MC-Unique: _o9ZNhijOBSVUPxFb--b5A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-emH_6pQqMwKiovvF7WHPMQ-1; Wed,
+ 23 Oct 2024 09:18:17 -0400
+X-MC-Unique: emH_6pQqMwKiovvF7WHPMQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5FFF1955F35; Wed, 23 Oct 2024 13:17:29 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFF281955BC2; Wed, 23 Oct 2024 13:18:08 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.43])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E4CFF19560AE; Wed, 23 Oct 2024 13:17:27 +0000 (UTC)
+ id 7D13C19560AE; Wed, 23 Oct 2024 13:18:06 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 06/23] docs/system/s390x/bootdevices: Update the documentation
- about network booting
-Date: Wed, 23 Oct 2024 15:16:53 +0200
-Message-ID: <20241023131710.906748-7-thuth@redhat.com>
+ Jens Remus <jremus@linux.ibm.com>, Marc Hartmayer <mhartmay@linux.ibm.com>
+Subject: [PULL 21/23] pc-bios/s390-ccw: Don't generate TEXTRELs
+Date: Wed, 23 Oct 2024 15:17:08 +0200
+Message-ID: <20241023131710.906748-22-thuth@redhat.com>
 In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
 References: <20241023131710.906748-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -82,54 +81,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Jens Remus <jremus@linux.ibm.com>
 
-Remove the information about the separate s390-netboot.img from
-the documentation.
+Commit 7cd50cbe4ca3 ("pc-bios/s390-ccw: Don't use __bss_start with the
+"larl" instruction") introduced the address constant bss_start_literal
+for __bss_start in the .text section, which introduced a relocation in
+code (i.e. TEXTREL). The dedicated constant is required, as __bss_start
+may not necessarily be aligned on a 2-byte boundary (see subject commit
+for details).
 
-Co-authored by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20241020012953.1380075-7-jrossi@linux.ibm.com>
+Move the constant to the .data section to get rid of the relocation in
+the .text section. Add the linker option -z text to prevent TEXTRELs to
+get introduced in the future.
+
+Note that the R_390_RELATIVE relocations are taken care of by function
+glue() in include/hw/elf_ops.h.inc introduced by commit 5dce07e1cb67
+("elf-loader: Provide the possibility to relocate s390 ELF files").
+
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Reviewed-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Message-ID: <20241001153618.17791-3-mhartmay@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/system/s390x/bootdevices.rst | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ pc-bios/s390-ccw/Makefile | 2 +-
+ pc-bios/s390-ccw/start.S  | 7 +++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/docs/system/s390x/bootdevices.rst b/docs/system/s390x/bootdevices.rst
-index 1a7a18b43b..c97efb8fc0 100644
---- a/docs/system/s390x/bootdevices.rst
-+++ b/docs/system/s390x/bootdevices.rst
-@@ -82,23 +82,17 @@ Note that ``0`` can be used to boot the default entry.
- Booting from a network device
- -----------------------------
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index db9e8f0892..38254e22df 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -46,7 +46,7 @@ EXTRA_CFLAGS += -fwrapv -fno-strict-aliasing -fno-asynchronous-unwind-tables
+ EXTRA_CFLAGS += -msoft-float
+ EXTRA_CFLAGS += -std=gnu99
+ EXTRA_CFLAGS += $(LIBC_INC) $(LIBNET_INC)
+-LDFLAGS += -Wl,-pie -nostdlib -z noexecstack
++LDFLAGS += -Wl,-pie -nostdlib -z noexecstack -z text
  
--Beside the normal guest firmware (which is loaded from the file ``s390-ccw.img``
--in the data directory of QEMU, or via the ``-bios`` option), QEMU ships with
--a small TFTP network bootloader firmware for virtio-net-ccw devices, too. This
--firmware is loaded from a file called ``s390-netboot.img`` in the QEMU data
--directory. In case you want to load it from a different filename instead,
--you can specify it via the ``-global s390-ipl.netboot_fw=filename``
--command line option.
--
--The ``bootindex`` property is especially important for booting via the network.
--If you don't specify the ``bootindex`` property here, the network bootloader
--firmware code won't get loaded into the guest memory so that the network boot
--will fail. For a successful network boot, try something like this::
-+The firmware that ships with QEMU includes a small TFTP network bootloader
-+for virtio-net-ccw devices.  The ``bootindex`` property is especially
-+important for booting via the network. If you don't specify the ``bootindex``
-+property here, the network bootloader won't be taken into consideration and
-+the network boot will fail. For a successful network boot, try something
-+like this::
+ cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>/dev/null
+ cc-option = if $(call cc-test, $1); then \
+diff --git a/pc-bios/s390-ccw/start.S b/pc-bios/s390-ccw/start.S
+index 576fc12c06..b70213e412 100644
+--- a/pc-bios/s390-ccw/start.S
++++ b/pc-bios/s390-ccw/start.S
+@@ -113,8 +113,6 @@ io_new_code:
+     br      %r14
  
-  qemu-system-s390x -netdev user,id=n1,tftp=...,bootfile=... \
-                    -device virtio-net-ccw,netdev=n1,bootindex=1
+     .balign 8
+-bss_start_literal:
+-    .quad   __bss_start
+ disabled_wait_psw:
+     .quad   0x0002000180000000,0x0000000000000000
+ enabled_wait_psw:
+@@ -124,6 +122,11 @@ external_new_mask:
+ io_new_mask:
+     .quad   0x0000000180000000
  
--The network bootloader firmware also has basic support for pxelinux.cfg-style
-+The network bootloader also has basic support for pxelinux.cfg-style
- configuration files. See the `PXELINUX Configuration page
- <https://wiki.syslinux.org/wiki/index.php?title=PXELINUX#Configuration>`__
- for details how to set up the configuration file on your TFTP server.
++.data
++    .balign 8
++bss_start_literal:
++    .quad   __bss_start
++
+ .bss
+     .balign 8
+ stack:
 -- 
 2.47.0
 
