@@ -4,87 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C92CFA44E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 16:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9D7CFA44E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 16:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3e6a-0006OJ-HU; Wed, 23 Oct 2024 12:21:04 -0400
+	id 1t3eAo-00080y-BA; Wed, 23 Oct 2024 12:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3e6Y-0006N2-Qf
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:21:02 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1t3e6X-0005sr-8b
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:21:02 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-20bb39d97d1so65705415ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 09:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729700460; x=1730305260; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rll0KkErhJLMNNm1d+xbnkqe5NHXnnYS+qBM2j1wp84=;
- b=Dc/GFBqEteLspmjlOcY2tOPZog0WMMER9f//Z5u+DzSiNkbJp5HVWczqye6eOwPiV7
- FR8k00B4b4vRUR1SMbLr6tnumTXlK0ZF/tmVQEj5uXBmpzF0xUJVSOEqfrwYDRVWTFS7
- ac2f3YVS8314JPFsDc/880nS9FNt/VW0FMPGzIE+N1oa1czNRu2gL0RTYtanAUmzPfts
- ZK6WR3BWnaZHVA0XmtwmX7yvrYpkn79Wgz5yjbRFL83q/+H1zYjgx/LX811l8y1YAiD9
- rHnK1o/tyTdvBZDSbDjOPD3SHWjHADVyYJ97/kaxfI7M3KjAc+/arcTwispxz2vWWe48
- cVhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729700460; x=1730305260;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rll0KkErhJLMNNm1d+xbnkqe5NHXnnYS+qBM2j1wp84=;
- b=d+p0ZvDy6h5DdfmNccUTiJr5TmssBiz/+yqdvdPU+Owmt2WWZ2lR24wyYXzzorC0gw
- osu6dMo+ua3TCuxhjhe838CKn+TgACl4UmEjHaP7R3BzFskso95XTH9ZEvjTm6AHpAEH
- BBYgz8e0U7JfMbULzrqQ7cZD8NVY2opp7yOh7dsEAjdITb4+W0/DXjbJjk1E0H52ogUv
- C4OEUeMWlBziRrp86p7JrCZWCz3ZdFLax+5iYuMYWWbSk4YoVSqSpoBdtqZOealn4dgv
- jSL1BDujM54/IrxaS4gIfN2zSe0VUxVce9QHQEZ+01Or98bpq+BzX0uaK8QVbAGbevcp
- azUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJG+oXz5iq5KGJxD/+ma+iNBNr7g+wGB3wShwvmD1Yfk30hid9glgTTSa64Q1WAUs2d/h/Nuae6DMN@nongnu.org
-X-Gm-Message-State: AOJu0Yy7DWLAWR1SG8ZQfn56oGXaPMpqhppr5TPZuzsBHmO/b0QjzqLV
- V0ae/RVJHr4nNUYLJMuxTlIqaoYArFv4RFPCWO2v/Q8RyPb5o1tP+5tSHKeNz3o=
-X-Google-Smtp-Source: AGHT+IFKWQktNFo+HZIoTY2tHL0dWZzuqKr+mIOlJGQj/pVWVAi+RiKRYO6kuHuv4rYamEEklwDOjw==
-X-Received: by 2002:a17:903:40d1:b0:20c:b0c7:92c9 with SMTP id
- d9443c01a7336-20fa9e5fd6dmr39297625ad.34.1729700459850; 
- Wed, 23 Oct 2024 09:20:59 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-81-121.tukw.qwest.net. [174.21.81.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7ef0d6f3sm59675785ad.106.2024.10.23.09.20.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 09:20:59 -0700 (PDT)
-Message-ID: <7ece7f8b-652f-4e76-9e77-ababd729717d@linaro.org>
-Date: Wed, 23 Oct 2024 09:20:57 -0700
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1t3eAl-00080c-14
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:25:23 -0400
+Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1t3eAj-0006KO-5j
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 12:25:22 -0400
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal
+ [10.202.2.50])
+ by mailfout.phl.internal (Postfix) with ESMTP id 397861380258;
+ Wed, 23 Oct 2024 12:25:17 -0400 (EDT)
+Received: from phl-imap-11 ([10.202.2.101])
+ by phl-compute-10.internal (MEProxy); Wed, 23 Oct 2024 12:25:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+ :cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1729700717;
+ x=1729787117; bh=ezYfh8vGbBGoL35ugyvD9i4flPvQdh7bUpgBPSQRYk4=; b=
+ UeHl3464JEn+yoSzXIvaxeQh6e0hcSBe5ww0Ds4gygXos/Ojhd05WqBiyYSXNIdg
+ XGu5wEktHYRy5weGkqVd1IeDtTFwKXtDDtgAPLDtMq9xCJdW8skfzQSW2fZCWzkX
+ uwBurbAo1qfO/hpPWUVzwutGqon5+6knnv0imhktmq7qmBuVP5q0RhLLIqY8ZwFX
+ Mgdaat5xTd/umnkoJdg/p9qsYUFcuSTcL9TUXHB56/2FfwbqE5lqIHMbIdXACGrc
+ v1o3lq3sJ9ivreuS4c5T37FnYcaFXit+Dm1K8EcfmLsyDkqlkeDToh8RQlMjrMm/
+ fxkW6G7+sX3o/VqoQ2sZxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729700717; x=
+ 1729787117; bh=ezYfh8vGbBGoL35ugyvD9i4flPvQdh7bUpgBPSQRYk4=; b=U
+ DSRgzmPXC0B22rx5tQfEA4tfrW3UPXPh07ArM8jXCUiEXFaQ4KBDMpA2l7or30Z6
+ z1SQK0RGWUN6SWPhM2auj7xvPr/+FpwG1urmkZETRx56g4jWaG9lr3+S74yZYGb/
+ wGnsMO8qwA6/UC4aqd+rRavmk86V2sW2VZcaqUEOmKbeArUKcEQWQoZVr+U/Q0q6
+ TDGq2LdauNNmSRUAnSvWbgF1CbGsK/2nd0T0HL9eIWv1tooJpgKgXuhxv11W+yV3
+ jXLXeNJ2FBnKg9PSZMGtEzYTMO6+wSO6LTqmKxL7o/ka1pitetlyDtGnf0n1gBVk
+ e4we+9lB0lV//8284X2ZQ==
+X-ME-Sender: <xms:bCMZZ6cgN86NZjlQ77gb_-7EQEj3WV3bermbUqFqBsR16TaydfTDgg>
+ <xme:bCMZZ0MNuYjpr2z43CfpbdMNe8-EgoUTHaEotzF_-D5CmZdsEtfQ0E1pYbej7qWV2
+ RjrBupl19GXR4MaRjg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgleelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+ necuhfhrohhmpedftehrnhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrd
+ guvgeqnecuggftrfgrthhtvghrnhephfdthfdvtdefhedukeetgefggffhjeeggeetfefg
+ gfevudegudevledvkefhvdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepudeh
+ pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrihhshhifrghrhigrrdhttghvse
+ grrhhmrdgtohhmpdhrtghpthhtoheptggrthgrlhhinhdrmhgrrhhinhgrshesrghrmhdr
+ tghomhdprhgtphhtthhopehvihhntggvnhiiohdrfhhrrghstghinhhosegrrhhmrdgtoh
+ hmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+ rghlvgigrdgsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtoheprghnuggvrh
+ hsrdhrohigvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepnhgrrhgvshhhrdhk
+ rghmsghojhhusehlihhnrghrohdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihug
+ gvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhn
+ ihigrdguvg
+X-ME-Proxy: <xmx:bCMZZ7gv2cOAzGtQ6izYwfARe9dQFEgcHUsD9NZzPHJ3PkK404tgAQ>
+ <xmx:bCMZZ38N3FZ4uEiq60yrwuxzICelSSESBSVHgH7gMObr6zjJ96fdQA>
+ <xmx:bCMZZ2udKX8GScfWKbHpPMRjTXUwjEReO1paH-uLugCkgT7vO5Rx2A>
+ <xmx:bCMZZ-HEsPGfk_cPUCvItTIBB2VdGuF8SQ6CnOQMI6fsGw-fW72mPg>
+ <xmx:bSMZZ2HyXyBrpdGtVf8NbxzkdUkyA2fOSW33YlwBMcMSwqQau3-neLsV>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 4FF162220072; Wed, 23 Oct 2024 12:25:16 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/tcg: Replace -mpower8-vector with -mcpu=power8
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Kewen Lin <linkw@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, John Platts <john_platts@hotmail.com>,
- Fabiano Rosas <farosas@linux.ibm.com>
-References: <20241023131250.48510-1-iii@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241023131250.48510-1-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Wed, 23 Oct 2024 16:24:43 +0000
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Naresh Kamboju" <naresh.kamboju@linaro.org>,
+ "open list" <linux-kernel@vger.kernel.org>,
+ "Linux ARM" <linux-arm-kernel@lists.infradead.org>,
+ lkft-triage@lists.linaro.org,
+ "Linux Regressions" <regressions@lists.linux.dev>, qemu-devel@nongnu.org
+Cc: "Mark Brown" <broonie@kernel.org>,
+ "Catalin Marinas" <catalin.marinas@arm.com>,
+ "Aishwarya TCV" <Aishwarya.TCV@arm.com>,
+ "Peter Maydell" <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Anders Roxell" <anders.roxell@linaro.org>,
+ "Vincenzo Frascino" <vincenzo.frascino@arm.com>,
+ "Thomas Gleixner" <tglx@linutronix.de>,
+ "Geert Uytterhoeven" <geert@linux-m68k.org>
+Message-Id: <4730e562-7d14-4f12-897a-e23783d094af@app.fastmail.com>
+In-Reply-To: <CA+G9fYsMg0fA-jraEvC==0a-22J97o-uBmbLJt16_ZKBpOT8EQ@mail.gmail.com>
+References: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
+ <CA+G9fYsMg0fA-jraEvC==0a-22J97o-uBmbLJt16_ZKBpOT8EQ@mail.gmail.com>
+Subject: Re: Qemu v9.0.2: Boot failed qemu-arm with Linux next-20241017 tag.
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.146; envelope-from=arnd@arndb.de;
+ helo=fout-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,32 +126,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/24 06:12, Ilya Leoshkevich wrote:
-> [1] deprecated -mpower8-vector, resulting in:
-> 
->      powerpc64-linux-gnu-gcc: warning: switch '-mpower8-vector' is no longer supported
->      qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error: expected ';' before 'float'
->          4 | typedef vector float vsx_float32_vec_t;
->            |               ^~~~~~
-> 
-> Use -mcpu=power8 instead. In order to properly verify that this works,
-> one needs a big-endian (the minimum supported CPU for 64-bit
-> little-endian is power8 anyway) GCC configured with --enable-checking
-> (see GCC commit e154242724b0 ("[RS6000] Don't pass -many to the
-> assembler").
-> 
-> [1]https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109987
-> 
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
-> ---
-> v1:https://lore.kernel.org/qemu-devel/20241021142830.486149-1-iii@linux.ibm.com/
-> v1 -> v2: Use -mcpu=power8 instead of -mvsx (Richard).
-> 
->   tests/tcg/ppc64/Makefile.target | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+On Sun, Oct 20, 2024, at 17:39, Naresh Kamboju wrote:
+> On Fri, 18 Oct 2024 at 12:35, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>>
+>> The QEMU-ARMv7 boot has failed with the Linux next-20241017 tag.
+>> The boot log is incomplete, and no kernel crash was detected.
+>> However, the system did not proceed far enough to reach the login prompt.
+>>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Anders bisected this boot regressions and found,
+> # first bad commit:
+>   [efe8419ae78d65e83edc31aad74b605c12e7d60c]
+>     vdso: Introduce vdso/page.h
+>
+> We are investigating the reason for boot failure due to this commit.
 
+Anders and I did the analysis on this, the problem turned out
+to be the early_init_dt_add_memory_arch() function in
+drivers/of/fdt.c, which does bitwise operations on PAGE_MASK
+with a 'u64' instead of phys_addr_t:
 
-r~
+void __init __weak early_init_dt_add_memory_arch(u64 base, u64 size)
+{
+        const u64 phys_offset = MIN_MEMBLOCK_ADDR;
+ 
+        if (size < PAGE_SIZE - (base & ~PAGE_MASK)) {
+                pr_warn("Ignoring memory block 0x%llx - 0x%llx\n",
+                        base, base + size);
+                return;
+        }
+
+        if (!PAGE_ALIGNED(base)) {
+                size -= PAGE_SIZE - (base & ~PAGE_MASK);
+                base = PAGE_ALIGN(base);
+        }
+
+On non-LPAE arm32, this broke the existing behavior for
+large 32-bit memory sizes. The obvious fix is to change
+back the PAGE_MASK definition for 32-bit arm to a signed
+number.
+
+mips32, ppc32 and hexagon had the same definition as
+well, so I think we should change at least those in order
+to restore the previous behavior in case they are affected
+by the same bug (or a different one).
+
+x86-32 and arc git flipped the other way by the patch,
+from unsigned to signed, when CONFIG_ARC_HAS_PAE40
+or CONFIG_X86_PAE are set. I think we should keep
+the 'signed' behavior as this was a bugfix by itself,
+but we may want to change arc and x86-32 with short
+phys_addr_t the same way for consistency.
+
+On csky, m68k, microblaze, nios2, openrisc, parisc32,
+riscv32, sh, sparc32, um and xtensa, we've always used
+the 'unsigned' PAGE_MASK, and there is no 64-bit
+phys_addr_t, so I would lean towards staying with
+'unsigned' in order to not introduce a regression.
+Alternatively we could choose to go with the 'signed'
+version on all 32-bit architectures unconditionally
+for consistency. Any preferences?
+
+      Arnd
 
