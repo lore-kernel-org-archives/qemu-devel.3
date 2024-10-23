@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C78D2E029
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 050E0D2E029
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3XEX-0002wA-O0; Wed, 23 Oct 2024 05:00:49 -0400
+	id 1t3XDC-00081h-Fx; Wed, 23 Oct 2024 04:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XES-0002XV-TF
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:00:44 -0400
+ id 1t3XDB-00080t-H9
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:25 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XEP-0000cf-1y
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:00:44 -0400
+ id 1t3XDA-0000KA-5n
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 04:59:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=zqxGnF/qV7BdR0oz3jvXLm+F7TTOtd3gMdpcwNcWh1c=; b=Q3XSDVyrJvu8byKfWx/uruwxhJ
- N0KMfGmC+f2gtWe9uDxrMTBDz/vnc3HTH+fsN7dBvMDVNH8Z46PHqxq8dcg+8aF4QOI2kBskdQw6w
- dNNnCXEtuUtz53HMNTnrdjrJM/G902IOa/pYQmooLs2konYZndKfGF4IBxe0paTx5uv7BBGqAeeli
- kegVY+CSB/U8AHZ2HrkkEKXmpd7/kAzuMd8J6D9JqeEPYX7lcy/XBCGfcpjcbXBm27q+quXFsu4Gn
- 0MGOc5jG154nT82Q9+GdDJBwOczU1ayk5xClOBiDXL06H1DMS3htCCh6dXQN9COV3dJjTEaygnILO
- T66xT9Sms9O7LEeDBJL11fNNTXJ8VyqBP/xexgJ0EFrHFogMsq4Mob8g/pEQBvYrOCP8Gd+I5YMwN
- 35L4Y8gWYEmsty8Fe7BR3fhsg6sLnejwUL8+pyIHfkQt72hp70idmeKzMw6lmQXsL4AkeskSu7DXU
- 0tHBeGlUD4h3XwUv6DXLsOeCu2RGcNF25nMzKyJO/xPXQ+B60F+Mn+xFX2juDI/QwhQ8vuqKWFlNu
- iKOQ9h2fa14FxOwTeuH5dBychQNk0HPmM5vdzyvSTJM1GWPIinReKrtvhvy03jIfp7213xtr15gpw
- g+QjCElSIhh1DqMcRmUBP8AeQk8P35rsESaQ1Y810=;
+ bh=/DrqSKmnp9M+9bamXDATfF7q+7CGyrvwvqhVWuUYqXU=; b=pEpgqSVdog1NmfM5p0EUI4yqQ5
+ UW3W6uI0UoGhfPuqYhxsy8zwCxAEvAHMI3fFLqZgGqZLikzOElLUUCTMIVCD9RWbMXgbep06nBOpk
+ NeJacqhzPLcxWFzJ/5zZEZjZ0pXcmp9IEB+V8U53Otmfu28tHVvojOSkWbc2INDIpRA5LiM1fyFqC
+ hWONBqbGANQr4JlhS/O98jmetJmBTR1KlOb/UmHarsBjOwCplWRDUC6Y7yQ4f6y9LZ/jnUKt50emc
+ fXRPahSIlYfMjAxLgbTgSY/5r7TMc71elvLYrti7eYDF4lIGZQApXzPsTAbn1XwL+tNhvVkOVpH0K
+ DTKX4QW72jzy0IVT2V59PzXtgTzdc7V9BkQ94qOOOFf+rBQzJpJgdvQ7LdO3pz/EtWEcmehBnYSNI
+ gKFyYC/ZaAyqeQo14UYr9YllYFKC7cnlWeHAP8wRJMsO23XOvKTaPFOlLzBJdrSWhPPL9perBlUTT
+ DdmGmfdh2+F6YLm8mIY1jeyYN0R7xb6CbUR9ANH7DJeSP/+Ds3AQhnGFcLUF1T6rwlQL/RfiYEHqb
+ FfzmsgrfSo1PsNLXiN4290xovijafeORxGzAKbqGDGHstVk+LXwmYde6BXE5cx12pqrMtXCGfx4Kz
+ XvgmPmiJx/Hc2I8xmrZv3H5qwEipDPTn5bCljYj5c=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XDu-0008EL-F8; Wed, 23 Oct 2024 10:00:14 +0100
+ id 1t3XCp-0008EL-Tm; Wed, 23 Oct 2024 09:59:08 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Wed, 23 Oct 2024 09:58:40 +0100
-Message-Id: <20241023085852.1061031-25-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 23 Oct 2024 09:58:21 +0100
+Message-Id: <20241023085852.1061031-6-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 24/36] next-cube: use named gpio to set RTC data bit in scr2
+Subject: [PATCH 05/36] next-cube: create new next.scsi container memory region
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,72 +78,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is in preparation for moving NeXTRTC to its own separate device.
+Move the ESP SCSI and SCSI CSR registers to the new next.scsi container memory
+region.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/m68k/next-cube.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ hw/m68k/next-cube.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index bca975065f..2a2e970830 100644
+index 6bdd91c9c6..9e457fdf12 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -240,10 +240,13 @@ static void next_scr2_rtc_update(NeXTPC *s)
-                                  ((scr2_2 & SCR2_RTDATA) ? 1 : 0);
-                 } else {
-                     /* Shift out value to read */
-+                    qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
-+                        DEVICE(s), "pc-rtc-data-in", 0);
-+
-                     if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
--                        scr2_2 |= SCR2_RTDATA;
-+                        qemu_irq_raise(rtc_data_in_irq);
-                     } else {
--                        scr2_2 &= ~SCR2_RTDATA;
-+                        qemu_irq_lower(rtc_data_in_irq);
-                     }
-                 }
-             }
-@@ -270,8 +273,6 @@ static void next_scr2_rtc_update(NeXTPC *s)
-         rtc->command = 0;
-         rtc->value = 0;
-     }
--
--    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
- }
+@@ -94,6 +94,7 @@ struct NeXTPC {
  
- static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
-@@ -1001,6 +1002,20 @@ static const MemoryRegionOps next_dummy_en_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
+     MemoryRegion mmiomem;
+     MemoryRegion scrmem;
++    MemoryRegion scsimem;
  
-+static void next_pc_rtc_data_in_irq(void *opaque, int n, int level)
-+{
-+    NeXTPC *s = NEXT_PC(opaque);
-+    uint8_t scr2_2 = extract32(s->scr2, 8, 8);
+     uint32_t scr1;
+     uint32_t scr2;
+@@ -843,7 +844,12 @@ static void next_scsi_init(DeviceState *pcdev)
+     sysbusdev = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(sysbusdev, &error_fatal);
+     sysbus_connect_irq(sysbusdev, 0, qdev_get_gpio_in(pcdev, NEXT_SCSI_I));
+-    sysbus_mmio_map(sysbusdev, 0, 0x2114000);
 +
-+    if (level) {
-+        scr2_2 |= SCR2_RTDATA;
-+    } else {
-+        scr2_2 &= ~SCR2_RTDATA;
-+    }
++    memory_region_init(&next_pc->scsimem, OBJECT(next_pc), "next.scsi", 0x40);
++    memory_region_add_subregion(&next_pc->scsimem, 0x0,
++                                sysbus_mmio_get_region(sysbusdev, 0));
 +
-+    s->scr2 = deposit32(s->scr2, 8, 8, scr2_2);
-+}
-+
- static void next_pc_reset_hold(Object *obj, ResetType type)
- {
-     NeXTPC *s = NEXT_PC(obj);
-@@ -1087,6 +1102,8 @@ static void next_pc_init(Object *obj)
-     sysbus_init_mmio(sbd, &s->timer_mem);
++    memory_region_add_subregion(&next_pc->scrmem, 0x14000, &next_pc->scsimem);
  
-     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
-+    qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
-+                            "pc-rtc-data-in", 1);
- }
- 
- /*
+     next_pc->scsi_reset = qdev_get_gpio_in(dev, 0);
+     next_pc->scsi_dma = qdev_get_gpio_in(dev, 1);
 -- 
 2.39.5
 
