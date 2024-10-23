@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D38CF5389
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 154A7CF538C
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 13:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3bFR-0006Sg-8c; Wed, 23 Oct 2024 09:18:01 -0400
+	id 1t3bFS-0006So-GG; Wed, 23 Oct 2024 09:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFI-0006Dg-4m
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFA-00069I-Rp
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bFG-0002C0-8A
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1t3bF8-0002Ak-EM
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 09:17:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729689469;
+ s=mimecast20190719; t=1729689461;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uWFhxuF8gL11t2g0E9b3OpEv0lIl7dL1SiEtTG1TGQ0=;
- b=BlBViKkE9hFK3kApJ5Vz6NoCMEn2jnMdzGHaiJyE8Jfwd83DowyOmz1iyX4KI5xmP2JpkW
- pmLh10Wq433+jZydiiUxH6ABl8BE7dZWYvn50w7dQRziMWx1hu6kWL+1tleghDgGf5o09j
- +Pqo1WlsvEoxqIx5VkG1jAtwYv0425c=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=atR3A5VkXgm97I9Vq/CR2yJyLTLLNn3U8+9PbctvM20=;
+ b=XmTFVAc4c3VRBwmQAIjATO9tSS1UjDw+09Q1ZLAgp8P4QQ/9Rk0YRDBek/h+AiLBBukkPq
+ 1jah8FJhD65QlABONethm71zaU0y4R1lZ/eiDsSGCZuoRZOyHJWRqGVo9rI43NN/IY5miy
+ MQ0go8tZmtRXrj4Bey1+kx+7z5W7XF4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-hUrBB-3cPlefM1udr-Yz7A-1; Wed,
- 23 Oct 2024 09:17:47 -0400
-X-MC-Unique: hUrBB-3cPlefM1udr-Yz7A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-D-QKvYcWMVarJnBMZDm8RQ-1; Wed,
+ 23 Oct 2024 09:17:38 -0400
+X-MC-Unique: D-QKvYcWMVarJnBMZDm8RQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12D1219560B8; Wed, 23 Oct 2024 13:17:47 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B4951955D61; Wed, 23 Oct 2024 13:17:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.43])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 43F2919560AE; Wed, 23 Oct 2024 13:17:44 +0000 (UTC)
+ id BDF9D1956054; Wed, 23 Oct 2024 13:17:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 13/23] include/hw/s390x: Add include files for common IPL
- structs
-Date: Wed, 23 Oct 2024 15:17:00 +0200
-Message-ID: <20241023131710.906748-14-thuth@redhat.com>
+Subject: [PULL 09/23] pc-bios/s390-ccw: Remove panics from SCSI IPL path
+Date: Wed, 23 Oct 2024 15:16:56 +0200
+Message-ID: <20241023131710.906748-10-thuth@redhat.com>
 In-Reply-To: <20241023131710.906748-1-thuth@redhat.com>
 References: <20241023131710.906748-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,388 +83,541 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Currently, structures defined in both hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
-must be kept in sync, which is prone to error. Instead, create a new directory
-at include/hw/s390x/ipl/ to contain the definitions that must be shared.
+Remove panic-on-error from virtio-scsi IPL specific functions so that error
+recovery may be possible in the future.
+
+Functions that would previously panic now provide a return code.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241020012953.1380075-14-jrossi@linux.ibm.com>
+Message-ID: <20241020012953.1380075-10-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/ipl.h              | 104 +-----------------------------
- include/hw/s390x/ipl/qipl.h | 123 ++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/iplb.h     |  84 ++----------------------
- pc-bios/s390-ccw/Makefile   |   2 +-
- 4 files changed, 130 insertions(+), 183 deletions(-)
- create mode 100644 include/hw/s390x/ipl/qipl.h
+ pc-bios/s390-ccw/bootmap.c       |  88 ++++++++++++++-----
+ pc-bios/s390-ccw/virtio-blkdev.c |   4 +-
+ pc-bios/s390-ccw/virtio-scsi.c   | 143 +++++++++++++++++++++----------
+ 3 files changed, 164 insertions(+), 71 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index b2105b616a..fa394c339d 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -16,95 +16,11 @@
- #include "cpu.h"
- #include "exec/address-spaces.h"
- #include "hw/qdev-core.h"
-+#include "hw/s390x/ipl/qipl.h"
- #include "qom/object.h"
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index b9596e28c7..652807a16a 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -595,7 +595,7 @@ static int ipl_eckd(void)
+  * IPL a SCSI disk
+  */
  
--struct IPLBlockPVComp {
--    uint64_t tweak_pref;
--    uint64_t addr;
--    uint64_t size;
--} QEMU_PACKED;
--typedef struct IPLBlockPVComp IPLBlockPVComp;
--
--struct IPLBlockPV {
--    uint8_t  reserved18[87];    /* 0x18 */
--    uint8_t  version;           /* 0x6f */
--    uint32_t reserved70;        /* 0x70 */
--    uint32_t num_comp;          /* 0x74 */
--    uint64_t pv_header_addr;    /* 0x78 */
--    uint64_t pv_header_len;     /* 0x80 */
--    struct IPLBlockPVComp components[0];
--} QEMU_PACKED;
--typedef struct IPLBlockPV IPLBlockPV;
--
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} QEMU_PACKED;
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[0];
--} QEMU_PACKED;
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} QEMU_PACKED;
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
- #define DIAG308_FLAGS_LP_VALID 0x80
+-static void zipl_load_segment(ComponentEntry *entry)
++static int zipl_load_segment(ComponentEntry *entry)
+ {
+     const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
+     ScsiBlockPtr *bprs = (void *)sec;
+@@ -615,7 +615,10 @@ static void zipl_load_segment(ComponentEntry *entry)
+     do {
+         memset(bprs, FREE_SPACE_FILLER, bprs_size);
+         fill_hex_val(blk_no, &blockno, sizeof(blockno));
+-        read_block(blockno, bprs, err_msg);
++        if (virtio_read(blockno, bprs)) {
++            puts(err_msg);
++            return -EIO;
++        }
  
--union IplParameterBlock {
--    struct {
--        uint32_t len;
--        uint8_t  reserved0[3];
--        uint8_t  version;
--        uint32_t blk0_len;
--        uint8_t  pbt;
--        uint8_t  flags;
--        uint16_t reserved01;
--        uint8_t  loadparm[8];
--        union {
--            IplBlockCcw ccw;
--            IplBlockFcp fcp;
--            IPLBlockPV pv;
--            IplBlockQemuScsi scsi;
--        };
--    } QEMU_PACKED;
--    struct {
--        uint8_t  reserved1[110];
--        uint16_t devno;
--        uint8_t  reserved2[88];
--        uint8_t  reserved_ext[4096 - 200];
--    } QEMU_PACKED;
--} QEMU_PACKED;
--typedef union IplParameterBlock IplParameterBlock;
--
- int s390_ipl_set_loadparm(uint8_t *loadparm);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
- int s390_ipl_prepare_pv_header(Error **errp);
-@@ -131,24 +47,6 @@ void s390_ipl_clear_reset_request(void);
- #define QIPL_FLAG_BM_OPTS_CMD   0x80
- #define QIPL_FLAG_BM_OPTS_ZIPL  0x40
+         for (i = 0;; i++) {
+             uint64_t *cur_desc = (void *)&bprs[i];
+@@ -643,23 +646,37 @@ static void zipl_load_segment(ComponentEntry *entry)
+             }
+             address = virtio_load_direct(cur_desc[0], cur_desc[1], 0,
+                                          (void *)address);
+-            IPL_assert(address != -1, "zIPL load segment failed");
++            if (!address) {
++                puts("zIPL load segment failed");
++                return -EIO;
++            }
+         }
+     } while (blockno);
++
++    return 0;
+ }
  
--/*
-- * The QEMU IPL Parameters will be stored at absolute address
-- * 204 (0xcc) which means it is 32-bit word aligned but not
-- * double-word aligned. Placement of 64-bit data fields in this
-- * area must account for their alignment needs.
-- * The total size of the struct must never exceed 28 bytes.
-- * This definition must be kept in sync with the definition
-- * in pc-bios/s390-ccw/iplb.h.
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} QEMU_PACKED;
--typedef struct QemuIplParameters QemuIplParameters;
--
- #define TYPE_S390_IPL "s390-ipl"
- OBJECT_DECLARE_SIMPLE_TYPE(S390IPLState, S390_IPL)
+ /* Run a zipl program */
+-static void zipl_run(ScsiBlockPtr *pte)
++static int zipl_run(ScsiBlockPtr *pte)
+ {
+     ComponentHeader *header;
+     ComponentEntry *entry;
+     uint8_t tmp_sec[MAX_SECTOR_SIZE];
  
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-new file mode 100644
-index 0000000000..0ef04af027
---- /dev/null
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -0,0 +1,123 @@
-+/*
-+ * S/390 boot structures
-+ *
-+ * Copyright 2024 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at
-+ * your option) any later version. See the COPYING file in the top-level
-+ * directory.
-+ */
-+
-+#ifndef S390X_QIPL_H
-+#define S390X_QIPL_H
-+
-+/* Boot Menu flags */
-+#define QIPL_FLAG_BM_OPTS_CMD   0x80
-+#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
-+
-+#define QIPL_ADDRESS  0xcc
-+#define LOADPARM_LEN    8
-+
-+/*
-+ * The QEMU IPL Parameters will be stored at absolute address
-+ * 204 (0xcc) which means it is 32-bit word aligned but not
-+ * double-word aligned. Placement of 64-bit data fields in this
-+ * area must account for their alignment needs.
-+ * The total size of the struct must never exceed 28 bytes.
-+ */
-+struct QemuIplParameters {
-+    uint8_t  qipl_flags;
-+    uint8_t  reserved1[3];
-+    uint64_t reserved2;
-+    uint32_t boot_menu_timeout;
-+    uint8_t  reserved3[12];
-+} QEMU_PACKED;
-+typedef struct QemuIplParameters QemuIplParameters;
-+
-+struct IPLBlockPVComp {
-+    uint64_t tweak_pref;
-+    uint64_t addr;
-+    uint64_t size;
-+} QEMU_PACKED;
-+typedef struct IPLBlockPVComp IPLBlockPVComp;
-+
-+struct IPLBlockPV {
-+    uint8_t  reserved18[87];    /* 0x18 */
-+    uint8_t  version;           /* 0x6f */
-+    uint32_t reserved70;        /* 0x70 */
-+    uint32_t num_comp;          /* 0x74 */
-+    uint64_t pv_header_addr;    /* 0x78 */
-+    uint64_t pv_header_len;     /* 0x80 */
-+    struct IPLBlockPVComp components[0];
-+} QEMU_PACKED;
-+typedef struct IPLBlockPV IPLBlockPV;
-+
-+struct IplBlockCcw {
-+    uint8_t  reserved0[85];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+    uint8_t  vm_flags;
-+    uint8_t  reserved3[3];
-+    uint32_t vm_parm_len;
-+    uint8_t  nss_name[8];
-+    uint8_t  vm_parm[64];
-+    uint8_t  reserved4[8];
-+} QEMU_PACKED;
-+typedef struct IplBlockCcw IplBlockCcw;
-+
-+struct IplBlockFcp {
-+    uint8_t  reserved1[305 - 1];
-+    uint8_t  opt;
-+    uint8_t  reserved2[3];
-+    uint16_t reserved3;
-+    uint16_t devno;
-+    uint8_t  reserved4[4];
-+    uint64_t wwpn;
-+    uint64_t lun;
-+    uint32_t bootprog;
-+    uint8_t  reserved5[12];
-+    uint64_t br_lba;
-+    uint32_t scp_data_len;
-+    uint8_t  reserved6[260];
-+    uint8_t  scp_data[0];
-+} QEMU_PACKED;
-+typedef struct IplBlockFcp IplBlockFcp;
-+
-+struct IplBlockQemuScsi {
-+    uint32_t lun;
-+    uint16_t target;
-+    uint16_t channel;
-+    uint8_t  reserved0[77];
-+    uint8_t  ssid;
-+    uint16_t devno;
-+} QEMU_PACKED;
-+typedef struct IplBlockQemuScsi IplBlockQemuScsi;
-+
-+union IplParameterBlock {
-+    struct {
-+        uint32_t len;
-+        uint8_t  reserved0[3];
-+        uint8_t  version;
-+        uint32_t blk0_len;
-+        uint8_t  pbt;
-+        uint8_t  flags;
-+        uint16_t reserved01;
-+        uint8_t  loadparm[LOADPARM_LEN];
-+        union {
-+            IplBlockCcw ccw;
-+            IplBlockFcp fcp;
-+            IPLBlockPV pv;
-+            IplBlockQemuScsi scsi;
-+        };
-+    } QEMU_PACKED;
-+    struct {
-+        uint8_t  reserved1[110];
-+        uint16_t devno;
-+        uint8_t  reserved2[88];
-+        uint8_t  reserved_ext[4096 - 200];
-+    } QEMU_PACKED;
-+} QEMU_PACKED;
-+typedef union IplParameterBlock IplParameterBlock;
-+
-+#endif
-diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index 3758698468..16643f5879 100644
---- a/pc-bios/s390-ccw/iplb.h
-+++ b/pc-bios/s390-ccw/iplb.h
-@@ -12,88 +12,14 @@
- #ifndef IPLB_H
- #define IPLB_H
+-    read_block(pte->blockno, tmp_sec, "Cannot read header");
++    if (virtio_read(pte->blockno, tmp_sec)) {
++        puts("Cannot read header");
++        return -EIO;
++    }
+     header = (ComponentHeader *)tmp_sec;
  
--#define LOADPARM_LEN    8
-+#ifndef QEMU_PACKED
-+#define QEMU_PACKED __attribute__((packed))
-+#endif
+-    IPL_assert(magic_match(tmp_sec, ZIPL_MAGIC), "No zIPL magic in header");
+-    IPL_assert(header->type == ZIPL_COMP_HEADER_IPL, "Bad header type");
++    if (!magic_match(tmp_sec, ZIPL_MAGIC)) {
++        puts("No zIPL magic in header");
++        return -EINVAL;
++    }
++    if (header->type != ZIPL_COMP_HEADER_IPL) {
++        puts("Bad header type");
++        return -EINVAL;
++    }
  
--struct IplBlockCcw {
--    uint8_t  reserved0[85];
--    uint8_t  ssid;
--    uint16_t devno;
--    uint8_t  vm_flags;
--    uint8_t  reserved3[3];
--    uint32_t vm_parm_len;
--    uint8_t  nss_name[8];
--    uint8_t  vm_parm[64];
--    uint8_t  reserved4[8];
--} __attribute__ ((packed));
--typedef struct IplBlockCcw IplBlockCcw;
--
--struct IplBlockFcp {
--    uint8_t  reserved1[305 - 1];
--    uint8_t  opt;
--    uint8_t  reserved2[3];
--    uint16_t reserved3;
--    uint16_t devno;
--    uint8_t  reserved4[4];
--    uint64_t wwpn;
--    uint64_t lun;
--    uint32_t bootprog;
--    uint8_t  reserved5[12];
--    uint64_t br_lba;
--    uint32_t scp_data_len;
--    uint8_t  reserved6[260];
--    uint8_t  scp_data[];
--} __attribute__ ((packed));
--typedef struct IplBlockFcp IplBlockFcp;
--
--struct IplBlockQemuScsi {
--    uint32_t lun;
--    uint16_t target;
--    uint16_t channel;
--    uint8_t  reserved0[77];
--    uint8_t  ssid;
--    uint16_t devno;
--} __attribute__ ((packed));
--typedef struct IplBlockQemuScsi IplBlockQemuScsi;
--
--struct IplParameterBlock {
--    uint32_t len;
--    uint8_t  reserved0[3];
--    uint8_t  version;
--    uint32_t blk0_len;
--    uint8_t  pbt;
--    uint8_t  flags;
--    uint16_t reserved01;
--    uint8_t  loadparm[LOADPARM_LEN];
--    union {
--        IplBlockCcw ccw;
--        IplBlockFcp fcp;
--        IplBlockQemuScsi scsi;
--    };
--} __attribute__ ((packed));
--typedef struct IplParameterBlock IplParameterBlock;
--
--extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
--
--#define QIPL_ADDRESS  0xcc
--
--/* Boot Menu flags */
--#define QIPL_FLAG_BM_OPTS_CMD   0x80
--#define QIPL_FLAG_BM_OPTS_ZIPL  0x40
--
--/*
-- * This definition must be kept in sync with the definition
-- * in hw/s390x/ipl.h
-- */
--struct QemuIplParameters {
--    uint8_t  qipl_flags;
--    uint8_t  reserved1[3];
--    uint64_t reserved2;
--    uint32_t boot_menu_timeout;
--    uint8_t  reserved3[12];
--} __attribute__ ((packed));
--typedef struct QemuIplParameters QemuIplParameters;
-+#include <qipl.h>
+     dputs("start loading images\n");
  
- extern QemuIplParameters qipl;
-+extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+@@ -674,22 +691,30 @@ static void zipl_run(ScsiBlockPtr *pte)
+             continue;
+         }
  
- #define S390_IPL_TYPE_FCP 0x00
- #define S390_IPL_TYPE_CCW 0x02
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 27cbb354af..db9e8f0892 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -3,7 +3,7 @@ all: build-all
- 	@true
+-        zipl_load_segment(entry);
++        if (zipl_load_segment(entry)) {
++            return -1;
++        }
  
- include config-host.mak
--CFLAGS = -O2 -g
-+CFLAGS = -O2 -g -I $(SRC_PATH)/../../include/hw/s390x/ipl
- MAKEFLAGS += -rR
+         entry++;
  
- GIT_SUBMODULES = roms/SLOF
+-        IPL_assert((uint8_t *)(&entry[1]) <= (tmp_sec + MAX_SECTOR_SIZE),
+-                   "Wrong entry value");
++        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
++            puts("Wrong entry value");
++            return -EINVAL;
++        }
+     }
+ 
+-    IPL_assert(entry->component_type == ZIPL_COMP_ENTRY_EXEC, "No EXEC entry");
++    if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
++        puts("No EXEC entry");
++        return -EINVAL;
++    }
+ 
+     /* should not return */
+     write_reset_psw(entry->compdat.load_psw);
+     jump_to_IPL_code(0);
++    return -1;
+ }
+ 
+-static void ipl_scsi(void)
++static int ipl_scsi(void)
+ {
+     ScsiMbr *mbr = (void *)sec;
+     int program_table_entries = 0;
+@@ -700,10 +725,13 @@ static void ipl_scsi(void)
+ 
+     /* Grab the MBR */
+     memset(sec, FREE_SPACE_FILLER, sizeof(sec));
+-    read_block(0, mbr, "Cannot read block 0");
++    if (virtio_read(0, mbr)) {
++        puts("Cannot read block 0");
++        return -EIO;
++    }
+ 
+     if (!magic_match(mbr->magic, ZIPL_MAGIC)) {
+-        return;
++        return 0;
+     }
+ 
+     puts("Using SCSI scheme.");
+@@ -711,11 +739,20 @@ static void ipl_scsi(void)
+     IPL_check(mbr->version_id == 1,
+               "Unknown MBR layout version, assuming version 1");
+     debug_print_int("program table", mbr->pt.blockno);
+-    IPL_assert(mbr->pt.blockno, "No Program Table");
++    if (!mbr->pt.blockno) {
++        puts("No Program Table");
++        return -EINVAL;
++    }
+ 
+     /* Parse the program table */
+-    read_block(mbr->pt.blockno, sec, "Error reading Program Table");
+-    IPL_assert(magic_match(sec, ZIPL_MAGIC), "No zIPL magic in PT");
++    if (virtio_read(mbr->pt.blockno, sec)) {
++        puts("Error reading Program Table");
++        return -EIO;
++    }
++    if (!magic_match(sec, ZIPL_MAGIC)) {
++        puts("No zIPL magic in Program Table");
++        return -EINVAL;
++    }
+ 
+     for (i = 0; i < MAX_BOOT_ENTRIES; i++) {
+         if (prog_table->entry[i].scsi.blockno) {
+@@ -725,17 +762,22 @@ static void ipl_scsi(void)
+     }
+ 
+     debug_print_int("program table entries", program_table_entries);
+-    IPL_assert(program_table_entries != 0, "Empty Program Table");
++    if (program_table_entries == 0) {
++        puts("Empty Program Table");
++        return -EINVAL;
++    }
+ 
+     if (menu_is_enabled_enum()) {
+         loadparm = menu_get_enum_boot_index(valid_entries);
+     }
+ 
+     debug_print_int("loadparm", loadparm);
+-    IPL_assert(loadparm < MAX_BOOT_ENTRIES, "loadparm value greater than"
+-               " maximum number of boot entries allowed");
++    if (loadparm >= MAX_BOOT_ENTRIES) {
++        puts("loadparm value greater than max number of boot entries allowed");
++        return -EINVAL;
++    }
+ 
+-    zipl_run(&prog_table->entry[loadparm].scsi); /* no return */
++    return zipl_run(&prog_table->entry[loadparm].scsi);
+ }
+ 
+ /***********************************************************************
+@@ -1032,7 +1074,9 @@ void zipl_load(void)
+         netmain();
+     }
+ 
+-    ipl_scsi();
++    if (ipl_scsi()) {
++        panic("\n! Cannot IPL this SCSI device !\n");
++    }
+ 
+     switch (virtio_get_device_type()) {
+     case VIRTIO_ID_BLOCK:
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 2666326801..1c585f034b 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -73,13 +73,13 @@ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list
+     unsigned long addr = (unsigned long)load_addr;
+ 
+     if (sec_len != virtio_get_block_size()) {
+-        return -1;
++        return 0;
+     }
+ 
+     printf(".");
+     status = virtio_read_many(sec, (void *)addr, sec_num);
+     if (status) {
+-        panic("I/O Error");
++        return 0;
+     }
+     addr += sec_num * virtio_get_block_size();
+ 
+diff --git a/pc-bios/s390-ccw/virtio-scsi.c b/pc-bios/s390-ccw/virtio-scsi.c
+index 6b4a1caf8a..71db75ce7b 100644
+--- a/pc-bios/s390-ccw/virtio-scsi.c
++++ b/pc-bios/s390-ccw/virtio-scsi.c
+@@ -26,7 +26,7 @@ static uint8_t scsi_inquiry_std_response[256];
+ static ScsiInquiryEvpdPages scsi_inquiry_evpd_pages_response;
+ static ScsiInquiryEvpdBl scsi_inquiry_evpd_bl_response;
+ 
+-static inline void vs_assert(bool term, const char **msgs)
++static inline bool vs_assert(bool term, const char **msgs)
+ {
+     if (!term) {
+         int i = 0;
+@@ -35,11 +35,13 @@ static inline void vs_assert(bool term, const char **msgs)
+         while (msgs[i]) {
+             printf("%s", msgs[i++]);
+         }
+-        panic(" !\n");
++        puts(" !");
+     }
++
++    return term;
+ }
+ 
+-static void virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
++static bool virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
+                                         const char *title)
+ {
+     const char *mr[] = {
+@@ -56,8 +58,8 @@ static void virtio_scsi_verify_response(VirtioScsiCmdResp *resp,
+         0
+     };
+ 
+-    vs_assert(resp->response == VIRTIO_SCSI_S_OK, mr);
+-    vs_assert(resp->status == CDB_STATUS_GOOD, ms);
++    return vs_assert(resp->response == VIRTIO_SCSI_S_OK, mr) &&
++           vs_assert(resp->status == CDB_STATUS_GOOD, ms);
+ }
+ 
+ static void prepare_request(VDev *vdev, const void *cdb, int cdb_size,
+@@ -78,24 +80,31 @@ static void prepare_request(VDev *vdev, const void *cdb, int cdb_size,
+     }
+ }
+ 
+-static inline void vs_io_assert(bool term, const char *msg)
++static inline bool vs_io_assert(bool term, const char *msg)
+ {
+-    if (!term) {
+-        virtio_scsi_verify_response(&resp, msg);
++    if (!term && !virtio_scsi_verify_response(&resp, msg)) {
++        return false;
+     }
++
++    return true;
+ }
+ 
+-static void vs_run(const char *title, VirtioCmd *cmd, VDev *vdev,
++static int vs_run(const char *title, VirtioCmd *cmd, VDev *vdev,
+                    const void *cdb, int cdb_size,
+                    void *data, uint32_t data_size)
+ {
+     prepare_request(vdev, cdb, cdb_size, data, data_size);
+-    vs_io_assert(virtio_run(vdev, VR_REQUEST, cmd) == 0, title);
++    if (!vs_io_assert(virtio_run(vdev, VR_REQUEST, cmd) == 0, title)) {
++        puts(title);
++        return -EIO;
++    }
++
++    return 0;
+ }
+ 
+ /* SCSI protocol implementation routines */
+ 
+-static bool scsi_inquiry(VDev *vdev, uint8_t evpd, uint8_t page,
++static int scsi_inquiry(VDev *vdev, uint8_t evpd, uint8_t page,
+                          void *data, uint32_t data_size)
+ {
+     ScsiCdbInquiry cdb = {
+@@ -110,12 +119,13 @@ static bool scsi_inquiry(VDev *vdev, uint8_t evpd, uint8_t page,
+         { data, data_size, VRING_DESC_F_WRITE },
+     };
+ 
+-    vs_run("inquiry", inquiry, vdev, &cdb, sizeof(cdb), data, data_size);
++    int ret = vs_run("inquiry", inquiry,
++                     vdev, &cdb, sizeof(cdb), data, data_size);
+ 
+-    return virtio_scsi_response_ok(&resp);
++    return ret ? ret : virtio_scsi_response_ok(&resp);
+ }
+ 
+-static bool scsi_test_unit_ready(VDev *vdev)
++static int scsi_test_unit_ready(VDev *vdev)
+ {
+     ScsiCdbTestUnitReady cdb = {
+         .command = 0x00,
+@@ -131,7 +141,7 @@ static bool scsi_test_unit_ready(VDev *vdev)
+     return virtio_scsi_response_ok(&resp);
+ }
+ 
+-static bool scsi_report_luns(VDev *vdev, void *data, uint32_t data_size)
++static int scsi_report_luns(VDev *vdev, void *data, uint32_t data_size)
+ {
+     ScsiCdbReportLuns cdb = {
+         .command = 0xa0,
+@@ -144,13 +154,13 @@ static bool scsi_report_luns(VDev *vdev, void *data, uint32_t data_size)
+         { data, data_size, VRING_DESC_F_WRITE },
+     };
+ 
+-    vs_run("report luns", report_luns,
++    int ret = vs_run("report luns", report_luns,
+            vdev, &cdb, sizeof(cdb), data, data_size);
+ 
+-    return virtio_scsi_response_ok(&resp);
++    return ret ? ret : virtio_scsi_response_ok(&resp);
+ }
+ 
+-static bool scsi_read_10(VDev *vdev,
++static int scsi_read_10(VDev *vdev,
+                          unsigned long sector, int sectors, void *data,
+                          unsigned int data_size)
+ {
+@@ -168,12 +178,13 @@ static bool scsi_read_10(VDev *vdev,
+     debug_print_int("read_10  sector", sector);
+     debug_print_int("read_10 sectors", sectors);
+ 
+-    vs_run("read(10)", read_10, vdev, &cdb, sizeof(cdb), data, data_size);
++    int ret = vs_run("read(10)", read_10,
++            vdev, &cdb, sizeof(cdb), data, data_size);
+ 
+-    return virtio_scsi_response_ok(&resp);
++    return ret ? ret : virtio_scsi_response_ok(&resp);
+ }
+ 
+-static bool scsi_read_capacity(VDev *vdev,
++static int scsi_read_capacity(VDev *vdev,
+                                void *data, uint32_t data_size)
+ {
+     ScsiCdbReadCapacity16 cdb = {
+@@ -187,10 +198,10 @@ static bool scsi_read_capacity(VDev *vdev,
+         { data, data_size, VRING_DESC_F_WRITE },
+     };
+ 
+-    vs_run("read capacity", read_capacity_16,
++    int ret = vs_run("read capacity", read_capacity_16,
+            vdev, &cdb, sizeof(cdb), data, data_size);
+ 
+-    return virtio_scsi_response_ok(&resp);
++    return ret ? ret : virtio_scsi_response_ok(&resp);
+ }
+ 
+ /* virtio-scsi routines */
+@@ -207,7 +218,7 @@ static int virtio_scsi_locate_device(VDev *vdev)
+     static uint8_t data[16 + 8 * 63];
+     ScsiLunReport *r = (void *) data;
+     ScsiDevice *sdev = vdev->scsi_device;
+-    int i, luns;
++    int i, ret, luns;
+ 
+     /* QEMU has hardcoded channel #0 in many places.
+      * If this hardcoded value is ever changed, we'll need to add code for
+@@ -233,13 +244,21 @@ static int virtio_scsi_locate_device(VDev *vdev)
+         sdev->channel = channel;
+         sdev->target = target;
+         sdev->lun = 0;          /* LUN has to be 0 for REPORT LUNS */
+-        if (!scsi_report_luns(vdev, data, sizeof(data))) {
++        ret = scsi_report_luns(vdev, data, sizeof(data));
++        if (ret < 0) {
++            return ret;
++        }
++
++        else if (ret == 0) {
+             if (resp.response == VIRTIO_SCSI_S_BAD_TARGET) {
+                 continue;
+             }
+             printf("target 0x%X\n", target);
+-            virtio_scsi_verify_response(&resp, "SCSI cannot report LUNs");
++            if (!virtio_scsi_verify_response(&resp, "SCSI cannot report LUNs")) {
++                return -EIO;
++            }
+         }
++
+         if (r->lun_list_len == 0) {
+             printf("no LUNs for target 0x%X\n", target);
+             continue;
+@@ -283,7 +302,9 @@ int virtio_scsi_read_many(VDev *vdev,
+         data_size = sector_count * virtio_get_block_size() * f;
+         if (!scsi_read_10(vdev, sector * f, sector_count * f, load_addr,
+                           data_size)) {
+-            virtio_scsi_verify_response(&resp, "virtio-scsi:read_many");
++            if (!virtio_scsi_verify_response(&resp, "virtio-scsi:read_many")) {
++                return -1;
++            }
+         }
+         load_addr += data_size;
+         sector += sector_count;
+@@ -352,11 +373,16 @@ static int virtio_scsi_setup(VDev *vdev)
+             uint8_t code = resp.sense[0] & SCSI_SENSE_CODE_MASK;
+             uint8_t sense_key = resp.sense[2] & SCSI_SENSE_KEY_MASK;
+ 
+-            IPL_assert(resp.sense_len != 0, "virtio-scsi:setup: no SENSE data");
++            if (resp.sense_len == 0) {
++                puts("virtio-scsi: setup: no SENSE data");
++                return -EINVAL;
++            }
+ 
+-            IPL_assert(retry_test_unit_ready && code == 0x70 &&
+-                       sense_key == SCSI_SENSE_KEY_UNIT_ATTENTION,
+-                       "virtio-scsi:setup: cannot retry");
++            if (!retry_test_unit_ready || code != 0x70 ||
++                       sense_key != SCSI_SENSE_KEY_UNIT_ATTENTION) {
++                puts("virtio-scsi:setup: cannot retry");
++                return -EIO;
++            }
+ 
+             /* retry on CHECK_CONDITION/UNIT_ATTENTION as it
+              * may not designate a real error, but it may be
+@@ -367,16 +393,22 @@ static int virtio_scsi_setup(VDev *vdev)
+             continue;
+         }
+ 
+-        virtio_scsi_verify_response(&resp, "virtio-scsi:setup");
++        if (!virtio_scsi_verify_response(&resp, "virtio-scsi:setup")) {
++            return -1;
++        }
+     }
+ 
+     /* read and cache SCSI INQUIRY response */
+-    if (!scsi_inquiry(vdev,
++    ret = scsi_inquiry(vdev,
+                       SCSI_INQUIRY_STANDARD,
+                       SCSI_INQUIRY_STANDARD_NONE,
+                       scsi_inquiry_std_response,
+-                      sizeof(scsi_inquiry_std_response))) {
+-        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:inquiry");
++                      sizeof(scsi_inquiry_std_response));
++    if (ret < 1) {
++        if (ret != 0 || !virtio_scsi_verify_response(&resp,
++                "virtio-scsi:setup:inquiry")) {
++            return -1;
++        }
+     }
+ 
+     if (virtio_scsi_inquiry_response_is_cdrom(scsi_inquiry_std_response)) {
+@@ -385,12 +417,16 @@ static int virtio_scsi_setup(VDev *vdev)
+         vdev->scsi_block_size = VIRTIO_ISO_BLOCK_SIZE;
+     }
+ 
+-    if (!scsi_inquiry(vdev,
++    ret = scsi_inquiry(vdev,
+                       SCSI_INQUIRY_EVPD,
+                       SCSI_INQUIRY_EVPD_SUPPORTED_PAGES,
+                       evpd,
+-                      sizeof(*evpd))) {
+-        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:supported_pages");
++                      sizeof(*evpd));
++    if (ret < 1) {
++        if (ret != 0 || !virtio_scsi_verify_response(&resp,
++                "virtio-scsi:setup:supported_pages")) {
++            return -1;
++        }
+     }
+ 
+     debug_print_int("EVPD length", evpd->page_length);
+@@ -402,12 +438,16 @@ static int virtio_scsi_setup(VDev *vdev)
+             continue;
+         }
+ 
+-        if (!scsi_inquiry(vdev,
++        ret = scsi_inquiry(vdev,
+                           SCSI_INQUIRY_EVPD,
+                           SCSI_INQUIRY_EVPD_BLOCK_LIMITS,
+                           evpd_bl,
+-                          sizeof(*evpd_bl))) {
+-            virtio_scsi_verify_response(&resp, "virtio-scsi:setup:blocklimits");
++                          sizeof(*evpd_bl));
++        if (ret < 1) {
++            if (ret != 0 || !virtio_scsi_verify_response(&resp,
++                    "virtio-scsi:setup:blocklimits")) {
++                return -1;
++            }
+         }
+ 
+         debug_print_int("max transfer", evpd_bl->max_transfer);
+@@ -423,8 +463,12 @@ static int virtio_scsi_setup(VDev *vdev)
+     vdev->max_transfer = MIN_NON_ZERO(VIRTIO_SCSI_MAX_SECTORS,
+                                       vdev->max_transfer);
+ 
+-    if (!scsi_read_capacity(vdev, data, data_size)) {
+-        virtio_scsi_verify_response(&resp, "virtio-scsi:setup:read_capacity");
++    ret = scsi_read_capacity(vdev, data, data_size);
++    if (ret < 1) {
++        if (ret != 0 || !virtio_scsi_verify_response(&resp,
++                "virtio-scsi:setup:read_capacity")) {
++            return -1;
++        }
+     }
+     scsi_parse_capacity_report(data, &vdev->scsi_last_block,
+                                (uint32_t *) &vdev->scsi_block_size);
+@@ -439,10 +483,15 @@ int virtio_scsi_setup_device(SubChannelId schid)
+     vdev->schid = schid;
+     virtio_setup_ccw(vdev);
+ 
+-    IPL_assert(vdev->config.scsi.sense_size == VIRTIO_SCSI_SENSE_SIZE,
+-               "Config: sense size mismatch");
+-    IPL_assert(vdev->config.scsi.cdb_size == VIRTIO_SCSI_CDB_SIZE,
+-               "Config: CDB size mismatch");
++    if (vdev->config.scsi.sense_size != VIRTIO_SCSI_SENSE_SIZE) {
++        puts("Config: sense size mismatch");
++        return -EINVAL;
++    }
++
++    if (vdev->config.scsi.cdb_size != VIRTIO_SCSI_CDB_SIZE) {
++        puts("Config: CDB size mismatch");
++        return -EINVAL;
++    }
+ 
+     puts("Using virtio-scsi.");
+ 
 -- 
 2.47.0
 
