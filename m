@@ -4,103 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F8BCFA460
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41419CFA45F
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 19:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3h5W-0005rr-8u; Wed, 23 Oct 2024 15:32:10 -0400
+	id 1t3hK6-0008Su-HE; Wed, 23 Oct 2024 15:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t3h5V-0005re-25
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:32:09 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t3hK1-0008SN-Mg
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:47:10 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1t3h5S-0000F3-SW
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:32:08 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id AF7A421FA6;
- Wed, 23 Oct 2024 19:32:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729711924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EID4EuuMV5DjnBT8PPKkM71QiOQECHQSuFeIv60cB+I=;
- b=XmZSMT1HBKhDwEJ1KxnQ6vbLAlNK4i0yzKfS3exmCCe+HDbpDdv2r5I+m3qMYfFeTTUYXZ
- UeGnx9E2qOb5En9ZGhaU14uMyRAeo4f/nINo6szpLgOA7xBQLe5OEUW54gxQmt8KKWm2Ua
- x6/g6winF4Tl+Vc2SIaznndE/3wVCN8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729711924;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EID4EuuMV5DjnBT8PPKkM71QiOQECHQSuFeIv60cB+I=;
- b=rJ46N71krOX/nmLHGPaR5pLL0zaDKjO6xu39sKol811qnd5pXq1zNv8KND2zHc1HdbV1pw
- xAiktBQpGhktyEDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1729711924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EID4EuuMV5DjnBT8PPKkM71QiOQECHQSuFeIv60cB+I=;
- b=XmZSMT1HBKhDwEJ1KxnQ6vbLAlNK4i0yzKfS3exmCCe+HDbpDdv2r5I+m3qMYfFeTTUYXZ
- UeGnx9E2qOb5En9ZGhaU14uMyRAeo4f/nINo6szpLgOA7xBQLe5OEUW54gxQmt8KKWm2Ua
- x6/g6winF4Tl+Vc2SIaznndE/3wVCN8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1729711924;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EID4EuuMV5DjnBT8PPKkM71QiOQECHQSuFeIv60cB+I=;
- b=rJ46N71krOX/nmLHGPaR5pLL0zaDKjO6xu39sKol811qnd5pXq1zNv8KND2zHc1HdbV1pw
- xAiktBQpGhktyEDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3742213A63;
- Wed, 23 Oct 2024 19:32:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rDNjADRPGWclbgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 23 Oct 2024 19:32:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Alex Williamson <alex.williamson@redhat.com>, Avihai
- Horon <avihaih@nvidia.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH v2 0/4] Migration: Make misc.h helpers available for
- whole VM lifecycle
-In-Reply-To: <20241023180216.1072575-1-peterx@redhat.com>
-References: <20241023180216.1072575-1-peterx@redhat.com>
-Date: Wed, 23 Oct 2024 16:32:01 -0300
-Message-ID: <87ed46fwem.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t3hJz-0002SD-Ex
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 15:47:08 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a9a26a5d6bfso11203266b.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 12:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729712826; x=1730317626; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cjeWek960NcUIgiohtPXB+Vg0rJ92eP6xQNpgT2ubOU=;
+ b=zU99zd3tiJg6haeDQlVXtBgDIkV5hMk8VELHFdyHsh3FA6tIjQ60pQam/VXPRaHovl
+ d+mP6oeZQhWiw9gnm/7d8Gmn+yQaI3lVr6tonLcsDbAqvtwSmUEuRBi6cn4N4cAaikMY
+ x+PZTorh0s0b9xuVUu3WAJidn9z1qkUPnxbzbahx/x0BLFDPIEmIkNFI9szpUshccCaZ
+ S5TqO9jqRt616JkR9jCuPV3iEke5ZImwOyVftpJIG8I02cHCOtdDOCJlkXzLXVQxZ0Dd
+ hAi0/0uGClGgHMZJ++k8UwpgY9eMfzpJxmn+CNTSPMDC0cIU365YdvI2ifJ+fIubVGP5
+ n07w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729712826; x=1730317626;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cjeWek960NcUIgiohtPXB+Vg0rJ92eP6xQNpgT2ubOU=;
+ b=rnrLVmdQLcSqKVgT/tMvWOCCNct+K3Lb4k5RTP39qYWsLdZXNJnnruCl2FLhQfOWIF
+ VKwMR25TtNXdWtoVeIxFDstB7DFZrF9BwPDqUQMNGZq3VEkqt1dBSSH0BNtwI3F1h7aU
+ NTuDnJ3gWAsNvArkSRnFTVyXzLIlBT5Fani2yvwNNbxJzG41Bysneb75i5PkaydEXBx0
+ 8LYtTxwqNekITKGp/nv5v0QGuc0ZpWkQgwzrKKIHFLXkf9FtMdG30bWh+clyq3PBV/8L
+ yR8YKXccm82SQe49qeNAcVbWBOW9VcHUg5y5juij+ztd9zsizkfRVEnxsLPNF37+7y7Q
+ SPaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXWUsEKp5nwfihkjhO9cx+lA5InD8Ixq+OYOkBjX1emjBw5PkGdribbsqq2ixYZjKZku31LcnjzlqD@nongnu.org
+X-Gm-Message-State: AOJu0YwCoFI6evhZhgXncJWP5eq7AEcB31lK6R1ZFRDn0ez7kAGPS4kz
+ vtZYrZ77zpiE9BeoPwB4g710XktnUrrM5MZu8ZIH1ApSlA+J0LBcp6/5/YOEuY0=
+X-Google-Smtp-Source: AGHT+IEIA9rIJ04+Qcp3TzNgVJAqmBz3KuIj/pMJ7zakUwT1dcG/rm3pZHFabLhpGBrqDgGq03uVBQ==
+X-Received: by 2002:a17:907:980c:b0:a99:a9b6:2eb6 with SMTP id
+ a640c23a62f3a-a9abf53587cmr351767466b.0.1729712825573; 
+ Wed, 23 Oct 2024 12:47:05 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a912d62efsm513496766b.44.2024.10.23.12.47.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Oct 2024 12:47:05 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 082235F897;
+ Wed, 23 Oct 2024 20:47:04 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Arnd Bergmann" <arnd@arndb.de>
+Cc: "Naresh Kamboju" <naresh.kamboju@linaro.org>,  "open list"
+ <linux-kernel@vger.kernel.org>,  "Linux ARM"
+ <linux-arm-kernel@lists.infradead.org>,  lkft-triage@lists.linaro.org,
+ "Linux Regressions" <regressions@lists.linux.dev>,
+ qemu-devel@nongnu.org,  "Mark Brown" <broonie@kernel.org>,  "Catalin
+ Marinas" <catalin.marinas@arm.com>,  "Aishwarya TCV"
+ <Aishwarya.TCV@arm.com>,  "Peter Maydell" <peter.maydell@linaro.org>,
+ "Anders Roxell" <anders.roxell@linaro.org>,  "Vincenzo Frascino"
+ <vincenzo.frascino@arm.com>,  "Thomas Gleixner" <tglx@linutronix.de>,
+ "Geert Uytterhoeven" <geert@linux-m68k.org>
+Subject: Re: Qemu v9.0.2: Boot failed qemu-arm with Linux next-20241017 tag.
+In-Reply-To: <4730e562-7d14-4f12-897a-e23783d094af@app.fastmail.com> (Arnd
+ Bergmann's message of "Wed, 23 Oct 2024 16:24:43 +0000")
+References: <CA+G9fYt86bUAu_v5dXPWnDUwQNVipj+Wq3Djir1KUSKdr9QLNg@mail.gmail.com>
+ <CA+G9fYsMg0fA-jraEvC==0a-22J97o-uBmbLJt16_ZKBpOT8EQ@mail.gmail.com>
+ <4730e562-7d14-4f12-897a-e23783d094af@app.fastmail.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Wed, 23 Oct 2024 20:47:03 +0100
+Message-ID: <87bjzalhzc.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,95 +110,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+"Arnd Bergmann" <arnd@arndb.de> writes:
 
-> This is a follow up of below patch from Avihai as a replacement:
+> On Sun, Oct 20, 2024, at 17:39, Naresh Kamboju wrote:
+>> On Fri, 18 Oct 2024 at 12:35, Naresh Kamboju <naresh.kamboju@linaro.org>=
+ wrote:
+>>>
+>>> The QEMU-ARMv7 boot has failed with the Linux next-20241017 tag.
+>>> The boot log is incomplete, and no kernel crash was detected.
+>>> However, the system did not proceed far enough to reach the login promp=
+t.
+>>>
 >
-> https://lore.kernel.org/qemu-devel/20241020130108.27148-3-avihaih@nvidia.com/
+>> Anders bisected this boot regressions and found,
+>> # first bad commit:
+>>   [efe8419ae78d65e83edc31aad74b605c12e7d60c]
+>>     vdso: Introduce vdso/page.h
+>>
+>> We are investigating the reason for boot failure due to this commit.
 >
-> This is v2 of the series, and it became a more generic rework on how we do
-> migration object refcounts, so I skipped a changelog because most of this
-> is new things.
+> Anders and I did the analysis on this, the problem turned out
+> to be the early_init_dt_add_memory_arch() function in
+> drivers/of/fdt.c, which does bitwise operations on PAGE_MASK
+> with a 'u64' instead of phys_addr_t:
 >
-> To put it simple, now I introduced another pointer to migration object, and
-> here's a simple explanation for both after all change applied (copy-paste
-> from one of the patch):
+> void __init __weak early_init_dt_add_memory_arch(u64 base, u64 size)
+> {
+>         const u64 phys_offset =3D MIN_MEMBLOCK_ADDR;
+>=20=20
+>         if (size < PAGE_SIZE - (base & ~PAGE_MASK)) {
+>                 pr_warn("Ignoring memory block 0x%llx - 0x%llx\n",
+>                         base, base + size);
+>                 return;
+>         }
 >
-> /*
->  * We have two pointers for the global migration objects.  Both of them are
->  * initialized early during QEMU starts, but they have different lifecycles.
-
-The very next person that needs to access one of those in migration code
-will get this wrong.
-
->  *
->  * - current_migration
->  *
->  *   This variable reflects the whole lifecycle of the migration object
->  *   (which each QEMU can only have one).  It is valid until the migration
->  *   object is destroyed.
->  *
->  *   This is the object that internal migration so far use.  For example,
->  *   internal helper migrate_get_current() references it.
->  *
->  *   When all migration code can always pass over a MigrationState* around,
->  *   this variable can logically be dropped.  But we're not yet there.
-
-Won't dropping it just bring us back to the situation before this patch?
-I'd say we need the opposite, to stop using migrate_get_current()
-everywhere in the migration code and instead expose the
-current_migration via an internal header.
-
->  *
->  * - global_migration
-
-Both are global, we can't prefix one of them with global_.
-
->  *
->  *   This is valid only until the migration object is still valid to the
->  *   outside-migration world (until migration_shutdown()).
->  *
->  *   This should normally be always set, cleared or accessed by the main
->  *   thread only, rather than the migration thread.
->  *
->  *   All the exported functions (in include/migration) should reference the
->  *   exported migration object only to avoid race conditions, as
->  *   current_migration can be freed concurrently by migration thread when
->  *   the migration thread holds the last refcount.
->  */
-
-Have you thought of locking the migration object instead?
-
-Having two global pointers to the same object with one having slightly
-different lifecycle than the other will certainly lead to misuse.
-
-I worry about mixing the usage of both globals due to some migration
-code that needs to call these exported functions or external code
-reaching into migration/ through some indirect path. Check global and
-try to use current sort of scenarios (and vice-versa).
-
-Similarly, what about when a lingering reference still exists, but
-global_migration is already clear? Any migration code looking at
-global_migration would do the wrong thing.
-
+>         if (!PAGE_ALIGNED(base)) {
+>                 size -=3D PAGE_SIZE - (base & ~PAGE_MASK);
+>                 base =3D PAGE_ALIGN(base);
+>         }
 >
-> It allows all misc.h exported helpers to be used for the whole VM
-> lifecycle, so as to never crash QEMU with freed migration objects.
+> On non-LPAE arm32, this broke the existing behavior for
+> large 32-bit memory sizes. The obvious fix is to change
+> back the PAGE_MASK definition for 32-bit arm to a signed
+> number.
 
-Isn't there a race with the last reference being dropped at
-migration_shutdown() and global_migration still being set?
+Agreed. However I think we were masking a calling issue that:
 
+    /* Actual RAM size depends on initial RAM and device memory settings */
+    [VIRT_MEM] =3D                { GiB, LEGACY_RAMLIMIT_BYTES },
+
+And:
+
+  -m 4G
+
+make no sense with no ARM_LPAE (which the kernel didn't have) but if you
+pass -machine virt,gic-version=3D3,highmem=3Doff (the default changed awhile
+back) you will get a warning:
+
+  qemu-system-arm: Addressing limited to 32 bits, but memory exceeds it by =
+1073741824 bytes
+
+but I guess that didn't trigger for some reason before this patch?
+
+> mips32, ppc32 and hexagon had the same definition as
+> well, so I think we should change at least those in order
+> to restore the previous behavior in case they are affected
+> by the same bug (or a different one).
 >
-> Thanks,
+> x86-32 and arc git flipped the other way by the patch,
+> from unsigned to signed, when CONFIG_ARC_HAS_PAE40
+> or CONFIG_X86_PAE are set. I think we should keep
+> the 'signed' behavior as this was a bugfix by itself,
+> but we may want to change arc and x86-32 with short
+> phys_addr_t the same way for consistency.
 >
-> Peter Xu (4):
->   migration: Unexport dirty_bitmap_mig_init() in misc.h
->   migration: Reset current_migration properly
->   migration: Add global_migration
->   migration: Make all helpers in misc.h safe to use without migration
+> On csky, m68k, microblaze, nios2, openrisc, parisc32,
+> riscv32, sh, sparc32, um and xtensa, we've always used
+> the 'unsigned' PAGE_MASK, and there is no 64-bit
+> phys_addr_t, so I would lean towards staying with
+> 'unsigned' in order to not introduce a regression.
+> Alternatively we could choose to go with the 'signed'
+> version on all 32-bit architectures unconditionally
+> for consistency. Any preferences?
 >
->  include/migration/misc.h | 29 ++++++++----
->  migration/migration.h    |  4 ++
->  migration/migration.c    | 99 +++++++++++++++++++++++++++++++++++-----
->  3 files changed, 113 insertions(+), 19 deletions(-)
+>       Arnd
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
