@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F7BCFA478
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D30FCFA478
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 21:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3j7K-0006xG-JR; Wed, 23 Oct 2024 17:42:10 -0400
+	id 1t3j8d-0007Xr-0K; Wed, 23 Oct 2024 17:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3j7H-0006we-GE
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:42:07 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3j7F-000110-Kb
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:42:07 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-71ec12160f6so185868b3a.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:42:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729719723; x=1730324523; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jCkPJh12O0xzpGusA8hDKMyWs4aOKC/zKINHHOek7eQ=;
- b=WUtIVc74k+FvrpDu+ZTlLgXi0ZwHvFGgdokgDyyVanpkUmfK3n1PMJt2aK91Q+ZNRU
- yQ2KMQOfvwxjUrZcuYGSXQaHbKkxie9IOXNMRDywltBnrk33ryFXHNrLfug3+s6DJ5fr
- 9Iu0W3J/7egD6s+F1ppmvdxPsec8EYMTFo/qyr8xxV7LHAlV2KCXdMdmsMcmktxUotp2
- 1NyDJr1hcqUnkwW36t7kMacjph59vBPVTOQE2p8RdMb+G+Vt63A59ZL5GOX1Bm82DKqM
- vqW89TrBZbWMgRr84Ti/RUB/hN56XKyYvxjPHsitJjL4AF73vnaT39rM9NLAA2owungY
- 9JSQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3j8b-0007Xg-CB
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:43:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3j8Z-0001Kh-Gp
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 17:43:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729719805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=70lE+KRDfL2D8BvCRzKaTQiL7nmGBY3W2JQlONcftHc=;
+ b=Sq6S1RANtrmOvT4rwT6c6VUhjp+l/NF4h5+WWVlpzmXATC7t2iw59yZg/nWJwWDMdodjPx
+ gSTDHIBmAkSp2USqflECbbRQM4AUTv7dC7aMJpnOdQKv/vOH994THblIz3BVsRIviqkP9v
+ pmgFLePVuJKy3WWgL56xJvA2HZKOAis=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-310-Jinu95SVPyuScnAmr6As4A-1; Wed, 23 Oct 2024 17:43:24 -0400
+X-MC-Unique: Jinu95SVPyuScnAmr6As4A-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6cbd2cb2f78so8004296d6.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 14:43:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729719723; x=1730324523;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jCkPJh12O0xzpGusA8hDKMyWs4aOKC/zKINHHOek7eQ=;
- b=I53Qb7dbKpOoa6uCw8mvnLh2P9HXdn+vEnJyOpZmrV9ZwGgzCGA6rR+ftVcpgCmJAw
- GcFkUXGJl75z+obWmIbQfXF2l/8vzNX/Pc6ElcngkBCkWdDy6Rsn+rOmbuSOgCK8m7mU
- tfnUUA/1q3h2apJgGJQGfiJbkYQg1lokrD/OW0VMELd0I1KP7TpdUBgsO/HQ7GNwnG8X
- qIHVBvrXPYZr6Dgx5m8444974JwH9sPJ+AClUcRWOYaobTPQTWIgBMd+h+KhUM+opYLO
- xyUmLIX7zrIV/GTeQVUyeKnRPtD4/jLH1wF6ETCnGIY7TBJAjBCX4tVeeKN8+Z6HcMz1
- /0EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7DU/ev90Js0qDqIug1qPgtMQxKP5O1CymfeFx7uiQyQlGJel82LzFs22UXLFpwXyl2U4uCW1tWjin@nongnu.org
-X-Gm-Message-State: AOJu0YxG/FN+bBVYKkIHCKBtSdg9UcmBsL6EGIMeTFjjAaNXCjCjRM6R
- Ncdtq0ZIa8iCTj03Ykyr00/efPPu6dHTy/i7VXi8CPaG5CbN3cNDAScPLqWrjJg=
-X-Google-Smtp-Source: AGHT+IETGYJ+HDGBMUoC54AGXmx0QCcmcSDv+vk+EF9lJGLv12KO2UbUT/FnGkATMNoXgCwXBo/I1g==
-X-Received: by 2002:a05:6a21:1191:b0:1d8:d3b4:7a73 with SMTP id
- adf61e73a8af0-1d978aebeacmr4611527637.4.1729719723468; 
- Wed, 23 Oct 2024 14:42:03 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeabc2b1csm7417781a12.75.2024.10.23.14.42.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Oct 2024 14:42:03 -0700 (PDT)
-Message-ID: <30454e0d-7110-4caf-b7f1-14a55beeea4d@linaro.org>
-Date: Wed, 23 Oct 2024 14:42:02 -0700
+ d=1e100.net; s=20230601; t=1729719804; x=1730324604;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=70lE+KRDfL2D8BvCRzKaTQiL7nmGBY3W2JQlONcftHc=;
+ b=rrd4H9FQxIkQ0HUF0bcn+rbAJk6YZONZLVFAXZgRzWxIyEqeoMElPxAyKoF2Dvj1iu
+ 5ZzC0DRYRxgSFF88ffidLBYuhOmWRe/fjC5yYlwgS7inQZNQ2UURSETHcZMI6ZvzCUzt
+ wnMyfCauxNhJmITWZ0yD8HCXmikcViYm32FiBsVDheYvHrEbGECGEK5NFYNt+TUkDpgA
+ hbFmnOJTTVtrV0d5OZ18/l32z8t7geQgs7s/pFEvQh3TVnp1CHRp7TWv3mwiKt5gYS1q
+ ES0NCSCco4Tb/x4Dm3pIfs53yVIvmFkrtkAazNQ/bZES5BYZAN+Wn3/aSC7+ZkWp3dvv
+ 1fKQ==
+X-Gm-Message-State: AOJu0Yw1YP0j/uXgWkPnB4MA5QkKIdyDaIa5WG4a3c8r4dvUM3JEQOfc
+ ivz2bWNw0nyDRqy476m63swlE71uspEN8Oda6YjiJFgrGWEw9HTGvWabOPerik1Af09tJbkg9Oa
+ NhDix6Bv7C4Ui9DtJJiEdKV7kHC4jyXc9skYAgsr6FEHFkLSEeTlQ
+X-Received: by 2002:a05:6214:260c:b0:6cb:5bde:d78 with SMTP id
+ 6a1803df08f44-6ce2178ecd2mr148630916d6.3.1729719803855; 
+ Wed, 23 Oct 2024 14:43:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaRzXWW1qmSFcGucdU8ALMNVjhtkepmY/wRrj9ltA1ah2AKpLYAenkmVgTe1AQnyrzNHMoZQ==
+X-Received: by 2002:a05:6214:260c:b0:6cb:5bde:d78 with SMTP id
+ 6a1803df08f44-6ce2178ecd2mr148630616d6.3.1729719803520; 
+ Wed, 23 Oct 2024 14:43:23 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6ce00a02338sm43059276d6.141.2024.10.23.14.43.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Oct 2024 14:43:22 -0700 (PDT)
+Date: Wed, 23 Oct 2024 17:43:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v2 0/4] Migration: Make misc.h helpers available for
+ whole VM lifecycle
+Message-ID: <Zxlt-E0PsT3wlRYC@x1n>
+References: <20241023180216.1072575-1-peterx@redhat.com>
+ <87ed46fwem.fsf@suse.de> <ZxlWjpVfRzCg1PJA@x1n>
+ <87bjzafs5z.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] net/tap-win32: Fix gcc 14 format truncation errors
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-stable@nongnu.org
-References: <20241008202842.4478-1-shentey@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241008202842.4478-1-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87bjzafs5z.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,143 +103,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/8/24 13:28, Bernhard Beschow wrote:
-> The patch fixes the following errors generated by GCC 14.2:
+On Wed, Oct 23, 2024 at 06:03:36PM -0300, Fabiano Rosas wrote:
+> Right, but consider that it's easy enough for someone to look for a
+> global object to write in the code, find the wrong one and just use
+> it. It would then be up to reviewers to catch the mistake.
 > 
-> ../src/net/tap-win32.c:343:19: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 176 [-Werror=format-truncation=]
->    343 |              "%s\\%s\\Connection",
->        |                   ^~
->    344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->        |                                       ~~~~~~~~~
+> Look at this:
 > 
-> ../src/net/tap-win32.c:341:9: note: 'snprintf' output between 92 and 347 bytes into a destination of size 256
->    341 |         snprintf(connection_string,
->        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->    342 |              sizeof(connection_string),
->        |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
->    343 |              "%s\\%s\\Connection",
->        |              ~~~~~~~~~~~~~~~~~~~~~
->    344 |              NETWORK_CONNECTIONS_KEY, enum_name);
->        |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> ../src/net/tap-win32.c:242:58: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 178 [-Werror=format-truncation=]
->    242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->        |                                                          ^~
->    243 |                   ADAPTER_KEY, enum_name);
->        |                                ~~~~~~~~~
-> 
-> ../src/net/tap-win32.c:242:9: note: 'snprintf' output between 79 and 334 bytes into a destination of size 256
->    242 |         snprintf (unit_string, sizeof(unit_string), "%s\\%s",
->        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    243 |                   ADAPTER_KEY, enum_name);
->        |                   ~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> ../src/net/tap-win32.c:620:52: error: '%s' directive output may be truncated writing up to 255 bytes into a region of size 245 [-Werror=format-truncation=]
->    620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->        |                                                    ^~
->    621 |               USERMODEDEVICEDIR,
->    622 |               device_guid,
->        |               ~~~~~~~~~~~
-> ../src/net/tap-win32.c:620:5: note: 'snprintf' output between 16 and 271 bytes into a destination of size 256
->    620 |     snprintf (device_path, sizeof(device_path), "%s%s%s",
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    621 |               USERMODEDEVICEDIR,
->        |               ~~~~~~~~~~~~~~~~~~
->    622 |               device_guid,
->        |               ~~~~~~~~~~~~
->    623 |               TAPSUFFIX);
->        |               ~~~~~~~~~~
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2607
-> Cc: qemu-stable@nongnu.org
-> 
-> --
-> 
-> This patch was just compile-tested (which fixes my issue). Testing TAP
-> networking under Windows apparently requires extra drivers which I don't want to
-> install (not my computer). So it would be nice if someone could give this patch
-> a test ride. Thanks!
-> 
-> Changes since v1:
-> * Use g_autofree and g_strdup_printf() rather than fixed size arrays (Peter)
-> ---
->   net/tap-win32.c | 15 ++++++---------
->   1 file changed, 6 insertions(+), 9 deletions(-)
-> 
-> diff --git a/net/tap-win32.c b/net/tap-win32.c
-> index 7edbd71633..671dee970f 100644
-> --- a/net/tap-win32.c
-> +++ b/net/tap-win32.c
-> @@ -214,7 +214,7 @@ static int is_tap_win32_dev(const char *guid)
->   
->       for (;;) {
->           char enum_name[256];
-> -        char unit_string[256];
-> +        g_autofree char *unit_string = NULL;
->           HKEY unit_key;
->           char component_id_string[] = "ComponentId";
->           char component_id[256];
-> @@ -239,8 +239,7 @@ static int is_tap_win32_dev(const char *guid)
->               return FALSE;
->           }
->   
-> -        snprintf (unit_string, sizeof(unit_string), "%s\\%s",
-> -                  ADAPTER_KEY, enum_name);
-> +        unit_string = g_strdup_printf("%s\\%s", ADAPTER_KEY, enum_name);
->   
->           status = RegOpenKeyEx(
->               HKEY_LOCAL_MACHINE,
-> @@ -315,7 +314,7 @@ static int get_device_guid(
->       while (!stop)
->       {
->           char enum_name[256];
-> -        char connection_string[256];
-> +        g_autofree char *connection_string = NULL;
->           HKEY connection_key;
->           char name_data[256];
->           DWORD name_type;
-> @@ -338,9 +337,7 @@ static int get_device_guid(
->               return -1;
->           }
->   
-> -        snprintf(connection_string,
-> -             sizeof(connection_string),
-> -             "%s\\%s\\Connection",
-> +        connection_string = g_strdup_printf("%s\\%s\\Connection",
->                NETWORK_CONNECTIONS_KEY, enum_name);
->   
->           status = RegOpenKeyEx(
-> @@ -595,7 +592,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
->   static int tap_win32_open(tap_win32_overlapped_t **phandle,
->                             const char *preferred_name)
+>   bool migration_is_idle(void)
 >   {
-> -    char device_path[256];
-> +    g_autofree char *device_path = NULL;
->       char device_guid[0x100];
->       int rc;
->       HANDLE handle;
-> @@ -617,7 +614,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
->       if (rc)
->           return -1;
+>       MigrationState *s = current_migration;
+>       ...
+>   }
+
+This is actually something I overlooked (and just fixed it up before this
+email..).. so yah I think it's too trivial indeed.
+
 >   
-> -    snprintf (device_path, sizeof(device_path), "%s%s%s",
-> +    device_path = g_strdup_printf("%s%s%s",
->                 USERMODEDEVICEDIR,
->                 device_guid,
->                 TAPSUFFIX);
+>   bool migration_is_active(void)
+>   {
+>       MigrationState *s = global_migration;
+>       ...
+>   }
+> 
+> Of course we'll get this wrong at some point.
+> 
+> Also, if in the future someone decides to call migration_is_idle() from
+> outside migration/, we'd be not only adding the burden to change the
+> variable, but also the functional change at shutdown time.
+> 
+> If we're to carry on with this idea, we'll need to play with some
+> headers to properly isolate these two usages. Something like:
+> 
+> migration.h:
+>   bool migration_is_active_internal(MigrationState *s);
+>   void set_global_obj(MigrationState *obj);
+> 
+> migration.c:
+>   bool migration_is_active_internal(MigrationState *s)
+>   {
+>   }
+> 
+>   void migration_object_init(void)
+>   {
+>       set_global_object(MIGRATION_OBJ(object_new(TYPE_MIGRATION)));
+>   }
+> 
+> exports.h:
+>   #include migration.h
+>   bool migration_is_active(void);
+> 
+> exports.c:
+>   static MigrationState *global_migration;
+>   
+>   void set_global_obj(MigrationState *obj)
+>   {
+>       global_migration = obj;
+>   }
+>   
+>   bool migration_is_active(void)
+>   {
+>       return migration_is_active_internal(global_migration);
+>   }
+> 
+> That way, the internal code never calls the exported functions with
+> global, always with current.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Yes if so we'll need this if to make it clean.
 
-I ran into this as well and reimplemented something similar, but less 
-good than current patch (which should be favored).[1]
+Now I'm thinking whether we can make it easier, by using a mutex to protect
+current_migration accesses, but only when outside migration/ (so migration
+thread's refcount will make sure the migration code has safe access to the
+variable).  Tricky, but maybe working.
 
-I can't test it neither with TAP networking, but content of patch seems
-correct to me. Hope we can merge it soon (before 9.2).
+The 1st thing we may want to fix is, we never clear current_migration, but
+QEMU does free the object after all refcounts released.. it means when
+accessed after freed it's UAF and it'll be harder to debug (comparing to
+NULL deref).  So the 1st thing is to clear current_migration properly,
+probably.
 
-[1] 
-https://lore.kernel.org/qemu-devel/20241023183009.1041419-1-pierrick.bouvier@linaro.org/
+The only possible place to reset current_migration is in finalize() (as
+proposed in this series), because it can be either main / migration thread
+that does the last unref and invoke finalize(), there's no function we can
+clear it manually besides the finalize().
 
-Regards,
-Pierrick
+But then this leads me to the QOM unit test crash, just noticing that QEMU
+has device-introspect-test which can dynamically create a migration object
+via qom-list-properties QMP command.
+
+We'll need to think about how to declare a class that can only be initiated
+once.  Things like INTERFACE_INTERNAL can potentially hide a class (per we
+talked just now), but you were right that could make qom-set harder to be
+applicable to migration some day.  The other approach can be
+INTERFACE_SINGLETON so it should still apply to qom-set /
+qom-list-properties / ... but it can't be created more than once.  Either
+of them needs more thoughts as prior work to allow mutex to protect
+current_migration.
+
+I'll think about it tomorrow to see what I'll propose next.
+
+-- 
+Peter Xu
+
 
