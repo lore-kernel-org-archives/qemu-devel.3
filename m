@@ -4,102 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5566CF5361
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 12:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3CB0CF537D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 12:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3aJE-0002M8-QN; Wed, 23 Oct 2024 08:17:54 -0400
+	id 1t3ajZ-0006O3-4N; Wed, 23 Oct 2024 08:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t3aJ8-0002Lg-4c; Wed, 23 Oct 2024 08:17:46 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3aj4-0006N9-BQ
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 08:44:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1t3aIy-0001ED-VN; Wed, 23 Oct 2024 08:17:45 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N0O2Qk018182;
- Wed, 23 Oct 2024 12:17:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2oYIub
- je1s/WIebtYf+zDCBbLYyNNOGCIJaFvIBrxyE=; b=n2loIoLo7zCrJJv/kop4fs
- Jv6yrNs+63aEzn6owe1nxIJ/8R1FS0tNusQ0accJFrcuWJuOnP4/EHImE2PZzz7n
- EmSSRkY2M/J71mSzrg4Yl0qmoSO69RsGBS2/wHKhoQJRmKaPpUswMuJIuCvCasKG
- +XdfljHGXnFe8Fh6tDUzg6+z0WP6tCp3vxJCjg0q+S2FwyH6d1eb93uFon5P2apt
- JrP+UhhnV+vGCBk4ghfXqej8+mmcC/r68xcJtyNxiufMnYB08NNyVnpuxJAhQdmS
- u7qnIwGpFsCBQidjP+y3aNjb4fQn56/Zr0uxILHWtxU4Fq4FbJvatIxwWB6yI+2A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emajjvt7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Oct 2024 12:17:22 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 49NCEAoJ030959;
- Wed, 23 Oct 2024 12:17:21 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emajjvt3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Oct 2024 12:17:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49NBXp8A014286;
- Wed, 23 Oct 2024 12:17:20 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42emhfjs53-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Oct 2024 12:17:20 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49NCHI3G27525778
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Oct 2024 12:17:18 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD16B2004B;
- Wed, 23 Oct 2024 12:17:18 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 12ED020040;
- Wed, 23 Oct 2024 12:17:18 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Oct 2024 12:17:17 +0000 (GMT)
-Message-ID: <935ba5fe7f761e641e9bcdd2e000c6e6c0c12fba.camel@linux.ibm.com>
-Subject: Re: [PATCH] tests/tcg: Replace -mpower8-vector with -mvsx
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, Nicholas Piggin
- <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Kewen Lin <linkw@linux.ibm.com>, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Date: Wed, 23 Oct 2024 14:17:17 +0200
-In-Reply-To: <56b09f33-d176-4489-989a-ddf02329636f@linaro.org>
-References: <20241021142830.486149-1-iii@linux.ibm.com>
- <56b09f33-d176-4489-989a-ddf02329636f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RBK3qo4xVbVycV3-0LjAy-syZmu2D7yZ
-X-Proofpoint-GUID: Tc-Xr5rHZPn4H3UJbx5nVs1PfBDyWOZL
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3aix-0004kS-8y
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 08:44:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729687463;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1y8LsVyEK5j61+YyNX4f8piQceRSKnJeLYW4F2vG7lg=;
+ b=TXqUJSMjydS+pJ0jpT8mAdCVdEnB2zV/2kvdIKaZU6qyOkGB6cdZwnuTleAIt7G4MLVC5J
+ 8kAEBtUMUMyj6l5CUaZEiTH9eNgwyuJQgAR55y+qQysVmpOUeMMUBkaZFxfKAcEgQwHxBB
+ 2rueSLd4ojNlWJW1ExH4PiYsWw6tiOQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-bXI9snhfNg2u1oXx3naNLQ-1; Wed, 23 Oct 2024 08:44:22 -0400
+X-MC-Unique: bXI9snhfNg2u1oXx3naNLQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4316655b2f1so35594445e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 05:44:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729687461; x=1730292261;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1y8LsVyEK5j61+YyNX4f8piQceRSKnJeLYW4F2vG7lg=;
+ b=gwGORsO8xfdfFgcM7SqsIkA2hpTzl7JiQzd3LjRCd8ujOtMqWMjYnvRCiEr0f1Irm0
+ BAxEyDXpaVEHvfBmOmnPk1rrz1fXgaXvJGiJ4C5miQVez9ubZQcL0eRb1LXmlv2rcJ9u
+ o5G9HR92WLcPPay2IVwplZCdSCPygQGr/g/j9Na7gfV4hXzlUmRbW589KHLGW/5wV+Td
+ EJn71v8ELBr21lAdxskiB/es4rccZUis+zP8bVnSvIIFuvHQ3GUNA3Bn3EDOPKt3hSM0
+ bMjldrN4a7lM1mPmGpADX8S084R5Z55XQQqSFryLa2JHNIX2bx+OQad+5UoS/ew3azms
+ iI8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXs+aHtHFPSOfl10I6v6g65zqqootd6WAUFopTL74vzjU+9HmWLmjMGfGWjzIml57i5yb9AqXpL+GY7@nongnu.org
+X-Gm-Message-State: AOJu0YxyoxD+sLQGY7JTO0J7Y4fI5RqZcj0XBbQFOjYKs9XobZGC4yGa
+ il8dOugAu3XgxsncQSS7EjM1MkEy5Q77Moj+sVjvrLE9DsnKbB+vugqUlAzvOTCWjWokHPpAnjJ
+ SHd6ZUFPKwXcTJEKmZ1iYp6+u4l+LW9iUcRYPusTaTHPf+tI3BUOD
+X-Received: by 2002:a05:6000:1865:b0:37d:4ebe:164d with SMTP id
+ ffacd0b85a97d-37efcf84a76mr1839256f8f.47.1729687461266; 
+ Wed, 23 Oct 2024 05:44:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFO3tZNUMflwrYgDIKG79ehu12zU1RkVwjxaGu7//olS5ThkoRAwfPeTR3oVzG2U8p0M64OsQ==
+X-Received: by 2002:a05:6000:1865:b0:37d:4ebe:164d with SMTP id
+ ffacd0b85a97d-37efcf84a76mr1839231f8f.47.1729687460740; 
+ Wed, 23 Oct 2024 05:44:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43186c0e0d5sm15476925e9.31.2024.10.23.05.44.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Oct 2024 05:44:20 -0700 (PDT)
+Message-ID: <d65cf179-21e6-4cda-baae-57fde73807cf@redhat.com>
+Date: Wed, 23 Oct 2024 14:44:19 +0200
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0
- mlxscore=0 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410230072
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] vfio/helpers: Align mmaps
+To: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com
+References: <20241022200830.4129598-1-alex.williamson@redhat.com>
+ <20241022200830.4129598-3-alex.williamson@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241022200830.4129598-3-alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,85 +149,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2024-10-21 at 19:59 -0700, Richard Henderson wrote:
-> On 10/21/24 07:27, Ilya Leoshkevich wrote:
-> > [1] deprecated -mpower8-vector, resulting in:
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0 powerpc64-linux-gnu-gcc: warning: switch '-mpo=
-wer8-vector' is
-> > no longer supported
-> > =C2=A0=C2=A0=C2=A0=C2=A0 qemu/tests/tcg/ppc64/vsx_f2i_nan.c:4:15: error=
-: expected ';'
-> > before 'float'
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 4 | typedef vector flo=
-at vsx_float32_vec_t;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- ^~~~~~
-> >=20
-> > Similar to how this was done for the GCC testcases, replace
-> > -mpower8-vector with -mvsx.
-> >=20
-> > [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D109987
-> >=20
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > ---
-> > =C2=A0 tests/tcg/ppc64/Makefile.target | 10 +++++-----
-> > =C2=A0 1 file changed, 5 insertions(+), 5 deletions(-)
-> >=20
-> > diff --git a/tests/tcg/ppc64/Makefile.target
-> > b/tests/tcg/ppc64/Makefile.target
-> > index 1940886c737..d1b00d2bf09 100644
-> > --- a/tests/tcg/ppc64/Makefile.target
-> > +++ b/tests/tcg/ppc64/Makefile.target
-> > @@ -6,7 +6,7 @@ VPATH +=3D $(SRC_PATH)/tests/tcg/ppc64
-> > =C2=A0=20
-> > =C2=A0 config-cc.mak: Makefile
-> > =C2=A0=C2=A0	$(quiet-@)( \
-> > -	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mpower8-vector,=C2=A0=C2=A0
-> > CROSS_CC_HAS_POWER8_VECTOR); \
-> > +	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mvsx,=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CROSS_CC_HAS_VSX);
-> > \
-> > =C2=A0=C2=A0	=C2=A0=C2=A0=C2=A0 $(call cc-option,-mpower10,=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > CROSS_CC_HAS_POWER10)) 3> config-cc.mak
->=20
-> I don't think this is quite right.
-> I think you need -mpower8 to get OPTION_MASK_P8_VECTOR set.
-
-Do you mean -mcpu=3Dpower8? -mpower8 is a GAS option.
-
->=20
-> > +ifneq ($(CROSS_CC_HAS_VSX),)
-> > =C2=A0 PPC64_TESTS=3Dbcdsub non_signalling_xscv
->=20
-> bcdsub is not in the base VSX instruction set, for instance.
->=20
->=20
-> r~
-
-I was confused why -mvsx works in practice, so I spent some time and
-managed to create a "hostile" gcc build, in which this is now a
-problem, using:
-
-    ./configure --target=3Dpowerpc64-linux-gnu --enable-checking \
-                --disable-bootstrap \
-                --with-as=3D"$(which powerpc64-linux-gnu-as)"
-
-The issue is masked by two things:
-
-- GCC passes "-many" to GAS. GCC commit e154242724b0 ("[RS6000] Don't
-  pass -many to the assembler") stops --enable-checking builds from
-  doing this.
-
-- binutils has the following line:
-
-  /* The minimum supported cpu for 64-bit little-endian is power8.  */
-  ppc_cpu |=3D ppc_parse_cpu (ppc_cpu, &sticky, "power8");
-
-  so one needs to use the big-endian toolchain to see the problem.
+On 10/22/24 22:08, Alex Williamson wrote:
+> Thanks to work by Peter Xu, support is introduced in Linux v6.12 to
+> allow pfnmap insertions at PMD and PUD levels of the page table.  This
+> means that provided a properly aligned mmap, the vfio driver is able
+> to map MMIO at significantly larger intervals than PAGE_SIZE.  For
+> example on x86_64 (the only architecture currently supporting huge
+> pfnmaps for PUD), rather than 4KiB mappings, we can map device MMIO
+> using 2MiB and even 1GiB page table entries.
+> 
+> Typically mmap will already provide PMD aligned mappings, so devices
+> with moderately sized MMIO ranges, even GPUs with standard 256MiB BARs,
+> will already take advantage of this support.  However in order to better
+> support devices exposing multi-GiB MMIO, such as 3D accelerators or GPUs
+> with resizable BARs enabled, we need to manually align the mmap.
+> 
+> There doesn't seem to be a way for userspace to easily learn about PMD
+> and PUD mapping level sizes, therefore this takes the simple approach
+> to align the mapping to the power-of-two size of the region, up to 1GiB,
+> which is currently the maximum alignment we care about.
 
 
-I'll send a v2.
+Couldn't we inspect /sys/kernel/mm/hugepages/ to get the sizes ?
+
+
+> Cc: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+
+anyhow,
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+
+> ---
+>   hw/vfio/helpers.c | 32 ++++++++++++++++++++++++++++++--
+>   1 file changed, 30 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> index b9e606e364a2..913796f437f8 100644
+> --- a/hw/vfio/helpers.c
+> +++ b/hw/vfio/helpers.c
+> @@ -27,6 +27,7 @@
+>   #include "trace.h"
+>   #include "qapi/error.h"
+>   #include "qemu/error-report.h"
+> +#include "qemu/units.h"
+>   #include "monitor/monitor.h"
+>   
+>   /*
+> @@ -406,8 +407,35 @@ int vfio_region_mmap(VFIORegion *region)
+>       prot |= region->flags & VFIO_REGION_INFO_FLAG_WRITE ? PROT_WRITE : 0;
+>   
+>       for (i = 0; i < region->nr_mmaps; i++) {
+> -        region->mmaps[i].mmap = mmap(NULL, region->mmaps[i].size, prot,
+> -                                     MAP_SHARED, region->vbasedev->fd,
+> +        size_t align = MIN(1ULL << ctz64(region->mmaps[i].size), 1 * GiB);
+> +        void *map_base, *map_align;
+> +
+> +        /*
+> +         * Align the mmap for more efficient mapping in the kernel.  Ideally
+> +         * we'd know the PMD and PUD mapping sizes to use as discrete alignment
+> +         * intervals, but we don't.  As of Linux v6.12, the largest PUD size
+> +         * supporting huge pfnmap is 1GiB (ARCH_SUPPORTS_PUD_PFNMAP is only set
+> +         * on x86_64).  Align by power-of-two size, capped at 1GiB.
+> +         *
+> +         * NB. qemu_memalign() and friends actually allocate memory, whereas
+> +         * the region size here can exceed host memory, therefore we manually
+> +         * create an oversized anonymous mapping and clean it up for alignment.
+> +         */
+> +        map_base = mmap(0, region->mmaps[i].size + align, PROT_NONE,
+> +                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +        if (map_base == MAP_FAILED) {
+> +            ret = -errno;
+> +            goto no_mmap;
+> +        }
+> +
+> +        map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+> +        munmap(map_base, map_align - map_base);
+> +        munmap(map_align + region->mmaps[i].size,
+> +               align - (map_align - map_base));
+> +
+> +        region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
+> +                                     MAP_SHARED | MAP_FIXED,
+> +                                     region->vbasedev->fd,
+>                                        region->fd_offset +
+>                                        region->mmaps[i].offset);
+>           if (region->mmaps[i].mmap == MAP_FAILED) {
+
 
