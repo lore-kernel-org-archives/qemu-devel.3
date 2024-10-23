@@ -4,81 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5425D2E01E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2493D2E01E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 07:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Vxn-0000dg-Hv; Wed, 23 Oct 2024 03:39:27 -0400
+	id 1t3W9E-0003Sf-LK; Wed, 23 Oct 2024 03:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3Vxl-0000dQ-RC
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:39:25 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t3W98-0003SI-8w
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:51:10 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t3Vxk-0008Go-BV
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:39:25 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5e5a0519d00so2898660eaf.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 00:39:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t3W96-0001HH-9N
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 03:51:10 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-71e4fa3ea7cso4943203b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 00:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729669163; x=1730273963; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MYNp47PXrBodBqptWa1AA6ppu7TdaThxK1XLbilfYis=;
- b=zqZ82IfyZKndsLaa4DMWVGInyQk3dyXE9KDc50XIUB+qteV/gz22PEcmlO0b80KMfY
- xoPAWVlLWrzL6GHVC8tqtMIuYamDKrAaBLSwOlFziH4XfhfgDQWTwC7qd1SRTUV6veq5
- JUNVdRfrVAQ6vqmXd/caw9fV6LUHloJr+qLVD2Bo/QoZWYeigcbLUHXekbmhBRc7/8Q6
- RB/FAJXh/OCUtCdEIXOOghu544siiZV4FogmAX4UDwARD91DFkzpSzUnZ7sLHw5g012r
- +iCm9sSg0drBQpigZO3gxR3lX1yzCc2dH8CHh+B1UoXygSs1aJJyF15LWC2lHZDjjuzA
- E3OQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729669866; x=1730274666;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/4GXR6qGytaSuh23nLegj+k6vr06+QYcpd0vf/jDKDw=;
+ b=OUx8e61H7Gn5XkKip42wo4MYgiic4xFKKfiilOiMMCIHUPnYOLlfdxF+sDZWlxaYmO
+ CNEHHM/RfLCMuOFUzzenp+FytAVyqXrID0h7MzCS4uJu5cWdDkTf7N5Lwd6U4Zb2sQUT
+ 7Tk3SaU7mAyBJcmCi5wczDpU+THu4lLPGOJzxW94kAplKRc7WpkToZqQOWZSnk5VVMCs
+ RxFcXdbed3EMdzAiT2/BtQhZvYIl202sXJ0VHT6b1biOgMerJxZL5vDQMqrbxDjOyH2Q
+ Sx92YicowQGFlyxvsPpfNZX8bNqeVAinz30ebhYY8qn0ErM9LBITJEiSuGlsvtwNJ3I8
+ bR9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729669163; x=1730273963;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MYNp47PXrBodBqptWa1AA6ppu7TdaThxK1XLbilfYis=;
- b=d1VrsFcitT9aXlCBCtyfJDpspIuth7P7fneo6RywvnAAJb6NTlwU23YPDYxPz1xkTX
- bc85RP5/91EF0YIZvepGP2ljgu1eTZG58uKVu02TnP4+4In+xfIMxmKVt33N+EV/yIND
- 71fYy2+5cN87+/+4n9bjZAe5nevIEJLwcOJr/6uUgbgJ0hpnaMUvScllaZfg13td6M4y
- Idiht8uYs1mbhf53FLL+JyobABsvl05166g+muqi7fAdnHcWBTcrtjV46N6viYK7Gz6g
- zH1eRZyVPOSPYkQpKKmF1H3cMmjVKMPFwSstcfflrCzQT/RYrdXjVWFBblWfT1qvx6BC
- gCEg==
-X-Gm-Message-State: AOJu0YyHBifd5S/6K79z2lg0cJq0IxiXkaIHVa6x4gS8WlQuAhJHvBqE
- v2DXx83Nhj0R22VBtug6FLRKh4qCcw7pOwyXH/14SSr5mUYA6mFGsTMaK+sxmh3lcFLOPWTqAoU
- 3cSryyw==
-X-Google-Smtp-Source: AGHT+IEcoUzhx/Y/RLMI/grLfq2HQXRLp2vephQv8nDF3XtlE/KvDgtXFxFxIEr3stAHSXv1LoL66Q==
-X-Received: by 2002:a05:6870:d888:b0:288:716b:142c with SMTP id
- 586e51a60fabf-28ccb7cdfc5mr1954758fac.18.1729669162659; 
- Wed, 23 Oct 2024 00:39:22 -0700 (PDT)
-Received: from linaro.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ d=1e100.net; s=20230601; t=1729669866; x=1730274666;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/4GXR6qGytaSuh23nLegj+k6vr06+QYcpd0vf/jDKDw=;
+ b=g3kmSmmDSRQYjN45+eZBBm+aL4vOUk3SHzJjUBGV/chcjOmJktd+6YrlQvORUZPbSC
+ LhgdlY0APan4umhL5A3I82Z0+yBXwTG4LYHWbMdUptXOoqUk1HCWEcz1zsKJmlkIyntA
+ wyRSkDjPsr8SRweHBU6DMQmgkKKuNo4kMeiL4rRBIA/Acmr94VJe0FD/i3uMjbc/hoWC
+ laLcyoApsYCwt5K1DBPKZeQYZCIDXxi9WQBv3OHYKIeF9fPi71z7Vvme+2bqzK9+KQi3
+ xBiwXcZ2+Vk4lLNJA5EVxkGYPef525RYxcW3JlGBAUbAjOyKj6Z4z9/AisJEz6WC2PtX
+ XNLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8aEr5lSFC8VGCwz9t5Dy5q10Hc3tFxJeDSd3DZTFQNngQz56JPv3xdxEfeKYJniN4FlULEcgcxXWK@nongnu.org
+X-Gm-Message-State: AOJu0YzJQRxQ1aUBdqYbaqYJ6809wLwL1CXZQKeDgGplazp+DJhPjPh5
+ 4fMaoY/y+ce3zWE7BVeSwcSGOpa9Zaovu6Seq0gG+zNkhCBf7KgFLcpH0lllYiE=
+X-Google-Smtp-Source: AGHT+IFpWjHdXOU1VJJgFPctJSN949WRUTNy35o2UVMYwVDc6PooAgtkvgZKcoTk1zHzlYFIqIUq7Q==
+X-Received: by 2002:a05:6a00:2da7:b0:71d:d2a9:6ebf with SMTP id
+ d2e1a72fcca58-72030b60ab3mr2707786b3a.6.1729669866226; 
+ Wed, 23 Oct 2024 00:51:06 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec13ea224sm5737564b3a.160.2024.10.23.00.39.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Oct 2024 00:39:22 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] scripts: remove erroneous file that breaks git clone on
- Windows
-Date: Wed, 23 Oct 2024 00:39:14 -0700
-Message-Id: <20241023073914.895438-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d2e1a72fcca58-71ec131386asm5801029b3a.44.2024.10.23.00.51.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Oct 2024 00:51:05 -0700 (PDT)
+Message-ID: <74bc6290-e312-4933-9cc2-c24abe554151@daynix.com>
+Date: Wed, 23 Oct 2024 16:51:00 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-6-dmitry.osipenko@collabora.com>
+ <9362f8ac-5616-4f6d-b424-3a2b679c2141@daynix.com>
+ <f79ebab7-fe1c-419d-89d5-6238b0b36ba5@collabora.com>
+ <c02c2bb3-c5fe-4675-bfc5-2b99fbf78f42@daynix.com>
+ <44929f04-f45f-45ff-bd0b-e1a955fad34a@collabora.com>
+ <5f9adf6c-2975-43c4-bd7d-df20370087e0@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <5f9adf6c-2975-43c4-bd7d-df20370087e0@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::435;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,21 +119,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This file was created by mistake in recent ed7667188 (9p: remove
-'proxy' filesystem backend driver).
+On 2024/10/22 21:44, Dmitry Osipenko wrote:
+> On 10/22/24 15:37, Dmitry Osipenko wrote:
+>> On 10/22/24 08:11, Akihiko Odaki wrote:
+>>> On 2024/10/19 6:31, Dmitry Osipenko wrote:
+>>>> On 10/18/24 08:28, Akihiko Odaki wrote:
+>>>>>> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+>>>>>> +                                      uint32_t ring_idx, uint64_t
+>>>>>> fence)
+>>>>>> +{
+>>>>>> +    VirtIOGPU *g = opaque;
+>>>>>
+>>>>> What about taking the BQL here instead of having a QEMUBH?
+>>>>
+>>>> That will block virglrenderer thread writing the fence, which in turns
+>>>> might block other virglrenderer threads.
+>>>
+>>> Looking at virglrenderer's source code, the thread writing the fence is
+>>> the only thread it creates. Otherwise virglrenderer's code should be
+>>> executed only in the QEMU thread calling virglrenderer's functions,
+>>> which always holds the BQL. So taking the BQL here will not interfere
+>>> with another thread.
+>>
+>> There are other problems with that BQL approach:
+>>
+>> 1. virgl_renderer_context_destroy() is executed from QEMU's main-loop
+>> and it will terminate the virglrenderer's fence-sync threads which at
+>> the same time will take the same BQL if fence fires while VM is shutting
+>> down and then this condition will result in a deadlock.
+> 
+> I mixed up virgl_renderer_context_destroy() with
+> virgl_renderer_cleanup() here, but actually
+> virgl_renderer_context_destroy() will have the same deadlock issue.
+> 
 
-When cloning the repository using native git for windows, we see this:
-Error: error: invalid path 'scripts/meson-buildoptions.'
-Error: The process 'C:\Program Files\Git\bin\git.exe' failed with exit code 128
----
- scripts/meson-buildoptions. | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
- delete mode 100644 scripts/meson-buildoptions.
+Thanks for explanation. This explains well why QEMUBH is needed.
 
-diff --git a/scripts/meson-buildoptions. b/scripts/meson-buildoptions.
-deleted file mode 100644
-index e69de29bb2d..00000000000
--- 
-2.39.5
-
+Regards,
+Akihiko Odaki
 
