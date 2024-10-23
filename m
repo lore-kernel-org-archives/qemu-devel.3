@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAF4CDDE70
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 11:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B551CDDE71
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 11:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3Zd9-0007Ia-O0; Wed, 23 Oct 2024 07:34:23 -0400
+	id 1t3ZdJ-0007Od-ID; Wed, 23 Oct 2024 07:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Zd7-0007Fu-FS
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:21 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1t3Zd4-0007EY-Il
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:19 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3Zd4-00037u-B5
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:21 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a9a0c40849cso1027401766b.3
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 04:34:17 -0700 (PDT)
+ id 1t3Zd0-000369-Ot
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 07:34:17 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a9a0f198d38so927033966b.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 04:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729683256; x=1730288056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729683252; x=1730288052; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F14s2fuGgke3fc+cUXWbJXkLt5Skh4xTYd/t6sQdYbY=;
- b=opO1NYF75BCF5psXILq+pIVtZdfMuPaNRwfMnc4fVpT6O4lwn84I1yeNp7HKzm0UK2
- Z14F94YppJjB1zBZ3i8jk87B0rUnvYGS5GxpjP6Ev3ra2q2BXOTJJy0DT0NOlRme0RLt
- eVs3gO1BoTibUG5IAb3kUGUCk68x6fBu/9XmmYAC+E+iY6ABvBPbPm7KasTxEletmL/9
- lXO7/Nd07KdPv/iPN2rhs1EXlFEhQyKyRnnDL96XBbVPgarBP6R+VOuyV2e3R2SSOEk8
- Pss37qfaXGvcS9PtouDwx41Xl6sB/RU34DVOkO28CVyJ9O6SqS2jCc8kDjTH+9w6LTMd
- r18Q==
+ bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
+ b=Nn+9GcmntLkV26cfpF+y789AyNHXHDlFjCaH6lTW4w2n8nyVAVXdtPIBnIoJZq9PhC
+ emHNqP3Z6edRclJnB0pyEfrS/bLduuQCOaQIU8VHbXJAcDRLheARjjeMbYN1bnhFNiW3
+ +fyC6rQWUdVGAG8fYOZvvTc+0qrETpRBesclKyxtkP7V8lYVv6UbIoU/Dre58RZKFoSm
+ IwclX9iqzqP6BmqGjPYImcKFAqc47Ii45j02BZhV61L9ZLsmTDH6NzEKZqDgOs+aalAY
+ 7iGTgJPqLIBTowv5lDuwpNK3vJdBvO1c5T0wHFdIdv5Tb6W798XQnc28Oy88xwqi33P4
+ nrPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729683256; x=1730288056;
+ d=1e100.net; s=20230601; t=1729683252; x=1730288052;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F14s2fuGgke3fc+cUXWbJXkLt5Skh4xTYd/t6sQdYbY=;
- b=ef6gEdLGLBt5we/R8QE2/25Q+/D/Abb55QhJTsp7MnsTE0+k4CfMJOjMVAdRSue/Ku
- M/Ms4LQ/yxiZ07ozmCl85PLVBgWhLzcuj0R8A0Bm0hgJU5V8ZtT/H/Tr42hgVymCt6hC
- NyX2FKvMEQGdrkNF8t7XH/O/6K0rngeW2I8j1VBVL47rOCwxwjMK1LbU5I/bmG5+VOSM
- EcWCf9WyWIA7loWNCUaBclO4gN7ud+ICq3zPaQQepyyDJwu7pCWpuEefwvp7ig6yQBaZ
- 9FCyxyX33RF3g6WUozI4yFx+II0hqfD7XPug6Iru9Qtv+2GDgKWJokGBr49sMQdZCEcZ
- EC0A==
-X-Gm-Message-State: AOJu0YzHGUK7hLYjKgMX++yFuv60VK9GaQmICZQVFRfna0ra9X/QWCv5
- ckwqHfawi3zcp2kcqYtqiE5yDSwl5WE2xWRuO30uB+YJolgmno5I3zdwuc+YW7Q=
-X-Google-Smtp-Source: AGHT+IGGBc55QM3qFCMBExtGsk6ICJf3Ug5DueFxLCCWUUU5RTVe6iZgYe//4a3K0VY6A0U2IduvZw==
-X-Received: by 2002:a17:907:97cb:b0:a99:fff3:2eb0 with SMTP id
- a640c23a62f3a-a9abf92cf40mr200716666b.40.1729683256020; 
- Wed, 23 Oct 2024 04:34:16 -0700 (PDT)
+ bh=dc/d/VIiG49L+/d6qxDj8y/ZsZGo0rIznhJwT5hb3KQ=;
+ b=NzZToxPHrurlLBXt+Y8VtXFz+/giHrF7hnnFrrkkDqpMUMdv6xIjDXCVDod+Hgk8n7
+ ElRbOK8kIHW4mzzDyokuYUud9xl3ofxc1Ph3MUHAKQ4FS+7L+vO7Gn8poqYCP/Xw9PZO
+ oEtwwNYFp9+GXUP41lJSj+O3Ca6gQUPqZb4d9DNvf3VFVjbA5nSEujU/2xjPWtlqcsoC
+ WYGFcQcuwgwAb6K0H6tdsH/hq9C6Li2nVhzxQ6bCBE0f/SYsVcnK/8rBQJ9GTOymlpBx
+ lt+8p6ndlQwXOMZYahM5SkDsa+wqY+MNP8m0tXkCR4YaHLpGSFznbcjNIblQzlvIbqOC
+ qpVQ==
+X-Gm-Message-State: AOJu0YxzYGD2PcHOdkh9lLNtXhybsCeokrS8pNUu9PZ2eLSTO9RmkzxU
+ UfQcz06uzl6dmfSzvezP2d7WhD4kXXs9ZNA+udzjM7q04dLs4MoDd9o6WuUv0M4=
+X-Google-Smtp-Source: AGHT+IGX9kLBYLMntAv2Zyd9NwAZDoBf7ZcI7j6Q9Uo1J6BYAqdZAtewejuvnJX4RHJtRVe8E9G1qg==
+X-Received: by 2002:a17:907:3f98:b0:a99:ebbb:12fd with SMTP id
+ a640c23a62f3a-a9abf96f557mr195597966b.65.1729683252535; 
+ Wed, 23 Oct 2024 04:34:12 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91559f15sm463603866b.133.2024.10.23.04.34.10
+ a640c23a62f3a-a9a912ee125sm463814566b.75.2024.10.23.04.34.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 23 Oct 2024 04:34:10 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 84B6C5F925;
+ by draig.lan (Postfix) with ESMTP id CBBA05F9D0;
  Wed, 23 Oct 2024 12:34:07 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,18 +82,18 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  Cleber Rosa <crosa@redhat.com>, kvm@vger.kernel.org,
  Beraldo Leal <bleal@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 06/18] scripts/ci: remove architecture checks for
- build-environment updates
-Date: Wed, 23 Oct 2024 12:33:54 +0100
-Message-Id: <20241023113406.1284676-7-alex.bennee@linaro.org>
+Subject: [PATCH v3 09/18] dockerfiles: fix default targets for
+ debian-loongarch-cross
+Date: Wed, 23 Oct 2024 12:33:57 +0100
+Message-Id: <20241023113406.1284676-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241023113406.1284676-1-alex.bennee@linaro.org>
 References: <20241023113406.1284676-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,37 +116,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We were missing s390x here. There isn't much point testing for the
-architecture here as we will fail anyway if the appropriate package
-list is missing.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Message-Id: <20241022105614.839199-7-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+fix system target name, and remove --disable-system (which deactivates
+system target).
+
+Found using: make docker-test-build@debian-loongarch-cross V=1
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/ci/setup/ubuntu/build-environment.yml | 2 --
- 1 file changed, 2 deletions(-)
+ tests/docker/dockerfiles/debian-loongarch-cross.docker | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
-index edf1900b3e..56b51609e3 100644
---- a/scripts/ci/setup/ubuntu/build-environment.yml
-+++ b/scripts/ci/setup/ubuntu/build-environment.yml
-@@ -39,7 +39,6 @@
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
-         - ansible_facts['distribution_version'] == '22.04'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 79eab5621e..538ab53490 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -43,8 +43,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
+ ENV PATH $PATH:/opt/cross-tools/bin
+ ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
  
-     - name: Install packages for QEMU on Ubuntu 22.04
-       package:
-@@ -47,7 +46,6 @@
-       when:
-         - ansible_facts['distribution'] == 'Ubuntu'
-         - ansible_facts['distribution_version'] == '22.04'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
+-ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+-ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
++ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
++ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
+ ENV MAKE /usr/bin/make
  
-     - name: Install armhf cross-compile packages to build QEMU on AArch64 Ubuntu 22.04
-       package:
+ # As a final step configure the user (if env is defined)
 -- 
 2.39.5
 
