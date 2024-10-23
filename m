@@ -4,93 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE3DD2E036
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 09:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2CACDDE49
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Oct 2024 10:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3XtW-0006Gt-L3; Wed, 23 Oct 2024 05:43:10 -0400
+	id 1t3YEX-0004LO-VW; Wed, 23 Oct 2024 06:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XtV-0006Gb-28
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:43:09 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3XtT-0005Gc-G2
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 05:43:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=7VHXH3J4Qcsm0nJdwJphVnxJ9SE11eE5E32A6djQqCE=; b=HE+E9dvW45bqkCv6C74xos1zz7
- RK5PVPi21ReJ/5O2h2JrnTZSDr3S/4T3DH1/FVqmmfiV1BC+tiC3O38D8DUjRqxDWzedo6buo5htY
- l27kNznIWL36XbQ6Lz8h4f0nkhxtdj+GqyZNSDnYkTE1MNeZKvV+dXiayqUsMn51b/R9tyut0INO1
- pqFf/250+WX7rWSh2exg1Ceui4mwE9o08fRPFN/m/hSDgu0IfN1l4pAjILqnmIssa/whbOL/YfLpB
- epbBWkIh1spicB3xLd8OcqJ84ZLcHbpDolS7O1kDKPudC83ki8kvC88dX8iTSDsXDrJlt2WDt8IrF
- dle4zjJb3NdI2q/SKpd8Nywp+8Qrvc7rUN1Tx9jfWO9skUglEAlG3ahFAQqSJOCshx29ubJ2wLImF
- G5We6iESSkkK+QqipqWFXZl8TF+oscinccGDBqre6pU86zSuccnbjr4pEc9VnNa+KXIp8vquQLRPD
- LF36z6prtrSqu790NyX29p52oeRqdmnReWdM7erVYOfSTeVdOpeuYStHqAN0JzB2aCyjFiKUJiiOv
- 39wGqaFeNcuu1XdklzDOTWVSybgRva/wGeeK4+nVnF6Qu+r3zxlDsiODSdb898s+2jA8GKEhQtIa4
- WBHM+ANMQwGVwidJsjCPj1qLPr5ofkVdeq1+U5qEk=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3Xt7-0008Ze-Qt; Wed, 23 Oct 2024 10:42:49 +0100
-Message-ID: <a92f8709-7a98-4e1c-96d5-35f25fb0c6b1@ilande.co.uk>
-Date: Wed, 23 Oct 2024 10:42:57 +0100
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t3YEU-0004Kv-KV
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 06:04:50 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1t3YEP-0007Xb-E7
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 06:04:49 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20ca1b6a80aso63770675ad.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 03:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1729677884; x=1730282684;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kpgIJN665y7+yq9RGXuUFaf4WOdMjkw6lY8q09rajcg=;
+ b=lDyKkYmZMn0nWmCACTnQzDFgqankvpU4V2M+CbyHMkLAwJ+X1MbtX0oUpS6dBiSdYs
+ WKz+e548R7yBw/5rstC9rFXGMfv5edVImrzKnTlrxoilkRHSxZ0EMQvaQqvx3ZLfyyey
+ WTs3j+eKyL2zaNOXF7+I/rxP1uU3xB7gD2Lr0sXd1zbCkKKDUTt55BNAUNAQQuVI/x9L
+ nkkWDRtYkx2THCKqp96pJdf5wzLXFviuBlDPbPP4yqUBcSabQ/axty7optcJhTHstd79
+ YZ2xv0dU/T8UPNnO90mO02dglo4Ms4Hq3Nj2vCOBnQg8E+MdoVWwBAI0+w5mWPWOzWAu
+ 8VDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729677884; x=1730282684;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kpgIJN665y7+yq9RGXuUFaf4WOdMjkw6lY8q09rajcg=;
+ b=ILB+vXgLEQONBprAfDfmEpZmW3TaUmUVOIo6qGeMB8SMjWInoKLVWqWL278Uk/JP+X
+ bXjc4AoTyckmYD70UmC+ga2+glzfI0MXYnooq3UyR0nINjlrnozXo9DfpWMwGQuyQr5W
+ Dc7sRWf2PZm0eZ7/h/FlDHK9ghb7C8Gz4Xdb6p4zfl8xiX99hPv7SFikYPlotYrY5rRa
+ j+fqZRgv+OyffLN7J7iZgznO9pqHzQRAWlpLzFBQJa6ofn8thM1iUjrNbjl9B4fKSEbZ
+ 8ryS4V9MkK+THoXdyf72iBB1h0U8MszSGvnMbLLbUkqOOU8zfvZgInNawEGw7RmplxrY
+ LotQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWoRZdTB2Uj89V2Hm+NylyGw8FvKNgJxXeREq6iDhuOmiw3dUsBqxKXprpPdemoP+f2i+fKFMmOKJ3s@nongnu.org
+X-Gm-Message-State: AOJu0YxZZxLUWtcPm4lBXXUCO/Q4IaH/kPtw3auZh6L2fcpynwuanweE
+ WoK94lq+63Z+e30VUSiRsLjhP3UwVJEI2KBswYpXYKePx+49ZD3J7lp4GsHxr3I=
+X-Google-Smtp-Source: AGHT+IHrpg7xiFz2sPyqyPuDgJcggTPAoUMny+6OpUnpu4jsRS3lLpjrNWNknPsH+k7dbOrOX98G6w==
+X-Received: by 2002:a17:902:e5c5:b0:1fa:1dd8:947a with SMTP id
+ d9443c01a7336-20fab2e0e03mr27258985ad.46.1729677883797; 
+ Wed, 23 Oct 2024 03:04:43 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7eee65c9sm54746825ad.22.2024.10.23.03.04.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Oct 2024 03:04:43 -0700 (PDT)
+Message-ID: <2020cf8d-32b8-459a-91d2-59b2464f817a@daynix.com>
+Date: Wed, 23 Oct 2024 19:04:38 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-37-mark.cave-ayland@ilande.co.uk>
- <ZxjCQQjnJMPqBWt4@redhat.com>
+Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <20241015043238.114034-6-dmitry.osipenko@collabora.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <ZxjCQQjnJMPqBWt4@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20241015043238.114034-6-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 36/36] next-cube: replace boiler-plate GPL 2.0 or later
- license text with SPDX identifier
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,43 +114,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/2024 10:30, Daniel P. Berrangé wrote:
-
-> On Wed, Oct 23, 2024 at 09:58:52AM +0100, Mark Cave-Ayland wrote:
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/m68k/next-cube.c | 5 +----
->>   1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index eefb372dca..c961d5fef6 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -4,10 +4,7 @@
->>    * Copyright (c) 2011 Bryce Lanham
->>    * Copyright (c) 2024 Mark Cave-Ayland
->>    *
->> - * This code is free software; you can redistribute it and/or modify
->> - * it under the terms of the GNU General Public License as published
->> - * by the Free Software Foundation; either version 2 of the License,
->> - * or (at your option) any later version.
->> + * SPDX-License-Identifier: GPL-2.0-or-later
+On 2024/10/15 13:32, Dmitry Osipenko wrote:
+> Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+> handle fence as soon as it's signalled instead of periodically polling
+> the fence status. This feature is required for enabling DRM context
+> support in Qemu because legacy fencing mode isn't supported for DRM
+> contexts in virglrenderer.
 > 
-> Although the Kernel folks did such replacements, IMHO we should be
-> wary about removing existing license boilerplate text, as it is
-> potentially in conflict with the requirements in clause 1 of the
-> license to keep all existing notices intact, depending on your
-> interpretation.
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     |   3 +
+>   hw/display/virtio-gpu-virgl.c  | 134 ++++++++++++++++++++++++++++-----
+>   include/hw/virtio/virtio-gpu.h |  14 ++++
+>   3 files changed, 133 insertions(+), 18 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index 7c0e448b4661..53d938f23f20 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -170,6 +170,9 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>       if (gl->renderer_state >= RS_INITED) {
+>   #if VIRGL_VERSION_MAJOR >= 1
+>           qemu_bh_delete(gl->cmdq_resume_bh);
+> +
+> +        virtio_gpu_virgl_reset_async_fences(g);
+> +        qemu_bh_delete(gl->async_fence_bh);
+>   #endif
+>           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>               timer_free(gl->print_stats);
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index b32ce44ba2b1..ad6512987079 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -891,6 +891,7 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+>   void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                         struct virtio_gpu_ctrl_command *cmd)
+>   {
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>       bool cmd_suspended = false;
+>       int ret;
+>   
+> @@ -992,35 +993,117 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>   
+>       trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+>   
+> -    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
+> -    if (ret)
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "%s: virgl_renderer_create_fence error: %s",
+> -                      __func__, strerror(-ret));
+> +    if (gl->context_fence_enabled &&
+> +        (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX)) {
+> +        uint32_t flags = 0;
+> +
+> +        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
+> +                                                  cmd->cmd_hdr.ring_idx,
+> +                                                  cmd->cmd_hdr.fence_id);
+> +        if (ret)
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: virgl_renderer_context_create_fence error: %s",
+> +                          __func__, strerror(ret));
 
-Hmmm. Do we have a specific list of criteria where this may or may not be 
-appropriate? FWIW the NeXTCube machine was written as part of GSoC back in 2011 
-(https://wiki.qemu.org/Google_Summer_of_Code_2011#NeXT_machines_system_emulation) so 
-I'm confident that the code was written with the intention of being upstreamed and 
-covered by the standard GPL-v2.0 or later license used by QEMU.
+This should use: strerror(-ret)
 
+> +    } else {
+> +        ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
+> +        if (ret)
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: virgl_renderer_create_fence error: %s",
+> +                          __func__, strerror(-ret));
+> +    }
+>   }
+>   
+> -static void virgl_write_fence(void *opaque, uint32_t fence)
+> +static void virtio_gpu_virgl_async_fence_bh(void *opaque)
+>   {
+> -    VirtIOGPU *g = opaque;
+> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
+>       struct virtio_gpu_ctrl_command *cmd, *tmp;
+> +    VirtIOGPU *g = opaque;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>   
+> -    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> -        /*
+> -         * the guest can end up emitting fences out of order
+> -         * so we should check all fenced cmds not just the first one.
+> -         */
+> -        if (cmd->cmd_hdr.fence_id > fence) {
+> -            continue;
+> +    qemu_mutex_lock(&gl->async_fence_lock);
+> +
+> +    QSLIST_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
+> +        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> +            /*
+> +             * the guest can end up emitting fences out of order
+> +             * so we should check all fenced cmds not just the first one.
+> +             */
+> +            if (cmd->cmd_hdr.fence_id > f->fence_id) {
+> +                continue;
+> +            }
+> +            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
+> +                    continue;
+> +                }
+> +                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
+> +                    continue;
+> +                }
+> +            } else if (f->ring_idx >= 0) {
+> +                /* ctx0 GL-query fences don't have ring info */
+> +                continue;
+> +            }
+> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> +            g_free(cmd);
+>           }
+> -        trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
+> -        virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+> -        QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> -        g_free(cmd);
+> +
+> +        trace_virtio_gpu_fence_resp(f->fence_id);
+> +        QSLIST_REMOVE(&gl->async_fenceq, f, virtio_gpu_virgl_context_fence,
+> +                      next);
 
-ATB,
+Use QSLIST_FIRST() and QSLIST_REMOVE_HEAD() to show that we are only 
+dealing with the head of the list to prove a singly-linked list is 
+sufficient for our use case.
 
-Mark.
+> +        g_free(f);
+>           g->inflight--;
+>           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>               trace_virtio_gpu_dec_inflight_fences(g->inflight);
+>           }
+>       }
+> +
+> +    qemu_mutex_unlock(&gl->async_fence_lock);
+> +}
+> +
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
+> +{
+> +    struct virtio_gpu_virgl_context_fence *f, *f_tmp;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    QSLIST_FOREACH_SAFE(f, &gl->async_fenceq, next, f_tmp) {
+> +        QSLIST_REMOVE(&gl->async_fenceq, f, virtio_gpu_virgl_context_fence,
+> +                      next);
+> +        g_free(f);
+> +    }
+> +}
+> +
+> +static void
+> +virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
+> +                                  int64_t ring_idx, uint64_t fence_id)
+> +{
+> +    struct virtio_gpu_virgl_context_fence *f;
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +
+> +    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
+> +    f->ctx_id = ctx_id;
+> +    f->ring_idx = ring_idx;
+> +    f->fence_id = fence_id;
+> +
+> +    qemu_mutex_lock(&gl->async_fence_lock);
+> +    QSLIST_INSERT_HEAD(&gl->async_fenceq, f, next);
+> +    qemu_mutex_unlock(&gl->async_fence_lock);
+> +
+> +    qemu_bh_schedule(gl->async_fence_bh);
+> +}
+> +
+> +static void virgl_write_fence(void *opaque, uint32_t fence)
+> +{
+> +    VirtIOGPU *g = opaque;
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, 0, -1, fence);
+> +}
+> +
+> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+> +                                      uint32_t ring_idx, uint64_t fence)
+> +{
+> +    VirtIOGPU *g = opaque;
+> +
+> +    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
+>   }
+>   
+>   static virgl_renderer_gl_context
+> @@ -1110,6 +1193,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>           dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
+>           dpy_gl_scanout_disable(g->parent_obj.scanout[i].con);
+>       }
+> +
+> +    virtio_gpu_virgl_reset_async_fences(g);
+>   }
+>   
+>   void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> @@ -1127,6 +1212,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       if (qemu_egl_display) {
+>           virtio_gpu_3d_cbs.version = 4;
+>           virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +        virtio_gpu_3d_cbs.write_context_fence = virgl_write_context_fence;
+> +        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
+> +        flags |= VIRGL_RENDERER_THREAD_SYNC;
+> +        gl->context_fence_enabled = true;
+> +#endif
+>       }
+>   #endif
+>   #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+> @@ -1160,6 +1251,13 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+>                                       virtio_gpu_virgl_resume_cmdq_bh,
+>                                       g);
+> +
+> +    gl->async_fence_bh = aio_bh_new(qemu_get_aio_context(),
+> +                                    virtio_gpu_virgl_async_fence_bh,
+> +                                    g);
+> +
+> +    qemu_mutex_init(&gl->async_fence_lock);
+> +    QSLIST_INIT(&gl->async_fenceq);
+
+This QSLIST_INIT() call is unnecessary. gl->async_fenceq should be 
+already initialized with zero.
+
+>   #endif
+>   
+>       return 0;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 230fa0c4ee0a..5673f0be85f4 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -229,6 +229,13 @@ struct VirtIOGPUClass {
+>                                Error **errp);
+>   };
+>   
+> +struct virtio_gpu_virgl_context_fence {
+> +    uint32_t ctx_id;
+> +    int64_t ring_idx;
+> +    uint64_t fence_id;
+> +    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
+> +};
+> +
+>   /* VirtIOGPUGL renderer states */
+>   typedef enum {
+>       RS_START,       /* starting state */
+> @@ -246,6 +253,12 @@ struct VirtIOGPUGL {
+>       QEMUTimer *print_stats;
+>   
+>       QEMUBH *cmdq_resume_bh;
+> +
+> +    QEMUBH *async_fence_bh;
+> +    QemuMutex async_fence_lock;
+
+Use QSLIST_INSERT_HEAD_ATOMIC() and QSLIST_MOVE_ATOMIC() to avoid locking.
+
+Regards,
+Akihiko Odaki
+
+> +    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> +
+> +    bool context_fence_enabled;
+>   };
+>   
+>   struct VhostUserGPU {
+> @@ -360,5 +373,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset(VirtIOGPU *g);
+>   int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+> +void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+>   
+>   #endif
 
 
