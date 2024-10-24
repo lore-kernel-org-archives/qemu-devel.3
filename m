@@ -4,83 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1104D10380
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93686D10380
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4513-0002oY-QI; Thu, 24 Oct 2024 17:05:09 -0400
+	id 1t452k-0000DK-90; Thu, 24 Oct 2024 17:06:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t4511-0002gV-0N
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:05:07 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t450y-0002RC-Vu
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:05:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1729803890; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=ly8hbjYqazJiXn+RFwulkiYaIXjuDlMSzl+/VCkTWKVcb9/ELQIB549RSHuavtv6ZWxtCqYO9PLAjFiSMwsfrq/7NNAwwEmtzxmx6V4arfehejpjlsCxbo/8X+dpogiXprdoJa+cDFykwHDwOu6J/ZYGFVPmaA6YwtFaaf3lAd0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1729803890;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=D8V4HEUmzsTG0wc2dRYJbBhLBAOcpnXd81Nmke0Ykvo=; 
- b=lWVv8qCnlRKvLs2CVWw2F/b28s8/Hy9j6Bw9I89kL0c967kmI9VuVyU3NFqHMmH29CY1ATe0rHk4+ZB3WXOTBBXsGm3ZwoNZXlhAopz6Kj+DIKb6d6d+3kHOcb5313m1Khezu+4Vo/t+/UmYaj1Vfw5riPONFf7zYpK1V3Q71Qw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729803890; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=D8V4HEUmzsTG0wc2dRYJbBhLBAOcpnXd81Nmke0Ykvo=;
- b=JU3EOBkaCD7erkMvZnWq/fDBckRrZh0MHj2Z3d5IuW6XGzWuy9p7QA68CG1pBkx5
- NlO2zbv5mxdz1CisDFEPMcsKVJk2/ZWLZ8/M0XiAkEmGgyjKbebsahTxFnyvhez3Y8B
- DXNrz1yyAvB7i9OL/jI1FfOceIUJXZLE1Vpt8cIg=
-Received: by mx.zohomail.com with SMTPS id 1729803889745633.5168546981427;
- Thu, 24 Oct 2024 14:04:49 -0700 (PDT)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v18 12/13] virtio-gpu: Register capsets dynamically
-Date: Fri, 25 Oct 2024 00:03:10 +0300
-Message-ID: <20241024210311.118220-13-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
-References: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t452i-0008Tj-Bg; Thu, 24 Oct 2024 17:06:52 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1t452f-0002aj-Oz; Thu, 24 Oct 2024 17:06:51 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-20cbcd71012so13178865ad.3; 
+ Thu, 24 Oct 2024 14:06:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1729804007; x=1730408807; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=SOOuFUWFIdW8xlo2txpDsfLpi4K7+F4EuNySjK6+HHY=;
+ b=m6gUMl33Ege4I42OK2cwIGiU4ZyXuzr2K9PVNGovysPR7h/Chb8KyUUGKvdXo47NtA
+ Wqey33x1NaWSHpuPwBAWkbVY0tJhB7CZsBy+J7p926V5lPtJKc6U2WAHP7vTM59UxAsF
+ BtPi7q+1WjIxvkxxqdbW17pti62/55QN7jNKgkREm1lNLdkAKGHtvW9gAO7h+pHiV4E6
+ wIVHmGmqmVQixKqbCkkdsPEe6kAFlYCD92NfC3EBwx9z+2/zeUGVwcFUUg7CXdvRYdfr
+ /OpLVS4MuCmHgsREwimlvXuJ5DYaNfCcX+65UlLypNpUj5PgdbZUKG2Gx4VoRYhQ1t5q
+ X2bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729804007; x=1730408807;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SOOuFUWFIdW8xlo2txpDsfLpi4K7+F4EuNySjK6+HHY=;
+ b=LMaQG4iOINUAIRsx8RBDElyMI5sxJVd6alxLE8Tw6jtdv454eskgLR02Q/nkYbszdJ
+ 5R8w1KwViJDDI1H9CYJaTqfF02fyNsFGGDm5jM7bvEQXqBs2TUTf+WiP7dYnWsPbCEwk
+ 5kB+11qhSyfGG76A2VW6GFy38avH45egSDxiEU6N1YVjaF93RY75o727mnmycBPxowlw
+ hQVix7BTPtGkmw8y1rV7RDSWrsXJ2C58uMmqkOlN6yd4u9Hxhbfz8oy7/hK/p4IrZfYg
+ ing+i3o1DojaGEM/OPUXjWe9yC1P5nLZFcscJC0lUHYlG/V7q8h+R9dnU9Y3YsHQ7fJ4
+ xLsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzynDBqphjnT91mVqROIh5AcKR7lTr3gE09sOycgS2GOomCPEpemDTOTY0XjwNlzHVDH56OUTtEKIm@nongnu.org
+X-Gm-Message-State: AOJu0YwUxiJoMSyveQFgz57nLl7tLRa9fhEMqEghkVZ2rqlpyGhyJppu
+ dypdV1FIwTz43AxCiukfPXaJHCjQD0S3tsWbAWwWl2JeqPdLly5u
+X-Google-Smtp-Source: AGHT+IGQukhadCtMoJuYR83EdD0QHzOtBSN5U5/RHwAgqpD9jPQLCbYSTGiAvn6XnM6m3VKa0OgwXA==
+X-Received: by 2002:a17:903:2284:b0:20c:6f55:2195 with SMTP id
+ d9443c01a7336-20fa9eb54eemr104311555ad.47.1729804007417; 
+ Thu, 24 Oct 2024 14:06:47 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-20e7f0f58eesm75905975ad.283.2024.10.24.14.06.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Oct 2024 14:06:46 -0700 (PDT)
+Message-ID: <e627f773-7332-4439-9611-7184a8bc35f3@roeck-us.net>
+Date: Thu, 24 Oct 2024 14:06:45 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v42 51/98] hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers
+ (CMD9 & CMD10)
+From: Guenter Roeck <linux@roeck-us.net>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ qemu-riscv <qemu-riscv@nongnu.org>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-52-philmd@linaro.org>
+ <94b2c5bf-53d0-4c74-8264-f3021916f38c@roeck-us.net>
+ <7965f970-cdbd-4e3e-bc4c-62fb496a9e24@linaro.org>
+ <a49719b7-e3fb-46ca-b884-cb7019a0b09f@roeck-us.net>
+ <e52b231d-f23e-4772-bfb2-08ddcc3e7ad0@linaro.org>
+ <e6e35e59-db18-42d4-a8b2-4099fe42e24d@roeck-us.net>
+Content-Language: en-US
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <e6e35e59-db18-42d4-a8b2-4099fe42e24d@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.17, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,125 +149,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+On 10/24/24 12:13, Guenter Roeck wrote:
+> On 10/24/24 10:53, Philippe Mathieu-Daudé wrote:
+>> Hi Guenter,
+>>
+>> On 24/10/24 01:04, Guenter Roeck wrote:
+>>> On 10/23/24 20:27, Philippe Mathieu-Daudé wrote:
+>>>> Hi Guenter,
+>>>>
+>>>> On 23/10/24 19:24, Guenter Roeck wrote:
+>>>>> Hi,
+>>>>>
+>>>>> On Fri, Jun 28, 2024 at 09:01:27AM +0200, Philippe Mathieu-Daudé wrote:
+>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>>>>>> ---
+>>>>>
+>>>>> This patch results in:
+>>>>>
+>>>>> [    5.976133] Waiting for root device /dev/mmcblk0...
+>>>>> [    6.501462] mmc0: error -38 whilst initialising SD card
+>>>>> [    7.557473] mmc0: error -38 whilst initialising SD card
+>>>>>
+>>>>> ... (repeated until session is aborted)
+>>>>>
+>>>>> when trying to boot Linux for sifive_u from sd card.
+>>>>> The command used to boot the image is
+>>>>>
+>>>>> qemu-system-riscv64 -M sifive_u -m 512M -no-reboot \
+>>>>>      -kernel arch/riscv/boot/Image \
+>>>>>      -snapshot -drive file=rootfs.ext2,format=raw,if=sd \
+>>>>>      -bios default \
+>>>>>      -append "root=/dev/mmcblk0 rootwait console=ttySIF0,115200 earlycon" \
+>>>>>      -nographic -monitor none
+>>
+>>
+>>>>> # first bad commit: [da954d0e32444f122a41c24948d4d1c718bf66d4] hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+>>>>
+>>>> I don't have access to my workstation, but looking at the patch,
+>>>> maybe the fix is simply:
+>>>>
+>>>> ---
+>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>>>> index a5d2d929a8a..1594d340a6e 100644
+>>>> --- a/hw/sd/sd.c
+>>>> +++ b/hw/sd/sd.c
+>>>> @@ -1567,7 +1567,7 @@ static sd_rsp_type_t emmc_cmd_SEND_EXT_CSD(SDState *sd, SDRequest req)
+>>>>   /* CMD9 */
+>>>>   static sd_rsp_type_t spi_cmd_SEND_CSD(SDState *sd, SDRequest req)
+>>>>   {
+>>>> -    if (sd->state != sd_standby_state) {
+>>>> +    if (sd->state != sd_transfer_state) {
+>>>>           return sd_invalid_state_for_cmd(sd, req);
+>>>>       }
+>>>>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
+>>>> @@ -1586,7 +1586,7 @@ static sd_rsp_type_t sd_cmd_SEND_CSD(SDState *sd, SDRequest req)
+>>>>   /* CMD10 */
+>>>>   static sd_rsp_type_t spi_cmd_SEND_CID(SDState *sd, SDRequest req)
+>>>>   {
+>>>> -    if (sd->state != sd_standby_state) {
+>>>> +    if (sd->state != sd_transfer_state) {
+>>>>           return sd_invalid_state_for_cmd(sd, req);
+>>>>       }
+>>>>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
+>>>> ---
+>>>>
+>>>> Is it possible for you to test this snippet?
+>>>>
+>>>
+>>> It must be related, but something else must be wrong. With the above, I get
+>>>
+>>> [    4.355063] Run /sbin/init as init process
+>>> ssi_sd: error: Unexpected response to cmd 13
+>>> [    4.780139] mmc0: SPI card removed
+>>> [    4.785194] EXT4-fs (mmcblk0): shut down requested (2)
+>>> [    4.812689] Starting init: /sbin/init exists but couldn't execute it (error -5)
+>>> [    4.813248] Run /etc/init as init process
+>>> [    4.825799] init: attempt to access beyond end of device
+>>>
+>>> The state is always 4 when spi_cmd_SEND_CSD() and spi_cmd_SEND_CID()
+>>> are called. With more debugging added:
+>>>
+>>> ssi_sd: error: Unexpected response to cmd 13 (arglen expected 4, got 16)
+>>>
+>>> Changing only one of the functions to check against sd_transfer_state
+>>> doesn't help either; that brings back the repeated error -38.
+>>
+>> Looking at commit 807f6adac37 ("hw/sd/sdcard: Add sd_cmd_SEND_STATUS
+>> handler (CMD13)"), this should fix:
+>>
+> 
+> Yes, it does fix the problem, together with the sd_transfer_state changes above.
+> 
+> I noticed that sd_cmd_SEND_CSD() and sd_cmd_SEND_CID() also check against
+> sd_standby_state. Is that wrong as well ?
+> 
+Never mind; those are correct.
 
-virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
-assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
-like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
+Guenter
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- hw/display/virtio-gpu-gl.c     |  6 ++++--
- hw/display/virtio-gpu-virgl.c  | 33 +++++++++++++++++++++------------
- include/hw/virtio/virtio-gpu.h |  4 +++-
- 3 files changed, 28 insertions(+), 15 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index f2555673a18e..e859c0dff055 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -144,8 +144,8 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     }
- 
-     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
--    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
--        virtio_gpu_virgl_get_num_capsets(g);
-+    g->capset_ids = virtio_gpu_virgl_get_capsets(g);
-+    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
- 
- #if VIRGL_VERSION_MAJOR >= 1
-     g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-@@ -177,6 +177,8 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-     }
- 
-     gl->renderer_state = RS_START;
-+
-+    g_array_unref(g->capset_ids);
- }
- 
- static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b2f4e215a7ad..5a881c58a11d 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -622,19 +622,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(info);
- 
-     memset(&resp, 0, sizeof(resp));
--    if (info.capset_index == 0) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
--        virgl_renderer_get_cap_set(resp.capset_id,
--                                   &resp.capset_max_version,
--                                   &resp.capset_max_size);
--    } else if (info.capset_index == 1) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
-+
-+    if (info.capset_index < g->capset_ids->len) {
-+        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
-+                                       info.capset_index);
-         virgl_renderer_get_cap_set(resp.capset_id,
-                                    &resp.capset_max_version,
-                                    &resp.capset_max_size);
--    } else {
--        resp.capset_max_version = 0;
--        resp.capset_max_size = 0;
-     }
-     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
-     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
-@@ -1160,12 +1154,27 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     return 0;
- }
- 
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
-+static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
-+{
-+    g_array_append_val(capset_ids, capset_id);
-+}
-+
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
- {
-     uint32_t capset2_max_ver, capset2_max_size;
-+    GArray *capset_ids;
-+
-+    capset_ids = g_array_new(false, false, sizeof(uint32_t));
-+
-+    /* VIRGL is always supported. */
-+    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
-+
-     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
-                               &capset2_max_ver,
-                               &capset2_max_size);
-+    if (capset2_max_ver) {
-+        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
-+    }
- 
--    return capset2_max_ver ? 2 : 1;
-+    return capset_ids;
- }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index f9ed81071f1b..07131d8eb9a1 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -207,6 +207,8 @@ struct VirtIOGPU {
-         QTAILQ_HEAD(, VGPUDMABuf) bufs;
-         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
-     } dmabuf;
-+
-+    GArray *capset_ids;
- };
- 
- struct VirtIOGPUClass {
-@@ -352,6 +354,6 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
- void virtio_gpu_virgl_reset(VirtIOGPU *g);
- int virtio_gpu_virgl_init(VirtIOGPU *g);
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- 
- #endif
--- 
-2.47.0
+
 
 
