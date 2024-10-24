@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C708DCE8E6D
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B33BCE8E6D
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3x43-000470-FA; Thu, 24 Oct 2024 08:35:43 -0400
+	id 1t3x9N-0001on-Qr; Thu, 24 Oct 2024 08:41:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3x3r-00045H-0I
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3x3l-0000GU-7v
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729773319;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2Qrs8Z+T7lnmSFV66Ia/l4J4QjdzFqwu0IF9bNk5p3w=;
- b=IFbRXRFGwdYtTQ3MprL3WK5Ld+AkLzeLPmrinz+l+pYQN80Bjctv9//JqGwaHU5U3aF41W
- ZQIpm3j1zIcVKqiPMOFxctdFhSE/Y+OR6AdUX30XKrOE1bG2/sAP3P+lYPak4IQ/MY4nGr
- F1TTJg/K/bn0vyquMuBeKXI2WcZrT2I=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-XVJsezn0NnaGBQzt4le4Vg-1; Thu, 24 Oct 2024 08:35:13 -0400
-X-MC-Unique: XVJsezn0NnaGBQzt4le4Vg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43157cff1d1so6925855e9.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:35:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729773311; x=1730378111;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2Qrs8Z+T7lnmSFV66Ia/l4J4QjdzFqwu0IF9bNk5p3w=;
- b=koP2cw/Fq1gp+jeP0fc2R+0i0CCCN06Oe9IXsYLYdWfrRyHPRNZmeeFcykRCElSOgO
- seJAocizp9+KK3xrhPV15H7Hi/p5uVop8wQ/aiM4YZV9Or/LwZjTL/dJzG33LB39XwMV
- I/HtO+zuQpV/LIpcO2w/RRp4CZns7G3yZ57HP8TNMB2nf/N4Lo8UvsqNQWanpkU1eHuX
- PDkCkBR72WrgNd5ESnG/7EEt8gM4QgjhExCeGQQ2I13eExShbbzfYR+yvxUk7NKcIQ21
- 0edBbvhYvHV2OPlsWT3fIyLDlSiDJErgI90IKMydnHhOm/UMI4FhhCUpf2R0zo5E+wVO
- dztg==
-X-Gm-Message-State: AOJu0YzSExFE0MADh38D4CaslfermV+wHvQ6gJHSVm0Oo4R2l23arFRP
- 2u7rKcKwoxxit8kVUnyKkg6m4d/F+OhD9VEOJc9fnysleygwpeWYWxx9kP71arw5O2I5MeyTqr1
- cUNi38XyzTbYhmjCaBFyemE29jfZjvY5JEvOlSRVDAPE8fvHolWd2ZtpqOZssFl06RHAwUAuZL4
- cnUPbmjwRFgiOVEa4GiG5GpOqOgZw/lo6x9r0n3D4=
-X-Received: by 2002:a05:600c:1c95:b0:42c:de34:34c1 with SMTP id
- 5b1f17b1804b1-43184133fc4mr48108585e9.2.1729773311399; 
- Thu, 24 Oct 2024 05:35:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+i07+Ypi3X20MCrGPUC/yBmgbJ+lEUn6OJqJFOV1plPmFrZ+iIuCoHwnkn/69jUBqm+lEhg==
-X-Received: by 2002:a05:600c:1c95:b0:42c:de34:34c1 with SMTP id
- 5b1f17b1804b1-43184133fc4mr48108315e9.2.1729773310891; 
- Thu, 24 Oct 2024 05:35:10 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.99.171])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b57b051sm16403615e9.42.2024.10.24.05.35.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 05:35:08 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>
-Subject: [PULL 5/8] configure: Replace literally printed '\n' with newline
-Date: Thu, 24 Oct 2024 14:34:56 +0200
-Message-ID: <20241024123459.59350-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241024123459.59350-1-pbonzini@redhat.com>
-References: <20241024123459.59350-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1t3x9B-0001nd-OT; Thu, 24 Oct 2024 08:41:01 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>)
+ id 1t3x97-0000z5-JW; Thu, 24 Oct 2024 08:41:00 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Axjq9QQBpn08AKAA--.1119S3;
+ Thu, 24 Oct 2024 20:40:48 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAx7uBKQBpnLJgPAA--.20295S3;
+ Thu, 24 Oct 2024 20:40:45 +0800 (CST)
+Subject: Re: [PATCH v5 2/3] hw/acpi: Upgrade ACPI SPCR table to support SPCR
+ table revision 4 format
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ sunilvl@ventanamicro.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com
+References: <20240829015920.95778-1-jeeheng.sia@starfivetech.com>
+ <20240829015920.95778-3-jeeheng.sia@starfivetech.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <449f736a-dadf-cb6e-9564-8622d6d5bcb3@loongson.cn>
+Date: Thu, 24 Oct 2024 20:40:20 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240829015920.95778-3-jeeheng.sia@starfivetech.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-CM-TRANSID: qMiowMAx7uBKQBpnLJgPAA--.20295S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3XrWfCw47XFWxGrWDWw17Arc_yoW7tF4DpF
+ 4qv3y3tr9xXryfZ3ZIyrnFkF1rWr4kGa4jk3y09r18Jay2g340yF15Ka1aka4ayw1kGF95
+ CF12qF48Wa1xZFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_Wr
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zw
+ Z7UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,36 +87,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
 
-The idea here was to leave an empty line before the message, but by
-default, echo prints '\n' literally instead of interpreting it. Use a
-separate echo without parameter instead like in other places in the
-script.
 
-Fixes: 6fdc5bc173188f5e4942616b16d589500b874a15
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Link: https://lore.kernel.org/r/20241018120557.43586-1-kwolf@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- configure | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On 2024/8/29 上午9:59, Sia Jee Heng wrote:
+> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
+> The SPCR table has been modified to adhere to the revision 4 format [2].
+> 
+> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+> [2]: https://github.com/acpica/acpica/pull/931
+> 
+> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+> Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   hw/acpi/aml-build.c         | 20 ++++++++++++++++----
+>   hw/arm/virt-acpi-build.c    |  8 ++++++--
+>   hw/riscv/virt-acpi-build.c  | 12 +++++++++---
+>   include/hw/acpi/acpi-defs.h |  7 +++++--
+>   include/hw/acpi/aml-build.h |  2 +-
+>   5 files changed, 37 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 6d4517cfbe..99a1b403e2 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -1996,7 +1996,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
+>   
+>   void build_spcr(GArray *table_data, BIOSLinker *linker,
+>                   const AcpiSpcrData *f, const uint8_t rev,
+> -                const char *oem_id, const char *oem_table_id)
+> +                const char *oem_id, const char *oem_table_id, const char *name)
 
-diff --git a/configure b/configure
-index 72d1a942250..0918147156b 100755
---- a/configure
-+++ b/configure
-@@ -2062,7 +2062,8 @@ chmod +x config.status
- rm -r "$TMPDIR1"
- 
- if test "$rust" != disabled; then
--  echo '\nINFO: Rust bindings generation with `bindgen` might fail in some cases where'
-+  echo
-+  echo 'INFO: Rust bindings generation with `bindgen` might fail in some cases where'
-   echo 'the detected `libclang` does not match the expected `clang` version/target. In'
-   echo 'this case you must pass the path to `clang` and `libclang` to your build'
-   echo 'command invocation using the environment variables CLANG_PATH and LIBCLANG_PATH'
--- 
-2.47.0
+Sorry for late response. LoongArch virt-machine uses function 
+build_spcr() also. Maybe there need small modification on it.
+
+Regards
+Bibo Mao
+>   {
+>       AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
+>                           .oem_table_id = oem_table_id };
+> @@ -2042,9 +2042,21 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>       build_append_int_noprefix(table_data, f->pci_flags, 4);
+>       /* PCI Segment */
+>       build_append_int_noprefix(table_data, f->pci_segment, 1);
+> -    /* Reserved */
+> -    build_append_int_noprefix(table_data, 0, 4);
+> -
+> +    if (rev < 4) {
+> +        /* Reserved */
+> +        build_append_int_noprefix(table_data, 0, 4);
+> +    } else {
+> +        /* UartClkFreq */
+> +        build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
+> +        /* PreciseBaudrate */
+> +        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
+> +        /* NameSpaceStringLength */
+> +        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
+> +        /* NameSpaceStringOffset */
+> +        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
+> +        /* NamespaceString[] */
+> +        g_array_append_vals(table_data, name, f->namespace_string_length);
+> +    }
+>       acpi_table_end(linker, &table);
+>   }
+>   /*
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index f76fb117ad..0b6f5f8d8d 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -464,8 +464,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>           .pci_flags = 0,
+>           .pci_segment = 0,
+>       };
+> -
+> -    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
+> +    /*
+> +     * Passing NULL as the SPCR Table for Revision 2 doesn't support
+> +     * NameSpaceString.
+> +     */
+> +    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
+> +               NULL);
+>   }
+>   
+>   /*
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 36d6a3a412..68ef15acac 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -200,14 +200,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+>   
+>   /*
+>    * Serial Port Console Redirection Table (SPCR)
+> - * Rev: 1.07
+> + * Rev: 1.10
+>    */
+>   
+>   static void
+>   spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+>   {
+> +    const char name[] = ".";
+>       AcpiSpcrData serial = {
+> -        .interface_type = 0,       /* 16550 compatible */
+> +        .interface_type = 0x12,       /* 16550 compatible */
+>           .base_addr.id = AML_AS_SYSTEM_MEMORY,
+>           .base_addr.width = 32,
+>           .base_addr.offset = 0,
+> @@ -229,9 +230,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
+>           .pci_function = 0,
+>           .pci_flags = 0,
+>           .pci_segment = 0,
+> +        .uart_clk_freq = 0,
+> +        .precise_baudrate = 0,
+> +        .namespace_string_length = sizeof(name),
+> +        .namespace_string_offset = 88,
+>       };
+>   
+> -    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
+> +    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
+> +               name);
+>   }
+>   
+>   /* RHCT Node[N] starts at offset 56 */
+> diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
+> index 0e6e82b339..2e6e341998 100644
+> --- a/include/hw/acpi/acpi-defs.h
+> +++ b/include/hw/acpi/acpi-defs.h
+> @@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
+>       uint8_t flow_control;
+>       uint8_t terminal_type;
+>       uint8_t language;
+> -    uint8_t reserved1;
+>       uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
+>       uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
+>       uint8_t pci_bus;
+> @@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
+>       uint8_t pci_function;
+>       uint32_t pci_flags;
+>       uint8_t pci_segment;
+> -    uint32_t reserved2;
+> +    uint32_t uart_clk_freq;
+> +    uint32_t precise_baudrate;
+> +    uint32_t namespace_string_length;
+> +    uint32_t namespace_string_offset;
+> +    char namespace_string[];
+>   } AcpiSpcrData;
+>   
+>   #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index a3784155cb..68c0f2dbee 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -500,5 +500,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+>   
+>   void build_spcr(GArray *table_data, BIOSLinker *linker,
+>                   const AcpiSpcrData *f, const uint8_t rev,
+> -                const char *oem_id, const char *oem_table_id);
+> +                const char *oem_id, const char *oem_table_id, const char *name);
+>   #endif
+> 
 
 
