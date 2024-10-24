@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4079ECDDE69
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 09:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43FECFA451
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 09:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3ua2-0001ED-Oh; Thu, 24 Oct 2024 05:56:34 -0400
+	id 1t3ua3-0001Ej-Pf; Thu, 24 Oct 2024 05:56:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uZn-00019h-3h
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:19 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1t3uZk-00018c-Gr
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:16 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uZk-0003os-ED
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:18 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a9a0ec0a94fso89118466b.1
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 02:56:16 -0700 (PDT)
+ id 1t3uZi-0003o7-5D
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:15 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5cb72918bddso924291a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 02:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729763775; x=1730368575; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729763772; x=1730368572; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QHD6OSG9G96Lp9DOw44GLfWhawl8Jnq29lPwNBLaOd0=;
- b=MQZ55JRv9Ay9zhaQVyQeHfLFEoxDVNeLkSId7qSgmu5vYGKfERxlMo4lZrSWOvNTZX
- xz2O17oz58msUE0CwFzxJSm1O3ghK1ntNNeBnupT7jPqbWHYOQrvSWutof5cTRBY51Ww
- rwsh18C+mcLzBIsw+4KO9uwPtCvY616RxiiTSufQAJKcy3cbu1b2alnaznJ/+uiFC8xS
- OtI8Tc5Yquf0eFExchKDOT38ruzg7bkQOBfLKMiYgcTkRAz151OyDzAi2UhHtWCc2F6M
- NAfwAUoSIwx9SIaheOvJO3KEwwnCFWESPpUDr+lyNgYufKdhrtUdYIQ0UruUEg7qDNtk
- I4Eg==
+ bh=oznrXdsmNzi0LevvMQ+H5t+DJg+P+IM2tS40pZyVrfA=;
+ b=x0q0xeHBKxpNhFsIyXY/YHQvE74daImtzAciR+yBHLzJAgiHzzJ0ebmyRGwzkw15PU
+ 0x6aT/xPhtr6jaByFAAIEYV/YoNWrMMV+9r7ACt0FEJR7+sEsIt20zrflEY+LKqeSRfK
+ fDrVLdArDZ4uAnB6wwustEbnF3gHfOeICQhF//o3rcYjaJ2csafvhPMa2uH4lIHouIe0
+ iIAdgtSoRlV3XDlVV7aaNi2BhYVsLDHqA5P7X005ri9nPj/2XvcU5sqrtRsONo2Xzlm6
+ IaSWEv+OnRxFbe05jjO3VjGHZOXagaImfYpDs0gZgpllKjEZBHuZPP2OB4HWFSbA+2s0
+ BThQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729763775; x=1730368575;
+ d=1e100.net; s=20230601; t=1729763772; x=1730368572;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QHD6OSG9G96Lp9DOw44GLfWhawl8Jnq29lPwNBLaOd0=;
- b=wcZmAOMyuTLayo27AHey/6qvFcTmMuYP/1DQR9HiBpDeqjonU3JfUDn7IKQvcD4i+p
- i2W91gJlnLwlwXUzoCuuyc+dRvezhkbU5sXbxluVA+PkcPs4qTwm8nKbuXxZCWGsPdIN
- p6iuA7RsbUNeSXqol/5tR87ZotC3wrGTpMbbRfeLoSSvo3HrSU4EynFuo2eflUYfj8OA
- fqTtlnQ12RfiKJ+UfPM1rKyiY6d7HJI5wztO0IGI3OzLkYQs89KlPrePerjWggHd7GFW
- xeVR3Vdz8T/RqFKENZ1w0PD2gL8zo5RW04cyYlFAxewiFzw1p6Bx4ZJtvM0UiWToZqhe
- 7ljQ==
-X-Gm-Message-State: AOJu0YzMcMpTebnHc8UzCI8SMN1PVYRxVzrUARm4gTiPRIMTOUJWB2hk
- ntDQouNsFi+4A5ntzJ0Q/Xq4KmOe+8j3HscVcnBHymR2FBgpWhUyClrhqZ8xwEI=
-X-Google-Smtp-Source: AGHT+IGCsaMbmOTOf+3c/DMi6woJkuHw4MIY73V/BSGn9M/Lh7e4Pb3FyGCd9VVVVXJBajnEQ6qGRQ==
-X-Received: by 2002:a17:907:1c19:b0:a9a:8a4:e090 with SMTP id
- a640c23a62f3a-a9ad2813d7cmr134421466b.50.1729763774960; 
- Thu, 24 Oct 2024 02:56:14 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91370e04sm590077066b.108.2024.10.24.02.56.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=oznrXdsmNzi0LevvMQ+H5t+DJg+P+IM2tS40pZyVrfA=;
+ b=MSyT9C2rjjcykjFthMiyuDOE8lJvbsSo+gRMQRo4ObK6exJTxXv0jnh3PhH0SmhOxC
+ 5PObsgIVZVB/A4DVUBbH8KyLMExiyitBNY2dU9EWllOMo8I305o047KANhZ9NHCLbsIX
+ Rz1lPCch/CG/9VpiN9f6pea6OyIEjvyvYRAooFaJke8PDiceYcMUgjSp3JwyjFaCCk8P
+ Xch4uUUFSQ5FmOvgP2PbovNrkGrNlDog4n4wXphOReaxJX9GzjtO3mNbHPUaI0Gv7U1Y
+ EEFu9bC4GxDL8xN9cG42bV3TZQljbqOqYU0oX2YxNRBmMWeTzL9NlfXPscfakIQBmSZ1
+ sLuw==
+X-Gm-Message-State: AOJu0YxUklAfZcY40deCSuAbeoOoAz2673MnmtAMTwD1eXY9sBOg6Ggf
+ c6H/uY462VolY5QgDB4Sa7bx8J2sFr7nDqFbZNrV6u5Gp6nVf1FMn2VbhcHTTVI=
+X-Google-Smtp-Source: AGHT+IEAt4uQRfFQMY1XCHNNH9YcWuMTzIuRnlV7XfaHyMRK555hRQferXZcRgvyPr4sFdu1oGtJOA==
+X-Received: by 2002:a05:6402:254b:b0:5ca:da2:b2ca with SMTP id
+ 4fb4d7f45d1cf-5cb8acba591mr5400530a12.19.1729763772509; 
  Thu, 24 Oct 2024 02:56:12 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5cb66c73b50sm5442472a12.97.2024.10.24.02.56.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Oct 2024 02:56:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 50D515FC0F;
- Thu, 24 Oct 2024 10:56:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DF8A25F9DD;
+ Thu, 24 Oct 2024 10:56:04 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 15/17] testing: Enhance gdb probe script
-Date: Thu, 24 Oct 2024 10:56:01 +0100
-Message-Id: <20241024095603.1813285-16-alex.bennee@linaro.org>
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PULL 10/17] gitlab: make check-[dco|patch] a little more verbose
+Date: Thu, 24 Oct 2024 10:55:56 +0100
+Message-Id: <20241024095603.1813285-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241024095603.1813285-1-alex.bennee@linaro.org>
 References: <20241024095603.1813285-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,119 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+When git fails the rather terse backtrace only indicates it failed
+without some useful context. Add some to make the log a little more
+useful.
 
-Use list and set comprehension to simplify code. Also, gently handle
-invalid gdb filenames.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20241015145848.387281-1-gustavo.romero@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-16-alex.bennee@linaro.org>
+Message-Id: <20241023113406.1284676-11-alex.bennee@linaro.org>
 
-diff --git a/scripts/probe-gdb-support.py b/scripts/probe-gdb-support.py
-index 6dc58d06c7..6bcadce150 100644
---- a/scripts/probe-gdb-support.py
-+++ b/scripts/probe-gdb-support.py
-@@ -19,58 +19,61 @@
+diff --git a/.gitlab-ci.d/check-dco.py b/.gitlab-ci.d/check-dco.py
+index 632c8bcce8..d221b16bd5 100755
+--- a/.gitlab-ci.d/check-dco.py
++++ b/.gitlab-ci.d/check-dco.py
+@@ -19,10 +19,9 @@
+ reponame = os.path.basename(cwd)
+ repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
  
- import argparse
- import re
--from subprocess import check_output, STDOUT
-+from subprocess import check_output, STDOUT, CalledProcessError
-+import sys
++print(f"adding upstream git repo @ {repourl}")
+ subprocess.check_call(["git", "remote", "add", "check-dco", repourl])
+-subprocess.check_call(["git", "fetch", "check-dco", "master"],
+-                      stdout=subprocess.DEVNULL,
+-                      stderr=subprocess.DEVNULL)
++subprocess.check_call(["git", "fetch", "check-dco", "master"])
  
--# mappings from gdb arch to QEMU target
--mappings = {
--    "alpha" : "alpha",
-+# Mappings from gdb arch to QEMU target
-+MAP = {
-+    "alpha" : ["alpha"],
-     "aarch64" : ["aarch64", "aarch64_be"],
--    "armv7": "arm",
-+    "armv7": ["arm"],
-     "armv8-a" : ["aarch64", "aarch64_be"],
--    "avr" : "avr",
-+    "avr" : ["avr"],
-     # no hexagon in upstream gdb
--    "hppa1.0" : "hppa",
--    "i386" : "i386",
--    "i386:x86-64" : "x86_64",
--    "Loongarch64" : "loongarch64",
--    "m68k" : "m68k",
--    "MicroBlaze" : "microblaze",
-+    "hppa1.0" : ["hppa"],
-+    "i386" : ["i386"],
-+    "i386:x86-64" : ["x86_64"],
-+    "Loongarch64" : ["loongarch64"],
-+    "m68k" : ["m68k"],
-+    "MicroBlaze" : ["microblaze"],
-     "mips:isa64" : ["mips64", "mips64el"],
--    "or1k" : "or1k",
--    "powerpc:common" : "ppc",
-+    "or1k" : ["or1k"],
-+    "powerpc:common" : ["ppc"],
-     "powerpc:common64" : ["ppc64", "ppc64le"],
--    "riscv:rv32" : "riscv32",
--    "riscv:rv64" : "riscv64",
--    "s390:64-bit" : "s390x",
-+    "riscv:rv32" : ["riscv32"],
-+    "riscv:rv64" : ["riscv64"],
-+    "s390:64-bit" : ["s390x"],
-     "sh4" : ["sh4", "sh4eb"],
--    "sparc": "sparc",
--    "sparc:v8plus": "sparc32plus",
--    "sparc:v9a" : "sparc64",
-+    "sparc": ["sparc"],
-+    "sparc:v8plus": ["sparc32plus"],
-+    "sparc:v9a" : ["sparc64"],
-     # no tricore in upstream gdb
-     "xtensa" : ["xtensa", "xtensaeb"]
- }
+ ancestor = subprocess.check_output(["git", "merge-base",
+                                     "check-dco/master", "HEAD"],
+diff --git a/.gitlab-ci.d/check-patch.py b/.gitlab-ci.d/check-patch.py
+index 39e2b403c9..68c549a146 100755
+--- a/.gitlab-ci.d/check-patch.py
++++ b/.gitlab-ci.d/check-patch.py
+@@ -19,13 +19,12 @@
+ reponame = os.path.basename(cwd)
+ repourl = "https://gitlab.com/%s/%s.git" % (namespace, reponame)
  
-+
- def do_probe(gdb):
--    gdb_out = check_output([gdb,
--                            "-ex", "set architecture",
--                            "-ex", "quit"], stderr=STDOUT)
-+    try:
-+        gdb_out = check_output([gdb,
-+                               "-ex", "set architecture",
-+                               "-ex", "quit"], stderr=STDOUT, encoding="utf-8")
-+    except (OSError) as e:
-+        sys.exit(e)
-+    except CalledProcessError as e:
-+        sys.exit(f'{e}. Output:\n\n{e.output}')
-+
-+    found_gdb_archs = re.search(r'Valid arguments are (.*)', gdb_out)
++print(f"adding upstream git repo @ {repourl}")
+ # GitLab CI environment does not give us any direct info about the
+ # base for the user's branch. We thus need to figure out a common
+ # ancestor between the user's branch and current git master.
+ subprocess.check_call(["git", "remote", "add", "check-patch", repourl])
+-subprocess.check_call(["git", "fetch", "check-patch", "master"],
+-                      stdout=subprocess.DEVNULL,
+-                      stderr=subprocess.DEVNULL)
++subprocess.check_call(["git", "fetch", "check-patch", "master"])
  
--    m = re.search(r"Valid arguments are (.*)",
--                  gdb_out.decode("utf-8"))
-+    targets = set()
-+    if found_gdb_archs:
-+        gdb_archs = found_gdb_archs.group(1).split(", ")
-+        mapped_gdb_archs = [arch for arch in gdb_archs if arch in MAP]
- 
--    valid_arches = set()
-+        targets = {target for arch in mapped_gdb_archs for target in MAP[arch]}
- 
--    if m.group(1):
--        for arch in m.group(1).split(", "):
--            if arch in mappings:
--                mapping = mappings[arch]
--                if isinstance(mapping, str):
--                    valid_arches.add(mapping)
--                else:
--                    for entry in mapping:
--                        valid_arches.add(entry)
-+    # QEMU targets
-+    return targets
- 
--    return valid_arches
- 
- def main() -> None:
-     parser = argparse.ArgumentParser(description='Probe GDB Architectures')
+ ancestor = subprocess.check_output(["git", "merge-base",
+                                     "check-patch/master", "HEAD"],
 -- 
 2.39.5
 
