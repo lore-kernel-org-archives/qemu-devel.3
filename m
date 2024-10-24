@@ -4,74 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B33BCE8E6D
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCD3CE8E6F
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3x9N-0001on-Qr; Thu, 24 Oct 2024 08:41:13 -0400
+	id 1t3xDa-0003Fz-HY; Thu, 24 Oct 2024 08:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1t3x9B-0001nd-OT; Thu, 24 Oct 2024 08:41:01 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1t3x97-0000z5-JW; Thu, 24 Oct 2024 08:41:00 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axjq9QQBpn08AKAA--.1119S3;
- Thu, 24 Oct 2024 20:40:48 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMAx7uBKQBpnLJgPAA--.20295S3;
- Thu, 24 Oct 2024 20:40:45 +0800 (CST)
-Subject: Re: [PATCH v5 2/3] hw/acpi: Upgrade ACPI SPCR table to support SPCR
- table revision 4 format
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
- sunilvl@ventanamicro.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240829015920.95778-1-jeeheng.sia@starfivetech.com>
- <20240829015920.95778-3-jeeheng.sia@starfivetech.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <449f736a-dadf-cb6e-9564-8622d6d5bcb3@loongson.cn>
-Date: Thu, 24 Oct 2024 20:40:20 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t3xDZ-0003Fq-8V
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:45:33 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1t3xDX-0001gf-HV
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:45:32 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a9a0472306cso109140666b.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729773929; x=1730378729; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7SHOViy4gQGzhNx9jgIFHlyv7Wx4RrOxEErfctHO1kc=;
+ b=I5EKo1hObeIUTFnkAm96JjNJNsSyk0z00/w+3Y9Lcnbi1Aj/XNg1n7g19y88kOLfaP
+ 9dczp+FV6xx7/ARgJ5u6zcP3SFX74+7EhX+bK8sZQ9C2K5vrlGkLHusJySUzYzTYg5rI
+ X64LwWL8+aaimReo1n34U56WP8fvleU2KPMrjuh3BuJ2WP5uXx/zAxgjrec9wxXqd00U
+ onX/ryILgJw61SHwbvItlZU7VlIscUmIpG+7CqNdT1cYrOTEoCpkk28zLbuh/GoLbagn
+ i3bbQop0veM6YX3pKItYvWpGFExYvkuCiWA1M0AlTNYkvUCnr7kKbHZeGZjP83xkz4Lt
+ bzSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729773929; x=1730378729;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7SHOViy4gQGzhNx9jgIFHlyv7Wx4RrOxEErfctHO1kc=;
+ b=QRpKVu6VC2ig8ZiMrr8ZB8MS1XydFQwruBUrflX2v5pfGwqiHVGoNMMDVtz5G1+8Ci
+ TsyPOS0X5xYRYaUbnj8GeoHsW5b3v9h/Qr1cEEwedtXKbLXTxjlk6/icsjGY0xbwSmut
+ WtjsbxA1OS9ENu0XC0MLur38iAgeqGzD0iqHs191QQtir0fTaLBJVQEy3nFrolvfSkDM
+ mzdxqEy16JGiYVAmq+QVFX3jclBQ+YBBujew884RzQlYp9A31F0xwesQi9csmAPrHKPb
+ co3gQFxfD+Duo7sM/eFyMlIc5NnHR2aHSDyFCugVwg6tHyymI43RjV+qRRl/WtPirwPO
+ 2Ocw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFGlw6gYoG+qDnEtwq8SXIUT5m4llcK97vRAk5C4RypOwzWc+pbczKZ5Oflacxi9EdRD3lnvoTOTaw@nongnu.org
+X-Gm-Message-State: AOJu0YxsSyNkBC8iAM2hcZQU78K0RHIo6KtYIYGKMQ82Rpj5z7fDKenu
+ bvMiBIZwBeqwX+vcDbRe4JXQifyh92fIciZeSukVCLuvoQflA3HN0FH9uiYiXiU=
+X-Google-Smtp-Source: AGHT+IF0HOnbjI9nSxmIwkpnD7HP47STsav2XucPuOsVV+2Y4G7Qf1+ir5qCKmKkm6KNZWQ6EODxww==
+X-Received: by 2002:a17:907:9406:b0:a99:e850:deb3 with SMTP id
+ a640c23a62f3a-a9abf890eaamr585049966b.18.1729773929411; 
+ Thu, 24 Oct 2024 05:45:29 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a912d62e4sm611623466b.7.2024.10.24.05.45.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Oct 2024 05:45:28 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D4ADF5F786;
+ Thu, 24 Oct 2024 13:45:27 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,  Akihiko Odaki
+ <akihiko.odaki@daynix.com>,  Huang Rui <ray.huang@amd.com>,  =?utf-8?Q?Ma?=
+ =?utf-8?Q?rc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
+ qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
+ Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
+ <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
+ <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
+Subject: Re: [PATCH v2 0/6] Support virtio-gpu DRM native context
+In-Reply-To: <999ae767-41ab-49aa-a3b6-bbe2d63164d8@collabora.com> (Dmitry
+ Osipenko's message of "Thu, 24 Oct 2024 15:21:05 +0300")
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+ <87ikthke2i.fsf@draig.linaro.org>
+ <999ae767-41ab-49aa-a3b6-bbe2d63164d8@collabora.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Thu, 24 Oct 2024 13:45:27 +0100
+Message-ID: <87v7xhis9k.fsf@draig.linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20240829015920.95778-3-jeeheng.sia@starfivetech.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAx7uBKQBpnLJgPAA--.20295S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3XrWfCw47XFWxGrWDWw17Arc_yoW7tF4DpF
- 4qv3y3tr9xXryfZ3ZIyrnFkF1rWr4kGa4jk3y09r18Jay2g340yF15Ka1aka4ayw1kGF95
- CF12qF48Wa1xZFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_Wr
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zw
- Z7UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.5,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,163 +118,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
+> On 10/24/24 13:09, Alex Benn=C3=A9e wrote:
+>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>=20
+>>> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+>>> It's based on the pending Venus v17 patches [1] that bring host blobs
+>>> support to virtio-gpu-gl device.
+>>>
+>>> Based-on: 20240822185110.1757429-1-dmitry.osipenko@collabora.com
+>>>
+>>> [1]
+>>> https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osip=
+enko@collabora.com/
+>>=20
+>> Now the tree is open are you going to re-base with the tags and get it
+>> merged? We don't have long before softfreeze for 9.2!
+>
+> The Venus patches apply cleanly to the latest base. I'll re-send them
+> today in a hope that it will speed up the merging process. Thanks for
+> the heads up.
+>
+> Patches should be waiting for Michael Tsirkin to press a button to get
+> them merged. On the other hand, I now see MAINTAINERS says that
+> virtio-gpu status is "Orphan", thought Michael/Gerd are in charge of it.
+> Does it means that any QEMU maintainer with a commit access could help
+> with applying virtio-gpu patches?
 
-On 2024/8/29 上午9:59, Sia Jee Heng wrote:
-> Update the SPCR table to accommodate the SPCR Table revision 4 [1].
-> The SPCR table has been modified to adhere to the revision 4 format [2].
-> 
-> [1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-> [2]: https://github.com/acpica/acpica/pull/931
-> 
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-> Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   hw/acpi/aml-build.c         | 20 ++++++++++++++++----
->   hw/arm/virt-acpi-build.c    |  8 ++++++--
->   hw/riscv/virt-acpi-build.c  | 12 +++++++++---
->   include/hw/acpi/acpi-defs.h |  7 +++++--
->   include/hw/acpi/aml-build.h |  2 +-
->   5 files changed, 37 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 6d4517cfbe..99a1b403e2 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -1996,7 +1996,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
->   
->   void build_spcr(GArray *table_data, BIOSLinker *linker,
->                   const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id)
-> +                const char *oem_id, const char *oem_table_id, const char *name)
+In theory although it would be better if we could find someone to
+step-up to maintainer duties. Could that be you?
 
-Sorry for late response. LoongArch virt-machine uses function 
-build_spcr() also. Maybe there need small modification on it.
-
-Regards
-Bibo Mao
->   {
->       AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
->                           .oem_table_id = oem_table_id };
-> @@ -2042,9 +2042,21 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->       build_append_int_noprefix(table_data, f->pci_flags, 4);
->       /* PCI Segment */
->       build_append_int_noprefix(table_data, f->pci_segment, 1);
-> -    /* Reserved */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> -
-> +    if (rev < 4) {
-> +        /* Reserved */
-> +        build_append_int_noprefix(table_data, 0, 4);
-> +    } else {
-> +        /* UartClkFreq */
-> +        build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
-> +        /* PreciseBaudrate */
-> +        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
-> +        /* NameSpaceStringLength */
-> +        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
-> +        /* NameSpaceStringOffset */
-> +        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
-> +        /* NamespaceString[] */
-> +        g_array_append_vals(table_data, name, f->namespace_string_length);
-> +    }
->       acpi_table_end(linker, &table);
->   }
->   /*
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index f76fb117ad..0b6f5f8d8d 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -464,8 +464,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->           .pci_flags = 0,
->           .pci_segment = 0,
->       };
-> -
-> -    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
-> +    /*
-> +     * Passing NULL as the SPCR Table for Revision 2 doesn't support
-> +     * NameSpaceString.
-> +     */
-> +    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
-> +               NULL);
->   }
->   
->   /*
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 36d6a3a412..68ef15acac 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -200,14 +200,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->   
->   /*
->    * Serial Port Console Redirection Table (SPCR)
-> - * Rev: 1.07
-> + * Rev: 1.10
->    */
->   
->   static void
->   spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->   {
-> +    const char name[] = ".";
->       AcpiSpcrData serial = {
-> -        .interface_type = 0,       /* 16550 compatible */
-> +        .interface_type = 0x12,       /* 16550 compatible */
->           .base_addr.id = AML_AS_SYSTEM_MEMORY,
->           .base_addr.width = 32,
->           .base_addr.offset = 0,
-> @@ -229,9 +230,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->           .pci_function = 0,
->           .pci_flags = 0,
->           .pci_segment = 0,
-> +        .uart_clk_freq = 0,
-> +        .precise_baudrate = 0,
-> +        .namespace_string_length = sizeof(name),
-> +        .namespace_string_offset = 88,
->       };
->   
-> -    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
-> +    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
-> +               name);
->   }
->   
->   /* RHCT Node[N] starts at offset 56 */
-> diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
-> index 0e6e82b339..2e6e341998 100644
-> --- a/include/hw/acpi/acpi-defs.h
-> +++ b/include/hw/acpi/acpi-defs.h
-> @@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
->       uint8_t flow_control;
->       uint8_t terminal_type;
->       uint8_t language;
-> -    uint8_t reserved1;
->       uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
->       uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
->       uint8_t pci_bus;
-> @@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
->       uint8_t pci_function;
->       uint32_t pci_flags;
->       uint8_t pci_segment;
-> -    uint32_t reserved2;
-> +    uint32_t uart_clk_freq;
-> +    uint32_t precise_baudrate;
-> +    uint32_t namespace_string_length;
-> +    uint32_t namespace_string_offset;
-> +    char namespace_string[];
->   } AcpiSpcrData;
->   
->   #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
-> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> index a3784155cb..68c0f2dbee 100644
-> --- a/include/hw/acpi/aml-build.h
-> +++ b/include/hw/acpi/aml-build.h
-> @@ -500,5 +500,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
->   
->   void build_spcr(GArray *table_data, BIOSLinker *linker,
->                   const AcpiSpcrData *f, const uint8_t rev,
-> -                const char *oem_id, const char *oem_table_id);
-> +                const char *oem_id, const char *oem_table_id, const char *name);
->   #endif
-> 
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
