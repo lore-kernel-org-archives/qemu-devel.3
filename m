@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DC0CE8E7B
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8C9CE8E7B
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3yRW-0007Bd-P9; Thu, 24 Oct 2024 10:04:02 -0400
+	id 1t3yR7-00078d-0I; Thu, 24 Oct 2024 10:03:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t3yR9-00078l-PV
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:50 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1t3yR5-000780-B8
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:35 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t3yR5-0003vD-78
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:39 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a99f1fd20c4so127480266b.0
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:03:34 -0700 (PDT)
+ id 1t3yQz-0003uQ-Uw
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:34 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5c9634c9160so1045954a12.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729778614; x=1730383414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729778608; x=1730383408; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=swZs0PvDIygR17bMoZNG/KFXxGRO0tSgGnszjaO+Hkw=;
- b=wsE/65xdxQlLgyEig+PnPcXICtPxqB+Xg+WG3xJ4cJg/uAd7rteKTq8u5qz5/nWob6
- bKT8ehX4kTV5UjeNUlO90Q8TNIS6u3cKpZyU6DvKpE8Ignzgya154zZmLNmtHVTDs5Tw
- eJnbHISO6nziIGnWVJjBX5tojxn6Yd54l9YR+neQxjWtx6Oi7w5M40xoeEJIuOAFcJjB
- g+hVYd57whWFirYJwMxwt6sCsj9P/SBmmVLW70Kb+3H6qmWw0e73ObYSs803JRJzlwsi
- 8CZ46qdDn80k5bd75gw0Vjd2xEY2fGBBOtjI2589FXZPP7RBYmWoC2o+4wYqYDU6+6+y
- SkAQ==
+ :reply-to; bh=+SVgJkd9IbTDUuA8uJ6beJLQHAW4cKJ/d6U0ghRVnFM=;
+ b=NzwFAW6doVm/aVU3/xo1B98cqajhp6aYZISC3nuqdDkDkCn8BL6KDSkNnf3JpxOFoc
+ tHykRjr5jIbQQgqNP5cuLo0sLHE61Bbq4CzENLQ+1OLSmiO3Ul9DtpUL9KBmpC1XgFNM
+ fJnadKUUYRskIaj2k4+uR6t4rJur/PL3GQfue5FvTduObxAYsSOnuEuNWByLmYMF9DF8
+ RwR6qlEjexn/ITp786whFjxRXSryVf5G2XH0QONkjQaqplpIUJdwBMYH6ylc1VfqxLKD
+ Ux+uRD3X4azs7snd614+29Tm4wV2msu0qMHzlwuc05uuFetn/rx10jqDbsdsV1Bedn9B
+ SP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729778614; x=1730383414;
+ d=1e100.net; s=20230601; t=1729778608; x=1730383408;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=swZs0PvDIygR17bMoZNG/KFXxGRO0tSgGnszjaO+Hkw=;
- b=XXgdI3KdB1QwQYBzK6Yo44BEqoQkBcv45kjZG6xmfvJmNdpOqxIe7blpbgSDjriAeq
- 5NVcEQTbKS+IYngd1y1IOMzps/BCLeoeos9LZBbExi36ysO6A8jvlhNnXqrnGaHqKr+p
- cJfo2cfIS/GSj5GARyfXrR/vfT7Zw3wzWNSYkWZXvKFgtuQkNdXaSVBfDudO/Eh7rnm+
- JSOe5dedtMtlaZIlTCJoNFttmxASDda/VYjfmno1sweakMtbI2HWyA64+z0J4F0ZSynZ
- vLO4jHECHWQLecc9h3rm96+55/pDsr4aRFHTKNQ8EuHUWMHBnDmSBA7iMgnTKsnQilJz
- ViPQ==
-X-Gm-Message-State: AOJu0YzcNfT3kTAyZly6/N1a2VqpZT3t6HT0chwoYu8iC8UzIdUcK0Zt
- P3XUglXR4LvIdBRrunb7kv57IN5y4a0IK1LkaRs8uVktW/imXTPXLuMGybMxH50=
-X-Google-Smtp-Source: AGHT+IHOL8SJMdgpdOlMXhi240mYeHWvmTK+XMYm/R+T9TX6gQCO7ENeJrnX7hkWY7JmO3ETRIFWsg==
-X-Received: by 2002:a17:906:c115:b0:a9a:e6:a031 with SMTP id
- a640c23a62f3a-a9abf964e1amr597810866b.59.1729778610634; 
- Thu, 24 Oct 2024 07:03:30 -0700 (PDT)
+ bh=+SVgJkd9IbTDUuA8uJ6beJLQHAW4cKJ/d6U0ghRVnFM=;
+ b=dJUx9Uq0Hc05vck1cuGlZZkk/BKUiaR0DZ2aJ3beoe6E/vgd9A4wFyWDYLw/cHOhD+
+ eV0wk98oChAop2Js4nWqEkmT9tduq8cNZRgOZXFSFX3exhrUj5+68RMharSnVjLKOAMP
+ VqDi8yebuqdIpg3WBoWIQVpnDfhsrphnWRgS174R7jzo6mikuZbnXGLVd5F3LgaCqRpX
+ qbyNm5/3Fse3yghxJphA8npB+/DJxluO3urrdeEo4OtjeRk0Chl/wNuSYdyrr+5LN6B1
+ yrqLNOSjOgpdWnMhdolhZwPoX3iLU+6uc5hOTENQrSIRBJuFuMTtYnv21nFB7zOfVtRt
+ JFkw==
+X-Gm-Message-State: AOJu0YxAMy3pcUdS03y2KeoL8MXpCqrdguvl6I4fjViSTxMkC/zbT72j
+ 6APJeBDchFgisfsxXq1UWGSrEs2upMwNX3ThLGJYdzzpCKWcXhsQW0Xu0LQOWUA=
+X-Google-Smtp-Source: AGHT+IFojY8Ck1w96BsUpnWgdTGC0RF9nOF/B6pnBvGm68yX+5eMRof0AOB3UQDoAf68PJ3dx2i++g==
+X-Received: by 2002:a17:907:9484:b0:a9a:1565:1051 with SMTP id
+ a640c23a62f3a-a9ad27127c7mr195794766b.10.1729778606758; 
+ Thu, 24 Oct 2024 07:03:26 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-113.37.6.2.tellas.gr. [37.6.2.113])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912f6878sm621407566b.86.2024.10.24.07.03.27
+ a640c23a62f3a-a9a912f6878sm621407566b.86.2024.10.24.07.03.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 07:03:30 -0700 (PDT)
+ Thu, 24 Oct 2024 07:03:26 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 24 Oct 2024 17:03:01 +0300
-Subject: [PATCH 03/11] rust/qemu-api-macros: introduce Device proc macro
+Date: Thu, 24 Oct 2024 17:03:00 +0300
+Subject: [PATCH 02/11] rust: add PL011 device model
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241024-rust-round-2-v1-3-051e7a25b978@linaro.org>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20241024-rust-round-2-v1-2-051e7a25b978@linaro.org>
 References: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
 In-Reply-To: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,30 +81,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Gustavo Romero <gustavo.romero@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 X-Mailer: b4 0.15-dev-12fc5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=61915;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=84468;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=I158Py0RnGmdnzcCp2wTlUb35MV778QZs4qZ5m1FnJk=;
+ bh=yXwI2OJKwlSx0i7yHHP76uQoqKGPlyD8Q0wIdVoTKCU=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm5HbE9pbXdQdlM1RS94RlM5b1Z4ZzVmTzVaN210CjF2VUxtYkFkQzBZT2dIUldx
- Uk9KQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnhwVG9nQUt
- DUkIzS2Nkd2YzNEowTGg0RC80bXN4SDdscm12dXV6Tk5BNGppc2NTcTM2NWhCdGU5djN6QWVJLw
- o3WFpYdGw4bm1nWGVKalcraW5wN1dxdUI5MHgwYnlJNEJ4dWk4WmdLL1hCSVFJMHFBMmsyMjJOW
- Fhwb3ArQnlwCitIVEdwRnVvU25wcEFzMUx1MW9WVkZZS1VSSlRuMVRqTHlHb1Jub0VTeE9kZklL
- ZDFaNEFMWmVERnJFdW9JajkKOEFlT0IwWUE5U1lNOXV6RGNjLys2aGRqU3hnZ0lGNU94YWxxcjk
- xdGhUM0lUdGFmeU83WjBESDkwZzd3RU9FegpkQ0s0NXZZRm9XVkhDNkNLYURIVFBQUWRPOU5vMU
- FHMWpHVjMxMi9ldEttNWxzbElzUzdoNFQ1NlZhZ003N25WCjY3Kzk5eWU5R01PdVphbDB3SWw2M
- y9FL3QyK3lOeDRPS1Vpa1VXYWl4dEl5ekhQTW1LVGNtTjZMYWJtaW1ETzkKNjgxd2FXRFRrcVc4
- R21hbXBBU2NySWlRbTRVZmlWUkloVHdTTVJYN1dVY1RsYUkyYm1tRDZrL3NXNHYwNS9xVgpKRTB
- CaUwwSmw0OTFPUUZVQmVSRlBJNlVqRC9OT29GK1ppcEFCUGNZNEhWWUNoY2J3bHJMMkRVaUw4aD
- Mxbkt3CjhuV3dabDZhV2l2UTRndkU1amFSL0l1alBiTW1Ob1BLWWptUDdQMzhWSlYvNTdwNVVZT
- WZOeVczenR0RXMveVIKUGhQWTNkdGc0VzhDYWZMMVBONFcvTEU3ajhsdEp5VDdPZ3NmMEkwRU9M
- dGlVeVNGWTQ0WnNrd093ZFhsZ3kvZQpXRVVOcTMwMlVCaUNCWmZPa3JUOFl1azgyRnkrK2tLMUN
- wYXV6elBGMnVYSElPMms0VEdCajZmRjBNU1E2WGJzClQ4b1Rsdz09Cj1LejI0Ci0tLS0tRU5EIF
+ 25RQWNzbVlnQm5HbE9pc3lyZUNjZnRYWDEyOGhhcEZ1ZTczSW10ClQrZDRCS211Q1JWUEpjM2h5
+ YzZKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnhwVG9nQUt
+ DUkIzS2Nkd2YzNEowSjk5RUFDUTgvSUxBVGVRampqdDZkN2pmMlk1NUoxZGpmSlIzRTI2RG5HNQ
+ poQUpCRmpSd3NxZE53ZXdFbU1Ib3QwT1NVL3ZMRUVDeU9LdkJaWnpWU3F0UVp4Tk9FYmFqdyswS
+ HRWL1VEWkt1CmpwT0FqR3I3WnBTV3ppWHJVcG8rOXYxU0JFbkc4YXZCNlI1azdyQU1vMFFNM2p4
+ TTVpMWw4VkRIdTVEdEE2cTQKWnFCYkZ5dEdGRWppN09ld05MYTZvQXNCTzBzaE4yNHNKeWt6Zzd
+ rOXpaMnNzUnI5NjJBMWZIZHRRbDdsd3M2Ugp6TmM2eFd4MVRsc20zLzNOTjV5dkxXZlNDb2Fuby
+ tCUklkWS9idDZjakd2WGhCUWxyY253Q2dSVkFESEh3Ulc2CkFhd3FGczZuUjM5a2dJdm9ScmcrY
+ kVYWTduRzQraWpSRzR3TkhNWU1LYUZqanEwMERyUlVFUmNWTjVlZzJrK2QKeDlYdGxvdzc2N1g3
+ V1Mvd1JWc1AxNTVxNXhrMndDTDhwVHZ4Qmd6WVRJaFlzUXFSZW9PTVFLTVVsWEpaYUplRwo1cTB
+ RQTloQllWajdSUitDL0ptZ3pHUmpObkQ1M1JZM2RnSGN5UDUzQ1dtaFVLYUFrQnBTUnk3MWorc0
+ x6U0N6Ck92a2RGR1lNQUJod1Brb2xtRnpubVc3VGFCRTRhSHhQd2t4b3lZaDBYZDRsL0lJOXdjU
+ VUrMnMrRld6TUYzN1QKandCR25KUm1yOWZSV0k3ZlJGRDFJY1ZXVDBIVnlScis1RWgrZER2M3Vw
+ WFhqM3V5S0szdWF5OHQzRXQ3M0g4ZQovTjMvUGR2cVFBZ0toYUVjdUh6VWdIL0Q4Q1BTSmNPS09
+ JTyt5ajNWakJSWWRENnYyandlbVNpM1E3c1lPUVpVCnZJWEErZz09Cj1hQmdYCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,180 +127,904 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new derive procedural macro to declare device models. Add
-corresponding DeviceImpl trait after already existing ObjectImpl trait.
-At the same time, add instance_init, instance_post_init,
-instance_finalize methods to the ObjectImpl trait and call them from the
-ObjectImplUnsafe trait, which is generated by the procedural macro.
+This commit adds a re-implementation of hw/char/pl011.c in Rust.
 
-This allows all the boilerplate device model registration to be handled
-by macros, and all pertinent details to be declared through proc macro
-attributes or trait associated constants and methods.
+How to build:
 
-The device class can now be generated automatically and the name can be
-optionally overridden:
+1. Configure a QEMU build with:
+   --enable-system --target-list=aarch64-softmmu --enable-rust
+2. Launching a VM with qemu-system-aarch64 should use the Rust version
+   of the pl011 device
 
-  ------------------------ >8 ------------------------
- #[repr(C)]
- #[derive(Debug, qemu_api_macros::Object, qemu_api_macros::Device)]
- #[device(class_name_override = PL011Class)]
- /// PL011 Device Model in QEMU
- pub struct PL011State {
-  ------------------------ >8 ------------------------
-
-Properties are now marked as field attributes:
-
-  ------------------------ >8 ------------------------
- #[property(name = c"chardev", qdev_prop = qdev_prop_chr)]
- pub char_backend: CharBackend,
-  ------------------------ >8 ------------------------
-
-Object methods (instance_init, etc) methods are now trait methods:
-
-  ------------------------ >8 ------------------------
- /// Trait a type must implement to be registered with QEMU.
- pub trait ObjectImpl {
-     type Class: ClassImpl;
-     const TYPE_NAME: &'static CStr;
-     const PARENT_TYPE_NAME: Option<&'static CStr>;
-     const ABSTRACT: bool;
-
-     unsafe fn instance_init(&mut self) {}
-     fn instance_post_init(&mut self) {}
-     fn instance_finalize(&mut self) {}
- }
-  ------------------------ >8 ------------------------
-
-Device methods (realize/reset etc) are now safe idiomatic trait methods:
-
-  ------------------------ >8 ------------------------
- /// Implementation methods for device types.
- pub trait DeviceImpl: ObjectImpl {
-     fn realize(&mut self) {}
-     fn reset(&mut self) {}
- }
-  ------------------------ >8 ------------------------
-
-The derive Device macro is responsible for creating all the extern "C" FFI
-functions that QEMU needs to call these methods.
-
+Co-authored-by: Junjie Mao <junjie.mao@intel.com>
+Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Junjie Mao <junjie.mao@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- rust/hw/char/pl011/src/device.rs              | 124 +++-----
- rust/hw/char/pl011/src/device_class.rs        |  70 -----
- rust/hw/char/pl011/src/lib.rs                 |   1 -
- rust/qemu-api-macros/src/device.rs            | 433 ++++++++++++++++++++++++++
- rust/qemu-api-macros/src/lib.rs               |  45 +--
- rust/qemu-api-macros/src/object.rs            | 107 +++++++
- rust/qemu-api-macros/src/symbols.rs           |  55 ++++
- rust/qemu-api-macros/src/utilities.rs         | 152 +++++++++
- rust/qemu-api/meson.build                     |   3 +-
- rust/qemu-api/src/definitions.rs              |  97 ------
- rust/qemu-api/src/device_class.rs             | 128 --------
- rust/qemu-api/src/lib.rs                      |   6 +-
- rust/qemu-api/src/objects.rs                  |  90 ++++++
- rust/qemu-api/src/tests.rs                    |  49 ---
- subprojects/packagefiles/syn-2-rs/meson.build |   1 +
- 15 files changed, 902 insertions(+), 459 deletions(-)
+ MAINTAINERS                                        |   5 +
+ meson.build                                        |  24 +
+ hw/arm/Kconfig                                     |  30 +-
+ rust/Kconfig                                       |   1 +
+ rust/hw/Kconfig                                    |   2 +
+ rust/hw/char/Kconfig                               |   3 +
+ rust/hw/char/meson.build                           |   1 +
+ rust/hw/char/pl011/.gitignore                      |   2 +
+ rust/hw/char/pl011/Cargo.lock                      | 134 +++++
+ rust/hw/char/pl011/Cargo.toml                      |  26 +
+ rust/hw/char/pl011/README.md                       |  31 ++
+ rust/hw/char/pl011/meson.build                     |  26 +
+ rust/hw/char/pl011/src/device.rs                   | 599 +++++++++++++++++++++
+ rust/hw/char/pl011/src/device_class.rs             |  70 +++
+ rust/hw/char/pl011/src/lib.rs                      | 586 ++++++++++++++++++++
+ rust/hw/char/pl011/src/memory_ops.rs               |  59 ++
+ rust/hw/meson.build                                |   1 +
+ rust/meson.build                                   |   2 +
+ scripts/archive-source.sh                          |   4 +-
+ scripts/make-release                               |   4 +-
+ scripts/rust/rust_root_crate.sh                    |  13 +
+ subprojects/.gitignore                             |   7 +
+ subprojects/arbitrary-int-1-rs.wrap                |   7 +
+ subprojects/bilge-0.2-rs.wrap                      |   7 +
+ subprojects/bilge-impl-0.2-rs.wrap                 |   7 +
+ subprojects/either-1-rs.wrap                       |   7 +
+ subprojects/itertools-0.11-rs.wrap                 |   7 +
+ .../packagefiles/arbitrary-int-1-rs/meson.build    |  19 +
+ subprojects/packagefiles/bilge-0.2-rs/meson.build  |  29 +
+ .../packagefiles/bilge-impl-0.2-rs/meson.build     |  45 ++
+ subprojects/packagefiles/either-1-rs/meson.build   |  24 +
+ .../packagefiles/itertools-0.11-rs/meson.build     |  30 ++
+ .../packagefiles/proc-macro-error-1-rs/meson.build |  40 ++
+ .../proc-macro-error-attr-1-rs/meson.build         |  32 ++
+ .../packagefiles/unicode-ident-1-rs/meson.build    |  20 +
+ subprojects/proc-macro-error-1-rs.wrap             |   7 +
+ subprojects/proc-macro-error-attr-1-rs.wrap        |   7 +
+ 37 files changed, 1906 insertions(+), 12 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index c7193b41beec0b177dbc75ac0e43fcfea4c82bfb..c469877b1ca70dd1a02e3a2449c65ad3e57c93ae 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -9,7 +9,7 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 793c683aa6cccafca9c98b74b9a20d84211f041b..c3bfa132fd6ecd61dd733b760a5e1ccd39613455 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1137,6 +1137,11 @@ F: include/hw/*/microbit*.h
+ F: tests/qtest/microbit-test.c
+ F: docs/system/arm/nrf.rst
  
- use qemu_api::{
-     bindings::{self, *},
--    definitions::ObjectImpl,
-+    objects::*,
- };
- 
- use crate::{
-@@ -26,7 +26,8 @@
- pub const PL011_FIFO_DEPTH: usize = 16_usize;
- 
- #[repr(C)]
--#[derive(Debug, qemu_api_macros::Object)]
-+#[derive(Debug, qemu_api_macros::Object, qemu_api_macros::Device)]
-+#[device(class_name_override = PL011Class)]
- /// PL011 Device Model in QEMU
- pub struct PL011State {
-     pub parent_obj: SysBusDevice,
-@@ -51,6 +52,7 @@ pub struct PL011State {
-     pub read_count: usize,
-     pub read_trigger: usize,
-     #[doc(alias = "chr")]
-+    #[property(name = c"chardev", qdev_prop = qdev_prop_chr)]
-     pub char_backend: CharBackend,
-     /// QEMU interrupts
-     ///
-@@ -68,38 +70,17 @@ pub struct PL011State {
-     #[doc(alias = "clk")]
-     pub clock: NonNull<Clock>,
-     #[doc(alias = "migrate_clk")]
-+    #[property(name = c"migrate-clk", qdev_prop = qdev_prop_bool)]
-     pub migrate_clock: bool,
- }
- 
- impl ObjectImpl for PL011State {
-     type Class = PL011Class;
--    const TYPE_INFO: qemu_api::bindings::TypeInfo = qemu_api::type_info! { Self };
++ARM PL011 Rust device
++M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++S: Maintained
++F: rust/hw/char/pl011/
 +
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
-     const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_SYS_BUS_DEVICE);
-     const ABSTRACT: bool = false;
--    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = Some(pl011_init);
--    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
--    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
--}
+ AVR Machines
+ -------------
  
--#[repr(C)]
--pub struct PL011Class {
--    _inner: [u8; 0],
--}
--
--impl qemu_api::definitions::Class for PL011Class {
--    const CLASS_INIT: Option<
--        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
--    > = Some(crate::device_class::pl011_class_init);
--    const CLASS_BASE_INIT: Option<
--        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
--    > = None;
--}
--
--#[used]
--pub static CLK_NAME: &CStr = c"clk";
--
--impl PL011State {
-     /// Initializes a pre-allocated, unitialized instance of `PL011State`.
-     ///
-     /// # Safety
-@@ -108,7 +89,7 @@ impl PL011State {
-     /// `PL011State` type. It must not be called more than once on the same
-     /// location/instance. All its fields are expected to hold unitialized
-     /// values with the sole exception of `parent_obj`.
--    pub unsafe fn init(&mut self) {
-+    unsafe fn instance_init(&mut self) {
-         let dev = addr_of_mut!(*self).cast::<DeviceState>();
-         // SAFETY:
-         //
-@@ -120,7 +101,7 @@ pub unsafe fn init(&mut self) {
-                 addr_of_mut!(*self).cast::<Object>(),
-                 &PL011_OPS,
-                 addr_of_mut!(*self).cast::<c_void>(),
--                Self::TYPE_INFO.name,
-+                Self::TYPE_NAME.as_ptr(),
-                 0x1000,
-             );
-             let sbd = addr_of_mut!(*self).cast::<SysBusDevice>();
-@@ -147,7 +128,49 @@ pub unsafe fn init(&mut self) {
-             .unwrap();
-         }
-     }
+diff --git a/meson.build b/meson.build
+index 0d617c551e61c90c7c357c62ff5da34437723947..c26c417de16ad9256a019a90fd89ea990bb3f948 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3520,6 +3520,7 @@ qom_ss = ss.source_set()
+ system_ss = ss.source_set()
+ specific_fuzz_ss = ss.source_set()
+ specific_ss = ss.source_set()
++rust_devices_ss = ss.source_set()
+ stub_ss = ss.source_set()
+ trace_ss = ss.source_set()
+ user_ss = ss.source_set()
+@@ -4067,6 +4068,29 @@ foreach target : target_dirs
+   arch_srcs += target_specific.sources()
+   arch_deps += target_specific.dependencies()
+ 
++  if have_rust and have_system
++    target_rust = rust_devices_ss.apply(config_target, strict: false)
++    crates = []
++    foreach dep : target_rust.dependencies()
++      crates += dep.get_variable('crate')
++    endforeach
++    if crates.length() > 0
++      rlib_rs = custom_target('rust_' + target.underscorify() + '.rs',
++                              output: 'rust_' + target.underscorify() + '.rs',
++                              command: [find_program('scripts/rust/rust_root_crate.sh')] + crates,
++                              capture: true,
++                              build_by_default: true,
++                              build_always_stale: true)
++      rlib = static_library('rust_' + target.underscorify(),
++                            rlib_rs,
++                            dependencies: target_rust.dependencies(),
++                            override_options: ['rust_std=2021', 'build.rust_std=2021'],
++                            rust_args: rustc_args,
++                            rust_abi: 'c')
++      arch_deps += declare_dependency(link_whole: [rlib])
++    endif
++  endif
++
+   # allow using headers from the dependencies but do not include the sources,
+   # because this emulator only needs those in "objects".  For external
+   # dependencies, the full dependency is included below in the executable.
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 53eb7bb3d0157bb6e8e078fe73ec66015ae0fe13..e7fd9338d11dadb7a18032c674927db3d9887bdd 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -20,7 +20,8 @@ config ARM_VIRT
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select GPIO_PWR
+@@ -73,7 +74,8 @@ config HIGHBANK
+     select AHCI
+     select ARM_TIMER # sp804
+     select ARM_V7M
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL022 # SPI
+     select PL031 # RTC
+     select PL061 # GPIO
+@@ -86,7 +88,8 @@ config INTEGRATOR
+     depends on TCG && ARM
+     select ARM_TIMER
+     select INTEGRATOR_DEBUG
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL041 # audio
+     select PL050 # keyboard/mouse
+@@ -104,7 +107,8 @@ config MUSCA
+     default y
+     depends on TCG && ARM
+     select ARMSSE
+-    select PL011
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031
+     select SPLIT_IRQ
+     select UNIMP
+@@ -168,7 +172,8 @@ config REALVIEW
+     select WM8750 # audio codec
+     select LSI_SCSI_PCI
+     select PCI
+-    select PL011  # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031  # RTC
+     select PL041  # audio codec
+     select PL050  # keyboard/mouse
+@@ -193,7 +198,8 @@ config SBSA_REF
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select USB_XHCI_SYSBUS
+@@ -217,7 +223,8 @@ config STELLARIS
+     select ARM_V7M
+     select CMSDK_APB_WATCHDOG
+     select I2C
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL022 # SPI
+     select PL061 # GPIO
+     select SSD0303 # OLED display
+@@ -277,7 +284,8 @@ config VEXPRESS
+     select ARM_TIMER # sp804
+     select LAN9118
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL041 # audio codec
+     select PL181  # display
+     select REALVIEW
+@@ -362,7 +370,8 @@ config RASPI
+     default y
+     depends on TCG && ARM
+     select FRAMEBUFFER
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select SDHCI
+     select USB_DWC2
+     select BCM2835_SPI
+@@ -438,7 +447,8 @@ config XLNX_VERSAL
+     select ARM_GIC
+     select CPU_CLUSTER
+     select DEVICE_TREE
+-    select PL011
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select CADENCE
+     select VIRTIO_MMIO
+     select UNIMP
+diff --git a/rust/Kconfig b/rust/Kconfig
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..f9f5c3909887451f71360a7986d79e57fdb43c91 100644
+--- a/rust/Kconfig
++++ b/rust/Kconfig
+@@ -0,0 +1 @@
++source hw/Kconfig
+diff --git a/rust/hw/Kconfig b/rust/hw/Kconfig
+new file mode 100644
+index 0000000000000000000000000000000000000000..4d934f30afe13ddff418db8ec9e8b8eb25a9e8d0
+--- /dev/null
++++ b/rust/hw/Kconfig
+@@ -0,0 +1,2 @@
++# devices Kconfig
++source char/Kconfig
+diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
+new file mode 100644
+index 0000000000000000000000000000000000000000..a1732a9e97fe3211547e30bc9319382e6394ed5b
+--- /dev/null
++++ b/rust/hw/char/Kconfig
+@@ -0,0 +1,3 @@
++config X_PL011_RUST
++    bool
++    default y if HAVE_RUST
+diff --git a/rust/hw/char/meson.build b/rust/hw/char/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..5716dc43ef6facdcf1cc963108347bbf4d12cf0e
+--- /dev/null
++++ b/rust/hw/char/meson.build
+@@ -0,0 +1 @@
++subdir('pl011')
+diff --git a/rust/hw/char/pl011/.gitignore b/rust/hw/char/pl011/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..71eaff2035d5a65b57ae32dfeecf3d87bbc7b396
+--- /dev/null
++++ b/rust/hw/char/pl011/.gitignore
+@@ -0,0 +1,2 @@
++# Ignore generated bindings file overrides.
++src/bindings.rs.inc
+diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
+new file mode 100644
+index 0000000000000000000000000000000000000000..b58cebb186e99efe184117bb931a341543d4466b
+--- /dev/null
++++ b/rust/hw/char/pl011/Cargo.lock
+@@ -0,0 +1,134 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 3
++
++[[package]]
++name = "arbitrary-int"
++version = "1.2.7"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d"
++
++[[package]]
++name = "bilge"
++version = "0.2.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57"
++dependencies = [
++ "arbitrary-int",
++ "bilge-impl",
++]
++
++[[package]]
++name = "bilge-impl"
++version = "0.2.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8"
++dependencies = [
++ "itertools",
++ "proc-macro-error",
++ "proc-macro2",
++ "quote",
++ "syn",
++]
++
++[[package]]
++name = "either"
++version = "1.12.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b"
++
++[[package]]
++name = "itertools"
++version = "0.11.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
++dependencies = [
++ "either",
++]
++
++[[package]]
++name = "pl011"
++version = "0.1.0"
++dependencies = [
++ "bilge",
++ "bilge-impl",
++ "qemu_api",
++ "qemu_api_macros",
++]
++
++[[package]]
++name = "proc-macro-error"
++version = "1.0.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
++dependencies = [
++ "proc-macro-error-attr",
++ "proc-macro2",
++ "quote",
++ "version_check",
++]
++
++[[package]]
++name = "proc-macro-error-attr"
++version = "1.0.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "version_check",
++]
++
++[[package]]
++name = "proc-macro2"
++version = "1.0.84"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
++dependencies = [
++ "unicode-ident",
++]
++
++[[package]]
++name = "qemu_api"
++version = "0.1.0"
++
++[[package]]
++name = "qemu_api_macros"
++version = "0.1.0"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "syn",
++]
++
++[[package]]
++name = "quote"
++version = "1.0.36"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
++dependencies = [
++ "proc-macro2",
++]
++
++[[package]]
++name = "syn"
++version = "2.0.66"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "unicode-ident",
++]
++
++[[package]]
++name = "unicode-ident"
++version = "1.0.12"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
++
++[[package]]
++name = "version_check"
++version = "0.9.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+new file mode 100644
+index 0000000000000000000000000000000000000000..b089e3dded623131ee13b4af8145b84388755df7
+--- /dev/null
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -0,0 +1,26 @@
++[package]
++name = "pl011"
++version = "0.1.0"
++edition = "2021"
++authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
++license = "GPL-2.0-or-later"
++readme = "README.md"
++homepage = "https://www.qemu.org"
++description = "pl011 device model for QEMU"
++repository = "https://gitlab.com/epilys/rust-for-qemu"
++resolver = "2"
++publish = false
++keywords = []
++categories = []
++
++[lib]
++crate-type = ["staticlib"]
++
++[dependencies]
++bilge = { version = "0.2.0" }
++bilge-impl = { version = "0.2.0" }
++qemu_api = { path = "../../../qemu-api" }
++qemu_api_macros = { path = "../../../qemu-api-macros" }
++
++# Do not include in any global workspace
++[workspace]
+diff --git a/rust/hw/char/pl011/README.md b/rust/hw/char/pl011/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..cd7dea31634241cbf96b0be13f21d52bbd8ae750
+--- /dev/null
++++ b/rust/hw/char/pl011/README.md
+@@ -0,0 +1,31 @@
++# PL011 QEMU Device Model
++
++This library implements a device model for the PrimeCell® UART (PL011)
++device in QEMU.
++
++## Build static lib
++
++Host build target must be explicitly specified:
++
++```sh
++cargo build --target x86_64-unknown-linux-gnu
++```
++
++Replace host target triplet if necessary.
++
++## Generate Rust documentation
++
++To generate docs for this crate, including private items:
++
++```sh
++cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
++```
++
++To include direct dependencies like `bilge` (bitmaps for register types):
++
++```sh
++cargo tree --depth 1 -e normal --prefix none \
++ | cut -d' ' -f1 \
++ | xargs printf -- '-p %s\n' \
++ | xargs cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
++```
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..547cca5a96f7eef284caf1949380b65f7d015d92
+--- /dev/null
++++ b/rust/hw/char/pl011/meson.build
+@@ -0,0 +1,26 @@
++subproject('bilge-0.2-rs', required: true)
++subproject('bilge-impl-0.2-rs', required: true)
++
++bilge_dep = dependency('bilge-0.2-rs')
++bilge_impl_dep = dependency('bilge-impl-0.2-rs')
++
++_libpl011_rs = static_library(
++  'pl011',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [
++    bilge_dep,
++    bilge_impl_dep,
++    qemu_api,
++    qemu_api_macros,
++  ],
++)
++
++rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
++  link_whole: [_libpl011_rs],
++  # Putting proc macro crates in `dependencies` is necessary for Meson to find
++  # them when compiling the root per-target static rust lib.
++  dependencies: [bilge_impl_dep, qemu_api_macros],
++  variables: {'crate': 'pl011'},
++)])
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..c7193b41beec0b177dbc75ac0e43fcfea4c82bfb
+--- /dev/null
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -0,0 +1,599 @@
++// Copyright 2024, Linaro Limited
++// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++use core::{
++    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
++    ptr::{addr_of, addr_of_mut, NonNull},
++};
++
++use qemu_api::{
++    bindings::{self, *},
++    definitions::ObjectImpl,
++};
++
++use crate::{
++    memory_ops::PL011_OPS,
++    registers::{self, Interrupt},
++    RegisterOffset,
++};
++
++static PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
++
++const DATA_BREAK: u32 = 1 << 10;
++
++/// QEMU sourced constant.
++pub const PL011_FIFO_DEPTH: usize = 16_usize;
++
++#[repr(C)]
++#[derive(Debug, qemu_api_macros::Object)]
++/// PL011 Device Model in QEMU
++pub struct PL011State {
++    pub parent_obj: SysBusDevice,
++    pub iomem: MemoryRegion,
++    #[doc(alias = "fr")]
++    pub flags: registers::Flags,
++    #[doc(alias = "lcr")]
++    pub line_control: registers::LineControl,
++    #[doc(alias = "rsr")]
++    pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
++    #[doc(alias = "cr")]
++    pub control: registers::Control,
++    pub dmacr: u32,
++    pub int_enabled: u32,
++    pub int_level: u32,
++    pub read_fifo: [u32; PL011_FIFO_DEPTH],
++    pub ilpr: u32,
++    pub ibrd: u32,
++    pub fbrd: u32,
++    pub ifl: u32,
++    pub read_pos: usize,
++    pub read_count: usize,
++    pub read_trigger: usize,
++    #[doc(alias = "chr")]
++    pub char_backend: CharBackend,
++    /// QEMU interrupts
++    ///
++    /// ```text
++    ///  * sysbus MMIO region 0: device registers
++    ///  * sysbus IRQ 0: `UARTINTR` (combined interrupt line)
++    ///  * sysbus IRQ 1: `UARTRXINTR` (receive FIFO interrupt line)
++    ///  * sysbus IRQ 2: `UARTTXINTR` (transmit FIFO interrupt line)
++    ///  * sysbus IRQ 3: `UARTRTINTR` (receive timeout interrupt line)
++    ///  * sysbus IRQ 4: `UARTMSINTR` (momem status interrupt line)
++    ///  * sysbus IRQ 5: `UARTEINTR` (error interrupt line)
++    /// ```
++    #[doc(alias = "irq")]
++    pub interrupts: [qemu_irq; 6usize],
++    #[doc(alias = "clk")]
++    pub clock: NonNull<Clock>,
++    #[doc(alias = "migrate_clk")]
++    pub migrate_clock: bool,
 +}
- 
-+impl DeviceImpl for PL011State {
-+    fn realize(&mut self) {
++
++impl ObjectImpl for PL011State {
++    type Class = PL011Class;
++    const TYPE_INFO: qemu_api::bindings::TypeInfo = qemu_api::type_info! { Self };
++    const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
++    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_SYS_BUS_DEVICE);
++    const ABSTRACT: bool = false;
++    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = Some(pl011_init);
++    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
++    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
++}
++
++#[repr(C)]
++pub struct PL011Class {
++    _inner: [u8; 0],
++}
++
++impl qemu_api::definitions::Class for PL011Class {
++    const CLASS_INIT: Option<
++        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
++    > = Some(crate::device_class::pl011_class_init);
++    const CLASS_BASE_INIT: Option<
++        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
++    > = None;
++}
++
++#[used]
++pub static CLK_NAME: &CStr = c"clk";
++
++impl PL011State {
++    /// Initializes a pre-allocated, unitialized instance of `PL011State`.
++    ///
++    /// # Safety
++    ///
++    /// `self` must point to a correctly sized and aligned location for the
++    /// `PL011State` type. It must not be called more than once on the same
++    /// location/instance. All its fields are expected to hold unitialized
++    /// values with the sole exception of `parent_obj`.
++    pub unsafe fn init(&mut self) {
++        let dev = addr_of_mut!(*self).cast::<DeviceState>();
++        // SAFETY:
++        //
++        // self and self.iomem are guaranteed to be valid at this point since callers
++        // must make sure the `self` reference is valid.
++        unsafe {
++            memory_region_init_io(
++                addr_of_mut!(self.iomem),
++                addr_of_mut!(*self).cast::<Object>(),
++                &PL011_OPS,
++                addr_of_mut!(*self).cast::<c_void>(),
++                Self::TYPE_INFO.name,
++                0x1000,
++            );
++            let sbd = addr_of_mut!(*self).cast::<SysBusDevice>();
++            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
++            for irq in self.interrupts.iter_mut() {
++                sysbus_init_irq(sbd, irq);
++            }
++        }
++        // SAFETY:
++        //
++        // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
++        // we can overwrite the undefined value without side effects. This is
++        // safe since all PL011State instances are created by QOM code which
++        // calls this function to initialize the fields; therefore no code is
++        // able to access an invalid self.clock value.
++        unsafe {
++            self.clock = NonNull::new(qdev_init_clock_in(
++                dev,
++                CLK_NAME.as_ptr(),
++                None, /* pl011_clock_update */
++                addr_of_mut!(*self).cast::<c_void>(),
++                ClockEvent::ClockUpdate.0,
++            ))
++            .unwrap();
++        }
++    }
++
++    pub fn read(
++        &mut self,
++        offset: hwaddr,
++        _size: core::ffi::c_uint,
++    ) -> std::ops::ControlFlow<u64, u64> {
++        use RegisterOffset::*;
++
++        std::ops::ControlFlow::Break(match RegisterOffset::try_from(offset) {
++            Err(v) if (0x3f8..0x400).contains(&v) => {
++                u64::from(PL011_ID_ARM[((offset - 0xfe0) >> 2) as usize])
++            }
++            Err(_) => {
++                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
++                0
++            }
++            Ok(DR) => {
++                // s->flags &= ~PL011_FLAG_RXFF;
++                self.flags.set_receive_fifo_full(false);
++                let c = self.read_fifo[self.read_pos];
++                if self.read_count > 0 {
++                    self.read_count -= 1;
++                    self.read_pos = (self.read_pos + 1) & (self.fifo_depth() - 1);
++                }
++                if self.read_count == 0 {
++                    // self.flags |= PL011_FLAG_RXFE;
++                    self.flags.set_receive_fifo_empty(true);
++                }
++                if self.read_count + 1 == self.read_trigger {
++                    //self.int_level &= ~ INT_RX;
++                    self.int_level &= !registers::INT_RX;
++                }
++                // Update error bits.
++                self.receive_status_error_clear = c.to_be_bytes()[3].into();
++                self.update();
++                // Must call qemu_chr_fe_accept_input, so return Continue:
++                return std::ops::ControlFlow::Continue(c.into());
++            }
++            Ok(RSR) => u8::from(self.receive_status_error_clear).into(),
++            Ok(FR) => u16::from(self.flags).into(),
++            Ok(FBRD) => self.fbrd.into(),
++            Ok(ILPR) => self.ilpr.into(),
++            Ok(IBRD) => self.ibrd.into(),
++            Ok(LCR_H) => u16::from(self.line_control).into(),
++            Ok(CR) => {
++                // We exercise our self-control.
++                u16::from(self.control).into()
++            }
++            Ok(FLS) => self.ifl.into(),
++            Ok(IMSC) => self.int_enabled.into(),
++            Ok(RIS) => self.int_level.into(),
++            Ok(MIS) => u64::from(self.int_level & self.int_enabled),
++            Ok(ICR) => {
++                // "The UARTICR Register is the interrupt clear register and is write-only"
++                // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
++                0
++            }
++            Ok(DMACR) => self.dmacr.into(),
++        })
++    }
++
++    pub fn write(&mut self, offset: hwaddr, value: u64) {
++        // eprintln!("write offset {offset} value {value}");
++        use RegisterOffset::*;
++        let value: u32 = value as u32;
++        match RegisterOffset::try_from(offset) {
++            Err(_bad_offset) => {
++                eprintln!("write bad offset {offset} value {value}");
++            }
++            Ok(DR) => {
++                // ??? Check if transmitter is enabled.
++                let ch: u8 = value as u8;
++                // XXX this blocks entire thread. Rewrite to use
++                // qemu_chr_fe_write and background I/O callbacks
++
++                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                // initialized in realize().
++                unsafe {
++                    qemu_chr_fe_write_all(addr_of_mut!(self.char_backend), &ch, 1);
++                }
++                self.loopback_tx(value);
++                self.int_level |= registers::INT_TX;
++                self.update();
++            }
++            Ok(RSR) => {
++                self.receive_status_error_clear = 0.into();
++            }
++            Ok(FR) => {
++                // flag writes are ignored
++            }
++            Ok(ILPR) => {
++                self.ilpr = value;
++            }
++            Ok(IBRD) => {
++                self.ibrd = value;
++            }
++            Ok(FBRD) => {
++                self.fbrd = value;
++            }
++            Ok(LCR_H) => {
++                let value = value as u16;
++                let new_val: registers::LineControl = value.into();
++                // Reset the FIFO state on FIFO enable or disable
++                if bool::from(self.line_control.fifos_enabled())
++                    ^ bool::from(new_val.fifos_enabled())
++                {
++                    self.reset_fifo();
++                }
++                if self.line_control.send_break() ^ new_val.send_break() {
++                    let mut break_enable: c_int = new_val.send_break().into();
++                    // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                    // initialized in realize().
++                    unsafe {
++                        qemu_chr_fe_ioctl(
++                            addr_of_mut!(self.char_backend),
++                            CHR_IOCTL_SERIAL_SET_BREAK as i32,
++                            addr_of_mut!(break_enable).cast::<c_void>(),
++                        );
++                    }
++                    self.loopback_break(break_enable > 0);
++                }
++                self.line_control = new_val;
++                self.set_read_trigger();
++            }
++            Ok(CR) => {
++                // ??? Need to implement the enable bit.
++                let value = value as u16;
++                self.control = value.into();
++                self.loopback_mdmctrl();
++            }
++            Ok(FLS) => {
++                self.ifl = value;
++                self.set_read_trigger();
++            }
++            Ok(IMSC) => {
++                self.int_enabled = value;
++                self.update();
++            }
++            Ok(RIS) => {}
++            Ok(MIS) => {}
++            Ok(ICR) => {
++                self.int_level &= !value;
++                self.update();
++            }
++            Ok(DMACR) => {
++                self.dmacr = value;
++                if value & 3 > 0 {
++                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
++                    eprintln!("pl011: DMA not implemented");
++                }
++            }
++        }
++    }
++
++    #[inline]
++    fn loopback_tx(&mut self, value: u32) {
++        if !self.loopback_enabled() {
++            return;
++        }
++
++        // Caveat:
++        //
++        // In real hardware, TX loopback happens at the serial-bit level
++        // and then reassembled by the RX logics back into bytes and placed
++        // into the RX fifo. That is, loopback happens after TX fifo.
++        //
++        // Because the real hardware TX fifo is time-drained at the frame
++        // rate governed by the configured serial format, some loopback
++        // bytes in TX fifo may still be able to get into the RX fifo
++        // that could be full at times while being drained at software
++        // pace.
++        //
++        // In such scenario, the RX draining pace is the major factor
++        // deciding which loopback bytes get into the RX fifo, unless
++        // hardware flow-control is enabled.
++        //
++        // For simplicity, the above described is not emulated.
++        self.put_fifo(value);
++    }
++
++    fn loopback_mdmctrl(&mut self) {
++        if !self.loopback_enabled() {
++            return;
++        }
++
++        /*
++         * Loopback software-driven modem control outputs to modem status inputs:
++         *   FR.RI  <= CR.Out2
++         *   FR.DCD <= CR.Out1
++         *   FR.CTS <= CR.RTS
++         *   FR.DSR <= CR.DTR
++         *
++         * The loopback happens immediately even if this call is triggered
++         * by setting only CR.LBE.
++         *
++         * CTS/RTS updates due to enabled hardware flow controls are not
++         * dealt with here.
++         */
++
++        //fr = s->flags & ~(PL011_FLAG_RI | PL011_FLAG_DCD |
++        //                  PL011_FLAG_DSR | PL011_FLAG_CTS);
++        //fr |= (cr & CR_OUT2) ? PL011_FLAG_RI  : 0;
++        //fr |= (cr & CR_OUT1) ? PL011_FLAG_DCD : 0;
++        //fr |= (cr & CR_RTS)  ? PL011_FLAG_CTS : 0;
++        //fr |= (cr & CR_DTR)  ? PL011_FLAG_DSR : 0;
++        //
++        self.flags.set_ring_indicator(self.control.out_2());
++        self.flags.set_data_carrier_detect(self.control.out_1());
++        self.flags.set_clear_to_send(self.control.request_to_send());
++        self.flags
++            .set_data_set_ready(self.control.data_transmit_ready());
++
++        // Change interrupts based on updated FR
++        let mut il = self.int_level;
++
++        il &= !Interrupt::MS;
++        //il |= (fr & PL011_FLAG_DSR) ? INT_DSR : 0;
++        //il |= (fr & PL011_FLAG_DCD) ? INT_DCD : 0;
++        //il |= (fr & PL011_FLAG_CTS) ? INT_CTS : 0;
++        //il |= (fr & PL011_FLAG_RI)  ? INT_RI  : 0;
++
++        if self.flags.data_set_ready() {
++            il |= Interrupt::DSR as u32;
++        }
++        if self.flags.data_carrier_detect() {
++            il |= Interrupt::DCD as u32;
++        }
++        if self.flags.clear_to_send() {
++            il |= Interrupt::CTS as u32;
++        }
++        if self.flags.ring_indicator() {
++            il |= Interrupt::RI as u32;
++        }
++        self.int_level = il;
++        self.update();
++    }
++
++    fn loopback_break(&mut self, enable: bool) {
++        if enable {
++            self.loopback_tx(DATA_BREAK);
++        }
++    }
++
++    fn set_read_trigger(&mut self) {
++        self.read_trigger = 1;
++    }
++
++    pub fn realize(&mut self) {
 +        // SAFETY: self.char_backend has the correct size and alignment for a
 +        // CharBackend object, and its callbacks are of the correct types.
 +        unsafe {
@@ -317,7 +1041,7 @@ index c7193b41beec0b177dbc75ac0e43fcfea4c82bfb..c469877b1ca70dd1a02e3a2449c65ad3
 +        }
 +    }
 +
-+    fn reset(&mut self) {
++    pub fn reset(&mut self) {
 +        self.line_control.reset();
 +        self.receive_status_error_clear.reset();
 +        self.dmacr = 0;
@@ -332,1424 +1056,1371 @@ index c7193b41beec0b177dbc75ac0e43fcfea4c82bfb..c469877b1ca70dd1a02e3a2449c65ad3
 +        self.flags = 0.into();
 +        self.reset_fifo();
 +    }
++
++    pub fn reset_fifo(&mut self) {
++        self.read_count = 0;
++        self.read_pos = 0;
++
++        /* Reset FIFO flags */
++        self.flags.reset();
++    }
++
++    pub fn can_receive(&self) -> bool {
++        // trace_pl011_can_receive(s->lcr, s->read_count, r);
++        self.read_count < self.fifo_depth()
++    }
++
++    pub fn event(&mut self, event: QEMUChrEvent) {
++        if event == bindings::QEMUChrEvent::CHR_EVENT_BREAK && !self.fifo_enabled() {
++            self.put_fifo(DATA_BREAK);
++            self.receive_status_error_clear.set_break_error(true);
++        }
++    }
++
++    #[inline]
++    pub fn fifo_enabled(&self) -> bool {
++        matches!(self.line_control.fifos_enabled(), registers::Mode::FIFO)
++    }
++
++    #[inline]
++    pub fn loopback_enabled(&self) -> bool {
++        self.control.enable_loopback()
++    }
++
++    #[inline]
++    pub fn fifo_depth(&self) -> usize {
++        // Note: FIFO depth is expected to be power-of-2
++        if self.fifo_enabled() {
++            return PL011_FIFO_DEPTH;
++        }
++        1
++    }
++
++    pub fn put_fifo(&mut self, value: c_uint) {
++        let depth = self.fifo_depth();
++        assert!(depth > 0);
++        let slot = (self.read_pos + self.read_count) & (depth - 1);
++        self.read_fifo[slot] = value;
++        self.read_count += 1;
++        // s->flags &= ~PL011_FLAG_RXFE;
++        self.flags.set_receive_fifo_empty(false);
++        if self.read_count == depth {
++            //s->flags |= PL011_FLAG_RXFF;
++            self.flags.set_receive_fifo_full(true);
++        }
++
++        if self.read_count == self.read_trigger {
++            self.int_level |= registers::INT_RX;
++            self.update();
++        }
++    }
++
++    pub fn update(&self) {
++        let flags = self.int_level & self.int_enabled;
++        for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
++            // SAFETY: self.interrupts have been initialized in init().
++            unsafe { qemu_set_irq(*irq, i32::from(flags & i != 0)) };
++        }
++    }
 +}
 +
-+impl qemu_api::objects::Migrateable for PL011State {}
++/// Which bits in the interrupt status matter for each outbound IRQ line ?
++pub const IRQMASK: [u32; 6] = [
++    /* combined IRQ */
++    Interrupt::E
++        | Interrupt::MS
++        | Interrupt::RT as u32
++        | Interrupt::TX as u32
++        | Interrupt::RX as u32,
++    Interrupt::RX as u32,
++    Interrupt::TX as u32,
++    Interrupt::RT as u32,
++    Interrupt::MS,
++    Interrupt::E,
++];
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_can_receive(opaque: *mut c_void) -> c_int {
++    unsafe {
++        debug_assert!(!opaque.is_null());
++        let state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++        state.as_ref().can_receive().into()
++    }
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++///
++/// The buffer and size arguments must also be valid.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_receive(
++    opaque: *mut core::ffi::c_void,
++    buf: *const u8,
++    size: core::ffi::c_int,
++) {
++    unsafe {
++        debug_assert!(!opaque.is_null());
++        let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++        if state.as_ref().loopback_enabled() {
++            return;
++        }
++        if size > 0 {
++            debug_assert!(!buf.is_null());
++            state.as_mut().put_fifo(c_uint::from(buf.read_volatile()))
++        }
++    }
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_event(opaque: *mut core::ffi::c_void, event: QEMUChrEvent) {
++    unsafe {
++        debug_assert!(!opaque.is_null());
++        let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++        state.as_mut().event(event)
++    }
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer for `chr`.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_create(
++    addr: u64,
++    irq: qemu_irq,
++    chr: *mut Chardev,
++) -> *mut DeviceState {
++    unsafe {
++        let dev: *mut DeviceState = qdev_new(PL011State::TYPE_INFO.name);
++        let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
++
++        qdev_prop_set_chr(dev, bindings::TYPE_CHARDEV.as_ptr(), chr);
++        sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
++        sysbus_mmio_map(sysbus, 0, addr);
++        sysbus_connect_irq(sysbus, 0, irq);
++        dev
++    }
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_init(obj: *mut Object) {
++    unsafe {
++        debug_assert!(!obj.is_null());
++        let mut state = NonNull::new_unchecked(obj.cast::<PL011State>());
++        state.as_mut().init();
++    }
++}
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b7ab31af02d7bb50ae94be0b153baafc7ccfa375
+--- /dev/null
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -0,0 +1,70 @@
++// Copyright 2024, Linaro Limited
++// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++use core::ptr::NonNull;
++
++use qemu_api::{bindings::*, definitions::ObjectImpl};
++
++use crate::device::PL011State;
 +
 +#[used]
-+pub static CLK_NAME: &CStr = c"clk";
-+
-+impl PL011State {
-     pub fn read(
-         &mut self,
-         offset: hwaddr,
-@@ -394,39 +417,6 @@ fn set_read_trigger(&mut self) {
-         self.read_trigger = 1;
-     }
- 
--    pub fn realize(&mut self) {
--        // SAFETY: self.char_backend has the correct size and alignment for a
--        // CharBackend object, and its callbacks are of the correct types.
--        unsafe {
--            qemu_chr_fe_set_handlers(
--                addr_of_mut!(self.char_backend),
--                Some(pl011_can_receive),
--                Some(pl011_receive),
--                Some(pl011_event),
--                None,
--                addr_of_mut!(*self).cast::<c_void>(),
--                core::ptr::null_mut(),
--                true,
--            );
--        }
--    }
--
--    pub fn reset(&mut self) {
--        self.line_control.reset();
--        self.receive_status_error_clear.reset();
--        self.dmacr = 0;
--        self.int_enabled = 0;
--        self.int_level = 0;
--        self.ilpr = 0;
--        self.ibrd = 0;
--        self.fbrd = 0;
--        self.read_trigger = 1;
--        self.ifl = 0x12;
--        self.control.reset();
--        self.flags = 0.into();
--        self.reset_fifo();
--    }
--
-     pub fn reset_fifo(&mut self) {
-         self.read_count = 0;
-         self.read_pos = 0;
-@@ -583,17 +573,3 @@ pub fn update(&self) {
-         dev
-     }
- }
--
--/// # Safety
--///
--/// We expect the FFI user of this function to pass a valid pointer, that has
--/// the same size as [`PL011State`]. We also expect the device is
--/// readable/writeable from one thread at any time.
--#[no_mangle]
--pub unsafe extern "C" fn pl011_init(obj: *mut Object) {
--    unsafe {
--        debug_assert!(!obj.is_null());
--        let mut state = NonNull::new_unchecked(obj.cast::<PL011State>());
--        state.as_mut().init();
--    }
--}
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-deleted file mode 100644
-index b7ab31af02d7bb50ae94be0b153baafc7ccfa375..0000000000000000000000000000000000000000
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ /dev/null
-@@ -1,70 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--use core::ptr::NonNull;
--
--use qemu_api::{bindings::*, definitions::ObjectImpl};
--
--use crate::device::PL011State;
--
--#[used]
--pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
--    name: PL011State::TYPE_INFO.name,
--    unmigratable: true,
--    ..unsafe { ::core::mem::MaybeUninit::<VMStateDescription>::zeroed().assume_init() }
--};
--
--qemu_api::declare_properties! {
--    PL011_PROPERTIES,
--    qemu_api::define_property!(
--        c"chardev",
--        PL011State,
--        char_backend,
--        unsafe { &qdev_prop_chr },
--        CharBackend
--    ),
--    qemu_api::define_property!(
--        c"migrate-clk",
--        PL011State,
--        migrate_clock,
--        unsafe { &qdev_prop_bool },
--        bool
--    ),
--}
--
--qemu_api::device_class_init! {
--    pl011_class_init,
--    props => PL011_PROPERTIES,
--    realize_fn => Some(pl011_realize),
--    legacy_reset_fn => Some(pl011_reset),
--    vmsd => VMSTATE_PL011,
--}
--
--/// # Safety
--///
--/// We expect the FFI user of this function to pass a valid pointer, that has
--/// the same size as [`PL011State`]. We also expect the device is
--/// readable/writeable from one thread at any time.
--#[no_mangle]
--pub unsafe extern "C" fn pl011_realize(dev: *mut DeviceState, _errp: *mut *mut Error) {
--    unsafe {
--        assert!(!dev.is_null());
--        let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
--        state.as_mut().realize();
--    }
--}
--
--/// # Safety
--///
--/// We expect the FFI user of this function to pass a valid pointer, that has
--/// the same size as [`PL011State`]. We also expect the device is
--/// readable/writeable from one thread at any time.
--#[no_mangle]
--pub unsafe extern "C" fn pl011_reset(dev: *mut DeviceState) {
--    unsafe {
--        assert!(!dev.is_null());
--        let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
--        state.as_mut().reset();
--    }
--}
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 2939ee50c99ceaacf6ec68127272d58814e33679..f4d9cce4b01f605cfcbec7ea87c8b2009d77ee52 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -42,7 +42,6 @@
- extern crate qemu_api;
- 
- pub mod device;
--pub mod device_class;
- pub mod memory_ops;
- 
- pub const TYPE_PL011: &::core::ffi::CStr = c"pl011";
-diff --git a/rust/qemu-api-macros/src/device.rs b/rust/qemu-api-macros/src/device.rs
-new file mode 100644
-index 0000000000000000000000000000000000000000..3b965576a065601cd5c97d5ab6a2501f96d16a61
---- /dev/null
-+++ b/rust/qemu-api-macros/src/device.rs
-@@ -0,0 +1,433 @@
-+// Copyright 2024, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use proc_macro::TokenStream;
-+use quote::{format_ident, quote, ToTokens};
-+use syn::{
-+    parse::{Parse, ParseStream},
-+    Result,
++pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
++    name: PL011State::TYPE_INFO.name,
++    unmigratable: true,
++    ..unsafe { ::core::mem::MaybeUninit::<VMStateDescription>::zeroed().assume_init() }
 +};
-+use syn::{parse_macro_input, DeriveInput};
 +
-+use crate::{symbols::*, utilities::*};
-+
-+#[derive(Debug, Default)]
-+struct DeriveContainer {
-+    category: Option<syn::Path>,
-+    class_name: Option<syn::Ident>,
-+    class_name_override: Option<syn::Ident>,
++qemu_api::declare_properties! {
++    PL011_PROPERTIES,
++    qemu_api::define_property!(
++        c"chardev",
++        PL011State,
++        char_backend,
++        unsafe { &qdev_prop_chr },
++        CharBackend
++    ),
++    qemu_api::define_property!(
++        c"migrate-clk",
++        PL011State,
++        migrate_clock,
++        unsafe { &qdev_prop_bool },
++        bool
++    ),
 +}
 +
-+impl Parse for DeriveContainer {
-+    fn parse(input: ParseStream) -> Result<Self> {
-+        let _: syn::Token![#] = input.parse()?;
-+        let bracketed;
-+        _ = syn::bracketed!(bracketed in input);
-+        assert_eq!(DEVICE, bracketed.parse::<syn::Ident>()?);
-+        let mut retval = Self {
-+            category: None,
-+            class_name: None,
-+            class_name_override: None,
-+        };
-+        let content;
-+        _ = syn::parenthesized!(content in bracketed);
-+        while !content.is_empty() {
-+            let value: syn::Ident = content.parse()?;
-+            if value == CLASS_NAME {
-+                let _: syn::Token![=] = content.parse()?;
-+                if retval.class_name.is_some() {
-+                    panic!("{} can only be used at most once", CLASS_NAME);
-+                }
-+                retval.class_name = Some(content.parse()?);
-+            } else if value == CLASS_NAME_OVERRIDE {
-+                let _: syn::Token![=] = content.parse()?;
-+                if retval.class_name_override.is_some() {
-+                    panic!("{} can only be used at most once", CLASS_NAME_OVERRIDE);
-+                }
-+                retval.class_name_override = Some(content.parse()?);
-+            } else if value == CATEGORY {
-+                let _: syn::Token![=] = content.parse()?;
-+                if retval.category.is_some() {
-+                    panic!("{} can only be used at most once", CATEGORY);
-+                }
-+                let lit: syn::LitStr = content.parse()?;
-+                let path: syn::Path = lit.parse()?;
-+                retval.category = Some(path);
-+            } else {
-+                panic!("unrecognized token `{}`", value);
-+            }
++qemu_api::device_class_init! {
++    pl011_class_init,
++    props => PL011_PROPERTIES,
++    realize_fn => Some(pl011_realize),
++    legacy_reset_fn => Some(pl011_reset),
++    vmsd => VMSTATE_PL011,
++}
 +
-+            if !content.is_empty() {
-+                let _: syn::Token![,] = content.parse()?;
-+            }
-+        }
-+        if retval.class_name.is_some() && retval.class_name_override.is_some() {
-+            panic!(
-+                "Cannot define `{}` and `{}` at the same time",
-+                CLASS_NAME, CLASS_NAME_OVERRIDE
-+            );
-+        }
-+        Ok(retval)
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_realize(dev: *mut DeviceState, _errp: *mut *mut Error) {
++    unsafe {
++        assert!(!dev.is_null());
++        let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
++        state.as_mut().realize();
 +    }
 +}
 +
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_reset(dev: *mut DeviceState) {
++    unsafe {
++        assert!(!dev.is_null());
++        let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
++        state.as_mut().reset();
++    }
++}
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+new file mode 100644
+index 0000000000000000000000000000000000000000..2939ee50c99ceaacf6ec68127272d58814e33679
+--- /dev/null
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -0,0 +1,586 @@
++// Copyright 2024, Linaro Limited
++// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0-or-later
++//
++// PL011 QEMU Device Model
++//
++// This library implements a device model for the PrimeCell® UART (PL011)
++// device in QEMU.
++//
++#![doc = include_str!("../README.md")]
++//! # Library crate
++//!
++//! See [`PL011State`](crate::device::PL011State) for the device model type and
++//! the [`registers`] module for register types.
++
++#![deny(
++    rustdoc::broken_intra_doc_links,
++    rustdoc::redundant_explicit_links,
++    clippy::correctness,
++    clippy::suspicious,
++    clippy::complexity,
++    clippy::perf,
++    clippy::cargo,
++    clippy::nursery,
++    clippy::style,
++    // restriction group
++    clippy::dbg_macro,
++    clippy::as_underscore,
++    clippy::assertions_on_result_states,
++    // pedantic group
++    clippy::doc_markdown,
++    clippy::borrow_as_ptr,
++    clippy::cast_lossless,
++    clippy::option_if_let_else,
++    clippy::missing_const_for_fn,
++    clippy::cognitive_complexity,
++    clippy::missing_safety_doc,
++    )]
++
++extern crate bilge;
++extern crate bilge_impl;
++extern crate qemu_api;
++
++pub mod device;
++pub mod device_class;
++pub mod memory_ops;
++
++pub const TYPE_PL011: &::core::ffi::CStr = c"pl011";
++
++/// Offset of each register from the base memory address of the device.
++///
++/// # Source
++/// ARM DDI 0183G, Table 3-1 p.3-3
++#[doc(alias = "offset")]
++#[allow(non_camel_case_types)]
++#[repr(u64)]
 +#[derive(Debug)]
-+struct QdevProperty {
-+    name: Option<syn::LitCStr>,
-+    qdev_prop: Option<syn::Path>,
++pub enum RegisterOffset {
++    /// Data Register
++    ///
++    /// A write to this register initiates the actual data transmission
++    #[doc(alias = "UARTDR")]
++    DR = 0x000,
++    /// Receive Status Register or Error Clear Register
++    #[doc(alias = "UARTRSR")]
++    #[doc(alias = "UARTECR")]
++    RSR = 0x004,
++    /// Flag Register
++    ///
++    /// A read of this register shows if transmission is complete
++    #[doc(alias = "UARTFR")]
++    FR = 0x018,
++    /// Fractional Baud Rate Register
++    ///
++    /// responsible for baud rate speed
++    #[doc(alias = "UARTFBRD")]
++    FBRD = 0x028,
++    /// `IrDA` Low-Power Counter Register
++    #[doc(alias = "UARTILPR")]
++    ILPR = 0x020,
++    /// Integer Baud Rate Register
++    ///
++    /// Responsible for baud rate speed
++    #[doc(alias = "UARTIBRD")]
++    IBRD = 0x024,
++    /// line control register (data frame format)
++    #[doc(alias = "UARTLCR_H")]
++    LCR_H = 0x02C,
++    /// Toggle UART, transmission or reception
++    #[doc(alias = "UARTCR")]
++    CR = 0x030,
++    /// Interrupt FIFO Level Select Register
++    #[doc(alias = "UARTIFLS")]
++    FLS = 0x034,
++    /// Interrupt Mask Set/Clear Register
++    #[doc(alias = "UARTIMSC")]
++    IMSC = 0x038,
++    /// Raw Interrupt Status Register
++    #[doc(alias = "UARTRIS")]
++    RIS = 0x03C,
++    /// Masked Interrupt Status Register
++    #[doc(alias = "UARTMIS")]
++    MIS = 0x040,
++    /// Interrupt Clear Register
++    #[doc(alias = "UARTICR")]
++    ICR = 0x044,
++    /// DMA control Register
++    #[doc(alias = "UARTDMACR")]
++    DMACR = 0x048,
++    ///// Reserved, offsets `0x04C` to `0x07C`.
++    //Reserved = 0x04C,
 +}
 +
-+impl Parse for QdevProperty {
-+    fn parse(input: ParseStream) -> Result<Self> {
-+        let _: syn::Token![#] = input.parse()?;
-+        let bracketed;
-+        _ = syn::bracketed!(bracketed in input);
-+        assert_eq!(PROPERTY, bracketed.parse::<syn::Ident>()?);
-+        let mut retval = Self {
-+            name: None,
-+            qdev_prop: None,
-+        };
-+        let content;
-+        _ = syn::parenthesized!(content in bracketed);
-+        while !content.is_empty() {
-+            let value: syn::Ident = content.parse()?;
-+            if value == NAME {
-+                let _: syn::Token![=] = content.parse()?;
-+                if retval.name.is_some() {
-+                    panic!("{} can only be used at most once", NAME);
-+                }
-+                retval.name = Some(content.parse()?);
-+            } else if value == QDEV_PROP {
-+                let _: syn::Token![=] = content.parse()?;
-+                if retval.qdev_prop.is_some() {
-+                    panic!("{} can only be used at most once", QDEV_PROP);
-+                }
-+                retval.qdev_prop = Some(content.parse()?);
-+            } else {
-+                panic!("unrecognized token `{}`", value);
-+            }
++impl core::convert::TryFrom<u64> for RegisterOffset {
++    type Error = u64;
 +
-+            if !content.is_empty() {
-+                let _: syn::Token![,] = content.parse()?;
-+            }
-+        }
-+        Ok(retval)
-+    }
-+}
-+
-+pub fn derive_device(input: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(input as DeriveInput);
-+
-+    assert_is_repr_c_struct(&input, "Device");
-+
-+    let derive_container: DeriveContainer = input
-+        .attrs
-+        .iter()
-+        .find(|a| a.path() == DEVICE)
-+        .map(|a| syn::parse(a.to_token_stream().into()).expect("could not parse device attr"))
-+        .unwrap_or_default();
-+    let (qdev_properties_static, qdev_properties_expanded) = make_qdev_properties(&input);
-+    let class_expanded = gen_device_class(derive_container, qdev_properties_static, &input.ident);
-+    let name = input.ident;
-+
-+    let realize_fn = format_ident!("__{}_realize_generated", name);
-+    let reset_fn = format_ident!("__{}_reset_generated", name);
-+
-+    let expanded = quote! {
-+        unsafe impl ::qemu_api::objects::DeviceImplUnsafe for #name {
-+            const REALIZE: ::core::option::Option<
-+                unsafe extern "C" fn(
-+                    dev: *mut ::qemu_api::bindings::DeviceState,
-+                    errp: *mut *mut ::qemu_api::bindings::Error,
-+                ),
-+                > = Some(#realize_fn);
-+            const RESET: ::core::option::Option<
-+                unsafe extern "C" fn(dev: *mut ::qemu_api::bindings::DeviceState),
-+                > = Some(#reset_fn);
-+        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #realize_fn(
-+            dev: *mut ::qemu_api::bindings::DeviceState,
-+            errp: *mut *mut ::qemu_api::bindings::Error,
-+        ) {
-+            let mut instance = NonNull::new(dev.cast::<#name>()).expect(concat!("Expected dev to be a non-null pointer of type ", stringify!(#name)));
-+            unsafe {
-+                ::qemu_api::objects::DeviceImpl::realize(instance.as_mut());
-+            }
-+        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #reset_fn(
-+            dev: *mut ::qemu_api::bindings::DeviceState,
-+        ) {
-+            let mut instance = NonNull::new(dev.cast::<#name>()).expect(concat!("Expected dev to be a non-null pointer of type ", stringify!(#name)));
-+            unsafe {
-+                ::qemu_api::objects::DeviceImpl::reset(instance.as_mut());
-+            }
-+        }
-+
-+        #qdev_properties_expanded
-+        #class_expanded
-+    };
-+
-+    TokenStream::from(expanded)
-+}
-+
-+fn make_qdev_properties(input: &DeriveInput) -> (syn::Ident, proc_macro2::TokenStream) {
-+    let name = &input.ident;
-+
-+    let qdev_properties: Vec<(syn::Field, QdevProperty)> = match &input.data {
-+        syn::Data::Struct(syn::DataStruct {
-+            fields: syn::Fields::Named(fields),
-+            ..
-+        }) => fields
-+            .named
-+            .iter()
-+            .map(|f| {
-+                f.attrs
-+                    .iter()
-+                    .filter(|a| a.path() == PROPERTY)
-+                    .map(|a| (f.clone(), a.clone()))
-+            })
-+            .flatten()
-+            .map(|(f, a)| {
-+                (
-+                    f.clone(),
-+                    syn::parse(a.to_token_stream().into()).expect("could not parse property attr"),
-+                )
-+            })
-+            .collect::<Vec<(syn::Field, QdevProperty)>>(),
-+        _other => unreachable!(),
-+    };
-+
-+    let mut properties_expanded = quote! {
-+        unsafe { ::core::mem::MaybeUninit::<::qemu_api::bindings::Property>::zeroed().assume_init() }
-+    };
-+    let prop_len = qdev_properties.len() + 1;
-+    for (field, prop) in qdev_properties {
-+        let prop_name = prop.name.as_ref().unwrap();
-+        let field_name = field.ident.as_ref().unwrap();
-+        let qdev_prop = prop.qdev_prop.as_ref().unwrap();
-+        let prop = quote! {
-+            ::qemu_api::bindings::Property {
-+                name: ::core::ffi::CStr::as_ptr(#prop_name),
-+                info: unsafe { &#qdev_prop },
-+                offset: ::core::mem::offset_of!(#name, #field_name) as _,
-+                bitnr: 0,
-+                bitmask: 0,
-+                set_default: false,
-+                defval: ::qemu_api::bindings::Property__bindgen_ty_1 { i: 0 },
-+                arrayoffset: 0,
-+                arrayinfo: ::core::ptr::null(),
-+                arrayfieldsize: 0,
-+                link_type: ::core::ptr::null(),
-+            }
-+        };
-+        properties_expanded = quote! {
-+            #prop,
-+            #properties_expanded
-+        };
-+    }
-+    let properties_ident = format_ident!("__{}_QDEV_PROPERTIES", name);
-+    let expanded = quote! {
-+        #[no_mangle]
-+        pub static mut #properties_ident: [::qemu_api::bindings::Property; #prop_len] = [#properties_expanded];
-+    };
-+    (properties_ident, expanded)
-+}
-+
-+fn gen_device_class(
-+    derive_container: DeriveContainer,
-+    qdev_properties_static: syn::Ident,
-+    name: &syn::Ident,
-+) -> proc_macro2::TokenStream {
-+    let (class_name, class_def) = match (
-+        derive_container.class_name_override,
-+        derive_container.class_name,
-+    ) {
-+        (Some(class_name), _) => {
-+            let class_expanded = quote! {
-+                #[repr(C)]
-+                pub struct #class_name {
-+                    _inner: [u8; 0],
-+                }
-+            };
-+            (class_name, class_expanded)
-+        }
-+        (None, Some(class_name)) => (class_name, quote! {}),
-+        (None, None) => {
-+            let class_name = format_ident!("{}Class", name);
-+            let class_expanded = quote! {
-+                #[repr(C)]
-+                pub struct #class_name {
-+                    _inner: [u8; 0],
-+                }
-+            };
-+            (class_name, class_expanded)
-+        }
-+    };
-+    let class_init_fn = format_ident!("__{}_class_init_generated", class_name);
-+    let class_base_init_fn = format_ident!("__{}_class_base_init_generated", class_name);
-+
-+    let (vmsd, vmsd_impl) = {
-+        let (i, vmsd) = make_vmstate(name);
-+        (quote! { &#i }, vmsd)
-+    };
-+    let category = if let Some(category) = derive_container.category {
-+        quote! {
-+            const BITS_PER_LONG: u32 = ::core::ffi::c_ulong::BITS;
-+            let _: ::qemu_api::bindings::DeviceCategory = #category;
-+            let nr: ::core::ffi::c_ulong = #category as _;
-+            let mask = 1 << (nr as u32 % BITS_PER_LONG);
-+            let p = ::core::ptr::addr_of_mut!(dc.as_mut().categories).offset((nr as u32 / BITS_PER_LONG) as isize);
-+            let p: *mut ::core::ffi::c_ulong = p.cast();
-+            let categories = p.read_unaligned();
-+            p.write_unaligned(categories | mask);
-+        }
-+    } else {
-+        quote! {}
-+    };
-+    let props = quote! {
-+        ::qemu_api::bindings::device_class_set_props(dc.as_mut(), #qdev_properties_static.as_mut_ptr());
-+    };
-+
-+    quote! {
-+        #class_def
-+
-+        impl ::qemu_api::objects::ClassImpl for #class_name {
-+            type Object = #name;
-+        }
-+
-+        unsafe impl ::qemu_api::objects::ClassImplUnsafe for #class_name {
-+            const CLASS_INIT: Option<
-+                unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
-+                > = Some(#class_init_fn);
-+            const CLASS_BASE_INIT: Option<
-+                unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void),
-+                > = Some(#class_base_init_fn);
-+        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #class_init_fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void) {
-+            {
-+                {
-+                    let mut dc =
-+                        ::core::ptr::NonNull::new(klass.cast::<::qemu_api::bindings::DeviceClass>()).unwrap();
-+                    unsafe {
-+                        dc.as_mut().realize =
-+                            <#name as ::qemu_api::objects::DeviceImplUnsafe>::REALIZE;
-+                        ::qemu_api::bindings::device_class_set_legacy_reset(
-+                            dc.as_mut(),
-+                            <#name as ::qemu_api::objects::DeviceImplUnsafe>::RESET
-+                        );
-+                        dc.as_mut().vmsd = #vmsd;
-+                        #props
-+                        #category
++    fn try_from(value: u64) -> Result<Self, Self::Error> {
++        macro_rules! case {
++            ($($discriminant:ident),*$(,)*) => {
++                /* check that matching on all macro arguments compiles, which means we are not
++                 * missing any enum value; if the type definition ever changes this will stop
++                 * compiling.
++                 */
++                const fn _assert_exhaustive(val: RegisterOffset) {
++                    match val {
++                        $(RegisterOffset::$discriminant => (),)*
 +                    }
 +                }
-+                let mut klass = NonNull::new(klass.cast::<#class_name>()).expect(concat!("Expected klass to be a non-null pointer of type ", stringify!(#class_name)));
-+                unsafe {
-+                    ::qemu_api::objects::ClassImpl::class_init(klass.as_mut(), data);
-+                }
-+            }
-+        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #class_base_init_fn(klass: *mut ObjectClass, data: *mut core::ffi::c_void) {
-+            {
-+                let mut klass = NonNull::new(klass.cast::<#class_name>()).expect(concat!("Expected klass to be a non-null pointer of type ", stringify!(#class_name)));
-+                unsafe {
-+                    ::qemu_api::objects::ClassImpl::class_base_init(klass.as_mut(), data);
-+                }
-+            }
-+        }
 +
-+        #vmsd_impl
++                match value {
++                    $(x if x == Self::$discriminant as u64 => Ok(Self::$discriminant),)*
++                     _ => Err(value),
++                }
++            }
++        }
++        case! { DR, RSR, FR, FBRD, ILPR, IBRD, LCR_H, CR, FLS, IMSC, RIS, MIS, ICR, DMACR }
 +    }
 +}
 +
-+fn make_vmstate(name: &syn::Ident) -> (syn::Ident, proc_macro2::TokenStream) {
-+    let vmstate_description_ident = format_ident!("__VMSTATE_{}", name);
++pub mod registers {
++    //! Device registers exposed as typed structs which are backed by arbitrary
++    //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
++    //!
++    //! All PL011 registers are essentially 32-bit wide, but are typed here as
++    //! bitmaps with only the necessary width. That is, if a struct bitmap
++    //! in this module is for example 16 bits long, it should be conceived
++    //! as a 32-bit register where the unmentioned higher bits are always
++    //! unused thus treated as zero when read or written.
++    use bilge::prelude::*;
 +
-+    let pre_load = format_ident!("__{}_pre_load_generated", name);
-+    let post_load = format_ident!("__{}_post_load_generated", name);
-+    let pre_save = format_ident!("__{}_pre_save_generated", name);
-+    let post_save = format_ident!("__{}_post_save_generated", name);
-+    let needed = format_ident!("__{}_needed_generated", name);
-+    let dev_unplug_pending = format_ident!("__{}_dev_unplug_pending_generated", name);
++    // TODO: FIFO Mode has different semantics
++    /// Data Register, `UARTDR`
++    ///
++    /// The `UARTDR` register is the data register.
++    ///
++    /// For words to be transmitted:
++    ///
++    /// - if the FIFOs are enabled, data written to this location is pushed onto
++    ///   the transmit
++    /// FIFO
++    /// - if the FIFOs are not enabled, data is stored in the transmitter
++    ///   holding register (the
++    /// bottom word of the transmit FIFO).
++    ///
++    /// The write operation initiates transmission from the UART. The data is
++    /// prefixed with a start bit, appended with the appropriate parity bit
++    /// (if parity is enabled), and a stop bit. The resultant word is then
++    /// transmitted.
++    ///
++    /// For received words:
++    ///
++    /// - if the FIFOs are enabled, the data byte and the 4-bit status (break,
++    ///   frame, parity,
++    /// and overrun) is pushed onto the 12-bit wide receive FIFO
++    /// - if the FIFOs are not enabled, the data byte and status are stored in
++    ///   the receiving
++    /// holding register (the bottom word of the receive FIFO).
++    ///
++    /// The received data byte is read by performing reads from the `UARTDR`
++    /// register along with the corresponding status information. The status
++    /// information can also be read by a read of the `UARTRSR/UARTECR`
++    /// register.
++    ///
++    /// # Note
++    ///
++    /// You must disable the UART before any of the control registers are
++    /// reprogrammed. When the UART is disabled in the middle of
++    /// transmission or reception, it completes the current character before
++    /// stopping.
++    ///
++    /// # Source
++    /// ARM DDI 0183G 3.3.1 Data Register, UARTDR
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    #[doc(alias = "UARTDR")]
++    pub struct Data {
++        _reserved: u4,
++        pub data: u8,
++        pub framing_error: bool,
++        pub parity_error: bool,
++        pub break_error: bool,
++        pub overrun_error: bool,
++    }
 +
-+    let migrateable_fish = quote! {<#name as ::qemu_api::objects::Migrateable>};
-+    let vmstate_description = quote! {
-+        #[used]
-+        #[allow(non_upper_case_globals)]
-+        pub static #vmstate_description_ident: ::qemu_api::bindings::VMStateDescription = ::qemu_api::bindings::VMStateDescription {
-+            name: if let Some(name) = #migrateable_fish::NAME {
-+                name.as_ptr()
-+            } else {
-+                <#name as ::qemu_api::objects::ObjectImplUnsafe>::TYPE_INFO.name
-+            },
-+            unmigratable: #migrateable_fish::UNMIGRATABLE,
-+            early_setup: #migrateable_fish::EARLY_SETUP,
-+            version_id: #migrateable_fish::VERSION_ID,
-+            minimum_version_id: #migrateable_fish::MINIMUM_VERSION_ID,
-+            priority: #migrateable_fish::PRIORITY,
-+            pre_load: Some(#pre_load),
-+            post_load: Some(#post_load),
-+            pre_save: Some(#pre_save),
-+            post_save: Some(#post_save),
-+            needed: Some(#needed),
-+            dev_unplug_pending: Some(#dev_unplug_pending),
-+            fields: ::core::ptr::null(),
-+            subsections: ::core::ptr::null(),
-+        };
++    // TODO: FIFO Mode has different semantics
++    /// Receive Status Register / Error Clear Register, `UARTRSR/UARTECR`
++    ///
++    /// The UARTRSR/UARTECR register is the receive status register/error clear
++    /// register. Receive status can also be read from the `UARTRSR`
++    /// register. If the status is read from this register, then the status
++    /// information for break, framing and parity corresponds to the
++    /// data character read from the [Data register](Data), `UARTDR` prior to
++    /// reading the UARTRSR register. The status information for overrun is
++    /// set immediately when an overrun condition occurs.
++    ///
++    ///
++    /// # Note
++    /// The received data character must be read first from the [Data
++    /// Register](Data), `UARTDR` before reading the error status associated
++    /// with that data character from the `UARTRSR` register. This read
++    /// sequence cannot be reversed, because the `UARTRSR` register is
++    /// updated only when a read occurs from the `UARTDR` register. However,
++    /// the status information can also be obtained by reading the `UARTDR`
++    /// register
++    ///
++    /// # Source
++    /// ARM DDI 0183G 3.3.2 Receive Status Register/Error Clear Register,
++    /// UARTRSR/UARTECR
++    #[bitsize(8)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    pub struct ReceiveStatusErrorClear {
++        pub framing_error: bool,
++        pub parity_error: bool,
++        pub break_error: bool,
++        pub overrun_error: bool,
++        _reserved_unpredictable: u4,
++    }
 +
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #pre_load(opaque: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::pre_load(instance.as_mut())
-+            }
++    impl ReceiveStatusErrorClear {
++        pub fn reset(&mut self) {
++            // All the bits are cleared to 0 on reset.
++            *self = 0.into();
 +        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #post_load(opaque: *mut ::core::ffi::c_void, version_id: core::ffi::c_int) -> ::core::ffi::c_int {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::post_load(instance.as_mut(), version_id)
-+            }
-+        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #pre_save(opaque: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::pre_save(instance.as_mut())
-+            }
-+        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #post_save(opaque: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::post_save(instance.as_mut())
-+            }
-+        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #needed(opaque: *mut ::core::ffi::c_void) -> bool {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::needed(instance.as_mut())
-+            }
-+        }
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #dev_unplug_pending(opaque: *mut ::core::ffi::c_void) -> bool {
-+            let mut instance = NonNull::new(opaque.cast::<#name>()).expect(concat!("Expected opaque to be a non-null pointer of type ", stringify!(#name), "::Object"));
-+            unsafe {
-+                ::qemu_api::objects::Migrateable::dev_unplug_pending(instance.as_mut())
-+            }
-+        }
-+    };
++    }
 +
-+    let expanded = quote! {
-+        #vmstate_description
-+    };
-+    (vmstate_description_ident, expanded)
++    impl Default for ReceiveStatusErrorClear {
++        fn default() -> Self {
++            0.into()
++        }
++    }
++
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    /// Flag Register, `UARTFR`
++    #[doc(alias = "UARTFR")]
++    pub struct Flags {
++        /// CTS Clear to send. This bit is the complement of the UART clear to
++        /// send, `nUARTCTS`, modem status input. That is, the bit is 1
++        /// when `nUARTCTS` is LOW.
++        pub clear_to_send: bool,
++        /// DSR Data set ready. This bit is the complement of the UART data set
++        /// ready, `nUARTDSR`, modem status input. That is, the bit is 1 when
++        /// `nUARTDSR` is LOW.
++        pub data_set_ready: bool,
++        /// DCD Data carrier detect. This bit is the complement of the UART data
++        /// carrier detect, `nUARTDCD`, modem status input. That is, the bit is
++        /// 1 when `nUARTDCD` is LOW.
++        pub data_carrier_detect: bool,
++        /// BUSY UART busy. If this bit is set to 1, the UART is busy
++        /// transmitting data. This bit remains set until the complete
++        /// byte, including all the stop bits, has been sent from the
++        /// shift register. This bit is set as soon as the transmit FIFO
++        /// becomes non-empty, regardless of whether the UART is enabled
++        /// or not.
++        pub busy: bool,
++        /// RXFE Receive FIFO empty. The meaning of this bit depends on the
++        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
++        /// is disabled, this bit is set when the receive holding
++        /// register is empty. If the FIFO is enabled, the RXFE bit is
++        /// set when the receive FIFO is empty.
++        pub receive_fifo_empty: bool,
++        /// TXFF Transmit FIFO full. The meaning of this bit depends on the
++        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
++        /// is disabled, this bit is set when the transmit holding
++        /// register is full. If the FIFO is enabled, the TXFF bit is
++        /// set when the transmit FIFO is full.
++        pub transmit_fifo_full: bool,
++        /// RXFF Receive FIFO full. The meaning of this bit depends on the state
++        /// of the FEN bit in the UARTLCR_H register. If the FIFO is
++        /// disabled, this bit is set when the receive holding register
++        /// is full. If the FIFO is enabled, the RXFF bit is set when
++        /// the receive FIFO is full.
++        pub receive_fifo_full: bool,
++        /// Transmit FIFO empty. The meaning of this bit depends on the state of
++        /// the FEN bit in the [Line Control register](LineControl),
++        /// `UARTLCR_H`. If the FIFO is disabled, this bit is set when the
++        /// transmit holding register is empty. If the FIFO is enabled,
++        /// the TXFE bit is set when the transmit FIFO is empty. This
++        /// bit does not indicate if there is data in the transmit shift
++        /// register.
++        pub transmit_fifo_empty: bool,
++        /// `RI`, is `true` when `nUARTRI` is `LOW`.
++        pub ring_indicator: bool,
++        _reserved_zero_no_modify: u7,
++    }
++
++    impl Flags {
++        pub fn reset(&mut self) {
++            // After reset TXFF, RXFF, and BUSY are 0, and TXFE and RXFE are 1
++            self.set_receive_fifo_full(false);
++            self.set_transmit_fifo_full(false);
++            self.set_busy(false);
++            self.set_receive_fifo_empty(true);
++            self.set_transmit_fifo_empty(true);
++        }
++    }
++
++    impl Default for Flags {
++        fn default() -> Self {
++            let mut ret: Self = 0.into();
++            ret.reset();
++            ret
++        }
++    }
++
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    /// Line Control Register, `UARTLCR_H`
++    #[doc(alias = "UARTLCR_H")]
++    pub struct LineControl {
++        /// 15:8 - Reserved, do not modify, read as zero.
++        _reserved_zero_no_modify: u8,
++        /// 7 SPS Stick parity select.
++        /// 0 = stick parity is disabled
++        /// 1 = either:
++        /// • if the EPS bit is 0 then the parity bit is transmitted and checked
++        /// as a 1 • if the EPS bit is 1 then the parity bit is
++        /// transmitted and checked as a 0. This bit has no effect when
++        /// the PEN bit disables parity checking and generation. See Table 3-11
++        /// on page 3-14 for the parity truth table.
++        pub sticky_parity: bool,
++        /// WLEN Word length. These bits indicate the number of data bits
++        /// transmitted or received in a frame as follows: b11 = 8 bits
++        /// b10 = 7 bits
++        /// b01 = 6 bits
++        /// b00 = 5 bits.
++        pub word_length: WordLength,
++        /// FEN Enable FIFOs:
++        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
++        /// 1-byte-deep holding registers 1 = transmit and receive FIFO
++        /// buffers are enabled (FIFO mode).
++        pub fifos_enabled: Mode,
++        /// 3 STP2 Two stop bits select. If this bit is set to 1, two stop bits
++        /// are transmitted at the end of the frame. The receive
++        /// logic does not check for two stop bits being received.
++        pub two_stops_bits: bool,
++        /// EPS Even parity select. Controls the type of parity the UART uses
++        /// during transmission and reception:
++        /// - 0 = odd parity. The UART generates or checks for an odd number of
++        ///   1s in the data and parity bits.
++        /// - 1 = even parity. The UART generates or checks for an even number
++        ///   of 1s in the data and parity bits.
++        /// This bit has no effect when the `PEN` bit disables parity checking
++        /// and generation. See Table 3-11 on page 3-14 for the parity
++        /// truth table.
++        pub parity: Parity,
++        /// 1 PEN Parity enable:
++        ///
++        /// - 0 = parity is disabled and no parity bit added to the data frame
++        /// - 1 = parity checking and generation is enabled.
++        ///
++        /// See Table 3-11 on page 3-14 for the parity truth table.
++        pub parity_enabled: bool,
++        /// BRK Send break.
++        ///
++        /// If this bit is set to `1`, a low-level is continually output on the
++        /// `UARTTXD` output, after completing transmission of the
++        /// current character. For the proper execution of the break command,
++        /// the software must set this bit for at least two complete
++        /// frames. For normal use, this bit must be cleared to `0`.
++        pub send_break: bool,
++    }
++
++    impl LineControl {
++        pub fn reset(&mut self) {
++            // All the bits are cleared to 0 when reset.
++            *self = 0.into();
++        }
++    }
++
++    impl Default for LineControl {
++        fn default() -> Self {
++            0.into()
++        }
++    }
++
++    #[bitsize(1)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `EPS` "Even parity select", field of [Line Control
++    /// register](LineControl).
++    pub enum Parity {
++        /// - 0 = odd parity. The UART generates or checks for an odd number of
++        ///   1s in the data and parity bits.
++        Odd = 0,
++        /// - 1 = even parity. The UART generates or checks for an even number
++        ///   of 1s in the data and parity bits.
++        Even = 1,
++    }
++
++    #[bitsize(1)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `FEN` "Enable FIFOs" or Device mode, field of [Line Control
++    /// register](LineControl).
++    pub enum Mode {
++        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
++        /// 1-byte-deep holding registers
++        Character = 0,
++        /// 1 = transmit and receive FIFO buffers are enabled (FIFO mode).
++        FIFO = 1,
++    }
++
++    impl From<Mode> for bool {
++        fn from(val: Mode) -> Self {
++            matches!(val, Mode::FIFO)
++        }
++    }
++
++    #[bitsize(2)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `WLEN` Word length, field of [Line Control register](LineControl).
++    ///
++    /// These bits indicate the number of data bits transmitted or received in a
++    /// frame as follows:
++    pub enum WordLength {
++        /// b11 = 8 bits
++        _8Bits = 0b11,
++        /// b10 = 7 bits
++        _7Bits = 0b10,
++        /// b01 = 6 bits
++        _6Bits = 0b01,
++        /// b00 = 5 bits.
++        _5Bits = 0b00,
++    }
++
++    /// Control Register, `UARTCR`
++    ///
++    /// The `UARTCR` register is the control register. All the bits are cleared
++    /// to `0` on reset except for bits `9` and `8` that are set to `1`.
++    ///
++    /// # Source
++    /// ARM DDI 0183G, 3.3.8 Control Register, `UARTCR`, Table 3-12
++    #[bitsize(16)]
++    #[doc(alias = "UARTCR")]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    pub struct Control {
++        /// `UARTEN` UART enable: 0 = UART is disabled. If the UART is disabled
++        /// in the middle of transmission or reception, it completes the current
++        /// character before stopping. 1 = the UART is enabled. Data
++        /// transmission and reception occurs for either UART signals or SIR
++        /// signals depending on the setting of the SIREN bit.
++        pub enable_uart: bool,
++        /// `SIREN` `SIR` enable: 0 = IrDA SIR ENDEC is disabled. `nSIROUT`
++        /// remains LOW (no light pulse generated), and signal transitions on
++        /// SIRIN have no effect. 1 = IrDA SIR ENDEC is enabled. Data is
++        /// transmitted and received on nSIROUT and SIRIN. UARTTXD remains HIGH,
++        /// in the marking state. Signal transitions on UARTRXD or modem status
++        /// inputs have no effect. This bit has no effect if the UARTEN bit
++        /// disables the UART.
++        pub enable_sir: bool,
++        /// `SIRLP` SIR low-power IrDA mode. This bit selects the IrDA encoding
++        /// mode. If this bit is cleared to 0, low-level bits are transmitted as
++        /// an active high pulse with a width of 3/ 16th of the bit period. If
++        /// this bit is set to 1, low-level bits are transmitted with a pulse
++        /// width that is 3 times the period of the IrLPBaud16 input signal,
++        /// regardless of the selected bit rate. Setting this bit uses less
++        /// power, but might reduce transmission distances.
++        pub sir_lowpower_irda_mode: u1,
++        /// Reserved, do not modify, read as zero.
++        _reserved_zero_no_modify: u4,
++        /// `LBE` Loopback enable. If this bit is set to 1 and the SIREN bit is
++        /// set to 1 and the SIRTEST bit in the Test Control register, UARTTCR
++        /// on page 4-5 is set to 1, then the nSIROUT path is inverted, and fed
++        /// through to the SIRIN path. The SIRTEST bit in the test register must
++        /// be set to 1 to override the normal half-duplex SIR operation. This
++        /// must be the requirement for accessing the test registers during
++        /// normal operation, and SIRTEST must be cleared to 0 when loopback
++        /// testing is finished. This feature reduces the amount of external
++        /// coupling required during system test. If this bit is set to 1, and
++        /// the SIRTEST bit is set to 0, the UARTTXD path is fed through to the
++        /// UARTRXD path. In either SIR mode or UART mode, when this bit is set,
++        /// the modem outputs are also fed through to the modem inputs. This bit
++        /// is cleared to 0 on reset, to disable loopback.
++        pub enable_loopback: bool,
++        /// `TXE` Transmit enable. If this bit is set to 1, the transmit section
++        /// of the UART is enabled. Data transmission occurs for either UART
++        /// signals, or SIR signals depending on the setting of the SIREN bit.
++        /// When the UART is disabled in the middle of transmission, it
++        /// completes the current character before stopping.
++        pub enable_transmit: bool,
++        /// `RXE` Receive enable. If this bit is set to 1, the receive section
++        /// of the UART is enabled. Data reception occurs for either UART
++        /// signals or SIR signals depending on the setting of the SIREN bit.
++        /// When the UART is disabled in the middle of reception, it completes
++        /// the current character before stopping.
++        pub enable_receive: bool,
++        /// `DTR` Data transmit ready. This bit is the complement of the UART
++        /// data transmit ready, `nUARTDTR`, modem status output. That is, when
++        /// the bit is programmed to a 1 then `nUARTDTR` is LOW.
++        pub data_transmit_ready: bool,
++        /// `RTS` Request to send. This bit is the complement of the UART
++        /// request to send, `nUARTRTS`, modem status output. That is, when the
++        /// bit is programmed to a 1 then `nUARTRTS` is LOW.
++        pub request_to_send: bool,
++        /// `Out1` This bit is the complement of the UART Out1 (`nUARTOut1`)
++        /// modem status output. That is, when the bit is programmed to a 1 the
++        /// output is 0. For DTE this can be used as Data Carrier Detect (DCD).
++        pub out_1: bool,
++        /// `Out2` This bit is the complement of the UART Out2 (`nUARTOut2`)
++        /// modem status output. That is, when the bit is programmed to a 1, the
++        /// output is 0. For DTE this can be used as Ring Indicator (RI).
++        pub out_2: bool,
++        /// `RTSEn` RTS hardware flow control enable. If this bit is set to 1,
++        /// RTS hardware flow control is enabled. Data is only requested when
++        /// there is space in the receive FIFO for it to be received.
++        pub rts_hardware_flow_control_enable: bool,
++        /// `CTSEn` CTS hardware flow control enable. If this bit is set to 1,
++        /// CTS hardware flow control is enabled. Data is only transmitted when
++        /// the `nUARTCTS` signal is asserted.
++        pub cts_hardware_flow_control_enable: bool,
++    }
++
++    impl Control {
++        pub fn reset(&mut self) {
++            *self = 0.into();
++            self.set_enable_receive(true);
++            self.set_enable_transmit(true);
++        }
++    }
++
++    impl Default for Control {
++        fn default() -> Self {
++            let mut ret: Self = 0.into();
++            ret.reset();
++            ret
++        }
++    }
++
++    /// Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC
++    pub const INT_OE: u32 = 1 << 10;
++    pub const INT_BE: u32 = 1 << 9;
++    pub const INT_PE: u32 = 1 << 8;
++    pub const INT_FE: u32 = 1 << 7;
++    pub const INT_RT: u32 = 1 << 6;
++    pub const INT_TX: u32 = 1 << 5;
++    pub const INT_RX: u32 = 1 << 4;
++    pub const INT_DSR: u32 = 1 << 3;
++    pub const INT_DCD: u32 = 1 << 2;
++    pub const INT_CTS: u32 = 1 << 1;
++    pub const INT_RI: u32 = 1 << 0;
++    pub const INT_E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
++    pub const INT_MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
++
++    #[repr(u32)]
++    pub enum Interrupt {
++        OE = 1 << 10,
++        BE = 1 << 9,
++        PE = 1 << 8,
++        FE = 1 << 7,
++        RT = 1 << 6,
++        TX = 1 << 5,
++        RX = 1 << 4,
++        DSR = 1 << 3,
++        DCD = 1 << 2,
++        CTS = 1 << 1,
++        RI = 1 << 0,
++    }
++
++    impl Interrupt {
++        pub const E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
++        pub const MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
++    }
 +}
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 59aba592d9ae4c5a4cdfdc6f9b9b08363b8a57e5..7753a853fae72fc87e6dc642cf076c6d0c736345 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -2,42 +2,21 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
-+#![allow(dead_code)]
 +
- use proc_macro::TokenStream;
--use quote::{format_ident, quote};
--use syn::{parse_macro_input, DeriveInput};
-+
-+mod device;
-+mod object;
-+mod symbols;
-+mod utilities;
- 
- #[proc_macro_derive(Object)]
- pub fn derive_object(input: TokenStream) -> TokenStream {
--    let input = parse_macro_input!(input as DeriveInput);
--
--    let name = input.ident;
--    let module_static = format_ident!("__{}_LOAD_MODULE", name);
--
--    let expanded = quote! {
--        #[allow(non_upper_case_globals)]
--        #[used]
--        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
--        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
--        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
--        pub static #module_static: extern "C" fn() = {
--            extern "C" fn __register() {
--                unsafe {
--                    ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::definitions::ObjectImpl>::TYPE_INFO);
--                }
--            }
--
--            extern "C" fn __load() {
--                unsafe {
--                    ::qemu_api::bindings::register_module_init(
--                        Some(__register),
--                        ::qemu_api::bindings::module_init_type::MODULE_INIT_QOM
--                    );
--                }
--            }
--
--            __load
--        };
--    };
-+    object::derive_object(input)
-+}
- 
--    TokenStream::from(expanded)
-+#[proc_macro_derive(Device, attributes(device, property))]
-+pub fn derive_device(input: TokenStream) -> TokenStream {
-+    device::derive_device(input)
- }
-diff --git a/rust/qemu-api-macros/src/object.rs b/rust/qemu-api-macros/src/object.rs
++// TODO: You must disable the UART before any of the control registers are
++// reprogrammed. When the UART is disabled in the middle of transmission or
++// reception, it completes the current character before stopping
+diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
 new file mode 100644
-index 0000000000000000000000000000000000000000..f808069aea42de752dea7524fef64467427f105c
+index 0000000000000000000000000000000000000000..8d066ebf6d016fa30db004933751a854d7e59117
 --- /dev/null
-+++ b/rust/qemu-api-macros/src/object.rs
-@@ -0,0 +1,107 @@
++++ b/rust/hw/char/pl011/src/memory_ops.rs
+@@ -0,0 +1,59 @@
 +// Copyright 2024, Linaro Limited
 +// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +
-+use proc_macro::TokenStream;
-+use quote::{format_ident, quote};
-+use syn::{parse_macro_input, DeriveInput};
++use core::{mem::MaybeUninit, ptr::NonNull};
 +
-+use crate::utilities::*;
++use qemu_api::bindings::*;
 +
-+pub fn derive_object(input: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(input as DeriveInput);
++use crate::device::PL011State;
 +
-+    assert_is_repr_c_struct(&input, "Object");
++pub static PL011_OPS: MemoryRegionOps = MemoryRegionOps {
++    read: Some(pl011_read),
++    write: Some(pl011_write),
++    read_with_attrs: None,
++    write_with_attrs: None,
++    endianness: device_endian::DEVICE_NATIVE_ENDIAN,
++    valid: unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_1>::zeroed().assume_init() },
++    impl_: MemoryRegionOps__bindgen_ty_2 {
++        min_access_size: 4,
++        max_access_size: 4,
++        ..unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_2>::zeroed().assume_init() }
++    },
++};
 +
-+    let name = input.ident;
-+    let module_static = format_ident!("__{}_LOAD_MODULE", name);
++#[no_mangle]
++unsafe extern "C" fn pl011_read(
++    opaque: *mut core::ffi::c_void,
++    addr: hwaddr,
++    size: core::ffi::c_uint,
++) -> u64 {
++    assert!(!opaque.is_null());
++    let mut state = unsafe { NonNull::new_unchecked(opaque.cast::<PL011State>()) };
++    let val = unsafe { state.as_mut().read(addr, size) };
++    match val {
++        std::ops::ControlFlow::Break(val) => val,
++        std::ops::ControlFlow::Continue(val) => {
++            // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++            // initialized in realize().
++            let cb_ptr = unsafe { core::ptr::addr_of_mut!(state.as_mut().char_backend) };
++            unsafe { qemu_chr_fe_accept_input(cb_ptr) };
 +
-+    let ctors = quote! {
-+        #[allow(non_upper_case_globals)]
-+        #[used]
-+        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
-+        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
-+        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
-+        pub static #module_static: extern "C" fn() = {
-+            extern "C" fn __register() {
-+                unsafe {
-+                    ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::objects::ObjectImplUnsafe>::TYPE_INFO);
-+                }
-+            }
-+
-+            extern "C" fn __load() {
-+                unsafe {
-+                    ::qemu_api::bindings::register_module_init(
-+                        Some(__register),
-+                        ::qemu_api::bindings::module_init_type::MODULE_INIT_QOM
-+                    );
-+                }
-+            }
-+
-+            __load
-+        };
-+    };
-+
-+    let instance_init = format_ident!("__{}_instance_init_generated", name);
-+    let instance_post_init = format_ident!("__{}_instance_post_init_generated", name);
-+    let instance_finalize = format_ident!("__{}_instance_finalize_generated", name);
-+
-+    let obj_impl_unsafe = quote! {
-+        unsafe impl ::qemu_api::objects::ObjectImplUnsafe for #name {
-+            const TYPE_INFO: ::qemu_api::bindings::TypeInfo =
-+                ::qemu_api::bindings::TypeInfo {
-+                    name: <Self as ::qemu_api::objects::ObjectImpl>::TYPE_NAME.as_ptr(),
-+                    parent: if let Some(pname) = <Self as ::qemu_api::objects::ObjectImpl>::PARENT_TYPE_NAME {
-+                        pname.as_ptr()
-+                    } else {
-+                        ::core::ptr::null()
-+                    },
-+                    instance_size: ::core::mem::size_of::<Self>() as ::qemu_api::bindings::size_t,
-+                    instance_align: ::core::mem::align_of::<Self>() as ::qemu_api::bindings::size_t,
-+                    instance_init: <Self as ::qemu_api::objects::ObjectImplUnsafe>::INSTANCE_INIT,
-+                    instance_post_init: <Self as ::qemu_api::objects::ObjectImplUnsafe>::INSTANCE_POST_INIT,
-+                    instance_finalize: <Self as ::qemu_api::objects::ObjectImplUnsafe>::INSTANCE_FINALIZE,
-+                    abstract_: <Self as ::qemu_api::objects::ObjectImpl>::ABSTRACT,
-+                    class_size:  ::core::mem::size_of::<<Self as ::qemu_api::objects::ObjectImpl>::Class>() as ::qemu_api::bindings::size_t,
-+                    class_init: <<Self as ::qemu_api::objects::ObjectImpl>::Class as ::qemu_api::objects::ClassImplUnsafe>::CLASS_INIT,
-+                    class_base_init: <<Self as ::qemu_api::objects::ObjectImpl>::Class as ::qemu_api::objects::ClassImplUnsafe>::CLASS_BASE_INIT,
-+                    class_data: ::core::ptr::null_mut(),
-+                    interfaces: ::core::ptr::null_mut(),
-+                };
-+            const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut ::qemu_api::bindings::Object)> = Some(#instance_init);
-+            const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut ::qemu_api::bindings::Object)> = Some(#instance_post_init);
-+            const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut ::qemu_api::bindings::Object)> = Some(#instance_finalize);
++            val
 +        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #instance_init(obj: *mut ::qemu_api::bindings::Object) {
-+            let mut instance = NonNull::new(obj.cast::<#name>()).expect(concat!("Expected obj to be a non-null pointer of type ", stringify!(#name)));
-+            unsafe {
-+                ::qemu_api::objects::ObjectImpl::instance_init(instance.as_mut());
-+            }
-+        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #instance_post_init(obj: *mut ::qemu_api::bindings::Object) {
-+                let mut instance = NonNull::new(obj.cast::<#name>()).expect(concat!("Expected obj to be a non-null pointer of type ", stringify!(#name)));
-+            unsafe {
-+                ::qemu_api::objects::ObjectImpl::instance_post_init(instance.as_mut());
-+            }
-+        }
-+
-+        #[no_mangle]
-+        pub unsafe extern "C" fn #instance_finalize(obj: *mut ::qemu_api::bindings::Object) {
-+                let mut instance = NonNull::new(obj.cast::<#name>()).expect(concat!("Expected obj to be a non-null pointer of type ", stringify!(#name)));
-+            unsafe {
-+                ::qemu_api::objects::ObjectImpl::instance_finalize(instance.as_mut());
-+            }
-+        }
-+    };
-+
-+    let expanded = quote! {
-+        #obj_impl_unsafe
-+
-+        #ctors
-+    };
-+    TokenStream::from(expanded)
++    }
 +}
-diff --git a/rust/qemu-api-macros/src/symbols.rs b/rust/qemu-api-macros/src/symbols.rs
++
++#[no_mangle]
++unsafe extern "C" fn pl011_write(
++    opaque: *mut core::ffi::c_void,
++    addr: hwaddr,
++    data: u64,
++    _size: core::ffi::c_uint,
++) {
++    unsafe {
++        assert!(!opaque.is_null());
++        let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++        state.as_mut().write(addr, data)
++    }
++}
+diff --git a/rust/hw/meson.build b/rust/hw/meson.build
 new file mode 100644
-index 0000000000000000000000000000000000000000..f73768d228ed2b4d478c18336db56cb11e70f012
+index 0000000000000000000000000000000000000000..860196645e719624d2e2e6bc301b62b81ab2e19b
 --- /dev/null
-+++ b/rust/qemu-api-macros/src/symbols.rs
-@@ -0,0 +1,55 @@
-+// Copyright 2024, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
++++ b/rust/hw/meson.build
+@@ -0,0 +1 @@
++subdir('char')
+diff --git a/rust/meson.build b/rust/meson.build
+index 7a32b1b195083571931ad589965c10ddaf6383b1..def77389cddc52f5d4503840e9bdfb1207586fa2 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -1,2 +1,4 @@
+ subdir('qemu-api-macros')
+ subdir('qemu-api')
 +
-+use core::fmt;
-+use syn::{Ident, Path};
++subdir('hw')
+diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+index 62a2cf45d28ed5565076443b9f931a647d395542..30677c3ec9032ea01090f74602d839d1c571d012 100755
+--- a/scripts/archive-source.sh
++++ b/scripts/archive-source.sh
+@@ -27,7 +27,9 @@ sub_file="${sub_tdir}/submodule.tar"
+ # in their checkout, because the build environment is completely
+ # different to the host OS.
+ subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
+-  berkeley-testfloat-3 proc-macro2-1-rs quote-1-rs
++  berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
++  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs proc-macro2-1-rs
++  proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+   syn-2-rs unicode-ident-1-rs"
+ sub_deinit=""
+ 
+diff --git a/scripts/make-release b/scripts/make-release
+index cf7d694ef73ba1c6c5afad5d211a42f6a6fe1577..8dc939124c4fd4abf3509c3b64c0588bc8810962 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -18,7 +18,9 @@ fi
+ 
+ # Only include wraps that are invoked with subproject()
+ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
+-  berkeley-testfloat-3 proc-macro2-1-rs quote-1-rs
++  berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
++  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs proc-macro2-1-rs
++  proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+   syn-2-rs unicode-ident-1-rs"
+ 
+ src="$1"
+diff --git a/scripts/rust/rust_root_crate.sh b/scripts/rust/rust_root_crate.sh
+new file mode 100755
+index 0000000000000000000000000000000000000000..975bddf7f1a4c6ca7770f800bdc894cdff1f3ab1
+--- /dev/null
++++ b/scripts/rust/rust_root_crate.sh
+@@ -0,0 +1,13 @@
++#!/bin/sh
 +
-+#[derive(Copy, Clone, Debug)]
-+pub struct Symbol(&'static str);
++set -eu
 +
-+pub const DEVICE: Symbol = Symbol("device");
-+pub const NAME: Symbol = Symbol("name");
-+pub const CATEGORY: Symbol = Symbol("category");
-+pub const CLASS_NAME: Symbol = Symbol("class_name");
-+pub const CLASS_NAME_OVERRIDE: Symbol = Symbol("class_name_override");
-+pub const QDEV_PROP: Symbol = Symbol("qdev_prop");
-+pub const MIGRATEABLE: Symbol = Symbol("migrateable");
-+pub const PROPERTIES: Symbol = Symbol("properties");
-+pub const PROPERTY: Symbol = Symbol("property");
++cat <<EOF
++// @generated
++// This file is autogenerated by scripts/rust_root_crate.sh
 +
-+impl PartialEq<Symbol> for Ident {
-+    fn eq(&self, word: &Symbol) -> bool {
-+        self == word.0
-+    }
-+}
++EOF
 +
-+impl<'a> PartialEq<Symbol> for &'a Ident {
-+    fn eq(&self, word: &Symbol) -> bool {
-+        *self == word.0
-+    }
-+}
-+
-+impl PartialEq<Symbol> for Path {
-+    fn eq(&self, word: &Symbol) -> bool {
-+        self.is_ident(word.0)
-+    }
-+}
-+
-+impl<'a> PartialEq<Symbol> for &'a Path {
-+    fn eq(&self, word: &Symbol) -> bool {
-+        self.is_ident(word.0)
-+    }
-+}
-+
-+impl PartialEq<Ident> for Symbol {
-+    fn eq(&self, ident: &Ident) -> bool {
-+        ident == self.0
-+    }
-+}
-+
-+impl fmt::Display for Symbol {
-+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-+        self.0.fmt(fmt)
-+    }
-+}
-diff --git a/rust/qemu-api-macros/src/utilities.rs b/rust/qemu-api-macros/src/utilities.rs
++for crate in $*; do
++    echo "extern crate $crate;"
++done
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index b6888182ca4e5b59b90cfde1792a5770e9a5240a..50f173f90dbe5dde1162cfe96636f63637574c74 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -6,6 +6,13 @@
+ /keycodemapdb
+ /libvfio-user
+ /slirp
++/arbitrary-int-1.2.7
++/bilge-0.2.0
++/bilge-impl-0.2.0
++/either-1.12.0
++/itertools-0.11.0
++/proc-macro-error-1.0.4
++/proc-macro-error-attr-1.0.4
+ /proc-macro2-1.0.84
+ /quote-1.0.36
+ /syn-2.0.66
+diff --git a/subprojects/arbitrary-int-1-rs.wrap b/subprojects/arbitrary-int-1-rs.wrap
 new file mode 100644
-index 0000000000000000000000000000000000000000..bd8776539aa0bb3bcaa023bd88d962efe1431746
+index 0000000000000000000000000000000000000000..e580538a8776001147bfc5c5c73df2bfccac6347
 --- /dev/null
-+++ b/rust/qemu-api-macros/src/utilities.rs
-@@ -0,0 +1,152 @@
-+// Copyright 2024, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use syn::{parenthesized, token, Data, DeriveInput, LitInt};
-+
-+#[derive(Default)]
-+pub enum Abi {
-+    #[default]
-+    Rust,
-+    C,
-+    Transparent,
-+    Other(String),
-+}
-+
-+#[derive(Default)]
-+pub struct Repr {
-+    pub abi: Abi,
-+    /// whether the attribute was declared in the definition.
-+    pub present: bool,
-+    pub align: Option<usize>,
-+    pub packed: Option<usize>,
-+}
-+
-+impl core::fmt::Display for Repr {
-+    fn fmt(&self, fmt: &mut core::fmt::Formatter) -> core::fmt::Result {
-+        write!(fmt, "repr(")?;
-+        match &self.abi {
-+            Abi::C => write!(fmt, "C")?,
-+            Abi::Rust => write!(fmt, "Rust")?,
-+            Abi::Transparent => write!(fmt, "transparent")?,
-+            Abi::Other(s) => write!(fmt, "{}", s)?,
-+        }
-+        if self.align.is_some() || self.packed.is_some() {
-+            write!(fmt, ", ")?;
-+            if let Some(v) = self.align {
-+                write!(fmt, "align({})", v)?;
-+                if self.packed.is_some() {
-+                    write!(fmt, ", ")?;
-+                }
-+            }
-+            match self.packed {
-+                Some(1) => write!(fmt, "packed")?,
-+                Some(n) => write!(fmt, "packed({})", n)?,
-+                None => {}
-+            }
-+        }
-+        write!(fmt, ")")
-+    }
-+}
-+
-+impl Repr {
-+    pub fn detect_repr(attrs: &[syn::Attribute]) -> Self {
-+        let mut repr = Self::default();
-+
-+        // We don't validate the repr attribute; if it's invalid rustc will complain
-+        // anyway.
-+        for attr in attrs {
-+            if attr.path().is_ident("repr") {
-+                repr.present = true;
-+                if let Err(err) = attr.parse_nested_meta(|meta| {
-+                    // #[repr(C)]
-+                    if meta.path.is_ident("C") {
-+                        repr.abi = Abi::C;
-+                        return Ok(());
-+                    }
-+
-+                    // #[repr(Rust)]
-+                    if meta.path.is_ident("Rust") {
-+                        repr.abi = Abi::Rust;
-+                        return Ok(());
-+                    }
-+
-+                    // #[repr(transparent)]
-+                    if meta.path.is_ident("transparent") {
-+                        repr.abi = Abi::Transparent;
-+                        return Ok(());
-+                    }
-+
-+                    // #[repr(align(N))]
-+                    if meta.path.is_ident("align") {
-+                        let content;
-+                        parenthesized!(content in meta.input);
-+                        let lit: LitInt = content.parse()?;
-+                        let n: usize = lit.base10_parse()?;
-+                        repr.align = Some(n);
-+                        return Ok(());
-+                    }
-+
-+                    // #[repr(packed)] or #[repr(packed(N))], omitted N means 1
-+                    if meta.path.is_ident("packed") {
-+                        repr.packed = if meta.input.peek(token::Paren) {
-+                            let content;
-+                            parenthesized!(content in meta.input);
-+                            let lit: LitInt = content.parse()?;
-+                            let n: usize = lit.base10_parse()?;
-+                            Some(n)
-+                        } else {
-+                            Some(1)
-+                        };
-+                        return Ok(());
-+                    }
-+
-+                    if let Some(i) = meta.path.get_ident() {
-+                        repr.abi = Abi::Other(i.to_string());
-+                    }
-+
-+                    Err(meta.error("unrecognized repr"))
-+                }) {
-+                    println!("Error while processing Object Derive macro: {}", err);
-+                }
-+            }
-+        }
-+        repr
-+    }
-+}
-+
-+pub fn assert_is_repr_c_struct(input: &DeriveInput, derive_macro: &'static str) {
-+    if !matches!(input.data, Data::Struct(_)) {
-+        panic!(
-+            "`{}` derive macro can only be used with structs, and `{}` is {}",
-+            derive_macro,
-+            input.ident,
-+            match input.data {
-+                Data::Struct(_) => unreachable!(),
-+                Data::Enum(_) => "enum",
-+                Data::Union(_) => "union",
-+            }
-+        );
-+    }
-+    match Repr::detect_repr(&input.attrs) {
-+        Repr { abi: Abi::C, .. } => { /* all good */ }
-+        Repr {
-+            abi: Abi::Transparent,
-+            ..
-+        } => {
-+            // If the data layout is `transparent`, then its representation
-+            // depends on the ABI of the wrapped type. We cannot
-+            // detect it here.
-+        }
-+        other => {
-+            panic!(
-+                "`{}` derive macro can only be used with repr(C) structs, and `{}` {} \
-+                 {}\nHint: Annotate the struct with `#[repr(C)]`.",
-+                derive_macro,
-+                input.ident,
-+                if other.present { "is" } else { "defaults to" },
-+                other,
-+            );
-+        }
-+    }
-+}
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index c72d34b607df1da90185046f4d9c26b3cb6c6523..0bd70b59afcc005251135802897954789b068e6e 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -3,8 +3,7 @@ _qemu_api_rs = static_library(
-   structured_sources(
-     [
-       'src/lib.rs',
--      'src/definitions.rs',
--      'src/device_class.rs',
-+      'src/objects.rs',
-     ],
-     {'.' : bindings_rs},
-   ),
-diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
-deleted file mode 100644
-index 60bd3f8aaa65ae131a9c4628a96ac52f590d7324..0000000000000000000000000000000000000000
---- a/rust/qemu-api/src/definitions.rs
-+++ /dev/null
-@@ -1,97 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--//! Definitions required by QEMU when registering a device.
--
--use ::core::ffi::{c_void, CStr};
--
--use crate::bindings::{Object, ObjectClass, TypeInfo};
--
--/// Trait a type must implement to be registered with QEMU.
--pub trait ObjectImpl {
--    type Class;
--    const TYPE_INFO: TypeInfo;
--    const TYPE_NAME: &'static CStr;
--    const PARENT_TYPE_NAME: Option<&'static CStr>;
--    const ABSTRACT: bool;
--    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)>;
--    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)>;
--    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)>;
--}
--
--pub trait Class {
--    const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)>;
--    const CLASS_BASE_INIT: Option<
--        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
--    >;
--}
--
--#[macro_export]
--macro_rules! module_init {
--    ($func:expr, $type:expr) => {
--        #[used]
--        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
--        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
--        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
--        pub static LOAD_MODULE: extern "C" fn() = {
--            extern "C" fn __load() {
--                unsafe {
--                    $crate::bindings::register_module_init(Some($func), $type);
--                }
--            }
--
--            __load
--        };
--    };
--    (qom: $func:ident => $body:block) => {
--        // NOTE: To have custom identifiers for the ctor func we need to either supply
--        // them directly as a macro argument or create them with a proc macro.
--        #[used]
--        #[cfg_attr(target_os = "linux", link_section = ".ctors")]
--        #[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
--        #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
--        pub static LOAD_MODULE: extern "C" fn() = {
--            extern "C" fn __load() {
--                #[no_mangle]
--                unsafe extern "C" fn $func() {
--                    $body
--                }
--
--                unsafe {
--                    $crate::bindings::register_module_init(
--                        Some($func),
--                        $crate::bindings::module_init_type::MODULE_INIT_QOM,
--                    );
--                }
--            }
--
--            __load
--        };
--    };
--}
--
--#[macro_export]
--macro_rules! type_info {
--    ($t:ty) => {
--        $crate::bindings::TypeInfo {
--            name: <$t as $crate::definitions::ObjectImpl>::TYPE_NAME.as_ptr(),
--            parent: if let Some(pname) = <$t as $crate::definitions::ObjectImpl>::PARENT_TYPE_NAME {
--                pname.as_ptr()
--            } else {
--                ::core::ptr::null_mut()
--            },
--            instance_size: ::core::mem::size_of::<$t>() as $crate::bindings::size_t,
--            instance_align: ::core::mem::align_of::<$t>() as $crate::bindings::size_t,
--            instance_init: <$t as $crate::definitions::ObjectImpl>::INSTANCE_INIT,
--            instance_post_init: <$t as $crate::definitions::ObjectImpl>::INSTANCE_POST_INIT,
--            instance_finalize: <$t as $crate::definitions::ObjectImpl>::INSTANCE_FINALIZE,
--            abstract_: <$t as $crate::definitions::ObjectImpl>::ABSTRACT,
--            class_size:  ::core::mem::size_of::<<$t as $crate::definitions::ObjectImpl>::Class>() as $crate::bindings::size_t,
--            class_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_INIT,
--            class_base_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_BASE_INIT,
--            class_data: ::core::ptr::null_mut(),
--            interfaces: ::core::ptr::null_mut(),
--        };
--    }
--}
-diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_class.rs
-deleted file mode 100644
-index 1ea95beb78dbf8637d9af1edb668d51411a9ac33..0000000000000000000000000000000000000000
---- a/rust/qemu-api/src/device_class.rs
-+++ /dev/null
-@@ -1,128 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--use std::sync::OnceLock;
--
--use crate::bindings::Property;
--
--#[macro_export]
--macro_rules! device_class_init {
--    ($func:ident, props => $props:ident, realize_fn => $realize_fn:expr, legacy_reset_fn => $legacy_reset_fn:expr, vmsd => $vmsd:ident$(,)*) => {
--        #[no_mangle]
--        pub unsafe extern "C" fn $func(
--            klass: *mut $crate::bindings::ObjectClass,
--            _: *mut ::core::ffi::c_void,
--        ) {
--            let mut dc =
--                ::core::ptr::NonNull::new(klass.cast::<$crate::bindings::DeviceClass>()).unwrap();
--            dc.as_mut().realize = $realize_fn;
--            dc.as_mut().vmsd = &$vmsd;
--            $crate::bindings::device_class_set_legacy_reset(dc.as_mut(), $legacy_reset_fn);
--            $crate::bindings::device_class_set_props(dc.as_mut(), $props.as_mut_ptr());
--        }
--    };
--}
--
--#[macro_export]
--macro_rules! define_property {
--    ($name:expr, $state:ty, $field:expr, $prop:expr, $type:expr, default = $defval:expr$(,)*) => {
--        $crate::bindings::Property {
--            name: {
--                #[used]
--                static _TEMP: &::core::ffi::CStr = $name;
--                _TEMP.as_ptr()
--            },
--            info: $prop,
--            offset: ::core::mem::offset_of!($state, $field)
--                .try_into()
--                .expect("Could not fit offset value to type"),
--            bitnr: 0,
--            bitmask: 0,
--            set_default: true,
--            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval.into() },
--            arrayoffset: 0,
--            arrayinfo: ::core::ptr::null(),
--            arrayfieldsize: 0,
--            link_type: ::core::ptr::null(),
--        }
--    };
--    ($name:expr, $state:ty, $field:expr, $prop:expr, $type:expr$(,)*) => {
--        $crate::bindings::Property {
--            name: {
--                #[used]
--                static _TEMP: &::core::ffi::CStr = $name;
--                _TEMP.as_ptr()
--            },
--            info: $prop,
--            offset: ::core::mem::offset_of!($state, $field)
--                .try_into()
--                .expect("Could not fit offset value to type"),
--            bitnr: 0,
--            bitmask: 0,
--            set_default: false,
--            defval: $crate::bindings::Property__bindgen_ty_1 { i: 0 },
--            arrayoffset: 0,
--            arrayinfo: ::core::ptr::null(),
--            arrayfieldsize: 0,
--            link_type: ::core::ptr::null(),
--        }
--    };
--}
--
--#[repr(C)]
--pub struct Properties<const N: usize>(pub OnceLock<[Property; N]>, pub fn() -> [Property; N]);
--
--impl<const N: usize> Properties<N> {
--    pub fn as_mut_ptr(&mut self) -> *mut Property {
--        _ = self.0.get_or_init(self.1);
--        self.0.get_mut().unwrap().as_mut_ptr()
--    }
--}
--
--#[macro_export]
--macro_rules! declare_properties {
--    ($ident:ident, $($prop:expr),*$(,)*) => {
--
--        const fn _calc_prop_len() -> usize {
--            let mut len = 1;
--            $({
--                _ = stringify!($prop);
--                len += 1;
--            })*
--            len
--        }
--        const PROP_LEN: usize = _calc_prop_len();
--
--        fn _make_properties() -> [$crate::bindings::Property; PROP_LEN] {
--            [
--                $($prop),*,
--                    unsafe { ::core::mem::MaybeUninit::<$crate::bindings::Property>::zeroed().assume_init() },
--            ]
--        }
--
--        #[no_mangle]
--        pub static mut $ident: $crate::device_class::Properties<PROP_LEN> = $crate::device_class::Properties(::std::sync::OnceLock::new(), _make_properties);
--    };
--}
--
--#[macro_export]
--macro_rules! vm_state_description {
--    ($(#[$outer:meta])*
--     $name:ident,
--     $(name: $vname:expr,)*
--     $(unmigratable: $um_val:expr,)*
--    ) => {
--        #[used]
--        $(#[$outer])*
--        pub static $name: $crate::bindings::VMStateDescription = $crate::bindings::VMStateDescription {
--            $(name: {
--                #[used]
--                static VMSTATE_NAME: &::core::ffi::CStr = $vname;
--                $vname.as_ptr()
--            },)*
--            unmigratable: true,
--            ..unsafe { ::core::mem::MaybeUninit::<$crate::bindings::VMStateDescription>::zeroed().assume_init() }
--        };
--    }
--}
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index e72fb4b4bb13b0982f828b6ec1cfe848c3e6bdf0..b94adc15288cdc62de7679988f549ebd80f895d7 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -27,11 +27,7 @@ unsafe impl Sync for bindings::Property {}
- unsafe impl Sync for bindings::TypeInfo {}
- unsafe impl Sync for bindings::VMStateDescription {}
- 
--pub mod definitions;
--pub mod device_class;
--
--#[cfg(test)]
--mod tests;
-+pub mod objects;
- 
- use std::alloc::{GlobalAlloc, Layout};
- 
-diff --git a/rust/qemu-api/src/objects.rs b/rust/qemu-api/src/objects.rs
++++ b/subprojects/arbitrary-int-1-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = arbitrary-int-1.2.7
++source_url = https://crates.io/api/v1/crates/arbitrary-int/1.2.7/download
++source_filename = arbitrary-int-1.2.7.tar.gz
++source_hash = c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d
++#method = cargo
++patch_directory = arbitrary-int-1-rs
+diff --git a/subprojects/bilge-0.2-rs.wrap b/subprojects/bilge-0.2-rs.wrap
 new file mode 100644
-index 0000000000000000000000000000000000000000..5c6762023ed6914f9c6b7dd16a5e07f778c2d4fa
+index 0000000000000000000000000000000000000000..7a4339d29896922c392e2e1952e02a1ee82b1874
 --- /dev/null
-+++ b/rust/qemu-api/src/objects.rs
-@@ -0,0 +1,90 @@
-+// Copyright 2024, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
++++ b/subprojects/bilge-0.2-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = bilge-0.2.0
++source_url = https://crates.io/api/v1/crates/bilge/0.2.0/download
++source_filename = bilge-0.2.0.tar.gz
++source_hash = dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57
++#method = cargo
++patch_directory = bilge-0.2-rs
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
+new file mode 100644
+index 0000000000000000000000000000000000000000..eefb10c36c24007d48833748cf200d67b6ff7ee7
+--- /dev/null
++++ b/subprojects/bilge-impl-0.2-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = bilge-impl-0.2.0
++source_url = https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
++source_filename = bilge-impl-0.2.0.tar.gz
++source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
++#method = cargo
++patch_directory = bilge-impl-0.2-rs
+diff --git a/subprojects/either-1-rs.wrap b/subprojects/either-1-rs.wrap
+new file mode 100644
+index 0000000000000000000000000000000000000000..6046712036c8db1b142d083ae6f8a2d58d6203ab
+--- /dev/null
++++ b/subprojects/either-1-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = either-1.12.0
++source_url = https://crates.io/api/v1/crates/either/1.12.0/download
++source_filename = either-1.12.0.tar.gz
++source_hash = 3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b
++#method = cargo
++patch_directory = either-1-rs
+diff --git a/subprojects/itertools-0.11-rs.wrap b/subprojects/itertools-0.11-rs.wrap
+new file mode 100644
+index 0000000000000000000000000000000000000000..66b05252cd55ed3149b79b992a6d224e9789ba97
+--- /dev/null
++++ b/subprojects/itertools-0.11-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = itertools-0.11.0
++source_url = https://crates.io/api/v1/crates/itertools/0.11.0/download
++source_filename = itertools-0.11.0.tar.gz
++source_hash = b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57
++#method = cargo
++patch_directory = itertools-0.11-rs
+diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..34a189cbaec77ba6631c6a8cb40d7eb3f32099ee
+--- /dev/null
++++ b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
+@@ -0,0 +1,19 @@
++project('arbitrary-int-1-rs', 'rust',
++  version: '1.2.7',
++  license: 'MIT',
++  default_options: [])
 +
-+//! Implementation traits for QEMU objects, devices.
++_arbitrary_int_rs = static_library(
++  'arbitrary_int',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [],
++)
 +
-+use ::core::ffi::{c_int, c_void, CStr};
++arbitrary_int_dep = declare_dependency(
++  link_with: _arbitrary_int_rs,
++)
 +
-+use crate::bindings::{DeviceState, Error, MigrationPriority, Object, ObjectClass, TypeInfo};
++meson.override_dependency('arbitrary-int-1-rs', arbitrary_int_dep)
+diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..a6ed4a8f0cde70be0bf75cd1ad40bc64e3a11a3a
+--- /dev/null
++++ b/subprojects/packagefiles/bilge-0.2-rs/meson.build
+@@ -0,0 +1,29 @@
++project(
++  'bilge-0.2-rs',
++  'rust',
++  version : '0.2.0',
++  license : 'MIT or Apache-2.0',
++)
 +
-+/// Trait a type must implement to be registered with QEMU.
-+pub trait ObjectImpl {
-+    type Class: ClassImpl;
-+    const TYPE_NAME: &'static CStr;
-+    const PARENT_TYPE_NAME: Option<&'static CStr>;
-+    const ABSTRACT: bool;
++subproject('arbitrary-int-1-rs', required: true)
++subproject('bilge-impl-0.2-rs', required: true)
 +
-+    unsafe fn instance_init(&mut self) {}
-+    fn instance_post_init(&mut self) {}
-+    fn instance_finalize(&mut self) {}
-+}
++arbitrary_int_dep = dependency('arbitrary-int-1-rs')
++bilge_impl_dep = dependency('bilge-impl-0.2-rs')
 +
-+/// The `extern`/`unsafe` analogue of [`ObjectImpl`]; it is used internally by `#[derive(Object)]`
-+/// and should not be implemented manually.
-+pub unsafe trait ObjectImplUnsafe {
-+    const TYPE_INFO: TypeInfo;
++lib = static_library(
++  'bilge',
++  'src/lib.rs',
++  override_options : ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi : 'rust',
++  dependencies: [
++    arbitrary_int_dep,
++    bilge_impl_dep,
++  ],
++)
 +
-+    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)>;
-+    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)>;
-+    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)>;
-+}
++bilge_dep = declare_dependency(
++  link_with : [lib],
++)
 +
-+/// Methods for QOM class types.
-+pub trait ClassImpl {
-+    type Object: ObjectImpl;
++meson.override_dependency('bilge-0.2-rs', bilge_dep)
+diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..80243c7024d898826cc3c98ba5b78ef286b79ce9
+--- /dev/null
++++ b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
+@@ -0,0 +1,45 @@
++project('bilge-impl-0.2-rs', 'rust',
++  version: '0.2.0',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
 +
-+    unsafe fn class_init(&mut self, _data: *mut core::ffi::c_void) {}
-+    unsafe fn class_base_init(&mut self, _data: *mut core::ffi::c_void) {}
-+}
++subproject('itertools-0.11-rs', required: true)
++subproject('proc-macro-error-attr-1-rs', required: true)
++subproject('proc-macro-error-1-rs', required: true)
++subproject('quote-1-rs', required: true)
++subproject('syn-2-rs', required: true)
++subproject('proc-macro2-1-rs', required: true)
 +
-+/// The `extern`/`unsafe` analogue of [`ClassImpl`]; it is used internally by `#[derive(Object)]`
-+/// and should not be implemented manually.
-+pub unsafe trait ClassImplUnsafe {
-+    const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)>;
-+    const CLASS_BASE_INIT: Option<
-+        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-+    >;
-+}
++itertools_dep = dependency('itertools-0.11-rs', native: true)
++proc_macro_error_attr_dep = dependency('proc-macro-error-attr-1-rs', native: true)
++proc_macro_error_dep = dependency('proc-macro-error-1-rs', native: true)
++quote_dep = dependency('quote-1-rs', native: true)
++syn_dep = dependency('syn-2-rs', native: true)
++proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
 +
-+/// Implementation methods for device types.
-+pub trait DeviceImpl: ObjectImpl {
-+    fn realize(&mut self) {}
-+    fn reset(&mut self) {}
-+}
++rust = import('rust')
 +
-+/// The `extern`/`unsafe` analogue of [`DeviceImpl`]; it is used internally by `#[derive(Device)]`
-+/// and should not be implemented manually.
-+pub unsafe trait DeviceImplUnsafe {
-+    const REALIZE: Option<unsafe extern "C" fn(dev: *mut DeviceState, _errp: *mut *mut Error)>;
-+    const RESET: Option<unsafe extern "C" fn(dev: *mut DeviceState)>;
-+}
++_bilge_impl_rs = rust.proc_macro(
++  'bilge_impl',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_args: [
++    '--cfg', 'use_fallback',
++    '--cfg', 'feature="syn-error"',
++    '--cfg', 'feature="proc-macro"',
++  ],
++  dependencies: [
++    itertools_dep,
++    proc_macro_error_attr_dep,
++    proc_macro_error_dep,
++    quote_dep,
++    syn_dep,
++    proc_macro2_dep,
++  ],
++)
 +
-+/// Constant metadata and implementation methods for types with device migration state.
-+pub trait Migrateable: DeviceImplUnsafe {
-+    const NAME: Option<&'static CStr> = None;
-+    const UNMIGRATABLE: bool = true;
-+    const EARLY_SETUP: bool = false;
-+    const VERSION_ID: c_int = 1;
-+    const MINIMUM_VERSION_ID: c_int = 1;
-+    const PRIORITY: MigrationPriority = MigrationPriority::MIG_PRI_DEFAULT;
++bilge_impl_dep = declare_dependency(
++  link_with: _bilge_impl_rs,
++)
 +
-+    unsafe fn pre_load(&mut self) -> c_int {
-+        0
-+    }
-+    unsafe fn post_load(&mut self, _version_id: c_int) -> c_int {
-+        0
-+    }
-+    unsafe fn pre_save(&mut self) -> c_int {
-+        0
-+    }
-+    unsafe fn post_save(&mut self) -> c_int {
-+        0
-+    }
-+    unsafe fn needed(&mut self) -> bool {
-+        false
-+    }
-+    unsafe fn dev_unplug_pending(&mut self) -> bool {
-+        false
-+    }
-+}
-diff --git a/rust/qemu-api/src/tests.rs b/rust/qemu-api/src/tests.rs
-deleted file mode 100644
-index df54edbd4e27e7d2aafc243355d1826d52497c21..0000000000000000000000000000000000000000
---- a/rust/qemu-api/src/tests.rs
-+++ /dev/null
-@@ -1,49 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--use crate::{
--    bindings::*, declare_properties, define_property, device_class_init, vm_state_description,
--};
--
--#[test]
--fn test_device_decl_macros() {
--    // Test that macros can compile.
--    vm_state_description! {
--        VMSTATE,
--        name: c"name",
--        unmigratable: true,
--    }
--
--    #[repr(C)]
--    pub struct DummyState {
--        pub char_backend: CharBackend,
--        pub migrate_clock: bool,
--    }
--
--    declare_properties! {
--        DUMMY_PROPERTIES,
--            define_property!(
--                c"chardev",
--                DummyState,
--                char_backend,
--                unsafe { &qdev_prop_chr },
--                CharBackend
--            ),
--            define_property!(
--                c"migrate-clk",
--                DummyState,
--                migrate_clock,
--                unsafe { &qdev_prop_bool },
--                bool
--            ),
--    }
--
--    device_class_init! {
--        dummy_class_init,
--        props => DUMMY_PROPERTIES,
--        realize_fn => None,
--        reset_fn => None,
--        vmsd => VMSTATE,
--    }
--}
-diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
-index a53335f3092e06723039513a1bf5a0d35b4afcd7..9f56ce1c24d0ff86e9b0146b0f82c37ac868fab7 100644
---- a/subprojects/packagefiles/syn-2-rs/meson.build
-+++ b/subprojects/packagefiles/syn-2-rs/meson.build
-@@ -24,6 +24,7 @@ _syn_rs = static_library(
-     '--cfg', 'feature="printing"',
-     '--cfg', 'feature="clone-impls"',
-     '--cfg', 'feature="proc-macro"',
-+    '--cfg', 'feature="extra-traits"',
-   ],
-   dependencies: [
-     quote_dep,
++meson.override_dependency('bilge-impl-0.2-rs', bilge_impl_dep)
+diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojects/packagefiles/either-1-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..a5842eb3a6a63cf94883663758ca5eb11225ad58
+--- /dev/null
++++ b/subprojects/packagefiles/either-1-rs/meson.build
+@@ -0,0 +1,24 @@
++project('either-1-rs', 'rust',
++  version: '1.12.0',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
++
++_either_rs = static_library(
++  'either',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2018', 'build.rust_std=2018'],
++  rust_abi: 'rust',
++  rust_args: [
++    '--cfg', 'feature="use_std"',
++    '--cfg', 'feature="use_alloc"',
++  ],
++  dependencies: [],
++  native: true,
++)
++
++either_dep = declare_dependency(
++  link_with: _either_rs,
++)
++
++meson.override_dependency('either-1-rs', either_dep, native: true)
+diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..13d2d27019d215fb793c457e494be7387a7ef455
+--- /dev/null
++++ b/subprojects/packagefiles/itertools-0.11-rs/meson.build
+@@ -0,0 +1,30 @@
++project('itertools-0.11-rs', 'rust',
++  version: '0.11.0',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
++
++subproject('either-1-rs', required: true)
++
++either_dep = dependency('either-1-rs', native: true)
++
++_itertools_rs = static_library(
++  'itertools',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2018', 'build.rust_std=2018'],
++  rust_abi: 'rust',
++  rust_args: [
++    '--cfg', 'feature="use_std"',
++    '--cfg', 'feature="use_alloc"',
++  ],
++  dependencies: [
++    either_dep,
++  ],
++  native: true,
++)
++
++itertools_dep = declare_dependency(
++  link_with: _itertools_rs,
++)
++
++meson.override_dependency('itertools-0.11-rs', itertools_dep, native: true)
+diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..38ea7b89d39d3f131959f00665b51a49d5bc95e5
+--- /dev/null
++++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
+@@ -0,0 +1,40 @@
++project('proc-macro-error-1-rs', 'rust',
++  version: '1.0.4',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
++
++subproject('proc-macro-error-attr-1-rs', required: true)
++subproject('quote-1-rs', required: true)
++subproject('syn-2-rs', required: true)
++subproject('proc-macro2-1-rs', required: true)
++
++proc_macro_error_attr_dep = dependency('proc-macro-error-attr-1-rs', native: true)
++proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
++quote_dep = dependency('quote-1-rs', native: true)
++syn_dep = dependency('syn-2-rs', native: true)
++
++_proc_macro_error_rs = static_library(
++  'proc_macro_error',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2018', 'build.rust_std=2018'],
++  rust_abi: 'rust',
++  rust_args: [
++    '--cfg', 'use_fallback',
++    '--cfg', 'feature="syn-error"',
++    '--cfg', 'feature="proc-macro"',
++    '-A', 'non_fmt_panics'
++  ],
++  dependencies: [
++    proc_macro_error_attr_dep,
++    proc_macro2_dep,
++    quote_dep,
++    syn_dep,
++  ],
++  native: true,
++)
++
++proc_macro_error_dep = declare_dependency(
++  link_with: _proc_macro_error_rs,
++)
++
++meson.override_dependency('proc-macro-error-1-rs', proc_macro_error_dep, native: true)
+diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..d900c54cfd1ad6c8c415438c2e9dd51695c82150
+--- /dev/null
++++ b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
+@@ -0,0 +1,32 @@
++project('proc-macro-error-attr-1-rs', 'rust',
++  version: '1.12.0',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
++
++subproject('proc-macro2-1-rs', required: true)
++subproject('quote-1-rs', required: true)
++
++proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
++quote_dep = dependency('quote-1-rs', native: true)
++
++rust = import('rust')
++_proc_macro_error_attr_rs = rust.proc_macro(
++  'proc_macro_error_attr',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2018', 'build.rust_std=2018'],
++  rust_args: [
++    '--cfg', 'use_fallback',
++    '--cfg', 'feature="syn-error"',
++    '--cfg', 'feature="proc-macro"'
++  ],
++  dependencies: [
++    proc_macro2_dep,
++    quote_dep,
++  ],
++)
++
++proc_macro_error_attr_dep = declare_dependency(
++  link_with: _proc_macro_error_attr_rs,
++)
++
++meson.override_dependency('proc-macro-error-attr-1-rs', proc_macro_error_attr_dep, native: true)
+diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+new file mode 100644
+index 0000000000000000000000000000000000000000..54f2376854504236689604f8ab08d351e4cceae9
+--- /dev/null
++++ b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
+@@ -0,0 +1,20 @@
++project('unicode-ident-1-rs', 'rust',
++  version: '1.0.12',
++  license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
++  default_options: [])
++
++_unicode_ident_rs = static_library(
++  'unicode_ident',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [],
++  native: true,
++)
++
++unicode_ident_dep = declare_dependency(
++  link_with: _unicode_ident_rs,
++)
++
++meson.override_dependency('unicode-ident-1-rs', unicode_ident_dep, native: true)
+diff --git a/subprojects/proc-macro-error-1-rs.wrap b/subprojects/proc-macro-error-1-rs.wrap
+new file mode 100644
+index 0000000000000000000000000000000000000000..b7db03b06a019562b2ad77bb252d50b7e83c0b33
+--- /dev/null
++++ b/subprojects/proc-macro-error-1-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = proc-macro-error-1.0.4
++source_url = https://crates.io/api/v1/crates/proc-macro-error/1.0.4/download
++source_filename = proc-macro-error-1.0.4.tar.gz
++source_hash = da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c
++#method = cargo
++patch_directory = proc-macro-error-1-rs
+diff --git a/subprojects/proc-macro-error-attr-1-rs.wrap b/subprojects/proc-macro-error-attr-1-rs.wrap
+new file mode 100644
+index 0000000000000000000000000000000000000000..d13d8a239ac259132cd905bc512e9024b2f30fb8
+--- /dev/null
++++ b/subprojects/proc-macro-error-attr-1-rs.wrap
+@@ -0,0 +1,7 @@
++[wrap-file]
++directory = proc-macro-error-attr-1.0.4
++source_url = https://crates.io/api/v1/crates/proc-macro-error-attr/1.0.4/download
++source_filename = proc-macro-error-attr-1.0.4.tar.gz
++source_hash = a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869
++#method = cargo
++patch_directory = proc-macro-error-attr-1-rs
 
 -- 
 2.45.2
