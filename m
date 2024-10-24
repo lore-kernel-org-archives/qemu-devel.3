@@ -4,91 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08635D0BB72
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04736D0BB72
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3tTQ-0000Uk-7L; Thu, 24 Oct 2024 04:45:40 -0400
+	id 1t3tUN-00015S-00; Thu, 24 Oct 2024 04:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tTO-0000Ub-Ix
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:45:38 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3tUL-000154-KX
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:46:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tTK-00036o-2p
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:45:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:References:To:From:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=VykfFFYAAVIOqIct83z2B8O/sMHuVJVtOFHOHArRaEU=; b=WH8N5Z6DlyFTD+PAINRuz08goQ
- /wy9ZMCMqyQ87JRcNTZ7eD/wgFRTDXDaZQCiiA2/ewqNdsKFaRk7oT48Tz/Mpc2BvYZpPixJF1UUb
- OUvlEzbDRFKv3K5aUAESJuTobdEEQpgbETquWZOCTFnIyaBZ8Di+QY0EHE2fflDP7gvprgXgnxJ+D
- MXsxvuZO0LBmMxWpQJcoEH8BTW4qqXADVmbs1OHrNUhjTvbrmD5lPaNG+f9hfoOGykxnxkP/GTNyB
- bDLzogzJtxEVP8fZu66ofEcskhbCBTCZyIe9lCN7IsB47j3Fj6F71qLNbWWOCLvMFZjF00wEJoUOx
- 8IEcvHt+CvgrPHDVCcC7Y/EsRevCQbHTcN00T1oDKH2D1W7GZg9rH8OLKYDPq8qoPGcjR+fiPEaa3
- JWEru3tStKHWJ7OvcmcRR48y0piLUHFLYbtY4ZnGOADtFMYKeDqLVvb+lV15jtu4gbwARtD3k7sbp
- b9dfR30ZAdQetFgtleGqnJcd+O823gc57o+84/5QsXBMQXQ33pS8hhuRplPG9w4tDMmlDX/9+S7wZ
- Wc1YEY5Z7yulAZZ5PrxjWYU7cgETRiTmTXQ6ukgnnuAKA4FK6VxhxQyVIg/X9O07pD67E6L3bHFFk
- vaqvPUe+l230wiOrDDJIfa6UYds1XY63eO2mK9c8o=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tSw-000Ch4-8X; Thu, 24 Oct 2024 09:45:14 +0100
-Message-ID: <903d5d62-88d9-4462-8ded-df73cb3c1450@ilande.co.uk>
-Date: Thu, 24 Oct 2024 09:45:23 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1t3tUJ-0003CP-3n
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:46:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729759592;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9DPzN3A2ihFKQ97Su/sg757xcRqdmx6CcF9313uYWlY=;
+ b=XaKSCeL5BqjqNrDxAM0Qc0rLqBkkqCMug6XkqUgIlYAX3neD3rrI4EdXliyu3PSw3WPvB9
+ EUI66RjljUz2fa64hP52fFiJVHe4X+HwX74nr02GQKLmv/3z5L4Lcb025OD1ASaRwkYCpb
+ 9ZiNfb3Gy/8AZzSGxa5PKU6OpnsEC84=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-kNJdsOROM-KjAzPXLFit5g-1; Thu,
+ 24 Oct 2024 04:46:29 -0400
+X-MC-Unique: kNJdsOROM-KjAzPXLFit5g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C75201955D4D; Thu, 24 Oct 2024 08:46:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E2C9196BB7D; Thu, 24 Oct 2024 08:46:23 +0000 (UTC)
+Date: Thu, 24 Oct 2024 09:46:20 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Landley <rob@landley.net>, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>
+Subject: Re: [PATCH 1/2] Revert "Remove the unused sh4eb target"
+Message-ID: <ZxoJXLYuT4omlDKS@redhat.com>
+References: <20241024082735.42324-1-thuth@redhat.com>
+ <20241024082735.42324-2-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-33-mark.cave-ayland@ilande.co.uk>
-Content-Language: en-US
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20241023085852.1061031-33-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 32/36] next-cube: add rtc-power-out named gpio to reset
- the rtc state machine
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241024082735.42324-2-thuth@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,91 +88,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/2024 09:58, Mark Cave-Ayland wrote:
-
-> This allows us to decouple the next-pc and next-rtc devices from each
-> other in next_rtc_data_in_irq().
+On Thu, Oct 24, 2024 at 10:27:34AM +0200, Thomas Huth wrote:
+> This reverts commit 73ceb12960e686b763415f0880cc5171ccce01cf.
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> The "r2d" machine can work in big endian mode, see:
+> 
+>  https://lore.kernel.org/qemu-devel/d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net/
+> 
+> So the reasoning for removing sh4eb was wrong.
+
+This is a good example of why bypassing the deprecation process is generally
+a bad idea. Even if we believe something is unusable, we may not be aware
+of the full situation. The deprecation period gives us an opportunity to
+solicit more diverse information with which we can make the final deletion
+decision.
+
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/m68k/next-cube.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> index 16b16e9956..0a8b899515 100644
-> --- a/hw/m68k/next-cube.c
-> +++ b/hw/m68k/next-cube.c
-> @@ -58,6 +58,7 @@ struct NeXTRTC {
->       uint8_t retval;
->   
->       qemu_irq data_out_irq;
-> +    qemu_irq power_irq;
->   };
->   
->   #define TYPE_NEXT_SCSI "next-scsi"
-> @@ -106,7 +107,6 @@ struct NeXTPC {
->       ESCCState escc;
->   
->       NeXTRTC rtc;
-> -    qemu_irq rtc_power_irq;
->       qemu_irq rtc_data_irq;
->       qemu_irq rtc_cmd_reset_irq;
->   };
-> @@ -184,7 +184,6 @@ static bool next_rtc_cmd_is_write(uint8_t cmd)
->   static void next_rtc_data_in_irq(void *opaque, int n, int level)
->   {
->       NeXTRTC *rtc = NEXT_RTC(opaque);
-> -    NeXTPC *s = NEXT_PC(container_of(rtc, NeXTPC, rtc));
->   
->       if (rtc->phase < 8) {
->           rtc->command = (rtc->command << 1) | level;
-> @@ -256,7 +255,7 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
->               if (rtc->value & 0x04) {
->                   /* clear FTU */
->                   rtc->status = rtc->status & (~0x18);
-> -                qemu_irq_lower(s->rtc_power_irq);
-> +                qemu_irq_lower(rtc->power_irq);
->               }
->           }
->       }
-> @@ -1044,6 +1043,8 @@ static void next_rtc_init(Object *obj)
->                                "rtc-data-out", 1);
->       qdev_init_gpio_in_named(DEVICE(obj), next_rtc_cmd_reset_irq,
->                               "rtc-cmd-reset", 1);
-> +    qdev_init_gpio_out_named(DEVICE(obj), &rtc->power_irq,
-> +                             "rtc-power-out", 1);
->   }
->   
->   static const VMStateDescription next_rtc_vmstate = {
-> @@ -1156,6 +1157,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
->                                                          "rtc-data-in", 0));
->       qdev_connect_gpio_out_named(dev, "rtc-cmd-reset", 0,
->                                   qdev_get_gpio_in_named(d, "rtc-cmd-reset", 0));
-> +    qdev_connect_gpio_out_named(d, "rtc-power-out", 0,
-> +                                qdev_get_gpio_in(dev, NEXT_PWR_I));
->   }
->   
->   static void next_pc_init(Object *obj)
-> @@ -1191,7 +1194,6 @@ static void next_pc_init(Object *obj)
->   
->       object_initialize_child(obj, "rtc", &s->rtc, TYPE_NEXT_RTC);
->   
-> -    s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
->       qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
->                               "rtc-data-in", 1);
->       qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
+>  configs/devices/sh4eb-softmmu/default.mak | 3 +++
+>  configs/targets/sh4eb-softmmu.mak         | 2 ++
+>  qapi/machine.json                         | 2 +-
+>  tests/qtest/endianness-test.c             | 1 +
+>  tests/qtest/machine-none-test.c           | 1 +
+>  .gitlab-ci.d/buildtest.yml                | 2 +-
+>  .gitlab-ci.d/cirrus.yml                   | 2 +-
+>  .gitlab-ci.d/crossbuilds.yml              | 2 +-
+>  .travis.yml                               | 2 +-
+>  tests/qemu-iotests/testenv.py             | 1 +
+>  tests/qtest/meson.build                   | 1 +
+>  11 files changed, 14 insertions(+), 5 deletions(-)
+>  create mode 100644 configs/devices/sh4eb-softmmu/default.mak
+>  create mode 100644 configs/targets/sh4eb-softmmu.mak
 
-(replying to myself)
-
-I've just noticed the headline summary is wrong and should instead read: "next-cube: 
-add rtc-power-out named gpio to trigger the NEXT_PWR_I interrupt".
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-ATB,
-
-Mark.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
