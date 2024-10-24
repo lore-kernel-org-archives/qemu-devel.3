@@ -4,82 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8783D0E3F3
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 20:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B9ED0E3F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 20:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t444C-0000ne-1f; Thu, 24 Oct 2024 16:04:20 -0400
+	id 1t44Es-0002ci-Bf; Thu, 24 Oct 2024 16:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4448-0000mt-Ao
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:04:16 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t4446-0002W2-IL
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:04:15 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-207115e3056so11020225ad.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 13:04:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729800253; x=1730405053; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=M8CVWV5WMwNuWfH+MyVrQqyAEZ/XBW52hhqZADqu3CY=;
- b=jje+Otuejw3WyDdVjS9IMtT/ud9Gl5sZLaI+ZBt9nMdN9Z0Ptnz41AAvqxXexLx72V
- BCPaleQEcjTGNCPMe5/s0TanASpifFmHnQccN8XD9mavx2JPWL1lYUyZaRqRmbCmnW+A
- m/K/2d5Vf8rl5B+rel/m6o1vAnNzxYivuTcS018w5k/vlQeyktyjoa7uloAzLZCJF8H6
- MVNrkSjsa5I0XWynnWVSjiMuaQHg/jbS8mvwyq337WKhVUUzQbGSfOZwIxmZKwA2IsOJ
- cOEne1ZqRiVC7lVbJlDUobZOkSNjOpcYU3zfHR6ngBy0doAzjXn4IPHZ6cxehEjv6zsD
- 9Qvw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t44Eo-0002cR-Ee
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:15:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t44Em-0003y8-7s
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:15:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729800914;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+mWP9Yoe+t/Q+V0P1ZAkdggn4g52uy+dXlfxNaukkOs=;
+ b=cdpjjxngSpzJcEQov6xXASbPdN90FOIS1OPIp4uCFLAww9jWdtES/OEalMMvI6/qvClvJO
+ NF0D7fEsJu3Oj/PLYkGT7H+tdU7rtdmSE74go+F2XlknfqHSGXuIKHq4xpQbevL10ow0QY
+ AetsoQkRSlhNRgJZJq51jE2sugvB/Tk=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-hlzycvBHP-y09MBkxLT--A-1; Thu, 24 Oct 2024 16:15:13 -0400
+X-MC-Unique: hlzycvBHP-y09MBkxLT--A-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b144a054baso518259685a.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 13:15:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729800253; x=1730405053;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M8CVWV5WMwNuWfH+MyVrQqyAEZ/XBW52hhqZADqu3CY=;
- b=H8XmwCRdoOXAKL0iC/eAEbLkX//LUVoud6XviEdbQaQGteLx/Z5HFGnrSOf5+fywM4
- r+BMTAYzWo2DC3VEasQVvWP+PmtfZD+TaLhGyFOGwETAx928pGFcj3n6ANx0sXhS1G09
- x062Aech7Lx2ZZkjdArUpPFTIVcDEwYXmBfdhOGIYwnNnEBubA90svq+Lzs/lgcDicuY
- GYcvW4209LJA7chmn3jg2iLMuHSKq3mnVZc87wEStg85BO3z+eYZzbuTxYBEZ52bY3g4
- GoYAINwn1bzIqQxkaM/Dq2hwRW9922KYLe3yO6VXL50fq6fLC1TgiIKnklgCJI3cgtDq
- 5sdA==
-X-Gm-Message-State: AOJu0YyBjWh+E8hXwtT4kMKQaRKOG29Wp4fX809Ksl3oapqPejWcFSVy
- qlpixmsUH/Re3jGP0bVk6E14qJXd8X9rYpNnQEo8s/LBSuC86tbyh9cww5wJ5WlOeDEIuwyJh53
- i
-X-Google-Smtp-Source: AGHT+IEkloBI+75K9SDbz3mcXQyui5LLaGD92vEGjm4kjiU6SGLPpWkH3dA00MxKSxjwCkOPiYDHCw==
-X-Received: by 2002:a17:902:ea0e:b0:20c:9bf9:1d97 with SMTP id
- d9443c01a7336-20fb9b41d28mr34011635ad.60.1729800252630; 
- Thu, 24 Oct 2024 13:04:12 -0700 (PDT)
-Received: from [192.168.100.49] ([45.176.88.171])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeaafbed0sm8891677a12.10.2024.10.24.13.04.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Oct 2024 13:04:12 -0700 (PDT)
-Message-ID: <5d99392c-1b3c-4086-9ce9-463ed7f4162e@linaro.org>
-Date: Thu, 24 Oct 2024 17:04:09 -0300
+ d=1e100.net; s=20230601; t=1729800913; x=1730405713;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+mWP9Yoe+t/Q+V0P1ZAkdggn4g52uy+dXlfxNaukkOs=;
+ b=RIexzbVnhXuhRildxmRMmBuogAyU/MPl/8a+Ay+EBpUgUvJm9yTsLfivcplHY8T4Sp
+ 21iEl4nC66z38ij/utjVY0ATCirnFvb4aQz5Jf1gYaGI0G3JY6nDYUE6cCWgIt6T0umr
+ Qna4xg0DVqZyZFNiKHpnjVL08RJ/UKa8WS1e6aVplBLY3+fxribFU/YjwyDgaqw+Kpwy
+ J9WxzTPdom99u/BXrYEnCZQmHA+iLUz9NPtsn1nUNpO5yD+3DyMOOa0A1ExmGMW3hOu6
+ SY38Yjq47cyT2DY6DlVgcEPenYE1PuCMSM4B0D0NwCrphWv3fS/7a6+gaqVouohl12sP
+ IZCw==
+X-Gm-Message-State: AOJu0YzHS/eNNn2wsMHyJCZip+GC7xf57QIGOCd1mIlqCtwHcURzmD3h
+ 1DZ1BxzjotZPOWcNW+39qrhz2xnzcjRTw4a3/DTdUyWSxHxtzu8hZ2Ta4khd5Q+9jFpV/PKFw/E
+ qPf+rgK2UcU9hSjGD8ranbKxzEXbq4dKDYoJ5lhn18IdmWLxm9nBf
+X-Received: by 2002:a05:620a:4410:b0:7ac:dd88:cc80 with SMTP id
+ af79cd13be357-7b1865d33c2mr552212485a.8.1729800912896; 
+ Thu, 24 Oct 2024 13:15:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKf6/jRnwDus5GIrnX00Mv9TGUumVFbnOXNSBy+AgaKI0aLK8v5BZYtwCP/VdpVhc55++liA==
+X-Received: by 2002:a05:620a:4410:b0:7ac:dd88:cc80 with SMTP id
+ af79cd13be357-7b1865d33c2mr552207685a.8.1729800912475; 
+ Thu, 24 Oct 2024 13:15:12 -0700 (PDT)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b1659ffba7sm514354085a.58.2024.10.24.13.15.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Oct 2024 13:15:11 -0700 (PDT)
+Date: Thu, 24 Oct 2024 16:15:10 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 4/4] migration: Reset current_migration properly
+Message-ID: <Zxqqzh-5b4Sz6bFF@x1n>
+References: <20241024165627.1372621-1-peterx@redhat.com>
+ <20241024165627.1372621-5-peterx@redhat.com>
+ <875xphfg6j.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: Introduce disas_mt_available()
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
-References: <20241024195447.44600-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241024195447.44600-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <875xphfg6j.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,38 +109,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/10/24 16:54, Philippe Mathieu-Daudé wrote:
-> Similarly to commit 17c2c320f3c ("Introduce ase_mt_available helper"),
-> introduce the disas_mt_available() one which takes a DisasContext
-> argument to determine whether Multi-Threading is available by
-> checking the MT bit of the CP0_Config3 register.
+On Thu, Oct 24, 2024 at 04:34:44PM -0300, Fabiano Rosas wrote:
+> > +     * here it means migration object is gone.  Clear the global reference
+> > +     * to reflect that.
 > 
-> Remove the then unused ASE_MT definition.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/mips-defs.h     |   1 -
->   target/mips/tcg/translate.h |   5 ++
->   target/mips/tcg/translate.c | 136 ++++++++++++++++++------------------
->   target/mips/cpu-defs.c.inc  |   4 +-
->   4 files changed, 75 insertions(+), 71 deletions(-)
+> Not really gone at this point. The free only happens when this function
+> returns.
 
+How about "is going away"?
 
-> diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-> index 5d196e69ac4..b613726ea42 100644
-> --- a/target/mips/tcg/translate.h
-> +++ b/target/mips/tcg/translate.h
-> @@ -228,6 +228,11 @@ bool decode_ext_octeon(DisasContext *ctx, uint32_t insn);
->   #endif
->   bool decode_ext_vr54xx(DisasContext *ctx, uint32_t insn);
->   
-> +static inline bool disas_mt_available(DisasContext *ctx)
-> +{
-> +    return ctx->CP0_Config3 & (1 << CP0C3_MT);
-> +}
-
-BTW I considered inlining it in translate.c but the MT code will
-eventually be converted to decodetree so better keep this helper
-in the translate.h header.
+-- 
+Peter Xu
 
 
