@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E0FCE8E96
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9365CE8E97
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 16:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4196-0003wR-In; Thu, 24 Oct 2024 12:57:14 -0400
+	id 1t419O-0003zg-Sv; Thu, 24 Oct 2024 12:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418a-0003tx-Sl
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418b-0003u0-FS
  for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418Y-0002we-JN
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418Z-0002x3-Il
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729788996;
+ s=mimecast20190719; t=1729788998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c0kLRIPNRsyiUEIuptSmNc8rruH765h3xOHpyL+r4uw=;
- b=SFztNE60EY86SVUKL/uWH5gxEz4x8TpJNJfJQ/snsg+LcPvKqdOOyzupxU332s7RoevEov
- FlKj60pmLwkX4M7yK6PcrZmZmbPc6aUO8FxmIHwIOddpX8hyEO0K/yyHin0vEoHUDiNcH/
- M1xp6XtwJwt+lmHMYLSvBev+IbOSQOA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FhBOPpVeD7iY6TuhvhvNePic6DBQmZNqw1nKL+DgVvE=;
+ b=Cu6C4CJk7qZoW/Fq+eQYjMlul75DwdFq/nIgmqftx1RTnoVsckdsXjUPmhSCO77kTKWOi5
+ fil6DxuzxJzIegySpTSumdTFqvsonR3GHH+M5f9g+pwess8Jcy2E/ilTqLB8XqKWhAlQl+
+ X1qha0yH1OZ6eLsUnWpvaztTM6vk75Y=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-46-fAtS33IKPi63denm6uL7yw-1; Thu, 24 Oct 2024 12:56:35 -0400
-X-MC-Unique: fAtS33IKPi63denm6uL7yw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6cdf0589e8aso15307156d6.3
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 09:56:35 -0700 (PDT)
+ us-mta-154-ZnWsICb5NdCLim05iF6yNQ-1; Thu, 24 Oct 2024 12:56:37 -0400
+X-MC-Unique: ZnWsICb5NdCLim05iF6yNQ-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6cbd12b8b60so48383456d6.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 09:56:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729788994; x=1730393794;
+ d=1e100.net; s=20230601; t=1729788996; x=1730393796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c0kLRIPNRsyiUEIuptSmNc8rruH765h3xOHpyL+r4uw=;
- b=n0uPClROqKuXG7wr4SP5xdFg1oO15GmwS3bnQqNEPqeYYqC9YY23/WRwUbI0vobCIR
- AYTYLzXn3laZz5quxVVcmNY2N0Rwqx+j9SJsVmbSgr6l7aKPXZ/5ontUJlU6i98g1zNk
- CuqEZ0pLM86iwYo1jcVzP5aCuDVpVDrAPaWD2wxhIKBxZI8kBBetmF0+94Fs6DZWwDZ6
- GtESv211L6XejDB6COxCi14cKZefDPFQhRd8AV5GUCifLCaZev64hb6H9olAawUIHnad
- d5mj4R7wM91C4576JaGdCDiM6BZgIxU15WLGRn3kmFpr82GVhBEtu0OiKnoNPecqKalB
- mW1A==
-X-Gm-Message-State: AOJu0YxQ/c7+vupOr9SeEdh97rCDB/J4lgjARWMUMKs0uCYeLCclTz8O
- 0icwn9GTGzbgOnsCh8XjM29pwJq/eJw/G/HypW687Kus2mduaOltbwYyReqnGG+PJm3p6t3585z
- +YFZEzOVMF1sxjs/VJgVOE5FgxUt0czTXDcpBpq0g8r28g+NimfEkgjDXYCisb0OgPn40crY5Ol
- +HMtMgVWHev+YqUevDpXq4DrYgQKIX4qhd3A==
-X-Received: by 2002:a05:6214:4b08:b0:6ce:d6c:499b with SMTP id
- 6a1803df08f44-6ce3427b2d2mr79501936d6.42.1729788994212; 
- Thu, 24 Oct 2024 09:56:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4neWev4q6Z4s9HREWkITl0xNMDbmLGQIm86O/0DXT0Uyol03xhdKJKN0gtBVqo6enK+iUNQ==
-X-Received: by 2002:a05:6214:4b08:b0:6ce:d6c:499b with SMTP id
- 6a1803df08f44-6ce3427b2d2mr79501606d6.42.1729788993831; 
- Thu, 24 Oct 2024 09:56:33 -0700 (PDT)
+ bh=FhBOPpVeD7iY6TuhvhvNePic6DBQmZNqw1nKL+DgVvE=;
+ b=Cj8PxsuCgkDvN7pQQipFW19BzIa1PdEI/9g4DoQOQxB/UIJyDKmVBWomnrsmrmnwoK
+ vYi28HVx6gE1kEh8injgF/vWUnj3Vd/4mD4dz//9cHrt8i5aZlZ9yk1sfCfCAhWE7Sl6
+ xxaElUOklXUDH0YXFQbbU6WVR8b/tnJhG9GIlo+1o0q1I+ESpLBWZC67QZRg31DzgkcA
+ kB6rQ3sGXzHf/RWm5Ywq3bxDTZlhEVXm3b8GxHJe1mw3TK5Az9ZA4WxG4/KQPOu/Rji7
+ F5cJPMpFYxKb20kte4dojqDNb+KThSk5zVt4Je8ClceB8mm3U9zYp/RX6G+xM8WRhl/2
+ B4Cw==
+X-Gm-Message-State: AOJu0YwKSRuccNE+DuC9Uea+RraQKCBGhMAyfvhi0D0blzc6TPrYOqSm
+ lhoUzANYKzB6sRo5Bu7yDjfv7Ad1CeTMA5tPV7fS6YQ2jHERJadriB1rag7FTdv6qo1/qnm4DsX
+ NhgZymY1HhYw0oNMZ9QhqfoS48OemIFFpsb4ozYbpODkry7pE2nIaYMjpd4TO1huC284Zx7yukz
+ 0wVdjXBiKthZliAxZGdHod9djA0H2a1Et6lw==
+X-Received: by 2002:a05:6214:449c:b0:6cb:f077:f2f7 with SMTP id
+ 6a1803df08f44-6d090405805mr38226036d6.25.1729788996255; 
+ Thu, 24 Oct 2024 09:56:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEILwM8gPQuuRVNIvfejpUixJwOf0AOTdAVbVgV+KVZO5jm/Vc3z51bcXVSlC8K0c8vKLYi5w==
+X-Received: by 2002:a05:6214:449c:b0:6cb:f077:f2f7 with SMTP id
+ 6a1803df08f44-6d090405805mr38225646d6.25.1729788995902; 
+ Thu, 24 Oct 2024 09:56:35 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ce008aff31sm51871076d6.12.2024.10.24.09.56.31
+ 6a1803df08f44-6ce008aff31sm51871076d6.12.2024.10.24.09.56.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 09:56:32 -0700 (PDT)
+ Thu, 24 Oct 2024 09:56:34 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
@@ -77,9 +77,9 @@ Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 2/4] x86/iommu: Make x86-iommu a singleton object
-Date: Thu, 24 Oct 2024 12:56:25 -0400
-Message-ID: <20241024165627.1372621-3-peterx@redhat.com>
+Subject: [PATCH 3/4] migration: Make migration object a singleton object
+Date: Thu, 24 Oct 2024 12:56:26 -0400
+Message-ID: <20241024165627.1372621-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241024165627.1372621-1-peterx@redhat.com>
 References: <20241024165627.1372621-1-peterx@redhat.com>
@@ -110,77 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-X86 IOMMUs cannot be created more than one on a system yet.  Make it a
-singleton so it guards the system from accidentally create yet another
-IOMMU object when one already presents.
-
-Now if someone tries to create more than one, e.g., via:
-
-  ./qemu -M q35 -device intel-iommu -device intel-iommu
-
-The error will change from:
-
-  qemu-system-x86_64: -device intel-iommu: QEMU does not support multiple vIOMMUs for x86 yet.
-
-To:
-
-  qemu-system-x86_64: -device intel-iommu: Class 'intel-iommu' only supports one instance
-
-Unfortunately, yet we can't remove the singleton check in the machine
-hook (pc_machine_device_pre_plug_cb), because there can also be
-virtio-iommu involved, which doesn't share a common parent class yet.
-
-But with this, it should be closer to reach that goal to check singleton by
-QOM one day.
+This makes the migration object a singleton unit.  After this, we can do
+something slightly tricky later on with the guarantee that nobody will be
+able to create the object twice.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/i386/x86-iommu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ migration/migration.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
-index 60af896225..4bfeb08705 100644
---- a/hw/i386/x86-iommu.c
-+++ b/hw/i386/x86-iommu.c
-@@ -26,6 +26,7 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- #include "sysemu/kvm.h"
+diff --git a/migration/migration.c b/migration/migration.c
+index bcb735869b..1b5285af95 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -45,6 +45,7 @@
+ #include "qapi/qmp/qerror.h"
+ #include "qapi/qmp/qnull.h"
+ #include "qemu/rcu.h"
 +#include "qom/object_interfaces.h"
+ #include "postcopy-ram.h"
+ #include "qemu/thread.h"
+ #include "trace.h"
+@@ -3855,11 +3856,19 @@ fail:
+     migrate_fd_cleanup(s);
+ }
  
- void x86_iommu_iec_register_notifier(X86IOMMUState *iommu,
-                                      iec_notify_fn fn, void *data)
-@@ -133,10 +134,19 @@ static Property x86_iommu_properties[] = {
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-+static Object *x86_iommu_get_instance(Error **errp)
++static Object* migration_get_instance(Error **errp)
 +{
-+    return OBJECT(x86_iommu_get_default());
++    return OBJECT(current_migration);
 +}
 +
- static void x86_iommu_class_init(ObjectClass *klass, void *data)
+ static void migration_class_init(ObjectClass *klass, void *data)
  {
      DeviceClass *dc = DEVICE_CLASS(klass);
 +    SingletonClass *singleton = SINGLETON_CLASS(klass);
+ 
+     dc->user_creatable = false;
++    singleton->get_instance = migration_get_instance;
 +
-     dc->realize = x86_iommu_realize;
-+    singleton->get_instance = x86_iommu_get_instance;
-+
-     device_class_set_props(dc, x86_iommu_properties);
+     device_class_set_props(dc, migration_properties);
  }
  
-@@ -152,6 +162,10 @@ static const TypeInfo x86_iommu_info = {
-     .class_init    = x86_iommu_class_init,
-     .class_size    = sizeof(X86IOMMUClass),
-     .abstract      = true,
+@@ -3932,6 +3941,10 @@ static const TypeInfo migration_type = {
+     .instance_size = sizeof(MigrationState),
+     .instance_init = migration_instance_init,
+     .instance_finalize = migration_instance_finalize,
 +    .interfaces = (InterfaceInfo[]) {
 +        { TYPE_SINGLETON },
 +        { }
 +    }
  };
  
- static void x86_iommu_register_types(void)
+ static void register_migration_types(void)
 -- 
 2.45.0
 
