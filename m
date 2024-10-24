@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDEDD10387
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA51DD10380
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t44zq-0000uC-0r; Thu, 24 Oct 2024 17:03:54 -0400
+	id 1t44zy-0000vK-Fw; Thu, 24 Oct 2024 17:04:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t44zo-0000tu-Fv
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:03:52 -0400
+ id 1t44zv-0000uq-Qt
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:04:00 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t44zm-0002AC-VG
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:03:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1729803816; cv=none; 
+ id 1t44zu-0002Av-6F
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:03:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1729803824; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=lOIN0lV4pl26xqkIgEIfaVMTBRZQqWzvRDaRoBLA+0sjE8XXaoVlBWU+nuuid9/8WP0Za1ES5rlDdjktL1kQogKzOd6DA71OBPnvlYixc3KocaQZhlK5HZe7YveTWnAf1+ONMBwxGncYgm3WpcZs+GjTA9ZkkBhP+rEkvnFmwrg=
+ b=HtnTjKSjEHA5Vh3vsJVAv10mvY/3qq4d9Cru+aHGT3BhMb9Li4JgpHR724/tAekLSmEmNSvJdOGlcQoMWy+MnJf9V5559gWUFR4Rt9WsdXLATB1G+6nL9zO+kq/wGr0O4fKUMCGonXE2xRpnV/4jPEjGyUah6ktzrzN5sqqVygA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1729803816;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=1Fe0u1XHaW1U+BsXCWBDXXPXUTsp3eLm5579/sHD3jA=; 
- b=cUsk9bb6YdFPPf/nRDsNbhGJRNuLqDEJ6wyToxuCxa67v+89ZpaXTu0MUZrrOCKvOHaEeFDzgYwOmAMeeNhEeLmIiQKfEBaXQMAX1jsrvQAwLmSSbLQ53L1rMAgUN/lFV3vAqpUAw7Cy9jQygf/TP2vj2toZkZ2NrsIsMvMoxOE=
+ s=zohoarc; t=1729803824;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=qsto3lML5XLcU8iEkzmujIrFEnuK5fHb3J+USi9bNrc=; 
+ b=Fl68muEUCQ6sZM898RJgv5+zFxvr+mcYCSA/3mAmH9vn/KbdEN17YmRkWFmX4lVjfa37GWCNIopGniYd13L1s/38fNe2a12re2PhDoR7tBpNWxOk3S2GBsADwqBa7dD7y4NSalvO+mZCMhTOZHcjewMbyA2W9kIVgnPxGttmQxs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729803816; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729803824; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=1Fe0u1XHaW1U+BsXCWBDXXPXUTsp3eLm5579/sHD3jA=;
- b=QQB0AyZS6hgfR9lfs1vtovGHq9KehNOX2ZoteNKCXCixfBd/qjlvJPJjLjqz+RIW
- UFGMIgs/9eiF8tscFZXl7VoYmmq+qLaelNwMGmKABwli7Rz/j6kue1mGLzB8c420Iju
- 3MkJhIBCTnqS0MLhw1gnLyzN77ioEzZweN+Cv0Tk=
-Received: by mx.zohomail.com with SMTPS id 1729803815301995.6744416677336;
- Thu, 24 Oct 2024 14:03:35 -0700 (PDT)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=qsto3lML5XLcU8iEkzmujIrFEnuK5fHb3J+USi9bNrc=;
+ b=gXBqOBVu5Aw3MXgzeoLybayyeRwXjuofIi5YtJV46vd4zspQz+HBAvITl7qmgjzd
+ r0WcYvj1IBBA2y1o7nTfToiASGSaCWeTELIhnW26WHbsY/+DHsiZcqIB6RiNgEusc+8
+ QFOTwSlK3PK90BP9PQozl8IyBrk6fVn7X3Q65GuY=
+Received: by mx.zohomail.com with SMTPS id 1729803822545959.3730091957152;
+ Thu, 24 Oct 2024 14:03:42 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -62,15 +62,13 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v18 01/13] virtio-gpu: Use trace events for tracking number of
- in-flight fences
-Date: Fri, 25 Oct 2024 00:02:59 +0300
-Message-ID: <20241024210311.118220-2-dmitry.osipenko@collabora.com>
+Subject: [PATCH v18 02/13] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
+Date: Fri, 25 Oct 2024 00:03:00 +0300
+Message-ID: <20241024210311.118220-3-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
 References: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -98,66 +96,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace printf's used for tracking of in-flight fence inc/dec events
-with tracing, for consistency with the rest of virtio-gpu code that
-uses tracing.
+Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
+that are used only by GL device.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/trace-events       | 2 ++
- hw/display/virtio-gpu-virgl.c | 2 +-
- hw/display/virtio-gpu.c       | 4 ++--
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-virgl.c  | 8 +++++---
+ include/hw/virtio/virtio-gpu.h | 3 ++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index 781f8a33203b..e212710284ae 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -53,6 +53,8 @@ virtio_gpu_cmd_ctx_submit(uint32_t ctx, uint32_t size) "ctx 0x%x, size %d"
- virtio_gpu_update_cursor(uint32_t scanout, uint32_t x, uint32_t y, const char *type, uint32_t res) "scanout %d, x %d, y %d, %s, res 0x%x"
- virtio_gpu_fence_ctrl(uint64_t fence, uint32_t type) "fence 0x%" PRIx64 ", type 0x%x"
- virtio_gpu_fence_resp(uint64_t fence) "fence 0x%" PRIx64
-+virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
-+virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
- 
- # qxl.c
- disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 9f34d0e6619c..14091b191ec0 100644
+index 14091b191ec0..91dce90f9176 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -525,7 +525,7 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
-         g_free(cmd);
-         g->inflight--;
-         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
--            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
-+            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-         }
+@@ -594,11 +594,12 @@ static void virtio_gpu_print_stats(void *opaque)
+ static void virtio_gpu_fence_poll(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+-        timer_mod(g->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
++        timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
      }
  }
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 49fd80339340..3fcc434732a3 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1046,7 +1046,7 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
-                 if (g->stats.max_inflight < g->inflight) {
-                     g->stats.max_inflight = g->inflight;
-                 }
--                fprintf(stderr, "inflight: %3d (+)\r", g->inflight);
-+                trace_virtio_gpu_inc_inflight_fences(g->inflight);
-             }
-         } else {
-             g_free(cmd);
-@@ -1066,7 +1066,7 @@ static void virtio_gpu_process_fenceq(VirtIOGPU *g)
-         g_free(cmd);
-         g->inflight--;
-         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
--            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
-+            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-         }
+ 
+@@ -626,6 +627,7 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+     uint32_t flags = 0;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
+ #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+     if (qemu_egl_display) {
+@@ -645,8 +647,8 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+         return ret;
      }
- }
+ 
+-    g->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+-                                 virtio_gpu_fence_poll, g);
++    gl->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
++                                  virtio_gpu_fence_poll, g);
+ 
+     if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+         g->print_stats = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index e343110e23db..48a67d662d7f 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -194,7 +194,6 @@ struct VirtIOGPU {
+     uint64_t hostmem;
+ 
+     bool processing_cmdq;
+-    QEMUTimer *fence_poll;
+     QEMUTimer *print_stats;
+ 
+     uint32_t inflight;
+@@ -229,6 +228,8 @@ struct VirtIOGPUGL {
+ 
+     bool renderer_inited;
+     bool renderer_reset;
++
++    QEMUTimer *fence_poll;
+ };
+ 
+ struct VhostUserGPU {
 -- 
 2.47.0
 
