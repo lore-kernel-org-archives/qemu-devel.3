@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBB8CE8E94
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 16:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E0FCE8E96
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 16:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4193-0003w8-5n; Thu, 24 Oct 2024 12:57:10 -0400
+	id 1t4196-0003wR-In; Thu, 24 Oct 2024 12:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418Y-0003tq-Vm
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418a-0003tx-Sl
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418W-0002wO-A6
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t418Y-0002we-JN
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 12:56:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729788994;
+ s=mimecast20190719; t=1729788996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4bMrWu6ahu03dVa1Nj/jzCJZxr91okbKkHKlA528y4A=;
- b=OrO0cHPqVM94vNtjuAEBHFavHoylBbxGmHKTXKX/jYMaa9yalX81sKAWdrCGDUNJiaaqDH
- SrKN1puoC++4z8g7+hCGCC+S1f4KJ+jXDsaO2KUQ0ag8y1eDJ+bSpS1eml2QxCTKBsNGyT
- LJtOHtz6QZb4+Oyjdq3wI+OyYdLvvr4=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=c0kLRIPNRsyiUEIuptSmNc8rruH765h3xOHpyL+r4uw=;
+ b=SFztNE60EY86SVUKL/uWH5gxEz4x8TpJNJfJQ/snsg+LcPvKqdOOyzupxU332s7RoevEov
+ FlKj60pmLwkX4M7yK6PcrZmZmbPc6aUO8FxmIHwIOddpX8hyEO0K/yyHin0vEoHUDiNcH/
+ M1xp6XtwJwt+lmHMYLSvBev+IbOSQOA=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-270-Oh-9LA8yPLqGwszaBFln7g-1; Thu, 24 Oct 2024 12:56:33 -0400
-X-MC-Unique: Oh-9LA8yPLqGwszaBFln7g-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6ce30559894so13964146d6.3
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 09:56:33 -0700 (PDT)
+ us-mta-46-fAtS33IKPi63denm6uL7yw-1; Thu, 24 Oct 2024 12:56:35 -0400
+X-MC-Unique: fAtS33IKPi63denm6uL7yw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6cdf0589e8aso15307156d6.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 09:56:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729788992; x=1730393792;
+ d=1e100.net; s=20230601; t=1729788994; x=1730393794;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4bMrWu6ahu03dVa1Nj/jzCJZxr91okbKkHKlA528y4A=;
- b=CjQtq+zv0ZhvGSwoE6auuBZdlxV9xPPRXPF5RenfGOEtAdzU7hNhnGBC3Xoy8utWFh
- rKWfjoHDNjWBsMKT2/zLjJBgdaKDaPr35o7q2INwNKcFo4VaYa/RUp4gjNgEVSWqKrse
- 1qJPMoMWUfjr7yzCjotpDNz7k+jA2ZaWEDrvaF1//lDfQHqtlATU8o6sc5LXNY7uI0XL
- B178UYRa9WRBKgYTalWIr7pkU76M/VFS227XKeTQkglMq3VvPT3YQ64TDR94XbGJ6Fau
- 0ioypfAYOMHzx6QVYawTCmEac3WLmzyNYL0Qi3jIFG9wIVUYhZkawLT6+AsITr5ZKQcX
- EWdQ==
-X-Gm-Message-State: AOJu0YzZzxfeNgOoHDNOMfpF8LmXLcf0dz6MlsqObAxa7f8o/SuyT022
- ALnpVPxCkkWYJMT3oiOz2arUX+WBq8McurxdhPVqPLyJjFteLjYNmgHaUHwcP88aH14SQ7PLTEv
- NbkewcEIRG34RfzCrx3UB7SvTvLPVWvWWqBxhTHnYPtDIifJTwQvCn+vxhXeEle5E9+9oPSZ4Kx
- EA6aImcrO+2XOJ8pSxc4GImwbzyByeX6ri8Q==
-X-Received: by 2002:a05:6214:3985:b0:6cb:e4d3:10a0 with SMTP id
- 6a1803df08f44-6ce342f3d8emr75447226d6.48.1729788992005; 
- Thu, 24 Oct 2024 09:56:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEf1VpAhGoD2rZyxmYQA3w3jyukDSTjdLMRt5w8yisKLcg8DBqkDDjYiV2dzwF3CNZ8AZ2Zfg==
-X-Received: by 2002:a05:6214:3985:b0:6cb:e4d3:10a0 with SMTP id
- 6a1803df08f44-6ce342f3d8emr75446786d6.48.1729788991457; 
- Thu, 24 Oct 2024 09:56:31 -0700 (PDT)
+ bh=c0kLRIPNRsyiUEIuptSmNc8rruH765h3xOHpyL+r4uw=;
+ b=n0uPClROqKuXG7wr4SP5xdFg1oO15GmwS3bnQqNEPqeYYqC9YY23/WRwUbI0vobCIR
+ AYTYLzXn3laZz5quxVVcmNY2N0Rwqx+j9SJsVmbSgr6l7aKPXZ/5ontUJlU6i98g1zNk
+ CuqEZ0pLM86iwYo1jcVzP5aCuDVpVDrAPaWD2wxhIKBxZI8kBBetmF0+94Fs6DZWwDZ6
+ GtESv211L6XejDB6COxCi14cKZefDPFQhRd8AV5GUCifLCaZev64hb6H9olAawUIHnad
+ d5mj4R7wM91C4576JaGdCDiM6BZgIxU15WLGRn3kmFpr82GVhBEtu0OiKnoNPecqKalB
+ mW1A==
+X-Gm-Message-State: AOJu0YxQ/c7+vupOr9SeEdh97rCDB/J4lgjARWMUMKs0uCYeLCclTz8O
+ 0icwn9GTGzbgOnsCh8XjM29pwJq/eJw/G/HypW687Kus2mduaOltbwYyReqnGG+PJm3p6t3585z
+ +YFZEzOVMF1sxjs/VJgVOE5FgxUt0czTXDcpBpq0g8r28g+NimfEkgjDXYCisb0OgPn40crY5Ol
+ +HMtMgVWHev+YqUevDpXq4DrYgQKIX4qhd3A==
+X-Received: by 2002:a05:6214:4b08:b0:6ce:d6c:499b with SMTP id
+ 6a1803df08f44-6ce3427b2d2mr79501936d6.42.1729788994212; 
+ Thu, 24 Oct 2024 09:56:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4neWev4q6Z4s9HREWkITl0xNMDbmLGQIm86O/0DXT0Uyol03xhdKJKN0gtBVqo6enK+iUNQ==
+X-Received: by 2002:a05:6214:4b08:b0:6ce:d6c:499b with SMTP id
+ 6a1803df08f44-6ce3427b2d2mr79501606d6.42.1729788993831; 
+ Thu, 24 Oct 2024 09:56:33 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6ce008aff31sm51871076d6.12.2024.10.24.09.56.29
+ 6a1803df08f44-6ce008aff31sm51871076d6.12.2024.10.24.09.56.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 09:56:30 -0700 (PDT)
+ Thu, 24 Oct 2024 09:56:32 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
@@ -77,9 +77,9 @@ Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 1/4] qom: TYPE_SINGLETON interface
-Date: Thu, 24 Oct 2024 12:56:24 -0400
-Message-ID: <20241024165627.1372621-2-peterx@redhat.com>
+Subject: [PATCH 2/4] x86/iommu: Make x86-iommu a singleton object
+Date: Thu, 24 Oct 2024 12:56:25 -0400
+Message-ID: <20241024165627.1372621-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20241024165627.1372621-1-peterx@redhat.com>
 References: <20241024165627.1372621-1-peterx@redhat.com>
@@ -110,207 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+X86 IOMMUs cannot be created more than one on a system yet.  Make it a
+singleton so it guards the system from accidentally create yet another
+IOMMU object when one already presents.
+
+Now if someone tries to create more than one, e.g., via:
+
+  ./qemu -M q35 -device intel-iommu -device intel-iommu
+
+The error will change from:
+
+  qemu-system-x86_64: -device intel-iommu: QEMU does not support multiple vIOMMUs for x86 yet.
+
+To:
+
+  qemu-system-x86_64: -device intel-iommu: Class 'intel-iommu' only supports one instance
+
+Unfortunately, yet we can't remove the singleton check in the machine
+hook (pc_machine_device_pre_plug_cb), because there can also be
+virtio-iommu involved, which doesn't share a common parent class yet.
+
+But with this, it should be closer to reach that goal to check singleton by
+QOM one day.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/qom/object_interfaces.h | 47 +++++++++++++++++++++++++++++++++
- qom/object.c                    |  3 +++
- qom/object_interfaces.c         | 24 +++++++++++++++++
- qom/qom-qmp-cmds.c              | 22 ++++++++++++---
- system/qdev-monitor.c           |  7 +++++
- 5 files changed, 100 insertions(+), 3 deletions(-)
+ hw/i386/x86-iommu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
-index 02b11a7ef0..9b2cc0e554 100644
---- a/include/qom/object_interfaces.h
-+++ b/include/qom/object_interfaces.h
-@@ -177,4 +177,51 @@ bool user_creatable_del(const char *id, Error **errp);
-  */
- void user_creatable_cleanup(void);
- 
-+#define TYPE_SINGLETON "singleton"
-+
-+typedef struct SingletonClass SingletonClass;
-+DECLARE_CLASS_CHECKERS(SingletonClass, SINGLETON, TYPE_SINGLETON)
-+
-+/**
-+ * SingletonClass:
-+ *
-+ * @parent_class: the base class
-+ * @get_instance: fetch the singleton instance if it is created,
-+ *                NULL otherwise.
-+ *
-+ * Singleton class describes the type of object classes that can only
-+ * provide one instance for the whole lifecycle of QEMU.  It will fail the
-+ * operation if one attemps to create more than one instance.
-+ *
-+ * One can fetch the single object using class's get_instance() callback if
-+ * it was created before.  This can be useful for operations like QMP
-+ * qom-list-properties, where dynamically creating an object might not be
-+ * feasible.
-+ */
-+struct SingletonClass {
-+    /* <private> */
-+    InterfaceClass parent_class;
-+    /* <public> */
-+    Object *(*get_instance)(Error **errp);
-+};
-+
-+/**
-+ * object_class_is_singleton:
-+ *
-+ * @class: the class to detect singleton
-+ *
-+ * Returns: true if it's a singleton class, false otherwise.
-+ */
-+bool object_class_is_singleton(ObjectClass *class);
-+
-+/**
-+ * singleton_get_instance:
-+ *
-+ * @class: the class to fetch singleton instance
-+ *
-+ * Returns: the object* if the class is a singleton class and the singleton
-+ *          object is created, NULL otherwise.
-+ */
-+Object *singleton_get_instance(ObjectClass *class);
-+
- #endif
-diff --git a/qom/object.c b/qom/object.c
-index 11424cf471..ded299ae1a 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -553,6 +553,9 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
-     g_assert(type->abstract == false);
-     g_assert(size >= type->instance_size);
- 
-+    /* Singleton class can only create one object */
-+    g_assert(!singleton_get_instance(type->class));
-+
-     memset(obj, 0, type->instance_size);
-     obj->class = type->class;
-     object_ref(obj);
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index e0833c8bfe..6766060d0a 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -354,6 +354,23 @@ void user_creatable_cleanup(void)
-     object_unparent(object_get_objects_root());
- }
- 
-+bool object_class_is_singleton(ObjectClass *class)
-+{
-+    return !!object_class_dynamic_cast(class, TYPE_SINGLETON);
-+}
-+
-+Object *singleton_get_instance(ObjectClass *class)
-+{
-+    SingletonClass *singleton =
-+        (SingletonClass *)object_class_dynamic_cast(class, TYPE_SINGLETON);
-+
-+    if (!singleton) {
-+        return NULL;
-+    }
-+
-+    return singleton->get_instance(&error_abort);
-+}
-+
- static void register_types(void)
- {
-     static const TypeInfo uc_interface_info = {
-@@ -362,7 +379,14 @@ static void register_types(void)
-         .class_size = sizeof(UserCreatableClass),
-     };
- 
-+    static const TypeInfo singleton_interface_info = {
-+        .name          = TYPE_SINGLETON,
-+        .parent        = TYPE_INTERFACE,
-+        .class_size = sizeof(SingletonClass),
-+    };
-+
-     type_register_static(&uc_interface_info);
-+    type_register_static(&singleton_interface_info);
- }
- 
- type_init(register_types)
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index e91a235347..ecc1cf781c 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -126,6 +126,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
-     ObjectProperty *prop;
-     ObjectPropertyIterator iter;
-     ObjectPropertyInfoList *prop_list = NULL;
-+    bool create;
- 
-     klass = module_object_class_by_name(typename);
-     if (klass == NULL) {
-@@ -141,7 +142,15 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
-         return NULL;
-     }
- 
--    obj = object_new(typename);
-+    /* Avoid creating multiple instances if the class is a singleton */
-+    create = !object_class_is_singleton(klass) ||
-+        !singleton_get_instance(klass);
-+
-+    if (create) {
-+        obj = object_new(typename);
-+    } else {
-+        obj = singleton_get_instance(klass);
-+    }
- 
-     object_property_iter_init(&iter, obj);
-     while ((prop = object_property_iter_next(&iter))) {
-@@ -172,7 +181,9 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
-         QAPI_LIST_PREPEND(prop_list, info);
-     }
- 
--    object_unref(obj);
-+    if (create) {
-+        object_unref(obj);
-+    }
- 
-     return prop_list;
- }
-@@ -199,7 +210,12 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
-         return NULL;
-     }
- 
--    if (object_class_is_abstract(klass)) {
-+    /*
-+     * Abstract classes are not for instantiations, meanwhile avoid
-+     * creating temporary singleton objects because it can cause conflicts
-+     * if there's already one created.
-+     */
-+    if (object_class_is_abstract(klass) || object_class_is_singleton(klass)) {
-         object_class_property_iter_init(&iter, klass);
-     } else {
-         obj = object_new(typename);
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 44994ea0e1..1310f35c9f 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -36,6 +36,7 @@
- #include "qemu/option.h"
- #include "qemu/qemu-print.h"
- #include "qemu/option_int.h"
+diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
+index 60af896225..4bfeb08705 100644
+--- a/hw/i386/x86-iommu.c
++++ b/hw/i386/x86-iommu.c
+@@ -26,6 +26,7 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
+ #include "sysemu/kvm.h"
 +#include "qom/object_interfaces.h"
- #include "sysemu/block-backend.h"
- #include "migration/misc.h"
- #include "qemu/cutils.h"
-@@ -643,6 +644,12 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-         return NULL;
-     }
  
-+    if (singleton_get_instance(OBJECT_CLASS(dc))) {
-+        error_setg(errp, "Class '%s' only supports one instance",
-+                   driver);
-+        return NULL;
-+    }
+ void x86_iommu_iec_register_notifier(X86IOMMUState *iommu,
+                                      iec_notify_fn fn, void *data)
+@@ -133,10 +134,19 @@ static Property x86_iommu_properties[] = {
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
++static Object *x86_iommu_get_instance(Error **errp)
++{
++    return OBJECT(x86_iommu_get_default());
++}
 +
-     /* find bus */
-     path = qdict_get_try_str(opts, "bus");
-     if (path != NULL) {
+ static void x86_iommu_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    SingletonClass *singleton = SINGLETON_CLASS(klass);
++
+     dc->realize = x86_iommu_realize;
++    singleton->get_instance = x86_iommu_get_instance;
++
+     device_class_set_props(dc, x86_iommu_properties);
+ }
+ 
+@@ -152,6 +162,10 @@ static const TypeInfo x86_iommu_info = {
+     .class_init    = x86_iommu_class_init,
+     .class_size    = sizeof(X86IOMMUClass),
+     .abstract      = true,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_SINGLETON },
++        { }
++    }
+ };
+ 
+ static void x86_iommu_register_types(void)
 -- 
 2.45.0
 
