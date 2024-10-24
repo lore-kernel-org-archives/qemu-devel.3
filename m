@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D66D0BB5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4EBD0BB63
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3rRf-0002H8-28; Thu, 24 Oct 2024 02:35:43 -0400
+	id 1t3rRo-0002L2-H1; Thu, 24 Oct 2024 02:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRc-0002FL-JS
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRl-0002JP-Um
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRZ-0003QA-Cy
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRj-0003Rz-2j
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729751736;
+ s=mimecast20190719; t=1729751746;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jddloZJAOdj5LJFFamH+V0nhCVCsU4XwZ7MW6CT72+w=;
- b=C/YwiXzBEVSaGqh5k4e6TBcTzduxkoJruk6ZCI846dTNvFg2wLY0moeZDe2DsWOibmShVj
- LYOY+/jL6aVpwHR2VHkwl3SBztjaAEQKs2e0AfX4Z0J0dJ9nYZtrqYIU7oBqbasCBURYG7
- UgINZJ2S8lJQwYOH0HlmcBvwYPE4BJg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=nzkrD5tNYYfCDyj3GSxOObG/iuTkqLW0MLBKGBdU4S4=;
+ b=Oh5doCpmnUCcM8SnTR4USpv28/1Tve0LAKa22xyggyLPOcMHYTu4cidO69LynY3tNU1u7h
+ 5AbjitgExvVoFCg252tEgeJ5JRTgeprL6SmSIa36lnAeoPrAYnolH8CNboYqGF9k+rthP8
+ 4Ws3WUjlSYbFVEK++sDh2C92ewQajp4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-zvR1FlElPVSjPWORYxEGhA-1; Thu,
- 24 Oct 2024 02:35:31 -0400
-X-MC-Unique: zvR1FlElPVSjPWORYxEGhA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-VkJtkJSwMK6fXUQONdAUXg-1; Thu,
+ 24 Oct 2024 02:35:42 -0400
+X-MC-Unique: VkJtkJSwMK6fXUQONdAUXg-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF05C1955BF6; Thu, 24 Oct 2024 06:35:29 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E3E01955F2E; Thu, 24 Oct 2024 06:35:41 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8EA5B1955F40; Thu, 24 Oct 2024 06:35:27 +0000 (UTC)
+ id 7904B1955F40; Thu, 24 Oct 2024 06:35:39 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 05/17] hw/gpio/aspeed: Add AST2700 support
-Date: Thu, 24 Oct 2024 08:34:55 +0200
-Message-ID: <20241024063507.1585765-6-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 10/17] tests/functional: Convert most Aspeed machine tests
+Date: Thu, 24 Oct 2024 08:35:00 +0200
+Message-ID: <20241024063507.1585765-11-clg@redhat.com>
 In-Reply-To: <20241024063507.1585765-1-clg@redhat.com>
 References: <20241024063507.1585765-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -83,467 +83,638 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+This is a simple conversion of the tests with some cleanups and
+adjustments to match the new test framework. Replace the zephyr image
+MD5 hashes with SHA256 hashes while at it.
 
-AST2700 integrates two set of Parallel GPIO Controller with maximum 212
-control pins, which are 27 groups. (H, exclude pin: H7 H6 H5 H4)
+The SDK tests depend on a ssh class from avocado.utils which is
+difficult to replace. To be addressed separately.
 
-In the previous design of ASPEED SOCs, one register is used for setting
-one function for one set which are 32 pins and 4 groups.
-ex: GPIO000 is used for setting data value for GPIO A, B, C and D in AST2600.
-ex: GPIO004 is used for setting direction for GPIO A, B, C and D in AST2600.
-
-However, the register set have a significant change since AST2700.
-Each GPIO pin has their own individual control register.
-In other words, users are able to set one GPIO pin’s direction,
-interrupt enable, input mask and so on in the same one register.
-
-Currently, aspeed_gpio_read and aspeed_gpio_write callback functions
-are not compatible AST2700.
-
-Introduce new aspeed_gpio_2700_read and aspeed_gpio_2700_write callback
-functions and aspeed_gpio_2700_ops memory region operation for AST2700.
-Introduce a new ast2700 class to support AST2700.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/gpio/aspeed_gpio.c | 380 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 380 insertions(+)
+ tests/avocado/machine_aspeed.py     | 292 ----------------------------
+ tests/functional/meson.build        |   2 +
+ tests/functional/test_arm_aspeed.py | 282 +++++++++++++++++++++++++++
+ 3 files changed, 284 insertions(+), 292 deletions(-)
+ create mode 100644 tests/functional/test_arm_aspeed.py
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 16c18ea2f743..a5b3f454e800 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -227,6 +227,38 @@ REG32(GPIO_INDEX_REG, 0x2AC)
-     FIELD(GPIO_INDEX_REG, COMMAND_SRC_1, 21, 1)
-     FIELD(GPIO_INDEX_REG, INPUT_MASK, 20, 1)
+diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+index 4e144bde9131..241ef180affc 100644
+--- a/tests/avocado/machine_aspeed.py
++++ b/tests/avocado/machine_aspeed.py
+@@ -19,258 +19,6 @@
+ from avocado_qemu import has_cmd
+ from avocado.utils import archive
+ from avocado import skipUnless
+-from avocado import skipUnless
+-
+-
+-class AST1030Machine(QemuSystemTest):
+-    """Boots the zephyr os and checks that the console is operational"""
+-
+-    timeout = 10
+-
+-    def test_ast1030_zephyros_1_04(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:ast1030-evb
+-        :avocado: tags=os:zephyr
+-        """
+-        tar_url = ('https://github.com/AspeedTech-BMC'
+-                   '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip')
+-        tar_hash = '4c6a8ce3a8ba76ef1a65dae419ae3409343c4b20'
+-        tar_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(tar_path, self.workdir)
+-        kernel_file = self.workdir + "/ast1030-evb-demo/zephyr.elf"
+-        self.vm.set_console()
+-        self.vm.add_args('-kernel', kernel_file,
+-                         '-nographic')
+-        self.vm.launch()
+-        wait_for_console_pattern(self, "Booting Zephyr OS")
+-        exec_command_and_wait_for_pattern(self, "help",
+-                                          "Available commands")
+-
+-    def test_ast1030_zephyros_1_07(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:ast1030-evb
+-        :avocado: tags=os:zephyr
+-        """
+-        tar_url = ('https://github.com/AspeedTech-BMC'
+-                   '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip')
+-        tar_hash = '40ac87eabdcd3b3454ce5aad11fedc72a33ecda2'
+-        tar_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(tar_path, self.workdir)
+-        kernel_file = self.workdir + "/ast1030-evb-demo/zephyr.bin"
+-        self.vm.set_console()
+-        self.vm.add_args('-kernel', kernel_file,
+-                         '-nographic')
+-        self.vm.launch()
+-        wait_for_console_pattern(self, "Booting Zephyr OS")
+-        for shell_cmd in [
+-                'kernel stacks',
+-                'otp info conf',
+-                'otp info scu',
+-                'hwinfo devid',
+-                'crypto aes256_cbc_vault',
+-                'random get',
+-                'jtag JTAG1 sw_xfer high TMS',
+-                'adc ADC0 resolution 12',
+-                'adc ADC0 read 42',
+-                'adc ADC1 read 69',
+-                'i2c scan I2C_0',
+-                'i3c attach I3C_0',
+-                'hash test',
+-                'kernel uptime',
+-                'kernel reboot warm',
+-                'kernel uptime',
+-                'kernel reboot cold',
+-                'kernel uptime',
+-        ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
+-
+-class AST2x00Machine(QemuSystemTest):
+-
+-    timeout = 180
+-
+-    def wait_for_console_pattern(self, success_message, vm=None):
+-        wait_for_console_pattern(self, success_message,
+-                                 failure_message='Kernel panic - not syncing',
+-                                 vm=vm)
+-
+-    def do_test_arm_aspeed(self, image):
+-        self.vm.set_console()
+-        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+-                         '-net', 'nic')
+-        self.vm.launch()
+-
+-        self.wait_for_console_pattern("U-Boot 2016.07")
+-        self.wait_for_console_pattern("## Loading kernel from FIT Image at 20080000")
+-        self.wait_for_console_pattern("Starting kernel ...")
+-        self.wait_for_console_pattern("Booting Linux on physical CPU 0x0")
+-        wait_for_console_pattern(self,
+-                "aspeed-smc 1e620000.spi: read control register: 203b0641")
+-        self.wait_for_console_pattern("ftgmac100 1e660000.ethernet eth0: irq ")
+-        self.wait_for_console_pattern("systemd[1]: Set hostname to")
+-
+-    def test_arm_ast2400_palmetto_openbmc_v2_9_0(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:palmetto-bmc
+-        """
+-
+-        image_url = ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
+-                     'obmc-phosphor-image-palmetto.static.mtd')
+-        image_hash = ('3e13bbbc28e424865dc42f35ad672b10f2e82cdb11846bb28fa625b48beafd0d')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        self.do_test_arm_aspeed(image_path)
+-
+-    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:romulus-bmc
+-        """
+-
+-        image_url = ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
+-                     'obmc-phosphor-image-romulus.static.mtd')
+-        image_hash = ('820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        self.do_test_arm_aspeed(image_path)
+-
+-    def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+-        self.require_netdev('user')
+-
+-        self.vm.set_console()
+-        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+-                         '-net', 'nic', '-net', 'user')
+-        self.vm.launch()
+-
+-        self.wait_for_console_pattern('U-Boot 2019.04')
+-        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+-        self.wait_for_console_pattern('Starting kernel ...')
+-        self.wait_for_console_pattern('Booting Linux on physical CPU ' + cpu_id)
+-        self.wait_for_console_pattern('lease of 10.0.2.15')
+-        # the line before login:
+-        self.wait_for_console_pattern(pattern)
+-        time.sleep(0.1)
+-        exec_command(self, 'root')
+-        time.sleep(0.1)
+-        exec_command(self, "passw0rd")
+-
+-    def do_test_arm_aspeed_buildroot_poweroff(self):
+-        exec_command_and_wait_for_pattern(self, 'poweroff',
+-                                          'reboot: System halted');
+-
+-    def test_arm_ast2500_evb_buildroot(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:ast2500-evb
+-        """
+-
+-        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-                     'images/ast2500-evb/buildroot-2023.11/flash.img')
+-        image_hash = ('c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        self.vm.add_args('-device',
+-                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
+-        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0', 'Aspeed AST2500 EVB')
+-
+-        exec_command_and_wait_for_pattern(self,
+-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
+-             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
+-        exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
+-        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+-                    property='temperature', value=18000);
+-        exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
+-
+-        self.do_test_arm_aspeed_buildroot_poweroff()
+-
+-    def test_arm_ast2600_evb_buildroot(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:ast2600-evb
+-        """
+-
+-        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-                     'images/ast2600-evb/buildroot-2023.11/flash.img')
+-        image_hash = ('b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        self.vm.add_args('-device',
+-                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
+-        self.vm.add_args('-device',
+-                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
+-        self.vm.add_args('-device',
+-                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
+-        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
+-
+-        exec_command_and_wait_for_pattern(self,
+-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
+-             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
+-        exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
+-        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+-                    property='temperature', value=18000);
+-        exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
+-
+-        exec_command_and_wait_for_pattern(self,
+-             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
+-             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
+-        year = time.strftime("%Y")
+-        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
+-
+-        exec_command_and_wait_for_pattern(self,
+-             'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
+-             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
+-        exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
+-        time.sleep(0.1)
+-        exec_command_and_wait_for_pattern(self,
+-             'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
+-             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
+-        self.do_test_arm_aspeed_buildroot_poweroff()
+-
+-    @skipUnless(*has_cmd('swtpm'))
+-    def test_arm_ast2600_evb_buildroot_tpm(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:ast2600-evb
+-        """
+-
+-        image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-                     'images/ast2600-evb/buildroot-2023.02-tpm/flash.img')
+-        image_hash = ('a46009ae8a5403a0826d607215e731a8c68d27c14c41e55331706b8f9c7bd997')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        # force creation of VM object, which also defines self._sd
+-        vm = self.vm
+-
+-        socket = os.path.join(self._sd.name, 'swtpm-socket')
+-
+-        subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
+-                        '--tpmstate', f'dir={self.vm.temp_dir}',
+-                        '--ctrl', f'type=unixio,path={socket}'])
+-
+-        self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
+-        self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
+-        self.vm.add_args('-device',
+-                         'tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e')
+-        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
+-
+-        exec_command_and_wait_for_pattern(self,
+-            'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
+-            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
+-        exec_command_and_wait_for_pattern(self,
+-            'cat /sys/class/tpm/tpm0/pcr-sha256/0',
+-            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
+-
+-        self.do_test_arm_aspeed_buildroot_poweroff()
  
-+/* AST2700 GPIO Register Address Offsets */
-+REG32(GPIO_2700_DEBOUNCE_TIME_1, 0x000)
-+REG32(GPIO_2700_DEBOUNCE_TIME_2, 0x004)
-+REG32(GPIO_2700_DEBOUNCE_TIME_3, 0x008)
-+REG32(GPIO_2700_INT_STATUS_1, 0x100)
-+REG32(GPIO_2700_INT_STATUS_2, 0x104)
-+REG32(GPIO_2700_INT_STATUS_3, 0x108)
-+REG32(GPIO_2700_INT_STATUS_4, 0x10C)
-+REG32(GPIO_2700_INT_STATUS_5, 0x110)
-+REG32(GPIO_2700_INT_STATUS_6, 0x114)
-+REG32(GPIO_2700_INT_STATUS_7, 0x118)
-+/* GPIOA0 - GPIOAA7 Control Register */
-+REG32(GPIO_A0_CONTROL, 0x180)
-+    SHARED_FIELD(GPIO_CONTROL_OUT_DATA, 0, 1)
-+    SHARED_FIELD(GPIO_CONTROL_DIRECTION, 1, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INT_ENABLE, 2, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INT_SENS_0, 3, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INT_SENS_1, 4, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INT_SENS_2, 5, 1)
-+    SHARED_FIELD(GPIO_CONTROL_RESET_TOLERANCE, 6, 1)
-+    SHARED_FIELD(GPIO_CONTROL_DEBOUNCE_1, 7, 1)
-+    SHARED_FIELD(GPIO_CONTROL_DEBOUNCE_2, 8, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INPUT_MASK, 9, 1)
-+    SHARED_FIELD(GPIO_CONTROL_BLINK_COUNTER_1, 10, 1)
-+    SHARED_FIELD(GPIO_CONTROL_BLINK_COUNTER_2, 11, 1)
-+    SHARED_FIELD(GPIO_CONTROL_INT_STATUS, 12, 1)
-+    SHARED_FIELD(GPIO_CONTROL_IN_DATA, 13, 1)
-+    SHARED_FIELD(GPIO_CONTROL_RESERVED, 14, 18)
-+REG32(GPIO_AA7_CONTROL, 0x4DC)
-+#define GPIO_2700_MEM_SIZE 0x4E0
-+#define GPIO_2700_REG_ARRAY_SIZE (GPIO_2700_MEM_SIZE >> 2)
-+
- static int aspeed_evaluate_irq(GPIOSets *regs, int gpio_prev_high, int gpio)
- {
-     uint32_t falling_edge = 0, rising_edge = 0;
-@@ -970,6 +1002,316 @@ static void aspeed_gpio_set_pin(Object *obj, Visitor *v, const char *name,
-     aspeed_gpio_set_pin_level(s, set_idx, pin, level);
- }
+ class AST2x00MachineSDK(QemuSystemTest, LinuxSSHMixIn):
  
-+static uint64_t aspeed_gpio_2700_read_control_reg(AspeedGPIOState *s,
-+                                    uint32_t pin)
-+{
-+    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-+    GPIOSets *set;
-+    uint64_t value = 0;
-+    uint32_t set_idx;
-+    uint32_t pin_idx;
-+
-+    set_idx = pin / ASPEED_GPIOS_PER_SET;
-+    pin_idx = pin % ASPEED_GPIOS_PER_SET;
-+
-+    if (set_idx >= agc->nr_gpio_sets) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: set index: %d, out of bounds\n",
-+                      __func__, set_idx);
-+        return 0;
-+    }
-+
-+    set = &s->sets[set_idx];
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_OUT_DATA,
-+                              extract32(set->data_read, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_DIRECTION,
-+                              extract32(set->direction, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INT_ENABLE,
-+                              extract32(set->int_enable, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INT_SENS_0,
-+                              extract32(set->int_sens_0, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INT_SENS_1,
-+                              extract32(set->int_sens_1, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INT_SENS_2,
-+                              extract32(set->int_sens_2, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_RESET_TOLERANCE,
-+                              extract32(set->reset_tol, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_DEBOUNCE_1,
-+                              extract32(set->debounce_1, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_DEBOUNCE_2,
-+                              extract32(set->debounce_2, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INPUT_MASK,
-+                              extract32(set->input_mask, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_INT_STATUS,
-+                              extract32(set->int_status, pin_idx, 1));
-+    value = SHARED_FIELD_DP32(value, GPIO_CONTROL_IN_DATA,
-+                              extract32(set->data_value, pin_idx, 1));
-+    return value;
-+}
-+
-+static void aspeed_gpio_2700_write_control_reg(AspeedGPIOState *s,
-+                                uint32_t pin, uint64_t data)
-+{
-+    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-+    const GPIOSetProperties *props;
-+    GPIOSets *set;
-+    uint32_t set_idx;
-+    uint32_t pin_idx;
-+    uint32_t group_value = 0;
-+    uint32_t pending = 0;
-+
-+    set_idx = pin / ASPEED_GPIOS_PER_SET;
-+    pin_idx = pin % ASPEED_GPIOS_PER_SET;
-+
-+    if (set_idx >= agc->nr_gpio_sets) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: set index: %d, out of bounds\n",
-+                      __func__, set_idx);
-+        return;
-+    }
-+
-+    set = &s->sets[set_idx];
-+    props = &agc->props[set_idx];
-+
-+    /* direction */
-+    group_value = set->direction;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_DIRECTION));
-+    /*
-+     * where data is the value attempted to be written to the pin:
-+     * pin type      | input mask | output mask | expected value
-+     * ------------------------------------------------------------
-+     * bidirectional  |   1       |   1        |  data
-+     * input only     |   1       |   0        |   0
-+     * output only    |   0       |   1        |   1
-+     * no pin         |   0       |   0        |   0
-+     *
-+     * which is captured by:
-+     * data = ( data | ~input) & output;
-+     */
-+    group_value = (group_value | ~props->input) & props->output;
-+    set->direction = update_value_control_source(set, set->direction,
-+                                                 group_value);
-+
-+    /* out data */
-+    group_value = set->data_read;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_OUT_DATA));
-+    group_value &= props->output;
-+    group_value = update_value_control_source(set, set->data_read,
-+                                              group_value);
-+    set->data_read = group_value;
-+
-+    /* interrupt enable */
-+    group_value = set->int_enable;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_ENABLE));
-+    set->int_enable = update_value_control_source(set, set->int_enable,
-+                                                  group_value);
-+
-+    /* interrupt sensitivity type 0 */
-+    group_value = set->int_sens_0;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_SENS_0));
-+    set->int_sens_0 = update_value_control_source(set, set->int_sens_0,
-+                                                  group_value);
-+
-+    /* interrupt sensitivity type 1 */
-+    group_value = set->int_sens_1;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_SENS_1));
-+    set->int_sens_1 = update_value_control_source(set, set->int_sens_1,
-+                                                  group_value);
-+
-+    /* interrupt sensitivity type 2 */
-+    group_value = set->int_sens_2;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_SENS_2));
-+    set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
-+                                                  group_value);
-+
-+    /* reset tolerance enable */
-+    group_value = set->reset_tol;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                        SHARED_FIELD_EX32(data, GPIO_CONTROL_RESET_TOLERANCE));
-+    set->reset_tol = update_value_control_source(set, set->reset_tol,
-+                                                 group_value);
-+
-+    /* debounce 1 */
-+    group_value = set->debounce_1;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_DEBOUNCE_1));
-+    set->debounce_1 = update_value_control_source(set, set->debounce_1,
-+                                                  group_value);
-+
-+    /* debounce 2 */
-+    group_value = set->debounce_2;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_DEBOUNCE_2));
-+    set->debounce_2 = update_value_control_source(set, set->debounce_2,
-+                                                  group_value);
-+
-+    /* input mask */
-+    group_value = set->input_mask;
-+    group_value = deposit32(group_value, pin_idx, 1,
-+                            SHARED_FIELD_EX32(data, GPIO_CONTROL_INPUT_MASK));
-+    /*
-+     * feeds into interrupt generation
-+     * 0: read from data value reg will be updated
-+     * 1: read from data value reg will not be updated
-+     */
-+    set->input_mask = group_value & props->input;
-+
-+    /* blink counter 1 */
-+    /* blink counter 2 */
-+    /* unimplement */
-+
-+    /* interrupt status */
-+    if (SHARED_FIELD_EX32(data, GPIO_CONTROL_INT_STATUS)) {
-+        /* pending is either 1 or 0 for a 1-bit field */
-+        pending = extract32(set->int_status, pin_idx, 1);
-+
-+        assert(s->pending >= pending);
-+
-+        /* No change to s->pending if pending is 0 */
-+        s->pending -= pending;
-+
-+        /*
-+         * The write acknowledged the interrupt regardless of whether it
-+         * was pending or not. The post-condition is that it mustn't be
-+         * pending. Unconditionally clear the status bit.
-+         */
-+        set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
-+    }
-+
-+    aspeed_gpio_update(s, set, set->data_value, UINT32_MAX);
-+    return;
-+}
-+
-+static uint64_t aspeed_gpio_2700_read(void *opaque, hwaddr offset,
-+                                uint32_t size)
-+{
-+    AspeedGPIOState *s = ASPEED_GPIO(opaque);
-+    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-+    GPIOSets *set;
-+    uint64_t value;
-+    uint64_t reg;
-+    uint32_t pin;
-+    uint32_t idx;
-+
-+    reg = offset >> 2;
-+
-+    if (reg >= agc->reg_table_count) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: offset 0x%" PRIx64 " out of bounds\n",
-+                      __func__, offset);
-+        return 0;
-+    }
-+
-+    switch (reg) {
-+    case R_GPIO_2700_DEBOUNCE_TIME_1 ... R_GPIO_2700_DEBOUNCE_TIME_3:
-+        idx = reg - R_GPIO_2700_DEBOUNCE_TIME_1;
-+
-+        if (idx >= ASPEED_GPIO_NR_DEBOUNCE_REGS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: debounce index: %d, out of bounds\n",
-+                          __func__, idx);
-+            return 0;
-+        }
-+
-+        value = (uint64_t) s->debounce_regs[idx];
-+        break;
-+    case R_GPIO_2700_INT_STATUS_1 ... R_GPIO_2700_INT_STATUS_7:
-+        idx = reg - R_GPIO_2700_INT_STATUS_1;
-+
-+        if (idx >= agc->nr_gpio_sets) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: interrupt status index: %d, out of bounds\n",
-+                          __func__, idx);
-+            return 0;
-+        }
-+
-+        set = &s->sets[idx];
-+        value = (uint64_t) set->int_status;
-+        break;
-+    case R_GPIO_A0_CONTROL ... R_GPIO_AA7_CONTROL:
-+        pin = reg - R_GPIO_A0_CONTROL;
-+
-+        if (pin >= agc->nr_gpio_pins) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid pin number: %d\n",
-+                          __func__, pin);
-+               return 0;
-+        }
-+
-+        value = aspeed_gpio_2700_read_control_reg(s, pin);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: no getter for offset 0x%"
-+                      PRIx64"\n", __func__, offset);
-+        return 0;
-+    }
-+
-+    trace_aspeed_gpio_read(offset, value);
-+    return value;
-+}
-+
-+static void aspeed_gpio_2700_write(void *opaque, hwaddr offset,
-+                                uint64_t data, uint32_t size)
-+{
-+    AspeedGPIOState *s = ASPEED_GPIO(opaque);
-+    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-+    uint64_t reg;
-+    uint32_t pin;
-+    uint32_t idx;
-+
-+    trace_aspeed_gpio_write(offset, data);
-+
-+    reg = offset >> 2;
-+
-+    if (reg >= agc->reg_table_count) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: offset 0x%" PRIx64 " out of bounds\n",
-+                      __func__, offset);
-+        return;
-+    }
-+
-+    switch (reg) {
-+    case R_GPIO_2700_DEBOUNCE_TIME_1 ... R_GPIO_2700_DEBOUNCE_TIME_3:
-+        idx = reg - R_GPIO_2700_DEBOUNCE_TIME_1;
-+
-+        if (idx >= ASPEED_GPIO_NR_DEBOUNCE_REGS) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: debounce index: %d out of bounds\n",
-+                          __func__, idx);
-+            return;
-+        }
-+
-+        s->debounce_regs[idx] = (uint32_t) data;
-+        break;
-+    case R_GPIO_A0_CONTROL ... R_GPIO_AA7_CONTROL:
-+        pin = reg - R_GPIO_A0_CONTROL;
-+
-+        if (pin >= agc->nr_gpio_pins) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid pin number: %d\n",
-+                          __func__, pin);
-+            return;
-+        }
-+
-+        if (SHARED_FIELD_EX32(data, GPIO_CONTROL_RESERVED)) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reserved data: 0x%"
-+                          PRIx64"\n", __func__, data);
-+            return;
-+        }
-+
-+        aspeed_gpio_2700_write_control_reg(s, pin, data);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: no setter for offset 0x%"
-+                      PRIx64"\n", __func__, offset);
-+        break;
-+    }
-+
-+    return;
-+}
-+
- /* Setup functions */
- static const GPIOSetProperties ast2400_set_props[ASPEED_GPIO_MAX_NR_SETS] = {
-     [0] = {0xffffffff,  0xffffffff,  {"A", "B", "C", "D"} },
-@@ -1016,6 +1358,16 @@ static GPIOSetProperties ast1030_set_props[ASPEED_GPIO_MAX_NR_SETS] = {
-     [5] = {0x000000ff,  0x00000000,  {"U"} },
- };
+@@ -452,43 +200,3 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
+                     property='temperature', value=18000)
+         self.ssh_command_output_contains(
+             'cat /sys/class/hwmon/hwmon20/temp1_input', '18000')
+-
+-class AST2x00MachineMMC(QemuSystemTest):
+-
+-    timeout = 240
+-
+-    def wait_for_console_pattern(self, success_message, vm=None):
+-        wait_for_console_pattern(self, success_message,
+-                                 failure_message='Kernel panic - not syncing',
+-                                 vm=vm)
+-
+-    def test_arm_aspeed_emmc_boot(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:rainier-bmc
+-        :avocado: tags=device:emmc
+-        """
+-
+-        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+-                     'mmc-p10bmc-20240617.qcow2')
+-        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+-                                      algorithm='sha256')
+-
+-        self.require_netdev('user')
+-
+-        self.vm.set_console()
+-        self.vm.add_args('-drive',
+-                         'file=' + image_path + ',if=sd,id=sd2,index=2',
+-                         '-net', 'nic', '-net', 'user')
+-        self.vm.launch()
+-
+-        self.wait_for_console_pattern('U-Boot SPL 2019.04')
+-        self.wait_for_console_pattern('Trying to boot from MMC1')
+-        self.wait_for_console_pattern('U-Boot 2019.04')
+-        self.wait_for_console_pattern('eMMC 2nd Boot')
+-        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+-        self.wait_for_console_pattern('Starting kernel ...')
+-        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
+-        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
+-        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 5ccc1aa66ddc..97c1c597e861 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -15,6 +15,7 @@ test_timeouts = {
+   'aarch64_sbsaref' : 600,
+   'aarch64_virt' : 360,
+   'acpi_bits' : 240,
++  'arm_aspeed' : 600,
+   'arm_raspi2' : 120,
+   'arm_tuxrun' : 120,
+   'mips_malta' : 120,
+@@ -51,6 +52,7 @@ tests_alpha_system_thorough = [
+ ]
  
-+static GPIOSetProperties ast2700_set_props[ASPEED_GPIO_MAX_NR_SETS] = {
-+    [0] = {0xffffffff,  0xffffffff,  {"A", "B", "C", "D"} },
-+    [1] = {0x0fffffff,  0x0fffffff,  {"E", "F", "G", "H"} },
-+    [2] = {0xffffffff,  0xffffffff,  {"I", "J", "K", "L"} },
-+    [3] = {0xffffffff,  0xffffffff,  {"M", "N", "O", "P"} },
-+    [4] = {0xffffffff,  0xffffffff,  {"Q", "R", "S", "T"} },
-+    [5] = {0xffffffff,  0xffffffff,  {"U", "V", "W", "X"} },
-+    [6] = {0x00ffffff,  0x00ffffff,  {"Y", "Z", "AA"} },
-+};
+ tests_arm_system_thorough = [
++  'arm_aspeed',
+   'arm_canona1100',
+   'arm_integratorcp',
+   'arm_raspi2',
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+new file mode 100644
+index 000000000000..9761fc06a454
+--- /dev/null
++++ b/tests/functional/test_arm_aspeed.py
+@@ -0,0 +1,282 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots the ASPEED SoCs with firmware
++#
++# Copyright (C) 2022 ASPEED Technology Inc
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- static const MemoryRegionOps aspeed_gpio_ops = {
-     .read       = aspeed_gpio_read,
-     .write      = aspeed_gpio_write,
-@@ -1024,6 +1376,14 @@ static const MemoryRegionOps aspeed_gpio_ops = {
-     .valid.max_access_size = 4,
- };
- 
-+static const MemoryRegionOps aspeed_gpio_2700_ops = {
-+    .read       = aspeed_gpio_2700_read,
-+    .write      = aspeed_gpio_2700_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
++import os
++import time
++import subprocess
++import tempfile
 +
- static void aspeed_gpio_reset(DeviceState *dev)
- {
-     AspeedGPIOState *s = ASPEED_GPIO(dev);
-@@ -1193,6 +1553,18 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-     agc->reg_ops = &aspeed_gpio_ops;
- }
- 
-+static void aspeed_gpio_2700_class_init(ObjectClass *klass, void *data)
-+{
-+    AspeedGPIOClass *agc = ASPEED_GPIO_CLASS(klass);
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import interrupt_interactive_console_until_pattern
++from qemu_test import exec_command
++from qemu_test import has_cmd
++from qemu_test.utils import archive_extract
++from zipfile import ZipFile
++from unittest import skipUnless
 +
-+    agc->props = ast2700_set_props;
-+    agc->nr_gpio_pins = 216;
-+    agc->nr_gpio_sets = 7;
-+    agc->reg_table_count = GPIO_2700_REG_ARRAY_SIZE;
-+    agc->mem_size = 0x1000;
-+    agc->reg_ops = &aspeed_gpio_2700_ops;
-+}
++class AST1030Machine(LinuxKernelTest):
 +
- static const TypeInfo aspeed_gpio_info = {
-     .name           = TYPE_ASPEED_GPIO,
-     .parent         = TYPE_SYS_BUS_DEVICE,
-@@ -1237,6 +1609,13 @@ static const TypeInfo aspeed_gpio_ast1030_info = {
-     .instance_init  = aspeed_gpio_init,
- };
- 
-+static const TypeInfo aspeed_gpio_ast2700_info = {
-+    .name           = TYPE_ASPEED_GPIO "-ast2700",
-+    .parent         = TYPE_ASPEED_GPIO,
-+    .class_init     = aspeed_gpio_2700_class_init,
-+    .instance_init  = aspeed_gpio_init,
-+};
++    ASSET_ZEPHYR_1_04 = Asset(
++        ('https://github.com/AspeedTech-BMC'
++         '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip'),
++        '4ac6210adcbc61294927918707c6762483fd844dde5e07f3ba834ad1f91434d3')
 +
- static void aspeed_gpio_register_types(void)
- {
-     type_register_static(&aspeed_gpio_info);
-@@ -1245,6 +1624,7 @@ static void aspeed_gpio_register_types(void)
-     type_register_static(&aspeed_gpio_ast2600_3_3v_info);
-     type_register_static(&aspeed_gpio_ast2600_1_8v_info);
-     type_register_static(&aspeed_gpio_ast1030_info);
-+    type_register_static(&aspeed_gpio_ast2700_info);
- }
- 
- type_init(aspeed_gpio_register_types);
++    def test_ast1030_zephyros_1_04(self):
++        self.set_machine('ast1030-evb')
++
++        zip_file = self.ASSET_ZEPHYR_1_04.fetch()
++
++        kernel_name = "ast1030-evb-demo/zephyr.elf"
++        with ZipFile(zip_file, 'r') as zf:
++                     zf.extract(kernel_name, path=self.workdir)
++        kernel_file = os.path.join(self.workdir, kernel_name)
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_file, '-nographic')
++        self.vm.launch()
++        self.wait_for_console_pattern("Booting Zephyr OS")
++        exec_command_and_wait_for_pattern(self, "help",
++                                          "Available commands")
++
++    ASSET_ZEPHYR_1_07 = Asset(
++        ('https://github.com/AspeedTech-BMC'
++         '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip'),
++        'ad52e27959746988afaed8429bf4e12ab988c05c4d07c9d90e13ec6f7be4574c')
++
++    def test_ast1030_zephyros_1_07(self):
++        self.set_machine('ast1030-evb')
++
++        zip_file = self.ASSET_ZEPHYR_1_07.fetch()
++
++        kernel_name = "ast1030-evb-demo/zephyr.bin"
++        with ZipFile(zip_file, 'r') as zf:
++                     zf.extract(kernel_name, path=self.workdir)
++        kernel_file = os.path.join(self.workdir, kernel_name)
++
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_file, '-nographic')
++        self.vm.launch()
++        self.wait_for_console_pattern("Booting Zephyr OS")
++        for shell_cmd in [
++                'kernel stacks',
++                'otp info conf',
++                'otp info scu',
++                'hwinfo devid',
++                'crypto aes256_cbc_vault',
++                'random get',
++                'jtag JTAG1 sw_xfer high TMS',
++                'adc ADC0 resolution 12',
++                'adc ADC0 read 42',
++                'adc ADC1 read 69',
++                'i2c scan I2C_0',
++                'i3c attach I3C_0',
++                'hash test',
++                'kernel uptime',
++                'kernel reboot warm',
++                'kernel uptime',
++                'kernel reboot cold',
++                'kernel uptime',
++        ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
++
++class AST2x00Machine(LinuxKernelTest):
++
++    def do_test_arm_aspeed(self, machine, image):
++        self.set_machine(machine)
++        self.vm.set_console()
++        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
++                         '-net', 'nic', '-snapshot')
++        self.vm.launch()
++
++        self.wait_for_console_pattern("U-Boot 2016.07")
++        self.wait_for_console_pattern("## Loading kernel from FIT Image at 20080000")
++        self.wait_for_console_pattern("Starting kernel ...")
++        self.wait_for_console_pattern("Booting Linux on physical CPU 0x0")
++        self.wait_for_console_pattern(
++                "aspeed-smc 1e620000.spi: read control register: 203b0641")
++        self.wait_for_console_pattern("ftgmac100 1e660000.ethernet eth0: irq ")
++        self.wait_for_console_pattern("systemd[1]: Set hostname to")
++
++    ASSET_PALMETTO_FLASH = Asset(
++        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
++         'obmc-phosphor-image-palmetto.static.mtd'),
++        '3e13bbbc28e424865dc42f35ad672b10f2e82cdb11846bb28fa625b48beafd0d');
++
++    def test_arm_ast2400_palmetto_openbmc_v2_9_0(self):
++        image_path = self.ASSET_PALMETTO_FLASH.fetch()
++
++        self.do_test_arm_aspeed('palmetto-bmc', image_path)
++
++    ASSET_ROMULUS_FLASH = Asset(
++        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
++         'obmc-phosphor-image-romulus.static.mtd'),
++        '820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
++
++    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
++        image_path = self.ASSET_ROMULUS_FLASH.fetch()
++
++        self.do_test_arm_aspeed('romulus-bmc', image_path)
++
++    def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
++        self.require_netdev('user')
++        self.vm.set_console()
++        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
++                         '-net', 'nic', '-net', 'user')
++        self.vm.launch()
++
++        self.wait_for_console_pattern('U-Boot 2019.04')
++        self.wait_for_console_pattern('## Loading kernel from FIT Image')
++        self.wait_for_console_pattern('Starting kernel ...')
++        self.wait_for_console_pattern('Booting Linux on physical CPU ' + cpu_id)
++        self.wait_for_console_pattern('lease of 10.0.2.15')
++        # the line before login:
++        self.wait_for_console_pattern(pattern)
++        time.sleep(0.1)
++        exec_command(self, 'root')
++        time.sleep(0.1)
++        exec_command(self, "passw0rd")
++
++    def do_test_arm_aspeed_buildroot_poweroff(self):
++        exec_command_and_wait_for_pattern(self, 'poweroff',
++                                          'reboot: System halted');
++
++    ASSET_BR2_202311_AST2500_FLASH = Asset(
++        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
++         'images/ast2500-evb/buildroot-2023.11/flash.img'),
++        'c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
++
++    def test_arm_ast2500_evb_buildroot(self):
++        self.set_machine('ast2500-evb')
++
++        image_path = self.ASSET_BR2_202311_AST2500_FLASH.fetch()
++
++        self.vm.add_args('-device',
++                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
++        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0',
++                                                'Aspeed AST2500 EVB')
++
++        exec_command_and_wait_for_pattern(self,
++             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
++             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
++        exec_command_and_wait_for_pattern(self,
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
++        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
++                    property='temperature', value=18000);
++        exec_command_and_wait_for_pattern(self,
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
++
++        self.do_test_arm_aspeed_buildroot_poweroff()
++
++    ASSET_BR2_202311_AST2600_FLASH = Asset(
++        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
++         'images/ast2600-evb/buildroot-2023.11/flash.img'),
++        'b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
++
++    def test_arm_ast2600_evb_buildroot(self):
++        self.set_machine('ast2600-evb')
++
++        image_path = self.ASSET_BR2_202311_AST2600_FLASH.fetch()
++
++        self.vm.add_args('-device',
++                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
++        self.vm.add_args('-device',
++                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
++        self.vm.add_args('-device',
++                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
++        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
++
++        exec_command_and_wait_for_pattern(self,
++             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
++             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
++        exec_command_and_wait_for_pattern(self,
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
++        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
++                    property='temperature', value=18000);
++        exec_command_and_wait_for_pattern(self,
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
++
++        exec_command_and_wait_for_pattern(self,
++             'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
++             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
++        year = time.strftime("%Y")
++        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
++
++        exec_command_and_wait_for_pattern(self,
++             'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
++             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
++        exec_command(self, 'i2cset -y 3 0x42 0x64 0x00 0xaa i');
++        time.sleep(0.1)
++        exec_command_and_wait_for_pattern(self,
++             'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
++             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
++        self.do_test_arm_aspeed_buildroot_poweroff()
++
++    ASSET_BR2_202302_AST2600_TPM_FLASH = Asset(
++        ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
++         'images/ast2600-evb/buildroot-2023.02-tpm/flash.img'),
++        'a46009ae8a5403a0826d607215e731a8c68d27c14c41e55331706b8f9c7bd997')
++
++    @skipUnless(*has_cmd('swtpm'))
++    def test_arm_ast2600_evb_buildroot_tpm(self):
++        self.set_machine('ast2600-evb')
++
++        image_path = self.ASSET_BR2_202302_AST2600_TPM_FLASH.fetch()
++
++        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
++        socket = os.path.join(socket_dir.name, 'swtpm-socket')
++
++        subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
++                        '--tpmstate', f'dir={self.vm.temp_dir}',
++                        '--ctrl', f'type=unixio,path={socket}'])
++
++        self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
++        self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
++        self.vm.add_args('-device',
++                         'tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e')
++        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
++
++        exec_command_and_wait_for_pattern(self,
++            'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
++            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
++        exec_command_and_wait_for_pattern(self,
++            'cat /sys/class/tpm/tpm0/pcr-sha256/0',
++            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
++
++        self.do_test_arm_aspeed_buildroot_poweroff()
++
++class AST2x00MachineMMC(LinuxKernelTest):
++
++    ASSET_RAINIER_EMMC = Asset(
++        ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
++         'mmc-p10bmc-20240617.qcow2'),
++        'd523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++
++    def test_arm_aspeed_emmc_boot(self):
++        self.set_machine('rainier-bmc')
++        self.require_netdev('user')
++
++        image_path = self.ASSET_RAINIER_EMMC.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args('-drive',
++                         'file=' + image_path + ',if=sd,id=sd2,index=2',
++                         '-net', 'nic', '-net', 'user', '-snapshot')
++        self.vm.launch()
++
++        self.wait_for_console_pattern('U-Boot SPL 2019.04')
++        self.wait_for_console_pattern('Trying to boot from MMC1')
++        self.wait_for_console_pattern('U-Boot 2019.04')
++        self.wait_for_console_pattern('eMMC 2nd Boot')
++        self.wait_for_console_pattern('## Loading kernel from FIT Image')
++        self.wait_for_console_pattern('Starting kernel ...')
++        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
++        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
++        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.0
 
