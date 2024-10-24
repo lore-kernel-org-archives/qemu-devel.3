@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC7BD10384
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DA9D10380
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 21:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t450c-00017i-If; Thu, 24 Oct 2024 17:04:42 -0400
+	id 1t450c-00017L-3a; Thu, 24 Oct 2024 17:04:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t450b-00016v-Bw
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:04:41 -0400
+ id 1t450a-00015B-Kt
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:04:40 -0400
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t450Z-0002Db-P9
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:04:41 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1729803850; cv=none; 
+ id 1t450Z-0002DY-3Z
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 17:04:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1729803864; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=DAv29XuBnLS4vXAM4wv7miReN9Pv5p/ErshGRP/eRo2vtEa/6yLuB0GQmITNaQ1U5Q1m+K2jo4dummKws7JU02CkbiOI4VGms7mTQbRsnnRyMO6CzDBLW07d+Zik8KWoaCj+KrvBOak3j3MGoNgOWXQN8msOqxn5YFsdZsh00a8=
+ b=kdh/GXtabfKBzGtMu7YskKv7tP+2x0vcLc4cNIWe7HQZ1YUHGWuCAsKW5bTKv9QPw8EpPfUwPKJEDCy0E413NBAJpDmgL0Vo04fMd7GBaw8z9q7qfQgDhvYDpmRwRbJ+YOVq6JIW6sNLepF9TUAlpasXkIGewLUZVy3I4W/WcZg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1729803850;
+ s=zohoarc; t=1729803864;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=XVmyrLXRqVwpYbrvGtEpbvb4gydn1N79PY4d8dOtZtk=; 
- b=cRn1lkX5NvknS5rsLlGRuQ3xIYRrSGCmgBbU5hkoyAqJTNGXvK6FuIwZCdk6xaYZNMmqN0r6ZQbPsJDkmvHTxFhdosrmKtD1XO3LXbEkN3pFG4ecO43xRHg+FmwDCnL90GvF9UPcQwgBSOHgs0mIskkVMyjk7+paRUneR08itsc=
+ bh=VUdjr3q/fmAQbl8IimR7vvFIex2FwAD2lFnxCW7JOwE=; 
+ b=fa0zD/sd3EeEY5uEZzvNXI26F1Rv+Q4eXPcsZijQxwsI/aqpLbIPO3FWumyLNgp2kkLQSMoF1MV0g2pk7NxJYGBx8ju5iFKjIaLw//zulcE9H4ngLYFkYAxAW7KrX5wjCcCX59bBg35wps2GEI6dZGwqaH5/bFXoMeP6nZmkwBQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729803850; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729803864; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=XVmyrLXRqVwpYbrvGtEpbvb4gydn1N79PY4d8dOtZtk=;
- b=QbSutGVUpCIMxbcE/0ere4Q0jCMOCTK3iuAHKoAyGf1sufbw70oQ/5yR3E+XFwjS
- EF8nmxkVcDOP5Ntyd+02eAR10I9kplVuS+Mw3b8Z5aD2vqXH7N9tW5/al/3oMARTtps
- 9jdFc8mnofYHH/sztK3FyPGzMHklsvq5X/zrMr5M=
-Received: by mx.zohomail.com with SMTPS id 1729803849092276.324105421285;
- Thu, 24 Oct 2024 14:04:09 -0700 (PDT)
+ bh=VUdjr3q/fmAQbl8IimR7vvFIex2FwAD2lFnxCW7JOwE=;
+ b=JoTW1pCGuG8pFTzSc6CzNKdx+7NswZ8+bZiiq3yBvV79affI2WpZpST1+vnTBIV6
+ V4Quo5oNfkEoqhkQh8hKCYz1M6kNetZ6FYarZXOcf70HHgyEK0H5wFuK7mDEk0PG9Pi
+ 4tI9nrnDkYoiiz6jPm3wdji8hyvJyJtkDVB3Exl0=
+Received: by mx.zohomail.com with SMTPS id 1729803863019377.6469818576775;
+ Thu, 24 Oct 2024 14:04:23 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -62,10 +62,10 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v18 06/13] virtio-gpu: Use pkgconfig version to decide which
- virgl features are available
-Date: Fri, 25 Oct 2024 00:03:04 +0300
-Message-ID: <20241024210311.118220-7-dmitry.osipenko@collabora.com>
+Subject: [PATCH v18 08/13] virtio-gpu: Don't require udmabuf when blobs and
+ virgl are enabled
+Date: Fri, 25 Oct 2024 00:03:06 +0300
+Message-ID: <20241024210311.118220-9-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
 References: <20241024210311.118220-1-dmitry.osipenko@collabora.com>
@@ -98,47 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New virglrerenderer features were stabilized with release of v1.0.0.
-Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibility
-with pre-release development versions of libvirglerender. Use virglrenderer
-version to decide reliably which virgl features are available.
+The udmabuf usage is mandatory when virgl is disabled and blobs feature
+enabled in the Qemu machine configuration. If virgl and blobs are enabled,
+then udmabuf requirement is optional. Since udmabuf isn't widely supported
+by a popular Linux distros today, let's relax the udmabuf requirement for
+blobs=on,virgl=on. Now, a full-featured virtio-gpu acceleration is
+available to Qemu users without a need to have udmabuf available in the
+system.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 2 +-
- meson.build                   | 5 +----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ hw/display/virtio-gpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index a63d1f540f04..ca6f4d6cbb58 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -171,7 +171,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-         struct virgl_renderer_resource_info info;
-         void *d3d_tex2d = NULL;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 3fcc434732a3..3d9679c1ef98 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1455,6 +1455,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
  
--#ifdef HAVE_VIRGL_D3D_INFO_EXT
-+#if VIRGL_VERSION_MAJOR >= 1
-         struct virgl_renderer_resource_info_ext ext;
-         memset(&ext, 0, sizeof(ext));
-         ret = virgl_renderer_resource_get_info_ext(ss.resource_id, &ext);
-diff --git a/meson.build b/meson.build
-index c26c417de16a..089cbd2bb364 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2429,10 +2429,7 @@ config_host_data.set('CONFIG_VNC', vnc.found())
- config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
- config_host_data.set('CONFIG_VNC_SASL', sasl.found())
- if virgl.found()
--  config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT',
--                       cc.has_member('struct virgl_renderer_resource_info_ext', 'd3d_tex2d',
--                                     prefix: '#include <virglrenderer.h>',
--                                     dependencies: virgl))
-+  config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')[0])
- endif
- config_host_data.set('CONFIG_VIRTFS', have_virtfs)
- config_host_data.set('CONFIG_VTE', vte.found())
+     if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
+         if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
++            !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
+             !virtio_gpu_have_udmabuf()) {
+             error_setg(errp, "need rutabaga or udmabuf for blob resources");
+             return;
 -- 
 2.47.0
 
