@@ -4,101 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219E4CFA456
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1395BCFA456
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3umK-0004MR-O7; Thu, 24 Oct 2024 06:09:16 -0400
+	id 1t3uns-0005Ea-Fu; Thu, 24 Oct 2024 06:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3umI-0004M2-Mr
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:09:14 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3umH-0005Pw-5L
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:09:14 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a9a0c7abaa6so80573266b.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:09:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729764551; x=1730369351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fzmDY01L3a4QW8U3i7R5j0APsDf/UzCDPnfjlygwr+A=;
- b=KRjQwUnzn0PakMuputudVkQvZdYjfNymlXt3PtvuvZL7mE3XX0cegCxV6bpI0YcPg2
- PBQD19qQwHxFG58iKz6x1wvys2yajDheoY8TCbneOubGapN816Zs9X9/r/mec4WdHdoN
- g9dmxzz+ssbrvyBvmfWpQr46t64rl+VcNog8+j4q56qGqPm1LI/7WmNH2Nbyu4MLi1XD
- gAIuoMoXslO2Tpvi3wB6Zq0A0QwHhXc3evR3lV7r4ir4oLjgZtIPIQi5yrb4lyvYC5DX
- Q4WNuQ5wRgv7AcC3lmC1rOT4gN/f7C+R41jRhdY9eGpM3BX+Ort4+Y3Vu357yCvyS/uq
- T34Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729764551; x=1730369351;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fzmDY01L3a4QW8U3i7R5j0APsDf/UzCDPnfjlygwr+A=;
- b=n6ezquZ3NNgb+2qrI6e7zIOVQkXqk2gddTxzam2gI0qNOIXMH6OOD4xT1n8RHMf/58
- bkB8Gd6lZToB6yRENipSBuJ+tIDTqwwWt8eNOhFCkGFEcb/pVcCzDNyxISOGHtOCtOKa
- Rs3mPH4XtNALrwtL9zhXxogBb7Sp0OsPYTgASfvrOU87XJhsR39OAWlTwd8Z8qfhVgQ2
- hZZSvP5S01yseoR0JHJ8mVs0UnBcQO193rZRrKEHzL6hsEkUGGq5vbC9+sRe6NWZLz1w
- eJByrctSLxWeq8OMKXpbdI+k4n4LP2eiBweglT4cHdtG08mrqJt9QAWIVODxdiuny0H8
- sF8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/O88dwGmQRNNfBSDyci82sUGDkj6sHahAbIzKAOnbACcq1MHwBjCB+7+sSGXVyXD87fsUp7fOizYc@nongnu.org
-X-Gm-Message-State: AOJu0YwvPM+LWKJEEt0MAHhpKMFoQcivnKcvRUnFYGyjg/5+LoS95rs/
- JTBLxapg/UhvqKVKRvHJoD6PlPoIkAZ+fcmndzlwXBZ6i5nzyXiUqQH4HBoyTHQ=
-X-Google-Smtp-Source: AGHT+IFcmyWzyE73dsLk57UjkbHveswh6uh2TAVcE1okyBdmTqPtConvn3N0to7DcWpPDXn3EJi8Iw==
-X-Received: by 2002:a17:907:9405:b0:a99:ee42:1f38 with SMTP id
- a640c23a62f3a-a9abf8aefbdmr505233566b.31.1729764551455; 
- Thu, 24 Oct 2024 03:09:11 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a9159a2bbsm591820066b.216.2024.10.24.03.09.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 03:09:10 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0BB045F897;
- Thu, 24 Oct 2024 11:09:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
- Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
- <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
- <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
-Subject: Re: [PATCH v2 0/6] Support virtio-gpu DRM native context
-In-Reply-To: <20241015043238.114034-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Tue, 15 Oct 2024 07:32:32 +0300")
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.12.6; emacs 29.4
-Date: Thu, 24 Oct 2024 11:09:09 +0100
-Message-ID: <87ikthke2i.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1t3unq-0005EO-6J; Thu, 24 Oct 2024 06:10:50 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1t3unl-0005kO-V8; Thu, 24 Oct 2024 06:10:49 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwC3r6oaHRpnfCHmAA--.453S2;
+ Thu, 24 Oct 2024 18:10:34 +0800 (CST)
+Received: from WYQ-S (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwDnOXYZHRpnuDo4AA--.8430S3;
+ Thu, 24 Oct 2024 18:10:34 +0800 (CST)
+Date: Thu, 24 Oct 2024 18:10:34 +0800
+From: "Yuquan Wang" <wangyuquan1236@phytium.com.cn>
+To: marcin.juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ jonathan.cameron <Jonathan.Cameron@Huawei.com>, 
+ quic_llindhol <quic_llindhol@quicinc.com>, 
+ peter.maydell <peter.maydell@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+	qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [RFC PATCH 1/2] hw/arm/sbsa-ref: Enable CXL Host Bridge by pxb-cxl
+References: <20240830041557.600607-1-wangyuquan1236@phytium.com.cn>, 
+ <20240830041557.600607-2-wangyuquan1236@phytium.com.cn>, 
+ <e632758d-893f-4a44-b081-9fdd92c19548@linaro.org>
+X-Priority: 3
+X-GUID: 1191C4AE-BEB1-41E7-9EEA-8322B08263CD
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.25.301[cn]
+Mime-Version: 1.0
+Message-ID: <2024102418103368919519@phytium.com.cn>
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-CM-TRANSID: AQAAfwDnOXYZHRpnuDo4AA--.8430S3
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAIAWcZU6AEuwABs7
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
+ 1236@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWrur17KF1xZr17Ar4rXryfCrg_yoW8JF1rpF
+ ZxKaySkF4kJw18Aw1kua40qFW8Can3Xa15Xry3ur18Cw45ZFyFgFn2g342va4UGayvk340
+ gayUAFy5Wr1rZ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=wangyuquan1236@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,22 +79,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Ckhp77yMTWFyY2luCgpJIGFtIHVwZGF0aW5nIHRoaXMgcGF0Y2hlcyBpbnRvIHYyIHdpdGggU2Vw
+YXJhdGUgTU1JTyBhZGRyZXNzIHNwYWNlIGZvciBDWEwsCmhvd2V2ZXIsIEknbSBub3QgY29uZmlk
+ZW50IGFib3V0IHRoZSBhZGRyZXNzcyBkZXNpZ24gb24gc2JzYS1yZWYuIEJlbG93IGFyZSBzb21l
+CnF1ZXN0aW9ucyBhYm91dCB0aGF0LgoKMSkgV2l0aCB0aGUgcHhiLWN4bC1ob3N0LCBhbnkgY3hs
+IHJvb3QgcG9ydHMgYW5kIGN4bCBlbmRwb2ludCBkZXZpY2VzIHdvdWxkIG9jY3VweSB0aGUKQkRG
+IG51bWJlciBvZiB0aGUgb3JpZ2luYWwgcGNpZSBkb21haW4uIEhlbmNlLCB0aGUgbWF4IGF2YWls
+YWJsZSBwY2llIGRldmljZXMgb24gc2JzYS1yZWYKd291bGQgZGVjcmVhc2UsIHdoaWNoIHNlZW1z
+IHRvIGJyaW5nIGEgc2VyaWVzIG9mICB0cm91YmxlLiAgRG8geW91IGhhdmUgYW55IHN1Z2dlc3Rp
+b25zPwoKMikgSW4gdGhlIHNpdHVhdGlvbiBkZXNjcmliZWQgYWJvdmUsIGlzIGl0IG5lY2Vzc2Fy
+eSB0byBhZGQgYSBzZXBhcmF0ZSBlY2FtIHNwYWNlIGZvciBjeGwgaG9zdD8KCgoKLS0tLS0tLS0t
+LS0tLS0KCk1hbnkgdGhhbmtzCgoKWXVxdWFuIFdhbmcKCgoKPk9uIDMwLjA4LjIwMjQgMDY6MTUs
+IFl1cXVhbiBXYW5nIHdyb3RlOgoKCgo+PiBUaGUgbWVtb3J5IGxheW91dCBwbGFjZXMgMU0gc3Bh
+Y2UgZm9yIDE2IGhvc3QgYnJpZGdlIHJlZ2lzdGVyIHJlZ2lvbnMKCgoKPj4gaW4gdGhlIHNic2Et
+cmVmIG1lbW1hcC4gSW4gYWRkaXRpb24sIHRoaXMgY3JlYXRlcyBhIGRlZmF1bHQgcHhiLWN4bAoK
+Cgo+PiAoYnVzX25yPTB4ZmUpIGJyaWRnZSB3aXRoIG9uZSBjeGwtcnAgb24gc2JzYS1yZWYuCgoK
+Cj4KCgoKPldpdGggdGhpcyBwYXRjaHNldCBhcHBsaWVkIEkgbm8gbG9uZ2VyIGNhbiBhZGQgcGNp
+ZSBkZXZpY2VzIHRvIHNic2EtcmVmLgoKCgo+CgoKCj4tZGV2aWNlIG52bWUsc2VyaWFsPWRlYWRi
+ZWVmLGJ1cz1yb290X3BvcnRfZm9yX252bWUxLGRyaXZlPWhkZAoKCgo+LWRyaXZlIGZpbGU9ZGlz
+a3MvZnVsbC1kZWJpYW4uaGRkaW1nLGZvcm1hdD1yYXcsaWQ9aGRkLGlmPW5vbmUKCgoKPgoKCgo+
+Tm9ybWFsbHkgdGhpcyBhZGRzIE5WTUUgYXMgcGNpZSBkZXZpY2UgYnV0IG5vdyBpdCBwcm9iYWJs
+eSBlbmRzIG9uIAoKCgo+cHhiLWN4bCBidXMgaW5zdGVhZC4KCgoKPgoKCgo+QWxzbyBwbGVhc2Ug
+YnVtcCBwbGF0Zm9ybV92ZXJzaW9uLm1pbm9yIGFuZCBkb2N1bWVudCBhZGRpbmcgQ1hMIGluIAoK
+Cgo+ZG9jcy9zeXN0ZW0vYXJtL3Nic2EucnN0IGZpbGUuCgoK
 
-> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
-> It's based on the pending Venus v17 patches [1] that bring host blobs
-> support to virtio-gpu-gl device.
->
-> Based-on: 20240822185110.1757429-1-dmitry.osipenko@collabora.com
->
-> [1]
-> https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osipen=
-ko@collabora.com/
-
-Now the tree is open are you going to re-base with the tags and get it
-merged? We don't have long before softfreeze for 9.2!
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
