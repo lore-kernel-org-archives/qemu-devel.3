@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E77D0E3F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 20:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF593D0E3F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 20:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t440s-0003JY-KU; Thu, 24 Oct 2024 16:00:54 -0400
+	id 1t440w-0003ME-Mr; Thu, 24 Oct 2024 16:00:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t440m-0003Iu-Cn
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:00:48 -0400
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t440n-0003JD-8c
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:00:54 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t440k-0002CW-9T
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:00:47 -0400
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1t440k-0002Cm-JA
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 16:00:49 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ODJFKT011407;
- Thu, 24 Oct 2024 20:00:38 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ODtxax012510;
+ Thu, 24 Oct 2024 20:00:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=aRVfQ8+ZSlgeARQdK
- kNjIs92kauHeSDJJzu9jan6Tw8=; b=eKG6DLYfUCtF6AS0tEDV8BVMeh8s6mjDC
- ePs9v3hqBi77GPsxwowZOzoXQW85UpbHLgLO7w06P0lBAmSs9f8SnyWEdMxqRTYL
- A2fgOu0ed99CxiHvzO5ZTUTGt8Y93+Vm+dtwzcjUbymw97gDzl2BUJ9/hYobgim4
- R5X4lN9TyoK3ZiMlC8E9mVDfsut6MhfqI0aE9+tIsgKfOACU8pujzRJYsW8ubYqU
- F8OQTPzjN5LyEeVp2LLH448EyMJYW3iWQO/sVxwGAmrfVLNsMaDkqnMyB/iMFhWC
- d0162EXryNhODUTr2LzuTpPC6dqQToufxa4lyYsMcELXkoPhOm8Pg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42fbw44t73-1
+ :mime-version:references:subject:to; s=pp1; bh=gQ3d+emLEApvigd4Q
+ vQbQP7K1eqyxJnf2yLOyu9WucQ=; b=DSrhCZBQHCYUHlQlQIc7ioKMR+1PsXjQv
+ gweIZXsdD3nxqaMyGz06OjMVKa0AvwO2PR69dEeEgvpbT+fucWSTCmulalyRWB/6
+ 4zWnZKzgWkqDy5oOSepq8CFs3b2wp52+eSEP0bXUn7RiTKa4/Wa1192FPORKRSKH
+ +S9Khadb6mG5lTpWVENuz9v+nx+sXmbtDq6Z5wGw9y1rUSVakyBa4WaT3A/0VBho
+ qI5OSHqLILuIOqyNmyo6BP/2re7zY6JFAv5kRHnjBid0l+SFHcwtsDZr17QKR2uX
+ zy/8F10jzwFbp4KsbxRkQkkvDxZduNOCIPlPETqNczTrB9hzKWaYg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42fbw44t6y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 24 Oct 2024 20:00:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49OHpfrX006862;
- Thu, 24 Oct 2024 20:00:37 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 42emjd26a8-1
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49OI5RsU008757;
+ Thu, 24 Oct 2024 20:00:36 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 42emkat86w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2024 20:00:37 +0000
+ Thu, 24 Oct 2024 20:00:36 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49OK0Z2626214918
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 49OK0YqP7209446
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Oct 2024 20:00:35 GMT
+ Thu, 24 Oct 2024 20:00:34 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E32F20043;
- Thu, 24 Oct 2024 20:00:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BCBAE20043;
+ Thu, 24 Oct 2024 20:00:34 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF2B620040;
+ by IMSVA (Postfix) with ESMTP id 410B120040;
  Thu, 24 Oct 2024 20:00:34 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.25.135])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
@@ -64,17 +64,17 @@ To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 3/8] user: Introduce user/signal.h
-Date: Thu, 24 Oct 2024 21:59:10 +0200
-Message-ID: <20241024200031.80327-4-iii@linux.ibm.com>
+Subject: [PATCH 2/8] gdbstub: Try unlinking the unix socket before binding
+Date: Thu, 24 Oct 2024 21:59:09 +0200
+Message-ID: <20241024200031.80327-3-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241024200031.80327-1-iii@linux.ibm.com>
 References: <20241024200031.80327-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: i0tS8DKl4qgeU-3kswFNEiwn48xGqaZF
-X-Proofpoint-GUID: i0tS8DKl4qgeU-3kswFNEiwn48xGqaZF
+X-Proofpoint-ORIG-GUID: 6cKcNFl7yXYrtk_K8mYCjsGYVTxdi2Pa
+X-Proofpoint-GUID: 6cKcNFl7yXYrtk_K8mYCjsGYVTxdi2Pa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
@@ -82,7 +82,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0 mlxscore=0
  bulkscore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
  priorityscore=1501 clxscore=1015 lowpriorityscore=0 malwarescore=0
- mlxlogscore=932 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxlogscore=944 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410240159
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -109,109 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdbstub needs target_to_host_signal(), so move its declaration to a
-public header.
+In case an emulated process execve()s another emulated process, bind()
+will fail, because the socket already exists. So try deleting it.
+
+Note that it is not possible to handle this in do_execv(): deleting
+gdbserver_user_state.socket_path before safe_execve() is not correct,
+because the latter may fail, and afterwards we may lose control.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- bsd-user/signal-common.h   |  1 -
- bsd-user/signal.c          |  1 +
- include/user/signal.h      | 23 +++++++++++++++++++++++
- linux-user/signal-common.h |  1 -
- linux-user/signal.c        |  1 +
- linux-user/syscall.c       |  1 +
- 6 files changed, 26 insertions(+), 2 deletions(-)
- create mode 100644 include/user/signal.h
+ gdbstub/user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
-index 77d7c7a78b7..4e634e04a30 100644
---- a/bsd-user/signal-common.h
-+++ b/bsd-user/signal-common.h
-@@ -42,7 +42,6 @@ void process_pending_signals(CPUArchState *env);
- void queue_signal(CPUArchState *env, int sig, int si_type,
-                   target_siginfo_t *info);
- void signal_init(void);
--int target_to_host_signal(int sig);
- void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index cdf5affae15..26b25b1b7e9 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -337,6 +337,7 @@ static int gdbserver_open_socket(const char *path)
  
- /*
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index da49b9bffc1..a2b11a97131 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -22,6 +22,7 @@
- #include "qemu/log.h"
- #include "qemu.h"
- #include "exec/page-protection.h"
-+#include "user/signal.h"
- #include "user/tswap-target.h"
- #include "gdbstub/user.h"
- #include "signal-common.h"
-diff --git a/include/user/signal.h b/include/user/signal.h
-new file mode 100644
-index 00000000000..19b6b9e5ddc
---- /dev/null
-+++ b/include/user/signal.h
-@@ -0,0 +1,23 @@
-+/*
-+ * Signal-related declarations.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef USER_SIGNAL_H
-+#define USER_SIGNAL_H
-+
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
-+
-+/**
-+ * target_to_host_signal:
-+ * @sig: target signal.
-+ *
-+ * On success, return the host signal between 0 (inclusive) and NSIG
-+ * (exclusive) corresponding to the target signal @sig. Return any other value
-+ * on failure.
-+ */
-+int target_to_host_signal(int sig);
-+
-+#endif
-diff --git a/linux-user/signal-common.h b/linux-user/signal-common.h
-index f4cbe6185e1..f82185ec0f5 100644
---- a/linux-user/signal-common.h
-+++ b/linux-user/signal-common.h
-@@ -61,7 +61,6 @@ void queue_signal(CPUArchState *env, int sig, int si_type,
-                   target_siginfo_t *info);
- void host_to_target_siginfo(target_siginfo_t *tinfo, const siginfo_t *info);
- void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo);
--int target_to_host_signal(int sig);
- int host_to_target_signal(int sig);
- long do_sigreturn(CPUArchState *env);
- long do_rt_sigreturn(CPUArchState *env);
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index 63ac2df53b7..84bb8a34808 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -33,6 +33,7 @@
- #include "signal-common.h"
- #include "host-signal.h"
- #include "user/safe-syscall.h"
-+#include "user/signal.h"
- #include "tcg/tcg.h"
- 
- /* target_siginfo_t must fit in gdbstub's siginfo save area. */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d1b0f7c5bbc..0a3c4d5a946 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -136,6 +136,7 @@
- #include "loader.h"
- #include "user-mmap.h"
- #include "user/safe-syscall.h"
-+#include "user/signal.h"
- #include "qemu/guest-random.h"
- #include "qemu/selfmap.h"
- #include "user/syscall-trace.h"
+     sockaddr.sun_family = AF_UNIX;
+     pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
++    unlink(sockaddr.sun_path);
+     ret = bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
+     if (ret < 0) {
+         perror("bind socket");
 -- 
 2.47.0
 
