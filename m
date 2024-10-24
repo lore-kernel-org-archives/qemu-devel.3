@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0D9CFA457
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219E4CFA456
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:09:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3uhZ-0002W5-SR; Thu, 24 Oct 2024 06:04:21 -0400
+	id 1t3umK-0004MR-O7; Thu, 24 Oct 2024 06:09:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uhW-0002VA-7A
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:04:19 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1t3umI-0004M2-Mr
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:09:14 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uhT-0004hc-NP
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:04:17 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-37d473c4bb6so615374f8f.3
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:04:15 -0700 (PDT)
+ id 1t3umH-0005Pw-5L
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:09:14 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a9a0c7abaa6so80573266b.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729764254; x=1730369054; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1729764551; x=1730369351; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/bDjSLop2+Mv88gsL28Dq0gY1HwGEOHZaaOiGIRGhO4=;
- b=aFBnmU1GJGmmX+ONiYx0nSwfmJyZnVEvqIfxmJV3ZPDYEuz/Ws5JyJVEAneU1lkBXb
- DzwraBsVC110h833WZ+vLK6po7aAynSkzY5HkFTg5wbLF4SN0wIV2QIs8moZW6GkpR2j
- jbg3y8cO0ZsJqRe6Y1PDgaUZmyU/HxSq2gNueXtHyKCbnv5khEGt2gwViU043OiFUs3E
- omI7Q3PZKZN3T98eo8lRZC/oHP4FHauWDJto65fhyIeWZLd75pwQUoPkFTQ89/qJtQCc
- hKYBwjECj9W66Sc6A8Om/+udmyMZPdVHQs48y+lgvEO/M4/lrMBRuB4GVqhZ+4NF4bLB
- mW9g==
+ bh=fzmDY01L3a4QW8U3i7R5j0APsDf/UzCDPnfjlygwr+A=;
+ b=KRjQwUnzn0PakMuputudVkQvZdYjfNymlXt3PtvuvZL7mE3XX0cegCxV6bpI0YcPg2
+ PBQD19qQwHxFG58iKz6x1wvys2yajDheoY8TCbneOubGapN816Zs9X9/r/mec4WdHdoN
+ g9dmxzz+ssbrvyBvmfWpQr46t64rl+VcNog8+j4q56qGqPm1LI/7WmNH2Nbyu4MLi1XD
+ gAIuoMoXslO2Tpvi3wB6Zq0A0QwHhXc3evR3lV7r4ir4oLjgZtIPIQi5yrb4lyvYC5DX
+ Q4WNuQ5wRgv7AcC3lmC1rOT4gN/f7C+R41jRhdY9eGpM3BX+Ort4+Y3Vu357yCvyS/uq
+ T34Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729764254; x=1730369054;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/bDjSLop2+Mv88gsL28Dq0gY1HwGEOHZaaOiGIRGhO4=;
- b=BBcAKzcfjO70AqpFmhoJC3qv5TalZPIOnzTrAR6OKDAaEMKAZiSVuAFl3tQgumpap8
- /iVcUj08Y9JMcdWkGhwhLBSY9e56XjbfUtPUaUuwXw/1w0aZSb9eXSHLRzpa9FyM9v8K
- NODZgZa5Xuo3PhJChYNzjZPl6xgZMDeU/A5vkwRnsey4kY8NTgzUR3BnaC0q9Nnp45NV
- qFzRRYRKQkS2+vJTOjIGDWCHFczv2RYqoFezFOeaG1YXbRBL1HZIBBmTLg3QKcUiRKaC
- ZRRUME67zPqgGGhlvgibLTQpeuEesXBqDvcsl3koonF9VNk5qXK68PnRJRPs2w/zX3JP
- a7GQ==
-X-Gm-Message-State: AOJu0YwTDvwp1dqGgyoTs4603y+Xb0T9+aLaC1iKNcFXJwrCGZrWSPSU
- 8n5+4k489+7y1tebPHXctarYRoM0nGXWr2JdtEEdE35fJ8/S6GHqA/0WYDTGX2Q=
-X-Google-Smtp-Source: AGHT+IFjUxXUDvKTBNYDbMnyfVMcNwydMZOy8lY/C9qD3+uYIbolltXGmV6OCLOM8eVIK9SvDfaRRw==
-X-Received: by 2002:a5d:4f84:0:b0:37d:3e6d:6a00 with SMTP id
- ffacd0b85a97d-37efcf84845mr4685390f8f.47.1729764253961; 
- Thu, 24 Oct 2024 03:04:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729764551; x=1730369351;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fzmDY01L3a4QW8U3i7R5j0APsDf/UzCDPnfjlygwr+A=;
+ b=n6ezquZ3NNgb+2qrI6e7zIOVQkXqk2gddTxzam2gI0qNOIXMH6OOD4xT1n8RHMf/58
+ bkB8Gd6lZToB6yRENipSBuJ+tIDTqwwWt8eNOhFCkGFEcb/pVcCzDNyxISOGHtOCtOKa
+ Rs3mPH4XtNALrwtL9zhXxogBb7Sp0OsPYTgASfvrOU87XJhsR39OAWlTwd8Z8qfhVgQ2
+ hZZSvP5S01yseoR0JHJ8mVs0UnBcQO193rZRrKEHzL6hsEkUGGq5vbC9+sRe6NWZLz1w
+ eJByrctSLxWeq8OMKXpbdI+k4n4LP2eiBweglT4cHdtG08mrqJt9QAWIVODxdiuny0H8
+ sF8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/O88dwGmQRNNfBSDyci82sUGDkj6sHahAbIzKAOnbACcq1MHwBjCB+7+sSGXVyXD87fsUp7fOizYc@nongnu.org
+X-Gm-Message-State: AOJu0YwvPM+LWKJEEt0MAHhpKMFoQcivnKcvRUnFYGyjg/5+LoS95rs/
+ JTBLxapg/UhvqKVKRvHJoD6PlPoIkAZ+fcmndzlwXBZ6i5nzyXiUqQH4HBoyTHQ=
+X-Google-Smtp-Source: AGHT+IFcmyWzyE73dsLk57UjkbHveswh6uh2TAVcE1okyBdmTqPtConvn3N0to7DcWpPDXn3EJi8Iw==
+X-Received: by 2002:a17:907:9405:b0:a99:ee42:1f38 with SMTP id
+ a640c23a62f3a-a9abf8aefbdmr505233566b.31.1729764551455; 
+ Thu, 24 Oct 2024 03:09:11 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a91571ebdsm603839766b.148.2024.10.24.03.04.13
+ a640c23a62f3a-a9a9159a2bbsm591820066b.216.2024.10.24.03.09.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 03:04:13 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 62EFD5FC11;
- Thu, 24 Oct 2024 10:56:05 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 16/17] MAINTAINERS: mention my plugins/next tree
-Date: Thu, 24 Oct 2024 10:56:02 +0100
-Message-Id: <20241024095603.1813285-17-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241024095603.1813285-1-alex.bennee@linaro.org>
-References: <20241024095603.1813285-1-alex.bennee@linaro.org>
+ Thu, 24 Oct 2024 03:09:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0BB045F897;
+ Thu, 24 Oct 2024 11:09:10 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Gert Wollny <gert.wollny@collabora.com>,
+ qemu-devel@nongnu.org,  Gurchetan Singh <gurchetansingh@chromium.org>,
+ Alyssa Ross <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?=
+ <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Rob Clark <robdclark@gmail.com>,  Yiwei Zhang
+ <zzyiwei@chromium.org>,  Sergio Lopez Pascual <slp@redhat.com>
+Subject: Re: [PATCH v2 0/6] Support virtio-gpu DRM native context
+In-Reply-To: <20241015043238.114034-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Tue, 15 Oct 2024 07:32:32 +0300")
+References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
+User-Agent: mu4e 1.12.6; emacs 29.4
+Date: Thu, 24 Oct 2024 11:09:09 +0100
+Message-ID: <87ikthke2i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,25 +115,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make it easier to find where plugin patches are being staged.
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-17-alex.bennee@linaro.org>
+> This patchset adds DRM native context support to VirtIO-GPU on Qemu.
+> It's based on the pending Venus v17 patches [1] that bring host blobs
+> support to virtio-gpu-gl device.
+>
+> Based-on: 20240822185110.1757429-1-dmitry.osipenko@collabora.com
+>
+> [1]
+> https://lore.kernel.org/qemu-devel/20240822185110.1757429-1-dmitry.osipen=
+ko@collabora.com/
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7eea7b7954..5b6c722a20 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3708,6 +3708,7 @@ F: include/tcg/
- 
- TCG Plugins
- M: Alex Bennée <alex.bennee@linaro.org>
-+T: git https://gitlab.com/stsquad/qemu plugins/next
- R: Alexandre Iooss <erdnaxe@crans.org>
- R: Mahmoud Mandour <ma.mandourr@gmail.com>
- R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
--- 
-2.39.5
+Now the tree is open are you going to re-base with the tags and get it
+merged? We don't have long before softfreeze for 9.2!
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
