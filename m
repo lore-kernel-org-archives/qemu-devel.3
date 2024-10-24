@@ -4,98 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12469CE8E76
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 13:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4724ACE8E7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3y1g-0002hM-ML; Thu, 24 Oct 2024 09:37:20 -0400
+	id 1t3yQy-00076r-EY; Thu, 24 Oct 2024 10:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fiuczy@linux.ibm.com>)
- id 1t3y1d-0002gn-Hs; Thu, 24 Oct 2024 09:37:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fiuczy@linux.ibm.com>)
- id 1t3y1b-0000mZ-OU; Thu, 24 Oct 2024 09:37:17 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49OBTQAR016712;
- Thu, 24 Oct 2024 13:37:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LjZXbe
- Ao5MOkiQxpVNv+tSNn/cP5Zk+6j0YkNgdjdiM=; b=VS8sixuoNfeIpZYPS2CEyt
- Jo3NBZt/8b8tXdX5k2fOKT/8nHsbxb5S4F1s2vttnX52W4A4YAsqqJpjkPvTG/mG
- lM1uH0sjuerRQhJYQ7jq4EP67IiXr03JeMrLi/DP0dp0upp/+2iq/FaFktEpA/JR
- vgf+gR5D3x2e9V1zmYqTs8LTCY+rH2zr+2pdqSqL1XZec6KwphNJ4jLV/hmvr0EM
- Kd43hLxGTeoEl9BXoUdAmw77z+XoHw6ys/xG/tfeg/4F24OWy7h+t0/q3bMym5OA
- cCR9NWu6oDFvbt+e9dKE8GkpaKmv8JSlI+rexsBv8eJCkeRngqXLtKcav60g4nnQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 42emajrs09-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2024 13:37:11 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 49OATEhi001542;
- Thu, 24 Oct 2024 13:37:11 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 42emk9gkqq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2024 13:37:11 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 49ODb7QQ55050516
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Oct 2024 13:37:07 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A03332004F;
- Thu, 24 Oct 2024 13:37:07 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 414B12004E;
- Thu, 24 Oct 2024 13:37:07 +0000 (GMT)
-Received: from [10.0.2.15] (unknown [9.171.140.58])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Oct 2024 13:37:07 +0000 (GMT)
-Message-ID: <2adb8b2e-ebd8-4c98-a2aa-2c4ed24683ed@linux.ibm.com>
-Date: Thu, 24 Oct 2024 15:37:06 +0200
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t3yQu-000758-I1
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:27 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1t3yQs-0003sQ-M8
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:24 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2fb5fa911aaso12769871fa.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:03:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1729778600; x=1730383400; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DUx6k1Bde8kvzj6RF5KlasgT1EWln2KLnDYjeI9zPqc=;
+ b=HK/rTKJCJ8KuTm74h4DX2Lsrw0FrD+RSH7h0dZSUvApeWXU6oBOzKDDNICwmYCVqxz
+ GadmpmZaUryDSXm+ydANcAMtwuPNYg416FH2mvomccfdY71KtbnJU0HoxAVox16pvNwZ
+ VSTxwelJFIggMw0P4Xl4KSBf1q026KXwPiTSM7Pj3MyR+MsGTZrebb/rlyLaWy7TlR7z
+ Vw//yK2CwEjW1278c5aChNw5+wRL6vcemLZo5oMOptn2Zxg0hZWE0+9q9+L+D9SLX2Ml
+ KInoclz6Ap+LiBOaN17ei/gzkPbkYOHk/iDQWUgwrW6yRJOX6NG9hAWRsIB8GPYLxDkh
+ gDtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729778600; x=1730383400;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DUx6k1Bde8kvzj6RF5KlasgT1EWln2KLnDYjeI9zPqc=;
+ b=ANpeIcTjXjxnOefZVKtTdkhC8zMOe07uHSwC0AdI87EoUXCQJpqQyFeMyUs7+Ig8GE
+ ZzUYhpVBe8JD4QoGUCs/fLM/Z/pJ7oMy8iaCrw9ufwy4OtVcfzqGonuq5oadqnWwyo+x
+ CgHi6DSVWyci2o0MZ7I7BtUykITxaQOTXYXFVcoiaaMtKxiL+JKXdKOr9tGc+ot2bI67
+ 8ONToqSfnVvf+jWwsRi7GTy/gCjgCmX/5QpXEbvSexteCbiT6ckEFZ1sBIEjc7zoRh6U
+ lp8Dhd5kgZzHuQ1eZZWCbuWyKl1ly4S62NHf0WRxx6QawQOsamKy5nLBpcSon9rAasyQ
+ Pb9Q==
+X-Gm-Message-State: AOJu0YwdhkvFC+gujDpi5s8xH4j5YZkHIraauSOHoJQWpt+tH42gcRFd
+ YX4diGNAUKkLXbVXWTFzxtC8pydC/dTqOyRDcGEnDR5ROy62GLAGTuOsaceqnqI=
+X-Google-Smtp-Source: AGHT+IGF0fKHc69oics2mZQuw7swSqpilJbB2Qw7cGV8n2lg3Jh0YCBhluhfwsRLrhXS+dFGtB+bVQ==
+X-Received: by 2002:a2e:a593:0:b0:2fb:8c9a:fe3f with SMTP id
+ 38308e7fff4ca-2fc9d3460a3mr58926641fa.22.1729778599324; 
+ Thu, 24 Oct 2024 07:03:19 -0700 (PDT)
+Received: from [127.0.1.1] (adsl-113.37.6.2.tellas.gr. [37.6.2.113])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a912f6878sm621407566b.86.2024.10.24.07.03.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Oct 2024 07:03:19 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 00/11] Rust device model patches and misc cleanups
+Date: Thu, 24 Oct 2024 17:02:58 +0300
+Message-Id: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Re-enable the pci-bridge device on s390x
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20241024130405.62134-1-thuth@redhat.com>
-Content-Language: en-US
-From: Boris Fiuczynski <fiuczy@linux.ibm.com>
-In-Reply-To: <20241024130405.62134-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2CsV8AmqFTkC43gokHs1k-ike2BMhQFZ
-X-Proofpoint-GUID: 2CsV8AmqFTkC43gokHs1k-ike2BMhQFZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 malwarescore=0
- mlxscore=0 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410240111
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=fiuczy@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-B4-Tracking: v=1; b=H4sIAJJTGmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDINYtKi0u0S3KL81L0TXSNbNMSzQ0SLZMBGIloJaCotS0zAqwcdGxtbU
+ At+RDMV4AAAA=
+X-Change-ID: 20241024-rust-round-2-69fa10c9a0c9
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>, 
+ Junjie Mao <junjie.mao@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Kevin Wolf <kwolf@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+X-Mailer: b4 0.15-dev-12fc5
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3938;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=B9hd9jIQu4jPW9jqJoF1leZCt6iMYL9SD7oKZZSv1mk=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm5HbE9pY2lyVE53WXF2NEJweE95b0twb1Z6WFViCjJhLzVvWEdMWWYyVHNIbmFZ
+ L0dKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnhwVG9nQUt
+ DUkIzS2Nkd2YzNEowR2p4RC80bXpqUkdvd1NJWW9KL0N2TVVsTGh2NUYwVTNpQ1RFd0Z6S2VJVA
+ paSE9hY1ZUeTVwZTlSOStVV1ZReWJvbm4yMWd4QndqOHpUL0djSXg1RVJlc2FoZE5MMFpwQ3BCR
+ TdCb24vcEhyCjB4TC9tUCt6K05SMlppbTdFMTdhVmpFVXdrNGp1YUtCamxsNlc2VTY3MkF6MUc1
+ b1Q0VnprK3ZJNmdmSVFpbDkKbVBYNDZ0d2s2RGw5V2tTdTFmOEhlZ25sN0lIcGRUcGwxTUVySGx
+ mSk1LVnF1MWxURjNvUEpSV1dkcnVKdEczSApmSVlEMWI0WmJvZjNDcDJLTHk4dEdQaksyM01JcU
+ U2MGUwTVg3QlBnWWZkZzNmVmxDN2tvclRyUkkrVzh1bVF4CkJsUTRKZElrYjk1RGM5RkExOUY2L
+ zhaUDdqSDFRT243SXVBUmx0VGJJczAzd2EwN2h6V09QbXUydWc1OWlNMTEKUlB4YlR2V0VyNFZo
+ ZGtjNlpNM3l3L1B3Y3pDRHBoODZzUlNsNmdDdmwzajBiMXdyZWFKay80Kys0and1RFRRQwp2MVF
+ URFJlR3hVenBTeTlxd1FKdHlPRXY1YVRaR0xNY05FenhWWEdWZDJpbTBqd01OdVg4MHJJdyt1aG
+ 0xMDFuCmpvRTFHbWlxV1VHOU95eDlJbURlZVFHYWs5Tkx0cHFEUlg2aFJxNHUrVzE4dmpUNk0ra
+ 3ZMS2ZtWld1VzUzZlYKam5IRlRxSXNCeVZtSXlrOVJUaDQyQlJvZFZsTndzMXdudktDc284M0Jh
+ TXpSd0IyMDVtVW5vQjR5UytJekh6MgpZS0pNZlcyb0o4cE1OZ21ONFFkUXZwWGZhM3VCTlVKZ2h
+ RNzBrZDRVSmZoY3U2OTZtVDNQb3FvQjJkazNNS0FMCnNDa0VKUT09Cj1hUGRRCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,58 +129,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just my two cents on this with regard to the future:
-Tools using libvirt to define or modify libvirt domains should not be 
-enforced to change there PCI code logic to prevent the usage of 
-pci-bridge for s390x.
-The PCI bus configuration in QEMU is QEMU internal only as the zPCI 
-configuration is used in the s390x guest.
+Hello everyone, the pathological corrosion of QEMU code continues.
 
-Therefore for this patch
-Reviewed-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
+This series expands the device model harness work performed in the
+initial Rust work from the previous month. In particular:
 
-On 10/24/24 15:04, Thomas Huth wrote:
-> Commit e779e5c05a ("hw/pci-bridge: Add a Kconfig switch for the
-> normal PCI bridge") added a config switch for the pci-bridge, so
-> that the device is not included in the s390x target anymore (since
-> the pci-bridge is not really useful on s390x).
-> 
-> However, it seems like libvirt is still adding pci-bridge devices
-> automatically to the guests' XML definitions (when adding a PCI
-> device to a non-zero PCI bus), so these guests are now broken due
-> to the missing pci-bridge in the QEMU binary.
-> 
-> To avoid disruption of the users, let's re-enable the pci-bridge
-> device on s390x for the time being. We could maybe disable it later
-> again if libvirt does not add the pci-bridge device automatically
-> to the guests anymore in the future.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/s390x/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/s390x/Kconfig b/hw/s390x/Kconfig
-> index 3bbf4ae56e..82afdaa9dc 100644
-> --- a/hw/s390x/Kconfig
-> +++ b/hw/s390x/Kconfig
-> @@ -7,6 +7,7 @@ config S390_CCW_VIRTIO
->       imply VFIO_AP
->       imply VFIO_CCW
->       imply WDT_DIAG288
-> +    imply PCI_BRIDGE
->       imply PCIE_DEVICES
->       imply IOMMUFD
->       select PCI_EXPRESS
+- A new derive proc macro, Device, is introduced and the Object derive
+  macro is heavily expanded upon. Many hack-like macros and fixups to
+  declare FFI code for QEMU to consume were removed and now everything
+  is generated by macros in the qemu-api-macros procmacro crate.
+- Add support for device migration by allowing device models to declare
+  their VMState description, fields, subsections like in C code. This
+  should also allow new qemu versions to transparently migrate any VMs
+  that used C device models that were afterwards ported to Rust.
+- Add a small logging interface in qemu-api crate to allow calling
+  qemu_log() and qemu_log_mask() from Rust code.
+- Some minor code cleanups in the Rust pl011 device, and also port of
+  one fix patch and one log prints addition patch that was added in the
+  C pl011.
 
+  In the future if we go forward with rewriting device models in Rust,
+  and keep having both of them in-tree while Rust is not required for
+  building QEMU, we could alter checkpatch.pl to produce a warning if a
+  C device model has changes but the corresponding Rust implementation
+  doesn't.
 
--- 
-Mit freundlichen Grüßen/Kind regards
-    Boris Fiuczynski
+  Code and functionality duplication is not fun, and pl011 was mostly
+  done as a proof of concept for a Rust device because of its small
+  complexity. As of this moment we have not decided on a policy for how
+  to handle these things and it is not in **scope for this patch series
+  anyway**.
 
-IBM Deutschland Research & Development GmbH
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen
-Registergericht: Amtsgericht Stuttgart, HRB 243294
+In the meantime there are lots of TODOs written in my personal notes, my
+personal repos, in the QEMU wiki, in mailing list threads. I plan on
+consolidating them all in gitlab issues to streamline things and
+who-does-what to avoid duplicating work.
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Manos Pitsidianakis (11):
+      Revert "rust: add PL011 device model"
+      rust: add PL011 device model
+      rust/qemu-api-macros: introduce Device proc macro
+      rust: add support for migration in device models
+      rust/pl011: move CLK_NAME static to function scope
+      rust/pl011: add TYPE_PL011_LUMINARY device
+      rust/pl011: move pub callback decl to local scope
+      rust/pl011: remove commented out C code
+      rust/pl011: Use correct masks for IBRD and FBRD
+      rust/qemu-api: add log module
+      rust/pl011: log guest/unimp errors
+
+ rust/wrapper.h                                |   1 +
+ rust/hw/char/pl011/src/device.rs              | 419 +++++++++++++++++---------
+ rust/hw/char/pl011/src/device_class.rs        |  70 -----
+ rust/hw/char/pl011/src/lib.rs                 |   2 +-
+ rust/qemu-api-macros/src/device.rs            | 370 +++++++++++++++++++++++
+ rust/qemu-api-macros/src/lib.rs               |  46 +--
+ rust/qemu-api-macros/src/object.rs            | 107 +++++++
+ rust/qemu-api-macros/src/symbols.rs           |  57 ++++
+ rust/qemu-api-macros/src/utilities.rs         | 152 ++++++++++
+ rust/qemu-api-macros/src/vmstate.rs           | 113 +++++++
+ rust/qemu-api/meson.build                     |   5 +-
+ rust/qemu-api/src/definitions.rs              |  97 ------
+ rust/qemu-api/src/device_class.rs             | 128 --------
+ rust/qemu-api/src/lib.rs                      |  10 +-
+ rust/qemu-api/src/log.rs                      | 140 +++++++++
+ rust/qemu-api/src/objects.rs                  |  90 ++++++
+ rust/qemu-api/src/tests.rs                    |  49 ---
+ rust/qemu-api/src/vmstate.rs                  | 403 +++++++++++++++++++++++++
+ subprojects/packagefiles/syn-2-rs/meson.build |   1 +
+ 19 files changed, 1726 insertions(+), 534 deletions(-)
+---
+base-commit: 55522f72149fbf95ee3b057f1419da0cad46d0dd
+change-id: 20241024-rust-round-2-69fa10c9a0c9
+
+--
+γαῖα πυρί μιχθήτω
+
 
