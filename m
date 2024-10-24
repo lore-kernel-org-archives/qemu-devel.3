@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A0ECFA457
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BF3CFA457
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3v56-0000p7-H5; Thu, 24 Oct 2024 06:28:40 -0400
+	id 1t3v5O-00017C-DU; Thu, 24 Oct 2024 06:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3v54-0000nk-G1
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:38 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1t3v5L-00012N-C6
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:55 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3v4w-00089O-VP
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:38 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a9a6acac4c3so104725266b.0
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:28:30 -0700 (PDT)
+ id 1t3v5J-0008IZ-Du
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:55 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a9acafdb745so153083566b.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729765709; x=1730370509;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729765732; x=1730370532;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rP0D2cZrDnPuW6xhPjmdVsND3O4YQtS5+Pte7yJoqqw=;
- b=ooQiMfBJYyFz4aDKE3cjGSnK9jDEYQsIbxBAI98x5uh3yK9GsxDNZcfGt9hrEAltL4
- qxX5VVYRC1wZ9CeOlnD0noECg/EgpenRIzWoIcJ6RP9yir3IABfKBTGC8FpXgg4eq6La
- +iQaJ7sq5uVunJdhxixsBgPywgUX5P/Vp/NBqEnY1UUWNXoFNpZXEb95mnqXMFCSr3PT
- 7Eq5psCDRa0p0TNEQViUOl4oEVwxtimoJdyvLcbUeEgxK1suZHFl7gGi0KAF1/QzToT6
- 9s8/ttzQY2YdIUWsrsKoUkTj/KWoPkQXLjeDHMbsJKEpoQjGfmiXq7HS/pKp1GlVCnsx
- YcMg==
+ bh=0nReO9r9RrbUk1hvaDfJ9iU/fN5yRbIfPdkL/UxhNLg=;
+ b=Xlt5OIUrLFQbm13tXIROyivFsqYkH7W4bNZS8Vr3o+bNSBFJC1CKJw0j7G+3eTDMqD
+ WeXgzEM4dpPjXAjyzwmxcI50bDsEhfqO8c6hodaiTCLGU/0qv0EuHzXcebElysEq03LE
+ ANFukznq35YS3cVcu2jUHBiwfxjXeGyIdxabOIkk/+kO3TUXJUf0+jjMTZtVmDzs9Srn
+ U/Wn517umiV4vldFcC1w2H5IY+QeUat3FMy7De+c7V1a2sS/BxzSYUhRh9ufb6SVblst
+ 4HvAQfimFOl0oBVJ3UC7/KKPNEArDAgSyTVUlFJOUXinGPVPsUx2qkOaVqODR8/G8t7p
+ J/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729765709; x=1730370509;
+ d=1e100.net; s=20230601; t=1729765732; x=1730370532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rP0D2cZrDnPuW6xhPjmdVsND3O4YQtS5+Pte7yJoqqw=;
- b=oWXWEFkze6jCdLCVsBmjh8RiYF2AQydm8kaiEMB8dZrfGkEoEtvkm19PRZdBGhJwcm
- OPXrn1bwt93AAcmNcYIokEcZfOUN67hpUPfgpmJgSH0jZF6S2PfxxSDA0waTYz/AuAJZ
- 1I52MabGaT4MsGG0s3dRv/1pYagI794zAXQoY48qbukwr0cdI2Z1NnACIb41y5TcS2Fi
- d7F86B/MIsXRH5PmrK2tHzZImQFWbtsrkUOsjGlUKLaRy09FqcJJ9DamkcSm3BbTgsqL
- b8iJI/NB553jVk6bPhcSgWD+QoUTS2mq4xRA6lmoQodJE55fVYcnAcmeLEueILn+ysC9
- VSpQ==
-X-Gm-Message-State: AOJu0YwNUKvRHLySBoEekQTeq7XWJcYGDzX3QgpiTxRC4a25fkOcx4QZ
- E3HaArtALshCZU6uOnaF6xFiV3oGik9PvJzdsqE/JnwascqE6ffT7FCVUVOQsnEHtjFG43+pbEU
- 8hQ==
-X-Google-Smtp-Source: AGHT+IF1uPacvKVgzyNaUMYzJRagxS/AwkFequCZAZd6h8apV/QxBYOicL4KCFdXyoaDqUQ90Q+XfQ==
-X-Received: by 2002:a17:906:7956:b0:a9a:8028:45d8 with SMTP id
- a640c23a62f3a-a9ad2711860mr127618266b.7.1729765709495; 
- Thu, 24 Oct 2024 03:28:29 -0700 (PDT)
+ bh=0nReO9r9RrbUk1hvaDfJ9iU/fN5yRbIfPdkL/UxhNLg=;
+ b=VwmfBjpKatizWCvWwTDEVigIVzQqgNGibj43bZ6C3p9ug9ZcbQuIb9hv2SxE7y77XK
+ XRJkRNdTHV79POPS9aWUreeZLouH2Iv+LMZNCQNls7SEOChobwJXildhPp/+ike5Sz5Q
+ nI4wBlzlfcI1LuELPoq3lPVAamOqQyb/pwe0Ds8bBdpr0BAhWj6L+lMw9sUavyVRvra7
+ bFPBQMrAQJXD+G2Hr9zsOx/zm2Z5ce2Pycj8lYELy5waS+mjRFIxaltVtO07Bgg7FiD/
+ tPrMXKNLeNfIj03GzFt0uSgEqrFJRE4m5mjTREAR6tFYjdWME7UTIbcet7fj8tVWMEkT
+ oh9w==
+X-Gm-Message-State: AOJu0YzfmxmJAXBvHKaalTx8BMozbEiezPRoqdV+xePq+23Bqz8iZ6q4
+ 7oMg79whniG42m4rUT6ifmV5Gds5Z6WTWvqC0YxBFiJXMXCrJWhe6+9HQmqnVWasuDqBynanPE3
+ rpg==
+X-Google-Smtp-Source: AGHT+IGHpK9VgCKrLDKOqmStQzxC8yg4Uc6VdrJTE5SlWfLSJW35I2wQF2EzsXfU7Ev0vNMBJfkytg==
+X-Received: by 2002:a17:907:7f0e:b0:a9a:cf0:8fd4 with SMTP id
+ a640c23a62f3a-a9ad19d4c3dmr168980766b.18.1729765731784; 
+ Thu, 24 Oct 2024 03:28:51 -0700 (PDT)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a913706d3sm601019066b.134.2024.10.24.03.28.26
+ a640c23a62f3a-a9a913706d3sm601019066b.134.2024.10.24.03.28.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Oct 2024 03:28:29 -0700 (PDT)
+ Thu, 24 Oct 2024 03:28:51 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -73,18 +73,18 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: [PATCH v4 03/15] hw/display/apple-gfx: Adds PCI implementation
-Date: Thu, 24 Oct 2024 12:28:01 +0200
-Message-Id: <20241024102813.9855-4-phil@philjordan.eu>
+ qemu-riscv@nongnu.org, Alexander Graf <graf@amazon.com>
+Subject: [PATCH v4 12/15] hw/vmapple/cfg: Introduce vmapple cfg region
+Date: Thu, 24 Oct 2024 12:28:10 +0200
+Message-Id: <20241024102813.9855-13-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 In-Reply-To: <20241024102813.9855-1-phil@philjordan.eu>
 References: <20241024102813.9855-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::631;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x631.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62f;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -106,208 +106,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change wires up the PCI variant of the paravirtualised
-graphics device, mainly useful for x86-64 macOS guests, implemented
-by macOS's ParavirtualizedGraphics.framework. It builds on code
-shared with the vmapple/mmio variant of the PVG device.
+From: Alexander Graf <graf@amazon.com>
 
+Instead of device tree or other more standardized means, VMApple passes
+platform configuration to the first stage boot loader in a binary encoded
+format that resides at a dedicated RAM region in physical address space.
+
+This patch models this configuration space as a qdev device which we can
+then map at the fixed location in the address space. That way, we can
+influence and annotate all configuration fields easily.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
+v3:
+
+ * Replaced legacy device reset method with Resettable method
 
 v4:
 
- * Threading improvements analogous to those in common apple-gfx code
-   and mmio device variant.
- * Smaller code review issues addressed.
+ * Fixed initialisation of default values for properties
+ * Dropped superfluous endianness conversions
+ * Moved most header code to .c, device name #define goes in vmapple.h
 
- hw/display/Kconfig         |   4 +
- hw/display/apple-gfx-pci.m | 152 +++++++++++++++++++++++++++++++++++++
- hw/display/meson.build     |   1 +
- 3 files changed, 157 insertions(+)
- create mode 100644 hw/display/apple-gfx-pci.m
+ hw/vmapple/Kconfig           |   3 +
+ hw/vmapple/cfg.c             | 197 +++++++++++++++++++++++++++++++++++
+ hw/vmapple/meson.build       |   1 +
+ include/hw/vmapple/vmapple.h |   2 +
+ 4 files changed, 203 insertions(+)
+ create mode 100644 hw/vmapple/cfg.c
 
-diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-index 6a9b7b19ada..2b53dfd7d26 100644
---- a/hw/display/Kconfig
-+++ b/hw/display/Kconfig
-@@ -149,3 +149,7 @@ config MAC_PVG_MMIO
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+index 68f88876eb9..8bbeb9a9237 100644
+--- a/hw/vmapple/Kconfig
++++ b/hw/vmapple/Kconfig
+@@ -4,3 +4,6 @@ config VMAPPLE_AES
+ config VMAPPLE_BDIF
      bool
-     depends on MAC_PVG && AARCH64
  
-+config MAC_PVG_PCI
++config VMAPPLE_CFG
 +    bool
-+    depends on MAC_PVG && PCI
-+    default y if PCI_DEVICES
-diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
++
+diff --git a/hw/vmapple/cfg.c b/hw/vmapple/cfg.c
 new file mode 100644
-index 00000000000..4ee26dde422
+index 00000000000..aeb76ba363c
 --- /dev/null
-+++ b/hw/display/apple-gfx-pci.m
-@@ -0,0 +1,152 @@
++++ b/hw/vmapple/cfg.c
+@@ -0,0 +1,197 @@
 +/*
-+ * QEMU Apple ParavirtualizedGraphics.framework device, PCI variant
++ * VMApple Configuration Region
 + *
-+ * Copyright © 2023-2024 Phil Dennis-Jordan
++ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 + *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * ParavirtualizedGraphics.framework is a set of libraries that macOS provides
-+ * which implements 3d graphics passthrough to the host as well as a
-+ * proprietary guest communication channel to drive it. This device model
-+ * implements support to drive that library from within QEMU as a PCI device
-+ * aimed primarily at x86-64 macOS VMs.
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
 +
-+#include "apple-gfx.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/pci/msi.h"
++#include "qemu/osdep.h"
++#include "hw/vmapple/vmapple.h"
++#include "hw/sysbus.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
 +#include "qapi/error.h"
-+#include "trace.h"
-+#import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
++#include "net/net.h"
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(AppleGFXPCIState, APPLE_GFX_PCI)
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleCfgState, VMAPPLE_CFG)
 +
-+struct AppleGFXPCIState {
-+    PCIDevice parent_obj;
++#define VMAPPLE_CFG_SIZE 0x00010000
 +
-+    AppleGFXState common;
++typedef struct VMAppleCfg {
++    uint32_t version;         /* 0x000 */
++    uint32_t nr_cpus;         /* 0x004 */
++    uint32_t unk1;            /* 0x008 */
++    uint32_t unk2;            /* 0x00c */
++    uint32_t unk3;            /* 0x010 */
++    uint32_t unk4;            /* 0x014 */
++    uint64_t ecid;            /* 0x018 */
++    uint64_t ram_size;        /* 0x020 */
++    uint32_t run_installer1;  /* 0x028 */
++    uint32_t unk5;            /* 0x02c */
++    uint32_t unk6;            /* 0x030 */
++    uint32_t run_installer2;  /* 0x034 */
++    uint32_t rnd;             /* 0x038 */
++    uint32_t unk7;            /* 0x03c */
++    MACAddr mac_en0;          /* 0x040 */
++    uint8_t pad1[2];
++    MACAddr mac_en1;          /* 0x048 */
++    uint8_t pad2[2];
++    MACAddr mac_wifi0;        /* 0x050 */
++    uint8_t pad3[2];
++    MACAddr mac_bt0;          /* 0x058 */
++    uint8_t pad4[2];
++    uint8_t reserved[0xa0];   /* 0x060 */
++    uint32_t cpu_ids[0x80];   /* 0x100 */
++    uint8_t scratch[0x200];   /* 0x180 */
++    char serial[32];          /* 0x380 */
++    char unk8[32];            /* 0x3a0 */
++    char model[32];           /* 0x3c0 */
++    uint8_t unk9[32];         /* 0x3e0 */
++    uint32_t unk10;           /* 0x400 */
++    char soc_name[32];        /* 0x404 */
++} VMAppleCfg;
++
++struct VMAppleCfgState {
++    SysBusDevice parent_obj;
++    VMAppleCfg cfg;
++
++    MemoryRegion mem;
++    char *serial;
++    char *model;
++    char *soc_name;
 +};
 +
-+static const char* apple_gfx_pci_option_rom_path = NULL;
-+
-+static void apple_gfx_init_option_rom_path(void)
++static void vmapple_cfg_reset(Object *obj, ResetType type)
 +{
-+    NSURL *option_rom_url = PGCopyOptionROMURL();
-+    const char *option_rom_path = option_rom_url.fileSystemRepresentation;
-+    apple_gfx_pci_option_rom_path = g_strdup(option_rom_path);
-+    [option_rom_url release];
++    VMAppleCfgState *s = VMAPPLE_CFG(obj);
++    VMAppleCfg *cfg;
++
++    cfg = memory_region_get_ram_ptr(&s->mem);
++    memset((void *)cfg, 0, VMAPPLE_CFG_SIZE);
++    *cfg = s->cfg;
 +}
 +
-+static void apple_gfx_pci_init(Object *obj)
++static bool strlcpy_set_error(char *restrict dst, const char *restrict src,
++                              size_t dst_size, Error **errp,
++                              const char *parent_func, const char *location,
++                              const char *buffer_name)
 +{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
++    size_t len;
 +
-+    if (!apple_gfx_pci_option_rom_path) {
-+        /* The following is done on device not class init to avoid running
-+         * ObjC code before fork() in -daemonize mode. */
-+        PCIDeviceClass *pci = PCI_DEVICE_CLASS(object_get_class(obj));
-+        apple_gfx_init_option_rom_path();
-+        pci->romfile = apple_gfx_pci_option_rom_path;
++    len = g_strlcpy(dst, src, dst_size);
++    if (len < dst_size) { /* len does not count nul terminator */
++        return true;
 +    }
 +
-+    apple_gfx_common_init(obj, &s->common, TYPE_APPLE_GFX_PCI);
++    error_setg(errp,
++               "strlcpy_set_error: %s (%s): Destination buffer %s too small "
++               "(need %zu, have %zu)",
++               parent_func, location, buffer_name, len + 1, dst_size);
++    return false;
 +}
 +
-+typedef struct AppleGFXPCIInterruptJob {
-+    PCIDevice *device;
-+    uint32_t vector;
-+} AppleGFXPCIInterruptJob;
++/*
++ * String copying wrapper that returns and reports a runtime error in
++ * case of truncation due to insufficient destination buffer space.
++ */
++#define strlcpy_array_return_error(dst_array, src, errp) \
++    do { \
++        if (!strlcpy_set_error((dst_array), (src), ARRAY_SIZE(dst_array), (errp),\
++                               __func__, stringify(__LINE__), # dst_array)) { \
++            return; \
++        } \
++    } while (0)
 +
-+static void apple_gfx_pci_raise_interrupt(void *opaque)
++static void vmapple_cfg_realize(DeviceState *dev, Error **errp)
 +{
-+    AppleGFXPCIInterruptJob *job = opaque;
++    VMAppleCfgState *s = VMAPPLE_CFG(dev);
++    uint32_t i;
 +
-+    if (msi_enabled(job->device)) {
-+        msi_notify(job->device, job->vector);
++    if (!s->serial) {
++        s->serial = g_strdup("1234");
 +    }
-+    g_free(job);
-+}
++    if (!s->model) {
++        s->model = g_strdup("VM0001");
++    }
++    if (!s->soc_name) {
++        s->soc_name = g_strdup("Apple M1 (Virtual)");
++    }
 +
-+static void apple_gfx_pci_interrupt(PCIDevice *dev, AppleGFXPCIState *s,
-+                                    uint32_t vector)
-+{
-+    AppleGFXPCIInterruptJob *job;
++    strlcpy_array_return_error(s->cfg.serial, s->serial, errp);
++    strlcpy_array_return_error(s->cfg.model, s->model, errp);
++    strlcpy_array_return_error(s->cfg.soc_name, s->soc_name, errp);
++    strlcpy_array_return_error(s->cfg.unk8, "D/A", errp);
++    s->cfg.version = 2;
++    s->cfg.unk1 = 1;
++    s->cfg.unk2 = 1;
++    s->cfg.unk3 = 0x20;
++    s->cfg.unk4 = 0;
++    s->cfg.unk5 = 1;
++    s->cfg.unk6 = 1;
++    s->cfg.unk7 = 0;
++    s->cfg.unk10 = 1;
 +
-+    trace_apple_gfx_raise_irq(vector);
-+    job = g_malloc0(sizeof(*job));
-+    job->device = dev;
-+    job->vector = vector;
-+    aio_bh_schedule_oneshot(qemu_get_aio_context(),
-+                            apple_gfx_pci_raise_interrupt, job);
-+}
-+
-+static void apple_gfx_pci_realize(PCIDevice *dev, Error **errp)
-+{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
-+    Error *err = NULL;
-+    int ret;
-+
-+    pci_register_bar(dev, PG_PCI_BAR_MMIO,
-+                     PCI_BASE_ADDRESS_SPACE_MEMORY, &s->common.iomem_gfx);
-+
-+    ret = msi_init(dev, 0x0 /* config offset; 0 = find space */,
-+                   PG_PCI_MAX_MSI_VECTORS, true /* msi64bit */,
-+                   false /*msi_per_vector_mask*/, &err);
-+    if (ret != 0) {
-+        error_propagate(errp, err);
++    if (s->cfg.nr_cpus > ARRAY_SIZE(s->cfg.cpu_ids)) {
++        error_setg(errp,
++                   "Failed to create %u CPUs, vmapple machine supports %zu max",
++                   s->cfg.nr_cpus, ARRAY_SIZE(s->cfg.cpu_ids));
 +        return;
 +    }
-+
-+    @autoreleasepool {
-+        PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
-+        desc.raiseInterrupt = ^(uint32_t vector) {
-+            apple_gfx_pci_interrupt(dev, s, vector);
-+        };
-+
-+        apple_gfx_common_realize(&s->common, desc, errp);
-+        [desc release];
-+        desc = nil;
++    for (i = 0; i < s->cfg.nr_cpus; i++) {
++        s->cfg.cpu_ids[i] = i;
 +    }
 +}
 +
-+static void apple_gfx_pci_reset(Object *obj, ResetType type)
++static void vmapple_cfg_init(Object *obj)
 +{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
-+    [s->common.pgdev reset];
++    VMAppleCfgState *s = VMAPPLE_CFG(obj);
++
++    memory_region_init_ram(&s->mem, obj, "VMApple Config", VMAPPLE_CFG_SIZE,
++                           &error_fatal);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mem);
 +}
 +
-+static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
++static Property vmapple_cfg_properties[] = {
++    DEFINE_PROP_UINT32("nr-cpus", VMAppleCfgState, cfg.nr_cpus, 1),
++    DEFINE_PROP_UINT64("ecid", VMAppleCfgState, cfg.ecid, 0),
++    DEFINE_PROP_UINT64("ram-size", VMAppleCfgState, cfg.ram_size, 0),
++    DEFINE_PROP_UINT32("run_installer1", VMAppleCfgState, cfg.run_installer1, 0),
++    DEFINE_PROP_UINT32("run_installer2", VMAppleCfgState, cfg.run_installer2, 0),
++    DEFINE_PROP_UINT32("rnd", VMAppleCfgState, cfg.rnd, 0),
++    DEFINE_PROP_MACADDR("mac-en0", VMAppleCfgState, cfg.mac_en0),
++    DEFINE_PROP_MACADDR("mac-en1", VMAppleCfgState, cfg.mac_en1),
++    DEFINE_PROP_MACADDR("mac-wifi0", VMAppleCfgState, cfg.mac_wifi0),
++    DEFINE_PROP_MACADDR("mac-bt0", VMAppleCfgState, cfg.mac_bt0),
++    DEFINE_PROP_STRING("serial", VMAppleCfgState, serial),
++    DEFINE_PROP_STRING("model", VMAppleCfgState, model),
++    DEFINE_PROP_STRING("soc_name", VMAppleCfgState, soc_name),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vmapple_cfg_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pci = PCI_DEVICE_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    assert(rc->phases.hold == NULL);
-+    rc->phases.hold = apple_gfx_pci_reset;
-+    dc->desc = "macOS Paravirtualized Graphics PCI Display Controller";
-+    dc->hotpluggable = false;
-+    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-+
-+    pci->vendor_id = PG_PCI_VENDOR_ID;
-+    pci->device_id = PG_PCI_DEVICE_ID;
-+    pci->class_id = PCI_CLASS_DISPLAY_OTHER;
-+    pci->realize = apple_gfx_pci_realize;
-+
-+    // TODO: Property for setting mode list
++    dc->realize = vmapple_cfg_realize;
++    dc->desc = "VMApple Configuration Region";
++    device_class_set_props(dc, vmapple_cfg_properties);
++    rc->phases.hold = vmapple_cfg_reset;
 +}
 +
-+static TypeInfo apple_gfx_pci_types[] = {
-+    {
-+        .name          = TYPE_APPLE_GFX_PCI,
-+        .parent        = TYPE_PCI_DEVICE,
-+        .instance_size = sizeof(AppleGFXPCIState),
-+        .class_init    = apple_gfx_pci_class_init,
-+        .instance_init = apple_gfx_pci_init,
-+        .interfaces = (InterfaceInfo[]) {
-+            { INTERFACE_PCIE_DEVICE },
-+            { },
-+        },
-+    }
++static const TypeInfo vmapple_cfg_info = {
++    .name          = TYPE_VMAPPLE_CFG,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(VMAppleCfgState),
++    .instance_init = vmapple_cfg_init,
++    .class_init    = vmapple_cfg_class_init,
 +};
-+DEFINE_TYPES(apple_gfx_pci_types)
 +
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 619e642905a..78e1c41ea0a 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -65,6 +65,7 @@ system_ss.add(when: 'CONFIG_MAC_PVG',         if_true: [files('apple-gfx.m'), pv
- if cpu == 'aarch64'
-   system_ss.add(when: 'CONFIG_MAC_PVG_MMIO',  if_true: [files('apple-gfx-mmio.m'), pvg, metal])
- endif
-+system_ss.add(when: 'CONFIG_MAC_PVG_PCI',     if_true: [files('apple-gfx-pci.m'), pvg, metal])
++static void vmapple_cfg_register_types(void)
++{
++    type_register_static(&vmapple_cfg_info);
++}
++
++type_init(vmapple_cfg_register_types)
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+index d4624713deb..64b78693a31 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -1,2 +1,3 @@
+ system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
+ system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
++system_ss.add(when: 'CONFIG_VMAPPLE_CFG',  if_true: files('cfg.c'))
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+index a4c87b166d5..984281b6a67 100644
+--- a/include/hw/vmapple/vmapple.h
++++ b/include/hw/vmapple/vmapple.h
+@@ -12,4 +12,6 @@
  
- if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
-   virtio_gpu_ss = ss.source_set()
+ #define TYPE_VMAPPLE_BDIF "vmapple-bdif"
+ 
++#define TYPE_VMAPPLE_CFG "vmapple-cfg"
++
+ #endif /* HW_VMAPPLE_VMAPPLE_H */
 -- 
 2.39.3 (Apple Git-145)
 
