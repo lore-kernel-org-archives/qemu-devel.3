@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967ACCE8E7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FCACE8E7A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3yRY-0007CZ-56; Thu, 24 Oct 2024 10:04:04 -0400
+	id 1t3yRZ-0007Cu-Ep; Thu, 24 Oct 2024 10:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t3yRD-00078r-JN
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:53 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1t3yRO-00079u-Ca
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:04:00 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1t3yRC-0003ww-55
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:43 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a9a0ef5179dso120046166b.1
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:03:41 -0700 (PDT)
+ id 1t3yRL-0003xf-TO
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:03:53 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a9acafdb745so196016766b.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729778620; x=1730383420; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729778630; x=1730383430; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hbU95iGb43ykjR6uVl1fMgZcXOfT8jfUmlrwgLmbMOQ=;
- b=X+iPHOIFgB8rwSu4oe5M/bIl1rtDoPymBneOA6eRH/SGvGyvOYlGn9Zer/6QEhO/bc
- Lmtk6ULwbBCOhwo6mOfWopwayFJ6Kwe0qj53zwrahnS40IqbJRCKxcVdiHM4UWQunIXK
- Zdq4W1oxNxhjlN7eySIzgy/F4b0/m5JhIJsXkd/AsTwd7xRgxrW8LHcXRMT7CxbkeWAY
- TG0eCyibaeuzGRsgCwZolIAns9DGJXnpST87XfVfPIo3lnnYgKTu1ifquT/GTW9J3sB3
- V1UDliBMO4v1P2L1nKKPw79LrRfUN5G9T71UqZG/oYDJrvBm7p8WxcSIjTbn8QnLbBKH
- u8ww==
+ :reply-to; bh=8Qgg42N8SuToqImklsCIv0xNcAbCllJIjfd+s7ENKDE=;
+ b=YvwCchidzJFAYBLkeCggH3glPoFBSqVKI6wNXScIUyeEPtfBJofvenTSA9YFJd/zC3
+ M4iev+BUW95yK35WAQY7omYfYcfp7DfsisNi5hbIaTV4lLcBqsfoALfu8hwOdtXkld87
+ yIYz7Qqlvf6dB03QULBMjVhKo9/jGP9yoCSvanvT1TDlXURjHoO2Gb8Liu3ADTG28d4o
+ 3tmvOlipagZEEFEOxCoR47+w9TEkTAhR2gsiJWX6u8H1z9Mn2YXAx9G8B4NOqWDPGlAi
+ 1LiZgeUNKWc7h7Um/KsDm+5xPle6FiExulsXA8YM3VykoNdvulySDfYH7roZn7GHrGb9
+ J7Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729778620; x=1730383420;
+ d=1e100.net; s=20230601; t=1729778630; x=1730383430;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hbU95iGb43ykjR6uVl1fMgZcXOfT8jfUmlrwgLmbMOQ=;
- b=BT3yvV9/gGSyGR5apfSY0MHLZFlPA7rKagLdmkTpeaw80EuHrJOOC5xvBl8ibMFIWf
- zK3QOCSRbmdUs6Wm4GfJhVEU5TFLB+Nf72hYkbsrsX/ILztzf4tz3pHOaM70HBNsyoU6
- BLXWAuApnZaMXe55NFbZOjFDFxqXjmT0vU6sTtEM/d4fNT8rGpTQV8R1kH5J+S4YSiOl
- Urm7SfB1FlliHBIEHFZ1k5R1fU74T7PC3bR4eHs8bW9EKens8GWf4MRkOLCGgiGS5/O7
- 48KD71MG+ewlmlMkh9MTFGzMimY+YTBc1QGIRimipWkHHmjq+R3s8V0e7E4IJVCTJO3L
- c45Q==
-X-Gm-Message-State: AOJu0YwNxGiwuAViVhmLkuTZg5HHCaCc7BT4P8otjfz2AXeV4IXtiEAe
- BuOl+83/A/9arsOwkqERL8UhdgculCwwyH4u4a0eUS5FK1K0nht/IKP8YIhPRCo=
-X-Google-Smtp-Source: AGHT+IGhCxLJqvJjntDHNM49xQFQgHimhRC45q6AuV8nHKxtr49b04s9hnT4dgW9VYj1o7UoyDb3PA==
-X-Received: by 2002:a17:907:7e8d:b0:a99:fb10:128e with SMTP id
- a640c23a62f3a-a9ad275718amr213407166b.36.1729778618544; 
- Thu, 24 Oct 2024 07:03:38 -0700 (PDT)
+ bh=8Qgg42N8SuToqImklsCIv0xNcAbCllJIjfd+s7ENKDE=;
+ b=RxW3hg7ECeQTh1hqZkW+Odz+HpXh4T2SJOJucDmEUqgyOkON68FCx7tbNmNGNz4IZD
+ IKZPVvT1QA81sEU9eNSaPK0k5Pvs/C2QLGs/t/+UX7NbmvMRHca1p5CUYHljuam/QX7t
+ taQmNOBusK35Faq9ZTjZ/M0xZR511pJjVghgwtXA2Yel1v7wwNN+Tf4FIGzmT78pgUYu
+ de9eV8dBix0pfL2kTyrMkGHdxV6HXMwG/fZecX35Zy1/gus5n869Y1er8RCNGYFfQesI
+ noerPOCWsh/3w9qt/V/Nnnyszs0z/hX3xDqkTGLZBPSu/9Lr6uGy9X0L5Mfs48i5EuqT
+ L+FA==
+X-Gm-Message-State: AOJu0Yyw414YxajHwX7No7Z9gzPUxxCUS7VAM6AMSw6IdlwCxJaR1UxU
+ L4jrBhkCi/GAi9evGwTD0usQN3ZG0oxNjBVss0olWOFg4lNgCRHEzUptU38UjwE=
+X-Google-Smtp-Source: AGHT+IFXmSbnHJhHsJg856w4Wo5guxUQvrw+8QKSwCcJ6BivTfnSyFN3SBBQpSQeunB3GnJnVqSuLg==
+X-Received: by 2002:a17:906:db0d:b0:a99:fcbe:c96b with SMTP id
+ a640c23a62f3a-a9ad1a5eee0mr225800166b.25.1729778629072; 
+ Thu, 24 Oct 2024 07:03:49 -0700 (PDT)
 Received: from [127.0.1.1] (adsl-113.37.6.2.tellas.gr. [37.6.2.113])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912f6878sm621407566b.86.2024.10.24.07.03.35
+ a640c23a62f3a-a9a912f6878sm621407566b.86.2024.10.24.07.03.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 07:03:38 -0700 (PDT)
+ Thu, 24 Oct 2024 07:03:48 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 24 Oct 2024 17:03:03 +0300
-Subject: [PATCH 05/11] rust/pl011: move CLK_NAME static to function scope
+Date: Thu, 24 Oct 2024 17:03:07 +0300
+Subject: [PATCH 09/11] rust/pl011: Use correct masks for IBRD and FBRD
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241024-rust-round-2-v1-5-051e7a25b978@linaro.org>
+Message-Id: <20241024-rust-round-2-v1-9-051e7a25b978@linaro.org>
 References: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
 In-Reply-To: <20241024-rust-round-2-v1-0-051e7a25b978@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,30 +81,30 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Gustavo Romero <gustavo.romero@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 X-Mailer: b4 0.15-dev-12fc5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1107;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=926;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=aBBqr/qTxXGjUVQdy1uoZ/LYcMTQXrtSqv1QzWzz+ig=;
+ bh=NKJsSY6EnujOR9+vYFNGnvQMyXTGi/+JMzK/b442IcI=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm5HbE9qZXdsVi9FOC9ONWVmUXJkQkJyenZIOEhaCm11d2xNL1k4blRaQXZiQVEw
- U1dKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnhwVG93QUt
- DUkIzS2Nkd2YzNEowSG1KRC80bHpOTFZDL3hMQTRyOE8yMWs5OVM1S3pWZWNXZUViOWJDbFAwMg
- p1ejd5V1IvMGxyTERCakdKbUJGLzFTQ3BQV2RBMWJVV1FybytwQVlsNE0rbzcxRUpuaVgyQ1EzQ
- 085R1NHK015ClZBVWVoZERZVnF3TnNBYkgrN2NsemtxeTNwNlZBU3pRcStLUi9oOFlWYVNDTG5M
- cHlsd0R2L21abldQUHk3Q0oKNVh6UkRybnhHNDBnSkJmdHZTckhNY25HQm9jaVg0RDU3SjFlRDh
- TSFRsYU9HYjJTUGxaSHozQmdMdzkweEVxLwpaUFFHbUlldlZaWjl3MExKRGtES2ZlakZRc1FzZ1
- Z1eDVnUUFxSUxIaThuV1FCYjhxMkRyeGI4RDFqSFlVbFJRCi9Md2NQVmRaM05sZ2pFcDVWNEQ5N
- lNsbXZYV0xYQmpHWStadW12UDR6SnVVVmJQYWZCZU54c0h1US9MRmxtQUMKeWdNakNOaUtBQ0Nn
- OERwblNvamRUemF4VGxlanpGdmJJUGVnUVROWGhwRmhYOC9KeklQdm5UVnBkVHltcSs5RgpPUTB
- td21xeHcrcE42NlRMYzBBbW83ZFdCWE1CVEx6L1pQYmh2U1o1azN5S21xN01OeDFrOWM4WkdVMW
- IvTVoxCnNaYU41eFkyeFo5ektxUXNGZDVzODB4YkpvdEE0Lzc5L29RV3RHVW9nM1lobVlqUmFJS
- VFDQ1dWTDBKSjRlN1MKL0lBRGMyc2Y5WGxjajk0d0NnRGQvMUVzMjBWZ2hnVkxUczByUENzWndT
- RTNvYUFpMWpBUXQweDZhaUdndGNRMwp6azFtbjJPY3NobXNVbkdGRWVWU2tXMkJ6R3pQdU13Q1V
- oSjNpblpYK3BoZzRteStxYkVjb1FEeGNoR2gyNFJYCkF5QndzQT09Cj1iTEExCi0tLS0tRU5EIF
+ 25RQWNzbVlnQm5HbE9qdjQrZ3JWeElma0w3ODB4SzlUSWpFd0s4CllWcFh1UzllLzNLenpETysw
+ K1dKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKWnhwVG93QUt
+ DUkIzS2Nkd2YzNEowRWdGRC85TUZuN0svSnNwMEVVUUxZTml2QTZKVVJabnNqbWI5ZSt2dE82VA
+ pOU3plNUNISmY3SklzamM4d0ZaK1VqcUpVWEZSd3k3bkZCYUdvYVQ2MzI1Y3gyUUhuMHh0VUl0a
+ m5LeHNKUDBLCkdoeWpPT0Q5bnRoTUVHRGE1dFN6UFgwbXNEbCtBN0JOSGxCcThSRXVNWGhlMDJt
+ c0lKYU5DZFBSWTJJZzV0cDUKUnZvcUdqSVFEKzdxdFJSVVJGK1lrb2YvVHpoVUdJYzJFWFQ3QVp
+ PbnJwNzZ0TjQvWlAzTDM3dy9nMjdrbjNUQQpOVzlndHA1NXR0eDMrN3NENHp6SnJLTVF4MWdmMX
+ FlOWZmcEhoZkxQYU1qWVp6SE1iM2FnZTUvQ0pBMnhiZFFVCjVtOXd2cE5DT3hMQVZhekZHYkx5b
+ nVFNkZiMWtiZWNTMWMrRjdQYTRFR2cyN1paMTNodFNyazNJTXB6QkdId3cKeW5WRzNrTFpRNVdQ
+ RGtvVjlTbFdOY0lKQTJVY1BhTXJESlRic05NV25YVGlQQWtEYnMyR0lXUnhCSm84QTR6NQpVUVF
+ CQzRieHAxNXRDOWkreHc4T2VEWkRDR0h0VzkwL0E1TWNYTlNuTXRWRkgyaStLVGN4dktvQUZrSn
+ FiMGU1Cmh4aGN5OGwyMStYcTZwcWlZbU5kMzA5eE9RcFlKWk1DMzM4MzV4K1QySnpVelZpQ1M3b
+ lVFNEFoY3N5alRhYUwKQi8veTR5eC9tK0pmS0hzYTAyb0Q5SzBENjd2a3VpYVdjR2g4N24zbnZO
+ aUsrQWhORUdPdjg2M29NV0VpeUMweApnYjdGYmxVMjV1djdyWGJuSW95c0RLM0k2NUdiTWhwNUh
+ yWGp4TGNOOXFlbURZWjZOQlg0M1IxMm9wbGZ6NmwxCjI5eUxSUT09Cj0wVHd2Ci0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,36 +127,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do not need to have CLK_NAME public nor a static. No functional change.
+Port fix from commit cd247eae16ab1b9ce97fd34c000c1b883feeda45
+"hw/char/pl011: Use correct masks for IBRD and FBRD"
+
+Related issue: <https://gitlab.com/qemu-project/qemu/-/issues/2610>
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- rust/hw/char/pl011/src/device.rs | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 57dc37dadef631fbccfa3049a3d8701b4e62b5b3..115786f9fa7f03c16cd44462cb7df5623ba3a6d7 100644
+index cf1964fecdfd6d9dae3378890aa8b515a1ddc036..6d1353dafc14bfe73703b5cff7e1ff7659de220e 100644
 --- a/rust/hw/char/pl011/src/device.rs
 +++ b/rust/hw/char/pl011/src/device.rs
-@@ -152,6 +152,8 @@ impl ObjectImpl for PL011State {
-     /// location/instance. All its fields are expected to hold unitialized
-     /// values with the sole exception of `parent_obj`.
-     unsafe fn instance_init(&mut self) {
-+        const CLK_NAME: &CStr = c"clk";
-+
-         let dev = addr_of_mut!(*self).cast::<DeviceState>();
-         // SAFETY:
-         //
-@@ -255,9 +257,6 @@ unsafe fn post_load(&mut self, _version_id: c_int) -> c_int {
-     }
- }
+@@ -21,10 +21,10 @@
+ };
  
--#[used]
--pub static CLK_NAME: &CStr = c"clk";
--
- impl PL011State {
-     pub fn read(
-         &mut self,
+ /// Integer Baud Rate Divider, `UARTIBRD`
+-const IBRD_MASK: u32 = 0x3f;
++const IBRD_MASK: u32 = 0xffff;
+ 
+ /// Fractional Baud Rate Divider, `UARTFBRD`
+-const FBRD_MASK: u32 = 0xffff;
++const FBRD_MASK: u32 = 0x3f;
+ 
+ const DATA_BREAK: u32 = 1 << 10;
+ 
 
 -- 
 2.45.2
