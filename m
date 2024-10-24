@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AD1D0BB63
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915AFD0BB63
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3rRp-0002LD-N6; Thu, 24 Oct 2024 02:35:53 -0400
+	id 1t3rRt-0002N8-9D; Thu, 24 Oct 2024 02:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRo-0002Km-0M
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRs-0002MQ-7q
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRm-0003Si-Ej
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRp-0003TI-Lt
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729751749;
+ s=mimecast20190719; t=1729751753;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vSWlToqPCAWVXccB0955bor5gnfBy3VynEI6kLZqWCM=;
- b=K1pJvZwoQeh+uq62KWDJFPnoNaLNbu/ELN66ahps4ViHkfDp7UYAcNaSDt6pfDtS9oiVcR
- tpQVXSCe2tsa4MuQ58YQ0m6FnfPYy2l0EoF3ahL80hfmZYiOx9sUBN90xNvHa4N1OjeUY+
- mWEY2p4d1CkT586cbT7SXtvKpd0L1eg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7TLwld3t9KOUqUx+FlmrlaZeNHVfm57CkbHCMoIGBKc=;
+ b=fO9B832pP35dvwf7XHvRuhe6U1d2fpqh+eYHKA6B46M8LOxN+3qdwoirCFCp1LhgyZ3kc3
+ MGMoAB1ivvnstIlfLC6HZmD0Olgu1mtw+dGdN5KeuO/wlrA0eNO+Q/3Q686cBUUjr8ss5j
+ 0xLNyRIZO2jK6/V/8GoWyC7cjs51PxQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-8qlckcPVMhKNfpPOs-UDmw-1; Thu,
- 24 Oct 2024 02:35:45 -0400
-X-MC-Unique: 8qlckcPVMhKNfpPOs-UDmw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-IqAzRYucNz-1VOzk-d1b7w-1; Thu,
+ 24 Oct 2024 02:35:49 -0400
+X-MC-Unique: IqAzRYucNz-1VOzk-d1b7w-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B11EC1956088; Thu, 24 Oct 2024 06:35:44 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CEBD19560B0; Thu, 24 Oct 2024 06:35:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E33B1956056; Thu, 24 Oct 2024 06:35:43 +0000 (UTC)
+ id C1D581956056; Thu, 24 Oct 2024 06:35:46 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 12/17] hw/block:m25p80: Fix coding style
-Date: Thu, 24 Oct 2024 08:35:02 +0200
-Message-ID: <20241024063507.1585765-13-clg@redhat.com>
+Subject: [PULL 14/17] hw/block/m25p80: Add SFDP table for w25q80bl flash
+Date: Thu, 24 Oct 2024 08:35:04 +0200
+Message-ID: <20241024063507.1585765-15-clg@redhat.com>
 In-Reply-To: <20241024063507.1585765-1-clg@redhat.com>
 References: <20241024063507.1585765-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,83 +85,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Fix coding style issues from checkpatch.pl
+Add the SFDP table for the Windbond w25q80bl flash.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/block/m25p80.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ hw/block/m25p80_sfdp.h |  2 +-
+ hw/block/m25p80.c      |  3 ++-
+ hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 2 deletions(-)
 
+diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+index 89c2d8f72d5c..35785686a0ec 100644
+--- a/hw/block/m25p80_sfdp.h
++++ b/hw/block/m25p80_sfdp.h
+@@ -25,7 +25,7 @@ uint8_t m25p80_sfdp_mx66l1g45g(uint32_t addr);
+ 
+ uint8_t m25p80_sfdp_w25q256(uint32_t addr);
+ uint8_t m25p80_sfdp_w25q512jv(uint32_t addr);
+-
++uint8_t m25p80_sfdp_w25q80bl(uint32_t addr);
+ uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
+ 
+ uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
 diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index f7123f9e6878..3f55b8f38561 100644
+index 411d810d3b1b..e2e84f8b5f8d 100644
 --- a/hw/block/m25p80.c
 +++ b/hw/block/m25p80.c
-@@ -61,7 +61,8 @@ typedef struct FlashPartInfo {
-      */
-     uint8_t id[SPI_NOR_MAX_ID_LEN];
-     uint8_t id_len;
--    /* there is confusion between manufacturers as to what a sector is. In this
-+    /*
-+     * there is confusion between manufacturers as to what a sector is. In this
-      * device model, a "sector" is the size that is erased by the ERASE_SECTOR
-      * command (opcode 0xd8).
-      */
-@@ -168,7 +169,7 @@ typedef struct FlashPartInfo {
+@@ -356,7 +356,8 @@ static const FlashPartInfo known_devices[] = {
+     { INFO("w25x64",      0xef3017,      0,  64 << 10, 128, ER_4K) },
+     { INFO("w25q64",      0xef4017,      0,  64 << 10, 128, ER_4K) },
+     { INFO("w25q80",      0xef5014,      0,  64 << 10,  16, ER_4K) },
+-    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K) },
++    { INFO("w25q80bl",    0xef4014,      0,  64 << 10,  16, ER_4K),
++      .sfdp_read = m25p80_sfdp_w25q80bl },
+     { INFO("w25q256",     0xef4019,      0,  64 << 10, 512, ER_4K),
+       .sfdp_read = m25p80_sfdp_w25q256 },
+     { INFO("w25q512jv",   0xef4020,      0,  64 << 10, 1024, ER_4K),
+diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+index 82d84cc21fe6..a03a291a09b5 100644
+--- a/hw/block/m25p80_sfdp.c
++++ b/hw/block/m25p80_sfdp.c
+@@ -404,6 +404,42 @@ static const uint8_t sfdp_w25q01jvq[] = {
+ };
+ define_sfdp_read(w25q01jvq);
+ 
++static const uint8_t sfdp_w25q80bl[] = {
++    0x53, 0x46, 0x44, 0x50, 0x05, 0x01, 0x00, 0xff,
++    0x00, 0x05, 0x01, 0x10, 0x80, 0x00, 0x00, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0x7f, 0x00,
++    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
++    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
++    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x0f, 0x52,
++    0x10, 0xd8, 0x00, 0x00, 0x23, 0x02, 0xa6, 0x00,
++    0x81, 0x6c, 0x14, 0xa7, 0xed, 0x61, 0x76, 0x33,
++    0x7a, 0x75, 0x7a, 0x75, 0xf7, 0xa2, 0xd5, 0x5c,
++    0x00, 0xf7, 0x1d, 0xff, 0xe9, 0x30, 0xc0, 0x80,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++};
++define_sfdp_read(w25q80bl);
++
  /*
-  * Spansion read mode command length in bytes,
-  * the mode is currently not supported.
--*/
-+ */
- 
- #define SPANSION_CONTINUOUS_READ_MODE_CMD_LEN 1
- #define WINBOND_CONTINUOUS_READ_MODE_CMD_LEN 1
-@@ -189,7 +190,8 @@ static const FlashPartInfo known_devices[] = {
- 
-     { INFO("at45db081d",  0x1f2500,      0,  64 << 10,  16, ER_4K) },
- 
--    /* Atmel EEPROMS - it is assumed, that don't care bit in command
-+    /*
-+     * Atmel EEPROMS - it is assumed, that don't care bit in command
-      * is set to 0. Block protection is not supported.
-      */
-     { INFO("at25128a-nonjedec", 0x0,     0,         1, 131072, EEPROM) },
-@@ -275,10 +277,13 @@ static const FlashPartInfo known_devices[] = {
-     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
-     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
-     { INFO_STACKED("mt25qu01g", 0x20bb21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
--    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
--    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096, ER_4K | ER_32K, 2) },
-+    { INFO_STACKED("mt25ql02g", 0x20ba22, 0x1040, 64 << 10, 4096,
-+                   ER_4K | ER_32K, 2) },
-+    { INFO_STACKED("mt25qu02g", 0x20bb22, 0x1040, 64 << 10, 4096,
-+                   ER_4K | ER_32K, 2) },
- 
--    /* Spansion -- single (large) sector size only, at least
-+    /*
-+     * Spansion -- single (large) sector size only, at least
-      * for the chips listed here (without boot sectors).
-      */
-     { INFO("s25sl032p",   0x010215, 0x4d00,  64 << 10,  64, ER_4K) },
-@@ -549,7 +554,8 @@ static void blk_sync_complete(void *opaque, int ret)
-     qemu_iovec_destroy(iov);
-     g_free(iov);
- 
--    /* do nothing. Masters do not directly interact with the backing store,
-+    /*
-+     * do nothing. Masters do not directly interact with the backing store,
-      * only the working copy so no mutexing required.
-      */
- }
-@@ -1843,7 +1849,7 @@ static void m25p80_register_types(void)
- 
-     type_register_static(&m25p80_info);
-     for (i = 0; i < ARRAY_SIZE(known_devices); ++i) {
--        TypeInfo ti = {
-+        const TypeInfo ti = {
-             .name       = known_devices[i].part_name,
-             .parent     = TYPE_M25P80,
-             .class_init = m25p80_class_init,
+  * Integrated Silicon Solution (ISSI)
+  */
 -- 
 2.47.0
 
