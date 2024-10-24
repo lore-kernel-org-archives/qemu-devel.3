@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB08CE8E7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5406CCE8E7F
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 14:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3yiM-0000AA-W2; Thu, 24 Oct 2024 10:21:27 -0400
+	id 1t3yiC-0008Vj-DG; Thu, 24 Oct 2024 10:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3yiL-00009r-Vr
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:21:26 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ id 1t3yiB-0008VS-6S
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:21:15 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1t3yiK-0006QX-Ds
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:21:25 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2fb561f273eso9552981fa.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:21:24 -0700 (PDT)
+ id 1t3yi8-0006OY-8N
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 10:21:14 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5c903f5bd0eso1827700a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 07:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729779683; x=1730384483; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0ddNpKDV5zUgomts8miFnSCnXj9Zn6B0bFSrFbn3114=;
- b=Fnkn0IQcHF5PBl7i8cwWxPopq5vUPDQY50L2tHF1lMyEuAGpUgWErSH4FO35v6G1Fv
- 8rpsxP7SpqW6OJX+2+FAHJ5XUwqbyyh6YMTuirJFvinfkt/HXP0pBbWgkOCj21o1Rxu+
- I3BT5AthUVyGZ1iV9xWlu0nMxN4xg3zZRb4rifyP0wZBwqtd7g4VsieLDeq1QkylAUlG
- LlArZWovVwSWMuNgVnm/pJN2+/xa9oqUF37HFHpRp/R0/dY0IqfvQAxgQATsF3nGDmPD
- 8lnidruTs1snyiYHZxtqi9hdhqp+h+KQo8mmGbao0E/gcGaTLJLqin8q7XaYPaYaCd8g
- BODg==
+ d=linaro.org; s=google; t=1729779670; x=1730384470; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=01LNpV0J5i2+mW4L0tTjXQrlSr+AmryCspQKyFFkmyk=;
+ b=ELDZlrdw+rf57/jperjqVFo44D0P0yDZqgfWpzTySqNgu/qsAx/6kvNha2hqqJ+dg0
+ 5crcbpQpMryD1IerwGuH9aoBjs2q9oyg/fg1uxag0jmU1Gyj860FTQ7S3VDm0YTvi7Lf
+ uahcuYwZm7VZeIvt/Ogy/cs20JfYAMLuRZhR/PGmVXICDZle9fj5ZCdtkL9ETxrULDuW
+ QSEEIcF5Oi6BbUJXdNeUwKx3jIX0L4yaZCHE3uVLNG95VdFrF+Xxk8kHhQNiYOAEgddt
+ 2y8iKY8ZGVLewDIyRpcwd+NDw8lBzkNP5Etq9mrGQwt2oGIebgLpJ5MhknkjsAu1Nml2
+ NZ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729779683; x=1730384483;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0ddNpKDV5zUgomts8miFnSCnXj9Zn6B0bFSrFbn3114=;
- b=ZDJEY86r1LBYI6oNNyfHBQ2cu9ReYWLH9isOIvSqZ4r+gLQhJmp3GFwZ4PDCBnR/B+
- nX33XjDbUeRPY+vvRaWvUBljcuu2GWxMF50izN45Auv6gfOq7YEuj8Zj1BkJInI5GRn+
- NB0hLr4axA0eBavSSLTf8Iho+/2fAGAATxYshj/5KHTEwzuFMLf9jXU/e52GE0V7eeuV
- gWOfeMxX5s++B/iRDfPnmJEjhrDhsOamYXQjiPpYSbpli9J7ToRtklyG4kYAcdR2Vr8S
- Ms5kS3dI8m30SqxZbqufbtCwGsUG9OI4pSUkhmuXaPMnSx3wHCGsaj90DP4clkJv4D7P
- 3AHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBbdIiZso4Ar0SoW1CulKTvWYy1znAQWMRnXZTvuplzQya+l35No8cYds5+0ghjRC2goErbzONvH0y@nongnu.org
-X-Gm-Message-State: AOJu0YxeRU2R0wM2XHuR1Mc1NpC+YvNP3lpBDHDK5edhtVaeoyly6HGK
- Fg0dUsxARrWLhPjDKNqOdWtQqJVpveBhSyS52A7eGZJtp25BkpX3wdWMH8RvufDg6wyL0r8zsQC
- Eeg4DJN0VhISmj7g7oRPohPwKZ6pnR2Zeoc9R7A==
-X-Google-Smtp-Source: AGHT+IG4CklBc8CORmkbiGcRVKDPktNldZeWkAzNCHcEhnii/BPFUWxV6QZsvPvhpNKgk6nupVUa91SwQ6XXux+0b4k=
-X-Received: by 2002:a2e:b8cd:0:b0:2fb:5f9d:c296 with SMTP id
- 38308e7fff4ca-2fc9d33af84mr32477711fa.4.1729779682602; Thu, 24 Oct 2024
- 07:21:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1729779670; x=1730384470;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=01LNpV0J5i2+mW4L0tTjXQrlSr+AmryCspQKyFFkmyk=;
+ b=U49UNvOsOwPkfgXSXxXZWD+qsjj0vmHTgvFht28pq51XVVQiu+t4PniZnx5cmTgB92
+ zsONMwGYC+utSKH9WVVHGBSy9GO7/41gIwlbW5jcPwx3y3ueAP9+kHiHaIwxB14ct2zx
+ fNbOgoqyvoxBJhFvnPVcdPdm73HmL/LGP7I5cGbxqQ2lH8jOLlKb7qzrrtlq9LYMPaVC
+ 0/aZUDmMd04y1u2B9FfnkqeVvuYyknJHuPswZ8MjC2SLMKYM8onXFix2JYHwKsmrjrnH
+ 7LNqqOTqMwnZf0mX4T0LRk+lflo0ipqKsIvY+6bKWS7u4qAJ8RYs8blvRQYb4n61p4+l
+ /Vxg==
+X-Gm-Message-State: AOJu0Yx4pD6nqgkv8hf4/mnRjKfiJXNP9gtwBjoa+WeUzGynR/pViNjq
+ b/rUsS4QxAqS2oa4mQhuE/VY4vJidxKeFxynJOESXL7u0qnjm7shG4kqCKPg2bkgSj8GIvR6Beb
+ rn7MoXyJppkIURIKrZk5fxnNTIdBpuI8ZcYfbSw==
+X-Google-Smtp-Source: AGHT+IGHhq6Qvof2pqDPVtU75qSOjwxphckJbPYbk9jVwNcKPCIbH+nSHpef7liMF0YUjq6SBIn/l/gDbYlxwu/npgk=
+X-Received: by 2002:a05:6402:2344:b0:5c9:59e6:e908 with SMTP id
+ 4fb4d7f45d1cf-5cb8ac5e8ebmr6287169a12.6.1729779670156; Thu, 24 Oct 2024
+ 07:21:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20241022164903.282174-1-kwolf@redhat.com>
-In-Reply-To: <20241022164903.282174-1-kwolf@redhat.com>
+References: <20241022152415.1632556-1-berrange@redhat.com>
+In-Reply-To: <20241022152415.1632556-1-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 24 Oct 2024 15:21:11 +0100
-Message-ID: <CAFEAcA-oDF_FU6zH6cDRsYxwh3D_oc4WqJxkCeKw=zi0d2i1ww@mail.gmail.com>
-Subject: Re: [PULL 0/9] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Date: Thu, 24 Oct 2024 15:20:58 +0100
+Message-ID: <CAFEAcA-nWDcFrLy21cme6+T1H_9oaHtYE3MtT8D5ucr+o2kn9A@mail.gmail.com>
+Subject: Re: [PULL 00/14] Misc fixes patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,28 +93,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 22 Oct 2024 at 17:51, Kevin Wolf <kwolf@redhat.com> wrote:
+On Tue, 22 Oct 2024 at 16:24, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> The following changes since commit 6f625ce2f21d6a1243065d236298277c56f972d5:
+> The following changes since commit cc5adbbd50d81555b8eb73602ec16fde40b55b=
+e4:
 >
->   Merge tag 'pull-request-2024-10-21' of https://gitlab.com/thuth/qemu into staging (2024-10-21 17:12:59 +0100)
+>   Merge tag 'pull-tpm-2024-10-18-1' of https://github.com/stefanberger/qe=
+mu-tpm into staging (2024-10-18 15:45:02 +0100)
 >
 > are available in the Git repository at:
 >
->   https://repo.or.cz/qemu/kevin.git tags/for-upstream
+>   https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
 >
-> for you to fetch changes up to 04bbc3ee52b32ac465547bb40c1f090a1b8f315a:
+> for you to fetch changes up to c64df333f92798823c4897ae6d4bd7f49d060225:
 >
->   raw-format: Fix error message for invalid offset/size (2024-10-22 17:52:49 +0200)
+>   gitlab: enable afalg tests in fedora system test (2024-10-22 13:02:33 +=
+0100)
 >
 > ----------------------------------------------------------------
-> Block layer patches
+> Misc sockets, crypto and VNC fixes
 >
-> - Event throttling for BLOCK_IO_ERROR
-> - iotests: Fix backup-discard-source test for XFS
-> - Coverity fixes
-> - raw-format: Fix error message for invalid offset/size
+> * Fix rare EADDRINUSE failures on OpenBSD platforms seen
+>   with migration
+> * Fix & test overwriting of hash output buffer
+> * Close connection instead of returning empty SASL mechlist to
+>   VNC clients
+> * Fix handling of SASL SSF on VNC server UNIX sockets
+> * Fix handling of NULL SASL server data in VNC server
+> * Validate trailing NUL padding byte from SASL client
+> * Fix & test AF_ALG crypto backend build
+> * Remove unused code in sockets and crypto subsystems
 >
+> ----------------------------------------------------------------
 
 
 Applied, thanks.
