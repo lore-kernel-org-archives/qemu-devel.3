@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FCCCE8E99
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 17:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91E0CE8E6A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 17:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t41QA-0004DX-NJ; Thu, 24 Oct 2024 13:14:50 -0400
+	id 1t41gl-0007np-6e; Thu, 24 Oct 2024 13:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t41Q5-0004CV-0a
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:14:45 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41gi-0007mz-Ug
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:31:56 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1t41Q2-0005Ob-U2
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:14:44 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-20c803787abso9305935ad.0
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:14:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41gh-00080f-Fz
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:31:56 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-20c8c50fdd9so14431795ad.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729790080; x=1730394880; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1729791114; x=1730395914; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Tky+sTpkoJN3pdSFdzjbo8/+js9TuxRW/ISLfU9UxEk=;
- b=BXWtF/DuN81jHzqefEUhWuAJxd96vel+32LgAf6U+NvGff7Cm0bm//YyU5m3t5p0R5
- BpO3G3DlnS51sgpM/G6Wtpf9i/oDKIzVWqreK8Izsjoia0+pcHTRVobP3RHvVRF6ToDZ
- YcYD+EGISpyeDqBza/7Q6Zhb8jDK5M+G0kEKaC7O+PJPzt+7eKxNe0wM3D3IombhWb75
- /i/TiYA0gaJP1kQjGoxLrZ0cNK1C7HAele55NE9H4dsi9F20oKiI08LyeP8QtIYfjAIM
- lBYO1XbqCzDs3AaaE6ru4OqF8mlgvY/rUKMmmLDCYUwwrjNkZXXVUO3NFJHzUSsxHEKs
- 7KLw==
+ bh=Ex1eq2dXKoKZNOU0o1C06Yv7ZF6tTCKwzI2J53l4+GM=;
+ b=QS4YqghvcCqM9kB2QU4tO9Ndv3ddLhvUFwWBy1oWdW5Cif5Hb7zHM4RQN47E6Ah0En
+ Tppt0nb/v9wx3yxOeh4k74AvBurTR0rXUxzt9+OsTYrRitLVd1SaLxWIVn9qlM0+utba
+ A4tZUK2rMR6q3kJEvEKgizfC9H1I4JOuZS7krYcFmQI8zY3ldIGatuVDwfH6y4FySanU
+ ysy20d+NABB9fDnDtV1Ib/ltG+7gtHrLSOR3t0VswuiC5e6ku3IIunPA47nNKnXYNR2E
+ OLHT+9wuLV2lZyiKdk+W2YYCccPkzGtcMeiht8yyOPAK9lxKi57FrnswBMFInr4ds0qp
+ ffrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729790080; x=1730394880;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1729791114; x=1730395914;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tky+sTpkoJN3pdSFdzjbo8/+js9TuxRW/ISLfU9UxEk=;
- b=IMJHrArUrQGIGv3rUi/XE6Q2SLN/jEgkyAvQKqm4Se16g22dxKDIn9xInjsQypz4er
- 4TKI84/PfRYfdLc3Lt/mdUJepp2h+OOl8cWRnItQMzsvxo+Goiy0EqZerEqCkR9yU19e
- L4igjYRHvj5aBf2GJGw7JBpRK0vaKAbsW8cok8Sys+TtwnIXoV5/ppJS7RKGwRHTy+pj
- dVPfQ7vjNTsxdty4LMYXxPYR8A/ZcoRjZq0sBVum2l1u8nYjcwiT2gbmFEnyf4HXY9Qe
- ji4/ELA7F+7joDpvZ8RMob0m8Nt4lo6E9RgRu1oXaPLH25q00J3Aeqy8IDZtNcy7WPl9
- aHzA==
+ bh=Ex1eq2dXKoKZNOU0o1C06Yv7ZF6tTCKwzI2J53l4+GM=;
+ b=vdmCVrwro95EjgEBX+SYpmANC3eUznbpf6j15dCWbZtVaoFcuFJhfMS3X6Wlwzg4Hn
+ nvHwVJPMGM2YBS+y2VuOK+N3nTF01Ze8RYcpn0ttGkvDKyIhK6YHzJl2wfSm2h4gXCHO
+ RPKkgedbnihnaQHRM+ESMOx+HthU9M5l1PHt4RDCQ9ZGuEo/WRpFSQfhDxaTI8GVJPaz
+ L2+D/KE0RE9qDTjEwo5bxokEVnCYvo3j0y8R7wnGKqCXZ5h8vy2ScllSLkrSkpze9TjM
+ Tm23CRhwqdXfnIxUYptFGWuBWugc9rQ4SEX4ZoQU43gnf9iwoJajoguAIjlCd4XaAb2X
+ uIDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXA/XtmeJyE7A4gM8HrDSgdymqFilYbgYXl62SMCb04eiKSnNRSnLR3Yyi2zsmHOEpvFPYLidNWm/e3@nongnu.org
-X-Gm-Message-State: AOJu0Yyv9gLIaqkVL0QsM5RBQ/gj21zl4OtSM7XBU6ntq4BLQwvwSozy
- Pfnuec0ZcN4OaIKGkpIBSIfvpPLAdKBPJ4yeKT9fe8NeHMxo1/ZrIqPp0MWoDVuiCsIPpqAVJ+V
- uSdnMM1B4
-X-Google-Smtp-Source: AGHT+IEQ97Nqp92Fw+WrPrzLv+wrAwX97fQ0+jBIr8yrYQgFNa+EUYiksuBNIYdou5IJ1XtyYqyRCA==
-X-Received: by 2002:a17:902:cecd:b0:20c:c18f:c39e with SMTP id
- d9443c01a7336-20fb89d6ad7mr43556935ad.21.1729790079887; 
- Thu, 24 Oct 2024 10:14:39 -0700 (PDT)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f0f6d10sm74773795ad.279.2024.10.24.10.14.39
+ AJvYcCWD9P/8oTlHQQHE9FOpP4CjymGSd0JVXYHRJ2bWn8wpWg/ZEo5XnShb9bFITMOaTmzfZ6M+sqY/TWA+@nongnu.org
+X-Gm-Message-State: AOJu0Yyptpvh9g7x3WtrPBNdZBW6RQR6HB+DQmKFdsN29EXT+AZmiCnM
+ 45TSKKM8j8V/eGjnJHywluJ7LHIaEbMaEEdqb3f8Cjf/Jr9OZHGBkqT3XewPYFY=
+X-Google-Smtp-Source: AGHT+IEcnU85hpfpG09I5j1Zg/mGrURc/ShV6X7JE74sguCMNSijNb3zWz+iQAB5FtRveKBaepuBGA==
+X-Received: by 2002:a17:90a:d40e:b0:2d8:b043:9414 with SMTP id
+ 98e67ed59e1d1-2e77e7b1407mr4599208a91.18.1729791113839; 
+ Thu, 24 Oct 2024 10:31:53 -0700 (PDT)
+Received: from [192.168.100.49] ([45.176.88.171])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e5df4162ddsm4082128a91.0.2024.10.24.10.31.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Oct 2024 10:14:39 -0700 (PDT)
-Message-ID: <849abe8a-9fae-490f-8fef-b3623ae6408b@linaro.org>
-Date: Thu, 24 Oct 2024 10:14:38 -0700
+ Thu, 24 Oct 2024 10:31:53 -0700 (PDT)
+Message-ID: <c789363c-38aa-4754-8a2d-a75eb0bfdf76@linaro.org>
+Date: Thu, 24 Oct 2024 14:31:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/i386: fix hang when using slow path for
- ptw_setl
+Subject: Re: [PATCH] hw/s390x: Re-enable the pci-bridge device on s390x
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20241024130405.62134-1-thuth@redhat.com>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20241023222026.1430014-1-pierrick.bouvier@linaro.org>
- <20241023222026.1430014-2-pierrick.bouvier@linaro.org>
- <66320518-0270-4426-8daf-9be3ae7bfce7@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <66320518-0270-4426-8daf-9be3ae7bfce7@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241024130405.62134-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,65 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/24 09:25, Richard Henderson wrote:
-> On 10/23/24 23:20, Pierrick Bouvier wrote:
->> When instrumenting memory accesses for plugin, we force memory accesses
->> to use the slow path for mmu. [1]
->> This create a situation where we end up calling ptw_setl_slow.
->>
->> Since this function gets called during a cpu_exec, start_exclusive then
->> hangs. This exclusive section was introduced initially for security
->> reasons [2].
->>
->> I suspect this code path was never triggered, because ptw_setl_slow
->> would always be called transitively from cpu_exec, resulting in a hang.
->>
->> [1] https://gitlab.com/qemu-project/qemu/-/commit/6d03226b42247b68ab2f0b3663e0f624335a4055
->> [2] https://gitlab.com/qemu-project/qemu/-/issues/279
->>
->> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2566
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 24/10/24 10:04, Thomas Huth wrote:
+> Commit e779e5c05a ("hw/pci-bridge: Add a Kconfig switch for the
+> normal PCI bridge") added a config switch for the pci-bridge, so
+> that the device is not included in the s390x target anymore (since
+> the pci-bridge is not really useful on s390x).
 > 
-> Oh, wow.  I believe this will be fixed by
+> However, it seems like libvirt is still adding pci-bridge devices
+> automatically to the guests' XML definitions (when adding a PCI
+> device to a non-zero PCI bus), so these guests are now broken due
+> to the missing pci-bridge in the QEMU binary.
 > 
-> https://lore.kernel.org/qemu-devel/20241023033432.1353830-19-richard.henderson@linaro.org/
+> To avoid disruption of the users, let's re-enable the pci-bridge
+> device on s390x for the time being. We could maybe disable it later
+> again if libvirt does not add the pci-bridge device automatically
+> to the guests anymore in the future.
 > 
-> which is in a pending PR.
-> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/s390x/Kconfig | 1 +
+>   1 file changed, 1 insertion(+)
 
-It might the issue by not triggering the situation we observed.
-However, we still have a hidden dead code path where start_exclusive is 
-called from cpu_exec, not being related to the plugins.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> 
-> r~
-> 
-> 
->> ---
->>    target/i386/tcg/sysemu/excp_helper.c | 4 ++++
->>    1 file changed, 4 insertions(+)
->>
->> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
->> index 8fb05b1f531..f30102b5362 100644
->> --- a/target/i386/tcg/sysemu/excp_helper.c
->> +++ b/target/i386/tcg/sysemu/excp_helper.c
->> @@ -108,6 +108,9 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
->>    {
->>        uint32_t cmp;
->>    
->> +    /* We are in cpu_exec, and start_exclusive can't be called directly.*/
->> +    g_assert(current_cpu && current_cpu->running);
->> +    cpu_exec_end(current_cpu);
->>        /* Does x86 really perform a rmw cycle on mmio for ptw? */
->>        start_exclusive();
->>        cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
->> @@ -115,6 +118,7 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
->>            cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
->>        }
->>        end_exclusive();
->> +    cpu_exec_start(current_cpu);
->>        return cmp == old;
->>    }
->>    
-> 
+
 
