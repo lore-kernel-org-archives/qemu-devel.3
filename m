@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694ECCDDE6A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC92CF537D
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 09:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3ua2-0001DS-6k; Thu, 24 Oct 2024 05:56:34 -0400
+	id 1t3ua2-0001DO-7h; Thu, 24 Oct 2024 05:56:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uZl-000194-OF
+ id 1t3uZl-000193-Ly
  for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:18 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1t3uZi-0003oN-Au
+ id 1t3uZk-0003ok-5R
  for qemu-devel@nongnu.org; Thu, 24 Oct 2024 05:56:17 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a9a850270e2so111800266b.0
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 02:56:13 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5c96936065dso743619a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 02:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729763773; x=1730368573; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729763774; x=1730368574; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XK/zHX8qgXptgXry27/12QWgnPSEzecfyqvscRlng8I=;
- b=Uk8IoZjWBQqffroCcYl7dTuvjJc99N1C+USThumofJ7AUSSdA9ucF5RQIJ5GdpjPgH
- Z0xs5dwOu70SgUuaZF1fDmilPqaZO0qjHhWDJA03Bu+jCadso+QmVBsMdeZ4U37HHxI6
- UAA5DnNyY0UvArdqyj9xq07tXNtqWiGwbPbR39KvR3IDWXlHMoATeGnvPPs58o8DBwYs
- DYNR1//L5DkWW5/YTEkc4GUxj4Y0tRhfZo4Ez2vvbsJHAUvyIh2jm/HflBoiSsxV0UmD
- JzI4hbzaCwwS7mbU97hFazPaIipn4f5mXBvaKgwcnXddf4sG120GT1FPngXwu4P6k9ao
- B59g==
+ bh=71XaNHfUGhL3lLQ52efa8tYMyfFJrkhKl2IJh8FAjpc=;
+ b=D0GFp8oOG8h01qoSTimBU4G8oXqDBKvf1KOU3guNO4AlNV5XMqiGs7ZFpmO8WrO00g
+ wtIOGDMHgAvfzveFvRd+B6phzs4Bv9XqyZJ+6ebKmS2EB1hqmiJHhI4Mff71nNu2xP0+
+ Mj/c79WaztfLx8wCND5EeFce+yKhH0w2xUB4jmv4JaF6xrSm9SvlI3iImKP0CwSXpp8b
+ ovs8fsNm53lQ5pBg+shPt96m+gaqzPDgxXlFkYc36Dm9rkG4zbIdC+NPKUOrGWtMIqQs
+ ABvkWzQ6Y/Rx20O4IjhC1ptFI8ttupK09MJA/P0/czTFUbFE4jJ0O83Ckj40SNxyxE7H
+ FQKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729763773; x=1730368573;
+ d=1e100.net; s=20230601; t=1729763774; x=1730368574;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XK/zHX8qgXptgXry27/12QWgnPSEzecfyqvscRlng8I=;
- b=nJLr/iwKVI3jNtQzv7DFov7KCOGeUXX0mYGedo+O8wWOvmG3x6WNgHkglyusoUTCTx
- Yhd4D+FeYXZ52q78rw75pYcKssmVTYDrsRcs4vr+9bwchi+xJQCDYhvXFJScc+sCp44c
- dqYgxiUnwF3ABBOyBVZD2iLsWaoexAbJuxd7lHq0UCoN6WH6hZiMcnynEY8M4hbxYDJ4
- 9mgN3D6Giz0yBiy6WzIbs6l6OwCTLQQMrH4NBZlruwsTSG4LKHE3bNGf7+1jZSoLqPKF
- hOcdvftcEMH5jsdiE9jVBAc/hcDSdzCLWt0WtxUp3RCty+yXoOFBw6tKGrj1pa7Dojki
- D6+A==
-X-Gm-Message-State: AOJu0YyyjZ9l5aHWDhLBtX9c2l0gvZLudN1ZFxsUIMICWWEEJlTg3Kx5
- KnKoKtf0AZ4z1E7wabjAs8e+2sXxIXIHeH6w06LNBwqdAVcdu2GPGmQPqqNANLA=
-X-Google-Smtp-Source: AGHT+IEOyQePChGWLvPydUo9luKyniLHTcp118GzZqLsR/2s04p0bWt/3Zyp/9H6Df53O9jmGDr9mg==
-X-Received: by 2002:a17:907:9405:b0:a99:ee42:1f38 with SMTP id
- a640c23a62f3a-a9abf8aefbdmr501541866b.31.1729763772859; 
- Thu, 24 Oct 2024 02:56:12 -0700 (PDT)
+ bh=71XaNHfUGhL3lLQ52efa8tYMyfFJrkhKl2IJh8FAjpc=;
+ b=LSS3hYVepsesocFlumQPSoKThtXtqD1XvGCWgyCu/8LZcIt9MEy5smXRY5nmnjiH5r
+ Wz7JAYXInJh7rczmAtmGYCFBsidx6uD/0bYm6MdbK33roeNVLYQjn1wLunLPjC4MPaLI
+ uj147N3xZuMCF6Kl+XZ7pBKutshfgru0waa7v4kp/fEtGQSxUFsfYqZV/RjngWBbChQX
+ /9VjQEXn2gUMgAxrxUCYd1OB6YN7z8KP9CVoxLTGsB29ct4c33kY7ZCLb3HUJBsd40Sm
+ Yej7BRv7ihq5IqWzWtJuqlbGtlzSkeR7G2SmjCC+lmuaSX2a1TYrDOZRdzaYmq9CyOg4
+ Irtw==
+X-Gm-Message-State: AOJu0YwVXCpWHP5VtWBHJknAUHDg6bnC7d+Dbt/DLEjZNswQ2HvKZhti
+ DgYY+BPoUG3jRDEo9qE34Wn40XgZOi/9/PpkWPXXzp/8Kkz90/8wJ0uDLUeO8DNChW3+ZPPhBnz
+ D
+X-Google-Smtp-Source: AGHT+IE/wBZQD87Dey/aX/z0U9zV0xenAh70yHxCbHrpfIqTMaF32FGJLkaPo6a5EdiJIUm4xcQ60A==
+X-Received: by 2002:a05:6402:84a:b0:5c9:3ff:2734 with SMTP id
+ 4fb4d7f45d1cf-5cb8ac86aa0mr3955509a12.12.1729763774311; 
+ Thu, 24 Oct 2024 02:56:14 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912d623fsm594030066b.9.2024.10.24.02.56.06
+ 4fb4d7f45d1cf-5cb66a6a45dsm5735432a12.42.2024.10.24.02.56.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 02:56:08 -0700 (PDT)
+ Thu, 24 Oct 2024 02:56:12 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CC4E75F9D0;
- Thu, 24 Oct 2024 10:56:04 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 3E07B5FBDC;
+ Thu, 24 Oct 2024 10:56:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PULL 09/17] dockerfiles: fix default targets for
- debian-loongarch-cross
-Date: Thu, 24 Oct 2024 10:55:55 +0100
-Message-Id: <20241024095603.1813285-10-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 14/17] tests/tcg/aarch64: Use raw strings for regexes in
+ test-mte.py
+Date: Thu, 24 Oct 2024 10:56:00 +0100
+Message-Id: <20241024095603.1813285-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241024095603.1813285-1-alex.bennee@linaro.org>
 References: <20241024095603.1813285-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-fix system target name, and remove --disable-system (which deactivates
-system target).
+Use Python's raw string notation instead of string literals for regex so
+it's not necessary to double backslashes when regex special forms are
+used. Raw notation is preferred for regex and easier to read.
 
-Found using: make docker-test-build@debian-loongarch-cross V=1
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20241020213759.2168248-1-pierrick.bouvier@linaro.org>
+Message-Id: <20241015140806.385449-1-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241023113406.1284676-10-alex.bennee@linaro.org>
+Message-Id: <20241023113406.1284676-15-alex.bennee@linaro.org>
 
-diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-index 79eab5621e..538ab53490 100644
---- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
-+++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -43,8 +43,8 @@ RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.
- ENV PATH $PATH:/opt/cross-tools/bin
- ENV LD_LIBRARY_PATH /opt/cross-tools/lib:/opt/cross-tools/loongarch64-unknown-linux-gnu/lib:$LD_LIBRARY_PATH
+diff --git a/tests/tcg/aarch64/gdbstub/test-mte.py b/tests/tcg/aarch64/gdbstub/test-mte.py
+index a4cae6caa0..9ad98e7a54 100644
+--- a/tests/tcg/aarch64/gdbstub/test-mte.py
++++ b/tests/tcg/aarch64/gdbstub/test-mte.py
+@@ -23,8 +23,8 @@
+ from test_gdbstub import arg_parser, main, report
  
--ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
--ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch-softmmu
-+ENV QEMU_CONFIGURE_OPTS --disable-docs --disable-tools
-+ENV DEF_TARGET_LIST loongarch64-linux-user,loongarch64-softmmu
- ENV MAKE /usr/bin/make
  
- # As a final step configure the user (if env is defined)
+-PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \\(0x[0-9a-f]+\\)."
+-PATTERN_1 = ".*(0x[0-9a-f]+)"
++PATTERN_0 = r"Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\)."
++PATTERN_1 = r".*(0x[0-9a-f]+)"
+ 
+ 
+ def run_test():
 -- 
 2.39.5
 
