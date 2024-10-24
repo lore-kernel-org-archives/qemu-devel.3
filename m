@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D98D0BB63
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B03D0BB5E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 06:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3rRa-0002EO-8h; Thu, 24 Oct 2024 02:35:38 -0400
+	id 1t3rRm-0002Jh-Ea; Thu, 24 Oct 2024 02:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRY-0002DX-0x
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRk-0002Is-SS
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRW-0003Pi-9H
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t3rRi-0003Ru-Oj
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 02:35:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729751733;
+ s=mimecast20190719; t=1729751746;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UIIYfufyTERSoZd9MuCU42vmPHNhXvgS1c4cRAcBpFE=;
- b=fPMI9uR4NwPS+kh/1wuXXZEmDjSe4fl+y0dy//Z5wrdabTiZ+uFfNzyFkT+cJpSnddC6z0
- LXU8hUkhJQK5a1SHwSaS2ugeo7xRsu5TEfewyPsqVJ16IEvE1qFNPuIGN6XeYUMtkc/sHE
- x9Cu9Azt6ry3D2SiUntJ+a0HkFW8vWM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ug8pvu8j9ZZmRgar7cJxXuiLWHOWL3pPlF+gILxlOxo=;
+ b=eBuPLCbEeed9MzwIknGnIcJhnYwmtgD8mApW1M3GKmV044djS1sflhaZP7a7gDvzds6Lvh
+ i2FaHZ+t3fbzGwJcX/JNQXPjNPJN9kUjdf4jsFfvFyaBcFQOxstl13btBtyl0jazeVDlgS
+ R/2h6tN6O2Mbk2HH80jNmbrrpDgZy0E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-sD6tjFqnO7mxwF133ISZtQ-1; Thu,
- 24 Oct 2024 02:35:29 -0400
-X-MC-Unique: sD6tjFqnO7mxwF133ISZtQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-ruHVheMaNLegHnQShwuQSw-1; Thu,
+ 24 Oct 2024 02:35:40 -0400
+X-MC-Unique: ruHVheMaNLegHnQShwuQSw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4578B1955D94; Thu, 24 Oct 2024 06:35:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 124E71955F3E; Thu, 24 Oct 2024 06:35:39 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6CAAF1956056; Thu, 24 Oct 2024 06:35:25 +0000 (UTC)
+ id 74AFC1956056; Thu, 24 Oct 2024 06:35:36 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 04/17] hw/gpio/aspeed: Fix clear incorrect interrupt status for
- GPIO index mode
-Date: Thu, 24 Oct 2024 08:34:54 +0200
-Message-ID: <20241024063507.1585765-5-clg@redhat.com>
+Cc: Alejandro Zeise <alejandro.zeise@seagate.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>
+Subject: [PULL 09/17] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+Date: Thu, 24 Oct 2024 08:34:59 +0200
+Message-ID: <20241024063507.1585765-10-clg@redhat.com>
 In-Reply-To: <20241024063507.1585765-1-clg@redhat.com>
 References: <20241024063507.1585765-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -83,107 +85,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-The interrupt status field is W1C, where a set bit on read indicates an
-interrupt is pending. If the bit extracted from data is set it should
-clear the corresponding bit in reg_value. However, if the extracted
-bit is clear then the value of the corresponding bit in reg_value
-should be unchanged.
+Make the Aspeed HACE module use the new qcrypto accumulative hashing functions
+when in scatter-gather accumulative mode. A hash context will maintain a
+"running-hash" as each scatter-gather chunk is received.
 
-SHARED_FIELD_EX32() extracts the interrupt status bit from the write
-(data). reg_value is set to the set's interrupt status, which means
-that for any pin with an interrupt pending, the corresponding bit is
-set. The deposit32() call updates the bit at pin_idx in the
-reg_value, using the value extracted from the write (data).
+Previously each scatter-gather "chunk" was cached
+so the hash could be computed once the final chunk was received.
+However, the cache was a shallow copy, so once the guest overwrote the
+memory provided to HACE the final hash would not be correct.
 
-The result is that if multiple interrupt status bits
-were pending and the write was acknowledging specific one bit,
-then the all interrupt status bits will be cleared.
-However, it is index mode and should only clear the corresponding bit.
+Possibly related to: https://gitlab.com/qemu-project/qemu/-/issues/1121
+Buglink: https://github.com/openbmc/qemu/issues/36
 
-For example, say we have an interrupt pending for GPIOA0, where the
-following statements are true:
-
-   set->int_status == 0b01
-   s->pending == 1
-
-Before it is acknowledged, an interrupt becomes pending for GPIOA1:
-
-   set->int_status == 0b11
-   s->pending == 2
-
-A write is issued to acknowledge the interrupt for GPIOA0. This causes
-the following sequence:
-
-   reg_value == 0b11
-   pending == 2
-   s->pending == 0
-   set->int_status == 0b00
-
-It should only clear bit 0 in index mode and the correct result
-should be as following.
-
-   set->int_status == 0b11
-   s->pending == 2
-
-   pending == 1
-   s->pending == 1
-   set->int_status == 0b10
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Suggested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+[ clg: - Checkpatch fixes
+       - Reworked qcrypto_hash*() error reports in do_hash_operation() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 ---
- hw/gpio/aspeed_gpio.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ include/hw/misc/aspeed_hace.h |   4 ++
+ hw/misc/aspeed_hace.c         | 104 +++++++++++++++++++---------------
+ 2 files changed, 63 insertions(+), 45 deletions(-)
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index 8725606aecae..16c18ea2f743 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -641,7 +641,7 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-     uint32_t pin_idx = reg_idx_number % ASPEED_GPIOS_PER_SET;
-     uint32_t group_idx = pin_idx / GPIOS_PER_GROUP;
-     uint32_t reg_value = 0;
--    uint32_t cleared;
-+    uint32_t pending = 0;
+diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+index ecb1b67de816..4af99191955a 100644
+--- a/include/hw/misc/aspeed_hace.h
++++ b/include/hw/misc/aspeed_hace.h
+@@ -1,6 +1,7 @@
+ /*
+  * ASPEED Hash and Crypto Engine
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (C) 2021 IBM Corp.
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+@@ -10,6 +11,7 @@
+ #define ASPEED_HACE_H
  
-     set = &s->sets[set_idx];
-     props = &agc->props[set_idx];
-@@ -703,16 +703,23 @@ static void aspeed_gpio_write_index_mode(void *opaque, hwaddr offset,
-                               FIELD_EX32(data, GPIO_INDEX_REG, INT_SENS_2));
-         set->int_sens_2 = update_value_control_source(set, set->int_sens_2,
-                                                       reg_value);
--        /* set interrupt status */
--        reg_value = set->int_status;
--        reg_value = deposit32(reg_value, pin_idx, 1,
--                              FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS));
--        cleared = ctpop32(reg_value & set->int_status);
--        if (s->pending && cleared) {
--            assert(s->pending >= cleared);
--            s->pending -= cleared;
-+        /* interrupt status */
-+        if (FIELD_EX32(data, GPIO_INDEX_REG, INT_STATUS)) {
-+            /* pending is either 1 or 0 for a 1-bit field */
-+            pending = extract32(set->int_status, pin_idx, 1);
+ #include "hw/sysbus.h"
++#include "crypto/hash.h"
+ 
+ #define TYPE_ASPEED_HACE "aspeed.hace"
+ #define TYPE_ASPEED_AST2400_HACE TYPE_ASPEED_HACE "-ast2400"
+@@ -35,6 +37,8 @@ struct AspeedHACEState {
+ 
+     MemoryRegion *dram_mr;
+     AddressSpace dram_as;
 +
-+            assert(s->pending >= pending);
++    QCryptoHash *hash_ctx;
+ };
+ 
+ 
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index b6f43f65b29a..bc1d66ad8064 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -1,6 +1,7 @@
+ /*
+  * ASPEED Hash and Crypto Engine
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (C) 2021 IBM Corp.
+  *
+  * Joel Stanley <joel@jms.id.au>
+@@ -151,49 +152,28 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+     return iov_count;
+ }
+ 
+-/**
+- * Generate iov for accumulative mode.
+- *
+- * @param s             aspeed hace state object
+- * @param iov           iov of the current request
+- * @param id            index of the current iov
+- * @param req_len       length of the current request
+- *
+- * @return count of iov
+- */
+-static int gen_acc_mode_iov(AspeedHACEState *s, struct iovec *iov, int id,
+-                            hwaddr *req_len)
+-{
+-    uint32_t pad_offset;
+-    uint32_t total_msg_len;
+-    s->total_req_len += *req_len;
+-
+-    if (has_padding(s, &iov[id], *req_len, &total_msg_len, &pad_offset)) {
+-        if (s->iov_count) {
+-            return reconstruct_iov(s, iov, id, &pad_offset);
+-        }
+-
+-        *req_len -= s->total_req_len - total_msg_len;
+-        s->total_req_len = 0;
+-        iov[id].iov_len = *req_len;
+-    } else {
+-        s->iov_cache[s->iov_count].iov_base = iov->iov_base;
+-        s->iov_cache[s->iov_count].iov_len = *req_len;
+-        ++s->iov_count;
+-    }
+-
+-    return id + 1;
+-}
+-
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
+ {
+     struct iovec iov[ASPEED_HACE_MAX_SG];
++    uint32_t total_msg_len;
++    uint32_t pad_offset;
+     g_autofree uint8_t *digest_buf = NULL;
+     size_t digest_len = 0;
+-    int niov = 0;
++    bool sg_acc_mode_final_request = false;
+     int i;
+     void *haddr;
++    Error *local_err = NULL;
 +
-+            /* No change to s->pending if pending is 0 */
-+            s->pending -= pending;
++    if (acc_mode && s->hash_ctx == NULL) {
++        s->hash_ctx = qcrypto_hash_new(algo, &local_err);
++        if (s->hash_ctx == NULL) {
++            qemu_log_mask(LOG_GUEST_ERROR, "qcrypto hash failed : %s",
++                          error_get_pretty(local_err));
++            error_free(local_err);
++            return;
++        }
++    }
+ 
+     if (sg_mode) {
+         uint32_t len = 0;
+@@ -226,8 +206,16 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             }
+             iov[i].iov_base = haddr;
+             if (acc_mode) {
+-                niov = gen_acc_mode_iov(s, iov, i, &plen);
+-
++                s->total_req_len += plen;
 +
-+            /*
-+             * The write acknowledged the interrupt regardless of whether it
-+             * was pending or not. The post-condition is that it mustn't be
-+             * pending. Unconditionally clear the status bit.
-+             */
-+            set->int_status = deposit32(set->int_status, pin_idx, 1, 0);
++                if (has_padding(s, &iov[i], plen, &total_msg_len,
++                                &pad_offset)) {
++                    /* Padding being present indicates the final request */
++                    sg_acc_mode_final_request = true;
++                    iov[i].iov_len = pad_offset;
++                } else {
++                    iov[i].iov_len = plen;
++                }
+             } else {
+                 iov[i].iov_len = plen;
+             }
+@@ -252,21 +240,42 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+              * required to check whether cache is empty. If no, we should
+              * combine cached iov and the current iov.
+              */
+-            uint32_t total_msg_len;
+-            uint32_t pad_offset;
+             s->total_req_len += len;
+             if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
+-                niov = reconstruct_iov(s, iov, 0, &pad_offset);
++                i = reconstruct_iov(s, iov, 0, &pad_offset);
+             }
          }
--        set->int_status &= ~reg_value;
-         break;
-     case gpio_reg_idx_debounce:
-         reg_value = set->debounce_1;
+     }
+ 
+-    if (niov) {
+-        i = niov;
+-    }
++    if (acc_mode) {
++        if (qcrypto_hash_updatev(s->hash_ctx, iov, i, &local_err) < 0) {
++            qemu_log_mask(LOG_GUEST_ERROR, "qcrypto hash update failed : %s",
++                          error_get_pretty(local_err));
++            error_free(local_err);
++            return;
++        }
++
++        if (sg_acc_mode_final_request) {
++            if (qcrypto_hash_finalize_bytes(s->hash_ctx, &digest_buf,
++                                            &digest_len, &local_err)) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "qcrypto hash finalize failed : %s",
++                              error_get_pretty(local_err));
++                error_free(local_err);
++                local_err = NULL;
++            }
+ 
+-    if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf, &digest_len, NULL) < 0) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
++            qcrypto_hash_free(s->hash_ctx);
++
++            s->hash_ctx = NULL;
++            s->iov_count = 0;
++            s->total_req_len = 0;
++        }
++    } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf,
++                                   &digest_len, &local_err) < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "qcrypto hash bytesv failed : %s",
++                      error_get_pretty(local_err));
++        error_free(local_err);
+         return;
+     }
+ 
+@@ -397,6 +406,11 @@ static void aspeed_hace_reset(DeviceState *dev)
+ {
+     struct AspeedHACEState *s = ASPEED_HACE(dev);
+ 
++    if (s->hash_ctx != NULL) {
++        qcrypto_hash_free(s->hash_ctx);
++        s->hash_ctx = NULL;
++    }
++
+     memset(s->regs, 0, sizeof(s->regs));
+     s->iov_count = 0;
+     s->total_req_len = 0;
 -- 
 2.47.0
 
