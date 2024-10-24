@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC92CE8E9A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 18:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E780CE8E6A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 18:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t427p-0006lI-Bq; Thu, 24 Oct 2024 13:59:57 -0400
+	id 1t42To-00011v-Pr; Thu, 24 Oct 2024 14:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t427n-0006kx-Nh
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:59:55 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t42Tn-00011m-QJ
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 14:22:40 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t427m-0003Kw-3W
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:59:55 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7ea8de14848so674651a12.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:59:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t42Tm-0006A1-5O
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 14:22:39 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7ea8de14848so688043a12.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 11:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729792792; x=1730397592; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729794155; x=1730398955; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tIqDcNbYTVZWbfAuK5MioxEwio+QdY/1Sd/0q+D3CrI=;
- b=wkyShw3pN76cfjQddU7Q1p9Lg+ciBs3N1JARU6KJAWDdr3k4Cd40PDdWIENYFB9tXE
- VBF2W2uxkRxejKXecL3H0zk87KnhGcJM+K95wz0Llf3OCrUjc3zZNQtY1VXAWz/c0NS1
- Dx9Hp5Xr9G5JkBzg9xvz5KW2FzgQ2pSs68JQXej7I0mOKTLAXsHmAhXKYS1bN8C3tqZu
- 5pBcxMGseaZvvad0RtfKVKcXrSTsE4shJKIolCqeMfIuvyeBQgABK1NWKA7xX7ZWr2FR
- w7kICtd2pPrMG8vxuue2i3zOXf2KP8nKJ7SauSyiT7sE7o6zOFqB42VclV/G3SaFzJWp
- jk/g==
+ bh=vFd5ebvDG/RNpGNuI9HDNFOyjX2CUQerktNggMQGNNI=;
+ b=ntJvwwcQIjxQ3EFHgQ49g4BlRAjMrwLW8MvDGpsTQu5JABXkVQSA/BOwt5CbofgCac
+ WvQaR0N+l4BegMETf94lsW5s+uFfdJ4uaMbbdFedm3d2x37sxnh0aGS7aDzYWMdE3x8e
+ QCqoiBarWh3J/R7tI6pFLSPXdInwS+CWlpkHI3sYjZAUIjSHavFFFQwwQW4d+/yHzLJp
+ Wphroi3AIb4QNh8fxKlugtMPBPQQk75b1TWlB1GixYGfzG3adk4YrfaWqcRa/6+iP5JN
+ F9O9kJS7KLMt3KqldBcGeBt3yydVnXHLje5HbTpY6iTlCjdCDarKEvwX3pW8HO21oeP9
+ q+Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729792792; x=1730397592;
+ d=1e100.net; s=20230601; t=1729794155; x=1730398955;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tIqDcNbYTVZWbfAuK5MioxEwio+QdY/1Sd/0q+D3CrI=;
- b=pIpQ0N4RHNoIc/QqVGM1g17KAQV4Aq+m7cPZZAB3kG9J4mrSjiZyTyFwqhj3oyEFt4
- FOly8pwX0n0oMCPxsNLArIWRy7h4H8lJq7sfL8FA9GbgbgKQTGzxlPPA9+9xZ/h5WXUS
- gpUf4iJh51pHW0KLynqI9x5ZfdwT9RRVTsOBdCLHfXt9um8QQs680ys/FoTJdgu8ENqU
- dV/v9U5eM94MFOwGyoPrkh32Uo8fsH3AzuOPFEB7Hot2A3BMMFUX0L81t6uEHegf71H6
- AmyeIFjAtmjYrYU+tRZ76ql307IXkBssS1erqnPr0Mwn8fVlsOn0xNyeORCJjwweLzy9
- s6Kw==
+ bh=vFd5ebvDG/RNpGNuI9HDNFOyjX2CUQerktNggMQGNNI=;
+ b=mQ5VOzxv79YjWTBsYOxvI5kfrhLDdc3ZTjPRojEPU6RLfCnZ6tw/xWYP1t/YYaKh8v
+ nHr0w3f7E6np3zXw7j/aLjFPv/+SEYrw34v284k8MH++sMAY0+nvvtv+cENO5ophgGiM
+ +FAPkCpkDw56FckCUNRafhSxSEZjNwduCqP+SYr4eaTB28L3DDxGjW+vhza29a+E+cIP
+ LObZr6nVMwFIr255KJ1l6gwPPSpe/6UeYokIvvqHcazqvYfmJeDz1p4QHr2giHOqpVDQ
+ tbe4EFTA1ZP22cDIsbqojUdFd/yOrA8FNwjKoMN7TuJhWTMkhjeVHMPuIC+D/uDLTrDZ
+ u1QA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+wDIiJZqUcBXFOuAjY4SupxOpRaiqwimf5IUZSI9/vZyQXttMQ1MGvKZHIaGGHZYp88BIwsw/Zd22@nongnu.org
-X-Gm-Message-State: AOJu0YwrGNC3vumq+MfSXxiM4Qyi7xT6f8P/azx9mUohKM1DzWAH0xbn
- 8+Z+oSpgAMjKcxBO3wYEIkIGEFgiyTvJ2QnrsBz2Zs6zBwZvjVwoo6OORr18gDm3vKqmnGP9vcW
- 5
-X-Google-Smtp-Source: AGHT+IEwY08smMeD+hGJlqAjfyHRepsVOr5YNqZFkShf6Z1eN9KRiXykf65EvdGyRzZ0QQ5YSfymhQ==
-X-Received: by 2002:a05:6a20:d795:b0:1d9:69cd:ae22 with SMTP id
- adf61e73a8af0-1d978b3de45mr8419283637.30.1729792792292; 
- Thu, 24 Oct 2024 10:59:52 -0700 (PDT)
+ AJvYcCXYiaYjhZKRH6oS4O0nct8yxOob7BpRGRszk3HE/vA0qWGi31IzDMzDU1C5aqjAk9GJulkNsI1HggS2@nongnu.org
+X-Gm-Message-State: AOJu0Yzm616snKDmx7hC+CsVj+G6XBZ6jUxFPiPVuq83kyByTC5G9Zgn
+ ZtjC3jUJeMYOzGjr5yXgpQY+Zka1evP3myF3vZYvdnDJm5QqdWI1GXxrejOKbKI=
+X-Google-Smtp-Source: AGHT+IGcu6Nvoibi6uYuJ0pWpdr3nGLxku2JqH58IHICZVFyYXpliul4Sh54rOO3IxD3f3gtDYzSDg==
+X-Received: by 2002:a05:6a20:751a:b0:1d9:96ed:dc81 with SMTP id
+ adf61e73a8af0-1d996edde03mr647748637.26.1729794154844; 
+ Thu, 24 Oct 2024 11:22:34 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-71ec1312d6bsm8226672b3a.29.2024.10.24.10.59.50
+ 41be03b00d2f7-7eaeab48f46sm8961613a12.41.2024.10.24.11.22.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Oct 2024 10:59:51 -0700 (PDT)
-Message-ID: <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
-Date: Thu, 24 Oct 2024 14:59:48 -0300
+ Thu, 24 Oct 2024 11:22:34 -0700 (PDT)
+Message-ID: <81879c74-f2e6-4672-85d0-b72bd4d0620e@linaro.org>
+Date: Thu, 24 Oct 2024 15:22:30 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
-To: Guenter Roeck <linux@roeck-us.net>, Jan Luebbe <jlu@pengutronix.de>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
- <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20241017163247.711244-1-peter.maydell@linaro.org>
- <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
- <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
- <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
- <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
- <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
- <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+Subject: Re: [PATCH v2 5/8] Add micromips to P5600
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ "arikalo@gmail.com" <arikalo@gmail.com>
+Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <AM9PR09MB4851B248008D8045D466EA0B84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
+In-Reply-To: <AM9PR09MB4851B248008D8045D466EA0B84402@AM9PR09MB4851.eurprd09.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,49 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Jan.
+Hi Aleksandar,
 
-On 22/10/24 12:04, Guenter Roeck wrote:
-> On 10/21/24 21:09, Philippe Mathieu-Daudé wrote:
->> Hi Guenter,
->>
->> On 21/10/24 11:02, Guenter Roeck wrote:
->>
->>> Unrelated to this, but I found that the sd emulation in 9.1 is also 
->>> broken
->>> for loongarch and sifive_u, and partially for ast2600-evb (it has two
->>> controllers, with one of them no longer working). That is too much 
->>> for me
->>> to track down quickly, so this is just a heads-up.
->>
->> Please Cc me with reproducer or assign Gitlab issues to me,
->> I'll have a look.
->>
+On 18/10/24 10:20, Aleksandar Rakic wrote:
+> Add micromips to P5600.
 > 
-> If it wasn't funny, it would be sad.
+> Cherry-picked d7bf2c2f7f2e03b55c6e9c57eec5c3e6207005a0
+> from https://github.com/MIPS/gnutools-qemu
 > 
-> hw/sd/sd.c:sd_reset() calls sd_bootpart_offset() t determine the boot 
-> partition
-> offset. That function needs to have sd->ext_csd[EXT_CSD_PART_CONFIG] 
-> configured.
-> However, the value is only set later in sd_reset() with the call to 
-> sc->set_csd().
-> One of the parameters of that function is the previously calculated size.
-> 
-> So in other words there is a circular dependency. The call to 
-> sd_bootpart_offset()
-> returns 0 because sd->ext_csd[EXT_CSD_PART_CONFIG] isn't set, then
-> the call to sc->set_csd() sets it ... too late. Subsequent calls to
-> sd_bootpart_offset() will then return the expected offset.
-> 
-> I have no idea how this is supposed to work, and I don't think it works
-> as implemented. I'll revert commit e32ac563b83 in my local copy of qemu.
+> Signed-off-by: Faraz Shahbazker <fshahbazker@wavecomp.com>
+> Signed-off-by: Matthew Fortune <matthew.fortune@imgtec.com>
+> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+> ---
+>   target/mips/cpu-defs.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Jan, can you have a look at this bug report please? Otherwise I'll
-have a look during soft freeze.
+Please Cc maintainers:
 
-Regards,
+$ ./scripts/get_maintainer.pl -f target/mips/cpu-defs.c.inc
+"Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:MIPS TCG CPUs)
+Aurelien Jarno <aurelien@aurel32.net> (reviewer:MIPS TCG CPUs)
+Jiaxun Yang <jiaxun.yang@flygoat.com> (reviewer:MIPS TCG CPUs)
+Aleksandar Rikalo <arikalo@gmail.com> (reviewer:MIPS TCG CPUs)
 
-Phil.
+> diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+> index fbf787d8ce..9428ece220 100644
+> --- a/target/mips/cpu-defs.c.inc
+> +++ b/target/mips/cpu-defs.c.inc
+> @@ -462,7 +462,7 @@ const mips_def_t mips_defs[] =
+>           .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
+>           .SEGBITS = 32,
+>           .PABITS = 40,
+> -        .insn_flags = CPU_MIPS32R5,
+> +        .insn_flags = CPU_MIPS32R5 | ASE_MICROMIPS,
+
+This doesn't make any sense, if the core has microMIPS then bits 14-15
+of CP0_Config3 can't be zeroes (meaning "Only MIPS32 is implemented,
+microMIPS not implemented").
+
+Besides, looking at "MIPS32® P5600 Multiprocessing System Software
+User’s Manual, Revision 01.60" -> 'Table 2.6 Field Descriptions for
+Config3 Register', CP0_Config3_ISA is 0b00, described as:
+
+   Indicates the instruction set availability.
+   This bit is always 0 to indicate MIPS32.
+
+What are you trying to achieve, which tests are you running?
+
+>           .mmu_type = MMU_TYPE_R4000,
+>       },
+>       {
 
 
