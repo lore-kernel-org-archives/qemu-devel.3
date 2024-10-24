@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB853D0BB70
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE16D0BB70
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3tCm-0004JK-7G; Thu, 24 Oct 2024 04:28:28 -0400
+	id 1t3tFp-0006uT-6H; Thu, 24 Oct 2024 04:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tCi-0004H6-VM
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:28:25 -0400
+ id 1t3tFn-0006uI-8R
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:31:35 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tCh-0000Ud-H0
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:28:24 -0400
+ id 1t3tFl-0000ww-Hk
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:31:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=yFSS7L4qg1XDGGjFiLSrLBSBmCbxochLDhENmKuzUmg=; b=WQQvGJQqd1YC0Q8L5xAYbPHFDw
- o+4rOIGc2IX59vJRVrRVUSzBBsuCZjQHE+/Veeef+YdQYirjlwVTWY750s2LF2Xoae/5b04RH1sYa
- GMJhihN0X4EYi48TC+tmAOWkuV2DGxoQgolG17ZnYQXmVuNhAXTcGSQu0+U4bWQKAEVWfS1MHJZNL
- 7hgjbZzLe07fkcYo1FfRf0OjPkqgKPyc5zTjSSJlwAUJblSjFVhFhbQvDmN5eTnaJpkbReQECPOJE
- A+RDE4pHE3tiIHHFfwnGMKi/iL/EogDxiRvatkPQC2Ma9BpNQ95/8GfQxSNwLH2izWFPabffRibp0
- Gw3kGF9+FG7/NMdYB6BPAChvJvCCgb8gwZ3yFwYQINZsKepvP4iLTTGvAYKJVSkh+gGsvyy9gMhS+
- KKmnsMf2U+FtlYMmJhq/uhceYAnhOOjf/WiHG6IIt8QgOWy6r5JzqYMixrmm8ygxdetaKxK/6mgKE
- gBbqvrzZoosA2R0uaGo3p5iP3U6l6Ve/KM/q7eD766LmKo2yFEMyidDKl+85VWwkpPgZBtrnLBPSr
- TunW2nwe6H5G3nA0kdNJt5uVeYM9/mbo9lrbbgqkWA67vfwyV+r97VmBSjMOWmk1qmBM4UdDGl+t9
- V6g6ExOKU6dTNp5YalzVeE0vWscjhtX2fNrIrqqUY=;
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=v+gEgdLNsBa4rPHUkjZop5D5rcFOSR0eid/5SoIMaOQ=; b=wntGWNyp3Aru1LcuGrgWWZPUVL
+ 2s4HDYBc6z8Gp/27YutBzcWfufxwXJKj6+S2NYg1DO7DDzpJCYFzqXX7qiQpUf7kNp1CrXRVAgy0i
+ tYBKwuxy/FoQRKRO3L1kES6F8MTw+fksJsQ3IPYmrHgUvwYBe8u0YuYebzMoJJgSjd/9LdwqMJ5mY
+ RJDfO681NeUxl+jBFoLp/vdCy4z5+PkfwtssGYH/hVxgvoTi+ksEydmvfupGHzG0ZYrSCihv1jor5
+ QGgL01F2sDIJLWujgBB9uE7cynQd0ccOtv8DYWuDd3Dn0Y94E3aBMfBuYdHDemTl7VQ1Gyta10x3y
+ mKPRR+MlzQGPYITeyk4omyiydLmzx7tD4pwdUVcWRCg36lJR8hwS1BlAQDGckBEnrQbLe5hJFxMfb
+ arYxGnGRJA7g4z1q7WUhUUCUjvE2Y4X1f+jCO4LoLqvOVDpEviLxMQCs+cNSFAaXg3DIstaiJdLWR
+ DfLSVV74aBeakFk32I96RhtYvTgBhkyu7dwOpHxBkhinbVialo/3fY8CGGjPalIKJYMvsjw32BmBx
+ +ZWLHGtAly4FSH4twn+XOv71kYOQnfnAiTVQ/UC4zuENesGKoaxPCA37A0PRZHD8WhWPOnvgd65Tf
+ +wiErl97QyMkY+9RCKhScOrkpd23XGmZbi6hV1OlQ=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tCI-000CUp-9t; Thu, 24 Oct 2024 09:28:02 +0100
-Message-ID: <bbac88ac-42aa-4bd0-9ba8-65221db36bf9@ilande.co.uk>
-Date: Thu, 24 Oct 2024 09:28:10 +0100
+ id 1t3tFP-000CXR-Vs; Thu, 24 Oct 2024 09:31:16 +0100
+Message-ID: <840e986f-f06f-405b-a008-e4de27d415a5@ilande.co.uk>
+Date: Thu, 24 Oct 2024 09:31:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ huth@tuxfamily.org, qemu-devel@nongnu.org
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-27-mark.cave-ayland@ilande.co.uk>
- <c604eddc-f8d8-88b1-8130-291433e3ac94@eik.bme.hu>
+ <20241023085852.1061031-4-mark.cave-ayland@ilande.co.uk>
+ <28ab5799-d096-4000-8806-0a30eeb10ba6@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,12 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <c604eddc-f8d8-88b1-8130-291433e3ac94@eik.bme.hu>
+In-Reply-To: <28ab5799-d096-4000-8806-0a30eeb10ba6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 26/36] next-cube: don't use rtc phase value of -1
+Subject: Re: [PATCH 03/36] next-cube: remove overlap between next.dma and
+ next.mmio memory regions
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -105,52 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/2024 11:37, BALATON Zoltan wrote:
+On 24/10/2024 03:42, Philippe Mathieu-Daudé wrote:
 
-> On Wed, 23 Oct 2024, Mark Cave-Ayland wrote:
->> The rtc phase value of -1 is directly equivalent to using a phase value of 0 so
->> simplify the logic to use an initial rtc phase of 0.
+> On 23/10/24 05:58, Mark Cave-Ayland wrote:
+>> Change the start of the next.mmio memory region so that it follows on directly
+>> after the next.dma memory region, adjusting the address offsets in
+>> next_mmio_read() and next_mmio_write() accordingly.
 >>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 >> ---
->> hw/m68k/next-cube.c | 5 +----
->> 1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index 43b2c775c0..e4d0083eb0 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -265,9 +265,6 @@ static void next_scr2_rtc_update(NeXTPC *s)
->>
->>     if (scr2_2 & 0x1) {
->>         /* DPRINTF("RTC %x phase %i\n", scr2_2, rtc->phase); */
->> -        if (rtc->phase == -1) {
->> -            rtc->phase = 0;
->> -        }
->>         /* If we are in going down clock... do something */
->>         if (((old_scr2 & SCR2_RTCLK) != (scr2_2 & SCR2_RTCLK)) &&
->>                 ((scr2_2 & SCR2_RTCLK) == 0)) {
->> @@ -282,7 +279,7 @@ static void next_scr2_rtc_update(NeXTPC *s)
->>         }
->>     } else {
->>         /* else end or abort */
->> -        rtc->phase = -1;
->> +        rtc->phase = 0;
->>         rtc->command = 0;
->>         rtc->value = 0;
->>     }
+>>   hw/m68k/next-cube.c | 28 ++++++++++++++--------------
+>>   1 file changed, 14 insertions(+), 14 deletions(-)
 > 
-> Additionally, maybe it would be simpler to invert the if condition and move this else 
-> branch up there to the beginning so you can return early after this reset (the 
-> deposit at the end does nothing after the else case as it's just storing back the 
-> unmodified value) and then you can deindent the big if where most of the 
-> functionality is now.
+> 
+>> @@ -897,7 +897,7 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+>>       qdev_init_gpio_in(dev, next_irq, NEXT_NUM_IRQS);
+>>       memory_region_init_io(&s->mmiomem, OBJECT(s), &next_mmio_ops, s,
+>> -                          "next.mmio", 0xd0000);
+>> +                          "next.mmio", 0x9000);
+> 
+> Please mention 0xd0000 was incorrect, otherwise:
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I didn't change the layout of the outer if() mainly because Bryce reversed engineered 
-a lot of this from Mach/NetBSD, and wasn't 100% confident that there was any other 
-logic that needed to be applied to bit 0. It's also worth pointing out that by the 
-end of the series all of the functionality has been moved to gpios, so all the 
-complexity within the big if() disappears anyway.
+This one is a little more fuzzy, since I'm not even sure that the new value 0x9000 is 
+correct (there isn't much in the way of documentation to support this) - effectively 
+the purpose of truncating this memory region is to remove the overlap with another so 
+that MMIO accesses are consistently directed to the same handler.
+
+I'll have a think about how I can re-word this better for a v2.
 
 
 ATB,
