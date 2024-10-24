@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C856CE8E6D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEC9CE8E6E
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3x45-000483-8P; Thu, 24 Oct 2024 08:35:45 -0400
+	id 1t3x4b-0004Qt-Hv; Thu, 24 Oct 2024 08:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3x3r-00045I-0j
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1t3x3m-0000HD-GL
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729773324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G41Gm1r+0jL4g/l3GF6vapafdMpPd/OeL9O59Yu11q4=;
- b=PM49ZrO4X2zW2KkVz0quGja2d/h9HxyJidJoCSy8Ewlwo0t487hbcnAGodvUHaNzCcTBqo
- p0HHfnGsH04bIBU/jIIT7v0SstoitVPimm40i+GgglwjwgF1HDxmz4YWVgWmP/PHUHle/Y
- st9utr5pmfXMaxM4yjN82fGveLbY1lg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-Wk04JPnlMdCmNZ3qjGu5gA-1; Thu, 24 Oct 2024 08:35:21 -0400
-X-MC-Unique: Wk04JPnlMdCmNZ3qjGu5gA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4315eaa3189so8885935e9.1
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:35:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t3x4Z-0004HJ-4E
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:36:15 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1t3x4W-0000KI-Rx
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:36:14 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a9a2209bd7fso102713966b.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:36:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729773371; x=1730378171;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/SdhQ2IgYyQSnjIq2OIcLl2Zc0Mbl7oG8Hg7S7gy7r8=;
+ b=lZDdxwnkK3UlWTEsZRlc6N1YIAq2Z4V9stSu00RoiQnfcImghLc444HuixAt3p2RR3
+ 8tv3cMlI+b/E1H0KS3b7Kkg5rMfwLPD8B7z64gASkxSP1k/D7BPMiYE1AW14jona6rFB
+ W0r4DWdeTpk+z76DVuTvKDzAQbggzdCfC6lWiNTLsmFwzJgZcZYKM/N7owGIbzKJPLpi
+ P7DVFVqYYUDk4lgtTa0/LtnQc00UuSooWNbsGPKT7RVMdsttEu3SD57xHuOvOIVsYKtd
+ goVN+5YelaW/FTjAlUmDIfTS2ORECD8mARG+jm/pRDtZasXWknszzaGQyW1MuAdhwfHi
+ 9j8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729773319; x=1730378119;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=G41Gm1r+0jL4g/l3GF6vapafdMpPd/OeL9O59Yu11q4=;
- b=EwNvTxhTffZfJsnWBqBHNOk6CYRF9DgUv1eDlbh4jXNdDGdVxwZQdq4wea4oH5bZqy
- SlTySq7YLvaD8Greac9GOo4ETHA8+woj+urV+pWVS1Tx0K3ppOxFKIqKyXMtPc5w1q9K
- BIr++XGtpfZR2i0McjLbT+rv9vKLZ+NWLDP34M0f1vprVpSKzMUV7k7uwEGTmIbB1r+7
- 3Jo4/WISqFVFjZH0ifSYEpFk1n88x9c2zlPXH/CBfZzOLq0Q0AY9X4a58Bua0ZO5/9tc
- gXNLIwDNgsWOoHEpR3Kz9rRwQS60TB5SsMNlvIbn5afdirTwSwlIpg2vEWBe862kNjMf
- Ahlw==
-X-Gm-Message-State: AOJu0YzrZ5yNroqxOQKoD1cVDkeJgmCqpOCetLeZmvWrU+AgiEl3DKZP
- XMMVcOdvCAzXmJepvv1Xwrl7gGRpncKXygPBGU0Q5ntTjRf4LT3py4cqdYz8cCUxrf9bxZmonfC
- IwrL5iM/6ILZ/hbW2vIGnmaVtfJpEv7yB9JMg8LJK/6Q9bDbbvX1QZBsuZZpQ8KcaduJJHcnb5W
- 6ZGGHWJW7u/9BNjViZfn/SGq7QI+HW3tKl958clCU=
-X-Received: by 2002:a05:600c:1e0f:b0:431:518a:6826 with SMTP id
- 5b1f17b1804b1-43184211ee6mr59273325e9.19.1729773318917; 
- Thu, 24 Oct 2024 05:35:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLydIwGp8rJnW7Bm3Ry956TgaLE0pyZ424cKKVVXVya403xdTIrKRmT7KDir4PIqPNxwEuZQ==
-X-Received: by 2002:a05:600c:1e0f:b0:431:518a:6826 with SMTP id
- 5b1f17b1804b1-43184211ee6mr59272985e9.19.1729773318372; 
- Thu, 24 Oct 2024 05:35:18 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.99.171])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4318b56742asm16132655e9.21.2024.10.24.05.35.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 05:35:15 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1729773371; x=1730378171;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/SdhQ2IgYyQSnjIq2OIcLl2Zc0Mbl7oG8Hg7S7gy7r8=;
+ b=GXaH/6myhrkm4kF6GoyWCZWi7zUCUFoUp09c9bd5BPI4/EHC5Vp3iawZYERR8kZnwR
+ 2LDH5ZPKUqLX/LCLKH67kec5t3pPJ1u6uS6g0ChRv7lWX6QMcALUWeEjBUN9sGQCdsek
+ V4uqV1yeKIFgEXyak2WDszjDI9TgczG9a8GvXOY8DNPu9ZHWKRogP9+cLwGbjsw3jYLa
+ C9JowG0RRYGMzYslk7SgWVxZwNxJTUSEBXov4S9mJD6rZ83RwakhjPKK3/ao47W3frnP
+ IHXLPVz6PXVOXnjg0TEfD6RMgOGJrO2aUkOZkKDzJRmlp9NtyA/SWDmptWC6DVTGvXXD
+ qyIg==
+X-Gm-Message-State: AOJu0YzirF8ngd0vgjHz5LyU3fyAn0RyLcd0q/rhJZRyPRNkUJs5bf5R
+ xNGrd6Ip5kMZEnNcm8NTgebEzz03Z4NZFZQva8sOSnVLRrWmmyQZXs98L4rt+78O7gxlmFBzJgz
+ 0Og==
+X-Google-Smtp-Source: AGHT+IENfC5wUh65o04QImvz5EN0791efO0q0lcvDE9mfpFXXpZuRqGvRJczo9BriSOUEopgFOiPSw==
+X-Received: by 2002:a17:907:7f14:b0:a9a:cee1:3cf3 with SMTP id
+ a640c23a62f3a-a9ad285ee91mr180886066b.53.1729773370653; 
+ Thu, 24 Oct 2024 05:36:10 -0700 (PDT)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a9a912ee592sm613369866b.79.2024.10.24.05.36.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 24 Oct 2024 05:36:10 -0700 (PDT)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>
-Subject: [PULL 8/8] qdev: make properties array "const"
-Date: Thu, 24 Oct 2024 14:34:59 +0200
-Message-ID: <20241024123459.59350-9-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241024123459.59350-1-pbonzini@redhat.com>
-References: <20241024123459.59350-1-pbonzini@redhat.com>
+Cc: mjt@tls.msk.ru, philmd@linaro.org, thuth@redhat.com,
+ pierrick.bouvier@linaro.org, berrange@redhat.com,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH] scripts/checkpatch.pl: Ignore ObjC #import lines for operator
+ spacing
+Date: Thu, 24 Oct 2024 14:35:55 +0200
+Message-Id: <20241024123555.25861-1-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::633;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,184 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Constify all accesses to qdev properties, except for the
-ObjectPropertyAccessor itself.  This makes it possible to place them in
-read-only memory, and also lets Rust bindings switch from "static mut"
-arrays to "static"; which is advantageous, because mutable statics are
-highly discouraged.
+checkpatch.pl lints for spaces around operators including / (slash).
+Code lines starting with #include are ignored, as slashes in those
+represent path separators.
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+In Objective-C code, #import is often used in preference to #include,
+as preprocessor-based multiple-#include defenses are considered
+non-idiomatic in that language.
+
+This change extends checkpatch.pl to treat #import lines in the same
+way as #include, avoiding false positives for "missing" spaces
+around path separators on those lines.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- include/hw/qdev-core.h       |  4 ++--
- include/hw/qdev-properties.h |  4 ++--
- hw/core/qdev-properties.c    | 26 +++++++++++++-------------
- system/qdev-monitor.c        |  2 +-
- 4 files changed, 18 insertions(+), 18 deletions(-)
+ scripts/checkpatch.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index aa97c34a4be..f9fa291cc63 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -132,7 +132,7 @@ struct DeviceClass {
-      * ensures a compile-time error if someone attempts to assign
-      * dc->props directly.
-      */
--    Property *props_;
-+    const Property *props_;
- 
-     /**
-      * @user_creatable: Can user instantiate with -device / device_add?
-@@ -935,7 +935,7 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
-  * you attempt to add an existing property defined by a parent class.
-  * To modify an inherited property you need to use????
-  */
--void device_class_set_props(DeviceClass *dc, Property *props);
-+void device_class_set_props(DeviceClass *dc, const Property *props);
- 
- /**
-  * device_class_set_parent_realize() - set up for chaining realize fns
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 09aa04ca1e2..26ebd230685 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -37,7 +37,7 @@ struct PropertyInfo {
-     int (*print)(Object *obj, Property *prop, char *dest, size_t len);
-     void (*set_default_value)(ObjectProperty *op, const Property *prop);
-     ObjectProperty *(*create)(ObjectClass *oc, const char *name,
--                              Property *prop);
-+                              const Property *prop);
-     ObjectPropertyAccessor *get;
-     ObjectPropertyAccessor *set;
-     ObjectPropertyRelease *release;
-@@ -223,7 +223,7 @@ void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
-  * On error, store error in @errp.  Static properties access data in a struct.
-  * The type of the QOM property is derived from prop->info.
-  */
--void qdev_property_add_static(DeviceState *dev, Property *prop);
-+void qdev_property_add_static(DeviceState *dev, const Property *prop);
- 
- /**
-  * qdev_alias_all_properties: Create aliases on source for all target properties
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 86a583574dd..315196bd85a 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -749,7 +749,7 @@ const PropertyInfo qdev_prop_array = {
- 
- /* --- public helpers --- */
- 
--static Property *qdev_prop_walk(Property *props, const char *name)
-+static const Property *qdev_prop_walk(const Property *props, const char *name)
- {
-     if (!props) {
-         return NULL;
-@@ -763,10 +763,10 @@ static Property *qdev_prop_walk(Property *props, const char *name)
-     return NULL;
- }
- 
--static Property *qdev_prop_find(DeviceState *dev, const char *name)
-+static const Property *qdev_prop_find(DeviceState *dev, const char *name)
- {
-     ObjectClass *class;
--    Property *prop;
-+    const Property *prop;
- 
-     /* device properties */
-     class = object_get_class(OBJECT(dev));
-@@ -840,7 +840,7 @@ void qdev_prop_set_string(DeviceState *dev, const char *name, const char *value)
- 
- void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
- {
--    Property *prop;
-+    const Property *prop;
- 
-     prop = qdev_prop_find(dev, name);
-     object_property_set_str(OBJECT(dev), name,
-@@ -956,7 +956,7 @@ const PropertyInfo qdev_prop_size = {
- /* --- object link property --- */
- 
- static ObjectProperty *create_link_property(ObjectClass *oc, const char *name,
--                                            Property *prop)
-+                                            const Property *prop)
- {
-     return object_class_property_add_link(oc, name, prop->link_type,
-                                           prop->offset,
-@@ -969,7 +969,7 @@ const PropertyInfo qdev_prop_link = {
-     .create = create_link_property,
- };
- 
--void qdev_property_add_static(DeviceState *dev, Property *prop)
-+void qdev_property_add_static(DeviceState *dev, const Property *prop)
- {
-     Object *obj = OBJECT(dev);
-     ObjectProperty *op;
-@@ -980,7 +980,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
-                              field_prop_getter(prop->info),
-                              field_prop_setter(prop->info),
-                              prop->info->release,
--                             prop);
-+                             (Property *)prop);
- 
-     object_property_set_description(obj, prop->name,
-                                     prop->info->description);
-@@ -994,7 +994,7 @@ void qdev_property_add_static(DeviceState *dev, Property *prop)
- }
- 
- static void qdev_class_add_property(DeviceClass *klass, const char *name,
--                                    Property *prop)
-+                                    const Property *prop)
- {
-     ObjectClass *oc = OBJECT_CLASS(klass);
-     ObjectProperty *op;
-@@ -1007,7 +1007,7 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
-                                        field_prop_getter(prop->info),
-                                        field_prop_setter(prop->info),
-                                        prop->info->release,
--                                       prop);
-+                                       (Property *)prop);
-     }
-     if (prop->set_default) {
-         prop->info->set_default_value(op, prop);
-@@ -1046,7 +1046,7 @@ static void qdev_get_legacy_property(Object *obj, Visitor *v,
-  * Do not use this in new code!  QOM Properties added through this interface
-  * will be given names in the "legacy" namespace.
-  */
--static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
-+static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop)
- {
-     g_autofree char *name = NULL;
- 
-@@ -1058,12 +1058,12 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, Property *prop)
-     name = g_strdup_printf("legacy-%s", prop->name);
-     object_class_property_add(OBJECT_CLASS(dc), name, "str",
-         prop->info->print ? qdev_get_legacy_property : prop->info->get,
--        NULL, NULL, prop);
-+        NULL, NULL, (Property *)prop);
- }
- 
--void device_class_set_props(DeviceClass *dc, Property *props)
-+void device_class_set_props(DeviceClass *dc, const Property *props)
- {
--    Property *prop;
-+    const Property *prop;
- 
-     dc->props_ = props;
-     for (prop = props; prop && prop->name; prop++) {
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 44994ea0e16..c346ea6ae4b 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -751,7 +751,7 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
- 
- #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
- 
--static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
-+static void qdev_print_props(Monitor *mon, DeviceState *dev, const Property *props,
-                              int indent)
- {
-     if (!props)
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 1b21249c91e..06d07e6c225 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -2246,7 +2246,7 @@ sub process {
+ 			}
+ 		}
+ # Check operator spacing.
+-		if (!($line=~/\#\s*include/)) {
++		if (!($line=~/\#\s*(include|import)/)) {
+ 			my $ops = qr{
+ 				<<=|>>=|<=|>=|==|!=|
+ 				\+=|-=|\*=|\/=|%=|\^=|\|=|&=|
 -- 
-2.47.0
+2.39.3 (Apple Git-145)
 
 
