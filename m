@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFD1CE8E6B
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0412CE8E6B
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3wxG-00024o-08; Thu, 24 Oct 2024 08:28:42 -0400
+	id 1t3x3h-000426-HO; Thu, 24 Oct 2024 08:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3wxD-00024C-3l
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:28:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3x3a-0003yy-Ay
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1t3wxB-0007Sz-9L
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:28:38 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3x3T-0000EL-QA
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729772914;
+ s=mimecast20190719; t=1729773306;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AAT7Hxc+iGl1Qt/9IXDFCeZ6dAiIxI4tkwA5K5eMJtI=;
- b=i0xl8aw+1vPyQxoF9ULa5NsondYgOIHjTs8myLtbdiOcwWfcfNm1Hu55vFQMfiosiCfjbg
- 8vOEm4HitMZXeczd5qwzuAJVYFQ7YncJj2/cuINS7PP7PLcGFOftjSivE1sc0whBJARYPe
- 7Hp9CHUS6Nf0fvJTmdwFgo65NkPeV28=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/IqAdLZglfKpF6mjDCcx9wZhknDWLZEahtdtuSLLUoE=;
+ b=ISLhFzB1/ra4oVzIgrzlemaRMqX922/CKWnGKoJiks9DMaEob1vz3TCLV7p2ULXUsFHFu/
+ 0hioxJjl8pVSDBqCekD1zaSizDYi8X4IJf+vpPJJDeDw3oSJwKTpXX1WUg0NU+/SOdVG41
+ KAJFYcF3L8WQdPEuGbRrU0bb0WVi5gU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-YzS1fC-yN5qBew8JT-kzfQ-1; Thu, 24 Oct 2024 08:28:33 -0400
-X-MC-Unique: YzS1fC-yN5qBew8JT-kzfQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b15c2e3ca1so113962685a.1
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:28:33 -0700 (PDT)
+ us-mta-120-GU77_GaeP1Kh_mcYXGrf2w-1; Thu, 24 Oct 2024 08:35:05 -0400
+X-MC-Unique: GU77_GaeP1Kh_mcYXGrf2w-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43157cff1d1so6924395e9.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:35:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729772913; x=1730377713;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AAT7Hxc+iGl1Qt/9IXDFCeZ6dAiIxI4tkwA5K5eMJtI=;
- b=RoALWOHSQgjQ4BJbkSqvRR/OMI+fJ9WK8hsxnbaYbHgaP33ka+MXWS3PRaLWCk1hi6
- 2OURGyC4SDBGDAnstOW+EuhROiEZJdDfXI1f6IlY95lqd4gKCVfe7cT8w+1VVcSIAyL9
- R5/slIUYAw7OUv9dqEGIzZHDSnhv9VoFY8dlgJSAiQYyjGOBA1wyNbzI14lzJT8qrLML
- 7ZpS/eyqou7lAvpEqLZKGoeo2nTwXPh5MADt9B4Y6mRG8FwqSEMzhiT1cMDX3TFmAO17
- KcQHOpfNH2mTIM4f1S/KKz+LB6F1CuYez9UfFMAvi+vAMCNEzDuMzAq+PhC9mw/yQbB0
- u+ww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNyzpqEuYqhyFEgLqef6/BMMyDt5UvJEXyZ6cKxFvrbMxQxvQqIPHzntmYaq+5REkbsUF7YsoDcg9i@nongnu.org
-X-Gm-Message-State: AOJu0Yw4yOb/lfCba39M4U051UzGRFRylidBxsteXvd2pT0LzxxmjDaU
- qyOd0b47Lh2l7AosSriLzR6fpSq0RhV9eWjYQ9pyg4wqV+ypHI+aN9mEJytb1hrBXlXd/i3zl0L
- q6Bf+OmbtmcsYfUI60yBEzdsdn8JZyY+taXqPh3XxiJoGr99fml4a
-X-Received: by 2002:a05:620a:4090:b0:7ac:d663:f664 with SMTP id
- af79cd13be357-7b17e5279bcmr703303085a.1.1729772912987; 
- Thu, 24 Oct 2024 05:28:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRZZHDfdLuN3SplkVMGZT7vbALKsux9mPZRDlQ1/lfOoDdp1YOsYmBR2Y66jH5srFzSLeyRw==
-X-Received: by 2002:a05:620a:4090:b0:7ac:d663:f664 with SMTP id
- af79cd13be357-7b17e5279bcmr703301485a.1.1729772912665; 
- Thu, 24 Oct 2024 05:28:32 -0700 (PDT)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b165a8800csm482451985a.125.2024.10.24.05.28.31
+ d=1e100.net; s=20230601; t=1729773303; x=1730378103;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/IqAdLZglfKpF6mjDCcx9wZhknDWLZEahtdtuSLLUoE=;
+ b=pbtPCSEOZc8dLpgUSTh6kVCXfx8nz62//KAvnYE6i66ftS1kjMB4LNxTrWDAwRxdmB
+ 1nNFejHc8QucTpzp844fzCI4FejW/Mwnzqmhwv4K1v0KdU6OwUbd6tdFD1rKqMyo99Pe
+ zXkkBhYAlfvJjZmGoPE61u7bDw+7IepEbxpl7GFN10yOUgSj8YLpN3zC6OE146+57DTT
+ qnZ7QSJcZNZEWTe3ubjHEoBVHnHKXxpYDpN/0+j3E7Qmclx7rp8WJlvQ1yfHcgszuFEK
+ ZZoJsDQTRUdaIX6DHxkwYSECGV33fM3HrANNUPl3a4JbvwQvY+Am4aMGrpeWaHtPiQ0i
+ spcg==
+X-Gm-Message-State: AOJu0YzK1fJ0aZ+WFv1XMq6OQ8Y/DT6YCvZbGlTNe7uhIMqf4DzDKUWn
+ zyHaDol/FU1GLyeN+L5TTysgl1+Bq7sCOxnaclCXTaBu3TWydOLfYjOm4AFpmq6IVrpEjLdryN1
+ GOcyJjjs4bKS6VeWVZAjVpIxxkMiDWouaSMvbOTNhdB7fd+ibp5wZdfh+dmGVbIRhlCZzwEgBIe
+ 3LLW+WNZO270OP9fKuzQftAiruhJ93EXeaNrRDKkY=
+X-Received: by 2002:a05:600c:1c11:b0:42c:a574:6360 with SMTP id
+ 5b1f17b1804b1-431841aff4emr52466015e9.29.1729773302878; 
+ Thu, 24 Oct 2024 05:35:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9bGGUeqi0HkJhxwXe67VNrAzubglPXelqgAxyEJYiDrtE9Va8432Ftm9vVaOMIiLSQiEjqA==
+X-Received: by 2002:a05:600c:1c11:b0:42c:a574:6360 with SMTP id
+ 5b1f17b1804b1-431841aff4emr52465745e9.29.1729773302417; 
+ Thu, 24 Oct 2024 05:35:02 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.99.171])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37ee0a37935sm11212187f8f.17.2024.10.24.05.35.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2024 05:28:32 -0700 (PDT)
-Date: Thu, 24 Oct 2024 08:28:30 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
-Message-ID: <Zxo9boa0OXqXv94S@x1n>
-References: <cover.1729562974.git.yong.huang@smartx.com>
- <87sesmdfl4.fsf@suse.de>
- <CAK9dgmZU+KuJmvqXYjcyFPOQkcH3v-ZfdZEQ6YobTJW7MkPyfw@mail.gmail.com>
+ Thu, 24 Oct 2024 05:35:02 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 1/8] stubs: avoid duplicate symbols in libqemuutil.a
+Date: Thu, 24 Oct 2024 14:34:52 +0200
+Message-ID: <20241024123459.59350-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241024123459.59350-1-pbonzini@redhat.com>
+References: <20241024123459.59350-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAK9dgmZU+KuJmvqXYjcyFPOQkcH3v-ZfdZEQ6YobTJW7MkPyfw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,17 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 24, 2024 at 10:06:51AM +0800, Yong Huang wrote:
-> Indeed, we could document how to build and use the guestperf,
-> refining it to be more convenient to use.
+qapi_event_send_device_deleted is always included (together with the
+rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
+are being built, and in that case the stub causes a duplicate symbol
+to appear in libqemuutil.a.
 
-If to do so, please feel free to add a "test" entry in devel/migration too
-no matter to put the doc there, or just add a reference to where the doc
-locates.
+Add the symbol only if events are not being requested.
 
-Thanks,
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ stubs/meson.build | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 772a3e817df..e91614a874d 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -55,7 +55,12 @@ endif
+ if have_user
+   # Symbols that are used by hw/core.
+   stub_ss.add(files('cpu-synchronize-state.c'))
+-  stub_ss.add(files('qdev.c'))
++
++  # Stubs for QAPI events.  Those can always be included in the build, but
++  # they are not built at all for --disable-system --disable-tools builds.
++  if not (have_system or have_tools)
++    stub_ss.add(files('qdev.c'))
++  endif
+ endif
+ 
+ if have_system
 -- 
-Peter Xu
+2.47.0
 
 
