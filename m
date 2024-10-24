@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEC9CE8E6E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B60DCE8E70
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 12:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3x4b-0004Qt-Hv; Thu, 24 Oct 2024 08:36:17 -0400
+	id 1t3x3l-00043n-Ex; Thu, 24 Oct 2024 08:35:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3x4Z-0004HJ-4E
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:36:15 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3x4W-0000KI-Rx
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:36:14 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a9a2209bd7fso102713966b.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729773371; x=1730378171;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/SdhQ2IgYyQSnjIq2OIcLl2Zc0Mbl7oG8Hg7S7gy7r8=;
- b=lZDdxwnkK3UlWTEsZRlc6N1YIAq2Z4V9stSu00RoiQnfcImghLc444HuixAt3p2RR3
- 8tv3cMlI+b/E1H0KS3b7Kkg5rMfwLPD8B7z64gASkxSP1k/D7BPMiYE1AW14jona6rFB
- W0r4DWdeTpk+z76DVuTvKDzAQbggzdCfC6lWiNTLsmFwzJgZcZYKM/N7owGIbzKJPLpi
- P7DVFVqYYUDk4lgtTa0/LtnQc00UuSooWNbsGPKT7RVMdsttEu3SD57xHuOvOIVsYKtd
- goVN+5YelaW/FTjAlUmDIfTS2ORECD8mARG+jm/pRDtZasXWknszzaGQyW1MuAdhwfHi
- 9j8w==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3x3a-0003zA-Da
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1t3x3U-0000Ed-QQ
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 08:35:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1729773307;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mViewCgOGDMlHRXHm6Ff3nuWR7zUwAwAF9HzbBfp5Ik=;
+ b=gEkD2Yt314W2X9MeT0dig1Ac7k65ub8iJ/iZbwSBQJ3R6w65RhaAc6hQGaGc39/br5hFqk
+ 8XG5y2PU/J5eJ3owgvXxB+8YaVgPx3c1t0w8on8+FroBw9u7J+veMb0HNLCAc/Pgw90z5C
+ Hk+gyRgxcoHQcZoOhvrTlLbgW2Xj8no=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-PTwV4MSgP1Gsxmqf8VFRSg-1; Thu, 24 Oct 2024 08:35:06 -0400
+X-MC-Unique: PTwV4MSgP1Gsxmqf8VFRSg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43152cd2843so6413595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 05:35:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729773371; x=1730378171;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/SdhQ2IgYyQSnjIq2OIcLl2Zc0Mbl7oG8Hg7S7gy7r8=;
- b=GXaH/6myhrkm4kF6GoyWCZWi7zUCUFoUp09c9bd5BPI4/EHC5Vp3iawZYERR8kZnwR
- 2LDH5ZPKUqLX/LCLKH67kec5t3pPJ1u6uS6g0ChRv7lWX6QMcALUWeEjBUN9sGQCdsek
- V4uqV1yeKIFgEXyak2WDszjDI9TgczG9a8GvXOY8DNPu9ZHWKRogP9+cLwGbjsw3jYLa
- C9JowG0RRYGMzYslk7SgWVxZwNxJTUSEBXov4S9mJD6rZ83RwakhjPKK3/ao47W3frnP
- IHXLPVz6PXVOXnjg0TEfD6RMgOGJrO2aUkOZkKDzJRmlp9NtyA/SWDmptWC6DVTGvXXD
- qyIg==
-X-Gm-Message-State: AOJu0YzirF8ngd0vgjHz5LyU3fyAn0RyLcd0q/rhJZRyPRNkUJs5bf5R
- xNGrd6Ip5kMZEnNcm8NTgebEzz03Z4NZFZQva8sOSnVLRrWmmyQZXs98L4rt+78O7gxlmFBzJgz
- 0Og==
-X-Google-Smtp-Source: AGHT+IENfC5wUh65o04QImvz5EN0791efO0q0lcvDE9mfpFXXpZuRqGvRJczo9BriSOUEopgFOiPSw==
-X-Received: by 2002:a17:907:7f14:b0:a9a:cee1:3cf3 with SMTP id
- a640c23a62f3a-a9ad285ee91mr180886066b.53.1729773370653; 
- Thu, 24 Oct 2024 05:36:10 -0700 (PDT)
-Received: from localhost.localdomain (h082218084190.host.wavenet.at.
- [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a912ee592sm613369866b.79.2024.10.24.05.36.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Oct 2024 05:36:10 -0700 (PDT)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
+ d=1e100.net; s=20230601; t=1729773304; x=1730378104;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mViewCgOGDMlHRXHm6Ff3nuWR7zUwAwAF9HzbBfp5Ik=;
+ b=PuKDZA/iYRUBdh6aF1cX0AEjCM5I7qy1Hrv90FDni3zOpyPkdWehS4pAOrUeZk6V0s
+ gcTyZYb48l2kT7+4YWM+zJJiuVTTFf3safzdxyr5IZEEm+J5py4TrtjBRVMA+XA43vz9
+ rSHVxth0xPPw11qCZJydocvPvcqN1yY+rflGh8JjtlkOHuyZMl/VazrH0z4x8ERcfjeG
+ 2HC6FzcEv5tuqOtuaQSb/lbshbLIrBXLMDVs97eEpr+GvBfw7FnIRWSBp13/tdQGvqYG
+ lW1uGZTO6ZxqzzYorQA1YwFcNvkm8TGYxEZc24m75p780loTZ7fza9dB5YAR/yBAy4yC
+ lqHA==
+X-Gm-Message-State: AOJu0YwYhTr0izsm0T4lLQ9LTFH595InI6aiB8V7AgZJ/bDoEfYGr/sJ
+ A2z39uEyizOrcenO9BZLBcbqbYPD4GWM3QhnDNawK4dJqvToPnWI/16WPsgcPa1EI8s0a2cd7t2
+ hx9jvf9/LQZE6PEFJrrJDZW8pwYx4Eoor/VE8pyF/DKiWE/hYKNC+TyZ9B2frTK8HF74MGWJgKe
+ mYnzv/fYC0PDNzPb7Wb9IxocMUPuQ9xS7mSpAfGeg=
+X-Received: by 2002:a05:600c:3550:b0:42c:b16e:7a22 with SMTP id
+ 5b1f17b1804b1-4318413f0ccmr54328945e9.12.1729773304049; 
+ Thu, 24 Oct 2024 05:35:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzYigG4QorSGEqrdTm/SDW/W3DNQjw1NBLSiWDmfXeF+ImapImv+hNlY/zGfQz8g7RbYStZg==
+X-Received: by 2002:a05:600c:3550:b0:42c:b16e:7a22 with SMTP id
+ 5b1f17b1804b1-4318413f0ccmr54328685e9.12.1729773303515; 
+ Thu, 24 Oct 2024 05:35:03 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.99.171])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4318b567977sm16188305e9.27.2024.10.24.05.35.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Oct 2024 05:35:02 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru, philmd@linaro.org, thuth@redhat.com,
- pierrick.bouvier@linaro.org, berrange@redhat.com,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH] scripts/checkpatch.pl: Ignore ObjC #import lines for operator
- spacing
-Date: Thu, 24 Oct 2024 14:35:55 +0200
-Message-Id: <20241024123555.25861-1-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PULL 2/8] sockets: Remove deadcode
+Date: Thu, 24 Oct 2024 14:34:53 +0200
+Message-ID: <20241024123459.59350-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241024123459.59350-1-pbonzini@redhat.com>
+References: <20241024123459.59350-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::633;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,37 +102,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-checkpatch.pl lints for spaces around operators including / (slash).
-Code lines starting with #include are ignored, as slashes in those
-represent path separators.
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-In Objective-C code, #import is often used in preference to #include,
-as preprocessor-based multiple-#include defenses are considered
-non-idiomatic in that language.
+socket_remote_address hasn't been used since it was added in
+  17c55decec ("sockets: add helpers for creating SocketAddress from a socket")
 
-This change extends checkpatch.pl to treat #import lines in the same
-way as #include, avoiding false positives for "missing" spaces
-around path separators on those lines.
+inet_connect hasn't been used since 2017's
+  8ecc2f9eab ("sheepdog: Use SocketAddress and socket_connect()")
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Remove them.
+
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Link: https://lore.kernel.org/r/20240918232633.463861-1-dave@treblig.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/checkpatch.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qemu/sockets.h | 16 ----------------
+ util/qemu-sockets.c    | 35 -----------------------------------
+ 2 files changed, 51 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 1b21249c91e..06d07e6c225 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -2246,7 +2246,7 @@ sub process {
- 			}
- 		}
- # Check operator spacing.
--		if (!($line=~/\#\s*include/)) {
-+		if (!($line=~/\#\s*(include|import)/)) {
- 			my $ops = qr{
- 				<<=|>>=|<=|>=|==|!=|
- 				\+=|-=|\*=|\/=|%=|\^=|\|=|&=|
+diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
+index d935fd80da8..c562690d893 100644
+--- a/include/qemu/sockets.h
++++ b/include/qemu/sockets.h
+@@ -61,7 +61,6 @@ int socket_set_fast_reuse(int fd);
+ int inet_ai_family_from_address(InetSocketAddress *addr,
+                                 Error **errp);
+ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp);
+-int inet_connect(const char *str, Error **errp);
+ int inet_connect_saddr(InetSocketAddress *saddr, Error **errp);
+ 
+ NetworkAddressFamily inet_netfamily(int family);
+@@ -117,21 +116,6 @@ socket_sockaddr_to_address(struct sockaddr_storage *sa,
+  */
+ SocketAddress *socket_local_address(int fd, Error **errp);
+ 
+-/**
+- * socket_remote_address:
+- * @fd: the socket file handle
+- * @errp: pointer to uninitialized error object
+- *
+- * Get the string representation of the remote socket
+- * address. A pointer to the allocated address information
+- * struct will be returned, which the caller is required to
+- * release with a call qapi_free_SocketAddress() when no
+- * longer required.
+- *
+- * Returns: the socket address struct, or NULL on error
+- */
+-SocketAddress *socket_remote_address(int fd, Error **errp);
+-
+ /**
+  * socket_address_flatten:
+  * @addr: the socket address to flatten
+diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+index 60c44b2b56b..c1b162b0560 100644
+--- a/util/qemu-sockets.c
++++ b/util/qemu-sockets.c
+@@ -707,26 +707,6 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
+ }
+ 
+ 
+-/**
+- * Create a blocking socket and connect it to an address.
+- *
+- * @str: address string
+- * @errp: set in case of an error
+- *
+- * Returns -1 in case of error, file descriptor on success
+- **/
+-int inet_connect(const char *str, Error **errp)
+-{
+-    int sock = -1;
+-    InetSocketAddress *addr = g_new(InetSocketAddress, 1);
+-
+-    if (!inet_parse(addr, str, errp)) {
+-        sock = inet_connect_saddr(addr, errp);
+-    }
+-    qapi_free_InetSocketAddress(addr);
+-    return sock;
+-}
+-
+ #ifdef CONFIG_AF_VSOCK
+ static bool vsock_parse_vaddr_to_sockaddr(const VsockSocketAddress *vaddr,
+                                           struct sockaddr_vm *svm,
+@@ -1421,21 +1401,6 @@ SocketAddress *socket_local_address(int fd, Error **errp)
+ }
+ 
+ 
+-SocketAddress *socket_remote_address(int fd, Error **errp)
+-{
+-    struct sockaddr_storage ss;
+-    socklen_t sslen = sizeof(ss);
+-
+-    if (getpeername(fd, (struct sockaddr *)&ss, &sslen) < 0) {
+-        error_setg_errno(errp, errno, "%s",
+-                         "Unable to query remote socket address");
+-        return NULL;
+-    }
+-
+-    return socket_sockaddr_to_address(&ss, sslen, errp);
+-}
+-
+-
+ SocketAddress *socket_address_flatten(SocketAddressLegacy *addr_legacy)
+ {
+     SocketAddress *addr;
 -- 
-2.39.3 (Apple Git-145)
+2.47.0
 
 
