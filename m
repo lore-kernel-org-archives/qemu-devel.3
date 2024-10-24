@@ -4,76 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0312AD0BB4E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 02:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F33E7D0BB4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 02:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3nFu-00058C-5m; Wed, 23 Oct 2024 22:07:18 -0400
+	id 1t3nTS-0007xE-Ih; Wed, 23 Oct 2024 22:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t3nFq-00057i-VB
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 22:07:15 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1t3nFn-0007zp-P5
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 22:07:14 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5ebc1af8e91so188135eaf.1
- for <qemu-devel@nongnu.org>; Wed, 23 Oct 2024 19:07:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1729735629; x=1730340429;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=c0WUy4in+bHU0hw3OC0v2mLjEjuWrdxL13BRwLDDGS4=;
- b=WJbl9M5Ug1yFrQHoydiwa3rJT0AygMHvPzoFdHKZL5aXVy8kqqMNJXi/zqcusEGhAT
- qz9c4W+Ii5Yi8SlVqWh8XsxnXv6L74MysPcQllK7qwDGdI+cfy3j+pWYJJVZs4li5DcQ
- M3qJDI3NtNIiPuBnRW+eK4FdUFizneD6myc0ttC/tqljEYthRPdA6GaO0aoo3gSuYfio
- pijvIR7myz28KLDs1xIW5a1hU2iEGMMJzu51lxBy7olMvUSgSh/t35D9RejcMex+xFXI
- 6VkpJyrMBLvjWe7jep7+aAJZadY8SJNVShg2uZ9UnTYjqEvGc35Y4GjR5aJGhJiIZWNU
- CXWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729735629; x=1730340429;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=c0WUy4in+bHU0hw3OC0v2mLjEjuWrdxL13BRwLDDGS4=;
- b=rFE3gnByEQ3OoEt4f5RMrs7WTTMhaMdY5g9IAjVGm0re6tOJHHbcFb1lbNqeg7eLzK
- zUoPoHyj6ruOUUXvYmVxVFyQAF/uWmvTXHFGUArMSV8C6UM1QwyPMCf0t3DzNOM5wxVw
- D+oR+lL4UVrWdWoUwnGC0ICBtL4YzoveKf11ZU7qxL1iXYfaPGyEa25mGJkvyJjUXrR/
- eomwcaeouaSaP347n9aIrEdq26yTx2CxUYt+sdzyNqKDpd1MgxHfpnIdNW2PZJtSymye
- qepFdvUZoWNnVP0iDGc+qW4tZoKLfLfS6X/KMpsb5+hnSO7A6b6ki6/LYHAmqzwSljt+
- 7mtQ==
-X-Gm-Message-State: AOJu0YwhTpCp6leQ3Ev+s1E0reT8OaY6fGVqgrnmlhqSrJOZBDtDpZls
- Ca++ibmFT0oL5YTflFySJ8V3IPmyjCwgYNdCyEMYhhTqydKmnp31TqO4mgqxQo20Q9EQgcOdhWv
- RZhXBwNTWdmUPBwbkiyTCsyw0ZPGP9UungYYPoA==
-X-Google-Smtp-Source: AGHT+IG0cXXr/PD2areYmCVD12rBrzLuNzsCSrTAl6OVMa8d1plsGuD8bTxWN83OJu5hGG/EEDsZuNbj7EeEApVCKgM=
-X-Received: by 2002:a05:6870:3509:b0:270:7a7:eaa5 with SMTP id
- 586e51a60fabf-28ced134b05mr361759fac.10.1729735628174; Wed, 23 Oct 2024
- 19:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t3nTN-0007wc-Eu
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 22:21:13 -0400
+Received: from mail-sy4aus01olkn20816.outbound.protection.outlook.com
+ ([2a01:111:f403:2819::816]
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.mao@hotmail.com>)
+ id 1t3nTL-0000yu-Hl
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 22:21:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A19juQnUJVOe+fXDSxeDaX70L2hba9FvCYNdD8pbNx2fDd8d4hUKIlKgaIMxkZzNH7Gxv1kNqXyTOBMxMmXmoXGn/sIRvHm3eedUAE3mK88jVVOvrhTb4rWyQE5HuyZ1udpBVW8EXu1KmVsGq9oWYZ1g5ZDuNxzDfPR4M5nnYx2rfHmT/i+KirmTHE7E5dj47PBCWg2p/obms92rdJhx9VtFbZ1Ynj+v0SXFC0Rx84VM3nrMCBHO39Ms/CyRJGLeFGxFyLHd1OTcLteR/1gdvnY43FoCN8URAOk5B8YlPf8CicGGtqDlKZNLj1pD0d4QgjeR9ljaryuoMbGvb5BafA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Gkkf1rlF9ANv+u7PT1E2RQvgfUfIaDW//uMhJoUGuDo=;
+ b=ybjlkjxYDbY4XGqbibHego6mJIlHvXkXDX76jpvKqTRm9+dnGoV9qT9hNgoDLA7r/X/2X3nQRSAn4/x2RcHa/Vd0lATZRHI3GuHGy3uxoZtN7FNV6MpKbKK8hPV5gcX+YS3jft9UgP6xh7NAlImxCoP1E/SlHv7I7m4HVsNaAdCIVUKWUNitSnpQoRNm6vaQZz6Q59OFTXFBk8aIvE8SYodpLACYoFvNqMdxgV4tOUvoQpafUWl8kMJNWuuhKm7nVcqKUeHhpAYhuKTSfi2HvGmu5OYstQq2vHpW7+DT7ye1gR8wBHBz+5qfi+7wCiRdXVWy2QNHaTMr+c8dXtP2HQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Gkkf1rlF9ANv+u7PT1E2RQvgfUfIaDW//uMhJoUGuDo=;
+ b=NWw1PNRfrV+L1SNHNgvc0PGHvJ5kMFqJ2l5vU7z7JgPVr4EUhpYxSQu05mob3+G6qW0BjriBaWzQa7umZZ1QucLVC8I8ZHxyMBWkjvNtdeMy/SRbtTmAGPo1CDpdD/1fGK+AdDV1ZLB4PpxbeuDon6mUS+R8HMZDLePUNvyocZR1qkO0kTsZKhmYSQZ1i/pd7ltbA8mbxUpb1ThqbkBArrWC17GjJASiDrH0i+IFipwkZowTcDPtrVXl6TWB//FfnlVxriyfMlUcF7hwDfwtAdMAF7g8pNTMrK5lORz+bM24uF9hYq230h5KaFlNRq06ModAtI/bLTuAGG0qgBKo8Q==
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:282::22)
+ by ME0P300MB1375.AUSP300.PROD.OUTLOOK.COM (2603:10c6:220:244::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.17; Thu, 24 Oct
+ 2024 02:21:04 +0000
+Received: from SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd]) by SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ ([fe80::aea3:2365:f9e8:5bd%2]) with mapi id 15.20.8093.018; Thu, 24 Oct 2024
+ 02:21:04 +0000
+References: <20241022100956.196657-1-pbonzini@redhat.com>
+ <20241022100956.196657-2-pbonzini@redhat.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From: Junjie Mao <junjie.mao@hotmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, kwolf@redhat.com,
+ manos.pitsidianakis@linaro.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2 01/14] rust: patch bilge-impl to allow compilation
+ with 1.63.0
+Date: Thu, 24 Oct 2024 10:12:28 +0800
+In-reply-to: <20241022100956.196657-2-pbonzini@redhat.com>
+Message-ID: <SY0P300MB102652AABC69A51603B447D0954E2@SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM>
+Content-Type: text/plain
+X-ClientProxiedBy: SI2PR01CA0009.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::18) To SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+ (2603:10c6:10:282::22)
+X-Microsoft-Original-Message-ID: <87wmhyi6m4.fsf@hotmail.com>
 MIME-Version: 1.0
-References: <cover.1729562974.git.yong.huang@smartx.com>
- <87sesmdfl4.fsf@suse.de>
-In-Reply-To: <87sesmdfl4.fsf@suse.de>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Thu, 24 Oct 2024 10:06:51 +0800
-Message-ID: <CAK9dgmZU+KuJmvqXYjcyFPOQkcH3v-ZfdZEQ6YobTJW7MkPyfw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ac505406252f7506"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY0P300MB1026:EE_|ME0P300MB1375:EE_
+X-MS-Office365-Filtering-Correlation-Id: 535333aa-3c99-40f6-6647-08dcf3d2828d
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|8060799006|7092599003|19110799003|15080799006|461199028|5072599009|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: krWEEQmdhKIRh7XOlCRiFATfKoOJoh7zpI1kzVCfNPRLQJuYHIi4X85OFDSUPAqWdxDg/w6vX6x5j/VBAJmYBpB7FK7JTX4cMCMy5bsi1iHgbJVUM+eoKXPnz2xQWmorH7E7Le0TcoXi7UuaMvbuOD1pOVn+yN3YxymS4jyHNwSFKF6oHc3x1tfDezaUh3I6RIN0H8XJUpEJz2kM4+GitIHmouAqFWONtaltJEi8+SwN3B1g9hHDGTJREwCTDgysu9RgH33Xu9+WDoqiJi6q3zpE2br/81d8XgKYgB+GRYlqry+u44p8/4HPEejpLLr/7C4cS1f/Q2FhRaOjF/G/iuDeznydooX/I6weqHgfVyrTT7lkqX2HUiEuTzJLlP4Wf/ALuna8/UqYIkjTm8a5gmy/Bbf43gN1MRtttcs6oSJk6H0uJcZiUxzKfdtZY9ym6Ffq6hi6JJF5g5YXN2Uqv56s72oB6/D1cb1fnf3eMMZhNTekW6gtYNsANSMSktpCgrW6MJWJ1NKYD7ZoSjnsp9lD91Q8vMiKBbPdeZXA5qd34QxzshhMm/2imxbMFa8XuDktYjIiLhai6cY6c1DRnQ9ShkIEQyU/pCabCRwGsBmeAowqIY/NtRkbyAK4ZDCZdbpMJY5Eg5JyIhCJo0YEb8Vq6B+bfTOeeW9saQDiONG3mdhRejYa+gr+mziymrvtYmQCDkXYCVzN9yucS8Gs0yIAFph+ey70YnW4PWKZMFc=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?1DD1oC72Kv26kiLZFFQx2YihYiA8jZWFct+1HR6yjoRRlPFpHH8HQy1JVupF?=
+ =?us-ascii?Q?+O9xhEiwAjCaCxZkDoTcr2m/l0/leFy00JO1aiQhlECD0WVrzakxBDU6ySw4?=
+ =?us-ascii?Q?a6FDW/gYYsGIpwgUxk1HbZce/EPv+bfzUdbfmzTBU1hyYqg75u6yLRTcDrMs?=
+ =?us-ascii?Q?cUsmduk2pVpSDfUx/SU56HjlfpHAiIT/v3sX50jC2VZjilS5ajv4pFoJOwo5?=
+ =?us-ascii?Q?hjJxG6hAb6d3MGb+LmNpDoUkeMHkpmzK15YsiXaXx1bAJ5kUlR4VCaVRUCTX?=
+ =?us-ascii?Q?kSyaK3WZc4S27HS0rc6MisqH0c1Jdk+G9/MUSO06SlrVrDxqlVe0gmCZj3iV?=
+ =?us-ascii?Q?OyCUWDqaRn1euSVb6WxTy3xV9snJvOJnASXfZ1B5CvzrqP8lkfw1VTIU+eRm?=
+ =?us-ascii?Q?rNURn/l5jg0bUNjxm3FJITqt68Hupu9t+MmNIeLH4vtXi8OCRrOx2X0FNAnL?=
+ =?us-ascii?Q?0220aIYRrJ6HO1vNYUbn2IeNkXcC13v6qWSxNBKMIXZgbUTjSguzxmkcmefq?=
+ =?us-ascii?Q?e5ezZKQ0lR6xeWQmXxvdXevTYZ1ZFka/AyFrKTDOKk3bi9HWD4/hh7Hn7ZhT?=
+ =?us-ascii?Q?5sDLrqQRdJ9QSzsPtvuqz5TGwcaq7/IEMToYTBofRYxZskcx1pme2Jbulpmc?=
+ =?us-ascii?Q?n6jg7JV1GaisB39CtnFx/zmhE2ZSu4XfB8tJLrh/8iBv9tQE0IXo4U4ET6XQ?=
+ =?us-ascii?Q?JG+4l0JhNLQoqSO3qaUBTfeunLeObsNjv1D1K2X6NzPddKLA7OH6izM0Og68?=
+ =?us-ascii?Q?R18MRuRfMH41HmVNqzgeQs0kwq+xU02Ysw6n0kpojwm05szq5Nqxvtw/xCze?=
+ =?us-ascii?Q?wppi/OMEQUs4S7CmSAGMPzY3mWyuPeFFzwgC6kSzPpQNdSyMHKL+lCRCyUKj?=
+ =?us-ascii?Q?QIp5KhIszgH1OByj3BxFEtSD8Fhg+HPOKTI5xYjfDXnWJhDABk2M2TVlLpMJ?=
+ =?us-ascii?Q?RO8TTGaHZ4sDEmUMv4JzDJ2Oc9niGO/ItjI7hMFjKOsa7at3ktt2b9aMH4I4?=
+ =?us-ascii?Q?zL883/Oj4I5Qz9LeATyakI6yQ4HUvHA+025jnY4a4zOcOpYSoJGHNiYNHfi+?=
+ =?us-ascii?Q?iLneSXOtbeHuyt7CSzBzE5TozsO7bPwrdP9DbJjmqCpAQkig6BQ7D+MfJUpq?=
+ =?us-ascii?Q?Pv9PUqVNPXkjuDPwGviCRrF7Wji568IofVz1Uq/8CTkGnjuc3Gmhz55ZRmac?=
+ =?us-ascii?Q?EFnffjqaT+YevrXgUFOy4oKFeP8PPYAnHM4gbX7eOD0NqYk1XhQPVjw2Lv8?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-448bf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 535333aa-3c99-40f6-6647-08dcf3d2828d
+X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB1026.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2024 02:21:04.0826 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME0P300MB1375
+Received-SPF: pass client-ip=2a01:111:f403:2819::816;
+ envelope-from=junjie.mao@hotmail.com;
+ helo=AUS01-SY4-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,274 +126,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ac505406252f7506
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 23, 2024 at 11:06=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wr=
-ote:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> yong.huang@smartx.com writes:
+> Apply a patch that removes "let ... else" constructs, replacing them with
+> "if let ... else" or "let ... = match ...".  "let ... else" was stabilized in
+> Rust 1.65.0.
 >
-> > From: Hyman Huang <yong.huang@smartx.com>
-> >
-> > v3:
-> > 1. Remove the two redundant assignments in [PATCH v2 2/5] suggested by
-> Daniel
-> >
-> > Please review, thanks
-> > Yong
-> >
-> > v2:
-> > 1. Update the MAINTAINERS section suggested by Fabiano Rosas
-> > 2. Ensure the dependencies when build the initrd-stress.img suggested b=
-y
-> Daniel
-> > 3. Fix some bugs
-> >
-> > v1:
-> > The previous patchset:
-> >
-> https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx=
-.com/
-> > does not made the necessary changes and tests for the upstream version.
-> >
-> > This patchset works for that:
-> > 1. Move the guestperf to scripts directory suggested by Fabiano Rosas
-> > 2. Make initrd-stress.img built by default suggested by Fabiano Rosas
-> > 3. Make the necessary changes to adapt the latest multifd behavior
-> > 4. A nitpick for multifd migration
-> > 5. Support multifd compression option
-> >
-> > Hyman Huang (5):
-> >   tests/migration: Move the guestperf tool to scripts directory
-> >   tests/migration: Make initrd-stress.img built by default
-> >   guestperf: Support deferred migration for multifd
-> >   guestperf: Nitpick the inconsistent parameters
-> >   guestperf: Introduce multifd compression option
-> >
-> >  MAINTAINERS                                   |  5 +++
-> >  .../migration/guestperf-batch.py              |  0
-> >  .../migration/guestperf-plot.py               |  0
-> >  {tests =3D> scripts}/migration/guestperf.py     |  0
-> >  .../migration/guestperf/__init__.py           |  0
-> >  .../migration/guestperf/comparison.py         | 15 ++++++++-
-> >  .../migration/guestperf/engine.py             | 33 ++++++++++++++++---
-> >  .../migration/guestperf/hardware.py           |  0
-> >  .../migration/guestperf/plot.py               |  0
-> >  .../migration/guestperf/progress.py           |  0
-> >  .../migration/guestperf/report.py             |  0
-> >  .../migration/guestperf/scenario.py           |  7 ++--
-> >  .../migration/guestperf/shell.py              |  3 ++
-> >  .../migration/guestperf/timings.py            |  0
-> >  tests/migration/meson.build                   | 30 +++++++++--------
-> >  15 files changed, 73 insertions(+), 20 deletions(-)
-> >  rename {tests =3D> scripts}/migration/guestperf-batch.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf-plot.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/__init__.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/comparison.py (89%)
-> >  rename {tests =3D> scripts}/migration/guestperf/engine.py (93%)
-> >  rename {tests =3D> scripts}/migration/guestperf/hardware.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/plot.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/progress.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/report.py (100%)
-> >  rename {tests =3D> scripts}/migration/guestperf/scenario.py (93%)
-> >  rename {tests =3D> scripts}/migration/guestperf/shell.py (98%)
-> >  rename {tests =3D> scripts}/migration/guestperf/timings.py (100%)
->
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->
->
-> Thinking out loud a little bit, it's still somewhat obscure from which
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-directory this script should be called. None of these invocations work:
->
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 
-Indeed, we could document how to build and use the guestperf,
-refining it to be more convenient to use.
+One question and one note below.
 
+> ---
+>  .gitattributes                                |  2 +
+>  subprojects/bilge-impl-0.2-rs.wrap            |  1 +
+>  subprojects/packagefiles/.gitattributes       |  1 +
+>  .../packagefiles/bilge-impl-1.63.0.patch      | 45 +++++++++++++++++++
+>  4 files changed, 49 insertions(+)
+>  create mode 100644 subprojects/packagefiles/.gitattributes
+>  create mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+>
+> diff --git a/.gitattributes b/.gitattributes
+> index 6dc6383d3d1..9ce7a19581a 100644
+> --- a/.gitattributes
+> +++ b/.gitattributes
+> @@ -5,3 +5,5 @@
+>  *.rs            diff=rust
+>  *.rs.inc        diff=rust
+>  Cargo.lock      diff=toml merge=binary
+> +
+> +*.patch         -text -whitespace
+<snip>
+> diff --git a/subprojects/packagefiles/.gitattributes b/subprojects/packagefiles/.gitattributes
+> new file mode 100644
+> index 00000000000..bf5b766d75d
+> --- /dev/null
+> +++ b/subprojects/packagefiles/.gitattributes
+> @@ -0,0 +1 @@
+> +/*.patch     -text
 
-> $ ./scripts/migration/guestperf.py
->
-> $ ./build/scripts/migration/guestperf.py
->
-> $ cd scripts/migration
-> $ ./guestperf.py
->
-> $ cd build/scripts/migration
-> $ ./guestperf.py
->
-> Failed to open file =E2=80=9Ctests/migration/initrd-stress.img=E2=80=9D: =
-open() failed:
-> No such file or directory
->
-> This is the only one that works:
-> $ cd build
-> $ ./scripts/migration/guestperf.py
->
-> Maybe we could improve that somehow in the future.
->
->
+Do we really need unsetting the attrs for *.patch in both .gitattributes
+and subprojects/packagefiles/.gitattributes? Is that related to the
+different setting of -whitespace?
 
---=20
-Best regards
+> diff --git a/subprojects/packagefiles/bilge-impl-1.63.0.patch b/subprojects/packagefiles/bilge-impl-1.63.0.patch
+> new file mode 100644
+> index 00000000000..987428a6d65
+> --- /dev/null
+> +++ b/subprojects/packagefiles/bilge-impl-1.63.0.patch
+> @@ -0,0 +1,45 @@
+> +--- a/src/shared/discriminant_assigner.rs
+> ++++ b/src/shared/discriminant_assigner.rs
 
---000000000000ac505406252f7506
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Just a note: when fetching this series using b4 am, I still get this
+patch with LF line ending. Later when merging one may need to fetch this
+specific commit directly from the git repository.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 23, 20=
-24 at 11:06=E2=80=AFPM Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de"=
->farosas@suse.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:s=
-olid;border-left-color:rgb(204,204,204);padding-left:1ex"><a href=3D"mailto=
-:yong.huang@smartx.com" target=3D"_blank">yong.huang@smartx.com</a> writes:=
-<br>
-<br>
-&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
-=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
-&gt;<br>
-&gt; v3:<br>
-&gt; 1. Remove the two redundant assignments in [PATCH v2 2/5] suggested by=
- Daniel <br>
-&gt;<br>
-&gt; Please review, thanks<br>
-&gt; Yong<br>
-&gt;<br>
-&gt; v2:<br>
-&gt; 1. Update the MAINTAINERS section suggested by Fabiano Rosas <br>
-&gt; 2. Ensure the dependencies when build the initrd-stress.img suggested =
-by Daniel<br>
-&gt; 3. Fix some bugs<br>
-&gt;<br>
-&gt; v1:<br>
-&gt; The previous patchset:<br>
-&gt; <a href=3D"https://lore.kernel.org/qemu-devel/cover.1722957352.git.yon=
-g.huang@smartx.com/" rel=3D"noreferrer" target=3D"_blank">https://lore.kern=
-el.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/</a><br>
-&gt; does not made the necessary changes and tests for the upstream version=
-.<br>
-&gt;<br>
-&gt; This patchset works for that:<br>
-&gt; 1. Move the guestperf to scripts directory suggested by Fabiano Rosas<=
-br>
-&gt; 2. Make initrd-stress.img built by default suggested by Fabiano Rosas<=
-br>
-&gt; 3. Make the necessary changes to adapt the latest multifd behavior<br>
-&gt; 4. A nitpick for multifd migration<br>
-&gt; 5. Support multifd compression option<br>
-&gt;<br>
-&gt; Hyman Huang (5):<br>
-&gt;=C2=A0 =C2=A0tests/migration: Move the guestperf tool to scripts direct=
-ory<br>
-&gt;=C2=A0 =C2=A0tests/migration: Make initrd-stress.img built by default<b=
-r>
-&gt;=C2=A0 =C2=A0guestperf: Support deferred migration for multifd<br>
-&gt;=C2=A0 =C2=A0guestperf: Nitpick the inconsistent parameters<br>
-&gt;=C2=A0 =C2=A0guestperf: Introduce multifd compression option<br>
-&gt;<br>
-&gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
-=C2=A0 5 +++<br>
-&gt;=C2=A0 .../migration/guestperf-batch.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf-plot.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 {tests =3D&gt; scripts}/migration/guestperf.py=C2=A0 =C2=A0 =C2=
-=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/__init__.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/comparison.py=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0| 15 ++++++++-<br>
-&gt;=C2=A0 .../migration/guestperf/engine.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0| 33 ++++++++++++++++---<br>
-&gt;=C2=A0 .../migration/guestperf/hardware.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/plot.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/progress.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/report.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 0<br>
-&gt;=C2=A0 .../migration/guestperf/scenario.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 7 ++--<br>
-&gt;=C2=A0 .../migration/guestperf/shell.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 3 ++<br>
-&gt;=C2=A0 .../migration/guestperf/timings.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 0<br>
-&gt;=C2=A0 tests/migration/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 30 +++++++++--------<br>
-&gt;=C2=A0 15 files changed, 73 insertions(+), 20 deletions(-)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf-batch.py (100=
-%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf-plot.py (100%=
-)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf.py (100%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/__init__.py (=
-100%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/comparison.py=
- (89%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/engine.py (93=
-%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/hardware.py (=
-100%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/plot.py (100%=
-)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/progress.py (=
-100%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/report.py (10=
-0%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/scenario.py (=
-93%)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/shell.py (98%=
-)<br>
-&gt;=C2=A0 rename {tests =3D&gt; scripts}/migration/guestperf/timings.py (1=
-00%)<br>
-<br>
-Reviewed-by: Fabiano Rosas &lt;<a href=3D"mailto:farosas@suse.de" target=3D=
-"_blank">farosas@suse.de</a>&gt;<br>
-<br>
-<br>
-Thinking out loud a little bit, it&#39;s still somewhat obscure from which=
-=C2=A0</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color=
-:rgb(204,204,204);padding-left:1ex">
-directory this script should be called. None of these invocations work:<br>=
-</blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sans=
- ms&quot;,sans-serif" class=3D"gmail_default">Indeed, we could document how=
- to build and use the guestperf,=C2=A0</div><div style=3D"font-family:&quot=
-;comic sans ms&quot;,sans-serif" class=3D"gmail_default">refining it to be =
-more convenient to use.</div></div><div><br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-lef=
-t-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-$ ./scripts/migration/guestperf.py<br>
-<br>
-$ ./build/scripts/migration/guestperf.py<br>
-<br>
-$ cd scripts/migration<br>
-$ ./guestperf.py<br>
-<br>
-$ cd build/scripts/migration<br>
-$ ./guestperf.py<br>
-<br>
-Failed to open file =E2=80=9Ctests/migration/initrd-stress.img=E2=80=9D: op=
-en() failed:<br>
-No such file or directory<br>
-<br>
-This is the only one that works:<br>
-$ cd build<br>
-$ ./scripts/migration/guestperf.py<br>
-<br>
-Maybe we could improve that somehow in the future.<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
-</div></div></div>
-
---000000000000ac505406252f7506--
+--
+Best Regards
+Junjie Mao
 
