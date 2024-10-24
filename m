@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C542CE8E6A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 17:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC92CE8E9A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 18:00:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t421s-00054i-W1; Thu, 24 Oct 2024 13:53:50 -0400
+	id 1t427p-0006lI-Bq; Thu, 24 Oct 2024 13:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t421m-00054E-SC
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:53:42 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t427n-0006kx-Nh
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:59:55 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t421j-0002Ju-Dg
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:53:41 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-7db908c9c83so695639a12.2
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:53:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t427m-0003Kw-3W
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:59:55 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-7ea8de14848so674651a12.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:59:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729792417; x=1730397217; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729792792; x=1730397592; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S5yCjJSTtpBCKuL6oAxXQ3icP8CLu07VEDpomx/5oNM=;
- b=q1YdYguijVa/tz4BaVTx3JvKcOFtqP9sEVgZlgeB2WQGOzbrm5UX/NjRyMRoITFP2m
- +E5nlArTAzWgLKUnwm9KPRSsxcibfWB39z1VFI2Ss7mt6zIEP/KTfw+1K0M5vi64qnNR
- i6pJYcOFkOlpvVSNbMt0HwLlkxLI9mOOLEOl/d0ZdauoA4DKvE1NPyXPolrLF5Zau2yk
- sOG2LX6QM4qbhhBeUI1lotIg6PVdkzml8i7QivrljKzf711Wh712AqrsAx2zE0nXUGct
- eg+3SVPguxC/+qT856LqqO/+ItnLXto6s8LIM+sH0uR5gbbjG/N2gOWXUXSCoSuXaLNG
- eC3A==
+ bh=tIqDcNbYTVZWbfAuK5MioxEwio+QdY/1Sd/0q+D3CrI=;
+ b=wkyShw3pN76cfjQddU7Q1p9Lg+ciBs3N1JARU6KJAWDdr3k4Cd40PDdWIENYFB9tXE
+ VBF2W2uxkRxejKXecL3H0zk87KnhGcJM+K95wz0Llf3OCrUjc3zZNQtY1VXAWz/c0NS1
+ Dx9Hp5Xr9G5JkBzg9xvz5KW2FzgQ2pSs68JQXej7I0mOKTLAXsHmAhXKYS1bN8C3tqZu
+ 5pBcxMGseaZvvad0RtfKVKcXrSTsE4shJKIolCqeMfIuvyeBQgABK1NWKA7xX7ZWr2FR
+ w7kICtd2pPrMG8vxuue2i3zOXf2KP8nKJ7SauSyiT7sE7o6zOFqB42VclV/G3SaFzJWp
+ jk/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729792417; x=1730397217;
+ d=1e100.net; s=20230601; t=1729792792; x=1730397592;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S5yCjJSTtpBCKuL6oAxXQ3icP8CLu07VEDpomx/5oNM=;
- b=rkgxHvhFzVWv8M3DwrHkXBTE91lSkE62CDdG9FBK+irDI/w7jPP/VVCkMuSe6lbAOq
- qUL3taEXq+GvJnEtz8Z2fQufFC4VQGPzUoARFm2CSnDMR/6FXO3TOxAlSOpZvW50rXiC
- MeOEO7FNy0LgJLrP0j4gq4Roxrahq9+AixuS0IVWZI6CpytQn3nEnq0kx4FhFIT37uWw
- G3sCHJFuMf8HzHJbI4erw2x4x77a08WDM466ig43j4GOpqZEu5Tafgrnah+F9rxoSliG
- 8h7wZWK9mV4j3EFJO9Dif2zYHkuRJ3MwvimHhOR0t1wUgEgAoytSYonoSj64yESIPE1Q
- olvQ==
-X-Gm-Message-State: AOJu0Ywma59nNzofkuuofRBmH0MESB+44uI832XDpVbzAiYz+BSIbQWy
- RVl4Qo14xl2rur2ugd32o3Jhs1Ko2qPBf3+bnCrtDgMTrqR2ASf0dSnFo4XVnfY=
-X-Google-Smtp-Source: AGHT+IFSSFUz4+OFDZZ7eu/hNQp6TY3zb6SYaBY/1EPqB8Kx1YB527ztlep+/ftJZmM+JIc53BZTxg==
-X-Received: by 2002:a05:6a21:2986:b0:1d9:20bb:4afe with SMTP id
- adf61e73a8af0-1d978bb45b5mr7278003637.50.1729792417045; 
- Thu, 24 Oct 2024 10:53:37 -0700 (PDT)
+ bh=tIqDcNbYTVZWbfAuK5MioxEwio+QdY/1Sd/0q+D3CrI=;
+ b=pIpQ0N4RHNoIc/QqVGM1g17KAQV4Aq+m7cPZZAB3kG9J4mrSjiZyTyFwqhj3oyEFt4
+ FOly8pwX0n0oMCPxsNLArIWRy7h4H8lJq7sfL8FA9GbgbgKQTGzxlPPA9+9xZ/h5WXUS
+ gpUf4iJh51pHW0KLynqI9x5ZfdwT9RRVTsOBdCLHfXt9um8QQs680ys/FoTJdgu8ENqU
+ dV/v9U5eM94MFOwGyoPrkh32Uo8fsH3AzuOPFEB7Hot2A3BMMFUX0L81t6uEHegf71H6
+ AmyeIFjAtmjYrYU+tRZ76ql307IXkBssS1erqnPr0Mwn8fVlsOn0xNyeORCJjwweLzy9
+ s6Kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+wDIiJZqUcBXFOuAjY4SupxOpRaiqwimf5IUZSI9/vZyQXttMQ1MGvKZHIaGGHZYp88BIwsw/Zd22@nongnu.org
+X-Gm-Message-State: AOJu0YwrGNC3vumq+MfSXxiM4Qyi7xT6f8P/azx9mUohKM1DzWAH0xbn
+ 8+Z+oSpgAMjKcxBO3wYEIkIGEFgiyTvJ2QnrsBz2Zs6zBwZvjVwoo6OORr18gDm3vKqmnGP9vcW
+ 5
+X-Google-Smtp-Source: AGHT+IEwY08smMeD+hGJlqAjfyHRepsVOr5YNqZFkShf6Z1eN9KRiXykf65EvdGyRzZ0QQ5YSfymhQ==
+X-Received: by 2002:a05:6a20:d795:b0:1d9:69cd:ae22 with SMTP id
+ adf61e73a8af0-1d978b3de45mr8419283637.30.1729792792292; 
+ Thu, 24 Oct 2024 10:59:52 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7eaeab638c5sm8939847a12.55.2024.10.24.10.53.35
+ d2e1a72fcca58-71ec1312d6bsm8226672b3a.29.2024.10.24.10.59.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Oct 2024 10:53:36 -0700 (PDT)
-Message-ID: <e52b231d-f23e-4772-bfb2-08ddcc3e7ad0@linaro.org>
-Date: Thu, 24 Oct 2024 14:53:33 -0300
+ Thu, 24 Oct 2024 10:59:51 -0700 (PDT)
+Message-ID: <5262a33d-d0c5-452b-9869-f8f482b1c857@linaro.org>
+Date: Thu, 24 Oct 2024 14:59:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 51/98] hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers
- (CMD9 & CMD10)
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- qemu-riscv <qemu-riscv@nongnu.org>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-52-philmd@linaro.org>
- <94b2c5bf-53d0-4c74-8264-f3021916f38c@roeck-us.net>
- <7965f970-cdbd-4e3e-bc4c-62fb496a9e24@linaro.org>
- <a49719b7-e3fb-46ca-b884-cb7019a0b09f@roeck-us.net>
+Subject: Re: [PATCH 0/2] arm: Add collie and sx functional tests
+To: Guenter Roeck <linux@roeck-us.net>, Jan Luebbe <jlu@pengutronix.de>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20241017163247.711244-1-peter.maydell@linaro.org>
+ <dcf06645-dac0-4099-8946-38ca9deaeccf@redhat.com>
+ <ec2cb5e8-77be-435e-8aa7-4314cf412c4d@redhat.com>
+ <CAFEAcA8MY8DWABNuYuzH57k-nv3J4s0eMR=FuRt1TVd8P2GU2g@mail.gmail.com>
+ <a65a224e-4f54-436d-b555-734a8926d941@roeck-us.net>
+ <aa7755a2-e6fa-4d23-bcac-a630e6da98db@linaro.org>
+ <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <a49719b7-e3fb-46ca-b884-cb7019a0b09f@roeck-us.net>
+In-Reply-To: <d9f18091-aee1-4b32-ba72-e1028fe433c9@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,117 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Guenter,
+Cc'ing Jan.
 
-On 24/10/24 01:04, Guenter Roeck wrote:
-> On 10/23/24 20:27, Philippe Mathieu-Daudé wrote:
+On 22/10/24 12:04, Guenter Roeck wrote:
+> On 10/21/24 21:09, Philippe Mathieu-Daudé wrote:
 >> Hi Guenter,
 >>
->> On 23/10/24 19:24, Guenter Roeck wrote:
->>> Hi,
->>>
->>> On Fri, Jun 28, 2024 at 09:01:27AM +0200, Philippe Mathieu-Daudé wrote:
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>>> ---
->>>
->>> This patch results in:
->>>
->>> [    5.976133] Waiting for root device /dev/mmcblk0...
->>> [    6.501462] mmc0: error -38 whilst initialising SD card
->>> [    7.557473] mmc0: error -38 whilst initialising SD card
->>>
->>> ... (repeated until session is aborted)
->>>
->>> when trying to boot Linux for sifive_u from sd card.
->>> The command used to boot the image is
->>>
->>> qemu-system-riscv64 -M sifive_u -m 512M -no-reboot \
->>>      -kernel arch/riscv/boot/Image \
->>>      -snapshot -drive file=rootfs.ext2,format=raw,if=sd \
->>>      -bios default \
->>>      -append "root=/dev/mmcblk0 rootwait console=ttySIF0,115200 
->>> earlycon" \
->>>      -nographic -monitor none
-
-
->>> # first bad commit: [da954d0e32444f122a41c24948d4d1c718bf66d4] 
->>> hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+>> On 21/10/24 11:02, Guenter Roeck wrote:
 >>
->> I don't have access to my workstation, but looking at the patch,
->> maybe the fix is simply:
+>>> Unrelated to this, but I found that the sd emulation in 9.1 is also 
+>>> broken
+>>> for loongarch and sifive_u, and partially for ast2600-evb (it has two
+>>> controllers, with one of them no longer working). That is too much 
+>>> for me
+>>> to track down quickly, so this is just a heads-up.
 >>
->> ---
->> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->> index a5d2d929a8a..1594d340a6e 100644
->> --- a/hw/sd/sd.c
->> +++ b/hw/sd/sd.c
->> @@ -1567,7 +1567,7 @@ static sd_rsp_type_t 
->> emmc_cmd_SEND_EXT_CSD(SDState *sd, SDRequest req)
->>   /* CMD9 */
->>   static sd_rsp_type_t spi_cmd_SEND_CSD(SDState *sd, SDRequest req)
->>   {
->> -    if (sd->state != sd_standby_state) {
->> +    if (sd->state != sd_transfer_state) {
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
->> @@ -1586,7 +1586,7 @@ static sd_rsp_type_t sd_cmd_SEND_CSD(SDState 
->> *sd, SDRequest req)
->>   /* CMD10 */
->>   static sd_rsp_type_t spi_cmd_SEND_CID(SDState *sd, SDRequest req)
->>   {
->> -    if (sd->state != sd_standby_state) {
->> +    if (sd->state != sd_transfer_state) {
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
->> ---
->>
->> Is it possible for you to test this snippet?
+>> Please Cc me with reproducer or assign Gitlab issues to me,
+>> I'll have a look.
 >>
 > 
-> It must be related, but something else must be wrong. With the above, I get
+> If it wasn't funny, it would be sad.
 > 
-> [    4.355063] Run /sbin/init as init process
-> ssi_sd: error: Unexpected response to cmd 13
-> [    4.780139] mmc0: SPI card removed
-> [    4.785194] EXT4-fs (mmcblk0): shut down requested (2)
-> [    4.812689] Starting init: /sbin/init exists but couldn't execute it 
-> (error -5)
-> [    4.813248] Run /etc/init as init process
-> [    4.825799] init: attempt to access beyond end of device
+> hw/sd/sd.c:sd_reset() calls sd_bootpart_offset() t determine the boot 
+> partition
+> offset. That function needs to have sd->ext_csd[EXT_CSD_PART_CONFIG] 
+> configured.
+> However, the value is only set later in sd_reset() with the call to 
+> sc->set_csd().
+> One of the parameters of that function is the previously calculated size.
 > 
-> The state is always 4 when spi_cmd_SEND_CSD() and spi_cmd_SEND_CID()
-> are called. With more debugging added:
+> So in other words there is a circular dependency. The call to 
+> sd_bootpart_offset()
+> returns 0 because sd->ext_csd[EXT_CSD_PART_CONFIG] isn't set, then
+> the call to sc->set_csd() sets it ... too late. Subsequent calls to
+> sd_bootpart_offset() will then return the expected offset.
 > 
-> ssi_sd: error: Unexpected response to cmd 13 (arglen expected 4, got 16)
-> 
-> Changing only one of the functions to check against sd_transfer_state
-> doesn't help either; that brings back the repeated error -38.
+> I have no idea how this is supposed to work, and I don't think it works
+> as implemented. I'll revert commit e32ac563b83 in my local copy of qemu.
 
-Looking at commit 807f6adac37 ("hw/sd/sdcard: Add sd_cmd_SEND_STATUS
-handler (CMD13)"), this should fix:
-
--- >8 --
-@@ -1639,7 +1639,7 @@ static sd_rsp_type_t sd_cmd_SEND_STATUS(SDState 
-*sd, SDRequest req)
-      }
-
-      if (sd_is_spi(sd)) {
--        return sd_r2_s;
-+        return sd_r1;
-      }
-
-      return sd_req_rca_same(sd, req) ? sd_r1 : sd_r0;
----
-
-But -- why the commit msg didn't mention the spec fix -- the commit
-looks correct to me. We might be missing smth from the spec. I'll
-have a look during soft freeze. Having a test such the one recently
-added in 
-https://lore.kernel.org/qemu-devel/20241024082735.42324-3-thuth@redhat.com/
-would help me ;)
+Jan, can you have a look at this bug report please? Otherwise I'll
+have a look during soft freeze.
 
 Regards,
 
