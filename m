@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E42D0BB4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 00:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251B0D0BB46
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 00:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3lPw-0002bN-U5; Wed, 23 Oct 2024 20:09:33 -0400
+	id 1t3lRw-0003Um-5k; Wed, 23 Oct 2024 20:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t3lPu-0002b9-G0
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 20:09:30 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t3lRu-0003TU-1C
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 20:11:34 -0400
+Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1t3lPs-0002pA-4s
- for qemu-devel@nongnu.org; Wed, 23 Oct 2024 20:09:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1729728552; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=PafJ9G8pz0K5EuoFwG/m2lqy6/SXKrkPs6QZfkscOF95jn2aNRrYUNGPHPdrZpgVXt/kajssecdPqgre0ceYwPY5zbzjW57zoVbmWarBFFd4iPo9+Q20hL76whZijc2jpirinDLeel80nLiQysdorHHzHqnIyjUBMgDissTa0xA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1729728552;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Kgo5bTQvBh63pe8d1VgGi3OBQQ1zuzOkN2K07GQrvSw=; 
- b=TS1ZZN9orgEuu21NUIPKTbqfvck8sDOC3LdWR3WszjYSfP1RyHSft+eVJAidcwGOZCD3nSm+7z0r2K1TZzjcKXO9NlAooOH8ml69cYzW5Y2Wm0pNRCPNtn8ecEhVmHrjppy00MBAzTuh1AivIl5Kende45qzKtKgz4O0f3JfFq4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729728552; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=Kgo5bTQvBh63pe8d1VgGi3OBQQ1zuzOkN2K07GQrvSw=;
- b=ZCTj39kJ88l4sih2SkkIp2tZVkdJg0c5cjdFDO8jrruI/hLaa86fddTSnJUsalBz
- ++5JEOpE9MQfzEDlp2ng8zRmwRWlUMWm0ukeOaXsdj/nb4iq9iXR2tusPujYB97371Y
- qwZ9J4AHo59Q+2/ekTZCsGu0T6CAm5RiiCiOraD0=
-Received: by mx.zohomail.com with SMTPS id 1729728551295499.0876305106515;
- Wed, 23 Oct 2024 17:09:11 -0700 (PDT)
-Message-ID: <e444ad67-7527-44f9-9a27-dd8f0ae990dd@collabora.com>
-Date: Thu, 24 Oct 2024 03:09:04 +0300
+ (Exim 4.90_1) (envelope-from <rob@landley.net>) id 1t3lRr-0003C4-UR
+ for qemu-devel@nongnu.org; Wed, 23 Oct 2024 20:11:33 -0400
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 537939426F4;
+ Thu, 24 Oct 2024 00:11:28 +0000 (UTC)
+Received: from pdx1-sub0-mail-a206.dreamhost.com
+ (100-99-180-59.trex-nlb.outbound.svc.cluster.local [100.99.180.59])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id E4DD69426D0;
+ Thu, 24 Oct 2024 00:11:27 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1729728687; a=rsa-sha256;
+ cv=none;
+ b=gO5JKzab1fdFjH8iM3P+gcjKfDsTdXo4kVlmIOfzIf6LemOMVxHvM1pSczqFDAW8F8BmrS
+ YxHt3Xw4Y0g/8xaAJ5mQ11IjZlZXf7Je9VSd6HgAsdr/NFUf6E0Vsb6RKvMPskWAqVqjz8
+ WLNfNETVEYgO04bkuS9WnIfvR7qQmtpbw8GR+sbQ9c1FCVw4bkpONxXMRT/8ENazr8rs1K
+ MPIFYhcoqGsKT9FQFOKMmGka95mpQNso/9zfVlm6254N7xA0zI7KrK8e0P/5XRaLUOABZa
+ 84M7ec+JswQG0h75OBElC/2LpaMcY11HuePyiALWI7ok3X2peCizGwjly9kZBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1729728687;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:dkim-signature;
+ bh=iuAyWQcyESR1v3JuX3TByXvN6gsd0PEViL14GajQdB8=;
+ b=6GOboNKzkyHQO6tuLcvp3wyDGfHI1WroWsi6DLFfHViqp26eHETfd+AGwkpXYI6Rw0K58N
+ vu01Lnq6aopOrry53v9lZS9kbhnzRddfukGEgSUk4NnVx7nYdFL379eeE010MxVxL3zLb3
+ KZ7M8TxrTd4wsOmqJQL8j9dUukFZRZhLYypETQ4mOESdWW/1FkcnJ/2jxBdFF+DajhmLuZ
+ QXalAeoGXJtVnYNQGy3OTmpGbGQLNMBZ/9ZRu6C6uFgMwlvFKTPO9f+dFSNxl/hlwEjAGJ
+ yWjBQ3sWeYQwvqzIPllFmztSuClWRbg/VcpJlKQFzsd6LOtXigAZzGAIT7z7CQ==
+ARC-Authentication-Results: i=1; rspamd-7767f6b98-6r5k9;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
+X-Sender-Id: dreamhost|x-authsender|rob@landley.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
+X-MailChannels-Auth-Id: dreamhost
+X-Name-Spicy: 6e42a35210eb48c5_1729728688177_3008430000
+X-MC-Loop-Signature: 1729728688176:2355695738
+X-MC-Ingress-Time: 1729728688176
+Received: from pdx1-sub0-mail-a206.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.99.180.59 (trex/7.0.2); Thu, 24 Oct 2024 00:11:28 +0000
+Received: from [172.22.7.54] (unknown [198.232.126.195])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested)
+ (Authenticated sender: rob@landley.net)
+ by pdx1-sub0-mail-a206.dreamhost.com (Postfix) with ESMTPSA id 4XYmYC2Q3LzDh; 
+ Wed, 23 Oct 2024 17:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
+ s=dreamhost; t=1729728687;
+ bh=iuAyWQcyESR1v3JuX3TByXvN6gsd0PEViL14GajQdB8=;
+ h=Date:To:From:Subject:Content-Type:Content-Transfer-Encoding;
+ b=GtEXE511RaFuCduGEcK5v5tCK/Nc2mTcGOmg5aMRqXUKrzJ+1sshmoi+h3358M5Oq
+ I/KRD4+FVGqbCf2peKHeYSUTdYbqWMAOiVw/a+y9CU0+PGHudfMyB6LcemWG6NfKv4
+ QTfSU9/GRSUnAGbLiXjFVMyUvcQkhqqZ7gIojj8+UvxhpZqA+AjWvc7pwPlS8xuB7B
+ r5AYgoT1W5Y9eEQTzSQrvDYO7QyixeEh4KRZQdB4jP80PZuGLYOHHlQf3scXbln7mC
+ bjU+HcJ94YKqFxHAzCuwZ1nxLRNXp3B/IlxF6p7gsdew63na8VRXWWmZeTXmro3jIV
+ /2jABSRWJei/Q==
+Message-ID: <d6755445-1060-48a8-82b6-2f392c21f9b9@landley.net>
+Date: Wed, 23 Oct 2024 19:11:26 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] virtio-gpu: Support asynchronous fencing
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@chromium.org>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20241015043238.114034-1-dmitry.osipenko@collabora.com>
- <20241015043238.114034-6-dmitry.osipenko@collabora.com>
- <2020cf8d-32b8-459a-91d2-59b2464f817a@daynix.com>
 Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <2020cf8d-32b8-459a-91d2-59b2464f817a@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+To: qemu-devel@nongnu.org, thuth@redhat.com, jeff@coresemi.io,
+ peter.maydell@linaro.org, glaubitz@physik.fu-berlin.de
+From: Rob Landley <rob@landley.net>
+Subject: Please put qemu-system-sh4eb back.
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=23.83.222.61; envelope-from=rob@landley.net;
+ helo=fly.ash.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,26 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/24 13:04, Akihiko Odaki wrote:
-...
->> +        ret = virgl_renderer_context_create_fence(cmd-
->> >cmd_hdr.ctx_id, flags,
->> +                                                  cmd->cmd_hdr.ring_idx,
->> +                                                  cmd-
->> >cmd_hdr.fence_id);
->> +        if (ret)
->> +            qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "%s: virgl_renderer_context_create_fence
->> error: %s",
->> +                          __func__, strerror(ret));
-> 
-> This should use: strerror(-ret)
+I use it, and ship system images for it:
 
-Indeed, here error code should be negative, while for the legacy
-virgl_renderer_create_fence() it's positive. Will correct it in v3, add
-a clarifying comment and address other comments. Thanks for the review!
+   https://landley.net/bin/mkroot/latest/sh4eb.tgz
 
--- 
-Best regards,
-Dmitry
+And here's me recentish-ly debugging an issue via it:
+
+  https://landley.net/notes-2024.html#24-05-2024
+
+(Compile/test cycles are WAY easier there than copying files onto an sd 
+card to test on actual hardware.)
+
+There was a big-endian issue breaking r2d last year, but it also broke 
+big endian mips and some other targets too, and it got fixed. The binary 
+I built a few months ago was working fine for me with vanilla qemu git 
+source? (I don't _think_ I had local changes?) I can try to build the 
+version removed to check that...
+
+Yes I should be better about pushing local patches upstream. For 
+example, here's the kernel patch I use to run fdpic binaries under qemu:
+
+https://landley.net/bin/mkroot/latest/linux-patches/0002-sh4-fdpic.patch
+
+Which lets you enable the FDPIC loader on an mmu kernel, which is useful 
+for testing j-core userspace under qemu.
+
+Rob
 
