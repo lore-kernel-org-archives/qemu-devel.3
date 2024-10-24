@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE16D0BB70
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499E2D0BB70
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 08:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3tFp-0006uT-6H; Thu, 24 Oct 2024 04:31:37 -0400
+	id 1t3tPb-000895-Sf; Thu, 24 Oct 2024 04:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tFn-0006uI-8R
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:31:35 -0400
+ id 1t3tPa-00088t-2G
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:41:42 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tFl-0000ww-Hk
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:31:34 -0400
+ id 1t3tPX-0002Jf-4Y
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 04:41:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=v+gEgdLNsBa4rPHUkjZop5D5rcFOSR0eid/5SoIMaOQ=; b=wntGWNyp3Aru1LcuGrgWWZPUVL
- 2s4HDYBc6z8Gp/27YutBzcWfufxwXJKj6+S2NYg1DO7DDzpJCYFzqXX7qiQpUf7kNp1CrXRVAgy0i
- tYBKwuxy/FoQRKRO3L1kES6F8MTw+fksJsQ3IPYmrHgUvwYBe8u0YuYebzMoJJgSjd/9LdwqMJ5mY
- RJDfO681NeUxl+jBFoLp/vdCy4z5+PkfwtssGYH/hVxgvoTi+ksEydmvfupGHzG0ZYrSCihv1jor5
- QGgL01F2sDIJLWujgBB9uE7cynQd0ccOtv8DYWuDd3Dn0Y94E3aBMfBuYdHDemTl7VQ1Gyta10x3y
- mKPRR+MlzQGPYITeyk4omyiydLmzx7tD4pwdUVcWRCg36lJR8hwS1BlAQDGckBEnrQbLe5hJFxMfb
- arYxGnGRJA7g4z1q7WUhUUCUjvE2Y4X1f+jCO4LoLqvOVDpEviLxMQCs+cNSFAaXg3DIstaiJdLWR
- DfLSVV74aBeakFk32I96RhtYvTgBhkyu7dwOpHxBkhinbVialo/3fY8CGGjPalIKJYMvsjw32BmBx
- +ZWLHGtAly4FSH4twn+XOv71kYOQnfnAiTVQ/UC4zuENesGKoaxPCA37A0PRZHD8WhWPOnvgd65Tf
- +wiErl97QyMkY+9RCKhScOrkpd23XGmZbi6hV1OlQ=;
+ bh=0PTWFwqPHVBCZfiNnDFmM41gRJS14UYrCHwf+jgtQ20=; b=WSPMijgnzjT87PwAOqJzPoZWSg
+ dxxmVLXWLvEXMTt998A1uMnIfBmZfeCrPtnAUFrV2kI97Lr0GcKkBR0npxkuOu2lJGrqEQKb9ZqU5
+ CK9PUh5ZKMF/ZiCbY68vXK0D6i6usYYu+mj0kNXqvscc/DoNILG5Fkb5NSsx2/X71opkJlIZYCSCa
+ HLzFhTdFoXOYfaqzvWgOgS/WhqMTvGsk/FnxFLPnB7LWS7sjsuofG21E56XfXRDu/HqmhEkf/oi/8
+ 1zfmA62bOra8c3K8QqXP5os9DpvrDAwGfsVKqDRU3Bhn6OzBv7rgz/W1VciYMMqUY5qGwugqY60/5
+ NjxPF/r1yg+5zuOeBt/i4HyqX/o6iAUy6kelDPed7u80HnhS5DLSw7+GdUhQI5DSrMzHS1ipli+I0
+ EpEDe2Nogq+dOsm4EkRIbvGW6F5sPig5OdKgUe01Ht4UfEpeMU+cnI7vfJZOn1WRx9HSpjZt4fdm4
+ V3sbYH255ef0qrTX/tq2q0D0kS7rpgjJNJHirsRLMOzzbHjwmPk/w36l9RCZUUsOdcxnlUhdpQiCZ
+ NhKrPDfJE0UkfRYUmllAgbHh7WycEjvI12JcmzDw/nrl6SxR198uHqqxukuExbEcw7gn7YSV7to/O
+ /F/xc01PXkpbf7pxnz8cLOM1oLDcK0OwVfrk5wDZo=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1t3tFP-000CXR-Vs; Thu, 24 Oct 2024 09:31:16 +0100
-Message-ID: <840e986f-f06f-405b-a008-e4de27d415a5@ilande.co.uk>
-Date: Thu, 24 Oct 2024 09:31:26 +0100
+ id 1t3tPA-000Cdw-Rd; Thu, 24 Oct 2024 09:41:20 +0100
+Message-ID: <e67d9e2a-d616-47ff-92a2-f4c7ea9eb70f@ilande.co.uk>
+Date: Thu, 24 Oct 2024 09:41:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  huth@tuxfamily.org, qemu-devel@nongnu.org
 References: <20241023085852.1061031-1-mark.cave-ayland@ilande.co.uk>
- <20241023085852.1061031-4-mark.cave-ayland@ilande.co.uk>
- <28ab5799-d096-4000-8806-0a30eeb10ba6@linaro.org>
+ <20241023085852.1061031-28-mark.cave-ayland@ilande.co.uk>
+ <ff126981-ddd6-41a7-bcd4-f27083a0445a@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <28ab5799-d096-4000-8806-0a30eeb10ba6@linaro.org>
+In-Reply-To: <ff126981-ddd6-41a7-bcd4-f27083a0445a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 03/36] next-cube: remove overlap between next.dma and
- next.mmio memory regions
+Subject: Re: [PATCH 27/36] next-cube: QOMify NeXTRTC
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,35 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/10/2024 03:42, Philippe Mathieu-Daudé wrote:
+On 24/10/2024 03:44, Philippe Mathieu-Daudé wrote:
 
+> Hi Mark,
+> 
 > On 23/10/24 05:58, Mark Cave-Ayland wrote:
->> Change the start of the next.mmio memory region so that it follows on directly
->> after the next.dma memory region, adjusting the address offsets in
->> next_mmio_read() and next_mmio_write() accordingly.
+>> This is to allow the RTC functionality to be maintained within its own separate
+>> device.
 >>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 >> ---
->>   hw/m68k/next-cube.c | 28 ++++++++++++++--------------
->>   1 file changed, 14 insertions(+), 14 deletions(-)
+>>   hw/m68k/next-cube.c | 66 ++++++++++++++++++++++++++++++++-------------
+>>   1 file changed, 48 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+>> index e4d0083eb0..6b574d39cf 100644
+>> --- a/hw/m68k/next-cube.c
+>> +++ b/hw/m68k/next-cube.c
+>> @@ -42,7 +42,13 @@
+>>   #define RAM_SIZE    0x4000000
+>>   #define ROM_FILE    "Rev_2.5_v66.bin"
+>> -typedef struct NeXTRTC {
+>> +
+>> +#define TYPE_NEXT_RTC "next-rtc"
+>> +OBJECT_DECLARE_SIMPLE_TYPE(NeXTRTC, NEXT_RTC)
+>> +
+>> +struct NeXTRTC {
+>> +    SysBusDevice parent_obj;
 > 
-> 
->> @@ -897,7 +897,7 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
->>       qdev_init_gpio_in(dev, next_irq, NEXT_NUM_IRQS);
->>       memory_region_init_io(&s->mmiomem, OBJECT(s), &next_mmio_ops, s,
->> -                          "next.mmio", 0xd0000);
->> +                          "next.mmio", 0x9000);
-> 
-> Please mention 0xd0000 was incorrect, otherwise:
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Since it was not explicitly reset, maybe QDev parent is enough?
 
-This one is a little more fuzzy, since I'm not even sure that the new value 0x9000 is 
-correct (there isn't much in the way of documentation to support this) - effectively 
-the purpose of truncating this memory region is to remove the overlap with another so 
-that MMIO accesses are consistently directed to the same handler.
+Hi Phil,
 
-I'll have a think about how I can re-word this better for a v2.
+This is deliberate, since the next-pc device resets a couple of fields directly in 
+the NeXTRTC struct in next_pc_reset_hold(), and these are moved to a separate 
+next_rtc_reset_hold() in the next patch.
+
+>>       int8_t phase;
+>>       uint8_t ram[32];
+>>       uint8_t command;
+>> @@ -50,7 +56,7 @@ typedef struct NeXTRTC {
+>>       uint8_t status;
+>>       uint8_t control;
+>>       uint8_t retval;
+>> -} NeXTRTC;
+>> +};
 
 
 ATB,
