@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E5DCE8E9A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 17:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22CB2CE8E6A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 17:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t41jZ-0000pY-OA; Thu, 24 Oct 2024 13:34:53 -0400
+	id 1t41mn-0001fF-VH; Thu, 24 Oct 2024 13:38:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41jW-0000oi-34
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:34:50 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41mn-0001f7-4e
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:38:13 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41jT-0008FW-UO
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:34:49 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-208cf673b8dso9862125ad.3
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:34:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1t41ml-0000Bw-Ki
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 13:38:12 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-71e3fce4a60so834668b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 10:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1729791286; x=1730396086; darn=nongnu.org;
+ d=linaro.org; s=google; t=1729791490; x=1730396290; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IghsbRgA5QvaXE95R8hVFjjHLs31Pi10rbpqIG2lUgc=;
- b=f3evdCZ2AZ/nFlnNNxwUkQ4qw1Qo3HxLWNsVvWW07JK0SJ01bLPUUpVMBX1aAqYGOi
- Q+5n7ry+WAAL9BCT2wR8ZgThQ9lUSUfg6n+4RdHPGRz9nhyLctRbqfr+NuSV506wTJTa
- uumlCLs4Z4S5XTPs7zQh+luPRV1+UBbBBXA+VDIiFFcBrO/X5xI7B/RGAHQLE8Yoz0mP
- +o+M/9CxlCojNoainGOy1VRWDrP2MnMvwa6MXKGxf/eYkNiKhUuQe0ssW3sCX9yqyJDz
- NGCGRnchoGdkKyC9Bahj5RKQChlNRA/7loTpZj8EFnNmX0+8yII2udcMLDIwjlVnBq6+
- ry3g==
+ bh=/HCkA72Al+fLXp2aws/gCeHnzhsyDnDthCWS7L8A744=;
+ b=snsDxCP6uKGF8pklijjgkog2fi3O1yinqmZ3RhSziNmGoW6S7OjM5z99MpSh7bgK1i
+ vT5XsboWsjiSEZYD10aanKevosArwEdy885tPJY8PwhPeb1voPt8LGD2qK2dsuxiUxnJ
+ be4j/0L8MtTcS1tln3XxpA8rhtKvPL31oP4RBSNEYbxwfHltFDn6JRyc9n2hxVMjp2Sv
+ cl4X8chNvwoMacUQm7Jkd4hnlSqpwZgNkOXLscdWnobtICtymzuFX+W6CKm/g5QvZ67j
+ sVJVi+okGPCyjy+q1eLD3BS4gPrZLBg+dtcllcVdjLX5qE2JkY9wDqrtFYUyk0pG6jd9
+ PPAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729791286; x=1730396086;
+ d=1e100.net; s=20230601; t=1729791490; x=1730396290;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IghsbRgA5QvaXE95R8hVFjjHLs31Pi10rbpqIG2lUgc=;
- b=NoAwwnoj3J6RjozBgEIGIsQPv8s7ZjKA9dIRKzdx+QplYau3WrkT+dryWmGmv5WEC7
- s9u/Xo27G9ShaAANLT6SkZJa2hLfvTUVFuwHjcSBi8jOTMJRUbz9vYNsySpW4+AkcLWv
- TEXWGHkFPkuOxVYX7essJSVW2Jqnh8cg7c7aNliW9oVg1mcU/AXRSyYstHTZbf5vstL8
- 3O37FKr062zA21EfRNFVsDL7pCGY43BVi5wn2b1/45XAYMBWwyyI9iGzntcelDTNOzbo
- bKS3O2Dz+M0KQc4PovFwhX6nAsgYxqqSqYtMpBraV21kIVA2/TQPISVPNxQVI0BeYHBP
- DNdQ==
+ bh=/HCkA72Al+fLXp2aws/gCeHnzhsyDnDthCWS7L8A744=;
+ b=Nf9wJO2UBYG9+VL+pqoW2AW7tD9sY0GFUE3IcNDwHuiecpJWYhOZnXwF+rGm8ghc1t
+ 8h9RfwdZNw0obEl/8HxrHS5bYbm9VngsgmuHGUy52SZqE9+dFO8Cw1zs9cSQjGTyfHg2
+ gybe3SRzaVfbKaVJGJCva6ZPaa7+ypeKd8wcWvicUOggjD2RnXZl+5iFRLhBlKlRtWh2
+ G8TKpuBVaRXp9rLN11nrybAePH+Tez1iNKunKd8r7CtrKnCQnx5eIKmk1ruJygRoVMNO
+ Kzv2IawqVa2CawVgoqg9qkBPaz8yjoS8k4q4jTpiUDiA8kf2xXSINWIe8dpfLuNv2hnx
+ BWTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKd+euFIqpe+BWLyTvF+fPnpChBHr6kQuRdKLV236VQvacLL7dS0JlEUbo5gxv2Mj972mUP4P48uMB@nongnu.org
-X-Gm-Message-State: AOJu0YwzSJDLzjH0tIjWRUtjaG/Zc1X3rLz+v44pE+fV/KJsM3u0CpuA
- UsVIRUxEIYPsPe16WlesHaoAuAEeEckkiPaprkEOakwdHOb9XRb4z5N5hCcw2/o=
-X-Google-Smtp-Source: AGHT+IFndmbkhEXR0vzVF3NyUsAyiySaBalT8Wk+a/XzEC5Qr8P50Vnrus2uB0cWpI9gFOKNrJBXHw==
-X-Received: by 2002:a17:902:c40c:b0:20c:a19d:e73e with SMTP id
- d9443c01a7336-20fb9a81a63mr30256365ad.57.1729791285917; 
- Thu, 24 Oct 2024 10:34:45 -0700 (PDT)
+ AJvYcCV2uA7VApJVMTlsWFbs9ZZt2j7/qyuS4fhT+EAIs1L18BBMFB7FNVRTOmHoSzwIa/l3ixJP65apJPd1@nongnu.org
+X-Gm-Message-State: AOJu0YwxYts1JREYZ3q/AJtruNiQ7k1oDWZTgNQfIyxWW4MMmnhEQGnL
+ LQiy0n8PERbQt+l0Ep1t0eoJBiZNGQ3LlRZObkvbUu8XIZrYaC5u6YaOQSEB/XI=
+X-Google-Smtp-Source: AGHT+IGK6gaqL43vWCwzDSJc5KN0PIvvTEaAcApOEKd7z10jrdWecDMqb+OzBbENK93g+8/u8AChYg==
+X-Received: by 2002:a05:6a00:1804:b0:71e:792b:4517 with SMTP id
+ d2e1a72fcca58-72045e78207mr3588873b3a.14.1729791489821; 
+ Thu, 24 Oct 2024 10:38:09 -0700 (PDT)
 Received: from [192.168.100.49] ([45.176.88.171])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-20e7f104ac1sm74887145ad.299.2024.10.24.10.34.44
+ d2e1a72fcca58-71ec13d7462sm8250653b3a.109.2024.10.24.10.38.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Oct 2024 10:34:45 -0700 (PDT)
-Message-ID: <df6dfd5c-ee36-4bca-8632-f0d2443d06ca@linaro.org>
-Date: Thu, 24 Oct 2024 14:34:43 -0300
+ Thu, 24 Oct 2024 10:38:09 -0700 (PDT)
+Message-ID: <aa4caeed-275b-459c-a244-bf3835f48227@linaro.org>
+Date: Thu, 24 Oct 2024 14:38:06 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] stubs: avoid duplicate symbols in libqemuutil.a
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20241021163449.136804-1-pbonzini@redhat.com>
+Subject: Re: [PATCH 2/2] tests/functional: Add a test for sh4eb
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Rob Landley <rob@landley.net>, Yoshinori Sato
+ <ysato@users.sourceforge.jp>, Magnus Damm <magnus.damm@gmail.com>
+References: <20241024082735.42324-1-thuth@redhat.com>
+ <20241024082735.42324-3-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241021163449.136804-1-pbonzini@redhat.com>
+In-Reply-To: <20241024082735.42324-3-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,44 +98,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/24 13:34, Paolo Bonzini wrote:
-> qapi_event_send_device_deleted is always included (together with the
-> rest of QAPI) in libqemuutil.a if either system-mode emulation or tools
-> are being built, and in that case the stub causes a duplicate symbol
-> to appear in libqemuutil.a.
+On 24/10/24 05:27, Thomas Huth wrote:
+> Now that we are aware of binaries that are available for sh4eb,
+> we should make sure that there are no regressions with this
+> target and test it regularly in our CI.
 > 
-> Add the symbol only if events are not being requested.
-> 
-> Supersedes: <20241018143334.949045-1-pbonzini@redhat.com>
-
-strip ^
-
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->          v1 fails to build with --disable-system --disable-tools, which I
->          have now noticed in CI.
-> 
->   stubs/meson.build | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index 772a3e817df..e91614a874d 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -55,7 +55,12 @@ endif
->   if have_user
->     # Symbols that are used by hw/core.
->     stub_ss.add(files('cpu-synchronize-state.c'))
-> -  stub_ss.add(files('qdev.c'))
-> +
-> +  # Stubs for QAPI events.  Those can always be included in the build, but
-> +  # they are not built at all for --disable-system --disable-tools builds.
-> +  if not (have_system or have_tools)
-> +    stub_ss.add(files('qdev.c'))
-> +  endif
->   endif
->   
->   if have_system
+>   tests/functional/meson.build       |  3 +++
+>   tests/functional/test_sh4eb_r2d.py | 33 ++++++++++++++++++++++++++++++
+>   2 files changed, 36 insertions(+)
+>   create mode 100755 tests/functional/test_sh4eb_r2d.py
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
