@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BF3CFA457
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4403ACFA457
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Oct 2024 10:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t3v5O-00017C-DU; Thu, 24 Oct 2024 06:28:58 -0400
+	id 1t3v5N-00015I-9c; Thu, 24 Oct 2024 06:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3v5L-00012N-C6
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:55 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1t3v5J-000114-Dz
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:54 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1t3v5J-0008IZ-Du
- for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:55 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a9acafdb745so153083566b.0
- for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:28:52 -0700 (PDT)
+ id 1t3v5H-0008I2-Ad
+ for qemu-devel@nongnu.org; Thu, 24 Oct 2024 06:28:53 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a99ebb390a5so341341366b.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Oct 2024 03:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729765732; x=1730370532;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1729765730; x=1730370530;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0nReO9r9RrbUk1hvaDfJ9iU/fN5yRbIfPdkL/UxhNLg=;
- b=Xlt5OIUrLFQbm13tXIROyivFsqYkH7W4bNZS8Vr3o+bNSBFJC1CKJw0j7G+3eTDMqD
- WeXgzEM4dpPjXAjyzwmxcI50bDsEhfqO8c6hodaiTCLGU/0qv0EuHzXcebElysEq03LE
- ANFukznq35YS3cVcu2jUHBiwfxjXeGyIdxabOIkk/+kO3TUXJUf0+jjMTZtVmDzs9Srn
- U/Wn517umiV4vldFcC1w2H5IY+QeUat3FMy7De+c7V1a2sS/BxzSYUhRh9ufb6SVblst
- 4HvAQfimFOl0oBVJ3UC7/KKPNEArDAgSyTVUlFJOUXinGPVPsUx2qkOaVqODR8/G8t7p
- J/aQ==
+ bh=O+oMGpZpk5UqkW6ZNwVEybaQMPICUUS3gQUdIlM43Mo=;
+ b=FkiBHQ9vBA+27nmT10VT/kmqJO7Rd4aB+MXInqEzWQifzF1fnOBszlw+blwDZaeaTR
+ dX6wY+iTFdy/4koNFttKF5IMJP1soBTtyahWpJ2nkw6/YNdh9NL40Fd+xtLC3/FuYT/J
+ wr0cozTxqIHql7/QIxmcyIi4z9smg/EHcVPl+cezP6eYms4OIt6DS86RpveYr86S9RKZ
+ oKrSIgcMdBGXHf00+xEiQuEoZxtJ6z2arbX6bNXWl3ydYaTtaZlWZfZnnpl+fLleG/9s
+ zcd5a/4kCWdDNFC6Du37tqPgW1k+Jr1ERFgfQxODn2ilN7+rFUEYQtVJcLkI1KpWmyR8
+ KwnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1729765732; x=1730370532;
+ d=1e100.net; s=20230601; t=1729765730; x=1730370530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0nReO9r9RrbUk1hvaDfJ9iU/fN5yRbIfPdkL/UxhNLg=;
- b=VwmfBjpKatizWCvWwTDEVigIVzQqgNGibj43bZ6C3p9ug9ZcbQuIb9hv2SxE7y77XK
- XRJkRNdTHV79POPS9aWUreeZLouH2Iv+LMZNCQNls7SEOChobwJXildhPp/+ike5Sz5Q
- nI4wBlzlfcI1LuELPoq3lPVAamOqQyb/pwe0Ds8bBdpr0BAhWj6L+lMw9sUavyVRvra7
- bFPBQMrAQJXD+G2Hr9zsOx/zm2Z5ce2Pycj8lYELy5waS+mjRFIxaltVtO07Bgg7FiD/
- tPrMXKNLeNfIj03GzFt0uSgEqrFJRE4m5mjTREAR6tFYjdWME7UTIbcet7fj8tVWMEkT
- oh9w==
-X-Gm-Message-State: AOJu0YzfmxmJAXBvHKaalTx8BMozbEiezPRoqdV+xePq+23Bqz8iZ6q4
- 7oMg79whniG42m4rUT6ifmV5Gds5Z6WTWvqC0YxBFiJXMXCrJWhe6+9HQmqnVWasuDqBynanPE3
- rpg==
-X-Google-Smtp-Source: AGHT+IGHpK9VgCKrLDKOqmStQzxC8yg4Uc6VdrJTE5SlWfLSJW35I2wQF2EzsXfU7Ev0vNMBJfkytg==
-X-Received: by 2002:a17:907:7f0e:b0:a9a:cf0:8fd4 with SMTP id
- a640c23a62f3a-a9ad19d4c3dmr168980766b.18.1729765731784; 
- Thu, 24 Oct 2024 03:28:51 -0700 (PDT)
+ bh=O+oMGpZpk5UqkW6ZNwVEybaQMPICUUS3gQUdIlM43Mo=;
+ b=bYesLCSDkTJrXH8kcxDFegzHY7a31vj7UmS5nWqG1MaCL6Bco9u6Tt0boYTfM8uNPL
+ UcW+XVU96ss4Pc1wPyv56nL9q1nekloMoNKhzebNmQIR1l3s0nYyCUgkH8LhdOGKWMSW
+ ByY4WIaGXXSe1YPy2MptfulbByeYwZF6HN8YNpkShvaR+Ju3c9PWWZWj0iVyxhStiLpd
+ mGU0z1+ic2BMySfWh6kOaQ81N/Yid7RWNKc85P2Ds/x3/k4aT/3UIQcBNljHCv6PluDt
+ bB4u2ZjiJam/OoZd3LGkLSM3pI6kozbbmaBR+6D/SdTk+dUxn1KI2YX6dHttagXma7vh
+ MeuA==
+X-Gm-Message-State: AOJu0Yz1kvih6SLOdKNvthuQCluIfPgPJ5uNI/eUtSRcO53DDvzkGIEW
+ GPVC6W2KxrVAbsO8fOzJZWXFU2u21PrlDv7txsim3hfxm4Cw09uFU8rRwtJEOTId1KDR5x9ubqJ
+ Fvg==
+X-Google-Smtp-Source: AGHT+IHuo+qwQNvvY53TTgDYQd9UY+9pBSKOkixoI+uOijtLXI2CoF63vhadyaIRMyyiEGtr6SHrtg==
+X-Received: by 2002:a17:907:3f89:b0:a99:ff33:9ba5 with SMTP id
+ a640c23a62f3a-a9ad1a5eecamr186480266b.24.1729765729830; 
+ Thu, 24 Oct 2024 03:28:49 -0700 (PDT)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a9a913706d3sm601019066b.134.2024.10.24.03.28.49
+ a640c23a62f3a-a9a913706d3sm601019066b.134.2024.10.24.03.28.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Oct 2024 03:28:51 -0700 (PDT)
+ Thu, 24 Oct 2024 03:28:49 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -74,17 +74,17 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org, Alexander Graf <graf@amazon.com>
-Subject: [PATCH v4 12/15] hw/vmapple/cfg: Introduce vmapple cfg region
-Date: Thu, 24 Oct 2024 12:28:10 +0200
-Message-Id: <20241024102813.9855-13-phil@philjordan.eu>
+Subject: [PATCH v4 11/15] hw/vmapple/bdif: Introduce vmapple backdoor interface
+Date: Thu, 24 Oct 2024 12:28:09 +0200
+Message-Id: <20241024102813.9855-12-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 In-Reply-To: <20241024102813.9855-1-phil@philjordan.eu>
 References: <20241024102813.9855-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::62f;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x62f.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::632;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -108,53 +108,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Graf <graf@amazon.com>
 
-Instead of device tree or other more standardized means, VMApple passes
-platform configuration to the first stage boot loader in a binary encoded
-format that resides at a dedicated RAM region in physical address space.
+The VMApple machine exposes AUX and ROOT block devices (as well as USB OTG
+emulation) via virtio-pci as well as a special, simple backdoor platform
+device.
 
-This patch models this configuration space as a qdev device which we can
-then map at the fixed location in the address space. That way, we can
-influence and annotate all configuration fields easily.
+This patch implements this backdoor platform device to the best of my
+understanding. I left out any USB OTG parts; they're only needed for
+guest recovery and I don't understand the protocol yet.
 
 Signed-off-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
-v3:
-
- * Replaced legacy device reset method with Resettable method
-
 v4:
 
- * Fixed initialisation of default values for properties
- * Dropped superfluous endianness conversions
- * Moved most header code to .c, device name #define goes in vmapple.h
+ * Moved most header code to .c, rest to vmapple.h
+ * Better compliance with coding, naming, and formatting conventions.
 
  hw/vmapple/Kconfig           |   3 +
- hw/vmapple/cfg.c             | 197 +++++++++++++++++++++++++++++++++++
+ hw/vmapple/bdif.c            | 259 +++++++++++++++++++++++++++++++++++
  hw/vmapple/meson.build       |   1 +
- include/hw/vmapple/vmapple.h |   2 +
- 4 files changed, 203 insertions(+)
- create mode 100644 hw/vmapple/cfg.c
+ hw/vmapple/trace-events      |   5 +
+ include/hw/vmapple/vmapple.h |  15 ++
+ 5 files changed, 283 insertions(+)
+ create mode 100644 hw/vmapple/bdif.c
+ create mode 100644 include/hw/vmapple/vmapple.h
 
 diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-index 68f88876eb9..8bbeb9a9237 100644
+index a73504d5999..68f88876eb9 100644
 --- a/hw/vmapple/Kconfig
 +++ b/hw/vmapple/Kconfig
-@@ -4,3 +4,6 @@ config VMAPPLE_AES
- config VMAPPLE_BDIF
+@@ -1,3 +1,6 @@
+ config VMAPPLE_AES
      bool
  
-+config VMAPPLE_CFG
++config VMAPPLE_BDIF
 +    bool
 +
-diff --git a/hw/vmapple/cfg.c b/hw/vmapple/cfg.c
+diff --git a/hw/vmapple/bdif.c b/hw/vmapple/bdif.c
 new file mode 100644
-index 00000000000..aeb76ba363c
+index 00000000000..8a697d759bd
 --- /dev/null
-+++ b/hw/vmapple/cfg.c
-@@ -0,0 +1,197 @@
++++ b/hw/vmapple/bdif.c
+@@ -0,0 +1,259 @@
 +/*
-+ * VMApple Configuration Region
++ * VMApple Backdoor Interface
 + *
 + * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 + *
@@ -163,212 +160,296 @@ index 00000000000..aeb76ba363c
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/vmapple/vmapple.h"
-+#include "hw/sysbus.h"
++#include "qemu/units.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
++#include "trace.h"
++#include "hw/vmapple/vmapple.h"
++#include "hw/sysbus.h"
++#include "hw/block/block.h"
 +#include "qapi/error.h"
-+#include "net/net.h"
++#include "sysemu/block-backend.h"
 +
-+OBJECT_DECLARE_SIMPLE_TYPE(VMAppleCfgState, VMAPPLE_CFG)
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleBdifState, VMAPPLE_BDIF)
 +
-+#define VMAPPLE_CFG_SIZE 0x00010000
-+
-+typedef struct VMAppleCfg {
-+    uint32_t version;         /* 0x000 */
-+    uint32_t nr_cpus;         /* 0x004 */
-+    uint32_t unk1;            /* 0x008 */
-+    uint32_t unk2;            /* 0x00c */
-+    uint32_t unk3;            /* 0x010 */
-+    uint32_t unk4;            /* 0x014 */
-+    uint64_t ecid;            /* 0x018 */
-+    uint64_t ram_size;        /* 0x020 */
-+    uint32_t run_installer1;  /* 0x028 */
-+    uint32_t unk5;            /* 0x02c */
-+    uint32_t unk6;            /* 0x030 */
-+    uint32_t run_installer2;  /* 0x034 */
-+    uint32_t rnd;             /* 0x038 */
-+    uint32_t unk7;            /* 0x03c */
-+    MACAddr mac_en0;          /* 0x040 */
-+    uint8_t pad1[2];
-+    MACAddr mac_en1;          /* 0x048 */
-+    uint8_t pad2[2];
-+    MACAddr mac_wifi0;        /* 0x050 */
-+    uint8_t pad3[2];
-+    MACAddr mac_bt0;          /* 0x058 */
-+    uint8_t pad4[2];
-+    uint8_t reserved[0xa0];   /* 0x060 */
-+    uint32_t cpu_ids[0x80];   /* 0x100 */
-+    uint8_t scratch[0x200];   /* 0x180 */
-+    char serial[32];          /* 0x380 */
-+    char unk8[32];            /* 0x3a0 */
-+    char model[32];           /* 0x3c0 */
-+    uint8_t unk9[32];         /* 0x3e0 */
-+    uint32_t unk10;           /* 0x400 */
-+    char soc_name[32];        /* 0x404 */
-+} VMAppleCfg;
-+
-+struct VMAppleCfgState {
++struct VMAppleBdifState {
 +    SysBusDevice parent_obj;
-+    VMAppleCfg cfg;
 +
-+    MemoryRegion mem;
-+    char *serial;
-+    char *model;
-+    char *soc_name;
++    BlockBackend *aux;
++    BlockBackend *root;
++    MemoryRegion mmio;
 +};
 +
-+static void vmapple_cfg_reset(Object *obj, ResetType type)
-+{
-+    VMAppleCfgState *s = VMAPPLE_CFG(obj);
-+    VMAppleCfg *cfg;
++#define VMAPPLE_BDIF_SIZE   0x00200000
 +
-+    cfg = memory_region_get_ram_ptr(&s->mem);
-+    memset((void *)cfg, 0, VMAPPLE_CFG_SIZE);
-+    *cfg = s->cfg;
++#define REG_DEVID_MASK      0xffff0000
++#define DEVID_ROOT          0x00000000
++#define DEVID_AUX           0x00010000
++#define DEVID_USB           0x00100000
++
++#define REG_STATUS          0x0
++#define REG_STATUS_ACTIVE     BIT(0)
++#define REG_CFG             0x4
++#define REG_CFG_ACTIVE        BIT(1)
++#define REG_UNK1            0x8
++#define REG_BUSY            0x10
++#define REG_BUSY_READY        BIT(0)
++#define REG_UNK2            0x400
++#define REG_CMD             0x408
++#define REG_NEXT_DEVICE     0x420
++#define REG_UNK3            0x434
++
++typedef struct VblkSector {
++    uint32_t pad;
++    uint32_t pad2;
++    uint32_t sector;
++    uint32_t pad3;
++} VblkSector;
++
++typedef struct VblkReqCmd {
++    uint64_t addr;
++    uint32_t len;
++    uint32_t flags;
++} VblkReqCmd;
++
++typedef struct VblkReq {
++    VblkReqCmd sector;
++    VblkReqCmd data;
++    VblkReqCmd retval;
++} VblkReq;
++
++#define VBLK_DATA_FLAGS_READ  0x00030001
++#define VBLK_DATA_FLAGS_WRITE 0x00010001
++
++#define VBLK_RET_SUCCESS  0
++#define VBLK_RET_FAILED   1
++
++static uint64_t bdif_read(void *opaque, hwaddr offset, unsigned size)
++{
++    uint64_t ret = -1;
++    uint64_t devid = offset & REG_DEVID_MASK;
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_STATUS:
++        ret = REG_STATUS_ACTIVE;
++        break;
++    case REG_CFG:
++        ret = REG_CFG_ACTIVE;
++        break;
++    case REG_UNK1:
++        ret = 0x420;
++        break;
++    case REG_BUSY:
++        ret = REG_BUSY_READY;
++        break;
++    case REG_UNK2:
++        ret = 0x1;
++        break;
++    case REG_UNK3:
++        ret = 0x0;
++        break;
++    case REG_NEXT_DEVICE:
++        switch (devid) {
++        case DEVID_ROOT:
++            ret = 0x8000000;
++            break;
++        case DEVID_AUX:
++            ret = 0x10000;
++            break;
++        }
++        break;
++    }
++
++    trace_bdif_read(offset, size, ret);
++    return ret;
 +}
 +
-+static bool strlcpy_set_error(char *restrict dst, const char *restrict src,
-+                              size_t dst_size, Error **errp,
-+                              const char *parent_func, const char *location,
-+                              const char *buffer_name)
++static void le2cpu_sector(VblkSector *sector)
 +{
-+    size_t len;
-+
-+    len = g_strlcpy(dst, src, dst_size);
-+    if (len < dst_size) { /* len does not count nul terminator */
-+        return true;
-+    }
-+
-+    error_setg(errp,
-+               "strlcpy_set_error: %s (%s): Destination buffer %s too small "
-+               "(need %zu, have %zu)",
-+               parent_func, location, buffer_name, len + 1, dst_size);
-+    return false;
++    sector->sector = le32_to_cpu(sector->sector);
 +}
 +
-+/*
-+ * String copying wrapper that returns and reports a runtime error in
-+ * case of truncation due to insufficient destination buffer space.
-+ */
-+#define strlcpy_array_return_error(dst_array, src, errp) \
-+    do { \
-+        if (!strlcpy_set_error((dst_array), (src), ARRAY_SIZE(dst_array), (errp),\
-+                               __func__, stringify(__LINE__), # dst_array)) { \
-+            return; \
-+        } \
-+    } while (0)
-+
-+static void vmapple_cfg_realize(DeviceState *dev, Error **errp)
++static void le2cpu_reqcmd(VblkReqCmd *cmd)
 +{
-+    VMAppleCfgState *s = VMAPPLE_CFG(dev);
-+    uint32_t i;
++    cmd->addr = le64_to_cpu(cmd->addr);
++    cmd->len = le32_to_cpu(cmd->len);
++    cmd->flags = le32_to_cpu(cmd->flags);
++}
 +
-+    if (!s->serial) {
-+        s->serial = g_strdup("1234");
-+    }
-+    if (!s->model) {
-+        s->model = g_strdup("VM0001");
-+    }
-+    if (!s->soc_name) {
-+        s->soc_name = g_strdup("Apple M1 (Virtual)");
++static void le2cpu_req(VblkReq *req)
++{
++    le2cpu_reqcmd(&req->sector);
++    le2cpu_reqcmd(&req->data);
++    le2cpu_reqcmd(&req->retval);
++}
++
++static void vblk_cmd(uint64_t devid, BlockBackend *blk, uint64_t value,
++                     uint64_t static_off)
++{
++    VblkReq req;
++    VblkSector sector;
++    uint64_t off = 0;
++    char *buf = NULL;
++    uint8_t ret = VBLK_RET_FAILED;
++    int r;
++
++    cpu_physical_memory_read(value, &req, sizeof(req));
++    le2cpu_req(&req);
++
++    if (req.sector.len != sizeof(sector)) {
++        ret = VBLK_RET_FAILED;
++        goto out;
 +    }
 +
-+    strlcpy_array_return_error(s->cfg.serial, s->serial, errp);
-+    strlcpy_array_return_error(s->cfg.model, s->model, errp);
-+    strlcpy_array_return_error(s->cfg.soc_name, s->soc_name, errp);
-+    strlcpy_array_return_error(s->cfg.unk8, "D/A", errp);
-+    s->cfg.version = 2;
-+    s->cfg.unk1 = 1;
-+    s->cfg.unk2 = 1;
-+    s->cfg.unk3 = 0x20;
-+    s->cfg.unk4 = 0;
-+    s->cfg.unk5 = 1;
-+    s->cfg.unk6 = 1;
-+    s->cfg.unk7 = 0;
-+    s->cfg.unk10 = 1;
++    /* Read the vblk command */
++    cpu_physical_memory_read(req.sector.addr, &sector, sizeof(sector));
++    le2cpu_sector(&sector);
 +
-+    if (s->cfg.nr_cpus > ARRAY_SIZE(s->cfg.cpu_ids)) {
-+        error_setg(errp,
-+                   "Failed to create %u CPUs, vmapple machine supports %zu max",
-+                   s->cfg.nr_cpus, ARRAY_SIZE(s->cfg.cpu_ids));
-+        return;
++    off = sector.sector * 512ULL + static_off;
++
++    /* Sanity check that we're not allocating bogus sizes */
++    if (req.data.len > 128 * MiB) {
++        goto out;
 +    }
-+    for (i = 0; i < s->cfg.nr_cpus; i++) {
-+        s->cfg.cpu_ids[i] = i;
++
++    buf = g_malloc0(req.data.len);
++    switch (req.data.flags) {
++    case VBLK_DATA_FLAGS_READ:
++        r = blk_pread(blk, off, req.data.len, buf, 0);
++        trace_bdif_vblk_read(devid == DEVID_AUX ? "aux" : "root",
++                             req.data.addr, off, req.data.len, r);
++        if (r < 0) {
++            goto out;
++        }
++        cpu_physical_memory_write(req.data.addr, buf, req.data.len);
++        ret = VBLK_RET_SUCCESS;
++        break;
++    case VBLK_DATA_FLAGS_WRITE:
++        /* Not needed, iBoot only reads */
++        break;
++    default:
++        break;
++    }
++
++out:
++    g_free(buf);
++    cpu_physical_memory_write(req.retval.addr, &ret, 1);
++}
++
++static void bdif_write(void *opaque, hwaddr offset,
++                       uint64_t value, unsigned size)
++{
++    VMAppleBdifState *s = opaque;
++    uint64_t devid = (offset & REG_DEVID_MASK);
++
++    trace_bdif_write(offset, size, value);
++
++    switch (offset & ~REG_DEVID_MASK) {
++    case REG_CMD:
++        switch (devid) {
++        case DEVID_ROOT:
++            vblk_cmd(devid, s->root, value, 0x0);
++            break;
++        case DEVID_AUX:
++            vblk_cmd(devid, s->aux, value, 0x0);
++            break;
++        }
++        break;
 +    }
 +}
 +
-+static void vmapple_cfg_init(Object *obj)
-+{
-+    VMAppleCfgState *s = VMAPPLE_CFG(obj);
++static const MemoryRegionOps bdif_ops = {
++    .read = bdif_read,
++    .write = bdif_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
 +
-+    memory_region_init_ram(&s->mem, obj, "VMApple Config", VMAPPLE_CFG_SIZE,
-+                           &error_fatal);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mem);
++static void bdif_init(Object *obj)
++{
++    VMAppleBdifState *s = VMAPPLE_BDIF(obj);
++
++    memory_region_init_io(&s->mmio, obj, &bdif_ops, obj,
++                         "VMApple Backdoor Interface", VMAPPLE_BDIF_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
 +}
 +
-+static Property vmapple_cfg_properties[] = {
-+    DEFINE_PROP_UINT32("nr-cpus", VMAppleCfgState, cfg.nr_cpus, 1),
-+    DEFINE_PROP_UINT64("ecid", VMAppleCfgState, cfg.ecid, 0),
-+    DEFINE_PROP_UINT64("ram-size", VMAppleCfgState, cfg.ram_size, 0),
-+    DEFINE_PROP_UINT32("run_installer1", VMAppleCfgState, cfg.run_installer1, 0),
-+    DEFINE_PROP_UINT32("run_installer2", VMAppleCfgState, cfg.run_installer2, 0),
-+    DEFINE_PROP_UINT32("rnd", VMAppleCfgState, cfg.rnd, 0),
-+    DEFINE_PROP_MACADDR("mac-en0", VMAppleCfgState, cfg.mac_en0),
-+    DEFINE_PROP_MACADDR("mac-en1", VMAppleCfgState, cfg.mac_en1),
-+    DEFINE_PROP_MACADDR("mac-wifi0", VMAppleCfgState, cfg.mac_wifi0),
-+    DEFINE_PROP_MACADDR("mac-bt0", VMAppleCfgState, cfg.mac_bt0),
-+    DEFINE_PROP_STRING("serial", VMAppleCfgState, serial),
-+    DEFINE_PROP_STRING("model", VMAppleCfgState, model),
-+    DEFINE_PROP_STRING("soc_name", VMAppleCfgState, soc_name),
++static Property bdif_properties[] = {
++    DEFINE_PROP_DRIVE("aux", VMAppleBdifState, aux),
++    DEFINE_PROP_DRIVE("root", VMAppleBdifState, root),
 +    DEFINE_PROP_END_OF_LIST(),
 +};
 +
-+static void vmapple_cfg_class_init(ObjectClass *klass, void *data)
++static void bdif_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    dc->realize = vmapple_cfg_realize;
-+    dc->desc = "VMApple Configuration Region";
-+    device_class_set_props(dc, vmapple_cfg_properties);
-+    rc->phases.hold = vmapple_cfg_reset;
++    dc->desc = "VMApple Backdoor Interface";
++    device_class_set_props(dc, bdif_properties);
 +}
 +
-+static const TypeInfo vmapple_cfg_info = {
-+    .name          = TYPE_VMAPPLE_CFG,
++static const TypeInfo bdif_info = {
++    .name          = TYPE_VMAPPLE_BDIF,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(VMAppleCfgState),
-+    .instance_init = vmapple_cfg_init,
-+    .class_init    = vmapple_cfg_class_init,
++    .instance_size = sizeof(VMAppleBdifState),
++    .instance_init = bdif_init,
++    .class_init    = bdif_class_init,
 +};
 +
-+static void vmapple_cfg_register_types(void)
++static void bdif_register_types(void)
 +{
-+    type_register_static(&vmapple_cfg_info);
++    type_register_static(&bdif_info);
 +}
 +
-+type_init(vmapple_cfg_register_types)
++type_init(bdif_register_types)
 diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-index d4624713deb..64b78693a31 100644
+index bcd4dcb28d2..d4624713deb 100644
 --- a/hw/vmapple/meson.build
 +++ b/hw/vmapple/meson.build
-@@ -1,2 +1,3 @@
+@@ -1 +1,2 @@
  system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
- system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
-+system_ss.add(when: 'CONFIG_VMAPPLE_CFG',  if_true: files('cfg.c'))
-diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
-index a4c87b166d5..984281b6a67 100644
---- a/include/hw/vmapple/vmapple.h
-+++ b/include/hw/vmapple/vmapple.h
-@@ -12,4 +12,6 @@
++system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
+diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+index 12757bc0852..6c3fdb389a6 100644
+--- a/hw/vmapple/trace-events
++++ b/hw/vmapple/trace-events
+@@ -16,3 +16,8 @@ aes_2_write_unknown(uint64_t offset) "offset=0x%"PRIx64
+ aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
+ aes_dump_data(const char *desc, const char *hex) "%s%s"
  
- #define TYPE_VMAPPLE_BDIF "vmapple-bdif"
- 
-+#define TYPE_VMAPPLE_CFG "vmapple-cfg"
++# bdif.c
++bdif_read(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_write(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
++bdif_vblk_read(const char *dev, uint64_t addr, uint64_t offset, uint32_t len, int r) "dev=%s addr=0x%"PRIx64" off=0x%"PRIx64" size=0x%x r=%d"
 +
- #endif /* HW_VMAPPLE_VMAPPLE_H */
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+new file mode 100644
+index 00000000000..a4c87b166d5
+--- /dev/null
++++ b/include/hw/vmapple/vmapple.h
+@@ -0,0 +1,15 @@
++/*
++ * Devices specific to the VMApple machine type
++ *
++ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_VMAPPLE_VMAPPLE_H
++#define HW_VMAPPLE_VMAPPLE_H
++
++#define TYPE_VMAPPLE_BDIF "vmapple-bdif"
++
++#endif /* HW_VMAPPLE_VMAPPLE_H */
 -- 
 2.39.3 (Apple Git-145)
 
