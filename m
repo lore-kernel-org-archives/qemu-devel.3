@@ -4,76 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CDF3D1171E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B17ED0C5E5
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Oct 2024 08:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1t4FNm-0006o9-Ms; Fri, 25 Oct 2024 04:09:18 -0400
+	id 1t4Foh-00017w-LP; Fri, 25 Oct 2024 04:37:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t4FNk-0006nt-OK
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:09:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4Fof-00017l-6T
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:37:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1t4FNi-00014W-BF
- for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:09:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1t4Fod-000423-OR
+ for qemu-devel@nongnu.org; Fri, 25 Oct 2024 04:37:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1729843752;
+ s=mimecast20190719; t=1729845423;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DXFpGnr1iPie8+k/5NbVJ9fd5XbCtbLFN39vE+LyodQ=;
- b=UqIZgzMjdMx1tcjdJwfrNnkC0PYBcHzmQx5w9p08/y2Vb8zoE11gWB3k510mFRb8JDYtdj
- 7dsHNwluCnqhbR+XlHU7I41btwFZP0nYeau8kwYcXDYHUC5FzxO22l0H1FSvssHqIMHE1J
- U4RU8zEx/EZE/y/0Wsxe70CGhWr6KkI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-494-N38NtGb-NRa8PtmlO2iEUg-1; Fri,
- 25 Oct 2024 04:08:04 -0400
-X-MC-Unique: N38NtGb-NRa8PtmlO2iEUg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60CE91956089; Fri, 25 Oct 2024 08:08:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.150])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 711791956088; Fri, 25 Oct 2024 08:08:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4A56921E6A28; Fri, 25 Oct 2024 10:07:59 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Fabiano Rosas <farosas@suse.de>,  Igor Mammedov
- <imammedo@redhat.com>,  Juraj Marcin <jmarcin@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/4] qom: TYPE_SINGLETON interface
-In-Reply-To: <20241024165627.1372621-2-peterx@redhat.com> (Peter Xu's message
- of "Thu, 24 Oct 2024 12:56:24 -0400")
-References: <20241024165627.1372621-1-peterx@redhat.com>
- <20241024165627.1372621-2-peterx@redhat.com>
-Date: Fri, 25 Oct 2024 10:07:59 +0200
-Message-ID: <87plnoli5c.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BfFzHh1iqPJL9FVCfvw5Bqnzq3efoDILiKf0e67cj4g=;
+ b=BmOHIgoW3UUv+RM508ciGuCHpsh66GNjHMdhPMAT1BdJInraz56SzvEgvta0FDe6ArniXZ
+ soq/uSXmt4/7fyQpn4lNDk/Nh69V1x+sQEWmTUh7d1syHPm1blTfX74nEVCPBVyaZD/wNK
+ 4K7xAUz1oER+XORzPaQCfwkx1BKMLhQ=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-64-qZ9oGMr2N1umXJWzcQBQIQ-1; Fri, 25 Oct 2024 04:37:00 -0400
+X-MC-Unique: qZ9oGMr2N1umXJWzcQBQIQ-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-53b1eddcf4aso1369767e87.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Oct 2024 01:37:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1729845419; x=1730450219;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BfFzHh1iqPJL9FVCfvw5Bqnzq3efoDILiKf0e67cj4g=;
+ b=YaQougsiXiODD18rO7MAzZDS9cuWExLafYIt0F+k0ewY816jLurFsb4uNPSjUloM7B
+ OJtPGiSvtmY/eCi5/X9jtoo+F43q9jaO5Gt5arJiuoydxN1Mbx4vkg1lh6H7R8X0a9pI
+ 4BftDs6QHrfCYP3+f+My20e+iw0J5DwjgWbDV682mFg0xKbUJdxQOXLrAnBLwODUYesW
+ mgfHCVwICeivSFC+vMlxC5XQqZTrT79RkGA5hiOyyvgVWfCNEK2+2bqAA2yncZro9KfJ
+ ogxF9zYIh5SI+sEf+35y/YU/rjzDsfSuW24i4lpCjFAEkHebb362+OKqRUlqzJvvilZH
+ NAUQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFzj+vsguyAnE+91ug8a0bONqEkvR2h29qgk4m+Zq5uQ0Htm9QnFcHkPDaf4qjpSy/JADuQ+odjF7m@nongnu.org
+X-Gm-Message-State: AOJu0Yxq0q2HJ213HD7IN8iUHvZMB+HYTVc41sDPaT7z/BNKia79ywmU
+ z4+VFfhipWKffoI7b2Cug+P/78+GMRB9lnumzOlwF8IegelGTL/b+Y64bmWexnIIQJm3A0TftAw
+ u70dmcsNiNP9GlntK+gnCHO9XBt8zqVggb2XI0tIiUjVuOR1lkuXR
+X-Received: by 2002:a05:6512:318c:b0:539:93e8:7eca with SMTP id
+ 2adb3069b0e04-53b1a321d31mr4924523e87.35.1729845418733; 
+ Fri, 25 Oct 2024 01:36:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuVx44CV2mzldLQuRcVnRt0bxTRfQY2gjJ4kClknGg3ecPjgwQuyZBdethgCzZ51XXeFHgJw==
+X-Received: by 2002:a05:6512:318c:b0:539:93e8:7eca with SMTP id
+ 2adb3069b0e04-53b1a321d31mr4924510e87.35.1729845418326; 
+ Fri, 25 Oct 2024 01:36:58 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72?
+ ([2a01:e0a:165:d60:bbdd:3c5e:7d8b:3f72])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4318b57b5d9sm40941065e9.44.2024.10.25.01.36.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Oct 2024 01:36:57 -0700 (PDT)
+Message-ID: <b5f4c6a6-fe91-4e5f-a85b-d9d2527a2dd0@redhat.com>
+Date: Fri, 25 Oct 2024 10:36:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/8] migration: Unexport ram_mig_init()
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20241024213056.1395400-1-peterx@redhat.com>
+ <20241024213056.1395400-4-peterx@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20241024213056.1395400-4-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.263,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.697,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,234 +150,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
+On 10/24/24 23:30, Peter Xu wrote:
+> It's only used within migration/.
+> 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->  include/qom/object_interfaces.h | 47 +++++++++++++++++++++++++++++++++
->  qom/object.c                    |  3 +++
->  qom/object_interfaces.c         | 24 +++++++++++++++++
->  qom/qom-qmp-cmds.c              | 22 ++++++++++++---
->  system/qdev-monitor.c           |  7 +++++
->  5 files changed, 100 insertions(+), 3 deletions(-)
->
-> diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
-> index 02b11a7ef0..9b2cc0e554 100644
-> --- a/include/qom/object_interfaces.h
-> +++ b/include/qom/object_interfaces.h
-> @@ -177,4 +177,51 @@ bool user_creatable_del(const char *id, Error **errp);
->   */
->  void user_creatable_cleanup(void);
->  
-> +#define TYPE_SINGLETON "singleton"
-> +
-> +typedef struct SingletonClass SingletonClass;
-> +DECLARE_CLASS_CHECKERS(SingletonClass, SINGLETON, TYPE_SINGLETON)
-> +
-> +/**
-> + * SingletonClass:
-> + *
-> + * @parent_class: the base class
-> + * @get_instance: fetch the singleton instance if it is created,
-> + *                NULL otherwise.
-> + *
-> + * Singleton class describes the type of object classes that can only
-> + * provide one instance for the whole lifecycle of QEMU.  It will fail the
-> + * operation if one attemps to create more than one instance.
-> + *
-> + * One can fetch the single object using class's get_instance() callback if
-> + * it was created before.  This can be useful for operations like QMP
-> + * qom-list-properties, where dynamically creating an object might not be
-> + * feasible.
-> + */
-> +struct SingletonClass {
-> +    /* <private> */
-> +    InterfaceClass parent_class;
-> +    /* <public> */
-> +    Object *(*get_instance)(Error **errp);
-> +};
-> +
-> +/**
-> + * object_class_is_singleton:
-> + *
-> + * @class: the class to detect singleton
-> + *
-> + * Returns: true if it's a singleton class, false otherwise.
-> + */
-> +bool object_class_is_singleton(ObjectClass *class);
-> +
-> +/**
-> + * singleton_get_instance:
-> + *
-> + * @class: the class to fetch singleton instance
-> + *
-> + * Returns: the object* if the class is a singleton class and the singleton
-> + *          object is created, NULL otherwise.
-> + */
-> +Object *singleton_get_instance(ObjectClass *class);
-
-A non-null return value can become dangling when the object gets
-destroyed.  This could conceivably happen in another thread.
-
-The obviously safe interface would take a reference the caller must
-unref when done.
-
-> +
->  #endif
-> diff --git a/qom/object.c b/qom/object.c
-> index 11424cf471..ded299ae1a 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -553,6 +553,9 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
->      g_assert(type->abstract == false);
->      g_assert(size >= type->instance_size);
->  
-> +    /* Singleton class can only create one object */
-> +    g_assert(!singleton_get_instance(type->class));
-> +
->      memset(obj, 0, type->instance_size);
->      obj->class = type->class;
->      object_ref(obj);
-> diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-> index e0833c8bfe..6766060d0a 100644
-> --- a/qom/object_interfaces.c
-> +++ b/qom/object_interfaces.c
-> @@ -354,6 +354,23 @@ void user_creatable_cleanup(void)
->      object_unparent(object_get_objects_root());
->  }
->  
-> +bool object_class_is_singleton(ObjectClass *class)
-> +{
-> +    return !!object_class_dynamic_cast(class, TYPE_SINGLETON);
-> +}
-> +
-> +Object *singleton_get_instance(ObjectClass *class)
-> +{
-> +    SingletonClass *singleton =
-> +        (SingletonClass *)object_class_dynamic_cast(class, TYPE_SINGLETON);
-> +
-> +    if (!singleton) {
-> +        return NULL;
-> +    }
-> +
-> +    return singleton->get_instance(&error_abort);
-> +}
-> +
->  static void register_types(void)
->  {
->      static const TypeInfo uc_interface_info = {
-> @@ -362,7 +379,14 @@ static void register_types(void)
->          .class_size = sizeof(UserCreatableClass),
->      };
->  
-> +    static const TypeInfo singleton_interface_info = {
-> +        .name          = TYPE_SINGLETON,
-> +        .parent        = TYPE_INTERFACE,
-> +        .class_size = sizeof(SingletonClass),
-> +    };
-> +
->      type_register_static(&uc_interface_info);
-> +    type_register_static(&singleton_interface_info);
->  }
->  
->  type_init(register_types)
-> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-> index e91a235347..ecc1cf781c 100644
-> --- a/qom/qom-qmp-cmds.c
-> +++ b/qom/qom-qmp-cmds.c
-> @@ -126,6 +126,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
->      ObjectProperty *prop;
->      ObjectPropertyIterator iter;
->      ObjectPropertyInfoList *prop_list = NULL;
-> +    bool create;
->  
->      klass = module_object_class_by_name(typename);
->      if (klass == NULL) {
-> @@ -141,7 +142,15 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
->          return NULL;
->      }
->  
-> -    obj = object_new(typename);
-> +    /* Avoid creating multiple instances if the class is a singleton */
-> +    create = !object_class_is_singleton(klass) ||
-> +        !singleton_get_instance(klass);
-> +
-> +    if (create) {
-> +        obj = object_new(typename);
-
-If the class is not a singleton or else if no instance exists, we create
-a temporary instance.
-
-> +    } else {
-> +        obj = singleton_get_instance(klass);
-
-If the class is a singleton and the instance exists, we use that
-instead.
-
-Any properties the instance has created dynamically after object_new()
-are visible to introspection.  This is not the case when we create a
-temporary instance.  Such subtle differences are problematic.  If we
-decide we're okay with this one, we need to document it.
-
-> +    }
->  
->      object_property_iter_init(&iter, obj);
->      while ((prop = object_property_iter_next(&iter))) {
-> @@ -172,7 +181,9 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
->          QAPI_LIST_PREPEND(prop_list, info);
->      }
->  
-> -    object_unref(obj);
-> +    if (create) {
-> +        object_unref(obj);
-> +    }
->  
->      return prop_list;
->  }
-> @@ -199,7 +210,12 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
->          return NULL;
->      }
->  
-> -    if (object_class_is_abstract(klass)) {
-> +    /*
-> +     * Abstract classes are not for instantiations, meanwhile avoid
-> +     * creating temporary singleton objects because it can cause conflicts
-> +     * if there's already one created.
-> +     */
-> +    if (object_class_is_abstract(klass) || object_class_is_singleton(klass)) {
->          object_class_property_iter_init(&iter, klass);
->      } else {
->          obj = object_new(typename);
-
-If the class is a singleton, we treat it as if it was abstract.  Its
-instance properties, if any, are not visible in qom-list-properties.
-This is a defect.  If you make an existing class with instance
-properties a singleton, the defect is a regression.
-
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 44994ea0e1..1310f35c9f 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -36,6 +36,7 @@
->  #include "qemu/option.h"
->  #include "qemu/qemu-print.h"
->  #include "qemu/option_int.h"
-> +#include "qom/object_interfaces.h"
->  #include "sysemu/block-backend.h"
->  #include "migration/misc.h"
->  #include "qemu/cutils.h"
-> @@ -643,6 +644,12 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
->          return NULL;
->      }
->  
-> +    if (singleton_get_instance(OBJECT_CLASS(dc))) {
-> +        error_setg(errp, "Class '%s' only supports one instance",
-> +                   driver);
-> +        return NULL;
-> +    }
-> +
->      /* find bus */
->      path = qdict_get_try_str(opts, "bus");
->      if (path != NULL) {
+>   include/migration/misc.h | 1 -
+>   migration/ram.h          | 1 +
+>   2 files changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index df57be6b5e..e8490e3af5 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -39,7 +39,6 @@ void precopy_add_notifier(NotifierWithReturn *n);
+>   void precopy_remove_notifier(NotifierWithReturn *n);
+>   int precopy_notify(PrecopyNotifyReason reason, Error **errp);
+>   
+> -void ram_mig_init(void);
+>   void qemu_guest_free_page_hint(void *addr, size_t len);
+>   bool migrate_ram_is_ignored(RAMBlock *block);
+>   
+> diff --git a/migration/ram.h b/migration/ram.h
+> index bc0318b834..0d1981f888 100644
+> --- a/migration/ram.h
+> +++ b/migration/ram.h
+> @@ -44,6 +44,7 @@ extern XBZRLECacheStats xbzrle_counters;
+>       INTERNAL_RAMBLOCK_FOREACH(block)                   \
+>           if (!qemu_ram_is_migratable(block)) {} else
+>   
+> +void ram_mig_init(void);
+>   int xbzrle_cache_resize(uint64_t new_size, Error **errp);
+>   uint64_t ram_bytes_remaining(void);
+>   uint64_t ram_bytes_total(void);
 
 
